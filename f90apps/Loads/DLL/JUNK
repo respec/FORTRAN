@@ -1,0 +1,75 @@
+Lahey MAKE, Version 5.31
+Copyright OPUS Software.  All rights reserved.
+
+lf90 ..\src\tacit013.for -c -o0 -i ..\src -win -ml msvc -dll
+Lahey Fortran 90 Compiler Release 3.00b  S/N: f9358012  
+Copyright (C) 1994-1996 Lahey Computer Systems.  All rights reserved.
+Copyright (C) 1985-1996 Intel Corp.  All rights reserved.
+Registered to:	Paul Hummel                            
+		AQUA TERRA Consultants                 
+Compiling file ..\src\tacit013.for.
+Compiling program unit TACIT_PARMS at line 1.
+Line 40, file ..\src\tacit013.for
+        INTEGER PPARAMS,POBS
+                        |
+WARNING -- INTEGER scalar (POBS) is set but never used.
+
+Line 57, file ..\src\tacit013.for
+     1            XL(PPARAMS),CVXL(PPARAMS)
+                  |           |
+WARNING -- REAL(kind 8) array (XL) is never used.
+WARNING -- REAL(kind 8) array (CVXL) is never used.
+
+Compiling program unit TACIT_LOADS at line 84.
+Line 104, file ..\src\tacit013.for
+        INTEGER PPARAMS,POBS
+                        |
+WARNING -- INTEGER scalar (POBS) is set but never used.
+
+Line 120, file ..\src\tacit013.for
+     1            XLIKE(0:PPARAMS),ITEST(PPARAMS),B_TEST(PPARAMS)
+                                   |              |
+WARNING -- INTEGER array (ITEST) is never used.
+WARNING -- REAL(kind 8) array (B_TEST) is never used.
+
+Line 148, file ..\src\tacit013.for
+        write(19,*) 'np+1'NP+1,
+                          |
+FATAL -- Syntax error.
+
+Compiling program unit TACIT_LOAD_VAR at line 159.
+Line 173, file ..\src\tacit013.for
+        INTEGER PPARAMS,POBS
+                        |
+WARNING -- INTEGER scalar (POBS) is set but never used.
+
+Line 189, file ..\src\tacit013.for
+     1            XLIKE(0:PPARAMS),ITEST(PPARAMS),B_TEST(PPARAMS)
+                                   |              |
+WARNING -- INTEGER array (ITEST) is never used.
+WARNING -- REAL(kind 8) array (B_TEST) is never used.
+
+Line 192, file ..\src\tacit013.for
+     1            XL(PPARAMS),CVXL(PPARAMS)
+                  |           |
+WARNING -- REAL(kind 8) array (XL) is never used.
+WARNING -- REAL(kind 8) array (CVXL) is never used.
+
+Compiling program unit TACIT at line 204.
+Compiling program unit TACIT_D at line 406.
+Compiling program unit TACIT_R at line 511.
+Compiling program unit TACIT_CALC at line 587.
+Compiling program unit TACIT_S at line 625.
+Compiling program unit TACIT_L at line 653.
+Compiling program unit TACIT_G at line 724.
+Compiling program unit TACIT_H at line 808.
+Compiling program unit TACIT_TEST at line 909.
+Compiling program unit TACIT_PVALUE at line 1007.
+Compiling program unit TAC_LOAD at line 1041.
+Compiling program unit EXPON at line 1201.
+Compiling program unit EXPVAR at line 1284.
+Compiling program unit SQUARE at line 1369.
+Encountered 1 error, 11 warnings in file ..\src\tacit013.for.
+
+
+Lahey MAKE: Shell line exit status 4. Stop.

@@ -1,0 +1,8 @@
+C#### WCH (CDM), 8/93.  INCREASE ARRAYS TO 26.
+      COMMON/TABLES/KDEPTH(27),KLASS(27),PSIMAX(18),ALFMAX(18),
+     1              NN(27),MM(27),ANORM(18,51),QNORM(18,51),
+     2              DNORM(18,51),AFACT(18),RFACT(18)
+
+
+
+	 

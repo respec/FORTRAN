@@ -1,0 +1,9 @@
+hass_ent.obj hass_dum.obj himutil.obj vb_scen.obj hspsta.obj ..\res\hass_ent.res
+-OUT ..\bin\hass_ent.dll
+-MAP ..\bin\hass_ent.map
+-LIB hspf122.lib hspdss.lib hec.lib wdm.lib adwdm.lib util.lib newaqt12.lib ann.lib iowdm.lib stats.lib graph.lib awstat.lib
+-LIBP ..\..\..\lib3.0\lf90libs
+-win -dll -ml msvb -mapn 32 -mapw 132
+@hass_ent.xp$
+@vb_scen.xp$
+@himutil.xp$

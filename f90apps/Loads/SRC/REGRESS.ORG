@@ -1,0 +1,63 @@
+        SUBROUTINE REGRESS(NC,NP,XC,DXC,YC,YTC,BETA,STDDEV,P_V,RES,PRED)
+C*** REVISION 92.05 5/8/92
+C===================================================================
+C
+C       REGRESSION PROGRAM--DOES TACIT REGRESSION
+C
+C       AUTHOR.........TIM COHN
+C       DATE...........MAY 7, 1992
+C
+C===================================================================
+C
+C       DEFINITIONS OF VARIABLES
+C
+C         NC        I*4     NUMBER VARIABLES IN XC USED TO CALIBRATE
+C                             MODEL
+C         NP        I*4     NUMBER OF PARAMETERS (NP=1 ==> ONLY
+C                             A CONSTANT IN THE MODEL)
+C         XC(NC,NP) R*8     EXPLANATORY VARIABLES FOR CALIBRATION
+C                             XC(1) = 1 ==> A CONSTANT IN MODEL
+C         DXC       I*4     LEADING DIMENSION OF XC AS DIMENSIONED
+C         YC(NP)    R*8     THE COLUMN VECTOR OF RESPONSE VARIABLES
+C         YTC(NP)   R*8     THE COLUMN VECTOR OF CENSORING THRESHOLDS
+C         BETA(NP)  R*8     THE COLUMN VECTOR OF ESTIMATED PARAMETERS
+C                             B(NP+1) = STND. DEV. RESIDS.
+C         STDDEV(NP)R*8     THE STANDARD DEVIATIONS OF BETA
+C         P_V       R*8     THE CORRESPONDING P-VALUES (LRT-BASED)
+C         YRES(DXC) R*8     THE COLUMN VECTOR OF STANDARDZ. RESIDUALS
+C         PRED(NC)  R*8     THE VECTOR OF PREDICTIONS
+C
+C===================================================================
+
+
+        IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+        INTEGER DXC,DCV
+
+        PARAMETER (NSIZE=2000,NPRM=30)
+
+        DIMENSION
+     1    XC(DXC,*),YC(*),YTC(*),BETA(*),RES(*),PRED(*),
+     2    STDDEV(*),P_V(*)
+
+		CALL TACIT_PARMS(YC,NC,YTC,XC,DXC,NP,BETA,STDDEV,P_V)
+			S	=	SQRT(BETA(NP+1))
+
+       	CALL DMRRRR(NC,NP,XC,DXC,NP,1,BETA,NPRM,NC,1,PRED,DXC)
+
+C===================================================================
+C
+C	FIX-UP:  INSERT THE EXPECTED VALUE OF CENSORED OBSERVATIONS 
+C			WHEN COMPUTING THE RESIDUALS....5/7/92 (TAC)
+C
+       DO 10 I=1,NC
+		IF(YC(I) .LT. YTC(I)) THEN
+			XSI		=	(YTC(I)-PRED(I))/S
+			CALL TACIT_CALC(XSI,F,PHI,XLOGPHI,A,G)
+			YC(I)	=	PRED(I) - S*A
+		ENDIF
+			RES(I)	=	YC(I)-PRED(I)
+   10  CONTINUE
+
+         RETURN
+         END

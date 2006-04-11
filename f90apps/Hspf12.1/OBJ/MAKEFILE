@@ -1,0 +1,41 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = LF90
+PROGRAM   = ..\bin\hspfbatl.exe
+LDMAP     = ..\bin\hspfbatl.map
+
+LSLOC     = \lib3.0\src
+LSLOCH    = $(LSLOC)\hspf13a
+FFLAGS    = -c -i ..\src\;$(LSLOCH)
+LDFLAGS   = -lisk -bind -pack # -bind -win32s
+
+LBLOC     = \lib3.0\lf90libs
+
+! tom order   hspf13 hspdss hec wdm aide adwdm util
+
+LIBS      = hspf121.lib  \
+            hspdss.lib  \
+            hec.lib  \
+            wdm.lib   \
+            aide.lib  \
+            adwdm.lib \
+            util.lib  \
+            
+
+#HDBG      = ..\..\HASSLIBS\OBJ\HIOUCI.OBJ
+OBJS      = hspfbat.obj hspsta.obj $(HDBG)
+
+VPATH = ..\src
+
+$(PROGRAM):     $(OBJS) #$(LIBS)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+          !endif
+          $(LINKER) $(OBJS) -EXE $@ -MAP $(LDMAP) \
+                            -LIB $(LIBS) -LIBP $(LBLOC) $(LDFLAGS)
+          !if -e $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif
+
+hspfbat.obj: fhsmes.inc versn.inc pmesfl.inc

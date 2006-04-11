@@ -1,0 +1,7 @@
+@LOOP TAB=CON ROW=TIM COL=SRC
+@TITLE
+@CON:**
+            @SRC:**     @SSUM:12    
+@TIM:**     @**:**:**   @**:00:**
+@TSUM:12    @**:**:00   @**:00:00
+

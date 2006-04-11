@@ -1,0 +1,34 @@
+TREEDRV:entry           3           1
+TREE_LEV_CNT:disp           3           5
+   1 AMG                      lev:   1 pos:   0 cnt:   1 con:   2
+   2 AG & JK                  lev:   2 pos:   0 cnt:   3 con:   3   4   5
+   3 AG-K                     lev:   3 pos:   0 cnt:   0 con:
+   4 SG-K                     lev:   3 pos:   0 cnt:   0 con:
+   5 JG-K                     lev:   3 pos:   0 cnt:   0 con:
+TREE_LEV_CNT:end disp
+AMG                     Level mx:   0 tct:   0 cnts:
+TREE_LEV_CNT:disp           5           7
+   1 RG                       lev:   1 pos:   0 cnt:   1 con:   2
+   2 MI & RG                  lev:   2 pos:   0 cnt:   1 con:   3
+   3 AMG                      lev:   3 pos:   0 cnt:   1 con:   4
+   4 AG & JK                  lev:   4 pos:   0 cnt:   3 con:   5   6   7
+   5 AG-K                     lev:   5 pos:   0 cnt:   0 con:
+   6 SG-K                     lev:   5 pos:   0 cnt:   0 con:
+   7 JG-K                     lev:   5 pos:   0 cnt:   0 con:
+TREE_LEV_CNT:end disp
+RG                      Level mx:   0 tct:   0 cnts:
+TREE_LEV_CNT:disp           3           4
+   1 AMG                      lev:   1 pos:   0 cnt:   1 con:   2
+   2 MI & RG                  lev:   2 pos:   0 cnt:   2 con:   3   4
+   3 MI                       lev:   3 pos:   0 cnt:   0 con:
+   4 RG                       lev:   3 pos:   0 cnt:   0 con:
+TREE_LEV_CNT:end disp
+AMG                     Level mx:   0 tct:   0 cnts:
+***** BEFORE DELETE BRANCH:DOWN
+***** BEFORE DELETE BRANCH:UP
+***** DELETE AMG                     
+BRAN_DEL:NUD:AG & JK                       263044           2
+BRAN_DEL:NDU:MI & RG                       263252           1
+***** AFTER DELETE BRANCH:DOWN
+***** AFTER DELETE BRANCH:UP
+TREEDRV:end

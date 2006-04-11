@@ -1,0 +1,167 @@
+*
+*       <<<<<<<<  SWMM 4.3 TEMP BLOCK DATA FILE >>>>>>>>>
+*
+*  Note, this file last updated by WCH, 4/22/94.
+*
+*       This is an input data file to the SWMM 4.3 (beta) TEMP
+*       Block for creating a temperaure, wind and/or evaporation
+*       time series.  All lines with an asterisk in column 1 are comment 
+*       lines and are ignored by the program.
+*
+*       Input data are free format and may be up to 230 columns wide.  
+*       You must have a value for every data column even if the program
+*       will not actually use a given value.  There must be at least one
+*       space between every input value.  Alphanumeric data should be
+*       enclosed in single quotes. 
+*
+*       Caution!  Data lines that are "wrapped around" (continued on
+*       two or more lines) should have a blank in column 1, unless a
+*       card identifier is needed.  
+*
+*       SWMM uses both U.S. customary units and metric units.  The
+*       examples use feet, cfs, acres, inches and inches/hour.  If metric
+*       is specified substitute meters, cms, hectares, millimeters and
+*       millimeters/hour.
+*============================================================================
+*	The SW card sets up the interface files to be used or created. 
+*	There is one output file (#9) which will contain the time series
+*       of temperatures and/or wind speeds and/or evaporation values
+*       for input to the Runoff Block on NSCRAT(3).
+*============================================================================
+*  NBLOCK  JIN(1)  JOUT(1)
+SW    1      8       9  
+*============================================================================
+*   The MM card opens the scratch files to be used by different subroutines.
+*   A certain number (0 for TEMP) may be required for each block.
+*============================================================================
+*  NITCH  NSCRAT(1) NSCRAT(2) NSCRAT(3) NSCRAT(4) NSCRAT(5) NSCRAT(6) NSCRAT(7)
+MM   7       1         2          3        10         11        12       13
+*============================================================================
+*     The @ command is used to permanently save an interface or 
+*     scratch file.  This line should be placed before the first SWMM
+*     block call.  The format of the @ command is as follows:
+*============================================================================
+*Column 1    Unit number of the       Name of the interface
+*            interface file saved     file (any valid DOS filename)
+*            or utilized
+*
+@             8                       'NWSTMP.DOT'
+*** @             9                       'MINTMP.INT'
+*============================================================================
+$TEMP     	Call the TEMP Block with a '$' in first column.
+*============================================================================
+*	Create title lines for the simulation.  There are two title lines 
+*       for the Temp Block.  Titles are enclosed in single quotes.
+*============================================================================
+*	A1 Line       :
+*          SITE       : Two 80-column descriptive titles. (Enclose in quotes.)
+*============================================================================
+A1 ' TEMPERATURE BLOCK EXAMPLE'
+A1 ' STATION # 14922 '
+*============================================================================
+*	Line B1 defines the control information for the Temp Block.
+*============================================================================
+*	B1 Line       :
+*          IFORM      :  Format of data,
+*                        = 0, NWS Tape Deck 3200, fixed length records,
+*                          (See example data at end of this file.)
+*                        = 1, Not implemented.  Do not use. 
+*                        = 2, User defined format.
+*          ISTA       :  NWS Station Number, or alternatively for user-
+*                        defined data, an arbitrary station number.  If
+*                        IFORM = 0, the station number should be 6 digits
+*                        consisting of the 2-digit state code plus the
+*                        4-digit cooperative network index number.
+*                        If non-zero, value must match station number on
+*                        input data set (value of JIN on SW line).  If
+*                        zero, any value found on the input data set will
+*                        be accepted.  
+*          KTYPE      :  Type of time series data.
+*                        = 0, Daily maximum and minimum temperature.
+*                        = 1, Daily evaporation.
+*                        = 2, Daily wind speed.
+*  
+*   Note, the following options are available only for IFORM = 0.
+*
+*                        = 3, Daily temperature and evaporation.
+*                        = 4, Daily temperature and wind speed.
+*                        = 5, Daily evaporation and wind speed.
+*                        = 6. Daily temperature, evaporation and wind speed.
+*          JYBEG      :  Starting date (six digits = yr/mo/day). Should
+*                        start on day 1 of month for proper statistics.
+*                        If zero the program searches for beginning year.
+*          JYEND      :  Ending date (six digits= yr/mo/day).  Should 
+*                        end on last day of month for proper statistics.  
+*                        If zero the program reads all the station data.
+*          IYEAR      :  Echo print of the KTYPE values read.
+*                        = 0, Do not print raw data or summary tables, 
+*                        = 1, Print all the data and summary tables, and
+*                        = 2, Print only monthly/yearly summary tables.
+*          PAN(1)     :  January pan evaporation coefficient.  Required
+*                        only if evaporation data are read by the Temp Block.
+*           .                        .
+*          PAN(12)    :  December pan evaporation coefficient.  Required
+*                        only if evaporation data are read by the Temp Block.
+*============================================================================
+*  IFORM   ISTA   KTYPE  IYBEG  JYEND  IYEAR 
+B1   2    14922    0    000000 000000   1
+*============================================================================
+*       User-defined temperature/evaporation/wind speed time series.
+*                    Required only if IFORM = 2 on data group B1.
+*============================================================================
+*	B2 Line       :
+*          FIRMAT     :  Format (character data, enclose in quotes).  
+*                        Should include a field for station number (optional),
+*                        year, month, day, and daily max-min temperature 
+*                        or wind speed. **All data fields must be read as 
+*                        INTEGERS.**  A conversion to allow fractions can
+*                        be made for evaporation and wind speed using
+*                        parameter CONV below.  E.g., input evaporation
+*                        as 100ths of an inch per day (as an integer field)
+*                        and set CONV = 0.01 to convert to inches/day.  
+*          METRIC     :  Metric input-output.
+*                        = 0, Use U.S. customary units.
+*                        = 1, Use metric units.
+*          KUNIT      :  Units of temperature. Required field.
+*                        = 0, Degrees F.
+*                        = 1, Degrees C.
+*          CONV       :  Conversion factor used to convert input units to
+*                        internal SWMM units for evaporation (in./day or 
+*                        mm/day) and wind speed (miles/hr or km/hr),
+*                        depending on the value of METRIC.  Temperature
+*                        input not affected by CONV value.  Thus, user
+*                        input of temperatures can only recognize integer
+*                        values.  
+*          F1         :  Field position for station number.
+*                        If F1 is zero a station number will not be read.
+*          F2         :  Field position for year.  Required.
+*          F3         :  Field position for month.  Required.
+*          F4         :  Field position for day.  Required.
+*          F5         :  Field position for daily maximum temperature, or
+*                        Field position for daily evaporation estimate, or     
+*                        Field position for wind speed.
+*          F6         :  Field position for daily minimum temperature
+*                        (KTYPE = 0 only).
+*============================================================================
+*      FIRMAT        METRIC KUNIT CONV F1 F2 F3 F4 F5 F6
+B2  '(I5,3I2,I3,I3)'   0      0   1.0  1  2  3  4  5  6
+*============================================================================
+*               End your input data set with a $ENDPROGRAM or 
+*               $Blockname for call to other SWMM block.
+$ENDPROGRAM
+*
+*  IFORM = 0 example data from Florida station 0025, September-October, 1956
+*
+*DLY08002502SNWD I19560999990310118 00000 10218 00000 10318 00000 10418 00000 10518 00000 10618 00000 10718 00000 10818 00000 10918 00000 11018 00000 11118 00000 11218 00000 11318 00000 11418 00000 11518 00000 11618 00000 11718 00000 11818 00000 11918 00000 12018 00000 12118 00000 12218 00000 12318 00000 12418 00000 12518 00000 126
+*DLY08002502SNOWTI19560999990310118 00000 10218 00000 10318 00000 10418 00000 10518 00000 10618 00000 10718 00000 10818 00000 10918 00000 11018 00000 11118 00000 11218 00000 11318 00000 11418 00000 11518 00000 11618 00000 11718 00000 11818 00000 11918 00000 12018 00000 12118 00000 12218 00000 12318 00000 12418 00000 12518 00000 126
+*DLY08002502PRCPHI19560999990310118 00005 10218 00000 10318 00000 10418 00000 10518 00037 10618 00060 10718 00000 10818 00000 10918 00000 11018 00000 11118 00000 11218 00000 11318 00000 11418 00000 11518 00000 11618 00000 11718 00069 11818 00000 11918 00000 12018 00000 12118 00000 12218 00000 12318 00000 12418 00000 12518 00113 126
+*DLY08002502TOBS F19560999990310118 00085 10218 00083 10318 00085 10418 00086 10518 00082 10618 00076 10718 00084 10818 00076 10918 00073 11018 00079 11118 00082 11218 00086 11318 00086 11418 00083 11518 00083 11618 00082 11718 00071 11818 00079 11918 00082 12018 00081 12118 00084 12218 00085 12318 00078 12418 00080 12518 00074 126
+*DLY08002502TMIN F19560999990310118 00070 10218 00070 10318 00068 10418 00069 10518 00070 10618 00071 10718 00071 10818 00070 10918 00066 11018 00059 11118 00060 11218 00061 11318 00059 11418 00059 11518 00063 11618 00066 11718 00069 11818 00066 11918 00067 12018 00056 12118 00067 12218 00068 12318 00070 12418 00072 12518 00071 126
+*DLY08002502TMAX F19560999990310118 00092 10218 00091 10318 00086 10418 00090 10518 00088 10618 00090 10718 00091 10818 00085 10918 00078 11018 00080 11118 00086 11218 00089 11318 00094 11418 00089 11518 00086 11618 00085 11718 00084 11818 00083 11918 00084 12018 00085 12118 00087 12218 00090 12318 00090 12418 00080 12518 00081 126
+*DLY08002502TMAX F19561099990310118 00089 10218 00084 10318 00081 10418 00081 10518 00083 10618 00081 10718 00081 10818 00086 10918 00087 11018 00085 11118 00081 11218 00078 11318 00082 11418 00083 11518 00080 11618 00082 11718 00078 11818 00079 11918 00080 12018 00075 12118 00080 12218 00076 12318 00081 12418 00083 12518 00078 126
+*DLY08002502SNWD I19561099990310118 00000 10218 00000 10318 00000 10418 00000 10518 00000 10618 00000 10718 00000 10818 00000 10918 00000 11018 00000 11118 00000 11218 00000 11318 00000 11418 00000 11518 00000 11618 00000 11718 00000 11818 00000 11918 00000 12018 00000 12118 00000 12218 00000 12318 00000 12418 00000 12518 00000 126
+*DLY08002502SNOWTI19561099990310118 00000 10218 00000 10318 00000 10418 00000 10518 00000 10618 00000 10718 00000 10818 00000 10918 00000 11018 00000 11118 00000 11218 00000 11318 00000 11418 00000 11518 00000 11618 00000 11718 00000 11818 00000 11918 00000 12018 00000 12118 00000 12218 00000 12318 00000 12418 00000 12518 00000 126
+*DLY08002502PRCPHI19561099990310118 00000 10218 00000 10318 00030 10418 00160 10518 00000 10618 00205 10718 00000 10818 00000 10918 00000 11018 00000 11118 00000 11218 00000 11318 00000 11418 00000 11518 00000 11618 00000 11718 00000 11818 00000 11918 00000 12018 00001 12118 00087 12218 00087 12318 00000 12418 00000 12518 00000 126
+*DLY08002502TOBS F19561099990310118 00082 10218 00077 10318 00079 10418 00076 10518 00080 10618 00070 10718 00080 10818 00080 10918 00084 11018 00078 11118 00076 11218 00070 11318 00078 11418 00077 11518 00077 11618 00078 11718 00078 11818 00078 11918 00074 12018 00070 12118 00075 12218 00075 12318 00075 12418 00075 12518 00070 126
+*DLY08002502TMIN F19561099990310118 00064 10218 00064 10318 00068 10418 00068 10518 00066 10618 00065 10718 00062 10818 00060 10918 00067 11018 00061 11118 00064 11218 00053 11318 00059 11418 00061 11518 00061 11618 00062 11718 00064 11818 00055 11918 00059 12018 00056 12118 00066 12218 00062 12318 00059 12418 00059 12518 00059 126
+

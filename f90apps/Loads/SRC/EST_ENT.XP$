@@ -1,0 +1,9 @@
+-export    F90_GPCODE
+-export    F90_REALDATE
+-export    F90_I3DATE
+-export    F90_ESTIM
+-export    F90_DPLOTI
+-export    F90_GBOXPN
+-export    F90_GBOXP_XX
+-export    F90_GPLOTP_XX
+-export    F90_GPLOTN

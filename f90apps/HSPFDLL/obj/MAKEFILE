@@ -1,0 +1,81 @@
+HLOC      = ..\..\hasslibs
+SRCLOC    = ..\src
+BINLOC    = ..\bin
+HSPLOC    = ..\..\hspf11.0
+OLOC      = ..\..\hspfuci
+MLOC      = ..\..\hspfmod
+TLOC      = ..\..\tree
+HLIBLOC   = \lib3.0\src\hspf
+ALIBLOC   = \lib3.0\src\adwdm
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(SRCLOC)
+
+DLL       = $(BINLOC)\hass_ent.dll
+LDMAP     = $(BINLOC)\hass_ent.map
+LBLOC     = \lib3.0\lf90libs,$(MLOC)\obj,$(TLOC)\obj
+LIBS      = hspf13a.lib \
+            hspdss.lib \
+            hec.lib \
+            wdm.lib \
+            adwdm.lib \
+            util.lib \
+            newaqt12.lib \
+            ann.lib \
+            iowdm.lib \
+            stats.lib \
+            graph.lib \
+            awstat.lib 
+
+OBJ       = bldgen.obj bldinp.obj
+OBJX      = hass_ent.obj himutil.obj
+OBJ1      = vb_tree.obj hass_dum.obj
+OBJ2      = scenmod.lib
+OBJ3      = vb_scen.obj
+OBJS      = hspsta.obj
+OBJSH     = $(OLOC)\obj\hiotsin.obj
+RES       = ..\res\hass_ent.res
+
+$(DLL): $(OBJ2) $(OBJ3) $(OBJ) $(OBJ1) $(OBJX) $(OBJS) $(RES) #$(LIBS)
+          $(FC) $(OBJX) $(OBJ1) $(OBJ) $(OBJ3) $(OBJSH) $(OBJS) $(RES) -MAP $(LDMAP) -OUT $(DLL) \
+               -LIB $(LIBS) -LIBP $(LBLOC) \
+               -win -dll -ml msvb -mapn 32 -mapw 132 \
+               @..\src\vb_tree.xp$$ \
+               @..\src\hass_ent.xp$$ \
+               @..\src\himutil.xp$$ \
+               @..\src\vb_scen.xp$$
+          !if -e $(SRCLOC)\*.dll
+            copy $(SRCLOC)\*.dll ..\bin
+            erase $(SRCLOC)\*.dll
+            erase $(SRCLOC)\*.def
+            erase $(SRCLOC)\*.xpo
+            erase $(SRCLOC)\*.obj
+          !endif
+          !copy $(DLL) \winNT\sysTEM32
+
+$(OBJ): $(TLOC)\src\$(*).for
+     (cd $(TLOC)\obj; $(FC) $(SRCLOC)\$(*).for $(FFLAGS) -win -dll)
+     copy $(TLOC)\src\$(@)
+
+$(OBJS): $(SRCLOC)\$(*).for
+     $(FC) $(SRCLOC)\$(*).for $(FFLAGS) -win -ml msvc -dll
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj
+
+$(OBJX): $(SRCLOC)\$(*).f90
+     $(FC) $(SRCLOC)\$(*).f90 -nfix $(FFLAGS) -win -dll -ml msvb -mod $(TLOC)\obj
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj
+
+$(OBJ1): $(SRCLOC)\$(*).for
+     $(FC) $(SRCLOC)\$(*).for $(FFLAGS) -win -dll -mod $(TLOC)\obj
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj
+
+$(OBJ2): $(SRCLOC)\$(*).f90
+     $(FC) $(SRCLOC)\$(*).f90 $(FFLAGS) -win -ml winapi -dll
+
+$(OBJ3): $(SRCLOC)\$(*).f90
+     $(FC) $(SRCLOC)\$(*).f90 $(FFLAGS) -nfix -win -dll -mod ..\obj
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj

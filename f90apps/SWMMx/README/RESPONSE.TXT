@@ -1,0 +1,99 @@
+                                                           File: RESPONSE.TXT
+
+
+                 Software Product User Response Form
+
+            Center for Exposure Assessment Modeling (CEAM)
+           U.S. Environmental Protection Agency (U.S. EPA)
+               Office of Research and Development (ORD)
+               Environmental Research Laboratory (ERL)
+                       960 College Station Road
+                      Athens, Georgia 30605-2720
+
+                              706/546-3549
+
+
+-----------------------------------------------------------------------------
+
+
+     User Name:_________________________________________________
+
+     User Address:______________________________________________
+
+                  ______________________________________________
+
+                  ______________________________________________
+
+
+
+     1.  User computer brand and model:_______________________________
+
+     2.  Amount of low end RAM memory:________________________________ 
+
+     3.  Amount of high end extended (XMS) memory:____________________ 
+
+     4.  Printer brand and model:_____________________________________
+
+     5.  Name/version no. of CEAM software product:___________________
+                                             (shown on diskette label)
+
+
+-----------------------------------------------------------------------------
+
+                                                       Complete other side ->
+
+-----------------------------------------------------------------------------
+     1.  Rate the software package.
+         (1=poor, 2=fair, 3=average, 4=good, 5=excellent)
+
+               Ease of installation   _____
+               Documentation          _____
+               Ease of learning       _____
+               Product support        _____
+               On-line help           _____
+               Tutorial (if applies)  _____
+
+
+     2.  What did you like least about the software package?
+
+     3.  What did you like best about the software package?
+
+     4.  Did you encounter conflicts with hardware when installing this 
+         package?
+
+     5.  Did you encounter conflicts with existing software packages that
+         were installed on your machine?
+
+
+-----------------------------------------------------------------------------
+
+
+     List below any improvements you would like to see made to the CEAM
+     software product(s) received.  
+
+     _________________________________________________________________
+
+     _________________________________________________________________
+
+     _________________________________________________________________
+
+     _________________________________________________________________
+
+
+-----------------------------------------------------------------------------
+
+
+     Return your response to:
+
+     Center for Exposure Assessment Modeling (CEAM)
+     U.S. Environmental Protection Agency
+     Office of Research and Development
+     Environmental Research Laboratory
+     960 College Station Road
+     Athens, GA  30605-2720
+
+
+                      #########################
+
+DWD/dwd - December 1993 - E:\MISC\CEAM\CEAMINFO\RESPONSE.TXT
+

@@ -1,0 +1,148 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  clu  grpnam  description
+  ___  ______  _____________________________________________
+  149  swstat  swstat main, top-level clusters for swstat.f
+  150  stats   statistics options menu
+END COMMENT
+CLU          149    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  SWSTAT
+  END LABEL
+  DATA   CLU   149
+#GROUP    2  TYPE MENU
+$WINDOW Opening screen
+$SCREEN
+                     U.S. Geological Survey
+
+          SWSTAT - Surface Water time series STATistics
+                   Version 4.1, February 25, 2002
+
+Select an option,                      or 
+  @File                                   @What   !
+  @Statistics                             @Query  !
+                                          @Return !
+$DEFAULT  1
+$LENGTH  10
+$OPTION File
+_DESC - open/close a WDM file
+_HELP
+ A WDM file must be opened first.
+$OPTION Statistics
+_DESC - analysis options
+_HELP
+Select this option to perform the computations.
+You must select the File option before choosing this option.
+$OPTION What
+_DESC - this program is about
+_HELP
+Choose this option for a summary of the purpose and capabilities
+of this program.
+$OPTION Query
+_DESC - for assistance
+_HELP
+Choose this option to find out who to contact for support assistance.
+$OPTION Return
+_DESC - to operating system
+_HELP
+This option will terminate the program.
+#GROUP    3  TYPE TEXT
+$WINDOW Statistics (S) Problem
+$TEXT
+Unable to perform analysis as no WDM file
+is currently open from which to work.
+
+To open a WDM file, select the File option
+from the Opening screen.
+#GROUP   4  TYPE TEXT
+$WINDOW What (W)
+$TEXT
+This program contains the basic computations found in WATSTORE programs
+A193, A969, and W4422. These compute flow-duration tables and curves,
+perform frequency analysis of annual series, generate annual series of
+n-day high or low flows, and compute minimum, maximum, mean and standard
+deviation of a time series. Time series are not restricted to streamflow.
+
+    Although this program has been used by the U.S. Geological
+    Survey, no warranty, expressed or implied, is made by the
+    USGS as to the accuracy and functioning of the program and
+    related program material, nor shall the fact of distribution
+    constitute any such warranty, and no responsibility is
+    assumed by the USGS in connection therewith.
+#GROUP   5  TYPE TEXT
+$WINDOW Query (Q)
+$TEXT
+   Technical support:  Kate Flynn (h2osoft@usgs.gov)
+Program availability:  http://water.usgs.gov/software/ (surface water)
+
+               Other: Kate Flynn
+                      Hydrologic Analysis Software Support
+                      U.S. Geological Survey, WRD
+                      437 National Center
+                      Reston, VA 20192
+  END DATA
+END CLU
+CLU          150    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP
+200
+  LABEL
+    GRPNAM  STATS
+  END LABEL
+  DATA   CLU   150
+#GROUP    1  TYPE MENU
+$WINDOW Statistics (S)
+$SCREEN
+Select a Statistics option
+  @Basic      - statistics computed on time series
+  @Duration   - analysis (percent time values within interval)
+  @Compare    - two time series (usually computed and observed)
+  @Frequency  - analysis with (Log) Pearson Type III distribution
+  @N-day      - high and/or low flow annual series generated
+  @Trend      - analysis with Kendall Tau
+  @Hydrograph - duration statistics
+  @Return     - to Opening screen
+$DEFAULT  2
+$LENGTH   10
+$OPTION Return
+_HELP
+Use this option when all statistical analyses are completed.
+$OPTION Basic
+_HELP
+Computes minimum, maximum, mean and standard deviation of a time series
+on a WDM file.
+$OPTION Duration
+_HELP
+Computations can be made of any time series on a WDM data set.  Tables
+are created of class intervals and the number or percent of cases within
+the intervals or the number or percent of cases equal to or exceeding the
+intervals.  A plot of the duration curve is also an option.
+$OPTION Compare
+_HELP
+Computations can be made of any two time series in a WDM file.   Tables
+are created of class intervals and the errors in each interval.  Standard
+error of estimate, absolute errors, and bias are also computed.  A table
+with the number of cases errors are within set intervals are computed.
+$OPTION Frequency
+_HELP
+Any annual time series on a WDM data set can be processed.  The distribution
+is fitted by method of moments, and tables and graphs of the results can be
+produced.  The computed statistics can also be stored on the WDM file for
+further processing.  Data from the N-day analysis is often used.
+$OPTION N-day
+_HELP
+Computes the n-day high or low annual series and produces tables of the
+results.  Frequency analysis must be used to plot the results.  The
+series can also be placed on new WDM data sets for further processing.
+A standard set (1,2,3,7,10,30,60,90,183,365-day) or user set can be used.
+$OPTION Trend
+_HELP
+Computes the Kendall Tau statistic to test for trends.  Uses annual time
+series data. The P-level and median slope of the data are also computed.
+$OPTION Hydrograph
+_HELP
+Computes duration hydrograph tables and curves.  Initially
+developed for stramflow data, the time-series data are not
+restricted to streamflow.  Taken from WATSTORE program k956.
+  END DATA
+END CLU

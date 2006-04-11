@@ -1,0 +1,1501 @@
+                                                    File: READ.ME
+
+                             SWMM
+                  Storm Water Management Model
+                         Version 4.30
+
+                   U.S. EPA Release, May 1994
+
+
+         Center for Exposure Assessment Modeling (CEAM)
+         U.S. Environmental Protection Agency (U.S. EPA)
+            Office of Research and Development (ORD)
+         Athens Environmental Research Laboratory (AERL)
+                    960 College Station Road
+                   Athens, Georgia  30605-2720
+
+                          706/546-3549
+
+
+
+_________________________________________________________________
+
+CONTENTS
+
+     Introduction
+     Abstract
+     Documentation
+     Distribution Diskettes
+     File Name and Content
+     Development System
+     Routine Execution
+     Run Time and Performance
+     Minimum File Configuration
+     Modification
+     Technical Help Contact
+     Disclaimer
+
+
+
+_________________________________________________________________
+
+INTRODUCTION
+
+The Storm Water Management Model (SWMM) is a comprehensive water
+quantity and quality simulation model developed primarily for
+urban areas.  Single-event and continuous simulation can be
+performed for almost all components of the rainfall, runoff, and
+quality cycles for a watershed.  The Extran Block of SWMM also
+includes complete dynamic flow routing for hydraulic simulation
+of dynamic backwater conditions, looped drainage networks,
+surcharging, etc.
+
+Version 4.30 of SWMM is an updated and improved release from
+version 4.20 last released in May 1992.  New features include
+natural channel cross sections in the Extran and Transport
+Blocks, simulation of groundwater quantity in the Runoff Block,
+variable time steps, easier access to long-term meteorological
+data, and many adaptations for microcomputer use, including use
+of free-format input.  For a list of modifications since the last
+release, refer to the files RELEASE.TXT and UPDATE.TXT (refer to
+FILE NAME AND CONTENT section).
+
+The model is designed for use by engineers and scientists
+experienced in urban hydrological and water quality processes. 
+Although the two user's manuals explain most computational
+algorithms, an engineering background is necessary to appreciate
+most methods being used and to verify that the model results are
+reasonable.
+
+     NOTE:  For convenience, the terms "SWMM model system"
+     or "SWMM" will be used in this document to refer to the
+     SWMM model and all associated support files and
+     programs as a single unit.  Therefore, the term "SWMM"
+     is synonymous with "SWMM model system" for purposes of
+     this document.
+
+
+
+_________________________________________________________________
+
+ABSTRACT
+
+                            Summary
+
+The Storm Water Management Model (SWMM) was originally developed
+for the EPA between 1969 and 1971 (1) and was the first
+comprehensive model of its type for urban runoff analysis. 
+Maintenance and improvements to SWMM led to Version 2 in 1975,
+Version 3 in 1981 and now Version 4 (2,3).  Version 4.30 of SWMM
+(May 1994) is the latest edition of this comprehensive computer
+model for analysis of quantity and quality problems associated
+with urban runoff.
+
+Both single-event and continuous simulation may be performed on
+catchments having storm sewers, or combined sewers and natural
+drainage, for prediction of flows, stages and pollutant
+concentrations.  The Extran Block (3) solves the complete dynamic
+flow routing equations (Saint Venant equations) for accurate
+simulation of backwater, looped connections, surcharging, and
+pressure flow.  Using SWMM, the modeler can simulate all aspects
+of the urban hydrologic and quality cycles, including rainfall,
+snowmelt, surface and subsurface runoff, flow routing through the
+drainage network, storage and treatment.  Statistical analyses
+may be performed on long-term precipitation data and on output
+from continuous simulation.
+
+The model may be used for both planning and design.  The planning
+mode is used for an overall assessment of the urban runoff
+problem and proposed abatement options.  This mode is typified by
+continuous simulation for several years using long-term
+precipitation data.  Catchment schematization is usually "coarse"
+in keeping with the planning level of analysis.  The Statistics
+Block may be used for frequency analysis of the long term time
+series of hydrographs and pollutographs and for identification of
+individual hydrologic events that may be of special interest.  A
+design-level, event simulation also may be run using a detailed
+catchment schematization and shorter time steps for precipitation
+input.  The Rain Block is used for processing of hourly and
+15-minute precipitation time series for input to continuous
+simulation.  This block also incorporates the statistical
+analysis procedures of the EPA SYNOP model (4,5) for
+characterization of storm events.  The Statistics Block may
+alternatively be used for statistical analysis of the
+precipitation time series.
+
+Although the historical basis of the model was for analysis of
+urban runoff quality problems, the model often is used just for
+hydrologic and hydraulic analysis.  The Extran Block has proven
+especially valuable for sophisticated hydraulic analysis of urban
+drainage networks.  An option for both the Extran (Saint Venant
+equations) and Transport (kinematic wave equations) Blocks is use
+of natural channel cross-section data in the same form as
+required by the Hydrologic Engineering Center's HEC2 program.  In
+this manner, Extran can perform a dynamic backwater analysis.
+
+The model is designed for use by engineers and scientists
+experienced in urban hydrological and water quality processes. 
+Although the two user's manuals explain most computational
+algorithms, an engineering background is necessary to appreciate
+most methods being used and to verify that the model results are
+reasonable.
+
+SWMM Version 4 is microcomputer based (DOS-compatible), although
+the Fortran code may be compiled on any machine.  Execution times
+are on the order of a few seconds to several minutes for most
+jobs on a 386/486 machine.  However, simulation of large areas
+with many subcatchments and/or channels for many time steps can
+require several hours on a microcomputer.  The user is well
+advised to use the most powerful microcomputer available.
+
+                      Data Requirements
+
+For hydrologic simulation in the Runoff Block, data requirements
+include area, imperviousness, slope, roughness, width (a shape
+factor), depression storage, and infiltration parameters for
+either the Horton or Green-Ampt equations for up to 100
+subcatchments.  (Number of subcatchments, pipes, etc. is variable
+depending on the compilation).  The program is driven by
+precipitation for up to ten gages (distributed spatially), and
+evaporation.  Additional data are required if simulation of
+snowmelt, subsurface drainage, and infiltration/inflow options
+are employed.  The subsurface drainage option is especially
+useful in locations where true overland flow rarely occurs
+because of flat, sandy soils.
+
+Flow routing can be performed in the Runoff, Transport and Extran
+Blocks, in increasing order of sophistication.  Input data
+include shape and dimensions of closed conduits and open
+channels, slope, roughness; and for Extran, invert and ground
+surface elevations.  Additional information is required for the
+description of weirs, orifices, pumps and storage, if simulated. 
+Extran can also simulate dynamic boundary conditions, e.g.,
+tides.  Storage-indication routing may be performed in the
+Transport and Storage/Treatment Blocks, with appropriate data on
+volume vs. outflow.
+
+Quality processes are initiated in the Runoff Block and include
+options for constant concentration, regression of load vs. flow,
+and buildup washoff, with the latter requiring the most data (6). 
+Additional options include street cleaning, erosion, and quality
+contributions from precipitation, catchbasins, adsorption, and
+base flow.  EPA Nationwide Urban Runoff Program (7) data are
+often used as starting values for quality computations.  Quality
+routing in subsequent blocks (except for Extran) requires few
+additional data, except for the Storage/Treatment Block in which
+several removal processes can be simulated.
+
+Depending upon the simulation objective, input data requirements
+can be minimal to extensive.  For simulation of a complete
+drainage network data collection can be accomplished within a few
+days, but reducing the data for input to the model may take up to
+3 person-weeks for a large area (e.g., greater than about 2000
+acres).  For an Extran simulation of sewer hydraulics, expensive
+and time consuming field verification of sewer invert elevations
+often is required.  However, most data reduction, such as
+tabulation of elevations, lengths and dimensions, is
+straightforward.  Blocks may be used in series or individually. 
+For example, the user may generate inlet hydrographs by means
+other than SWMM and then use only the SWMM flow routing options. 
+SWMM interfacing requirements are clearly defined.  E.g., output
+may be directed to the EPA WASP receiving water model (8).
+
+Calibration data consist of measured hydrographs and
+pollutographs for use in establishing values of input parameters
+for which a priori estimates are insufficient.  It is often
+possible to obtain good agreement between predicted and measured
+hydrographs with little calibration effort.  This is not true for
+quality simulation for which calibration data are essential to
+obtain credible simulations of pollutographs.  Without such
+measured concentrations and loads, SWMM quality simulation is at
+best only suited for relative comparisons between control
+strategies and should not be relied upon for prediction of
+absolute magnitudes of concentrations and loads (9,6).  No firm
+numbers can be given for the required amount of calibration and
+verification events, but six of each should provide a robust
+calibration and verification.
+
+                            Output
+
+Basic SWMM output consists of hydrographs and pollutographs
+(concentration vs. time) at any desired location in the drainage
+system.  Depths and velocities are also available as are summary
+statistics on surcharging, volumes, continuity and other quantity
+parameters.  Additional quality output includes loads, source
+identification, continuity, residuals (e.g., sludge), and other
+parameters.  The Statistics Block may be used to separate
+hydrographs and pollutographs into storm events and then compute
+statistics on parameters such as volume, duration, intensity,
+interevent time, load, average concentration, and peak
+concentration.  A hydraulic design routine in the Transport Block
+will re-size conduits to pass peak flows.  Either metric or U.S.
+customary units may be used.
+
+Most output is tabular.  Microcomputer graphics are accessed
+through exports to spreadsheets or other graphics packages and
+through third party software for pre- and post-processing.  The
+latter includes options for dynamic plots of the hydraulic grade
+line produced by the Extran Block.  Linkages have also been
+prepared to geographic information systems (10,11).
+
+                  Assumptions and Limitations
+
+The two user's manuals clearly explain almost all computational
+assumptions of the model, several of which have been mentioned in
+preceding paragraphs.  The model performs best in urbanized areas
+with impervious drainage, although it has been widely used
+elsewhere.  Quantity simulations are enhanced by the
+calibration/verification process, but can be expected to resemble
+measured data fairly accurately if good information is known
+about area, imperviousness and rainfall.  Quality simulations
+must be calibrated in order to be credible in terms of absolute
+magnitudes (9,6).
+
+Technical limitations include lack of subsurface quality routing
+(a constant concentration is used), no interaction of quality
+processes (apart from adsorption), difficulty in simulation of
+wetlands quality processes (except as can be represented as
+storage processes), and a weak scour deposition routine in the
+Transport Block.  The biggest impediment to model usage is the
+user interface, with its lack of menus and graphical output.  The
+model is still run in a batch mode (the user constructs an input
+file with an editor), unless third-party software is used for
+pre- and post-processing.
+
+                      Application History
+
+SWMM has an impressive longevity.  It has been used in scores of
+U.S. cities as well as extensively in Canada, Europe, Australia
+and elsewhere (12).  A large body of literature on theory and
+case studies is available, partly documented in a bibliography of
+SWMM-related publications (13) and elsewhere (6,12).  The model
+has been used for very complex hydraulic analysis for combined
+sewer overflow mitigation as well as for many stormwater
+management planning studies and pollution abatement projects, and
+there are many instances of successful calibration and
+verification.  Because of its public domain status, extensive
+feedback has been received from users on needed corrections and
+enhancements, and the model is continuously updated through
+interaction with CEAM.
+
+                          References
+
+1.  Metcalf and Eddy, Inc., University of Florida, and Water
+Resources Engineers, Inc. 1971.  Storm Water Management Model,
+Vol. I.  Final Report, 11024DOC07/71 (NTIS PB-203289), U.S. EPA,
+Washington, DC, 20460.
+
+2.  Huber, W.C. and R.E. Dickinson.  1988.  Storm Water
+Management Model, Version 4, User's Manual.  EPA/600/3-88/001a
+(NTIS PB88-236641/AS), U.S. EPA, Athens, GA, 30605.
+
+3.  Roesner, L.A., Aldrich, J.A. and R.E. Dickinson.  1988. 
+Storm Water Management Model, Version 4, User's Manual: Extran
+Addendum.  EPA/600/3-88/001b (NTIS PB88-236658/AS), U.S. EPA,
+Athens, GA, 30605.
+
+4.  U.S. EPA.  Areawide Assessment Procedures Manual, Three
+Volumes.  1976 et seq. EPA-600/9-76-014, U.S. EPA, Cincinnati,
+OH, 45268.
+
+5.  Woodward-Clyde Consultants.  1989.  Synoptic Analysis of
+Selected Rainfall Gages Throughout the United States.  Report to
+U.S. EPA, Woodward-Clyde Consultants, Oakland, CA.
+
+6.  Donigian, A.S., Jr. and W.C. Huber.  1991.  Modeling of
+Nonpoint Source Water Quality in Urban and Non-Urban Areas. 
+EPA/600/3-91/039, U.S. EPA, Athens, GA, 30605.
+
+7.  U.S. EPA.  1983.  Results of the Nationwide Urban Runoff
+Program, Volume I.  Final Report, NTIS PB84-185552, U.S. EPA,
+Washington, DC, 20460.
+
+8.  Martin, J.L.  1993.  Modification of the Storm Water
+Management Model's (SWMM's) Transport Submodel for Creation of a
+Hydrodynamic Linkage to the Water Analysis Simulation Program
+(WASP).  Report to Camp, Dresser and McKee, Inc. by AScI Corp.,
+Athens, GA, 30605.
+
+9.  Huber, W.C.  1986.  Deterministic Modeling of Urban Runoff
+Quality.  In: H.C.Torno et. al. (eds.) Urban Runoff Pollution,
+Proceedings of the NATO Advanced Research Workshop on Urban
+Runoff Pollution, Montpellier, France.  Springer-Verlag, New
+York, Series G: Ecological Sciences, 10:167-242.
+
+10. Huber, W.C., Zollo, A.F., Tarbox, T.W. and J.P. Heaney. 
+1991.  Integration of the SWMM Runoff Block with ARC/INFO and
+AutoCAD: A Case Study.  Final Report to Foster-Wheeler
+Enviresponse, Inc. and U.S. EPA, Edison, NJ, Contract
+VN1-320-420000, from Dept. of Environmental Engineering Sciences,
+University of Florida, Gainesville.
+
+11. Curtis, T.G., and W.C. Huber.  1993.  SWMM AML - An ARC/INFO
+Processor for the Storm Water Management Model (SWMM).  Proc.
+1993 Runoff Quantity and Quality Modeling Conference, Reno, NV,
+(NTIS, in press), U.S. EPA, Athens, GA, 30605.
+
+12. Huber, W.C.  1992.  Experience with the U.S. EPA SWMM Model
+for Analysis and Solution of Urban Drainage Problems. 
+Proceedings, Inundaciones Y Redes De Drenaje Urbano, J. Dolz, M.
+Gomez, and J.P. Martin, eds., Colegio de Ingenieros de Caminos,
+Canales Y Puertos, Universitat Politecnica de Catalunya,
+Barcelona, Spain, p.199-220.
+
+13. Huber, W.C., Heaney, J.P. and B.A. Cunningham.  1985.  Storm
+Water Management Model (SWMM) Bibliography.  EPA/600/3-85/077
+(NTIS PB86-136041/AS), U.S. EPA, Athens, GA, September 1985.
+
+
+
+_________________________________________________________________
+
+DOCUMENTATION
+
+It is recommended that the user obtain the following documents
+for reference:
+
+     SWMM
+     Storm Water Management Model (SWMM), version 4, User's
+     Manual Part A.  EPA/600/3-88/001a NTIS accession no.  PB88
+     236 641
+
+     SWMM
+     Storm Water Management Model (SWMM), version 4, User's
+     Manual Part B, EXTRAN Addendum.  EPA/600/3-88/001b NTIS
+     accession no.  PB88 236 658
+
+Although revised versions of the version 3.xx manuals, these
+documents are necessary to run the SWMM model.  These documents
+are available from Oregon State University at the address shown
+below.  Although also available from the National Technical
+Information Service (NTIS) (refer to paragraph below), it is
+preferable to purchase them from Oregon State University in order
+to obtain the most recently edited version.
+
+     Dr. Wayne C. Huber
+     Department of Civil Engineering
+     Oregon State University
+     Corvallis, OR     97331-2302
+
+     voice phone: 503/737-4934
+          e-mail: huberw@ccmail.orst.edu
+
+     Cost: (as of March 1994)
+
+     Two manuals:                            $85.00
+     Postage and handling: United States -   $ 6.00
+                                  Canada -   $10.00
+                               Elsewhere -   $35.00
+
+Another useful document is a bibliography of SWMM usage that
+contains references to several case studies.  This report is
+available only from the National Technical Information Service
+(refer to ordering and address information below).
+
+     Huber, W.C., Heaney, J.P. and B.A. Cunningham, "Storm Water
+     Management Model (SWMM) Bibliography," EPA/600/3-85/077
+     (NTIS accession no. PB86 136041/AS), U.S. Environmental
+     Protection Agency, Athens, GA, September 1985.
+
+A newer index to case studies and past SWMM articles is provided
+by:
+
+     James, W., "Introduction to the SWMM Environment," in New
+     Techniques for Modelling the Management of Stormwater
+     Quality Impacts, W. James, ed., Proceedings of the
+     Stormwater and Water Quality Management Modelling
+     Conference, Toronto, February 1992, Lewis Publishers, CRC
+     Press, Boca Raton, FL, 1993.
+
+Selected documents, as noted above by NTIS accession numbers, can
+also be ordered from the National Technical Information Service
+(NTIS) at the address shown below.  When ordering, use the NTIS
+accession number associated with the document.  Contact NTIS for
+current price plus shipping and handling charges.
+
+     National Technical Information Service (NTIS)
+     5285 Port Royal Road
+     Springfield, Virginia (VA)   22161
+     703/487-4650
+
+Copies of the following documents are included on the
+distribution diskette set and electronic bulletin board system
+(BBS)/Internet distribution file INSTALSW.EXE.  Refer to FILE
+NAME AND CONTENT and MINIMUM FILE CONFIGURATION sections for
+further information.
+
+Document Name(s)                                 File Name(s)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~
+SWMM model system general execution and              READ.ME
+     user support guide
+SWMM Model System Release Notes                   RELEASE.TXT
+SWMM Model System Update Notes                     UPDATE.TXT
+     (Enhancements/updates/additions not
+     covered in user's manual)
+
+CEAM Software Product User Response Form         RESPONSE.TXT
+
+All documents are applicable to the microcomputer, mainframe,
+and/or work station installation and application of the U.S. EPA
+release of the SWMM model system.  These documents should be
+retained by the requester for future reference.
+
+The files READ.ME, RELEASE.TXT, UPDATE.TXT, and RESPONSE.TXT are
+ASCII (non-binary) text files that can be displayed on the
+monitor screen by using the DOS TYPE command (e.g., TYPE READ.ME)
+or printed using the DOS PRINT command (e.g., PRINT READ.ME). 
+File names with a file name extension of ".DOC" are WordPerfect
+(binary) document files that can only be viewed and/or printed
+within WordPerfect.
+
+
+
+_________________________________________________________________
+
+DISTRIBUTION DISKETTES
+
+     NOTE:  k=1,024; m=1,048,576; b=1 byte
+
+Included are 2, 3.5 inch (1.44mb, DS/HD) DOS (Disk Operating
+System) formatted diskettes containing the Storm Water Management
+Model (SWMM, Version 4.30), dated May 1994.
+
+This model system is designed for the IBM PC family of
+microcomputer or compatible systems running under version 3.30 or
+higher of the Microsoft or PC Disk Operating Systems (PC or MS
+DOS--refer to DEVELOPMENT SYSTEM section).  Properly configured,
+this model system and its support files and programs can be
+executed under PC DOS or MS DOS 3.30 and later versions, DOS
+4.0x, DOS 5.0x, or DOS 6.x.
+
+To install the SWMM model system and/or related support files and
+programs on a hard disk, insert the first distribution diskette
+in a compatible diskette drive.  Type
+
+                    A:\INSTALL or B:\INSTALL
+
+at the DOS system prompt and press the <Enter> key.  Then follow
+instructions and respond to the prompts presented on the monitor
+screen by the interactive installation program.
+
+     NOTE:  If the SWMM model system is being installed from
+     the SWMM installation file (INSTALSW.EXE) downloaded
+     from the CEAM electronic bulletin board system (BBS) or
+     the Internet, then the user should type
+
+                            INSTALSW
+
+     at the DOS system prompt and press the <Enter> key. 
+     This command assumes that the current default drive and
+     sub-directory is the same drive and sub-directory that
+     contain the file INSTALSW.EXE.  For further information
+     on the CEAM BBS, refer to the TECHNICAL HELP CONTACT
+     section.
+
+     NOTE:  The content of the distribution diskettes can be
+     copied to another set of "backup" diskettes using the
+     DOS DISKCOPY command.  Refer to the DOS Reference
+     Manual for command application and use.  The "backup"
+     diskettes must be the same size and storage density as
+     the original source diskettes.
+
+The following FILE NAME AND CONTENT section provides a brief
+functional description of each file by name or file name
+extension type.  Other sections in this document contain
+information about
+
+     o system development tools used to build the microcomputer
+       release of the SWMM model system
+     o recommended hardware and software configuration for the
+       execution of the model system and all support programs
+     o program execution
+     o sample run times
+     o minimum file configuration
+     o program modification
+     o technical support
+
+
+
+_________________________________________________________________
+
+FILE NAME AND CONTENT
+
+The self-extracting, interactive executable program file on the
+distribution diskettes exists in a compressed format to save
+diskette space and file transfer time.  This section contains a
+description of each file that can be decompressed from the
+compressed distribution file.
+
+Follow the instructions on the first distribution diskette label
+to install, decompress (extract), and restore file(s) to their
+original name and size in order to place the SWMM model system in
+a usable format on a hard or virtual disk.  For comparison
+purposes, the original date and time of creation are also
+restored with each file.
+
+     NOTE:  Execution of the INSTALL or INSTALSW command can
+     extract one or more SWMM model system files.  These
+     files are automatically stored into DOS sub-directories
+     on the hard disk.  The sub-directory structure, under
+     which the sub-directories shown below are stored, is
+     selected by the user during execution of the INSTALL or
+     INSTALSW program.  The string "InstallationDirectory"
+     will be used to denote the highest level default
+     installation directory structure chosen by the user
+     during execution of INSTALL or INSTALSW.  Below the
+     installation directory, all files are grouped and
+     listed by the appropriate DOS sub-directory name.
+
+
+**  Sub-directory InstallationDirectory\README:
+
+READ.ME      - SWMM model system execution and general support 
+               guide.  This is an ASCII text file that can be
+               displayed on the monitor screen with the DOS TYPE
+               command or printed using the DOS PRINT command.
+
+RELEASE.TXT  - Summary of corrections and/or changes between 
+               release versions.  This is an ASCII text file that
+               can be displayed on the monitor screen with the
+               DOS TYPE command or printed using the DOS PRINT
+               command.
+
+UPDATE.TXT   - Summary of enhancements, updates, and additions 
+               not covered in the current user's manual.  This is
+               an ASCII text file that can be displayed on the
+               monitor screen with the DOS TYPE command or
+               printed using the DOS PRINT command.
+
+RESPONSE.TXT - CEAM Software Product User Response Form.  This is
+               an ASCII text file that can be displayed on the
+               monitor screen with the DOS TYPE command or
+               printed using the DOS PRINT command.
+
+
+**  Sub-directory InstallationDirectory:
+
+F77L3.EER    - Run time error message library file for Lahey 
+               FORTRAN (F77L3) (refer to DEVELOPMENT SYSTEM
+               section).  This file is read automatically during
+               execution of the SWMM model system executable task
+               image file (*.EXE) if an error is detected during
+               execution.
+
+SWMM.BAT     - DOS batch command file used to execute the SWMM 
+               model.  To execute, type
+
+               SWMM
+
+               at the DOS system prompt, press the <Enter> key,
+               then respond to the prompts displayed on the
+               monitor screen.  For further information and
+               options on executing SWMM, refer to the ROUTINE
+               EXECUTION section.
+
+SWMM.SCR     - Initial welcome and CEAM information screen 
+               displayed before the execution of the SWMM model
+               by the DOS batch command file SWMM.BAT.  This is
+               an ASCII text file that can be displayed on the
+               monitor screen with the DOS TYPE command or
+               printed using the DOS PRINT command.
+
+XSWMMX.EXE   - Executable task image file for the SWMM model.
+
+                    WARNING:  This task image file
+                    (XSWMMX.EXE) should only be executed
+                    using the DOS batch command file
+                    provided (SWMM.BAT).
+
+*.DOC        - Annotated, example, input data (template) files to
+               test the installation and demonstrate application
+               of the SWMM model and its different blocks (one
+               for each block).  These data files are also
+               furnished to provide instruction by example and
+               can be used as templates for the preparation of
+               new input files.  To test installation, execute
+               the SWMM model using each file as the name of an
+               input file.  The model interactively prompts the
+               user for the input file name.  These files may
+               refer to other data and interface files (refer to
+               *.DNT, *.DOT files).
+
+     NOTE:  Differences between version 4.30 and earlier
+     version 4.xx release versions and updates/changes to
+     the user manuals (refer to DOCUMENTATION section) are
+     documented within the *.DOC files.  These files are
+     especially important for changes in input formats that
+     differ from those listed in the user manuals (refer to
+     DOCUMENTATION section).
+
+               These are ASCII (non-binary) text files that can
+               be displayed on the monitor screen with the DOS
+               TYPE command or printed using the DOS PRINT
+               command.  These files can also be viewed or edited
+               using any editor program that can read and save a
+               file to disk in ASCII text format.
+
+     NOTE:  A file name path specification and/or file name,
+     as typed by the user, must be a unique and valid DOS
+     path and/or file name.  An input file name must also be
+     a valid SWMM model input data file name -- either
+     furnished with the distribution package or created,
+     designated, and named by the user.  A file name used as
+     input data for the SWMM model will be processed and
+     executed in the run of the model.  Remember, a DOS file
+     name can be from 1 to 8 characters and can have an
+     optional 1 to 3 character file name extension.
+
+     NOTE:  Refer to the explanation of the *.OUT files for
+     a procedure to compare the contents of an output file
+     produced on the users system to an output file provided
+     with the distribution release.  The SWMM model
+     interactively prompts the user for the output file
+     name.
+
+*.DNT        - Auxiliary interface and extra input data files
+*.DOT          needed by *.DOC files and read automatically by 
+               the SWMM model.
+
+SWDAT1.DAT   - Two additional example, input data files to test
+SWDAT4.DAT     the installation and demonstrate application of 
+               the SWMM model.  These data files can be used to
+               create the TRANS1.DNT and RUNOFF6.DNT interface
+               files that are needed to execute the SWMM model
+               using the input files GRAPH.DOC and STATS.DOC.
+
+NWSTMP.DAT   - Interface files required to run test input data
+NWSPPT.DAT     files SWDAT1.DAT and SWDAT4.DAT.  These files will 
+               be automatically read during the execution of the
+               SWMM model.
+
+
+**  Sub-directory InstallationDirectory\OUTPUT:
+
+*.OUT        - Output listing files, one for each SWMM block, 
+               produced by the SWMM model using the test input
+               data files that are provided on the distribution
+               diskettes.  After executing the SWMM model with
+               each test data file, compare the contents of the
+               output file produced (e.g., RUNOFF.OUT) with the
+               corresponding *.OUT output file provided within
+               the sub-directory OUTPUT (e.g.,
+               OUTPUT/RUNOFF.OUT).  To compare file contents, use
+               the COMP (PC DOS) or FC (MS DOS) file compare
+               command, or print both files then compare contents
+               by hand.  For further information and options on
+               executing the SWMM model, refer to file SWMM.BAT
+               in this section or to the ROUTINE EXECUTION
+               section.
+
+     NOTE:  The symbol "<Enter>" represents pressing the
+     <Enter> or carriage return key.  Responses and key
+     strokes that can be typed by the user are underlined
+     with the hyphen character (-) and/or enclosed by the
+     angle bracket characters (<>).
+
+               Example SWMM interactive (non-batch) execution and
+               file comparison sequence:
+
+               1)   Set the default drive to the disk containing
+               the SWMM model system sub-directory:
+
+               A:\> C:<Enter>
+                    --
+
+               2)   Change the DOS default sub-directory to the
+               sub-directory designated by the user during the
+               installation program as the installation sub-
+               directory (e.g., SWMM).  Use the DOS CD (change
+               directory) command at the DOS system prompt:
+
+               C:\> CD \SWMM<Enter>
+                    --------
+
+               3)   Execute the SWMM model with a selected test
+               input data file:
+
+               C:\SWMM> SWMM<Enter>
+                        ----
+
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+               (SWMM banner/registration screen displayed
+               here...press <Enter> key to clear screen and
+               continue model execution...)
+
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+               (The following screen is displayed next while the
+               SWMM program is loaded into memory.)
+
+               #
+               #
+               ##  Loading SWMM task image file...
+
+         
+               ษออออออออออออออออออออออออออออออออออออออออออออออออออป
+               บ     32-bit Power for Lahey Computer Systems      บ
+               บ   Phar Lap's 386|DOS-Extender(tm) Version 4.1L   บ
+               บ  Copyright (C) 1986-92 Phar Lap Software, Inc.   บ
+               บ           Available Memory = xxxxx Kb            บ
+               ศออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+               (Where xxxxx is a number that represents the
+               available RAM memory on the host system, expressed
+               in K bytes (K=1,024), that will be filled in
+               automatically by the SWMM executable task image
+               file.  The above screen will be cleared
+               automatically when the SWMM program is loaded into
+               memory.)
+
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+               *************************************************
+               *  This is an implementation of EPA SWMM 4.30.  *
+               *  "Nature is full of infinite causes which     *
+               *   have never occurred in experience" da Vinci *
+               *************************************************
+
+               Type input file name, then press <Enter> -> RUNOFF.DOC<Enter>
+                                                           ----------
+               Type output file name, then press <Enter> -> RUNOFF.OUT<Enter>
+                                                            ----------
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+               (SWMM run time diagnostic and information status
+               messages displayed here while the model executes. 
+               After execution stops, press the <Enter> key to
+               return to the DOS prompt.)
+
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+               (Compare the output file produced to one
+               supplied.)
+
+               C:\SWMM> COMP RUNOFF.OUT OUTPUT\RUNOFF.OUT<Enter>
+                        ---------------------------------
+               or,
+
+               C:\SWMM> FC RUNOFF.OUT OUTPUT\RUNOFF.OUT<Enter>
+                        -------------------------------
+
+     NOTE:  The SWMM output file contains a date and time
+     stamp.  Therefore, the only difference between the
+     output file produced to the one supplied should be the
+     date and time of the run as noted and printed at the
+     end of the output file.
+
+
+**  Sub-directory InstallationDirectory\SWMMCODE:
+
+     NOTE:  The following file(s) are NOT required to
+     document, execute, and/or test any model, program, or
+     associated run time support file as provided on the
+     distribution diskettes or electronic bulletin
+     board/Internet installation file.  For further
+     information, refer to the MINIMUM FILE CONFIGURATION
+     section.
+
+ANSWER.COM   - Executable code file used by the compile and link 
+               (CLSWF77L.BAT) DOS batch command file to write a
+               screen prompt and read the user response entered
+               from the keyboard.  Do NOT attempt to type or
+               print this file using the DOS TYPE or PRINT
+               commands.
+
+RETURNY.ANS  - A file containing a "Y" followed by a carriage 
+               return character used to provide a "Y" or "yes"
+               response to an input prompt within the compile and
+               link (CLSWF77L.BAT) DOS batch command file.
+
+RETURN1.ANS  - An empty file containing a single carriage return 
+               character used to provide an <Enter> key or null
+               response to an input prompt in selected DOS batch
+               command files.
+
+CLSWF77L.BAT - DOS batch command file that can be used to compile
+               and link edit the SWMM model FORTRAN source code
+               files (*.INC, *.FOR) to incorporate changes made
+               in the source code files by the user.  Refer to
+               the program listing for in-code documentation. 
+               The execution of this command produces a new
+               executable task image file (XSWMMX.EXE) for the
+               SWMM model.  This command file only needs to be
+               executed if changes have been made in the FORTRAN
+               source code, not input data files.  To execute,
+               type CLSWF77L at the DOS system prompt, then press
+               the <Enter> key.
+
+SWMMF77L.LNK - Lahey FORTRAN 386LINK link edit command file 
+               called and executed automatically during the
+               execution of the compile and link edit DOS batch
+               command file CLSWF77L.BAT.
+
+*.INC        - FORTRAN source code "include" files containing 
+               FORTRAN COMMON block declarations for the SWMM
+               model.  These files are automatically included or
+               "copied" into the appropriate SWMM FORTRAN source
+               code file (*.FOR) during compilation.
+
+*.FOR        - FORTRAN source code files for the SWMM model, 
+               version 4.30.
+
+
+
+_________________________________________________________________
+
+DEVELOPMENT SYSTEM
+
+The following list describes the language and program development
+tools used by the Center for Exposure Assessment Modeling to
+build version 4.30 of the microcomputer implementation of the
+SWMM model system.
+
+Also shown are the recommended minimum hardware and software
+configuration and the recommended \CONFIG.SYS
+configuration/environment file statements for the implementation
+and execution of these models and all related support files and
+programs.  Make sure that the IBM PC or compatible system has
+these statements in the \CONFIG.SYS file, and re-boot the system
+to implement these changes before attempting to install or use
+the SWMM model system.
+
+    Development System:
+
+       Hardware System:     Fully IBM compatible 80386 or 80486
+              Language:     FORTRAN 77
+      Operating System:     DOS version 3.30 or higher.  Properly
+                            configured, the SWMM model system
+                            should also work on systems with PC
+                            DOS or MS DOS versions 4.0x, 5.0x, or
+                            6.x
+          DOS Extender:     Phar Lap 386/DOS-extender; bound into
+                            application EXE files with automatic
+                            virtual memory management;
+                            distributed royalty free
+        Memory Manager:     Compatible with VDISK.SYS, QEMM386,
+                            HIMEM.SYS, RAMDRIVE.SYS, EMM386,
+                            CEMM, 386Max; compatible with DPMI,
+                            VCPI, and XMS standards
+
+              Compiler:     Lahey FORTRAN, F77L-EM/32 version
+                            5.01
+           Link Editor:     Phar Lap 386LINK version 4.1L
+
+     Overlay Structure:     None - linked as flat memory model
+
+  Storage Requirements:     (k=1,024; m=1,048,576)
+
+  Random Access Memory:     (approximate minimum free bytes
+                            needed to execute EXE file)
+
+                            640k base (low end) memory, plus
+                            4.8m bytes of free extended (XMS)
+                            memory and 2.6m byte of free disk
+                            space; or, 1m byte of free extended
+                            (XMS) memory and 6.4m bytes disk
+                            space
+
+        Diskette Drive:     Required for installation only.
+       Hard Disk Drive:     20m byte drive recommended (minimum)
+                            with 2.6m bytes free (minimum)
+     Installation Size:     Run Time:  Approx. 2.6m bytes max.
+                            FOR Code:  Approx. 1.7m bytes max.
+                                               ~~~~~
+                                        Total  4.3m bytes
+
+                            (Total does not include *.OBJ and if
+                            all source code files are compiled
+                            and linked.)
+
+         Run time size:     Up to approximately 1m bytes plus
+                            space for user input data files,
+                            output, and temporary files produced
+                            by model and programs (refer to
+                            MINIMUM FILE CONFIGURATION section).
+
+ Numerical Coprocessor:     Required.
+
+\CONFIG.SYS Statements:     BREAK=ON
+                            BUFFERS=20 or BUFFERS=32
+                            FILES=20
+                            DEVICE=C:\ANSI.SYS
+                            DEVICE=extended memory manager
+
+                                         - and -
+
+                            SHELL=C:\COMMAND.COM C:\ /e:512 /p
+
+
+
+_________________________________________________________________
+
+ROUTINE EXECUTION
+
+     NOTE:  The symbol "<Enter>" represents pressing the
+     <Enter> or carriage return key.  Responses and key
+     strokes that can be typed by the user are underlined
+     with the hyphen character (-) and/or enclosed by the
+     angle bracket characters (<>).
+
+     NOTE:  It is possible that the SWMM model system could
+     be incompatible with MS DOS and Windows software cache
+     files SMARTDRV.SYS or SMARTDRV.EXE loaded from the
+     system configuration files \CONFIG.SYS and/or
+     \AUTOEXEC.BAT on the boot drive.  If any portion of the
+     SWMM model system prematurely halts, produces unusual
+     results, and/or causes the host system to halt or hang,
+     remove any SMARTDRV statements on the boot drive
+     \CONFIG.SYS and/or \AUTOEXEC.BAT files, then re-boot
+     the system to implement these changes before attempting
+     to reuse any portion the SWMM model system.
+
+Introduction
+~~~~~~~~~~~~
+Complete the installation process to make the full or any portion
+of the SWMM model system and related files resident on a hard
+(usually designated as "C:") or virtual disk drive.  Then modify
+the \CONFIG.SYS system environment file and restart the
+microcomputer system.  This needs to be completed only once for a
+given installation of the SWMM model system.
+
+General Execution Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are four basic phases in using the SWMM model.  Phase one
+is to create a SWMM input data file.  Instructions are provided
+in the two user manuals (refer to DOCUMENTATION section) and the
+example input files provided on the distribution diskettes can be
+used as an example and/or template file that can be modified. 
+The input file must be created manually using a text editor or
+word processor (non-document mode) that can save a file in ASCII
+text (non-binary) format.
+
+     NOTE:  Caution!  Refer to *.DOC files for changes to
+     the user manual concerning the SWMM model input file
+     format requirements.
+
+In phase two, verify that the SWMM model executable task image
+file (XSWMMX.EXE), DOS batch command file SWMM.BAT, Lahey FORTRAN
+run time error message file (F77L3.EER), SWMM initial welcome and
+CEAM information screen (SWMM.SCR), input data file, and
+interface file(s) (optional) are in the current default DOS sub-
+directory.  It is convenient but not required to have the above
+files in the same sub-directory.
+
+     NOTE:  To execute the SWMM model system from any sub-
+     directory located on a hard or virtual disk drive, add
+     the SWMM installation sub-directory (e.g., C:\SWMM) to
+     the DOS search PATH.  One way to accomplish this is to
+     add or modify the PATH statement in the system start-up
+     file, AUTOEXEC.BAT (located in the root directory on
+     the start-up or boot drive).  For example
+
+     PATH C:\;C:\DOS;C:\UTIL;C:\WP51;C:\SWMM
+
+     Refer to the DOS Reference Manual for PATH command and
+     AUTOEXEC.BAT file application and use.
+
+Any interface file will be assumed to be in the current or
+default sub-directory unless otherwise assigned using the @
+function in the input data file.  Be sure that there is
+sufficient space on the disk for generation of output and
+interface files.
+
+Phase three requires the user to execute the SWMM model (refer to
+"Routine Execution Steps" for further information).  During
+execution of any block, run-time status messages will appear on
+the monitor indicating the progress of the program, including the
+current time step.
+
+In phase four the user views the output file produced by the
+execution of the SWMM model.  SWMM program output can be viewed
+by scrolling through the output file created by the block that
+was executed and named by the user.  A word processor or text
+editor is convenient for this purpose, or the command
+
+                    TYPE filename.ext | MORE
+
+can be used where "filename.ext" is the name of the output file
+selected by the user (e.g., RUNOFF.OUT).  However, the TYPE
+command is awkward for the majority of the output that exceeds
+the usual 80-column screen width.
+
+Alternatively, the output file can be printed.  A compressed
+print mode (132 column) should be used to avoid awkward--wrapped
+around--output from lines that exceed 80 columns.  The DOS MODE
+command may be used for this purpose.  For a parallel printer
+assigned to LPT1, the DOS command
+
+                        MODE LPT1: 132
+
+will cause most printers to print in compressed mode.  The
+Combine Block with parameter ICOMB = 4 can be used to generate an
+ASCII text (non-binary) file containing viewable hydrographs and
+pollutographs on the interface file.  These time series can be
+imported or input to a spread-sheet for graphing.  The process
+can be automated using DOS batch files and spreadsheet macros. 
+For further information, refer to the DOS Reference Manual or the
+spreadsheet software user manual(s).
+
+Routine Execution Steps
+~~~~~~~~~~~~~~~~~~~~~~~
+Step Description/Action
+~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1)   Set the default drive to the disk containing the SWMM model 
+     system sub-directory:
+
+     A:\> C:<Enter>
+          --
+
+2)   Change the DOS default sub-directory to the sub-directory 
+     designated by the user during the installation program as
+     the installation sub-directory (e.g., SWMM).  Use the DOS CD
+     (change directory) command at the DOS system prompt:
+
+     C:\> CD \SWMM<Enter>
+          --------
+
+3)   To execute the SWMM model, type:
+
+     C:\SWMM> SWMM<Enter>
+              ----
+     (SWMM banner/registration screen displayed here...press
+     <Enter> key to clear screen and continue model execution...)
+
+     After an opening banner/registration screen is displayed on
+     the monitor, press the <Enter> key to clear the screen and
+     continue model execution.  The model will begin prompting
+     the user for information needed for this run of the model.
+
+     The DOS command line syntax to execute the SWMM model is
+
+     SWMM [input-file-name [output-file-name]]
+
+     where input-file-name and output-file-name are optional
+     command line arguments for the SWMM model input and output
+     file names that must be specified by the user.  If the input
+     and output file names, or the output file name are not
+     specified on the SWMM command line, then one or both of the
+     following prompts will be displayed on the monitor after the
+     opening banner/registration screen:
+
+     Type input file name, then press <Enter> -> RUNOFF.DOC<Enter>
+                                                 ----------
+     Type output file name, then press <Enter> -> RUNOFF.OUT<Enter>
+                                                  ----------
+
+     The response to these prompts can include an optional drive
+     and/or path for the file name entered (e.g.,
+     C:\SWMM\TESTDATA\RUNOFF.DOC, A:MYDATA.OUT).
+
+     A common problem is for the SWMM executable file to be
+     unable to locate a file because it assumes the file is on
+     the default drive and/or sub-directory when it is not.  If
+     input, output, and/or interface files are not on the default
+     drive and sub-directory, the user must type a drive and/or
+     path name ahead of the file name.  For interface files this
+     is only possible by using the @-function.  For further
+     information refer to the "File Name and Path Specifications"
+     sub-section later in this document or to Chapter 2 of the
+     User's Manual.
+
+     Interface files created by blocks included in the SWMM model
+     (e.g., Runoff) for use by Extran (and vice versa) can be
+     saved between runs by using the @ symbol, as described in
+     Section 2 of the SWMM user's manual.  The format of the @
+     command is
+
+     Column 1    Unit number of the       Name of the interface
+                 interface file saved     file (any valid DOS filename)
+                 or utilized
+
+     @            15                       'RUNOFF1.INT'
+
+     This line is format free and is inserted between the MM data
+     line and the data line describing the name of the first SWMM
+     block to be called by the program.  The unit number is any
+     integer excluding 5, 6 or 55 and should correspond to a unit
+     number entered on the SW data line or MM data line.  In the
+     above example, unit 15 could correspond to the output
+     interface file created by the Runoff Block and identified by
+     a JOUT parameter on the SW data line.  More than one @
+     command can be used.
+
+Pausing During Execution
+~~~~~~~~~~~~~~~~~~~~~~~~
+SWMM execution can be paused by pressing the <Ctrl><S> or <Pause>
+keys.  The user can press any key to resume execution.  Execution
+can be prematurely and permanently halted (aborted) by pressing
+the <Ctrl><C> or <Ctrl><Break> keys.
+
+Run Time Error
+~~~~~~~~~~~~~~
+The user should be aware that if the program stops suddenly
+leaving the DOS prompt on the screen, an error has most likely
+been generated from within the SWMM program.  This error can be
+seen by looking at the end of the SWMM output file and usually
+points to the problem.  The most common SWMM-generated error is
+the following:
+
+You had an error in your input data.
+Did you include enough values of zeroes for all parameters on an
+input line??  The program attempted to read line --> B2 and this
+is an echo of what it found:
+'B2' 0  0
+
+===> Run ended due to input error(s) in either the
+     above line or the previous line.
+
+This error usually indicates an insufficient number of parameters
+on the indicated input line or somewhere prior to it.  If there
+are not enough parameters, the program almost inevitably
+encounters a mis-match between a required variable type (e.g.,
+integer instead of real), and an error message will result. 
+Sometimes the error is caused by an insufficient number of
+parameters several lines previously.  In the above example,
+another zero is required on line B2 of the Runoff Block.
+
+File Name and Path Specifications
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A file name, path specification, and/or the parameter file name
+argument "filename.ext" must be a unique and valid DOS path
+and/or file name.  The user response "filename.ext" must also be
+a valid SWMM model system input or output file name -- either
+furnished with the distribution package (refer to FILE NAME AND
+CONTENT section) or created, designated, and named by the user. 
+A file name used as input data for any program and/or model in
+the SWMM model system will be processed and executed in that run
+of the program or model.
+
+File names used for the input data and/or output listing files
+(except for the test input and output cases provided) are
+arbitrary, but must follow the rules for DOS file names.  A file
+name should assist the user with identifying the contents or
+purpose of a file (e.g., INPUT.DAT, OUTPUT.LST).
+
+Any file name can be from 1 to 8 characters and can have an
+optional 1 to 3 character file name extension.  Any characters
+beyond 8 in the file name or beyond 3 in the file name extension
+will be truncated by the DOS operating system.  Refer to the DOS
+Reference Manual for further information on file names and disk
+file input/output procedures, rules, and commands.
+
+
+
+_________________________________________________________________
+
+RUN TIME AND PERFORMANCE
+
+The following run times (approximate) were observed using the
+test data files furnished with the distribution version of the
+SWMM model system.  Remember that these times were obtained using
+test data files that may not be representative of a "real world"
+problem and/or data.  The test data files have been furnished for
+testing the installation of the SWMM model system and for
+instruction by example.
+
+In general, these input test data files are not intended to be
+representative of full scale model simulations.  They were
+developed to test the installation of significant sections of
+model code.
+
+The run times listed in the table below were produced on a
+Microway 80486 B2T EISA class microcomputer running under MS DOS
+5.0 and using 640k bytes of random access (low end) memory (RAM),
+32 megabytes of extended memory, a 32 megabyte virtual (RAM)
+disk, Microp 1624-15 SCSI 765 megabyte DPT EISA hard disk with
+512K byte cache SCSI controller, a 256K byte memory cache, a 50
+megahertz clock, a Number Smasher-860 40 megahertz, 32 megabyte
+math numerical coprocessor, and an ATI Ultra Graphics 1 megabyte
+video card.
+
+     Input File Name     Approx. Run Time (hr:min:sec)
+     ~~~~~~~~~~~~~~~     ~~~~~~~~~~~~~~~~
+     RUNOFF.DOC             00:00:19
+     RAIN.DOC               00:00:10
+     EXTRAN.DOC             00:00:17
+     TEMP.DOC               00:00:09
+     TRANS.DOC              00:00:12
+     COMB.DOC               00:00:09
+     STATS.DOC              00:00:12
+     STRT.DOC               00:00:09
+     GRAPH.DOC              00:00:09
+
+Program run time and performance can be affected by many
+microcomputer system and program parameters including
+
+     o available disk space
+     o available memory
+     o CONFIG.SYS file options and parameter values
+     o disk and/or file storage and/or fragmentation
+
+
+
+_________________________________________________________________
+
+MINIMUM FILE CONFIGURATION
+
+The following list describes the absolute minimum file
+configuration needed within the application sub-directory to
+execute the SWMM model system and all support command files and
+programs.
+
+This list assumes that
+
+     o the SWMM model system and all support files and programs 
+       have been successfully installed from the distribution
+       diskettes
+     o the user has defined and stored all application specific 
+       run time files
+
+     NOTE:  Files other than those listed below can be
+     deleted if the user needs to recover disk space.
+
+
+**  Sub-directory InstallationDirectory\README:
+
+READ.ME      - SWMM model system execution and general support 
+               guide.
+RELEASE.TXT  - Summary of corrections and/or changes between 
+               release versions.
+UPDATE.TXT   - Summary of enhancements, updates, and additions 
+               not covered in the current user's manual.
+RESPONSE.TXT - CEAM Software Product User Response Form.
+
+
+**  Sub-directory InstallationDirectory:
+
+F77L3.EER    - Run time error message library file for Lahey 
+               FORTRAN (F77L3).
+SWMM.BAT     - DOS batch command file used to execute the SWMM 
+               model.
+SWMM.SCR     - Initial welcome and CEAM information screen 
+               displayed before the execution of the SWMM model
+               by the DOS batch command file SWMM.BAT.
+
+XSWMMX.EXE   - Executable task image file for the SWMM model.
+
+                    WARNING:  This task image file
+                    (XSWMMX.EXE) should only be executed
+                    using the DOS batch command file
+                    provided (SWMM.BAT).
+
+*.DOC        - Annotated, example, input data (template) files to
+               test the installation and demonstrate application
+               of the SWMM model and its different blocks (one
+               for each block).
+
+
+
+_________________________________________________________________
+
+MODIFICATION
+
+Included in the diskette set are
+
+     o executable task image files for the SWMM model system
+     o FORTRAN source code files for IBM PC and compatible 
+       microcomputer systems (refer to DEVELOPMENT SYSTEM
+       section)
+
+A FORTRAN compiler link editor are NOT required to execute any
+portion of the SWMM model system.  If the user wishes to modify
+any portion of the SWMM model system, it will be up to the user
+to supply and/or obtain
+
+     o an appropriate text editor that saves files in ASCII text 
+       non-binary) format
+     o FORTRAN program development tools to recompile and link 
+       edit any model and/or program
+
+The U.S. EPA CEAM cannot support, maintain, and/or be responsible
+for modifications that change the function of any executable task
+image file (*.EXE) or DOS batch command file (*.BAT) supplied
+with this model package.
+
+
+
+_________________________________________________________________
+
+TECHNICAL HELP CONTACT
+
+     NOTE:  This section assumes that the user has
+     successfully completed the installation process to make
+     the full or any portion of the SWMM model system and
+     related files resident and fully operational on a hard
+     (usually designated as "C:") or virtual disk drive. 
+     For further information on installation and execution,
+     refer to the DISTRIBUTION DISKETTES and ROUTINE
+     EXECUTION sections.
+
+For special questions and/or information concerning
+
+     o installation and/or testing of the SWMM model system 
+       and/or support programs or files, call 706/546-3590 for
+       assistance
+     o model theory and/or application, contact
+
+       Dr. Wayne C. Huber
+       Department of Civil Engineering
+       Oregon State University
+       Apperson Hall 202
+       Corvallis, OR     97331-2302
+       voice: 503/737-6150
+       fax:   503/737-3052
+       email: huberw@ccmail.orst.edu
+
+       Dr. Huber will answer short-duration questions not
+       requiring excessive amounts of time.  More extensive
+       assistance must be arranged on a consulting basis. 
+       Technical feedback to Oregon State University is
+       encouraged since it results in the discovery and
+       correction of program errors.
+
+     o use of the CEAM electronic bulletin board system (BBS) or 
+       the Internet, contact the BBS system operator (SYSOP) at
+       706/546-3590
+     o other environmental software products and documentation 
+       distributed through CEAM, contact the Model Distribution
+       Coordinator at 706/546-3549
+     o other support available through CEAM, contact Mr. Dermont 
+       Bouchard, CEAM Manager
+
+       - by mail at the following address
+
+         Center for Exposure Assessment Modeling (CEAM)
+         Athens Environmental Research Laboratory
+         U.S. Environmental Protection Agency
+         960 College Station Road
+         Athens, Georgia  30605-2720
+
+       - by telephone at 706/546-3130
+       - by fax at 706/546-3340
+       - through the CEAM BBS message menu and commands.  The 
+         CEAM BBS communication parameters and telephone number
+         are listed below.
+
+To help technical staff provide better assistance, write down a
+response to the following topics before calling or writing.  If
+calling, be at the computer, with the computer on, and in the
+proper sub-directory (e.g., C:\SWMM) when the call is placed.
+
+     o program information:
+
+       - describe the problem, including the exact wording of any
+         error and/or warning message(s)
+       - list the exact steps, command(s), and/or keyboard key 
+         sequence that will reproduce the problem
+
+     o machine information:
+
+       - list computer brand and model
+       - list available RAM (as reported by DOS CHKDSK or MEM 
+         command)
+       - list extended memory present and free (XMS)
+       - list name and version of extended memory (XMS) manager 
+         (i.e., HIMEM, VDISK, RAMDRIVE, etc.)
+       - list available hard disk space (as reported by DOS 
+         CHKDSK command)
+       - list the brand and version of DOS (as reported by DOS 
+         VER command)
+       - list the name of any memory resident (TSR) program(s) 
+         installed
+       - printer brand and model
+       - monitor brand and model
+
+     NOTE: If contacting CEAM by mail, fax, or BBS, include
+     responses to the above information in correspondence.
+
+To check the status of the latest release of this model system or
+any other CEAM software product, call the CEAM BBS 24 hours a
+day, 7 days a week.  To access the BBS, a computer with a modem
+and communication software are needed.  The phone number for the
+BBS is 706/546-3402.  Communication parameters for the BBS are
+
+     o 1200-14400 baud
+     o 8 data bits
+     o no parity
+     o 1 stop bit
+
+
+
+_________________________________________________________________
+
+DISCLAIMER
+
+Mention of trade names or use of commercial products does not
+constitute endorsement or recommendation for use by the United
+States Environmental Protection Agency.
+
+Execution of any portion of the SWMM model system, and
+modification to the DOS system configuration files (i.e.,
+\CONFIG.SYS and \AUTOEXEC.BAT) must be used and/or made at the
+user's own risk.  Neither the U.S. EPA nor the program author(s)
+can assume responsibility for model and/or program modification,
+content, output, interpretation, or usage.
+
+The SWMM program and files have been extensively tested and
+verified.  However, as for all complex software products, the
+programs herein may not be completely free of errors and may not
+be applicable for all cases.  In no event will the U.S. EPA be
+liable for direct, indirect, special, incidental, or
+consequential damages arising out of the use of the programs
+and/or associated documentation.
+
+CEAM software products are built using FORTRAN-77, assembler, and
+operating system interface command languages.  The code structure
+and logic of these products is designed for single-user,
+single-tasking, non-LAN environment and operating platform for
+microcomputer installations (i.e., single user on dedicated
+system).
+
+A user will be on their own if he/she attempts to install a CEAM
+product on a multi-user, multi-tasking, and/or LAN based system
+(i.e., Windows, DESQview, any LAN).  CEAM cannot provide
+installation, operation, and/or general user support under any
+combination of these configurations.  Instructions and conditions
+for proper installation and testing are provided with the product
+in a READ.ME file.  While multiuser/multitasking/LAN
+installations could work, none of the CEAM products have been
+thoroughly tested under all possible conditions.  CEAM can
+provide selected and/or limited scientific and/or application
+support for selected products if the user proves that a given
+product is installed and working correctly.
+
+     o Microway and Number Smasher are registered trademarks of
+       Microway, Inc.
+     o Intel, 386, 486, and 860 are registered trademarks of
+       Intel Corporation.
+     o F77L is a registered trademark of Lahey Computer Systems,
+       Inc.  All other Lahey products are trademarks of Lahey
+       Computer Systems, Inc.
+     o IBM, Personal Computer/XT (PC/XT), Personal Computer/AT
+       (PC/AT), PC DOS, VDISK, and Personal System/2 (PS/2) are
+       registered trademarks of International Business Machines
+       Corporation
+     o PKZIP, PKUNZIP, and PKSFX are registered trademarks and/or
+       trademarks of PKWARE, Incorporated.
+     o DESQview is a trademark of Quarterdeck Office Systems,
+       Inc.
+     o Sun and SunOS are registered trademarks of Sun
+       Microsystems, Inc.
+     o SPARC is a registered trademark of SPARC International,
+       Inc.
+     o UNIX is a registered trademark of American Telephone and
+       Telegraph
+     o SVS FORTRAN-77 is a trademark of Silicon Valley Software
+     o PRIME and PRIMOS are trademarks of Prime Computers, Inc.
+     o Microsoft, RAMDRIVE, HIMEM, MS, and MS-DOS are
+       registered trademarks of Microsoft Corporation
+     o Windows is a trademark of Microsoft Corporation
+     o RM/FORTRAN is a trademark of Language Processors, Inc.
+     o DEC, VAX, VMS, and DCL are trademarks of Digital Equipment
+       Corporation
+     o US Robotics is a registered trademark and Courier HST is a
+       trademark of U.S. Robotics, Inc.
+     o VP-Expert is a registered trade mark of WordTech Systems,
+       Inc.
+
+
+                    #########################
+
+DWD/dwd - May 1994 - E:\SWMM_430\DOCUMENT\READ.ME
+

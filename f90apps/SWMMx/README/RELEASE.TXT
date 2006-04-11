@@ -1,0 +1,541 @@
+                                                           File:  RELEASE.TXT
+
+
+                   SWMM Model System Release Notes
+
+            Center for Exposure Assessment Modeling (CEAM)
+           U.S. Environmental Protection Agency (U.S. EPA)
+               Office of Research and Development (ORD)
+               Environmental Research Laboratory (ERL)
+                       960 College Station Road
+                      Athens, Georgia 30605-2720
+
+                             706/546-3549
+
+
+
+-----------------------------------------------------------------------------
+
+Corrections and Changes Between Versions 4.21 and 4.30:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+NOTE:  Changes/corrections 1 through 5 were made by CEAM, May 1994.  Changes
+       and/or corrections 6 through 113 are listed in cronological order.
+
+1)   Updated and modified READ.ME file for release of version 4.30.
+
+2)   Upgraded and modified INSTALIT/MediaBuilder code and logic for release
+     of version 4.30 to include additional system hardware/software checks
+     and installation options.
+
+3)   Compiled and linked SWMM model using Lahey FORTRAN 32-bit, protected
+     mode compiler and Phar-lap linker.
+
+4)   Implemented FORTRAN source code changes to correct minor problems that
+     occured during compilation and/or execution due to use of Lahey FORTRAN
+     development tools or CEAM Systems Development Life Ccycle Methodology
+     (SDLCM) Statement of Policy, Standards, and Guidelines.
+
+5)   Increased storage capacity and parameterization as follows:
+
+     From FORTRAN source code include file TAPES.INC:
+
+     Parameter Description                                         Old   New
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~   ~~~
+     NUMBER OF SUBCATCHMENTS IN THE RUNOFF BLOCK.................. 100   250
+     NUMBER OF CHANNEL/PIPES IN THE RUNOFF BLOCK.................. 150   250
+     NUMBER OF CONNECTING CHANNEL/PIPES OF SUBCATCHMENTS..........   4     5
+     NUMBER OF ELEMENTS IN THE TRANSPORT BLOCK.................... 200   500
+     NUMBER OF INPUT HYDROGRAPHS IN TRANSPORT.....................  80   125
+     NUMBER OF ELEMENTS IN EXTRAN BLOCK........................... 200   500
+     NUMBER OF SUBCATCHMENTS W/GROUNDWATER COMPARTMENTS IN RUNOFF. 100   250
+     NUMBER OF INTERFACE LOCATIONS FOR ALL BLOCKS................. 200   250
+     NUMBER OF EXTRAN PUMPS.......................................  20   100
+     NUMBER OF EXTRAN ORIFICES....................................  60   100
+     NUMBER OF EXTRAN WEIRS.......................................  60   100
+     NUMBER OF EXTRAN PRINTOUT LOCATIONS..........................  30    50
+     NUMBER OF NATURAL CHANNELS IN EXTRAN AND TRANSPORT...........  50   100
+     NUMBER OF STORAGE JUNCTIONS IN EXTRAN........................  20   100
+     NUMBER OF INPUT HYDROGRAPHS IN THE EXTRAN BLOCK.............. 100   250
+
+     From FORTRAN source code file UNITS.FOR:
+
+     Parameter Description                                         Old   New
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~   ~~~
+     PLUGS DIMENSION (NPLUG)...................................... 200  2000
+
+6)   Natural channel cross sections.  This program will read data and perform
+     the calculations.
+
+7)   Combine.  DELT and related parameters have been made single precision
+     to correspond to other blocks.
+
+8)   Typo correction in HTIDES.FOR.
+
+9)   Check for equal VRATE values for Type 3 pumps in Extran.
+
+10)  Metric units conversion corrections in TEMP and GTCOLD for user input of
+     temperature and evaporation.
+
+11)  Metric conversion correction in INFIL.
+
+12)  Input units correction in CATCH for groundwater routine.
+
+13)  Correction to TSTORG and TSTRDT for maintaining data for second power
+     function outlet for all S/T devices.
+
+14)  Metric conversion correction to PRINTQ.
+
+15)  Correction to SNOWIN and WSHED for reading evaporation time series input
+     to TEMP.
+
+16)  Correction to GUTTER for groundwater continuity check.
+
+17)  Correction for possible divide error in STATS.
+
+18)  Miscellaneous corrections for spelling and messages.  It is possible to
+     limit the number of non-convergence messages from the groundwater
+     routine by adding a fourth parameter to the B2 line in Runoff.  This
+     parameter is the number of messages to be printed, and may be omitted
+     without causing an input error.
+
+19)  Correction to Extran (and Transport) for calculation of hydraulic radius
+     for irregular (natural) channels with vertical sides, e.g., a rectangular
+     channel.  An error in Subroutine GETCUR had resulted in a hydraulic
+     radius that was too high for irregular channels that included vertical
+     segments.
+
+20)  Correction to Rain Block for incorrect February-March date calculations.
+
+21)  Correction to Runoff Block groundwater routine for error when
+     infiltration was returned to ground surface and for bad iterative
+     solution leading to negative deep percolation.
+
+22)  Correction to Extran to read J4 line with NTIDE=5 according to User's
+     Manual description.  
+
+23)  Correction to Subroutine TRANS to have the Transport Block write in
+     metric units to the interface file when metric units are being used.
+
+24)  Corrections to Subroutines QHYDRO and QINT involving I/O and use of land
+     use fractions input in data group L2.
+
+25)  Correction to Subroutine DATED to fix conversion from time in seconds to
+     hour/minute/second.  Error had caused negative seconds just before
+     change to new hour.
+
+26)  Correction to Subroutine INDAT3 to add initial date (IDATEZ) to Extran
+     initiation.  This allows Extran to read another Extran interface file.
+
+27)  Modification to Subroutine CATCH to print warning message and reset
+     imperviousness to 100 % if value entered is > 100%.  This can occur,
+     for example, if ratios are used and accidentally create modified
+     imperviousness > 100 %.
+
+NOTE:  Modification numbers 28-33 and several others are courtesy of
+Robert E. Dickinson = RED of XP Software, Tampa, FL, 813/886-7724.
+
+28)  Correction to S1.INC (common block) of the Storage/Treatment Block to
+     remove double precision declaration from parameter DS.  This corrects
+     timing errors that made S/T incompatible with interface file.
+
+29)  Minor correction to Subroutine SNOWIN so that it prints correct error
+     message.
+
+30)  Correction to Subroutines INITAL and DWLOAD to avoid setting NITER = 1
+     when storage units are used in Transport.  This error caused different
+     pipe routing in Transport when storage units were included.
+
+31)  Correction to Subroutine COMBIN to remove double precision from TDIFF
+     and DIFF that may have caused timing problems. (RED, 6/1/93)
+
+32)  Correction to Subroutine HYDRO for timing problem for continuous
+     simulations that exceed rainfall duration by large amount. (RED, 6/1/93)
+
+33)  Correction to Subroutines GETCUR and INTRAN to read and process natural
+     channel data from the Transport Block correctly. (RED, 6/2/93)
+
+34)  Correction to Subroutine TRANSX for check for surface flooding in
+     Extran, based on CDM correction (Chuck Moore).  May lead to lower
+     continuity errors when surface flooding occurs during surcharging.
+     (7/14/93)
+
+35)  Modifications to Statistics Block subroutines STATS, SBTABL and POINTS
+     and STCOM.INC to: 1) correct headings (i.e., years vs. months for return
+     period) and misc. minor format changes; 2) compute return period for
+     plots using same method (using parameter "A") as for tables; 3) change
+     units for average and max. flow to cfs (cms) from cf/hr (m^3/hr); 4)
+     warn about small return periods (simulation period < 1 yr or mo); 5)
+     correct plots to be sure data are sorted prior to plotting; 6) change
+     max. no. of events back to 4000 as listed in user's manual. (7/22/93)
+
+36)  Correction to Subroutine GROUND to use correct derivative in iterative
+     scheme (Brett Cunningham, CDM). (7/27/93)
+
+37)  Correction to Subroutine GQUAL to alter channel/pipe quality routing in
+     the Runoff Block during surcharge conditions.  This correction maintains
+     a constant concentration for conditions for which this is desired, e.g.,
+     only quality loading is from precipitation.  The quality continuity
+     error is also reduced.  The quality continuity error can be reduced
+     further only by reducing the time step. (7/28/93)
+
+38)  Correction to Subroutine GQUAL for computation of exponential argument
+     during quality flow routing. (7/28/93)
+
+39)  Modification to Runoff Block quality (Subroutines QINT and QSHED, plus
+     QUALTY.INC) to maintain loadings as a function of landuse fractions
+     for subcatchments when land use fractions are entered in data group L2.
+     Previously, the buildup parameters were constant (last values read in
+     for each pollutant/land use combination) for each subcatchment after
+     the pre-simulation buildup. (7/29/93)
+
+40)  Addition of error message to Subroutine COMBIN to warn of possible error
+     consisting of trying to read numeric node number when should be reading
+     alphanumeric node name (i.e., while using $ANUM option). (8/2/93)
+
+41)  Correct Subroutine STRT for proper metric conversion when writing to
+     the interface file and metric units are used in the Storage/Treatment
+     Block. (Rob James, 8/4/93)
+
+42)  Correction to interface file handling in Subroutine GRAPH (update
+     counter, i.e., subscripts, for JIN/JOUT files).  This allows operation
+     of the Graph Block in separate runs (not just as part of an overall SWMM
+     run).  Also install error message regarding file handling and install
+     no-quote option in the Graph Block.  (Use of $NOQUOTE at beginning of
+     SWMM input avoids display of various quotes/sayings from literature.)
+     (8/5/93)
+
+43)  Modification of Subroutine SNOWIN to permit use of alphanumeric
+     subcatchment names (using $ANUM option) when using snowmelt routines.
+     (8/5/93)
+
+44)  Message about quality continuity added to Subroutine PRPOLL. (8/6/93)
+
+45)  Option in the Rain Block to read current EarthInfo ASCII files of hourly
+     and 15-min. precipitation (Subroutines RAIN, GTRAIN, G9RAIN and
+     PRECIP.INC).  See RAIN.DOC file.  Several corrections to permit correct
+     processing of 15-min. precipitation (place 15-min. precip. on interface
+     file in 15-min. increments, instead of hourly totals as done before).
+     (8/20/93)
+
+46)  Correction of negative sign in Subroutine HORTON for correct
+     regeneration of Horton infiltration during continuous simulation.
+     (Steve Merrill, Brown and Caldwell, 8/20/93)
+
+NOTE:  Changes 47-53 are due to Chuck Moore, CDM, Annandale, VA.
+
+47)  Deletion of unnecessary assignment statements in Subroutines MAIN,
+     GRAPH, RHYDRO1. (CDM, 8/23/93)
+
+48)  Realignment of some variables in Common statements in S1.INC and LAB.INC
+     (to make compatible with Lahey Fortran). (CDM, 8/23/93)
+
+49)  Insertion of zero divide check in Subroutine FIRST. (CDM, 8/23/93)
+
+50)  Check for subscript out of range and wrong data lines while reading R1
+     lines in Subroutine TRANS and G lines in Subroutine TSTRDT (Transport
+     Block). (CDM, 8/23/93)
+
+51)  On-screen print of continuity error in Subroutine TRANS. (CDM, 8/23/93)
+
+52)  Modification to MAIN.FOR to allow optional input of input and output
+     file names on SWMM command line.  Includes addition of Subroutine CLINE
+     and CCLNAME.INC. (CDM, 8/23/93)
+     E.g., type: XSWMMA MYFILE.DAT MYFILE.OUT
+
+53)  Addition of Type 26 Tabular Flow Divider in the Transport Block.  This
+     flow divider uses a table of inflow vs. undiverted outflow values to
+     split flow between undiverted and diverted pathways downstream.  See
+     TRANS.DOC for explanation.  Altered subroutines include TRANS, INTRAN,
+     FIRST, ROUTE, TRBLK and new subroutine RSPLIT, plus changes to Common
+     statements in several .INC files. (CDM, 8/23/93)
+
+54)  Correction to Subroutine STRT to read more than 5 date intervals for
+     detailed print-outs on Storage/Treatment line C2.  New maximum is 45.
+     (8/30/93)
+
+55)  Add Parameter statement to Subroutine UNIT to facilitate changing
+     allowable number of plugs in Storage/Treatment quality routing.
+     Increase allowable number of plugs to 200 (from 50).  Users who run up
+     against this limit have option of recompiling with larger limit or
+     increasing the size of the S/T time step. (8/31/93)
+
+56)  Added provision to print summary statistics for subcatchments and
+     channel/pipes in the Runoff Block.  Changes affect Subroutines HYDRO,
+     WSHED and others.  Two new subroutines added: SMSTAT, WSTAT, plus
+     RUNSTAT.INC. (CDM, 9/3/93)
+
+57)  Added option to generate rainfall-dependent infiltration/inflow (RDII)
+     to Runoff Block simulations.  This procedure involves new input in lines
+     F3,F4 and H5 and uses groups of triangular unit hydrographs to generate
+     flows from the rainfall record as a function of the sewered area for
+     desired subcatchments.  See RUNOFF.DOC for details.  Changes made to
+     several subroutines, plus new subroutines RDIIREAD, RDIIRES, RDIISHED,
+     READNEXT and RDII.INC. (CDM, 9/3/93)
+
+58)  Corrected IDECID = 0 option in the Rain Block (Subroutine RAIN) to cease
+     calculation of precipitation statistics with this option, thus avoiding
+     any limit on the number of storms, hence number of years, that can be
+     processed. (9/7/93)
+
+59)  Added end-of-file message to Subroutine INFACE for better error message
+     when reading interface file headers. (9/8/93)
+
+60)  Numerous corrections to fix miscellaneous small errors, including
+     computation of correct running time for very long simulations
+     (TIMER.INC); scale adjustment for STCHL and STCHR for variable cross
+     sections (GETCUR); correction to S/T pump routine to produce correct
+     shut-off (TSTORG); corrections to GROUND for subsurface flow iterations;
+     correction for snow quality calculations (QSHED); metric corrections in
+     S/T, Transport and Runoff Blocks (CONTRL, INTRAN, QHYDRO, WSHED, and
+     RHYDRO1); surcharge correction in Runoff (GUTNR); and other minor
+     corrections in several subroutines. (Bob Dickinson and Warren Chrusciel,
+     9/30/93)
+
+61)  Modification to the Temp Block (Subroutine GTCOLD) so that station
+     number does not have to be supplied, plus improved error message.
+     (9/30/93)
+
+62)  Modified Common block structure (QUALTY.INC) to avoid overlay problems
+     that affected land use fractions in the Runoff Block for some
+     compilations. (9/30/93)
+
+63)  Addition to Subroutine QHYDRO to allow program to recover from possible
+     user error of having more J2 lines than indicated by parameter JLAND for
+     Runoff Block land use data. (9/30/93)
+
+64)  Corrected limits on dimensions (from number of watersheds, NW, to number
+     of channels, NG) in Runoff Block (DETAIL.INC). (Chuck Moore, CDM,
+     9/30/93)
+
+65)  Modified Runoff Block (Subroutine QINT) to calculate initial catchbasin
+     load when using multiple land use option (JJ line) by summing
+     contribution from each land use fraction (see RUNOFF.DOC). (10/4/93)
+
+66)  Add option to Runoff Block (several subroutines and DETAIL.INC involved)
+     to set evaporation to zero during time steps with rain or snowfall (see
+     RUNOFF.DOC). (CDM, Chuck Moore, 10/5/93)
+
+67)  Altered error message slightly in Subroutine IERROR, the most common
+     message seen by users when there is an input data error. (10/5/93)
+
+68)  Correction in Transport Block for quality routing through storage units,
+     and miscellaneous related quality continuity corrections in Subroutines
+     QUAL, TSTORG, ROUTE, INITAL, and TRANS.  Without this correction quality
+     routing through storage units could generate pollutant mass, causing
+     large quality continuity errors. (10/6/93)
+
+69)  A final (??!!) correction to Subroutine QINT for proper buildup
+     calculations in Runoff when using multiple land use fractions. (10/8/93)
+
+70)  Modification to Subroutines GTRAIN and RAIN for reading 15-min. rainfall
+     according to NOAA-NCDC Release B condensed format (IFORM = 4 or 6).
+     (10/12/93)
+
+71)  Correction (Subroutine GUTTER) for metric output of daily-monthly-annual
+     quality summaries in the Runoff Block. (Warren Chrusciel, 10/15/93)
+
+72)  Addition of linkage to EPA CEAM WASP (Water Analysis Simulation Program)
+     from the Transport Block.  Transport hydraulics are provided to WASP for
+     receiving water quality simulations through an interface file generated
+     by new Subroutine LINK.  See TRANS.DOC for details.  Involves
+     modifications to Subroutines TRANS, INTRAN and HUGO.INC.
+     (James L. Martin, AScI Corp., 10/25/93)
+
+73)  Minor improvement to Subroutine TRANSX error message regarding error
+     while reading NSCRAT(1). (11/5/93)
+
+74)  Modification to Rain Block labeled Common block structure (PRECIP.INC)
+     to avoid boundary problem with array clusters larger than 64 kb.  This
+     cures problem of erroneous rainfall values when using user-supplied
+     data (IFORM = 3). (11/5/93)
+
+75)  Correction to Subroutine RAIN of Rain Block to avoid dividing by zero
+     THISTO during user-supplied rainfall input.  Modification to Subroutine
+     G3RAIN to allow hour values for user input to range from 1-24 as well
+     as from 0-23 (see RAIN.DOC). (11/12/93)
+
+76)  Runoff Block metric conversion correction for channel/pipe Qfull
+     print-out (Subroutine RHYDRO1). (RED, 11/12/93)
+
+77)  Correction to Subroutine HORTON in Runoff Block to help convergence of
+     Newton-Raphson iteration (to avoid TP < 0). (11/15/93)
+
+78)  Minor modifications to Subroutine PRPOLL and PRFLOW of Runoff Block for
+     minor format changes and to avoid non-zero minima and std. deviation
+     for simulation of zero flows. (11/15/93)
+
+79)  Correction for metric rainfall and infiltration depth for individual
+     Runoff subcatchment summaries (Subroutine WSTAT). (11/15/93)
+
+80)  Limit number of required initial loads on Runoff Block L1 line to number
+     of pollutants, NQS (Subroutine QHYDRO). (11/15/93)
+
+81)  Correction of significant error in Subroutine HEAD of Extran.  The error
+     has probably been in the program since version 4.05.  This error had
+     caused non-boundary junction surface areas to be half of their true
+     value for ordinary subcritical flow calculations.  The principal effect
+     was maximum junction areas that were as little as 50% of their correct
+     value as listed in the Junction Summary Statistics, most noticeably for
+     open channels.  For closed conduits there is a difference, but it is
+     variable and not as significant.  Reassuringly, computed flows and
+     stages differ by relatively little (typically < 1%) between the
+     corrected and former versions. (11/16/93)
+
+82)  Correction to the Combine Block so that the collate and combine options
+     can be used with alphanumeric labeling ($ANUM option). (11/23/93)
+
+83)  Miscellaneous minor Combine Block format and output polishing, plus
+     option for writing pollutant concentrations instead of loads onto
+     readable ASCII interface file (ICOMB=4 option).  See COMB.DOC.
+     CAUTION!!  The headers at the beginning of the ASCII interface file have
+     been altered.  Persons using spreadsheet macros or other programming to
+     read the ASCII interface file will need to revise their programs.
+     (11/23/93)
+
+84)  Minor enhancement of read/write error messages from/to the interface
+     file (Subroutine INFACE). (11/23/93)
+
+85)  Correct metric output of diameter ("conduit vertical depth") in Extran
+     conduit summary (Subroutine OUTPUT).  (Units of cm used but mm
+     indicated.  Now use meters.) (11/29/93)
+
+86)  Fix number of Subroutine FIRST arguments in Subroutine TRANS to avoid
+     some compiler problems. (RED, 11/29/93)
+
+87)  Correction to Extran Subroutine BOUND to avoid continuity errors in
+     outfall link when tide gate is closed. (RED, 11/29/93)
+
+88)  Metric and minor correction to Runoff Sub. RDIIREAD. (RED, 11/29/93)
+
+89)  Add elapsed time printout in seconds to MAIN.FOR. (RED, 11/29/93)
+
+90)  Make summations of flow and quality consistent within the Runoff Block
+     and also in the Combine and Statistics Blocks for the case in which
+     flows and loads on a Runoff interface file are summed with variable time
+     steps.  Formerly there were differences within Runoff and between
+     blocks.  Changes to Subroutines HYDRO, QSHED, GUTTER, PRPOLL, PRFLOW,
+     WSHED, COMB1, STATS.  Now, should get same total flows and loads in all
+     routines.  The integration assumes that when a non-zero flow follows a
+     zero flow, the time step for multiplication to get volumes should equal
+     the new time step, not the average of the new and the old, because the
+     old has the potential to be too long. (11/30/93)
+
+91)  Correct Subroutine RHYDRO1 in Runoff Block to print alphanumeric
+     subcatchment names in "Arrangement of Subcatchments and Channel/Pipes."
+     (11/30/93)
+
+92)  Modify Subroutine GETCUR for natural channels in Extran and Transport
+     so that if a roughness transition occurs exactly at the location of a
+     vertical side, the vertical side is assumed to have the lower, main
+     channel roughness. (11/30/93)
+
+93)  Correct timing variable in Subroutine LINK for WASP linkage from the
+     Transport Block. (J. Martin, 1/3/94)
+
+94)  Fix Subroutine TRANS in Transport Block to read R1 lines properly for
+     case of all flow and quality input on a single R1 line. (RED, 1/3/94)
+
+95)  Miscellaneous corrections for array subscript ranges, array references,
+     variable initialization, unnecessary metric correction, typos in
+     Subroutines FINDA, DEPTH, SMSTAT, ROUTE, RHYDRO1, HEAD and GETCUR.
+     (RED, 1/4/94)
+
+96)  Correction to Subroutine HYDRO in Runoff Block to use THISTO as time
+     step when THISTO < WET, thus maintaining correct precipitation volume.
+     (RED, 1/4/94)
+
+97)  Close NSCRAT(8) in MAIN if necessary, cosmetic changes to Subroutines
+     INTRAN, RUNOFF and HYDRO, rearrange Common list in TIMER.INC. (1/4/94)
+
+98)  Correct Subroutine RDIIRES in Runoff Block to fix improper unit
+     hydrograph file transfer for rainfall-induced infiltration/inflow
+     routine and avoid erroneous flows and large continuity errors. (1/4/94)
+
+99)  Corrections to Runoff Block Subroutines SMSTAT and WSTAT to list proper
+     linkages in subcatchment summary and correct time listings in channel/
+     pipe summary. (RED, 1/25/94)
+
+100) Correction to Runoff Block Subroutine WSHED to compute air temperature
+     at each time step instead of only once per day for ISNOW = 2.
+     (RED, 1/31/94)
+
+101) Correction to Transport Block Subroutine OTRAIN to fix metric output of
+     Qfull for surcharge summary (formerly in US units). (3/28/94)
+
+102) Modification to Transport Block Subroutines TSTORG, TRANS, OTRAIN and
+     TST.INC to permit printing of storage element depth hydrographs for
+     storage elements listed on optional I2 line. (Steve Merrill, Brown and
+     Caldwell, 3/28/94)
+
+103) Correct Runoff Block Subroutines HYDRO, WSHED, SNOW and GUTTER and
+     SUBCAT.INC to ensure that WETDRY time step is used when 1) residual
+     overland flow occurs after rainfall stops, 2) snowmelt occurs, 3)
+     residual channel/pipe flow occurs after rainfall stops, 4) groundwater
+     outflow to channel/pipes occurs.  WET is used only during a time step
+     with precipitation.  DRY is used at all other times.  Better resolution
+     (and lower continuity errors) during residual flow calculations is thus
+     achieved by setting WETDRY closer to WET, but at the expense of added
+     computer time during continuous simulations.  Note that WETDRY and DRY
+     are only approximated during time intervals without precipitation.
+     These intervals are divided into time steps that most closely
+     approximate WETDRY and DRY. (4/7/94)
+
+104) Informational message in Runoff Block quality summary (Sub. PRFLOW)
+     indicating that buildup is computed only at the beginning of time steps
+     with runoff, or for street cleaning time steps. (4/7/94)
+
+105) Initialize two variables in Sub. CATCH in Runoff Block. (4/11/94)
+
+106) Add optional initial date in Extran (Subs. INDAT1, INDAT3 and
+     CONTR.INC).  Default is 880101.  Enhances earlier correction #26.
+     (4/11/94)
+
+107) Correct logic in Sub. G9RAIN in Rain Block to check correctly for stop
+     dates for input of rainfall data. (4/12/94)
+
+108) Enhanced error message in Sub. GTCOLD in Temp Block. (4/18/94)
+
+109) Correct headings for evaporation output in Sub. RHYDRO1 of the Runoff
+     Block. (4/19/94)
+
+110) Correct ratio/default option for groundwater input (H2-H4 lines) in
+     Runoff Block (Sub. CATCH) and add error message. (4/21/94)
+
+111) Fix headings and array limits for print-out of depths in the Runoff
+     Block (Sub. PRFLOW).  Now correctly prints out for more than nine
+     locations. (4/22/94)
+
+112) Fix Rain Block (Sub. RAIN) for correct depths in event summary using
+     15-min. precipitation and IFORM <= 1. (4/22/94)
+
+113) Modify and correct Rain Block (all Rain Block subroutines plus
+     PRECIP.INC) to: 1) permit optional averaging of NCDC accumulated values
+     over preceding hours; 2) correct discrepancies between total rain
+     printed in Rain vs. Combine Blocks; 3) permit optional print of
+     indication of NCDC special codes in Event Summary.  Uses new optional B0
+     input line.  Two new subroutines created: RAINAVG and RAINCD.
+     (4/25/94 and 4/26/94)
+
+114) Corrected subroutine INTRAN in the Transport Block to accept arbitrary
+     sequence of data lines following E1 lines (e.g., following E1 only with
+     J2 did not work).  Also minor modification of READ in subroutine LINK.
+     (5/10/94)
+
+115) Add error message about duplicate I/O file names to MAIN.  (5/10/94)
+
+116) Include number of barrels in Transport Block continuity check
+     (subroutines TRANS and OTRAIN).  (5/12/94)
+
+117) Fix errors in Rain Block (subroutines RAIN, GTRAIN, G9RAIN, RAINAVG) to
+     correct errors in implementing #113 above and fix missing first rainfall
+     value for IFORM=4.  (5/25/94)
+
+118) Corrected subroutine SMSTAT in Runoff Block to avoid exponentiation
+     error in channel/pipe summary table when maximum flow = 0.  (5/25/94)
+
+119) Corrected subroutine WSHED in Runoff Block to avoid zero flows when
+     subcatchment has 100% imperviousness with no depression storage
+     (PCTZER=100).  (5/25/94)
+
+-----------------------------------------------------------------------------
+

@@ -1,0 +1,50 @@
+Changes to Estimator Code in August 1997:
+
+Adding Estimator to GenScn as an Analysis Tool
+
+
+code group      explanation of change
+----------      ---------------------
+
+main.for        all screen interaction moved to this new code group.
+                not used in gui version of estimator.
+
+boxpit94.for    no changes
+
+estimato.for    formerly contained main program, now a subroutine
+                called from GenScn.  interaction removed and new
+                arguments added to pass information from user and
+                return error codes.
+
+getdatc2.for    interaction removed and new arguments added to pass
+                information from user and return error codes.
+
+getdate.for     interaction removed and new arguments added to pass
+                information from user and return error codes.
+
+graphres.for    added character variables to send labels to graphics
+                routines.  required by hass coding conventions.
+
+logload.for     added error codes in place of stop statements.
+
+readd.for       interaction removed and new arguments added to pass
+                information from user and return error codes.  also
+                added subroutine gpcode to return valid parameter values,
+                which is necessary in the gui version.
+
+regress.for     removed two unused variables.
+
+rsquare.for     no changes
+
+tacit013.for    corrected dimensioning of variables in three places
+                which were producing array bounds problems on the pc.
+                also explicitly declared several variables.
+
+utility.for     no changes
+
+
+These changes result in only one minor change to the look and feel of
+running the batch estimator program.  The parameter file name is now
+explicitly entered by the user due to the characteristic of the dos
+operating system which prohibits more than one extension to a file name
+(for example, the name 'test.qw.cmnd' works in unix but not dos).

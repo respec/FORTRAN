@@ -1,0 +1,5 @@
+*.obj
+-OUT ..\bin\usgs_swstats.dll
+-MAP ..\bin\usgs_swstats.map
+-win -dll -ml msvb -mapn 32 -mapw 132
+@lgpstx.xp$

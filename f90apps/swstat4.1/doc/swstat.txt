@@ -1,0 +1,396 @@
+
+
+
+U.S. Geological Survey                                  swstat(1)
+
+
+
+NAME
+     swstat - Surface-water statistics
+
+ABSTRACT
+     SWSTAT contains a number of options for statistically
+     analyzing time-series data.  The time-series data are read
+     from a Watershed Data Management (WDM) file.  The computed
+     statistics and (or) time series can be written back to the
+     WDM file or to a text file.  The statistics options include:
+
+     Basic       Computes minimum, maximum, mean, and standard
+                 deviation of a time series (any time step).
+
+     Compare     Uses flow-duration analysis and class intervals
+                 to compute absolute error, root mean square
+                 error, and bias by class interval for two time
+                 series.  The standard error of estimate is
+                 computed.  The flow-durations curves can be
+                 plotted.  Data may be any time step.
+
+     Duration    Performs traditional flow-duration analysis by
+                 counting occurrences of all time-series values
+                 within flow intervals.  The duration curve can
+                 be plotted.  Data are analyzed at a daily time
+                 step.
+
+     Frequency   Analyzes time series using log-Pearson Type III
+                 distribution, without the extra features of
+                 Bulletin 17B found in the PEAKFQ program.  The
+                 distribution is fitted by method of moments.
+                 Based on the USGS A193 WATSTORE program.  Data
+                 are read from time-series data sets and analyzed
+                 at an annual time step.
+
+     Hydrograph  Computes duration hydrograph tables and curves.
+                 Based on the USGS K956 WATSTORE program.  The
+                 duration hydrograph curves may be plotted.  Data
+                 are analyzed at a daily time step.  Although
+                 originally developed for streamflow data, any
+                 time series may be analyzed.
+
+     N-day       Computes annual n-day high and (or) low flows
+                 from a daily time series.  A default set of 1-,
+                 2-, 3-, 7-, 10-, 30-, 60-, 90-, 183-, and
+                 365-day periods can be selected, or up to 10
+                 durations may be specified.  Analysis may be
+                 over a calendar year, water year, or a season.
+                 Based on the USGS A969 WATSTORE program.
+
+     Trend       Tests annual time series for trends.  Computes
+                 Kendall's tau, the associated p-level and the
+                 slope of the trend line.  The p-level is the
+
+
+
+                  Last change: 25 February 2002                 1
+
+
+
+
+
+
+U.S. Geological Survey                                  swstat(1)
+
+
+
+                 attained (two-sided) significance level of the
+                 test.  The data may be read from a time-series
+                 data set or from a table data set.
+
+METHOD
+     Standard textbook procedures are used.  The log-Pearson Type
+     III and Pearson Type III distributions are fit using the
+     method of moments.  The Kendall Tau procedure is used for
+     trend analysis.  Class intervals used for flow-duration and
+     comparison analysis are created as uniform log units or are
+     user defined.
+
+HISTORY
+     Some of the options in the program were originally
+     implemented as programs in the WATSTORE system. These
+     procedures were included under the statistics option in the
+     1990 version of the ANNIE program.  In 1993, the software
+     was ported to the UNIX platform, the user interface was
+     enhanced, and the statistics options were removed from the
+     ANNIE program and placed into the SWSTAT program.
+
+     Version 4.1 2002/02/25 - Corrections in the N-day
+        computations and in the specification for minimum and
+        maximum values for plots with probability axis.
+        Corrected problems in Frequency option where data set did
+        not contain season attributes or a recognized value for
+        TSTYPE.  In the Frequency option, added the 3-year
+        recurrence to the printed table and added attributes
+        L07050, L07100, and L04003 for optional WDM output.  In
+        Frequency option, corrected problem where negative
+        Parameter Values were sometimes reported for low flows.
+        Miscellaneous spelling corrections.
+
+     Version 4.0 2000/12/01 - All WDM data sets now contain the
+        date the data set was created and the date the data set
+        was last modified.  Attributes SEADBG and SEADND
+        introduced with version 3.2 of SWSTAT are in conflict
+        with the creation and modification attributes.  If you
+        have N-day data sets created with Version 3.2 of SWSTAT,
+        you will need to run the WDMRX program to resolve this
+        conflict.  WDMRX is included in the bin directory of the
+        SWSTAT distribution.  The N-day option was modified to
+        rank high flow values in descending order.
+
+     Version 3.2 1998/03/09 - Updated to incorporate corrections
+        and changes made in the swstat program and in the lib
+        library; there are four noteworthy changes.  (1) The
+        compare option had been reporting incorrect values for
+        the total mean absolute error (percent) and root mean
+        square error (percent); this is fixed.  (2) In some
+        instances, the common time period that was determined by
+        the software may actually have been shorter than the
+
+
+
+                  Last change: 25 February 2002                 2
+
+
+
+
+
+
+U.S. Geological Survey                                  swstat(1)
+
+
+
+        actual common time period; this has been corrected.  (3)
+        The n-day option now includes the option to compute
+        duration for one or more months.  (4) The n-day option
+        now includes the option to compute seasonal durations
+        that begin or (and) end on days other than the first and
+        last, respectively, of the months.
+
+     Version 3.1 1996/09/25 - Corrections made in the Hydrograph
+        option.  February 29, leap day, was not being correctly
+        handled during leap years--the value for February 29 was
+        used for February 28.  The program now skips February 29.
+        The number of data values tagged as missing is now being
+        correctly computed.
+
+     Version 3.0 1996/03/26 - New release of program.  Includes
+        addition of the duration hydrograph (DURHYD) program as
+        the Hydrograph option in SWSTAT.  Corrections were made
+        in the n-day option so that the correct year was reported
+        for seasons shorter than a year.
+
+     Version 2.1 1994/06/28 - Corrections made in the n-day
+        option.  The seasons the user entered were not being used
+        for the high- and (or) low-flow computations.  The
+        program was always using the full climate year for low
+        flows and the water year for high flows.  Both low and
+        high flows were always being calculated.  The program now
+        recognizes the seasons requested by the user and also
+        that the user may not want both high and low flows.  The
+        user may now enter different durations for the low and
+        the high flows.
+
+DATA REQUIREMENTS
+     Input comes from WDM files.
+
+OUTPUT OPTIONS
+     Statistical output can be placed in a text output file or
+     stored on the user's WDM file in addition to being viewed on
+     the screen.  The graphs produced in the flow-duration and
+     frequency analyses meet USGS publication standards and can
+     be viewed on the screen.  Additional plot output options
+     depend on the devices supported by the GKS library used and
+     may include PostScript, Computer Graphics Metafile (CGM),
+     Hewlett-Packard Graphics Language (HP-GL), and assorted
+     printers and plotters.  See the installation instructions
+     (README.TXT) for details of output devices available with
+     precompiled distributions of the program.
+
+SYSTEM REQUIREMENTS
+     SWSTAT is written in Fortran 77 with the following
+     extension: use of include files.  The ANN, WAIDE, AWSTAT,
+     GRAPH, STATS, AIDE, WDM, ADWDM, and UTIL libraries from
+     LIBANNE are required to recompile.  For more information,
+
+
+
+                  Last change: 25 February 2002                 3
+
+
+
+
+
+
+U.S. Geological Survey                                  swstat(1)
+
+
+
+     see System Requirements in LIBANNE.
+
+APPLICATIONS
+     There have been hundreds of applications throughout the
+     United States and published as State or regional high- or
+     low-flow frequency reports.
+
+DOCUMENTATION
+     Lumb, A.M., Kittle, J.L., Jr., and Flynn, K.M., 1990, Users
+        manual for ANNIE, a computer program for interactive
+        hydrologic analyses and data management: U.S. Geological
+        Survey Water-Resources Investigations Report 89-4080, 236
+        p.  (Documents the 1990 version included in the ANNIE
+        program.)
+
+RELATED DOCUMENTATION
+     Flynn, K.M., Hummel, P.R., Lumb, A.M., and Kittle, J.L.,
+        Jr., 1995, User's manual for ANNIE, version 2, a computer
+        program for interactive hydrologic data management:  U.S.
+        Geological Survey Water-Resources Investigations Report
+        95-4085, 211 p.
+
+REFERENCES
+     Arihood, L.D., and Glatfelter, D.R., 1991, Method for
+        estimating low-flow characteristics of ungaged streams in
+        Indiana:  U.S. Geological Survey Water-Supply Paper 2372.
+
+     Bingham, R.H., 1985, Low flows and flow duration of
+        Tennessee streams through 1981:  U.S. Geological Survey
+        Water-Resources Investigations Report 84-4347.
+
+     Bingham, R.H., 1986, Regionalization of low-flow
+        characteristics of Tennessee streams:  U.S. Geological
+        Survey Water-Resources Investigations Report 85-4191.
+
+     Giese, G.L., and Mason, R.R., 1990, Low-flow frequency
+        characteristics of streams in North Carolina:  U.S.
+        Geological Survey Open-File Report 90-399.
+
+     Hayes, D.C., 1991, Low-flow characteristics of streams in
+        Virginia: U.S. Geological Survey Water-Supply Paper 2374.
+
+     Ludwig, A.H., 1992, Flow duration and low-flow
+        characteristics of selected Arkansas streams:  U.S.
+        Geological Survey Water-Resources Investigations Report
+        92-4026, 77 p.
+
+     Ruhl, K.J., and Martin, G.R., 1991, Low-flow characteristics
+        of Kentucky streams:  U.S. Geological Survey Water-
+        Resources Investigations Report 91-4097, 51 p.
+
+
+
+
+
+                  Last change: 25 February 2002                 4
+
+
+
+
+
+
+U.S. Geological Survey                                  swstat(1)
+
+
+
+     Telis, P.A., 1991, Low-flow and flow-duration
+        characteristics of Mississippi streams:  U.S. Geological
+        Survey Water-Resources Investigations Report 90-4087, 214
+        p.
+
+TRAINING
+     Statistical Approach to Surface-Water Hydrologic Analysis
+     (SW2011TC), offered annually at the USGS National Training
+     Center.
+
+CONTACTS
+     Operation and Distribution:
+        U.S. Geological Survey
+        Hydrologic Analysis Software Support Program
+        437 National Center
+        Reston, VA 20192
+
+        h2osoft@usgs.gov
+
+     Official versions of U.S. Geological Survey water-resources
+     analysis software are available for electronic retrieval via
+     the World Wide Web (WWW) at:
+
+                http://water.usgs.gov/software/
+
+     and via anonymous File Transfer Protocol (FTP) from:
+
+                water.usgs.gov (path: /pub/software).
+
+     The WWW page and anonymous FTP directory from which the
+     SWSTAT software can be retrieved are, respectively:
+
+                http://water.usgs.gov/software/swstat.html
+                              --and--
+                /pub/software/surface_water/swstat
+
+     See
+     http://water.usgs.gov/software/ordering_documentation.html
+     for information on ordering printed copies of USGS
+     publications.
+
+SEE ALSO
+     annie(1) - Program to list, table, plot data in a WDM file
+
+     glsnet(1) - Regional hydrologic regression and network
+                 analysis using generalized least squares
+
+     hass-cui(1) - Character-based user interface
+
+     iowdm(1) - Program to store time-series data in a WDM file
+
+
+
+
+
+                  Last change: 25 February 2002                 5
+
+
+
+
+
+
+U.S. Geological Survey                                  swstat(1)
+
+
+
+     wdm(1) - Watershed Data Management system
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  Last change: 25 February 2002                 6
+
+
+

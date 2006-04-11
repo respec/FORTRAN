@@ -1,0 +1,104 @@
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+ 
+   Developed for:                Developed by:
+ 
+     U.S. Environmental            Hydrocomp, Incorporated
+       Protection Agency             415-637-9060
+     Office of Research
+       and Development           Modified and Maintained by
+     Center for Exposure
+       Assessment Modeling         Aqua Terra Consultants
+     College Station Road            415-962-1864
+     Athens, Georgia 30613
+     706/546-3590                Release 11
+                                 September 1995
+ 
+ 
+ Start of Job
+ 
+ PREPROCESSING USERS CONTROL INPUT.
+ 
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+ 
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND DURANL      
+ FOUND END DURANL      
+ FOUND MUTSIN      
+ FOUND END MUTSIN      
+ FOUND NETWORK     
+ FOUND END NETWORK     
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    Version 11 test run:  DURANL of simulated and observed flows
+
+   START       1976              END    1976
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1975/12/31 24:60    1976/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  3
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  2
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG=     1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  UNITFG=     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     OPN SEQUENCE                                                                                                                        
+         INGRP              INDELT 24:00                                                                                                 
+           MUTSIN       1                                                                                                                
+           DURANL       1                                                                                                                
+           DURANL       2                                                                                                                
+         END INGRP                                                                                                                       
+     END OPN SEQUENCE                                                                                                                    
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING DURANL   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING INPUT FOR DURATION ANALYSIS OPERATION NO.     1   TIME INTERVAL=  1440 MINS
+ 
+ Title of display                              NDUR      NLEV      PRFG     PUNIT     LCNUM     LCOUT
+ DURANL OF SIM DAILY FLOW (CFS)                   1        14         1        42         0         0
+ 
+     Analysis season
+     Start date/time       End date/time
+        1/ 1/ 1  0: 0       1/12/31 24: 0
+ 
+ Durations, in multiples of DELT
+          1
+ 
+ Levels for the analysis
+         0.      150.      300.      450.      600.      750.      900.     1050.     1200.     1350.     1500.     1650.     1800.
+      2000.

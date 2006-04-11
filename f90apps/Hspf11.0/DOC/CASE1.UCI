@@ -1,0 +1,130 @@
+RUN
+
+GLOBAL
+  Special Actions Case Study #1 - Simple parameter changes
+  START       1992              END    1992
+  RUN INTERP OUTPUT LEVEL    3    2
+  RESUME     0 RUN     1                   UNIT SYSTEM     1
+END GLOBAL
+
+FILES      
+<FILE>  <UN#>***<----FILE NAME------------------------------------------------->
+WDM        21   case.wdm
+MESSU      22   case1.ech
+           30   case1.out
+END FILES
+
+OPN SEQUENCE
+    INGRP              INDELT 00:30
+      PERLND       1
+    END INGRP
+END OPN SEQUENCE
+
+SPEC-ACTIONS
+***                                       <-addr->              <uvqn>
+***optyp range dc ds yr  mo da hr mn d t   vari  s1 s2 s3 ac  value    tc ts num
+  <****><-><--><>< ><--><-><-><-><-><><> 
+<----><-><-><-><-><--------> <> < >< >
+*** Spring Thaw
+  PERLND  1         1992/04/15            INFILT           =      0.10 YR   1 10
+*** Beginning of Growing Season
+  PERLND  1         1992/04/29 12         INFILT           =      0.13 YR   1 10
+*** End of Growing Season
+  PERLND  1         1992/08/25            INFILT           =      0.10 YR   1 10
+*** Winter Frozen Ground
+  PERLND  1         1992/12/02            INFILT           =      0.05 YR   1 10
+END SPEC-ACTIONS
+
+PERLND
+  ACTIVITY
+    <PLS >          Active Sections (1=Active; 0=Inactive)             ***
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC ***
+    1                   1
+  END ACTIVITY
+
+  PRINT-INFO
+    <PLS >          Print-flags                                    *** PIVL  PYR
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC  
+    ***
+    1                   4                                                     12
+  END PRINT-INFO
+
+  GEN-INFO
+    <PLS ><-------Name------->        Unit-systems   Printer ***
+    # -  #                                t-series Engl Metr ***
+                                           in  out           ***
+    1     Cropland                          1    1   30
+  END GEN-INFO
+
+  *** Section PWATER ***
+
+  PWAT-PARM1
+    <PLS >  PWATER variable monthly parameter value flags    ***
+    # -  # CSNO RTOP UZFG  VCS  VUZ  VNN VIFW VIRC  VLE IFFC ***
+    1         0    0    0    1    1    1    0    0    1    1
+  END PWAT-PARM1
+
+  PWAT-PARM2
+    <PLS > ***  PWATER input info: Part 2
+           ***  INFILT here reflects frozen ground conditions on Jan 1
+           ***  Nominal value is 0.10.  See SPEC-ACTIONS block
+    # -  # ***FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+    1          0.000       8.0     0.050      350.     0.010       0.5      0.98
+  END PWAT-PARM2
+
+  PWAT-PARM3
+    <PLS > ***  PWATER input info: Part 3
+    # -  # ***PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+    1            40.       35.       2.0       2.0      0.10       0.0      0.08
+  END PWAT-PARM3
+
+  PWAT-PARM4
+    <PLS >     PWATER input info: Part 4                               ***
+    # -  #     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP ***
+    1                     0.01       0.1       1.0      0.60
+  END PWAT-PARM4
+
+  MON-INTERCEP
+    <PLS>   Only required if VCSFG=1 in PWAT-PARM1                     ***
+    # -  #  Interception storage capacity at start of each month       ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      0.04 0.04 0.03 0.03 0.03 0.03 0.10 0.17 0.19 0.14 0.05 0.04
+  END MON-INTERCEP
+
+  MON-UZSN
+    <PLS>   Only required if VUZFG=1 in PWAT-PARM1                     ***
+    # -  #  Upper zone storage at start of each month                  ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       0.4  0.4  0.4  0.4  1.6  1.1  1.1  1.3  1.3  1.3  1.1  0.9
+  END MON-UZSN
+
+  MON-MANNING
+    <PLS >  Only required if VNNFG=1 in PWAT-PARM1                     ***
+    # -  #  Manning's n for overland flow at start of each month       ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      0.30 0.30 0.30 0.30 0.27 0.25 0.25 0.25 0.25 0.25 0.35 0.33
+  END MON-MANNING
+
+  MON-LZETPARM
+    <PLS >  Only required if VLEFG=1 in PWAT-PARM1                     ***
+    # -  #  Lower zone ET parameter at start of each month             ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      0.20 0.20 0.20 0.23 0.23 0.25 0.60 0.80 0.75 0.50 0.30 0.20
+  END MON-LZETPARM
+
+  PWAT-STATE1
+    <PLS > *** Initial conditions at start of simulation
+    # -  # ***  CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+    1           0.05       0.0      0.15       0.0       4.0      0.05      0.05
+  END PWAT-STATE1
+END PERLND
+
+EXT SOURCES
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp>
+<-Member->  ***
+<Name>   # <Name> # tem strg<-factor->strg <Name>   #   #        <Name> # #  ***
+WDM     39 PREC     ENGLZERO               PERLND   1     EXTNL  PREC
+WDM     41 EVAP     ENGL        .7    DIV  PERLND   1     EXTNL  PETINP
+END EXT SOURCES
+
+END RUN

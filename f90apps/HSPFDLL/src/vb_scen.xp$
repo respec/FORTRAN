@@ -1,0 +1,3 @@
+-export    F90_SPIPH
+-export    F90_ACTSCN
+-export    F90_SIMSCN

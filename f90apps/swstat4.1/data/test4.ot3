@@ -1,0 +1,19 @@
+
+
+
+  DATA-                      MEDIAN PERIOD OF NUMBER OF NON-ZERO
+  SET   KENDALL'S          SLOPE OF  RECORD     VALUES   RETURNS       RANGE OF DATA                           DATA
+ NUMBER    TAU     P-LEVEL   TREND  FROM  TO  USED  NOT CODE CNT    MINIMUM        MAXIMUM     QUALIFIERS      TYPE STATION NUMBER 
+ ------ --------- -------- -------- ---- ---- ---- ---- ---- --- -------------- -------------- --------------- ---- ----------------
+      3     0.186    0.073    1.232 1934 1981   45    3    0   0         0.       1000000.      0/             FLOW 11517500        
+    110     0.195    0.064    1.238 1935 1982   44    4    0   0         0.       1000000.      0/             L365 11517500        
+    120     0.190    0.067    1.432 1934 1982   45    4    0   0         0.       1000000.      0/             H365 11517500        
+
+
+
+  DATA-                      MEDIAN PERIOD OF NUMBER OF NON-ZERO
+  SET   KENDALL'S          SLOPE OF  RECORD     VALUES   RETURNS       RANGE OF DATA                           DATA
+ NUMBER    TAU     P-LEVEL   TREND  FROM  TO  USED  NOT CODE CNT    MINIMUM        MAXIMUM     QUALIFIERS      TYPE STATION NUMBER 
+ ------ --------- -------- -------- ---- ---- ---- ---- ---- --- -------------- -------------- --------------- ---- ----------------
+      3    -0.045    0.667   -0.033 1934 1981   45    3    0   0         0.       1000000.      0/             FLOW 11517500        
+    101    -0.016    0.887   -0.004 1935 1982   44    4    0   0         0.       1000000.      0/             L001 11517500        

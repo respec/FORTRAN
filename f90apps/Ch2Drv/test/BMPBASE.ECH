@@ -1,0 +1,1926 @@
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND PERLND      
+ FOUND END PERLND      
+ FOUND IMPLND      
+ FOUND END IMPLND      
+ FOUND BMPRAC      
+ FOUND END BMPRAC      
+ FOUND MONTH-DATA  
+ FOUND END MONTH-DATA  
+ FOUND RCHRES      
+ FOUND END RCHRES      
+ FOUND COPY        
+ FOUND END COPY        
+ FOUND EXT SOURCES 
+ FOUND END EXT SOURCES 
+ FOUND EXT TARGETS 
+ FOUND END EXT TARGETS 
+ FOUND SCHEMATIC   
+ FOUND END SCHEMATIC   
+ FOUND MASS-LINK   
+ FOUND END MASS-LINK   
+ FOUND FTABLES     
+ FOUND END FTABLES     
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    South Fork Shenandoah River - BMP test
+
+   START       1984  1  1  0  0  END    1987 12 31 24  0
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1983/12/31 24:60    1987/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  3
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  2
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG=     1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  UNITFG=     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     OPN SEQUENCE                                                                    
+         INGRP              INDELT 01:00                                             
+           PERLND     191                                                            
+           PERLND     192                                                            
+           PERLND     193                                                            
+           PERLND     194                                                            
+           PERLND     195                                                            
+           PERLND     196                                                            
+           IMPLND     194                                                            
+           IMPLND     195                                                            
+           BMPRAC     680                                                            
+           RCHRES     680                                                            
+           RCHRES     660                                                            
+           RCHRES     670                                                            
+           RCHRES     640                                                            
+           RCHRES     650                                                            
+           RCHRES     580                                                            
+           RCHRES     590                                                            
+           COPY       100                                                            
+         END INGRP                                                                   
+     END OPN SEQUENCE                                                                
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING FTABLES BLOCK
+ 
+ USERS CONTROL INPUT IS:
+     FTABLES                                                                         
+                                                                                     
+       FTABLE    580                                                                 
+      rows cols                                 ***                                  
+         7    4                                                                      
+          depth      area    volume   outflow   ***                                  
+           (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+           0.00     0.000     0.000      0.00                                        
+           1.34    524.87    663.93     235.0                                        
+           1.67    453.09    789.55     405.0                                        
+           3.03    753.65   2409.01    1300.0                                        
+           4.21    762.63   3167.16    2200.0                                        
+           6.74    816.46   6998.25    4680.0                                        
+          25.00   1121.51  35888.45   60000.0                                        
+       END FTABLE580                                                                 
+       FTABLE    590                                                                 
+      rows cols                                 ***                                  
+         6    4                                                                      
+          depth      area    volume   outflow   ***                                  
+           (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+           0.00     0.000     0.000      0.00                                        
+           3.45    457.72   1113.38     476.0                                        
+           9.38    523.70   3917.46    7130.0                                        
+          12.05    536.07   5401.96   12000.0                                        
+          14.58    639.16   6898.56   18100.0                                        
+          53.58   1443.28  30927.27  235000.0                                        
+       END FTABLE590                                                                 
+       FTABLE    640                                                                 
+      rows cols                                 ***                                  
+        11    4                                                                      
+          depth      area    volume   outflow   ***                                  
+           (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+           0.00     0.000     0.000      0.00                                        
+           1.62    48.964    13.834      1.34                                        
+           1.74    71.892    26.231      2.46                                        
+           2.00   114.250    58.291      9.09                                        
+           2.23   275.910   242.490     22.10                                        
+           2.78   345.859   512.960     75.30                                        
+           3.81   431.353  1305.716    412.00                                        
+           5.10   505.188  1989.663    981.00                                        
+           6.82   598.453  2895.115   1980.00                                        
+          17.00   610.112  9248.825  15000.00                                        
+          24.05   777.212 15544.244 213000.00                                        
+       END FTABLE640                                                                 
+       FTABLE    650                                                                 
+      rows cols                                 ***                                  
+         7    4                                                                      
+          depth      area    volume   outflow   ***                                  
+           (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+           0.00     0.000     0.000      0.00                                        
+           1.34    394.25    498.72     235.0                                        
+           1.67    340.34    593.06     405.0                                        
+           3.03    566.11   1809.52    1300.0                                        
+           4.21    572.85   2379.00    2200.0                                        
+           6.74    613.29   5256.72    4680.0                                        
+          25.00    842.42  26957.58   60000.0                                        
+       END FTABLE650                                                                 
+       FTABLE    660                                                                 
+      rows cols                                 ***                                  
+        11    4                                                                      
+          depth      area    volume   outflow   ***                                  
+           (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+           0.00     0.000     0.000      0.00                                        
+           1.62    21.351     6.033      1.34                                        
+           1.74    31.349    11.438      2.46                                        
+           2.00    49.820    25.418      9.09                                        
+           2.23   120.313   105.740     22.10                                        
+           2.78   150.815   223.680     75.30                                        
+           3.81   188.095   569.367    412.00                                        
+           5.10   220.291   867.607    981.00                                        
+           6.82   260.960  1262.436   1980.00                                        
+          17.00   266.044  4033.018  15000.00                                        
+          24.05   338.909  6778.182 213000.00                                        
+       END FTABLE660                                                                 
+       FTABLE    670                                                                 
+      rows cols                                 ***                                  
+         8    4                                                                      
+          depth      area    volume   outflow   ***                                  
+           (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+           0.00     0.000     0.000      0.00                                        
+           1.10    46.162    41.901     10.40                                        
+           1.20    66.284    46.872     20.80                                        
+           1.60   142.036   175.415     79.90                                        
+           2.30   160.975   243.829    156.00                                        
+           5.22   215.422   923.236   1420.00                                        
+           7.62   250.931  1200.207   2730.00                                        
+          22.10   473.455  2367.273  32200.00                                        
+       END FTABLE670                                                                 
+       FTABLE    680                                                                 
+      rows cols                                 ***                                  
+        11    4                                                                      
+          depth      area    volume   outflow   ***                                  
+           (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+           0.00     0.000     0.000      0.00                                        
+           1.62    46.475    13.131      1.34                                        
+           1.74    68.237    24.897      2.46                                        
+           2.00   108.441    55.327      9.09                                        
+           2.23   261.882   230.161     22.10                                        
+           2.78   328.275   486.880     75.30                                        
+           3.81   409.422  1239.331    412.00                                        
+           5.10   479.503  1888.504    981.00                                        
+           6.82   568.027  2747.921   1980.00                                        
+          17.00   579.092  8778.594  15000.00                                        
+          24.05   737.697 14753.939 213000.00                                        
+       END FTABLE680                                                                 
+                                                                                     
+     END FTABLES                                                                     
+
+ FINISHED PROCESSING FTABLES BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING MASS LINK BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     MASS-LINK                                                                       
+       MASS-LINK        1                                                            
+     <-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+     <Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+     PERLND     PWATER PERO       0.0833333     RCHRES         INFLOW IVOL           
+       END MASS-LINK    1                                                            
+                                                                                     
+       MASS-LINK        3                                                            
+     <Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+     <Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+     IMPLND     IWATER SURO       0.0833333     RCHRES         INFLOW IVOL           
+       END MASS-LINK    3                                                            
+                                                                                     
+       MASS-LINK        5                                                            
+     <Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+     <Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+     RCHRES     ROFLOW                          RCHRES         INFLOW                
+       END MASS-LINK    5                                                            
+                                                                                     
+       MASS-LINK       11                                                            
+     <-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+     <Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+     PERLND     PWATER PERO       0.0833333     BMPRAC         INFLOW IVOL           
+       END MASS-LINK   11                                                            
+                                                                                     
+       MASS-LINK       13                                                            
+     <Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+     <Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+     IMPLND     IWATER SURO       0.0833333     BMPRAC         INFLOW IVOL           
+       END MASS-LINK   13                                                            
+                                                                                     
+       MASS-LINK       15                                                            
+     <Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+     <Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+     BMPRAC     ROFLOW                          RCHRES         INFLOW                
+       END MASS-LINK   15                                                            
+                                                                                     
+       MASS-LINK       90                                                            
+     <-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+     <Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+     PERLND     PWATER SURO                     COPY           INPUT  MEAN   1       
+     PERLND     PWATER IFWO                     COPY           INPUT  MEAN   2       
+     PERLND     PWATER AGWO                     COPY           INPUT  MEAN   3       
+     PERLND     PWATER PET                      COPY           INPUT  MEAN   4       
+     PERLND     PWATER TAET                     COPY           INPUT  MEAN   5       
+     PERLND     PWATER UZS                      COPY           INPUT  MEAN   6       
+     PERLND     PWATER LZS                      COPY           INPUT  MEAN   7       
+       END MASS-LINK   90                                                            
+                                                                                     
+       MASS-LINK       91                                                            
+     <-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+     <Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+     IMPLND     IWATER SURO                     COPY           INPUT  MEAN   1       
+     IMPLND     IWATER PET                      COPY           INPUT  MEAN   4       
+     IMPLND     IWATER IMPEV                    COPY           INPUT  MEAN   5       
+       END MASS-LINK   91                                                            
+     END MASS-LINK                                                                   
+ 
+ FINISHED PROCESSING MASS LINK BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING MONTH-DATA BLOCK
+ 
+ USERS CONTROL INPUT IS:
+     MONTH-DATA                                                                      
+       MONTH-DATA       1                                                            
+        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec ***    
+        0.1   0.1   0.1   0.2   0.4   0.5   0.5   0.4   0.3   0.2   0.2   0.1        
+       END MONTH-DATA   1                                                            
+                                                                                     
+       MONTH-DATA       2                                                            
+        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec ***    
+        0.9   0.9   0.9   0.8   0.6   0.5   0.5   0.6   0.7   0.8   0.8   0.9        
+       END MONTH-DATA   2                                                            
+     END MONTH-DATA                                                                  
+
+ FINISHED PROCESSING MONTH-DATA BLOCK
+ ====================================================================================================================================
+
+ =======================================================================================================================
+ PROCESSING PERLND   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO: 191     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         0         1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     5    4    5    5    5    5    5    4    4    4    4    4         1          12
+ 
+ Perv Land-segment id      Unit systems                 Print-file nos
+                         IUNITS    OUNITS             English    Metric
+ FOREST                       1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+     CSNOFG    RTOPFG      UZFG     VCSFG     VUZFG     VNNFG    VIFWFG    VIRCFG     VLEFG    IFFCFG     HWTFG    IRRGFG
+          0         1         1         1         0         0         0         0         0         1         0         0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000     8.000      0.06      200.   0.22000     0.000      .995
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+       40.0      35.0       2.0       2.0       0.0       0.0       0.0
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00     1.000     0.350       3.0     0.650     0.420
+ 
+        FZG      FZGL
+      (/in)
+        1.0       0.1
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.060     0.060     0.060     0.100     0.160     0.160     0.160     0.160     0.160     0.100     0.060     0.060
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+      0.000     0.000     1.500     0.000     7.900     1.006     0.000
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.  191
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO: 192     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         0         1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     5    4    5    5    5    5    5    5    4    5    5    4         1          12
+ 
+ Perv Land-segment id      Unit systems                 Print-file nos
+                         IUNITS    OUNITS             English    Metric
+ HIGH TILL CROPLAND           1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+     CSNOFG    RTOPFG      UZFG     VCSFG     VUZFG     VNNFG    VIFWFG    VIRCFG     VLEFG    IFFCFG     HWTFG    IRRGFG
+          0         1         1         1         1         1         0         0         1         1         0         0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000     8.000       .06      300.   0.07000     0.000      .995
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+       40.0      35.0       2.0       2.0       0.0       0.0       0.0
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00     0.800     0.090       3.0     0.600     0.420
+ 
+        FZG      FZGL
+      (/in)
+        1.0       0.1
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.030     0.030     0.030     0.030     0.015     0.060     0.120     0.143     0.135     0.105     0.050     0.040
+ 
+ Values of Upper Zone Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.300     0.300     0.300     0.300     0.280     0.250     0.250     0.250     0.250     0.300     0.300     0.300
+ 
+ Values of Manning's N at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       .100      .100      .100      .080      .080      .080      .080      .090      .090      .100      .100      .100
+ 
+ Values of Lower Zone ET at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.100     0.100     0.100     0.100     0.250     0.550     0.550     0.550     0.450     0.250     0.150     0.100
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+      0.000     0.000     1.500     0.000     7.900     1.006     0.000
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.  192
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO: 193     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         0         1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     5    4    5    5    5    5    5    5    4    5    5    4         1          12
+ 
+ Perv Land-segment id      Unit systems                 Print-file nos
+                         IUNITS    OUNITS             English    Metric
+ LOW TILL CROPLAND            1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+     CSNOFG    RTOPFG      UZFG     VCSFG     VUZFG     VNNFG    VIFWFG    VIRCFG     VLEFG    IFFCFG     HWTFG    IRRGFG
+          0         1         1         1         1         1         0         0         1         1         0         0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000     8.000       .06      300.   0.07000     0.000      .995
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+       40.0      35.0       2.0       2.0       0.0       0.0       0.0
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00     0.800     0.200       3.0     0.600     0.420
+ 
+        FZG      FZGL
+      (/in)
+        1.0       0.1
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.080     0.075     0.075     0.071     0.086     0.105     0.143     0.143     0.143     0.105     0.093     0.086
+ 
+ Values of Upper Zone Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.400     0.380     0.360     0.350     0.350     0.350     0.350     0.350     0.350     0.420     0.420     0.400
+ 
+ Values of Manning's N at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       .220      .225      .220      .180      .180      .180      .180      .200      .200      .220      .220      .220
+ 
+ Values of Lower Zone ET at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.100     0.100     0.100     0.100     0.250     0.550     0.550     0.550     0.450     0.250     0.150     0.100
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+      0.000     0.000     1.500     0.000     7.900     1.006     0.000
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.  193
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO: 194     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         0         1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     5    4    5    5    5    5    5    4    4    4    4    4         1          12
+ 
+ Perv Land-segment id      Unit systems                 Print-file nos
+                         IUNITS    OUNITS             English    Metric
+ PASTURE                      1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+     CSNOFG    RTOPFG      UZFG     VCSFG     VUZFG     VNNFG    VIFWFG    VIRCFG     VLEFG    IFFCFG     HWTFG    IRRGFG
+          0         1         1         1         0         0         0         0         0         1         0         0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000     8.000       .05      270.   0.11000     0.000      .995
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+       40.0      35.0       2.0       2.0       0.0       0.0       0.0
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00     0.800     0.150       3.0     0.600     0.420
+ 
+        FZG      FZGL
+      (/in)
+        1.0       0.1
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.063     0.060     0.065     0.078     0.095     0.098     0.098     0.094     0.095     0.077     0.072     0.067
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+      0.000     0.000     1.500     0.000     7.900     1.006     0.000
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.  194
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO: 195     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         0         1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     5    4    5    5    5    5    5    4    4    4    4    4         1          12
+ 
+ Perv Land-segment id      Unit systems                 Print-file nos
+                         IUNITS    OUNITS             English    Metric
+ URBAN                        1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+     CSNOFG    RTOPFG      UZFG     VCSFG     VUZFG     VNNFG    VIFWFG    VIRCFG     VLEFG    IFFCFG     HWTFG    IRRGFG
+          0         1         1         1         0         0         0         0         0         1         0         0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000     8.000       .05      300.   0.07000     0.000      .995
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+       40.0      35.0       2.0       2.0       0.0       0.0       0.0
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00     0.800     0.100       3.0     0.600     0.420
+ 
+        FZG      FZGL
+      (/in)
+        1.0       0.1
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.093     0.093     0.093     0.093     0.096     0.096     0.096     0.096     0.096     0.093     0.093     0.093
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+      0.000     0.000     1.500     0.000     7.900     1.006     0.000
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.  195
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO: 196     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         0         1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     5    4    5    5    5    5    5    5    4    5    5    4         1          12
+ 
+ Perv Land-segment id      Unit systems                 Print-file nos
+                         IUNITS    OUNITS             English    Metric
+ HAY                          1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+     CSNOFG    RTOPFG      UZFG     VCSFG     VUZFG     VNNFG    VIFWFG    VIRCFG     VLEFG    IFFCFG     HWTFG    IRRGFG
+          0         1         1         1         0         0         0         0         0         1         0         0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000     8.000       .05      270.   0.11000     0.000      .995
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+       40.0      35.0       2.0       2.0       0.0       0.0       0.0
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00     0.800     0.150       3.0     0.600     0.420
+ 
+        FZG      FZGL
+      (/in)
+        1.0       0.1
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.063     0.060     0.065     0.078     0.095     0.098     0.098     0.094     0.095     0.077     0.072     0.067
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+      0.000     0.000     1.500     0.000     7.900     1.006     0.000
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.  196
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING PERLND   BLOCK
+ =======================================================================================================================
+
+ =======================================================================================================================
+ PROCESSING IMPLND   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING IMPERVIOUS LAND-SEGMENT NO: 194     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    IWATFG     SLDFG     IWGFG    IQALFG
+          0         0         1         0         0         0
+ 
+      Printout level flags       Print-ivl Print-yrend
+ ATEMP SNOW IWAT  SLD IWTG IQAL      PIVL      PYREND
+     5    4    5    4    5    4         1          12
+ 
+ Imperv Land-segment id              Unit systems                Print-file nos
+                                   IUNITS    OUNITS             English    Metric
+ ANIMAL/FEEDLOT                         1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION IWATER
+ 
+     CSNOFG    RTOPFG     VRSFG     VNNFG    RTLIFG
+          0         1         1         0         0
+ 
+       LSUR     SLSUR      NSUR     RETSC
+       (ft)          (nManning)      (ft)
+       150.    0.0200     0.150     0.000
+ 
+     PETMAX    PETMIN
+    (deg F)   (deg F)
+       40.0      35.0
+ 
+ Values of Retention Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.350     0.350     0.350     0.350     0.350     0.350     0.350     0.350     0.350     0.350     0.350     0.350
+ 
+ Storages (inches):
+       RETS      SURS
+  1.000E-03 1.000E-03
+
+ FINISHED PROCESSING INPUT FOR SECTION IWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING IMPERVIOUS LAND-SEGMENT NO.  194
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING IMPERVIOUS LAND-SEGMENT NO: 195     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    IWATFG     SLDFG     IWGFG    IQALFG
+          0         0         1         0         0         0
+ 
+      Printout level flags       Print-ivl Print-yrend
+ ATEMP SNOW IWAT  SLD IWTG IQAL      PIVL      PYREND
+     5    4    5    4    5    5         1          12
+ 
+ Imperv Land-segment id              Unit systems                Print-file nos
+                                   IUNITS    OUNITS             English    Metric
+ RESIDENTIAL                            1         1                  91         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION IWATER
+ 
+     CSNOFG    RTOPFG     VRSFG     VNNFG    RTLIFG
+          0         1         1         0         0
+ 
+       LSUR     SLSUR      NSUR     RETSC
+       (ft)          (nManning)      (ft)
+       250.    0.0350     0.030     0.000
+ 
+     PETMAX    PETMIN
+    (deg F)   (deg F)
+       40.0      35.0
+ 
+ Values of Retention Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+      0.036     0.036     0.049     0.049     0.049     0.065     0.065     0.065     0.049     0.049     0.049     0.036
+ 
+ Storages (inches):
+       RETS      SURS
+  1.000E-03 1.000E-03
+
+ FINISHED PROCESSING INPUT FOR SECTION IWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING IMPERVIOUS LAND-SEGMENT NO.  195
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING IMPLND   BLOCK
+ =======================================================================================================================
+
+ =======================================================================================================================
+ PROCESSING BMPRAC   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING BMP GENERATOR NO: 680     TIME STEP(DELT):   60  MINS
+ 
+                 Printout level flags                Print-ivl Print-yrend
+  FLOW CONS HEAT  SED   GQ  OXY  NUT PLNK   PH           PIVL    PYREND
+     4    4    4    4    4    4    4    4    4              1        12
+ 
+ Best Management-id      BMPTYP     NCONS    NGQUAL               Unit systems                  Print-file nos
+                                                                IUNITS    OUNITS              English    Metric
+ TEST BMP TO RCH 680          1         2         1                   1         1                   2         3
+ 
+  Flow flag
+     VOLFFG
+          0
+ 
+ Flow removal fraction
+      VOLFRC
+       0.10
+ 
+                            Conservative Constituent Flags
+      CONS1     CONS2     CONS3     CONS4     CONS5     CONS6     CONS7     CONS8     CONS9    CONS10
+          1         0
+ 
+              Conservative data
+    Name                 Units  Removal fraction
+    CONID                CQTYID     CONFRC
+     ALKALINITY              KG      0.20
+ 
+              Conservative data
+    Name                 Units  Removal fraction
+    CONID                CQTYID     CONFRC
+     CHLORIDE                KG      0.25
+ 
+  Heat flag
+      HTFFG
+          2
+ 
+ Heat removal fraction
+       HTFRC
+       0.30
+ 
+           Sediment flags
+       SAND      SILT      CLAY
+          0         1         2
+ 
+   Sediment removal fractions
+        Sand      Silt      Clay
+       0.40      0.50      0.60
+ 
+                            Generalized Quality Constituent Flags
+                     QUAL 1                                  QUAL 2                                  QUAL 3
+       soln      sand      silt      clay      soln      sand      silt      clay      soln      sand      silt      clay
+          0         1         2         0
+ 
+                        Qual data
+    Name                 Units              Removal fractions
+     GQID                GQTYID       Soln      Sand      Silt      Clay
+         PESTICIDE B4         G      0.70      0.80      0.90      0.80
+ 
+  Oxygen component flags
+        DOX       BOD
+          1         2
+ 
+   Oxygen components removal fractions
+         DOX       BOD
+       0.70      0.60
+ 
+  Nutrient flags
+                    Solution                     Adsorbed Ammonia              Adsorbed Phosphate
+        NO3       TAM       NO2       PO4      SAND      SILT      CLAY      SAND      SILT      CLAY
+          0         1         2         0         1         2         0         1         2         0
+ 
+   Dissolved nutrient removal fractions
+        NO3       TAM       NO3       PO4
+       0.50      0.40      0.30      0.20
+ 
+   Adsorbed nutrient removal fractions
+               Ammonia                     Phosphate
+       Sand      Silt      Clay      Sand      Silt      Clay
+       0.10      0.20      0.30      0.40      0.50      0.60
+ 
+               Plankton component flags
+       PHYT       ZOO       ORN       ORP       ORC
+          0         1         2         0         1
+ 
+   Plankton components removal fractions
+      Phyto       Zoo     Org N     Org P     Org C
+       0.70      0.80      0.90      0.80      0.70
+ 
+  Inorganic carbon component flags
+        TIC       CO2
+          2         0
+ 
+   Inorganic carbon components removal fractions
+         TIC       CO2
+       0.60      0.50
+ 
+  Acid mine drainage component flags
+       ACI1      ACI2      ACI3      ACI4      ACI5      ACI6      ACI7
+          0         1         2         0         1         2         0
+          1
+ 
+   Acid mine drainage chemcial removal fractions
+       ACI1      ACI2      ACI3      ACI4      ACI5      ACI6      ACI7
+
+
+ FINISHED PROCESSING BMP GENERATOR NO.  680
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING BMPRAC   BLOCK
+ =======================================================================================================================
+
+ =======================================================================================================================
+ PROCESSING RCHRES   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING RCHRES NO: 680     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     HYDRFG      ADFG    CONSFG      HTFG     SEDFG   GQUALFG      OXFG     NUTFG     PLKFG      PHFG
+          1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                    Print-ivl Print-yrend
+  HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB           PIVL    PYREND
+     5    5    4    5    5    4    5    5    5    4              1        12
+ 
+ Reach/reservoir-id      NEXITS               Unit systems                  Print-file nos      Lake-
+                                            IUNITS    OUNITS              English    Metric      flag
+ South River, Dooms           1                   1         1                  91         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION HYDR
+ 
+     VCONFG    AUX1FG    AUX2FG    AUX3FG     ODFV-flags for      ODGT-flags for      FUNCT-flags for
+                                              each poss. exit          poss. exit     each poss. exit
+          0         1         1         1       4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+ 
+                          MILES        FT        FT                  IN
+        DSN      FTBN       LEN     DELTH     STCOR        KS      DB50
+      0.000       680     30.43     0.000     0.000        .5 1.000E-02
+ 
+  (acre-ft)       CAT Init value of COLIND for each poss exit           Init value of OUTDGT for each poss exit (ft3/s)
+        VOL
+                              1         2         3         4         5         1         2         3         4         5
+       587.                4.00      4.00      4.00      4.00      4.00     0.000     0.000     0.000     0.000     0.000
+
+ INITIAL TOTAL OUTFLOW RATE:    1.201E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 1
+        DEP     STAGE     SAREA     AVDEP      TWID      HRAD
+         FT        FT     ACRES        FT        FT        FT
+  2.931E+00 2.931E+00 3.402E+02 1.726E+00 9.223E+01 1.663E+00
+
+ AUXILIARY STATE VARIABLES - GROUP 2
+      AVVEL    AVSECT
+     FT/SEC       FT2
+  7.547E-01 1.591E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 3
+      USTAR       TAU
+     FT/SEC    LB/FT2
+  0.000E+00 0.000E+00
+
+ FINISHED PROCESSING INPUT FOR SECTION HYDR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING RCHRES NO.  680
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING RCHRES NO: 660     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     HYDRFG      ADFG    CONSFG      HTFG     SEDFG   GQUALFG      OXFG     NUTFG     PLKFG      PHFG
+          1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                    Print-ivl Print-yrend
+  HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB           PIVL    PYREND
+     5    5    4    5    5    4    5    5    5    4              1        12
+ 
+ Reach/reservoir-id      NEXITS               Unit systems                  Print-file nos      Lake-
+                                            IUNITS    OUNITS              English    Metric      flag
+ South R at Harriston         1                   1         1                  91         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION HYDR
+ 
+     VCONFG    AUX1FG    AUX2FG    AUX3FG     ODFV-flags for      ODGT-flags for      FUNCT-flags for
+                                              each poss. exit          poss. exit     each poss. exit
+          0         1         1         1       4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+ 
+                          MILES        FT        FT                  IN
+        DSN      FTBN       LEN     DELTH     STCOR        KS      DB50
+      0.000       660     13.98     0.000     0.000        .5 1.000E-02
+ 
+  (acre-ft)       CAT Init value of COLIND for each poss exit           Init value of OUTDGT for each poss exit (ft3/s)
+        VOL
+                              1         2         3         4         5         1         2         3         4         5
+       568.                4.00      4.00      4.00      4.00      4.00     0.000     0.000     0.000     0.000     0.000
+
+ INITIAL TOTAL OUTFLOW RATE:    4.107E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 1
+        DEP     STAGE     SAREA     AVDEP      TWID      HRAD
+         FT        FT     ACRES        FT        FT        FT
+  3.806E+00 3.806E+00 1.880E+02 3.022E+00 1.109E+02 2.866E+00
+
+ AUXILIARY STATE VARIABLES - GROUP 2
+      AVVEL    AVSECT
+     FT/SEC       FT2
+  1.225E+00 3.352E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 3
+      USTAR       TAU
+     FT/SEC    LB/FT2
+  0.000E+00 0.000E+00
+
+ FINISHED PROCESSING INPUT FOR SECTION HYDR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING RCHRES NO.  660
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING RCHRES NO: 670     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     HYDRFG      ADFG    CONSFG      HTFG     SEDFG   GQUALFG      OXFG     NUTFG     PLKFG      PHFG
+          1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                    Print-ivl Print-yrend
+  HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB           PIVL    PYREND
+     5    5    4    5    5    4    5    5    5    4              1        12
+ 
+ Reach/reservoir-id      NEXITS               Unit systems                  Print-file nos      Lake-
+                                            IUNITS    OUNITS              English    Metric      flag
+ Christians C, Fshrvl         1                   1         1                  91         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION HYDR
+ 
+     VCONFG    AUX1FG    AUX2FG    AUX3FG     ODFV-flags for      ODGT-flags for      FUNCT-flags for
+                                              each poss. exit          poss. exit     each poss. exit
+          0         1         1         1       4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+ 
+                          MILES        FT        FT                  IN
+        DSN      FTBN       LEN     DELTH     STCOR        KS      DB50
+      0.000       670     19.53     0.000     0.000        .5 1.000E-02
+ 
+  (acre-ft)       CAT Init value of COLIND for each poss exit           Init value of OUTDGT for each poss exit (ft3/s)
+        VOL
+                              1         2         3         4         5         1         2         3         4         5
+       179.                4.00      4.00      4.00      4.00      4.00     0.000     0.000     0.000     0.000     0.000
+
+ INITIAL TOTAL OUTFLOW RATE:    8.389E+01
+
+ AUXILIARY STATE VARIABLES - GROUP 1
+        DEP     STAGE     SAREA     AVDEP      TWID      HRAD
+         FT        FT     ACRES        FT        FT        FT
+  1.639E+00 1.639E+00 1.431E+02 1.251E+00 6.045E+01 1.201E+00
+
+ AUXILIARY STATE VARIABLES - GROUP 2
+      AVVEL    AVSECT
+     FT/SEC       FT2
+  1.109E+00 7.561E+01
+
+ AUXILIARY STATE VARIABLES - GROUP 3
+      USTAR       TAU
+     FT/SEC    LB/FT2
+  0.000E+00 0.000E+00
+
+ FINISHED PROCESSING INPUT FOR SECTION HYDR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING RCHRES NO.  670
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING RCHRES NO: 640     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     HYDRFG      ADFG    CONSFG      HTFG     SEDFG   GQUALFG      OXFG     NUTFG     PLKFG      PHFG
+          1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                    Print-ivl Print-yrend
+  HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB           PIVL    PYREND
+     5    5    4    5    5    4    5    5    5    4              1        12
+ 
+ Reach/reservoir-id      NEXITS               Unit systems                  Print-file nos      Lake-
+                                            IUNITS    OUNITS              English    Metric      flag
+ Middle R nr Verona           1                   1         1                  91         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION HYDR
+ 
+     VCONFG    AUX1FG    AUX2FG    AUX3FG     ODFV-flags for      ODGT-flags for      FUNCT-flags for
+                                              each poss. exit          poss. exit     each poss. exit
+          0         1         1         1       4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+ 
+                          MILES        FT        FT                  IN
+        DSN      FTBN       LEN     DELTH     STCOR        KS      DB50
+      0.000       640     32.06     0.000     0.000        .5 1.000E-02
+ 
+  (acre-ft)       CAT Init value of COLIND for each poss exit           Init value of OUTDGT for each poss exit (ft3/s)
+        VOL
+                              1         2         3         4         5         1         2         3         4         5
+       804.                4.00      4.00      4.00      4.00      4.00     0.000     0.000     0.000     0.000     0.000
+
+ INITIAL TOTAL OUTFLOW RATE:    1.989E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 1
+        DEP     STAGE     SAREA     AVDEP      TWID      HRAD
+         FT        FT     ACRES        FT        FT        FT
+  3.185E+00 3.185E+00 3.795E+02 2.119E+00 9.765E+01 2.031E+00
+
+ AUXILIARY STATE VARIABLES - GROUP 2
+      AVVEL    AVSECT
+     FT/SEC       FT2
+  9.614E-01 2.069E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 3
+      USTAR       TAU
+     FT/SEC    LB/FT2
+  0.000E+00 0.000E+00
+
+ FINISHED PROCESSING INPUT FOR SECTION HYDR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING RCHRES NO.  640
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING RCHRES NO: 650     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     HYDRFG      ADFG    CONSFG      HTFG     SEDFG   GQUALFG      OXFG     NUTFG     PLKFG      PHFG
+          1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                    Print-ivl Print-yrend
+  HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB           PIVL    PYREND
+     5    5    4    5    5    4    5    5    5    4              1        12
+ 
+ Reach/reservoir-id      NEXITS               Unit systems                  Print-file nos      Lake-
+                                            IUNITS    OUNITS              English    Metric      flag
+ Middle R nr Grottoes         1                   1         1                  91         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION HYDR
+ 
+     VCONFG    AUX1FG    AUX2FG    AUX3FG     ODFV-flags for      ODGT-flags for      FUNCT-flags for
+                                              each poss. exit          poss. exit     each poss. exit
+          0         1         1         1       4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+ 
+                          MILES        FT        FT                  IN
+        DSN      FTBN       LEN     DELTH     STCOR        KS      DB50
+      0.000       650     27.80     0.000     0.000        .5 1.000E-02
+ 
+  (acre-ft)       CAT Init value of COLIND for each poss exit           Init value of OUTDGT for each poss exit (ft3/s)
+        VOL
+                              1         2         3         4         5         1         2         3         4         5
+       634.                4.00      4.00      4.00      4.00      4.00     0.000     0.000     0.000     0.000     0.000
+
+ INITIAL TOTAL OUTFLOW RATE:    4.351E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 1
+        DEP     STAGE     SAREA     AVDEP      TWID      HRAD
+         FT        FT     ACRES        FT        FT        FT
+  1.730E+00 1.730E+00 3.503E+02 1.810E+00 1.040E+02 1.749E+00
+
+ AUXILIARY STATE VARIABLES - GROUP 2
+      AVVEL    AVSECT
+     FT/SEC       FT2
+  2.313E+00 1.881E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 3
+      USTAR       TAU
+     FT/SEC    LB/FT2
+  0.000E+00 0.000E+00
+
+ FINISHED PROCESSING INPUT FOR SECTION HYDR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING RCHRES NO.  650
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING RCHRES NO: 580     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     HYDRFG      ADFG    CONSFG      HTFG     SEDFG   GQUALFG      OXFG     NUTFG     PLKFG      PHFG
+          1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                    Print-ivl Print-yrend
+  HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB           PIVL    PYREND
+     5    5    4    5    5    4    5    5    5    4              1        12
+ 
+ Reach/reservoir-id      NEXITS               Unit systems                  Print-file nos      Lake-
+                                            IUNITS    OUNITS              English    Metric      flag
+ North R nr Burketown         1                   1         1                  91         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION HYDR
+ 
+     VCONFG    AUX1FG    AUX2FG    AUX3FG     ODFV-flags for      ODGT-flags for      FUNCT-flags for
+                                              each poss. exit          poss. exit     each poss. exit
+          0         1         1         1       4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+ 
+                          MILES        FT        FT                  IN
+        DSN      FTBN       LEN     DELTH     STCOR        KS      DB50
+      0.000       580     37.01     0.000     0.000        .5 1.000E-02
+ 
+  (acre-ft)       CAT Init value of COLIND for each poss exit           Init value of OUTDGT for each poss exit (ft3/s)
+        VOL
+                              1         2         3         4         5         1         2         3         4         5
+      1072.                4.00      4.00      4.00      4.00      4.00     0.000     0.000     0.000     0.000     0.000
+
+ INITIAL TOTAL OUTFLOW RATE:    5.611E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 1
+        DEP     STAGE     SAREA     AVDEP      TWID      HRAD
+         FT        FT     ACRES        FT        FT        FT
+  1.965E+00 1.965E+00 5.182E+02 2.069E+00 1.155E+02 1.997E+00
+
+ AUXILIARY STATE VARIABLES - GROUP 2
+      AVVEL    AVSECT
+     FT/SEC       FT2
+  2.348E+00 2.390E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 3
+      USTAR       TAU
+     FT/SEC    LB/FT2
+  0.000E+00 0.000E+00
+
+ FINISHED PROCESSING INPUT FOR SECTION HYDR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING RCHRES NO.  580
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING RCHRES NO: 590     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     HYDRFG      ADFG    CONSFG      HTFG     SEDFG   GQUALFG      OXFG     NUTFG     PLKFG      PHFG
+          1         0         0         0         0         0         0         0         0         0
+ 
+                 Printout level flags                    Print-ivl Print-yrend
+  HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB           PIVL    PYREND
+     5    5    4    5    5    4    5    5    5    4              1        12
+ 
+ Reach/reservoir-id      NEXITS               Unit systems                  Print-file nos      Lake-
+                                            IUNITS    OUNITS              English    Metric      flag
+ SF Shenandoah, Lynwd         1                   1         1                  91         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION HYDR
+ 
+     VCONFG    AUX1FG    AUX2FG    AUX3FG     ODFV-flags for      ODGT-flags for      FUNCT-flags for
+                                              each poss. exit          poss. exit     each poss. exit
+          0         1         1         1       4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+ 
+                          MILES        FT        FT                  IN
+        DSN      FTBN       LEN     DELTH     STCOR        KS      DB50
+      0.000       590     17.01     0.000     0.000        .5 1.000E-02
+ 
+  (acre-ft)       CAT Init value of COLIND for each poss exit           Init value of OUTDGT for each poss exit (ft3/s)
+        VOL
+                              1         2         3         4         5         1         2         3         4         5
+      1528.                4.00      4.00      4.00      4.00      4.00     0.000     0.000     0.000     0.000     0.000
+
+ INITIAL TOTAL OUTFLOW RATE:    1.460E+03
+
+ AUXILIARY STATE VARIABLES - GROUP 1
+        DEP     STAGE     SAREA     AVDEP      TWID      HRAD
+         FT        FT     ACRES        FT        FT        FT
+  4.380E+00 4.380E+00 4.681E+02 3.265E+00 2.270E+02 3.173E+00
+
+ AUXILIARY STATE VARIABLES - GROUP 2
+      AVVEL    AVSECT
+     FT/SEC       FT2
+  1.970E+00 7.411E+02
+
+ AUXILIARY STATE VARIABLES - GROUP 3
+      USTAR       TAU
+     FT/SEC    LB/FT2
+  0.000E+00 0.000E+00
+
+ FINISHED PROCESSING INPUT FOR SECTION HYDR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING RCHRES NO.  590
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING RCHRES   BLOCK
+ =======================================================================================================================
+
+ =======================================================================================================================
+ PROCESSING COPY     BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING COPY OPERATION NO.  100
+ 
+        NPT       NMN
+          0         7
+
+ FINISHED PROCESSING COPY OPERATION NO.  100
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING COPY     BLOCK
+ =======================================================================================================================
+
+ ====================================================================================================================================
+ SPEC-ACTIONS BLOCK NOT FOUND
+
+ FINISHED PROCESSING SPEC-ACTIONS BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+
+ INGROUP NO.  1    OSVSZ= 9500    INPAD WIDTH=  4039 INTERVALS    MAXROW=   61  RUNWID=    0
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND  191
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     PWATER  PERO     1   1    1.138E+04  RCHRES  580 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.861E+03  RCHRES  590 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    4.248E+03  RCHRES  640 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.243E+03  RCHRES  650 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.900E+03  RCHRES  660 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.004E+03  RCHRES  670 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    6.667E+00  BMPRAC  680 INFLOW  IVOL     1   1
+     PWATER  SURO     1   1    3.140E+05  COPY    100 INPUT   MEAN     1   1
+     PWATER  IFWO     1   1    3.140E+05  COPY    100 INPUT   MEAN     2   1
+     PWATER  AGWO     1   1    3.140E+05  COPY    100 INPUT   MEAN     3   1
+     PWATER  PET      1   1    3.140E+05  COPY    100 INPUT   MEAN     4   1
+     PWATER  TAET     1   1    3.140E+05  COPY    100 INPUT   MEAN     5   1
+     PWATER  UZS      1   1    3.140E+05  COPY    100 INPUT   MEAN     6   1
+     PWATER  LZS      1   1    3.140E+05  COPY    100 INPUT   MEAN     7   1
+     PWATER  PERO     1   1    1.667E+00  RCHRES  680 INFLOW  IVOL     1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND  192
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     PWATER  PERO     1   1    3.776E+02  RCHRES  580 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.087E+02  RCHRES  590 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.667E+02  RCHRES  640 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.281E+02  RCHRES  650 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    5.758E+01  RCHRES  660 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.371E+02  RCHRES  670 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    7.333E+00  BMPRAC  680 INFLOW  IVOL     1   1
+     PWATER  SURO     1   1    1.689E+04  COPY    100 INPUT   MEAN     1   1
+     PWATER  IFWO     1   1    1.689E+04  COPY    100 INPUT   MEAN     2   1
+     PWATER  AGWO     1   1    1.689E+04  COPY    100 INPUT   MEAN     3   1
+     PWATER  PET      1   1    1.689E+04  COPY    100 INPUT   MEAN     4   1
+     PWATER  TAET     1   1    1.689E+04  COPY    100 INPUT   MEAN     5   1
+     PWATER  UZS      1   1    1.689E+04  COPY    100 INPUT   MEAN     6   1
+     PWATER  LZS      1   1    1.689E+04  COPY    100 INPUT   MEAN     7   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND  193
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     PWATER  PERO     1   1    8.740E+02  RCHRES  580 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    4.833E+02  RCHRES  590 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    6.175E+02  RCHRES  640 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    5.279E+02  RCHRES  650 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.332E+02  RCHRES  660 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    3.173E+02  RCHRES  670 INFLOW  IVOL     1   1
+     PWATER  SURO     1   1    3.910E+04  COPY    100 INPUT   MEAN     1   1
+     PWATER  IFWO     1   1    3.910E+04  COPY    100 INPUT   MEAN     2   1
+     PWATER  AGWO     1   1    3.910E+04  COPY    100 INPUT   MEAN     3   1
+     PWATER  PET      1   1    3.910E+04  COPY    100 INPUT   MEAN     4   1
+     PWATER  TAET     1   1    3.910E+04  COPY    100 INPUT   MEAN     5   1
+     PWATER  UZS      1   1    3.910E+04  COPY    100 INPUT   MEAN     6   1
+     PWATER  LZS      1   1    3.910E+04  COPY    100 INPUT   MEAN     7   1
+     PWATER  PERO     1   1    8.325E+01  RCHRES  680 INFLOW  IVOL     1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND  194
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     PWATER  PERO     1   1    3.713E+03  RCHRES  580 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.053E+03  RCHRES  590 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.623E+03  RCHRES  640 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.243E+03  RCHRES  650 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    5.662E+02  RCHRES  660 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.348E+03  RCHRES  670 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.297E+03  BMPRAC  680 INFLOW  IVOL     1   1
+     PWATER  SURO     1   1    1.661E+05  COPY    100 INPUT   MEAN     1   1
+     PWATER  IFWO     1   1    1.661E+05  COPY    100 INPUT   MEAN     2   1
+     PWATER  AGWO     1   1    1.661E+05  COPY    100 INPUT   MEAN     3   1
+     PWATER  PET      1   1    1.661E+05  COPY    100 INPUT   MEAN     4   1
+     PWATER  TAET     1   1    1.661E+05  COPY    100 INPUT   MEAN     5   1
+     PWATER  UZS      1   1    1.661E+05  COPY    100 INPUT   MEAN     6   1
+     PWATER  LZS      1   1    1.661E+05  COPY    100 INPUT   MEAN     7   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND  195
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     PWATER  PERO     1   1    1.163E+03  RCHRES  580 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    4.442E+02  RCHRES  590 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.652E+02  RCHRES  640 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    8.002E+02  RCHRES  650 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.087E+02  RCHRES  660 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    2.564E+02  RCHRES  670 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    8.362E+02  BMPRAC  680 INFLOW  IVOL     1   1
+     PWATER  SURO     1   1    4.769E+04  COPY    100 INPUT   MEAN     1   1
+     PWATER  IFWO     1   1    4.769E+04  COPY    100 INPUT   MEAN     2   1
+     PWATER  AGWO     1   1    4.769E+04  COPY    100 INPUT   MEAN     3   1
+     PWATER  PET      1   1    4.769E+04  COPY    100 INPUT   MEAN     4   1
+     PWATER  TAET     1   1    4.769E+04  COPY    100 INPUT   MEAN     5   1
+     PWATER  UZS      1   1    4.769E+04  COPY    100 INPUT   MEAN     6   1
+     PWATER  LZS      1   1    4.769E+04  COPY    100 INPUT   MEAN     7   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND  196
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     PWATER  PERO     1   1    2.035E+03  RCHRES  580 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.125E+03  RCHRES  590 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.438E+03  RCHRES  640 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    1.229E+03  RCHRES  650 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    3.102E+02  RCHRES  660 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    7.388E+02  RCHRES  670 INFLOW  IVOL     1   1
+     PWATER  PERO     1   1    7.106E+02  BMPRAC  680 INFLOW  IVOL     1   1
+     PWATER  SURO     1   1    9.104E+04  COPY    100 INPUT   MEAN     1   1
+     PWATER  IFWO     1   1    9.104E+04  COPY    100 INPUT   MEAN     2   1
+     PWATER  AGWO     1   1    9.104E+04  COPY    100 INPUT   MEAN     3   1
+     PWATER  PET      1   1    9.104E+04  COPY    100 INPUT   MEAN     4   1
+     PWATER  TAET     1   1    9.104E+04  COPY    100 INPUT   MEAN     5   1
+     PWATER  UZS      1   1    9.104E+04  COPY    100 INPUT   MEAN     6   1
+     PWATER  LZS      1   1    9.104E+04  COPY    100 INPUT   MEAN     7   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   IMPLND  194
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     IWATER  SURO     1   1    8.333E-01  RCHRES  590 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    8.333E-02  RCHRES  650 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    2.833E+00  BMPRAC  680 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    4.500E+01  COPY    100 INPUT   MEAN     1   1
+     IWATER  PET      1   1    4.500E+01  COPY    100 INPUT   MEAN     4   1
+     IWATER  IMPEV    1   1    4.500E+01  COPY    100 INPUT   MEAN     5   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   IMPLND  195
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   PETINP   1   1
+     WDM1     41      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+     WDM1     44        60      SAME     1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46        60      SAME     1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1     49        60      SAME     1.000E+00    EXTNL   GATMP    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     IWATER  SURO     1   1    4.700E+02  RCHRES  580 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    1.426E+02  RCHRES  590 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    6.408E+01  RCHRES  640 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    2.861E+02  RCHRES  650 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    4.283E+01  RCHRES  660 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    9.958E+01  RCHRES  670 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    2.972E+02  BMPRAC  680 INFLOW  IVOL     1   1
+     IWATER  SURO     1   1    1.683E+04  COPY    100 INPUT   MEAN     1   1
+     IWATER  PET      1   1    1.683E+04  COPY    100 INPUT   MEAN     4   1
+     IWATER  IMPEV    1   1    1.683E+04  COPY    100 INPUT   MEAN     5   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   BMPRAC  680
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  PERO     1   1  6.667E+00    INFLOW  IVOL     1   1
+     PERLND  192 PWATER  PERO     1   1  7.333E+00    INFLOW  IVOL     1   1
+     PERLND  194 PWATER  PERO     1   1  1.297E+03    INFLOW  IVOL     1   1
+     PERLND  195 PWATER  PERO     1   1  8.362E+02    INFLOW  IVOL     1   1
+     PERLND  196 PWATER  PERO     1   1  7.106E+02    INFLOW  IVOL     1   1
+     IMPLND  194 IWATER  SURO     1   1  2.833E+00    INFLOW  IVOL     1   1
+     IMPLND  195 IWATER  SURO     1   1  2.972E+02    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     ROFLOW  ROVOL    1   1    1.000E+00  RCHRES  680 INFLOW  IVOL     1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   RCHRES  680
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   POTEV    1   1
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     BMPRAC  680 ROFLOW  ROVOL    1   1  1.000E+00    INFLOW  IVOL     1   1
+     PERLND  191 PWATER  PERO     1   1  1.667E+00    INFLOW  IVOL     1   1
+     PERLND  193 PWATER  PERO     1   1  8.325E+01    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     ROFLOW  ROVOL    1   1    1.000E+00  RCHRES  660 INFLOW  IVOL     1   1
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     ROFLOW  ROVOL    1   1    5.042E-01      SUM   WDM1   1022      1440
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   RCHRES  660
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   POTEV    1   1
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  PERO     1   1  1.900E+03    INFLOW  IVOL     1   1
+     PERLND  192 PWATER  PERO     1   1  5.758E+01    INFLOW  IVOL     1   1
+     PERLND  193 PWATER  PERO     1   1  1.332E+02    INFLOW  IVOL     1   1
+     PERLND  194 PWATER  PERO     1   1  5.662E+02    INFLOW  IVOL     1   1
+     PERLND  195 PWATER  PERO     1   1  2.087E+02    INFLOW  IVOL     1   1
+     PERLND  196 PWATER  PERO     1   1  3.102E+02    INFLOW  IVOL     1   1
+     IMPLND  195 IWATER  SURO     1   1  4.283E+01    INFLOW  IVOL     1   1
+     RCHRES  680 ROFLOW  ROVOL    1   1  1.000E+00    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     ROFLOW  ROVOL    1   1    1.000E+00  RCHRES  590 INFLOW  IVOL     1   1
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     ROFLOW  ROVOL    1   1    5.042E-01      SUM   WDM1   1020      1440
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   RCHRES  670
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   POTEV    1   1
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  PERO     1   1  1.004E+03    INFLOW  IVOL     1   1
+     PERLND  192 PWATER  PERO     1   1  1.371E+02    INFLOW  IVOL     1   1
+     PERLND  193 PWATER  PERO     1   1  3.173E+02    INFLOW  IVOL     1   1
+     PERLND  194 PWATER  PERO     1   1  1.348E+03    INFLOW  IVOL     1   1
+     PERLND  195 PWATER  PERO     1   1  2.564E+02    INFLOW  IVOL     1   1
+     PERLND  196 PWATER  PERO     1   1  7.388E+02    INFLOW  IVOL     1   1
+     IMPLND  195 IWATER  SURO     1   1  9.958E+01    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     ROFLOW  ROVOL    1   1    1.000E+00  RCHRES  650 INFLOW  IVOL     1   1
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     ROFLOW  ROVOL    1   1    5.042E-01      SUM   WDM1   1021      1440
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   RCHRES  640
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   POTEV    1   1
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  PERO     1   1  4.248E+03    INFLOW  IVOL     1   1
+     PERLND  192 PWATER  PERO     1   1  2.667E+02    INFLOW  IVOL     1   1
+     PERLND  193 PWATER  PERO     1   1  6.175E+02    INFLOW  IVOL     1   1
+     PERLND  194 PWATER  PERO     1   1  2.623E+03    INFLOW  IVOL     1   1
+     PERLND  195 PWATER  PERO     1   1  2.652E+02    INFLOW  IVOL     1   1
+     PERLND  196 PWATER  PERO     1   1  1.438E+03    INFLOW  IVOL     1   1
+     IMPLND  195 IWATER  SURO     1   1  6.408E+01    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     ROFLOW  ROVOL    1   1    1.000E+00  RCHRES  650 INFLOW  IVOL     1   1
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     ROFLOW  ROVOL    1   1    5.042E-01      SUM   WDM1   1018      1440
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   RCHRES  650
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   POTEV    1   1
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  PERO     1   1  1.243E+03    INFLOW  IVOL     1   1
+     PERLND  192 PWATER  PERO     1   1  2.281E+02    INFLOW  IVOL     1   1
+     PERLND  193 PWATER  PERO     1   1  5.279E+02    INFLOW  IVOL     1   1
+     PERLND  194 PWATER  PERO     1   1  2.243E+03    INFLOW  IVOL     1   1
+     PERLND  195 PWATER  PERO     1   1  8.002E+02    INFLOW  IVOL     1   1
+     PERLND  196 PWATER  PERO     1   1  1.229E+03    INFLOW  IVOL     1   1
+     IMPLND  194 IWATER  SURO     1   1  8.333E-02    INFLOW  IVOL     1   1
+     IMPLND  195 IWATER  SURO     1   1  2.861E+02    INFLOW  IVOL     1   1
+     RCHRES  670 ROFLOW  ROVOL    1   1  1.000E+00    INFLOW  IVOL     1   1
+     RCHRES  640 ROFLOW  ROVOL    1   1  1.000E+00    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     ROFLOW  ROVOL    1   1    1.000E+00  RCHRES  590 INFLOW  IVOL     1   1
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     ROFLOW  ROVOL    1   1    5.042E-01      SUM   WDM1   1019      1440
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   RCHRES  580
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   POTEV    1   1
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  PERO     1   1  1.138E+04    INFLOW  IVOL     1   1
+     PERLND  192 PWATER  PERO     1   1  3.776E+02    INFLOW  IVOL     1   1
+     PERLND  193 PWATER  PERO     1   1  8.740E+02    INFLOW  IVOL     1   1
+     PERLND  194 PWATER  PERO     1   1  3.713E+03    INFLOW  IVOL     1   1
+     PERLND  195 PWATER  PERO     1   1  1.163E+03    INFLOW  IVOL     1   1
+     PERLND  196 PWATER  PERO     1   1  2.035E+03    INFLOW  IVOL     1   1
+     IMPLND  195 IWATER  SURO     1   1  4.700E+02    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     ROFLOW  ROVOL    1   1    1.000E+00  RCHRES  590 INFLOW  IVOL     1   1
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     ROFLOW  ROVOL    1   1    5.042E-01      SUM   WDM1   1016      1440
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   RCHRES  590
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    705        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1     40      1440      DIV      8.600E-01    EXTNL   POTEV    1   1
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  PERO     1   1  1.861E+03    INFLOW  IVOL     1   1
+     PERLND  192 PWATER  PERO     1   1  2.087E+02    INFLOW  IVOL     1   1
+     PERLND  193 PWATER  PERO     1   1  4.833E+02    INFLOW  IVOL     1   1
+     PERLND  194 PWATER  PERO     1   1  2.053E+03    INFLOW  IVOL     1   1
+     PERLND  195 PWATER  PERO     1   1  4.442E+02    INFLOW  IVOL     1   1
+     PERLND  196 PWATER  PERO     1   1  1.125E+03    INFLOW  IVOL     1   1
+     IMPLND  194 IWATER  SURO     1   1  8.333E-01    INFLOW  IVOL     1   1
+     IMPLND  195 IWATER  SURO     1   1  1.426E+02    INFLOW  IVOL     1   1
+     RCHRES  660 ROFLOW  ROVOL    1   1  1.000E+00    INFLOW  IVOL     1   1
+     RCHRES  650 ROFLOW  ROVOL    1   1  1.000E+00    INFLOW  IVOL     1   1
+     RCHRES  580 ROFLOW  ROVOL    1   1  1.000E+00    INFLOW  IVOL     1   1
+
+   OUTPUT TIMESERIES
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     ROFLOW  ROVOL    1   1    5.042E-01      SUM   WDM1   1017      1440
+     ROFLOW  ROVOL    1   1    1.734E-05      SAME  WDM1   1008        60
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   COPY    100
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND  191 PWATER  SURO     1   1  3.140E+05    INPUT   MEAN     1   1
+     PERLND  191 PWATER  IFWO     1   1  3.140E+05    INPUT   MEAN     2   1
+     PERLND  191 PWATER  AGWO     1   1  3.140E+05    INPUT   MEAN     3   1
+     PERLND  191 PWATER  PET      1   1  3.140E+05    INPUT   MEAN     4   1
+     PERLND  191 PWATER  TAET     1   1  3.140E+05    INPUT   MEAN     5   1
+     PERLND  191 PWATER  UZS      1   1  3.140E+05    INPUT   MEAN     6   1
+     PERLND  191 PWATER  LZS      1   1  3.140E+05    INPUT   MEAN     7   1
+     PERLND  192 PWATER  SURO     1   1  1.689E+04    INPUT   MEAN     1   1
+     PERLND  192 PWATER  IFWO     1   1  1.689E+04    INPUT   MEAN     2   1
+     PERLND  192 PWATER  AGWO     1   1  1.689E+04    INPUT   MEAN     3   1
+     PERLND  192 PWATER  PET      1   1  1.689E+04    INPUT   MEAN     4   1
+     PERLND  192 PWATER  TAET     1   1  1.689E+04    INPUT   MEAN     5   1
+     PERLND  192 PWATER  UZS      1   1  1.689E+04    INPUT   MEAN     6   1
+     PERLND  192 PWATER  LZS      1   1  1.689E+04    INPUT   MEAN     7   1
+     PERLND  193 PWATER  SURO     1   1  3.910E+04    INPUT   MEAN     1   1
+     PERLND  193 PWATER  IFWO     1   1  3.910E+04    INPUT   MEAN     2   1
+     PERLND  193 PWATER  AGWO     1   1  3.910E+04    INPUT   MEAN     3   1
+     PERLND  193 PWATER  PET      1   1  3.910E+04    INPUT   MEAN     4   1
+     PERLND  193 PWATER  TAET     1   1  3.910E+04    INPUT   MEAN     5   1
+     PERLND  193 PWATER  UZS      1   1  3.910E+04    INPUT   MEAN     6   1
+     PERLND  193 PWATER  LZS      1   1  3.910E+04    INPUT   MEAN     7   1
+     PERLND  194 PWATER  SURO     1   1  1.661E+05    INPUT   MEAN     1   1
+     PERLND  194 PWATER  IFWO     1   1  1.661E+05    INPUT   MEAN     2   1
+     PERLND  194 PWATER  AGWO     1   1  1.661E+05    INPUT   MEAN     3   1
+     PERLND  194 PWATER  PET      1   1  1.661E+05    INPUT   MEAN     4   1
+     PERLND  194 PWATER  TAET     1   1  1.661E+05    INPUT   MEAN     5   1
+     PERLND  194 PWATER  UZS      1   1  1.661E+05    INPUT   MEAN     6   1
+     PERLND  194 PWATER  LZS      1   1  1.661E+05    INPUT   MEAN     7   1
+     PERLND  195 PWATER  SURO     1   1  4.769E+04    INPUT   MEAN     1   1
+     PERLND  195 PWATER  IFWO     1   1  4.769E+04    INPUT   MEAN     2   1
+     PERLND  195 PWATER  AGWO     1   1  4.769E+04    INPUT   MEAN     3   1
+     PERLND  195 PWATER  PET      1   1  4.769E+04    INPUT   MEAN     4   1
+     PERLND  195 PWATER  TAET     1   1  4.769E+04    INPUT   MEAN     5   1
+     PERLND  195 PWATER  UZS      1   1  4.769E+04    INPUT   MEAN     6   1
+     PERLND  195 PWATER  LZS      1   1  4.769E+04    INPUT   MEAN     7   1
+     PERLND  196 PWATER  SURO     1   1  9.104E+04    INPUT   MEAN     1   1
+     PERLND  196 PWATER  IFWO     1   1  9.104E+04    INPUT   MEAN     2   1
+     PERLND  196 PWATER  AGWO     1   1  9.104E+04    INPUT   MEAN     3   1
+     PERLND  196 PWATER  PET      1   1  9.104E+04    INPUT   MEAN     4   1
+     PERLND  196 PWATER  TAET     1   1  9.104E+04    INPUT   MEAN     5   1
+     PERLND  196 PWATER  UZS      1   1  9.104E+04    INPUT   MEAN     6   1
+     PERLND  196 PWATER  LZS      1   1  9.104E+04    INPUT   MEAN     7   1
+     IMPLND  194 IWATER  SURO     1   1  4.500E+01    INPUT   MEAN     1   1
+     IMPLND  194 IWATER  PET      1   1  4.500E+01    INPUT   MEAN     4   1
+     IMPLND  194 IWATER  IMPEV    1   1  4.500E+01    INPUT   MEAN     5   1
+     IMPLND  195 IWATER  SURO     1   1  1.683E+04    INPUT   MEAN     1   1
+     IMPLND  195 IWATER  PET      1   1  1.683E+04    INPUT   MEAN     4   1
+     IMPLND  195 IWATER  IMPEV    1   1  1.683E+04    INPUT   MEAN     5   1
+
+   OUTPUT TIMESERIES
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     OUTPUT  MEAN     1   1    1.450E-06      SAME  WDM1   1009        60
+     OUTPUT  MEAN     2   1    1.450E-06      SAME  WDM1   1010        60
+     OUTPUT  MEAN     3   1    1.450E-06      SAME  WDM1   1011        60
+     OUTPUT  MEAN     4   1    1.450E-06      SUM   WDM1   1012      1440
+     OUTPUT  MEAN     5   1    1.450E-06      SUM   WDM1   1013      1440
+     OUTPUT  MEAN     6   1    1.450E-06      SUM   WDM1   1014      1440
+     OUTPUT  MEAN     7   1    1.450E-06      SUM   WDM1   1015      1440
+
+ FINISHED PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+ ====================================================================================================================================
+ 
+ INTERPRETATION OF RUN DATA SET COMPLETE
+ 

@@ -1,0 +1,45 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "winver.h"
+#include "winresrc.h"
+#include "resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 13,0,4,0
+ PRODUCTVERSION 13,0,4,0
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Aqua Terra Consultants\0"
+            VALUE "FileDescription", "HassEnt\0"
+            VALUE "FileVersion", "13, 0, 4, 0\0"
+            VALUE "InternalName", "HassEnt\0"
+            VALUE "LegalCopyright", "Copyright © 1994-2003\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "HASS_ENT.DLL\0"
+            VALUE "ProductName", "Hass Entry DLL\0"
+            VALUE "ProductVersion", "13, 0, 4, 0\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

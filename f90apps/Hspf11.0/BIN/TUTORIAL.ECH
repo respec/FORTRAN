@@ -1,0 +1,104 @@
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+ 
+   Developed for:                Developed by:
+ 
+     U.S. Environmental            Hydrocomp, Incorporated
+       Protection Agency             415-637-9060
+     Office of Research
+       and Development           Modified and Maintained by
+     Center for Exposure
+       Assessment Modeling         Aqua Terra Consultants
+     College Station Road            415-962-1864
+     Athens, Georgia 30613
+     706/546-3590                Release 11
+                                 September 1995
+ 
+ 
+ Start of Job
+ 
+ PREPROCESSING USERS CONTROL INPUT.
+ 
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+ 
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND PERLND      
+ FOUND END PERLND      
+ FOUND IMPLND      
+ FOUND END IMPLND      
+ FOUND RCHRES      
+ FOUND END RCHRES      
+ FOUND FTABLES     
+ FOUND END FTABLES     
+ FOUND EXT SOURCES 
+ FOUND END EXT SOURCES 
+ FOUND SCHEMATIC   
+ FOUND END SCHEMATIC   
+ FOUND EXT TARGETS 
+ FOUND END EXT TARGETS 
+ FOUND MASS-LINK   
+ FOUND END MASS-LINK   
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    UCI Created by WinHSPF for tutorial
+
+   START       1990/01/01 00:00  END    1990/12/31 24:00
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1989/12/31 24:60    1990/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  1
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  0
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG=     1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  UNITFG=     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING FTABLES BLOCK
+
+ FINISHED PROCESSING FTABLES BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING MASS LINK BLOCK
+ 
+ 
+ FINISHED PROCESSING MASS LINK BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING PERLND   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO: 101     TIME STEP(DELT):   60  MINS

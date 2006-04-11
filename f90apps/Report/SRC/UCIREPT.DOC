@@ -1,0 +1,45 @@
+C
+C
+C
+      INTEGER FUNCTION REPEXT
+     I                       (REPID)
+C
+C     + + + PURPOSE + + +
+C     check to see if a standard report exists
+C       1-exists, 0-does not exist
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   REPID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     REPID - report id to check
+C
+C
+C
+      SUBROUTINE ADDREPT
+     I                  (REPID)
+C
+C     + + + PURPOSE + + +
+C     add a standard report
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   REPID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     REPID - report id to add
+C
+C
+C
+C
+      SUBROUTINE DELREPT
+     I                  (REPID)
+C
+C     + + + PURPOSE + + +
+C     delete a standard report
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   REPID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     REPID - report id to delete
+C

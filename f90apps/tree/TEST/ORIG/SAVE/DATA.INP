@@ -1,0 +1,54 @@
+FldPeakVal
+Flood Peak Value
+CFS
+single float
+
+PtLocn
+Point Location
+Lat/Long
+xy-pair float
+
+RetPer
+Return Period
+Days
+single time
+
+AnnPks
+Annual Peaks
+CFS
+array float
+
+RegParms
+Reg Parameters
+Unknown
+unknown unknown
+
+RegParmDB
+Reg Parameters Data Base
+Unknown
+unknown unknown
+
+DailyVals
+Daily Values
+CFS
+array float
+
+NDParms
+ND Parameters
+Unknown
+unknown unknown
+
+NwisDB
+NWIS Data Base
+Unknown
+unknown unknown
+
+HspfParms
+HSPF Parameters
+Unknown
+unknown unknown
+
+PrmsParms
+PRMS Parameters
+Unknown
+unknown unknown

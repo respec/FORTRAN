@@ -1,0 +1,9 @@
+# This file contains Lahey LF90 module information
+# Created on Mon Nov 18 10:04:03 1996
+# Each line contains the module name, followed by the DOS file
+# name used to store module information and library object
+# data files, followed by the name of the sourcefile for the module.
+# Lines beginning with # are comments.
+uci uci ..\src\uci.for
+tsins tsins ..\src\tsins.for
+osv osv ..\src\osv.for

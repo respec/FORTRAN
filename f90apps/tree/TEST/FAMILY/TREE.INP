@@ -1,0 +1,11 @@
+method AG & JK
+output AG-K
+output SG-K
+output JG-K
+input AMG
+input JLK
+
+method MI & RG
+output AMG
+input MI
+input RG

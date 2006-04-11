@@ -1,0 +1,312 @@
+C
+C
+C
+      PROGRAM   CH2DRV
+C
+C     + + + PURPOSE + + +
+C     driver for new Ch2 modules - report and bmprac - testing code
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmesfl.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      FILES(15),I,I0,WDMFL,OPID,OPTYP,IDNO,SREC,EREC,
+     $             RETCOD,IOPT,MKFILS,SCLU,SGRP,KEY,LIKE,
+     $             OMCODE,TABNO,UUNITS,INIT,ADDFG,OCCUR,
+     $             TCLU,TGRP,KGRP,IVAL,IFUN,I1,I2
+      LOGICAL      LFLAG
+      CHARACTER*64 HMSNAM,WDNAME,ECHNAM
+      CHARACTER*1  CHSTR1(20)
+      CHARACTER*8  ITMNAM
+      CHARACTER*10 CTXT10
+      CHARACTER*12 CSCEN,TNAME
+      CHARACTER*20 CTXT
+      CHARACTER*64 FNAME
+      CHARACTER*80 CBUFF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR1,CHSTR)
+      CHARACTER*20 CHSTR
+C
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     WDBFIN, XGTARG, FILOPN, FILBLK, HSPF, HDMESI, SCCLAL
+      EXTERNAL     ZIPI, DSSCLO, UCIINP, HDMESC, HDMEST, WDBOPN, DELML
+      EXTERNAL     HAOPSQ, HADD, ADDOPB, ESTADD, HGETI, ADDFIL, GETML
+      EXTERNAL     HGETC, GTINS
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (A64)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0 = 0
+      I1 = 1
+      I2 = 2
+C     avoid some lahey math errors
+      LFLAG = .TRUE.
+      CALL INVALOP (LFLAG)
+      CALL UNDFL (LFLAG)
+C
+      OPEN (UNIT=99,FILE='error.fil')
+C
+C     initialize wdm file common block
+      CALL WDBFIN
+C
+C     open message file
+      I = 1
+      INCLUDE 'fhsmes.inc'
+      CALL WDBOPN (MESSFL,HMSNAM,I,
+     O             RETCOD)
+C
+C     open wdm file
+      I = 0
+      WDMFL = 24
+      WDNAME= 'yellow.wdm'
+      CALL WDBOPN (WDMFL,WDNAME,I,
+     O             RETCOD)
+C
+      CSCEN = 'bmprep.uci'
+      OPEN(UNIT=23,FILE=CSCEN,STATUS='OLD')
+
+      CALL SCCLAL
+      IOPT = 1
+      SCLU = 201
+      SGRP = 50
+      CALL HDMESC (IOPT,MESSFL,SCLU,SGRP,CSCEN)
+
+      FILES= I0
+      FILES(15) = MESSFL
+      FILES(11) = WDMFL
+      CALL FILSET (MESSFL,23,WDMFL,
+     M             FILES,
+     O             ECOUNT,RETCOD)
+
+      INQUIRE(UNIT=FILES(1),NAME=ECHNAM)
+
+      IF (RETCOD .EQ. 0) THEN
+        IOPT  = 1
+        CALL HDMES3(IOPT,'GenScnActivate HSPF')
+        CALL INTERP (I0,I0,
+     M               FILES,
+     O               UNITFG,RETCOD)
+        IOPT  = 99
+        CALL HDMES3(IOPT,' ')
+      END IF
+
+      CLOSE (UNIT=23)      ! close users input file
+C
+C     all code preceeding this point happens as scenario is activated
+
+C     do any report operations exist?
+      OPID = 0
+      OPTYP= 11
+ 10   CONTINUE
+        CALL GETNXT (OPTYP,
+     M               OPID)
+        IF (OPID.GT.0) THEN
+          WRITE(99,*) 'FOUND REPORT OPERATION NUMBER ',OPID
+        END IF
+      IF (OPID.GT.0) GO TO 10
+
+C     get records from the report flags table
+      OMCODE= 131
+      TABNO = 1
+      UUNITS= 1
+      INIT  = 1
+      ADDFG = 0
+      OCCUR = 1
+ 30   CONTINUE
+        CALL XTABLE (MESSFL,OMCODE,TABNO,UUNITS,INIT,ADDFG,OCCUR,
+     O               KEY,CBUFF,RETCOD)
+        IF (RETCOD.EQ.2) THEN
+          WRITE(99,*) 'REPORT TABLE 1 AT KEY ',KEY,CBUFF
+        END IF
+        INIT = 0
+      IF (RETCOD.NE.10) GO TO 30
+
+C     delete report number 2
+      OPID = 2
+C     get associated file unit number
+      ITMNAM = 'REPUNIT '
+      CALL HGETI (ITMNAM,OPID,
+     O            IVAL)
+C     delete this file from files block
+      CALL DELFIL (IVAL)
+      CALL HDELOP (OPTYP,OPID)
+C
+C     add a report, say number 12
+      OPID = 12
+C     add to opn seq block
+      CALL HAOPSQ (OPTYP,OPID)
+C     add to report block, copy specs from number 6
+      LIKE = 6
+      CALL HADD (OPTYP,OPID,LIKE)
+C     add report file to files block
+      FNAME = 'report12.out'
+      IFUN  = 70
+      CALL ADDFIL(FNAME,IFUN)
+C     put this file unit number
+      ITMNAM = 'REPUNIT '
+      CALL HPUTI (ITMNAM,OPID,IFUN)
+C     add time series records like number 6
+      CALL HADDTS (OPTYP,OPID,LIKE)
+C
+C     what is the file unit associated with report 6
+      ITMNAM = 'REPUNIT '
+      CALL HGETI (ITMNAM,LIKE,
+     O            IVAL)
+      WRITE(99,*) 'REPORT OPERATION 6 WRITTEN TO UNIT ',IVAL
+C
+C     add an op type block for an op that does not already exist
+C     lets add bmprac
+      IDNO = 100
+      TNAME= 'BMPRAC'
+      CALL ADDOPB (IDNO,TNAME,
+     M             SREC,EREC)
+C
+C     add a bmprac, say number 88
+      OPTYP= 10
+      OPID = 88
+C     add to opn seq block
+      CALL HAOPSQ (OPTYP,OPID)
+
+C     add first bmprac table
+      TCLU  = 130
+      TGRP  = 101
+      KGRP  = 1
+      CALL ESTADD (MESSFL,TCLU,TGRP,KGRP,OPTYP,I1,
+     O             SREC,EREC)
+C
+C     add bmprac file to files block
+      FNAME = 'bmprac88.out'
+      IFUN  = 70
+      CALL ADDFIL(FNAME,IFUN)
+C     would need to put unit number to table but havent created table yet
+C
+C     do any bmprac operations exist?
+      OPID = 0
+ 20   CONTINUE
+        CALL GETNXT (OPTYP,
+     M               OPID)
+        IF (OPID.GT.0) THEN
+          WRITE(99,*) 'FOUND BMPRAC OPERATION NUMBER ',OPID
+        END IF
+      IF (OPID.GT.0) GO TO 20
+C
+C     delete bmprac number 88
+      OPID = 88
+C     get associated file unit number english
+      ITMNAM = 'BMPUNITE'
+      CALL HGETI (ITMNAM,OPID,
+     O            IVAL)
+      IF (IVAL.NE.0) THEN
+C       delete this file from files block
+        CALL DELFIL (IVAL)
+      END IF
+C     get associated file unit number metric
+      ITMNAM = 'BMPUNITM'
+      CALL HGETI (ITMNAM,OPID,
+     O            IVAL)
+      IF (IVAL.NE.0) THEN
+C       delete this file from files block
+        CALL DELFIL (IVAL)
+      END IF
+C     in this prototype we don't have the table that contains file unit
+C     numbers yet, but i remember what unit i gave it
+      CALL DELFIL(IFUN)
+C     now delete the operation
+      CALL HDELOP (OPTYP,OPID)
+C
+C     add an op type block for an op that does not already exist
+C     lets add bmprac
+      IDNO = 100
+      TNAME= 'BMPRAC'
+      CALL ADDOPB (IDNO,TNAME,
+     M             SREC,EREC)
+C
+C     add a bmprac again, say number 87
+      OPTYP= 10
+      OPID = 87
+C     add to opn seq block
+      CALL HAOPSQ (OPTYP,OPID)
+
+C     add first bmprac table
+      TCLU  = 130
+      TGRP  = 101
+      KGRP  = 1
+      CALL ESTADD (MESSFL,TCLU,TGRP,KGRP,OPTYP,I1,
+     O             SREC,EREC)
+C
+C     add bmprac file to files block
+      FNAME = 'bmprac87.out'
+      IFUN  = 70
+      CALL ADDFIL(FNAME,IFUN)
+C
+C     do any bmprac operations exist?
+      OPID = 0
+ 40   CONTINUE
+        CALL GETNXT (OPTYP,
+     M               OPID)
+        IF (OPID.GT.0) THEN
+          WRITE(99,*) 'FOUND BMPRAC OPERATION NUMBER ',OPID
+        END IF
+      IF (OPID.GT.0) GO TO 40
+C
+C     add the mass-link for the new bmprac
+      I = 1
+      CALL GETML (I,MLNO)
+      WRITE(99,*) 'ADDED PERLND TO BMPRAC MASSLINK ',MLNO
+      I = 2
+      CALL GETML (I,MLNO)
+      WRITE(99,*) 'ADDED IMPLND TO BMPRAC MASSLINK ',MLNO
+C
+C     what mass link is used for perlnd to report?
+      I = 4
+      CALL GETML (I,MLNO)
+      WRITE(99,*) 'PERLND TO REPORT MASSLINK EXISTS AT ',MLNO
+C
+C     delete mass link 4
+      I = 4
+      CALL DELML (I)
+C
+C     get a list of reaches and reach descriptions
+ 50   CONTINUE
+        ITMNAM = 'RCHID   '
+        CALL HGETI (ITMNAM,I0,
+     O              OPID)
+        write(99,*) 'found reach ',opid
+      IF (OPID.NE.-99) GO TO 50
+      ITMNAM = 'RCHDESC '
+      I = 880
+      CALL HGETC (ITMNAM,I,
+     O            CTXT)
+      write(99,*) 'found reach ',i,ctxt
+C
+C     get a list of operations input to this reach from schematic block
+      INIT = 1
+ 60   CONTINUE
+        ITMNAM = 'INOPERS '
+        CALL GTINS (INIT,I,I1,
+     O              CTXT10,RAREA)
+        write(99,*) 'found input ',ctxt10,rarea
+        INIT = 0
+      IF (CTXT10.NE.'       -99') GO TO 60
+C
+C     get a list of operations input to this bmprac from schematic block
+      INIT = 1
+ 70   CONTINUE
+        ITMNAM = 'INOPERS '
+        CALL GTINS (INIT,I,I2,
+     O              CTXT10,RAREA)
+        write(99,*) 'found input ',ctxt10,rarea
+        INIT = 0
+      IF (CTXT10.NE.'       -99') GO TO 70
+C
+C     now output modified uci file
+      OPEN(UNIT=23,FILE='UCI.OUT')    ! open uci file
+      CALL UCISAV(23)
+      CLOSE (UNIT=23)      ! close uci file
+
+      STOP
+      END

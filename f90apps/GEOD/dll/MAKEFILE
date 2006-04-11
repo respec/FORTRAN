@@ -1,0 +1,46 @@
+SRCLOC    = ..\srcall
+BINLOC    = ..\bin
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(SRCLOC)
+
+DLL       = $(BINLOC)\nadcon.dll
+LDMAP     = $(BINLOC)\nadcon.map
+
+OBJS      = vinitl.obj vheadr.obj viparms.obj vmloop.obj \
+            vnblank.obj vgetpt.obj vround.obj vwrtpt.obj vtype2.obj  \
+            vprint2.obj vprint3.obj vrcard.obj vdcard.obj vtype1.obj \
+            type34.obj print.obj print4.obj angle.obj vaskpt.obj     \
+            interp.obj vfhelp.obj vfgrid.obj vcoeff.obj vsurf.obj    \
+            initl.obj headr.obj menu.obj ngrids.obj iparms.obj mloop.obj endrep.obj \
+            grids.obj dgrids.obj sgrids.obj nblank.obj fhelp.obj getpt.obj transf.obj \
+            openfl.obj askpt.obj type1.obj type2.obj type3.obj to83.obj hms.obj \
+            wrtpt.obj report.obj diagrm.obj ccard.obj dcard.obj \
+            fgrid.obj intrp.obj print1.obj print2.obj print3.obj \
+            putarea.obj coeff.obj surf.obj meters.obj
+
+OBJX      = nad_ent.obj
+
+
+$(DLL): $(OBJS) $(OBJX)
+          $(FC) $(OBJS) $(OBJX) -MAP $(LDMAP) -OUT $(DLL) \
+               -win -dll -ml msvb -mapn 32 -mapw 132 \
+               @..\srcALL\nad_ent.xp$$
+          !if -e $(SRCLOC)\*.dll
+            copy $(SRCLOC)\*.dll ..\bin
+            erase $(SRCLOC)\*.dll
+            erase $(SRCLOC)\*.def
+            erase $(SRCLOC)\*.xpo
+            erase $(SRCLOC)\*.obj
+          !endif
+          copy $(DLL) \windows\system
+
+$(OBJS): $(SRCLOC)\$(*).for
+     $(FC) $(SRCLOC)\$(*).for $(FFLAGS) -win -ml msvc -dll
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj
+
+$(OBJX): $(SRCLOC)\$(*).f90
+     $(FC) $(SRCLOC)\$(*).f90 -nfix $(FFLAGS) -win -dll -ml msvb -mod $(TLOC)\obj
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj

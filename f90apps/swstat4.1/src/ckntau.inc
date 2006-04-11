@@ -1,0 +1,11 @@
+c     + + + PARAMETERS + + +
+      INTEGER   MAXPKS, MAXCNT
+      PARAMETER (MAXPKS = 200)
+      PARAMETER (MAXCNT = 300)
+C
+      COMMON / KNTR / PK, WYR, NROW
+      COMMON / KNTC / QCOD
+C
+      INTEGER      WYR(MAXPKS), NROW
+      REAL         PK(MAXPKS)
+      CHARACTER*1  QCOD(12,MAXPKS)

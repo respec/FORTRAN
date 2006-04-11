@@ -1,0 +1,9 @@
+-export    CloseFile
+-export    Read_MODFLOW_Unformatted
+-export    Read_MODFLOW_3D_Unformatted
+-export    Read_MODFLOW_List
+-export    Read_Integer_Array
+-export    Read_Real_Array
+-export    Write_Integer_Array
+-export    Write_Real_Array
+-export    Write_Binout

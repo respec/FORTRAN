@@ -1,0 +1,36 @@
+Dear Jack, Paul-H and Paul-D:
+
+Here are the routines that do table lookup and handle the conversion
+of a year/month/day to the modified julian date and the inverse.
+
+Description of the files:
+
+ ARSIZE.PRM -contains Fortran PARAMETERS used in various parts of FEQ.
+ 
+ BLOCK.FOR-  BLOCK DATA unit to initialize a named common block
+
+ FTABLE.COM- common block for the vectors that store all of the 
+             function tables.  Internal structure defined by 
+             the various table lookup subroutines.
+
+ INVMJD.FOR- converts a modified julian date to a gregorian calendar
+             date.
+
+ LKTAB.FOR-  subroutine that does function-table lookup in a variety 
+             of tables.  Lookup for all but cross section and 2-d 
+             tables.  GENSCN does not need to do anything with 2-D
+             tables. 
+
+ MJD.FOR-    converts a gregorian calendar date to modified julian date.
+
+ OFFCOM.COM- contains standard offsets for cross section tables.
+
+ XLKT.FOR-   the six subroutines that do table lookup in the six 
+             types of cross section tables: types 20--25.
+
+ XSCOM.COM-  common block that contains a few items needed such as
+             the variables OUTPUT and TIME
+
+ XSTYPE.FOR- subroutine for reporting the valid cross-section 
+             function tables types for FEQ. 
+

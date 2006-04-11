@@ -1,0 +1,11 @@
+-export    F90_MJD
+-export    F90_INVMJD
+-export    F90_LKTAB
+-export    F90_XLKT20
+-export    F90_XLKT21
+-export    F90_XLKT22
+-export    F90_XLKT23
+-export    F90_XLKT24
+-export    F90_XLKT25
+-export    F90_FILTAB
+-export    F90_TABTYP

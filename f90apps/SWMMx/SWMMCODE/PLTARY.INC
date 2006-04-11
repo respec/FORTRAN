@@ -1,0 +1,2 @@
+      COMMON/PLTARY/A(51,101)
+      CHARACTER A*1

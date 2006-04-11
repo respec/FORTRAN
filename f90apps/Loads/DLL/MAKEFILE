@@ -1,0 +1,116 @@
+SRCLOC    = ..\src
+IMSLLOC   = ..\imsl
+BINLOC    = ..\bin
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(SRCLOC)
+IFLAGS    = -c -o0 -i $(IMSLLOC)
+
+DLL       = $(BINLOC)\estimato.dll
+LDMAP     = $(BINLOC)\estimato.map
+LBLOC     = \lib3.0\lf90libs
+LIBS      = stats.lib \
+            util.lib
+
+OBJS      = boxpit94.obj \
+            estimato.obj \
+            getdatc2.obj \
+            getdate.obj \
+            graphres.obj \
+            readd.obj \
+            logload.obj \
+            regress.obj \
+            rsquare.obj \
+            tacit013.obj \
+            utility.obj
+
+OBJI      = imslreps.obj \
+            guiplots.obj \
+            dlngam.obj  \
+            DUMIAH.obj \
+            DU2IAH.obj \
+            DU3IAH.obj \
+            DU4INF.obj \
+            DU5INF.obj \
+            DU6INF.obj \
+            DU7IAH.obj \
+            DU8IAH.obj \
+            DU9IAH.obj \
+            DU10AH.obj \
+            DU11NF.obj \
+            DU13NF.obj \
+            DU14NF.obj \
+            DU18NF.obj \
+            DU19NF.obj \
+            DAXPY.obj  \
+            DCOPY.obj  \
+            DCSFRG.obj \
+            DDOT.obj   \
+            DMACH.obj  \
+            DNRM2.obj  \
+            DSCAL.obj  \
+            DSET.obj   \
+            DVCAL.obj  \
+            C1TCI.obj  \
+            C1TIC.obj  \
+            E1INIT.obj \
+            E1INPL.obj \
+            E1MES.obj  \
+            E1POP.obj  \
+            E1POS.obj  \
+            E1PRT.obj  \
+            E1PSH.obj  \
+            E1STD.obj  \
+            E1STI.obj  \
+            E1STL.obj  \
+            E1UCS.obj  \
+            E1USR.obj  \
+            I1CSTR.obj \
+            I1DX.obj   \
+            I1ERIF.obj \
+            I1KGT.obj  \
+            I1KQU.obj  \
+            I1KRL.obj  \
+            I1KST.obj  \
+            I1X.obj    \
+            IACHAR.obj \
+            ICASE.obj  \
+            IDAMAX.obj \
+            IMACH.obj  \
+            IWKIN.obj  \
+            M1VE.obj   \
+            M1VECH.obj \
+            N1RCD.obj  \
+            S1ANUM.obj
+
+OBJX      = est_ent.obj
+
+
+$(DLL): $(OBJS) $(OBJI) $(OBJX) #$(LIBS)
+          $(FC) $(OBJS) $(OBJI) $(OBJX) -MAP $(LDMAP) -OUT $(DLL) \
+               -LIB $(LIBS) -LIBP $(LBLOC) \
+               -win -dll -ml msvb -mapn 32 -mapw 132 \
+               @..\src\est_ent.xp$$
+          !if -e $(SRCLOC)\*.dll
+            copy $(SRCLOC)\*.dll ..\bin
+            erase $(SRCLOC)\*.dll
+            erase $(SRCLOC)\*.def
+            erase $(SRCLOC)\*.xpo
+            erase $(SRCLOC)\*.obj
+          !endif
+          copy $(DLL) \windows\system
+
+$(OBJS): $(SRCLOC)\$(*).for
+     $(FC) $(SRCLOC)\$(*).for $(FFLAGS) -win -ml msvc -dll
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj
+
+$(OBJI): $(IMSLLOC)\$(*).for
+     $(FC) $(IMSLLOC)\$(*).for $(IFLAGS) -win -ml msvc -dll
+     copy $(IMSLLOC)\$(*).obj
+     erase $(IMSLLOC)\$(*).obj
+
+$(OBJX): $(SRCLOC)\$(*).f90
+     $(FC) $(SRCLOC)\$(*).f90 -nfix $(FFLAGS) -win -dll -ml msvb -mod $(TLOC)\obj
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj

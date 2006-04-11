@@ -1,0 +1,225 @@
+*
+*       <<<<<<<<  SWMM 4.3 STATISTICS BLOCK DATA FILE >>>>>>>>>
+*
+*  This file last updated 4/22/94 by WCH.
+*
+*	This is an input data file to the SWMM 4.3 Statistics 
+*       Block for analyzing a rainfall, flow or water quality time series.
+*       All lines with an asterisk in column 1 are comment lines and are 
+*       ignored by the program.
+*
+*       Input data are free format and may be up to 230 columns wide.  
+*       You must have a value for every data column even if the program
+*       will not actually use a given value.  There must be at least one
+*       space or comma between every input value.  Alphanumeric data 
+*       should be enclosed in single quotes. 
+*
+*       Caution!  Data lines that are "wrapped around" (continued on
+*       two or more lines) should have a blank in column 1, unless a
+*       card identifier is needed.  
+*
+*       SWMM uses both U.S. customary units and metric units.  The
+*       examples use feet, cfs, acres, inches and inches/hour.  If metric
+*       is specified substitute meters, cms, hectares, millimeters and
+*       millimeters/hour.
+*============================================================================
+*	The SW card sets up the interface files to be used or created. 
+*	There is one output file (#9) which will contain the hourly
+*       flows and pollutant loads for subsequent blocks.
+*============================================================================
+*  NBLOCK  JIN(1)  JOUT(1)
+SW    1      8       9  
+*============================================================================
+*   The MM card opens the scratch files to be used by different subroutines.
+*   A certain number (3 for STATISTICS) may be required for each block.
+*============================================================================
+*  NITCH  NSCRAT(1) NSCRAT(2) NSCRAT(3) NSCRAT(4) NSCRAT(5) NSCRAT(6) NSCRAT(7)
+MM   7       1         2          3        10         11        12       13
+*============================================================================
+*     The @ command is used to permanently save an interface or 
+*     scratch file.  This line should be placed before the first SWMM
+*     block call.  The format of the @ command is as follows:
+*============================================================================
+*  NOTE: This file requires interface file RUNOFF6.DNT from Minneapois,
+*  Lake Calhoun simulation.  This must be supplied or created by running
+*  file SWDAT4.DAT.  
+*============================================================================
+*Column 1    Unit number of the       Name of the interface
+*            interface file saved     file (any valid DOS filename)
+*            or utilized
+*
+@             8                       'RUNOFF6.DNT'
+*============================================================================
+$STATISTICS     	Call the STATISTICS Block with a '$' in first column.
+*============================================================================
+*	The 'A1' line defines the starting and ending time and date.
+*       The meaning of the values listed on each line are as follows:
+*============================================================================
+*	A1 Line       :
+*            ISTART   :  Starting date, 6 digits, yr/mo/day
+*            TSTART   :  Starting time, decimal hours 
+*            IEND     :  Ending date, 6 digits, yr/mo/day       
+*            TEND     :  Ending time, decimal hours   
+*            INLOG    :  = 0, calculate only moments of untransformed data.
+*                        = 1, also calculate moments of natural logs of storm 
+*                        event data.
+*            JCUBE    :  = 0, storm event "volumes" are given in inches [mm].
+*                        = 1, storm event volumes are listed in cubic feet
+*                        [cubic meters].
+*============================================================================
+*   ISTART  TSTART  IEND   TEND  INLOG   JCUBE
+A1  600101   0.0   601231   0.0      0       0
+*============================================================================
+*	The 'B1' line defines control information for the Statistics Block.
+*============================================================================
+*	B1 Line       :
+*            MIT      :  Minimum interevent time, decimal hours.
+*            BASE     :  Cutoff flow (baseflow), cfs [m3/s].  Flows less
+*                        than BASE are not used.  This value is not 
+*                        subtracted from flow rate but only serves as a
+*                        threshold for analysis.
+*            EBASE    :  Cutoff storm event volume, inches [millimeters].
+*                        Storm events below EBASE are not included in 
+*                        the statistical analysis.
+*            LOCRQ    :  ID of flow location requested.  To perform 
+*                        statistical analysis on more than one location it
+*                        is necessary to run the Statistics Block more
+*                        than once. 
+*            LOCRN    :  ID of rainfall gage for analysis. 
+*                       Note: LOCRQ or LOCRN must be zero.  Both cannot
+*                       be non-zero.  
+*            NPR      :  Number of pollutants requested (max = 5).
+*            NPOINT   :  Number of events printed in tables.
+*                        Print only the top NPOINT flows, events etc.
+*                        IF NPOINT is 0 then all events are printed.
+*            METRIC   :  Requests type of units for output    
+*                        = 0, U.S. customary,
+*                        = 1, Metric.
+*            LRET     :  Units of return period,
+*                        = 0, Return period in years,
+*                        = 1, Return period in months.
+*            A        :  Plotting postion parameter (see text for 
+*                        explanation).  Briefly, the return period, T, is
+*                        calculated as:
+*                              T = (n+1-2A)/(m-A) , where
+*                        n = total number of events, and
+*                        m = rank.  E.g., use A = 0 for Weibull plotting
+*                        position and A = 0.4 for Cunnane's recommended
+*                        plotting position.
+*============================================================================
+*  MIT  BASE  EBASE LOCRQ  LOCRN NPR NPOINT METRIC LRET  PLOTTING POS(A)
+*============================================================================
+B1  6   0.0     0.0     1    0     5    50     0     1           0.4
+*============================================================================
+*	The 'B2' line defines print control information.
+*============================================================================
+*	B2 Line       :
+*            KSEQ     :  Request to print sequential series
+*                        of flow events?  No = 0, Yes = 1.
+*            KTERM    :  Code for terminating program if number of
+*                        events exceeds allowable memory space (5000 events).
+*                        = 0, Do not terminate (perform analyses
+*                        on those events already identified).
+*                        = 1, Terminate program (no event analysis performed).
+*            KTSEQS   :  Code for printing sequential series if the
+*                        number of events exceed limit and KTERM = 1.
+*                        = 0, Do not print sequential series.
+*                        = 1, Print sequential series of those
+*                          events already identified.
+*============================================================================
+*  KSEQ  KTERM  KTSEQS
+B2  1      0       1
+*============================================================================
+*	The 'B3' line defines the interface file location 
+*                 of water quality information.
+*                 Required only if NPR > 0 on Data Group B1.
+*                 If NPR = 0 then skip to Data Group C1.
+*
+*     Max. of 5 pollutants requested.  Run Statistics Block again if
+*     need to analyze more.
+*============================================================================
+*	B3 Line       :
+*          IPOLRQ(1)  :  First pollutant requested, identified
+*                        by position on interface file.
+*                            .                     .
+*          IPOLRQ(NPR):  Last pollutant requested, identified by              None
+*                        position on interface file.
+*============================================================================
+*   IPOLRQ
+B3     1  2  3  4  5
+*============================================================================
+*        Enter the C1 line only if LOCRQ on Data Group B1 is > 0.
+*============================================================================
+*        The C1 line describes the Statistics Block Options for Flow.
+*
+*    This data group controls the printing or plotting of information on 
+* magnitude, return period and frequency for each of the five flow parameters.  
+* In all cases, No = 0, Yes = 1.  The control information is entered as a four
+* digit integer number with each column controlling a different table or graph.
+*
+*             First column  - table of magnitude, return period
+*                             and frequency.
+*             Second column - print graph of magnitude versus
+*                             return period.
+*             Third column  - print graph of magnitude versus
+*                             frequency.
+*             Fourth column - print moments.
+*
+*     For example, enter 1111 to print/plot all tables/graphs, 1000 to
+*  print the table only, 1100 to print the table and the graph of
+*  magnitude versus return period only, and 0000 to bypass printing/plotting
+*  of the flow parameter. 
+*============================================================================
+*	C1 Line       :
+*         ISFLOW(1,1) :  Request for total flow?
+*         ISFLOW(1,2) :  Request for average flow?
+*         ISFLOW(1,3) :  Request for peak flow?
+*         ISFLOW(1,4) :  Request for event duration?
+*         ISFLOW(1,5) :  Request for interevent duration?
+*============================================================================
+*   ISFLOW(1,1) ISFLOW(1,2) ISFLOW(1,3) ISFLOW(1,4) ISFLOW(1,5)
+C1         1111        1001        1001        1001        1001
+*============================================================================
+*           Data Group D1 is only required if NPR > 0 on Data Group B1.
+*============================================================================
+*      The D1 line describes the Statistics Block Options for Water Quality.
+*
+* If NPR > 0 use one D1 Data Group for each pollutant requested, up to
+*    ten sets of D1 lines, in the order defined by Group B2.  The first
+*    index of ISPOLL(K,I,J) identifies the pollutant.  Follow the
+*    instructions for Data Group C1 in entering data for Data Group D1.  
+*============================================================================
+*	D1 Line       :
+*     ISPOLL(1,1,1)   :  Request for total load?
+*     ISPOLL(1,1,2)   :  Request for average load?
+*     ISPOLL(1,1,3)   :  Request for peak load?
+*     ISPOLL(1,1,4)   :  Request for flow weighted average concentration?
+*     ISPOLL(1,1,5)   :  Request for peak concentration?
+*============================================================================
+*   ISPOLL(1,1,1)  ISPOLL(1,1,2) ISPOLL(1,1,3) ISPOLL(1,1,4) ISPOLL(1,1,5)
+D1           1111           1001          1001          1001          1001
+D1           1001           1001          1001          1001          1001
+D1           1001           1001          1001          1001          1001
+D1           1001           1001          1001          1001          1001
+D1           1001           1001          1001          1001          1001
+*============================================================================
+*        Enter the E1 line only if LOCRN on Data Group B1 is > 0.
+*============================================================================
+*   The E1 line describes the Statistics Block Options for Rainfall Analysis.
+*
+*    Follow the instructions for Data Group C1 in entering data 
+*                            for Data Group E1.
+*============================================================================
+*	E1 Line       :
+*         ISFLOW(2,1) :  Request for total volume?
+*         ISFLOW(2,2) :  Request for average intensity?
+*         ISFLOW(2,3) :  Request for peak intensity?
+*         ISFLOW(2,4) :  Request for event duration?
+*         ISFLOW(2,5) :  Request for interevent duration?
+*============================================================================
+*   ISFLOW(2,1) ISFLOW(2,2) ISFLOW(2,3) ISFLOW(2,4) ISFLOW(2,5)
+* E1         1001        1001        1001        1001        1001
+*============================================================================
+*               End your input data set with a $ENDPROGRAM.
+$ENDPROGRAM
+

@@ -1,0 +1,755 @@
+RUN                                                                             
+                                                                                
+GLOBAL                                                                          
+  South Fork Shenandoah River - BMP test
+  START       1984  1  1  0  0  END    1987 12 31 24  0                         
+  RUN INTERP OUTPUT LEVEL    3    2                                             
+  RESUME     0 RUN     1                   UNIT SYSTEM     1                    
+END GLOBAL                                                                      
+                                                                                
+FILES                                                                           
+<FILE>  <UN#>***<----FILE NAME------------------------------------------------->
+WDM        16   shena.wdm                                                       
+MESSU      64   BMPBASE.ECH
+           91   BMPBASE.out                                                     
+            2   bmprac.eng
+            3   bmprac.met
+END FILES                                                                       
+                                                                                
+OPN SEQUENCE                                                                    
+    INGRP              INDELT 01:00                                             
+      PERLND     191                                                            
+      PERLND     192                                                            
+      PERLND     193                                                            
+      PERLND     194                                                            
+      PERLND     195                                                            
+      PERLND     196                                                            
+      IMPLND     194                                                            
+      IMPLND     195                                                            
+      BMPRAC     680
+      RCHRES     680                                                            
+      RCHRES     660                                                            
+      RCHRES     670                                                            
+      RCHRES     640                                                            
+      RCHRES     650                                                            
+      RCHRES     580                                                            
+      RCHRES     590                                                            
+      COPY       100                                                            
+    END INGRP                                                                   
+END OPN SEQUENCE                                                                
+                                                                                
+PERLND                                                                          
+  ACTIVITY                                                                      
+    #    # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC   ***    
+  191         0    0    1    0    0    0    0    0    0    0    0    0          
+  192         0    0    1    0    0    0    0    0    0    0    0    0          
+  193         0    0    1    0    0    0    0    0    0    0    0    0          
+  194         0    0    1    0    0    0    0    0    0    0    0    0          
+  195         0    0    1    0    0    0    0    0    0    0    0    0          
+  196         0    0    1    0    0    0    0    0    0    0    0    0          
+  END ACTIVITY                                                                  
+                                                                                
+  PRINT-INFO                                                                    
+    #    # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC PIVL***PY
+  191         5         5    5    5    5    5                                 12
+  192         5         5    5    5    5    5    5         5    5             12
+  193         5         5    5    5    5    5    5         5    5             12
+  194         5         5    5    5    5    5                                 12
+  195         5         5    5    5    5    5                                 12
+  196         5         5    5    5    5    5    5         5    5             12
+  END PRINT-INFO                                                                
+                                                                                
+  GEN-INFO                                                                      
+    #    #      NAME          NBLKS  UCI   IN  OUT ENGL METR  ***               
+  191     FOREST                  1    1    1    1   91    0                    
+  192     HIGH TILL CROPLAND      1    1    1    1   91    0                    
+  193     LOW TILL CROPLAND       1    1    1    1   91    0                    
+  194     PASTURE                 1    1    1    1   91    0                    
+  195     URBAN                   1    1    1    1   91    0                    
+  196     HAY                     1    1    1    1   91    0                    
+  END GEN-INFO                                                                  
+                                                                                
+  PWAT-PARM1                                                                    
+    #    # CSNO RTOP UZFG  VCS  VUZ  NVV VIFW VIRC  VLE  ***                    
+  191         0    1    1    1    0    0    0    0    0    1                    
+  192         0    1    1    1    1    1    0    0    1    1                    
+  193         0    1    1    1    1    1    0    0    1    1                    
+  194         0    1    1    1    0    0    0    0    0    1                    
+  195         0    1    1    1    0    0    0    0    0    1                    
+  196         0    1    1    1    0    0    0    0    0    1                    
+  END PWAT-PARM1                                                                
+                                                                                
+  PWAT-PARM2                                                                    
+    #    # ***FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY      AGWR
+  191          0.000     8.000      0.06      200.   0.22000     0.000      .995
+  192          0.000     8.000       .06      300.   0.07000     0.000      .995
+  193          0.000     8.000       .06      300.   0.07000     0.000      .995
+  194          0.000     8.000       .05      270.   0.11000     0.000      .995
+  195          0.000     8.000       .05      300.   0.07000     0.000      .995
+  196          0.000     8.000       .05      270.   0.11000     0.000      .995
+  END PWAT-PARM2                                                                
+  PWAT-PARM3                                                                    
+***<PLS>    PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP  
+***x - x   (deg F)   (deg F)                                                    
+  191           40.0      35.0       2.0       2.0       0.0       0.0       0.0
+  192           40.0      35.0       2.0       2.0       0.0       0.0       0.0
+  193           40.0      35.0       2.0       2.0       0.0       0.0       0.0
+  194           40.0      35.0       2.0       2.0       0.0       0.0       0.0
+  195           40.0      35.0       2.0       2.0       0.0       0.0       0.0
+  196           40.0      35.0       2.0       2.0       0.0       0.0       0.0
+  END PWAT-PARM3                                                                
+                                                                                
+  PWAT-PARM4                                                                    
+    #    #     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP  ***     
+  191           0.00     1.000     0.350       3.0     0.650     0.420          
+  192           0.00     0.800     0.090       3.0     0.600     0.420          
+  193           0.00     0.800     0.200       3.0     0.600     0.420          
+  194           0.00     0.800     0.150       3.0     0.600     0.420          
+  195           0.00     0.800     0.100       3.0     0.600     0.420          
+  196           0.00     0.800     0.150       3.0     0.600     0.420          
+  END PWAT-PARM4                                                                
+  PWAT-PARM5                                                                    
+*** <PLS >       FZG      FZGL                                                  
+*** x -  x                                                                      
+  191            1.0       0.1                                                  
+  192            1.0       0.1                                                  
+  193            1.0       0.1                                                  
+  194            1.0       0.1                                                  
+  195            1.0       0.1                                                  
+  196            1.0       0.1                                                  
+  END PWAT-PARM5                                                                
+                                                                                
+  MON-INTERCEP                                                                  
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***     
+  191     0.0600.0600.0600.1000.1600.1600.1600.1600.1600.1000.0600.060          
+  192     0.0300.0300.0300.0300.0150.0600.1200.1430.1350.1050.0500.040          
+  193     0.0800.0750.0750.0710.0860.1050.1430.1430.1430.1050.0930.086          
+  194     0.0630.0600.0650.0780.0950.0980.0980.0940.0950.0770.0720.067          
+  195     0.0930.0930.0930.0930.0960.0960.0960.0960.0960.0930.0930.093          
+  196     0.0630.0600.0650.0780.0950.0980.0980.0940.0950.0770.0720.067          
+  END MON-INTERCEP                                                              
+                                                                                
+  MON-UZSN                                                                      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***     
+  192     0.3000.3000.3000.3000.2800.2500.2500.2500.2500.3000.3000.300          
+  193     0.4000.3800.3600.3500.3500.3500.3500.3500.3500.4200.4200.400          
+  END MON-UZSN                                                                  
+                                                                                
+  MON-MANNING                                                                   
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***     
+  192      .100 .100 .100 .080 .080 .080 .080 .090 .090 .100 .100 .100          
+  193      .220 .225 .220 .180 .180 .180 .180 .200 .200 .220 .220 .220          
+  END MON-MANNING                                                               
+                                                                                
+  MON-LZETPARM                                                                  
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***     
+  192     0.1000.1000.1000.1000.2500.5500.5500.5500.4500.2500.1500.100          
+  193     0.1000.1000.1000.1000.2500.5500.5500.5500.4500.2500.1500.100          
+  END MON-LZETPARM                                                              
+                                                                                
+  PWAT-STATE1                                                                   
+    #    # ***  CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+  191          0.000     0.000     1.500     0.000     7.900     1.006     0.000
+  192          0.000     0.000     1.500     0.000     7.900     1.006     0.000
+  193          0.000     0.000     1.500     0.000     7.900     1.006     0.000
+  194          0.000     0.000     1.500     0.000     7.900     1.006     0.000
+  195          0.000     0.000     1.500     0.000     7.900     1.006     0.000
+  196          0.000     0.000     1.500     0.000     7.900     1.006     0.000
+  END PWAT-STATE1                                                               
+                                                                                
+END PERLND                                                                      
+                                                                                
+                                                                                
+IMPLND                                                                          
+  ACTIVITY                                                                      
+    #    # ATMP SNOW IWAT  SLD  IWG IQAL  ***                                   
+  194         0    0    1    0    0    0                                        
+  195         0    0    1    0    0    0                                        
+  END ACTIVITY                                                                  
+                                                                                
+  PRINT-INFO                                                                    
+    #    # ATMP SNOW IWAT  SLD  IWG IQAL PIVL  PYR  ***                         
+  194         5         5         5             12                              
+  195         5         5         5    5        12                              
+  END PRINT-INFO                                                                
+                                                                                
+  GEN-INFO                                                                      
+    #    #      NAME            UCI   IN  OUT ENGL METR  ***                    
+  194     ANIMAL/FEEDLOT          1    1    1   91    0                         
+  195     RESIDENTIAL             1    1    1   91    0                         
+  END GEN-INFO                                                                  
+                                                                                
+  IWAT-PARM1                                                                    
+    #    # CSNO RTOP  VRS  VNN RTLI  ***                                        
+  194  195    0    1    1    0    0                                             
+  END IWAT-PARM1                                                                
+                                                                                
+  IWAT-PARM2                                                                    
+    #    #      LSUR     SLSUR      NSUR     RETSC  ***                         
+  194           150.    0.0200     0.150     0.000                              
+  195           250.    0.0350     0.030     0.000                              
+  END IWAT-PARM2                                                                
+                                                                                
+  MON-RETN                                                                      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***     
+  194     0.3500.3500.3500.3500.3500.3500.3500.3500.3500.3500.3500.350          
+  195     0.0360.0360.0490.0490.0490.0650.0650.0650.0490.0490.0490.036          
+  END MON-RETN                                                                  
+                                                                                
+END IMPLND                                                                      
+                                                                                
+BMPRAC
+  PRINT-INFO
+*** BMPRAC
+*** x -  x FLOW CONS HEAT  SED   GQ  OXY  NUT PLNK   PH PIVL  PYR
+  680         4    4    4    4    4    4    4    4    4    1   12
+  END PRINT-INFO
+
+  GEN-INFO
+***              Name           BMP             Unit Systems   Printer
+*** BMPRAC                     Type NCON  NGQ      t-series  Engl Metr
+*** x -  x<------------------>                      in  out
+  680     TEST BMP TO RCH 680     1    2    1         1    1    2    3
+  END GEN-INFO
+
+
+*** FLOW ***
+
+  FLOW-FLAG
+*** BMPRAC Monthly variable flag
+*** x -  x VOLF
+  680         0
+  END FLOW-FLAG
+
+  FLOW-FRAC
+*** BMPRAC Removal fraction
+*** x -  x    VOLFRC
+  680           0.10
+  END FLOW-FRAC
+
+  CONS-FLAG
+*** BMPRAC            Monthly variable flags
+*** x -  x  C1F  C2F  C3F  C4F  C5F  C6F  C7F  C8F  C9F C10F
+  680         1
+  END CONS-FLAG
+
+  CONS-FRAC
+*** BMPRAC        Name           Units  Removal fraction
+*** x -  x<-------CONID------>  <CQTYID>    CONFRC
+  680         ALKALINITY              KG      0.20
+  END CONS-FRAC
+
+  CONS-FRAC
+*** BMPRAC        Name           Units  Removal fraction
+*** x -  x<-------CONID------>  <CQTYID>    CONFRC
+  680         CHLORIDE                KG      0.25
+  END CONS-FRAC
+
+  HEAT-FLAG
+*** BMPRAC Monthly variable flag
+*** x -  x  HTF
+  680         2
+  END HEAT-FLAG
+
+  HEAT-FRAC
+*** BMPRAC Removal fraction
+*** x -  x     HTFRC
+  680           0.30
+  END HEAT-FRAC
+
+  SED-FLAG
+*** BMPRAC Monthly variable flags
+*** x -  x Sand Silt Clay
+  680         0    1    2
+  END SED-FLAG
+
+  SED-FRAC
+*** BMPRAC         Removal fractions
+*** x -  x      Sand      Silt      Clay
+  680           0.40      0.50      0.60
+  END SED-FRAC
+
+  GQ-FLAG
+***                     Monthly variable flags
+*** BMPRAC<------Qual 1------><------Qual 2------><------Qual 3------>
+*** x -  x Soln Sand Silt Clay Soln Sand Silt Clay Soln Sand Silt Clay
+  680         0    1    2    0
+  END GQ-FLAG
+
+  GQ-FRAC
+*** BMPRAC        Name           Units            Removal fractions
+*** x -  x<-------GQID------->  <GQTYID>      Soln      Sand      Silt      Clay
+  680             PESTICIDE B4         G      0.70      0.80      0.90      0.80
+  END GQ-FRAC
+
+  OXY-FLAG
+*** BMPRAC  Monthly variable flags
+*** x -  x  DOx  BOD
+  680         1    2
+  END OXY-FLAG
+
+  OXY-FRAC
+*** BMPRAC   Removal fractions
+*** x -  x       DOx       BOD
+  680           0.70      0.60
+  END OXY-FRAC
+
+  NUT-FLAG
+***              Monthly variable flags
+*** BMPRAC<-----Solution-----><---Ads-NH4---><---Ads-PO4--->
+*** x -  x  NO3  TAM  NO2  PO4 Sand Silt Clay Sand Silt Clay
+  680         0    1    2    0    1    2    0    1    2    0
+  END NUT-FLAG
+
+  DNUT-FRAC
+*** BMPRAC               Removal fractions
+*** x -  x       NO3       TAM       NO2       PO4
+  680           0.50      0.40      0.30      0.20
+  END DNUT-FRAC
+
+  ADSNUT-FRAC
+***                              Removal fractions
+*** BMPRAC              Ammonia                     Phosphate
+*** x -  x      Sand      Silt      Clay      Sand      Silt      Clay
+  680           0.10      0.20      0.30      0.40      0.50      0.60
+  END ADSNUT-FRAC
+
+  PLANK-FLAG
+*** BMPRAC  Monthly variable flags
+*** x -  x Phyt  Zoo  ORN  ORP  ORC
+  680         0    1    2    0    1
+  END PLANK-FLAG
+
+  PLANK-FRAC
+*** BMPRAC                  Removal Fractions
+*** x -  x      Phyt       Zoo       ORN       ORP       ORC
+  680           0.70      0.80      0.90      0.80      0.70
+  END PLANK-FRAC
+
+  PH-FLAG
+*** BMPRAC  Monthly variable flags
+*** x -  x  TIC  CO2
+  680         2    0
+  END PH-FLAG
+
+  PH-FRAC
+*** BMPRAC    Removal fractions
+*** x -  x       TIC       CO2
+  680           0.60      0.50
+  END PH-FRAC
+
+  ACID-FLAG
+*** BMPRAC  Num       Monthly variable flags
+*** x -  x Chem ACI1 ACI2 ACI3 ACI4 ACI5 ACI6 ACI7
+  680         0    1    2    0    1    2    0    1
+  END ACID-FLAG
+
+  ACID-FRAC
+*** BMPRAC                           Removal fractions
+*** x -  x      ACI1      ACI2      ACI3      ACI4      ACI5      ACI6      ACI7
+  680           0.40      0.30      0.20      0.10      0.20      0.30      0.40
+  END ACID-FRAC
+END BMPRAC
+
+MONTH-DATA
+  MONTH-DATA       1
+   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec ***
+   0.1   0.1   0.1   0.2   0.4   0.5   0.5   0.4   0.3   0.2   0.2   0.1
+  END MONTH-DATA   1
+
+  MONTH-DATA       2
+   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec ***
+   0.9   0.9   0.9   0.8   0.6   0.5   0.5   0.6   0.7   0.8   0.8   0.9
+  END MONTH-DATA   2
+END MONTH-DATA
+                                                                                
+RCHRES                                                                          
+  ACTIVITY                                                                      
+    RCHRES  Active Sections (1=Active; 0=Inactive)           ***                
+    # -  # HYFG ADFG CNFG HTFG SDFG GQFG OXFG NUFG PKFG PHFG ***                
+  580         1    0         0    0         0    0    0                         
+  590         1    0         0    0         0    0    0                         
+  640         1    0         0    0         0    0    0                         
+  650         1    0         0    0         0    0    0                         
+  660         1    0         0    0         0    0    0                         
+  670         1    0         0    0         0    0    0                         
+  680         1    0         0    0         0    0    0                         
+  END ACTIVITY                                                                  
+                                                                                
+  PRINT-INFO                                                                    
+    RCHRES  Print-flags                                                ***      
+    # -  # HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB PIVL  PYR ***      
+  580         5    5         5    5         5    5    5             12          
+  590         5    5         5    5         5    5    5             12          
+  640         5    5         5    5         5    5    5             12          
+  650         5    5         5    5         5    5    5             12          
+  660         5    5         5    5         5    5    5             12          
+  670         5    5         5    5         5    5    5             12          
+  680         5    5         5    5         5    5    5             12          
+  END PRINT-INFO                                                                
+                                                                                
+  GEN-INFO                                                                      
+    RCHRES<-------Name------->Nexit   Unit Systems   Printer      ***           
+    # -  #                          User t-series  Engl Metr LKFG ***           
+                                           in  out                ***           
+  680     South River, Dooms      1    1    1    1   91    0    0               
+  660     South R at Harriston    1    1    1    1   91    0    0               
+  640     Middle R nr Verona      1    1    1    1   91    0    0               
+  670     Christians C, Fshrvl    1    1    1    1   91    0    0               
+  650     Middle R nr Grottoes    1    1    1    1   91    0    0               
+  580     North R nr Burketown    1    1    1    1   91    0    0               
+  590     SF Shenandoah, Lynwd    1    1    1    1   91    0    0               
+  END GEN-INFO                                                                  
+                                                                                
+  HYDR-PARM1                                                                    
+    RCHRES  Flags for HYDR section                           ***                
+    # -  #  VC A1 A2 A3  ODFVFG for each     ODGTFG for each *** FUNCT  for each
+            FG FG FG FG  possible   exit     possible   exit *** possible   exit
+                           1  2  3  4  5       1  2  3  4  5 ***   1  2  3  4  5
+  580           1  1  1    4                                                    
+  590           1  1  1    4                                                    
+  640           1  1  1    4                                                    
+  650           1  1  1    4                                                    
+  660           1  1  1    4                                                    
+  670           1  1  1    4                                                    
+  680           1  1  1    4                                                    
+  END HYDR-PARM1                                                                
+                                                                                
+                                                                                
+  HYDR-PARM2                                                                    
+    RCHRES                                                             ***      
+    # -  #    FTABNO       LEN     DELTH     STCOR        KS      DB50 ***      
+  580            580     37.01                            .5                    
+  590            590     17.01                            .5                    
+  640            640     32.06                            .5                    
+  650            650     27.80                            .5                    
+  660            660     13.98                            .5                    
+  670            670     19.53                            .5                    
+  680            680     30.43                            .5                    
+  END HYDR-PARM2                                                                
+                                                                                
+  HYDR-INIT                                                                     
+    RCHRES  Initial conditions for HYDR section     ***                         
+    # -  #       VOL       Initial value of COLIND  ***  Initial value of OUTDGT
+             (ac-ft)       for each  possible exit  ***  for each  possible exit
+                           EX1  EX2  EX3  EX4  EX5  ***  EX1  EX2  EX3  EX4  EX5
+  580          1072.                                                            
+  590          1528.                                                            
+  640           804.                                                            
+  650           634.                                                            
+  660           568.                                                            
+  670           179.                                                            
+  680           587.                                                            
+  END HYDR-INIT                                                                 
+END RCHRES                                                                      
+                                                                                
+COPY                                                                            
+  TIMESERIES                                                                    
+  Copy-opn***                                                                   
+*** x -  x  NPT  NMN                                                            
+  100         0    7                                                            
+  END TIMESERIES                                                                
+END COPY                                                                        
+                                                                                
+EXT SOURCES                                                                     
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   x <Name> x tem strg<-factor->strg <Name>   x   x        <Name> x x  ***
+WDM    705 HPRC  10 ENGL                   PERLND 191 196 EXTNL  PREC           
+WDM     40 EVAP  10 ENGL         0.86 DIV  PERLND 191 196 EXTNL  PETINP         
+WDM     41 DEWP     ENGLZERO          SAME PERLND 191 196 EXTNL  DTMPG          
+WDM     44 WNDH     ENGLZERO          SAME PERLND 191 196 EXTNL  WINMOV         
+WDM     46 RADH     ENGLZERO          SAME PERLND 191 196 EXTNL  SOLRAD         
+WDM     49 ATMP     ENGL              SAME PERLND 191 196 EXTNL  GATMP          
+                                                                                
+WDM    705 HPRC  10 ENGL                   IMPLND 194 195 EXTNL  PREC           
+WDM     40 EVAP  10 ENGL         0.86 DIV  IMPLND 194 195 EXTNL  PETINP         
+WDM     41 DEWP     ENGLZERO          SAME IMPLND 194 195 EXTNL  DTMPG          
+WDM     44 WNDH     ENGLZERO          SAME IMPLND 194 195 EXTNL  WINMOV         
+WDM     46 RADH     ENGLZERO          SAME IMPLND 194 195 EXTNL  SOLRAD         
+WDM     49 ATMP     ENGL              SAME IMPLND 194 195 EXTNL  GATMP          
+                                                                                
+WDM    705 HPRC  10 ENGL                   RCHRES 580 590 EXTNL  PREC           
+WDM    705 HPRC  10 ENGL                   RCHRES 640 680 EXTNL  PREC           
+WDM     40 EVAP  10 ENGL         0.86 DIV  RCHRES 580 590 EXTNL  POTEV          
+WDM     40 EVAP  10 ENGL         0.86 DIV  RCHRES 640 680 EXTNL  POTEV          
+END EXT SOURCES                                                                 
+                                                                                
+EXT TARGETS                                                                     
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Volume-> <Member> Tsys Aggr Amd ***
+<Name>   x        <Name> x x<-factor->strg <Name>   x <Name>qf  tem strg strg***
+RCHRES 580 ROFLOW ROVOL  1    0.50417 SUM  WDM1  1016 FLOW     ENGL AGGR REPL   
+RCHRES 640 ROFLOW ROVOL  1    0.50417 SUM  WDM1  1018 FLOW     ENGL AGGR REPL   
+RCHRES 670 ROFLOW ROVOL  1    0.50417 SUM  WDM1  1021 FLOW     ENGL AGGR REPL   
+RCHRES 650 ROFLOW ROVOL  1    0.50417 SUM  WDM1  1019 FLOW     ENGL AGGR REPL   
+RCHRES 660 ROFLOW ROVOL  1    0.50417 SUM  WDM1  1020 FLOW     ENGL AGGR REPL   
+RCHRES 590 ROFLOW ROVOL  1    0.50417 SUM  WDM1  1017 FLOW     ENGL AGGR REPL   
+RCHRES 680 ROFLOW ROVOL  1    0.50417 SUM  WDM1  1022 FLOW     ENGL AGGR REPL   
+                                                                                
+RCHRES 590 ROFLOW ROVOL  1 1 .00001734     WDM1  1008 SIMQ   1 ENGL      REPL   
+COPY   100 OUTPUT MEAN   1 1 .00000145     WDM1  1009 SURO   1 ENGL      REPL   
+COPY   100 OUTPUT MEAN   2 1 .00000145     WDM1  1010 IFWO   1 ENGL      REPL   
+COPY   100 OUTPUT MEAN   3 1 .00000145     WDM1  1011 AGWO   1 ENGL      REPL   
+COPY   100 OUTPUT MEAN   4 1 .00000145     WDM1  1012 PETX   1 ENGL AGGR REPL   
+COPY   100 OUTPUT MEAN   5 1 .00000145     WDM1  1013 SAET   1 ENGL AGGR REPL   
+COPY   100 OUTPUT MEAN   6 1 .00000145     WDM1  1014 UZSX   1 ENGL AGGR REPL   
+COPY   100 OUTPUT MEAN   7 1 .00000145     WDM1  1015 LZSX   1 ENGL AGGR REPL   
+END EXT TARGETS                                                                 
+                                                                                
+SCHEMATIC                                                                       
+<-Volume->                  <--Area-->     <-Volume->  <ML#> ***                
+<Name>   x                  <-factor->     <Name>   x        ***                
+PERLND 191                   136620.       RCHRES 580      1                    
+PERLND 192                     4531.       RCHRES 580      1                    
+PERLND 193                    10488.       RCHRES 580      1                    
+PERLND 194                    44555.       RCHRES 580      1                    
+PERLND 195                    13953.       RCHRES 580      1                    
+PERLND 196                    24417.       RCHRES 580      1                    
+IMPLND 194                        0. ***   RCHRES 580      3                    
+IMPLND 195                     5640.       RCHRES 580      3                    
+                                                                                
+PERLND 191                    22338.       RCHRES 590      1                    
+PERLND 192                     2505.       RCHRES 590      1                    
+PERLND 193                     5800.       RCHRES 590      1                    
+PERLND 194                    24639.       RCHRES 590      1                    
+PERLND 195                     5331.       RCHRES 590      1                    
+PERLND 196                    13502.       RCHRES 590      1                    
+IMPLND 194                       10.       RCHRES 590      3                    
+IMPLND 195                     1711.       RCHRES 590      3                    
+                                                                                
+PERLND 191                    50977.       RCHRES 640      1                    
+PERLND 192                     3201.       RCHRES 640      1                    
+PERLND 193                     7410.       RCHRES 640      1                    
+PERLND 194                    31479.       RCHRES 640      1                    
+PERLND 195                     3182.       RCHRES 640      1                    
+PERLND 196                    17251.       RCHRES 640      1                    
+IMPLND 194                        0. ***   RCHRES 640      3                    
+IMPLND 195                      769.       RCHRES 640      3                    
+                                                                                
+PERLND 191                    14922.       RCHRES 650      1                    
+PERLND 192                     2737.       RCHRES 650      1                    
+PERLND 193                     6335.       RCHRES 650      1                    
+PERLND 194                    26915.       RCHRES 650      1                    
+PERLND 195                     9603.       RCHRES 650      1                    
+PERLND 196                    14750.       RCHRES 650      1                    
+IMPLND 194                        1.       RCHRES 650      3                    
+IMPLND 195                     3433.       RCHRES 650      3                    
+                                                                                
+PERLND 191                    22797.       RCHRES 660      1                    
+PERLND 192                      691.       RCHRES 660      1                    
+PERLND 193                     1599.       RCHRES 660      1                    
+PERLND 194                     6794.       RCHRES 660      1                    
+PERLND 195                     2504.       RCHRES 660      1                    
+PERLND 196                     3723.       RCHRES 660      1                    
+IMPLND 194                        0. ***   RCHRES 660      3                    
+IMPLND 195                      514.       RCHRES 660      3                    
+                                                                                
+PERLND 191                    12047.       RCHRES 670      1                    
+PERLND 192                     1645.       RCHRES 670      1                    
+PERLND 193                     3808.       RCHRES 670      1                    
+PERLND 194                    16179.       RCHRES 670      1                    
+PERLND 195                     3077.       RCHRES 670      1                    
+PERLND 196                     8866.       RCHRES 670      1                    
+IMPLND 194                        0. ***   RCHRES 670      3                    
+IMPLND 195                     1195.       RCHRES 670      3                    
+                                                                                
+PERLND 191                    54275.       BMPRAC 680     11
+PERLND 192                     1582.       BMPRAC 680     11
+PERLND 193                     3663.       BMPRAC 680     11
+PERLND 194                    15561.       BMPRAC 680     11
+PERLND 195                    10035.       BMPRAC 680     11
+PERLND 196                     8527.       BMPRAC 680     11
+IMPLND 194                       34.       BMPRAC 680     13
+IMPLND 195                     3566.       BMPRAC 680     13
+                                                                                
+BMPRAC 680                                 RCHRES 680     15
+                                                                                
+RCHRES 680                                 RCHRES 660      5                    
+RCHRES 660                                 RCHRES 590      5                    
+RCHRES 670                                 RCHRES 650      5                    
+RCHRES 650                                 RCHRES 590      5                    
+RCHRES 640                                 RCHRES 650      5                    
+RCHRES 580                                 RCHRES 590      5                    
+                                                                                
+PERLND 191                   313976.       COPY   100     90                    
+PERLND 192                    16892.       COPY   100     90                    
+PERLND 193                    39103.       COPY   100     90                    
+PERLND 194                   166122.       COPY   100     90                    
+PERLND 195                    47685.       COPY   100     90                    
+PERLND 196                    91036.       COPY   100     90                    
+IMPLND 194                       45.       COPY   100     91                    
+IMPLND 195                    16828.       COPY   100     91                    
+                                                                                
+END SCHEMATIC                                                                   
+                                                                                
+MASS-LINK                                                                       
+  MASS-LINK        1                                                            
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+PERLND     PWATER PERO       0.0833333     RCHRES         INFLOW IVOL           
+  END MASS-LINK    1                                                            
+                                                                                
+  MASS-LINK        3                                                            
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+IMPLND     IWATER SURO       0.0833333     RCHRES         INFLOW IVOL           
+  END MASS-LINK    3                                                            
+                                                                                
+  MASS-LINK        5                                                            
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+RCHRES     ROFLOW                          RCHRES         INFLOW                
+  END MASS-LINK    5                                                            
+                                                                                
+  MASS-LINK       11
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+PERLND     PWATER PERO       0.0833333     BMPRAC         INFLOW IVOL
+  END MASS-LINK   11
+                                                                                
+  MASS-LINK       13
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+IMPLND     IWATER SURO       0.0833333     BMPRAC         INFLOW IVOL
+  END MASS-LINK   13
+                                                                                
+  MASS-LINK       15
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> *** 
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # *** 
+BMPRAC     ROFLOW                          RCHRES         INFLOW
+  END MASS-LINK   15
+
+  MASS-LINK       90                                                            
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+PERLND     PWATER SURO                     COPY           INPUT  MEAN   1       
+PERLND     PWATER IFWO                     COPY           INPUT  MEAN   2       
+PERLND     PWATER AGWO                     COPY           INPUT  MEAN   3       
+PERLND     PWATER PET                      COPY           INPUT  MEAN   4       
+PERLND     PWATER TAET                     COPY           INPUT  MEAN   5       
+PERLND     PWATER UZS                      COPY           INPUT  MEAN   6       
+PERLND     PWATER LZS                      COPY           INPUT  MEAN   7       
+  END MASS-LINK   90                                                            
+                                                                                
+  MASS-LINK       91                                                            
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>            <Name> x x<-factor->strg <Name>                <Name> x x  ***
+IMPLND     IWATER SURO                     COPY           INPUT  MEAN   1       
+IMPLND     IWATER PET                      COPY           INPUT  MEAN   4       
+IMPLND     IWATER IMPEV                    COPY           INPUT  MEAN   5       
+  END MASS-LINK   91                                                            
+END MASS-LINK                                                                   
+                                                                                
+                                                                                
+FTABLES                                                                         
+                                                                                
+  FTABLE    580                                                                 
+ rows cols                                 ***                                  
+    7    4                                                                      
+     depth      area    volume   outflow   ***                                  
+      (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+      0.00     0.000     0.000      0.00                                        
+      1.34    524.87    663.93     235.0                                        
+      1.67    453.09    789.55     405.0                                        
+      3.03    753.65   2409.01    1300.0                                        
+      4.21    762.63   3167.16    2200.0                                        
+      6.74    816.46   6998.25    4680.0                                        
+     25.00   1121.51  35888.45   60000.0                                        
+  END FTABLE580                                                                 
+  FTABLE    590                                                                 
+ rows cols                                 ***                                  
+    6    4                                                                      
+     depth      area    volume   outflow   ***                                  
+      (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+      0.00     0.000     0.000      0.00                                        
+      3.45    457.72   1113.38     476.0                                        
+      9.38    523.70   3917.46    7130.0                                        
+     12.05    536.07   5401.96   12000.0                                        
+     14.58    639.16   6898.56   18100.0                                        
+     53.58   1443.28  30927.27  235000.0                                        
+  END FTABLE590                                                                 
+  FTABLE    640                                                                 
+ rows cols                                 ***                                  
+   11    4                                                                      
+     depth      area    volume   outflow   ***                                  
+      (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+      0.00     0.000     0.000      0.00                                        
+      1.62    48.964    13.834      1.34                                        
+      1.74    71.892    26.231      2.46                                        
+      2.00   114.250    58.291      9.09                                        
+      2.23   275.910   242.490     22.10                                        
+      2.78   345.859   512.960     75.30                                        
+      3.81   431.353  1305.716    412.00                                        
+      5.10   505.188  1989.663    981.00                                        
+      6.82   598.453  2895.115   1980.00                                        
+     17.00   610.112  9248.825  15000.00                                        
+     24.05   777.212 15544.244 213000.00                                        
+  END FTABLE640                                                                 
+  FTABLE    650                                                                 
+ rows cols                                 ***                                  
+    7    4                                                                      
+     depth      area    volume   outflow   ***                                  
+      (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+      0.00     0.000     0.000      0.00                                        
+      1.34    394.25    498.72     235.0                                        
+      1.67    340.34    593.06     405.0                                        
+      3.03    566.11   1809.52    1300.0                                        
+      4.21    572.85   2379.00    2200.0                                        
+      6.74    613.29   5256.72    4680.0                                        
+     25.00    842.42  26957.58   60000.0                                        
+  END FTABLE650                                                                 
+  FTABLE    660                                                                 
+ rows cols                                 ***                                  
+   11    4                                                                      
+     depth      area    volume   outflow   ***                                  
+      (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+      0.00     0.000     0.000      0.00                                        
+      1.62    21.351     6.033      1.34                                        
+      1.74    31.349    11.438      2.46                                        
+      2.00    49.820    25.418      9.09                                        
+      2.23   120.313   105.740     22.10                                        
+      2.78   150.815   223.680     75.30                                        
+      3.81   188.095   569.367    412.00                                        
+      5.10   220.291   867.607    981.00                                        
+      6.82   260.960  1262.436   1980.00                                        
+     17.00   266.044  4033.018  15000.00                                        
+     24.05   338.909  6778.182 213000.00                                        
+  END FTABLE660                                                                 
+  FTABLE    670                                                                 
+ rows cols                                 ***                                  
+    8    4                                                                      
+     depth      area    volume   outflow   ***                                  
+      (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+      0.00     0.000     0.000      0.00                                        
+      1.10    46.162    41.901     10.40                                        
+      1.20    66.284    46.872     20.80                                        
+      1.60   142.036   175.415     79.90                                        
+      2.30   160.975   243.829    156.00                                        
+      5.22   215.422   923.236   1420.00                                        
+      7.62   250.931  1200.207   2730.00                                        
+     22.10   473.455  2367.273  32200.00                                        
+  END FTABLE670                                                                 
+  FTABLE    680                                                                 
+ rows cols                                 ***                                  
+   11    4                                                                      
+     depth      area    volume   outflow   ***                                  
+      (ft)   (acres) (acre-ft)   (ft3/s)   ***                                  
+      0.00     0.000     0.000      0.00                                        
+      1.62    46.475    13.131      1.34                                        
+      1.74    68.237    24.897      2.46                                        
+      2.00   108.441    55.327      9.09                                        
+      2.23   261.882   230.161     22.10                                        
+      2.78   328.275   486.880     75.30                                        
+      3.81   409.422  1239.331    412.00                                        
+      5.10   479.503  1888.504    981.00                                        
+      6.82   568.027  2747.921   1980.00                                        
+     17.00   579.092  8778.594  15000.00                                        
+     24.05   737.697 14753.939 213000.00                                        
+  END FTABLE680                                                                 
+                                                                                
+END FTABLES                                                                     
+                                                                                
+END RUN                                                                         
+                                                                                
+                                                                                
+                                                                                
+                                                                                

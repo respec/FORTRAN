@@ -1,0 +1,91 @@
+Private Declare Function F90_WDFLCL Lib "wdmwms.dll" (l&) As Long
+Private Declare Function F90_WDCKDT Lib "wdmwms.dll" (l&, l&) As Long
+Private Declare Function F90_WDBOPN Lib "wdmwms.dll" (ByVal s$, ByVal i%) As Long
+Private Declare Sub F90_WDTGET Lib "wdmwms.dll" (l&, l&, l&, l&, l&, l&, l&, r!, l&)
+Private Declare Sub F90_WDBSGC Lib "wdmwms.dll" (l&, l&, l&, l&, l&)
+Private Declare Sub F90_WTFNDT Lib "wdmwms.dll" (l&, l&, l&, l&, l&)
+
+
+  Dim WdmFileUnit As Long
+  Dim DataSetNumber As Long
+  Dim ReturnCode As Long
+  Dim FileName As String
+  Dim LengthOfFileName As Long
+  Dim DataSetType As Long
+  Dim DataSetName As String
+  Dim AttributeIndex As Long
+  Dim AttributeLength As Long
+  Dim IntegerArray(48) As Long
+  Dim StartingDate(6) As Long
+  Dim EndingDate(6) As Long
+  Dim TimeStep As Long
+  Dim NumberOfValues As Long
+  Dim TransformationCode As Long
+  Dim TimeUnits As Long
+  Dim Values(100) As Single
+  
+  'open the wdm file
+  FileName = "yourfile.wdm"
+  LengthOfFileName = Len(FileName)
+  WdmFileUnit = F90_WDBOPN(FileName, LengthOfFileName)
+  
+  If WdmFileUnit > 0 Then
+    'successfully opened wdm file
+    
+    DataSetType = 0
+    DataSetNumber = 0
+    Do Until DataSetType = 1
+      'loop through data sets until we find a timeseries data set
+      DataSetNumber = DataSetNumber + 1
+      DataSetType = F90_WDCKDT(WdmFileUnit, DataSetNumber)
+    Loop
+    'we now have a data set number
+    
+    'get data set name attribute
+    AttributeIndex = 45
+    AttributeLength = 48
+    Call F90_WDBSGC(WdmFileUnit, DataSetNumber, AttributeIndex, AttributeLength, IntegerArray(0))
+    'need to convert integer array to a character string
+    DataSetName = ""
+    For i = 0 To 47
+      'build string using the VisualBasic function Chr,
+      'which returns the character represented by the integer ascii code
+      DataSetName = DataSetName & Chr(IntegerArray(i))
+    Next i
+    
+    'find out dates for data on this data set
+    Call F90_WTFNDT(WdmFileUnit, DataSetNumber, StartingDate(0), EndingDate(0), ReturnCode)
+    
+    If ReturnCode = 0 Then
+      'data is available on this data set
+      
+      'prepare to get the first 100 values
+      TimeStep = 1
+      NumberOfValues = 100
+      
+      TransformationCode = 0 'average,same
+      'TransformationCode = 1 'sum,div
+      'TransformationCode = 2 'max
+      'TransformationCode = 3 'min
+      
+      'TimeUnits = 1 'seconds
+      'TimeUnits = 2 'minutes
+      'TimeUnits = 3 'hours
+      TimeUnits = 4 'days
+      'TimeUnits = 5 'months
+      'TimeUnits = 6 'years
+      
+      'retrieve first 100 daily values
+      Call F90_WDTGET(WdmFileUnit, DataSetNumber, TimeStep, StartingDate(0), NumberOfValues, TransformationCode, TimeUnits, Values(0), ReturnCode)
+      
+    End If
+    
+    'close wdm file
+    
+    'if more than one wdm file open use this:
+    'ReturnCode = F90_WDFLCL(WdmFileUnit)
+    
+    'if only one wdm file open you can use this:
+    Close (WdmFileUnit)
+    
+  End If

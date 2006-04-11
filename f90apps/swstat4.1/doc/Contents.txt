@@ -1,0 +1,29 @@
+
+swstat - documentation files
+
+file name         file contents
+----------------  -----------------------------------------------------
+README.TXT        installation and testing instructions
+RELEASE.TXT       release notes
+NOTICE.TXT        user rights notice
+
+doc/Contents.txt  this file
+    versions.txt  description of files that differ by operating system
+    gligks.txt    GLIGKS copyright and gksfont.dat installation
+    swstat.txt    text version of man page
+    swstat.ps     draft of user's document, PostScript 
+    swstat.pdf    draft of user's document, Portable Document Format
+-----------------------------------------------------------------------
+
+Lumb, A.M., Kittle, J.L., Jr., and Flynn, K.M., 1990, Users manual
+   for ANNIE, a computer program for interactive hydrologic analyses
+   and data management: U.S. Geological Survey Water-Resources
+   Investigations Report 89-4080, 236 p.
+
+Flynn, K.M., Hummel, P.R., Lumb, A.M., and Kittle, J.L., Jr., 1995,
+   User's manual for ANNIE, version 2, a computer program for
+   interactive hydrologic data management:  U.S. Geological Survey
+   Water-Resources Investigations Report 95-4085, 211 p.
+
+   Available electronically as an Adobe Portable Document file (pdf)
+   or PostScript file (ps) at http://water.usgs.gov/software/annie.html.

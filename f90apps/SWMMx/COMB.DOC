@@ -1,0 +1,223 @@
+*
+*       <<<<<<<<  SWMM 4.3 (beta) COMBINE BLOCK DATA FILE >>>>>>>>>
+*
+*  Note, this file last updated by WCH, 4/22/94.
+*
+*	This is an input data file to the SWMM 4.3 Combine Block
+*       for collating, combining and providing readable versions of
+*       SWMM interface files, including both hydrograph/pollutograph
+*       time series, and precipitation time series from the Rain Block.
+*       All lines with an asterisk in column 1 are comment lines and are 
+*       ignored by the program.
+*
+*       This file may be run as input to SWMM as long as interface files
+*       RUNOFF.DNT and RUNOFFCB.DNT are present.
+*
+*       Input data are free format and may be up to 230 columns wide.  
+*       You must have a value for every data column even if the program
+*       will not actually use a given value.  There must be at least one
+*       space or comma between every input value.  Alphanumeric data 
+*       should be enclosed in single quotes. 
+*
+*       Caution!  Data lines that are "wrapped around" (continued on
+*       two or more lines) should have a blank in column 1, unless a
+*       card identifier is needed.  
+*
+*       SWMM uses both U.S. customary units and metric units.  The
+*       examples use feet, cfs, acres, inches and inches/hour.  If metric
+*       is specified substitute meters, cms, hectares, millimeters and
+*       millimeters/hour.
+*============================================================================
+*	The SW card sets up the interface files to be used or created. 
+*	There is one output file (#9) from the first run of Combine,
+*       no output from the second run of Combine (ICOMB=5), and a second
+*       output file (# 10) from the third run of Combine that creates
+*       an ASCII file (ICOMB=4).  Interface files are ordinarily written  
+*       in binary mode.  This special case (ICOMB=4) is the only instance 
+*       in which an interface file can be viewed and read using a DOS
+*       editor.  
+*============================================================================
+*  NBLOCK  JIN(1)  JOUT(1) JIN(2) JOUT(2)   etc.
+SW    3      8       9       9      0       9      10
+*============================================================================
+*   The MM card opens the scratch files to be used by different subroutines.
+*   A certain number (1 for COMBINE) may be required for each block.
+*============================================================================
+*  NITCH  NSCRAT(1) NSCRAT(2) NSCRAT(3) NSCRAT(4) NSCRAT(5) NSCRAT(6) NSCRAT(7)
+MM   7       1         2          3        10         11        12       13
+*============================================================================
+*   In the example below, file RUNOFFCB.DNT is the same file as RUNOFF.DNT
+*   and is simply a copy of RUNOFF.DNT.  Thus, the collated output file
+*   will contain flows that are double those on the the input files.
+*   After running this COMB.DOC file RUNCOMB.ASC is viewable with a 
+*   DOS editor.  
+*============================================================================
+*     The @ command is used to permanently save an interface or 
+*     scratch file.  This line should be placed before the first SWMM
+*     block call.  The format of the @ command is as follows:
+*============================================================================
+*Column 1    Unit number of the       Name of the interface
+*            interface file saved     file (any valid DOS filename)
+*            or utilized
+*
+@             8                       'RUNOFF.DNT'
+@             1                       'RUNOFFCB.DNT'
+@            10                       'RUNCOMB.ASC'
+*  @          9                       'RUNCOMB.INT'
+*============================================================================
+*  Column 1
+*  $ANUM      Alphanumeric labeling of node names is used.  Enter
+*             all requests for node numbers with names in quotes.
+*             This option must be used if Combine is operating on
+*             interface files created by earlier SWMM blocks using
+*             the $ANUM option.
+*============================================================================
+$COMBIN     	Call the COMBINE Block with a '$' in first column.
+*============================================================================
+*	The 'A1' line defines the Combine Block program control.
+*       The meaning of the values listed on each line are as follows:
+*============================================================================
+*	A1 Line       :
+*          ICOMB      : Program control.
+*                       = 0, Collate option.  Merge two interface files (JIN 
+*                            and NSCRAT(1)), retaining all location IDs. 
+*                            For locations with identical IDs, sum flows 
+*                            and loads on new output interface file, JOUT.  
+*                       = 1, Combine option.  Sum all flows and loads on
+*                            interface files JIN and NSCRAT(1) and combine
+*                            on output interface file JOUT at location
+*                            NODEOT given in data group B2.  
+*                       = 2, Extract (and optionally renumber)
+*                            from a single file (JIN).
+*                       = 3, Read the file headers of file JIN.
+*                       = 4, Create a formatted ASCII (text) file from 
+*                            the unformatted interface file (JIN).  This
+*                            file can be manipulated for plotting using
+*                            a spreadsheet, for example.  
+*                            Caution.  The maximum product of number of
+*                            locations x (1 + number of pollutants) must
+*                            be <= 220.  
+*                       = 5, Calculate the simple statistics (totals) of flow
+*                            and/or water quality on interface file JIN.
+*                       = 6, Calculate the simple statistics (totals) of the
+*                            precipitation interface file JIN.
+*============================================================================
+*  Collate interface files RUNOFF.DNT and RUNOFFCB.DNT.
+*  ICOMB
+A1   0
+*
+*   Note : End of input to the Combine Block if ICOMB = 3, 5 or 6.
+*============================================================================
+*	Create title lines for the simulation.  There are two title lines 
+*       for the Combine Block.  Titles are enclosed in single quotes.
+*============================================================================
+*	B1 Line       :
+*          TITLE      : Title, 2 lines to be placed as first title on
+*                       output file (maximum of 80 characters per line).
+*============================================================================
+B1 ' COMBINE BLOCK COLLATE EX.  INTERFACE FILE FROM RUNOFF.DOC' 
+B1 ' COLLATE WITH IDENTICAL INTERFACE FILE FOR THIS EXAMPLE'
+*============================================================================
+*	B2 Line       :
+*          NODEOT     : Node number on output file for combined location.
+*                       Enter zero if collating (ICOMB = 0).
+*                       If $ANUM option is used, enter node name in quotes
+*                       and use '' for zero.
+*          NPOLL      : Number of quality constituents to be placed on
+*                       new interface file.
+*
+*                       Note, option for ICOMB=4 and NPOLL > 0:
+*
+*                       Pollutants written on ASCII version of interface
+*                       file have units of flow x concentration (e.g.,
+*                       cfs x mg/l or cms x mg/l) as the default option.
+*                       If NPOLL is input as a negative number, then
+*                       concentrations will be placed on the ASCII file
+*                       instead.  NPOLL will be reset to its proper
+*                       positive value.
+*============================================================================
+*    NODEOT  NPOLL
+B2     0       3
+*============================================================================
+*      Use the B3 to define the water quality interface file locations
+*          if NPOLL > 0 on line B2.
+*============================================================================
+*	B3 Line       :
+*         NPOS1(1)    :  Constituent 1 position on file 1.
+*         NPOS2(1)    :  Constituent 1 position on file 2. 
+*               .                         . 
+*         NPOS1(NPOLL):  Constituent NPOLL position on file 1.
+*         NPOS2(NPOLL):  Constituent NPOLL position on file 2.
+*============================================================================
+*    NPOS1(1) NPOS2(1) NPOS1(2) NPOS2(2)  etc.
+B3     1        1         2       2       3       3
+*       The C1 line defines the extraction/renumbering options.
+*============================================================================
+*	C1 Line       :
+*          NUMX       : = 0, Use all locations.  
+*                       > 0, number of locations (nodes) to be
+*                         extracted from one or two files.
+*          NUMR       : = 0, do not renumber any locations. 
+*                       = NUMX, renumber according to data group C3.
+*                       (If NUMX = 0, NUMR can equal total number of
+*                        nodes.  See text for more information.)
+*============================================================================
+*    NUMX   NUMR
+C1    0      0
+*============================================================================
+*       Define the locations (nodes) to be extracted if NUMX > 0
+*                  on data group C1 using data line C2.
+*============================================================================
+*       Not required if NUMX = 0 in data group C1.
+*
+*	C2 Line       :
+*        NODEX(1)     :  First node number.
+*             .              .
+*        NODEX(NUMX)  :  Last node number.
+*============================================================================
+*    COULD EXTRACT NODE NUMBER 3
+*    NODEX(1)
+*  C2     3
+*============================================================================
+*       Define the Numbers to be Assigned to Extracted Nodes
+*                  if NUMR > 0 on data group C2.
+*============================================================================
+*     Not required if NUMR = 0 in data group C2.
+*
+*	C3 Line       :
+*          NODER(1)   :  Number for first renumbered node.
+*              .                  .
+*          NODER(NUMR):  Number for last renumbered node.
+*============================================================================
+*    COULD RENUMBER NODE NUMBER 3 TO 3333
+*    NODER(1)
+* C3    3333
+*============================================================================
+*  Additional Combine Block example to illustrate simple statistics option.
+*============================================================================
+$COMBINE
+*  ICOMB
+A1   5
+*  No more input required for this run.
+*============================================================================
+*  Additional Combine Block example to illustrate creation of ASCII file.
+*============================================================================
+$COMBINE
+*  ICOMB
+A1   4
+* Title
+B1 'ASCII file generation from output of earlier Combine'
+B1 'ASCII file should be on DOS file: RUNCOMB.ASC'
+*  NODEOT  NPOLL
+B2   0      3
+* Note, because NPOLL > 0 above, loads, not concentrations, will be listed
+* on the interface file.
+*
+*    NPOS1(1) NPOS2(1) NPOS1(2) NPOS2(2)  etc.
+B3     1        1         2       2       3       3
+*  NUMX  NUMR
+C1  0     0
+*============================================================================
+*               End your input data set with a $ENDPROGRAM.
+$ENDPROGRAM
+

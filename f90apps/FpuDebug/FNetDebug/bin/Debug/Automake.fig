@@ -1,0 +1,15 @@
+# Automake.fig for project FNetDebug (Win32 / Debug) 
+
+# global directives
+KEEPOBJDIR
+NOQUITONERROR
+MODULE=D:\F90Apps\FpuDebug\FNETDE~1\bin\Debug
+OBJDIR=D:\F90Apps\FpuDebug\FNETDE~1\bin\Debug
+TARGET=d:\vbNet\FPUREG~1\bin\FNetDebug.dll
+
+LINK=@lf95 -dll -g -nco @%rf -out "%ex"
+
+
+# compilation directives for FNetDllTest.f90
+FILES=D:\F90Apps\FpuDebug\FNetDebug\FNetDllTest.f90
+COMPILE=@lf95 "%fi" -c -pause -g -co -lst -xref -ml msvb -staticlink -o0 -chkglobal -mod %mo -o "%od%sf%oe"

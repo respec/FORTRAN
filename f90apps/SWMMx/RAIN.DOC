@@ -1,0 +1,499 @@
+*
+*       <<<<<<<<  SWMM 4.3 RAIN BLOCK DATA FILE >>>>>>>>>
+*
+*  Note, this file last updated by WCH, 4/27/94.
+*
+*	This is an input data file to the SWMM 4.3 (beta) Rain Block for 
+*       analyzing and creating a precipitation time series interface
+*       file.  All lines with an asterisk in column 1 are comment lines 
+*       and are ignored by the program.
+*
+*       Input data are free format and may be up to 230 columns wide.  
+*       You must have a value for every data column even if the program
+*       will not actually use a given value.  Alternatively, a slash, /, may
+*       be used at the end of a line to indicate that remaining input
+*       values should be filled with zeroes.  There must be at least one
+*       space or comma between every input value.  Alphanumeric data 
+*       should be enclosed in single quotes. 
+*
+*       Caution!  Data lines that are "wrapped around" (continued on
+*       two or more lines) should have a blank in column 1, unless a
+*       card identifier is needed.  
+*
+*       SWMM uses both U.S. customary units and metric units.  The
+*       examples use feet, cfs, acres, inches and inches/hour.  If metric
+*       is specified, substitute meters, cms, hectares, millimeters and
+*       millimeters/hour.
+*============================================================================
+*	The SW line sets up the interface files to be used or created. 
+*	There is one output file (#9 in this example) that will contain 
+*       the hourly, 15 min. or other time interval precipitation data for 
+*       subsequent blocks.
+*============================================================================
+*  NBLOCK  JIN(1)  JOUT(1)
+SW    1      8       9  
+*============================================================================
+*   Note, the rainfall interface file is created on unit JOUT.  If this
+*   file already exists and is referenced through an @ line, then rainfall
+*   input during this Rain Block run will be combined with rainfall already
+*   stored on the referenced file.  In this way, data from multiple gages
+*   with different IDs may be stored on the same rainfall interface file. 
+*============================================================================
+*   The MM line opens the scratch files to be used by different subroutines.
+*   A certain number (up to 4 for RAIN) is required for each block.
+*============================================================================
+*  NITCH  NSCRAT(1) NSCRAT(2) NSCRAT(3) NSCRAT(4) NSCRAT(5) NSCRAT(6) NSCRAT(7)
+MM   7       1         2          3        10         11        12       13
+*============================================================================
+*     The @ command is used to permanently save an interface or 
+*     scratch file.  This line should be placed before the first SWMM
+*     block call.  The format of the @ command is as follows:
+*============================================================================
+*Column 1    Unit number of the       Name of the interface
+*            interface file saved     file (any valid DOS filename)
+*            or utilized
+*
+@             8                       'GEO6667.DOT'
+*** @             9                       'FLORN.INT'
+*============================================================================
+$RAIN     	Call the RAIN Block with a '$' in first column.
+*============================================================================
+*	Create title lines for the simulation.  There are two title lines 
+*       for the Rain Block.  Titles are enclosed in single quotes.
+*============================================================================
+*	A1 Line       :
+*          SITE       : Two 80-column descriptive titles.
+*============================================================================
+A1  ' EXAMPLE RUN OF THE RAIN BLOCK'
+A1  ' APPALACHICOLA, FLORIDA RAINFALL'
+*============================================================================
+*                      Optional B0 line.  May be omitted.
+*
+*      B0 Line        :
+*
+*          KODEA      : Relative to treatment of accumulated totals (totals 
+*                       over several hourly or 15-min intervals, instead of 
+*                       the actual values at each interval) in NCDC 
+*                       precipitation records, indicated by a special
+*                       code "A":
+*                        = 0, Do not include accumulated totals on 
+*                             interface file time series or in hourly
+*                             and event summary (default, as in past).
+*
+*                             Options 1 and 2 available only for 
+*                             IFORM = 0,1,4,6 or >= 9.
+*
+*                        = 1, Average accumulated total over preceding
+*                             intervals since last special code or beginning
+*                             of day (a uniformly dispersed positioning).
+*                        = 2, Insert accumulated total at its indicated
+*                             time (a lumped positioning).  
+*          KODEPR     : For printing of presence of special codes and/or
+*                       missing data in event summary table (IDECID >= 1).
+*                        = 0, If present, indicate only for dates shown in
+*                             in event summary table (default).
+*                        = 1, If present, indicate for all dates.  This 
+*                             option may lengthen event summary table.  
+*============================================================================
+*  KODEA  KODEPR
+B0   1       1
+*============================================================================
+*	Line B1 defines the control information for the Rain Block.
+*============================================================================
+*	B1 Line       :
+*
+*       NOTE: Both hourly and 15-min. precipitation data may be analyzed
+*       using IFORM = 0,1,4,6,9,10,11,12. 
+*       When 15-min. data are analyzed, NSCRAT(4) is required.
+*       Note, that when 15-min. data are processed, annual, storm event
+*       and summary statistics are all based on hourly totals, not on the
+*       individual 15-min. values.  However, the 15-min. values are 
+*       properly stored on the interface file at 15-min. increments.
+*       For IFORM = 0,1,4,6, the time interval (THISTO) is detected
+*       from the NWS file.  It is not necessary to specify hourly or 
+*       15-min.  
+*
+*       Only hourly data may be analyzed for IFORM = 2,5,7,8.
+*
+*       For IFORM = 3 (user defined) the time interval is arbitrary, but
+*       1 hour or 15 min is recommended.  If the precipitation interval 
+*       (THISTO) is greater than 1 hour, then annual summary statistics 
+*       may be incorrect.  If THISTO < 1 hr, it should be an integer
+*       divisor of 1 hr for proper annual and summary statistics. 
+*     
+*       Note, NOAA-NCDC precipitation data are given in terms of the 
+*       ending time of a precipitation value, whereas SWMM needs the
+*       beginning time of the precipitation increment.  Thus, times listed
+*       in the print-outs and on the interface file will be one hyetograph
+*       time interval (e.g., usually 1 hr or 15 min) earlier than the times
+*       listed in the NOAA-NCDC files.  I.e., SWMM hours are 0-23 (0000-
+*       2345 for 15-min. data), whereas NOAA-NCDC hours are 1-24 
+*       (0015-2400 for 15-min. data).  
+*
+*       Note: see examples of data for IFORM = 0,1,2,3,4,5,9,10 at end
+*       of this file.
+*
+*          IFORM      :  Format of precipitation (rainfall) data.
+*                        = 0, Post-1980 NWS format (NWS Tape Deck 3240
+*                             or 3260), fixed length records (one 
+*                             precipitation entry per line). 
+*                        = 1, Post-1980 NWS format (NWS Tape Deck 3240
+*                             or 3260), variable length records (all 
+*                             non-zero precipitation values on one line 
+*                             for each day).  This is also the AS ON TAPE 
+*                             FORMAT of the NWS and the "NCDC format" of
+*                             EarthInfo.  
+*                        = 2, NWS Card Deck 488.
+*                        = 3, User-defined rainfall format.
+*                        = 4, NWS diskette rainfall format ("Release B,
+*                             Condensed").  (Field definitions are similar 
+*                             to TD 3260 but placed on separate lines and
+*                             alphanumeric values enclosed in double quotes.)
+*                             Provide first 5-yr (or total) diskette (DOS) 
+*                             file on unit JIN and identify other input files 
+*                             (if any) using an @-line(s) in the input data 
+*                             file, i.e., immediately after the B1 line, 
+*                             place an @-line that identifies a
+*                             new NWS DOS file (unit number and file name).
+*                             (See example after B1 line.)
+*                             The data on this file must follow 
+*                             chronologically the data already input (and
+*                             include preliminary station number info etc.).  
+*                             If no additional data are made available,
+*                             a message is printed.
+*                             Because NWS input data must be converted to
+*                             proper ASCII format before being read by SWMM,
+*                             the converted data may be saved for future
+*                             input (IFORM=6) by saving file NSCRAT(3)
+*                             using an appropriate @-line.  
+*                        = 5, Canadian AES precipitation data format.
+*                        = 6, Processed NWS diskette rainfall format 
+*                             ("Release B, Condensed").  Provide first 
+*                             diskette (DOS) file on unit JIN and  
+*                             identify other input files (if any) as 
+*                             indicated for IFORM = 4.
+*                             Quotation marks in file for input using
+*                             IFORM = 4 option have been changed to
+*                             apostrophes in this file from a prior run 
+*                             using IFORM = 4 and saving
+*                             resulting NSCRAT(3) file (then use saved file 
+*                             for unit JIN for IFORM = 6).
+*                        = 7, EarthInfo NCDC rainfall display format
+*                             (data retrieved from screen display, unlikely
+*                             to be encountered).
+*                        = 8, EarthInfo ASCII rainfall display format
+*                             (data retrieved from screen display, unlikely
+*                             to be encountered).
+*
+*                        Caution! The EarthInfo ASCII output format changed
+*                        during 1993. Only use IFORM = 9 or 10 if the 
+*                        format of your data is the same as shown at the
+*                        end of this RAIN.DOC file.  Otherwise, export
+*                        EarthInfo data in the NCDC (CR/LF) format and use
+*                        IFORM = 1.
+*
+*                        = 9, EarthInfo ASCII output format (1993), 15-min. 
+*                             precipitation data -- unprocessed EarthInfo
+*                             data file; suggest saving processed file
+*                             on NSCRAT(3).  "Processed" means placing 
+*                             alphanumeric data in single quotes for 
+*                             list-directed input.  
+*                        = 10 EarthInfo ASCII output format (1993), hourly 
+*                             precipitation data -- unprocessed EarthInfo
+*                             data file; suggest saving processed file
+*                             on NSCRAT(3).
+*                        = 11 EarthInfo processed 15-min. ASCII precipitation 
+*                             data.  Input on unit JIN the file previously 
+*                             processed and saved on NSCRAT(3) from run
+*                             using IFORM = 9. 
+*                        = 12 EarthInfo processed hourly ASCII precipitation 
+*                             data.  Input on unit JIN the file previously 
+*                             processed and saved on NSCRAT(3) from run
+*                             using IFORM = 10. 
+*          ISTA       :  NWS station number, or alternatively for user
+*                        defined data (IFORM = 3), an arbitrary 
+*                        integer station number. 
+*                        Note, for IFORM = 0,1,2, ISTA is a 6-digit integer,
+*                        i.e., 2-digit state code plus 4-digit cooperative
+*                        network index.  For IFORM = 9-12, ISTA is the 3 
+*                        or 4-digit cooperative network index.  
+*                        For IFORM = 5, ISTA is an 8-digit Canadian ID.
+*                        For IFORM = 0,1,2,5,9-12, ISTA must match station 
+*                        number in data file.  Likewise for IFORM = 3 if
+*                        a station number is read (F1 > 0).  
+*                        For IFORM = 4 or 6, ISTA is read from data (entry
+*                        on line B1 is ignored).  For IFORM = 7 or 8, ISTA 
+*                        is set on B1 line and not compared to data file.
+*          IDECID     :  Controls the program purpose and output.
+*                        = 0, Create a rainfall interface file on JOUT.
+*                        = 1, Create a rainfall interface file on JOUT, and
+*                             perform the synoptic rainfall analysis.
+*                        = 2, Only do the synoptic rainfall analysis.
+*
+*     Note, synoptic rainfall analysis is the same as performed by the
+*     EPA SYNOP model. 
+*
+*          IYBEG      :  Starting date, six digits, yr/mo/dy.
+*                        If zero the program searches for beginning year.
+*          IYEND      :  Ending date, six digits, yr/mo/dy. 
+*                        If zero the program reads all the station data.
+*          IYEAR      :  Echo print of the rainfall values read
+*                        = 0, Do not print all rainfall data.
+*                        = 1, Print all the (non-zero) data (1-3 months/page).
+*          ISUM       :  Indicator for storm event summary printout.
+*                        = 0, Do not print storm event summary.
+*                        = 1, Do print the storm event summary (1-2
+*                             pages per year).
+*============================================================================
+*          Note: The following fields are not required if IDECID is 0.
+*============================================================================
+*          MIT        :  Minimum interevent time to separate storm
+*                        events, number of hours (>_1).  Only used if storm 
+*                        event statistics are printed.  (See text.)
+*          NPTS       :  NPTS highest events are printed in rainfall
+*                        analysis tables.  If zero, all events are printed.
+*          IFILE      :  Indicator for storm event formatted file creation.
+*                        = 0, Do not save storm event data on a file.
+*                        = 1, Save the storm event data on a formatted
+*                        NSCRAT(1).  User must insure that this file will
+*                        be permanently saved by appropriate JCL or by 
+*                        using the @ function as described above.
+*          A          :  Plotting position parameter (see text for 
+*                        explanation).  0.4 recommended, or else use zero
+*                        for Weibull plotting position.  
+*          NOSTAT     :  Indicator for storm event statistics printout:
+*
+*      NOSTAT controls the printing of the event tables for volume, average
+*  intensity, storm duration, and interevent duration.  In all cases,
+*  No = 0, Yes = 1.  The control information is entered as a four digit 
+*  integer number with each column controlling a different table.
+*          First column   - table of storm volume by return period. 
+*          Second column  - table of average intensity by return period.
+*          Third column   - table of storm duration by return period.
+*          Fourth column  - table of interevent duration by return period.
+*      For example, enter 1111 to print all four tables, 1000 to print the
+*   first table only, 1100 to print the first two tables, and 0000
+*   or 0 to bypass all table printing.  In all cases only the top NPTS 
+*   events are printed.
+*============================================================================
+*  POST 1980 NWS RAINFALL FORMAT
+*  IFORM ISTA  IDECID  IYBEG  IYEND IYEAR ISUM MIT NPTS IFILE A NOSTAT
+B1   0  080211  1     660000 670000   1     1  12  50     0  0.4  1111
+*============================================================================
+*   Below is an example of a line that could be used to provide file
+*   information to continue input for IFORM = 4 or 6.  The @ symbol should
+*   be in the first column.  File NEWDATA.PRE would contain a 
+*   continuation of Release B Condensed precipitation data,
+*   including all the normal header information.  These data would follow
+*   chronologically from prior data read in for this station.  The unit 
+*   number, 4, is arbitrary but should not duplicate other unit numbers
+*   listed on the SW or MM lines.  
+*
+*  @   4  'C:\SWMMDATA\NEWDATA.PRE'
+*============================================================================
+*	Line B2 defines the control information for a user-defined 
+*               rainfall time series.  Required only if IFORM = 3 
+*               on data group B1.  
+*============================================================================
+*  A maximum of 5000 precipitation values per year may be input in file JIN
+*  (no limit on number of years), one value per line, each value with a date
+*  and time (and optional station ID).  Note, 24 precipitation values per 
+*  line may be entered according to special criteria through the use of
+*  optional line B3, explained below.
+*
+*	B2 Line       :
+*          THISTO     :  Rainfall time interval, minutes.
+*          METRIC     :  Metric input/output.  
+*                        = 0, Use U.S. customary units.
+*                        = 1, Use metric units, denoted by brackets [].
+*          KUNIT      :  Standard rainfall units.
+*                        = 0, intensity, in./hr [mm/hr], or
+*                        = 1, volume, in. [mm].
+*                        (Note: other units, e.g., hundredths of an inch,
+*                        may be used by using CONV below.)
+*          FIRMAT     :  Rainfall format (character data; enclose in single
+*                        quotes).
+*                        Should include integer fields for station number, 
+*                        year, month, day, hour, minute and an F, E or G 
+*                        field for rainfall.  Rainfall may not be read as
+*                        integer (I-format) unless using B3 line -- see
+*                        below.
+*          CONV       :  Multiply by CONV to convert non-standard rainfall
+*                        units to in./hr [mm/hr] (KUNIT = 0) or in. [mm] 
+*                        (KUNIT = 1).  (Conversion should be to mm 
+*                        if METRIC = 1.)
+*
+*                        NOTE: The value for the hour of precipitation should
+*                        vary from zero (midnight) to 23 (11:00 p.m. = 2300). 
+*                        E.g., hour = 2 and minute = 15 gives 0215 for the
+*                        precipitation starting hour.  This is the 
+*                        default procedure.  If desired, the hour can vary
+*                        from 1 to 24 (midnight).  E.g., hour = 2 and minute
+*                        = 15 gives 0115 for the precipitation starting 
+*                        hour.  To choose this option (hour varying from
+*                        1 to 24), enter CONV as a negative number
+*                        (e.g., CONV = -1.0).  CONV will be reset in 
+*                        the program to its correct positive value.
+*
+*          F1         :  Field position for station number.
+*                        If F1 is zero a station number will not be read.
+*          F2         :  Field position for year.  Required.
+*          F3         :  Field position for month.  Required.
+*          F4         :  Field position for day.  Required. 
+*          F5         :  Field position for hour.  Required.
+*          F6         :  Field position for minute.  Required.
+*          F7         :  Field position for precipitation.  Required.
+*                        Rainfall must be either first (1) or last (6 or 7)
+*                        field.  SWMM considers positive numbers to be 
+*                        rainfall and negative numbers to be snowfall.
+*============================================================================
+*     Use line B2 if IFORM = 3 on data line B1.
+*     USER DEFINED INPUT RAINFALL TIME SERIES ==> "USRN.DAT"
+*   THISTO METRIC KUNIT   FIRMAT       CONV  F1 F2 F3 F4 F5 F6 F7
+* B2  15.0    0     0   '(I5,5I3,F4.0)'  1.0  1  2  3  4  5  6  7
+*============================================================================
+*      Optional data group for entry of 24 precipitation values per line.
+*   This line may be omitted.  If used, this line should follow the B2 line.
+*                          
+*       B3              Group identifier
+*
+*       NUVAL           = 24 = number of precipitation values entered on
+*                       each B2 line for variable F7.  If this option is
+*                       used, the year, month and day are entered (in the
+*                       sequence defined by F2, F3 and F4 on line B2 and
+*                       in the fields specified by FIRMAT on line B2), 
+*                       followed by 24 (hourly) precipitation values in 
+*                       100th's of an inch (METRIC=0) or mm x 100 (METRIC=1).
+*                       For example, an intensity of 0.2 in./hr should be 
+*                       entered as 20 (METRIC=0), and an intensity of 30
+*                       mm/hr should be entered as 3000 (METRIC=1).  
+*                       *** Rainfall is read in integer format.***
+*                       The integer format (e.g., 24I5) is included 
+*                       in parameter FIRMAT on line B2.  There is no 
+*                       multiplication by parameter CONV of these 
+*                       data entries.  
+*
+*                       Note that by manipulation of the format specified
+*                       in parameter FIRMAT, the data can be arranged 
+*                       in groups of 12 values on two lines.  For instance, 
+*                       if year, month and day occupy the first three fields
+*                       of each line as real values, followed by 12 
+*                       precipitation values as integers, the following
+*                       FIRMAT is an example: '(3I4, 12I5,/,12X,12I5)'
+*                       Of course, a field position may be left for
+*                       a station number if need be.  
+*============================================================================
+*  This is a one-day example using format listed above.  Note that zeroes
+*  are not necessary to fill-in empty fields because a Format statement
+*  is used, but zeroes are included below for clarity.
+* YEAR MON DAY   RAIN VALUES....
+*  86   2   5   20    0    0    0    0    0   10   40   110   10    0   0
+*  86   2   5    0   10    0    0    0    0    0    0     0    0    0   0
+*
+*                            End of Rain Block Data
+*               End your input data set with a $ENDPROGRAM.
+*               or a $BLOCKNAME for another SWMM block.
+$ENDPROGRAM
+*
+*  Brief examples of data formats.  Remember that asterisk in column 1 is
+*  necessary to maintain comment lines in this RAIN.DOC file.
+*
+*  IFORM = 0, Appalachacola, Florida, April 27-28, 1964
+*
+*HPD08021100HPCPHI19640400270011900 00002  &&&
+*HPD08021100HPCPHI19640400270012000 00004  &&&
+*HPD08021100HPCPHI19640400270012100 00003  &&&
+*HPD08021100HPCPHI19640400270012200 00001  &&&
+*HPD08021100HPCPHI19640400270012300 00012  &&&
+*HPD08021100HPCPHI19640400280010100 00005  &&&
+*HPD08021100HPCPHI19640400280010300 00001  &&&
+*
+* IFORM = 1, Indianapolis, Indiana, January 1-14, 1987
+*
+*HPD12425900HPCPHI19870100010020100000000  2500000000
+*HPD12425900HPCPHI19870100020050300000001  0600000001  0700000002  0800000002  2500000006
+*HPD12425900HPCPHI19870100090131300000003  1400000009  1500000004  1600000008  1700000010  1800000006  1900000004  2000000007  2100000003  2200000004  2300000001  2400000002  2500000061
+*HPD12425900HPCPHI19870100100031900000001  2400000001  2500000002
+*HPD12425900HPCPHI19870100110020100000001  2500000001
+*HPD12425900HPCPHI19870100140021300000003  2500000003
+*
+* IFORM = 2, Minneapolis, Minnesota, January 1-4, 1960
+*
+*2154356001011-  -  -  -  -  -  -  -  -  -  -  -                                 
+*21543560010120020020030030020030020050030020030010031                         02
+*2154356001021002001001002004002002002001-  -  -                                 
+*2154356001022-  -  -  -  -  -  -  -  -  -  -  -  0017                         04
+*2154356001041-  -  -  -  -  -  -  -  -  -  -  -                                 
+*2154356001042-  -  -  001-  -  -  -  -  -  -  -  0001                         05
+*
+* IFORM = 3, Hypothetical user-defined.  This is USRN.DAT refered to in text.
+*
+*14922 80 02 01 00 00 .1
+*14922 80 02 01 00 30 .1
+*14922 80 02 01 14 00 .1
+*14922 80 02 01 15 00 .1
+*14922 80 02 01 18 00 .1
+*14922 80 02 01 19 00 .1
+*14922 80 02 23 12 30 .1
+*14922 80 02 23 12 45 .1
+*14922 80 02 23 15 00 .1
+*14922 80 02 23 18 00 .1
+*14922 80 02 23 19 00 .1
+*14922 80 02 24 17 00 .1
+*14922 80 02 24 18 00 .1
+*14922 80 02 25 12 00 .1
+*14922 80 02 26 12 00 .1
+*14922 80 02 27 12 00 .1
+*14922 80 02 27 15 00 .1
+*14922 80 02 27 15 30 .1
+*14922 80 03 04 12 00 .05
+*14922 80 03 04 12 30 .05
+*14922 80 03 04 14 00 .05
+*14922 80 03 05 00 00 .05
+*14922 80 03 05 00 30 .05
+*
+* IFORM = 4, Greensboro-High Point, North Carolina, July 1-12, 1948
+*
+*1,'HPD'
+*2,'GREENSBORO,HIGH P, NC'
+*3,313630,313630,0,0,0,0,0,0,0,0
+*4,1948,07,1952,12
+*5,'HPCP',' ',' ',' ',' '
+*8,948,7,1,'HI',2
+*9,1,0,'0','0'
+*9,25,0,'0','0'
+*8,948,7,11,'HI',2
+*9,3,1,'0','0'
+*9,25,1,'0','0'
+*8,948,7,12,'HI',3
+*9,13,1,'0','0'
+*9,14,4,'0','0'
+*9,25,5,'0','0'
+*
+* IFORM = 5, Unidentified Canadian station 61060009, November 13-18, 1978
+* Note, rainfall in mm.
+*
+*61060009781113123000000000000000000000000000000000000000000000000000000000000000000000000000200150007002400370031
+*61060009781114123002200170006000300000000000000000000000000000000000000000000000000000000000000000000000000000000
+*61060009781115123000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+*61060009781116123000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+*61060009781117123000000000000000000000000000000000000000000000000000000130019002800220013000900260024004600460002
+*61060009781118123000200040005000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+*
+* IFORM = 9, Yaquina Bay, Oregon, November 1-7, 1980
+*
+*OR,9581,1,in,11/01/1980,0.00,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,0.20,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.70,
+*OR,9581,1,in,11/02/1980,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,
+*OR,9581,1,in,11/03/1980,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,0.10,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.30,
+*OR,9581,1,in,11/05/1980,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,0.10,,.,,.,,.,,0.10,,0.10,,.,,0.10,,0.10,,.,,0.10,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.80,
+*OR,9581,1,in,11/06/1980,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,0.10,,.,,0.10,,.,,0.10,,.,,0.10,,.,,0.10,,.,,0.10,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.20,,.,,.,,.,,.,,0.10,,0.20,,.,,0.10,,1.50,
+*OR,9581,1,in,11/07/1980,0.10,,0.10,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,0.40,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,0.10,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,1.10,
+*
+* IFORM = 10, Eugene, Oregon, January 1-9, 1970
+*
+*OR,2709,2,in,01/01/1970,0.00,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.00,,
+*OR,2709,2,in,01/03/1970,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.02,,.,,.,,0.02,,0.01,,0.03,,.,,.,,.,,0.08,,.,,0.01,,.,,.,,.,,0.17,,
+*OR,2709,2,in,01/07/1970,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.01,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,.,,0.01,,
+*OR,2709,2,in,01/08/1970,.,,.,,.,,.,,.,,.,,.,,0.01,,.,,0.02,,.,,.,,.,,0.01,,.,,0.02,,.,,.,,.,,0.04,,0.04,,0.13,,0.08,,0.04,,0.39,,
+*OR,2709,2,in,01/09/1970,0.01,,0.06,,0.07,,0.18,,0.16,,0.09,,0.08,,0.08,,0.03,,0.06,,0.04,,0.02,,0.03,,0.06,,0.06,,0.07,,0.06,,0.11,,0.11,,0.04,,0.02,,0.02,,.,,.,,1.46,,
+

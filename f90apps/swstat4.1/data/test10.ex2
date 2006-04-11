@@ -1,0 +1,120 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  Attributes from daily data sets used in swstat tests
+END COMMENT 
+DSN            1    TYPE  TIME   NDN   1   NUP   1   NSA  40   NSP  75   NDP 150
+  LABEL   
+    DATCRE  200110   1  14                                                      
+    DATMOD  200110   1  14                                                      
+    TCODE          4                                                            
+    TGROUP         6                                                            
+    TSFORM         1                                                            
+    COMPFG         1                                                            
+    VBTIME         1                                                            
+    TSBYR       1960                                                            
+    TSSTEP         1                                                            
+    ISTAID  11516530                                                            
+    PARMCD        60                                                            
+    STATCD         3                                                            
+    TSFILL  -99999.0                                                            
+    DAREA     4630.0                                                            
+    STAID   11516530                                                            
+    TSTYPE  FLOW                                                                
+    STANAM  Klamath River below Iron Gate Dam, CA.                              
+    AGENCY  USGS                                                                
+    MINVAL     647.0                                                            
+    MAXVAL   25000.0                                                            
+    MEANVL  2188.405                                                            
+    STDDEV  1782.144                                                            
+  END LABEL   
+END DSN 
+DSN            2    TYPE  TIME   NDN   1   NUP   1   NSA  40   NSP  75   NDP 150
+  LABEL   
+    DATCRE  200110   1  14                                                      
+    DATMOD  200110   1  14                                                      
+    TCODE          4                                                            
+    TGROUP         6                                                            
+    TSFORM         1                                                            
+    COMPFG         1                                                            
+    VBTIME         1                                                            
+    TSBYR       1912                                                            
+    TSSTEP         1                                                            
+    ISTAID  11520500                                                            
+    PARMCD        60                                                            
+    STATCD         3                                                            
+    TSFILL  -99999.0                                                            
+    DAREA     6940.0                                                            
+    STAID   11520500                                                            
+    TSTYPE  FLOW                                                                
+    STANAM  Klamath River near Seiad Valley, CA.                                
+    AGENCY  USGS                                                                
+    MINVAL     320.0                                                            
+    MAXVAL  115000.0                                                            
+    MEANVL  4072.749                                                            
+    STDDEV   3990.63                                                            
+  END LABEL   
+END DSN 
+DSN            3    TYPE  TIME   NDN   1   NUP   1   NSA  40   NSP  75   NDP 150
+  LABEL   
+    DATCRE  200110   1  14                                                      
+    DATMOD  200110   1  14                                                      
+    TCODE          4                                                            
+    TGROUP         6                                                            
+    TSFORM         1                                                            
+    COMPFG         1                                                            
+    VBTIME         1                                                            
+    TSBYR       1933                                                            
+    TSSTEP         1                                                            
+    ISTAID  11517500                                                            
+    PARMCD        60                                                            
+    STATCD         3                                                            
+    TSFILL  -99999.0                                                            
+    DAREA      793.0                                                            
+    STAID   11517500                                                            
+    TSTYPE  FLOW                                                                
+    STANAM  Shasta River near Yreka, CA.                                        
+    AGENCY  USGS                                                                
+    MINVAL       1.5                                                            
+    MAXVAL   10400.0                                                            
+    MEANVL  185.1218                                                            
+    STDDEV  240.9372                                                            
+    KENTAU  0.185859                                                            
+    KENPLV 0.0734277                                                            
+    KENSLP   1.23228                                                            
+  END LABEL   
+END DSN 
+DSN            4    TYPE  TIME   NDN   1   NUP   1   NSA  40   NSP  75   NDP 150
+  LABEL   
+    DATCRE  200110   1  14                                                      
+    DATMOD  200110   1  14                                                      
+    TCODE          4                                                            
+    TGROUP         6                                                            
+    TSFORM         1                                                            
+    COMPFG         1                                                            
+    VBTIME         1                                                            
+    TSBYR       1941                                                            
+    TSSTEP         1                                                            
+    ISTAID  11519500                                                            
+    PARMCD        60                                                            
+    STATCD         3                                                            
+    TSFILL  -99999.0                                                            
+    DAREA      653.0                                                            
+    STAID   11519500                                                            
+    TSTYPE  FLOW                                                                
+    STANAM  Scott River near Fort Jones, CA.                                    
+    AGENCY  USGS                                                                
+    MINVAL       5.0                                                            
+    MAXVAL   39500.0                                                            
+    MEANVL  662.5822                                                            
+    STDDEV  1137.985                                                            
+    QEX95P  42.11763                                                            
+    QEX90P  55.14115                                                            
+    QEX75P  91.81227                                                            
+    QEX70P  112.6203                                                            
+    QEX50P  362.2527                                                            
+    QEX25P  964.4949                                                            
+    QEX10P  1699.654                                                            
+  END LABEL   
+END DSN 

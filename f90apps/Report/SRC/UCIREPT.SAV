@@ -1,0 +1,482 @@
+C
+C
+C
+      INTEGER FUNCTION REPEXT
+     I                       (REPID)
+C
+C     + + + PURPOSE + + +
+C     check to see if a standard report exists
+C       1-exists, 0-does not exist
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   REPID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     REPID - report id to check
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER        OPID,OPTYP
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     GETNXT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     does this report operation exist?
+      OPID  = 0
+      OPTYP = 11
+      REPEXT= 0
+ 10   CONTINUE
+        CALL GETNXT (OPTYP,
+     M               OPID)
+        IF (OPID.GT.0 .AND. OPID.EQ.REPID) THEN
+C         found the report we're looking for
+          REPEXT = 1
+        END IF
+      IF (OPID.GT.0 .AND. REPEXT.EQ.0) GO TO 10
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE ADDREPT
+     I                  (MESSFL,REPID)
+C
+C     + + + PURPOSE + + +
+C     add a standard report
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   MESSFL,REPID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSFL - message file unit number
+C     REPID  - report id to add
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER        OPID,OPTYP,IFOUND,IDNO,SREC,EREC,I1,I8,I0,LEN,
+     1               BLKID,TCLU,TGRP,KGRP,RETCOD,SNO,NRCH,RCHID(50),
+     2               NBMP,BMPID(50),NPER,PERID(50),NIMP,IMPID(50),
+     3               NLOAD,LOADID(50)
+      CHARACTER*8    ITMNAM
+      CHARACTER*12   TNAME
+      CHARACTER*20   CRCH(50),CBMP(50),CPER(50),CIMP(50),CTMP,CLOAD(50)
+      CHARACTER*75   CTEMP(13)
+      CHARACTER*80   UCIBF
+      CHARACTER*1    CSTR1(80)
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (I5,75X)
+
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (I5,A75)
+
+C     + + + EXTERNALS + + +
+      EXTERNAL     GETNXT, ADDOPB, HAOPSQ, GETSE, ESTADD, HGETI, HGETC
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0 = 0
+      I1 = 1
+      I8 = 8
+C
+C     does this report operation exist?
+      OPID = 0
+      OPTYP= 11
+      IFOUND= 0
+ 10   CONTINUE
+        CALL GETNXT (OPTYP,
+     M               OPID)
+        IF (OPID.GT.0) THEN
+C         found a report
+          IF (OPID.EQ.REPID) THEN
+C           found the report we're looking for
+            IFOUND = 1
+          END IF
+        END IF
+      IF (OPID.GT.0 .AND. IFOUND.EQ.0) GO TO 10
+C
+      IF (IFOUND.EQ.1) THEN
+C       we found this report and don't need to add it
+      ELSE
+C       need to add this report, start collecting info
+C
+C       number of reaches
+        NRCH = 0
+ 50     CONTINUE
+          ITMNAM = 'RCHID   '
+          CALL HGETI (ITMNAM,I0,
+     O                OPID)
+          IF (OPID.GT.0) THEN
+C           found a reach, get desc
+            NRCH  = NRCH + 1
+            RCHID(NRCH) = OPID
+            ITMNAM= 'RCHDESC '
+            CALL HGETC (ITMNAM,OPID,
+     O                  CRCH(NRCH))
+          END IF
+        IF (OPID.NE.-99) GO TO 50
+C
+C       number of BMPs
+        NBMP = 0
+ 51     CONTINUE
+          ITMNAM = 'BMPID   '
+          CALL HGETI (ITMNAM,I0,
+     O                OPID)
+          IF (OPID.GT.0) THEN
+C           found a BMP, get desc
+            NBMP  = NBMP + 1
+            BMPID(NBMP) = OPID
+            ITMNAM= 'BMPDESC '
+            CALL HGETC (ITMNAM,OPID,
+     O                  CBMP(NBMP))
+          END IF
+        IF (OPID.NE.-99) GO TO 51
+C
+C       number of perlnds
+        NPER = 0
+ 52     CONTINUE
+          ITMNAM = 'PERID   '
+          CALL HGETI (ITMNAM,I0,
+     O                OPID)
+          IF (OPID.GT.0) THEN
+C           found a PER, get desc
+            ITMNAM= 'PERDESC '
+            CALL HGETC (ITMNAM,OPID,
+     O                  CTMP)
+            IF (NPER.EQ.0) THEN
+              NPER  = NPER + 1
+              PERID(NPER) = OPID
+              CPER(NPER) = CTMP
+            ELSE
+C             check before adding to list
+              ADDFG = 1
+              DO 520 I = 1,NPER
+                IF (CTMP.EQ.CPER(I)) THEN
+C                 we already have this one
+                  ADDFG = 0
+                END IF
+ 520          CONTINUE
+              IF (ADDFG.EQ.1) THEN
+                NPER  = NPER + 1
+                PERID(NPER) = OPID
+                CPER(NPER) = CTMP
+              END IF
+            END IF
+          END IF
+        IF (OPID.NE.-99) GO TO 52
+C
+C       number of implnds
+        NIMP = 0
+ 53     CONTINUE
+          ITMNAM = 'IMPID   '
+          CALL HGETI (ITMNAM,I0,
+     O                OPID)
+          IF (OPID.GT.0) THEN
+C           found a IMP, get desc
+            ITMNAM= 'IMPDESC '
+            CALL HGETC (ITMNAM,OPID,
+     O                  CTMP)
+            IF (NIMP.EQ.0) THEN
+              NIMP  = NIMP + 1
+              IMPID(NIMP) = OPID
+              CIMP(NIMP) = CTMP
+            ELSE
+C             check before adding to list
+              ADDFG = 1
+              DO 530 I = 1,NIMP
+                IF (CTMP.EQ.CIMP(I)) THEN
+C                 we already have this one
+                  ADDFG = 0
+                END IF
+ 530          CONTINUE
+              IF (ADDFG.EQ.1) THEN
+                NIMP  = NIMP + 1
+                IMPID(NIMP) = OPID
+                CIMP(NIMP) = CTMP
+              END IF
+            END IF
+          END IF
+        IF (OPID.NE.-99) GO TO 53
+C
+C       add to opn seq block
+        BLKID = 3
+C       find starting and ending records for this block
+        CALL GETSE (BLKID,I1,
+     O              SREC,EREC)
+        IF (SREC.NE.0) THEN
+C         this block exists
+          CALL PREUCI(EREC)
+          KEY = SREC
+          CALL GETUCI (I0,
+     M                 KEY,
+     O                 UCIBF)
+          CALL GETUCI (I0,
+     M                 KEY,
+     O                 UCIBF)
+          IFOUND = 0
+ 20       CONTINUE
+            IF (UCIBF(7:12).EQ.'RCHRES') THEN
+C             found a rchres
+              IFOUND = KEY
+            END IF
+C           get next record
+            CALL GETUCI (I0,
+     M                   KEY,
+     O                   UCIBF)
+          IF (KEY.NE.EREC) GO TO 20
+          IF (IFOUND.GT.0) THEN
+            UCIBF = '      REPORT            '
+            LEN  = 80
+            CALL CVARAR (LEN,UCIBF,LEN,CSTR1)
+            CALL INTCHR (REPID,I8,I0,I,CSTR1(13))
+            CALL CARVAR (LEN,CSTR1,LEN,UCIBF)
+            CALL PUTUCI (UCIBF,I1,IFOUND)
+            CALL ADDOPN (OPTYP,REPID)
+          END IF
+        END IF
+
+C       does the report block exist?
+        ITYPE = (1000 * OPTYP) + 1
+        CALL GETSE (ITYPE,I1,
+     O              SREC,EREC)
+        IF (SREC.GT.0) THEN
+C         this block already exists
+          write(99,*) 'the report block already exists ',srec
+        ELSE
+C         need to add report block
+          write(99,*) 'need to add report block'
+          IDNO = 100
+          TNAME= 'REPORT'
+          SREC = 0
+          EREC = 0
+          CALL ADDOPB (IDNO,TNAME,
+     M                 SREC,EREC)
+        END IF
+C
+C       add report tables if necessary
+        DO 30 I = 1,5
+          IFOUND = 0
+C         check that this table exists
+          IDNO = (OPTYP*1000)+ I
+          CALL GETSE (IDNO,I1,
+     O                SREC,EREC)
+          TCLU  = 131
+          IF (SREC.EQ.0) THEN
+C           this table does not exist
+            write(99,*) 'this table does not exist ',i,srec
+            TGRP  = 100 + I
+            KGRP  = I
+            CALL ESTADD (MESSFL,TCLU,TGRP,KGRP,OPTYP,I1,
+     O                   SREC,EREC)
+            IFOUND = SREC
+          ELSE
+C           this table already exists
+C           check to see if this records is already in table
+            INIT  = 1
+ 40         CONTINUE
+              CALL XTABLE (MESSFL,TCLU,I,I1,INIT,I0,I1,
+     O                     KEY,UCIBF,RETCOD)
+              IF (RETCOD.EQ.2) THEN
+                write(99,*) ucibf
+                READ (UCIBF,1000) SNO
+                IF (REPID.EQ.SNO) THEN
+                  RETCOD = 10
+                  IFOUND = 1
+                END IF
+              END IF
+              INIT = 0
+            IF (RETCOD.NE.10) GO TO 40
+          END IF
+C
+          IF (IFOUND.EQ.1) THEN
+C           table already existed with this record, do nothing
+            write(99,*) 'table already existed with this record'
+          ELSE
+C           need to build this record
+            IF (I.EQ.1) THEN
+C             table type flags
+            ELSE IF (I.EQ.2) THEN
+C             table type title
+              IF (REPID.EQ.1) THEN
+                UCIBF = '    1     Land Surface total-loads       '
+              ELSE IF (REPID.EQ.2) THEN
+                UCIBF = '    2     Land Surface percent loads     '
+              ELSE IF (REPID.EQ.3) THEN
+                UCIBF = '    3     Land Surface unit loads        '
+              ELSE IF (REPID.EQ.4) THEN
+                UCIBF = '    4     Reach total loads              '
+              ELSE IF (REPID.EQ.5) THEN
+                UCIBF = '    5     Reach total change(+gain,-loss)'
+              ELSE IF (REPID.EQ.6) THEN
+                UCIBF = '    6     Point Loads                    '
+              ELSE IF (REPID.EQ.7) THEN
+                UCIBF = '    7     BMP Removals                   '
+              END IF
+              IF (IFOUND.EQ.0) THEN
+C               table already existed, but this record did not, add it
+                CALL PUTUCI(UCIBF,I1,SREC)
+              ELSE IF (IFOUND.GT.1) THEN
+C               just added this table with this key
+                CALL REPUCI(KEY,UCIBF)
+              END IF
+            ELSE IF (I.EQ.3) THEN
+C             table type src
+              IF (REPID.GE.1 .AND. REPID.LE.3) THEN
+                DO 70 J = 1,NPER
+                  WRITE(UCIBF,2000) REPID,'P:',CPER(J)
+                  IF (J.EQ.1 .AND. IFOUND.GT.1) THEN
+                    CALL REPUCI(KEY,UCIBF)
+                    IFOUND = 0
+                  ELSE
+                    CALL PUTUCI(UCIBF,I1,SREC)
+                  END IF
+ 70             CONTINUE
+                DO 71 J = 1,NIMP
+                  WRITE(UCIBF,2000) REPID,'I:',CIMP(J)
+                  IF (J.EQ.1 .AND. IFOUND.GT.1) THEN
+                    CALL REPUCI(KEY,UCIBF)
+                    IFOUND = 0
+                  ELSE
+                    CALL PUTUCI(UCIBF,I1,SREC)
+                  END IF
+ 71             CONTINUE
+              ELSE IF (REPID.EQ.4 .OR. REPID.EQ.5) THEN
+                DO 72 J = 1,NRCH
+                  WRITE(UCIBF,2000) REPID,'R:',CRCH(J)
+                  IF (J.EQ.1 .AND. IFOUND.GT.1) THEN
+                    CALL REPUCI(KEY,UCIBF)
+                    IFOUND = 0
+                  ELSE
+                    CALL PUTUCI(UCIBF,I1,SREC)
+                  END IF
+ 72             CONTINUE
+              ELSE IF (REPID.EQ.6) THEN
+                DO 73 J = 1,NLOAD
+                  WRITE(UCIBF,2000) REPID,'L:',CLOAD(J)
+                  IF (J.EQ.1 .AND. IFOUND.GT.1) THEN
+                    CALL REPUCI(KEY,UCIBF)
+                    IFOUND = 0
+                  ELSE
+                    CALL PUTUCI(UCIBF,I1,SREC)
+                  END IF
+ 73             CONTINUE
+              ELSE IF (REPID.EQ.7) THEN
+                DO 74 J = 1,NBMP
+                  WRITE(UCIBF,2000) REPID,'B:',CBMP(J)
+                  IF (J.EQ.1 .AND. IFOUND.GT.1) THEN
+                    CALL REPUCI(KEY,UCIBF)
+                    IFOUND = 0
+                  ELSE
+                    CALL PUTUCI(UCIBF,I1,SREC)
+                  END IF
+ 74             CONTINUE
+              END IF
+            ELSE IF (I.EQ.4) THEN
+C             table type con
+              CTEMP(1) = '     SEDIMENT(TONS)       SUM     5    3'
+              CTEMP(2) = '     NO3(LBS)             SUM     5    3'
+              CTEMP(3) = '     NH3(LBS)             SUM     5    3'
+              CTEMP(4) = '     NO2(LBS)             SUM     5    3'
+              CTEMP(5) = '     NO23(LBS)            SUM     5    3'
+              CTEMP(6) = '     ORGANIC N(LBS)       SUM     5    3'
+              CTEMP(7) = '     TOTAL N(LBS)         SUM     5    3'
+              CTEMP(8) = '     PO4(LBS)             SUM     5    3'
+              CTEMP(9) = '     ORGP(LBS)            SUM     5    3'
+              CTEMP(10) = '     TOTP(LBS)            SUM     5    3'
+              CTEMP(11) = '     FECAL COLI(#M ORGS)  SUM     5    3'
+              CTEMP(12) = '     DO(LBS)              SUM     5    3'
+              CTEMP(13) = '     BOD(LBS)             SUM     5    3'
+              DO 60 J = 1,13
+                WRITE(UCIBF,2000) REPID,CTEMP(J)
+                IF (IFOUND.EQ.0) THEN
+C                 table already existed, but this record did not, add it
+                  CALL PUTUCI(UCIBF,I1,SREC)
+                ELSE IF (IFOUND.GT.1) THEN
+C                 just added this table with this key
+                  IF (J.EQ.1) THEN
+                    CALL REPUCI(KEY,UCIBF)
+                  ELSE
+                    CALL PUTUCI(UCIBF,I1,SREC)
+                  END IF
+                END IF
+ 60           CONTINUE
+            ELSE IF (I.EQ.5) THEN
+C             table type summ
+              IF (REPID.EQ.1) THEN
+                UCIBF = '    1           Total Load     SUM  Average'//
+         1              '              AVER    1'
+              ELSE IF (REPID.EQ.2) THEN
+                UCIBF = '    2             Pct Load     PCT  Average'//
+         1              '              AVER    1'
+              ELSE IF (REPID.EQ.3) THEN
+                UCIBF = '    3            Unit Load     AVER Average'//
+         1              '              AVER    1'
+              ELSE IF (REPID.EQ.4) THEN
+                UCIBF = '    4           Ignore         SUM  Average'//
+         1              '              AVER    1'
+              ELSE IF (REPID.EQ.5) THEN
+                UCIBF = '    5          Total Delta     AVER Average'//
+         1              '              AVER    1'
+              ELSE IF (REPID.EQ.6) THEN
+                UCIBF = '    6           Ignore         AVER Average'//
+         1              '              AVER    1'
+              ELSE IF (REPID.EQ.7) THEN
+                UCIBF = '    7           Ignore         AVER Average'//
+         1              '              AVER    1'
+              END IF
+              IF (IFOUND.EQ.0) THEN
+C               table already existed, but this record did not, add it
+                CALL PUTUCI(UCIBF,I1,SREC)
+              ELSE IF (IFOUND.GT.1) THEN
+C               just added this table with this key
+                CALL REPUCI(KEY,UCIBF)
+              END IF
+            END IF
+C
+          END IF
+ 30     CONTINUE
+
+      END IF
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE DELREPT
+     I                  (REPID)
+C
+C     + + + PURPOSE + + +
+C     delete a standard report
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   REPID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     REPID - report id to delete
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER        OPTYP,LEN,I8,I0,I,BLKID
+      CHARACTER*1    CSTR1(20)
+      CHARACTER*20   CSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     CVARAR, INTCHR, HDEL, DELOPN
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0 = 0
+      I8 = 8
+C
+      OPTYP = 11
+      CSTR = 'REPORT              '
+      LEN  = 14
+      CALL CVARAR (LEN,CSTR,LEN,CSTR1)
+      CALL INTCHR (REPID,I8,I0,I,CSTR1(7))
+      BLKID = 3
+      CALL HDEL (BLKID,LEN,CSTR1)
+      CALL DELOPN (OPTYP,REPID)
+C
+      RETURN
+      END

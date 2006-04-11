@@ -1,0 +1,78 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = LF90
+PROGRAM   = ..\bin\transl.exe
+LDMAP     = ..\bin\transl.map
+
+FFLAGS    = -c -i ..\src
+LDFLAGS   = -bind -pack
+
+OBJS      = main.obj error.obj trans.obj strip.obj ierror.obj nin.obj \
+            first.obj depth.obj psi.obj qual.obj circle.obj radh.obj \
+            route.obj printf.obj printq.obj pct.obj vel.obj otrain.obj \
+            newton.obj dated.obj stime.obj tstorg.obj tintrp.obj \
+            finda.obj link.obj intran.obj ntime.obj dpsi.obj clinelh.obj \
+            inface.obj jdate.obj getcur.obj tstrdt.obj rsplit.obj \
+            infil.obj filth.obj slop.obj dwload.obj inital.obj \
+            power.obj getsum.obj getdep.obj blkmn.obj \
+            extran.obj indat1.obj indat2.obj indat3.obj transx.obj output.obj
+
+VPATH     = ..\src
+
+$(PROGRAM):     $(OBJS) $(LIBS)
+          $(FC) $(OBJS) -EXE $@ -MAP $(LDMAP)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif
+
+main.obj:   TAPES.INC CLNAME.INC
+
+error.obj:  TAPES.INC
+ierror.obj: TAPES.INC
+
+blkmn.obj:  TAPES.INC INTER.INC
+circle.obj: TAPES.INC
+clinelh.obj: CLNAME.INC
+dated.obj:  STIMER.INC
+depth.obj:  TAPES.INC TABLES.INC HUGO.INC NEW81.INC FLODAT.INC
+dpsi.obj:   TAPES.INC PSIDPS.INC TABLES.INC HUGO.INC FLODAT.INC NEW81.INC
+dwload.obj: TAPES.INC INTER.INC STIMER.INC DRWF.INC TABLES.INC HUGO.INC \
+            NEW81.INC TST.INC
+filth.obj:  TAPES.INC DRWF.INC TABLES.INC HUGO.INC NEW81.INC
+finda.obj:  TAPES.INC TABLES.INC HUGO.INC NEW81.INC FLODAT.INC
+first.obj:  TAPES.INC NAMES.INC TABLES.INC HUGO.INC NEW81.INC TST.INC \
+            NEWTR.INC FLODAT.INC
+getcur.obj: TAPES.INC FLODAT.INC
+inface.obj: TAPES.INC INTER.INC
+infil.obj:  TAPES.INC INTER.INC STIMER.INC TABLES.INC NAMES.INC HUGO.INC \
+            NEW81.INC
+inital.obj: TAPES.INC INTER.INC STIMER.INC TABLES.INC DRWF.INC HUGO.INC \
+            TST.INC
+intran.obj: TAPES.INC INTER.INC STIMER.INC DRWF.INC TABLES.INC NAMES.INC \
+            TST.INC NEW81.INC HUGO.INC FLODAT.INC NEWTR.INC FSPLIT.INC
+link.obj:   TAPES.INC HUGO.INC TST.INC INTER.INC
+newton.obj: TAPES.INC TABLES.INC HUGO.INC NEW81.INC
+nin.obj:    TAPES.INC HUGO.INC
+ntime.obj:  STIMER.INC
+otrain.obj: TAPES.INC INTER.INC STIMER.INCDRWF.INC TABLES.INC NAMES.INC \
+            TST.INC NEW81.INC HUGO.INC NEWTR.INC
+pct.obj:    TAPES.INC
+printf.obj: TAPES.INC INTER.INC STIMER.INC HUGO.INC NEW81.INC
+printq.obj: TAPES.INC INTER.INC STIMER.INC HUGO.INC NEW81.INC
+psi.obj:    TAPES.INC PSIDPS.INC TABLES.INC HUGO.INC NEW81.INC FLODAT.INC
+qual.obj:   TAPES.INC NAMES.INC TABLES.INC HUGO.INC NEW81.INC TST.INC
+radh.obj:   TAPES.INC TABLES.INC HUGO.INC NEW81.INC FLODAT.INC
+route.obj:  TAPES.INC TABLES.INC NAMES.INC HUGO.INC NEW81.INC TST.INC \
+            FLODAT.INC FSPLIT.INC
+rsplit.obj: TAPES.INC FSPLIT.INC HUGO.INC NEW81.INC
+slop.obj:   TAPES.INC NAMES.INC TABLES.INC HUGO.INC NEW81.INC
+stime.obj:  STIMER.INC
+strip.obj:  TAPES.INC
+trans.obj:  TAPES.INC INTER.INC STIMER.INC DRWF.INC TABLES.INC NAMES.INC \
+            TST.INC NEW81.INC HUGO.INC NEWTR.INC
+tstorg.obj: TAPES.INC HUGO.INC NEW81.INC TST.INC
+tstrdt.obj: TAPES.INC INTER.INC HUGO.INC NEW81.INC TST.INC
+extran.obj: TAPES.INC INTER.INC STIMER.INC BND.INC BD.INC CONTR.INC \
+            JUNC.INC ORF.INC PIPE.INC OUT.INC TIDE.INC
