@@ -394,21 +394,26 @@ C
 C     + + + LOCAL VARIABLES + + +
       LOGICAL       WDOPFG(5)
       INTEGER       INFIL,RECORD,OFFSET,I,I0,I1,NVLIB,VARADD(5),
-     $              ADDR,OMCODE,OPTNO,iyear,imon,iday,RETCOD,C,
+     $              ADDR,OMCODE,OPTNO,iyear,imon,iday,ihr,imin,RETCOD,C,
      $              BINADD,BINU,ERRFLG,ARCFIL,ILEN,VARSUB,MXSUB(5)
+      INTEGER       WDMXRC(5), IMXRC, IBUFF(512)
+      LOGICAL       MXMSG
       REAL          NEWVAL,OLDVAL
       CHARACTER*1   FUNC
       CHARACTER*4   CTYP
       CHARACTER*6   VARNAM,VARLIB(5),OPNAME,OPLIB(3)
-      CHARACTER*10  S
+      CHARACTER*16  S
       CHARACTER*80  UREC
       CHARACTER*256 MSG,DMSG,FILNAM,WDNAME(5),BINNAM,ARCNAM
+C
+C     + + + FUNCTIONS + + +
+      INTEGER       WDGIVL
 C
 C     + + + INTRINSICS + + +
       INTRINSIC     MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL      GTOSVI,GTOSVR,PTOSVR,WDFLCL,WDBOPN,WDBFIN
+      EXTERNAL      GTOSVI,GTOSVR,PTOSVR,WDFLCL,WDBOPN,WDBFIN,WDGIVL
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA NVLIB,I0,I1/5,0,1/
@@ -424,14 +429,14 @@ C     + + + INPUT FORMATS + + +
  1010 FORMAT (A6,I5,1X,A6,I5,1X,F10.0,1X,A1)
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT (I5,2I3,1X,A6,I4,1X,A6,I5,2E12.4)
+ 2000 FORMAT (I5,4I3,1X,A6,I4,1X,A6,I5,2E12.4)
  2010 FORMAT (1X,A,2I3,1X,A)
  2020 FORMAT (1X,A,2I5)
- 2030 FORMAT (1X,A,3I5,1X,A)
+ 2030 FORMAT (1X,A,4I5,1X,A)
  2040 FORMAT (1X,A,2I5,1X,A)
  2050 FORMAT (1X,A,1X,A)
  2060 FORMAT (1X,A,I5,1X,A)
- 2070 FORMAT (1X,A,4I5,1X,A)
+ 2070 FORMAT (1X,A,5I10,1X,A)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -443,6 +448,7 @@ C     close all open WDM files
         IF (WDMSFL(I) .NE. 0) THEN
           INQUIRE (WDMSFL(I),OPENED=WDOPFG(I),NAME=WDNAME(I))
           IF (WDOPFG(I)) THEN
+            WDMXRC(I) = WDGIVL(WDMSFL(I),1,29)
             IF (I.EQ.5) THEN
 C             special case for message file
               CLOSE (WDMSFL(I))
@@ -452,17 +458,30 @@ C             special case for message file
      O                     RETCOD)
             END IF
             WRITE(99,2030)  'HSPSTA:EXT_UPD:closed ',
-     $                   I,WDMSFL(I),RETCOD,TRIM(WDNAME(I))
+     $                   I,WDMSFL(I),WDMXRC(I),RETCOD,TRIM(WDNAME(I))
             WRITE(MSG,2010) 'HSPSTA:EXT_UPDATE:closed ',
      $                   WDMSFL(I),RETCOD,TRIM(WDNAME(I))
             ILEN = LEN_TRIM(MSG)
             CALL UPDATESTATUSX(7,ILEN,MSG)
+C
+           IMXRC = WDGIVL(WDMSFL(I),1,29)
+           IF (WDMXRC(I) .NE. IMXRC .AND. WDMXRC(I) .GT. 0) THEN
+              OPEN(UNIT=WDMSFL(I),FILE=WDNAME(I),ACCESS='DIRECT',
+     $             RECL=2048,STATUS='OLD')
+              READ(UNIT=WDMSFL(I),REC=1) IBUFF
+              WRITE(99,*) ' HSPSTA:EXT_UPD:BUFFER STATE:',
+     $               IBUFF(1),IBUFF(29),IBUFF(31)
+              CLOSE(UNIT=WDMSFL(I))
+            END IF
+C
           ELSE
             WRITE(99,2040) 'HSPSTA:EXT_UPD:not open',
      $                   I,WDMSFL(I),TRIM(WDNAME(I))
           END IF
         END IF
  10   CONTINUE
+C     be sure io ON 99 is complete
+      CALL FLUSH(99)
 C
 C     close binu
       IF (OSUPM(1,FOPKEY) .LE. 2) THEN
@@ -501,8 +520,13 @@ C     tell driver that we are ready to begin simulating current period
      O             imon)
       CALL GTOSVI (record,I+86,
      O             iday)
+      CALL GTOSVI (record,I+87,
+     O             ihr)
+      CALL GTOSVI (record,I+88,
+     O             imin)
 C
-      write(s,'(i4,"/",i2,"/",i2)') iyear,imon,iday
+      write(s,'(i4,"/",i2,"/",i2,"/",i2,"/",i2)') iyear,imon,iday,
+     $                                            ihr,imin
       WRITE (*,*) '(HSPF NEEDUPDATE AT ' // s // ')'
       WRITE (99,2050) 'HSPSTA:EXT_UPDATE:',
      $            '(HSPF NEEDUPDATE AT ' // s // ')'
@@ -577,7 +601,7 @@ C
 C           change multiplication factor desired
             !WRITE(99,*) '  found MULT'
             CALL MULT_UPDATE (ARCFIL,UREC,FOPKEY,LOPKEY,OSUPM,
-     1                        iyear,imon,iday)
+     1                        iyear,imon,iday,ihr,imin)
           ELSE
 C           change parameter value desired
             READ (UREC,1010,ERR=120,END=120) OPNAME,OPTNO,VARNAM,
@@ -632,7 +656,8 @@ C
 C                 finally update variable value
                   CALL PTOSVR (RECORD,OFFSET,NEWVAL)
 C                  WRITE (99,*) 'Reset ',VARNAM,OLDVAL,NEWVAL
-                  WRITE (ARCFIL,2000) iyear,imon,iday,OPNAME,OPTNO,
+                  WRITE (ARCFIL,2000) iyear,imon,iday,ihr,imin,
+     1                                OPNAME,OPTNO,
      1                                VARNAM,VARSUB,OLDVAL,NEWVAL
                 END IF
  110          CONTINUE
@@ -657,10 +682,9 @@ C
 C     reopen all previusly opened WDM files
       CALL WDBFIN
       DO 140 I= 5, 1, -1
-C        IF (I.EQ.6) THEN
-C          OPEN (99,FILE=WDNAME(I),POSITION='APPEND')
         IF (WDOPFG(I)) THEN
           C= 0
+          MXMSG = .FALSE.
  130      CONTINUE
             C = C+ 1
             IF (I.EQ.5) THEN
@@ -670,10 +694,34 @@ C          OPEN (99,FILE=WDNAME(I),POSITION='APPEND')
               CALL WDBOPN (WDMSFL(I),WDNAME(I),I0,
      O                     RETCOD)
             END IF
+            IF (RETCOD .EQ. 0) THEN
+              IMXRC = WDGIVL(WDMSFL(I),1,29)
+              IF (WDMXRC(I) .GT. IMXRC) THEN
+C               file buffer problem - compiler or op sys
+                IF (MXMSG .EQV. .FALSE.) THEN
+                  MXMSG = .TRUE.
+                  WRITE(99,2030)  'HSPSTA:EXT_UPD:MXREC PROBLEM ',
+     $                       I,WDMSFL(I),WDMXRC(I),IMXRC,TRIM(WDNAME(I))            
+                  CALL WDFLCL(WDMSFL(I),RETCOD)
+                  OPEN(UNIT=WDMSFL(I),FILE=WDNAME(I),ACCESS='DIRECT',
+     $                 RECL=2048,STATUS='OLD')
+                  READ(UNIT=WDMSFL(I),REC=1) IBUFF
+                  WRITE(99,*) ' HSPSTA:EXT_UPD:BUFFER STATE:',
+     $                 IBUFF(1),IBUFF(29),IBUFF(31)
+                  CLOSE(UNIT=WDMSFL(I))
+                  RETCOD = -1
+                ELSE
+C                 hopeless
+                  C = 100000
+                  RETCOD = -1
+                END IF
+              END IF
+            END IF
           IF (RETCOD .NE. 0 .AND. C .LT. 100000) GO TO 130
+          WDMXRC(I) = IMXRC
 C
           WRITE(99,2070) ' HSPSTA:EXT_UPDATE:opnWdmFile',
-     1                I,WDMSFL(I),RETCOD,C,TRIM(WDNAME(I))
+     1                I,WDMSFL(I),RETCOD,C,IMXRC,TRIM(WDNAME(I))
           IF (RETCOD .NE. 0) THEN
             WRITE(99,*) '  HSPSTA:EXT_UPDATE:error opening WDM'
 C           force buffer clear
@@ -695,7 +743,7 @@ C
 C
       SUBROUTINE   MULT_UPDATE
      I                        (ARCFIL,UREC,FOPKEY,LOPKEY,OSUPM,
-     I                         IYEAR,IMON,IDAY)
+     I                         IYEAR,IMON,IDAY,IHR,IMIN)
 C
 C     + + + PURPOSE + + +
 C     Read multiplication factor update, alter time series
@@ -705,7 +753,7 @@ C
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       ARCFIL,FOPKEY,LOPKEY,OSUPM(11,LOPKEY),
-     1              IYEAR,IMON,IDAY
+     1              IYEAR,IMON,IDAY,IHR,IMIN
       CHARACTER*80  UREC
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -717,6 +765,8 @@ C     OSUPM  - osuper file
 C     IYEAR  - year of mfactr update
 C     IMON   - month of mfactr update
 C     IDAY   - day of mfactr update
+C     IHR    - hour of mfactr update
+C     IMIN   - minute of mfactr update
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER       SNUM,SMEMSB(2),TNUM,TMEMSB(2),DATIM(6),ILEN
@@ -746,8 +796,8 @@ C
       DATIM(1) = IYEAR
       DATIM(2) = IMON
       DATIM(3) = IDAY
-      DATIM(4) = 0
-      DATIM(5) = 0
+      DATIM(4) = IHR
+      DATIM(5) = IMIN
       DATIM(6) = 0
 C
 C     use updmft from specact to update the mfact in the tsins

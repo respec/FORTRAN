@@ -1,124 +1,28 @@
-      !local  
-      SUBROUTINE LOG_MSG(MSG)
-        CHARACTER(LEN=*) :: MSG
-
-        CHARACTER(LEN=1) :: C
-        CHARACTER(LEN=10):: TIME, DATE, ZONE
-        CHARACTER(LEN=15):: TIMEX
-        INTEGER          :: DT(8)
-        INTEGER          :: I
-        LOGICAL          :: L, O
-        LOGICAL,SAVE     :: W = .FALSE.
-       
-        INQUIRE(FILE='ERROR.FIL',EXIST=L,OPENED=O,IOSTAT=I,ERR=98)
-
-        !WRITE(*,*) TRIM(MSG)
-
-        IF (TRIM(MSG) .EQ. 'WRITE') THEN
-          W= .TRUE.
-        END IF
-
-        TIMEX = ""
-        CALL DATE_AND_TIME(DATE,TIME,ZONE,DT)
-        TIMEX = TIME(1:2) // ":" // TIME(3:4) // ":" // TIME(5:10) // " : "
-        
-        IF (TRIM(MSG) .EQ. 'OPEN' .OR. TRIM(MSG) .EQ. 'WRITE') THEN 
-          IF (.NOT. O) THEN
-            IF (L) THEN 
-              OPEN(99,FILE='ERROR.FIL',POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='OLD')
-            ELSE
-              OPEN(99,FILE='ERROR.FIL',POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='NEW')
-            END IF
-            WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL OPENED'
-          ELSE
-            WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL ALREADY OPEN'
-          END IF
-        ELSE IF (TRIM(MSG) .EQ. 'CLOSE') THEN
-          IF (O) THEN
-            WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL CLOSING'
-            CLOSE(99)
-          END IF
-        ELSE IF (O .AND. W) THEN
-          WRITE(99,*) TIMEX // TRIM(MSG)
-        END IF
-
-        RETURN
-
- 98     CONTINUE
-        WRITE (*,*) 'Error ',MOD(I,16384),' opening ERROR.FIL',L
-        INQUIRE(99,ERR=99,IOSTAT=I,OPENED=L)
- 99     CONTINUE
-        WRITE (*,*) 'Status',MOD(I,16384),L
-        READ(*,*) C
-        WRITE (*,*) C
-
-      END SUBROUTINE
-
-      SUBROUTINE F90_MSG(MSG)
-        DLL_EXPORT F90_MSG
-
-        CHARACTER(LEN=*) :: MSG
-
-        CALL LOG_MSG(MSG)
-
-      END SUBROUTINE F90_MSG
-
-      !local
-      INTEGER FUNCTION INQUIRE_NAME(NAME)
-        CHARACTER*64       :: NAME
-
-        CHARACTER*256,SAVE :: KNOWN(100)
-        CHARACTER*256      :: MSG
-        INTEGER            :: I, U
-        INTEGER,SAVE       :: K = 0
-
-        U = 0
-
-        DO I = 1, K
-          IF (TRIM(NAME) .EQ. KNOWN(I)) THEN
-            U = I + 100
-            WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:KNO:',U,' ' // TRIM(NAME)
-          END IF
-        END DO
-
-        IF (U .EQ. 0) THEN !does the fortran unit table know about the file?
-          INQUIRE (FILE=NAME,NUMBER=U)
-          IF (U .NE. 0) THEN !yes
-            WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:INQ:',U,' ' // TRIM(NAME)
-            CALL LOG_MSG(MSG)
-            K= K + 1
-            KNOWN(K) = TRIM(NAME)
-          END IF
-        END IF
-
-        IF (U .EQ. 0) THEN !assign a new number to the wdm
-          K = K + 1
-          KNOWN(K) = TRIM(NAME)
-          U = K + 100
-          WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:ASN:',U,' ' // TRIM(NAME)
-          CALL LOG_MSG(MSG)
-        END IF
-
-        WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:RET:',U,K,' ' // TRIM(NAME)
-        CALL LOG_MSG(MSG)
-
-        INQUIRE_NAME = U
-
-      END FUNCTION INQUIRE_NAME
-
       !general
       SUBROUTINE F90_W99OPN()
         dll_export F90_W99OPN
         CHARACTER(LEN=1)              :: C
         INTEGER                       :: I
+        !INTEGER                       :: J
         LOGICAL                       :: L
+        !CHARACTER(LEN=32)             :: F
 
+        !J= 0
+! 10   CONTINUE        
+        !  J= J+ 1
+        !  WRITE(F,2000) J
+!2000  FORMAT("ERROR" , I2 , ".FIL")
         INQUIRE(FILE='ERROR.FIL',EXIST=L,IOSTAT=I,ERR=98)
+        !  INQUIRE(FILE=F,EXIST=L,IOSTAT=I,ERR=98)
+        !IF (L) GOTO 10
+        !OPEN(99,FILE=F,ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='NEW')
+
         IF (L) THEN 
           OPEN(99,FILE='ERROR.FIL',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='OLD')
         ELSE
           OPEN(99,FILE='ERROR.FIL',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='NEW')
         END IF
+
         CALL GET_WDM_FUN(-1)
         RETURN
 
@@ -166,6 +70,8 @@
             
         CLOSE(UNIT=UNIT,ERR=99)
         F90_WDMCLO=0
+        !mark as unusable
+        CALL WDFLNU(UNIT)
         RETURN
  99     CONTINUE
         WRITE(*,*) 'Error closing ',UNIT
@@ -400,13 +306,7 @@
         CHARACTER*3                 :: WSTAT
 
         LNAME = WDNAME
-        
-        IF (WDMSFL .EQ. -2) THEN
-          WDMSFL = INQUIRE_NAME(LNAME)
-        ELSE
-          CALL GET_WDM_FUN(WDMSFL)
-        END IF
-
+        CALL GET_WDM_FUN(WDMSFL)
         !WRITE(*,*) 'HASS_ENT:F90_WDBOPN:RWFLG,WDMSFL:',RWFLG,WDMSFL
         CALL WDBOPN(WDMSFL,LNAME,RWFLG,RETCOD)
         !WRITE(*,*) 'HASS_ENT:F90_WDBOPN:',RWFLG,WSTAT

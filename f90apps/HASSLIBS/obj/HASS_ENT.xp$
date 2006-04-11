@@ -1,4 +1,3 @@
--export    F90_MSG
 -export    F90_W99OPN
 -export    F90_W99CLO
 -export    F90_WDMOPN

@@ -1,7 +1,7 @@
 # This file contains Lahey LF90 module information
-# Created on Thu Dec 02 16:35:17 2004
+# Created on Thu Jun 24 12:25:41 2004
 # Each line contains the module name, followed by the DOS file
 # name used to store module information and library object
 # data files, followed by the name of the sourcefile for the module.
 # Lines beginning with # are comments.
-scenmod scenmod D:\F90Apps\HASSLIBS\src\SCENMOD.F90
+scenmod scenmod ..\src\scenmod.f90
