@@ -16,6 +16,11 @@
          <property name="LibName" value="adwdm"/>
       </ant>
 
+      <echo message="make aide"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="aide"/>
+      </ant>
+
       <echo message="make hspdss"/>
       <ant antfile="makeLib.xml">
          <property name="LibName" value="hspdss"/>

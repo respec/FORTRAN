@@ -1,8 +1,8 @@
 C     from CMPAD.INC
 C     scratch pad is the entire common block
       INTEGER   SCRSIZ,SCRSZ2
-      PARAMETER (SCRSIZ=1518000)
-      PARAMETER (SCRSZ2=759000)
+      PARAMETER (SCRSIZ=518000)
+      PARAMETER (SCRSZ2=259000)
 C
       INTEGER IPAD(SCRSIZ)
       REAL    PAD(SCRSIZ)

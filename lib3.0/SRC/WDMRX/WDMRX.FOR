@@ -6,11 +6,12 @@ C
 C     strong medicine for an ailing wdm file
 C
 C     + + + PARAMETERS + + +
-      INTEGER   PCHNLN
+      INTEGER   PCHNLN,PMXREC
       PARAMETER(PCHNLN=8000)
+      PARAMETER(PMXREC=96000)
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   USEREC(96000),IBUF(512),MAXREC,I,RECID,J,K,L,M,REVFG,
+      INTEGER   USEREC(PMXREC),IBUF(512),MAXREC,I,RECID,J,K,L,M,REVFG,
      1          FREREC,WDMFL,CHFLG,CLEN,PDP,PUP,PSA,PDAT,PDATV,
      2          SACNT,PSASTR,ECNT,DREC(400),DOFF(400),DPOS,DBUF(512),
      3          CBUF(PCHNLN),UBUF(512),
@@ -243,7 +244,8 @@ C     free records
       IF (FREREC .GT. 0) THEN
         CHFLG= 1
         RECID= -2
-        CALL CHAIN (WDMFL,FREREC,CHFLG,MAXREC,RECID,UPDFLG,PCHNLN,
+        CALL CHAIN (WDMFL,FREREC,PMXREC,
+     I              CHFLG,MAXREC,RECID,UPDFLG,PCHNLN,
      M              USEREC,
      O              CBUF,I)
         WRITE (*,2020) (CBUF(J),J=1,I)
@@ -277,7 +279,8 @@ C             do details of dsn
               WRTFLG= 0
  36           CONTINUE
                 REVFG= 0
-                CALL CHAIN (WDMFL,DBUF(J),CHFLG,MAXREC,CDSN,UPDFLG,
+                CALL CHAIN (WDMFL,DBUF(J),PMXREC,
+     I                      CHFLG,MAXREC,CDSN,UPDFLG,
      I                      PCHNLN,
      M                      USEREC,
      O                      CBUF,CLEN)
@@ -557,7 +560,8 @@ C       revised free record chain
  70     CONTINUE
         CHFLG= 1
         RECID= -2
-        CALL CHAIN (WDMFL,FREREC,CHFLG,MAXREC,RECID,UPDFLG,PCHNLN,
+        CALL CHAIN (WDMFL,FREREC,PMXREC,
+     I              CHFLG,MAXREC,RECID,UPDFLG,PCHNLN,
      M              USEREC,
      O              CBUF,I)
         WRITE (*,2020) (CBUF(J),J=1,I)
@@ -597,7 +601,8 @@ C
 C
 C
       SUBROUTINE   CHAIN
-     I                   (WDMFL,FSTREC,CHFLG,MAXREC,RECID,UPDFLG,PCHNLN,
+     I                   (WDMFL,FSTREC,PMXREC,
+     I                    CHFLG,MAXREC,RECID,UPDFLG,PCHNLN,
      M                    USEREC,
      O                    CBUF,NUMREC)
 C
@@ -606,11 +611,12 @@ C     determine chain of records
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   WDMFL,FSTREC,CHFLG,MAXREC,RECID,UPDFLG,PCHNLN,
-     1          USEREC(MAXREC),CBUF(PCHNLN),NUMREC
+     1          USEREC(MAXREC),CBUF(PCHNLN),NUMREC,PMXREC
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     WDMFL  - Fortran unit number of the WDM file
 C     FSTREC - First record in chain
+C     PMXREC - maximum record pointer
 C     CHFLG  - check flag, 1 - forward only, 2 - forward and back
 C     MAXREC - maximum record on WDM file
 C     RECID  - record id
@@ -632,6 +638,7 @@ C     + + + OUTPUT FORMATS + + +
 2010  FORMAT (' **** PROBLEM **** BAD BACK POINTER,CUR,BK:',2I5)
 2020  FORMAT (' ** NOTE ** TOO MANY RECORDS (',
      1          I5,') FOR WDMRX IN DSN',I5)
+2030  FORMAT (' **** PROBLEM **** BAD FORWARD POINTER IN CHAIN:',I10)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -666,15 +673,21 @@ C           bad back pointer
           END IF
         END IF
         IF (NXTREC .NE. 0) THEN
-          IF (USEREC(NXTREC) .EQ. 0) THEN
-            USEREC(NXTREC)= RECID
-            LSTREC= NXTREC
-            NXTREC= PTF(CHFLG)
+          IF (NXTREC.GT.MAXREC .OR. NXTREC.LT.0) THEN
+            WRITE (*,2030) NXTREC
+            WRITE (10,2030) NXTREC
+            NXTREC = 0
           ELSE
-            WRITE (*,2000) USEREC(NXTREC)
-            WRITE(10,2000) USEREC(NXTREC)
-            NXTREC= 0
-          END IF
+            IF (USEREC(NXTREC) .EQ. 0) THEN
+              USEREC(NXTREC)= RECID
+              LSTREC= NXTREC
+              NXTREC= PTF(CHFLG)
+            ELSE
+              WRITE (*,2000) USEREC(NXTREC)
+              WRITE(10,2000) USEREC(NXTREC)
+              NXTREC= 0
+            END IF
+          END IF  
         END IF
       IF (NXTREC .GT. 0) GO TO 10
 C

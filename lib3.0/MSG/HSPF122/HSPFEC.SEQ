@@ -99,5 +99,11 @@ $TEXT
   An error occurred reading the following line in MASS-LINK Table number &I   :
 
 &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   26  TYPE TEXT
+$TEXT
+   20   11    0    5
+  MASS-LINK Table number &I    contains an implicit instruction to pass 
+  timeseries from one operation type to another operation type.  Using 
+  implicit instructions in this way can result in misleading results.
   END DATA
 END CLU

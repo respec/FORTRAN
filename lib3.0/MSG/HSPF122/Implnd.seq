@@ -2629,7 +2629,7 @@ _WIDTH  10
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0.001 : 100.
+_RANGE  0.000 : 100.
 _DEFAULT  0.001
 _HELP
 RETS  is the initial retention storage.
@@ -2639,7 +2639,7 @@ _WIDTH  10
 _COLUMN 21
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE   0.001 : 100.
+_RANGE   0.000 : 100.
 _DEFAULT  0.001
 _HELP
 SURS  is the initial surface (overland flow) storage.
@@ -2669,7 +2669,7 @@ _WIDTH  10
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0.025 : 2500.
+_RANGE  0.000 : 2500.
 _DEFAULT  0.025
 _HELP
 RETS  is the initial retention storage.
@@ -2679,7 +2679,7 @@ _WIDTH  10
 _COLUMN 21
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE   0.025 : 2500.
+_RANGE   0.000 : 2500.
 _DEFAULT  0.025
 _HELP
 SURS  is the initial surface (overland flow) storage.

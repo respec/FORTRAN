@@ -76,7 +76,7 @@ OBJS      = \
 	     pufbfr.obj    pufbfw.obj   \
 	     pufc.obj      pufca.obj    \
 	     pufl.obj      pufla.obj    \
-	     pufwca.obj    putholpc.obj \
+            pufwca.obj    puthol90.obj \
 	     r2sd3.obj     rbell.obj    \
 	     readf.obj     remblk.obj   \
 	     rjchr.obj     rjstr.obj    \
