@@ -1,0 +1,60 @@
+IPHYTO             14614 IZOO               14615 IORN               14616
+IORP               14617 IORC               14618 ITORN              14649
+ITORP              14650 ITORC              14651 ITOTN              14652
+ITOTP              14653 PLADFG   6         14685 PHYFG              14691
+PKFG     8         14691 ZOOFG              14692 BALFG              14693
+SDLTFG             14694 AMRFG              14695 DECFG              14696
+NSFG               14697 ZFOOD              14698 PLAFXM  12   3     14699
+PLACNM  12   3     14735 CVBC               14771 CVBCL              14772
+CVNRBO             14773 CVPB               14774 RATCLP             14775
+PKPM1    6         14775 NONREF             14776 LITSED             14777
+ALNPR              14778 EXTB               14779 MALGR              14780
+CMMLT              14781 PKPM2    7         14781 CMMN               14782
+CMMNP              14783 CMMP               14784 TALGRH             14785
+TALGRL             14786 TALGRM             14787 ALR20              14788
+PKPM3    6         14788 ALDH               14789 ALDL               14790
+OXALD              14791 NALDH              14792 PALDH              14793
+SEED               14794 PKPM4    6         14794 MXSTAY             14795
+OREF               14796 CLALDH             14797 PHYSET             14798
+REFSET             14799 MZOEAT             14800 PKPM5    5         14800
+ZFIL20             14801 ZRES20             14802 ZD                 14803
+OXZD               14804 TCZFIL             14805 PKPM6    4         14805
+TCZRES             14806 ZEXDEL             14807 ZOMASS             14808
+MBAL               14809 PKPM7    3         14809 CFBALR             14810
+CFBALG             14811 PHYTO              14816 PKST1    3         14816
+PHYCLA             14817 LIMPHY             14818 BENAL              14819
+PKST2    3         14819 BALCLA             14820 LIMBAL             14821
+ORN                14822 PKST3    7         14822 ORP                14823
+ORC                14824 TORN               14825 TORP               14826
+TORC               14827 POTBOD             14828 ZOO                14829
+TN                 14830 PKST4    2         14830 TP                 14831
+ROPHYT             14846 ROZOO              14847 ROORN              14848
+ROORP              14849 ROORC              14850 ROTORN             14871
+ROTORP             14872 ROTORC             14873 ROTOTN             14874
+ROTOTP             14875 OPHYT    5         14896 OZOO     5         14901
+OORN     5         14906 OORP     5         14911 OORC     5         14916
+OTORN    5         15021 OTORP    5         15026 OTORC    5         15031
+OTOTN    5         15036 OTOTP    5         15041 PLADDR   3         15146
+PLADWT   3         15161 PLADEP   3         15176 SNKPHY             15179
+ZOOPHY             15180 DTHPHY             15181 GROPHY             15182
+TOTPHY             15183 GROZOO             15204 DTHZOO             15205
+TOTZOO             15206 GROBAL             15219 DTHBAL             15220
+TOTBAL             15221 SNKORN             15234 PHYORN             15235
+ZOOORN             15236 BALORN             15237 TOTORN             15238
+SNKORP             15259 PHYORP             15260 ZOOORP             15261
+BALORP             15262 TOTORP             15263 SNKORC             15284
+PHYORC             15285 ZOOORC             15286 BALORC             15287
+TOTORC             15288 PYCO2              15309 ZOCO2              15310
+BACO2              15311 ITIC               15407 ICO2               15408
+PHCNT              15421 PHPM1    2         15421 ALKCON             15422
+CFCINV             15423 PHPM2    3         15423 BRCO2    2         15424
+TIC                15428 PHST     3         15428 CO2                15429
+PH                 15430 SATCO2             15434 ROTIC              15436
+ROCO2              15437 OTIC     5         15448 OCO2     5         15453
+BODCO2             15508 PHYCO2             15509 ZOOCO2             15510
+BALCO2             15511 BENCO2             15512 INVCO2             15513
+TOTCO2             15514 ACFLAG  14         15550 ACPARM   7         15564
+NUMCON             15572 NUMGQL             15573 ACCONC   7         15610
+ACSTOR   7   5     15624 ACINFL   7   5     15666 ACFLX1   7   5     15715
+ACFLX2   5   7   5 15757 ACFLXC  10   5     15967 ACFLXG   3   5     16027
+ACFLX3   7   5     16045 ACPH               16080 ACCONV   7         16082

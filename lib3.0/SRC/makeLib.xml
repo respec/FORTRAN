@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<project name="MakeLib" default="compile">
+   <property name="LibName"     value="util"/>
+   <property name="FC"          value="lf90"/>
+   <property name="FOpts"       value="-c -o0"/>
+   <property name="LibDir"      value="..\${FC}libs\"/>
+   <property name="ListFile"    value="${LibName}\${ant.project.name}.lis"/>
+
+   <target name="compile">
+      <echo message="${LibName}"/>
+      <echo message="compiling ${LibName}${line.separator}" file="${ListFile}"/>
+      <echo message=" basedir:'${basedir}'${line.separator}" file="${ListFile}" append="yes"/>
+
+      <apply executable="${FC}" dest="${LibDir}${LibName}" dir="${LibName}"    output="${ListFile}" append="yes">
+         <srcfile/>
+         <arg line="${FOpts} -i ..\util;..\adwdm;..\aide;..\waide;..\hspf122;..\graph"/>
+         <mapper type="glob" from="*.FOR" to="*.obj"/>
+         <fileset dir="${LibName}" casesensitive="false" excludesfile="${LibName}\exclude.lis"> 
+            <include name="*.FOR"/>          
+         </fileset>
+      </apply>
+
+      <fileset dir="${LibName}" id="objNew"> <include name="*.obj"/> </fileset>
+
+      <apply executable="386lib" dir="${LibName}" output="${ListFile}" append="true">
+         <arg value="..\${LibDir}${LibName}.lib "/>
+         <arg line="-PAGESIZE 128 -REPLACE"/>
+         <srcfile/>
+         <fileset refid="objNew"/>
+      </apply>
+
+      <copy todir="${LibDir}${LibName}"><fileset refid="objNew"/></copy>
+
+      <delete><fileset refid="objNew"/></delete>
+
+      <echo message=" done${line.separator}${line.separator}" file="${ListFile}" append="true"/>
+   </target>
+
+   <target name="clean">
+      <delete>
+         <fileset dir="${LibDir}" casesensitive="false"> 
+            <include name="${LibName}/*.obj"/>          
+            <include name="${LibName}.lib"/>
+         </fileset>
+      </delete>
+   </target>
+</project>

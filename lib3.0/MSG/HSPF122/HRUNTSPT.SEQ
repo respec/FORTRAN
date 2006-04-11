@@ -1,0 +1,224 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          235    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRUNTSPT
+  END LABEL
+  DATA   CLU   235
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  TXVAR not= FRMTIM.
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Linear variation BTI encountered when such
+ BTI's are not yet supported.
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Linear variation compression selected when such
+ compression is not yet supported.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer underflow in RGET.
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Dataset overflow in RGET.
+#GROUP    6  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer overflow in RGET.
+#GROUP    7  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Invalid time series block encountered during replace access.
+ Block must be type uncompressed.
+#GROUP    8  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer underflow in RPUT.
+#GROUP    9  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Dataset overflow in RPUT.
+#GROUP   10  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer overflow in RPUT.
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Year not= value of year obtained in dataset in REPLC.
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ End of chronological data encountered
+ before end of run.
+#GROUP   13  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Invalid buffer state in PTVAL.
+#GROUP   14  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer underflow in PTVAL.
+#GROUP   15  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer/extension overflow in PTVAL.
+#GROUP   16  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Dataset overflow in PTVAL.  Probable cause is not enough
+ space in your TSS dataset.
+#GROUP   17  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug. Invalid buffer state in BUFINT.
+#GROUP   18  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Dataset underflow in BUFINT
+#GROUP   19  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ DATASET overflow in BUFINT
+#GROUP   20  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer overflow in BUFINT
+#GROUP   21  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer/extension does not contain the TSB in BUFINT.
+#GROUP   22  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Invalid buffer state in REPLC
+#GROUP   23  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Dataset overflow in WFBUFF
+#GROUP   24  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Program bug.  Buffer underflow in GTWORD
+#GROUP   25  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Attempt to obtain data from beyond upper limit of dataset.
+  END DATA
+END CLU
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

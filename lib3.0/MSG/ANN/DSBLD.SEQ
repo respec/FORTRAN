@@ -1,0 +1,252 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  dsbld.seq for lib ann
+END COMMENT 
+CLU           27    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  DSBLD                                                               
+  END LABEL   
+  DATA   CLU    27
+#GROUP    1  TYPE PRM1
+$SCREEN
+
+  Enter data-set number to be added   [@NDSN.]
+
+  Copy existing data-set's attributes
+  as a template for the new data set? [@CPFG.]
+
+  If copying data-set's attributes,
+  enter data-set number from which to copy [@ODSN.]
+$FIELD @NDSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$FIELD @CPFG
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES, NO
+_DEFAULT YES
+$FIELD @ODSN
+_TYPE INTEGER
+_RANGE  1 : 32000              
+_DEFAULT -999
+$HELP
+ If your new dataset has attributes similar to an old one, enter YES
+ in the second field.  Then the old data-set's attributes will be copied
+ into the new one and you will have a chance to modify them.  Otherwise,
+ enter NO in the second field and you will be prompted for label info.
+$WINDOW Build (DB)
+#GROUP    2  TYPE TEXT
+$TEXT
+Data-set number & already exists, thus it can not be added.
+$WINDOW Build (DB) Problem
+#GROUP    3  TYPE TEXT
+$TEXT
+Data-set number & does not exist, thus it is not
+possible to copy attributes from it to the new data set.
+$WINDOW Build (DB) Problem
+#GROUP    4  TYPE MENU
+$TITLE Data set successfully added.  Are modifications desired?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  8
+$OPTION No
+_DESC - all done with this data-set label for now
+$OPTION Yes
+_DESC - allow me to make changes to data-set label
+$HELP
+ If you select Yes, then you will be automatically transferred
+ to modify mode for the new dataset.
+$WINDOW Build (DB)
+#GROUP   11  TYPE MENU
+$TITLE What type is the new dataset?
+$DEFAULT   1
+$LENGTH   10
+$WIDTH    39
+$COLENGTH  6
+$OPTION TImeseries
+_DESC -
+$OPTION TAble
+_DESC -
+$OPTION SChematic
+_DESC -
+$OPTION Project
+_DESC -
+$OPTION Vector
+_DESC -
+$OPTION Rastor
+_DESC -
+$OPTION SPace-time
+_DESC -
+$OPTION Attribute
+_DESC - characteristics
+$OPTION Message
+_DESC - stores text, etc for sc
+$HELP
+ Indicate the type for the new data set.
+$WINDOW Build (DB)
+#GROUP   12  TYPE PRM1
+$SCREEN
+     Update dataset label space allocations as needed.
+
+     Down pointers  @PRM1      Search attributes        @PRM3
+     Up pointers    @PRM2      Search attribute space   @PRM4
+                               Data pointers            @PRM5
+
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE  1 : 50                 
+_DEFAULT 10
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE  1 : 50                 
+_DEFAULT 20
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE  1 : 70                 
+_DEFAULT 20
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE  1 : 200                
+_DEFAULT 50
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE  1 : 400                
+_DEFAULT 100
+$WINDOW Build (DB)
+#GROUP   13  TYPE TEXT
+$TEXT
+Not enough room on label for your requirement of (words): &
+$WINDOW Build (DB) Problem
+#GROUP   21  TYPE PRM2
+$HEADER
+General description attributes for dataset
+ TS-  station id
+ TYPE (ISTAID/STAID)   station name and/or location (STANAM)
+$FIELD FIELD1
+_HELP
+A User defined 4-character descriptor for
+the dataset.  Ex. FLOW, PRCP, EVAP
+_TYPE CHARACTER
+_WIDTH     4
+_COLUMN     2
+$FIELD FIELD2
+_HELP
+The station id will be stored as ISTAID  if a valid integer
+of 9 digits or less is entered.  It will be stored as STAID, a
+16-character string if the id contains non-numeric characters or
+is longer than 9-digits.
+A 16-character alpha numeric station id
+_TYPE CHARACTER
+_WIDTH    16
+_COLUMN     7
+$FIELD FIELD3
+_HELP
+A 48-character description of the dataset
+_TYPE CHARACTER
+_WIDTH    48
+_COLUMN    24
+$HELP
+ The attributes TSTYPE and STANAM are required,
+ station id (ISTAID or STAID) is optional.
+$WINDOW Build (DB)
+#GROUP   22  TYPE PRM2
+$HEADER
+Modify time specification attributes as needed.
+
+time    time   group   base  form of   time step compression
+step   units  pointer  year    data      option      flag
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     4
+_COLUMN     1
+_RANGE  1 : 1440               
+_DEFAULT 1
+_HELP
+Time step of the data in time units units.
+$FIELD FIELD2
+_TYPE CHARACTER
+_WIDTH     6
+_COLUMN     7
+_VALID SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Primary time units of data
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH     7
+_COLUMN    15
+_VALID HOUR, DAY, MONTH, YEAR, CENTURY
+_DEFAULT YEAR
+_HELP
+Group pointer for data.
+$FIELD FIELD4
+_TYPE INTEGER
+_WIDTH     5
+_COLUMN    23
+_RANGE  1 : 9999
+_DEFAULT 1950
+_HELP
+Base year of data.  Should be before any data in the dataset.
+$FIELD FIELD5
+_TYPE CHARACTER
+_WIDTH     7
+_COLUMN    30
+_VALID MEAN, TOTAL, INSTANT, MINIMUM, MAXIMUM
+_DEFAULT MEAN
+_HELP
+Form of data:
+     MEAN - mean over the timestep
+    TOTAL - total over the timestep
+  INSTANT - instantaneous at time (end of timestep)
+  MINIMUM - minimum over the timestep
+  MAXIMUM - maximum over the timestep
+$FIELD FIELD6
+_TYPE CHARACTER
+_WIDTH    10
+_COLUMN    40
+_VALID CONSTANT, VARIABLE, BREAKPOINT
+_DEFAULT VARIABLE
+_HELP
+Option for variable timestep:
+    CONSTANT - all data in dataset at same timestep
+    VARIABLE - timestep may vary in dataset
+  BREAKPOINT - each value time tagged
+$FIELD FIELD7
+_TYPE CHARACTER
+_WIDTH     3
+_COLUMN    54
+_VALID YES, NO
+_DEFAULT YES
+_HELP
+Compression flag.  Compressed (YES) data will take up less
+space in the WDM file, but may require a COPY operation to
+update some values.
+$HELP
+The following are required attributes:
+  TSSTEP, TCODE, TGROUP, TSBYR, TSFORM, VBTIME
+$WINDOW Build (DB)
+#GROUP   23  TYPE TEXT
+$TEXT
+Group pointer not compatable with time units.
+$WINDOW Build (DB) Problem
+#GROUP   30  TYPE TEXT
+$TEXT
+*** WHY DOES THIS MESSAGE APPEAR?
+***   (might be all required attributes have been added
+***    or that a required attribute is about to be prompted for)
+$WINDOW Build (DB)
+#GROUP   31  TYPE TEXT
+$TEXT
+Attribute not allowed for this dataset type.
+$WINDOW Build (DB) Problem
+#GROUP   32  TYPE TEXT
+$TEXT
+Attribute already present for this dataset.
+$WINDOW Build (DB) Problem
+  END DATA
+END CLU 

@@ -1,0 +1,258 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           56    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  WSGSIM
+  END LABEL
+  DATA   CLU    56
+#GROUP   1  TYPE MENU
+$WINDOW Scenario (S)
+$SCREEN
+
+Select a Scenario option.
+
+@Activate !                        @Create   !
+@Delete   !                        @SAve     !
+@Modify   !
+@Edit     !                        @SImulate !
+
+                 @Return !
+$DEFAULT   1
+$LENGTH    11
+$OPTION Activate
+_DESC - existing scenario
+$OPTION Delete
+_DESC - any scenario
+$OPTION Modify
+_DESC - active scenario
+$OPTION Edit
+_DESC - active uci file
+$OPTION Create
+_DESC - new scenario from active
+$OPTION SAve
+_DESC - current scenario
+$OPTION SImulate
+_DESC - run model
+$OPTION Return
+_DESC - to the Opening screen
+$HELP
+To simulate an existing scenario, use 'Activate', then 'Simulate'.  All new
+scenarios (simulation runs) are created by modification of an existing
+scenario.  Use 'Create', then 'Edit' to make the necessary changes to the
+active uci file ('Modify' has not been implemented for all versions of the
+scenario generator).  Use 'Save' to keep the newly created scenario.
+#GROUP  10  TYPE MENU
+$WINDOW Activate (SA)
+$TITLE Select a scenario to activate.
+$LENGTH 8
+$OPTION Dum
+$HELP
+Select the scenario to be activated.  A scenario must be active for
+editing, creating a new scenario, and simulating.
+#GROUP  11  TYPE MENU
+$WINDOW Activate (SA) Warning
+$TITLE Another scenario is presently active.  Sure you want to activate another?
+$DEFAULT   2
+$LENGTH    4
+$OPTION Yes
+_DESC - go ahead with Activate and lose unsaved changes
+$OPTION No
+_DESC - return to Scenario screen so I can save the changes
+$HELP
+Only one scenario may be active at a time, so activating another will return
+the current scenario to an inactive state.  If you have made changes that you
+care to save, make sure you save that scenario before activating another.
+#GROUP  12  TYPE FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP  14  TYPE TEXT
+$WINDOW Activate (SA) Problem
+$TEXT
+No scenarios exist to be activated.
+
+A UCI file name must correspond to a scenario name on the wdm file.
+$HELP
+In order for a scenario to be activated, the file <scenario>.uci must exist
+in the directory specified in the 'Change Basin' screen as the path to the
+uci files.  The prefix <scenario> must be the same as a scenario id in the
+time series directory.
+#GROUP  30  TYPE TEXT
+$WINDOW Delete (SD) Problem
+$TEXT
+ Only one scenario exists.
+
+ Cannot delete only scenario.
+$HELP
+At least one scenario must remain at all times, so this scenario
+cannot be deleted.
+#GROUP  31  TYPE MENU
+$WINDOW Delete (SD)
+$TITLE Select a scenario to delete.
+$LENGTH 63
+$OPTION Dum
+$HELP
+Select the scenario to be deleted.  All data sets pertaining to this
+scenario will be deleted, and this scenario will no longer be available
+for activating.
+#GROUP  32  TYPE PRM1
+$WINDOW Delete (SD) Warning
+$SCREEN
+
+        About to Delete Scenario @SENNAM.
+
+        If you do not wish to delete this scenario,
+        use the Previous command (F4) to return to the
+        Delete screen.
+
+$FIELD @SENNAM
+_TYPE    CHARACTER
+_PROTECT PROTECTED
+$HELP
+All data sets pertaining to this scenario will be deleted, and this scenario
+will no longer be available for activating.
+#GROUP  35  TYPE TEXT
+$WINDOW Modify (SM)
+$TEXT
+  'Modify' has not yet been implemented for this scenario generator.
+
+  Use the 'Edit' option to modify a scenario.
+$HELP
+This option is not implemented for all scenario generators.  Where it has been
+implemented, it allows the user to modify only a select group of parameters
+from the UCI file.  All parameters can be modified with the 'Edit' option.
+#GROUP  36  TYPE TEXT
+$WINDOW Modify (SM) Problem
+$TEXT
+ No scenario is active for modifying.
+
+ Activate a scenario with the 'Activate' option.
+$HELP
+ The activate option must be selected before any other option.
+#GROUP  39  TYPE TEXT
+$WINDOW SImulate (SSi) Problem
+$TEXT
+  The active scenario is unsaved.
+
+  Use the 'SAve' option to save the scenario
+  before performing simulation.
+$HELP
+ Simulations can only be performed on scenarios that have been saved.
+#GROUP  40  TYPE TEXT
+$WINDOW SImulate (SSi) Problem
+$TEXT
+  No scenario has yet been specified.
+
+  Use the 'Activate' or 'Create' option to specify a scenario.
+$HELP
+ A scenario must be active before any other option can be specified.
+#GROUP  50  TYPE TEXT
+$WINDOW Edit (SE) Problem
+$TEXT
+  No scenario is active for editing.
+
+  Activate a scenario with the 'Activate' option.
+$HELP
+ A scenario must be active before any other option can be specified.
+#GROUP  60  TYPE TEXT
+$WINDOW Create (SC) Problem
+$TEXT
+  To create a new scenario from an existing scenario, an existing
+  scenario must first be active.
+
+  Choose the 'Activate' option to make a scenario active.
+$HELP
+ A scenario must be active before any other option can be specified.
+#GROUP  61  TYPE PRM1
+$WINDOW Create (SC)
+$SCREEN
+
+  Creating a new scenario from the existing scenario @SENORG.
+
+  Name of new scenario [@SENNEW.]
+
+$FIELD @SENORG
+_TYPE    CHARACTER
+_PROTECT PROTECTED
+$FIELD @SENNEW
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$HELP
+These names are used when analyzing the results.  It will be beneficial
+to develop a naming convention that will be easy for you to recognize.
+#GROUP  62  TYPE TEXT
+$WINDOW Create (SC) Problem
+$TEXT
+  Cannot create a new scenario because the number of
+  scenarios has reached its limit.
+
+  Delete a scenario with the 'Delete' option to
+  make room for another scenario.
+$HELP
+ A limited number of scenarios may exist.
+ Delete one before creating another.
+#GROUP  63  TYPE PRM1
+$WINDOW Create (SC)
+$SCREEN
+
+  Put new scenario @SENNEW. on wdm file @WDI,
+
+  using available datasets starting with number @DSN.. .
+
+
+$FIELD @SENNEW
+_TYPE    CHARACTER
+_PROTECT PROTECTED
+$FIELD @WDI
+_TYPE    CHARACTER
+_PROTECT CORRECT
+_VALID   ?WDID
+$FIELD @DSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1 : 32000
+$HELP
+Choose where to put the output data from the new scenario.  If the specified
+data set is not available, the next available will be used.
+#GROUP  70  TYPE TEXT
+$WINDOW SAve (SSa) Problem
+$TEXT
+  No scenario is current to save.
+$HELP
+ A scenario must be active before any other option can be specified.
+#GROUP  71  TYPE TEXT
+$WINDOW SAve (SSa) Problem
+$TEXT
+  Problem opening uci file for output.
+#GROUP  72  TYPE TEXT
+$WINDOW SAve (SSa)
+$TEXT
+
+#GROUP  73  TYPE FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP  75  TYPE TEXT
+$WINDOW Create (SC) Problem
+$TEXT
+  Invalid scenario name.
+
+  A scenario by this name already exists.
+$HELP
+ Two scenarios must not have the same name.
+#GROUP  80  TYPE MENU
+$WINDOW Return (SR) Warning
+$TITLE Scenario may have been changed but not saved.  Sure you want to Return?
+$DEFAULT   2
+$LENGTH    4
+$OPTION Whoa
+_DESC - I want to return to scenario menu to save the scenario.
+$OPTION Exit
+_DESC - I want to return to opening screen and not save scenario.
+$HELP
+ Remember to save the scenario if you want to keep any changes made.
+  END DATA
+END CLU

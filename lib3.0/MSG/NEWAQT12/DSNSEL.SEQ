@@ -1,0 +1,35 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          201    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  DSNSEL
+  END LABEL
+  DATA   CLU   201
+#GROUP    1  TYPE PRM1
+$SCREEN
+
+  Scenario [@SCEN...]      Location [@LOCN...]      Constituent [@CONS...]
+
+  Count of matching data sets [@NDSN]
+
+  Data-set numbers:
+  [@DSNS.................................................................]
+$FIELD @SCEN
+_TYPE CHARACTER
+_VALID ?SCENARI
+$FIELD @LOCN
+_TYPE CHARACTER
+_VALID ?LOCATIO
+$FIELD @CONS
+_TYPE CHARACTER
+_VALID ?CONSTIT
+$FIELD @NDSN
+_TYPE INTEGER
+$FIELD @DSNS
+_TYPE CHARACTER
+_PROTECT PROTECTED
+  END DATA
+END CLU

@@ -1,0 +1,6 @@
+NQUAL       1530
+NQSD        1531
+NQOF        1532
+NQIF        1533
+NQGW        1534
+NPST        3205

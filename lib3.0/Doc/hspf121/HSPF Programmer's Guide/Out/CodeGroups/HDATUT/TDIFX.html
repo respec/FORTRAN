@@ -1,0 +1,63 @@
+<html><head><title>TDIFX</title></head>
+<body>
+<a name="TDIFX"><hr size=7><h2>TDIFX</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT.html">HDATUT</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="TDIF.html">TDIF</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   TDIFX
+     I                  (BYRI,DATEI,
+     O                   DIFF)
+C
+C     + + + PURPOSE + + +
+C     Compute difference in minutes from the start of
+C     the base year until the start of the given date
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    BYRI,DATEI(5),DIFF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     BYRI   - base year
+C     DATEI  - date to calc difference from
+C     DIFF   - difference in minutes
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   TDIF
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     calc whole day difference
+      CALL TDIF (BYRI,DATEI(1),DATEI(2),DATEI(3),
+     O           DIFF)
+C     add hours and minutes difference
+      DIFF = DIFF+ DATEI(4)*60 + DATEI(5)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="TDIFX">
+</Object>
+
+</body>
+</html>
+

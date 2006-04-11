@@ -1,0 +1,270 @@
+Purpose - Get an entry from time series blocks data structure.
+<p>Flow of Execution
+<ul>
+<li><a href="#L1">get next record from user's control input</a>
+<li><a href="#L2">if another record is available, process it</a>
+    <ul>
+    <li><a href="#L3">external sources block record</a>
+        <ul>
+        <li><a href="#L4">extra processing for WDM record</a>
+        </ul>
+    <li><a href="#L5">network block record</a>
+    <li><a href="#L6">external targets block record</a>
+        <ul>
+        <li><a href="#L7">extra processing for WDM record</a>
+        </ul>
+    <li><a href="#L8">schematic block record</a>
+    </ul>
+<li><a href="#L9">no more records available in this block</a>
+</ul>
+<p>Code Group 
+   <a href="../HSPFEC">HSPFEC</a>
+<p>Called By
+   <a href="../HRINTS/NETBLK">NETBLK</a>,
+   <a href="../HRINTS/SCHBLK">SCHBLK</a>,
+   <a href="../HRINTS/SRCBLK">SRCBLK</a>,
+   <a href="../HRINTS/TARBLK">TARBLK</a>
+<p>Common Blocks <i>none</i>  
+<p>Calls
+   <a href="../HIOUCI/GETUCI">GETUCI</a>,
+   CHRDIG,
+   <a href="../HRINGEUT/TAGVAL">TAGVAL</a>,
+   <a href="RDMFAC">RDMFAC</a>,
+   <a href="../HPRBUT/OMSG">OMSG</a>,
+   <a href="../HPRBUT/OMSTC">OMSTC</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   GTTMRC
+     I                   (TSBKCD,KEYND,MESSU,MSGFL,SCLU,BGRP,
+     M                    KEY,ECOUNT,
+     O                    SVOL,SVOLNO,SGRPN,SMEMN,SMEMSB,SSYST,SGAPST,
+     O                    MFACTR,TRAN,TVOL,TVOLNO,TOPFST,TOPLST,TGRPN,
+     O                    TMEMN,TMEMSB,TSYST,AGG,AMDST,GTCOD)
+C
+C     + + + PURPOSE + + +
+C     Get an entry from time series blocks data structure.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     TSBKCD,KEYND,MESSU,MSGFL,SCLU,BGRP,KEY,ECOUNT,SVOLNO,
+     $            SMEMSB(2),TVOLNO,TOPFST,TOPLST,TMEMSB(2),GTCOD
+      REAL        MFACTR
+      CHARACTER*4 SSYST,SGAPST,TRAN,TSYST,AGG,AMDST
+      CHARACTER*6 SVOL,SGRPN,SMEMN,TVOL,TGRPN,TMEMN
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     TSBKCD - time-series type code,
+C              1 - Ext Sources
+C              2 - Network
+C              3 - Ext Targets
+C              4 - Schematic
+C     KEYND  - UCI key of last line in time-series block
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of message file
+C     SCLU   -
+C     BGRP   -
+C     KEY    - UCI key of current line in time-series block
+C     ECOUNT -
+C     SVOL   - source volume
+C     SVOLNO - source volume number
+C     SGRPN  - 
+C     SMEMN  - 
+C     SMEMSB - ???
+C     SSYST  - ???
+C     SGAPST - ???
+C     MFACTR - ???
+C     TRAN   - ???
+C     TVOL   - ???
+C     TVOLNO - ???
+C     TOPFST - ???
+C     TOPLST - ???
+C     TGRPN  - ???
+C     TMEMN  - ???
+C     TMEMSB - ???
+C     TSYST  - ???
+C     AGG    - ???
+C     AMDST  - ???
+C     GTCOD  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      I0,I80,TCLU,SGRP
+      CHARACTER*2  CSMSUB(2),CTMSUB(2)
+      CHARACTER*10 CMFACT
+      CHARACTER*80 UCIBF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (UCIBF,UCIBF1)
+      CHARACTER*1  UCIBF1(80)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER   CHRDIG
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  GETUCI,CHRDIG,TAGVAL,RDMFAC,OMSG,OMSTC
+C
+C     + + + INPUT FORMATS + + +
+ 1010 FORMAT (A6,I4,1X,A6,A2,1X,2A4,A10,A4,1X,A6,2(1X,I3),
+     $        2(1X,A6),2A2)
+ 1020 FORMAT (A6,I4,2(1X,A6),2A2,A10,A4,1X,A6,2(1X,I3),
+     $        2(1X,A6),2A2)
+ 1030 FORMAT (A6,I4,2(1X,A6),2A2,A10,A4,1X,A6,I4,1X,
+     $        A6,A2,3(1X,A4))
+ 1040 FORMAT (A6,I4,18X,A10,5X,A6,I4,3X,I4,11X,2A2)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0= 0
+      I80= 80
+C
+      TCLU= 202
+C
+      <a name="L1">CALL <a href="../HIOUCI/GETUCI">GETUCI</a> (I0,
+     M             KEY,
+     O             UCIBF)
+C
+      <a name="L2">IF (KEY .NE. KEYND) THEN
+C       not done yet
+        <a name="L3">IF (TSBKCD .EQ. 1) THEN
+C         external sources
+          READ (UCIBF,1010,ERR=10)  SVOL, SVOLNO, SMEMN, CSMSUB(1),
+     $              SSYST, SGAPST, CMFACT, TRAN, TVOL, TOPFST,
+     $              TOPLST, TGRPN, TMEMN, CTMSUB
+            GO TO 15
+ 10       CONTINUE
+C           error - cannot read ext sources line
+            CALL OMSTC (I80,UCIBF1)
+            SGRP= 21
+            CALL OMSG (MESSU,MSGFL,TCLU,SGRP,
+     M                 ECOUNT)
+ 15       CONTINUE
+          CALL <a href="RDMFAC">RDMFAC</a> (CMFACT,MESSU,MSGFL,TCLU,
+     M                 ECOUNT,
+     O                 MFACTR)
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CSMSUB(1),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 SMEMSB(1))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CTMSUB(1),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 TMEMSB(1))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CTMSUB(2),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 TMEMSB(2))
+          <a name="L4">IF (SVOL(1:3) .EQ. 'WDM') THEN
+C           do extra processing for wdm files
+            IF (UCIBF(18:19) .EQ. '  ') THEN
+C             quality flag defaults to 31
+              SMEMSB(1)= 31
+            END IF
+            SMEMSB(2)= CHRDIG (SVOL(4:4))
+            IF ( (SMEMSB(2) .LT. 1) .OR. (SMEMSB(2) .GT. 4) ) THEN
+C             blank or invalid
+              SMEMSB(2)= 1
+              SVOL(4:4)= '1'
+            END IF
+          ELSE
+C           dummy second subscript for non-wdm
+            SMEMSB(2) = -999
+          END IF
+          GTCOD= 1
+        <a name="L5">ELSE IF (TSBKCD .EQ. 2) THEN
+C         network
+          READ (UCIBF,1020,ERR=20)  SVOL, SVOLNO, SGRPN, SMEMN,
+     $          CSMSUB, CMFACT, TRAN, TVOL, TOPFST, TOPLST,
+     $          TGRPN, TMEMN, CTMSUB
+            GO TO 25
+ 20       CONTINUE
+C           error - cannot read network line
+            CALL OMSTC (I80,UCIBF1)
+            SGRP= 22
+            CALL OMSG (MESSU,MSGFL,TCLU,SGRP,
+     M                 ECOUNT)
+ 25       CONTINUE
+          CALL <a href="RDMFAC">RDMFAC</a> (CMFACT,MESSU,MSGFL,TCLU,
+     M                 ECOUNT,
+     O                 MFACTR)
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CSMSUB(1),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 SMEMSB(1))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CSMSUB(2),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 SMEMSB(2))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CTMSUB(1),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 TMEMSB(1))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CTMSUB(2),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 TMEMSB(2))
+          GTCOD= 2
+        <a name="L6">ELSE IF (TSBKCD .EQ. 3) THEN
+C         external targets
+          READ (UCIBF,1030,ERR=30)  SVOL, SVOLNO, SGRPN, SMEMN,
+     $          CSMSUB, CMFACT, TRAN, TVOL, TVOLNO, TMEMN,
+     $          CTMSUB(1), TSYST, AGG, AMDST
+            GO TO 35
+ 30       CONTINUE
+C           error - cannot read ext targets line
+            CALL OMSTC (I80,UCIBF1)
+            SGRP= 23
+            CALL OMSG (MESSU,MSGFL,TCLU,SGRP,
+     M                 ECOUNT)
+ 35       CONTINUE
+          CALL <a href="RDMFAC">RDMFAC</a> (CMFACT,MESSU,MSGFL,TCLU,
+     M                 ECOUNT,
+     O                 MFACTR)
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CSMSUB(1),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 SMEMSB(1))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CSMSUB(2),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 SMEMSB(2))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CTMSUB(1),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 TMEMSB(1))
+          <a name="L7">IF (TVOL(1:3) .EQ. 'WDM') THEN
+C           do extra processing for wdm files
+            TMEMSB(2)= CHRDIG (TVOL(4:4))
+            IF ( (TMEMSB(2) .LT. 1) .OR. (TMEMSB(2) .GT. 4) ) THEN
+C             blank or invalid
+              TMEMSB(2)= 1
+              TVOL(4:4)= '1'
+            END IF
+          ELSE
+C           dummy second subscript for non-wdm
+            TMEMSB(2) = -999
+          END IF
+          GTCOD= 3
+        ELSE IF (TSBKCD .EQ. 4) THEN
+C         <a name="L8">schematic
+          READ (UCIBF,1040,ERR=40) SVOL,SVOLNO,CMFACT,TVOL,TVOLNO,
+     $          TOPFST,CTMSUB
+            GO TO 45
+ 40       CONTINUE
+C           error - cannot read ext sources line
+            CALL OMSTC (I80,UCIBF1)
+            SGRP= 24
+            CALL OMSG (MESSU,MSGFL,TCLU,SGRP,
+     M                 ECOUNT)
+ 45       CONTINUE
+          CALL <a href="RDMFAC">RDMFAC</a> (CMFACT,MESSU,MSGFL,TCLU,
+     M                 ECOUNT,
+     O                 MFACTR)
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CTMSUB(1),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 TMEMSB(1))
+          CALL <a href="../HRINGEUT/TAGVAL">TAGVAL</a> (CTMSUB(2),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 TMEMSB(2))
+          GTCOD= 4
+        END IF
+      ELSE
+C       <a name="L9">at end of block
+        GTCOD= -1
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+

@@ -1,0 +1,10 @@
+utwdmd.obj: cfbuff.inc cdrloc.inc fversn.inc
+utwdmf.obj: cfbuff.inc
+wdatm1.obj: cfbuff.inc cdrloc.inc
+wdmess.obj: cfbuff.inc cdrloc.inc
+msopen.obj: fmsgwd.inc
+msimpt.obj: pmxfld.inc
+ztwdmf.obj: cqrsp.inc  cscren.inc czhide.inc czoptn.inc \
+            zcntrl.inc cclbak.inc pmxrsl.inc \
+            pmxfld.inc cfbuff.inc
+adutil.obj: zcntrl.inc czglvl.inc pmxrsl.inc

@@ -1,0 +1,53 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+   <a href="../HIOOSUP/OSUP">OSUP</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   SCENMOD:SYNC_TIME
+<p>Code<pre>
+C
+C
+C
+      SUBROUTINE   HSPF_INI
+     I                      (DELT,OPST,OPND,OPNTAB,
+     O                       EXUPFG,EXTWID)
+C
+C     + + + PURPOSE + + +
+C     Passes start-up information from HSPF to integrated model driver
+C     program, and returns the number of intervals to run.  If a run
+C     has multiple INSPANs, the driver must be able to respond to
+C     multiple messages from this subroutine, each with its own DELT.
+C
+      USE SCENMOD, ONLY: SYNC_TIME
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DELT,OPST,OPND,OPNTAB(20,OPND),EXUPFG,EXTWID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DELT   - timestep of run, in minutes
+C     OPST   - first operation of this ingroup
+C     OPND   - last operation of this ingroup
+C     OPNTAB - table of operation information and keys
+C     EXUPFG - flag indicating whether updates are needed from
+C              external driver during the run
+C     EXTWID - maximum inspan width required by external driver
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     determine whether we need updates
+      CALL SYNC_TIME (DELT,OPST,OPND,OPNTAB,
+     O                EXUPFG,EXTWID)
+C
+      RETURN
+      END
+</pre>
+
+
+
+

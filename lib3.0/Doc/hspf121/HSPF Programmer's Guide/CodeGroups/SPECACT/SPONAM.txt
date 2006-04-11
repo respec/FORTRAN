@@ -1,0 +1,68 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPONAM
+     I                    (VNAM,VSUB,ADDR,TYPCOD,
+     O                     CVNAME)
+C
+C     + + + PURPOSE + + +
+C     build special action variable name string
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      VNAM(2),VSUB(3),ADDR,TYPCOD
+      CHARACTER*20 CVNAME
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      BLANK
+      CHARACTER*4  CVTYP(4),CBLK
+C
+C     + + + DATA INITIALZATIONS + + +
+      DATA CBLK/'    '/
+      DATA CVTYP/'unkn','INTG','REAL','DBLE'/
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (A4)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A4,' LOC:',I8)
+ 2010 FORMAT (A4,A2,3I4)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      READ (CBLK,1000) BLANK
+      IF (VNAM(1) .EQ. BLANK) THEN
+C       dont know variable name
+        WRITE (CVNAME,2000) CVTYP(TYPCOD),ADDR
+      ELSE IF (VSUB(1) .EQ. 0) THEN
+C       name of variable known and no subscripts
+        WRITE (CVNAME,2010) VNAM
+      ELSE IF (VSUB(2) .EQ. 0 .AND. VSUB(1) .NE. 0) THEN
+C       one subscript
+        WRITE (CVNAME,2010) VNAM,VSUB(1)
+      ELSE IF (VSUB(3) .EQ. 0 .AND. VSUB(2) .NE. 0) THEN
+C       two subscripts
+        WRITE (CVNAME,2010) VNAM,VSUB(1),VSUB(2)
+      ELSE
+C       three subscripts
+        WRITE (CVNAME,2010) VNAM,VSUB
+      END IF
+C
+      RETURN
+      END
+</pre>
+

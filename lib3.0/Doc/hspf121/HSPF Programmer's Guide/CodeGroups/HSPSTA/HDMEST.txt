@@ -1,0 +1,58 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   WMSGTT,
+   <a href="UPDWIN">UPDWIN</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   HDMEST
+     I                   (IOPT,MESSFL,SCLU,SGRP)
+C
+C     + + + PURPOSE + + +
+C     write message file text to window
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     IOPT,MESSFL,SCLU,SGRP
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IOPT   - position to output
+C     MESSFL - message file unit number
+C     SCLU   - screen cluster number
+C     SGRP   - screen message group
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     INITFG, OLEN, CONT
+      CHARACTER*1 TXT(72)
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    WMSGTT,UPDWIN
+C
+C     + + +  END SPECIFICATIONS + + +
+C
+      INITFG = 1
+      OLEN   = 72
+      CALL WMSGTT (MESSFL,SCLU,SGRP,INITFG,
+     M             OLEN,
+     O             TXT,CONT)
+C
+      CALL <a href="UPDWIN">UPDWIN</a>(IOPT,OLEN,TXT)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

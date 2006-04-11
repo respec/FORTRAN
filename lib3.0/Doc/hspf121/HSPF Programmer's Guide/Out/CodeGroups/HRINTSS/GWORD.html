@@ -1,0 +1,97 @@
+<html><head><title>GWORD</title></head>
+<body bgcolor="#ffffff">
+<a name="GWORD"><h3>GWORD</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4.html">CRIN4</a> 
+<p>Calls
+   OMSG,
+   RBUFF,
+   OMSTI
+<p>Code
+<pre>
+C
+C     3.5.8.01
+C
+      SUBROUTINE GWORD
+     I                 (ADDR,
+     O                  WORD)
+C     + + + PURPOSE + + +
+C     Get a word from the tss dataset at the given address.
+C     current buffer must be valid and available for reuse
+C     This subroutine is closely related to gtword.
+C      any bugs detected here may be present there.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   ADDR
+      REAL      WORD
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     ADDR   - ???
+C     WORD   - ???
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE   'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   SCLU,SGRP,RECNO
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   OMSG,RBUFF,OMSTI
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 216
+      IF (ADDR .GE. 1) GO TO 10
+C       program bug
+C       buffer underflow
+        SGRP = 130
+        CALL OMSTI (FILE)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+ 10   CONTINUE
+C
+      RECNO= (ADDR-1)/RECLT +FREC
+      IF (RECNO .LE. LREC) GO TO 20
+C       error
+C       attempt to obtain data beyond upper limit of dataset
+        SGRP = 131
+        CALL OMSTI (FILE)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+ 20   CONTINUE
+C
+      IF (RECNO .EQ. TRCNO) GO TO 30
+        CALL RBUFF (RECNO,RECLT,TSSFL,      TBUFF)
+        TRCNO  = RECNO
+        VOBUFF = (TRCNO-FREC)*RECLT
+        ENDBUF = VOBUFF +RECLT
+        BMTFLG = 0
+        BADR   = 1
+ 30   CONTINUE
+C
+C     get the word from the buffer
+      WORD = TBUFF(ADDR-VOBUFF)
+C
+      RETURN
+      END
+</pre>
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="GWORD">
+</Object>
+
+</body>
+</html>
+

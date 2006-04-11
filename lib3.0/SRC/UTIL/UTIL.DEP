@@ -1,0 +1,5 @@
+utchar.obj:     const.inc
+utnumb.obj:     const.inc  fversn.inc
+utscxx.obj:     color.inc
+utscot.obj:     color.inc
+utscpc.obj:     color.inc

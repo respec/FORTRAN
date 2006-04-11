@@ -1,0 +1,34 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = LF90
+PROGRAM   = wdimex.exe
+LDMAP     = wdimex.map
+
+LSLOC     = \lib3.0\src
+LSLOCH    = $(LSLOC)\hspf12
+FFLAGS    = -c -i ..\src\;$(LSLOCH)
+LDFLAGS   = -lisk -bind -pack # -bind -win32s
+
+LBLOC     = \lib3.0\lf90libs
+LIBS      = wdm.lib   \
+            adwdm.lib \
+            util.lib  \
+            aide.lib  \
+            hspf12b.lib  \
+            newaqt12.lib  \
+            hspnodss.lib
+
+OBJS      = wdimex.obj wdimez.obj
+
+VPATH = .
+
+$(PROGRAM):     $(OBJS) #$(LIBS)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+          !endif
+          $(LINKER) $(OBJS) -EXE $@ -MAP $(LDMAP) \
+                            -LIB $(LIBS) -LIBP $(LBLOC) $(LDFLAGS)
+          !if -e $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif

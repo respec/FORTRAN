@@ -1,0 +1,203 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI">HTSINSI</a>
+<p>Called By
+   <a href="../HSPFEC/TIMSER">TIMSER</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3">CRIN3</a>,
+   <a href="../../CommonBlocks/CRIN3C">CRIN3C</a>,
+   <a href="../../CommonBlocks/CMDUM">CMDUM</a>,
+   <a href="../../CommonBlocks/CMPAD">CMPAD</a>
+<p>Calls
+   <a href="OSVPRO">OSVPRO</a>,
+   <a href="../HIOOSV/GETOSV">GETOSV</a>,
+   <a href="../HIOOSV/PUTOSV">PUTOSV</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   OSVFPT
+     I                   (GRPST,GRPND)
+C
+C     + + + PURPOSE + + +
+C     Assign values to the flag-pointers for the time series in each
+C     operation in this exgrp
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   GRPND,GRPST
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     GRPST  - ???
+C     GRPND  - ???
+C
+C     + + + COMMON BLOCKS- INTERP3,OSV + + +
+      INCLUDE 'crin3.inc'
+      INCLUDE 'crin3c.inc'
+      INCLUDE 'cmosv.inc'
+      INCLUDE 'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   GRP,KEYND,KEYST,MESSU,OPND,OPST,PADVO,WIDTH,
+     $          WKND,WKST1,WKST2,WKST3,WKST4,I1,I2,I3,I4,I
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  OSVPRO,GETOSV,PUTOSV
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(//,' ',132('+'),
+     $       //,' TIMESERIES USED BY OPERATION',3X,A4,A2,2X,I3)
+ 2010 FORMAT (/,'   INPUT TIMESERIES')
+ 2020 FORMAT (/,'     FROM EXTERNAL SOURCES',
+     $        /,'     TYPE      #  INTERVAL   TRN STR    ',
+     $          '     MFACT    GROUP   MEMBER  S1  S2   ',/)
+ 2050 FORMAT (/,'     FROM OTHER OPERATIONS(NETWORK)',
+     $        /,'     TYPE      # GROUP   MEMBER  S1  S2 ',
+     $          '     MFACT    GROUP   MEMBER  S1  S2   ',/)
+ 2080 FORMAT (/,'   OUTPUT TIMESERIES')
+ 2090 FORMAT (/,'     TO OTHER OPERATIONS(NETWORK)',
+     $        /,'     GROUP   MEMBER  S1  S2        MFACT',
+     $          '  TYPE      # GROUP   MEMBER  S1  S2   ',/)
+ 2120 FORMAT (/,'     TO EXTERNAL TARGETS',
+     $        /,'     GROUP   MEMBER  S1  S2        MFACT',
+     $          '   TRN STR  TYPE      #  INTERVAL      ',/)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      MESSU = FILE(1)
+C
+C     ingrp loop
+      DO 200 GRP= GRPST,GRPND
+        OPST = GRPTAB(1,GRP)
+        OPND = GRPTAB(2,GRP)
+        PADVO= GRPTAB(4,GRP)
+        WIDTH= GRPTAB(5,GRP)
+C
+        DO 100 OPNO= OPST,OPND
+C         read in the osv for this operation
+          KEYST= OPNTAB(7,OPNO)
+          KEYND= OPNTAB(8,OPNO)
+          CALL GETOSV (KEYST,KEYND,MAXOSV,
+     O                 OSV)
+C
+          IF (OUTLEV .GT. 2) THEN
+C           timeseries used message
+            WRITE(MESSU,2000) (OPNTAB(I,OPNO),I=1,3)
+          END IF
+C
+C         process input time series
+          WKST1= OPNTAB(9,OPNO)
+          WKST2= OPNTAB(13,OPNO)
+C
+          IF (OUTLEV .GT. 2 .AND. (WKST1.GT.0 .OR. WKST2.GT.0)) THEN
+C           input timeseries
+            WRITE(MESSU,2010)
+          END IF
+C
+          IF (WKST1 .GT. 0) THEN
+C           from external sources
+            IF (OUTLEV .GT. 2) THEN
+C             message
+              WRITE(MESSU,2020)
+            END IF
+C
+            WKND = OPNTAB(10,OPNO)
+            I1   = 41
+            I2   = 44
+            I3   = 37
+            I4   = 1
+C
+            CALL OSVPRO (WKST1,WKND,I1,I2,I3,I4,PADVO,WIDTH,
+     I                   MESSU,OUTLEV,TRNKWL,MAXOPN,OPNTAB,MAXOSV,
+     M                   OSV)
+          END IF
+C
+C         process input time series, from network block
+          IF (WKST2 .GT. 0) THEN
+C           from other operations
+            IF (OUTLEV .GT. 2) THEN
+C             message
+              WRITE(MESSU,2050)
+            END IF
+C
+            WKND= OPNTAB(14,OPNO)
+            I1  = 41
+            I2  = 44
+            I3  = 37
+            I4  = 2
+C
+            CALL OSVPRO (WKST2,WKND,I1,I2,I3,I4,PADVO,WIDTH,
+     I                   MESSU,OUTLEV,TRNKWL,MAXOPN,OPNTAB,MAXOSV,
+     M                   OSV)
+          END IF
+C
+C         enhancement to check for missing required input timeseries
+C         will go here
+C
+C         process output time series
+          WKST3= OPNTAB(11,OPNO)
+          WKST4= OPNTAB(15,OPNO)
+C
+          IF (OUTLEV .GT. 2 .AND. (WKST3.GT.0 .OR. WKST4.GT.0)) THEN
+C           output timeseries
+            WRITE(MESSU,2080)
+          END IF
+C
+          IF (WKST3 .GT. 0) THEN
+C           from operations
+            IF (OUTLEV .GT. 2) THEN
+C             message
+              WRITE(MESSU,2090)
+            END IF
+C
+            WKND= OPNTAB(12,OPNO)
+            I1  = 15
+            I2  = 18
+            I3  = 11
+            I4  = 3
+C
+            CALL OSVPRO (WKST3,WKND,I1,I2,I3,I4,PADVO,WIDTH,
+     I                   MESSU,OUTLEV,TRNKWL,MAXOPN,OPNTAB,MAXOSV,
+     M                   OSV)
+          END IF
+C
+          IF (WKST4 .GT. 0) THEN
+C           from ext targets
+            IF (OUTLEV .GT. 2) THEN
+              WRITE(MESSU,2120)
+            END IF
+C
+C           process output time series from the ext targets block
+            WKND= OPNTAB(16,OPNO)
+            I1  = 15
+            I2  = 18
+            I3  = 11
+            I4  = 4
+C
+            CALL OSVPRO (WKST4,WKND,I1,I2,I3,I4,PADVO,WIDTH,
+     I                   MESSU,OUTLEV,TRNKWL,MAXOPN,OPNTAB,MAXOSV,
+     M                   OSV)
+          END IF
+C
+C         write the osv out to osvfl
+          CALL PUTOSV (KEYST,KEYND,MAXOSV,OSV)
+C
+ 100    CONTINUE
+ 200  CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+

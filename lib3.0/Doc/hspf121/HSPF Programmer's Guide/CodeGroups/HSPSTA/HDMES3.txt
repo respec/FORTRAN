@@ -1,0 +1,53 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="UPDWIN">UPDWIN</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   HDMES3
+     I                   (IOPT,TXT)
+C
+C     + + + PURPOSE + + +
+C     write text to window
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER          ::  IOPT
+      CHARACTER(LEN=*) ::  TXT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IOPT    - position to output
+C     TXT     - text to write
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      ILEN
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    LEN
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     UPDWIN
+C
+C     + + +  END SPECIFICATIONS + + +
+C
+      ILEN = LEN(TXT)
+      CALL <a href="UPDWIN">UPDWIN</a>(IOPT,ILEN,TXT)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

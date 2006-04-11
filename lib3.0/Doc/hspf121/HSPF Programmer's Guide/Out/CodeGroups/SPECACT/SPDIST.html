@@ -1,0 +1,94 @@
+<html><head><title>SPDIST</title></head>
+<body bgcolor="#ffffff">
+<a name="SPDIST"><h3>SPDIST</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT.html">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPDIST
+     I                    (MESSU,SPOUT,DSIND,DSPOS,
+     M                     RVAL,DEFFRC,
+     O                     CFRAC)
+C
+C     + + + PURPOSE + + +
+C     Handle distributed Special Action fractions.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MESSU,SPOUT,DSIND,DSPOS
+      REAL        RVAL,DEFFRC,CFRAC
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     SPOUT  - runtime Special Action output level
+C     DSIND  - index of current distribution
+C     DSPOS  - position in current distribution this interval
+C     RVAL   - action value for this interval
+C     DEFFRC - deferred fraction of action value
+C
+C     + + + COMMON BLOCKS + + +
+C     special action distributions
+      INCLUDE     'pspdst.inc'
+      INCLUDE     'cspdst.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      REAL         MVFRAC
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    FLOAT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     get current fraction
+      CFRAC= SPDFRC(DSPOS,DSIND)
+      IF (SPOUT .GE. 9) THEN
+C       echo distrib info
+        WRITE (MESSU,*) 'use distribut',DSIND,DSPOS,CFRAC,RVAL
+      END IF
+C
+      IF (DEFFRC .GT. 0.0) THEN
+C       adjust cfrac if any deferred fraction
+        IF (SPDDFG(DSIND) .EQ. 2) THEN
+C         shift
+          MVFRAC= DEFFRC / (FLOAT (SPDCNT(DSIND)- DSPOS+ 1))
+          CFRAC= CFRAC+ MVFRAC
+          DEFFRC= DEFFRC- MVFRAC
+        ELSE IF (SPDDFG(DSIND) .EQ. 3) THEN
+C         accum
+          CFRAC= CFRAC+ DEFFRC
+          DEFFRC= 0.0
+        END IF
+      END IF
+C
+C     adjust value
+      RVAL= RVAL*CFRAC
+      IF (SPOUT .GE. 9) THEN
+C       echo new value
+        WRITE (MESSU,*) 'adjusted RVAL,CFRAC',RVAL,CFRAC
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="SPDIST">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,193 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  Message file clusters used by code group PRWFIL.F77
+END COMMENT
+CLU           25    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  PROWMS
+  END LABEL
+  DATA   CLU    25
+#GROUP    1  TYPE MENU
+$WINDOW File (&F)
+$TITLE Select a File option.
+$DEFAULT   1
+$LENGTH    9
+$WIDTH    78
+$COLENGTH  7
+$OPTION Open
+_DESC - an existing WDM file
+$OPTION Close
+_DESC - a WDM file
+$OPTION Build
+_DESC - and initialize a new WDM file
+$OPTION Summarize
+_DESC - WDM file contents
+$OPTION Return
+_DESC - one level up
+$HELP
+See the ANNIE user's manual for more information.
+#GROUP    2  TYPE PRM1
+$WINDOW Build (&FB)
+$SCREEN
+
+  Enter the name for your new WDM file:
+  @WDMFILE........................................................
+$FIELD @WDMFILE
+_TYPE    FILE
+_VALID  STATUS: NEW, ACCESS: DIRECT, RECL: WDM
+#GROUP    3  TYPE PRM1
+$WINDOW Open (&FO)
+$SCREEN
+
+  Enter the name of an existing WDM file:
+  @WDMFILE........................................................
+$FIELD @WDMFILE
+_TYPE    FILE
+_VALID  STATUS: OLD, ACCESS: DIRECT, RECL: WDM
+#GROUP    4  TYPE TEXT
+$TEXT
+Error opening specified file.  Error code: &
+#GROUP    5  TYPE TEXT
+$TEXT
+File specified is blank.
+#GROUP    6  TYPE MENU
+$TITLE Do you want to specify another file name?
+$DEFAULT  1
+$LENGTH   4
+$OPTION Yes
+_DESC - return to the previous screen and enter another file name
+$OPTION No
+_DESC - return to the File screen
+#GROUP    7  TYPE TEXT
+$WINDOW Open (&FO) Problem
+$TEXT
+WDM file &
+is already open for use.
+
+Only one WDM file may be used at a time.
+
+If you want to open a different WDM file,
+first select the Close option from the File screen,
+and then select the Open option.
+#GROUP    8  TYPE TEXT
+$WINDOW Close (&FC) Problem
+$TEXT
+There is no WDM file open to be closed.
+
+To open a WDM file, select the Open option from the
+File screen and provide the name of an existing WDM file,
+     OR
+Select the Build option from the File screen
+and enter the name of a WDM file to build.
+#GROUP    9  TYPE TEXT
+$WINDOW Build (&FB) Problem
+$TEXT
+WDM file &
+is already open for use.
+
+Only one WDM file may be used at a time,
+thus a WDM file may not be built right now.
+
+If you want to build a new WDM file,
+first select the Close option from the File screen,
+and then select the Build option.
+#GROUP   10  TYPE TEXT
+$WINDOW Summarize (&FS) Problem
+$TEXT
+There is no WDM file open to be summarized.
+
+To open a WDM file, select the Open option from the
+File screen and provide the name of an existing WDM file,
+     OR
+Select the Build option from the File screen
+and enter the name of a WDM file to build.
+#GROUP   11  TYPE TEXT
+$WINDOW Build (&FB)
+$TEXT
+Your WDM file has been built and is ready for use.
+#GROUP   12  TYPE TEXT
+$WINDOW Open (&FO)
+$TEXT
+WDM file &
+has been opened and is ready for use.
+#GROUP   13  TYPE TEXT
+$WINDOW Close (&FC)
+$TEXT
+WDM file &
+has been closed.
+#GROUP   14  TYPE TEXT
+$WINDOW Close (&FC) Problem
+$TEXT
+Unable to successfully close
+WDM file &
+
+Return code = &
+#GROUP   15  TYPE TEXT
+$WINDOW Close (&FC) Problem
+$TEXT
+There is no WDM file open to be closed.
+
+To open a WDM file, select the Open option from the
+File screen and provide the name of an existing WDM file.
+#GROUP   16  TYPE TEXT
+$WINDOW Summarize (&FS) Problem
+$TEXT
+There is no WDM file open to be summarized.
+
+To open a WDM file, select the Open option from the
+File screen and provide the name of an existing WDM file.
+#GROUP   21  TYPE TEXT
+$WINDOW Summary (&FS)
+$TEXT
+    General Summary
+#GROUP   22  TYPE TEXT
+$TEXT
+    WDM file
+#GROUP   23  TYPE TEXT
+$TEXT
+    contains & records.
+#GROUP   24  TYPE TEXT
+$TEXT
+    Dataset Type        Count
+#GROUP   25  TYPE TEXT
+$TEXT
+    No datasets present.
+#GROUP   26  TYPE TEXT
+$TEXT
+    Minimum dataset number is &.
+#GROUP   27  TYPE TEXT
+$TEXT
+    Maximum dataset number is &.
+#GROUP   28  TYPE TEXT
+$TEXT
+    ------------        -----
+#GROUP   29  TYPE TEXT
+$TEXT
+     TOTAL
+#GROUP   31  TYPE TEXT
+$TEXT
+TIMESERIES  TABLE       SCHEMATIC   PROJECT     VECTOR      RASTOR      SPACE-TIME  ATTRIBUTE   MESSAGE
+#GROUP   32  TYPE TEXT
+$TEXT
+ARC NODE
+#GROUP   33  TYPE MENU
+$WINDOW File (&F)
+$TITLE Select a File option.
+$DEFAULT   1
+$LENGTH    9
+$WIDTH    78
+$COLENGTH  7
+$OPTION Open
+_DESC - an existing WDM file
+$OPTION Close
+_DESC - a WDM file
+$OPTION Summarize
+_DESC - WDM file contents
+$OPTION Return
+_DESC - one level up
+$HELP
+See the ANNIE user's manual for more information.
+  END DATA
+END CLU

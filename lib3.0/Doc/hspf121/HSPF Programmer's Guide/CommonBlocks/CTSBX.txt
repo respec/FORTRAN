@@ -1,0 +1,44 @@
+<table width="100%" border="1">
+<caption>CTSBX portion of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Relative Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>TBUFF<td>R4<td>Time series dataset label and buffer
+</tbody></table>
+<p>This Include File is used in version <a href="GETCOM-PUTCOM">GETCOM-PUTCOM</a> of SCRTCH.  It always follows <a href="CTSBU">CTSBU</a>.
+
+<p>The offset to be used to calculate the absolute address from the relative address given in the table is 375 words.
+
+<p>Referenced by 
+   <a href="../CodeGroups/HRUNTSGP/TSGET">TSGET</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSPUT">TSPUT</a>,
+   <a href="../CodeGroups/HRUNTSGQ/SEQINP">SEQINP</a>,
+   <a href="../CodeGroups/HRUNTSGT/GETTSS">GETTSS</a>,
+   <a href="../CodeGroups/HRUNTSGW/GETWDM">GETWDM</a>,
+   <a href="../CodeGroups/HRUNTSPT/PUTTSS">PUTTSS</a>,
+   <a href="../CodeGroups/HRUNTSPW/PUTWDM">PUTWDM</a>
+<p>Variable Usage
+
+<p>Code
+<pre>
+C    FROM CTSBX.COM
+C    TBUFF SECTION OF TSS OSV:
+      COMMON/SCRTCH/ TBUFF
+      REAL           TBUFF(545)
+C    END BYTE 3680
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+

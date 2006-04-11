@@ -1,0 +1,173 @@
+SI        22000
+CO   CRINTP
+HE   run interpreter common
+PF   pmxopn.inc
+PF   pmxttb.inc
+PF   pmxrow.inc
+PM   MAXOPN  MO       500   1
+PM   MAXTTB  MT       100   2
+PM   MXROW   MR      4000   3
+SE   CRIN3.INC
+HE 1   third version
+VA   FILE    15   0   0   0 I P                         12
+VA   FILET   15   0   0   0 I P                         21
+VA   DUMT1    0   0   0   0 I P                         11
+VA   DUMT2    0   0   0   0 I P                         11
+VA   DUMT3    0   0   0   0 I P                         11
+VA   WCOUNT  10   0   0   0 I P                         11
+VA   ECOUNT   0   0   0   0 I P                         11
+VA   OUTLEV   0   0   0   0 I P                         11
+VA   RESMFG   0   0   0   0 I P                         11
+VA   NIVLS    0   0   0   0 I P                         11
+VA   IVLLIB  20   0   0   0 I P                         11
+VA   NXGRPS   0   0   0   0 I P                         11
+VA   EXGTAB   5  10   0   0 I P                         11
+VA   NGRPS    0   0   0   0 I P                         11
+VA   GRPTAB   5  10   0   0 I P                         11
+VA   NOPNS    0   0   0   0 I P                         11
+VA   OPNO     0   0   0   0 I P                         11
+VA   OPNTAB  20  MO   0   0 I P                         11
+VA   DUMS     2   0   0   0 I P                         12 
+VA   SVOL     2   0   0   0 I P                         21 
+VA   SVOLNO   0   0   0   0 I P                         11 
+VA   SNUM     0   0   0   0 I P                         11 
+VA   SDELT    0   0   0   0 I P                         11 
+VA   SUNITS   0   0   0   0 I P                         11 
+VA   DUMG1    2   0   0   0 I P                         12 
+VA   SGRPN    2   0   0   0 I P                         21 
+VA   SAMDCD   0   0   0   0 I P                         11 
+VA   SGAPCD   0   0   0   0 I P                         11 
+VA   SFRC     0   0   0   0 I P                         11 
+VA   SNTS     0   0   0   0 I P                         11 
+VA   STABL   10  MT   0   0 I P                         11 
+EQ   STABLR  10  MT   0   0 R P STABL                   11 
+VA   DUMT     2   0   0   0 I P                         12 
+VA   TVOL     2   0   0   0 I P                         21 
+VA   TVOLNO   0   0   0   0 I P                         11 
+VA   TNUM     0   0   0   0 I P                         11 
+VA   TDELT    0   0   0   0 I P                         11 
+VA   TUNITS   0   0   0   0 I P                         11 
+VA   DUMG2    2   0   0   0 I P                         12 
+VA   TGRPN    2   0   0   0 I P                         21 
+VA   TAMDCD   0   0   0   0 I P                         11 
+VA   TGAPCD   0   0   0   0 I P                         11 
+VA   TFRC     0   0   0   0 I P                         11 
+VA   TNTS     0   0   0   0 I P                         11 
+VA   TTABL   10  MT   0   0 I P                         11 
+EQ   TTABLR  10  MT   0   0 R P TTABL                   11 
+VA   DUMK    23   0   0   0 I P                         11 
+VA   FMTINF   2   6   0   0 I P                         11 
+VA   TDFREC   0   0   0   0 I P                         11 
+VA   TDDS     0   0   0   0 I P                         11 
+VA   TOTDS    0   0   0   0 I P                         11 
+VA   RECLT    0   0   0   0 I P                         11 
+VA   TDSIZE   0   0   0   0 I P                         11 
+VA   DUML     8   0   0   0 I P                         11 
+VA   TRNTAB   9   3   3   0 I P                         11 
+VA   AVFG    MR   0   0   0 I P                         11 
+VA   RELFG   MR   0   0   0 I P                         11 
+
+SE   CRIN4.INC
+HE 2   fourth version
+VA   DUMTSR 260   0   0   0 I D                         12
+VA   AMODE    0   0   0   0 I P                         21
+EQ   INSTR  200   0   0   0 I P AMODE                   21
+VA   NCOMPS   0   0   0   0 I P                         21
+VA   VOLCOD   0   0   0   0 I P                         21
+VA   FILE     0   0   0   0 I P                         21
+VA   DELTAT   0   0   0   0 I P                         21
+VA   FREC     0   0   0   0 I P                         21
+EQ   CTYPI    2   0   0   0 I P FREC                    21
+VA   LREC     0   0   0   0 I P                         21
+VA   COMPR    0   0   0   0 I P                         21
+EQ   QLFG     0   0   0   0 I P COMPR                   21
+VA   TOTCOM   0   0   0   0 I P                         21
+VA   FMTCLS   0   0   0   0 I P                         21
+VA   BEGYR    0   0   0   0 I P                         21
+VA   TENDR    0   0   0   0 I P                         21
+VA   LGAP     0   0   0   0 I P                         21
+VA   TGAP     0   0   0   0 I P                         21
+VA   GAPVAL   0   0   0   0 R P                         21
+VA   LTRNFG   0   0   0   0 I P                         21
+VA   VOTSB    0   0   0   0 I P                         21
+EQ   CRDSEQ   3   0   0   0 I P VOTSB                   21
+VA   VOLFRM   0   0   0   0 I P                         21
+VA   VOTFRM   0   0   0   0 I P                         21
+VA   BCWBTI   0   0   0   0 I P                         21
+EQ   BCW      0   0   0   0 I P BCWBTI                  21
+VA   BCWNOV   0   0   0   0 I P                         21
+VA   INPSTR   0   0   0   0 I P                         21
+VA   ENDF     0   0   0   0 I P                         21
+VA   YEAR     0   0   0   0 I P                         21
+VA   MO       0   0   0   0 I P                         21
+VA   DAY      0   0   0   0 I P                         21
+VA   LPYRFG   0   0   0   0 I P                         21
+EQ   AGGRFG   0   0   0   0 I P LPYRFG                  21
+VA   NREM     0   0   0   0 I P                         21
+VA   TYREND   0   0   0   0 I P                         21
+VA   FRMTIM   0   0   0   0 I P                         21
+VA   TZERO    0   0   0   0 I P                         21
+EQ   OLDOFF   0   0   0   0 I P TZERO                   21
+VA   TLAST    0   0   0   0 I P                         21
+VA   UCNT     0   0   0   0 I P                         21
+EQ   CRDNO    0   0   0   0 I P UCNT                    21
+VA   ZCNT     0   0   0   0 I P                         21
+VA   VOPADR  20   0   0   0 I P                         21
+VA   OFFSET  20   0   0   0 I P                         21
+VA   STKIND  20   0   0   0 I P                         21
+VA   STTRAN  20   0   0   0 I P                         21
+VA   INMODE  20   0   0   0 I P                         21
+VA   A       20   0   0   0 R P                         21
+VA   B       20   0   0   0 R P                         21
+VA   PVAR    20   0   0   0 R P                         21
+VA   INPDAT   6   0   0   0 I P                         21
+VA   MESSU    0   0   0   0 I P                         21
+VA   UCIFL    0   0   0   0 I P                         21
+VA   TSGETF   0   0   0   0 I P                         21
+VA   TSPUTF   0   0   0   0 I P                         21
+VA   WORKFL   0   0   0   0 I P                         21
+VA   MSGFL    0   0   0   0 I P                         21
+VA   RATIO    0   0   0   0 I P                         21
+VA   RRATIO   0   0   0   0 R P                         21
+VA   XVAR    20   0   0   0 R P                         21
+VA   WS      22   0   0   0 R P                         21
+VA   TSSFL    0   0   0   0 I P                         21
+VA   BADR     0   0   0   0 I P                         21
+VA   BLEN     0   0   0   0 I P                         21
+VA   CWF      0   0   0   0 I P                         21
+VA   FORFLG   0   0   0   0 I P                         21
+VA   BMTFLG   0   0   0   0 I P                         21
+VA   EXTF     0   0   0   0 I P                         21
+VA   TRCNO    0   0   0   0 I P                         21
+VA   VOBUFF   0   0   0   0 I P                         21
+VA   ENDBUF   0   0   0   0 I P                         21
+VA   DSDSNO   0   0   0   0 I P                         11 
+EQ   DSLABL 256   0   0   0 R P DSDSNO                  11 
+EQ   TBUFF  545   0   0   0 R P DSDSNO                  11 
+VA   LBLSZ    0   0   0   0 I P                         11 
+VA   DSFREC   0   0   0   0 I P                         11 
+VA   DSLREC   0   0   0   0 I P                         11 
+VA   VOFRWD   0   0   0   0 I P                         11 
+VA   VOYEAR   0   0   0   0 I P                         11 
+VA   LASTYR   0   0   0   0 I P                         11 
+VA   DSSEC    0   0   0   0 I P                         11 
+VA   BASEYR   0   0   0   0 I P                         11 
+VA   VOKEY    0   0   0   0 I P                         11 
+VA   KEYS   100   0   0   0 I P                         11 
+VA   NAME     2   0   0   0 I P                         11 
+VA   UNITS    0   0   0   0 I P                         11 
+VA   DSCMPR   0   0   0   0 I P                         11 
+VA   YEAROR   0   0   0   0 I P                         11 
+VA   OBSTIM   0   0   0   0 I P                         11 
+VA   STA      2   0   0   0 I P                         11 
+VA   LOCATN  10   0   0   0 I P                         11 
+VA   GAPCOD   0   0   0   0 I P                         11 
+VA   DSDELT   0   0   0   0 I P                         11 
+VA   NMEMS    0   0   0   0 I P                         11 
+VA   IMEMNM   2  20   0   0 I P                         11 
+VA   MSUB    20   0   0   0 I P                         11 
+VA   MKIND   20   0   0   0 I P                         11 
+VA   FMT     20   0   0   0 I P                         11 
+VA   DUMLAB 314   0   0   0 I P                         11
+
+WR

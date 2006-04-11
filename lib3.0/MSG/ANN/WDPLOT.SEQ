@@ -1,0 +1,2124 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  Message file cluster for ANNIE interactive plotting (wdplot.f)
+END COMMENT
+CLU           93    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  WDPLOT
+  END LABEL
+  DATA   CLU    93
+#GROUP    1  TYPE MENU
+$WINDOW Graphics (G)
+$SCREEN
+ 
+  Select a Graphics option:
+ 
+      @Input
+      @Plot
+      @Modify
+ 
+      @Return
+$DEFAULT 1
+$LENGTH  6
+$OPTION Input
+_DESC - specify source of data and type of plot
+$OPTION Modify
+_DESC - make detailed modifications to plot specifications
+$OPTION Plot
+_DESC - make the plot
+$OPTION Return
+_DESC - to the Opening screen
+$HELP
+Only 2 types of plots can be produced, x-y and time-series.  The x-y plot
+option can use up to 10 data sets.  The time series plot can use up to 5
+data sets.  The time-series plot can use both the left and right y-axes
+plus an optional auxiliary axis above the main axis. The auxiliary axis is
+usually used for rainfall when streamflow is plotted.  Immediately before
+or after plotting, you may select the Modify option to change the
+axes titles or labels, or the plot symbols, line types or color.  You may
+also add additional text to the plot and change the scaling.
+#GROUP    2  TYPE TEXT
+$WINDOW Modify (GM) problem
+$TEXT
+  Identify the Input data before modifying the plot specifications.
+ 
+  Select "Input" from the Graphics window.
+#GROUP    3  TYPE TEXT
+$WINDOW Plot (GP) Problem
+$TEXT
+Device not opened, so plot cannot be made.
+Check ERROR.FIL file for the problem.
+#GROUP    4  TYPE TEXT
+$WINDOW Plot (GP) problem
+$TEXT
+  Identify the Input data before selecting Plot.
+ 
+  Select "Input" from the Graphics window.
+#GROUP    8  TYPE MENU
+$WINDOW Input (GI)
+$SCREEN
+ 
+  Select an Input option:
+ 
+      @Time
+      @X-Y
+      @Column
+      @Attributes
+ 
+      @Return
+$DEFAULT 1
+$LENGTH 10
+$OPTION Time
+_DESC - time-series plot of one or more data sets
+$OPTION X-Y
+_DESC - x-y plot of pairs of time-series data sets
+$OPTION Column
+_DESC - x-y plot of pairs of columns in table data sets
+$OPTION Attributes
+_DESC - x-y plot of pairs of attributes of many data sets
+$OPTION Return
+_DESC - to the Graphics screen
+#GROUP    9  TYPE TEXT
+$WINDOW Column (GIC)
+$TEXT
+The Column option is not currently implemented.
+#GROUP   12  TYPE PRM1
+$WINDOW Time (GIT) data sets
+$SCREEN
+ 
+       Enter data-set numbers for up to 8 time-series curves:
+
+                    Data-set                    Data-set
+           Curve     Number            Curve     Number
+           -----    --------           -----    --------
+             1       @DSN1.              5       @DSN5.
+             2       @DSN2.              6       @DSN6.
+             3       @DSN3.              7       @DSN7.
+             4       @DSN4.              8       @DSN8.
+$FIELD @DSN1
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$FIELD @DSN2
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$FIELD @DSN3
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$FIELD @DSN4
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$FIELD @DSN5
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$FIELD @DSN6
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$FIELD @DSN7
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$FIELD @DSN8
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0
+$HELP
+Time series data from up to 8 data sets may be plotted.  Time is on the
+x-axis.  The time series may be plotted against the left or right y-axes
+or on a small auxiliary axis at the top of the plot.  The auxiliary axis
+is usually used for precipitation.
+#GROUP   13  TYPE PRM1
+$WINDOW X-Y (GIX) 1 of 2
+$SCREEN
+     Enter data-set numbers for up to 8 pairs of time-series:
+ 
+             Data-set Numbers                 Data-set Numbers
+             ----------------                 ----------------
+     Curve   Y-axis    X-axis         Curve   Y-axis    X-axis
+     -----   ------    ------         -----   ------    ------
+       1     @PRM1.    @PRM2.           5     @PRM9.    @PRMA.
+       2     @PRM3.    @PRM4.           6     @PRMB.    @PRMC.
+       3     @PRM5.    @PRM6.           7     @PRMD.    @PRME.
+       4     @PRM7.    @PRM8.           8     @PRMF.    @PRMG.
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRMD
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRME
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRMF
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$FIELD @PRMG
+_TYPE INTEGER
+_RANGE 0:32000
+_DEFAULT 0
+$HELP
+Time series data from up to 8 pairs of time series data sets may be
+plotted.  You identify which of each pair is plotted against the x-axis
+and which is plotted against the y-axis.
+#GROUP   14  TYPE PRM2
+$WINDOW Attributes (GIA)
+$HEADER
+                               Optional attribute combinations
+            Attributes        ---------------------------------
+        ------------------        Y-axis            X-axis
+ Curve   Y-axis    X-axis     +-/*  Attribute   +-/*  Attribute
+ -----  --------  --------    ----  ---------   ----  ---------
+$FIELD FIELD1
+_WIDTH   1
+_COLUMN  4
+_PROTECT PROTECTED
+_TYPE INTEGER
+_RANGE 1 : 5
+$FIELD FIELD2
+_WIDTH   6
+_COLUMN 10
+_TYPE CHARACTER
+$FIELD FIELD3
+_WIDTH   6
+_COLUMN 20
+_TYPE CHARACTER
+$FIELD FIELD4
+_WIDTH   1
+_COLUMN 32
+_TYPE CHARACTER
+_VALID +,-,/,*
+_DEFAULT +
+_HELP
+Arithmetic operator.  Add, subtract, divide or multiply.
+$FIELD FIELD5
+_WIDTH   6
+_COLUMN 38
+_TYPE CHARACTER
+_HELP
+Name of secondary attribute for the Y-axis.  See Help information for the
+main attributes (fields 2 and 3) for a list of valid attribute names.
+$FIELD FIELD6
+_WIDTH   1
+_COLUMN 50
+_TYPE CHARCTER
+_VALID +,-,/,*
+_DEFAULT +
+_HELP
+Arithmetic operator.  Add, subtract, divide or multiply.
+$FIELD FIELD7
+_WIDTH   6
+_COLUMN 56
+_TYPE CHARACTER
+_HELP
+Name of secondary attribute for the X-axis.  See Help information for the
+main attributes (fields 2 and 3) for a list of valid attribute names.
+$HELP
+Name of attribute which will go on this axis for this curve. Valid attributes:
+
+AZMUTH, BASEQ, BLNGTH, BRANCH, BSLOPE, CHEAT, COCODE, COMPFG, CONTDA, DAREA,
+DATE, DATUM, DCODE, DEPH25, DEPTH, DSCODE, EL1085, EL5000, EL6000, ELEV, END,
+FOREST, FROST, GCODE, GLACER, H01002, H01005, H01010, H01020, H01025, H01050,
+H01100, H03002, H03005, H03010, H03020, H03025, H03050, H03100, H07002,
+H07005, H07010, H07020, H07025, H07050, H07100, H15002, H15005, H15010,
+H15020, H15025, H15050, H15100, H30002, H30005, H30010, H30020, H30025,
+H30050, H30100, HUCODE, I24-2., I24010, I24025, I24050, I24100, ISTAID,
+J407BQ, J407BY, J407EY, J407GS, J407HO, J407HP, J407LO, J407NH, J407SE,
+J407SO, J407UR, JANAVE, JANMIN, JULAVE, JULMAX, KENPLV, KENSLP, KENTAU,
+L01002, L01010, L01020, L03002, L03010, L03020, L07002, L07005, L07010,
+L07020, L14002, L14010, L14020, L30002, L30010, L30020, L90002, L90010,
+L90020, LAKE, LATCTR, LATDEG, LATDMS, LCODE, LENGTH, LKEVAP, LMOM1, LMOM2,
+LMOM3, LMOM4, LMOM5, LNGCTR, LNGDEG, LNGDMS, LOESS, LQU010, LQU020, LQU050,
+LQU100, LQU200, LQU500, LQU800, LQU900, LQU950, LQU980, LQU990, LQU995,
+LQU998, MARMAX, MAXVAL, MEANND, MEANPK, MEANVL, MINVAL, NONZRO, NUMZRO, P1.25,
+P10., P100., P2., P200., P25., P5., P50., P500., PARMCD, PCLT01, PCLT02,
+PCLT05, PCLT10, PCLT20, PCLT25, PCLT50, PCLT75, PCLT80, PCLT90, PCLT95,
+PCLT98, PCLT99, PNEVAP, PRCAPR, PRCAUG, PRCDEC, PRCFEB, PRCJAN, PRCJUL,
+PRCJUN, PRCMAR, PRCMAY, PRCNOV, PRCOCT, PRCSEP, PRECIP, QANN, QAPR, QAUG,
+QDEC, QEX10P, QEX25P, QEX50P, QEX70P, QEX75P, QEX90P, QEX95P, QFEB, QJAN,
+QJUL, QJUN, QMAR, QMAY, QNOV, QOCT, QSDANN, QSDAPR, QSDAUG, QSDDEC, QSDFEB,
+QSDJAN, QSDJUL, QSDJUN, QSDMAR, QSDMAY, QSDNOV, QSDOCT, QSDSEP, QSEP, RFOOT,
+RMILE, RWFLAG, SDND, SDPK, SEASBG, SEASND, SKEWCF, SKWND, SKWPK, SLOPE, SN002,
+SN010, SN025, SN100, SNOAPR, SNOFAL, SNOMAR, SOILIN, START, STATCD, STDDEV,
+STDIMX, STDIMY, STDIMZ, STFIPS, STORAG, SUBHUC, TCODE, TGROUP, TMTOPK, TMZONE,
+TOLR, TSBDY, TSBHR, TSBMO, TSBYR, TSFILL, TSFORM, TSPREC, TSPTAD, TSSTEP,
+UBC024, UBC025, UBC026, UBC027, UBC028, UBC029, UBC030, UBC031, UBC038,
+UBC039, UBC040, UBC066, UBC067, UBC068, UBC069, UBC073, UBC074, UBC166,
+UBC167, UBC169, UBC170, UBC182, UBC183, UBC184, UBC185, UBC186, UBC187,
+UBC188, UBC189, UBC190, UBC191, UBC192, UBC193, UBC194, UBC195, UBC200,
+VALLGH, VBTIME, VCODE, VLCODE, WELLDP, WEMAR2, WRCMN, WRCSD, WRCSKW, XSECLC,
+YRSDAY, YRSHPK, YRSLOW, YRSPK
+#GROUP   18  TYPE TEXT
+$WINDOW Input (GI) Problem
+$TEXT
+ Problem retrieving data from the data set(s).
+#GROUP   19  TYPE TEXT
+$TEXT
+Retrieving input data to be plotted from WDM file.
+#GROUP   20  TYPE TEXT
+$WINDOW Attributes (GIA)
+$TEXT
+Currently, you have specified & valid curve(s) to plot.
+#GROUP   21  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Currently, you have not specified any valid curves to plot.
+You will need to do so before any plotting can be done.
+#GROUP   25  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Only one attribute has been specified for curve &.
+A pair of attributes is necessary to create an x-y plot.
+#GROUP   31  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Attribute & and/or attribute & does not exist
+on any of the data sets specified.
+#GROUP   32  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Attribute & does not exist on any of the data sets specified.
+#GROUP   35  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+No valid arithmetic combinations of attribute & with attribute &
+on the y-axis and/or combinations of attribute & with attribute &
+on the x-axis can be plotted due to non-existent values of both attributes
+on the data sets specified.
+#GROUP   36  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+No valid arithmetic combinations of attribute & with attribute &
+can be plotted due to non-existent values of both attributes on the data sets
+specified.
+#GROUP   37  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Values for attribute & and/or & not found on & data set(s).
+The plot of curve & will only include the good values found for the attribute.
+#GROUP   38  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Values for attribute & not found on & data set(s).
+The plot of curve & will only include the good values found for the attribute.
+#GROUP   39  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Curve & cannot be plotted.
+#GROUP   40  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Input value & for curve & is not known as a valid attribute.
+ 
+#GROUP   41  TYPE TEXT
+$WINDOW Attributes (GIA) Problem
+$TEXT
+Attribute & for curve & cannot be plotted.
+All attributes must be of type real or integer.
+ 
+#GROUP   45  TYPE TEXT
+$WINDOW & (GI&) Problem
+$TEXT
+ *** Data-set number & does not exist.
+#GROUP   46  TYPE TEXT
+$WINDOW & (GI&) Problem
+$TEXT
+ *** Data-set number & is not a time-series data set.
+#GROUP   47  TYPE TEXT
+$WINDOW & (GI&) Problem
+$TEXT
+ *** A pair of data sets is required for curve &.
+#GROUP   48  TYPE MENU
+$WINDOW & (GI&) Action
+$SCREEN
+ 
+ What action do you want to take?
+    @Select
+    @Return
+$DEFAULT  1
+$LENGTH   7
+$OPTION Select
+_DESC -  different data sets
+_HELP
+ Return to the data set select screen to modify the data sets selected.
+$OPTION Return
+_DESC - to Input menu
+_HELP
+ Return to the Input menu to:
+ 
+    o  select the type of plot and new data sets
+    o  return to the Graphics menu
+#GROUP   49  TYPE MENU
+$WINDOW & (GI&) Action
+$SCREEN
+ 
+ What action do you want to take?
+    @Continue
+    @Select
+    @Return
+$DEFAULT  1
+$LENGTH   9
+$OPTION Select
+_DESC -  different data sets
+_HELP
+ Return to the data set select screen to modify the data sets selected.
+$OPTION Return
+_DESC - to input menu
+_HELP
+ Return to the Input menu to:
+ 
+    o  select the type of plot and new data sets
+    o  return to the Graphics menu
+$OPTION Continue
+_DESC - with the valid selected data sets
+_HELP
+ Continue with the plotting options, and plot the data from the
+ valid data sets.
+#GROUP   50  TYPE TEXT
+$WINDOW X-Y (GIX) Problem
+$TEXT
+ *** No common time period for data sets & and &.
+#GROUP   51  TYPE TEXT
+$WINDOW X-Y (GIX) Problem
+$TEXT
+ *** Time steps and units not compatible for data sets & and &.
+#GROUP   52  TYPE TEXT
+$WINDOW X-Y (GIX) Problem
+$TEXT
+ *** Unknown problem with data sets & and &.
+#GROUP   53  TYPE TEXT
+$WINDOW X-Y (GIX) Problem
+$TEXT
+ *** No time series data in at least one of these data sets: & and &.
+#GROUP   54  TYPE TEXT
+$WINDOW X-Y (GIX) Problem
+$TEXT
+ *** At least one of these data sets is not a time series: & and &.
+#GROUP   55  TYPE TEXT
+$WINDOW X-Y (GIX) Problem
+$TEXT
+ *** Too many points to plot, current is &, maximum is &.
+     Shorten the time step or the time period.
+#GROUP   56  TYPE TEXT
+$WINDOW X-Y (GIX) Problem
+$TEXT
+ *** Too many points to plot, current is &, maximum is &.
+     Shorten the time step or the time period or reduce number of curves.
+#GROUP   57  TYPE MENU
+$WINDOW & (GI&) Problem
+$SCREEN
+ 
+ How do you want to handle this problem?
+    @Change
+    @Select
+    @Return
+$DEFAULT  3
+$LENGTH   7
+$OPTION Select
+_DESC - different data sets
+_HELP
+ To reduce the number of points for the selected curve(s) by:
+ 
+    o  selecting fewer data sets
+    o  selecting different data sets
+$OPTION Return
+_DESC - to input menu
+_HELP
+ Return to the Input menu to:
+ 
+    o  select the type of plot and new data sets
+    o  return to the Graphics menu
+$OPTION Change
+_DESC - time period or time step
+_HELP
+ To reduce the number of points for the selected curve(s) by:
+ 
+    o  shortening the time period to be plotted
+    o  lengthening the plotting time step for one or more of the curves
+#GROUP   59  TYPE PRM2
+$WINDOW X-Y (GIX) 2 of 2
+$HEADER
+Modify specifications for each curve:
+      <--- begin date -->  <--- end date ---->               <transformation>
+curve year mo dy hr mn sc  year mo dy hr mn sc  <time step>  y-axis   x-axis
+$FIELD CRV
+_TYPE    INTEGER
+_WIDTH   3
+_COLUMN  1
+_PROTECT PROTECT
+_RANGE   1:-999
+_DEFAULT 1
+$FIELD YRI
+_TYPE    INTEGER
+_WIDTH   4
+_COLUMN  7
+_PROTECT CORRECT
+_RANGE   1:9999
+_DEFAULT 1900
+$FIELD MOI
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  12
+_PROTECT CORRECT
+_RANGE   1:12
+_DEFAULT 1
+$FIELD DYI
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  15
+_PROTECT CORRECT
+_RANGE   1:31
+_DEFAULT 1
+$FIELD HRI
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  18
+_PROTECT CORRECT
+_RANGE   0:24
+_DEFAULT 0
+$FIELD MNI
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  21
+_PROTECT CORRECT
+_RANGE   0:60
+_DEFAULT 0
+$FIELD SCI
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  24
+_PROTECT CORRECT
+_RANGE   0:60
+_DEFAULT 0
+$FIELD YRO
+_TYPE    INTEGER
+_WIDTH   4
+_COLUMN  28
+_PROTECT CORRECT
+_RANGE   1:9999
+_DEFAULT 1900
+$FIELD MOO
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  33
+_PROTECT CORRECT
+_RANGE   1:12
+_DEFAULT 1
+$FIELD DYO
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  36
+_PROTECT CORRECT
+_RANGE   1:31
+_DEFAULT 1
+$FIELD HRO
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  39
+_PROTECT CORRECT
+_RANGE   0:24
+_DEFAULT 0
+$FIELD MNO
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  42
+_PROTECT CORRECT
+_RANGE   0:60
+_DEFAULT 0
+$FIELD SCO
+_TYPE    INTEGER
+_WIDTH   2
+_COLUMN  45
+_PROTECT CORRECT
+_RANGE   0:60
+_DEFAULT 0
+$FIELD TSTEP
+_TYPE    INTEGER
+_WIDTH   4
+_COLUMN  49
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The two time series will be transformed to
+the requested time step using the transformations requested.
+$FIELD TUNIT
+_TYPE    CHARACTER
+_WIDTH   6
+_COLUMN  54
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The two time series will be transformed to
+the requested time step using the transformations requested.
+$FIELD TRANS1
+_TYPE    CHARACTER
+_WIDTH   7
+_COLUMN  62
+_PROTECT CORRECT
+_VALID   RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD TRANS2
+_TYPE    CHARACTER
+_WIDTH   7
+_COLUMN  71
+_PROTECT CORRECT
+_VALID   RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$HELP
+Period of record to be plotted for this curve.
+#GROUP   60  TYPE TEXT
+$WINDOW Time (GIT) Problem
+$TEXT
+ *** No time-series data in data set &.
+#GROUP   61  TYPE TEXT
+$WINDOW Time (GIT) Problem
+$TEXT
+ *** Data set & is not a time series data set.
+#GROUP   62  TYPE TEXT
+$WINDOW Time (GIT) Problem
+$TEXT
+ *** Unknown problem with data set &.
+#GROUP   63  TYPE TEXT
+$WINDOW Time (GIT) Problem
+$TEXT
+ *** No common time period for the & curves selected.
+#GROUP   70  TYPE PRM1
+$WINDOW Time (GIT) plotting period
+$SCREEN
+
+Modify specifications for the curve:
+ 
+           Year    Month   Day     Hour    Minute  Second
+ Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+ End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$HELP
+Period of record to be plotted.
+#GROUP   71  TYPE PRM1
+$WINDOW Time (GIT) time periods
+$SCREEN
+
+Modify specifications for the curve:
+
+           Year    Month   Day     Hour    Minute  Second
+ Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+ End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+
+                                  transfor-
+                   <- time step >  mation
+                   @TSTP1 @TUNIT1  @DTRAN1
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$HELP
+Period of record to be plotted.
+#GROUP   72  TYPE PRM1
+$WINDOW Time (GIT) time periods
+$SCREEN
+Modify specifications for the curves:
+
+           Year    Month   Day     Hour    Minute  Second
+ Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+ End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+
+                                  transfor-
+            Curve  <- time step >  mation
+              1    @TSTP1 @TUNIT1  @DTRAN1
+              2    @TSTP2 @TUNIT2  @DTRAN2
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+The transformation to be used when the requested time step is not the
+same as the time step of the data set.
+$FIELD @TSTP2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$HELP
+Period of record to be plotted.
+#GROUP   73  TYPE PRM1
+$WINDOW Time (GIT) time periods
+$SCREEN
+Modify specifications for the curves:
+           Year    Month   Day     Hour    Minute  Second
+ Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+ End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+
+                                  transfor-
+            Curve  <- time step >  mation
+              1    @TSTP1 @TUNIT1  @DTRAN1
+              2    @TSTP2 @TUNIT2  @DTRAN2
+              3    @TSTP3 @TUNIT3  @DTRAN3
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTHS, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$HELP
+Period of record to be plotted.
+#GROUP   74  TYPE PRM1
+$WINDOW Time (GIT) time periods
+$SCREEN
+Modify specifications for the curves:
+           Year    Month   Day     Hour    Minute  Second
+ Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+ End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+                                  transfor-
+            Curve  <- time step >  mation
+              1    @TSTP1 @TUNIT1  @DTRAN1
+              2    @TSTP2 @TUNIT2  @DTRAN2
+              3    @TSTP3 @TUNIT3  @DTRAN3
+              4    @TSTP4 @TUNIT4  @DTRAN4
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+Time step to be used to retrieve the data.  Need not be the same time
+step of the data.  If needed, the time series will be transformed using
+the transformation requested.
+$FIELD @TUNIT4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$HELP
+Period of record to be plotted.
+#GROUP   75  TYPE PRM1
+$WINDOW Time (GIT) time periods
+$SCREEN
+Modify specifications for the curves:
+           Year    Month   Day     Hour    Minute  Second
+ Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+ End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+
+                       transfor-                             transfor-
+ Curve  <- time step >  mation         Curve  <- time step >  mation
+   1    @TSTP1 @TUNIT1  @DTRAN1          4    @TSTP4 @TUNIT4  @DTRAN4
+   2    @TSTP2 @TUNIT2  @DTRAN2          5    @TSTP5 @TUNIT5  @DTRAN5
+   3    @TSTP3 @TUNIT3  @DTRAN3
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP5
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$HELP
+Period of record to be plotted.
+#GROUP   76  TYPE PRM1
+$WINDOW Time (GIT) time periods
+$SCREEN
+Modify specifications for the curves:
+           Year    Month   Day     Hour    Minute  Second
+ Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+ End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+
+                       transfor-                             transfor-
+ Curve  <- time step >  mation         Curve  <- time step >  mation
+   1    @TSTP1 @TUNIT1  @DTRAN1          4    @TSTP4 @TUNIT4  @DTRAN4
+   2    @TSTP2 @TUNIT2  @DTRAN2          5    @TSTP5 @TUNIT5  @DTRAN5
+   3    @TSTP3 @TUNIT3  @DTRAN3          6    @TSTP6 @TUNIT6  @DTRAN6
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP5
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP6
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$HELP
+Period of record to be plotted.
+#GROUP   77  TYPE PRM1
+$WINDOW Time (GIT) time steps
+$SCREEN
+
+                       transfor-                             transfor-
+ Curve  <- time step >  mation         Curve  <- time step >  mation
+   1    @TSTP1 @TUNIT1  @DTRAN1          5    @TSTP5 @TUNIT5  @DTRAN5
+   2    @TSTP2 @TUNIT2  @DTRAN2          6    @TSTP6 @TUNIT6  @DTRAN6
+   3    @TSTP3 @TUNIT3  @DTRAN3          7    @TSTP7 @TUNIT7  @DTRAN7
+   4    @TSTP4 @TUNIT4  @DTRAN4
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP5
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP6
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP7
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+#GROUP   78  TYPE PRM1
+$WINDOW Time (GIT) time steps
+$SCREEN
+
+                       transfor-                             transfor-
+ Curve  <- time step >  mation         Curve  <- time step >  mation
+   1    @TSTP1 @TUNIT1  @DTRAN1          5    @TSTP5 @TUNIT5  @DTRAN5
+   2    @TSTP2 @TUNIT2  @DTRAN2          6    @TSTP6 @TUNIT6  @DTRAN6
+   3    @TSTP3 @TUNIT3  @DTRAN3          7    @TSTP7 @TUNIT7  @DTRAN7
+   4    @TSTP4 @TUNIT4  @DTRAN4          8    @TSTP8 @TUNIT8  @DTRAN8
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP5
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP6
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP7
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+$FIELD @TSTP8
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @TUNIT8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+Time step to be used to retrieve the data.  Need not be the same as the
+time step of the data set.  The time series will be transformed to the
+requested time step using the transformation requested.
+$FIELD @DTRAN8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT RATE
+_HELP
+Type of transformation over the time step (if needed):
+ 
+  RATE - average or same        MAXIMUM - largest value
+ TOTAL - sum or divide          MINIMUM - smallest value
+  END DATA
+END CLU

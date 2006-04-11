@@ -1,0 +1,282 @@
+<html><head><title>PINIT</title></head>
+<body bgcolor="#ffffff">
+<a name="PINIT"><h3>PINIT</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+   <a href="../HRINTS/FINSTR.html">FINSTR</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4.html">CRIN4</a> 
+<p>Calls
+   FIRINT,
+   YROFF,
+   OMSG,
+   FLFRM,
+   FITSB,
+   ADJTSB,
+   NEWYR,
+   ADJLAB,
+   FNDGAP,
+   OMSTI
+<p>Code
+<pre>
+C
+C     3.5.8.2.3
+C
+      SUBROUTINE PINIT
+     I                 (START,ENDR,STIME,FMIN,DELT)
+C
+C     + + + PURPOSE + + +
+C     Compute control values for the instruction file for tsput
+C     for references to the tss and adjust the datasets in the tss
+C     so that they are consistent with the instruction file
+C     We assume that the entire dataset label, entire instruction and
+C     workspace are in common
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   START(5),ENDR(5),DELT,STIME,FMIN
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     START  - ???
+C     ENDR   - ???
+C     STIME  - ???
+C     FMIN   - ???
+C     DELT   - simulation time interval in minutes
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE   'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   TEMP(5),YR,SCLU,SGRP,PYR,SKIPFG,SINT,VOYR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  IABS
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  FIRINT,YROFF,OMSG,FLFRM,FITSB,ADJTSB,NEWYR
+      EXTERNAL  ADJLAB,FNDGAP,OMSTI
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(1X,'BEGIN COMPUTING CONTROL VALUES FOR TSPUT')
+ 2020 FORMAT(1X,'END COMPUTING CONTROL VALUES FOR TSPUT')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU  = 216
+      SKIPFG= 0
+C
+      IF (OUTLEV .LE. 6) GO TO 10
+        WRITE(MESSU,2000)
+ 10   CONTINUE
+C
+C     compute date/time and minute of the year for the starting interv
+C      in the dataset.  note that sint > stime at all times.
+      CALL FIRINT(DELTAT,START,      TEMP)
+      CALL YROFF(TEMP,      SINT)
+C     establish year at end of run
+C
+      YR=TEMP(1)
+C
+C     check for invalid access method
+      IF (YEAROR .NE. 1) GO TO 50
+        IF (AMODE .NE. 1 .AND. AMODE .NE. 2 ) GO TO  40
+          IF (LASTYR .LE. 0) GO TO 30
+            IF (YR .LE. LASTYR+1) GO TO 20
+C             error
+C             gap of one or more years using add or insert for a data-
+C             set which requires data to be in chronological order
+              SGRP = 124
+              CALL OMSTI (FILE)
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+C             set flag to suppress a subsequent program bug message
+              SKIPFG= 1
+ 20         CONTINUE
+ 30       CONTINUE
+ 40     CONTINUE
+        GO TO  70
+ 50   CONTINUE
+        IF (AMODE .NE. 1 ) GO TO 60
+C         error
+C         attempt to use add access on a dataset in which data is not
+C         in chronological order
+          SGRP = 125
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 60     CONTINUE
+ 70   CONTINUE
+C
+C     search for the starting interval in the dataset
+      IF (YR .GT. BASEYR) GO TO 80
+C       error
+C       starting year is earlier than first year permitted
+C       in the keying system
+        SGRP = 126
+        CALL OMSTI (FILE)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+ 80   CONTINUE
+      PYR=YR-1
+      IF (PYR .NE. BASEYR) GO TO  90
+        PYR=0
+        GO TO 110
+ 90   CONTINUE
+        IF (KEYS(PYR-BASEYR) .NE. 0) GO TO 100
+          PYR=0
+ 100    CONTINUE
+ 110  CONTINUE
+      VOYR=KEYS(YR-BASEYR)
+      IF (VOYR .LE. 0) GO TO 190
+C       year exists in the dataset
+        LGAP=0
+        IF (AMODE .NE.  2 ) GO TO  120
+C         error
+C         attempt to access dataset with insert for a year
+C         which already contains data
+          SGRP = 127
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 120    CONTINUE
+        IF (FMIN .NE. 1) GO TO 150
+C         start time is on year boundary
+          IF (PYR .LE. 0) GO TO  130
+C           previous year exists in the dataset
+            CALL FLFRM(YR,BASEYR,KEYS,TOTCOM,VOFRWD,      VOLFRM)
+            CALL FITSB(VOYR,SINT)
+            CALL ADJTSB(STIME,SINT,DELT)
+            GO TO 140
+ 130      CONTINUE
+C           previous year does not exist
+            VOLFRM=0
+            CALL FITSB(VOYR,SINT)
+            CALL ADJTSB(STIME,SINT,DELT)
+ 140      CONTINUE
+          GO TO    180
+ 150    CONTINUE
+C         start time is not on a year boundary
+          CALL FITSB(VOYR,SINT)
+          IF (STIME .NE. TZERO) GO TO  160
+C           compute address of preceding frame
+            VOLFRM=VOTSB-TOTCOM
+            GO TO 170
+ 160      CONTINUE
+            VOLFRM=0
+ 170      CONTINUE
+          CALL ADJTSB(STIME,SINT,DELT)
+ 180    CONTINUE
+        GO TO 270
+ 190  CONTINUE
+C       year does not exist in the dataset
+        IF (AMODE .NE. 3 ) GO TO 200
+C         error
+C         attempt to use replace for a year without data
+          SGRP = 128
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 200    CONTINUE
+        LGAP=(STIME+DELTAT-1)/DELTAT
+        IF (PYR .LE. 0) GO TO  210
+C         previous year exists
+          CALL FLFRM(YR,BASEYR,KEYS,TOTCOM,VOFRWD,      VOLFRM)
+          CALL NEWYR(YR,PYR,DELT)
+          GO TO 260
+ 210    CONTINUE
+          IF (LASTYR .LE. 0) GO TO 240
+C           some data exists
+            IF (AMODE .NE. 2 ) GO TO 220
+              VOLFRM=0
+              CALL NEWYR(YR,PYR,DELT)
+              GO TO 230
+ 220        CONTINUE
+              IF (YR .GE. LASTYR) GO TO 225
+C               add is being used to place data before any pre-
+C               existing data in the dataset. initialize as for
+C               an empty dataset
+                VOFRWD= LBLSZ
+                VOLFRM= 0
+                CALL NEWYR(YR,PYR,DELT)
+                GO TO 228
+ 225          CONTINUE
+C               error - we should not be here at all. if yr= lastyr
+C               then keys(yr-baseyr) should be >0 and we should
+C               have taken a different path. if yr> lastyr then
+C               either data exists for the previous year or an
+C               error should be detected earlier. however that
+C               error does not stop processing so that we must add
+C               a flag to prevent spurious program bug reports
+                IF (SKIPFG .EQ. 1) GO TO 226
+C                 program bug or invalid dataset label - improper
+C                 branching
+                  SGRP = 129
+                  CALL OMSTI (FILE)
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+ 226            CONTINUE
+ 228          CONTINUE
+ 230        CONTINUE
+            GO TO 250
+ 240      CONTINUE
+C           no data exists
+            VOLFRM=0
+            CALL NEWYR(YR,PYR,DELT)
+ 250      CONTINUE
+ 260    CONTINUE
+ 270  CONTINUE
+      IF (AMODE .EQ.  3 ) GO TO 280
+        CALL ADJLAB(YR)
+ 280  CONTINUE
+      IF (AMODE .NE.  3 ) GO TO 290
+        TGAP=0
+        GO TO 300
+ 290  CONTINUE
+        CALL FNDGAP(ENDR,DELTAT,      TGAP)
+ 300  CONTINUE
+C     set nature of leading and trailing gaps
+      IF (GAPCOD .LE. 0) GO TO 310
+        GAPVAL=0.0
+        GO TO 320
+ 310  CONTINUE
+        GAPVAL=-1.E30
+ 320  CONTINUE
+      IF (COMPR .NE. 1) GO TO 370
+        IF (LGAP .LE. 0) GO TO 340
+          IF (IABS(GAPCOD) .LE. 2) GO TO 330
+            LGAP=-LGAP
+ 330      CONTINUE
+ 340    CONTINUE
+        IF (TGAP .LE. 0) GO TO 360
+          IF (IABS(GAPCOD) .NE. 2 .AND. IABS(GAPCOD) .NE. 4) GO TO 350
+            TGAP=-TGAP
+ 350      CONTINUE
+ 360    CONTINUE
+ 370  CONTINUE
+      IF (OUTLEV .LE. 6) GO TO 380
+        WRITE(MESSU,2020)
+ 380  CONTINUE
+C
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="PINIT">
+</Object>
+
+</body>
+</html>
+

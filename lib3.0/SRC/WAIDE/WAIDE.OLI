@@ -1,0 +1,8 @@
+OBJS      = agplot.obj agterm.obj atinfo.obj prwfil.obj  \
+            qtdate.obj qtfils.obj wdpeak.obj awfeb.obj  \
+            wdsnad.obj agpltx.obj tslist.obj tstabl.obj  \
+            tslign.obj tslegn.obj
+
+INCOTHER  = adwdm\cdrloc.inc  adwdm\cfbuff.inc  aide\pmesfl.inc  \
+            graph\ptsmax.inc  graph\cplot.inc   \
+            graph\pbfmax.inc  graph\cplotb.inc

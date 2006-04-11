@@ -1,0 +1,61 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPCKDT
+     I                    (DATE1,DATE2,
+     O                     FLAG)
+C
+C     + + + PURPOSE + + +
+C     determine order of two dates
+C     (adapted from CKDATE)
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DATE1(5),DATE2(5),FLAG
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DATE1  - first date
+C     DATE2  - second date
+C     FLAG   - order flag -1: 1<2, 0: 1=2, 1: 1>2
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,IDAT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     check it
+      FLAG= -99
+      I= 0
+ 10   CONTINUE
+        I= I+ 1
+        IDAT= DATE2(I)
+        IF (DATE1(I) .LT. IDAT) THEN
+C         first date is sooner
+          FLAG= -1
+        ELSE IF (DATE1(I) .GT. IDAT) THEN
+C         first date is later
+          FLAG= 1
+        ELSE IF (I .EQ. 5) THEN
+C         all parts of date are equal
+          FLAG= 0
+        END IF
+      IF (FLAG .EQ. -99) GO TO 10
+C
+      RETURN
+      END
+</pre>
+

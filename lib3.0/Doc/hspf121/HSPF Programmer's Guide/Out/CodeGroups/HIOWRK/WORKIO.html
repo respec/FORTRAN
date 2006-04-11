@@ -1,0 +1,115 @@
+<html><head><title>WORKIO</title></head>
+<body>
+<a name="WORKIO"><hr size=7><h2>WORKIO</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOWRK.html">HIOWRK</a>
+<p>Called By
+   <a href="../HRINTS/PAIRS.html">PAIRS</a>,
+   <a href="../HSPFEC/TIMSER.html">TIMSER</a>,
+   <a href="../HTSINSI/CHAIN.html">CHAIN</a>,
+   <a href="../HTSINSI/CHANGE.html">CHANGE</a>,
+   <a href="../HTSINSI/OSVPRO.html">OSVPRO</a>,
+   <a href="../HTSINSI/SAME.html">SAME</a>,
+   <a href="../HTSINSI/SOURCE.html">SOURCE</a>,
+   <a href="../HTSINSI/TARGET.html">TARGET</a>,
+   <a href="../HTSINSI/WKDMP1.html">WKDMP1</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CWORK.html">CWORK</a>,
+   <a href="../../CommonBlocks/CMPAD.html">CMPAD</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C     3.5.01.3
+C
+      SUBROUTINE WORKIO
+     I                  (RWFG,LEN,KEY,
+     M                   REC,MXKY)
+C
+C     + + + PURPOSE + + +
+C     Perform i/o to workfl core equivalent
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   LEN
+      INTEGER   RWFG,KEY,REC(LEN),MXKY
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     RWFG   - ???
+C     LEN    - ???
+C     KEY    - ???
+C     REC    - ???
+C     MXKY   - ???
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE    'cwork.inc'
+      INCLUDE    'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,LMXKY
+      SAVE      LMXKY
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  MAX0
+C
+C     + + + OUTPUT FORMATS + + +
+C 1000 FORMAT(' IN WORKIO',3I10,/,2X,2A4,2I5,2(2X,2A4),16I5,
+C     $       2F5.1,/,2X,2A4,2I5,2(2X,2A4),16I5)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     keep track of max record in WORKSPA
+      IF (MXKY .EQ. -1) THEN
+C       first call
+        LMXKY= 1
+      ELSE
+C       other calls
+        LMXKY= MAX0(LMXKY,KEY)
+      END IF
+      MXKY= LMXKY
+C
+      IF (RWFG .EQ. 0) THEN
+C       read operation
+        DO 10 I=1,LEN
+          REC(I)=WRKSPA(I,KEY)
+ 10     CONTINUE
+      ELSE
+C       write operation
+        DO 20 I=1,LEN
+          WRKSPA(I,KEY)=REC(I)
+ 20     CONTINUE
+      END IF
+C
+C     IF (LEN .GT. 30)
+C    $                WRITE(*,1000) RWFG,LEN,KEY,REC
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="WORKIO">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,99 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+   <a href="../HOSUPER/OSUPER">OSUPER</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="UPDWIN">UPDWIN</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   HSPSTA
+     I                   (IOPT,NOPNS,LAST,COUNT,OPN,OMCODE,OPTNO)
+C
+C     + + + PURPOSE + + +
+C     routine to show run status for HSPF
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   IOPT,NOPNS,LAST,COUNT,OPN,OMCODE,OPTNO
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IOPT   - position to output
+C     NOPNS  - total number of operations
+C     LAST   - last time interval
+C     COUNT  - number of current time interval
+C     OPN    - number of current operation number
+C     OMCODE - code number of current operation
+C     OPTNO  - number for this operation
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER          OPCT,PCT,ILEN,OPT
+      DOUBLE PRECISION BINC,LINC,BCUR,LCUR
+      CHARACTER*1      CPCT,TXT(12)
+      SAVE             OPCT,BINC,LINC
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (TXT,LTXT)
+      CHARACTER*12 LTXT
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    UPDWIN
+C
+C     + + + OUTPUT FORMATS + + +
+2000  FORMAT(I1,'%')
+2010  FORMAT(I2,'%')
+C
+C     + + +  END SPECIFICATIONS + + +
+C
+      IF (COUNT.EQ.1 .AND. OPN.EQ.1) THEN
+        BINC= FLOAT(1)/FLOAT(LAST)
+        LINC= BINC * (FLOAT(1)/FLOAT(NOPNS))
+        OPCT= 0
+        !WRITE(*,*) 'HSPSTA:HSPSTA:BINC,LINC',BINC,LINC,NOPNS,LAST
+        ILEN= 12
+        OPT = 1
+        LTXT= 'Executing'
+        CALL <a href="UPDWIN">UPDWIN</a>(OPT,ILEN,TXT)
+        OPT = 2
+        LTXT= '  Now    '
+        CALL <a href="UPDWIN">UPDWIN</a>(OPT,ILEN,TXT)
+        OPT = 4
+        LTXT= 'Complete '
+        CALL <a href="UPDWIN">UPDWIN</a>(OPT,ILEN,TXT)
+      END IF
+      BCUR= FLOAT(COUNT-1) * BINC
+      LCUR= FLOAT(OPN-1)   * LINC
+      PCT = 100* (LCUR + BCUR)
+      !WRITE(*,*) 'HSPSTA:HSPSTA:PCT',PCT,COUNT,OPN,IOPT,BCUR,LCUR
+      IF (PCT .NE. OPCT) THEN
+        ILEN= 1
+        CPCT= CHAR(PCT)
+        CALL <a href="UPDWIN">UPDWIN</a>(IOPT,ILEN,CPCT)
+        IF (PCT < 10) THEN
+          WRITE(LTXT,2000) PCT
+        ELSE IF (PCT < 100) THEN
+          WRITE(LTXT,2010) PCT
+        ELSE
+          LTXT = '99%'
+        END IF
+        OPT = 3
+        CALL HDMES3(OPT,LTXT)
+      END IF
+      OPCT = PCT
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          217    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 200
+  LABEL
+    GRPNAM  HRINWDM
+  END LABEL
+  DATA   CLU   217
+#GROUP   98  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified dataset was not found in the WDM file.
+#GROUP   99  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified WDM dataset name '&CCC' does not match attribute TSTYP, '&CCC'.
+#GROUP  100  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Attribute TSTYP not found for specified WDM dataset.
+#GROUP  101  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified WDM dataset has an invalid TCODE attribute for HSPF;
+ must be minute, hour, or day for target (month is ok for source).
+#GROUP  102  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Attribute TCODE and/or TSSTEP not found for specified WDM dataset;
+ it is not a timeseries dataset.
+#GROUP  103  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Time span of simulation is not within time span of specified WDM
+ source dataset.
+#GROUP  104  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified WDM target dataset is "read-only" (RWFLAG=1).
+#GROUP  105  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified units system is not compatible with units system of
+ WDM dataset.  ERRCOD = &I
+#GROUP  106  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified access mode is invalid for WDM datasets; must be "add"
+ or "replace".
+#GROUP  107  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified gap value is invalid.  "UNDEFINED" substituted, or
+ attribute TSFILL from WDM dataset used, if available.
+#GROUP  108  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified WDM data quality code is invalid.  Valid values are 0-31.
+#GROUP  109  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Specified access mode for WDM dataset is "add"; however, data are
+ already present in dataset after run start time.
+#GROUP  149  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ The specified aggregation keyword is incorrect for WDM dataset;
+ 'AGGR' should be used in columns 69-72.
+#GROUP  150  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ Aggregation to a WDM dataset requires that the timestep of the dataset
+ be an even multiple of the run timestep.  Check TCODE and TSSTEP of
+ the dataset.  Also, VBTIME may be incompatible with TCODE, TSSTEP.
+#GROUP  151  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+ WDMSFL: &I
+
+ The specified WDM dataset does not have a valid value for the TSFORM
+ attribute.  TSFORM should be 1 or 2 (mean) or 3 (point).
+  END DATA
+END CLU
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

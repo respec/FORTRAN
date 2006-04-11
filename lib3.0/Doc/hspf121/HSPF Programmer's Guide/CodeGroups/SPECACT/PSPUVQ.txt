@@ -1,0 +1,384 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+   OMSTC,
+   OMSG,
+   OMSTI,
+   OPNNO,
+   CHKSTR,
+   CKTCOD,
+   MKADDR
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PSPUVQ
+     I                    (UCIBUF,MESSU,OUTLEV,MSGFL,SCLU,LOCDIR,
+     I                     DELT,MAXOPN,OPNTAB,NOPNS,SPOUT,OPTYL1,
+     M                     ECOUNT,RUNWID)
+C
+C     + + + PURPOSE + + +
+C     read and process user-defined variable quantity from ucifl
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      MESSU,OUTLEV,MSGFL,SCLU,LOCDIR,DELT,MAXOPN,
+     $             OPNTAB(20,MAXOPN),NOPNS,SPOUT,ECOUNT,RUNWID
+      CHARACTER*1  OPTYL1(60)
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UCIBUF - buffer containing current record from uci file
+C     MESSU  - unit number to write messages on
+C     OUTLEV - output level
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
+C     LOCDIR - specs method(s) available for spec. actions input
+C              0 - variable name required;
+C              1 - either variable name or address required;
+C              2 - address required
+C     DELT   - simulation interval in minutes
+C     MAXOPN - maximum number of operations
+C     OPNTAB - information on operations
+C     NOPNS  - number of operations
+C     SPOUT  - runtime Special Action output level
+C     OPTYL1 - operation type name library
+C     ECOUNT - error count
+C     RUNWID - maximum run span width allowed by user-defined variable
+C              quantities - 0 if no restrictions
+C
+C     + + + COMMON BLOCKS + + +
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      TSTEP(2),I80,SGRP,ERRFLG,I1,TOPX,TCODE,TCMIN(4),I,
+     $             I6,IMIN,IMAX,BGRP,SDELT,I4,I2,J,I60
+      CHARACTER*2  CTCODE(2)
+      CHARACTER*4  CTRAN
+      CHARACTER*6  COPTYP,OBUFF
+      CHARACTER*15 CADDR
+      CHARACTER*80 EBUFF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE     (COPTYP,COPTY1(1)),(OBUFF,OBUF1(1)),(EBUFF,EBUF1)
+      CHARACTER*1      COPTY1(6),OBUF1(6),EBUF1(80)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      OPNNO,CHKSTR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    MAX
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     OMSTC,OMSG,OMSTI,OPNNO,CHKSTR,CKTCOD,MKADDR
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I1,I2,I4,I6,I60,I80/1,2,4,6,60,80/
+      DATA TCMIN/0,1,60,1440/
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (9X,A6,1X,A6,1X,I3,1X,A15,I3,F10.0,2(1X,A2,I3),1X,A4)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT ('  UVQUAN :',A6,': COPTYP :',A6,': OPTNO ',I3,
+     $        ' CADDR :',A15,': UVQTYP',I2,' UVQMUL ',G10.4,
+     $        ' LAGCOD :',A2,': LAGSTP ',I3,/,'  AGGCOD :',A2,
+     $        ': AGGSTP ',I3,' TRNCOD :',A4,':')
+ 2010 FORMAT ('  UVQBNM,UVQSUB,ADDR: ',A6,3I3,I6)
+ 2020 FORMAT (/,' USER-DEFINED VARIABLE QUANTITIES',/,/,'  NAME OPTYP',
+     $        ' OPTNO OPNO      ADDR TYP  MULTIPLY LAGIVL AGGIVL ',
+     $        'AGGCD')
+ 2030 FORMAT (A6,2I6,I5,I10,I4,G10.3,2I7,I6)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      ERRFLG= 0
+      BGRP= 102
+C
+      NVQD= NVQD+ 1
+      IF (NVQD .GT. MXSPVQ) THEN
+C       error - too many uvquans
+        ERRFLG= 1
+        CALL OMSTI (MXSPVQ)
+        SGRP= 77
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       read line
+        READ (UCIBUF,1000,ERR=10)  UVQNAM(NVQD),COPTYP,UVQOPN(2,NVQD),
+     $                             CADDR,UVQTYP(NVQD),UVQMUL(NVQD),
+     $                             CTCODE(1),TSTEP(1),CTCODE(2),
+     $                             TSTEP(2),CTRAN
+        GO TO 20
+ 10     CONTINUE
+C         error - read format
+          EBUFF= UCIBUF
+          CALL OMSTC (I80,EBUF1)
+          SGRP= 60
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+ 20     CONTINUE
+        IF (SPOUT .GE. 10) THEN
+C         echo initial read
+          WRITE (MESSU,2000)  UVQNAM(NVQD),COPTYP,
+     $                        UVQOPN(2,NVQD),CADDR,UVQTYP(NVQD),
+     $                        UVQMUL(NVQD),CTCODE(1),TSTEP(1),
+     $                        CTCODE(2),TSTEP(2),CTRAN
+        END IF
+      END IF
+C
+      IF ( (ERRFLG .EQ. 0) .AND. (NVQD .GT. 1) ) THEN
+C       check name for uniqueness
+        I= NVQD- 1
+        OBUFF(1:6)= UVQNAM(NVQD)
+        J= CHKSTR (I6,I,OBUF1,UVQNM1)
+        IF (J .NE. 0) THEN
+C         error - repeated name
+          ERRFLG= 1
+          OBUFF(1:6)= UVQNAM(NVQD)
+          CALL OMSTC (I6,OBUF1)
+          SGRP= 61
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
+      END IF
+
+      IF (ERRFLG .EQ. 0) THEN
+C       check operation type and store in integer version
+C
+        IF (COPTYP .EQ. 'GLOBAL') THEN
+C         special case for global workspace variable
+          UVQOPN(1,NVQD)= 0
+          UVQOPN(2,NVQD)= 0
+        ELSE
+C         check for legal operation type          
+          UVQOPN(1,NVQD)= CHKSTR (I6,I60,COPTY1,OPTYL1)
+          IF (UVQOPN(1,NVQD) .LE. 0) THEN
+C           error - invalid operation type
+            OBUFF(1:6)= UVQNAM(NVQD)
+            CALL OMSTC (I6,OBUF1)
+            CALL OMSTC (I6,COPTY1)
+            SGRP= 62
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ERRFLG= 1
+          END IF
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo operation type
+          WRITE (MESSU,*) '  operation type',UVQOPN(1,NVQD)
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       check opid and find its row in operation table
+        IF (UVQOPN(1,NVQD) .EQ. 0) THEN
+C         workspace - no operation
+          UVQOPX(NVQD)= 0
+        ELSE
+C         see if base operation is active
+          TOPX= <a href="../HRINGEUT/OPNNO">OPNNO</a> (COPTYP,UVQOPN(2,NVQD),UVQOPN(2,NVQD),MAXOPN,
+     $                 OPNTAB,I1,NOPNS)
+          IF (TOPX .LE. 0) THEN
+C           error - base variable not available
+            OBUFF(1:6)= UVQNAM(NVQD)
+            CALL OMSTC (I6,OBUF1)
+            CALL OMSTC (I6,COPTY1)
+            CALL OMSTI (UVQOPN(2,NVQD))
+            SGRP= 63
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ERRFLG= 1
+            UVQOPX(NVQD)= 0
+          ELSE
+C           store row number
+            UVQOPX(NVQD)= TOPX
+          END IF
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo operation index
+          WRITE (MESSU,*) '  operation index',UVQOPX(NVQD)
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       get address of base variable
+        CALL MKADDR (LOCDIR,CADDR,MESSU,MSGFL,SCLU,BGRP,
+     M               UVQOPN(1,NVQD),ERRFLG,
+     O               UVQBNM(NVQD),UVQSUB(1,NVQD),UVQADD(NVQD))
+        IF (SPOUT .GE. 10) THEN
+C         echo base variable info
+          WRITE (MESSU,2010) UVQBNM(NVQD),(UVQSUB(I,NVQD), I= 1, 3),
+     $                       UVQADD(NVQD)
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       check type code
+        IF (UVQTYP(NVQD) .EQ. 0) THEN
+C         default to real
+          UVQTYP(NVQD)= 3
+        END IF
+        IMIN= 2
+        IMAX= 4
+        IF ( (UVQTYP(NVQD) .LT. IMIN) .OR.
+     $       (UVQTYP(NVQD) .GT. IMAX) ) THEN
+C         error - bad type code
+          OBUFF(1:6)= UVQNAM(NVQD)
+          CALL OMSTC (I6,OBUF1)
+          CALL OMSTI(UVQTYP(NVQD))
+          CALL OMSTI(IMIN)
+          CALL OMSTI(IMAX)
+          SGRP= 64
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+          UVQTYP(NVQD)= 3
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo type
+          WRITE (MESSU,*) '  type',UVQTYP(NVQD)
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       check multiplier
+        IF (UVQMUL(NVQD) .EQ. 0.0) THEN
+C         default to one
+          UVQMUL(NVQD)= 1.0
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo multiplier
+          WRITE (MESSU,*) '  multiplier',UVQMUL(NVQD)
+        END IF
+      END IF
+C 
+      IF (ERRFLG .EQ. 0) THEN
+C       check lag and aggregate intervals
+C
+        DO 30 I= 1, 2
+C         check tcode
+          CALL CKTCOD (CTCODE(I),MESSU,MSGFL,SCLU,
+     M                 ECOUNT,ERRFLG,
+     O                 TCODE)
+          IF (TCODE .GT. 4) THEN
+C           error - tcode cannot be months or years
+            OBUFF(1:6)= UVQNAM(NVQD)
+            CALL OMSTC (I6,OBUF1)
+            CALL OMSTC (I2,CTCODE(I))
+            SGRP= 65
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ERRFLG= 1
+            TCODE= 4
+          ELSE
+C           check tstep
+            IF (TSTEP(I) .LT. 0) THEN
+C             tstep out of range
+              OBUFF(1:6)= UVQNAM(NVQD)
+              CALL OMSTC (I6,OBUF1)
+              CALL OMSTI (TSTEP(I))
+              SGRP= 66
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFLG= 1
+              TSTEP(I)= 1
+            ELSE
+C             calculate intervals
+              SDELT= TSTEP(I)*(TCMIN(TCODE)/DELT)
+              IF (I .EQ. 1) THEN
+C               lag defaults to zero
+                UVQLAG(NVQD)= SDELT
+                IF (SPOUT .GE. 10) THEN
+C                 echo lag interval
+                  WRITE (MESSU,*) '  lag intervals',UVQLAG(NVQD)
+                END IF
+              ELSE IF (I .EQ. 2) THEN
+C               aggregation defaults to one
+                UVQAGG(NVQD)= MAX (SDELT,I1)
+                IF (SPOUT .GE. 10) THEN
+C                 echo aggregate interval
+                  WRITE (MESSU,*) '  ag intervals',UVQAGG(NVQD)
+                END IF
+              END IF
+            END IF
+          END IF
+ 30     CONTINUE
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       check aggregation transormation function
+        IF ( (CTRAN .EQ. 'SUM ') .OR. (CTRAN .EQ. '    ') ) THEN
+C         sum over intervals - default
+          UVQAFG(NVQD)= 1
+        ELSE IF ( (CTRAN .EQ. 'AVER') .AND.
+     $            (UVQTYP(NVQD) .GE. 3) ) THEN
+C         average over intervals - real or dp only
+          UVQAFG(NVQD)= 2
+        ELSE IF (CTRAN .EQ. 'MAX ') THEN
+C         maximum over intervals
+          UVQAFG(NVQD)= 3
+        ELSE IF (CTRAN .EQ. 'MIN ') THEN
+C         minimum over intervals
+          UVQAFG(NVQD)= 4
+        ELSE
+C         error - invalid aggregation code
+          CALL OMSTC (I4,CTRAN)
+          OBUFF(1:6)= UVQNAM(NVQD)
+          CALL OMSTC (I6,OBUF1)
+          SGRP= 67
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo aggregation function code
+          WRITE (MESSU,*) '  aggregation code',UVQAFG(NVQD)
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       condition was legal
+C
+        IF (RUNWID .EQ. 0) THEN
+C         run width must be determined in pspips
+          RUNWID= -1
+        END IF
+C
+C       echo definition
+        IF (OUTLEV .GT. 2) THEN
+C         echo to message unit
+          IF (NVQD .EQ. 1) THEN
+C           echo header lines
+            WRITE (MESSU,2020)
+          END IF
+          WRITE (MESSU,2030) UVQNAM(NVQD),UVQOPN(1,NVQD),
+     $                       UVQOPN(2,NVQD),UVQOPX(NVQD),
+     $                       UVQADD(NVQD),UVQTYP(NVQD),UVQMUL(NVQD),
+     $                       UVQLAG(NVQD),UVQAGG(NVQD),UVQAFG(NVQD)
+        END IF
+      ELSE
+C       ignore condition
+        NVQD= NVQD- 1
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+

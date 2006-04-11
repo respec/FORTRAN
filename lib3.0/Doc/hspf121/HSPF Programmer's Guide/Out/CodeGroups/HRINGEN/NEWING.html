@@ -1,0 +1,143 @@
+<html><head><title>NEWING</title></head>
+<body bgcolor="#ffffff">
+<a name="NEWING"><h3>NEWING</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINGEN.html">HRINGEN</a>
+<p>Called By
+   <a href="NEWOPN.html">NEWOPN</a>,
+   <a href="SEQBLK.html">SEQBLK</a>
+<p>Common Blocks <i>none</i> 
+<p>Calls
+   VALNO,
+   OMSG,
+   OMSTI,
+   <a href="NEWEXG.html">NEWEXG</a>,
+   PMXTFT
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   NEWING
+     I                   (INFG,EXFG,MESSU,MSGFL,SCLU,
+     $                    GRPNO,XGRPNO,OUTLEV,HRMIN,NIVLS,
+     $                    IVLLIB,
+     $                    RUNMIN,
+     M                    ECOUNT,
+     O                    ICOUNT,NDELT,XCOUNT,XDELT)
+C
+C     + + + PURPOSE + + +
+C     New ingroup - check whether this is legal, check ndelt and
+C     remember the details of this ingroup
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    ECOUNT,MSGFL,SCLU,EXFG,GRPNO,
+     $           HRMIN(2),ICOUNT,INFG,IVLLIB(20),MESSU,NDELT,NIVLS,
+     $           OUTLEV,RUNMIN,XCOUNT,XDELT,XGRPNO
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     INFG   - ???
+C     EXFG   - ???
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     SCLU   - cluster containing messages for this routine
+C     GRPNO  - ???
+C     XGRPNO - ???
+C     OUTLEV - run interpreter output level
+C     HRMIN  - ???
+C     NIVLS  - ???
+C     IVLLIB - ???
+C     RUNMIN - ???
+C     ECOUNT - count(s) of specific errors
+C     ICOUNT - ???
+C     NDELT  - simulation time interval in minutes
+C     XCOUNT - ???
+C     XDELT  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    SGRP
+C
+C     + + + FUNCTION + + +
+      INTEGER    VALNO
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  MOD
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   VALNO,OMSG,OMSTI,NEWEXG,PMXTFT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     icount is the no. of opns encountered so far in the current
+C     ingroup
+      ICOUNT= 0
+C
+      IF (INFG.GT.0) THEN
+C       error - ingroup was specified before end of existing ingroup
+C       was encountered
+        CALL OMSTI (GRPNO)
+        SGRP = 29
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
+      IF (EXFG.EQ.0) THEN
+C       not in a user specified exgroup - generate one
+        IF (OUTLEV .GT. 4)  THEN
+          SGRP= 38
+          CALL PMXTFT(MSGFL,MESSU,SCLU,SGRP)
+        END IF
+C       check properties of this exgroup
+        CALL <a href="NEWEXG.html">NEWEXG</a> (EXFG,MESSU,MSGFL,SCLU,XGRPNO,
+     $               INFG,GRPNO,HRMIN,NIVLS,IVLLIB,RUNMIN,
+     M               ECOUNT,
+     O               XCOUNT,XDELT)
+      END IF
+C
+C     check the time interval supplied for this ingroup
+      NDELT= HRMIN(1)*60+ HRMIN(2)
+C
+      IF (VALNO(NIVLS,IVLLIB,NDELT).EQ.0) THEN
+C       error - ndelt is not a valid interval
+        CALL OMSTI (HRMIN(1))
+        CALL OMSTI (HRMIN(2))
+        SGRP = 30
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+C
+      ELSE
+C       ok - check that it is compatible with xdelt
+        IF (MOD(XDELT,NDELT) .NE. 0) THEN
+          IF (MOD(NDELT,XDELT) .NE. 0) THEN
+C           error - xdelt and ndelt are not compatible
+            CALL OMSTI (XDELT)
+            CALL OMSTI (NDELT)
+            SGRP = 31
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="NEWING">
+</Object>
+
+</body>
+</html>
+

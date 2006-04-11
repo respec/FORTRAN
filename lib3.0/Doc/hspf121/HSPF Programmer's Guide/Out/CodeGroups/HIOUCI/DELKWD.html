@@ -1,0 +1,80 @@
+<html><head><title>DELKWD</title></head>
+<body>
+<a name="DELKWD"><hr size=7><h2>DELKWD</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI.html">HIOUCI</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM.html">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   DELKWD
+     I                   (KWDTYP)
+C
+C     + + + PURPOSE + + +
+C     delete info about where a keyword was found because this
+C     keyword no longer exists
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     KWDTYP
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     KWDTYP - type of keyword
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER       I,FOUND
+C
+C     + + + END SPECIFCATIONS + + +
+C
+      IF (KWDTYP.LT.1000) THEN
+C       look for this keyword
+        I = 0
+        FOUND = 0
+ 10     CONTINUE
+          I = I + 1
+          IF (UKWDTY(I).EQ.KWDTYP) THEN
+C           this is the keyword to get rid of
+            FOUND = 1
+            UKWDTY(I) = 0
+          END IF
+        IF (FOUND.EQ.0) GO TO 10
+      ELSE
+C       look for any table of this kwdtyp
+        I = 0
+ 20     CONTINUE
+          I = I + 1
+          IF (UKWDTY(I).GT.KWDTYP .AND. UKWDTY(I).LT.KWDTYP+1000) THEN
+C           get rid of this keyword
+            UKWDTY(I) = 0
+          END IF
+        IF (I.LT.MXSKWD) GO TO 20
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="DELKWD">
+</Object>
+
+</body>
+</html>
+

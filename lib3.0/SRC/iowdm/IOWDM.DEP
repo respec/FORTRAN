@@ -1,0 +1,6 @@
+inwatx.obj: ciowdm.inc ciowtb.inc catrib.inc \
+            diowdm.inc datrib.inc
+inwatg.obj: ciowdm.inc ciowtb.inc catrib.inc
+indsop.obj: pbcatr.inc catrib.inc
+inwdmu.obj: ciowdm.inc ciowtb.inc
+inflts.obj: catrib.inc

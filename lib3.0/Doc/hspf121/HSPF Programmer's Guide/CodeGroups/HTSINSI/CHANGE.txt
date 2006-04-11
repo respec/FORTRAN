@@ -1,0 +1,90 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI">HTSINSI</a>
+<p>Called By
+   <a href="SOURCE">SOURCE</a>,
+   <a href="TARGET">TARGET</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="../HIOWRK/WORKIO">WORKIO</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   CHANGE
+     I                   (EXTSFG,SDT,STKND,STTRN,STKEY,ROW,
+     I                    SEQCOL,RESCOL)
+C
+C     + + + PURPOSE + + +
+C     Change any subsequent appearances of a source or target to refer
+C     to a given inpad row.  if we are dealing with an external source
+C     (extsfg= 1), also change sdelt, stkind, and sttran.  the entries
+C     are processed according to value in field SEQCOL, starting at
+C     record STKEY
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   EXTSFG,RESCOL,ROW,SDT,SEQCOL,STKEY,STKND,STTRN
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     EXTSFG - ???
+C     SDT    - ???
+C     STKND  - ???
+C     STTRN  - ???
+C     STKEY  - ???
+C     ROW    - ???
+C     SEQCOL - ???
+C     RESCOL - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   KEY,REC(50),RWFG,LEN,MXKY
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  WORKIO
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (STKEY .NE. 0) THEN
+        LEN= 50
+        KEY= STKEY
+C
+C       whiledo key not= 0
+ 10     CONTINUE
+          RWFG= 0
+          MXKY= 0
+          CALL WORKIO (RWFG,LEN,KEY,
+     M                 REC,MXKY)
+C         change field to refer to given row
+          REC(RESCOL)= ROW
+C
+          IF (EXTSFG .EQ. 1) THEN
+C           also change stkind and sttran
+            REC(4) = SDT
+            REC(23)= STKND
+            REC(24)= STTRN
+          END IF
+C
+          RWFG= 1
+          MXKY= 0
+          CALL WORKIO (RWFG,LEN,KEY,
+     M                 REC,MXKY)
+          KEY= REC(SEQCOL)
+C         loop back when more to do
+        IF (KEY .NE. 0) GO TO 10
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

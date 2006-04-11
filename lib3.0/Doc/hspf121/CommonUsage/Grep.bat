@@ -1,0 +1,6 @@
+cd "d:\lib3.0\src\hspf121"
+"c:\program files\dostools\grep" "include" *.* >..\..\doc\hspf121\include.txt"
+"c:\program files\dostools\grep" "gettsi"  *.* >..\..\doc\hspf121\gettsi.txt"
+"c:\program files\dostools\grep" "puttsi"  *.* >..\..\doc\hspf121\puttsi.txt"
+"c:\program files\dostools\grep" "ctsgpm"  *.* >..\..\doc\hspf121\ctsgpm.txt"
+cd "d:\lib3.0\doc\hspf121"

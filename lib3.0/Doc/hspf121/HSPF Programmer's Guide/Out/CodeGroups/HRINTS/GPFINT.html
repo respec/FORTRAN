@@ -1,0 +1,104 @@
+<html><head><title>GPFINT</title></head>
+<body bgcolor="#ffffff">
+<a name="GPFINT"><h3>GPFINT</h3></a>
+ 
+Purpose -  
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTS.html">HRINTS</a>
+<p>Called By
+   TIMSER<a href="../HSPFEC/TIMSER.html"></a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   WMSGTT,
+   <a href="../HIOTSIN/PUTTSI.html">PUTTSI</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE GPFINT
+     I                  (RECLT,FILE,
+     O                   GPKEY)
+C
+C     + + + PURPOSE + + +
+C     Initialize the instruction files for tsget/tsput by
+C     placing the appropriate error offsets plus other data
+C     in the initial record of each instruction file.
+C     note: several scalars and EOFFST share storage with INSTR.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   RECLT,FILE(15),GPKEY
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     RECLT  - record length of the time series store
+C     FILE   - array of file unit numbers
+C     GPKEY  - key in tsget file
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      INSTR(3),K,MSGFL,I3,SCLU,SGRP,INITFG,CONT,CLEN
+      CHARACTER*1  INBUF1(80)
+C
+C     + + + EQIVALENCES + + +
+      EQUIVALENCE (INSTR(1),TESTFG),(INSTR(2),RECL),
+     #            (INSTR(3),UNDEF)
+      INTEGER      TESTFG,RECL
+      REAL         UNDEF
+      EQUIVALENCE (INBUF1,INBUFF)
+      CHARACTER*80 INBUFF
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     WMSGTT,PUTTSI
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (20X,I10)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I3    = 3
+      MSGFL = FILE(15)
+      SCLU  = 215
+C     define record length and undefined value.
+      RECL  = RECLT
+      UNDEF = -1.E30
+C
+      DO 100 K= 1,2
+C       read info for tsget and tsput errors (temp)
+        SGRP  = K+ 30
+        INITFG= 1
+        CLEN  = 80
+        CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M               CLEN,
+     O               INBUF1,CONT)
+        READ(INBUFF,1000) TESTFG
+C
+        CALL <a href="../HIOTSIN/PUTTSI.html">PUTTSI</a> (I3,K,INSTR)
+C
+ 100  CONTINUE
+C
+C     set key for tsgetf/tsputf
+      GPKEY= 2
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="GPFINT">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,436 @@
+<html><head><title>OSUPER</title></head>
+<body bgcolor="#ffffff">
+<a name="OSUPER"><h3>OSUPER</h3></a>
+ 
+Purpose - Call the various operating modules in the correct sequence and ensure that the various input and output time series are moved into and out of the inpad.  Read the osvs from disc and write them back to disc when an operation terminates or is interrupted.
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HOSUPER.html">HOSUPER</a>
+<p>Called By
+   <a href="../HSPF/HSPF.html">HSPF</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CMOSV.html">CMOSV</a>,
+   <a href="../../CommonBlocks/CMPAD.html">CMPAD</a>,
+   <a href="../../CommonBlocks/COSUPM.html">COSUPM</a>
+<p>Calls
+   <a href="../HSPSTA/HSPSTA.html">HSPSTA</a>,
+   <a href="../HSPSTA/EXT_UPDATE.html">EXT_UPDATE</a>,
+   <a href="../HRUNTSGP/TSGET.html">TSGET</a>,
+   <a href="../HRUNTSGP/TSPUT.html">TSPUT</a>,
+   <a href="../HIOOSV/GETOSV.html">GETOSV</a>,
+   <a href="../HIOOSV/PUTOSV.html">PUTOSV</a>,
+   GSTVFL,
+   PSTVFL,
+   PERLND,
+   IMPLND,
+   RCHRES,
+   COPY,
+   HDISPL,
+   DURANL,
+   GENER,
+   MUTSIN,
+   PLTGEN,
+   BMPRAC,
+   REPORT,
+   COPYI,
+   <a href="../HSPSTA/CHKUSR.html">CKUSER</a>
+<p>Code
+<pre>
+C
+C     4.0
+C
+      SUBROUTINE OSUPER
+     I                  (FILES,
+     O                   RETCOD)
+C
+C     + + + PURPOSE + + +
+C     This module is the operations supervisor.  it calls the various
+C     operating modules in the correct sequence and ensures that the
+C     various input and output time series are moved into and out of
+C     the inpad.  it also reads the osvs from disc and writes them
+C     back to disc when an operation terminates or is interrupted
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      FILES(15),RETCOD
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     FILES  - array of file unit numbers
+C     RETCOD - return code, 1 for user interrupt
+C
+C     + + + COMMON BLOCKS- SCRTCH, VERSION OSV + + +
+      INCLUDE      'cmosv.inc'
+      INCLUDE      'cmpad.inc'
+      INCLUDE      'cosupm.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      COUNT,DELT,EXGINF(4),EXKEY,FSTCAL,GRP,INGINF(8),
+     $             INKEY,LAST,LSTCAL,MESSU,NGRPS,NOPNS,NXGRPS,OMCODE,
+     $             OPINF(8),OPKEY,OPN,OPTNO,OSUPKY,I11,I4,I8,
+     $             OSVKND,OSVKST,REPEAT,REPLST,RUNINF(11),TSGKND,
+     $             TSGKST,TSPKND,TSPKST,WID,WIDTH,WLAST,XCOUNT,
+     $             XDELT,XGRP,XREPET,XWIDTH,FOPKEY,LOPKEY,GKEY,PKEY,
+     $             IW,IVLS,RUNWID,EXTFG,STIVL,I1,IOPT,STATFG,IVLDON,
+     $             STECNT,MSGFL,STFIL,EXUPFG
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE  (RUNINF(1),NXGRPS)
+C
+      EQUIVALENCE  (EXGINF(1),XREPET), (EXGINF(2),XWIDTH),
+     $             (EXGINF(3),XDELT),  (EXGINF(4),NGRPS)
+C
+      EQUIVALENCE  (INGINF(1),REPEAT), (INGINF(2),REPLST),
+     $             (INGINF(3),WID),    (INGINF(4),WLAST),
+     $             (INGINF(5),DELT),   (INGINF(6),NOPNS),
+     $             (INGINF(7),RUNWID), (INGINF(8),EXUPFG)
+C
+      EQUIVALENCE  (OPINF(1),OMCODE),  (OPINF(2),OPTNO),
+     $             (OPINF(3),TSGKST),  (OPINF(4),TSGKND),
+     $             (OPINF(5),TSPKST),  (OPINF(6),TSPKND),
+     $             (OPINF(7),OSVKST),  (OPINF(8),OSVKND)
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    MIN
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      CKUSER
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     HSPSTA,TSGET,GETOSV,PERLND,IMPLND,RCHRES,COPY
+      EXTERNAL     HDISPL,DURANL,GENER,MUTSIN,PUTOSV,TSPUT,PLTGEN
+      EXTERNAL     COPYI,CKUSER,GSTVFL,PSTVFL
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I1,I4,I8,I11/1,4,8,11/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' COMMENCING EXECUTION')
+C
+C     + + + HISTORY + + +
+C     2002  THJ allowed external control and interaction for IHM
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     initialize variables
+      MESSU= FILES(1)
+      MSGFL= FILES(15)
+      STFIL= FILES(9)
+      FSTCAL= 1
+      STECNT= 0
+C
+C     first record
+      OSUPKY= 1
+C
+      WRITE (MESSU,2000)
+C
+C     get information about this run
+      CALL COPYI (I11,OSUPM(1,OSUPKY),
+     O            RUNINF)
+C     find the starting key for the first exgroup
+      EXKEY= OSUPKY +1
+C
+C     Exgroup loop
+      XGRP = 0
+ 10   CONTINUE
+        XGRP= XGRP+ 1
+C       write(99,*) 'xgrp,nxgrps',xgrp,nxgrps
+C       get information about this exgroup
+        CALL COPYI (I4,OSUPM(1,EXKEY),
+     O              EXGINF)
+C
+C       exspan loop
+        XCOUNT = 0
+ 20     CONTINUE
+          XCOUNT = XCOUNT+ 1
+C         find key for first ingroup
+          INKEY= EXKEY+ 1
+C
+C         ingroup loop
+          GRP = 0
+ 30       CONTINUE
+            GRP = GRP+ 1
+C           write(99,*) 'osuper:',GRP
+            CALL COPYI (I8,OSUPM(1,INKEY),
+     O                  INGINF)
+C           WRITE(99,*)' runwid',RUNWID
+C           find the number of inspans in this exspan
+            IF (XCOUNT.EQ.XREPET) THEN
+              LAST= REPLST
+            ELSE
+              LAST= REPEAT
+            END IF
+C
+C           inspan loop
+            COUNT = 0
+            IVLDON= 0
+ 40         CONTINUE
+              COUNT = COUNT+ 1
+C
+C             find the width of this inspan
+              IF (COUNT.EQ.LAST) THEN
+                WIDTH= WLAST
+              ELSE
+                WIDTH= WID
+              END IF
+C
+C             get ready to perform the operations in this ingroup
+              OPKEY= INKEY+ 1
+              FOPKEY= OPKEY
+              LOPKEY= OPKEY+ NOPNS- 1
+C
+              IF (EXUPFG .EQ. 1) THEN
+C               check for external control and interaction
+                CALL <a href="../HSPSTA/EXT_UPDATE.html">EXT_UPDATE</a> (FILES(11),FOPKEY,LOPKEY,OSUPM)
+              END IF
+C
+C             set up runwid loop
+              STATFG= 0
+              STIVL = 1
+C
+              IF (RUNWID .GT. 0) THEN
+C               get all external time series before running any
+C               WRITE(99,*)' getting all time series'
+                EXTFG= 1
+                DO 50 GKEY= FOPKEY, LOPKEY
+                  CALL COPYI (I8,OSUPM(1,GKEY),
+     O                        OPINF)
+                  IF (TSGKST.GT.0) THEN
+                    CALL <a href="../HRUNTSGP/TSGET.html">TSGET</a> (FILES,TSGKST,TSGKND,
+     I                          DELT,I1,WIDTH,FSTCAL,EXTFG)
+                  END IF
+ 50             CONTINUE
+              END IF
+C
+              IVLS= WIDTH
+C             WRITE(99,*)' set ivls',IVLS
+C
+C             begin do-until loop for runwid
+ 60           CONTINUE
+C
+                OPKEY= FOPKEY
+                IF (RUNWID .GT. 0) THEN
+C                 only run runwid or remaining intervals
+                  IW= MIN (RUNWID,IVLS)
+                ELSE
+C                 run entire width
+                  IW= WIDTH
+                END IF
+C                WRITE(99,*)'width,ivls,runwid,iw',WIDTH,IVLS,RUNWID,IW
+C
+C               determine whether or not this is the first or last
+C               time through operation loop
+                FSTCAL= 0
+                LSTCAL= 0
+C               WRITE(99,*)'xcount,xrepet,count,last,stivl,width,iw',
+C     #                      XCOUNT,XREPET,COUNT,LAST,STIVL,WIDTH,IW
+                IF ( (XCOUNT .EQ. 1) .AND. (COUNT .EQ. 1) .AND.
+     #               (STIVL .EQ. 1) ) THEN
+                  FSTCAL= 1
+C                  WRITE(99,*)'fstcal'
+                END IF
+                IF ( (XCOUNT .EQ. XREPET) .AND.(COUNT .EQ. LAST) .AND.
+     #               ((STIVL+ IW) .GT. WIDTH) ) THEN
+                  LSTCAL= 1
+C                  WRITE(99,*)'lstcal'
+                END IF
+C             
+C               opn loop
+                OPN = 0
+ 70             CONTINUE
+                  OPN = OPN+ 1
+C
+C                 write (99,*) '  opn,opkey:',OPN,OPKEY
+                  CALL COPYI (I8,OSUPM(1,OPKEY),
+     O                        OPINF)
+C
+                  STATFG= STATFG+ 1
+                  IF (STATFG .LE. NOPNS) THEN
+C                   show status for pc version
+                    IOPT = 5
+                    CALL <a href="../HSPSTA/HSPSTA.html">HSPSTA</a> (IOPT,NOPNS,LAST,COUNT,OPN,OMCODE,OPTNO)
+C                   WRITE(99,*) 'OSUP,HSPSTA:',OPN,NOPNS,LAST,COUNT
+                  END IF
+C
+                  IF (RUNWID .EQ. 0) THEN
+C                   need to get all time series for operation
+                    EXTFG= 0
+                  ELSE
+C                   external done, just get internal
+                    EXTFG= 2
+                  END IF
+C                 get time series data not already done
+                  IF (TSGKST.GT.0) THEN
+                    CALL <a href="../HRUNTSGP/TSGET.html">TSGET</a> (FILES,TSGKST,TSGKND,
+     I                          DELT,STIVL,IW,FSTCAL,EXTFG)
+                  END IF
+C                 write(99,*)'out of single tsget, tsgkst',tsgkst
+C
+C                 read the osv from disc
+                  CALL GETOSV (OSVKST,OSVKND,MAXOSV,
+     O                         OSV)
+C
+C                 call the appropriate operating module
+C                 casentry omcode
+C                  write(99,*)'omcode,opn,nopns',omcode,opn,nopns
+                  GO TO (110,120,130,140,150,160,170,180,190,200,210),
+     $                   OMCODE
+C                   case 1
+ 110                  CONTINUE
+                        CALL PERLND (STIVL,IW)
+                      GO TO 300
+C
+C                   case 2
+ 120                  CONTINUE
+                        CALL IMPLND (STIVL,IW)
+                      GO TO 300
+C
+C                   case 3
+ 130                  CONTINUE
+                        CALL RCHRES (STIVL,IW,FSTCAL)
+                      GO TO 300
+C
+C                   case 4
+ 140                  CONTINUE
+                        CALL COPY (STIVL,IW)
+                      GO TO 300
+C
+C                   case 5
+ 150                  CONTINUE
+                        CALL PLTGEN (STIVL,IW,LSTCAL)
+                      GO TO 300
+C
+C                   case 6
+ 160                  CONTINUE
+                        CALL HDISPL (STIVL,IW,LSTCAL)
+                      GO TO 300
+C
+C                   case 7
+ 170                  CONTINUE
+                        CALL DURANL (STIVL,IW,FSTCAL,LSTCAL)
+                      GO TO 300
+C
+C                   case 8
+ 180                  CONTINUE
+                        CALL GENER (STIVL,IW)
+                      GO TO 300
+C
+C                   case 9
+ 190                  CONTINUE
+                        CALL MUTSIN (STIVL,IW)
+                      GO TO 300
+C
+C                   case 10
+ 200                  CONTINUE
+                        CALL BMPRAC (STIVL,IW)
+                      GO TO 300
+C
+C                   case 11
+ 210                  CONTINUE
+                        CALL REPORT (STIVL,IW,LSTCAL)
+                      GO TO 300
+ 300              CONTINUE
+C                 endcase
+C
+C                 write the osv to disc
+                  CALL PUTOSV (OSVKST,OSVKND,MAXOSV,OSV)
+C
+                  IF (RUNWID .EQ. 0) THEN
+C                   put all time series
+                    EXTFG= 0
+                  ELSE
+C                   only put internal time series
+                    EXTFG= 2
+                  END IF
+C                 output time series from the inpad
+C                 WRITE(99,*)' putting single time series',TSPKST
+                  IF (TSPKST.GT.0) CALL <a href="../HRUNTSGP/TSPUT.html">TSPUT</a> (FILES,TSPKST,TSPKND,
+     I                             DELT,STIVL,IW,FSTCAL,LSTCAL,EXTFG)
+C
+C                 increment key for osupfl
+                  OPKEY = OPKEY+ 1
+C
+C                 check for external cancel command
+                  RETCOD= <a href="../HSPSTA/CHKUSR.html">CKUSER</a> ()
+C
+C               end of operation loop
+                IF (RETCOD.EQ.0 .AND. OPN .LT.NOPNS) GO TO 70
+C
+                IVLS = IVLS - IW
+                STIVL= STIVL+ IW
+                IVLDON= IVLDON+ IW
+C                WRITE (99,*)'updated ivls,stivl',IVLS,STIVL,IW
+C
+C               status file write
+                IF (STFIL .NE. 0) THEN
+C                 status file specified
+C                   WRITE(99,*) 'HSPF:write status file'
+                  CALL PSTVFL (STFIL,IVLDON,DELT,NOPNS,LSTCAL,MESSU,
+     I                         MSGFL,
+     M                         STECNT)
+                END IF
+C
+C             end of interval loop
+              IF (IVLS.GT.0 .AND. RETCOD.EQ.0) GO TO 60
+C
+              IF (RUNWID .GT. 0) THEN
+C               put all external time series
+C                WRITE(99,*)' putting all external time series'
+                EXTFG= 1
+                DO 310 PKEY= FOPKEY, LOPKEY
+                  CALL COPYI (I8,OSUPM(1,PKEY),
+     O                        OPINF)
+                  IF (TSPKST.GT.0) THEN
+                    CALL <a href="../HRUNTSGP/TSPUT.html">TSPUT</a> (FILES,TSPKST,TSPKND,
+     $                          DELT,I1,WIDTH,FSTCAL,LSTCAL,EXTFG)
+                  END IF
+ 310            CONTINUE
+              END IF
+C
+C           end of inspan loop
+            IF (COUNT.LT.LAST .AND. RETCOD.EQ.0) GO TO 40
+C           get key for start of next ingroup
+            INKEY= OPKEY
+C
+C         end of ingroup loop
+          IF (GRP.LT.NGRPS .AND. RETCOD.EQ.0) GO TO 30
+C
+C       end of exspan loop
+        IF (XCOUNT.LT.XREPET .AND. RETCOD.EQ.0) GO TO 20
+C       get key for start of next exgroup
+        EXKEY= OPKEY
+C
+C     end of exgroup loop
+      IF (XGRP.LT.NXGRPS .AND. RETCOD.EQ.0) GO TO 10
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="OSUPER">
+</Object>
+
+</body>
+</html>
+

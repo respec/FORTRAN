@@ -1,0 +1,568 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  General information and parameter groups for ANNIE-IDE utilities
+END COMMENT
+CLU            1    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  QRESP
+  END LABEL
+  DATA   CLU     1
+#GROUP    1  TYPE TEXT
+$TEXT
+(Use return for
+#GROUP    2  TYPE TEXT
+$TEXT
+(Use return for &)
+
+#GROUP    3  TYPE TEXT
+$TEXT
+Min allowed value is &, Max allowed value is &.
+
+#GROUP    4  TYPE TEXT
+$TEXT
+ Valid responses are:
+#GROUP    5  TYPE TEXT
+$TEXT
+ Conflicting response, could be:
+#GROUP    6  TYPE TEXT
+$TEXT
+ Incorrect response - try again
+#GROUP    7  TYPE TEXT
+$TEXT
+FIELD   MINIMUM MAXIMUM DEFAULT ROW
+#GROUP    8  TYPE TEXT
+$TEXT
+ Enter changes ( ? for help, D for done ) in correct columns.
+#GROUP    9  TYPE TEXT
+$TEXT
+Using DEFAULT instead of bad value in field
+
+#GROUP   10  TYPE TEXT
+$TEXT
+ Help not available for this question.
+#GROUP   11  TYPE TEXT
+$TEXT
+
+ End of your command file, enter response
+ to the above question...
+
+#GROUP   12  TYPE TEXT
+$TEXT
+CHECK out of range value in field
+
+#GROUP   13  TYPE TEXT
+$TEXT
+DONE     ?        HELP     VIEW     EDIT     PLOT     TRANSFORMFILE
+#GROUP   14  TYPE TEXT
+$TEXT
+Currently viewing the top row.
+#GROUP   15  TYPE TEXT
+$TEXT
+Currently viewing the bottom row.
+#GROUP   16  TYPE TEXT
+$TEXT
+Can not change PROTECTED value in field
+
+#GROUP   17  TYPE TEXT
+$TEXT
+Can not copy over a row.
+#GROUP   18  TYPE TEXT
+$TEXT
+Rw &, fld &, bad new value, NOT updated.
+
+#GROUP   19  TYPE TEXT
+$TEXT
+Rw &, fld &, bad new value, CHECK it.
+
+#GROUP   20  TYPE TEXT
+$TEXT
+No new value input for CHANGE.
+
+#GROUP   21  TYPE TEXT
+$TEXT
+DONE - done with this screen of data
+HELP - get general help for screen or specific help for field
+VIEW - REFRESH screen, refresh LIMITS, move UP or DOWN rows
+EDIT - modify data in window (cursor moves to window)
+PLOT - plot either row numbers or a field vs desired fields
+TRANSFORM - perform transformations on screen of data
+FILE - put data onto files
+#GROUP   22  TYPE TEXT
+$TEXT
+Commands:
+#GROUP   23  TYPE TEXT
+$TEXT
+Out of EDIT mode.
+#GROUP   24  TYPE TEXT
+$TEXT
+In EDIT mode. To quick exit type % "cr". To backup, < (n) "cr".
+#GROUP   25  TYPE TEXT
+$TEXT
+Max allowable row is &, you specified &.
+#GROUP   26  TYPE TEXT
+$TEXT
+Max allowable field is &, you specified &.
+#GROUP   27  TYPE TEXT
+$TEXT
+Min allowable row is 1, you specified &.
+
+#GROUP   28  TYPE TEXT
+$TEXT
+Min allowable field is 1, you specified &.
+
+#GROUP   29  TYPE TEXT
+$TEXT
+REFRESHLIMITS UP     DOWN   ?      CANCEL
+#GROUP   30  TYPE TEXT
+$TEXT
+& data errors exist, first one in row &, field &.
+#GROUP   31  TYPE TEXT
+$TEXT
+Parameter out of range.  Try again.
+#GROUP   32  TYPE TEXT
+$TEXT
+START-ROW  END-ROW    LEFT-FIELD RIGHT-FIELDGO         ?          CANCEL
+#GROUP   33  TYPE TEXT
+$TEXT
+START-ROW  END-ROW    LEFT-FIELD RIGHT-FIELDVALUE      GO         ?          CANCEL
+#GROUP   34  TYPE TEXT
+$TEXT
+START-ROW  END-ROW    LEFT-FIELD RIGHT-FIELDVALUE      INCREMENT  GO         ?          CANCEL
+#GROUP   35  TYPE TEXT
+$TEXT
+START-ROW  END-ROW    LEFT-FIELD RIGHT-FIELDNEW-ROW    FINAL-ROW  GO         ?          CANCEL
+#GROUP   36  TYPE TEXT
+$TEXT
+current:     &        &        &           &
+#GROUP   37  TYPE TEXT
+$TEXT
+current:     &        &        &           &         &       &
+#GROUP   38  TYPE TEXT
+$TEXT
+Min &, Max &, now: &
+#GROUP   39  TYPE TEXT
+$TEXT
+Enter STARTING ROW:
+#GROUP   40  TYPE TEXT
+$TEXT
+Enter ENDING ROW:
+#GROUP   41  TYPE TEXT
+$TEXT
+Enter LEFT FIELD:
+#GROUP   42  TYPE TEXT
+$TEXT
+Enter RIGHT FIELD:
+#GROUP   43  TYPE TEXT
+$TEXT
+Enter STARTING ROW (copy from):
+#GROUP   44  TYPE TEXT
+$TEXT
+Enter ENDING ROW (copy from):
+#GROUP   45  TYPE TEXT
+$TEXT
+Enter NEW ROW (copy to):
+#GROUP   46  TYPE TEXT
+$TEXT
+Enter FINAL ROW (copy to):
+#GROUP   47  TYPE TEXT
+$TEXT
+Enter VALUE:
+#GROUP   48  TYPE TEXT
+$TEXT
+Enter INCREMENT:
+#GROUP   49  TYPE TEXT
+$TEXT
+Enter MULTIPLE:
+#GROUP   50  TYPE TEXT
+$TEXT
+Enter NUMBER OF ROWS:
+#GROUP   51  TYPE TEXT
+$TEXT
+Enter FIELD NUMBER:
+#GROUP   52  TYPE TEXT
+$TEXT
+Options: "<" to cancel  or  "cr" to accept
+#GROUP   53  TYPE TEXT
+$TEXT
+  Unable to INCREMENT, no value to increment by.
+  Use any key to continue.
+#GROUP   54  TYPE TEXT
+$TEXT
+  REFRESH - refresh whole screen with current values
+  LIMITS  - refresh limits portion of screen
+  UP      - move up desired number of rows of data
+  DOWN    - move down desired number of rows of data
+#GROUP   55  TYPE TEXT
+$TEXT
+  Unable to CHANGE, no value to change to.
+  Use any key to continue.
+#GROUP   56  TYPE TEXT
+$TEXT
+  Field number & contains values which are out of order.
+#GROUP   57  TYPE TEXT
+$TEXT
+0.0
+#GROUP   58  TYPE TEXT
+$TEXT
+0.0     0.0
+#GROUP   59  TYPE TEXT
+$TEXT
+INCREMENT the data in the window defined by Row (TOP,BOT) and
+Field (LEF,RGT) Ranges.  The TOP, BOTTOM, LEFT, RIGHT commands
+are used to set the desired values to describe the window.
+When the GO command is used, all defined data values in the
+window will be incremented by VAL.  (Use any key to continue).
+#GROUP   60  TYPE TEXT
+$TEXT
+MULTIPLY the data in the window defined by Row (TOP,BOT) and
+Field (LEF,RGT) Ranges.  The TOP, BOTTOM, LEFT, RIGHT commands
+are used to set the desired values to describe the window.
+When the GO command is used, all defined data values in the
+window will be multiplied by VAL.  (Use any key to continue).
+#GROUP   61  TYPE TEXT
+$TEXT
+COPY the rows of data described by Row Range (from) (TOP,BOT)
+to the rows of data described by Row Range (to) (NEWBEG,FINAL).
+The fields to be copied are described by Field Range (LEF,RGT).
+The TOP, BOTTOM, NEWBEG, FINAL, LEFT, RIGHT commands set the
+desired values.  GO will do the COPY. (Use any key to continue).
+#GROUP   62  TYPE TEXT
+$TEXT
+CHANGE the data in the window defined by Row (TOP,BOT) and
+Field (LEF,RGT) Ranges.  The TOP, BOTTOM, LEFT, RIGHT commands
+are used to set the desired values to describe the window.
+GO changes the top row to VAL and all additional rows will be
+changed to VAL and incremented by INC. (Use any key to continue)
+#GROUP   63  TYPE TEXT
+$TEXT
+EDIT the data in the window described by row (TOP,BOT) and
+field (LEF,RGT) ranges.  The TOP, BOTTOM, LEFT, RIGHT commands
+are used to set the desired values to describe the window.
+When GO is used, the cursor will move to the top left of
+the window you wish to EDIT.  (Use any key to continue).
+#GROUP   64  TYPE TEXT
+$TEXT
+ADD_CONST MULT_CONSTROWCOPY   FIELDCOPY SUBSTITUTEFUNCTION  ?         CANCEL
+#GROUP   65  TYPE TEXT
+$TEXT
+ADD_CONST  - increment defined values in window by a constant
+MULT_CONST - multiply defined values in window by a constant
+ROWCOPY    - copy rows of values from one window to another
+FIELDCOPY  - copy values from one field to another
+SUBSTITUTE - chage values in window to a value and add increment
+FUNCTION   - perform desired mathematical functions on data
+#GROUP   66  TYPE TEXT
+$TEXT
+WDM   FLAT  ROWS  FIELDS?     CANCEL
+#GROUP   67  TYPE TEXT
+$TEXT
+WDM    - write data to WDM file
+FLAT   - write data to flat file
+ROWS   - specify rows of data to write to file
+FIELDS - specify fields of data to write to file
+#GROUP   68  TYPE TEXT
+$TEXT
+GENERALFIELD  ?      CANCEL
+#GROUP   69  TYPE TEXT
+$TEXT
+GENERAL - get general help for this screen of data
+FIELD   - get help for a specified field
+#GROUP   70  TYPE TEXT
+$TEXT
+EDIT
+#GROUP   71  TYPE TEXT
+$TEXT
+ADD_CONSTANT
+#GROUP   72  TYPE TEXT
+$TEXT
+MULT_CONSTANT
+#GROUP   73  TYPE TEXT
+$TEXT
+ROWCOPY
+#GROUP   74  TYPE TEXT
+$TEXT
+SUBSTITUTE
+#GROUP   75  TYPE TEXT
+$TEXT
+HELP FIELD
+#GROUP   76  TYPE TEXT
+$TEXT
+MOVE UP
+#GROUP   77  TYPE TEXT
+$TEXT
+MOVE DOWN
+#GROUP   78  TYPE TEXT
+$TEXT
+& values out of a desired & have been input.
+
+#GROUP   79  TYPE TEXT
+$TEXT
+& values have been input.
+
+#GROUP   80  TYPE TEXT
+$TEXT
+ / can't be used.  Must enter & values.
+#GROUP   81  TYPE TEXT
+$TEXT
+ * is repeat symbol and no digits preceed it.
+ data will be ignored.
+#GROUP   82  TYPE TEXT
+$TEXT
+ Repeat number too large, reduce to &.
+#GROUP   83  TYPE MENU
+$TITLE Is this input acceptable?
+$DEFAULT 1
+$LENGTH  3
+$OPTION  Yes
+_DESC - values have been entered as desired
+$OPTION No
+_DESC - go back to last screen to modify input values
+#GROUP   84  TYPE TEXT
+$TEXT
+& more.
+#GROUP   85  TYPE TEXT
+$TEXT
+Bad values, start line over.
+#GROUP   86  TYPE TEXT
+$TEXT
+Previous & values ok.
+#GROUP   87  TYPE TEXT
+$TEXT
+Input complete.
+  END DATA
+END CLU
+CLU            2    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  QFOPEN
+  END LABEL
+  DATA   CLU     2
+#GROUP    4  TYPE TEXT
+$TEXT
+File already in use.
+#GROUP   10  TYPE TEXT
+$TEXT
+Could not open file.  No Fortran unit numbers are available.
+#GROUP   12  TYPE FILE
+$SCREEN
+
+ Name of output file?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS NEW
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   14  TYPE MENU
+$TITLE Do you want to use another file?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  2
+$OPTION YES
+$OPTION NO
+#GROUP   15  TYPE MENU
+$TITLE File not found. Do you want to try another name?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  2
+$OPTION YES
+$OPTION NO
+#GROUP   16  TYPE TEXT
+$TEXT
+Status must be old, new, scratch, or unknown.
+#GROUP   17  TYPE MENU
+$TITLE File exists. Do you want to write over it?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  2
+$OPTION YES
+$OPTION NO
+$HELP
+ YES - try to open file again and continue.
+ NO  - will not open file.  will either end or ask
+       for another name.
+#GROUP   27  TYPE TEXT
+$TEXT
+You do not have write access to the specified file.
+#GROUP   28  TYPE TEXT
+$TEXT
+File name is blanks.
+#GROUP   29  TYPE FILE
+$NAME ANNIE.LOG
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   31  TYPE FILE
+$SCREEN
+
+ Name of file to log your responses?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ The default file (ANNIE.LOG) is in use.
+ Make up a name or kill program and restart when file not in use
+#GROUP   32  TYPE FILE
+$SCREEN
+
+ Name of file with dates?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   33  TYPE FILE
+$SCREEN
+
+ Name of file to store dates?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS NEW
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   34  TYPE FILE
+$NAME HSPMESS.DA
+$STATUS OLD
+$ACCESS DIRECT
+$FORM FORMATTED
+$RECL   132
+#GROUP   36  TYPE FILE
+$SCREEN
+
+ Name of your WDM file?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS DIRECT
+$FORM UNFORMATTED
+$RECL  1024
+#GROUP   40  TYPE FILE
+$SCREEN
+
+ Name of sequential file with variables.
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   41  TYPE FILE
+$SCREEN
+
+ Name of sequential file with years of record.
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   42  TYPE FILE
+$SCREEN
+
+ Name of sequential file with cross-correlations.
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   45  TYPE FILE
+$SCREEN
+
+ Name of input file created from ANNIE/GLS analysis.
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   46  TYPE FILE
+$SCREEN
+
+ Name of output file for telegraf input?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS NEW
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   51  TYPE TEXT
+$TEXT
+Could not open file, I/O status = &
+#GROUP   57  TYPE PRM1
+$SCREEN
+
+  Specify Output options
+
+    Output type    [@OUTTYP.]     (Terminal, File)
+
+    Lines per page [@LINES]
+
+    Page width     [@WIDTH]
+$FIELD @OUTTYP
+_TYPE CHARACTER
+_VALID TERMINAL, FILE
+_DEFAULT TERMINAL
+_HELP
+Destination for output
+$FIELD @LINES
+_TYPE INTEGER
+_RANGE          5:    200000
+_DEFAULT         20
+_HELP
+For terminal output, lines output before a pause
+For file output, lines output before fortran carriage control
+$FIELD @WIDTH
+_TYPE INTEGER
+_RANGE         40:       250
+_DEFAULT         80
+_HELP
+Maximum allowable characters output on a line
+$HELP
+The user may direct output to the screen or to a file for
+printing or use by another program.
+#GROUP   58  TYPE TEXT
+$TEXT
+ Selected file already exists.
+#GROUP   59  TYPE TEXT
+$TEXT
+ Selected file not found.
+#GROUP   60  TYPE FILE
+$SCREEN
+
+ Name of file for printout?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ This will be file for printed output to be printed
+ after this ANNIE session.  It may use Fortran carriage
+ control.
+#GROUP   61  TYPE MENU
+$TITLE Do you want to copy the log file to a new name?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  2
+$OPTION NO
+$OPTION YES
+$HELP
+ The log file of this run is stored as ANNIE.LOG
+ and will be overwrote the next time you run the
+ program.  Use YES to save this log file under
+ another name.
+#GROUP   62  TYPE FILE
+$SCREEN
+
+ Name of new file to copy log file to?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS NEW
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ The log file from this run will be saved as this file name.
+  END DATA
+END CLU

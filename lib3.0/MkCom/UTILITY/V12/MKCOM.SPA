@@ -1,0 +1,103 @@
+YR                    18
+MON                   19
+DAY                   20
+HR                    21
+MIN                   22
+SPOUT                 28
+UUNITS                29
+POINT   20           110
+MEAN    20           130
+
+UUNITS                29
+
+UUNITS                29
+
+UUNITS                29
+
+YR                    17
+MON                   18
+DAY                   19
+HR                    20
+MIN                   21
+SPOUT                 27
+UUNITS                29
+OPCODE                30
+NTERMS                31
+K        7            32
+SUM                   39
+
+UUNITS                29
+
+UUNITS                29
+YR                    54
+MON                   55
+DAY                   56
+HR                    57
+MIN                   58
+SPOUT                 67
+IVOL                  69
+CIVOL  100            76
+VOLFRM  12           777
+VOLFRC               789
+ROVOL                790
+CROVOL 100           796
+RMVOL               1396
+CRMVOL 100          1402
+ICON    10          2002
+CONFRM  12  10      2082
+CONFRC  10          2272
+ROCON   10          2282
+RMCON   10          2342
+IHEAT               2402
+HTFRM   12          2410
+HTFRC               2422
+ROHEAT              2423
+RMHEAT              2429
+ISED     3          2435
+SEDFRM  12   3      2459
+SEDFRC   3          2495
+ROSED    3          2498
+RMSED    3          2516
+IDQAL    3          2534
+ISQAL    3   3      2555
+GQDFRM  12   3      2630
+GQSFRM  12   3   3  2666
+GQDFRC   3          2795
+GQSFRC   3   3      2798
+RODQAL   3          2807
+ROSQAL   3   3      2825
+RMDQAL   3          2879
+RMSQAL   3   3      2897
+IOX      2          2951
+OXFRM   12   2      2967
+OXFRC    2          2991
+ROOX     2          2993
+RMOX     2          3005
+IDNUT    4          3017
+ISNUT    3   2      3045
+DNUFRM  12   4      3097
+SNUFRM  12   3   2  3145
+DNUFRC   4          3217
+SNUFRC   3   2      3221
+RODNUT   4          3227
+ROSNUT   3   2      3251
+RMDNUT   4          3287
+RMSNUT   3   2      3311
+IPLK     5          3347
+PLKFRM  12   5      3387
+PLKFRC   5          3447
+ROPLK    5          3452
+RMPLK    5          3482
+IPH      2          3512
+PHFRM   12   2      3528
+PHFRC    2          3552
+ROPH     2          3554
+RMPH     2          3566
+IACID    7          3578
+ACIFRM  12   7      3634
+ACIFRC   7          3718
+ROACID   7          3725
+RMACID   7          3767
+
+UUNITS                29
+

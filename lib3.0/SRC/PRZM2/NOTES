@@ -1,0 +1,60 @@
+Tony/Brian -
+
+Here is a rounded off summary of monthly denitrification totals before and
+after the threshold parameters was put in place:
+
+Denitrification monthly totals
+
+                Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
+B4 Threshold     76   72  131  121  151  107  100   93   85  144  109  89
+Threshold=0.2    29   28   60   57   74   62   58   54   48   73   54   43
+Threshold=0.1    36   35   73   69   89   73   68   63   56   87   65   51
+Threshold=0.0    41   40   82   77   99   79   74   69   61   97   73   57
+
+
+
+Also, for your review, here is the section of code around the call to NITRXN
+where soil mass and the threshold-adjust denitrification rate are calculated:
+
+C     transport nitrogen species
+      CALL NITMOV (LPRZOT,MODID)
+C
+      DO 150 I = 1,NCOM2
+C       perform nitrogen reactions per compartment
+        WRITE(LAYID,2000) I
+C       convert from cm to kg/ha
+        SLMOIS = SW(I) * 1.0E5
+C       convert from g/cm3 to kg/ha
+        SLMASS = BD(I) * DELX(I) * 1.0E5
+C       convert from cm to inches
+        SLWILT = WP(I) / 2.54
+        WS     = SW(I) / 2.54
+C       create temporary value for denitrification rate based on threshold
+        TMPKDN = NPM(5,I)
+        IF (THETN(I).GT.DNTHRS(I)) THEN
+C         determine rate for denitrification based on water content
+          NPM(5,I) = (THETN(I)-DNTHRS(I))/
+     $               (THETAS(I)-DNTHRS(I)) * NPM (5,I)
+        ELSE
+C         water content below threshold for denitrification
+          NPM(5,I) = 0.0
+        END IF
+        CALL NITRXN(IPRZM,I1,DATIM,LPRZOT,ITMAXA,GNPM,I1,
+     I              I1,FORAFG,SPT(I),SLMOIS,SLMASS,NPM(1,I),LAYID,
+     I              KPLN(I),NUPTFG,FIXNFG,ALPNFG,AMVOFG,NUPTG(I),NMXRAT,
+     I              SLWILT,ORNPM(1,I),KVOL(I),THVOL,TRFVOL,DUM,DUM,
+     I              KRETBN(I),BGNPRF,ANUTF(I),WS,
+     M              NDFC(I),NWCNT,NECNT,AGPLTN,NIT(1,I),NRXF(1,I))
+C       restore input value for denitrification rate
+        NPM(5,I) = TMPKDN
+ 150  CONTINUE
+
+
+where:
+      SLMASS = soil mass (Kg/Ha)
+      DNTHRS = denitrification threshold value (converted from input percentage
+               of saturation water content to an actual water content value)
+
+
+Finally, I have not yet aligned the flux totals under their columns as you
+suggested Tony, but I have got the annual fluxes being reported correctly.

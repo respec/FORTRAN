@@ -1,0 +1,50 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="TDIF">TDIF</a>
+<p>Code
+<pre>
+C
+C     3.5.8.03
+C
+      SUBROUTINE YROFF
+     I                 (DATIM,
+     O                  TOFF)
+C
+C     + + + PURPOSE + + +
+C     Compute offset in minutes from start of calendar year
+C     given by datim(1) to the date/time given by datim
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DATIM(5),TOFF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DATIM  - date and time of day
+C     TOFF   - ???
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   TDIF
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CALL TDIF(DATIM(1),DATIM(1),DATIM(2),DATIM(3),  TOFF)
+C
+C     add in the hour/minute information
+      TOFF = TOFF+ (DATIM(4)-1)*60 + DATIM(5)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

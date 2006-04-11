@@ -1,0 +1,55 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI">HTSINSI</a>
+<p>Called By
+   <a href="ALLOC">ALLOC</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   RELESE
+     I                   (MAXROW,
+     M                    RELFG,
+     O                    AVFG)
+C
+C     + + + PURPOSE + + +
+C     Release all rows flagged for release
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   MAXROW,AVFG(MAXROW),RELFG(MAXROW)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MAXROW - ???
+C     RELFG  - ???
+C     AVFG   - flag indicating whether or not each IMPAD row is available
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   NR
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      DO 10 NR= 1,MAXROW
+        IF (RELFG(NR) .EQ. 1) THEN
+          AVFG(NR) = 1
+          RELFG(NR)= 0
+        END IF
+ 10   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

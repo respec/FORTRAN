@@ -1,0 +1,57 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSUT">HRUNTSUT</a>
+<p>Called By
+ 
+<p>Common Blocks <i>none</i>
+<p>Calls  
+   <a href="../HDATUT/LPYEAR">LPYEAR</a>
+<p>Code
+<pre>
+C
+C
+C
+      INTEGER FUNCTION   VYDELT
+     I                          (YEAR)
+C
+C     + + + PURPOSE + + +
+C     Calculate number of minutes in a year, accounting for leap year
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER  YEAR
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     YEAR   - year
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER  LPYRFG,MIN365,MINDAY,MINS
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL LPYEAR
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA MINDAY,MIN365/1440,525600/
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CALL LPYEAR (YEAR,
+     O             LPYRFG)
+C
+      MINS= MIN365
+      IF (LPYRFG .EQ. 1) THEN
+C       add leap day
+        MINS= MINS+ MINDAY
+      END IF
+C
+      VYDELT= MINS
+C
+      RETURN
+      END
+
+
+
+

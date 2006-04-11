@@ -1,0 +1,238 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           51    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  PRWPLT
+  END LABEL
+  DATA   CLU    51
+#GROUP    1  TYPE MENU
+$WINDOW Graph (G)
+$SCREEN
+
+   Select a graph option.
+
+   @Device !                          @Time !
+   @Units  !                          @Flow !
+   @Specs  !
+   @Window !
+   @Axis   !                          @Return !
+
+$DEFAULT   1
+$LENGTH   11
+$OPTION Device
+_DESC - to make plot on
+$OPTION Units
+_DESC - and time span of plot
+$OPTION Specs
+_DESC - of plot
+$OPTION Window
+_DESC - for screen output
+$OPTION Axis
+_DESC - type and scale
+$OPTION Time
+_DESC Plot - produce timeseries plot
+$OPTION Flow
+_DESC Plot - produce flow/duration plot
+$OPTION Return
+_DESC - one level up
+#GROUP   11  TYPE MENU
+$WINDOW Device (GD)
+$SCREEN
+
+  Select a graph output device.
+
+  @Display
+  @PRinter
+  @PLotter
+
+$DEFAULT   1
+$LENGTH    7
+$OPTION Display
+_DESC - to screen
+$OPTION PRinter
+_DESC - or print file
+$OPTION PLotter
+_DESC - or print file
+#GROUP   21  TYPE PRM1
+$WINDOW Units (GU)
+$SCREEN
+
+       Specify Time Period and Units for Graph
+
+               YEAR    MONTH      DAY
+       Start  [@SYR]   [@SMO]   [@SDY]        Time units  [@TUNITS]
+       End    [@EYR]   [@EMO]   [@EDY]
+
+$FIELD @SYR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1900:1992
+_HELP
+Start year for graph.
+$FIELD @SMO
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_HELP
+Start month for graph.
+$FIELD @SDY
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_HELP
+Start day for graph.
+$FIELD @EYR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1900:1992
+_HELP
+End year for graph.
+$FIELD @EMO
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_HELP
+End month for graph.
+$FIELD @EDY
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_HELP
+End day for graph.
+$FIELD @TUNITS
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID HOUR,DAY,MONTH,YEAR
+_HELP
+Time units for graph.
+#GROUP   31  TYPE PRM2
+$WINDOW Specify (GS)
+$HEADER
+Graph Specifications.
+
+                    line           fill
+Scenerio            type   color  pattern  symbol
+<-------->        <-----> <-----> <-----> <----->
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECT
+_TYPE CHARACTER
+$FIELD  FIELD2
+_WIDTH   7
+_COLUMN 19
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?LINETY
+_DEFAULT SOLID
+_HELP
+ Check limits for the line types currently available.
+$FIELD  FIELD3
+_WIDTH   7
+_COLUMN 27
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?COLOR
+_DEFAULT WHITE
+_HELP
+ Check limits for the colors currently available.
+$FIELD  FIELD4
+_WIDTH   7
+_COLUMN 35
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?FILL
+_DEFAULT NONE
+_HELP
+ Select a fill pattern.  Caution: SOLID on pen
+ plotters may take a long time.
+$FIELD  FIELD5
+_WIDTH   7
+_COLUMN 43
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?SYMBOL
+_DEFAULT NONE
+_HELP
+ Check limits for the symbol types currently available.
+#GROUP   40  TYPE TEXT
+$WINDOW Graph (G)
+$TEXT
+  Retrieving data for specified graph.
+#GROUP   41  TYPE TEXT
+$WINDOW Graph (GP) Problem
+$TEXT
+Unable to retrieve data for selected station, data-set number &
+#GROUP   42  TYPE TEXT
+$WINDOW Graph (GP) Status
+$TEXT
+Graphs partially completed,
+
+ACCEPT to view next graph,
+INTRPT to interrupt plotting.
+#GROUP   43  TYPE TEXT
+$WINDOW Graph complete (GT)
+$TEXT
+ Time plot completed and put on file "gksplt.out&".
+#GROUP   44  TYPE TEXT
+$WINDOW Graph complete (GF)
+$TEXT
+ Flow duration plot completed and put on file "gksplt.out&".
+#GROUP   45  TYPE TEXT
+$WINDOW Graph (GP) Status
+$TEXT
+ Writing plot to specified device.
+#GROUP   46  TYPE TEXT
+$WINDOW Graph (GP) Problem
+$TEXT
+Number of data points exceeds maximum.
+
+Reduce number of data points by shortening
+time span, increasing time step, or
+eliminating variables to be plotted.
+#GROUP   51  TYPE PRM1
+$WINDOW Window (GW)
+$SCREEN
+
+      Active Graph Window  [@WIND.]
+$FIELD  @WIND
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1:7
+_DEFAULT 1
+_HELP
+ Select the window you would like active.
+#GROUP   61  TYPE PRM1
+$WINDOW Axis (GA)
+$SCREEN
+
+Type and scale for Y axis:
+
+      axis type       @ ARITHMETIC      @ LOGARITHMIC
+
+      % of scale to use   [@ARPCSC]
+
+$FIELD  @ ARITHMETIC
+_TYPE    OPTION
+_SET     1
+_WIDTH   12
+_ONOFF   @ LOGARITHMIC
+_OFFON   @ LOGARITHMIC
+$FIELD  @ LOGARITHMIC
+_TYPE    OPTION
+_SET     1
+_WIDTH   13
+_ONOFF   @ ARITHMETIC
+_OFFON   @ ARITHMETIC
+$FIELD  @ARPCSC
+_PROTECT CORRECT
+_TYPE    REAL
+_RANGE   0.01 : 500.0
+_DEFAULT 100.0
+_HELP
+ Adjust the scale to less than 100. look at the lower portion of plot.
+  END DATA
+END CLU

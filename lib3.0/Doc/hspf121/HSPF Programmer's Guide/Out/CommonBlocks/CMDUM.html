@@ -1,0 +1,50 @@
+<html><head><title>CMDUM</title></head>
+<body>
+<a name="CMDUM"><hr size=7><h2>CMDUM</h2><hr size=7></a>
+ 
+<table width="100%" border="1">
+<caption>Version CMDUM of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>ASVEC(1)<td>I4<td>Marker for beginning of SCRTCH for all versions</tr>
+<tr>&nbsp;<td></tr>
+</table>
+
+<p>Referenced by 
+   <a href="../CodeGroups/HTSINSI/ALLOC.html">ALLOC</a>
+<p>Includes 
+   <a href="../Dimensions/PMXOSV.html">PMXOSV</a>
+<p>Code
+<pre>
+C    FROM CMDUM.COM
+C    AREA RESERVED FOR OSVS:
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxosv.inc'
+C
+C     SPECIAL COMMON SCRTCH
+       COMMON/SCRTCH/ ASVEC
+       INTEGER        ASVEC(1)
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="CMDUM">
+</Object>
+
+</body>
+</html>
+

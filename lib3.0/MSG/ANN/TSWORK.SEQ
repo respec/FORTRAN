@@ -1,0 +1,814 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  tswork.seq for lib ann
+END COMMENT 
+CLU           39    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  TSWORK                                                              
+  END LABEL   
+  DATA   CLU    39
+#GROUP    1  TYPE MENU
+$SCREEN
+Choose a Timeseries values option.
+
+@Select !                                 @Modify
+                                          @Add
+@List   !                                 @Copy
+@Table  !                                 @Delete
+                                          @Generate
+@Return !
+$DEFAULT   1
+$LENGTH    8
+$OPTION Select
+_DESC - data sets to use in List/Table
+$OPTION List
+_DESC - data set columns, time rows
+$OPTION Table
+_DESC - month columns, daily rows
+$OPTION Modify
+_DESC - values in a data set
+$OPTION Add
+_DESC - values to a data set
+$OPTION Copy
+_DESC - from data set to data set
+$OPTION Delete
+_DESC - values from a data set
+$OPTION Generate
+_DESC - data sets from others
+$OPTION Return
+_DESC - to the Values screen
+$HELP
+Select List to retrieve and print up to 12 time series at a time.
+  Columns are time series and rows are dates. Any time step can be used.
+Select Table to retrieve and print time series one page per year with
+  columns as months and rows as days.  Only produced for a daily time step.
+Select Add to put data on a data set if no data exists or the data
+  is not in a compressed block.
+Select Modify to replace data on a data set one value at a time or
+  the entire compressed block if data is compressed.
+Select Copy to copy data from one data set to another with the
+  addition option to update as you go.
+Select Delete to remove data from a data set following a specified DATE.
+Select Generate to create a time-series data set from one or two other time
+  series.  Options include math functions, time shifts, and time changes.
+$WINDOW Timeseries (DT)
+#GROUP    2  TYPE TEXT
+$WINDOW List (DTL) Problem
+$TEXT
+Unable to List time-series data as no data sets have been selected.
+
+To specify data sets containing data to List,
+choose the Select option on this menu.
+#GROUP    3  TYPE TEXT
+$WINDOW Table (DTT) Problem
+$TEXT
+Unable to Table time-series data as no data sets have been selected.
+
+To specify data sets containing data to Table,
+choose the Select option on this menu.
+#GROUP    4  TYPE TEXT
+$WINDOW List (DTL) Problem
+$TEXT
+The List feature is only able to display time-series data for
+a maximum of 30 data sets, and then, only to a file (a maximum
+of 8 data sets may be displayed to the screen).  Thus, only the
+first 30 data sets in the buffer will be used for the listing.
+
+If this is satisfactory, use the Accept (F2) command to continue.
+
+If you would like to select a subset of 30 or less data sets,
+use the Previous (F4) command, then choose the Select option.
+#GROUP   10  TYPE MENU
+$TITLE Select a time-series values Modify option.
+$DEFAULT   1
+$LENGTH    7
+$WIDTH    78
+$COLENGTH  8
+$OPTION Values
+_DESC - modify time-series values or quality codes
+$OPTION Fill
+_DESC - recover missing blocks and fill with missing value filler
+$OPTION Return
+_DESC - to the Timeseries screen
+$HELP
+Select Values to modify time-series values or quality codes.
+Select Recover to retrieve missing blocks of data.
+  The blocks will be filled with the missing value filler TSFILL
+  and the quality code will be set to 30.
+$WINDOW Modify (DTM)
+#GROUP   11  TYPE TEXT
+$TEXT
+Start of data:                          End  of  data:
+#GROUP   12  TYPE TEXT
+$TEXT
+           time steps changed starting
+#GROUP   13  TYPE FILE
+$SCREEN
+              Name of output file?
+
+          [@FILE......................]
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   14  TYPE PRM1
+$SCREEN
+
+        Enter number of data set to modify  [@DSN..]
+
+(Note: Use 'Intrpt' command to return to the Timeseries screen.)
+$FIELD @DSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$WINDOW Modify - 1 (DTM)
+#GROUP   15  TYPE PRM1
+$SCREEN
+
+ A summary of all the data blocks modified will be output to a file.
+ A summary of every 50th block modified will be output to the terminal.
+
+ Enter the name of the summary output file?
+ [@FILE...........................................................]
+
+ Enter starting date to begin filling data blocks:
+  Year    Mon   Day  Hour   Min   Sec
+ [@YR.]  [@M]  [@D]  [@H]  [@I]  [@S]
+$FIELD @FILE
+_TYPE CHARACTER
+$FIELD @YR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1492 : 9999            
+_DEFAULT -999
+_HELP
+year (4 digits)
+$FIELD @M
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 12                 
+_DEFAULT 1
+_HELP
+month
+$FIELD @D
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 31                 
+_DEFAULT 1
+_HELP
+day
+$FIELD @H
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 24                 
+_DEFAULT 0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @I
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @S
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+second, use 0
+$HELP
+ Input date as year,month,day,hour,minute,second.
+$WINDOW Modify - 2 (DTM)
+#GROUP   16  TYPE PRM1
+$SCREEN
+
+ Enter starting date to begin modifying data values:
+
+        Year    Mon   Day  Hour   Min   Sec
+       [@YR.]  [@M]  [@D]  [@H]  [@I]  [@S]
+$FIELD @YR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1492 : 9999            
+_DEFAULT -999
+_HELP
+year (4 digits)
+$FIELD @M
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 12                 
+_DEFAULT 1
+_HELP
+month
+$FIELD @D
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 31                 
+_DEFAULT 1
+_HELP
+day
+$FIELD @H
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 24                 
+_DEFAULT 0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @I
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @S
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+second, use 0
+$HELP
+ Input date as year,month,day,hour,minute,second.
+$WINDOW Modify - 2 (DTM)
+#GROUP   17  TYPE PRM1
+$SCREEN
+
+ Modify values and quality codes as desired.
+
+           Value   [@VALUE....]
+           Quality [@QUAL.....]
+$FIELD @VALUE
+_TYPE REAL
+_RANGE    -999.00  :   -999.00 
+_DEFAULT 0.
+_HELP
+Updated data value
+$FIELD @QUAL
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 30                 
+_DEFAULT 0
+_HELP
+quality of updated data value
+$HELP
+Enter new values for the above time interval.
+If you do not wish to change the values, use the 'Accept' command.
+command to retain the original value and quality code.
+$WINDOW Modify - 3 (DTM)
+#GROUP   18  TYPE TEXT
+$TEXT
+**** NOTE:  more than 1 interval will be changed *****
+#GROUP   20  TYPE MENU
+$TITLE Select a time-series data Copy option.
+$DEFAULT   1
+$LENGTH    8
+$WIDTH    78
+$COLENGTH  8
+$OPTION Datasets
+_DESC - specify source and target data sets for the copy
+$OPTION Period
+_DESC - define period of record to copy from source to target data set
+$OPTION Update
+_DESC - specify any data value updates for the target data set
+$OPTION Execute
+_DESC - copy from specified source to specified target data set
+$OPTION Return
+_DESC - to the Values screen
+$HELP
+ First select Dataset, Period, and Update options to set specifications
+ then select Execute to do the copy or copy and update.  Return when
+ finished copying or if you do not want to copy a data set.
+$WINDOW Copy (DTC)
+#GROUP   21  TYPE PRM1
+$SCREEN
+
+ For Time-series Copy operation, enter the following:
+
+  Source data-set number  [@SDSN.]
+
+  Target data-set number  [@TDSN.]
+$FIELD @SDSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 32000              
+_DEFAULT 0
+_HELP
+The data set with the time series to be copied.
+$FIELD @TDSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 32000              
+_DEFAULT 0
+_HELP
+Data set for the existing data to be copied into.
+If this data set does not exist, the attributes
+from the source dsn can be used to add this dsn.
+$HELP
+Time-series data will be copied from the source dsn to the
+target dsn, with updates as specified by the user.
+$WINDOW Datasets (DTCD)
+#GROUP   22  TYPE MENU
+$TITLE Target data set does not exist, copy source data-set's attributes?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  8
+$OPTION Yes
+_DESC - copy source data-set's attributes to the target data set
+$OPTION No
+_DESC - do not copy (Copy function may not be performed with these data sets
+$HELP
+To copy data to a new data set, the source data-set's
+attributes must be copied to the new data set.
+$WINDOW Datasets - 2 (DTCD)
+#GROUP   23  TYPE TEXT
+$TEXT
+Target data ends after start of copy, can't overwrite.
+End date of target data is new start date.
+
+$WINDOW Period (DTCP) Problem
+#GROUP   24  TYPE TEXT
+$TEXT
+Source data starts after start of copy.
+Start date of source data is new copy start date.
+
+$WINDOW Period (DTCP) Problem
+#GROUP   25  TYPE TEXT
+$TEXT
+Source data ends before end of copy.
+End date of source data is new copy end date.
+
+$WINDOW Period (DTCP) Problem
+#GROUP   26  TYPE TEXT
+$TEXT
+Target data present after start of copy.
+End date of target data is new copy end date.
+
+$WINDOW Period (DTCP) Problem
+#GROUP   27  TYPE MENU
+$TITLE Try another set of dates?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  8
+$OPTION Yes
+$OPTION No
+$WINDOW Period (DTCP) Problem
+#GROUP   28  TYPE FILE
+$SCREEN
+
+  Enter the name of the input file containing data values updates.
+
+ [@FILE...........................................................]
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ The order of the information in the file is date (yr,mo,dy,hr,mn,sc),
+ time interval, time units, updated value, and quality flag.
+ The format of the data is I6, 5I3, I6, I7, F11.0, I7.
+$WINDOW File (DTCUF)
+#GROUP   29  TYPE FILE
+$WINDOW Terminal (DTCUT)
+$SCREEN
+
+    Enter the name of the file to contain data values updates.
+
+ [@FILE...........................................................]
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ The order of the information in the file is date (yr,mo,dy,hr,mn,sc),
+ time interval, time units, updated value, and quality flag.
+ The format of the data is I6, 5I3, I6, I7, F11.0, I7.
+#GROUP   30  TYPE PRM2
+$HEADER
+To end input of UPDATEs, enter a 0 for the year.
+     updated quality < start of time step><--- time --->
+      value    code    year mo dy hr mi sc steps   units
+$WINDOW Terminal (DTCUT)
+$FIELD FIELD1
+_TYPE REAL
+_WIDTH    11
+_COLUMN     2
+_RANGE    -999.00  :   -999.00 
+_DEFAULT 0.
+_HELP
+new value
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     7
+_COLUMN    14
+_RANGE  0 : 30                 
+_DEFAULT 0
+_HELP
+quality of new value
+$FIELD FIELD3
+_TYPE INTEGER
+_WIDTH     6
+_COLUMN    22
+_RANGE  0 : 9999               
+_DEFAULT 0
+_HELP
+year (4 digits) (use a 0 to end update)
+$FIELD FIELD4
+_TYPE INTEGER
+_WIDTH     3
+_COLUMN    28
+_RANGE  1 : 12                 
+_DEFAULT 1
+_HELP
+month
+$FIELD FIELD5
+_TYPE INTEGER
+_WIDTH     3
+_COLUMN    31
+_RANGE  1 : 31                 
+_DEFAULT 1
+_HELP
+day
+$FIELD FIELD6
+_TYPE INTEGER
+_WIDTH     3
+_COLUMN    34
+_RANGE  0 : 24                 
+_DEFAULT 0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD FIELD7
+_TYPE INTEGER
+_WIDTH     3
+_COLUMN    37
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD FIELD8
+_TYPE INTEGER
+_WIDTH     3
+_COLUMN    40
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+second, use 0 for daily or midnight
+$FIELD FIELD9
+_TYPE INTEGER
+_WIDTH     6
+_COLUMN    43
+_RANGE  1 : 60                 
+_DEFAULT 1
+_HELP
+time interval
+$FIELD FIELD10
+_TYPE CHARACTER
+_WIDTH     7
+_COLUMN    50
+_VALID SECOND ,MINUTE ,HOUR   ,DAY    ,MONTH  ,YEAR
+_DEFAULT DAY
+_HELP
+time units
+$HELP
+Input date as year,month,day,hour,minute,second
+#GROUP   31  TYPE TEXT
+$TEXT
+Problem with date.
+#GROUP   32  TYPE TEXT
+$TEXT
+Dates must be in sequential order.
+#GROUP   33  TYPE TEXT
+$TEXT
+  Starting copy.
+$WINDOW Copy (DTCC)
+#GROUP   34  TYPE TEXT
+$TEXT
+  Copy complete, return code: &
+#GROUP   35  TYPE TEXT
+$TEXT
+Unable to perform Period option as no data sets have been
+selected on which to perform the copy function.
+
+To specify the source and target data sets fot the copy
+function, select the Datasets option from the Copy menu.
+$WINDOW Period (DTCP) Problem
+#GROUP   36  TYPE MENU
+$TITLE Select an Update option.
+$DEFAULT   1
+$LENGTH    8
+$WIDTH    78
+$COLENGTH  8
+$OPTION File
+_DESC - get updated data values from an existing file
+$OPTION Terminal
+_DESC - enter updated data values now from terminal
+$OPTION None
+_DESC - no data values to be updated during Copy
+$HELP
+Select File to read updated values from an existing file.
+Select Terminal to enter updated values from the terminal.
+Select None to perform a straight copy, no update file.
+ The order of the information in the file is date (yr,mo,dy,hr,mn,sc),
+ time interval, time units, updated value, and quality flag.
+ The format of the data is I6, 5I3, I6, I7, F11.0, I7.
+$WINDOW Update (DTCU)
+#GROUP   37  TYPE MENU
+$TITLE Data sets specified, but Copy not performed. Sure you want to Return?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  8
+$OPTION Yes
+_DESC - return to the Values screen and do not perform Copy
+$OPTION No
+_DESC - remain in Copy menu and have another chance to perform Copy function
+$WINDOW Copy (DTC) Problem
+#GROUP   38  TYPE TEXT
+$TEXT
+Unable to perform Copy option as no data sets have been
+selected on which to perform the copy function.
+
+To specify the source and target data sets fot the copy
+function, select the Datasets option from the Copy menu.
+$WINDOW Copy (DTCC) Problem
+#GROUP   39  TYPE TEXT
+$WINDOW  Terminal (DTCUT) end update period
+$TEXT
+
+                     Notice
+
+Input screens will be ended because date specified
+for end of update period has been reached or passed.
+#GROUP   41  TYPE PRM1
+$SCREEN
+
+  Enter number of data set from which data is to be deleted [@PRM1]
+
+     (Note: Enter 0 for data set number or use 'Intrpt' command
+       to return from Delete option to the Timeseries screen.)
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE  0 : 32000              
+_DEFAULT 0
+$WINDOW Delete - 1 (DTD)
+#GROUP   42  TYPE PRM1
+$SCREEN
+
+ Enter date from which to delete all ensuing data.
+
+      Year    Mon   Day  Hour   Min   Sec
+     [@YR.]  [@M]  [@D]  [@H]  [@I]  [@S]
+$FIELD @YR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1492 : 9999            
+_DEFAULT -999
+_HELP
+year (4 digits)
+$FIELD @M
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 12                 
+_DEFAULT 1
+_HELP
+month
+$FIELD @D
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 31                 
+_DEFAULT 1
+_HELP
+day
+$FIELD @H
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 24                 
+_DEFAULT 0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @I
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @S
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+second, use 0
+$HELP
+ Input date as year,month,day,hour,minute,second.
+$WINDOW Delete - 2 (DTD)
+#GROUP   43  TYPE TEXT
+$TEXT
+No data to delete in the specified span.
+$WINDOW Delete - 3 (DTD) Problem
+#GROUP   44  TYPE TEXT
+$TEXT
+All data in the data set will be deleted.
+
+#GROUP   45  TYPE MENU
+$TITLE Are you sure you want to delete the specified data?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  8
+$OPTION Yes
+_DESC - delete all data beginning with specified start date
+$OPTION No
+_DESC - do not perform Delete of specified data
+$WINDOW Delete - 3 (DTD)
+#GROUP   46  TYPE TEXT
+$TEXT
+Delete cancelled, return code: &
+$WINDOW Delete (DTD) Problem
+#GROUP   47  TYPE TEXT
+$TEXT
+Delete complete, return code: &
+$WINDOW Delete (DTD)
+#GROUP   51  TYPE PRM1
+$SCREEN
+
+ Enter number of data set to which data is to be added [@DSN..]
+
+   (Note: Enter 0 for data set number or use 'Intrpt' command
+      to return from Add option to the Timeseries screen.)
+$FIELD @DSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$WINDOW Add (DTA)
+#GROUP   52  TYPE PRM1
+$SCREEN
+  For the time-series data to be added:
+
+  <-----Date to begin adding data---->
+   Year    Mon   Day  Hour   Min   Sec
+  [@YR.]  [@M]  [@D]  [@H]  [@I]  [@S]
+
+  Number of values to be added [@NVAL.]
+  Quality code of new data     [@QUAL.]
+  Time step                    [@TSTP.]
+  Time units                   [@TUNIT]
+$FIELD @YR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1492 : 9999            
+_DEFAULT -999
+_HELP
+year (4 digits)
+$FIELD @M
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 12                 
+_DEFAULT 1
+_HELP
+month
+$FIELD @D
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 31                 
+_DEFAULT 1
+_HELP
+day
+$FIELD @H
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 24                 
+_DEFAULT 0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @I
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @S
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+second, use 0
+$FIELD @NVAL
+_TYPE INTEGER
+_RANGE  1 : 366                
+_DEFAULT 24
+_HELP
+ Number of values to be added.
+ The values entered will all have the same quality code and
+ the same constant time step.  Additional data with different
+ quality or time step can be entered in a subsequent step.
+$FIELD @QUAL
+_TYPE INTEGER
+_RANGE  0 : 30                 
+_DEFAULT 0
+_HELP
+ Quality of the data values to be added.
+ The values entered will all have the same quality code and
+ the same constant time step.  Additional data with different
+ quality or time step can be entered in a subsequent step.
+$FIELD @TSTP
+_TYPE INTEGER
+_RANGE  1 : 1440               
+_DEFAULT 1
+_HELP
+ Time step of the data.
+ The values entered will all have the same quality code and
+ the same constant time step.  Additional data with different
+ quality or time step can be entered in a subsequent step.
+$FIELD @TUNIT
+_TYPE CHARACTER
+_VALID SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+ This is the units for the time step.
+ The values entered will all have the same quality code and
+ the same constant time step.  Additional data with different
+ quality or time step can be entered in a subsequent step.
+$HELP
+ The values entered will all have the same quality code and
+ the same constant time step.  Additional data with different
+ quality or time step can be entered in a subsequent step.
+ Data must be added chronologically.
+$WINDOW Add - 2 (DTA)
+#GROUP   53  TYPE PRM2
+$HEADER
+                     Enter data values to add.
+
+                 Sequence Number       Data Value
+                 ---------------       ----------
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     4
+_COLUMN     25
+_PROTECT PROTECTED
+_RANGE  1 : -999               
+_DEFAULT 0
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH     8
+_COLUMN    41
+_PROTECT CORRECT
+_RANGE    -999.00  :   -999.00 
+_DEFAULT -999.
+$HELP
+Enter a new data value for each sequence number. Sequence number is number
+time step from the starting date.
+$WINDOW Add - 3 (DTA)
+#GROUP   54  TYPE TEXT
+$TEXT
+New data would write over existing data.
+
+Use the COPY operation with UPDATE entries or DELETE then ADD.
+$WINDOW Add - 2 (DTA) Problem
+#GROUP   55  TYPE TEXT
+$TEXT
+One or more values in the starting date entered are not valid.
+
+Check starting date carefully as this screen must be correct to continue.
+$WINDOW Add - 2 (DTA) Problem
+#GROUP   61  TYPE TEXT
+$TEXT
+Table time-series data option not currently implemented.
+$WINDOW Table (DTT)
+#GROUP   71  TYPE TEXT
+$TEXT
+Generate time-series data option not currently implemented.
+$WINDOW Generate (DTG)
+#GROUP   72  TYPE TEXT
+$WINDOW Terminal (DTCUT)
+$TEXT
+Terminal input of updated data values not currently allowed.
+#GROUP   73  TYPE PRM1
+$SCREEN
+
+ Enter number of data set to which data is to be added [@DSN..]
+
+(Note: Use the 'Intrpt' command to return from the Add option to
+       the Timeseries screen.)
+$FIELD @DSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$WINDOW Add (DTA)
+$HELP
+ If you don't remember the data set number return to a menu that has 
+ a Select option and then pick the Browse option to list the data sets.
+  END DATA
+END CLU   

@@ -1,0 +1,20 @@
+<p>Referenced by 
+   <a href="../CodeGroups/HPRBUT/OMSG">OMSG</a>,
+   <a href="../CodeGroups/HPRBUT/OMSINI">OMSINI</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTI">OMSTI</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTR">OMSTR</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTC">OMSTC</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTD">OMSTD</a>
+<p>Code
+<pre>
+C
+C     paramters to size variables to be output with next message
+C
+      INTEGER   MXMSI,MXMSR,MXMSC
+      PARAMETER(MXMSI=15,MXMSR=15,MXMSC=200)
+C
+</pre>
+
+
+
+

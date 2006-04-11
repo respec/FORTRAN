@@ -1,0 +1,89 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSSUT">HTSSUT</a>
+<p>Called By
+
+<p>Common Blocks 
+    
+<p>Calls
+
+<p>Code
+<pre>
+C
+C     4.1.01
+C
+      SUBROUTINE TFUNE
+C
+C     + + + PURPOSE + + +
+C     Perform functional operations for the tss when the source
+C     time interval = target time interval.  fills workspace with
+C     values.
+C
+C     + + + COMMON BLOCKS- GETCOM + + +
+      INCLUDE   'ctsin.inc'
+      INCLUDE   'ctsex.inc'
+      INCLUDE   'ctser.inc'
+      INCLUDE   'ctsbu.inc'
+      INCLUDE   'ctsbx.inc'
+      INCLUDE   'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  ABS
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' ENTERING TFUNE')
+ 2010 FORMAT (3X, 'ZERO FLAG=',I6,3X,
+     $        'UNDEFINED FLAG=',I6,3X,
+     $        4(E16.7,2X), (/,3X, 7(E16.7,2X)))
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (TESTFG .GE. 2) WRITE (MESSU,2000)
+C
+C     Set flags to on here.  they are set off in the loop if a
+C     Nonzero or undefined value is found.
+      ZFLAG= 1
+      UFLAG= 1
+C
+      DO 80 I=1,NCOMPS
+        IF (STKIND(I) .GE. 3) GO TO 40
+C         stkind is 1 or 2
+C         point to point or mean to mean data
+C
+C         use same value
+          XVAR(I)= XNEW(I)
+          GO TO 60
+C
+ 40     CONTINUE
+C         point to mean data
+C
+C         use average
+          XVAR(I)= (XOLD(I)+ XNEW(I))/2
+ 60     CONTINUE
+C
+C       set flag off if value is nonzero or undefined
+C       if (xvar(i) .ne. 0.0) zflag= 0
+        IF ((ABS(XVAR(I))).GT.0.0) ZFLAG= 0
+        IF (XVAR(I) .GT. -1.E15) UFLAG= 0
+C
+C
+C     Enddo
+ 80   CONTINUE
+C
+C
+      IF (TESTFG .GE. 2) WRITE (MESSU,2010) ZFLAG,UFLAG,
+     $                          (XVAR(I),I=1,NCOMPS)
+C
+      RETURN
+      END
+</pre>
+
+
+

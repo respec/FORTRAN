@@ -1,0 +1,3 @@
+      INTEGER MXMAT
+      PARAMETER (MXMAT=5)
+C 

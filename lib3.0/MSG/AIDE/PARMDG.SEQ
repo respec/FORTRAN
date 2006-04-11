@@ -1,0 +1,507 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  clu  grpnam  description
+  ___  ______  ___________________________________________
+    3  uparms  term.dat parameters for computer type DG
+    4  emife   instruct window and command line text
+END COMMENT
+CLU            3    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  UPARMS
+  END LABEL
+  DATA   CLU     3
+#GROUP    1  TYPE TEXT
+$TEXT
+   1 CMPTYP C     6    5 PC    PRIME VAX   UNIX  AVIION
+   2 TRMTYP C     6    2 PC    VT100 OTHER
+   3 TRMINP I          5          0        10
+   4 TRMOUT I          6          0        10
+   5 TRMPAU I        124         33       127
+   6 TRMFIL I         64         33       127
+   7 TRMDLM I         59         33       127
+   8 TRMLRN I         33         33       127
+   9 MENCRA C     5    3 NONE DOWN NEXT
+  10 TRMDDD I        124         33       127
+  11 SCRWID I         80         40       256
+  12 SCRLEN I         24         10       100
+  13 FILMAX I         15         10        99
+  14 FILUNI I         30          7        99
+  15 RECTYP C     7    4 WORD   HWORD  BYTE   UNKNOWN
+  16 GRAPHS C     4    1 YES NO
+  17 PLTDV1 C     8    1 DISPLAY PRINTER PLOTTER
+  18 PLTDV2 C     8    2 DISPLAY PRINTER PLOTTER
+  19 PLTDV3 C     8    3 DISPLAY PRINTER PLOTTER
+  20 INPDV1 C     8    1 NONE    MOUSE   DIGITIZ
+  21 COLORS C
+  22 CLRFRM I         15          0        15
+  23 CLRFRT I         11          0        15
+  24 CLRFRL I         13          0        15
+  25 CLRFRE I          4          0        15
+  26 CLRFRC I         14          0        15
+  27 CLRFRP I          7          0        15
+  28 CLRFRD I         15          0        15
+  29 CLRFRN I         14          0        15
+  30 CLRFRS I          7          0        15
+  31 CLRBKO I          2          0        15
+  32 CLRBKE I          1          0        15
+  33 CLRBKD I          0          0        15
+  34 CLRBKS I          0          0        15
+  35 BUGFLG C     5    1 NONE SOME LOTS
+  36 IOERR1 I         18          0      1000
+  37 IOERR2 I         15          0      1000
+  38 IOERR3 I          5          0      1000
+  39 IOERR4 I         57          0      1000
+  40 GKSDIS I       1100          0      9999
+  41 GKSPRT I        102          0      9999
+  42 GKSPLT I       7475          0      9999
+  43 GKSMET I         24          0      9999
+  44 GKSDSP I         24          0      9999
+  45 USRLEV I          0          0         2
+  46 RSPTYP C     6    2 ANNIE EMIFE
+  47 GKPREC C     7    3 STRING CHAR   STROKE
+  48 GKSCFT I          1      -9999      9999
+  49 GKPRFT I      -2808      -9999      9999
+  50 GKPLFT I          1      -9999      9999
+  51 LSOLID I          1      -9999      9999
+  52 LDASH  I          2      -9999      9999
+  53 LDOT   I          3      -9999      9999
+  54 LMIXED I          4      -9999      9999
+  55 1LUSER I          1      -9999      9999
+  56 2LUSER I          1      -9999      9999
+  57 3LUSER I          1      -9999      9999
+  58 4LUSER I          1      -9999      9999
+  59 5LUSER I          1      -9999      9999
+  60 6LUSER I          1      -9999      9999
+  61 CBLACK I          0      -9999      9999
+  62 CWHITE I          1      -9999      9999
+  63 CRED   I          2      -9999      9999
+  64 CGREEN I          3      -9999      9999
+  65 CBLUE  I          4      -9999      9999
+  66 CCYAN  I          5      -9999      9999
+  67 CMAGNT I          6      -9999      9999
+  68 CYELLW I          7      -9999      9999
+  69 1CUSER I          1      -9999      9999
+  70 2CUSER I          1      -9999      9999
+  71 CDOT   I          1      -9999      9999
+  72 CPLUS  I          2      -9999      9999
+  73 CSTAR  I          3      -9999      9999
+  74 CZERO  I          4      -9999      9999
+  75 CX     I          5      -9999      9999
+  76 1SUSER I          6      -9999      9999
+  77 2SUSER I          7      -9999      9999
+  78 3SUSER I          8      -9999      9999
+  79 4SUSER I          9      -9999      9999
+  80 5SUSER I         19      -9999      9999
+  81 PSOLID I          1      -9999      9999
+  82 PHORIZ I         -1      -9999      9999
+  83 PVERT  I         -2      -9999      9999
+  84 PDIAG  I         -3      -9999      9999
+  85 1PUSER I         -4      -9999      9999
+  86 2PUSER I         -5      -9999      9999
+  87 3PUSER I         -6      -9999      9999
+  88 4PUSER I          1      -9999      9999
+  89 5PUSER I          1      -9999      9999
+  90 6PUSER I          1      -9999      9999
+  91 PFKEY1 C     2    1 H C A P G L S O W M V T J D U I E Z K Q X
+  92 PFKEY2 C     2    3 H C A P G L S O W M V T J D U I E Z K Q X
+  93 PFKEY3 C     2    0 H C A P G L S O W M V T J D U I E Z K Q X
+  94 PFKEY4 C     2    4 H C A P G L S O W M V T J D U I E Z K Q X
+  95 PFKEY5 C     2    6 H C A P G L S O W M V T J D U I E Z K Q X
+  96 PFKEY6 C     2   16 H C A P G L S O W M V T J D U I E Z K Q X
+  97 PFKEY7 C     2    7 H C A P G L S O W M V T J D U I E Z K Q X
+  98 PFKEY8 C     2   20 H C A P G L S O W M V T J D U I E Z K Q X
+  99 PFKEY9 C     2   21 H C A P G L S O W M V T J D U I E Z K Q X
+ 100 PFKEY0 C     2   12 H C A P G L S O W M V T J D U I E Z K Q X
+ 101 BCOLOR C     6    1 BLACK WHITE OTHER
+ 102 SYMSIZ I        100          1     10000
+ 103 TXTEXF I        100          0       200
+ 104 TXTCHS I          0          0       200
+ 105 BGRED  I          0          0       100
+ 106 BGREEN I          0          0       100
+ 107 BGBLUE I          0          0       100
+ 108 WEIBA  I          0          0      1000
+ 109 PBCOLR C     6    2 BLACK WHITE
+#GROUP  120  TYPE TEXT
+$TEXT
+COLOR      8       65536     256       1
+BACK       0
+FORE       1
+RED        2         255       0       0
+GREEN      3           0     255       0
+BLUE       4           0       0     255
+CYAN       5           0     255     255
+MAGENTA    6         255       0     255
+YELLOW     7         255     255       0
+ORANGE     8         255     165       0
+BROWN      9         165      42      42
+VIOLET    10         238     130     238
+GREY      11         192     192     192
+LTRED     12         255     182     193
+LTGREEN   13          32     178     170
+LTBLUE    14         173     216     230
+HOTPINK   15         255     105     180
+KHAKI     16         240     230     140
+TURQUOSE  17          64     224     208
+FORESTGR  18          34     139      34
+THISTLE   19         216     191     216
+PURPLE    20         160      32     240
+WHEAT     21         245     222     179
+SALMON    22         250     128     114
+NAVY      23           0       0     128
+SKYBLUE   24         135     206     235
+GOLDENRD  25         218     165      32
+BLACK     26           1       1       1
+CHARCOAL  27          81      81      81
+DARKGREY  28         130     130     130
+LTGREY    29         220     220     220
+WHITE     30         255     255     255
+#GROUP  121  TYPE TEXT
+$TEXT
+LINETYPE   8           1
+NONE                   0
+SOLID                  1
+DASH                   2
+DOT                    3
+DASHDOT                4
+#GROUP  122  TYPE TEXT
+$TEXT
+SYMBOL     8           1
+NONE                   0
+.                      1
++                      2
+*                      3
+O                      4
+X                      5
+SQUARE                 6
+TRIANGLE               7
+DIAMOND                8
+OCTOGON                9
+TRIPTDWN              10
+WATSURF               11
+STAR                  12
+OPENUPAR              13
+SPIDER                14
+OCTWIND               15
+CROSBOX               16
+WINDOW                17
+CROSDIAM              18
+DIAMWIND              19
+#GROUP  123  TYPE TEXT
+$TEXT
+FILL       8           1
+NONE                   0
+HOLLOW                 1
+SOLID                  2
+HORIZON               -1
+VERTICAL              -2
+DIAGONAL              -3
+RDIAGON               -4
+BOX                   -5
+DIABOX                -6
+  END DATA
+END CLU
+CLU            4    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  EMIFE
+  END LABEL
+  DATA   CLU     4
+#GROUP    1  TYPE TEXT
+$TEXT
+TEXT    MENU    1D-DATA 2D-DATA FILE    STATUS  HELP    LIMITS  TUTOR   COMMANDSXPAD    INSTRUCTERROR
+#GROUP    2  TYPE TEXT
+$TEXT
+Help  Cmhlp AcceptPrev  Guide LimitsStatusOops  WindowMove  View  Top   Jump  Dnpg  Uppg  IntrptExit  Zap   Keys  Quiet
+#GROUP    3  TYPE TEXT
+$TEXT
+Xpad  F     B     R     Y     N
+#GROUP    5  TYPE TEXT
+$TEXT
+End of input from macro,
+#GROUP    6  TYPE TEXT
+$TEXT
+now reading input from keyboard.
+#GROUP    7  TYPE TEXT
+$TEXT
+Too many macros currently in use.
+#GROUP    8  TYPE TEXT
+$TEXT
+Enter macro name:
+#GROUP    9  TYPE TEXT
+$TEXT
+Unable to open specified macro.
+#GROUP   10  TYPE TEXT
+$TEXT
+Use any key to continue.
+#GROUP   11  TYPE TEXT
+$TEXT
+Help   display help in this box
+#GROUP   12  TYPE TEXT
+$TEXT
+Cmhlp  display what you see here
+#GROUP   13  TYPE TEXT
+$TEXT
+Accept contents of current screen, go to next screen
+#GROUP   14  TYPE TEXT
+$TEXT
+Prev   go to previous screen
+#GROUP   15  TYPE TEXT
+$TEXT
+Guide  display tutorial for new users
+#GROUP   16  TYPE TEXT
+$TEXT
+Limits display limits in this box
+#GROUP   17  TYPE TEXT
+$TEXT
+Status display status in this box
+#GROUP   18  TYPE TEXT
+$TEXT
+Oops   undo changes made in error
+#GROUP   19  TYPE TEXT
+$TEXT
+Window specify data to operate on
+#GROUP   20  TYPE TEXT
+$TEXT
+Move   move rows and/or columns of data
+#GROUP   21  TYPE TEXT
+$TEXT
+View   plot specified data
+#GROUP   22  TYPE TEXT
+$TEXT
+Top    go to first (opening) screen of application
+#GROUP   23  TYPE TEXT
+$TEXT
+Jump   go to screen specifed
+#GROUP   24  TYPE TEXT
+$TEXT
+Dn pg  display more text or data
+#GROUP   25  TYPE TEXT
+$TEXT
+Up pg  display previous text or data
+#GROUP   26  TYPE TEXT
+$TEXT
+Intrpt interrupt current calculation
+#GROUP   27  TYPE TEXT
+$TEXT
+Exit   clean up and return to operating system
+#GROUP   28  TYPE TEXT
+$TEXT
+Zap    STOP right now
+#GROUP   29  TYPE TEXT
+$TEXT
+Keys   redefine function keys
+#GROUP   30  TYPE TEXT
+$TEXT
+Quiet  turn off this box to allow more room for data
+#GROUP   31  TYPE TEXT
+$TEXT
+Xpad   use scratch pad
+#GROUP   41  TYPE TEXT
+$TEXT
+                      Select an option using arrow keys
+                   then confirm selection with the F2 key,  or
+                     Type the first letter of an option.
+#GROUP   42  TYPE TEXT
+$TEXT
+
+   Additional characters required to select from highlighted options.
+#GROUP   43  TYPE TEXT
+$TEXT
+
+                           Unknown option.
+#GROUP   51  TYPE TEXT
+$TEXT
+
+                         Undefined Function Key.
+#GROUP   52  TYPE TEXT
+$TEXT
+
+                      Undefined command in this context.
+#GROUP   61  TYPE TEXT
+$TEXT
+               Enter a command by typing first letter of name or
+          move highlight to desired command with left or right arrow,
+                             then <carriage return>
+#GROUP   62  TYPE TEXT
+$TEXT
+
+                       No more commands to the left
+#GROUP   63  TYPE TEXT
+$TEXT
+
+                       No more commands to the right
+#GROUP   64  TYPE TEXT
+$TEXT
+
+                             Unknown keystroke
+#GROUP   65  TYPE TEXT
+$TEXT
+
+                  'Accept' command to go to next screen
+#GROUP   66  TYPE TEXT
+$TEXT
+
+                    Waiting for computer to complete a task
+#GROUP   67  TYPE TEXT
+$TEXT
+                         Space bar for more text,
+                  'Accept' command to go to next screen
+#GROUP   71  TYPE TEXT
+$TEXT
+                  Page Down or Down Arrow for more text
+                          F3 to return to Data
+#GROUP   72  TYPE TEXT
+$TEXT
+                Page Up or Up Arrow to review previous text
+                          F3 to return to Data
+#GROUP   73  TYPE TEXT
+$TEXT
+                  Page Down or Down Arrow for more text
+                Page Up or Up Arrow to review previous text
+                          F3 to return to Data
+#GROUP   74  TYPE TEXT
+$TEXT
+
+              Data values not in correct order for current field
+#GROUP   75  TYPE TEXT
+$TEXT
+                   Invalid data input in highlighted field.
+               Use 'Limits' command to see acceptable range,  or
+                   'Help' command to see field definition.
+#GROUP   76  TYPE TEXT
+$TEXT
+            Null data input, please enter data in highlighted field.
+               Use 'Limits' command to see acceptable range,  or
+                   'Help' command to see field definition.
+#GROUP   77  TYPE TEXT
+$TEXT
+
+                         No Help available for this field.
+
+#GROUP   78  TYPE TEXT
+$TEXT
+ Default:                 Minimum:                 Maximum:
+#GROUP   79  TYPE TEXT
+$TEXT
+   Valid:
+#GROUP   80  TYPE TEXT
+$TEXT
+ Invalid:
+#GROUP   81  TYPE TEXT
+$TEXT
+                        Any integer is acceptable.
+#GROUP   82  TYPE TEXT
+$TEXT
+                        Any number is acceptable.
+#GROUP   83  TYPE TEXT
+$TEXT
+                     Any character string is acceptable.
+#GROUP   85  TYPE TEXT
+$TEXT
+                    Enter data in highlighted field(s).
+   Use carriage return or arrow keys to enter data and move between fields.
+      Use 'Accept' command to go to next screen when done entering data.
+#GROUP   86  TYPE TEXT
+$TEXT
+                  Use cursor keys to define window of data.
+               Enter desired operation when window is defined.
+#GROUP   87  TYPE TEXT
+$TEXT
+                        View data in highlighted field.
+                 Use 'Help' command to see field definition(s).
+#GROUP   88  TYPE TEXT
+$TEXT
+
+          Current field is protected, data value may not be modified.
+#GROUP   89  TYPE TEXT
+$TEXT
+          The value for the number of rows for this
+          2-dimensional parameter screen is zero,
+          thus the screen is not able to be generated.
+#GROUP   91  TYPE TEXT
+$TEXT
+               Page Down or Down Arrow for more scratch pad
+                           F3 to return to Data
+#GROUP   92  TYPE TEXT
+$TEXT
+        Page Up or Up Arrow to review previous parts of scratch pad
+                           F3 to return to Data
+#GROUP   93  TYPE TEXT
+$TEXT
+               Page Down or Down Arrow for more scratch pad
+        Page Up or Up Arrow to review previous parts of scratch pad
+                           F3 to return to Data
+#GROUP   94  TYPE TEXT
+$TEXT
+               Page Down or Down Arrow for more scratch pad
+        Page Up or Up Arrow to review previous parts of scratch pad
+                           F3 to return to Data
+#GROUP   95  TYPE TEXT
+$TEXT
+      Option field:  use space bar to toggle between ON (X) and OFF ( ).
+          Use carriage return or arrow keys to move between fields.
+      Use 'Accept' command to go to next screen when done entering data.
+#GROUP   96  TYPE TEXT
+$TEXT
+                Unable to toggle on option(s) as the number of
+          allowable selected options for this set would be exceeded.
+               Use the 'Help' command to see field definition.
+#GROUP   97  TYPE TEXT
+$TEXT
+                  Not enough options selected for this set.
+            Select more options within this set before continuing.
+               Use the 'Help' command to see field definition.
+#GROUP    98  TYPE TEXT
+$TEXT
+     Use arrow keys to highlight the desired file. Press F2 or RETURN to
+     confirm selection. Or use arrow keys to highlight one of the first 3
+         fields to change directory/wild card or to type a file name.
+#GROUP    99  TYPE TEXT
+$TEXT
+                      Enter a new directory search path.
+                   Press F2 or RETURN to confirm selection.
+#GROUP    100  TYPE TEXT
+$TEXT
+                     Enter a new wild card search string.
+                   Press F2 or RETURN to confirm selection.
+#GROUP    101  TYPE TEXT
+$TEXT
+                    Enter a pathname of an existing file.
+                   Press F2 or RETURN to confirm selection.
+#GROUP  110  TYPE TEXT
+$TEXT
+      File already exists for the file name entered in this data field.
+   To open the file as a NEW file, you must specify to Overwrite the file.
+             To do so, toggle ON the associated Overwrite field.
+#GROUP  111  TYPE TEXT
+$TEXT
+      File already exists for the file name entered in this data field.
+            Overwriting or Appending to the file may be possible.
+ Use Limits (F5) to see valid options for the field associated with this file.
+#GROUP  112  TYPE TEXT
+$TEXT
+      File already exists for the file name entered in this data field.
+ This file may not be opened as a NEW file as overwriting it is not permitted.
+#GROUP  113  TYPE TEXT
+$TEXT
+      File does not exist for the file name entered in this data field.
+         Enter the name of an existing file or use wild card entries
+        (e.g. *.dat) to display available files in the Limits window.
+#GROUP  114  TYPE TEXT
+$TEXT
+      File already in use for the file name entered in this data field.
+     Enter the name of another file or use wild card entries (e.g. *.dat)
+            to display other available files in the Limits window.
+#GROUP  115  TYPE TEXT
+$TEXT
+     Unable to open file specified by the name entered in this data field.
+     Enter the name of another file or use wild card entries (e.g. *.dat)
+            to display other available files in the Limits window.
+#GROUP  116  TYPE TEXT
+$TEXT
+            File name specified in this data field does not match
+             any of the valid file names required for this file.
+      To view the list of valid file names, use the Limits (F5) command.
+  END DATA
+END CLU

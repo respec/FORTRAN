@@ -1,0 +1,2103 @@
+ WTR
+ WTR ***********************************
+ WTR *                                 *
+ WTR * PESTICIDE ROOT ZONE MODEL - 2   *
+ WTR *     PRZM-2 RELEASE 2.00         *
+ WTR *       SEPTEMBER  1994           *
+ WTR ***********************************
+ WTR
+ WTR
+ WTR DEVELOPED FOR:
+ WTR       U.S. ENVIRONMENTAL PROTECTION AGENCY
+ WTR       OFFICE OF RESEARCH AND DEVELOPMENT
+ WTR       ATHENS ENVIRONMENTAL RESEARCH LABORATORY
+ WTR       ATHENS, GA.  30605
+ WTR       706-546-3210
+ WTR
+ WTR NITROGEN SIMULATION, TEMPERATURE CORRECTION, PRZM INPUT FOR LA PLATA, CO
+ WTR
+ WTR
+ WTR
+ WTR
+ WTR
+ WTR SIMULATION START DATE (DAY-MONTH-YEAR)          1 JAN., 57
+ WTR SIMULATION  END  DATE (DAY-MONTH-YEAR)         31 DEC., 61
+ WTR
+ WTR
+ WTR SEPTIC SYSTEM, SOIL N CALIBRATION RUN #6
+ WTR
+ WTR
+ WTR
+ WTR
+ WTR
+ WTR HYDROLOGY AND SEDIMENT RELATED PARAMETERS
+ WTR -----------------------------------------
+ WTR
+ WTR PAN COEFFICIENT FOR EVAPORATION                     0.7500
+ WTR FLAG FOR ET SOURCE (0=EVAP,1=TEMP, 2=EITHER)             0
+ WTR DEPTH TO WHICH ET IS COMPUTED YEAR-ROUND (CM)      15.0000
+ WTR SNOW MELT COEFFICIENT (CM/DEG-C-DAY)                    0.4400
+ WTR INITIAL CROP NUMBER                                      1
+ WTR INITIAL CROP CONDITION                                   2
+ WTR
+ WTR
+ WTR CROP INFORMATION
+ WTR ----------------
+ WTR
+ WTR        MAXIMUM                                   SURFACE
+ WTR        INTERCEPT.MAXIMUM     MAXIMUM   MAXIMUM   CONDITION  MAXIMUM                                USLE COVER MANAGEMENT
+ WTR CROP   POTENTIAL ROOT DEPTH  COVER     WEIGHT    AFTER      HEIGHT   AMC  RUNOFF CURVE NUMBERS     "C" FACTOR
+ WTR NUMBER   (CM)      (CM)       (%)      (KG/M**2) HARVEST     (CM)        FALLOW    CROP  RESIDUE   FALLOW  CROP    RESIDUE
+ WTR
+ WTR                                                                        I     38      38       38
+ WTR    1     0.2000     50.00     95.00    0.0000E+00    1        0.000   II     58      58       58   0.0000  0.0000  0.0000
+ WTR                                                                      III     76      76       76
+ WTR
+ WTR
+ WTR CROP ROTATION INFORMATION
+ WTR -------------------------
+ WTR
+ WTR CROP               EMERGENCE           MATURATION          HARVEST
+ WTR NUMBER             DATE                DATE                DATE
+ WTR
+ WTR    1                2 JAN., 57          1 MAY , 57          1 NOV., 57
+ WTR
+ WTR
+ WTR SOILS PARAMETERS (HAPLOBOROLLS)
+ WTR
+ WTR
+ WTR
+ WTR
+ WTR
+ WTR GENERAL SOIL INFORMATION
+ WTR ------------------------
+ WTR
+ WTR CORE DEPTH (CM)                                      250.0
+ WTR TOTAL HORIZONS IN CORE                                   5
+ WTR PLANT UPTAKE EFFICIENCY FACTOR                  0.0000E+00
+ WTR THETA FLAG                 (0=INPUT,1=CALCULATED)        0
+ WTR PARTITION COEFFICIENT FLAG (0=INPUT,1=CALCULATED)        0
+ WTR BULK DENSITY FLAG          (0=INPUT,1=CALCULATED)        0
+ WTR SOIL HYDRAULICS MODULE     (0=HYDR1,1=HYDR2)             0
+ WTR TRANSPORT SOLUTION TECHNIQUE   (0=BACKDIFF,1=MOC)        0
+ WTR IRRIGATION FLAG                (0=OFF,1=ON)              0
+ WTR TEMPERATURE CORRECTION         (0=OFF,1=ON)              1
+ WTR THERMAL CONDUCTIVITY    (0=SUPPLIED,1=CALCULATED)        1
+ WTR BIODEGRADATION FLAG            (0=OFF,1=ON)              0
+ WTR
+ WTR MONTHLY VALUES OF SOIL SURFACE ALBEDO      (JAN through DEC)
+ WTR           0.60  0.60  0.45  0.16  0.25  0.25  0.25  0.25  0.25  0.25  0.18  0.16
+ WTR SOIL EMMISSIVITY                                      0.9700
+ WTR HEIGHT ABOVE GROUND WHERE WIND SPEED MEASURED (M)      10.00
+ WTR BOTTOM BOUNDARY TEMPERAUTRE MONTHLY VALUE, JAN - DEC
+ WTR           6.00   5.00   5.00   6.00   8.00  10.00  13.00  13.00  11.00   9.00   6.00   6.00
+ WTR
+ WTR
+ WTR
+ WTR
+ WTR SOIL HORIZON INFORMATION
+ WTR ------------------------
+ WTR
+ WTR                       DISS.  SORB.  VAPOR  INITIAL                           FIELD     WILTING
+ WTR                       PEST.  PEST.  PEST.  SOIL                              CAPACITY  POINT
+ WTR             BULK      DECAY  DECAY  DECAY  WATER     DRAINAGE    LAT DRAIN   WATER     WATER     PARTITION DISPERSION  ORGANIC
+ WTR HORI- THICK DENSITY   RATE   RATE   RATE   CONTENT   PARAMETER   PARAMETER   CONTENT   CONTENT   COEFF     COEFF       CARBON
+ WTR  ZON  (CM)  (G/CM**3) (/DAY) (/DAY) (/DAY) (CM/CM)   (/DAY)      (/DAY)      (CM/CM)   (CM/CM)   (CM**3/G) (CM**2/DAY)   (%)
+ WTR --------------------------------------------------------------------------------------------------------------------------
+ WTR
+ WTR   1     5.0  1.2700  .00000 0.00 .00000   0.250       0.000       0.000      0.250    0.120    0.00000  0.000E+00
+ WTR   2    45.0  1.2700  .00000 0.00 .00000   0.250       0.000       0.000      0.250    0.120    0.00000  0.000E+00
+ WTR   3    10.0  0.2000  .00000 0.00 .00000   0.050       0.000       0.000      0.050    0.010    0.00000  0.000E+00
+ WTR   4    30.0  2.2000  .00000 0.00 .00000   0.100       0.000       0.000      0.100    0.020    0.00000  0.000E+00
+ WTR   5   160.0  1.3700  .00000 0.00 .00000   0.200       0.000       0.000      0.200    0.090    0.00000  0.000E+00
+ WTR
+ WTR
+ WTR  HORIZON    LAYER DEPTH (CM)   TEMPERATURE      SAND      CLAY      ORGANIC CARBON
+ WTR
+ WTR     1            1.00               5.00       50.00     23.00            2.32
+ WTR     2            5.00               7.00       50.00     23.00            1.16
+ WTR     3            2.00               7.00        5.00      2.00           40.00
+ WTR     4            5.00               7.50       30.00      5.00            0.03
+ WTR     5           20.00               8.00       52.00     22.00            0.15
+ WTR
+ WTR
+ WTR SOIL NITROGEN PARAMETERS
+ WTR ------------------------
+ WTR
+ WTR SEPTIC EFFLUENT INTRODUCED INTO HORIZON   4
+ WTR
+ WTR
+ WTR
+ WTR OUTPUT FILE PARAMETERS
+ WTR ----------------------
+ WTR
+ WTR OUTPUT    TIME STEP    LAYER FREQ
+ WTR
+ WTR
+ WTR   WATR      YEAR             1
+ WTR
+ WTR   NITR      YEAR             1
+ WTR
+ WTR   CONC      YEAR             1
+ WTR
+ WTR
+ WTR
+ WTR PLOT FILE INFORMATION
+ WTR ---------------------
+ WTR
+ WTR NUMBER OF PLOTTING VARIABLES             6
+ WTR TIMSER NAME        MODE                ARGUMENT            CONSTANT       TYPE DSN
+ WTR
+ WTR RUNF               TSER                   0                0.0000E+00     P
+ WTR STMP               TSER                   5                0.0000E+00     P
+ WTR STMP               TSER                  14                0.0000E+00     P
+ WTR STMP               TSER                  19                0.0000E+00     P
+ WTR STMP               TSER                  25                0.0000E+00     P
+ WTR STMP               TSER                  33                0.0000E+00     P
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   57/ 7/ 8
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    1
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.86      0.02      0.00      0.00      0.00      0.02      0.01      0.03      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   57/ 7/ 8
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    2
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.84      0.02      0.00      0.00      0.00      0.02      0.01      0.03      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   57/ 7/ 8
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    3
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.81      0.02      0.00      0.00      0.00      0.02      0.01      0.03      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   57/ 7/ 8
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    4
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.79      0.02     -0.01      0.00      0.00      0.02      0.01      0.03      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   57/ 7/ 9
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    4
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.99      0.02      0.00      0.00      0.00      0.02      0.01      0.03      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   57/ 7/16
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    5
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.93      0.02      0.00      0.00      0.00      0.02      0.01      0.03      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR ****************************
+ WTR * ANNUAL WATER OUTPUT      *
+ WTR *                          *
+ WTR * DATE:     31 DEC., 57    *
+ WTR ****************************
+ WTR                              ALL HYDROLOGY UNITS ARE CM OF WATER
+ WTR                              SEDIMENT UNITS ARE METRIC TONNES
+ WTR                              NUMBERS IN PARENTHESES ARE SOIL WATER CONTENTS
+ WTR
+ WTR CURRENT CONDITIONS
+ WTR ------------------
+ WTR
+ WTR CROP NUMBER                                1
+ WTR FRACTION OF GROUND COVER              0.0000E+00
+ WTR INTERCEPTION POTENTIAL (CM)           0.0000E+00
+ WTR DEPTH TO WHICH ET EXTRACTED(CM)        15.00
+ WTR
+ WTR
+ WTR
+ WTR FLUXES AND STORAGES FOR THIS PERIOD
+ WTR -----------------------------------
+ WTR
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              STORAGE             PRECIPITATION       EVAPORATION         THROUGHFALL         STORAGE
+ WTR
+ WTR CANOPY                       0.0000E+00           51.41               9.268               42.14              0.0000E+00
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              SNOWPACK            SNOW                                    SNOWMELT            SNOWPACK
+ WTR
+ WTR SNOWPACK                     0.0000E+00           7.238                                   7.238              0.0000E+00
+ WTR
+ WTR
+ WTR                                                  THROUGHFALL         RUNOFF              INFILTRATION
+ WTR
+ WTR SURFACE                                           42.14               1.488               47.89
+ WTR
+ WTR
+ WTR                              PREVIOUS            LEACHING                                     LEACHING       CURRENT
+ WTR      SOIL LAYERS             STORAGE             INPUT          TRANSPIRATION  LATERAL FLOW   OUTPUT         STORAGE
+ WTR HORIZON   COMPARTMENT
+ WTR ------------------------------------------------------------------------------------------------------------------------
+ WTR
+ WTR    1           1             0.2500    (.250)     47.89          3.352         0.0000E+00      44.67         0.1200    (.120)
+ WTR    1           2             0.2500    (.250)     44.67          2.748         0.0000E+00      42.05         0.1200    (.120)
+ WTR    1           3             0.2500    (.250)     42.05          2.392         0.0000E+00      39.79         0.1200    (.120)
+ WTR    1           4             0.2500    (.250)     39.79          2.209         0.0000E+00      37.71         0.1200    (.120)
+ WTR    1           5             0.2500    (.250)     37.71          1.839         0.0000E+00      36.00         0.1200    (.120)
+ WTR
+ WTR    2           6              1.250    (.250)     36.00          8.291         0.0000E+00      28.36         0.6007    (.120)
+ WTR    2           7              1.250    (.250)     28.36          6.034         0.0000E+00      22.96         0.6117    (.122)
+ WTR    2           8              1.250    (.250)     22.96          3.884         0.0000E+00      19.08          1.250    (.250)
+ WTR    2           9              1.250    (.250)     19.08          3.193         0.0000E+00      15.89          1.250    (.250)
+ WTR    2          10              1.250    (.250)     15.89          3.006         0.0000E+00      12.88          1.250    (.250)
+ WTR    2          11              1.250    (.250)     12.88          2.514         0.0000E+00      10.37          1.250    (.250)
+ WTR    2          12              1.250    (.250)     10.37          1.706         0.0000E+00      8.661          1.250    (.250)
+ WTR    2          13              1.250    (.250)     8.661          1.287         0.0000E+00      7.373          1.250    (.250)
+ WTR    2          14              1.250    (.250)     7.373          1.005         0.0000E+00      6.368          1.250    (.250)
+ WTR
+ WTR    3          15             0.1000    (.050)     6.368         0.0000E+00     0.0000E+00      6.368         0.1000    (.050)
+ WTR    3          16             0.1000    (.050)     6.368         0.0000E+00     0.0000E+00      6.368         0.1000    (.050)
+ WTR    3          17             0.1000    (.050)     6.368         0.0000E+00     0.0000E+00      6.368         0.1000    (.050)
+ WTR    3          18             0.1000    (.050)     6.368         0.0000E+00     0.0000E+00      6.368         0.1000    (.050)
+ WTR    3          19             0.1000    (.050)     6.368         0.0000E+00     0.0000E+00      6.368         0.1000    (.050)
+ WTR
+ WTR    4          20             0.5000    (.100)     6.368         0.0000E+00     0.0000E+00      75.29         0.5000    (.100)
+ WTR    4          21             0.5000    (.100)     75.29         0.0000E+00     0.0000E+00      144.2         0.5000    (.100)
+ WTR    4          22             0.5000    (.100)     144.2         0.0000E+00     0.0000E+00      213.1         0.5000    (.100)
+ WTR    4          23             0.5000    (.100)     213.1         0.0000E+00     0.0000E+00      282.1         0.5000    (.100)
+ WTR    4          24             0.5000    (.100)     282.1         0.0000E+00     0.0000E+00      351.0         0.5000    (.100)
+ WTR    4          25             0.5000    (.100)     351.0         0.0000E+00     0.0000E+00      419.9         0.5000    (.100)
+ WTR
+ WTR    5          26              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR    5          27              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR    5          28              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR    5          29              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR    5          30              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR    5          31              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR    5          32              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR    5          33              4.000    (.200)     419.9         0.0000E+00     0.0000E+00      419.9          4.000    (.200)
+ WTR
+ WTR
+ WTR
+ WTR SUMMARY FLUXES
+ WTR --------------
+ WTR
+ WTR TOTAL SEDIMENT ERODED FROM SURFACE    0.0000E+00
+ WTR TOTAL ET FROM PROFILE                  43.46
+ WTR RECHARGE BELOW ROOT ZONE               6.368
+ WTR TOTAL LATERAL OUTFLOW                 0.0000E+00
+ WTR TOTAL LATERAL INFLOW                   413.5
+ WTR
+ WTR
+ WTR
+ WTR MATERIAL BALANCE
+ WTR ----------------
+ WTR
+ WTR WATER BALANCE ERROR                   0.2086E-06
+ WTR CUMULATIVE ERROR                      0.7376E-04
+ CNC
+ CNC NITROGEN SPECIES CONCENTRATION PROFILE
+ CNC
+ CNC DATE (DAY-MONTH-YEAR)    31 DEC., 57
+ CNC
+ CNC ABOVE GROUND PLANT  5.916
+ CNC LITTER              2.560
+ CNC
+ CNC HO-  COM-   NH4-N      NH4-N      NO3/       SOL LABILE ADS LABILE SOL REFR   ADS REFR
+ CNC RIZONPTMNT  SOLUTION   ADSORBED   NO2-N      ORGANIC N  ORGANIC N  ORGANIC N  ORGANIC N  PLANT N
+ CNC ---------------------------------------------------------------------------------------------------------
+ CNC
+ CNC   1    1    0.9681E-02 0.5428     0.8756E-01 0.5511E-01  55.11     0.4088E-01  204.4     0.6419
+ CNC   1    2    0.9973E-02 0.5463     0.9866E-01 0.5569E-01  55.69     0.4096E-01  204.8     0.6401
+ CNC   1    3    0.1010E-01 0.5478     0.1105     0.5601E-01  56.01     0.4100E-01  205.0     0.6402
+ CNC   1    4    0.1014E-01 0.5484     0.1231     0.5625E-01  56.25     0.4103E-01  205.2     0.6397
+ CNC   1    5    0.1011E-01 0.5481     0.1368     0.5633E-01  56.33     0.4104E-01  205.2     0.6396
+ CNC   2    6    0.1757E-01  2.368     0.3932     0.1379      137.9     0.1032      515.9      3.642
+ CNC   2    7    0.1646E-01  2.354     0.4815     0.1376      137.6     0.1031      515.5      3.645
+ CNC   2    8    0.2405E-01  2.310     0.7767     0.1375      137.5     0.1030      515.2      3.644
+ CNC   2    9    0.2388E-01  2.310      1.271     0.1374      137.4     0.1030      515.0      3.636
+ CNC   2   10    0.2391E-01  2.310      2.280     0.1376      137.6     0.1030      514.9      3.639
+ CNC   2   11    0.2400E-01  2.310      4.189     0.1377      137.7     0.1030      514.9      3.622
+ CNC   2   12    0.2390E-01  2.310      6.952     0.1377      137.7     0.1030      514.8      3.614
+ CNC   2   13    0.2377E-01  2.309      10.28     0.1378      137.8     0.1030      514.8      3.625
+ CNC   2   14    0.2355E-01  2.308      13.65     0.1379      137.9     0.1029      514.7      3.589
+ CNC   3   15    0.6333E-02 0.2556      1.140     0.3726E-01  37.26     0.3052E-01  152.6     0.5214
+ CNC   3   16    0.6406E-02 0.2572      1.167     0.3729E-01  37.29     0.3052E-01  152.6     0.5185
+ CNC   3   17    0.6493E-02 0.2591      1.196     0.3733E-01  37.33     0.3052E-01  152.6     0.5162
+ CNC   3   18    0.6530E-02 0.2599      1.231     0.3736E-01  37.36     0.3052E-01  152.6     0.5119
+ CNC   3   19    0.6598E-02 0.2614      1.268     0.3738E-01  37.38     0.3052E-01  152.6     0.5096
+ CNC   4   20     2.284      30.62     0.4433E-01 0.1305      130.5     0.1910E-01  95.49     0.4289
+ CNC   4   21     2.267      30.43     0.4428E-01 0.1298      129.8     0.1907E-01  95.37     0.4261
+ CNC   4   22     2.252      30.27     0.4543E-01 0.1291      129.1     0.1906E-01  95.30     0.4253
+ CNC   4   23     2.246      30.21     0.4689E-01 0.1283      128.3     0.1905E-01  95.26     0.4253
+ CNC   4   24     2.235      30.08     0.4833E-01 0.1284      128.4     0.1905E-01  95.24     0.4219
+ CNC   4   25     2.220      29.92     0.4994E-01 0.1280      128.0     0.1904E-01  95.21     0.4208
+ CNC   5   26     6.332      70.88      1.175     0.3308      330.8     0.5792E-01  289.6     0.0000E+00
+ CNC   5   27     3.414      42.68      1.353     0.2138      213.8     0.5753E-01  287.7     0.0000E+00
+ CNC   5   28     1.556      28.27      1.076     0.1520      152.0     0.5737E-01  286.8     0.0000E+00
+ CNC   5   29    0.8264      20.98     0.7957     0.1182      118.2     0.5729E-01  286.4     0.0000E+00
+ CNC   5   30    0.4401      17.34     0.5541     0.9937E-01  99.37     0.5724E-01  286.2     0.0000E+00
+ CNC   5   31    0.2377      15.54     0.3723     0.8849E-01  88.49     0.5722E-01  286.1     0.0000E+00
+ CNC   5   32    0.9514E-01  14.36     0.2378     0.8262E-01  82.62     0.5720E-01  286.0     0.0000E+00
+ CNC   5   33    0.3365E-02  9.546     0.1433     0.8105E-01  81.05     0.5719E-01  286.0     0.0000E+00
+ CNC
+ CNC   TOTALS     26.69      426.0      52.82      3.646      3646.      1.858      9290.      40.98
+ CNC
+ NIT ****************************
+ NIT * ANNUAL NITROGEN OUTPUT   *
+ NIT *                          *
+ NIT * DATE:     31 DEC., 57    *
+ NIT ****************************
+ NIT                              STORAGE UNITS IN KG/HA
+ NIT                              FLUX UNITS IN KG/HA/OUTPUT TIMESTEP
+ NIT
+ NIT CURRENT CONDITIONS
+ NIT ------------------
+ NIT
+ NIT CROP NUMBER                                1
+ NIT
+ NIT
+ NIT FLUXES FOR THIS PERIOD
+ NIT -----------------------------------
+ NIT
+ NIT
+ NIT ATMOSPHERIC DEPOSITION
+ NIT
+ NIT                     DRY         WET       TOTAL
+ NIT   NH4-N       3.650      0.0000E+00   3.650
+ NIT   NO3-N       1.825      0.0000E+00   1.825
+ NIT   ORGN       0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT <---SEDIMENT EROSION OUTFLOW--->       <---------SOLUTION RUNOFF OUTFLOW--------->
+ NIT      NH4-N     LABILE     REFRAC         NH4-N IN  NO3(+NO2)     LABILE     REFRAC
+ NIT   ADSORBED  ORGANIC N  ORGANIC N         SOLUTION   SOLUTION  ORGANIC N  ORGANIC N
+ NIT 0.0000E+00 0.0000E+00 0.0000E+00       0.0000E+00 0.0000E+00 0.0000E+00 0.0000E+00
+ NIT
+ NIT
+ NIT  HO-  COM-   NH4 LEACH-  NH4 LATERAL ABV-GROUND  BLW-GROUND  NH3 NITRI-  NH3 IMMOB-  NH3 VOLAT-  ORG-N MIN-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NH3 UPTAKE  NH3 UPTAKE  FICATION    ILIZATION   ILIZATION   ERALIZATION
+ NIT ------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1     0.3390      0.0000E+00  0.9503E-02  0.1093       3.439      0.6377      0.8404       3.200
+ NIT   1    2     0.5185      0.0000E+00  0.9462E-02  0.1088       3.558      0.6565      0.8693       3.208
+ NIT   1    3     0.6364      0.0000E+00  0.9450E-02  0.1087       3.597      0.6621      0.8788       3.201
+ NIT   1    4     0.7243      0.0000E+00  0.9405E-02  0.1082       3.614      0.6640      0.8830       3.195
+ NIT   1    5     0.8129      0.0000E+00  0.9470E-02  0.1089       3.604      0.6623      0.8807       3.183
+ NIT
+ NIT   2    6      1.462      0.0000E+00  0.4998E-01   1.075       13.39       4.467      0.6546       6.009
+ NIT   2    7      1.611      0.0000E+00  0.4999E-01   1.075       13.68       4.541      0.6684       5.865
+ NIT   2    8      1.479      0.0000E+00  0.4992E-01   1.073       13.84       4.555      0.6764       5.731
+ NIT   2    9      1.241      0.0000E+00  0.4979E-01   1.070       13.90       4.486      0.6794       5.619
+ NIT   2   10     0.9734      0.0000E+00  0.4980E-01   1.071       13.87       4.428      0.6778       5.496
+ NIT   2   11     0.7140      0.0000E+00  0.4981E-01   1.071       13.82       4.367      0.6756       5.396
+ NIT   2   12     0.5459      0.0000E+00  0.4982E-01   1.071       13.73       4.287      0.6708       5.304
+ NIT   2   13     0.4635      0.0000E+00  0.4984E-01   1.072       13.60       4.222      0.6648       5.197
+ NIT   2   14     0.3674      0.0000E+00  0.4985E-01   1.072       13.59       4.187      0.6639       5.127
+ NIT
+ NIT   3   15     0.5561      0.0000E+00  0.9562E-02  0.1100       7.281      0.9879       1.186       1.025
+ NIT   3   16     0.7184      0.0000E+00  0.9562E-02  0.1100       7.298      0.9827       1.189       1.015
+ NIT   3   17     0.8625      0.0000E+00  0.9562E-02  0.1100       7.304      0.9788       1.190       1.002
+ NIT   3   18     0.9910      0.0000E+00  0.9562E-02  0.1100       7.312      0.9750       1.191      0.9922
+ NIT   3   19      1.107      0.0000E+00  0.9562E-02  0.1100       7.315      0.9707       1.192      0.9804
+ NIT
+ NIT   4   20      119.9      0.0000E+00  0.6639E-02  0.9295E-01   55.46       91.19       15.06       1.867
+ NIT   4   21      238.0      0.0000E+00  0.6639E-02  0.9295E-01   55.89       91.57       15.17       1.856
+ NIT   4   22      356.1      0.0000E+00  0.6639E-02  0.9295E-01   55.99       91.53       15.20       1.838
+ NIT   4   23      474.7      0.0000E+00  0.6639E-02  0.9295E-01   55.93       91.26       15.18       1.817
+ NIT   4   24      592.4      0.0000E+00  0.6639E-02  0.9295E-01   56.36       91.62       15.30       1.817
+ NIT   4   25      710.4      0.0000E+00  0.6639E-02  0.9295E-01   56.42       91.52       15.32       1.804
+ NIT
+ NIT   5   26      368.8      0.0000E+00  0.0000E+00  0.0000E+00   73.81       172.2       30.06       5.390
+ NIT   5   27      190.8      0.0000E+00  0.0000E+00  0.0000E+00   38.33       87.89       15.61       3.681
+ NIT   5   28      97.48      0.0000E+00  0.0000E+00  0.0000E+00   19.67       44.80       8.009       2.738
+ NIT   5   29      48.49      0.0000E+00  0.0000E+00  0.0000E+00   9.659       22.05       3.933       2.196
+ NIT   5   30      22.72      0.0000E+00  0.0000E+00  0.0000E+00   4.352       9.996       1.772       1.883
+ NIT   5   31      9.519      0.0000E+00  0.0000E+00  0.0000E+00   1.461       3.315      0.5951       1.698
+ NIT   5   32      2.744      0.0000E+00  0.0000E+00  0.0000E+00  0.5555E-01  0.1116      0.2262E-01   1.619
+ NIT   5   33     0.9832      0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00   1.538
+ NIT
+ NIT TOTALS       0.9832      0.0000E+00  0.5837       11.30       661.1       936.7       167.6       102.5
+ NIT
+ NIT
+ NIT  HO-  COM-   NO3 LEACH-  NO3 LATERAL ABV-GROUND  BLW-GROUND  NO3 IMMOB-  NITROGEN    DENITRIF-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NO3 UPTAKE  NO3 UPTAKE  ILIZATION   FIXATION    ICATION
+ NIT -----------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      3.827      0.0000E+00  0.3830E-01  0.4405      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    2      7.772      0.0000E+00  0.3835E-01  0.4410      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    3      11.74      0.0000E+00  0.3836E-01  0.4411      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    4      15.72      0.0000E+00  0.3840E-01  0.4416      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    5      19.67      0.0000E+00  0.3834E-01  0.4409      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   2    6      29.83      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    7      40.17      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    8      50.39      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    9      60.17      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   10      68.92      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   11      75.70      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   12      79.63      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   13      80.11      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   14      77.19      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   3   15      83.86      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   16      90.51      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   17      97.14      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   18      103.7      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   19      110.3      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   4   20      134.0      0.0000E+00  0.2656E-01  0.3719       12.03      0.0000E+00   19.50
+ NIT   4   21      160.9      0.0000E+00  0.2656E-01  0.3719       10.94      0.0000E+00   17.72
+ NIT   4   22      189.8      0.0000E+00  0.2656E-01  0.3719       10.22      0.0000E+00   16.56
+ NIT   4   23      220.1      0.0000E+00  0.2656E-01  0.3719       9.704      0.0000E+00   15.72
+ NIT   4   24      251.6      0.0000E+00  0.2656E-01  0.3719       9.355      0.0000E+00   15.16
+ NIT   4   25      284.0      0.0000E+00  0.2656E-01  0.3719       9.064      0.0000E+00   14.69
+ NIT
+ NIT   5   26      188.1      0.0000E+00  0.0000E+00  0.0000E+00   72.45      0.0000E+00   96.93
+ NIT   5   27      124.2      0.0000E+00  0.0000E+00  0.0000E+00   43.53      0.0000E+00   58.24
+ NIT   5   28      81.35      0.0000E+00  0.0000E+00  0.0000E+00   26.67      0.0000E+00   35.68
+ NIT   5   29      52.66      0.0000E+00  0.0000E+00  0.0000E+00   16.44      0.0000E+00   22.00
+ NIT   5   30      33.66      0.0000E+00  0.0000E+00  0.0000E+00   10.13      0.0000E+00   13.55
+ NIT   5   31      21.24      0.0000E+00  0.0000E+00  0.0000E+00   6.152      0.0000E+00   8.231
+ NIT   5   32      13.27      0.0000E+00  0.0000E+00  0.0000E+00   3.704      0.0000E+00   4.956
+ NIT   5   33      8.578      0.0000E+00  0.0000E+00  0.0000E+00   2.320      0.0000E+00   3.103
+ NIT
+ NIT TOTALS        8.578      0.0000E+00   2.348       45.47       242.7      0.0000E+00   342.0
+ NIT
+ NIT
+ NIT              <----------- LABILE ORGANIC N ------------>  <--------- REFRACTORY ORGANIC N ---------->
+ NIT  HO-  COM-   LEACHING   LATERAL    LITTER     BLW-GROUND  LEACHING   LATERAL    LITTER     BLW-GROUND  LABILE-->REFRACTORY
+ NIT RIZON PTMNT  OUTPUT     OUTFLOW    RETURN     RETURN      OUTPUT     OUTFLOW    RETURN     RETURN      CONVERSION
+ NIT ----------------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      1.542     0.0000E+00 0.3439     0.2155       1.092     0.0000E+00 0.1474     0.9236E-01   1.280
+ NIT   1    2      2.520     0.0000E+00 0.3439     0.2168       1.781     0.0000E+00 0.1474     0.9290E-01   1.283
+ NIT   1    3      3.193     0.0000E+00 0.3439     0.2167       2.255     0.0000E+00 0.1474     0.9289E-01   1.281
+ NIT   1    4      3.644     0.0000E+00 0.3439     0.2171       2.570     0.0000E+00 0.1474     0.9303E-01   1.278
+ NIT   1    5      4.028     0.0000E+00 0.3439     0.2172       2.838     0.0000E+00 0.1474     0.9306E-01   1.273
+ NIT
+ NIT   2    6      2.835     0.0000E+00 0.0000E+00  2.468       2.037     0.0000E+00 0.0000E+00  1.058       3.004
+ NIT   2    7      2.173     0.0000E+00 0.0000E+00  2.465       1.578     0.0000E+00 0.0000E+00  1.057       2.932
+ NIT   2    8      1.834     0.0000E+00 0.0000E+00  2.465       1.338     0.0000E+00 0.0000E+00  1.056       2.866
+ NIT   2    9      1.691     0.0000E+00 0.0000E+00  2.469       1.237     0.0000E+00 0.0000E+00  1.058       2.810
+ NIT   2   10      1.506     0.0000E+00 0.0000E+00  2.467       1.103     0.0000E+00 0.0000E+00  1.057       2.748
+ NIT   2   11      1.308     0.0000E+00 0.0000E+00  2.479      0.9594     0.0000E+00 0.0000E+00  1.062       2.698
+ NIT   2   12      1.159     0.0000E+00 0.0000E+00  2.485      0.8519     0.0000E+00 0.0000E+00  1.065       2.652
+ NIT   2   13      1.017     0.0000E+00 0.0000E+00  2.477      0.7478     0.0000E+00 0.0000E+00  1.061       2.598
+ NIT   2   14     0.8828     0.0000E+00 0.0000E+00  2.503      0.6492     0.0000E+00 0.0000E+00  1.073       2.564
+ NIT
+ NIT   3   15      1.029     0.0000E+00 0.0000E+00 0.1599      0.7727     0.0000E+00 0.0000E+00 0.6852E-01  0.6833
+ NIT   3   16      1.153     0.0000E+00 0.0000E+00 0.1619      0.8778     0.0000E+00 0.0000E+00 0.6938E-01  0.6764
+ NIT   3   17      1.261     0.0000E+00 0.0000E+00 0.1635      0.9686     0.0000E+00 0.0000E+00 0.7008E-01  0.6679
+ NIT   3   18      1.355     0.0000E+00 0.0000E+00 0.1666       1.048     0.0000E+00 0.0000E+00 0.7138E-01  0.6615
+ NIT   3   19      1.439     0.0000E+00 0.0000E+00 0.1681       1.119     0.0000E+00 0.0000E+00 0.7206E-01  0.6536
+ NIT
+ NIT   4   20      7.723     0.0000E+00 0.0000E+00 0.1418       2.008     0.0000E+00 0.0000E+00 0.6078E-01   1.244
+ NIT   4   21      14.02     0.0000E+00 0.0000E+00 0.1438       3.012     0.0000E+00 0.0000E+00 0.6161E-01   1.237
+ NIT   4   22      20.29     0.0000E+00 0.0000E+00 0.1444       4.073     0.0000E+00 0.0000E+00 0.6186E-01   1.225
+ NIT   4   23      26.54     0.0000E+00 0.0000E+00 0.1444       5.168     0.0000E+00 0.0000E+00 0.6186E-01   1.212
+ NIT   4   24      32.78     0.0000E+00 0.0000E+00 0.1467       6.283     0.0000E+00 0.0000E+00 0.6288E-01   1.211
+ NIT   4   25      38.99     0.0000E+00 0.0000E+00 0.1474       7.413     0.0000E+00 0.0000E+00 0.6319E-01   1.203
+ NIT
+ NIT   5   26      24.74     0.0000E+00 0.0000E+00 0.0000E+00   6.355     0.0000E+00 0.0000E+00 0.0000E+00   3.594
+ NIT   5   27      17.22     0.0000E+00 0.0000E+00 0.0000E+00   6.087     0.0000E+00 0.0000E+00 0.0000E+00   2.454
+ NIT   5   28      13.17     0.0000E+00 0.0000E+00 0.0000E+00   6.013     0.0000E+00 0.0000E+00 0.0000E+00   1.825
+ NIT   5   29      10.94     0.0000E+00 0.0000E+00 0.0000E+00   5.990     0.0000E+00 0.0000E+00 0.0000E+00   1.464
+ NIT   5   30      9.697     0.0000E+00 0.0000E+00 0.0000E+00   5.982     0.0000E+00 0.0000E+00 0.0000E+00   1.256
+ NIT   5   31      9.004     0.0000E+00 0.0000E+00 0.0000E+00   5.979     0.0000E+00 0.0000E+00 0.0000E+00   1.132
+ NIT   5   32      8.670     0.0000E+00 0.0000E+00 0.0000E+00   5.978     0.0000E+00 0.0000E+00 0.0000E+00   1.079
+ NIT   5   33      8.541     0.0000E+00 0.0000E+00 0.0000E+00   5.977     0.0000E+00 0.0000E+00 0.0000E+00   1.025
+ NIT
+ NIT TOTALS        8.541     0.0000E+00  1.719      25.05       5.977     0.0000E+00 0.7368      10.74       55.77
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 4/26
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.29      0.00      0.00      0.01      0.00      0.00      0.01      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 4/27
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.01      0.01      0.00      0.00      0.02      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 4/28
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.02      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 4/29
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.02      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 4/30
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.02      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 5/ 1
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.02      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 5/ 2
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.03      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 5/ 3
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.03      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 5/ 4
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.03      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 5/ 5
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    7
+ WTR
+ WTR A negative value is projected for nitrate.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC       NO3      TNO3     NITRF     IMMNI      DENI      UTNI     UTNIA
+ WTR      0.00      0.00     -0.02      0.01      0.00      0.00      0.03      0.00
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR The count for the ERROR printed above has reached its maximum.
+ WTR
+ WTR The RUN has been terminated.
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 6/16
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    1
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.94      0.02      0.00      0.00      0.00      0.02      0.01      0.02      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 6/16
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    2
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.87      0.02      0.00      0.00      0.00      0.02      0.01      0.03      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 6/17
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    3
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.98      0.02      0.00      0.00      0.00      0.02      0.00      0.02      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ 
+ WTR          DATE:   58/ 6/17
+ WTR
+ WTR PRZM-2 zone:   1       Compartment:    4
+ WTR
+ WTR A negative value is projected for solution ammonium.  To avoid the problem,
+ WTR fluxes will be arbitrarily reduced.  Relevant data are:
+ WTR
+ WTR      FRAC      AMSU     TAMSU     ADSAM     DESAM     AMMIF     IMMAM     NITRF      UTAM     UTAMA      AMVO
+ WTR      0.94      0.02      0.00      0.00      0.00      0.02      0.01      0.02      0.00      0.00      0.01
+ WTR
+ WTR See PRZM-2 manual for definitions of terms.
+ 
+ WTR
+ WTR ****************************************************************************************************
+ WTR
+ WTR The count for the ERROR printed above has reached its maximum.
+ WTR
+ WTR The RUN has been terminated.
+ WTR
+ WTR ****************************************************************************************************
+ WTR ****************************
+ WTR * ANNUAL WATER OUTPUT      *
+ WTR *                          *
+ WTR * DATE:     31 DEC., 58    *
+ WTR ****************************
+ WTR                              ALL HYDROLOGY UNITS ARE CM OF WATER
+ WTR                              SEDIMENT UNITS ARE METRIC TONNES
+ WTR                              NUMBERS IN PARENTHESES ARE SOIL WATER CONTENTS
+ WTR
+ WTR CURRENT CONDITIONS
+ WTR ------------------
+ WTR
+ WTR CROP NUMBER                                1
+ WTR FRACTION OF GROUND COVER              0.0000E+00
+ WTR INTERCEPTION POTENTIAL (CM)           0.0000E+00
+ WTR DEPTH TO WHICH ET EXTRACTED(CM)        15.00
+ WTR
+ WTR
+ WTR
+ WTR FLUXES AND STORAGES FOR THIS PERIOD
+ WTR -----------------------------------
+ WTR
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              STORAGE             PRECIPITATION       EVAPORATION         THROUGHFALL         STORAGE
+ WTR
+ WTR CANOPY                       0.0000E+00           22.40              0.0000E+00           22.40              0.0000E+00
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              SNOWPACK            SNOW                                    SNOWMELT            SNOWPACK
+ WTR
+ WTR SNOWPACK                     0.0000E+00           2.131                                   2.131              0.0000E+00
+ WTR
+ WTR
+ WTR                                                  THROUGHFALL         RUNOFF              INFILTRATION
+ WTR
+ WTR SURFACE                                           22.40              0.0000E+00           24.53
+ WTR
+ WTR
+ WTR                              PREVIOUS            LEACHING                                     LEACHING       CURRENT
+ WTR      SOIL LAYERS             STORAGE             INPUT          TRANSPIRATION  LATERAL FLOW   OUTPUT         STORAGE
+ WTR HORIZON   COMPARTMENT
+ WTR ------------------------------------------------------------------------------------------------------------------------
+ WTR
+ WTR    1           1             0.1200    (.120)     24.53          5.569         0.0000E+00      18.95         0.1367    (.137)
+ WTR    1           2             0.1200    (.120)     18.95          3.587         0.0000E+00      15.36         0.1201    (.120)
+ WTR    1           3             0.1200    (.120)     15.36          2.854         0.0000E+00      12.51         0.1203    (.120)
+ WTR    1           4             0.1200    (.120)     12.51          2.406         0.0000E+00      10.10         0.1212    (.121)
+ WTR    1           5             0.1200    (.120)     10.10          1.926         0.0000E+00      8.170         0.1216    (.122)
+ WTR
+ WTR    2           6             0.6007    (.120)     8.170          4.385         0.0000E+00      3.786         0.6004    (.120)
+ WTR    2           7             0.6117    (.122)     3.786          1.427         0.0000E+00      2.351         0.6192    (.124)
+ WTR    2           8              1.250    (.250)     2.351         0.0000E+00     0.0000E+00      2.351          1.250    (.250)
+ WTR    2           9              1.250    (.250)     2.351         0.0000E+00     0.0000E+00      2.351          1.250    (.250)
+ WTR    2          10              1.250    (.250)     2.351         0.0000E+00     0.0000E+00      2.351          1.250    (.250)
+ WTR    2          11              1.250    (.250)     2.351         0.0000E+00     0.0000E+00      2.351          1.250    (.250)
+ WTR    2          12              1.250    (.250)     2.351         0.0000E+00     0.0000E+00      2.351          1.250    (.250)
+ WTR    2          13              1.250    (.250)     2.351         0.0000E+00     0.0000E+00      2.351          1.250    (.250)
+ WTR    2          14              1.250    (.250)     2.351         0.0000E+00     0.0000E+00      2.351          1.250    (.250)
+ WTR
+ WTR    3          15             0.1000    (.050)     2.351         0.0000E+00     0.0000E+00      2.351         0.1000    (.050)
+ WTR    3          16             0.1000    (.050)     2.351         0.0000E+00     0.0000E+00      2.351         0.1000    (.050)
+ WTR    3          17             0.1000    (.050)     2.351         0.0000E+00     0.0000E+00      2.351         0.1000    (.050)
+ WTR    3          18             0.1000    (.050)     2.351         0.0000E+00     0.0000E+00      2.351         0.1000    (.050)
+ WTR    3          19             0.1000    (.050)     2.351         0.0000E+00     0.0000E+00      2.351         0.1000    (.050)
+ WTR
+ WTR    4          20             0.5000    (.100)     2.351         0.0000E+00     0.0000E+00      71.28         0.5000    (.100)
+ WTR    4          21             0.5000    (.100)     71.28         0.0000E+00     0.0000E+00      140.2         0.5000    (.100)
+ WTR    4          22             0.5000    (.100)     140.2         0.0000E+00     0.0000E+00      209.1         0.5000    (.100)
+ WTR    4          23             0.5000    (.100)     209.1         0.0000E+00     0.0000E+00      278.0         0.5000    (.100)
+ WTR    4          24             0.5000    (.100)     278.0         0.0000E+00     0.0000E+00      347.0         0.5000    (.100)
+ WTR    4          25             0.5000    (.100)     347.0         0.0000E+00     0.0000E+00      415.9         0.5000    (.100)
+ WTR
+ WTR    5          26              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR    5          27              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR    5          28              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR    5          29              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR    5          30              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR    5          31              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR    5          32              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR    5          33              4.000    (.200)     415.9         0.0000E+00     0.0000E+00      415.9          4.000    (.200)
+ WTR
+ WTR
+ WTR
+ WTR SUMMARY FLUXES
+ WTR --------------
+ WTR
+ WTR TOTAL SEDIMENT ERODED FROM SURFACE    0.0000E+00
+ WTR TOTAL ET FROM PROFILE                  22.15
+ WTR RECHARGE BELOW ROOT ZONE               2.351
+ WTR TOTAL LATERAL OUTFLOW                 0.0000E+00
+ WTR TOTAL LATERAL INFLOW                   413.5
+ WTR
+ WTR
+ WTR
+ WTR MATERIAL BALANCE
+ WTR ----------------
+ WTR
+ WTR WATER BALANCE ERROR                   0.2086E-06
+ WTR CUMULATIVE ERROR                      0.1485E-03
+ CNC
+ CNC NITROGEN SPECIES CONCENTRATION PROFILE
+ CNC
+ CNC DATE (DAY-MONTH-YEAR)    31 DEC., 58
+ CNC
+ CNC ABOVE GROUND PLANT  6.218
+ CNC LITTER              2.517
+ CNC
+ CNC HO-  COM-   NH4-N      NH4-N      NO3/       SOL LABILE ADS LABILE SOL REFR   ADS REFR
+ CNC RIZONPTMNT  SOLUTION   ADSORBED   NO2-N      ORGANIC N  ORGANIC N  ORGANIC N  ORGANIC N  PLANT N
+ CNC ---------------------------------------------------------------------------------------------------------
+ CNC
+ CNC   1    1    0.1196E-01 0.5528     0.7165E-01 0.5087E-01  50.87     0.4099E-01  204.9     0.7950
+ CNC   1    2    0.1124E-01 0.5620     0.1355     0.5222E-01  52.22     0.4120E-01  206.0     0.7942
+ CNC   1    3    0.1172E-01 0.5677     0.2428     0.5276E-01  52.76     0.4128E-01  206.4     0.7943
+ CNC   1    4    0.1272E-01 0.5792     0.3486     0.5322E-01  53.22     0.4134E-01  206.7     0.7941
+ CNC   1    5    0.1287E-01 0.5806     0.3872     0.5341E-01  53.41     0.4136E-01  206.8     0.7947
+ CNC   2    6    0.2064E-01  2.399      3.248     0.1345      134.5     0.1042      520.9      4.362
+ CNC   2    7    0.1992E-01  2.385      2.755     0.1360      136.0     0.1035      517.6      4.660
+ CNC   2    8    0.2319E-01  2.307      1.198     0.1362      136.2     0.1034      516.9      4.271
+ CNC   2    9    0.2306E-01  2.306     0.4886     0.1361      136.1     0.1033      516.7      4.297
+ CNC   2   10    0.2327E-01  2.307     0.1738     0.1354      135.4     0.1035      517.5      4.809
+ CNC   2   11    0.2305E-01  2.306     0.7906     0.1342      134.2     0.1038      518.9      4.370
+ CNC   2   12    0.2309E-01  2.306      2.021     0.1344      134.4     0.1038      518.8      4.373
+ CNC   2   13    0.2314E-01  2.306      3.973     0.1346      134.6     0.1037      518.7      4.377
+ CNC   2   14    0.2319E-01  2.307      6.465     0.1348      134.8     0.1037      518.6      4.376
+ CNC   3   15    0.5278E-02 0.2329     0.5832     0.3593E-01  35.93     0.3066E-01  153.3     0.7237
+ CNC   3   16    0.5283E-02 0.2330     0.6191     0.3600E-01  36.00     0.3066E-01  153.3     0.7220
+ CNC   3   17    0.5280E-02 0.2329     0.6544     0.3606E-01  36.06     0.3066E-01  153.3     0.7205
+ CNC   3   18    0.5275E-02 0.2328     0.6880     0.3612E-01  36.12     0.3066E-01  153.3     0.7165
+ CNC   3   19    0.5262E-02 0.2326     0.7214     0.3618E-01  36.18     0.3066E-01  153.3     0.7136
+ CNC   4   20     2.440      32.34     0.1131E-03 0.2344      234.4     0.3367E-01  168.4     0.5992
+ CNC   4   21     2.430      32.23     0.1131E-03 0.2337      233.7     0.3364E-01  168.2     0.5951
+ CNC   4   22     2.427      32.20     0.1131E-03 0.2327      232.7     0.3361E-01  168.1     0.5946
+ CNC   4   23     2.423      32.15     0.1131E-03 0.2319      231.9     0.3359E-01  168.0     0.5934
+ CNC   4   24     2.420      32.12     0.1131E-03 0.2315      231.5     0.3358E-01  167.9     0.5914
+ CNC   4   25     2.416      32.08     0.1131E-03 0.2308      230.8     0.3357E-01  167.9     0.5902
+ CNC   5   26     7.629      83.89     0.1796E-01 0.6124      612.4     0.6099E-01  304.9     0.0000E+00
+ CNC   5   27     4.330      51.34     0.7298E-01 0.3880      388.0     0.5885E-01  294.2     0.0000E+00
+ CNC   5   28     2.241      31.94     0.1728     0.2702      270.2     0.5812E-01  290.6     0.0000E+00
+ CNC   5   29    0.9386      21.99     0.2739     0.2001      200.1     0.5779E-01  289.0     0.0000E+00
+ CNC   5   30    0.4761      17.63     0.2424     0.1564      156.4     0.5763E-01  288.1     0.0000E+00
+ CNC   5   31    0.2516      15.64     0.1938     0.1259      125.9     0.5752E-01  287.6     0.0000E+00
+ CNC   5   32    0.1399      14.71     0.1463     0.1068      106.8     0.5747E-01  287.3     0.0000E+00
+ CNC   5   33    0.8333E-01  14.26     0.1065     0.9440E-01  94.40     0.5742E-01  287.1     0.0000E+00
+ CNC
+ CNC   TOTALS     30.93      469.5      26.79      5.008      5008.      1.960      9799.      51.03
+ CNC
+ NIT ****************************
+ NIT * ANNUAL NITROGEN OUTPUT   *
+ NIT *                          *
+ NIT * DATE:     31 DEC., 58    *
+ NIT ****************************
+ NIT                              STORAGE UNITS IN KG/HA
+ NIT                              FLUX UNITS IN KG/HA/OUTPUT TIMESTEP
+ NIT
+ NIT CURRENT CONDITIONS
+ NIT ------------------
+ NIT
+ NIT CROP NUMBER                                1
+ NIT
+ NIT
+ NIT FLUXES FOR THIS PERIOD
+ NIT -----------------------------------
+ NIT
+ NIT
+ NIT ATMOSPHERIC DEPOSITION
+ NIT
+ NIT                     DRY         WET       TOTAL
+ NIT   NH4-N       3.650      0.0000E+00   3.650
+ NIT   NO3-N       1.825      0.0000E+00   1.825
+ NIT   ORGN       0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT <---SEDIMENT EROSION OUTFLOW--->       <---------SOLUTION RUNOFF OUTFLOW--------->
+ NIT      NH4-N     LABILE     REFRAC         NH4-N IN  NO3(+NO2)     LABILE     REFRAC
+ NIT   ADSORBED  ORGANIC N  ORGANIC N         SOLUTION   SOLUTION  ORGANIC N  ORGANIC N
+ NIT 0.0000E+00 0.0000E+00 0.0000E+00       0.0000E+00 0.0000E+00 0.0000E+00 0.0000E+00
+ NIT
+ NIT
+ NIT  HO-  COM-   NH4 LEACH-  NH4 LATERAL ABV-GROUND  BLW-GROUND  NH3 NITRI-  NH3 IMMOB-  NH3 VOLAT-  ORG-N MIN-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NH3 UPTAKE  NH3 UPTAKE  FICATION    ILIZATION   ILIZATION   ERALIZATION
+ NIT ------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1     0.2322      0.0000E+00  0.9364E-02  0.1077       2.307      0.4666      0.5636       2.968
+ NIT   1    2     0.3035      0.0000E+00  0.9293E-02  0.1069       2.446      0.4915      0.5976       3.009
+ NIT   1    3     0.3212      0.0000E+00  0.9324E-02  0.1072       2.485      0.4978      0.6071       3.016
+ NIT   1    4     0.2971      0.0000E+00  0.9305E-02  0.1070       2.507      0.5019      0.6126       3.017
+ NIT   1    5     0.2504      0.0000E+00  0.9352E-02  0.1075       2.516      0.5026      0.6148       3.009
+ NIT
+ NIT   2    6     0.8984E-01  0.0000E+00  0.5017E-01   1.079       3.367       1.363      0.1645       5.897
+ NIT   2    7     0.5804E-01  0.0000E+00  0.3060E-01  0.6580       1.356      0.5251      0.6629E-01   2.640
+ NIT   2    8     0.4900E-01  0.0000E+00  0.2423E-01  0.5209       1.151      0.4277      0.5622E-01   2.166
+ NIT   2    9     0.4441E-01  0.0000E+00  0.2482E-01  0.5336       1.132      0.4178      0.5530E-01   2.154
+ NIT   2   10     0.4370E-01  0.0000E+00  0.3730E-01  0.8019       1.736      0.6742      0.8482E-01   3.330
+ NIT   2   11     0.4190E-01  0.0000E+00  0.4976E-01   1.070       2.854       1.118      0.1394       5.224
+ NIT   2   12     0.4084E-01  0.0000E+00  0.4976E-01   1.070       2.775       1.080      0.1356       5.104
+ NIT   2   13     0.4019E-01  0.0000E+00  0.4976E-01   1.070       2.705       1.045      0.1322       4.998
+ NIT   2   14     0.3966E-01  0.0000E+00  0.4976E-01   1.070       2.627       1.008      0.1284       4.881
+ NIT
+ NIT   3   15     0.4881E-01  0.0000E+00  0.9562E-02  0.1100      0.6544      0.9903E-01  0.1066      0.9649
+ NIT   3   16     0.5672E-01  0.0000E+00  0.9562E-02  0.1100      0.6442      0.9686E-01  0.1049      0.9481
+ NIT   3   17     0.6360E-01  0.0000E+00  0.9562E-02  0.1100      0.6334      0.9468E-01  0.1032      0.9303
+ NIT   3   18     0.6960E-01  0.0000E+00  0.9562E-02  0.1100      0.6239      0.9264E-01  0.1016      0.9153
+ NIT   3   19     0.7489E-01  0.0000E+00  0.9562E-02  0.1100      0.6142      0.9064E-01  0.1000      0.8995
+ NIT
+ NIT   4   20      155.4      0.0000E+00  0.6640E-02  0.9296E-01   53.39       89.74       14.50       4.598
+ NIT   4   21      310.2      0.0000E+00  0.6640E-02  0.9296E-01   53.60       89.81       14.55       4.562
+ NIT   4   22      465.3      0.0000E+00  0.6640E-02  0.9296E-01   53.51       89.50       14.53       4.510
+ NIT   4   23      620.5      0.0000E+00  0.6640E-02  0.9296E-01   53.54       89.31       14.53       4.467
+ NIT   4   24      776.0      0.0000E+00  0.6640E-02  0.9296E-01   53.42       88.95       14.50       4.431
+ NIT   4   25      932.1      0.0000E+00  0.6640E-02  0.9296E-01   53.24       88.51       14.45       4.387
+ NIT
+ NIT   5   26      620.5      0.0000E+00  0.0000E+00  0.0000E+00   81.58       194.1       33.22       11.66
+ NIT   5   27      418.9      0.0000E+00  0.0000E+00  0.0000E+00   53.54       123.9       21.80       7.209
+ NIT   5   28      278.2      0.0000E+00  0.0000E+00  0.0000E+00   38.58       87.05       15.71       4.980
+ NIT   5   29      180.7      0.0000E+00  0.0000E+00  0.0000E+00   27.59       61.20       11.23       3.651
+ NIT   5   30      113.2      0.0000E+00  0.0000E+00  0.0000E+00   19.46       42.58       7.925       2.845
+ NIT   5   31      70.16      0.0000E+00  0.0000E+00  0.0000E+00   12.62       27.47       5.138       2.256
+ NIT   5   32      42.19      0.0000E+00  0.0000E+00  0.0000E+00   8.274       17.88       3.369       1.953
+ NIT   5   33      23.21      0.0000E+00  0.0000E+00  0.0000E+00   4.426       9.647       1.802       1.693
+ NIT
+ NIT TOTALS        23.21      0.0000E+00  0.5004       9.516       601.9       1110.       191.7       119.3
+ NIT
+ NIT
+ NIT  HO-  COM-   NO3 LEACH-  NO3 LATERAL ABV-GROUND  BLW-GROUND  NO3 IMMOB-  NITROGEN    DENITRIF-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NO3 UPTAKE  NO3 UPTAKE  ILIZATION   FIXATION    ICATION
+ NIT -----------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      2.207      0.0000E+00  0.3844E-01  0.4421      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    2      4.500      0.0000E+00  0.3851E-01  0.4429      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    3      6.736      0.0000E+00  0.3848E-01  0.4426      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    4      8.901      0.0000E+00  0.3850E-01  0.4428      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    5      11.05      0.0000E+00  0.3846E-01  0.4422      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   2    6      7.048      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    7      3.257      0.0000E+00  0.1277       2.746      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    8      1.640      0.0000E+00  0.1043       2.242      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    9      1.153      0.0000E+00  0.1067       2.295      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   10      1.476      0.0000E+00  0.1564       3.363      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   11      3.213      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   12      6.403      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   13      10.90      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   14      16.19      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   3   15      16.93      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   16      17.64      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   17      18.34      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   18      19.03      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   19      19.71      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   4   20      49.89      0.0000E+00  0.2656E-01  0.3718       8.725      0.0000E+00   14.14
+ NIT   4   21      80.99      0.0000E+00  0.2656E-01  0.3718       8.447      0.0000E+00   13.69
+ NIT   4   22      112.6      0.0000E+00  0.2656E-01  0.3718       8.244      0.0000E+00   13.36
+ NIT   4   23      144.5      0.0000E+00  0.2656E-01  0.3718       8.101      0.0000E+00   13.13
+ NIT   4   24      176.7      0.0000E+00  0.2656E-01  0.3718       7.979      0.0000E+00   12.93
+ NIT   4   25      208.9      0.0000E+00  0.2656E-01  0.3718       7.883      0.0000E+00   12.77
+ NIT
+ NIT   5   26      145.4      0.0000E+00  0.0000E+00  0.0000E+00   62.54      0.0000E+00   83.67
+ NIT   5   27      108.5      0.0000E+00  0.0000E+00  0.0000E+00   39.25      0.0000E+00   52.51
+ NIT   5   28      84.37      0.0000E+00  0.0000E+00  0.0000E+00   27.21      0.0000E+00   36.41
+ NIT   5   29      65.96      0.0000E+00  0.0000E+00  0.0000E+00   19.89      0.0000E+00   26.62
+ NIT   5   30      50.37      0.0000E+00  0.0000E+00  0.0000E+00   15.13      0.0000E+00   20.24
+ NIT   5   31      37.52      0.0000E+00  0.0000E+00  0.0000E+00   10.97      0.0000E+00   14.68
+ NIT   5   32      27.37      0.0000E+00  0.0000E+00  0.0000E+00   7.921      0.0000E+00   10.60
+ NIT   5   33      19.07      0.0000E+00  0.0000E+00  0.0000E+00   5.456      0.0000E+00   7.300
+ NIT
+ NIT TOTALS        19.07      0.0000E+00   2.042       38.86       237.7      0.0000E+00   332.0
+ NIT
+ NIT
+ NIT              <----------- LABILE ORGANIC N ------------>  <--------- REFRACTORY ORGANIC N ---------->
+ NIT  HO-  COM-   LEACHING   LATERAL    LITTER     BLW-GROUND  LEACHING   LATERAL    LITTER     BLW-GROUND  LABILE-->REFRACTORY
+ NIT RIZON PTMNT  OUTPUT     OUTFLOW    RETURN     RETURN      OUTPUT     OUTFLOW    RETURN     RETURN      CONVERSION
+ NIT ----------------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      1.148     0.0000E+00 0.3196     0.2777      0.8809     0.0000E+00 0.1370     0.1190       1.187
+ NIT   1    2      1.503     0.0000E+00 0.3196     0.2770       1.146     0.0000E+00 0.1370     0.1187       1.204
+ NIT   1    3      1.626     0.0000E+00 0.3196     0.2770       1.234     0.0000E+00 0.1370     0.1187       1.206
+ NIT   1    4      1.533     0.0000E+00 0.3196     0.2767       1.159     0.0000E+00 0.1370     0.1186       1.207
+ NIT   1    5      1.336     0.0000E+00 0.3196     0.2763       1.008     0.0000E+00 0.1370     0.1184       1.204
+ NIT
+ NIT   2    6     0.4875     0.0000E+00 0.0000E+00  3.271      0.3702     0.0000E+00 0.0000E+00  1.402       2.949
+ NIT   2    7     0.3166     0.0000E+00 0.0000E+00  1.673      0.2395     0.0000E+00 0.0000E+00 0.7169       1.320
+ NIT   2    8     0.2827     0.0000E+00 0.0000E+00  1.495      0.2137     0.0000E+00 0.0000E+00 0.6407       1.083
+ NIT   2    9     0.2683     0.0000E+00 0.0000E+00  1.517      0.2027     0.0000E+00 0.0000E+00 0.6503       1.077
+ NIT   2   10     0.2617     0.0000E+00 0.0000E+00  2.096      0.1979     0.0000E+00 0.0000E+00 0.8984       1.665
+ NIT   2   11     0.2584     0.0000E+00 0.0000E+00  3.245      0.1960     0.0000E+00 0.0000E+00  1.391       2.612
+ NIT   2   12     0.2570     0.0000E+00 0.0000E+00  3.237      0.1951     0.0000E+00 0.0000E+00  1.387       2.552
+ NIT   2   13     0.2565     0.0000E+00 0.0000E+00  3.243      0.1947     0.0000E+00 0.0000E+00  1.390       2.499
+ NIT   2   14     0.2565     0.0000E+00 0.0000E+00  3.218      0.1945     0.0000E+00 0.0000E+00  1.379       2.440
+ NIT
+ NIT   3   15     0.3229     0.0000E+00 0.0000E+00 0.2433      0.2519     0.0000E+00 0.0000E+00 0.1043      0.6433
+ NIT   3   16     0.3803     0.0000E+00 0.0000E+00 0.2424      0.3015     0.0000E+00 0.0000E+00 0.1039      0.6320
+ NIT   3   17     0.4304     0.0000E+00 0.0000E+00 0.2418      0.3448     0.0000E+00 0.0000E+00 0.1036      0.6202
+ NIT   3   18     0.4744     0.0000E+00 0.0000E+00 0.2416      0.3826     0.0000E+00 0.0000E+00 0.1036      0.6102
+ NIT   3   19     0.5133     0.0000E+00 0.0000E+00 0.2420      0.4160     0.0000E+00 0.0000E+00 0.1037      0.5997
+ NIT
+ NIT   4   20      18.45     0.0000E+00 0.0000E+00 0.2061       2.942     0.0000E+00 0.0000E+00 0.8835E-01   3.066
+ NIT   4   21      36.25     0.0000E+00 0.0000E+00 0.2070       5.510     0.0000E+00 0.0000E+00 0.8873E-01   3.042
+ NIT   4   22      53.91     0.0000E+00 0.0000E+00 0.2068       8.098     0.0000E+00 0.0000E+00 0.8862E-01   3.007
+ NIT   4   23      71.42     0.0000E+00 0.0000E+00 0.2076       10.70     0.0000E+00 0.0000E+00 0.8898E-01   2.978
+ NIT   4   24      88.95     0.0000E+00 0.0000E+00 0.2067       13.30     0.0000E+00 0.0000E+00 0.8857E-01   2.954
+ NIT   4   25      106.4     0.0000E+00 0.0000E+00 0.2068       15.91     0.0000E+00 0.0000E+00 0.8863E-01   2.925
+ NIT
+ NIT   5   26      61.66     0.0000E+00 0.0000E+00 0.0000E+00   8.330     0.0000E+00 0.0000E+00 0.0000E+00   7.773
+ NIT   5   27      38.42     0.0000E+00 0.0000E+00 0.0000E+00   6.551     0.0000E+00 0.0000E+00 0.0000E+00   4.806
+ NIT   5   28      26.13     0.0000E+00 0.0000E+00 0.0000E+00   6.121     0.0000E+00 0.0000E+00 0.0000E+00   3.320
+ NIT   5   29      19.18     0.0000E+00 0.0000E+00 0.0000E+00   6.010     0.0000E+00 0.0000E+00 0.0000E+00   2.434
+ NIT   5   30      15.07     0.0000E+00 0.0000E+00 0.0000E+00   5.978     0.0000E+00 0.0000E+00 0.0000E+00   1.897
+ NIT   5   31      12.34     0.0000E+00 0.0000E+00 0.0000E+00   5.966     0.0000E+00 0.0000E+00 0.0000E+00   1.504
+ NIT   5   32      10.63     0.0000E+00 0.0000E+00 0.0000E+00   5.961     0.0000E+00 0.0000E+00 0.0000E+00   1.302
+ NIT   5   33      9.545     0.0000E+00 0.0000E+00 0.0000E+00   5.959     0.0000E+00 0.0000E+00 0.0000E+00   1.129
+ NIT
+ NIT TOTALS        9.545     0.0000E+00  1.598      26.83       5.959     0.0000E+00 0.6849      11.50       69.44
+ WTR ****************************
+ WTR * ANNUAL WATER OUTPUT      *
+ WTR *                          *
+ WTR * DATE:     31 DEC., 59    *
+ WTR ****************************
+ WTR                              ALL HYDROLOGY UNITS ARE CM OF WATER
+ WTR                              SEDIMENT UNITS ARE METRIC TONNES
+ WTR                              NUMBERS IN PARENTHESES ARE SOIL WATER CONTENTS
+ WTR
+ WTR CURRENT CONDITIONS
+ WTR ------------------
+ WTR
+ WTR CROP NUMBER                                1
+ WTR FRACTION OF GROUND COVER              0.0000E+00
+ WTR INTERCEPTION POTENTIAL (CM)           0.0000E+00
+ WTR DEPTH TO WHICH ET EXTRACTED(CM)        15.00
+ WTR
+ WTR
+ WTR
+ WTR FLUXES AND STORAGES FOR THIS PERIOD
+ WTR -----------------------------------
+ WTR
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              STORAGE             PRECIPITATION       EVAPORATION         THROUGHFALL         STORAGE
+ WTR
+ WTR CANOPY                       0.0000E+00           31.32              0.0000E+00           31.32              0.0000E+00
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              SNOWPACK            SNOW                                    SNOWMELT            SNOWPACK
+ WTR
+ WTR SNOWPACK                     0.0000E+00           3.556                                   3.556              0.0000E+00
+ WTR
+ WTR
+ WTR                                                  THROUGHFALL         RUNOFF              INFILTRATION
+ WTR
+ WTR SURFACE                                           31.32              0.0000E+00           34.87
+ WTR
+ WTR
+ WTR                              PREVIOUS            LEACHING                                     LEACHING       CURRENT
+ WTR      SOIL LAYERS             STORAGE             INPUT          TRANSPIRATION  LATERAL FLOW   OUTPUT         STORAGE
+ WTR HORIZON   COMPARTMENT
+ WTR ------------------------------------------------------------------------------------------------------------------------
+ WTR
+ WTR    1           1             0.1367    (.137)     34.87          5.107         0.0000E+00      29.78         0.1200    (.120)
+ WTR    1           2             0.1201    (.120)     29.78          3.881         0.0000E+00      25.90         0.1200    (.120)
+ WTR    1           3             0.1203    (.120)     25.90          3.302         0.0000E+00      22.60         0.1200    (.120)
+ WTR    1           4             0.1212    (.121)     22.60          2.804         0.0000E+00      19.80         0.1200    (.120)
+ WTR    1           5             0.1216    (.122)     19.80          2.451         0.0000E+00      17.35         0.1200    (.120)
+ WTR
+ WTR    2           6             0.6004    (.120)     17.35          7.581         0.0000E+00      9.766         0.6002    (.120)
+ WTR    2           7             0.6192    (.124)     9.766          3.151         0.0000E+00      6.633         0.6005    (.120)
+ WTR    2           8              1.250    (.250)     6.633         0.0000E+00     0.0000E+00      6.633          1.250    (.250)
+ WTR    2           9              1.250    (.250)     6.633         0.0000E+00     0.0000E+00      6.633          1.250    (.250)
+ WTR    2          10              1.250    (.250)     6.633         0.0000E+00     0.0000E+00      6.633          1.250    (.250)
+ WTR    2          11              1.250    (.250)     6.633         0.0000E+00     0.0000E+00      6.633          1.250    (.250)
+ WTR    2          12              1.250    (.250)     6.633         0.0000E+00     0.0000E+00      6.633          1.250    (.250)
+ WTR    2          13              1.250    (.250)     6.633         0.0000E+00     0.0000E+00      6.633          1.250    (.250)
+ WTR    2          14              1.250    (.250)     6.633         0.0000E+00     0.0000E+00      6.633          1.250    (.250)
+ WTR
+ WTR    3          15             0.1000    (.050)     6.633         0.0000E+00     0.0000E+00      6.633         0.1000    (.050)
+ WTR    3          16             0.1000    (.050)     6.633         0.0000E+00     0.0000E+00      6.633         0.1000    (.050)
+ WTR    3          17             0.1000    (.050)     6.633         0.0000E+00     0.0000E+00      6.633         0.1000    (.050)
+ WTR    3          18             0.1000    (.050)     6.633         0.0000E+00     0.0000E+00      6.633         0.1000    (.050)
+ WTR    3          19             0.1000    (.050)     6.633         0.0000E+00     0.0000E+00      6.633         0.1000    (.050)
+ WTR
+ WTR    4          20             0.5000    (.100)     6.633         0.0000E+00     0.0000E+00      75.56         0.5000    (.100)
+ WTR    4          21             0.5000    (.100)     75.56         0.0000E+00     0.0000E+00      144.5         0.5000    (.100)
+ WTR    4          22             0.5000    (.100)     144.5         0.0000E+00     0.0000E+00      213.4         0.5000    (.100)
+ WTR    4          23             0.5000    (.100)     213.4         0.0000E+00     0.0000E+00      282.3         0.5000    (.100)
+ WTR    4          24             0.5000    (.100)     282.3         0.0000E+00     0.0000E+00      351.3         0.5000    (.100)
+ WTR    4          25             0.5000    (.100)     351.3         0.0000E+00     0.0000E+00      420.2         0.5000    (.100)
+ WTR
+ WTR    5          26              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR    5          27              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR    5          28              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR    5          29              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR    5          30              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR    5          31              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR    5          32              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR    5          33              4.000    (.200)     420.2         0.0000E+00     0.0000E+00      420.2          4.000    (.200)
+ WTR
+ WTR
+ WTR
+ WTR SUMMARY FLUXES
+ WTR --------------
+ WTR
+ WTR TOTAL SEDIMENT ERODED FROM SURFACE    0.0000E+00
+ WTR TOTAL ET FROM PROFILE                  28.28
+ WTR RECHARGE BELOW ROOT ZONE               6.633
+ WTR TOTAL LATERAL OUTFLOW                 0.0000E+00
+ WTR TOTAL LATERAL INFLOW                   413.5
+ WTR
+ WTR
+ WTR
+ WTR MATERIAL BALANCE
+ WTR ----------------
+ WTR
+ WTR WATER BALANCE ERROR                   0.2086E-06
+ WTR CUMULATIVE ERROR                      0.2237E-03
+ CNC
+ CNC NITROGEN SPECIES CONCENTRATION PROFILE
+ CNC
+ CNC DATE (DAY-MONTH-YEAR)    31 DEC., 59
+ CNC
+ CNC ABOVE GROUND PLANT  6.385
+ CNC LITTER              2.540
+ CNC
+ CNC HO-  COM-   NH4-N      NH4-N      NO3/       SOL LABILE ADS LABILE SOL REFR   ADS REFR
+ CNC RIZONPTMNT  SOLUTION   ADSORBED   NO2-N      ORGANIC N  ORGANIC N  ORGANIC N  ORGANIC N  PLANT N
+ CNC ---------------------------------------------------------------------------------------------------------
+ CNC
+ CNC   1    1    0.1227E-01 0.5751     0.1389     0.4705E-01  47.05     0.4104E-01  205.2     0.8963
+ CNC   1    2    0.1253E-01 0.5784     0.1733     0.4893E-01  48.93     0.4136E-01  206.8     0.8972
+ CNC   1    3    0.1262E-01 0.5795     0.2246     0.4981E-01  49.81     0.4150E-01  207.5     0.8973
+ CNC   1    4    0.1264E-01 0.5799     0.2775     0.5044E-01  50.44     0.4159E-01  208.0     0.8972
+ CNC   1    5    0.1254E-01 0.5785     0.3420     0.5079E-01  50.79     0.4164E-01  208.2     0.8976
+ CNC   2    6    0.1949E-01  2.387     0.5267     0.1324      132.4     0.1052      526.1      4.734
+ CNC   2    7    0.2002E-01  2.392     0.8468     0.1332      133.2     0.1044      522.1      4.825
+ CNC   2    8    0.2178E-01  2.301      1.330     0.1331      133.1     0.1042      521.1      4.674
+ CNC   2    9    0.2154E-01  2.299      1.129     0.1355      135.5     0.1037      518.5      5.117
+ CNC   2   10    0.2150E-01  2.299      1.068     0.1353      135.3     0.1037      518.5      4.806
+ CNC   2   11    0.2129E-01  2.298     0.8865     0.1339      133.9     0.1041      520.4      4.394
+ CNC   2   12    0.2149E-01  2.299     0.6806     0.1332      133.2     0.1043      521.3      4.872
+ CNC   2   13    0.2193E-01  2.301     0.9116     0.1322      132.2     0.1045      522.6      4.567
+ CNC   2   14    0.2201E-01  2.302     0.9244     0.1325      132.5     0.1045      522.4      4.567
+ CNC   3   15    0.4814E-02 0.2232     0.1261     0.3470E-01  34.70     0.3078E-01  153.9     0.8341
+ CNC   3   16    0.4820E-02 0.2233     0.1312     0.3481E-01  34.81     0.3078E-01  153.9     0.8264
+ CNC   3   17    0.4830E-02 0.2235     0.1344     0.3491E-01  34.91     0.3079E-01  153.9     0.8223
+ CNC   3   18    0.4843E-02 0.2238     0.1355     0.3499E-01  34.99     0.3079E-01  153.9     0.8199
+ CNC   3   19    0.4851E-02 0.2239     0.1378     0.3508E-01  35.08     0.3079E-01  153.9     0.8166
+ CNC   4   20     2.417      32.08     0.3328E-03 0.3239      323.9     0.4826E-01  241.3     0.6880
+ CNC   4   21     2.417      32.09     0.3328E-03 0.3231      323.1     0.4820E-01  241.0     0.6856
+ CNC   4   22     2.412      32.03     0.3328E-03 0.3223      322.3     0.4817E-01  240.8     0.6840
+ CNC   4   23     2.409      32.00     0.3329E-03 0.3214      321.4     0.4814E-01  240.7     0.6833
+ CNC   4   24     2.405      31.95     0.3329E-03 0.3209      320.9     0.4812E-01  240.6     0.6808
+ CNC   4   25     2.399      31.89     0.3330E-03 0.3202      320.2     0.4810E-01  240.5     0.6787
+ CNC   5   26     7.588      83.47     0.4299E-01 0.9167      916.7     0.6625E-01  331.2     0.0000E+00
+ CNC   5   27     4.295      51.01     0.1508     0.5816      581.6     0.6103E-01  305.2     0.0000E+00
+ CNC   5   28     2.308      32.54     0.2987     0.3982      398.2     0.5928E-01  296.4     0.0000E+00
+ CNC   5   29     1.012      22.67     0.3699     0.2879      287.9     0.5854E-01  292.7     0.0000E+00
+ CNC   5   30    0.5364      18.16     0.3195     0.2169      216.9     0.5816E-01  290.8     0.0000E+00
+ CNC   5   31    0.2956      16.01     0.2526     0.1679      167.9     0.5792E-01  289.6     0.0000E+00
+ CNC   5   32    0.1703      14.95     0.1893     0.1348      134.8     0.5780E-01  289.0     0.0000E+00
+ CNC   5   33    0.1034      14.42     0.1368     0.1118      111.8     0.5769E-01  288.4     0.0000E+00
+ CNC
+ CNC   TOTALS     31.04      470.2      11.89      6.370      6370.      2.065     0.1033E+05  55.26
+ CNC
+ NIT ****************************
+ NIT * ANNUAL NITROGEN OUTPUT   *
+ NIT *                          *
+ NIT * DATE:     31 DEC., 59    *
+ NIT ****************************
+ NIT                              STORAGE UNITS IN KG/HA
+ NIT                              FLUX UNITS IN KG/HA/OUTPUT TIMESTEP
+ NIT
+ NIT CURRENT CONDITIONS
+ NIT ------------------
+ NIT
+ NIT CROP NUMBER                                1
+ NIT
+ NIT
+ NIT FLUXES FOR THIS PERIOD
+ NIT -----------------------------------
+ NIT
+ NIT
+ NIT ATMOSPHERIC DEPOSITION
+ NIT
+ NIT                     DRY         WET       TOTAL
+ NIT   NH4-N       3.650      0.0000E+00   3.650
+ NIT   NO3-N       1.825      0.0000E+00   1.825
+ NIT   ORGN       0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT <---SEDIMENT EROSION OUTFLOW--->       <---------SOLUTION RUNOFF OUTFLOW--------->
+ NIT      NH4-N     LABILE     REFRAC         NH4-N IN  NO3(+NO2)     LABILE     REFRAC
+ NIT   ADSORBED  ORGANIC N  ORGANIC N         SOLUTION   SOLUTION  ORGANIC N  ORGANIC N
+ NIT 0.0000E+00 0.0000E+00 0.0000E+00       0.0000E+00 0.0000E+00 0.0000E+00 0.0000E+00
+ NIT
+ NIT
+ NIT  HO-  COM-   NH4 LEACH-  NH4 LATERAL ABV-GROUND  BLW-GROUND  NH3 NITRI-  NH3 IMMOB-  NH3 VOLAT-  ORG-N MIN-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NH3 UPTAKE  NH3 UPTAKE  FICATION    ILIZATION   ILIZATION   ERALIZATION
+ NIT ------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1     0.2405      0.0000E+00  0.9381E-02  0.1079       2.019      0.4035      0.4932       2.566
+ NIT   1    2     0.3634      0.0000E+00  0.9290E-02  0.1068       2.153      0.4278      0.5260       2.633
+ NIT   1    3     0.4235      0.0000E+00  0.9317E-02  0.1072       2.218      0.4389      0.5420       2.659
+ NIT   1    4     0.4435      0.0000E+00  0.9344E-02  0.1075       2.267      0.4462      0.5539       2.675
+ NIT   1    5     0.4303      0.0000E+00  0.9391E-02  0.1080       2.293      0.4495      0.5602       2.674
+ NIT
+ NIT   2    6     0.1991      0.0000E+00  0.4987E-01   1.072       3.134       1.248      0.1532       5.413
+ NIT   2    7     0.1526      0.0000E+00  0.4965E-01   1.067       2.930       1.169      0.1432       5.320
+ NIT   2    8     0.1369      0.0000E+00  0.4971E-01   1.069       2.838       1.126      0.1387       5.198
+ NIT   2    9     0.1198      0.0000E+00  0.3136E-01  0.6742      0.9032      0.3192      0.4413E-01   1.947
+ NIT   2   10     0.1064      0.0000E+00  0.1359E-01  0.2921      0.4515      0.1457      0.2207E-01  0.9021
+ NIT   2   11     0.1053      0.0000E+00  0.2106E-01  0.4529      0.7793      0.2570      0.3808E-01   1.538
+ NIT   2   12     0.1089      0.0000E+00  0.3656E-01  0.7861       1.433      0.5230      0.7005E-01   2.844
+ NIT   2   13     0.1145      0.0000E+00  0.4971E-01   1.069       2.489      0.9481      0.1216       4.676
+ NIT   2   14     0.1175      0.0000E+00  0.4971E-01   1.069       2.435      0.9210      0.1190       4.590
+ NIT
+ NIT   3   15     0.1358      0.0000E+00  0.9562E-02  0.1100      0.5853      0.8748E-01  0.9534E-01  0.8958
+ NIT   3   16     0.1516      0.0000E+00  0.9562E-02  0.1100      0.5814      0.8623E-01  0.9471E-01  0.8875
+ NIT   3   17     0.1655      0.0000E+00  0.9562E-02  0.1100      0.5751      0.8471E-01  0.9368E-01  0.8771
+ NIT   3   18     0.1779      0.0000E+00  0.9562E-02  0.1100      0.5664      0.8293E-01  0.9225E-01  0.8640
+ NIT   3   19     0.1891      0.0000E+00  0.9562E-02  0.1100      0.5586      0.8128E-01  0.9099E-01  0.8525
+ NIT
+ NIT   4   20      159.1      0.0000E+00  0.6640E-02  0.9296E-01   54.20       89.46       14.71       6.753
+ NIT   4   21      317.9      0.0000E+00  0.6640E-02  0.9296E-01   54.20       89.30       14.71       6.692
+ NIT   4   22      476.7      0.0000E+00  0.6640E-02  0.9296E-01   54.28       89.22       14.74       6.637
+ NIT   4   23      635.8      0.0000E+00  0.6640E-02  0.9296E-01   54.20       88.94       14.72       6.574
+ NIT   4   24      794.9      0.0000E+00  0.6640E-02  0.9296E-01   54.25       88.81       14.73       6.533
+ NIT   4   25      954.2      0.0000E+00  0.6640E-02  0.9296E-01   54.28       88.66       14.74       6.486
+ NIT
+ NIT   5   26      644.0      0.0000E+00  0.0000E+00  0.0000E+00   87.81       205.2       35.76       18.11
+ NIT   5   27      439.5      0.0000E+00  0.0000E+00  0.0000E+00   58.67       133.5       23.89       11.13
+ NIT   5   28      298.1      0.0000E+00  0.0000E+00  0.0000E+00   40.63       90.92       16.55       7.388
+ NIT   5   29      198.5      0.0000E+00  0.0000E+00  0.0000E+00   28.76       63.57       11.71       5.216
+ NIT   5   30      129.1      0.0000E+00  0.0000E+00  0.0000E+00   20.21       44.23       8.231       3.845
+ NIT   5   31      80.84      0.0000E+00  0.0000E+00  0.0000E+00   14.23       30.82       5.796       2.993
+ NIT   5   32      49.10      0.0000E+00  0.0000E+00  0.0000E+00   9.534       20.50       3.882       2.451
+ NIT   5   33      30.08      0.0000E+00  0.0000E+00  0.0000E+00   5.858       12.59       2.386       1.988
+ NIT
+ NIT TOTALS        30.08      0.0000E+00  0.4856       9.196       622.3       1145.       200.5       142.8
+ NIT
+ NIT
+ NIT  HO-  COM-   NO3 LEACH-  NO3 LATERAL ABV-GROUND  BLW-GROUND  NO3 IMMOB-  NITROGEN    DENITRIF-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NO3 UPTAKE  NO3 UPTAKE  ILIZATION   FIXATION    ICATION
+ NIT -----------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      1.836      0.0000E+00  0.3843E-01  0.4419      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    2      3.835      0.0000E+00  0.3852E-01  0.4430      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    3      5.955      0.0000E+00  0.3849E-01  0.4426      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    4      8.178      0.0000E+00  0.3846E-01  0.4423      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    5      10.40      0.0000E+00  0.3842E-01  0.4418      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   2    6      11.74      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    7      12.06      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    8      10.25      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    9      7.519      0.0000E+00  0.1332       2.864      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   10      5.678      0.0000E+00  0.6216E-01   1.336      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   11      4.289      0.0000E+00  0.9210E-01   1.980      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   12      3.595      0.0000E+00  0.1541       3.313      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   13      4.631      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   14      8.092      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   3   15      8.656      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   16      9.247      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   17      9.864      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   18      10.51      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   19      11.17      0.0000E+00  0.3825E-01  0.4398      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   4   20      43.56      0.0000E+00  0.2656E-01  0.3718       8.169      0.0000E+00   13.24
+ NIT   4   21      76.54      0.0000E+00  0.2656E-01  0.3718       7.943      0.0000E+00   12.87
+ NIT   4   22      109.9      0.0000E+00  0.2656E-01  0.3718       7.823      0.0000E+00   12.68
+ NIT   4   23      143.5      0.0000E+00  0.2656E-01  0.3718       7.729      0.0000E+00   12.52
+ NIT   4   24      177.2      0.0000E+00  0.2656E-01  0.3718       7.663      0.0000E+00   12.42
+ NIT   4   25      211.2      0.0000E+00  0.2656E-01  0.3718       7.607      0.0000E+00   12.33
+ NIT
+ NIT   5   26      151.4      0.0000E+00  0.0000E+00  0.0000E+00   63.11      0.0000E+00   84.44
+ NIT   5   27      113.0      0.0000E+00  0.0000E+00  0.0000E+00   41.50      0.0000E+00   55.52
+ NIT   5   28      85.84      0.0000E+00  0.0000E+00  0.0000E+00   28.95      0.0000E+00   38.73
+ NIT   5   29      65.53      0.0000E+00  0.0000E+00  0.0000E+00   20.95      0.0000E+00   28.03
+ NIT   5   30      49.86      0.0000E+00  0.0000E+00  0.0000E+00   15.31      0.0000E+00   20.49
+ NIT   5   31      37.71      0.0000E+00  0.0000E+00  0.0000E+00   11.26      0.0000E+00   15.07
+ NIT   5   32      28.04      0.0000E+00  0.0000E+00  0.0000E+00   8.195      0.0000E+00   10.96
+ NIT   5   33      20.25      0.0000E+00  0.0000E+00  0.0000E+00   5.823      0.0000E+00   7.790
+ NIT
+ NIT TOTALS        20.25      0.0000E+00   1.988       37.71       242.0      0.0000E+00   337.1
+ NIT
+ NIT
+ NIT              <----------- LABILE ORGANIC N ------------>  <--------- REFRACTORY ORGANIC N ---------->
+ NIT  HO-  COM-   LEACHING   LATERAL    LITTER     BLW-GROUND  LEACHING   LATERAL    LITTER     BLW-GROUND  LABILE-->REFRACTORY
+ NIT RIZON PTMNT  OUTPUT     OUTFLOW    RETURN     RETURN      OUTPUT     OUTFLOW    RETURN     RETURN      CONVERSION
+ NIT ----------------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      1.267     0.0000E+00 0.3197     0.3139       1.054     0.0000E+00 0.1370     0.1345       1.026
+ NIT   1    2      1.929     0.0000E+00 0.3197     0.3128       1.582     0.0000E+00 0.1370     0.1340       1.053
+ NIT   1    3      2.235     0.0000E+00 0.3197     0.3128       1.817     0.0000E+00 0.1370     0.1340       1.063
+ NIT   1    4      2.344     0.0000E+00 0.3197     0.3127       1.895     0.0000E+00 0.1370     0.1340       1.070
+ NIT   1    5      2.305     0.0000E+00 0.3197     0.3128       1.856     0.0000E+00 0.1370     0.1341       1.070
+ NIT
+ NIT   2    6      1.082     0.0000E+00 0.0000E+00  3.510      0.8719     0.0000E+00 0.0000E+00  1.504       2.707
+ NIT   2    7     0.7689     0.0000E+00 0.0000E+00  3.652      0.6134     0.0000E+00 0.0000E+00  1.565       2.660
+ NIT   2    8     0.7205     0.0000E+00 0.0000E+00  3.486      0.5694     0.0000E+00 0.0000E+00  1.494       2.599
+ NIT   2    9     0.7132     0.0000E+00 0.0000E+00  1.903      0.5557     0.0000E+00 0.0000E+00 0.8157      0.9734
+ NIT   2   10     0.7124     0.0000E+00 0.0000E+00  1.142      0.5512     0.0000E+00 0.0000E+00 0.4893      0.4511
+ NIT   2   11     0.7101     0.0000E+00 0.0000E+00  1.686      0.5507     0.0000E+00 0.0000E+00 0.7227      0.7689
+ NIT   2   12     0.7079     0.0000E+00 0.0000E+00  2.521      0.5510     0.0000E+00 0.0000E+00  1.080       1.422
+ NIT   2   13     0.7053     0.0000E+00 0.0000E+00  3.635      0.5518     0.0000E+00 0.0000E+00  1.558       2.338
+ NIT   2   14     0.7047     0.0000E+00 0.0000E+00  3.635      0.5523     0.0000E+00 0.0000E+00  1.558       2.295
+ NIT
+ NIT   3   15     0.8288     0.0000E+00 0.0000E+00 0.3076      0.6661     0.0000E+00 0.0000E+00 0.1318      0.5972
+ NIT   3   16     0.9370     0.0000E+00 0.0000E+00 0.3118      0.7648     0.0000E+00 0.0000E+00 0.1336      0.5917
+ NIT   3   17      1.033     0.0000E+00 0.0000E+00 0.3136      0.8522     0.0000E+00 0.0000E+00 0.1344      0.5847
+ NIT   3   18      1.120     0.0000E+00 0.0000E+00 0.3125      0.9306     0.0000E+00 0.0000E+00 0.1339      0.5760
+ NIT   3   19      1.198     0.0000E+00 0.0000E+00 0.3128       1.002     0.0000E+00 0.0000E+00 0.1340      0.5683
+ NIT
+ NIT   4   20      29.23     0.0000E+00 0.0000E+00 0.2632       4.930     0.0000E+00 0.0000E+00 0.1128       4.502
+ NIT   4   21      57.03     0.0000E+00 0.0000E+00 0.2620       8.918     0.0000E+00 0.0000E+00 0.1123       4.461
+ NIT   4   22      84.58     0.0000E+00 0.0000E+00 0.2628       12.93     0.0000E+00 0.0000E+00 0.1126       4.425
+ NIT   4   23      111.9     0.0000E+00 0.0000E+00 0.2625       16.96     0.0000E+00 0.0000E+00 0.1125       4.383
+ NIT   4   24      139.2     0.0000E+00 0.0000E+00 0.2628       21.00     0.0000E+00 0.0000E+00 0.1126       4.355
+ NIT   4   25      166.3     0.0000E+00 0.0000E+00 0.2634       25.05     0.0000E+00 0.0000E+00 0.1129       4.324
+ NIT
+ NIT   5   26      99.83     0.0000E+00 0.0000E+00 0.0000E+00   10.84     0.0000E+00 0.0000E+00 0.0000E+00   12.07
+ NIT   5   27      62.53     0.0000E+00 0.0000E+00 0.0000E+00   7.341     0.0000E+00 0.0000E+00 0.0000E+00   7.418
+ NIT   5   28      41.92     0.0000E+00 0.0000E+00 0.0000E+00   6.442     0.0000E+00 0.0000E+00 0.0000E+00   4.925
+ NIT   5   29      29.85     0.0000E+00 0.0000E+00 0.0000E+00   6.188     0.0000E+00 0.0000E+00 0.0000E+00   3.477
+ NIT   5   30      22.38     0.0000E+00 0.0000E+00 0.0000E+00   6.106     0.0000E+00 0.0000E+00 0.0000E+00   2.563
+ NIT   5   31      17.37     0.0000E+00 0.0000E+00 0.0000E+00   6.073     0.0000E+00 0.0000E+00 0.0000E+00   1.995
+ NIT   5   32      14.01     0.0000E+00 0.0000E+00 0.0000E+00   6.058     0.0000E+00 0.0000E+00 0.0000E+00   1.634
+ NIT   5   33      11.70     0.0000E+00 0.0000E+00 0.0000E+00   6.048     0.0000E+00 0.0000E+00 0.0000E+00   1.325
+ NIT
+ NIT TOTALS        11.70     0.0000E+00  1.598      29.87       6.048     0.0000E+00 0.6851      12.80       86.28
+ WTR ****************************
+ WTR * ANNUAL WATER OUTPUT      *
+ WTR *                          *
+ WTR * DATE:     31 DEC., 60    *
+ WTR ****************************
+ WTR                              ALL HYDROLOGY UNITS ARE CM OF WATER
+ WTR                              SEDIMENT UNITS ARE METRIC TONNES
+ WTR                              NUMBERS IN PARENTHESES ARE SOIL WATER CONTENTS
+ WTR
+ WTR CURRENT CONDITIONS
+ WTR ------------------
+ WTR
+ WTR CROP NUMBER                                1
+ WTR FRACTION OF GROUND COVER              0.0000E+00
+ WTR INTERCEPTION POTENTIAL (CM)           0.0000E+00
+ WTR DEPTH TO WHICH ET EXTRACTED(CM)        15.00
+ WTR
+ WTR
+ WTR
+ WTR FLUXES AND STORAGES FOR THIS PERIOD
+ WTR -----------------------------------
+ WTR
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              STORAGE             PRECIPITATION       EVAPORATION         THROUGHFALL         STORAGE
+ WTR
+ WTR CANOPY                       0.0000E+00           26.85              0.0000E+00           26.85              0.0000E+00
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              SNOWPACK            SNOW                                    SNOWMELT            SNOWPACK
+ WTR
+ WTR SNOWPACK                     0.0000E+00           5.004                                   4.979              0.2500E-01
+ WTR
+ WTR
+ WTR                                                  THROUGHFALL         RUNOFF              INFILTRATION
+ WTR
+ WTR SURFACE                                           26.85              0.0000E+00           31.83
+ WTR
+ WTR
+ WTR                              PREVIOUS            LEACHING                                     LEACHING       CURRENT
+ WTR      SOIL LAYERS             STORAGE             INPUT          TRANSPIRATION  LATERAL FLOW   OUTPUT         STORAGE
+ WTR HORIZON   COMPARTMENT
+ WTR ------------------------------------------------------------------------------------------------------------------------
+ WTR
+ WTR    1           1             0.1200    (.120)     31.83          4.399         0.0000E+00      27.42         0.1251    (.125)
+ WTR    1           2             0.1200    (.120)     27.42          3.289         0.0000E+00      24.13         0.1288    (.129)
+ WTR    1           3             0.1200    (.120)     24.13          2.731         0.0000E+00      21.38         0.1346    (.135)
+ WTR    1           4             0.1200    (.120)     21.38          2.400         0.0000E+00      18.96         0.1435    (.144)
+ WTR    1           5             0.1200    (.120)     18.96          2.193         0.0000E+00      16.73         0.1571    (.157)
+ WTR
+ WTR    2           6             0.6002    (.120)     16.73          7.541         0.0000E+00      8.900         0.8870    (.177)
+ WTR    2           7             0.6005    (.120)     8.900          3.503         0.0000E+00      5.000         0.9971    (.199)
+ WTR    2           8              1.250    (.250)     5.000         0.0000E+00     0.0000E+00      5.000          1.250    (.250)
+ WTR    2           9              1.250    (.250)     5.000         0.0000E+00     0.0000E+00      5.000          1.250    (.250)
+ WTR    2          10              1.250    (.250)     5.000         0.0000E+00     0.0000E+00      5.000          1.250    (.250)
+ WTR    2          11              1.250    (.250)     5.000         0.0000E+00     0.0000E+00      5.000          1.250    (.250)
+ WTR    2          12              1.250    (.250)     5.000         0.0000E+00     0.0000E+00      5.000          1.250    (.250)
+ WTR    2          13              1.250    (.250)     5.000         0.0000E+00     0.0000E+00      5.000          1.250    (.250)
+ WTR    2          14              1.250    (.250)     5.000         0.0000E+00     0.0000E+00      5.000          1.250    (.250)
+ WTR
+ WTR    3          15             0.1000    (.050)     5.000         0.0000E+00     0.0000E+00      5.000         0.1000    (.050)
+ WTR    3          16             0.1000    (.050)     5.000         0.0000E+00     0.0000E+00      5.000         0.1000    (.050)
+ WTR    3          17             0.1000    (.050)     5.000         0.0000E+00     0.0000E+00      5.000         0.1000    (.050)
+ WTR    3          18             0.1000    (.050)     5.000         0.0000E+00     0.0000E+00      5.000         0.1000    (.050)
+ WTR    3          19             0.1000    (.050)     5.000         0.0000E+00     0.0000E+00      5.000         0.1000    (.050)
+ WTR
+ WTR    4          20             0.5000    (.100)     5.000         0.0000E+00     0.0000E+00      74.11         0.5000    (.100)
+ WTR    4          21             0.5000    (.100)     74.11         0.0000E+00     0.0000E+00      143.2         0.5000    (.100)
+ WTR    4          22             0.5000    (.100)     143.2         0.0000E+00     0.0000E+00      212.3         0.5000    (.100)
+ WTR    4          23             0.5000    (.100)     212.3         0.0000E+00     0.0000E+00      281.5         0.5000    (.100)
+ WTR    4          24             0.5000    (.100)     281.5         0.0000E+00     0.0000E+00      350.6         0.5000    (.100)
+ WTR    4          25             0.5000    (.100)     350.6         0.0000E+00     0.0000E+00      419.7         0.5000    (.100)
+ WTR
+ WTR    5          26              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR    5          27              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR    5          28              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR    5          29              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR    5          30              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR    5          31              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR    5          32              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR    5          33              4.000    (.200)     419.7         0.0000E+00     0.0000E+00      419.7          4.000    (.200)
+ WTR
+ WTR
+ WTR
+ WTR SUMMARY FLUXES
+ WTR --------------
+ WTR
+ WTR TOTAL SEDIMENT ERODED FROM SURFACE    0.0000E+00
+ WTR TOTAL ET FROM PROFILE                  26.06
+ WTR RECHARGE BELOW ROOT ZONE               5.000
+ WTR TOTAL LATERAL OUTFLOW                 0.0000E+00
+ WTR TOTAL LATERAL INFLOW                   414.7
+ WTR
+ WTR
+ WTR
+ WTR MATERIAL BALANCE
+ WTR ----------------
+ WTR
+ WTR WATER BALANCE ERROR                   0.2086E-06
+ WTR CUMULATIVE ERROR                      0.2999E-03
+ CNC
+ CNC NITROGEN SPECIES CONCENTRATION PROFILE
+ CNC
+ CNC DATE (DAY-MONTH-YEAR)    31 DEC., 60
+ CNC
+ CNC ABOVE GROUND PLANT  6.208
+ CNC LITTER              2.548
+ CNC
+ CNC HO-  COM-   NH4-N      NH4-N      NO3/       SOL LABILE ADS LABILE SOL REFR   ADS REFR
+ CNC RIZONPTMNT  SOLUTION   ADSORBED   NO2-N      ORGANIC N  ORGANIC N  ORGANIC N  ORGANIC N  PLANT N
+ CNC ---------------------------------------------------------------------------------------------------------
+ CNC
+ CNC   1    1    0.1022E-01 0.5442     0.2727E-01 0.4360E-01  43.60     0.4111E-01  205.6     0.9470
+ CNC   1    2    0.1136E-01 0.5539     0.5187E-01 0.4581E-01  45.81     0.4153E-01  207.6     0.9475
+ CNC   1    3    0.1207E-01 0.5561     0.7900E-01 0.4685E-01  46.85     0.4171E-01  208.5     0.9455
+ CNC   1    4    0.1285E-01 0.5559     0.1128     0.4762E-01  47.62     0.4184E-01  209.2     0.9455
+ CNC   1    5    0.1397E-01 0.5549     0.1544     0.4810E-01  48.10     0.4191E-01  209.5     0.9466
+ CNC   2    6    0.3098E-01  2.402      1.047     0.1301      130.1     0.1063      531.5      4.708
+ CNC   2    7    0.3316E-01  2.392      2.084     0.1305      130.5     0.1054      526.9      4.749
+ CNC   2    8    0.2214E-01  2.302      1.576     0.1300      130.0     0.1051      525.4      4.704
+ CNC   2    9    0.2256E-01  2.304      1.279     0.1326      132.6     0.1046      522.9      4.843
+ CNC   2   10    0.2246E-01  2.303     0.6625     0.1344      134.4     0.1041      520.5      5.104
+ CNC   2   11    0.2230E-01  2.303     0.3737     0.1334      133.4     0.1044      521.9      4.523
+ CNC   2   12    0.2228E-01  2.303     0.1724     0.1330      133.0     0.1045      522.6      4.589
+ CNC   2   13    0.2229E-01  2.303     0.1808     0.1319      131.9     0.1048      524.0      4.299
+ CNC   2   14    0.2249E-01  2.304     0.1862     0.1322      132.2     0.1048      523.8      4.210
+ CNC   3   15    0.4451E-02 0.2157     0.3872E-01 0.3413E-01  34.13     0.3083E-01  154.2     0.8598
+ CNC   3   16    0.4533E-02 0.2174     0.3979E-01 0.3417E-01  34.17     0.3085E-01  154.2     0.8760
+ CNC   3   17    0.4564E-02 0.2180     0.4125E-01 0.3428E-01  34.28     0.3085E-01  154.3     0.8736
+ CNC   3   18    0.4589E-02 0.2185     0.4163E-01 0.3437E-01  34.37     0.3086E-01  154.3     0.8756
+ CNC   3   19    0.4609E-02 0.2190     0.4299E-01 0.3445E-01  34.45     0.3086E-01  154.3     0.8759
+ CNC   4   20     2.418      32.09     0.1735E-03 0.4026      402.6     0.6288E-01  314.4     0.7503
+ CNC   4   21     2.418      32.10     0.1735E-03 0.4021      402.1     0.6281E-01  314.0     0.7489
+ CNC   4   22     2.419      32.11     0.1735E-03 0.4013      401.3     0.6275E-01  313.8     0.7479
+ CNC   4   23     2.419      32.11     0.1735E-03 0.4003      400.3     0.6271E-01  313.6     0.7475
+ CNC   4   24     2.417      32.09     0.1735E-03 0.3999      399.9     0.6268E-01  313.4     0.7445
+ CNC   4   25     2.415      32.07     0.1735E-03 0.3991      399.1     0.6265E-01  313.3     0.7433
+ CNC   5   26     7.713      84.74     0.2380E-01  1.225      1225.     0.7376E-01  368.8     0.0000E+00
+ CNC   5   27     4.487      52.85     0.9327E-01 0.7796      779.6     0.6413E-01  320.6     0.0000E+00
+ CNC   5   28     2.519      34.45     0.2192     0.5299      529.9     0.6089E-01  304.5     0.0000E+00
+ CNC   5   29     1.369      24.31     0.3679     0.3784      378.4     0.5954E-01  297.7     0.0000E+00
+ CNC   5   30    0.5940      18.66     0.3414     0.2806      280.6     0.5885E-01  294.3     0.0000E+00
+ CNC   5   31    0.3166      16.17     0.2741     0.2126      212.6     0.5843E-01  292.2     0.0000E+00
+ CNC   5   32    0.1799      15.02     0.2048     0.1663      166.3     0.5821E-01  291.0     0.0000E+00
+ CNC   5   33    0.1093      14.46     0.1461     0.1321      132.1     0.5801E-01  290.0     0.0000E+00
+ CNC
+ CNC   TOTALS     32.10      478.0      9.864      7.701      7701.      2.175     0.1087E+05  55.30
+ CNC
+ NIT ****************************
+ NIT * ANNUAL NITROGEN OUTPUT   *
+ NIT *                          *
+ NIT * DATE:     31 DEC., 60    *
+ NIT ****************************
+ NIT                              STORAGE UNITS IN KG/HA
+ NIT                              FLUX UNITS IN KG/HA/OUTPUT TIMESTEP
+ NIT
+ NIT CURRENT CONDITIONS
+ NIT ------------------
+ NIT
+ NIT CROP NUMBER                                1
+ NIT
+ NIT
+ NIT FLUXES FOR THIS PERIOD
+ NIT -----------------------------------
+ NIT
+ NIT
+ NIT ATMOSPHERIC DEPOSITION
+ NIT
+ NIT                     DRY         WET       TOTAL
+ NIT   NH4-N       3.660      0.0000E+00   3.660
+ NIT   NO3-N       1.830      0.0000E+00   1.830
+ NIT   ORGN       0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT <---SEDIMENT EROSION OUTFLOW--->       <---------SOLUTION RUNOFF OUTFLOW--------->
+ NIT      NH4-N     LABILE     REFRAC         NH4-N IN  NO3(+NO2)     LABILE     REFRAC
+ NIT   ADSORBED  ORGANIC N  ORGANIC N         SOLUTION   SOLUTION  ORGANIC N  ORGANIC N
+ NIT 0.0000E+00 0.0000E+00 0.0000E+00       0.0000E+00 0.0000E+00 0.0000E+00 0.0000E+00
+ NIT
+ NIT
+ NIT  HO-  COM-   NH4 LEACH-  NH4 LATERAL ABV-GROUND  BLW-GROUND  NH3 NITRI-  NH3 IMMOB-  NH3 VOLAT-  ORG-N MIN-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NH3 UPTAKE  NH3 UPTAKE  FICATION    ILIZATION   ILIZATION   ERALIZATION
+ NIT ------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1     0.2153      0.0000E+00  0.9416E-02  0.1083       2.040      0.4118      0.4984       2.518
+ NIT   1    2     0.3345      0.0000E+00  0.9430E-02  0.1084       2.173      0.4368      0.5309       2.620
+ NIT   1    3     0.4011      0.0000E+00  0.9448E-02  0.1086       2.240      0.4485      0.5472       2.664
+ NIT   1    4     0.4299      0.0000E+00  0.9448E-02  0.1086       2.284      0.4557      0.5581       2.689
+ NIT   1    5     0.4325      0.0000E+00  0.9506E-02  0.1093       2.308      0.4590      0.5638       2.698
+ NIT
+ NIT   2    6     0.1978      0.0000E+00  0.4964E-01   1.067       3.265       1.311      0.1595       5.643
+ NIT   2    7     0.1135      0.0000E+00  0.4969E-01   1.068       3.086       1.236      0.1508       5.519
+ NIT   2    8     0.1009      0.0000E+00  0.4974E-01   1.069       2.944       1.176      0.1439       5.373
+ NIT   2    9     0.9622E-01  0.0000E+00  0.4975E-01   1.070       2.930       1.161      0.1432       5.355
+ NIT   2   10     0.8575E-01  0.0000E+00  0.2993E-01  0.6436       1.161      0.4178      0.5673E-01   2.304
+ NIT   2   11     0.7698E-01  0.0000E+00  0.2180E-01  0.4688      0.8283      0.2805      0.4048E-01   1.636
+ NIT   2   12     0.7435E-01  0.0000E+00  0.1602E-01  0.3445      0.6544      0.2140      0.3198E-01   1.262
+ NIT   2   13     0.7302E-01  0.0000E+00  0.1859E-01  0.3997      0.7628      0.2516      0.3727E-01   1.470
+ NIT   2   14     0.7234E-01  0.0000E+00  0.1796E-01  0.3862      0.7475      0.2449      0.3653E-01   1.435
+ NIT
+ NIT   3   15     0.8775E-01  0.0000E+00  0.5291E-02  0.6085E-01  0.2617      0.3589E-01  0.4263E-01  0.4140
+ NIT   3   16     0.1023      0.0000E+00  0.6173E-02  0.7099E-01  0.3010      0.4208E-01  0.4904E-01  0.4777
+ NIT   3   17     0.1148      0.0000E+00  0.6269E-02  0.7209E-01  0.3031      0.4221E-01  0.4938E-01  0.4798
+ NIT   3   18     0.1257      0.0000E+00  0.6443E-02  0.7410E-01  0.3075      0.4271E-01  0.5008E-01  0.4862
+ NIT   3   19     0.1353      0.0000E+00  0.6623E-02  0.7617E-01  0.3125      0.4330E-01  0.5090E-01  0.4939
+ NIT
+ NIT   4   20      160.1      0.0000E+00  0.6640E-02  0.9296E-01   54.24       91.11       14.72       8.947
+ NIT   4   21      320.1      0.0000E+00  0.6640E-02  0.9296E-01   54.23       90.92       14.72       8.871
+ NIT   4   22      480.4      0.0000E+00  0.6640E-02  0.9296E-01   54.16       90.63       14.70       8.790
+ NIT   4   23      641.0      0.0000E+00  0.6640E-02  0.9296E-01   54.06       90.29       14.68       8.708
+ NIT   4   24      801.7      0.0000E+00  0.6640E-02  0.9296E-01   54.07       90.10       14.68       8.650
+ NIT   4   25      962.9      0.0000E+00  0.6640E-02  0.9296E-01   53.95       89.72       14.65       8.575
+ NIT
+ NIT   5   26      657.8      0.0000E+00  0.0000E+00  0.0000E+00   86.66       207.3       35.29       25.57
+ NIT   5   27      456.5      0.0000E+00  0.0000E+00  0.0000E+00   57.42       133.9       23.38       15.45
+ NIT   5   28      315.6      0.0000E+00  0.0000E+00  0.0000E+00   40.24       92.11       16.39       10.02
+ NIT   5   29      215.0      0.0000E+00  0.0000E+00  0.0000E+00   28.82       64.95       11.73       6.873
+ NIT   5   30      143.8      0.0000E+00  0.0000E+00  0.0000E+00   20.86       46.34       8.495       5.012
+ NIT   5   31      93.61      0.0000E+00  0.0000E+00  0.0000E+00   14.92       32.71       6.075       3.743
+ NIT   5   32      57.64      0.0000E+00  0.0000E+00  0.0000E+00   10.92       23.56       4.447       3.033
+ NIT   5   33      35.40      0.0000E+00  0.0000E+00  0.0000E+00   6.905       14.85       2.812       2.362
+ NIT
+ NIT TOTALS        35.40      0.0000E+00  0.4210       7.973       620.4       1167.       200.5       170.1
+ NIT
+ NIT
+ NIT  HO-  COM-   NO3 LEACH-  NO3 LATERAL ABV-GROUND  BLW-GROUND  NO3 IMMOB-  NITROGEN    DENITRIF-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NO3 UPTAKE  NO3 UPTAKE  ILIZATION   FIXATION    ICATION
+ NIT -----------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      2.038      0.0000E+00  0.3839E-01  0.4415      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    2      4.218      0.0000E+00  0.3838E-01  0.4413      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    3      6.490      0.0000E+00  0.3836E-01  0.4411      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    4      8.825      0.0000E+00  0.3836E-01  0.4411      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    5      11.21      0.0000E+00  0.3830E-01  0.4405      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   2    6      9.436      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    7      6.770      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    8      4.953      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    9      3.218      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   10      1.917      0.0000E+00  0.1274       2.739      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   11      1.122      0.0000E+00  0.9495E-01   2.041      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   12     0.6683      0.0000E+00  0.7183E-01   1.544      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   13     0.4009      0.0000E+00  0.7827E-01   1.683      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   14     0.2423      0.0000E+00  0.7307E-01   1.571      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   3   15     0.3214      0.0000E+00  0.2160E-01  0.2484      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   16     0.3998      0.0000E+00  0.2513E-01  0.2890      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   17     0.4773      0.0000E+00  0.2550E-01  0.2933      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   18     0.5513      0.0000E+00  0.2619E-01  0.3012      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   19     0.6224      0.0000E+00  0.2690E-01  0.3093      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   4   20      33.92      0.0000E+00  0.2656E-01  0.3718       7.838      0.0000E+00   12.70
+ NIT   4   21      67.19      0.0000E+00  0.2656E-01  0.3718       7.846      0.0000E+00   12.71
+ NIT   4   22      100.4      0.0000E+00  0.2656E-01  0.3718       7.828      0.0000E+00   12.68
+ NIT   4   23      133.7      0.0000E+00  0.2656E-01  0.3718       7.797      0.0000E+00   12.63
+ NIT   4   24      167.0      0.0000E+00  0.2656E-01  0.3718       7.770      0.0000E+00   12.59
+ NIT   4   25      200.3      0.0000E+00  0.2656E-01  0.3718       7.729      0.0000E+00   12.52
+ NIT
+ NIT   5   26      139.3      0.0000E+00  0.0000E+00  0.0000E+00   63.14      0.0000E+00   84.47
+ NIT   5   27      102.2      0.0000E+00  0.0000E+00  0.0000E+00   40.49      0.0000E+00   54.18
+ NIT   5   28      77.51      0.0000E+00  0.0000E+00  0.0000E+00   27.79      0.0000E+00   37.18
+ NIT   5   29      59.67      0.0000E+00  0.0000E+00  0.0000E+00   19.96      0.0000E+00   26.70
+ NIT   5   30      45.73      0.0000E+00  0.0000E+00  0.0000E+00   14.88      0.0000E+00   19.90
+ NIT   5   31      34.96      0.0000E+00  0.0000E+00  0.0000E+00   10.98      0.0000E+00   14.69
+ NIT   5   32      26.87      0.0000E+00  0.0000E+00  0.0000E+00   8.125      0.0000E+00   10.87
+ NIT   5   33      19.99      0.0000E+00  0.0000E+00  0.0000E+00   5.890      0.0000E+00   7.880
+ NIT
+ NIT TOTALS        19.99      0.0000E+00   1.725       32.71       238.1      0.0000E+00   331.7
+ NIT
+ NIT
+ NIT              <----------- LABILE ORGANIC N ------------>  <--------- REFRACTORY ORGANIC N ---------->
+ NIT  HO-  COM-   LEACHING   LATERAL    LITTER     BLW-GROUND  LEACHING   LATERAL    LITTER     BLW-GROUND  LABILE-->REFRACTORY
+ NIT RIZON PTMNT  OUTPUT     OUTFLOW    RETURN     RETURN      OUTPUT     OUTFLOW    RETURN     RETURN      CONVERSION
+ NIT ----------------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      1.018     0.0000E+00 0.3241     0.3494      0.9189     0.0000E+00 0.1389     0.1497       1.007
+ NIT   1    2      1.582     0.0000E+00 0.3241     0.3496       1.400     0.0000E+00 0.1389     0.1498       1.048
+ NIT   1    3      1.936     0.0000E+00 0.3241     0.3511       1.693     0.0000E+00 0.1389     0.1505       1.066
+ NIT   1    4      2.123     0.0000E+00 0.3241     0.3511       1.839     0.0000E+00 0.1389     0.1505       1.076
+ NIT   1    5      2.176     0.0000E+00 0.3241     0.3506       1.873     0.0000E+00 0.1389     0.1502       1.079
+ NIT
+ NIT   2    6      1.086     0.0000E+00 0.0000E+00  3.785      0.9126     0.0000E+00 0.0000E+00  1.622       2.822
+ NIT   2    7     0.5929     0.0000E+00 0.0000E+00  3.821      0.4877     0.0000E+00 0.0000E+00  1.638       2.759
+ NIT   2    8     0.5450     0.0000E+00 0.0000E+00  3.748      0.4426     0.0000E+00 0.0000E+00  1.606       2.687
+ NIT   2    9     0.5345     0.0000E+00 0.0000E+00  3.961      0.4258     0.0000E+00 0.0000E+00  1.697       2.677
+ NIT   2   10     0.5337     0.0000E+00 0.0000E+00  2.159      0.4194     0.0000E+00 0.0000E+00 0.9254       1.152
+ NIT   2   11     0.5321     0.0000E+00 0.0000E+00  1.667      0.4177     0.0000E+00 0.0000E+00 0.7144      0.8182
+ NIT   2   12     0.5312     0.0000E+00 0.0000E+00  1.520      0.4174     0.0000E+00 0.0000E+00 0.6515      0.6312
+ NIT   2   13     0.5287     0.0000E+00 0.0000E+00  1.646      0.4180     0.0000E+00 0.0000E+00 0.7052      0.7352
+ NIT   2   14     0.5285     0.0000E+00 0.0000E+00  1.620      0.4183     0.0000E+00 0.0000E+00 0.6942      0.7174
+ NIT
+ NIT   3   15     0.6449     0.0000E+00 0.0000E+00 0.1985      0.5282     0.0000E+00 0.0000E+00 0.8506E-01  0.2760
+ NIT   3   16     0.7442     0.0000E+00 0.0000E+00 0.2173      0.6219     0.0000E+00 0.0000E+00 0.9312E-01  0.3184
+ NIT   3   17     0.8313     0.0000E+00 0.0000E+00 0.2198      0.7035     0.0000E+00 0.0000E+00 0.9420E-01  0.3199
+ NIT   3   18     0.9086     0.0000E+00 0.0000E+00 0.2237      0.7757     0.0000E+00 0.0000E+00 0.9587E-01  0.3241
+ NIT   3   19     0.9780     0.0000E+00 0.0000E+00 0.2284      0.8400     0.0000E+00 0.0000E+00 0.9787E-01  0.3292
+ NIT
+ NIT   4   20      37.58     0.0000E+00 0.0000E+00 0.2817       6.266     0.0000E+00 0.0000E+00 0.1207       5.965
+ NIT   4   21      73.88     0.0000E+00 0.0000E+00 0.2811       11.74     0.0000E+00 0.0000E+00 0.1205       5.914
+ NIT   4   22      109.9     0.0000E+00 0.0000E+00 0.2806       17.24     0.0000E+00 0.0000E+00 0.1203       5.860
+ NIT   4   23      145.8     0.0000E+00 0.0000E+00 0.2804       22.75     0.0000E+00 0.0000E+00 0.1202       5.805
+ NIT   4   24      181.5     0.0000E+00 0.0000E+00 0.2807       28.27     0.0000E+00 0.0000E+00 0.1203       5.767
+ NIT   4   25      217.1     0.0000E+00 0.0000E+00 0.2801       33.79     0.0000E+00 0.0000E+00 0.1201       5.716
+ NIT
+ NIT   5   26      136.0     0.0000E+00 0.0000E+00 0.0000E+00   13.26     0.0000E+00 0.0000E+00 0.0000E+00   17.04
+ NIT   5   27      86.45     0.0000E+00 0.0000E+00 0.0000E+00   8.068     0.0000E+00 0.0000E+00 0.0000E+00   10.30
+ NIT   5   28      57.79     0.0000E+00 0.0000E+00 0.0000E+00   6.701     0.0000E+00 0.0000E+00 0.0000E+00   6.683
+ NIT   5   29      40.62     0.0000E+00 0.0000E+00 0.0000E+00   6.306     0.0000E+00 0.0000E+00 0.0000E+00   4.582
+ NIT   5   30      29.77     0.0000E+00 0.0000E+00 0.0000E+00   6.173     0.0000E+00 0.0000E+00 0.0000E+00   3.341
+ NIT   5   31      22.50     0.0000E+00 0.0000E+00 0.0000E+00   6.117     0.0000E+00 0.0000E+00 0.0000E+00   2.495
+ NIT   5   32      17.58     0.0000E+00 0.0000E+00 0.0000E+00   6.092     0.0000E+00 0.0000E+00 0.0000E+00   2.022
+ NIT   5   33      14.03     0.0000E+00 0.0000E+00 0.0000E+00   6.074     0.0000E+00 0.0000E+00 0.0000E+00   1.575
+ NIT
+ NIT TOTALS        14.03     0.0000E+00  1.621      28.45       6.074     0.0000E+00 0.6946      12.19       104.9
+ WTR ****************************
+ WTR * ANNUAL WATER OUTPUT      *
+ WTR *                          *
+ WTR * DATE:     31 DEC., 61    *
+ WTR ****************************
+ WTR                              ALL HYDROLOGY UNITS ARE CM OF WATER
+ WTR                              SEDIMENT UNITS ARE METRIC TONNES
+ WTR                              NUMBERS IN PARENTHESES ARE SOIL WATER CONTENTS
+ WTR
+ WTR CURRENT CONDITIONS
+ WTR ------------------
+ WTR
+ WTR CROP NUMBER                                1
+ WTR FRACTION OF GROUND COVER              0.0000E+00
+ WTR INTERCEPTION POTENTIAL (CM)           0.0000E+00
+ WTR DEPTH TO WHICH ET EXTRACTED(CM)        15.00
+ WTR
+ WTR
+ WTR
+ WTR FLUXES AND STORAGES FOR THIS PERIOD
+ WTR -----------------------------------
+ WTR
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              STORAGE             PRECIPITATION       EVAPORATION         THROUGHFALL         STORAGE
+ WTR
+ WTR CANOPY                       0.0000E+00           33.47              0.0000E+00           33.47              0.0000E+00
+ WTR
+ WTR
+ WTR                              PREVIOUS                                                                        CURRENT
+ WTR                              SNOWPACK            SNOW                                    SNOWMELT            SNOWPACK
+ WTR
+ WTR SNOWPACK                     0.2500E-01           3.021                                   3.046              0.0000E+00
+ WTR
+ WTR
+ WTR                                                  THROUGHFALL         RUNOFF              INFILTRATION
+ WTR
+ WTR SURFACE                                           33.47              0.0000E+00           36.52
+ WTR
+ WTR
+ WTR                              PREVIOUS            LEACHING                                     LEACHING       CURRENT
+ WTR      SOIL LAYERS             STORAGE             INPUT          TRANSPIRATION  LATERAL FLOW   OUTPUT         STORAGE
+ WTR HORIZON   COMPARTMENT
+ WTR ------------------------------------------------------------------------------------------------------------------------
+ WTR
+ WTR    1           1             0.1251    (.125)     36.52          6.646         0.0000E+00      29.83         0.1655    (.165)
+ WTR    1           2             0.1288    (.129)     29.83          4.565         0.0000E+00      25.22         0.1737    (.174)
+ WTR    1           3             0.1346    (.135)     25.22          3.507         0.0000E+00      21.67         0.1784    (.178)
+ WTR    1           4             0.1435    (.144)     21.67          3.076         0.0000E+00      18.58         0.1565    (.156)
+ WTR    1           5             0.1571    (.157)     18.58          2.692         0.0000E+00      15.88         0.1710    (.171)
+ WTR
+ WTR    2           6             0.8870    (.177)     15.88          7.685         0.0000E+00      8.126         0.9519    (.190)
+ WTR    2           7             0.9971    (.199)     8.126          4.061         0.0000E+00      4.406         0.6552    (.131)
+ WTR    2           8              1.250    (.250)     4.406         0.0000E+00     0.0000E+00      4.406          1.250    (.250)
+ WTR    2           9              1.250    (.250)     4.406         0.0000E+00     0.0000E+00      4.406          1.250    (.250)
+ WTR    2          10              1.250    (.250)     4.406         0.0000E+00     0.0000E+00      4.406          1.250    (.250)
+ WTR    2          11              1.250    (.250)     4.406         0.0000E+00     0.0000E+00      4.406          1.250    (.250)
+ WTR    2          12              1.250    (.250)     4.406         0.0000E+00     0.0000E+00      4.406          1.250    (.250)
+ WTR    2          13              1.250    (.250)     4.406         0.0000E+00     0.0000E+00      4.406          1.250    (.250)
+ WTR    2          14              1.250    (.250)     4.406         0.0000E+00     0.0000E+00      4.406          1.250    (.250)
+ WTR
+ WTR    3          15             0.1000    (.050)     4.406         0.0000E+00     0.0000E+00      4.406         0.1000    (.050)
+ WTR    3          16             0.1000    (.050)     4.406         0.0000E+00     0.0000E+00      4.406         0.1000    (.050)
+ WTR    3          17             0.1000    (.050)     4.406         0.0000E+00     0.0000E+00      4.406         0.1000    (.050)
+ WTR    3          18             0.1000    (.050)     4.406         0.0000E+00     0.0000E+00      4.406         0.1000    (.050)
+ WTR    3          19             0.1000    (.050)     4.406         0.0000E+00     0.0000E+00      4.406         0.1000    (.050)
+ WTR
+ WTR    4          20             0.5000    (.100)     4.406         0.0000E+00     0.0000E+00      73.33         0.5000    (.100)
+ WTR    4          21             0.5000    (.100)     73.33         0.0000E+00     0.0000E+00      142.3         0.5000    (.100)
+ WTR    4          22             0.5000    (.100)     142.3         0.0000E+00     0.0000E+00      211.2         0.5000    (.100)
+ WTR    4          23             0.5000    (.100)     211.2         0.0000E+00     0.0000E+00      280.1         0.5000    (.100)
+ WTR    4          24             0.5000    (.100)     280.1         0.0000E+00     0.0000E+00      349.0         0.5000    (.100)
+ WTR    4          25             0.5000    (.100)     349.0         0.0000E+00     0.0000E+00      418.0         0.5000    (.100)
+ WTR
+ WTR    5          26              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR    5          27              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR    5          28              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR    5          29              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR    5          30              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR    5          31              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR    5          32              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR    5          33              4.000    (.200)     418.0         0.0000E+00     0.0000E+00      418.0          4.000    (.200)
+ WTR
+ WTR
+ WTR
+ WTR SUMMARY FLUXES
+ WTR --------------
+ WTR
+ WTR TOTAL SEDIMENT ERODED FROM SURFACE    0.0000E+00
+ WTR TOTAL ET FROM PROFILE                  32.23
+ WTR RECHARGE BELOW ROOT ZONE               4.406
+ WTR TOTAL LATERAL OUTFLOW                 0.0000E+00
+ WTR TOTAL LATERAL INFLOW                   413.5
+ WTR
+ WTR
+ WTR
+ WTR MATERIAL BALANCE
+ WTR ----------------
+ WTR
+ WTR WATER BALANCE ERROR                   0.2086E-06
+ WTR CUMULATIVE ERROR                      0.3746E-03
+ CNC
+ CNC NITROGEN SPECIES CONCENTRATION PROFILE
+ CNC
+ CNC DATE (DAY-MONTH-YEAR)    31 DEC., 61
+ CNC
+ CNC ABOVE GROUND PLANT  5.841
+ CNC LITTER              2.485
+ CNC
+ CNC HO-  COM-   NH4-N      NH4-N      NO3/       SOL LABILE ADS LABILE SOL REFR   ADS REFR
+ CNC RIZONPTMNT  SOLUTION   ADSORBED   NO2-N      ORGANIC N  ORGANIC N  ORGANIC N  ORGANIC N  PLANT N
+ CNC ---------------------------------------------------------------------------------------------------------
+ CNC
+ CNC   1    1    0.1228E-01 0.5334     0.1705E-01 0.4054E-01  40.54     0.4112E-01  205.6     0.9756
+ CNC   1    2    0.1493E-01 0.5505     0.4950E-01 0.4330E-01  43.30     0.4168E-01  208.4     0.9763
+ CNC   1    3    0.1625E-01 0.5582     0.1157     0.4448E-01  44.48     0.4190E-01  209.5     0.9750
+ CNC   1    4    0.1414E-01 0.5571     0.1888     0.4537E-01  45.37     0.4207E-01  210.3     0.9747
+ CNC   1    5    0.1554E-01 0.5579     0.3260     0.4598E-01  45.98     0.4216E-01  210.8     0.9746
+ CNC   2    6    0.3351E-01  2.404      2.850     0.1284      128.4     0.1073      536.5      4.741
+ CNC   2    7    0.2284E-01  2.402      1.303     0.1283      128.3     0.1063      531.4      4.717
+ CNC   2    8    0.2097E-01  2.297     0.2176     0.1276      127.6     0.1059      529.5      4.708
+ CNC   2    9    0.2187E-01  2.301     0.1240     0.1302      130.2     0.1054      526.9      4.713
+ CNC   2   10    0.2254E-01  2.304     0.1342     0.1335      133.5     0.1045      522.7      5.293
+ CNC   2   11    0.2120E-01  2.298     0.1170     0.1333      133.3     0.1046      522.8      4.743
+ CNC   2   12    0.2080E-01  2.296     0.1107     0.1330      133.0     0.1046      523.1      4.542
+ CNC   2   13    0.2087E-01  2.297     0.1203     0.1319      131.9     0.1049      524.5      4.128
+ CNC   2   14    0.2110E-01  2.298     0.1246     0.1322      132.2     0.1049      524.3      3.960
+ CNC   3   15    0.4125E-02 0.2091     0.2873E-01 0.3377E-01  33.77     0.3086E-01  154.3     0.8447
+ CNC   3   16    0.4171E-02 0.2100     0.3102E-01 0.3383E-01  33.83     0.3088E-01  154.4     0.8548
+ CNC   3   17    0.4209E-02 0.2108     0.3150E-01 0.3395E-01  33.95     0.3088E-01  154.4     0.8523
+ CNC   3   18    0.4243E-02 0.2115     0.3284E-01 0.3406E-01  34.06     0.3089E-01  154.4     0.8517
+ CNC   3   19    0.4277E-02 0.2122     0.3603E-01 0.3415E-01  34.15     0.3089E-01  154.5     0.8478
+ CNC   4   20     2.453      32.49     0.2493E-03 0.4694      469.4     0.7732E-01  386.6     0.7803
+ CNC   4   21     2.447      32.42     0.2493E-03 0.4694      469.4     0.7724E-01  386.2     0.7764
+ CNC   4   22     2.444      32.39     0.2493E-03 0.4688      468.8     0.7717E-01  385.8     0.7758
+ CNC   4   23     2.443      32.37     0.2493E-03 0.4679      467.9     0.7712E-01  385.6     0.7756
+ CNC   4   24     2.442      32.36     0.2493E-03 0.4673      467.3     0.7708E-01  385.4     0.7738
+ CNC   4   25     2.439      32.33     0.2493E-03 0.4666      466.6     0.7704E-01  385.2     0.7716
+ CNC   5   26     7.983      87.48     0.3111E-01  1.539      1539.     0.8322E-01  416.1     0.0000E+00
+ CNC   5   27     4.737      55.26     0.1174     0.9875      987.5     0.6805E-01  340.3     0.0000E+00
+ CNC   5   28     2.734      36.40     0.2711     0.6689      668.9     0.6292E-01  314.6     0.0000E+00
+ CNC   5   29     1.543      25.80     0.4626     0.4730      473.0     0.6077E-01  303.9     0.0000E+00
+ CNC   5   30    0.8460      19.95     0.6155     0.3465      346.5     0.5969E-01  298.5     0.0000E+00
+ CNC   5   31    0.3817      16.73     0.4353     0.2602      260.2     0.5909E-01  295.4     0.0000E+00
+ CNC   5   32    0.2135      15.29     0.3115     0.1980      198.0     0.5870E-01  293.5     0.0000E+00
+ CNC   5   33    0.1281      14.60     0.2123     0.1526      152.6     0.5837E-01  291.9     0.0000E+00
+ CNC
+ CNC   TOTALS     33.54      490.6      8.417      9.003      9003.      2.285     0.1143E+05  55.33
+ CNC
+ NIT ****************************
+ NIT * ANNUAL NITROGEN OUTPUT   *
+ NIT *                          *
+ NIT * DATE:     31 DEC., 61    *
+ NIT ****************************
+ NIT                              STORAGE UNITS IN KG/HA
+ NIT                              FLUX UNITS IN KG/HA/OUTPUT TIMESTEP
+ NIT
+ NIT CURRENT CONDITIONS
+ NIT ------------------
+ NIT
+ NIT CROP NUMBER                                1
+ NIT
+ NIT
+ NIT FLUXES FOR THIS PERIOD
+ NIT -----------------------------------
+ NIT
+ NIT
+ NIT ATMOSPHERIC DEPOSITION
+ NIT
+ NIT                     DRY         WET       TOTAL
+ NIT   NH4-N       3.650      0.0000E+00   3.650
+ NIT   NO3-N       1.825      0.0000E+00   1.825
+ NIT   ORGN       0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT <---SEDIMENT EROSION OUTFLOW--->       <---------SOLUTION RUNOFF OUTFLOW--------->
+ NIT      NH4-N     LABILE     REFRAC         NH4-N IN  NO3(+NO2)     LABILE     REFRAC
+ NIT   ADSORBED  ORGANIC N  ORGANIC N         SOLUTION   SOLUTION  ORGANIC N  ORGANIC N
+ NIT 0.0000E+00 0.0000E+00 0.0000E+00       0.0000E+00 0.0000E+00 0.0000E+00 0.0000E+00
+ NIT
+ NIT
+ NIT  HO-  COM-   NH4 LEACH-  NH4 LATERAL ABV-GROUND  BLW-GROUND  NH3 NITRI-  NH3 IMMOB-  NH3 VOLAT-  ORG-N MIN-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NH3 UPTAKE  NH3 UPTAKE  FICATION    ILIZATION   ILIZATION   ERALIZATION
+ NIT ------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1     0.2289      0.0000E+00  0.9445E-02  0.1086       1.741      0.3373      0.4254       2.112
+ NIT   1    2     0.3057      0.0000E+00  0.9372E-02  0.1078       1.921      0.3700      0.4693       2.224
+ NIT   1    3     0.3478      0.0000E+00  0.9475E-02  0.1090       1.973      0.3787      0.4820       2.270
+ NIT   1    4     0.3579      0.0000E+00  0.9453E-02  0.1087       2.022      0.3871      0.4940       2.304
+ NIT   1    5     0.3376      0.0000E+00  0.9468E-02  0.1089       2.053      0.3923      0.5017       2.320
+ NIT
+ NIT   2    6     0.1600      0.0000E+00  0.4970E-01   1.069       2.832       1.105      0.1384       5.021
+ NIT   2    7     0.9230E-01  0.0000E+00  0.4970E-01   1.069       2.704       1.049      0.1321       4.935
+ NIT   2    8     0.8266E-01  0.0000E+00  0.4969E-01   1.068       2.579      0.9970      0.1260       4.804
+ NIT   2    9     0.7948E-01  0.0000E+00  0.4917E-01   1.057       2.575      0.9885      0.1258       4.788
+ NIT   2   10     0.7182E-01  0.0000E+00  0.3105E-01  0.6675       1.175      0.4306      0.5740E-01   2.354
+ NIT   2   11     0.5716E-01  0.0000E+00  0.1493E-01  0.3209      0.3441      0.1101      0.1682E-01  0.7864
+ NIT   2   12     0.5136E-01  0.0000E+00  0.8814E-02  0.1895      0.2495      0.7816E-01  0.1219E-01  0.5245
+ NIT   2   13     0.4856E-01  0.0000E+00  0.6805E-02  0.1463      0.2397      0.7330E-01  0.1171E-01  0.4675
+ NIT   2   14     0.4756E-01  0.0000E+00  0.5469E-02  0.1176      0.2313      0.6967E-01  0.1130E-01  0.4270
+ NIT
+ NIT   3   15     0.6217E-01  0.0000E+00  0.3406E-02  0.3917E-01  0.1621      0.2126E-01  0.2641E-01  0.2600
+ NIT   3   16     0.7485E-01  0.0000E+00  0.3380E-02  0.3886E-01  0.1619      0.2108E-01  0.2637E-01  0.2565
+ NIT   3   17     0.8591E-01  0.0000E+00  0.3357E-02  0.3861E-01  0.1604      0.2079E-01  0.2613E-01  0.2528
+ NIT   3   18     0.9556E-01  0.0000E+00  0.3336E-02  0.3837E-01  0.1598      0.2059E-01  0.2603E-01  0.2504
+ NIT   3   19     0.1040      0.0000E+00  0.3317E-02  0.3815E-01  0.1601      0.2049E-01  0.2607E-01  0.2494
+ NIT
+ NIT   4   20      162.1      0.0000E+00  0.6640E-02  0.9296E-01   54.23       88.87       14.72       10.07
+ NIT   4   21      323.7      0.0000E+00  0.6640E-02  0.9296E-01   54.48       89.07       14.79       10.04
+ NIT   4   22      485.5      0.0000E+00  0.6640E-02  0.9296E-01   54.43       88.85       14.78       9.968
+ NIT   4   23      647.6      0.0000E+00  0.6640E-02  0.9296E-01   54.36       88.59       14.76       9.891
+ NIT   4   24      810.0      0.0000E+00  0.6640E-02  0.9296E-01   54.27       88.31       14.73       9.822
+ NIT   4   25      972.5      0.0000E+00  0.6640E-02  0.9296E-01   54.30       88.18       14.74       9.765
+ NIT
+ NIT   5   26      661.1      0.0000E+00  0.0000E+00  0.0000E+00   90.45       212.2       36.83       31.06
+ NIT   5   27      454.9      0.0000E+00  0.0000E+00  0.0000E+00   60.20       137.9       24.52       19.04
+ NIT   5   28      312.0      0.0000E+00  0.0000E+00  0.0000E+00   41.85       94.24       17.04       12.36
+ NIT   5   29      211.8      0.0000E+00  0.0000E+00  0.0000E+00   29.43       65.49       11.99       8.414
+ NIT   5   30      140.3      0.0000E+00  0.0000E+00  0.0000E+00   21.08       46.32       8.583       6.034
+ NIT   5   31      87.99      0.0000E+00  0.0000E+00  0.0000E+00   15.82       34.19       6.443       4.759
+ NIT   5   32      54.19      0.0000E+00  0.0000E+00  0.0000E+00   10.44       22.45       4.251       3.640
+ NIT   5   33      33.68      0.0000E+00  0.0000E+00  0.0000E+00   6.489       13.94       2.643       2.724
+ NIT
+ NIT TOTALS        33.68      0.0000E+00  0.3692       6.998       625.3       1165.       204.0       184.2
+ NIT
+ NIT
+ NIT  HO-  COM-   NO3 LEACH-  NO3 LATERAL ABV-GROUND  BLW-GROUND  NO3 IMMOB-  NITROGEN    DENITRIF-
+ NIT RIZON PTMNT  ING OUTPUT  OUTFLOW     NO3 UPTAKE  NO3 UPTAKE  ILIZATION   FIXATION    ICATION
+ NIT -----------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      1.637      0.0000E+00  0.3836E-01  0.4412      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    2      3.444      0.0000E+00  0.3844E-01  0.4420      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    3      5.266      0.0000E+00  0.3833E-01  0.4408      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    4      7.098      0.0000E+00  0.3836E-01  0.4411      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   1    5      8.865      0.0000E+00  0.3834E-01  0.4409      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   2    6      5.380      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    7      4.350      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    8      3.772      0.0000E+00  0.2007       4.315      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2    9      3.059      0.0000E+00  0.1975       4.245      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   10      1.968      0.0000E+00  0.1242       2.670      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   11      1.225      0.0000E+00  0.5971E-01   1.284      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   12     0.7429      0.0000E+00  0.3526E-01  0.7580      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   13     0.4308      0.0000E+00  0.2722E-01  0.5852      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   2   14     0.2315      0.0000E+00  0.2188E-01  0.4703      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   3   15     0.2333      0.0000E+00  0.1362E-01  0.1567      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   16     0.2349      0.0000E+00  0.1352E-01  0.1555      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   17     0.2372      0.0000E+00  0.1343E-01  0.1544      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   18     0.2390      0.0000E+00  0.1335E-01  0.1535      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT   3   19     0.2401      0.0000E+00  0.1327E-01  0.1526      0.0000E+00  0.0000E+00  0.0000E+00
+ NIT
+ NIT   4   20      34.71      0.0000E+00  0.2656E-01  0.3718       7.392      0.0000E+00   11.98
+ NIT   4   21      69.30      0.0000E+00  0.2656E-01  0.3718       7.437      0.0000E+00   12.05
+ NIT   4   22      103.9      0.0000E+00  0.2656E-01  0.3718       7.434      0.0000E+00   12.05
+ NIT   4   23      138.4      0.0000E+00  0.2656E-01  0.3718       7.416      0.0000E+00   12.02
+ NIT   4   24      172.9      0.0000E+00  0.2656E-01  0.3718       7.391      0.0000E+00   11.98
+ NIT   4   25      207.5      0.0000E+00  0.2656E-01  0.3718       7.371      0.0000E+00   11.94
+ NIT
+ NIT   5   26      150.7      0.0000E+00  0.0000E+00  0.0000E+00   62.99      0.0000E+00   84.27
+ NIT   5   27      113.3      0.0000E+00  0.0000E+00  0.0000E+00   41.74      0.0000E+00   55.84
+ NIT   5   28      87.16      0.0000E+00  0.0000E+00  0.0000E+00   29.04      0.0000E+00   38.85
+ NIT   5   29      67.57      0.0000E+00  0.0000E+00  0.0000E+00   20.93      0.0000E+00   28.00
+ NIT   5   30      52.14      0.0000E+00  0.0000E+00  0.0000E+00   15.50      0.0000E+00   20.73
+ NIT   5   31      39.98      0.0000E+00  0.0000E+00  0.0000E+00   11.90      0.0000E+00   15.93
+ NIT   5   32      29.94      0.0000E+00  0.0000E+00  0.0000E+00   8.711      0.0000E+00   11.65
+ NIT   5   33      21.80      0.0000E+00  0.0000E+00  0.0000E+00   6.229      0.0000E+00   8.334
+ NIT
+ NIT TOTALS        21.80      0.0000E+00   1.486       28.17       241.5      0.0000E+00   335.6
+ NIT
+ NIT
+ NIT              <----------- LABILE ORGANIC N ------------>  <--------- REFRACTORY ORGANIC N ---------->
+ NIT  HO-  COM-   LEACHING   LATERAL    LITTER     BLW-GROUND  LEACHING   LATERAL    LITTER     BLW-GROUND  LABILE-->REFRACTORY
+ NIT RIZON PTMNT  OUTPUT     OUTFLOW    RETURN     RETURN      OUTPUT     OUTFLOW    RETURN     RETURN      CONVERSION
+ NIT ----------------------------------------------------------------------------------------------------------------------
+ NIT
+ NIT   1    1      1.123     0.0000E+00 0.3200     0.3648       1.095     0.0000E+00 0.1371     0.1563      0.8448
+ NIT   1    2      1.582     0.0000E+00 0.3200     0.3647       1.502     0.0000E+00 0.1371     0.1563      0.8896
+ NIT   1    3      1.846     0.0000E+00 0.3200     0.3642       1.725     0.0000E+00 0.1371     0.1561      0.9082
+ NIT   1    4      1.945     0.0000E+00 0.3200     0.3644       1.795     0.0000E+00 0.1371     0.1562      0.9215
+ NIT   1    5      1.901     0.0000E+00 0.3200     0.3652       1.739     0.0000E+00 0.1371     0.1565      0.9279
+ NIT
+ NIT   2    6     0.9339     0.0000E+00 0.0000E+00  3.746      0.8139     0.0000E+00 0.0000E+00  1.605       2.511
+ NIT   2    7     0.5280     0.0000E+00 0.0000E+00  3.791      0.4456     0.0000E+00 0.0000E+00  1.625       2.468
+ NIT   2    8     0.4811     0.0000E+00 0.0000E+00  3.765      0.3989     0.0000E+00 0.0000E+00  1.614       2.402
+ NIT   2    9     0.4708     0.0000E+00 0.0000E+00  3.803      0.3820     0.0000E+00 0.0000E+00  1.630       2.394
+ NIT   2   10     0.4716     0.0000E+00 0.0000E+00  2.204      0.3745     0.0000E+00 0.0000E+00 0.9447       1.177
+ NIT   2   11     0.4707     0.0000E+00 0.0000E+00 0.9689      0.3715     0.0000E+00 0.0000E+00 0.4152      0.3932
+ NIT   2   12     0.4697     0.0000E+00 0.0000E+00 0.6964      0.3702     0.0000E+00 0.0000E+00 0.2985      0.2622
+ NIT   2   13     0.4672     0.0000E+00 0.0000E+00 0.6314      0.3700     0.0000E+00 0.0000E+00 0.2706      0.2337
+ NIT   2   14     0.4666     0.0000E+00 0.0000E+00 0.5868      0.3698     0.0000E+00 0.0000E+00 0.2515      0.2135
+ NIT
+ NIT   3   15     0.5678     0.0000E+00 0.0000E+00 0.1477      0.4674     0.0000E+00 0.0000E+00 0.6329E-01  0.1734
+ NIT   3   16     0.6563     0.0000E+00 0.0000E+00 0.1509      0.5525     0.0000E+00 0.0000E+00 0.6467E-01  0.1710
+ NIT   3   17     0.7343     0.0000E+00 0.0000E+00 0.1500      0.6271     0.0000E+00 0.0000E+00 0.6430E-01  0.1685
+ NIT   3   18     0.8033     0.0000E+00 0.0000E+00 0.1511      0.6928     0.0000E+00 0.0000E+00 0.6474E-01  0.1669
+ NIT   3   19     0.8646     0.0000E+00 0.0000E+00 0.1532      0.7507     0.0000E+00 0.0000E+00 0.6566E-01  0.1663
+ NIT
+ NIT   4   20      44.76     0.0000E+00 0.0000E+00 0.3043       7.650     0.0000E+00 0.0000E+00 0.1304       6.715
+ NIT   4   21      88.39     0.0000E+00 0.0000E+00 0.3061       14.58     0.0000E+00 0.0000E+00 0.1312       6.695
+ NIT   4   22      131.8     0.0000E+00 0.0000E+00 0.3058       21.53     0.0000E+00 0.0000E+00 0.1311       6.646
+ NIT   4   23      175.0     0.0000E+00 0.0000E+00 0.3057       28.48     0.0000E+00 0.0000E+00 0.1310       6.594
+ NIT   4   24      218.0     0.0000E+00 0.0000E+00 0.3048       35.44     0.0000E+00 0.0000E+00 0.1306       6.548
+ NIT   4   25      260.9     0.0000E+00 0.0000E+00 0.3056       42.40     0.0000E+00 0.0000E+00 0.1310       6.510
+ NIT
+ NIT   5   26      170.6     0.0000E+00 0.0000E+00 0.0000E+00   15.82     0.0000E+00 0.0000E+00 0.0000E+00   20.71
+ NIT   5   27      110.4     0.0000E+00 0.0000E+00 0.0000E+00   8.898     0.0000E+00 0.0000E+00 0.0000E+00   12.69
+ NIT   5   28      73.99     0.0000E+00 0.0000E+00 0.0000E+00   7.011     0.0000E+00 0.0000E+00 0.0000E+00   8.243
+ NIT   5   29      51.66     0.0000E+00 0.0000E+00 0.0000E+00   6.445     0.0000E+00 0.0000E+00 0.0000E+00   5.609
+ NIT   5   30      37.45     0.0000E+00 0.0000E+00 0.0000E+00   6.246     0.0000E+00 0.0000E+00 0.0000E+00   4.022
+ NIT   5   31      27.94     0.0000E+00 0.0000E+00 0.0000E+00   6.162     0.0000E+00 0.0000E+00 0.0000E+00   3.173
+ NIT   5   32      21.29     0.0000E+00 0.0000E+00 0.0000E+00   6.119     0.0000E+00 0.0000E+00 0.0000E+00   2.427
+ NIT   5   33      16.46     0.0000E+00 0.0000E+00 0.0000E+00   6.088     0.0000E+00 0.0000E+00 0.0000E+00   1.816
+ NIT
+ NIT TOTALS        16.46     0.0000E+00  1.600      24.60       6.088     0.0000E+00 0.6857      10.54       115.8

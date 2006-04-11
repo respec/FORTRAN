@@ -1,0 +1,64 @@
+<html><head><title>PUTUCI</title></head>
+<body>
+<a name="PUTUCI"><hr size=7><h2>PUTUCI</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI.html">HIOUCI</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls 
+   PUTUCX
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PUTUCI
+     I                   (UCIBUF,LTYPRC,LPRERC)
+C
+C     + + + PURPOSE + + +
+C     Save a UCI line and assoc info
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      LTYPRC,LPRERC
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UCIBUF - UCI record
+C     LTYPRC - type of record: -2:blank line,
+C                              -1:comment,
+C                               0:unknown,
+C                              >0:something useful
+C     LPRERC - record to write this one after
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER  I
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   PUTUCX
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I= -1
+      CALL PUTUCX (UCIBUF,LTYPRC,LPRERC,I)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="PUTUCI">
+</Object>
+
+</body>
+</html>
+

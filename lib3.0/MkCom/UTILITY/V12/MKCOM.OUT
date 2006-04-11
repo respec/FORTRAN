@@ -1,0 +1,74 @@
+ COPY  :INPUT               30 POINT   20   0
+ COPY  :INPUT               50 MEAN    20   0
+ COPY  :OUTPUT              70 POINT   20   0
+ COPY  :OUTPUT              90 MEAN    20   0
+
+ PLTGEN:INPUT             1064 POINT   20   0
+ PLTGEN:INPUT             1084 MEAN    99   0
+
+ DISPLY:INPUT             2470 TIMSER   0   0
+
+ DURANL:INPUT              109 TIMSER   0   0
+
+ GENER :INPUT               42 ONE      0   0
+ GENER :INPUT               43 TWO      0   0
+ GENER :OUTPUT              44 TIMSER   0   0
+
+ MUTSIN:OUTPUT              74 POINT   20   0
+ MUTSIN:OUTPUT              94 MEAN    20   0
+
+ BMPRAC:INFLOW              74 IVOL     0   0
+ BMPRAC:RECEIV              75 IVOL     0   0
+ BMPRAC:INFLOW             576 CIVOL   MC   0
+ BMPRAC:RECEIV             676 CIVOL   MC   0
+ BMPRAC:ROFLOW             795 ROVOL    0   0
+ BMPRAC:ROFLOW            1296 CROVOL  MC   0
+ BMPRAC:REMOVE            1401 RMVOL    0   0
+ BMPRAC:REMOVE            1902 CRMVOL  MC   0
+ BMPRAC:INFLOW            2052 ICON    10   0
+ BMPRAC:RECEIV            2062 ICON    10   0
+ BMPRAC:ROFLOW            2332 ROCON   10   0
+ BMPRAC:REMOVE            2392 RMCON   10   0
+ BMPRAC:INFLOW            2407 IHEAT    0   0
+ BMPRAC:RECEIV            2408 IHEAT    0   0
+ BMPRAC:ROFLOW            2428 ROHEAT   0   0
+ BMPRAC:REMOVE            2434 RMHEAT   0   0
+ BMPRAC:INFLOW            2450 ISED     3   0
+ BMPRAC:RECEIV            2453 ISED     3   0
+ BMPRAC:ROFLOW            2513 ROSED    3   0
+ BMPRAC:REMOVE            2531 RMSED    3   0
+ BMPRAC:INFLOW            2549 IDQAL    3   0
+ BMPRAC:RECEIV            2552 IDQAL    3   0
+ BMPRAC:INFLOW            2600 ISQAL    3   3
+ BMPRAC:RECEIV            2609 ISQAL    3   3
+ BMPRAC:ROFLOW            2822 RODQAL   3   0
+ BMPRAC:ROFLOW            2870 ROSQAL   3   3
+ BMPRAC:REMOVE            2894 RMDQAL   3   0
+ BMPRAC:REMOVE            2942 RMSQAL   3   3
+ BMPRAC:INFLOW            2961 IOX      2   0
+ BMPRAC:RECEIV            2963 IOX      2   0
+ BMPRAC:ROFLOW            3003 ROOX     2   0
+ BMPRAC:REMOVE            3015 RMOX     2   0
+ BMPRAC:INFLOW            3037 IDNUT    4   0
+ BMPRAC:RECEIV            3041 IDNUT    4   0
+ BMPRAC:INFLOW            3075 ISNUT    3   2
+ BMPRAC:RECEIV            3081 ISNUT    3   2
+ BMPRAC:ROFLOW            3247 RODNUT   4   0
+ BMPRAC:ROFLOW            3281 ROSNUT   3   2
+ BMPRAC:REMOVE            3307 RMDNUT   4   0
+ BMPRAC:REMOVE            3341 RMSNUT   3   2
+ BMPRAC:INFLOW            3372 IPLK     5   0
+ BMPRAC:RECEIV            3377 IPLK     5   0
+ BMPRAC:ROFLOW            3477 ROPLK    5   0
+ BMPRAC:REMOVE            3507 RMPLK    5   0
+ BMPRAC:INFLOW            3522 IPH      2   0
+ BMPRAC:RECEIV            3524 IPH      2   0
+ BMPRAC:ROFLOW            3564 ROPH     2   0
+ BMPRAC:REMOVE            3576 RMPH     2   0
+ BMPRAC:INFLOW            3613 IACID    7   0
+ BMPRAC:RECEIV            3620 IACID    7   0
+ BMPRAC:ROFLOW            3760 ROACID   7   0
+ BMPRAC:REMOVE            3802 RMACID   7   0
+
+ REPORT:INPUT            12476 TIMSER  MC  MS
+

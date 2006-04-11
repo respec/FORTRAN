@@ -1,0 +1,6 @@
+C     common block CBACK.INC
+C
+      REAL*8    TMHV,HVTM,QVTM
+      INTEGER*4 NTSNDH,ITSTH
+      COMMON /BACKUP/NTSNDH(2),TMHV(2,MXTMV),HVTM(2,MXTMV),
+     1               QVTM(2,MXTMV), ITSTH(2)

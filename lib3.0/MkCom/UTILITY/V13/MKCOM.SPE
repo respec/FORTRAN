@@ -1,0 +1,8 @@
+ COPY      0   24   25   28  150
+ PLTGEN    0   11   12   15   16
+ DISPLY    0    0    0    0    0
+ DURANL    0    0    0    0    0
+ GENER     0   23   24   27   28
+ MUTSIN    0    0    0    0    0
+ BMPRAC    0   63   64   67   68
+ REPORT    0    0    0    0    0

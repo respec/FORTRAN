@@ -1,0 +1,101 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   CKRWID
+     I                    (UVQOPX,UVQLAG,OPTYP,TOPFST,TOPLST,MAXOPN,
+     I                     OPNTAB,NOPNS,
+     M                     RUNWID)
+C
+C     + + + PURPOSE + + +
+C     Checks the target operations of a special action to
+C     determine any restriction in run width caused by
+C     user-defined variable quantities.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     UVQOPX,UVQLAG,TOPFST,TOPLST,MAXOPN,OPNTAB(20,MAXOPN),
+     $            NOPNS,RUNWID
+      CHARACTER*6 OPTYP
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UVQOPX - operation index of base variable for user-defined
+C              variable quantity
+C     UVQLAG - lag in intervals for user-defined variable quantity
+C     OPTYP  - operation type of special action target(s)
+C     TOPFST - first target operation ID number of special action target(s)
+C     TOPLST - last target operation ID number of special action target(s)
+C     MAXOPN - maximum number of operations
+C     OPNTAB - information on operations
+C     NOPNS  - number of operations
+C     RUNWID - maximum run span width allowed by user-defined variable
+C              quantities - 0 if no restrictions
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   START,TOPX,RSTRIC
+C
+C     + + + FUNCTIONS + + +
+      INTEGER   OPNNO
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC MIN
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  OPNNO
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     do-until checked all target ops
+      START= 1
+ 10   CONTINUE
+        TOPX= <a href="../HRINGEUT/OPNNO">OPNNO</a> (OPTYP,TOPFST,TOPLST,MAXOPN,OPNTAB,START,
+     $               NOPNS)
+        IF (TOPX .GT. 0) THEN
+C         check this operation
+          IF (TOPX .LT. UVQOPX) THEN
+C           quantity is downstream of target - can run lag+1 ivls
+            RSTRIC= UVQLAG+ 1
+            IF (RUNWID .LE. 0) THEN
+C             this is first restriction
+              RUNWID= RSTRIC
+            ELSE
+C             lowest restriction applies
+              RUNWID= MIN (RUNWID,RSTRIC)
+            END IF
+          ELSE IF (TOPX .GT. UVQOPX) THEN
+C           quantity is upstream of target
+            IF (RUNWID .EQ. 0) THEN
+C             run width is determined later in pspips
+C             set flag value
+              RUNWID= -1
+            END IF
+          ELSE
+C           quantity is in same operation as target
+C           no run width restriction
+          END IF
+        END IF
+C
+C       increment operation pointer
+        START= START+ 1
+C
+C     end of loop on target operations
+      IF (TOPX .GT. 0) GO TO 10
+C
+      RETURN
+      END
+</pre>
+
+

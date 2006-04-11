@@ -1,0 +1,6 @@
+OBJS      = usys$(FC).obj utwdmd.obj utwdt1.obj wdatm1.obj \
+            wdmess.obj msimpt.obj msexpt.obj utwdmf.obj \
+            msopen.obj prtfil.obj ztwdmf.obj wdmchk.obj \
+            adutil.obj ehut$(FC).obj wdoppc90.obj
+
+INCOTHER  = util\color.inc

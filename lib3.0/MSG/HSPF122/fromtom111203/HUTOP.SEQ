@@ -1,0 +1,106 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          370    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HUTOP
+  END LABEL
+  DATA   CLU   370
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+ MUTSIN: &I              Sequential input file unit: &I
+
+ The date on the multiple timeseries sequential input file (seqdat) does not
+ correspond to the date in HSPF (exdate).
+
+    Time from input file: &I    &I    &I    &I    &I
+    Time from HSPF:       &I    &I    &I    &I    &I
+#GROUP    2  TYPE TEXT
+$TEXT
+    1    1    1    5
+ MUTSIN: &I              Sequential input file unit: &I
+
+ The end of the multiple timeseries sequential input file was reached before
+ any data was found.  Is the name correct in the FILES block?  Are MUTFL and
+ NLINES correct in Table-type MUTSINFO?
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+ MUTSIN: &I              Sequential input file unit: &I
+
+ An error occurred reading the first data line in the multiple timeseries
+ sequential input file.  See the MUTSIN/PLTGEN format in the HSPF Manual.
+ The input was:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP    4  TYPE TEXT
+$TEXT
+    1    1    1    5
+ MUTSIN: &I              Sequential input file unit: &I
+
+ The end of the multiple timeseries sequential input file was reached reading
+ the first data line in the multiple timeseries sequential input file.  Is
+ NLINES correct in Table-type MUTSINFO?
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+ MUTSIN: &I              Sequential input file unit: &I
+
+ An error occurred reading a data line in the multiple timeseries sequential
+ input file.  See the MUTSIN/PLTGEN format in the HSPF Manual.
+
+    Time from HSPF:       &I    &I    &I    &I    &I
+    The input was:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP    6  TYPE TEXT
+$TEXT
+    1    1    1    5
+ MUTSIN: &I              Sequential input file unit: &I
+
+ The end of the multiple timeseries sequential input file was reached reading
+ data from the multiple timeseries sequential input file.
+
+    Time from HSPF:       &I    &I    &I    &I    &I
+#GROUP   11  TYPE TEXT
+$TEXT
+   10   11    0    5
+ PLTGEN: &I   
+
+ The PLOTINFO table for this PLTGEN specifies that &I    point-valued timeseries
+ should be supplied.  However, POINT &I    was not supplied in the EXT SOURCES,
+ NETWORK, or SCHEMATIC blocks.  Is the source time series specified in one of
+ these blocks?  Has it been commented out?
+
+ If the intended source of this time series is an operation - is that operation
+ commented out in the OPN SEQUENCE block?
+
+ If the intended source is a PERLND, IMPLND, or RCHRES - is the appropriate
+ module section turned on in the ACTIVITY table?
+#GROUP   12  TYPE TEXT
+$TEXT
+   10   11    0    5
+ PLTGEN: &I   
+
+ The PLOTINFO table for this PLTGEN specifies that &I    mean-valued timeseries
+ should be supplied.  However, MEAN &I    was not supplied in the EXT SOURCES,
+ NETWORK, or SCHEMATIC blocks.  Is the source time series specified in one of
+ these blocks?  Has it been commented out?
+
+ If the intended source of this time series is an operation - is that operation
+ commented out in the OPN SEQUENCE block?
+
+ If the intended source is a PERLND, IMPLND, or RCHRES - is the appropriate
+ module section turned on in the ACTIVITY table?
+#GROUP   13  TYPE TEXT
+$TEXT
+    1    1    1    5
+ PLTGEN: &I   
+
+ One or more input time series for this PLTGEN are missing.  Refer to previous
+ error messages for more help.
+  END DATA
+END CLU

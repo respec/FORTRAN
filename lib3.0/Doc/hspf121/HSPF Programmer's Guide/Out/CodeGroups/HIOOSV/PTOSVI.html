@@ -1,0 +1,59 @@
+<html><head><title>PTOSVI</title></head>
+<body>
+<a name="PTOSVI"><hr size=7><h2>PTOSVI</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOOSV.html">HIOOSV</a>
+<p>Called By
+
+<p>Includes 
+   <a href="../../Dimensions/POSVM.html">POSVM</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/COSVM.html">COSVM</a>
+<p>Calls <i>none</i>    
+<p>Code
+<pre>C
+C
+C
+      SUBROUTINE   PTOSVI
+     I                    (RECORD,OFFSET,IVAL)
+C
+C     + + + PURPOSE + + +
+C     Reset a single integer value directly into the OSV file
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   RECORD,OFFSET,IVAL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     RECORD - index of OSV block
+C     OFFSET - address within OSV block
+C     IVAL   - value being replaced
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'posvm.inc'
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cosvm.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      OSVM(OFFSET,RECORD)= IVAL
+C
+      RETURN
+      END
+</pre>
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="PTOSVI">
+</Object>
+
+</body>
+</html>
+

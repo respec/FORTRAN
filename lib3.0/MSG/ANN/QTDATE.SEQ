@@ -1,0 +1,357 @@
+DATE
+WDMSFL
+SYSTEM
+CLU           28    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  DATEM
+  END LABEL
+  DATA   CLU    28
+#GROUP    1  TYPE TEXT
+$TEXT
+START  END  CURRENT  DATE  (?-instructions, X-delete, D-done)
+
+#GROUP    2  TYPE PRM1
+$SCREEN
+
+Enter starting date.
+@PRM1.........................................................................
+$FIELD @PRM1
+_TYPE CHARACTER
+$HELP
+ Enter dates as year/month/day/hour/minute.
+   '/' is required to separate items.
+   Dates are inclusive.  Use no blanks.
+   Only the year is required.
+#GROUP    3  TYPE PRM1
+$SCREEN
+
+Enter ending date.
+@PRM1.........................................................................
+$FIELD @PRM1
+_TYPE CHARACTER
+$HELP
+  Enter dates as year/month/day/hour/minute.
+    '/' is required to separate items.
+    Dates are inclusive.  Use no blanks.
+    Only the year is required.
+#GROUP    4  TYPE TEXT
+$TEXT
+**** Question number 4 would go here if it existed. ****
+
+#GROUP    5  TYPE TEXT
+$TEXT
+Enter changes in correct column (D-done).
+#GROUP    6  TYPE TEXT
+$TEXT
+End date is before start date!  Try again.
+#GROUP    7  TYPE TEXT
+$TEXT
+Year invalid.
+#GROUP    8  TYPE TEXT
+$TEXT
+Month invalid.
+#GROUP    9  TYPE TEXT
+$TEXT
+Day invalid.
+#GROUP   10  TYPE TEXT
+$TEXT
+Hour invalid.
+#GROUP   11  TYPE TEXT
+$TEXT
+Minute invalid.
+#GROUP   12  TYPE TEXT
+$TEXT
+ To make corrections, move cursor below the appropriate
+   column, then enter replacement number or slash(/) or
+   enter X to delete the value in the column.  When
+   finished, enter D or DONE beginning in column 1.
+#GROUP   13  TYPE PRM1
+$SCREEN
+
+  Enter date (this is the changed screen)
+  <==  DATE/TIME  ==>
+  year mo dy hr mi sc
+  @YR. @M @D @H @I @S
+$FIELD  @YR
+_TYPE INTEGER
+_RANGE       1492:      9999
+_DEFAULT       -999
+_HELP
+year (4 characters)
+$FIELD  @M
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT          1
+_HELP
+month
+$FIELD  @D
+_TYPE INTEGER
+_RANGE          1:        31
+_DEFAULT          1
+_HELP
+day
+$FIELD  @H
+_TYPE INTEGER
+_RANGE          0:        24
+_DEFAULT          0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD  @I
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD  @S
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+second, use 0
+$HELP
+ Input date as year,month,day,hour,minute,second.
+ Time on starting date is the beginning of the time interval.
+ Time on ending date is the end of the time interval.
+#GROUP   14  TYPE PRM1
+$SCREEN
+
+  Enter starting date
+  <= STARTING DATE =>
+  year mo dy hr mi sc
+  @YR. @M @D @H @I @S
+$FIELD @YR
+_TYPE INTEGER
+_RANGE       1492:      9999
+_DEFAULT       -999
+_HELP
+year (4 digits)
+$FIELD @M
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT          1
+_HELP
+month
+$FIELD @D
+_TYPE INTEGER
+_RANGE          1:        31
+_DEFAULT          1
+_HELP
+day
+$FIELD @H
+_TYPE INTEGER
+_RANGE          0:        24
+_DEFAULT          0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @I
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @S
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+second, use 0
+$HELP
+ Input date as year,month,day,hour,minute,second. Time
+ on starting date is the beginning of the time interval.
+#GROUP   15  TYPE PRM1
+$SCREEN
+
+  Enter ending date
+  <= STARTING DATE =>
+  year mo dy hr mi sc
+  @YR. @M @D @H @I @S
+$FIELD @YR
+_TYPE INTEGER
+_RANGE       1492:      9999
+_DEFAULT       -999
+_HELP
+year (4 digits)
+$FIELD @M
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT         12
+_HELP
+month
+$FIELD @D
+_TYPE INTEGER
+_RANGE          1:        31
+_DEFAULT         31
+_HELP
+day
+$FIELD @H
+_TYPE INTEGER
+_RANGE          0:        24
+_DEFAULT          0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @I
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @S
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+second, use 0
+$HELP
+ Input date as year,month,day,hour,minute,second. Time
+ on ending date is the end of the time interval.
+#GROUP   16  TYPE PRM1
+$SCREEN
+
+  Enter beginning and ending dates
+  <= STARTING DATE =>   <=  ENDING DATE  =>
+  year mo dy hr mi sc   year mo dy hr mi sc
+  @YRS @M @D @H @I @S   @YRE @O @Y @R @U @C
+$FIELD @YRS
+_TYPE INTEGER
+_RANGE       1492:      9999
+_DEFAULT       -999
+_HELP
+year (4 digits)
+$FIELD @M
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT          1
+_HELP
+month
+$FIELD @D
+_TYPE INTEGER
+_RANGE          1:        31
+_DEFAULT          1
+_HELP
+day
+$FIELD @H
+_TYPE INTEGER
+_RANGE          0:        24
+_DEFAULT          0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @I
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @S
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+second, use 0
+$FIELD @YRE
+_TYPE INTEGER
+_RANGE       1492:      9999
+_DEFAULT       -999
+_HELP
+year (4 digits)
+$FIELD @O
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT         12
+_HELP
+month
+$FIELD @Y
+_TYPE INTEGER
+_RANGE          1:        31
+_DEFAULT         31
+_HELP
+day
+$FIELD @R
+_TYPE INTEGER
+_RANGE          0:        24
+_DEFAULT          0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @U
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @C
+_TYPE INTEGER
+_RANGE          0:        59
+_DEFAULT          0
+_HELP
+second, use 0
+$HELP
+ Input date as year,month,day,hour,minute,second. Time
+ on starting date is the beginning of the time interval.
+ Time on ending date is the end of the time interval.
+#GROUP   17  TYPE TEXT
+$TEXT
+Error in date(s), reenter.
+#GROUP   18  TYPE PRM1
+$SCREEN
+
+  Enter time step and time units
+  TIME  TIME
+  STEP  UNITS
+  @TST  @TUNITS
+$FIELD @TST
+_TYPE INTEGER
+_RANGE          1:      3600
+_DEFAULT          1
+_HELP
+Time step
+$FIELD @TUNITS
+_TYPE CHARACTER
+_VALID SECOND ,MINUTE ,HOUR   ,DAY    ,MONTH  ,YEAR
+_DEFAULT DAY
+_HELP
+This is the units for the time step
+$HELP
+The time step is given in the time units entered.
+#GROUP   19  TYPE TEXT
+$TEXT
+
+   Allowable time steps for SECOND time units are:
+      &, &, &, &, &, &, &, &, &, &,
+      &, &, &, &, &, &, &, &, &, &,
+      &, &, &, and &.
+   Reenter time step and time units.
+#GROUP   20  TYPE TEXT
+$TEXT
+
+   Allowable time steps for MINUTE time units are:
+      &, &, &, &, &, &, &, &, &, &,
+      &, &, &, &, &, &, &, &, and &.
+   Reenter time step and time units.
+#GROUP   21  TYPE TEXT
+$TEXT
+
+   Allowable time steps for HOUR time units are:
+      &, &, &, &, &, &, &, and &.
+   Reenter time step and time units.
+#GROUP   22  TYPE TEXT
+$TEXT
+
+   Allowable time step for DAY time units is &.
+   Reenter time step and time units.
+#GROUP   23  TYPE TEXT
+$TEXT
+
+   Allowable time steps for MONTH time units are & and &.
+   Reenter time step and time units.
+#GROUP   24  TYPE TEXT
+$TEXT
+
+   Allowable time step for YEAR time units is &.
+   Reenter time step and time units.
+#GROUP   25  TYPE TEXT
+$TEXT
+Group pointer is incompatible with time units
+#GROUP   26  TYPE TEXT
+$TEXT
+   The time unit & is invalid.
+  END DATA
+END CLU

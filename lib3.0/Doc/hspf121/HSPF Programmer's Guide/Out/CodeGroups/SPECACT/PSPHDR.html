@@ -1,0 +1,68 @@
+<html><head><title>PSPHDR</title></head>
+<body bgcolor="#ffffff">
+<a name="PSPHDR"><h3>PSPHDR</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT.html">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PSPHDR
+     I                    (UCIBUF,
+     M                     FIRSTH,NUMHDR,ALLHDR)
+C
+C     + + + PURPOSE + + +
+C     Store new special action header and update pointers
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      FIRSTH,NUMHDR,ALLHDR
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UCIBUF - buffer containing current record from uci file
+C     FIRSTH - index of first header for upcoming action line
+C     NUMHDR - number of header lines for upcoming action line
+C     ALLHDR - total number of header lines read so far
+C
+C     + + + COMMON BLOCKS + + +
+C     special action file in memory
+      INCLUDE     'pspins.inc'
+      INCLUDE     'cspins.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (ALLHDR .LT. MXSPHF) THEN
+C       room to store header
+        ALLHDR= ALLHDR+ 1
+        IF (NUMHDR .EQ. 0) THEN
+C         this is first header
+          FIRSTH= ALLHDR
+        END IF
+        NUMHDR= NUMHDR+ 1
+        SPHDR(ALLHDR)= UCIBUF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="PSPHDR">
+</Object>
+
+</body>
+</html>
+

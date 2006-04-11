@@ -1,0 +1,2268 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  clu  grpnam  description
+  ___  ______  ______________________________________________________
+   42  pgener  contains groups for both the updated version of pgener
+               and the original version (now refered to as pgenor).
+END COMMENT
+CLU           42    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  PGENER
+  END LABEL
+  DATA   CLU    42
+#GROUP    1  TYPE PRM1
+$WINDOW Generate (&G)
+$SCREEN
+ Target DSN [@Dsno] |  Dates:            Year Mon Day Hr  Min Sec
+   WDM file [@Wdi]  |   Target Start    [@Yrs @Ms @Dx @Hs @Is @Ss]
+                    |   Source Start    [@Yrt @Mt @Dt @Ht @It @Sx]
+ Perform Function   |            End    [@Yre @Me @De @He @Ie @Se]
+  [@] Compute       |
+  [@] Transform     |   Time Units  [@Unit]         Time Step   [@Step]
+  [@] Manual        |   Qual Code   [@Qual..]       Source DSN  [@Dsns]
+                    |   Value       [@Rval1.]         WDM file  [@Wds]
+  [@] Return One    |    [@]_Use this for all       Status      [@Naor]
+      Level Up      |    [@]_Interpolate to this    Transform   [@Tran]
+$FIELD @Dsno
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:32000
+_HELP
+ Number of the target (output) data set on which to operate
+$FIELD @Wdi
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?WDID
+_HELP
+ ID of the target (output) WDM file on which to operate
+$FIELD @] Compute
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Yrt 3 23 3 45
+_HIDE ON @Mt 3 47 3 49
+_HIDE ON @Dt 3 51 3 53
+_HIDE ON @Ht 3 55 3 57
+_HIDE ON @It 3 59 3 61
+_HIDE ON @Sx 3 63 3 66
+_HIDE ON @Unit 6 23 6 51
+_HIDE ON @Qual 7 23 7 51
+_HIDE ON @Step 6 52 6 77
+_HIDE ON @Rval1 8 23 8 51
+_HIDE ON @Dsns 7 52 7 77
+_HIDE ON @Wds 8 52 8 77
+_HIDE ON @]_Use 9 23 9 51
+_HIDE ON @Naor 9 52 9 77
+_HIDE ON @]_Inter 10 23 10 51
+_HIDE ON @Tran 10 52 10 77
+_ONOFF @] Transform
+_ONOFF @] Manual
+_ONOFF @] Return
+_OFFON @] Return
+_HELP
+  Toggle to compute values using values in other data sets.
+$FIELD @] Transform
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Qual 7 23 7 51
+_HIDE ON @Rval1 8 23 8 51
+_HIDE ON @]_Use 9 23 9 51
+_HIDE ON @]_Inter 10 23 10 51
+_ONOFF @] Compute
+_ONOFF @] Manual
+_ONOFF @] Return
+_OFFON @] Return
+_HELP
+  Toggle to transform values in one data set to values in another data set.
+$FIELD @] Manual
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Yrt 3 23 3 45
+_HIDE ON @Mt 3 47 3 49
+_HIDE ON @Dt 3 51 3 53
+_HIDE ON @Ht 3 55 3 57
+_HIDE ON @It 3 59 3 61
+_HIDE ON @Sx 3 63 3 66
+_HIDE ON @Dsns 7 52 7 77
+_HIDE ON @Wds 8 52 8 77
+_HIDE ON @Naor 9 52 9 77
+_HIDE ON @Tran 10 52 10 77
+_ONOFF @] Compute
+_ONOFF @] Transform
+_ONOFF @] Return
+_OFFON @] Return
+_HELP
+  Toggle to assign one value to a series of values in one data set
+  or to interpolate from the last existing value to a new value.
+$FIELD @] Return
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Yrs 1 23 2 45
+_HIDE ON @Ms 1 47 2 49
+_HIDE ON @Dx 1 51 2 53
+_HIDE ON @Hs 1 55 2 57
+_HIDE ON @Is 1 59 2 61
+_HIDE ON @Ss 1 63 2 66
+_HIDE ON @Yrt 3 23 3 45
+_HIDE ON @Mt 3 47 3 49
+_HIDE ON @Dt 3 51 3 53
+_HIDE ON @Ht 3 55 3 57
+_HIDE ON @It 3 59 3 61
+_HIDE ON @Sx 3 63 3 66
+_HIDE ON @Yre 4 23 4 45
+_HIDE ON @Me 4 47 4 49
+_HIDE ON @De 4 51 4 53
+_HIDE ON @He 4 55 4 57
+_HIDE ON @Ie 4 59 4 61
+_HIDE ON @Se 4 63 4 66
+_HIDE ON @Unit 6 23 6 51
+_HIDE ON @Qual 7 23 7 51
+_HIDE ON @Step 6 52 6 77
+_HIDE ON @Rval1 8 23 8 51
+_HIDE ON @Dsns 7 52 7 77
+_HIDE ON @Wds 8 52 8 77
+_HIDE ON @]_Use 9 23 9 51
+_HIDE ON @Naor 9 52 9 77
+_HIDE ON @]_Inter 10 23 10 51
+_HIDE ON @Tran 10 52 10 77
+_ONOFF @] Compute
+_ONOFF @] Transform
+_ONOFF @] Manual
+_HELP
+  Toggle to return from this screen to the previous menu.
+  This option functions the same as Previous (F4).
+$FIELD @Yrs
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+_HELP
+  Starting year when data is to be put on target data set.
+$FIELD @Ms
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+_HELP
+  Starting month when data is to be put on target data set.
+$FIELD @Dx
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+_HELP
+  Starting day when data is to be put on target data set.
+$FIELD @Hs
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+_HELP
+  Starting hour when data is to be put on target data set.
+$FIELD @Is
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+  Starting minute when data is to be put on target data set.
+$FIELD @Ss
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+  Starting second when data is to be put on target data set.
+$FIELD @Yrt
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+_HELP
+  Starting year when data is to be gotten from source data set.
+$FIELD @Mt
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+_HELP
+  Starting month when data is to be gotten from source data set.
+$FIELD @Dt
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+_HELP
+  Starting day when data is to be gotten from source data set.
+$FIELD @Ht
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+_HELP
+  Starting hour when data is to be gotten from source data set.
+$FIELD @It
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+  Starting minute when data is to be gotten from source data set.
+$FIELD @Sx
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+  Starting second when data is to be gotten from source data set.
+$FIELD @Yre
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+_HELP
+  Ending year for data.
+$FIELD @Me
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+_HELP
+  Ending month for data.
+$FIELD @De
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+_HELP
+  Ending day for data.
+$FIELD @He
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+_HELP
+  Ending hour for data.
+$FIELD @Ie
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+  Ending minute for data.
+$FIELD @Se
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+  Ending second for data.
+$FIELD @Unit
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_HELP
+The time units for the target (output) time series.
+$FIELD @Step
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:1440
+_DEFAULT 1
+_HELP
+The time step for the target (output) time series.
+$FIELD @Qual
+_TYPE INTEGER
+_RANGE  0 : 30                 
+_DEFAULT 0
+_HELP
+ Quality of the data values.
+ The values entered will all have the same quality code and
+ the same constant time step.  Additional data with different
+ quality or time step can be entered in a subsequent step.
+$FIELD @Rval1
+_TYPE REAL
+_RANGE -999:-999
+_DEFAULT 0.0
+_HELP
+  Enter the number to fill between the specified dates.
+$FIELD @Dsns
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:32000
+_HELP
+ Number of the source (input) data set
+$FIELD @Wds
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?WDID
+_HELP
+ ID of the source (input) WDM file on which to operate
+$FIELD @]_Use
+_TYPE OPTION
+_SET 2
+_WIDTH 1
+_HELP
+  Toggle to manually fill one value for every time unit in the time span.
+$FIELD @Naor
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NEW, APPEN, OVERW
+_DEFAULT NEW
+_HELP
+      NEW - the output data set does not exist, it will be created
+   APPEND - the output data set exists, data will be added to it
+OVERWRITE - the output data set exists, data may overwrite existing data
+$FIELD @]_Interpolate
+_TYPE OPTION
+_SET 2
+_WIDTH 1
+_HELP
+  Toggle to interpolate from the previous value to this value, filling in
+  the time span with incremental values.
+$FIELD @Tran
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVER, SUM, MAX, MIN, SAME, DIV
+_DEFAULT AVER
+_HELP
+Aggregating to a larger time step:  AVERAGE for the mean, SUM for the total
+                                    MAX for largest, MIN for the smallest
+Disaggregating to a smaller time step:  SAME to use same value
+                                        DIVIDE to distribute
+#GROUP    2  TYPE PRM1
+$WINDOW Compute (&GC)
+$SCREEN
+Choose a compute function, then fill in needed information:
+[@] NONE [@] ADD   [@] DIV   [@] **C  [@] E**   [@] ABS  [@] MIN   [@] SIGF
+[@] +C   [@] SUB   [@] MEAN  [@] C**  [@] LG10  [@] Z-   [@] MAX   [@] LINE
+[@] *C   [@] MULT  [@] WGHT  [@] POW  [@] LGE   [@] Z+   [@] SUM   [@] TABLE
+
+Function: @Funct..........................................................
+
+Source DSN1 [@Dsn1] on wdm [@Wd1]  Constants: C1 [@Cst1]    Exponent [@Expo]
+       DSN2 [@Dsn2] on wdm [@Wd2]             C2 [@Cst2]    Sig Figs [@SiFi]
+       File [@File............................................]
+$FIELD @] NONE
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Funct 6 1 6 78
+_HIDE ON @Dsn1 8 1 8 19
+_HIDE ON @Wd1 8 20 8 33
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] +C
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] *C
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] ADD
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] SUB
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] MULT
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] DIV
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] MEAN
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] WGHT
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] **C
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] C**
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] POW
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] E**
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] LG10
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] LGE
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] ABS
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] Z-
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] Z+
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] MIN
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] MAX
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] SUM
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SIGF
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] SIGF
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] LINE
+_ONOFF @] TABLE
+$FIELD @] LINE
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_HIDE ON @File 10 1 10 78
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] TABLE
+$FIELD @] TABLE
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @Dsn2 9 1 9 19
+_HIDE ON @Wd2 9 20 9 33
+_HIDE ON @Cst1 8 35 8 57
+_HIDE ON @Cst2 9 35 9 57
+_HIDE ON @Expo 8 59 8 77
+_HIDE ON @SiFi 9 59 9 77
+_OFFON @] NONE
+_ONOFF @] NONE
+_ONOFF @] +C
+_ONOFF @] *C
+_ONOFF @] ADD
+_ONOFF @] SUB
+_ONOFF @] MULT
+_ONOFF @] DIV
+_ONOFF @] MEAN
+_ONOFF @] WGHT
+_ONOFF @] **C
+_ONOFF @] C**
+_ONOFF @] POW
+_ONOFF @] E**
+_ONOFF @] LG10
+_ONOFF @] LGE
+_ONOFF @] ABS
+_ONOFF @] Z-
+_ONOFF @] Z+
+_ONOFF @] MIN
+_ONOFF @] MAX
+_ONOFF @] SUM
+_ONOFF @] SIGF
+_ONOFF @] LINE
+$FIELD @Funct
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+  This field contains desriptive information about this function which
+  may not be modified.
+$FIELD @Dsn1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:32000
+_HELP
+ Number of the source (input) data set.
+$FIELD @Wd1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?WDID
+_HELP
+ ID of the source (input) WDM file.
+$FIELD @Dsn2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:32000
+_HELP
+ Number of the source (input) data set.
+$FIELD @Wd2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?WDID
+_HELP
+ ID of the source (input) WDM file.
+$FIELD @Cst1
+_TYPE REAL
+_RANGE -999:-999
+_DEFAULT 0.0
+_HELP
+  Enter the first constant for the transformation equation.
+$FIELD @Cst2
+_TYPE REAL
+_RANGE -999:-999
+_DEFAULT 0.0
+_HELP
+  Enter the second constant for the transformation equation.
+$FIELD @Expo
+_TYPE CHARACTER
+_HELP
+ C is the exponent.  If no decimal is entered, an integer
+ constant will be used for the exponent.
+$FIELD @SiFi
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 8                  
+_DEFAULT 4
+_HELP
+ Number of significant figures to round off to.
+$FIELD @File
+_TYPE CHARACTER
+_HELP
+Enter the file name with path for this option.
+$HELP
+Generate a series using one of the following functions:
+ +C   - T = T1 + C                     **C  - T = T1 ** C
+ *C   - T = T1 * C                     C**  - T = C ** T1
+ LINE - T = (C1 * T1) + C2             POW  - T = T1 ** T2
+ ADD  - T = T1 + T2                    E**  - T = e ** T1
+ SUB  - T = T1 - T2                    LG10 - T = log(T1)
+ MULT - T = T1 * T2                    LGE  - T = ln(T1)
+ DIV  - T = T1 / T2
+ WGHT - T = (C1 * T1) + (C2 * T2)      Z-   - T = T1 IF T1>=C1,
+ MEAN - T = (T1 + T2) / 2.                      = C2 = T1<C1
+ ABS  - T = abs(T1)                    Z+   - T = T1 if T1<=C1,
+ TABLE- T looked up in a table                  = C2 if T1>C1
+ SUM  - sums a time series             MIN  - T = min( T1, T2 )
+ SIGF - output C significant figures   MAX  - T = max( T1, T2 )
+NOTE: Series - T-generated, T1,T2-user supplied
+      C, C1, C2 - user supplied constants
+#GROUP   10  TYPE PRM1
+$WINDOW Generate (&G)
+$SCREEN
+
+ Edit the attributes as desired for data set number @Dsno on WDM file @Wdi:
+
+       ISTAID [@ISTAID...]             IDSCEN [@IDSCEN.]
+       STAID  [@STAID..........]       IDLOCN [@IDLOCN.]
+       TSTYPE [@TST]                   IDCONS [@IDCONS.]
+       TCODE  [@TCODE..]
+       TSSTEP [@TSSTEP.]
+       STANAM [@STANAM.........................................]
+
+$FIELD @Dsno
+_TYPE INTEGER
+_PROTECT PROTECTED
+_RANGE 1:32000
+$FIELD @Wdi
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_VALID ?WDID
+$FIELD @ISTAID
+_TYPE INTEGER
+_HELP
+ Integer identification number
+$FIELD @STAID
+_TYPE CHARACTER
+_HELP
+ Station id
+$FIELD @TST
+_TYPE CHARACTER
+_HELP
+ User-defined descriptor
+$FIELD @TCODE
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:6
+_HELP
+ Time units code; 1-seconds,2-minutes,3-hours,4-days,5-months,6-years
+$FIELD @TSSTEP
+_TYPE INTEGER
+_HELP
+ Time step in tcode units
+$FIELD @STANAM
+_TYPE CHARACTER
+_HELP
+ Station name
+$FIELD @IDSCEN
+_TYPE CHARACTER
+_HELP
+ Scenario name
+$FIELD @IDLOCN
+_TYPE CHARACTER
+_HELP
+ Location name
+$FIELD @IDCONS
+_TYPE CHARACTER
+_HELP
+ Constituent name
+#GROUP   11  TYPE TEXT
+$WINDOW Transform (&GT) Notice
+$TEXT
+*** Before you can Define the output,
+*** you must Select the data sets.
+#GROUP   12  TYPE TEXT
+$WINDOW Transform (&GT) Notice
+$TEXT
+*** Before you can Transform time series data,
+*** you must Select the data sets and Define the output
+#GROUP   13  TYPE TEXT
+$WINDOW Transform (&GT) Notice
+$TEXT
+*** Before you can Transform time series data,
+*** you must Define the output.
+#GROUP   14  TYPE TEXT
+$WINDOW Transform (&GT) Complete
+$TEXT
+
+All of the specificed data has been transformed.
+#GROUP   15  TYPE TEXT
+$WINDOW Transform (&GT) Notice
+$TEXT
+Attributes copied and updated from data set & to NEW data set &.
+After the transformation, use Attribute/Modify (DAM) to update the
+descriptive attributes in the new data set.
+#GROUP   16  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+There was a problem copying and updating the attributes from the
+source data set & to the NEW data set &.
+
+       Return code = &.
+
+The data will not be transformed.
+#GROUP   17  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+There is a problem with the data group pointer attribute (TGROUP)
+on the output data set &.  The time units of TGROUP must be at
+least one time unit larger than the time units (TCODE) of the data.
+#GROUP   18  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+There was a problem with the data.
+Some or all of the data was not transformed.
+#GROUP   19  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+There was a problem with the data sets.
+None of the data was transformed.
+#GROUP   21  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The selected input data set exists, but contains no time-series data.
+#GROUP   22  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The selected input data set does not exist.
+#GROUP   23  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The selected input data set exists, but is not a time-series data set.
+#GROUP   24  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** There is a problem with the selected input data set.
+#GROUP   25  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The time steps of the input and output data sets are not compatible.
+#GROUP   26  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The selected output data set exists, but is not a time-series data set.
+#GROUP   27  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** There is a problem with the selected output data set.
+#GROUP   28  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The selected output data set exists, but it was specified as new.
+#GROUP   32  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The selected output data set does not exist,
+*** but it was specified as APPEND or OVERWRITE.
+#GROUP   35  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The input time step is not compatible with the output time step.
+*** One time step must be an even multiple of the other time step.
+#GROUP   36  TYPE TEXT
+$WINDOW Transform (&GT) Problem
+$TEXT
+*** The selected dates and times are not compatible with the time step.
+*** The date/time must be an even time boundary of the time step.
+*** Note:  daily data begins at time 00:00:00, ends at time 24:00:00
+***        monthly begins day 1, 00:00:00, ends last day, 24:00:00
+***        annual begins Jan 1, 00:00:00, ends Dec 31, 24:00:00
+
+#GROUP   41  TYPE TEXT
+$WINDOW Compute (&GC) Problem
+$TEXT
+Data sets and constants for computation may not be defined
+until the desired mathematical function has been specified.
+
+To specify the mathematical function, select the Function option.
+#GROUP   42  TYPE TEXT
+$WINDOW Compute (&GC) Problem
+$TEXT
+The Period of record for the computation may not be defined
+until both the desired mathematical Function and the Data sets
+and constants have been specified.
+
+To specify the mathematical function, select the Function option.
+To specify the Data sets and constants, select the Datasets option.
+#GROUP   43  TYPE TEXT
+$WINDOW Compute (&GC) Problem
+$TEXT
+Execution of the computation may not be performed until the
+desired mathematical Function, Data sets and constants, and
+Period of record have all been specified.
+
+To specify the mathematical function, select the Function option.
+To specify the Data sets and constants, select the Datasets option.
+To specify the Period of record, select the Period option.
+#GROUP   51  TYPE TEXT
+$WINDOW Data set (&GCD)
+$TEXT
+You are using the following equation:
+#GROUP   52  TYPE TEXT
+$TEXT
+  DONE
+#GROUP   53  TYPE TEXT
+$TEXT
+  T = T1 + C                C can be any number
+#GROUP   54  TYPE TEXT
+$TEXT
+  T = T1 * C                C can be any non-zero number
+#GROUP   55  TYPE TEXT
+$TEXT
+  T = T1 + T2
+#GROUP   56  TYPE TEXT
+$TEXT
+  T = T1 - T2
+#GROUP   57  TYPE TEXT
+$TEXT
+  T = T1 * T2
+#GROUP   58  TYPE TEXT
+$TEXT
+  T = T1 / T2               If T2=0, then T=10.0E35
+#GROUP   59  TYPE TEXT
+$TEXT
+  T = (T1+T2) / 2.
+#GROUP   60  TYPE TEXT
+$TEXT
+  T = (C1*T1)+(C2*T2)       Must have C1+C2=1.0
+#GROUP   61  TYPE TEXT
+$TEXT
+  T = T ** C                C is any non-zero number
+#GROUP   62  TYPE TEXT
+$TEXT
+  T = C ** T1               C is any non-zero number
+#GROUP   63  TYPE TEXT
+$TEXT
+  T = T1 ** T2              If T1=0 and T2<0, then T=0
+#GROUP   64  TYPE TEXT
+$TEXT
+  T = e ** T1               If T1>80.5, then T=10.0E35
+#GROUP   65  TYPE TEXT
+$TEXT
+  T = log(T1)               IF T1<=0, then T=10.0E35
+#GROUP   66  TYPE TEXT
+$TEXT
+  T = ln(T1)                If T1<=0, then T=10.0E35
+#GROUP   67  TYPE TEXT
+$TEXT
+  T = abs(T1)
+#GROUP   68  TYPE TEXT
+$TEXT
+  T = T1 if T1 >= C1,
+    = C2 if T1 < C1
+#GROUP   69  TYPE TEXT
+$TEXT
+  T = T1 if T1 <= C1,
+    = C2 if T1 > C1
+#GROUP   70  TYPE TEXT
+$TEXT
+  T = min(T1,T2)
+#GROUP   71  TYPE TEXT
+$TEXT
+  T = max(T1,T2)
+#GROUP   72  TYPE TEXT
+$TEXT
+  T(n) = T1(1)+T1(2)+...+T1(n)
+#GROUP   73  TYPE TEXT
+$TEXT
+  T = n significant figures of T1
+#GROUP   74  TYPE TEXT
+$TEXT
+  T = (C1*T1) + C2    C1 and C2 can be any number
+#GROUP   75  TYPE TEXT
+$TEXT
+  T = value looked up in table
+#GROUP   83  TYPE TEXT
+$WINDOW Compute (&GC) Problem
+$TEXT
+  Input data-set number & does not exist.
+#GROUP   84  TYPE TEXT
+$WINDOW Compute (&GC) Problem
+$TEXT
+Time units and time steps are different between source and target data sets:
+
+  Target:  TUNIT = &, TSSTEP = &
+  Source:  TUNIT = &, TSSTEP = &
+
+Unable to perform Computation with differing time units/steps between
+source and target data sets.  One of the data sets must be transformed
+to have matching time units/steps before performing computation.  To do
+so, select the Transform option from the Generate screen.
+#GROUP   85  TYPE TEXT
+$WINDOW Compute (&GC)
+$TEXT
+ SUM = & at the last time step.
+#GROUP   86  TYPE TEXT
+$WINDOW Compute (&GC) Warning
+$TEXT
+** WARNING **  Some values out of range, KOUNT = &
+#GROUP   87  TYPE TEXT
+$WINDOW Compute (&GC)
+$TEXT
+ Generate completed.
+#GROUP   89  TYPE TEXT
+$WINDOW Compute (&GC) Problem
+$TEXT
+File doesn't exist or error reading file or not enough pairs
+or numbers in first column not constantly increasing.
+#GROUP   90  TYPE TEXT
+$WINDOW Compute (&GC) Notice
+$TEXT
+Target data set & does not exist, and thus has been created.
+Attributes from source data set & have been copied to the
+new target data set.
+
+After execution of the computation, use the Attribute Modify (DAM)
+option to update the copied attributes on the new data set.
+#GROUP   101  TYPE MENU
+$WINDOW Generate (&G)
+$SCREEN
+ Select a time-series generation option:
+
+       @Compute   - new time series using mathematical functions
+       @Transform - the time step and/or shift in time
+
+       @Return    - one level up
+$DEFAULT    1
+$LENGTH     10
+$OPTION Return
+$OPTION Compute
+_HELP
+Generate a new time series from one or two existing time series using
+simple mathematical functions.
+$OPTION Transform
+_HELP
+ Generate a new time series by:
+
+    aggregating or disaggegating a time series
+ or shifting a time series forward or backward in time
+ or aggregating or disaggregating and than shifting in time a time series
+#GROUP  102  TYPE MENU
+$WINDOW Transform (&GT)
+$SCREEN
+
+         Select a transformation option:
+
+       First:   @Select  - data sets
+                @Define  - transformation
+        Then:   @Execute - transformation
+
+                @Return - to Generate menu
+$DEFAULT  2
+$LENGTH   8
+$OPTION @Return
+$OPTION @Select
+_HELP
+Identify the data set that is to be transformed.
+$OPTION @Define
+_HELP
+ Define the time series transformation by entering:
+    o  period of record to be transformed
+    o  any time shift or time change
+    o  the number and status of the output data set
+$OPTION @Execute
+_HELP
+ Execute after Selecting data sets and defining the Transformation
+#GROUP   103  TYPE PRM1
+$WINDOW Select (&GTS)
+$SCREEN
+
+  Enter the data-set numbers:
+
+      input [ @dsni ]
+     output [ @dsno ] status is [ @naoro... ]
+$FIELD @dsni
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:32000
+_HELP
+Number of the data set to be transformed
+$FIELD @dsno
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:32000
+_HELP
+Number of the data set for the transformed data.
+The data set does not have to exist, it can be created.
+$FIELD @naoro
+_TYPE    CHARACTER
+_PROTECT CORRECT
+_VALID   NEW, APPEND, OVERWRITE
+_DEFAULT NEW
+_HELP
+      NEW - the output data set does not exist, it will be created
+   APPEND - the output data set exists, data will be added to it
+OVERWRITE - the output data set exists, data may overwrite existing data
+#GROUP   104  TYPE MENU
+$WINDOW Select (&GTS) Problem
+$SCREEN
+
+ Do you want to:
+
+     @Select - different data set(s)
+     @Return - to the Transformation screen (no data sets selected)
+$DEFAULT 1
+$LENGTH  7
+$OPTION @Select
+$OPTION @Return
+#GROUP   105  TYPE PRM1
+$WINDOW Define (&GTD)
+$SCREEN
+ For the input data set < @Dsni >
+     output to data set < @Dsno >
+     with output status < @Status.. >
+
+ Define the time period, transformation, and time step:
+
+           Year  Mon  Day Hour  Min  Sec     Year  Mon  Day Hour  Min  Sec
+ Input:  [ @Yri @Moi @Dyi @Hri @Mni @Sci ] [ @Yre @Moe @Dye @Hre @Mne @Sce ]
+ Output: [ @Yro @Moo @Dyo @Hro @Mno @Sco ]
+         transformation  [ @Transf... ]    time step [ @Step @Unit. ]
+$FIELD @Yri
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @Moi
+_TYPE INGEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @Dyi
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @Hri
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @Mni
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Sci
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Yre
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @Moe
+_TYPE INGEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @Dye
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @Hre
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @Mne
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Sce
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Yro
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @Moo
+_TYPE INGEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @Dyo
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @Hro
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @Mno
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Sco
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Transf
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN, SAME, DIVIDE
+_DEFAULT AVERAGE
+_HELP
+Aggregating to a larger time step:  AVERAGE for the mean, SUM for the total
+                                    MAX for largest, MIN for the smallest
+Disaggregating to a smaller time step:  SAME to use same value
+                                        DIVIDE to distribute
+$FIELD @Step
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:1440
+_DEFAULT 1
+_HELP
+The time step and units for the output time series.
+$FIELD @Unit
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+_HELP
+The time step and units for the output time series.
+$FIELD @Dsni
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:32000
+_DEFAULT 1
+_HELP
+Data-set number of the input time series to be transformed,
+Choose "Select" from the "Transform" menu to change this.
+$FIELD @Dsno
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:32000
+_DEFAULT 1
+_HELP
+Data-set number of the input time series to be transformed,
+Choose "Select" from the "Transform" menu to change this.
+$FIELD @Status
+_TYPE CHARACTER
+_PROTECT PROTECT
+_VALID   NEW
+_DEFAULT NEW
+_HELP
+Status of the requested output data set is NEW.
+This data set will be created.
+$HELP
+The Input Start and End dates identify the period to be transformed
+The Output Start date identifies the start of the output time series,
+    it may be the same as the Input Start or may be shifted forward
+    or backward in time.
+#GROUP   106  TYPE PRM1
+$WINDOW Define (&GTD)
+$SCREEN
+ For the input data set < @Dsni >
+     output to data set < @Dsno >
+     with time step of  < @Step @Unit. >
+
+ Define the time period, transformation, and output status:
+
+           Year  Mon  Day Hour  Min  Sec     Year  Mon  Day Hour  Min  Sec
+ Input:  [ @Yri @Moi @Dyi @Hri @Mni @Sci ] [ @Yre @Moe @Dye @Hre @Mne @Sce ]
+ Output: [ @Yro @Moo @Dyo @Hro @Mno @Sco ]
+         transformation  [ @Transf... ]    output status [ @Status.. ]
+$FIELD @Yri
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @Moi
+_TYPE INGEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @Dyi
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @Hri
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @Mni
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Sci
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Yre
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @Moe
+_TYPE INGEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @Dye
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @Hre
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @Mne
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Sce
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Yro
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @Moo
+_TYPE INGEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @Dyo
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @Hro
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @Mno
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Sco
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @Transf
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN, SAME, DIVIDE
+_DEFAULT AVERAGE
+_HELP
+Aggregating to a larger time step:  AVERAGE for the mean, SUM for the total
+                                    MAX for largest, MIN for the smallest
+Disaggregating to a smaller time step:  SAME to use same value
+                                        DIVIDE to distribute
+$FIELD @Status
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   APPEND, OVERWRITE
+_DEFAULT APPEND
+_HELP
+Status of the requested output data set:
+      APPEND - data set does exist, existing data will NOT be overwritten
+   OVERWRITE - date set does exist, existing data MAY be overwritten
+$FIELD @Step
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:1440
+_DEFAULT 1
+_HELP
+The time step and units for the output time series.
+$FIELD @Unit
+_TYPE CHARACTER
+_PROTECT PROTECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+_HELP
+The time step and units for the output time series.
+$FIELD @Dsni
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:32000
+_DEFAULT 1
+_HELP
+Data-set number of the input time series to be transformed,
+Choose "Select" from the "Transform" menu to change this.
+$FIELD @Dsno
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:32000
+_DEFAULT 1
+_HELP
+Data-set number of the input time series to be transformed,
+Choose "Select" from the "Transform" menu to change this.
+$HELP
+The Input Start and End dates identify the period to be transformed
+The Output Start date identifies the start of the output time series,
+    it may be the same as the Input Start or may be shifted forward
+    or backward in time.
+#GROUP   107  TYPE MENU
+$WINDOW Define (&GTD) Problem
+$SCREEN
+
+ Do you want to:
+
+     @Define - a different date/time or time step
+     @Return - to the Transformation screen (no transformation defined)
+$DEFAULT 1
+$LENGTH  7
+$OPTION @Define
+$OPTION @Return
+#GROUP   108  TYPE MENU
+$WINDOW  Compute (&GC)
+$SCREEN
+
+ Select a Compute option:
+
+   @Function - select type of mathematical function for computation
+   @Datasets - define data sets and any constants for computation
+   @Period   - specify period of record to use for computation
+
+   @Execute  - the computation
+
+   @Return   - to Generate menu
+$DEFAULT  2
+$LENGTH   9
+$OPTION @Return
+$OPTION @Function
+_HELP
+Identify the type of mathematical function to use in the
+computation to be performed.
+$OPTION @Datasets
+_HELP
+$OPTION @Period
+$OPTION @Execute
+#GROUP   109  TYPE MENU
+$WINDOW Function (&GCF)
+$SCREEN
+Choose a Compute function:
+   @ADD  - T1 + T2      @**C  - T1 ** C       @MIN  - min( T1, T2 )
+   @SUB  - T1 - T2      @C**  - C ** T1       @MAX  - max( T1, T2 )
+   @MULT - T1 * T2      @POW  - T1 ** T2      @LINE - (C1 * T1) + C2
+   @DIV  - T1 / T2      @E**  - e ** T1       @WGHT - (C1 * T1) + (C2 * T2)
+   @+C   - T1 + C       @LG10 - log(T1)       @TABLE- looked up in a table
+   @*C   - T1 * C       @LGE  - ln(T1)        @SIGF - C significant digits
+   @ABS  - abs(T1)      @MEAN - (T1+T2)/2.    @SUM  - sums a time series
+   @Z-   - T1 if T1>=C1, C2 if T1<C1
+   @Z+   - T1 if T1<=C1, C2 if T1>C1
+$DEFAULT   1
+$LENGTH    6
+$OPTION @+C
+$OPTION @*C
+$OPTION @ADD
+$OPTION @SUB
+$OPTION @MULT
+$OPTION @DIV
+$OPTION @MEAN
+$OPTION @WGHT
+$OPTION @**C
+$OPTION @C**
+$OPTION @POW
+$OPTION @E**
+$OPTION @LG10
+$OPTION @LGE
+$OPTION @ABS
+$OPTION @Z-
+$OPTION @Z+
+$OPTION @MIN
+$OPTION @MAX
+$OPTION @SUM
+$OPTION @SIGF
+$OPTION @LINE
+$OPTION @TABLE
+$HELP
+Compute a new time series using the selected function, where
+        T1 - an input time series, always required
+        T2 - an input time series, required for some functions
+ C, C1, C2 - constants, required for some functions
+#GROUP   110  TYPE PRM2
+$HEADER
+
+Enter the data-set numbers:
+ data-set numbers
+ ----------------
+  target   input
+    T        T1
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN     2
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T is the time-series data set to be computed.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    10
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T1 is the input time-series data set.
+$HELP
+ See the above transformation, enter the appropriate
+ data-set numbers.
+#GROUP   111  TYPE PRM2
+$HEADER
+
+Enter the data-set numbers:
+     data-set numbers
+ ------------------------
+  target   input   input
+    T        T1      T2
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN     2
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T is the time-series data set to be computed.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    10
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T1 is the first input time-series data set.
+$FIELD FIELD3
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    18
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T2 is the second input time-series data set.
+$HELP
+ See the above transformation, enter the appropriate
+ data-set numbers.
+#GROUP   112  TYPE PRM2
+$HEADER
+
+Enter the data-set numbers:
+ data-set numbers
+ ----------------
+  target   input  constant
+    T        T1      C1
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN     2
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T is the time-series data set to be computed.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    10
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T1 is the input time-series data set.
+$FIELD FIELD3
+_TYPE REAL
+_WIDTH    10
+_COLUMN    18
+_RANGE    -999.00  :   -999.00
+_DEFAULT 0.
+_HELP
+ C1 in the constant.
+$HELP
+ See the above transformation, enter the appropriate
+ data-set numbers and constant.
+#GROUP  113  TYPE PRM2
+$HEADER
+
+Enter the data-set numbers:
+ data-set numbers
+ ---------------- significant
+  target   input    figures
+    T        T1        n
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN     2
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T is the time-series data set to be computed.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    10
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T1 is the input time-series data set.
+$FIELD FIELD3
+_TYPE INTEGER
+_WIDTH    11
+_COLUMN    19
+_RANGE  1 : 8
+_DEFAULT 4
+_HELP
+ T1 will be rounded off to n significant figures.
+ If n=4 and T1=12345.6, then T=12350.0.
+$HELP
+ See the above transformation, enter the appropriate
+ data-set numbers and constant.
+#GROUP  114  TYPE PRM2
+$HEADER
+
+Enter the data-set numbers:
+ data-set numbers
+ ----------------
+  target   input  exponent
+    T        T1      C
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN     2
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T is the time-series data set to be computed.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    10
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T1 is the input time-series data set.
+$FIELD FIELD3
+_HELP
+ C is the exponent.  If no decimal is entered, an integer
+ constant will be used for the exponent.
+_TYPE CHARACTER
+_WIDTH    10
+_COLUMN    18
+$HELP
+ See the above transformation, enter the appropriate
+ data-set numbers and constant.
+#GROUP  115  TYPE PRM2
+$HEADER
+
+Enter the data-set numbers:
+ data-set numbers
+ ----------------      constants
+  target   input --------------------
+    T        T1      C1        C2
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN     2
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T is the time-series data set to be computed.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    10
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T1 is the input time-series data set.
+$FIELD FIELD3
+_TYPE REAL
+_WIDTH    10
+_COLUMN    18
+_RANGE    -999.00  :   -999.00
+_DEFAULT 0.
+_HELP
+ C1 in the first constant.
+$FIELD FIELD4
+_TYPE REAL
+_WIDTH    10
+_COLUMN    28
+_RANGE    -999.00  :   -999.00
+_DEFAULT 0.
+_HELP
+ C2 is the second constant.
+$HELP
+ See the above transformation, enter the appropriate
+ data-set numbers and constants.
+#GROUP  116  TYPE PRM2
+$HEADER
+
+Enter the data-set numbers:
+     data-set numbers
+ ------------------------      constants
+  target   input   input --------------------
+    T        T1      T1      C1        C2
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN     2
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T is the time-series data set to be computed.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    10
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T1 is the first input time-series data set.
+$FIELD FIELD3
+_TYPE INTEGER
+_WIDTH     8
+_COLUMN    18
+_RANGE  1 : 32000
+_DEFAULT -999
+_HELP
+ T2 is the second input time-series data set.
+$FIELD FIELD4
+_TYPE REAL
+_WIDTH    10
+_COLUMN    26
+_RANGE    -999.00  :   -999.00
+_DEFAULT 0.
+_HELP
+ C1 in the first constant.
+$FIELD FIELD5
+_TYPE REAL
+_WIDTH    10
+_COLUMN    36
+_RANGE    -999.00  :   -999.00
+_DEFAULT 0.
+_HELP
+ C2 is the second constant.
+$HELP
+ See the above transformation, enter the appropriate
+ data-set numbers and constants.
+#GROUP  117  TYPE FILE
+$WINDOW Dataset File (DTGCD)
+$SCREEN
+
+ Name of file for table?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   141  TYPE TEXT
+$WINDOW Manual (&GM)
+$TEXT
+Creation of new data set performed successfully.
+#GROUP   142  TYPE TEXT
+$WINDOW Manual (&GM) Problem
+$TEXT
+Problem creating new data set.
+#GROUP   143  TYPE TEXT
+$WINDOW Manual (&GM) Complete
+$TEXT
+Execution of specified Manual manipulation completed successfully.
+#GROUP   144  TYPE TEXT
+$WINDOW Manual (&GM) Problem
+$TEXT
+Problem getting value to interpolate.
+#GROUP   145  TYPE TEXT
+$WINDOW Manual (&GM) Problem
+$TEXT
+Problem writing to data set.
+#GROUP   146  TYPE TEXT
+$WINDOW Manual (&GM) Problem
+$TEXT
+Problem getting value to interpolate because
+no data exists on this data set.
+  END DATA
+END CLU

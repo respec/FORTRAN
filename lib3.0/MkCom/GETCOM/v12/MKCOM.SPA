@@ -1,0 +1,83 @@
+AMODE                  1
+INSTR  200             1
+NCOMPS                 2
+VOLCOD                 3
+FILE                   4
+DELTAT                 5
+FREC                   6
+LREC                   7
+COMPR                  8
+QLFG                   8
+TOTCOM                 9
+FMTCLS                10
+BEGYR                 11
+TENDR                 12
+LGAP                  13
+TGAP                  14
+GAPVAL                15
+LTRNFG                16
+VOTSB                 17
+CRDSEQ   3            17
+VOLFRM                18
+VOTFRM                19
+BCWBTI                20
+BCW                   20
+BCWNOV                21
+INPSTR                22
+ENDF                  23
+YEAR                  24
+MO                    25
+DAY                   26
+LPYRFG                27
+AGGRFG                27
+NREM                  28
+TYREND                29
+FRMTIM                30
+TZERO                 31
+OLDOFF                31
+TLAST                 32
+UCNT                  33
+CRDNO                 33
+ZCNT                  34
+VOPADR  20            35
+OFFSET  20            55
+STKIND  20            75
+STTRAN  20            95
+INMODE  20           115
+A       20           135
+B       20           155
+PVAR    20           175
+INPDAT   6           195
+TSGETF               201
+TSPUTF               201
+XOLD    20           202
+XNEW    20           222
+XVAR    20           242
+XZERO   20           262
+XLAST   20           282
+TXOLD                302
+TXNEW                303
+TXVAR                304
+RRATIO               305
+RATIO                306
+SUITFG               307
+TESTFG               308
+UFLAG                309
+ZFLAG                310
+UNDEF                311
+MSGFL                312
+MESSU                313
+KNT                  314
+TSSFL                315
+BADR                 316
+BLEN                 317
+CWF                  318
+FORFLG               319
+BMTFLG               320
+EXTF                 321
+RECLT                322
+TRCNO                323
+VOBUFF               324
+ENDBUF               325
+TBUFF  545           326
+

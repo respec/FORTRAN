@@ -1,0 +1,73 @@
+<b>OPERATIONS SUPERVISOR INSTRUCTION FILE</b>
+
+<p>Function
+
+<p>This virtual file (stored in common block <a href="../CommonBlocks/COSUPM">COSUPM</a>)contains instructions which the Operations Supervisor (OSUPER) will follow.  They include information concerning:          
+<ol>
+  <li>The operation which must be worked on next            
+  <li>Where to find, in their respective files:
+    <ol type='a'>
+      <li>instructions for input of time series for this operation  
+      <li>instructions for output of time series from this operation  
+    </ol>      
+  <li>Where to find and store information in the Operation Status Vector File (OSVFL)         
+  <li>The configuration of the internal scratch pad  
+</ol>         
+
+<p>Method of Operation       
+<ol>
+<li>It is prepared by the Run Interpreter (subroutine OSUP) from the User's Control Input.         
+<li>It is read by subroutine OSUPER. 
+    <ol type="a">
+       <li>Exgroup_info is read once only for each EXGROUP in the run.
+       <li>INGROUP_info and Operation_info are read repetitively, as the various INGROUPs and operations are repeated for each EXSPAN and INSPAN.
+    </ol>
+</ol>     
+
+<p>Structure 
+<pre> 
+1 OSUPFL   
+ 
+ 2 RUNINF(11)        I4   A record   
+  3 NXGRPS           I4   number of EXGROUPs in the RUN  
+  3 SDATIM(5)        I4   starting date and time for the RUN   
+  3 EDATIM(5)        I4   ending date and time for the RUN   
+ 
+ 2 Exgroup_data           Repeats for each EXGROUP in the run  
+ 
+  3 EXGINF(4)        I4   A record   
+    Because the EXPAD is not implemented in this release of HSPF,  
+    the following dummy values are assigned:   
+    XREPET=1, XWIDTH=0, XDELT=0  
+   4 XREPET          I4   number of EXSPANs in the RUN (complete or part)  
+   4 XWIDTH          I4   width of a complete EXSPAN (in units of XDELT)   
+   4 XDELT           I4   time interval in the EXPAD (minutes)   
+   4 NGRPS           I4   number of INGROUPs in this EXGROUP   
+ 
+  3 Ingroup_data          Repeats for each INGROUP in this EXGROUP   
+ 
+   4 INGINF(6)       I4   A record   
+    5 REPEAT         I4   number of INSPANs in one complete EXSPAN   
+    5 REPLST         I4   number of INSPANS in the last EXSPAN of the RUN  
+    5 WID            I4   width of a complete INPAD (in units of DELT)   
+    5 WLAST          I4   width of the last INPAD in the RUN   
+    5 DELT           I4   time interval in the INPAD (minutes)   
+    5 NOPNS          I4   number of operations in this INGROUP   
+ 
+   4 OPINF(8)        I4   A record. Repeats for each operation in this INGROUP   
+    5 OMCODE         I4   code indicating which operating module is to be called   
+    5 OPTNO          I4   Operation_type number, e.g. 2 for RCHRES2  
+    5 TSGKST         I4   key of first record to be read from TSGETF 
+    5 TSGKND         I4   key of last record to be read from TSGETF  
+    5 TSPKST         I4   key of first record to be read from TSPUTF 
+    5 TSPKND         I4   key of last record to be read from TSPUTF  
+    5 OSVKST         I4   key of first record to be read from OSVFL  
+    5 OSVKND         I4   key of last record to be read from OSVFL 
+</pre>
+
+
+
+
+
+
+

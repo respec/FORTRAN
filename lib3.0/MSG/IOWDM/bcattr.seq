@@ -1,0 +1,247 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  conversions clusters
+  ___  ______  ________________________________________________
+  106  bcattr  basin characteristics to attributes
+  106  cvwtat  watstore parameter code to tstype
+END COMMENT
+CLU          106    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  BCATTR
+  END LABEL
+  DATA   CLU   106
+#GROUP    1  TYPE TEXT
+$TEXT
+   1 AREA      11 DAREA  x
+   2 CONTDA    43 CONTDA x
+   3 SLOPE     24 SLOPE  x
+   4 BSLOPE    86 BSLOPE x
+   5 LENGTH    26 LENGTH x
+   6 BLENGTH   87 BLNGTH x
+   7 VALLGH    88 VALLGH x
+   8 ELEV       7 ELEV   x
+   9 ELV10,85  89 EL1085 x
+  10 EL5000    90 EL5000 x
+  11 EL6000    91 EL6000 x
+  12 STORAGE   59 STORAG x
+  13 LAKEAREA  92 LAKE   x
+  14 FOREST    61 FOREST x
+  15 GLACIER   93 GLACER x
+  16 SOIL INF  62 SOILIN x
+  17 LOESS     94 LOESS  x
+  18 AZIMUTH   95 AZMUTH x
+  19 LAT       96 LATCTR x
+  20 LONG      97 LNGCTR x
+  21 TIMETOPK  98 TMTOPK x
+  22 LAT GAGE   8 LATDEG x
+  23 LNG GAGE   9 LNGDEG x
+  24          220 UBC024 x
+  25          221 UBC025 x
+  26          222 UBC026 x
+  27          223 UBC027 x
+  28          224 UBC028 x
+  29          225 UBC029 x
+  30          226 UBC030 x
+  31          227 UBC031 x
+  32 PRECIP    58 PRECIP x
+  33 I24,2     63 I24-2. x
+  34 I24,10    99 I24010 x
+  35 I24,25   100 I24025 x
+  36 I24,50   101 I24050 x
+  37 I24,100  102 I24100 x
+  38          228 UBC038 x
+  39          229 UBC039 x
+  40          230 UBC040 x
+  41 PRC10    103 PRCOCT x
+  42 PRC11    104 PRCNOV x
+  43 PRC12    105 PRCDEC x
+  44 PRC1     106 PRCJAN x
+  45 PRC2     107 PRCFEB x
+  46 PRC3     108 PRCMAR x
+  47 PRC4     109 PRCAPR x
+  48 PRC5     110 PRCMAY x
+  49 PRC6     111 PRCJUN x
+  50 PRC7     112 PRCJUL x
+  51 PRC8     113 PRCAUG x
+  52 PRC9     114 PRCSEP x
+  53 SNOFALL  115 SNOFAL x
+  54 SNOMAR   116 SNOMAR x
+  55 SNOAPR   117 SNOAPR x
+  56 SN2      118 SN002  x
+  57 SN10     119 SN010  x
+  58 SN25     120 SN025  x
+  59 SN100    121 SN100  x
+  60 JANMIN    64 JANMIN x
+  61 JANAV    122 JANAVE x
+  62 MARMAX   123 MARMAX x
+  63 JULYMAX  124 JULMAX x
+  64 JULYAV   125 JULAVE x
+  65 WE MAR2  126 WEMAR2 x
+  66          231 UBC066 x
+  67          232 UBC067 x
+  68          233 UBC068 x
+  69          234 UBC069 x
+  70 EVAP     127 LKEVAP x
+  71 EVAPAN   128 PNEVAP x
+  72 FROST    129 FROST  x
+  73          235 UBC073 x
+  74          236 UBC074 x
+  75 P1,25     65 P1.25  x
+  76 P2        66 P2.    x
+  77 P5        67 P5.    x
+  78 P10       68 P10.   x
+  79 P25       69 P25.   x
+  80 P50       70 P50.   x
+  81 P100      71 P100.  x
+  82 P200      72 P200.  x
+  83 MEANPK    74 MEANPK x
+  84 SDPK      75 SDPK   x
+  85 SKEWPK    76 SKWPK  x
+  86 QA       130 QANN   x
+  87 SDQA     131 QSDANN x
+  88 Q10      132 QOCT   x
+  89 Q11      133 QNOV   x
+  90 Q12      134 QDEC   x
+  91 Q1       135 QJAN   x
+  92 Q2       136 QFEB   x
+  93 Q3       137 QMAR   x
+  94 Q4       138 QAPR   x
+  95 Q5       139 QMAY   x
+  96 Q6       140 QJUN   x
+  97 Q7       141 QJUL   x
+  98 Q8       142 QAUG   x
+  99 Q9       143 QSEP   x
+ 100 SDQ10    144 QSDOCT x
+ 101 SDQ11    145 QSDNOV x
+ 102 SDQ12    146 QSDDEC x
+ 103 SDQ1     147 QSCJAN x
+ 104 SDQ2     148 QSDFEB x
+ 105 SDQ3     149 QSDMAR x
+ 106 SDQ4     150 QSDAPR x
+ 107 SDQ5     151 QSDMAY x
+ 108 SDQ6     152 QSDJUN x
+ 109 SDQ7     153 QSDJUL x
+ 110 SDQ8     154 QSDAUG x
+ 111 SDQ9     155 QSDSEP x
+ 112 M1,2     156 L01002 x
+ 113 M1,10    157 L01010 x
+ 114 M1,20    158 L01020 x
+ 115 M3,2     159 L03002 x
+ 116 M3,10    160 L03010 x
+ 117 M3,20    161 L03020 x
+ 118 M7,2     162 L07002 x
+ 119 M7,5     163 L07005 x
+ 120 M7,10    164 L07010 x
+ 121 M7,20    165 L07020 x
+ 122 M14,2    166 L14002 x
+ 123 M14,10   167 L14010 x
+ 124 M14,20   168 L14020 x
+ 125 M30,2    169 L30002 x
+ 126 M30,10   170 L30010 x
+ 127 M30,20   171 L30020 x
+ 128 M90,2    172 L90002 x
+ 129 M90,10   173 L90010 x
+ 130 M90,20   174 L90020 x
+ 131 V1,100   181 H01100 x
+ 132 V15,5    197 H15005 x
+ 133 V30,5    204 H30005 x
+ 134 V30,20   206 H30020 x
+ 135 V30,100  209 H30100 x
+ 136 V1,2     175 H01002 x
+ 137 V1,5     176 H01005 x
+ 138 V1,10    177 H01010 x
+ 139 V1,20    178 H01020 x
+ 140 V1,25    179 H01025 x
+ 141 V1,50    180 H01050 x
+ 142 V3,2     182 H03002 x
+ 143 V3,5     183 H03005 x
+ 144 V3,10    184 H03010 x
+ 145 V3,20    185 H03020 x
+ 146 V3,25    186 H03025 x
+ 147 V3,5     187 H03050 x
+ 148 V3,100   188 H03100 x
+ 149 V7,2     189 H07002 x
+ 150 V7,5     190 H07005 x
+ 151 V7,10    191 H07010 x
+ 152 V7,20    192 H07020 x
+ 153 V7,25    193 H07025 x
+ 154 V7,50    194 H07050 x
+ 155 V7,100   195 H07100 x
+ 156 V15,2    196 H15002 x
+ 157 V15,10   198 H15010 x
+ 158 V15,20   199 H15020 x
+ 159 V15,25   200 H15025 x
+ 160 V15,50   201 H15050 x
+ 161 V15,100  202 H15100 x
+ 162 V30,2    203 H30002 x
+ 163 V30,10   205 H30010 x
+ 164 V30,25   207 H30025 x
+ 165 V30,50   208 H30050 x
+ 166          237 UBC166 x
+ 167          238 UBC167 x
+ 168 DEPH25   210 DEPH25 x
+ 169          239 UBC169 x
+ 170          240 UBC170 x
+ 171 D95      211 QEX95P x
+ 172 D90      212 QEX90P x
+ 173 D75      213 QEX75P x
+ 174 D70      214 QEX70P x
+ 175 D50      215 QEX50P x
+ 176 D25      216 QEX25P x
+ 177 D10      217 QEX10P x
+ 178 P500      73 P500.  x
+ 179 WRC SKEW  77 WRCSKW x
+ 180 WRC MEAN  78 WRCMN  x
+ 181 WRC SD    79 WRCSD  x
+ 182          241 UBC182 x
+ 183          242 UBC183 x
+ 184          243 UBC184 x
+ 185          244 UBC185 x
+ 186          245 UBC186 x
+ 187          246 UBC187 x
+ 188          247 UBC188 x
+ 189          248 UBC189 x
+ 190          249 UBC190 x
+ 191          250 UBC191 x
+ 192          251 UBC192 x
+ 193          252 UBC193 x
+ 194          253 UBC194 x
+ 195          254 UBC195 x
+ 196 YRSPK     80 YRSPK  x
+ 197 YRSHISPK  81 YRSHPK x
+ 198 YRSDAY   218 YRSDAY x
+ 199 YRSLOW   219 YRSLOW x
+ 200          255 UBC200 x
+#GROUP    2  TYPE TEXT
+$TEXT
+XLOC      1 x-sect location, feet from right bank looking upstream     X
+XLOC      2 x-sect location, percent from right bank looking upstream  X
+DPTH      3 sampling depth (feet)                                      X
+WDTH      4 stream width (feet)                                        X
+XLOC      5 x-section location, vertical (percent of total depth)      X
+XLOC      9 x-section location, feet from left bank looking downstream X
+TH20     10 temperature, water (deg. C)                                X
+TPAH     12 temperature, evaporation, 48 in. pan (deg. C)              X
+TPAN     13 temperature, evaporation, 24 in. pan (deg. C)              X
+TWTB     14 temperature, wet bulb (deg. C)                             X
+TEMP     20 temperature, air (deg. C)                                  X
+BPRS     25 barometric pressure (mm of hg)                             X
+SRAD     30 solar radiation, incidental, intensity (calories/sq cm/day)X
+WNDS     35 wind speed (mph)                                           X
+WNDD     36 wind direction, in degrees from true north (clockwise)     X
+PREC     45 rainfall, accumulated (inches)                             X
+EVAP     50 evaporation, total (inches per day)                        X
+HUMD     52 humidity, relative (percent)                               X
+RESV     54 reservoir storage (ac-ft)                                  X
+SVEL     55 stream velocity (feet per second)                          X
+FLOW     60 discharge, in cubic feet per second                        X
+ Z       65 gage height (feet above datum)                             X
+TURB     70 (jtu)                                                      X
+TURB     76 (ntu)                                                      X
+COLR     80 (platinum-cobalt units)                                    X
+OXPT     90 oxidation reduction potential (millivolts)                 X
+SPCD     95 specific conductance, micro siemens/centimeter at 25 deg. CX
+  END DATA
+END CLU

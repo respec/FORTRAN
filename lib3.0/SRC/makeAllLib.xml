@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+<project name="makeAllLib" default="compile">
+
+   <property name="FC"          value="lf90"/>
+
+   <target name="compile">
+      <echo message="basedir:'${basedir}'"/>
+
+      <echo message="make util"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="util"/>
+      </ant>
+
+      <echo message="make adwdm"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="adwdm"/>
+      </ant>
+
+      <echo message="make hspdss"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="hspdss"/>
+      </ant>
+
+      <echo message="make hec"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="hec"/>
+      </ant>
+
+      <echo message="make newaqt12"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="newaqt12"/>
+      </ant>
+
+      <echo message="make wdm"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="wdm"/>
+      </ant>
+
+      <echo message="make ann"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="ann"/>
+      </ant>
+
+      <echo message="make iowdm"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="iowdm"/>
+      </ant>
+
+      <echo message="make stats"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="stats"/>
+      </ant>
+
+      <echo message="make graph"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="graph"/>
+      </ant>
+
+      <echo message="make awstat"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="awstat"/>
+      </ant>
+
+      <echo message="make hspf122"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="hspf122"/>
+      </ant>
+
+      <concat destfile="${ant.project.name}Details.lis">
+         <fileset dir=".">
+            <include name="**/MakeLib.lis"/>
+         </fileset>
+      </concat>
+
+      <echo message="all done"/>
+
+   </target>
+
+   <target name="clean">
+      <delete>
+	   <fileset dir="..\${FC}libs" casesensitive="no">
+            <include name="**/*.obj"/>
+            <include name="*.lib"/>
+         </fileset>
+      </delete>
+   </target>
+
+</project> 

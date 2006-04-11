@@ -1,0 +1,81 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+   <a href="ENDATE">ENDATE</a>
+   <a href="STDATE">STDATE</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   DAYMON
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   HDATIN
+     M                   (YR,MON,DAY,HR,MIN)
+C
+C     + + + PURPOSE + + +
+C     convert date to hspf internal format
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   YR,MON,DAY,HR,MIN
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   PREMON,NDAYS
+C
+C     + + + FUNCTIONS + + +
+      INTEGER   DAYMON
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  DAYMON
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      HR= HR+ 1
+C
+      IF (MIN.EQ.0) THEN
+C       on an hour boundary
+        MIN= 60
+        HR = HR- 1
+C
+        IF (HR.EQ.0) THEN
+C         on a day boundary
+          HR = 24
+          DAY= DAY- 1
+C
+          IF (DAY.EQ.0) THEN
+C           on a month boundary
+            IF (MON.GT.1) THEN
+              PREMON= MON- 1
+            ELSE
+              PREMON= 12
+            END IF
+C
+C           find no. of days in "previous" month
+            NDAYS= DAYMON(YR,PREMON)
+            DAY  = NDAYS
+            MON  = PREMON
+C
+            IF (MON.EQ.12) THEN
+C             on a year boundary
+              YR= YR- 1
+            END IF
+          END IF
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+

@@ -1,0 +1,68 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI">HIOUCI</a>
+<p>Called By
+   <a href="../HSPFEC/GTTMRC">GTTMRC</a>,
+   <a href="../HSPFEC/PSCHEM">PSCHEM</a>,
+   <a href="../HRINGEN/GLOBLK">GLOBLK</a>,
+   <a href="../HRINGEN/MSLKBK">MSLKBK</a>,
+   <a href="../HRINGEN/MDATBK">MDATBK</a>,
+   <a href="../HRINGEN/SEQBLK">SEQBLK</a>,
+   <a href="../HRINGEN/TABBLK">TABBLK</a>,
+   <a href="../HRINGEN/CATBLK">CATBLK</a>,
+   <a href="../HRINGEN/PTHBLK">PTHBLK</a>
+<p>Common Blocks <i>none</i>
+<p>Calls 
+   <a href="GETUCIEX">GETUCIEX</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   GETUCI
+     I                  (LTYPRC,
+     M                   NREC,
+     O                   UCIBUF)
+C
+C     + + + PURPOSE + + +
+C     Retrieve a UCI line
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      LTYPRC,NREC
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     LTYPRC - type of record: -2:blank line,
+C                              -1:comment,
+C                               0:unknown,
+C                              >0:something useful
+C     NREC   - record number to start looking after and record found
+C     UCIBUF - UCI line
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   RETCOD
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  GETUCIEX
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CALL GETUCIEX (LTYPRC,
+     M               NREC,
+     O               UCIBUF,RETCOD)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

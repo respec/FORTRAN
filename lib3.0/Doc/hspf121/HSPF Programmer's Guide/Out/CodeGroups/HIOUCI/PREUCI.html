@@ -1,0 +1,54 @@
+<html><head><title>PREUCI</title></head>
+<body>
+<a name="PREUCI"><hr size=7><h2>PREUCI</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI.html">HIOUCI</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM.html">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PREUCI
+     M                   (LKEY)
+C
+C     + + + PURPOSE + + +
+C     given a key, return the key of the previous uci line
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      LKEY
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     LKEY   - uci key
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      LKEY = PREREC(LKEY)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="PREUCI">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,39 @@
+<table width="100%" border="1">
+<caption>Version CMDUM of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>ASVEC(1)<td>I4<td>Marker for beginning of SCRTCH for all versions</tr>
+<tr>&nbsp;<td></tr>
+</table>
+
+<p>Referenced by 
+   <a href="../CodeGroups/HTSINSI/ALLOC">ALLOC</a>
+<p>Includes 
+   <a href="../Dimensions/PMXOSV">PMXOSV</a>
+<p>Code
+<pre>
+C    FROM CMDUM.COM
+C    AREA RESERVED FOR OSVS:
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxosv.inc'
+C
+C     SPECIAL COMMON SCRTCH
+       COMMON/SCRTCH/ ASVEC
+       INTEGER        ASVEC(1)
+</pre>
+
+
+
+
+
+
+
+
+
+
+

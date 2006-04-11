@@ -1,0 +1,164 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4">CRIN4</a> 
+<p>Calls
+   BCWCAL,
+   WBUFF,
+   PVAL,
+   OMSG,
+   OMSTI
+<p>Code
+<pre>
+C
+C     3.5.8.2.3.2.3
+C
+      SUBROUTINE AICOMP
+     I                 (STIME,SINT,DELT)
+C
+C     + + + PURPOSE + + +
+C     Adjust existing compressed tsb for add access
+C     Needs 22 real words of workspace in common
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     DELT,STIME,SINT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STIME  - ???
+C     SINT   - ???
+C     DELT   - simulation time interval in minutes
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE     'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     I,N,OFF(1),REM,WORDI,VO,SCLU,SGRP
+      REAL        DUMMY,WORDR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (WORDR,WORDI)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER    BCWCAL
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   BCWCAL,WBUFF,PVAL,OMSG,OMSTI
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 216
+      IF (STIME .NE. TZERO) GO TO 10
+C       starting time at initial point of tsb
+C       restart tsb as uncompressed
+        NREM   = RATIO
+        BCWBTI = 1
+        BCWNOV = 0
+        VOTFRM = VOTSB +1
+        TLAST  = TZERO-DELTAT
+        FRMTIM = STIME
+        WORDI  =BCWCAL(BCWBTI,BCWNOV)
+        TBUFF(VOTSB-VOBUFF+1) = WORDR
+        CALL WBUFF(TRCNO,RECLT,TSSFL,TBUFF)
+        BMTFLG = 1
+        GO TO 100
+ 10   CONTINUE
+        N    = (STIME-TZERO)/DELTAT
+        REM  = (STIME-TZERO) -N*DELTAT
+        NREM = RATIO -REM/DELT
+C       set workspace to zero or undefined
+        IF (BCWBTI .NE. 2) GO TO 20
+          DUMMY = 0
+          GO TO 30
+ 20     CONTINUE
+          DUMMY = -1.E30
+ 30     CONTINUE
+          DO 40 I=1,TOTCOM
+            WS(I+1) = DUMMY
+ 40       CONTINUE
+        IF (REM .NE. 0) GO TO  60
+C         starting point at a point represented in tsb,
+C         but not initial nor final point
+C         revise tsb and initiate a new tsb
+          BCWNOV = N +1
+          VOLFRM = VOTSB +1
+          VO     = VOTSB
+          WORDI  =BCWCAL(BCWBTI,BCWNOV)
+          WS(1)  = WORDR
+C         develop new bcw
+          BCWBTI = 1
+          BCWNOV = 0
+          VOTSB  = VOTSB +TOTCOM +1
+          VOTFRM = VOTSB +1
+          TZERO  = SINT-DELTAT
+          IF (TZERO .EQ. STIME) GO TO 50
+C           program bug
+            SGRP = 136
+            CALL OMSTI (FILE)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+ 50       CONTINUE
+          TLAST  = TZERO -DELTAT
+          FRMTIM = STIME
+          WORDI  =BCWCAL(BCWBTI,BCWNOV)
+          WS(TOTCOM+2) = WORDR
+          N      = TOTCOM +2
+          OFF(1) =  0
+          CWF    = 1
+          FORFLG = 1
+          CALL PVAL(N,OFF,WS,VO)
+          GO TO 90
+ 60     CONTINUE
+C         starting point between points stored in the tsb
+          VOLFRM = 0
+          BCWNOV = N +1
+          CWF    = 1
+          OFF(1) = 0
+          N      = TOTCOM +1
+          IF (BCWNOV .NE. 1) GO TO 70
+C           restart tsb as uncompressed-first frame is zero or
+C            undefined
+            BCWBTI = 1
+            WORDI  =BCWCAL(BCWBTI,BCWNOV)
+            WS(1)  = WORDR
+            FORFLG = 1
+            VOTFRM = VOTSB +TOTCOM +1
+            CALL PVAL(N,OFF,WS,VOTSB)
+            GO TO  80
+ 70       CONTINUE
+C           revise the tsb and initiate a new uncompressed tsb.
+C            the last frame of the current tsb and the first frame
+C            of the new tsb are zero or undefined
+C
+            WORDI=BCWCAL(BCWBTI,BCWNOV)
+            WS(1)  = WORDR
+            FORFLG = 0
+            CALL PVAL(N,OFF,WS,VOTSB)
+            BCWBTI = 1
+            BCWNOV = 1
+            VOTSB  = VOTSB +TOTCOM +1
+            VOTFRM = VOTSB +TOTCOM +1
+            WORDI  =BCWCAL(BCWBTI,BCWNOV)
+            WS(1)  = WORDR
+            FORFLG = 1
+            CALL PVAL(N,OFF,WS,VOTSB)
+ 80       CONTINUE
+          TZERO  = SINT-DELTAT
+          TLAST  = TZERO
+          FRMTIM = SINT
+ 90     CONTINUE
+ 100  CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+

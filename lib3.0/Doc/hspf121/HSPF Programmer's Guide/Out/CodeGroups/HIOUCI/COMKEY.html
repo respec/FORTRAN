@@ -1,0 +1,55 @@
+<html><head><title>COMKEY</title></head>
+<body>
+<a name="COMKEY"><hr size=7><h2>COMKEY</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI.html">HIOUCI</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM.html">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   COMKEY
+     I                   (LREC)
+C
+C     + + + PURPOSE + + +
+C     comment out a UCI line
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      LREC
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     LREC   - record to replace
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     comment out record
+      TYPREC(LREC)= -1
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="COMKEY">
+</Object>
+
+</body>
+</html>
+

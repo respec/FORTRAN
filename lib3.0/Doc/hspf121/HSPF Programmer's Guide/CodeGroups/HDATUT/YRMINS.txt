@@ -1,0 +1,72 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+   <a href="DIFTIM">DIFTIM</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="DAYMNH">DAYMNH</a>
+<p>Code
+<pre>C
+C     3.01.1
+C
+      SUBROUTINE YRMINS
+     I                  (DATIM,NDAMON,
+     O                   YROFF)
+C
+C     + + + PURPOSE + + +
+C     Find the offset (in mins) of a given date/time from the start of
+C     that year
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    DATIM(5),NDAMON(12),YROFF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DATIM  - date and time of day
+C     NDAMON - no. of days in each month of calendar year
+C     YROFF  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    DAY,DAY1,HR,M,MIN,MON,NDAYS,YR
+C
+C     + + + FUNCTIONS + + +
+      INTEGER    DAYMNH
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   DAYMNH
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      YR = DATIM(1)
+      MON= DATIM(2)
+      DAY= DATIM(3)
+      HR = DATIM(4)
+      MIN= DATIM(5)
+C
+      YROFF= 0
+      M    = 1
+C     whiledo m< mon
+ 10   IF (M.GE.MON) GO TO 20
+        NDAYS= DAYMNH(YR,M,NDAMON)
+        YROFF= YROFF+ 1440*NDAYS
+        M    = M+ 1
+        GO TO 10
+ 20   CONTINUE
+C
+      DAY1 = DAY - 1
+      YROFF= YROFF+ (DAY1)*1440+ (HR-1)*60 + MIN
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+

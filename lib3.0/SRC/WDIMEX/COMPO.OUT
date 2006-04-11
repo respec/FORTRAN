@@ -1,0 +1,9 @@
+Lahey MAKE, Version 5.2
+(C) Copyright OPUS Software 1987-91.  All rights reserved.
+
+copy \lib2.0\src\wdimex\*.inc
+D:\LIB2.0\SRC\WDIMEX\FVERSN.INC
+D:\LIB2.0\SRC\WDIMEX\CDRLOC.INC
+D:\LIB2.0\SRC\WDIMEX\CFBUFF.INC
+        3 file(s) copied
+Lahey MAKE: Don't know how to make `wdimex.obj'.  Stop.

@@ -1,0 +1,10 @@
+grcaxe.obj: ptsmax.inc cplot.inc
+grccrv.obj: ptsmax.inc cplot.inc
+grclay.obj: ptsmax.inc cplot.inc
+grcmeg.obj: ptsmax.inc cplot.inc
+grcomn.obj: ptsmax.inc cplot.inc  pbfmax.inc cplotb.inc
+grcvar.obj: ptsmax.inc cplot.inc
+grdata.obj: ptsmax.inc cplot.inc  pbfmax.inc cplotb.inc
+grgks.obj:  ptsmax.inc cplot.inc  cgracm.inc cgrapm.inc fversn.inc
+grtext.obj: ptsmax.inc cplot.inc
+gksint.obj: lkagks.inc gksprm.inc

@@ -1,0 +1,320 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPBKCK
+     I                    (LOGBLK,SPIVL,SPOPNO,SPOUT,MESSU,
+     O                     CONDCK)
+C
+C     + + + PURPOSE + + +
+C     Determine whether a conditional special action should be taken.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER LOGBLK,SPIVL,SPOPNO,SPOUT,MESSU,CONDCK
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     LOGBLK - index of condition to check
+C     SPIVL  - interval of run
+C     SPOPNO - index of target operation
+C     SPOUT  - runtime Special Action output level
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     CONDCK - flag indicating result of check: 0=fail, 1=pass
+C
+C     + + + PARAMETERS + + +
+      INTEGER    MXSTAK
+      PARAMETER (MXSTAK=100)
+C
+C     + + + COMMON BLOCKS + + +
+C     special action conditions
+      INCLUDE     'pspcnd.inc'
+      INCLUDE     'cspcnd.inc'
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,IQUAN(2),TYPFG,IND,STACK(MXSTAK),POINTR,OPAND1,
+     $          OPAND2,OPERAT,POPS,ERRFLG,CURCHN,CURREF,LSTREF,PTR,
+     $          CHVAL,EPOS,KEY,I0,UVQ,RLEN,SDIG,DECP
+      REAL      R,QUAN(2)
+      CHARACTER*2   CMPCOD(6)
+      CHARACTER*5   CTRUTH(2)
+      CHARACTER*132 ECHBUF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (ECHBUF,ECHBU1)
+      CHARACTER*1  ECHBU1(132)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER   LENSTR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC FLOAT,MIN,MAX,ABS,MOD
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  GTQUAN,ZIPI,GETUCI,LENSTR,DECCHX
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I0/0/
+      DATA RLEN,SDIG,DECP/13,5,-5/
+      DATA CMPCOD/'= ','!=','> ','>=','< ','<='/
+      DATA CTRUTH/'FALSE','TRUE '/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (I10)
+ 2005 FORMAT (132A1)
+ 2010 FORMAT (A6,':')
+ 2020 FORMAT (A2)
+ 2030 FORMAT (A55,A5)
+ 2040 FORMAT (10X,'CONDITION IS ',A5)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CONDCK= 1
+      ERRFLG= 0
+C
+      IF (LOGBLK .GT. 0) THEN
+C       check condition
+C
+C       initialize chain pointers
+        CURREF= BLKPOS(LOGBLK)
+        LSTREF= CURREF+ BLKCNT(LOGBLK)- 1
+C
+C       begin do-until loop on chain references
+ 10     CONTINUE
+C
+C         get current value of chain
+          CURCHN= ABS(BLKCHN(CURREF))
+          CALL GTQUAN (CHNUVQ(CURCHN),SPIVL,SPOPNO,
+     O                 CHVAL,R,I)
+          IF (CHVAL .EQ. -1) THEN
+C           must compute value this interval
+C
+C           initialize stack and link pointers
+            IND= CHNCND(CURCHN)
+            POINTR= 0
+            CALL ZIPI (MXSTAK,I0,
+     O                 STACK)
+            IF (SPOUT .GE. 1) THEN
+C             echo chain
+              KEY= -CHNKEY(CURCHN)
+ 12           CONTINUE
+                CALL GETUCI (I0,
+     M                       KEY,
+     O                       ECHBUF(1:80))
+                EPOS= 80
+                EPOS= MAX (4,LENSTR (EPOS,ECHBUF))
+                WRITE (ECHBUF(EPOS+1:EPOS+10),2000) CHNKEY(CURCHN)
+                WRITE (MESSU,2005) (ECHBU1(I), I= 1, EPOS+ 10)
+                IF (ECHBUF(EPOS- 3:EPOS) .EQ. 'THEN') THEN
+C                 last line of chain
+                  KEY= 0
+                END IF
+              IF (KEY .NE. 0) GO TO 12
+            END IF            
+C
+C           do-until loop for each link
+ 20         CONTINUE
+C
+C             evaluate comparison and push result
+C
+              POINTR= POINTR+ 1
+              IF (SPOUT .GE. 3) THEN
+C               initialize echo buffer
+                EPOS= 11
+                ECHBUF= ' '
+              END IF
+              IF (POINTR .LE. MXSTAK) THEN
+C               get quantities - all converted to real
+                DO 30 I= 1, 2
+                  UVQ= CNDUVQ(I,IND)
+                  IF (UVQ .GT. 0) THEN
+C                   get variable quantity
+                    IF (SPOUT .GE. 3) THEN
+C                     echo uvquan names
+                      WRITE (ECHBUF(EPOS:EPOS+6),2010) UVQNAM(UVQ)
+                    END IF
+                    CALL GTQUAN (UVQ,SPIVL,SPOPNO,
+     O                           IQUAN(I),QUAN(I),TYPFG)
+                    IF (TYPFG .EQ. 2) THEN
+C                     convert integer to real
+                      QUAN(I)= FLOAT (IQUAN(I))
+                    END IF
+                  ELSE
+C                   get constant quantity
+                    QUAN(I)= CNDVAL(I,IND)
+                  END IF
+                  IF (SPOUT .GE. 3) THEN
+C                   echo quantity
+                    EPOS= EPOS+ 7
+                    CALL DECCHX (QUAN(I),RLEN,SDIG,DECP,
+     O                           ECHBU1(EPOS))
+                    EPOS= EPOS+ RLEN+ 4
+                  END IF
+ 30             CONTINUE
+                IF (SPOUT .GE. 3) THEN
+C                 echo comparison operator
+                  WRITE (ECHBUF(32:33),2020) CMPCOD(CNDCOD(IND))
+                END IF
+C
+C               compare quantities
+                IF ( (CNDCOD(IND) .EQ. 1) .AND.
+     $               (QUAN(1) .EQ. QUAN(2)) ) THEN
+C                 equal
+                  STACK(POINTR)= 1
+                ELSE IF ( (CNDCOD(IND) .EQ. 2) .AND.
+     $                    (QUAN(1) .NE. QUAN(2)) ) THEN
+C                 not equal
+                  STACK(POINTR)= 1
+                ELSE IF ( (CNDCOD(IND) .EQ. 3) .AND.
+     $                    (QUAN(1) .GT. QUAN(2)) ) THEN
+C                 greater
+                  STACK(POINTR)= 1
+                ELSE IF ( (CNDCOD(IND) .EQ. 4) .AND.
+     $                    (QUAN(1) .GE. QUAN(2)) ) THEN
+C                 greater or equal
+                  STACK(POINTR)= 1
+                ELSE IF ( (CNDCOD(IND) .EQ. 5) .AND.
+     $                    (QUAN(1) .LT. QUAN(2)) ) THEN
+C                 less
+                  STACK(POINTR)= 1
+                ELSE IF ( (CNDCOD(IND) .EQ. 6) .AND.
+     $                    (QUAN(1) .LE. QUAN(2)) ) THEN
+C                 less or equal
+                  STACK(POINTR)= 1
+                END IF
+                IF (SPOUT .GE. 3) THEN
+C                 echo truth value
+                  WRITE (MESSU,2030) ECHBUF(1:56),
+     $                               CTRUTH(STACK(POINTR)+1)
+                END IF
+              ELSE
+C               stack overflow
+                CHVAL= -1
+                ERRFLG= 1
+              END IF
+C
+              IF (ERRFLG .GE. 0) THEN
+C               handle stack
+C
+                IF (CNDLNK(IND) .LE. 0) THEN
+C                 end of chain - clear stack
+                  POPS= (POINTR- 1) / 2
+                ELSE
+C                 user has specified proper number of pops
+                  POPS= CNDPOP(IND)
+                END IF
+C
+                DO 40 I= 1, POPS
+                  IF (ERRFLG .EQ. 1) THEN
+C                   skip rest of stack pops
+                  ELSE IF (POINTR .LT. 3) THEN
+C                   stack underflow
+                    CHVAL= -2
+                    ERRFLG= 1
+                  ELSE
+C                   pop and evaluate an operator and its operands, and
+C                   push the result
+                    OPAND1= STACK(POINTR)
+                    OPERAT= STACK(POINTR-1)
+                    OPAND2= STACK(POINTR-2)
+                    STACK(POINTR)= 0
+                    STACK(POINTR-1)= 0
+                    POINTR= POINTR- 2
+                    IF (OPERAT .EQ. 1) THEN
+C                     and
+                      STACK(POINTR)= OPAND1*OPAND2
+                    ELSE IF (OPERAT .EQ. 2) THEN
+C                     or
+                      STACK(POINTR)= MIN ((OPAND1+ OPAND2), 1)
+                    END IF
+                  END IF
+ 40             CONTINUE
+C
+                IF ( (ERRFLG .EQ. 0) .AND. (CNDLNK(IND) .GT. 0) ) THEN
+C                 chain not complete
+                  POINTR= POINTR+ 1
+                  IF (POINTR .LE. MXSTAK) THEN
+C                   push next operator
+                    STACK(POINTR)= CNDLOG(IND)
+                  ELSE
+C                   stack overflow
+                    CHVAL= -1
+                    ERRFLG= 1
+                  END IF
+                END IF
+C
+C               update index to point to next link, if necessary
+                IND= CNDLNK(IND)
+C
+              END IF
+C
+C           end do-until on links
+            IF ( (ERRFLG .EQ. 0) .AND. (IND .GT. 0) ) GO TO 20
+C
+            IF (ERRFLG .EQ. 0) THEN
+C             no error so far
+              IF (POINTR .NE. 1) THEN
+C               error - program bug - stack not complete
+                CHVAL= -3
+                ERRFLG= 1
+              ELSE
+C               get result from stack
+                CHVAL= STACK(1)
+              END IF
+            END IF
+C
+            IF ( (SPOUT .GE. 1) .AND. (CHVAL .GE. 0) ) THEN
+C             echo final truth value
+             WRITE (MESSU,2040) CTRUTH(CHVAL+1)
+            END IF
+C
+C           store value in internal uvquan
+            PTR= MOD (SPIVL- 1,UVQLEN(CHNUVQ(CURCHN)))+
+     $           UVQPOS(CHNUVQ(CURCHN))
+            IVQPIP(PTR)= CHVAL
+          END IF
+C
+          IF ( (CONDCK .EQ. 1) .AND. (ERRFLG .EQ. 0) ) THEN
+C           check chain result against desired result
+            IF ( (BLKCHN(CURREF) .GT. 0) .AND. (CHVAL .EQ. 1) ) THEN
+C             need true - got true
+              CONDCK= 1
+            ELSE IF ( (BLKCHN(CURREF) .LT. 0) .AND.
+     $                (CHVAL .EQ. 0) ) THEN
+C             need false - got false
+              CONDCK= 1
+            ELSE
+C             condition fails
+              CONDCK= 0
+            END IF
+C         ELSE
+C           block is already false - continue checking only to force
+C           evaluation of last chain if necessary
+          END IF
+C
+C         update pointer
+          CURREF= CURREF+ 1
+C       end do-until loop on chains
+        IF ( (ERRFLG .EQ. 0) .AND. (CURREF .LE. LSTREF) ) GO TO 10
+C
+      END IF
+C
+      RETURN
+      END
+</pre>
+

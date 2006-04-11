@@ -1,0 +1,204 @@
+<html><head><title>TARBLK</title></head>
+<body bgcolor="#ffffff">
+<a name="TARBLK"><h3>TARBLK</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTS.html">HRINTS</a>
+<p>Called By
+   <a href="../HSPFEC/TIMSER.html">TIMSER</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3.html">CRIN3</a>,
+   <a href="../../CommonBlocks/CRIN3C.html">CRIN3C</a>,
+   <a href="../../CommonBlocks/CMOSV.html">CMOSV</a>,
+   <a href="../../CommonBlocks/CMPAD.html">CMPAD</a>
+<p>Calls
+   <a href="../HSPFEC/GTTMRC.html">GTTMRC</a>,
+   <a href="../HRINGEUT/OPNNO.html">OPNNO</a>,
+   <a href="../HSPFEC/EXTTS.html">EXTTS</a>,
+   <a href="OPNTS.html">OPNTS</a>,
+   <a href="PAIRS.html">PAIRS</a>,
+   <a href="../HTSINSI/CHAIN.html">CHAIN</a>,
+   <a href="../HTSINSI/WKDMP1.html">WKDMP1</a>,
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   TARBLK
+     I                   (OPST,OPND,KEYST,KEYND,SDATIM,EDATIM,TFTKST,
+     I                    TFTKND,IHMFG,
+     M                    WKEY)
+C
+C     + + + PURPOSE + + +
+C     Expand and check any entries in the ext targets block for this
+C     exgrp.  chain entries by source opn sequence order.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   EDATIM(5),KEYND,KEYST,OPND,OPST,SDATIM(5),
+     $          TFTKND,TFTKST,WKEY,IHMFG
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     OPST   - ???
+C     OPND   - ???
+C     KEYST  - starting record number
+C     KEYND  - ending record number
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     TFTKST - ???
+C     TFTKND - ???
+C     IHMFG  - IHM flag (normal-0,IHM control-1)
+C     WKEY   - ???
+C
+C     + + + COMMON BLOCKS- INTERP3, OSV + + +
+      INCLUDE    'crin3.inc'
+      INCLUDE    'crin3c.inc'
+      INCLUDE    'cmosv.inc'
+      INCLUDE    'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     IDUM1,IDUM2,MESSU,MSGFL,SGRP,SCLU,BGRP,
+     $            SMEMSB(2),TMEMSB(2),
+     $            WKND,WKST,I1,I2,I3,I4,TSBKCD,
+     $            ITSR,GTCOD,RWFG,TOPFST,TOPLST
+      REAL        MFACTR
+      CHARACTER*6 SMEMN,TMEMN
+      CHARACTER*4 TRAN,TSYST,SSYST,TGAPST,AMDST,SGAPST
+C
+C     + + + FUNCTIONS + + +
+      INTEGER   OPNNO
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  GTTMRC,OPNNO,EXTTS,OPNTS,PAIRS,CHAIN,WKDMP1
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' PROCESSING ANY ENTRIES IN EXT TARGETS BLOCK')
+ 2010 FORMAT (/,' FINISHED PROCESSING ANY ENTRIES IN EXT TARGETS BLOCK')
+C
+C     + + + HISTORY + + +
+C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I1= 1
+      SCLU= 215
+C
+      MESSU= FILE(1)
+      MSGFL= FILE(15)
+C
+C     wkst is key at which first record will be written to
+C     workfl, if any are written
+      WKST= WKEY+ 1
+C
+      IF (OUTLEV .GT. 4) THEN
+C       processing message
+        WRITE (MESSU,2000)
+      END IF
+C
+      TSBKCD= 3
+      ITSR= KEYST
+      BGRP= 56
+C
+10    CONTINUE
+C       get an ext targets entry (first entry if first time through)
+        CALL <a href="../HSPFEC/GTTMRC.html">GTTMRC</a>
+     I              (TSBKCD,KEYND,MESSU,MSGFL,SCLU,BGRP,
+     M               ITSR,ECOUNT,
+     O               SVOLC,SVOLNO,SGRPN,SMEMN,SMEMSB,SSYST,SGAPST,
+     O               MFACTR,TRAN,TVOLC,TVOLNO,TOPFST,TOPLST,TGRPN,
+     O               TMEMN,TMEMSB,TSYST,TGAPST,AMDST,GTCOD)
+C
+        IF (GTCOD .EQ. 3) THEN
+C         ext targets entry, process
+C
+C         check the source opn-id
+          SNUM= <a href="../HRINGEUT/OPNNO.html">OPNNO</a>(SVOLC,SVOLNO,SVOLNO,MAXOPN,OPNTAB,OPST,OPND)
+C
+          IF (SNUM .GT. 0) THEN
+C           check and expand the supplied target reference
+            CALL <a href="../HSPFEC/EXTTS.html">EXTTS</a>
+     I                (TMEMN,TMEMSB,TSYST,AMDST,TGAPST,SDATIM,
+     I                 EDATIM,TVOLC,TVOLNO,TFTKST,TFTKND,I1,MAXTTB,
+     I                 IHMFG,
+     O                 TNUM,TDELT,TUNITS,TGRPN,TNTS,TAMDCD,TFRC,
+     O                 TGAPCD,TTABL,TTABLR)
+C
+C           check and expand the supplied source reference
+            SGRP  = OPNTAB(6,SNUM)
+            SDELT = GRPTAB(3,SGRP)
+C           dummy values
+            SAMDCD= 0
+            SGAPCD= 0
+            SFRC  = 0
+C           reading timeseries
+            RWFG  = 2
+            CALL <a href="OPNTS.html">OPNTS</a>
+     I                (SNUM,MAXOPN,OPNTAB,MSGFL,MESSU,SGRPN,
+     I                 RWFG,SMEMN,SMEMSB,MAXOSV,MAXTTB,
+     M                 ECOUNT,TUNITS,
+     O                 OSV,SNTS,STABL,STABLR)
+C
+C           match any individual time series references situated
+C           in the source and target tables.  write matched
+C           references to workfl.
+            CALL <a href="PAIRS.html">PAIRS</a>
+     I                 (TRAN,
+     M                  MFACTR,WKEY)
+          END IF
+        END IF
+      IF (GTCOD .EQ. 3) GO TO 10
+C
+      IF (WKEY .GE. WKST) THEN
+C       something was written to workfl
+        WKND= WKEY
+C
+C       chain in source opn sequence order, and keep keys in opntab
+        I1= 3
+        I2= 15
+        I3= 15
+        I4= 16
+        CALL <a href="../HTSINSI/CHAIN.html">CHAIN</a>
+     I             (OPST,OPND,WKST,WKND,I1,I2,I3,I4,MAXOPN,
+     O              OPNTAB,IDUM1,IDUM2)
+C
+        IF (OUTLEV .GT. 5) THEN
+C         dump records written to workfl
+          CALL <a href="../HTSINSI/WKDMP1.html">WKDMP1</a> (WKST,WKND,MESSU)
+        END IF
+      END IF
+C
+      IF (OUTLEV .GT. 4) THEN
+C       done processing message
+        WRITE (MESSU,2010)
+      END IF
+C
+      RETURN
+      END
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="TARBLK">
+</Object>
+
+</body>
+</html>
+

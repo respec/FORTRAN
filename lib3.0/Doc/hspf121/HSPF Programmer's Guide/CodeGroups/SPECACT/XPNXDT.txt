@@ -1,0 +1,175 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPNXDT
+     I                    (TCODE,TSTEP,INTFG,
+     M                     DATIM)
+C
+C     + + + PURPOSE + + +
+C     increment hspf format date
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   TCODE,TSTEP,INTFG,DATIM(5)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     TCODE  - time code
+C     TSTEP  - time step
+C     INTFG  - internal date flag - 0: external format date, 1: internal
+C     DATIM  - current special action date
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,CURDAT(5),STPOS,CARRY,DPM,DONFG
+C
+C     + + + FUNCTIONS + + +
+      INTEGER   DAYMON
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  DAYMON,EXDATE
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     make working copy
+      DO 10 I= 1,5
+        CURDAT(I)= DATIM(I)
+ 10   CONTINUE
+C
+C     increment time
+C
+      CARRY= TSTEP
+      STPOS= TCODE- 1
+C     add the time, not changing insig. parts
+      GO TO (20,30,40,60,70), STPOS
+C
+ 20   CONTINUE
+C       minutes
+C
+C       add minutes carried
+        CURDAT(5)= CURDAT(5)+ CARRY
+C
+C       determine extra hours to carry
+        CARRY    = (CURDAT(5)-1)/ 60
+C
+C       subtract extra hours from minutes
+        CURDAT(5)= CURDAT(5)- (CARRY*60)
+C
+      IF (CARRY .EQ. 0) GO TO 80
+ 30   CONTINUE
+C       hours
+C
+C       add hours carried
+        CURDAT(4)= CURDAT(4)+ CARRY
+C
+C       determine extra days to carry
+        CARRY    = (CURDAT(4)-1)/ 24
+C
+C       subtract extra days from hours
+        CURDAT(4)= CURDAT(4)- (CARRY*24)
+C
+      IF (CARRY .EQ. 0) GO TO 80
+ 40   CONTINUE
+C       days
+C
+C       add days carried
+        CURDAT(3)= CURDAT(3)+ CARRY
+C
+        DONFG= 0
+C       do-until loop
+ 50     CONTINUE
+          DPM= DAYMON (CURDAT(1),CURDAT(2))
+          IF (CURDAT(3).GT.DPM) THEN
+C
+C           subtract month from days
+            CURDAT(3)= CURDAT(3)- DPM
+C
+C           add month
+            CURDAT(2)= CURDAT(2)+ 1
+            IF (CURDAT(2) .GT. 12) THEN
+C             new year
+              CURDAT(1)= CURDAT(1)+ 1
+              CURDAT(2)= 1
+            END IF
+          ELSE
+            DONFG= 1
+          END IF
+        IF (DONFG.EQ.0) GO TO 50
+C
+C       years updated already, so done
+        CARRY= 0
+      GO TO 80
+ 60   CONTINUE
+C       months
+C
+C       add months carried
+        CURDAT(2)= CURDAT(2)+ CARRY
+C
+C       determine years to carry
+        CARRY    = (CURDAT(2)-1)/ 12
+C
+C       subtract years carried
+        CURDAT(2)= CURDAT(2)- (CARRY*12)
+C
+      IF (CARRY .EQ. 0) GO TO 80
+ 70   CONTINUE
+C       years
+        CURDAT(1)= CURDAT(1)+ CARRY
+C
+C     end computed go to
+ 80   CONTINUE
+C
+      IF (TCODE .GE. 5) THEN
+C       check days/month when adding months or years only
+        DPM= DAYMON (CURDAT(1),CURDAT(2))
+        IF (DAYMON (DATIM(1),DATIM(2)) .EQ. DATIM(3)) THEN
+C         stay at end of month regardless of length
+          CURDAT(3)= DPM
+        ELSE IF (DPM .LT. CURDAT(3)) THEN
+C         this month shorter than previous - use end of month
+          CURDAT(3)= DPM
+        END IF
+      END IF
+C
+      IF (INTFG .EQ. 0) THEN
+C       convert new time to external format and make it current
+        CALL EXDATE (CURDAT,
+     O               DATIM)
+        IF (DATIM(4) .EQ. 24) THEN
+C         too many hours
+          DATIM(4)= 0
+          DATIM(3)= DATIM(3)+ 1
+          IF (DATIM(3).GT.DAYMON(DATIM(1),DATIM(2))) THEN
+C           too many days
+            DATIM(3)= 1
+            DATIM(2)= DATIM(2)+ 1
+            IF (DATIM(2) .GT. 12) THEN
+C             too many months
+              DATIM(2)= 1
+              DATIM(1)= DATIM(1)+ 1
+            END IF
+          END IF
+        END IF
+      ELSE
+C       leave in internal format
+        DO 110 I= 1,5
+          DATIM(I)= CURDAT(I)
+ 110    CONTINUE
+      END IF
+C
+      RETURN
+      END
+</pre>
+

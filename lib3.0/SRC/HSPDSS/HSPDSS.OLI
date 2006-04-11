@@ -1,0 +1,5 @@
+OBJS      = hrindss.obj  hdssut.obj   hruntsgd.obj  hruntspd.obj
+
+INCOTHER  = hspf13a\cpthnm.inc  hspf13a\cifltb.inc                  \
+            hspf13a\ctsin.inc   hspf13a\ctsex.inc   hspf13a\ctser.inc  \
+            hspf13a\ctsbu.inc   hspf13a\ctsbx.inc   hspf13a\cmpad.inc

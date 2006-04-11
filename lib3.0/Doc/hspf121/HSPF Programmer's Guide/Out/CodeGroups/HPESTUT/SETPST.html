@@ -1,0 +1,197 @@
+<html><head><title>SETPST</title></head>
+<body>
+<a name="SETPST"><hr size=7><h2>SETPST</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HPESTUT.html">HPESTUT</a>
+<p>Called By
+   <a href="../HSPF/INTERP.html">INTERP</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CPEST.html">CPEST</a>
+<p>Calls
+   PMXTFT, 
+   OMSTC, 
+   OMSTI, 
+   OMSG
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SETPST (MESSU, MSGFL, SUPFIL, OUTLEV,
+     M                     ECOUNT) 
+C
+C     + + + PURPOSE + + +
+C     Read (and echo) pest supplemental file
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      MESSU, MSGFL, SUPFIL, OUTLEV, ECOUNT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - unit to write messages on
+C     MSGFL  - unit cotaining text for error messages
+C     SUPFIL - unit number of pest supplemental file
+C     OUTLEV - run interpreter output level
+C     ECOUNT - count of errors 
+C     
+C     + + + COMMON BLOCKS + + +
+      INCLUDE   'cpest.inc'
+C
+C     + + + LOCAL VARIABLES + + + 
+      INTEGER   I, J, SGRP, SCLU, IECNT
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  PMXTFT, OMSTC, OMSTI, OMSG
+C
+C     + + + OUTPUT FORMATS + + +
+2000  FORMAT ('   Begin processing supplemental ID',I5,
+     $        ' into position',I5,' with ',I5,' values')
+2010  FORMAT ('     Supplemental values:',
+     $        (10x,5(1x,1g14.6)))
+2020  FORMAT ('   Processed ',I5,' supplemental IDs')
+2030  FORMAT ('   Skip supplemental record')
+2040  FORMAT ('   End of file on supplemental file after ',I5,' IDs')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     cluster for messages
+      SCLU = 241
+C     start processing message
+      SGRP = 1
+      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+C
+C     save original error count
+      IECNT= ECOUNT
+C
+C     initialize common block
+      DO 10 I= 1, MAXVEC
+        DO 5 J=1, MAXNUM
+          SUPVAR(J,I)= -1.0e37
+    5   CONTINUE
+   10 CONTINUE
+C
+      USED = 0
+C     loop thru supplemental file
+   20 CONTINUE
+        USED = USED+ 1
+        IF (USED .GT. MAXVEC) THEN
+C         too many arrays, increase maxvec
+          CALL OMSTI (MAXVEC)
+          SGRP = 11
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        ELSE
+          READ (SUPFIL,*,ERR=25,END=100) ID(USED),NUM(USED)
+          GOTO 30
+   25     CONTINUE
+C           error reading header
+            CALL OMSTI(USED)
+            CALL OMSTI(ID(USED))
+            CALL OMSTI(NUM(USED))
+            SGRP= 12
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+   30     CONTINUE
+          IF (ID(USED) .EQ. 0) THEN
+C           skip this supplemental record
+            USED= USED- 1
+            IF (OUTLEV .GT. 8) THEN
+              WRITE(MESSU,2030)             
+            END IF
+          ELSE
+            IF (OUTLEV .GT. 6) THEN
+              WRITE(MESSU,2000) ID(USED),USED,NUM(USED)
+            END IF
+            IF (NUM(USED) .GT. MAXNUM) THEN
+C             too many entries in array
+              CALL OMSTI(USED)
+              CALL OMSTI(ID(USED))
+              CALL OMSTI(MAXNUM)
+              CALL OMSTI(NUM(USED))
+              SGRP = 13
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            ELSE
+C             check to see if array identifier has already been used
+              DO 40 J = 1, USED-1
+                IF (ID(J) .EQ. ID(USED)) THEN
+C                 already in use
+                  CALL OMSTI(ID(USED))
+                  CALL OMSTI(USED)
+                  CALL OMSTI(J)
+                  SGRP= 14
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                END IF
+   40         CONTINUE
+C             read current values
+              READ(SUPFIL,*,err=45,end=100) 
+     $            (SUPVAR(I,USED),I=1,NUM(USED))
+              IF (OUTLEV .GT. 7) THEN
+                WRITE(MESSU,2010) (SUPVAR(I,USED),I=1,NUM(USED))
+              END IF
+              GOTO 50
+   45         CONTINUE
+C               error reading supplemental values
+                CALL OMSTI(ID(USED))
+                CALL OMSTI(USED)
+                CALL OMSTI(NUM(USED))
+                SGRP= 15
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+   50         CONTINUE
+            END IF
+          END IF
+        END IF
+C       loop back up if no errors 
+C       TODO: try to trap more errors in supp file
+      IF (IECNT .EQ. ECOUNT) GOTO 20
+C
+C     get here on end of supp file or too many errors
+  100 CONTINUE
+      USED = USED- 1
+      IF (OUTLEV .GT. 7) THEN
+        WRITE(MESSU,2040) USED
+      END IF
+C
+      IF (SUPVAR(NUM(USED),USED) .LT. -0.9e37) THEN
+C       error reading data from array, can this ever happen?
+        CALL OMSTI(ID(USED))
+        CALL OMSTI(USED)
+        CALL OMSTI(NUM(USED)) 
+        SGRP= 16
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
+      IF (OUTLEV .GT. 2) THEN
+C       echo processed supplemental file contents
+        WRITE(MESSU,2020) USED
+      END IF
+C    
+C     finished processing message
+      SGRP = 2
+      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="SETPST">
+</Object>
+
+</body>
+</html>
+

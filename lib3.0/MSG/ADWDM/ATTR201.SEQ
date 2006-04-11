@@ -1,0 +1,606 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  attributes 201 - 250
+END COMMENT
+DSN            9    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN     9
+#ATTRIBUTE  H15050    INDEX   201
+$TYPE     REAL
+$LENGTH   1
+$DESC     15-day high flow, 50-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 15-day mean discharge, in cubic
+   feet per second for 50-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 160, V15,50.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H15100    INDEX   202
+$TYPE     REAL
+$LENGTH   1
+$DESC     15-day high flow, 100-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 15-day mean discharge, in cubic
+   feet per second for 100-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 161, V15,100.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H30002    INDEX   203
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day high flow, 2-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 30-day mean discharge, in cubic
+   feet per second for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 162, V30,2.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H30005    INDEX   204
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day high flow, 5-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 30-day mean discharge, in cubic
+   feet per second for 5-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 133, V30,5.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H30010    INDEX   205
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day high flow, 10-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 30-day mean discharge, in cubic
+   feet per second for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 163, V30,10.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H30020    INDEX   206
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day high flow, 20-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 30-day mean discharge, in cubic
+   feet per second for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 134, V30,20.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H30025    INDEX   207
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day high flow, 25-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 30-day mean discharge, in cubic
+   feet per second for 25-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 164, V30,25.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H30050    INDEX   208
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day high flow, 50-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 30-day mean discharge, in cubic
+   feet per second for 50-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 165, V30,50.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  H30100    INDEX   209
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day high flow, 100-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 30-day mean discharge, in cubic
+   feet per second for 100-year recurrence interval,
+   defined by log-Pearson Type III fitting ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 135, V30,100.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  DEPH25    INDEX   210
+$TYPE     REAL
+$LENGTH   1
+$DESC     Flow depth, in feet
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  -999.000
+$HELP
+   Flow depth, in feet.  Corresponding to the
+   difference between the 25 percent flow duration
+   gage height and point of zero flow.  Basin and
+   streamflow characteristic no 168, DEPH25.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  QEX95P    INDEX   211
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 95 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Discharge, in cubic feet per second, exceeded 95
+   percent of time.  Defined by daily flow
+   duration, WATSTORE program A969.  Basin and
+   streamflow characteristic no 171, D95.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  QEX90P    INDEX   212
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 90 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Discharge, in cubic feet per second, exceeded 90
+   percent of time.  Defined by daily flow
+   duration, WATSTORE program A969.  Basin and
+   streamflow characteristic no 172, D90.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  QEX75P    INDEX   213
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 75 percent of the time
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Discharge, in cubic feet per second, exceeded 75
+   percent of time.  Defined by daily flow
+   duration, WATSTORE program A969.  Basin and
+   streamflow characteristic no 173, D75.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  QEX70P    INDEX   214
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 70 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Discharge, in cubic feet per second, exceeded 70
+   percent of time.  Defined by daily flow
+   duration, WATSTORE program A969.  Basin and
+   streamflow characteristic no 174, D70.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  QEX50P    INDEX   215
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 50 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Discharge, in cubic feet per second, exceeded 50
+   percent of time.  Defined by daily flow
+   duration, WATSTORE program A969.  Basin and
+   streamflow characteristic no 175, D50.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  QEX25P    INDEX   216
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 25 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Discharge, in cubic feet per second, exceeded 25
+   percent of time.  Defined by daily flow
+   duration, WATSTORE program A969.  Basin and
+   streamflow characteristic no 176, D25.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  QEX10P    INDEX   217
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 10 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Discharge, in cubic feet per second, exceeded 10
+   percent of time.  Defined by daily flow
+   duration, WATSTORE program A969.  Basin and
+   streamflow characteristic no 177, D10.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  YRSDAY    INDEX   218
+$TYPE     REAL
+$LENGTH   1
+$DESC     Number of years of daily-flow record.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Number of years of daily-flow record, from
+   WATSTORE flow variability program W4422.
+   Basin and streamflow characteristic no 198, YRSDAY.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  YRSLOW    INDEX   219
+$TYPE     REAL
+$LENGTH   1
+$DESC     Number of years of low-flow record.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Number of years of low-flow record.
+   Basin and streamflow characteristic no 199, YRSLOW.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC024    INDEX   220
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 24
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC025    INDEX   221
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 25
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC026    INDEX   222
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 26
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC027    INDEX   223
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 27
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC028    INDEX   224
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 28
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC029    INDEX   225
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 29
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC030    INDEX   226
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 30
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC031    INDEX   227
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 31
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC038    INDEX   228
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 38
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC039    INDEX   229
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 39
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC040    INDEX   230
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 040
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC066    INDEX   231
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 66
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC067    INDEX   232
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 67
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC068    INDEX   233
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 68
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC069    INDEX   234
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 69
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC073    INDEX   235
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 73
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC074    INDEX   236
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 74
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC166    INDEX   237
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 166
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC167    INDEX   238
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 167
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC169    INDEX   239
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 168
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC170    INDEX   240
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 170
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC182    INDEX   241
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 182
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC183    INDEX   242
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 183
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC184    INDEX   243
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 184
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC185    INDEX   244
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 185
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC186    INDEX   245
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 186
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC187    INDEX   246
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 187
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC188    INDEX   247
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 188
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC189    INDEX   248
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 189
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC190    INDEX   249
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 190
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  UBC191    INDEX   250
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 191
+   See WATSTORE users manual, Appendix.
+  END DATA
+END CLU

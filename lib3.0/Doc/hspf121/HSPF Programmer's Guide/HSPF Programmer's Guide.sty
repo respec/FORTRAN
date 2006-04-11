@@ -1,0 +1,94 @@
+[Top]
+1 <h1><sectionname></h1>
+2 <h2><sectionname></h2>
+3 <h3><sectionname></h3>
+
+[Bottom]
+
+[Body]
+bgcolor="#ffffff"
+
+[PrintStart]
+TablePrintFormat 1
+TablePrintApply 447
+FilePageSetup TopMargin:=1.5, BottomMargin:=1, LeftMargin:=1,RightMargin:=1, HeaderDistance:=1, FacingPages:=1, OddAndEvenPages:=1
+FormatFont Points:=11, KerningMin:=10, Font:=Times New Roman
+ViewFooter
+FormatTabsClear
+FormatTabs 6.5, 2
+Insert vbTab
+InsertField PAGE
+#InsertPageNumbers Position:=4, FirstPage:=1
+BorderTop 1
+EditSelectAll
+FormatFont Points:=9, Bold:=0
+ViewNormal
+InsertBreak 2
+#set even page header to always be "GenScn 2.0"
+ViewHeader
+BorderBottom 1
+Insert GenScn 2.0
+EditSelectAll
+FormatFont Points:=9, Bold:=0
+ViewNormal
+ViewFooter
+InsertField PAGE
+BorderTop 1
+EditSelectAll
+FormatFont Points:=9, Bold:=0
+ViewNormal
+StartOfDocument
+
+
+[PrintSection]
+1 FormatFont 18, Kerning:=1, KerningMin:=14, Bold:=1
+1 FormatPara Before:=12, after:=9
+1 CharLeft
+1 InsertBreak 5
+#1 WordRightS
+#1 InsertField SEQ Chapter
+
+2 FormatFont 16, Bold:=1
+2 FormatPara Before:=12, after:=3
+2 CharLeft
+2 InsertBreak 2
+#2 WordRightS
+#2 WordRightS
+#2 WordRightS
+#2 InsertField SEQ XXX
+
+3 FormatFont 14, Bold:=1
+3 FormatPara Before:=12, after:=3
+
+1 ViewHeaderAndSet vbTab<sectionname>
+1 EditSelectAll
+1 FormatTabsClear
+1 FormatTabs 6.5, 2
+1 FormatFont Points:=9, Bold:=0
+1 BorderBottom 1
+1 ViewNormal
+
+#ViewFooterAndSet vbTab<sectionword 1>-
+#ViewFooterAndSet vbTab
+#CharRight
+#InsertField PAGE
+#ShowNextHeaderFooter
+#ShowPrevHeaderFooter
+#InsertPageNumbers Type:=1, Position:=4, FirstPage:=1
+#EditSelectAll
+#FormatTabsClear
+#FormatTabs 6.5, 2
+#FormatFont Points:=9, Bold:=0
+#BorderTop 1
+#ShowNextHeaderFooter
+#ToggleHeaderFooterLink
+#EditSelectAll
+#EditClear
+#Insert <sectionword 1>-
+#CharRight
+#InsertField PAGE
+#EditSelectAll
+#FormatFont Points:=9, Bold:=0
+#BorderTop 1
+#ViewNormal
+#FormatPageNumber NumRestart:=1, StartingNum:=1, NumFormat:=0

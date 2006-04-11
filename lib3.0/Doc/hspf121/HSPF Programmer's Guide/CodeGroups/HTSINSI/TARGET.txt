@@ -1,0 +1,280 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI">HTSINSI</a>
+<p>Called By
+   <a href="ALLOC">ALLOC</a>
+<p>Common Blocks 
+<p>Calls
+   <a href="ROW">ROW</a>,
+   CHKSTR,
+   <a href="../HIOWRK/WORKIO">WORKIO</a>,
+   <a href="CHANGE">CHANGE</a>,
+   <a href="TSINS">TSINS</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   TARGET
+     I                   (EXTSFG,WKST,WKND,MROW,
+     I                    MESSU,MSGFL,EXTKW1,RUNWID,
+     M                    PRGKEY,AVFG,ECOUNT,MAXROW,
+     O                    RELFG)
+C
+C     + + + PURPOSE + + +
+C     process entries in workfl, derived from ext sources or network
+C     block, considering operation as a target
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     EXTSFG,WKST,WKND,MROW,MESSU,MSGFL,RUNWID,PRGKEY,
+     $            AVFG(MROW),ECOUNT,MAXROW,RELFG(MROW)
+      CHARACTER*1 EXTKW1(16)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     EXTSFG - ???
+C     WKST   - ???
+C     WKND   - ???
+C     MROW   - ???
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     EXTKW1 - ???
+C     RUNWID - ??? 
+C     PRGKEY - ???
+C     AVFG   - flag indicating whether or not each IMPAD row is available
+C     ECOUNT - count(s) of specific errors
+C     MAXROW - ???
+C     RELFG  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   REC(50),NEWKEY,SAMDCD,SCHAIN,SDELT,SFRC,SGAPCD,
+     $          SGRPN(2),SINF(22),SMEMN(2),SMEMSB(2),SNUM,SOFFST,SROW,
+     $          SSNXT,STKIND,STNXT,STTRAN,SVOL(2),TAMDCD,TCHAIN,
+     $          TDELT,TFRC,TGAPCD,TGRPN(2),TINF(22),TMEMN(2),TMEMSB(2),
+     $          TNUM,TOFFST,TROW,TSNXT,TTNXT,TVOL(2),WKEY,KWDNO,
+     $          I,I0,I1,I2A,I2B,I2,I3,I4,RWFG,LEN,MXKY
+      REAL      A,B
+      CHARACTER*4 CHSTR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE(CHSTR,CHSTR1)
+      CHARACTER*1 CHSTR1(4)
+      EQUIVALENCE  (REC(1),SINF(1)),          (REC(1),SVOL(1)),
+     $             (REC(3),SNUM),             (REC(4),SDELT),
+     $             (REC(5),SGRPN(1)),         (REC(7),SMEMN(1)),
+     $             (REC(9),SMEMSB(1)),       (REC(11),SOFFST),
+     $             (REC(12),SAMDCD),          (REC(13),SGAPCD),
+     $             (REC(14),SFRC),            (REC(15),SCHAIN),
+     $             (REC(16),STNXT),           (REC(17),SSNXT),
+     $             (REC(18),SROW),            (REC(23),STKIND),
+     $             (REC(24),STTRAN),          (REC(25),A),
+     $             (REC(26),B)
+C
+      EQUIVALENCE  (REC(27),TINF(1)),         (REC(27),TVOL(1)),
+     $             (REC(29),TNUM),            (REC(30),TDELT),
+     $             (REC(31),TGRPN(1)),        (REC(33),TMEMN(1)),
+     $             (REC(35),TMEMSB(1)),       (REC(37),TOFFST),
+     $             (REC(38),TAMDCD),          (REC(39),TGAPCD),
+     $             (REC(40),TFRC),            (REC(41),TCHAIN),
+     $             (REC(42),TTNXT),           (REC(43),TSNXT),
+     $             (REC(44),TROW)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER    ROW,CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   ROW,CHKSTR,WORKIO,TSINS,CHANGE
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(A4)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0  = 0
+      I1  = 1
+      I2  = 2
+      I3  = 3
+      I4  = 4
+      LEN = 50
+      RWFG= 0
+C
+      IF (WKST .GT. 0) THEN
+C       there are entries for this operation
+        NEWKEY= WKST
+C
+        IF (EXTSFG .EQ. 1) THEN
+C         move external sources into inpad where necessary
+C
+C         dountil wkey= wknd
+ 10       CONTINUE
+            WKEY= NEWKEY
+            MXKY= 0
+            CALL <a href="../HIOWRK/WORKIO">WORKIO</a> (RWFG,LEN,WKEY,
+     M                   REC,MXKY)
+            IF (SROW .EQ. 0) THEN
+C             this source is not yet in the inpad
+              IF ( (STNXT .EQ. 0) .AND. (RUNWID .EQ. 0) ) THEN
+C               it's not required again in this ingroup, with same
+C               functional
+C               deal with this later
+C
+              ELSE
+C               allocate a row and move it in, replacing present
+C               contents of row
+                SROW= <a href="ROW">ROW</a>(MROW,MESSU,MSGFL,
+     M                    AVFG,ECOUNT,MAXROW)
+C               volume is 1 for tss and seq, 2 for wdms and dss
+                I = 1
+C               search last two keywords
+                WRITE(CHSTR,2000) SVOL(1)
+                CHSTR1(4)= ' '
+                KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
+                IF (KWDNO .NE. 0) THEN
+C                 wdm or dss
+                  I = 2
+                END IF
+                CALL <a href="TSINS">TSINS</a> (I,SNUM,SDELT,SROW,SOFFST,STKIND,
+     I                      STTRAN,I0,1.0,0.0,SMEMSB,SAMDCD,SGAPCD,
+     I                      SFRC,
+     M                      PRGKEY)
+C
+C               change this, and other references to this source, to
+C               reflect its new location and, possibly, form
+                IF (STKIND .EQ. 3) STKIND= 2
+                STTRAN= 1
+                I2A   =16
+                I2B   =18
+                CALL <a href="CHANGE">CHANGE</a> (I1,TDELT,STKIND,STTRAN,WKEY,SROW,
+     I                       I2A,I2B)
+C
+              END IF
+C
+            END IF
+            NEWKEY= TCHAIN
+C
+          IF (WKEY .NE. WKND) GO TO 10
+C
+        END IF
+C
+C       get sources to the target operations
+        NEWKEY= WKST
+C       dountil wkey= wknd
+ 20     CONTINUE
+          WKEY= NEWKEY
+          MXKY= 0
+          CALL <a href="../HIOWRK/WORKIO">WORKIO</a> (RWFG,LEN,WKEY,
+     M                 REC,MXKY)
+          IF (SROW .EQ. 0) THEN
+C           source is not yet in inpad (and it's not required again
+C           in this ingroup, else it would have been moved in already)
+            IF (TROW .EQ. 0) THEN
+C             target doesn't have a row
+              TROW= <a href="ROW">ROW</a>(MROW,MESSU,MSGFL,
+     M                  AVFG,ECOUNT,MAXROW)
+C
+C             change this and any future references to this target
+C             to refer to trow
+              I2A=42
+              I2B=44
+              CALL <a href="CHANGE">CHANGE</a> (I0,I0,I0,I0,WKEY,TROW,I2A,I2B)
+C
+C             move in the source, replacing existing values in row
+              I = 1
+C             search last two keywords
+              WRITE(CHSTR,2000) SVOL(1)
+              CHSTR1(4)= ' '
+              KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
+              IF (KWDNO .NE. 0) THEN
+C               wdm or dss
+                I = 2
+              END IF
+              CALL <a href="TSINS">TSINS</a> (I,SNUM,SDELT,TROW,SOFFST,STKIND,
+     I                    STTRAN,I0,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
+     M                    PRGKEY)
+C
+C             mark the row for later release
+              RELFG(TROW)= 1
+C
+            ELSE
+C             target already has a row
+C             move in the source, adding to existing values
+              I = 1
+C             search last two keywords
+              WRITE(CHSTR,2000) SVOL(1)
+              CHSTR1(4)= ' '
+              KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
+              IF (KWDNO .NE. 0) THEN
+C               wdm or dss
+                I = 2
+              END IF
+              CALL <a href="TSINS">TSINS</a> (I,SNUM,SDELT,TROW,SOFFST,STKIND,
+     I                    STTRAN,I1,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
+     M                    PRGKEY)
+C
+            END IF
+C
+          ELSE
+C           source is already in inpad
+            IF (TROW .EQ. 0) THEN
+C             target doesn't yet have a row
+              IF ( (STNXT .EQ. 0) .AND. (RUNWID .EQ. 0) ) THEN
+C               target uses same row as source
+                TROW= SROW
+              ELSE
+C               target needs a row
+                TROW = <a href="ROW">ROW</a> (MROW,MESSU,MSGFL,
+     M                    AVFG,ECOUNT,MAXROW)
+              END IF
+C
+C             mark row for later release
+              RELFG(TROW)= 1
+C
+C             alter this, and any subsequent references to this
+C             target to refer to trow
+              I2A=42
+              I2B=44
+              CALL <a href="CHANGE">CHANGE</a> (I0,I0,I0,I0,WKEY,TROW,I2A,I2B)
+C
+C             move source from srow to trow, replacing existing
+C             values
+              CALL <a href="TSINS">TSINS</a> (I3,SROW,SDELT,TROW,SOFFST,STKIND,
+     I                    STTRAN,I0,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
+     M                    PRGKEY)
+C
+            ELSE
+C             target has a row
+C             add source to target
+              CALL <a href="TSINS">TSINS</a> (I3,SROW,SDELT,TROW,SOFFST,STKIND,
+     I                    STTRAN,I1,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
+     M                    PRGKEY)
+              IF ( (STNXT .EQ. 0) .AND. (RUNWID .EQ. 0) ) THEN
+C               release the source row now
+                AVFG(SROW)= 1
+              END IF
+C
+            END IF
+C
+          END IF
+          NEWKEY= TCHAIN
+C
+        IF (WKEY .NE. WKND) GO TO 20
+C
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+

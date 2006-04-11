@@ -1,0 +1,210 @@
+C
+C
+C
+      SUBROUTINE HYDR1
+C
+C     Performs hydraulic calculations assuming a uniform soil
+C     profile with unrestricted drainage 
+C     (drainage occurs instantaneously)
+C     Modification date: 2/18/92 JAM
+C
+C     +  +  + PARAMETERS +  +  +
+C      
+      INCLUDE 'PPARM.INC'
+C
+C     +  +  + COMMON BLOCKS +  +  +
+C
+      INCLUDE 'CHYDR.INC'
+      INCLUDE 'CPEST.INC'
+C
+C     +  +  + LOCAL VARIABLES +  +  +               
+C
+      REAL         R(3,NCMPTS)
+      INTEGER      I,K
+      CHARACTER*80 MESAGE
+C
+C     +  +  + EXTERNALS +  +  + 
+C      
+      EXTERNAL SUBIN,SUBOUT
+C
+C     +  +  + END SPECIFICATIONS +  +  +              
+C
+      MESAGE = 'HYDR1'
+      CALL SUBIN(MESAGE)
+C
+      DO 20 I=1,NCOM2
+        THETO(I) = SW(I)/DELX(I)
+        THETN(I) = (SW(I)+ AINF(I)- ET(I))/ DELX(I)
+        AINF(I+1)= 0.0
+        IF (THETN(I) .GT. THEFC(I)) THEN
+          AINF(I+1)= (THETN(I)- THEFC(I))* DELX(I)
+          THETN(I) = THEFC(I)
+        ENDIF
+        VEL(I)= AINF(I+1)/THETN(I)
+        IF (MCFLAG.EQ.1) THEN
+          DO 21 K = 1,3
+            R(K,I) = 1 + (BD(I)*KD(K,I)/THETN(I))
+C            VM(K,I) = VEL(I)/R(K,I)
+21        CONTINUE
+        ENDIF
+        SW(I) = THETN(I)*DELX(I)
+20    CONTINUE
+C
+      VLFLAG = 0
+      DO 30 I = 1, NCOM2
+        IF (VEL(I) .GT. 0.0) VLFLAG = 1
+30    CONTINUE
+C
+      CALL SUBOUT
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE HYDR2
+C
+C     Performs soil hydraulic calculations. Incoming water
+C     fills successive soil compartments to field capacity during infil-
+C     tration events until incoming water is depleted. Percolation continues
+C     according to assigned drainage parameters (AD) until redistribution
+C     is complete. Allows for the presence of restrictive layers in soil
+C     profile.
+C     Modfication date: 2/7/92 JAM
+C
+C     +  +  + PARAMETERS +  +  +  
+C
+      INCLUDE 'PPARM.INC'
+C
+C     +  +  + COMMON BLOCKS +  +  +
+C
+      INCLUDE 'CHYDR.INC'
+      INCLUDE 'CMISC.INC'
+      INCLUDE 'CPEST.INC'
+C
+C     +  +  + LOCAL VARIABLES +  +  +                 
+C
+      REAL         R(3,NCMPTS)
+      REAL         TS(NCMPTS),AVSTOR,EXTRA,F1,F2,F3,T,LNCHK
+      INTEGER      I,K,IB,NDEX,NDEXM1
+      CHARACTER*80 MESAGE
+      REAL*8       EXPCHK
+C
+C     +  +  + INTRINSICS +  +  + 
+C      
+      INTRINSIC AMAX1,AMIN1,DBLE,REAL
+C
+C     +  +  + EXTERNALS +  +  +
+C
+      EXTERNAL SUBIN,SUBOUT,LNCHK,EXPCHK
+C
+C     +  +  + END SPECIFICATIONS +  +  +                
+C
+      MESAGE = 'HYDR2'
+      CALL SUBIN(MESAGE)
+C
+C     Subtract evapotranspired water from soil profile
+C
+      DO 10 I=1,NCOM2
+        OUTFLO(I) = 0.0
+        THETO(I)=SW(I)/DELX(I)
+        TS(I)   =THETO(I)-ET(I)*DELT/DELX(I)
+10    CONTINUE
+C
+      IF (AINF(1) .GT. 0.0) THEN
+C
+C       Route water during infiltration event
+C
+        DO 20 I=1, NCOM2
+          AVSTOR   = (THETAS(I)- TS(I))* DELX(I)/DELT
+          THETN(I) = AMIN1(AINF(I),AVSTOR)* DELT/DELX(I)+ TS(I)
+          AINF(I+1)= AINF(I)- (THETN(I)-TS(I))* DELX(I)/DELT
+          IF (AINF(I+1).LE.0.0) AINF(I+1)= 0.0
+20      CONTINUE
+C
+C       If there is an infiltration event on the current dat, then water
+C       movement calculations are finished - jump to end of routine
+C
+      ELSE
+C
+C       If there is no infiltration event on current, then water
+C       movement calculations are made here
+C
+        AINF(1) = 0.0
+        DO 40 I=1,NCOM2
+          TS(I)   = TS(I)+ AINF(I)/DELX(I)* DELT
+          AINF(I+1) = 0.0
+          IF (TS(I) .GT. THETAS(I)) THEN
+            F1 = THETAS(I) - THEFC(I)
+            F2 = TS(I) - THEFC(I)
+            F3 = LNCHK(F1/F2) / (-AD(I)-ADL(I))
+            T  = AMIN1(1.0,F3)
+            TS(I) = THEFC(I) + F2 * 
+     1                  REAL(EXPCHK(DBLE((-AD(I)-ADL(I))*T)))
+            AINF(I+1) = AD(I) * F2 * DELX(I) / (ADL(I) + AD(I)) *
+     1              (1.0 - REAL(EXPCHK(DBLE((-AD(I)-ADL(I))*T))))
+            OUTFLO(I) = ADL(I) * F2 * DELX(I) / (ADL(I) + AD(I)) *
+     1             (1.0 - REAL(EXPCHK(DBLE((-AD(I)-ADL(I))*T))))
+            IF (T .LT. 1.0) THEN
+              F1 = REAL(EXPCHK(DBLE(-AD(I)*(1.0-T))))
+              F2 = TS(I) - THEFC(I)
+              TS(I) = THEFC(I) + F2 * F1
+              AINF(I+1) = AINF(I+1) + F2 * DELX(I) * (1.0 - F1)
+            ENDIF
+          ELSEIF (TS(I) .GT. THEFC(I)) THEN
+            F1 = REAL(EXPCHK(DBLE(-AD(I) * DELT)))
+            F2 = TS(I) - THEFC(I)
+            TS(I) = THEFC(I) + F2 * F1
+            AINF(I+1) = F2 * DELX(I) * (1.0 - F1)
+          ENDIF
+          THETN(I)= TS(I)
+40      CONTINUE
+C
+50      CONTINUE
+          NDEX= 0
+          I   = NCOM2
+60        CONTINUE
+            IF (THETN(I).GT.THETAS(I)) NDEX= I
+            I = I- 1
+          IF (I.GE.1.AND.NDEX.EQ.0) GO TO 60
+C
+          IF (NDEX .GT. 1) THEN
+C
+C           Redistribute water into overlying compartments
+            NDEXM1     = NDEX- 1
+            EXTRA      = THETN(NDEX)- THETAS(NDEX)
+            THETN(NDEX)= THETAS(NDEX)
+            IB= NDEXM1
+70          CONTINUE
+              AVSTOR    = AMAX1(0.0,THETAS(IB)-THETN(IB))
+              THETN(IB) = AMIN1(EXTRA,AVSTOR)+ THETN(IB)
+              AINF(IB+1)= AINF(IB+1)- EXTRA * DELX(IB)/DELT
+              EXTRA     = EXTRA- AMIN1(EXTRA,AVSTOR)
+              IB= IB- 1
+            IF (EXTRA .GT. 0.0 .AND. IB .GE. 1) GO TO 70
+C
+C           Look for oversaturation again
+          ENDIF
+        IF (NDEX .NE. 0) GO TO 50
+      ENDIF
+C
+      DO 120 I=1,NCOM2
+        VEL(I)= AINF(I+1)/THETN(I)
+        IF (MCFLAG.EQ.1) THEN
+          DO 22 K = 1,3
+            R(K,I) = 1 + (BD(I)*KD(K,I)/THETN(I))
+C            VM(K,I) = VEL(I)/R(K,I)
+22        CONTINUE
+        ENDIF
+        SW(I) = THETN(I)*DELX(I)
+120   CONTINUE
+C
+      VLFLAG = 0
+      DO 130 I = 1, NCOM2
+        IF (VEL(I) .GT. 0.0) VLFLAG = 1
+130   CONTINUE
+C
+      CALL SUBOUT
+C
+      RETURN
+      END

@@ -1,0 +1,139 @@
+<html><head><title>DSCHK</title></head>
+<body bgcolor="#ffffff">
+<a name="DSCHK"><h3>DSCHK</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3.html">CRIN3</a> 
+<p>Calls
+   RBUFF,
+   OMSG,
+   OMSTI
+<p>Code
+<pre>
+C
+C     3.5.2.2.1.1
+C
+      INTEGER FUNCTION   DSCHK
+     I                         (MESSU,MSGFL,TSSFL,DSN)
+C
+C     + + + PURPOSE + + +
+C     Check validity of the tss dataset and input the label if valid.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MESSU,MSGFL,TSSFL,DSN
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     TSSFL  - fortran unit number of time series store file
+C     DSN    - ???
+C
+C     + + + COMMON BLOCKS- INTERP3  + + +
+      INCLUDE     'crin3.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     REC,SCLU,SGRP,DS(2),VOBUFF,VO,I,ADDRT,RECT,DSFRLO
+      REAL        RFREC,RDSEC
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (RFREC,DSFRLO), (RDSEC,DS(1))
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   RBUFF,OMSG,OMSTI
+C
+C     + + + OUTPUT FORMATS + + +
+ 2010 FORMAT(1X,'BEGIN CHECKING DATASET VALIDITY')
+ 2020 FORMAT(1X,'END CHECKING DATASET VALIDITY')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU  = 216
+      IF (OUTLEV .GT. 7) WRITE(MESSU,2010)
+C
+      IF (DSN .LE. 0 .OR. DSN .GT. TOTDS) GO TO 60
+        IF (DSN .EQ. TDDS) GO TO 40
+C         dataset number is valid-see if dataset exists in tss
+C         compute address of the dataset entry in the tss
+C          directory.
+          VO =(DSN-1)*TDSIZE
+          REC=TDFREC +VO/RECLT
+          CALL RBUFF(REC,RECLT,TSSFL,      TBUFF)
+          VOBUFF=RECLT*(REC-TDFREC)
+C         special overlays needed here-must read in part of directory
+C         from next record if needed
+          I= VO- VOBUFF+ 3
+          IF(I .LT. RECLT) GO TO 5
+            RECT = REC+ 1
+            ADDRT= RECLT+ 1
+            CALL RBUFF(RECT,TDSIZE,TSSFL,        TBUFF(ADDRT))
+ 5        CONTINUE
+C
+          RFREC=TBUFF(VO-VOBUFF+3)
+          RDSEC=TBUFF(VO-VOBUFF+1)
+C
+          IF (DSFRLO .LE. 0) GO TO 20
+C           dataset exists
+            IF (DSN .EQ. DS(1)) GO TO 10
+C             program bug-error in tss directory number.
+              SGRP = 87
+              CALL OMSTI (DSN)
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+ 10         CONTINUE
+C
+            DSCHK=1
+C
+C           input the label.
+C
+            CALL RBUFF(DSFRLO,RECLT,TSSFL,      TBUFF)
+            GO TO 30
+ 20       CONTINUE
+C           dataset does not exist.
+            DSCHK=0
+ 30       CONTINUE
+C
+          GO TO 50
+ 40     CONTINUE
+C
+          DSCHK=0
+C         error-time series dataset reference made to the
+C          tss directory dataset.
+          SGRP = 88
+          CALL OMSTI (DSN)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 50     CONTINUE
+        GO TO 70
+ 60   CONTINUE
+        DSCHK=0
+C       error-dataset number outside valid range for this tss.
+        SGRP = 89
+        CALL OMSTI (DSN)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+ 70   CONTINUE
+C
+      IF (OUTLEV .GT. 7) WRITE(MESSU,2020)
+C
+      RETURN
+      END
+</pre>
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="DSCHK">
+</Object>
+
+</body>
+</html>
+

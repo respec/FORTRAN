@@ -1,0 +1,22 @@
+agmap.obj:    pmxmap.inc pmxcls.inc pmxwin.inc cmaprm.inc
+damap.obj:    cmapdt.inc cstaid.inc pmxsen.inc
+dspeci.obj:   pmxcls.inc pmxts.inc
+durani.obj:   pmxdur.inc pbfmax.inc
+durbat.obj:   pmxdur.inc pbfmax.inc ptsmax.inc cplotb.inc
+grmap.obj:    cstaid.inc
+hget.obj:     pmesfl.inc
+mapseg.obj:   pmxseg.inc cmpseg.inc pmxani.inc
+prwplt.obj:   pmxsen.inc
+sgdate.obj:   cdate.inc  pmxdat.inc
+sglist.obj:   ctslst.inc
+tsplot.obj:   pmaxd.inc  pmxwin.inc \
+              pbfmax.inc ptsmax.inc cplotb.inc
+ucirea.obj:   fversn.inc
+utclas.obj:   cclas.inc  pmxcls.inc pmxts.inc
+utdir.obj:    ctsdir.inc pmxts.inc  pmesfl.inc
+utmap.obj:    cmap.inc   cmaprm.inc pmxmap.inc
+utwin.obj:    pmxwin.inc cwindo.inc
+utplot.obj:   ptsmax.inc
+wsgsim.obj:   ctsdir.inc pmxts.inc
+wsgsys.obj:   pmxdat.inc pmxseg.inc cmaprm.inc pmxani.inc pmxwin.inc
+wsgutl.obj:   pmxmap.inc pmxseg.inc pmxwin.inc

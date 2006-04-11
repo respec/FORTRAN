@@ -1,0 +1,66 @@
+
+ Successful open of old WDM file \vbapps\genscn\test\hspfmsg.wdm                                 
+
+
+ Importing from file ucimod.seq                                                      
+ General information from the IMPORT file:
+ DATE
+ WDMSFL
+ SYSTEM
+ COMMENT
+ END COMMENT
+
+ Importing DSN/CLU number    53.
+ This DSN/CLU already exists.
+Overwrite DSN/CLU
+ For group number   1 type is MENU
+ For group number   5 type is TEXT
+ For group number  10 type is PRM1
+ For group number  20 type is TEXT
+ For group number  21 type is PRM2
+ For group number  22 type is PRM1
+ For group number  23 type is TEXT
+ For group number  30 type is TEXT
+ For group number  31 type is PRM2
+ For group number  32 type is PRM2
+ For group number  34 type is PRM2
+ For group number  35 type is PRM2
+ For group number  36 type is PRM2
+ For group number  38 type is TEXT
+ For group number  39 type is PRM1
+ For group number  40 type is MENU
+ For group number  41 type is PRM2
+ For group number  42 type is PRM2
+ For group number  43 type is PRM2
+ For group number  44 type is PRM2
+ For group number  45 type is PRM1
+ For group number  46 type is PRM1
+ For group number  47 type is PRM2
+ For group number  48 type is TEXT
+ For group number  49 type is MENU
+ For group number  50 type is PRM2
+ For group number  51 type is TEXT
+ For group number  52 type is TEXT
+ For group number  53 type is TEXT
+ For group number  54 type is PRM2
+ For group number  55 type is PRM2
+ For group number  56 type is TEXT
+ For group number  57 type is TEXT
+ For group number  59 type is TEXT
+ For group number  60 type is PRM2
+ For group number  65 type is PRM2
+ For group number  69 type is TEXT
+ For group number  78 type is MENU
+ For group number  79 type is MENU
+ For group number 150 type is PRM2
+ For group number 160 type is TEXT
+ For group number 170 type is PRM2
+ For group number 180 type is PRM2
+ For group number 190 type is PRM2
+ For group number 200 type is PRM2
+ For group number 201 type is TEXT
+ For group number 202 type is PRM1
+ For group number 203 type is TEXT
+
+ Import of DSN/CLUs complete.
+

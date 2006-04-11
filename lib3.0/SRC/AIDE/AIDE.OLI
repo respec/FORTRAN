@@ -1,0 +1,21 @@
+OBJS      = aninit.obj qtchar.obj qtfile.obj qtnumb.obj \
+            qtnums.obj prtaid.obj qtscn1.obj utmisc.obj \
+            utuprm.obj z0util.obj z1util.obj z4util.obj \
+            ztscn1.obj zutil.obj  zutilx.obj \
+            zutily.obj qtstgt.obj zclbak.obj zcbch1.obj \
+            zcbch2.obj zcbch3.obj zcbch4.obj zcbch5.obj \
+            zcbch6.obj zcbch7.obj zcbch8.obj zcbch9.obj \
+            zcbfl1.obj zcbfl2.obj zcbfl3.obj zcbfl4.obj \
+            zcbfl5.obj zcbfl6.obj zcbfl7.obj zcbfl8.obj \
+            zcbfl9.obj zcbex1.obj zcbex2.obj zcbex3.obj \
+            zcbex4.obj zcbex5.obj zcbex6.obj zcbex7.obj \
+            zcbex8.obj zcbex9.obj zsys$(FC).obj
+
+INCOTHER  = util\color.inc  util\const.inc  \
+            adwdm\fmsgwd.inc adwdm\pmxfld.inc adwdm\cfbuff.inc \
+            adwdm\cscren.inc adwdm\czoptn.inc adwdm\cqrsp.inc  \
+            adwdm\czhide.inc adwdm\zcntrl.inc adwdm\cclbak.inc \
+            adwdm\czglvl.inc adwdm\pmxrsl.inc
+
+# For OTG, compile the following code groups without checks (FTN77no)
+# qtscn1.for  utmisc.for

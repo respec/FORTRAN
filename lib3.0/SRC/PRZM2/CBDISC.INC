@@ -1,0 +1,5 @@
+C     common block CBDISC.INC
+C
+      REAL      THL
+      INTEGER*4 NELM,IMATL
+      COMMON /BDISC/ THL(MXNLAY),NELM(MXNLAY),IMATL(MXNLAY)

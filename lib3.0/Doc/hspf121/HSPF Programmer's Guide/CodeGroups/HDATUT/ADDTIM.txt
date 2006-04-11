@@ -1,0 +1,150 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="DAYMNH">DAYMNH</a>
+<p>Code
+<pre>
+C
+C     4.02
+C
+      SUBROUTINE   ADDTIM
+     I                   (DMIN,NDAY,PIVL,PYREND,
+     M                    DATIM,PIVLNO,
+     O                    NDAYS,NXTMON,HRFG,DAYFG,EDAYFG,
+     O                    EMONFG,EPYRFG)
+C
+C     + + + PURPOSE + + +
+C     Add a specified interval (day/hour/min) to a given date/time to
+C     obtain a new date/time.  Also, set time-related flags which
+C     application modules need.  Dates and times are in internal format.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    DATIM(5),DAYFG,DMIN,EDAYFG,EMONFG,EPYRFG,HRFG,
+     $           NDAY(12),NDAYS,NXTMON,PIVL,PIVLNO,PYREND
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DMIN   - ???
+C     NDAY   - ???
+C     PIVL   - ???
+C     PYREND - ???
+C     DATIM  - date and time of day
+C     PIVLNO - ???
+C     NDAYS  - no. of days in this month
+C     NXTMON - next calendar month
+C     HRFG   - ???
+C     DAYFG  - flag for first day or day change
+C     EDAYFG - ???
+C     EMONFG - ???
+C     EPYRFG - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    DAY,HR,MIN,MON,TDAY,THRS,TMINS,YR
+C
+C     + + + FUNCTIONS + + +
+      INTEGER    DAYMNH
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   DAYMNH
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      HRFG  = 0
+      DAYFG = 0
+      EDAYFG= 0
+      EMONFG= 0
+      EPYRFG= 0
+      YR    = DATIM(1)
+      MON   = DATIM(2)
+      DAY   = DATIM(3)
+      HR    = DATIM(4)
+      MIN   = DATIM(5)
+C
+      IF (PIVLNO .EQ. PIVL) THEN
+        PIVLNO= 0
+      END IF
+C
+      PIVLNO= PIVLNO + 1
+      TMINS = MIN + DMIN
+      THRS  = (TMINS - 1)/60
+      MIN   = TMINS - THRS*60
+C
+      IF (THRS .GT. 0) THEN
+C       hour has changed
+        HRFG= 1
+        THRS= THRS + HR
+        TDAY= (THRS - 1)/24
+        HR  = THRS - TDAY*24
+C
+        IF (TDAY .GT. 0) THEN
+C         day has changed
+          DAYFG= 1
+          TDAY = TDAY + DAY
+          NDAYS= DAYMNH(YR,MON,NDAY)
+C
+          IF (TDAY .GT. NDAYS) THEN
+C           month has changed
+C           dountil tday<= ndays
+ 10         CONTINUE
+              TDAY= TDAY - NDAYS
+              IF (MON .EQ. 12) THEN
+                YR = YR + 1
+                MON= 1
+              ELSE
+                MON= MON + 1
+              END IF
+              NDAYS= DAYMNH(YR,MON,NDAY)
+C           end dountil
+            IF (TDAY .GT. NDAYS) GO TO 10
+C
+            IF (MON .EQ. 12) THEN
+              NXTMON= 1
+            ELSE
+              NXTMON= MON + 1
+            END IF
+C
+          END IF
+          DAY= TDAY
+        END IF
+C
+      END IF
+C
+C     set printout flags
+      IF (MIN .EQ. 60 .AND. HR .EQ. 24) THEN
+C       last interval of the day
+        EDAYFG= 1
+C
+        IF (DAY .EQ. NDAYS) THEN
+C         last interval of the month
+          EMONFG= 1
+          IF (MON .EQ. PYREND) THEN
+C           last interval in printout year
+            EPYRFG= 1
+          END IF
+C
+        END IF
+C
+      END IF
+C
+      DATIM(1)= YR
+      DATIM(2)= MON
+      DATIM(3)= DAY
+      DATIM(4)= HR
+      DATIM(5)= MIN
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+

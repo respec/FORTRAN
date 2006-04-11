@@ -1,0 +1,44 @@
+Pattern = "CLU"
+PGENER.SEQ(5):	  clu  grpnam  description
+PGENER.SEQ(10):	CLU           42    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+PGENER.SEQ(14):	  DATA   CLU    42
+PGENER.SEQ(2268):	END CLU
+WDPLOT.SEQ(5):	  Message file cluster for ANNIE interactive plotting (wdplot.f)
+WDPLOT.SEQ(7):	CLU           93    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+WDPLOT.SEQ(11):	  DATA   CLU    93
+WDPLOT.SEQ(352):	The plot of curve & will only include the good values found for the attribute.
+WDPLOT.SEQ(357):	The plot of curve & will only include the good values found for the attribute.
+WDPLOT.SEQ(2124):	END CLU
+ATWORK.SEQ(7):	CLU           22    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+ATWORK.SEQ(11):	  DATA   CLU    22
+ATWORK.SEQ(93):	END CLU 
+ATDISP.SEQ(7):	CLU           23    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+ATDISP.SEQ(11):	  DATA   CLU    23
+ATDISP.SEQ(59):	_DESC - include the period of record (start/end date)
+ATDISP.SEQ(61):	_DESC - selected attributes to include
+ATDISP.SEQ(72):	 The period of record will also be included.
+ATDISP.SEQ(263):	END CLU 
+DSBLD.SEQ(7):	CLU           27    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+DSBLD.SEQ(11):	  DATA   CLU    27
+DSBLD.SEQ(252):	END CLU 
+PRWARC.SEQ(7):	CLU           30    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+PRWARC.SEQ(11):	  DATA   CLU    30
+PRWARC.SEQ(186):	YES means that the dataset attributes will be included in the export file.
+PRWARC.SEQ(193):	YES means that the dataset data will be included in the export file.
+PRWARC.SEQ(319):	END CLU 
+TSWORK.SEQ(7):	CLU           39    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+TSWORK.SEQ(11):	  DATA   CLU    39
+TSWORK.SEQ(55):	  series.  Options include math functions, time shifts, and time changes.
+TSWORK.SEQ(814):	END CLU   
+DSWORK.SEQ(7):	CLU           26    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+DSWORK.SEQ(11):	  DATA   CLU    26
+DSWORK.SEQ(134):	END CLU 
+QTPRNT.SEQ(5):	  Message file cluster for QTPRNT.F77 (WDM Error Print) code group
+QTPRNT.SEQ(7):	CLU           50    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+QTPRNT.SEQ(11):	  DATA   CLU    50
+QTPRNT.SEQ(211):	END CLU
+QTDATE.SEQ(4):	CLU           28    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+QTDATE.SEQ(8):	  DATA   CLU    28
+QTDATE.SEQ(23):	   Dates are inclusive.  Use no blanks.
+QTDATE.SEQ(35):	    Dates are inclusive.  Use no blanks.
+QTDATE.SEQ(357):	END CLU

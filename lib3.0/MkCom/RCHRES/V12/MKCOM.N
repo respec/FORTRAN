@@ -1,0 +1,6 @@
+NEXITS        59
+NCATS       2325
+NCONS       9672
+NGQUAL     11465
+NGQ3       11540
+NUMCHM     15571

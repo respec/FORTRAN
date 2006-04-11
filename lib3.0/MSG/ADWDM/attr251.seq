@@ -1,0 +1,418 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  attributes 251 - 300
+END COMMENT
+DSN           10    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN    10
+#ATTRIBUTE  UBC192    INDEX   251
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 192
+   See WATSTORE users guide, Appendix.
+#ATTRIBUTE  UBC193    INDEX   252
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 193
+   See WATSTORE users guide, Appendix.
+#ATTRIBUTE  UBC194    INDEX   253
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 194
+   See WATSTORE users guide, Appendix.
+#ATTRIBUTE  UBC195    INDEX   254
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 195
+   See WATSTORE users guide, Appendix.
+#ATTRIBUTE  UBC200    INDEX   255
+$TYPE     REAL
+$LENGTH   1
+$DESC     User defined.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Defined by user or application.
+   Basin and streamflow characteristic no 200
+   See WATSTORE users guide, Appendix.
+#ATTRIBUTE  SEASBG    INDEX   256
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Month season begins
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:        12
+$DEFAULT          1
+$HELP
+   Beginning month of a user defined season.  A starting
+   day may be specified by attribute SEADBG.   Used with
+   attributes SEASND and SEADND to define a specific time
+   period, ofter a year.  January is month 1.
+#ATTRIBUTE  SEASND    INDEX   257
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Month season ends
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:        12
+$DEFAULT         12
+$HELP
+   Ending month of a user defined season.  A ending
+   day may be specified by attribute SEADND.  Used with
+   attributes SEASBG and SEASND to define a specific time
+   period, often a year.  January is month 1.
+#ATTRIBUTE  XSECLC    INDEX   258
+$TYPE     REAL
+$LENGTH   1
+$DESC     Cross-section locator
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Cross-section locator, distance in feet from left
+   bank (as determined by facing downstream).
+#ATTRIBUTE  DEPTH     INDEX   259
+$TYPE     REAL
+$LENGTH   1
+$DESC     Sampling depth
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Sampling depth, in feet, at which observation was
+   made.
+#ATTRIBUTE  RFOOT     INDEX   260
+$TYPE     REAL
+$LENGTH   1
+$DESC     Distance from mouth, in feet.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP     Distance from mouth of river, in feet.
+#ATTRIBUTE  BRANCH    INDEX   261
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Integer ID number of a single channel.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            0:      -999
+$DEFAULT       -999
+$HELP
+   Integer ID number of a channel segment.
+#ATTRIBUTE  TMZONE    INDEX   262
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Time zone, +- hours from Greenwich.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE          -12:        12
+$DEFAULT          0
+$HELP
+   Time zone.  Each time zone is represented as the
+   number of hours to be added to, or subtracted
+   from, Greenwich time:
+   -4 - Atlantic Standard  -8 - Pacific Standard
+   -5 - Eastern Standard   -9 - Yukon Standard
+   -6 - Central Standard  -10 - Alaska-Hawaii
+   -7 - Mountain Standard            Standard
+#ATTRIBUTE  GRPNAM    INDEX   263
+$TYPE     CHARACTER
+$LENGTH   8
+$DESC     Group name (6 characters).
+$REQUIRED  MESSAGE
+$HELP
+   Six character name for a cluster of message
+   type data-set groups.
+#ATTRIBUTE  DATUM     INDEX   264
+$TYPE     REAL
+$LENGTH   1
+$DESC     Reference Elevation
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Reference elevation, to mean sea level.
+#ATTRIBUTE  STDTYP    INDEX   265
+$TYPE     CHARACTER
+$LENGTH   4
+$DESC     Space time data type.
+$UPDATE
+$REQUIRED  SPACE-TIME
+$VALID   INT REALDPRC
+#ATTRIBUTE  STDIMX    INDEX   266
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Space time dimension in X direction.
+$UPDATE
+$REQUIRED  SPACE-TIME
+$RANGE            1:      -999
+$DEFAULT          1
+$HELP
+   Space time dimension in X direction.
+#ATTRIBUTE  STDIMY    INDEX   267
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Space time dimension in Y direction.
+$UPDATE
+$OPTIONAL  SPACE-TIME
+$RANGE            1:      -999
+$DEFAULT          1
+$HELP
+   Space time dimension in Y direction.
+#ATTRIBUTE  STDIMZ    INDEX   268
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Space time dimension in Z direction.
+$UPDATE
+$OPTIONAL  SPACE-TIME
+$RANGE            1:      -999
+$DEFAULT          1
+$HELP
+   Space time dimension in Z direction.
+#ATTRIBUTE  J407LO    INDEX   269
+$TYPE     REAL
+$LENGTH   1
+$DESC     Low outlier discharge criterion.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -1.00E+09: 1.000E+09
+$DEFAULT  0.000E-01
+$HELP
+   Low outlier discharge criterion (Bulletin 17B
+   frequency analysis).
+#ATTRIBUTE  J407HO    INDEX   270
+$TYPE     REAL
+$LENGTH   1
+$DESC     High-outlier discharge criterion
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -1.00E+09: 1.000E+09
+$DEFAULT  0.000E-01
+$HELP
+   High outlier discharge criterion (Bulletin 17B
+   frequency analysis).
+#ATTRIBUTE  J407SO    INDEX   271
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Generalized skew option
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE           -1:         1
+$DEFAULT          0
+$HELP
+   Generalized skew option (Bulletin 17B frequency
+   analysis):
+  -1 - station skew
+   0 - weighted skew
+   1 - generalized skew
+#ATTRIBUTE  J407GS    INDEX   272
+$TYPE     REAL
+$LENGTH   1
+$DESC     Generalized skew.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -1.00E+09: 1.000E+09
+$DEFAULT  0.000E-01
+$HELP
+   Generalized skew (Bulletin 17B frequency analysis).
+#ATTRIBUTE  J407BQ    INDEX   273
+$TYPE     REAL
+$LENGTH   1
+$DESC     Base gage discharge
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -1.00E+09: 1.000E+09
+$DEFAULT  0.000E-01
+$HELP
+   Base gage discharge (Bulletin 17B frequency analysis).
+#ATTRIBUTE  J407NH    INDEX   274
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Number of historic peaks.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            0:       100
+$DEFAULT          0
+$HELP
+   Number of historic peaks (Bulletin 17B frequency
+   analysis).
+#ATTRIBUTE  J407SE    INDEX   275
+$TYPE     REAL
+$LENGTH   1
+$DESC     Root mean square error of generalized skew
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -1.00E+09: 1.000E+09
+$DEFAULT  0.000E-01
+$HELP
+   Root mean square error of generalized skew
+   (Bulletin 17B frequency analysis).
+#ATTRIBUTE  J407UR    INDEX   276
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Include urban-regulated peaks
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:         2
+$DEFAULT          1
+$HELP
+   Include urban-regulated peaks (Bulletin 17B
+   frequency analysis):
+   1 - no
+   2 - yes
+#ATTRIBUTE  J407HP    INDEX   277
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Historic peak option
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:         2
+$DEFAULT          1
+$HELP
+   Historic peak option (Bulletin 17B frequency
+   analysis):
+   1 - include historic peaks
+   2 - exclude historic peaks
+#ATTRIBUTE  J407BY    INDEX   278
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Year to begin analysis
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            0:      3000
+$DEFAULT          0
+$HELP
+   Year to begin analysis, used to identify subset of
+   available record (Bulletin 17B frequency analysis).
+#ATTRIBUTE  J407EY    INDEX   279
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Year to end analysis.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            0:      3000
+$DEFAULT          0
+$HELP
+   Year to end analysis, used to identify subset of
+   available record (Bulletin 17B frequency analysis).
+#ATTRIBUTE  MEANND    INDEX   280
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean of the LOG of annual n-day high or low sta
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 :    7.0000
+$DEFAULT  0.000E-01
+$HELP
+   Mean of the logarithms, base 10, of annual n-day
+   high-flow or low-flow statistic.
+#ATTRIBUTE  SDND      INDEX   281
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation of LOG of annual n-day high
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 5.000E+00
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation of logarithms, base 10, of
+   annual n-day high-flow or low-flow statistic.
+#ATTRIBUTE  SKWND     INDEX   282
+$TYPE     REAL
+$LENGTH   1
+$DESC     Skew of LOG of annual n-day high or low statist
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Skew of logarithms, base 10, of annual n-day high-
+   flow or low-flow statistic.
+#ATTRIBUTE  KENTAU    INDEX   283
+$TYPE     REAL
+$LENGTH   1
+$DESC     Kendahl Tau statistic for time series data
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Kendahl Tau statistic for time-series data.
+#ATTRIBUTE  KENPLV    INDEX   284
+$TYPE     REAL
+$LENGTH   1
+$DESC     P-level for Kendahl Tau statistic
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   P-level for Kendahl Tau statistic.
+#ATTRIBUTE  KENSLP    INDEX   285
+$TYPE     REAL
+$LENGTH   1
+$DESC     Median slope of time series trend
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Median slope of time-series trend.
+#ATTRIBUTE  NONZRO    INDEX   286
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Number of non-zero values in the time series.
+$OPTIONAL  TIMESERIES
+$RANGE            0:      -999
+$DEFAULT          0
+$HELP
+   Number of non-zero values in the time series.
+#ATTRIBUTE  NUMZRO    INDEX   287
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Number of zero values in time series.
+$OPTIONAL  TIMESERIES
+$RANGE            0:      -999
+$DEFAULT          0
+$HELP
+   Number of zero values in time series.
+#ATTRIBUTE  IDSCEN    INDEX   288
+$TYPE     CHARACTER
+$LENGTH   8
+$DESC     Scenario id
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$HELP
+  8-character identifier for the scenario associated with this data set.
+#ATTRIBUTE  IDCONS    INDEX   289
+$TYPE     CHARACTER
+$LENGTH   8
+$DESC     Constituent id
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$HELP
+  8-character identifier of the constituent contained in this data set.
+#ATTRIBUTE  IDLOCN    INDEX   290
+$TYPE     CHARACTER
+$LENGTH   8
+$DESC     Location id
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$HELP
+  8-character identifier for the location associated with this data set.
+#ATTRIBUTE  PCLT01    INDEX   300
+$TYPE     REAL
+$LENGTH   1
+$DESC     1% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   One percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+  END DATA
+END CLU

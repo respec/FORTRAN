@@ -1,0 +1,611 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  attributes 51 - 100
+END COMMENT
+DSN            6    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN     6
+#ATTRIBUTE  ISTAID    INDEX    51
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Station identification number.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT          0
+$HELP
+   Integer indentification number, as an integer.
+#ATTRIBUTE  START     INDEX    52
+$TYPE     INTEGER
+$LENGTH   6
+$DESC     Starting date for timeseries data
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT          0
+#ATTRIBUTE  END       INDEX    53
+$TYPE     INTEGER
+$LENGTH   6
+$DESC     Ending data for timeseries data.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT          0
+#ATTRIBUTE  LATDMS    INDEX    54
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Latitude (degrees, minutes, seconds).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT       -999
+$HELP
+   Latitude in degrees, minutes, seconds (dddmmss).
+#ATTRIBUTE  LNGDMS    INDEX    55
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Longitude (degrees, minutes, seconds).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT       -999
+$HELP
+   Longitude in degrees, minutes, seconds (dddmmss).
+#ATTRIBUTE  PARMCD    INDEX    56
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Parameter code.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:     99999
+$DEFAULT       -999
+$HELP
+   Parameter code, see WATSTORE users manual,
+   Appendix D.
+#ATTRIBUTE  STATCD    INDEX    57
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Statistics code.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:     99999
+$DEFAULT       -999
+$HELP
+   Statistics code, see WATSTORE users manual,
+   Appendix E.
+#ATTRIBUTE  PRECIP    INDEX    58
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean annual precipitation.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean annual precipitation, in inches, from U.S.
+   Weather Bureau Series "Climates of States;" grid
+   sampling methods used if isohyetal map is
+   available, otherwise anomaly map constructed
+   (Water-Supply Paper 1580-d).  Basin and
+   streamflow characteristics no 32, PRECIP.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  STORAG    INDEX    59
+$TYPE     REAL
+$LENGTH   1
+$DESC     Area of lakes, ponds, and swamps (% of CONTDA).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 1.000E+02
+$DEFAULT  0.000E-01
+$HELP
+   Area of lakes, ponds, and swamps in percent of
+   contributing drainage area, measured by the grid
+   sampling methods.  Basin and streamflow
+   chracteristics no 12, STORAGE.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  TSPTAD    INDEX    60
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Timeseries put aggregation/disaggregation code.
+$OPTIONAL  TIMESERIES
+$RANGE            0:         1
+$DEFAULT          0
+$HELP
+   Timeseries put aggregation/disaggregation code.
+#ATTRIBUTE  FOREST    INDEX    61
+$TYPE     REAL
+$LENGTH   1
+$DESC     Forested area (% of CONTDA)
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 1.000E+02
+$DEFAULT  0.000E-01
+$HELP
+   Forested area in percent of contributing drainage
+   area, measured by the grid sampling methods.
+   Basin and streamflow charachteristic no 14, FOREST.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  SOILIN    INDEX    62
+$TYPE     REAL
+$LENGTH   1
+$DESC     Soils index, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Soils index, in inches, a relative measure of
+   potential infiltration (soil water storage), from
+   Soil Conservation Service.  Basin and streamflow
+   characteristic no 16, SOIL INF.
+#ATTRIBUTE  I24-2.    INDEX    63
+$TYPE     REAL
+$LENGTH   1
+$DESC     24-hour rainfall precip intensity 2-year recurr
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Precipitation intensity, 24-hour rainfall, in
+   inches, expected on the average of once each 2
+   years.  Basin and streamflow characteristic no
+   33, I24,2.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  JANMIN    INDEX    64
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean minimum January temp, in degrees F.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE        -999.: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean minimum January temp, in degrees F.
+   Basin and streamflow characteristic no 60, JANMIN.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  P1.25     INDEX    65
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 1.25 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 1.25-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 75, P1,25.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P2.       INDEX    66
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 2 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 2-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 76, P2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P5.       INDEX    67
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 5 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 5-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 77, P5.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P10.      INDEX    68
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 10 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 10-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 78, P10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P25.      INDEX    69
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 25 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 25-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 79, P25.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P50.      INDEX    70
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 50 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 50-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 80, P50.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P100.     INDEX    71
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 100 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 100-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 81, P100.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P200.     INDEX    72
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 200 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 200-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 82, P200.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  P500.     INDEX    73
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual flood peak, 500 year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual flood peak, in cubic feet per second, 500-
+   year recurrence interval.  Basin and streamflow
+   characteristic no 178, P500.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  MEANPK    INDEX    74
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean of the LOG of systematic annual peak Q
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 :    7.0000
+$DEFAULT  0.000E-01
+$HELP
+   Mean of the logarithms, base 10, of systematic
+   annual peak discharges from Bulletin 17B frequency
+   analysis or WATSTORE program J407.  Basin and
+   streamflow characteristic no 83, MEANPK.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  SDPK      INDEX    75
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation of LOG of syst ann peak Q.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 5.000E+00
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation of logarithms, base 10, of
+   systematic annual peak discharges, from Bulletin
+   17B frequency analysis or WATSTORE program J407..
+   Basin and streamflow characteristic no 84 SDPK.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  SKWPK     INDEX    76
+$TYPE     REAL
+$LENGTH   1
+$DESC     Skew of LOG of systematic annual peak Q (J407).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE      -9.0000:    9.0000
+$DEFAULT  0.000E-01
+$HELP
+   Skew of logarithms, base 10, of systematic annual
+   peak discharges, from Bulletin 17B frequency
+   analysis or WATSTORE program J407.  Basin and
+   streamflow characteristic no 85, SKEWPK.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  WRCSKW    INDEX    77
+$TYPE     REAL
+$LENGTH   1
+$DESC     WRC skew of LOG of peak Q (J407).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE      -9.0000:    9.0000
+$DEFAULT  0.000E-01
+$HELP
+   WRC skew of logarithms, base 10, of annual peak
+   discharge after outlier and historic-peak
+   adjustments and generalized skew weighting, from
+   Bulletin 17B grequency analysis or WATSTORE
+   program J407.  Basin and streamflow
+   characteristic no 179, WRC SKEW.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  WRCMN     INDEX    78
+$TYPE     REAL
+$LENGTH   1
+$DESC     WRC mean of LOG of peak Q (J407).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 :    7.0000
+$DEFAULT  0.000E-01
+$HELP
+   WRC mean of logarithms, base 10, of annual peak
+   discharge after outlier and historic-peak
+   adjustments, from Bulletin 17B frequency analysis
+   or WATSTORE program J407.  Basin and streamflow
+   characteristic no 180, WRC MEAN.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  WRCSD     INDEX    79
+$TYPE     REAL
+$LENGTH   1
+$DESC     WRC standard deviation of LOG of peak Q (J407).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 5.000E+00
+$DEFAULT  0.000E-01
+$HELP
+   WRC standard deviation of logarithms, base 10, of
+   annual peak discharge after outlier and historic-
+   peak adjustments, from Bulletin 17B frequency
+   analysis or WATSTORE program J407.  Basin and
+   streamflow characteristics no 181, WRC SD.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  YRSPK     INDEX    80
+$TYPE     REAL
+$LENGTH   1
+$DESC     Number of years of systematic peak flow record.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Number of years of systematic peak flow record,
+   used in Bulletin 17B frequency analysis or
+   WATSTORE program J407.  Basin and streamflow
+   characteristic no 196, YRSPK.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  YRSHPK    INDEX    81
+$TYPE     REAL
+$LENGTH   1
+$DESC     No. of consecutive yrs used for hist-pk adjust.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -2.0: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Number of consecutive years used for historic-peak
+   adjustment to flood-frequency data used in
+   Bulletin 17B frequency analysis or WATSTORE
+   program J407.  Basin and streamflow
+   characteristic no 197, YRSHISPK.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  CHEAT     INDEX    82
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Pointer to associated quality flags.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:     32000
+$DEFAULT       -999
+$HELP
+   Pointer to an associated data set.  Used to
+   associate quality flags for peak flow data,
+   needed for J407.
+#ATTRIBUTE  COMPFG    INDEX    83
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Compression flag
+$UPDATE
+$OPTIONAL  TIMESERIES
+$RANGE            1:         2
+$DEFAULT          1
+$HELP
+   Compression flag
+   1 - yes, data are compressed (default)
+   2 - no, data are not compressed
+   compressed data will take up less space in the WDM
+   file, but will require a COPY operation to update
+   data values.
+#ATTRIBUTE  TSFORM    INDEX    84
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Form of data
+$UPDATE
+$REQUIRED  TIMESERIES
+$RANGE            1:         5
+$DEFAULT          1
+$HELP
+   Form of data
+   1 - mean over the timestep (default)
+   2 - total over the timestep
+   3 - instantaneous @ time (end of timestep)
+   4 - minimum over the timestep
+   5 - maximum over the timestep
+#ATTRIBUTE  VBTIME    INDEX    85
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Variable time-step option
+$UPDATE
+$REQUIRED  TIMESERIES
+$RANGE            1:         3
+$DEFAULT          2
+$HELP
+  Variable time-step option for the data set
+  1 - all data are at the same time step
+  2 - time step may vary (default)
+#ATTRIBUTE  BSLOPE    INDEX    86
+$TYPE     REAL
+$LENGTH   1
+$DESC     Average basin slope
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Average basin slope, in feet per mile.
+   Measured by grid sampling method.  Basin
+   and streamflow characteristic no 4, BSLOPE.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  BLNGTH    INDEX    87
+$TYPE     REAL
+$LENGTH   1
+$DESC     Stream length, gage to end of defined channel
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Stream length, in miles, from gage to end of
+   defined channel, blue line on topographic map.
+   Basin and streamflow characteristic no 6, BLENGTH.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  VALLGH    INDEX    88
+$TYPE     REAL
+$LENGTH   1
+$DESC     Valley length, from gage to basin divide.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Valley length, in miles, measured along general
+   path of flood plain from gage to basin divide.
+   Basin and streamflow characteristic no 7, VALLGH.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  EL1085    INDEX    89
+$TYPE     REAL
+$LENGTH   1
+$DESC     Average of channel elevations
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Average of channel elevations, in feet above mean
+   sea level, at points 10- and 85-percent of stream
+   length upstream from gage.  Basin and streamflow
+   characteristic no 9, ELV10,85.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  EL5000    INDEX    90
+$TYPE     REAL
+$LENGTH   1
+$DESC     Percent of basin above elevation 5000 feet.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 1.000E+02
+$DEFAULT  0.000E-01
+$HELP
+   Percent of basin above elevation 5000 feet, mean
+   sea level.  Basin and streamflow characteristic
+   no 10, EL5000.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  EL6000    INDEX    91
+$TYPE     REAL
+$LENGTH   1
+$DESC     Percent of basin above elevation 6000 feet.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 1.000E+02
+$DEFAULT  0.000E-01
+$HELP
+   Percent of basin above elevation 5000 feet, mean
+   sea level.  Basin and streamflow characteristic
+   no 11, EL6000.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  LAKE      INDEX    92
+$TYPE     REAL
+$LENGTH   1
+$DESC     Lakes and ponds area (% of CONTDA)
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 1.000E+02
+$DEFAULT  0.000E-01
+$HELP
+   Area of lakes and ponds in percent of contributing
+   drainage area.  Measured by the grid sampling
+   method.  Basin and streamflow characteristic
+   no 13, LAKE.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  GLACER    INDEX    93
+$TYPE     REAL
+$LENGTH   1
+$DESC     Area of glaciers (% of CONTDA)
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 1.000E+02
+$DEFAULT  0.000E-01
+$HELP
+   Area of glaciers in percent of contributing
+   drainage area.  Basin and streamflow
+   characteristic no 15, GLACIER.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  LOESS     INDEX    94
+$TYPE     REAL
+$LENGTH   1
+$DESC     Depth of surficial loess, in feet.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Depth of surficial loess, in feet.  From
+   Soil Conservation Service.  Basin and
+   streamflow characteristic no 17, LOESS.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  AZMUTH    INDEX    95
+$TYPE     REAL
+$LENGTH   1
+$DESC     Azimuth, from north.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: 3.600E+02
+$DEFAULT  0.000E-01
+$HELP
+   Azimuth, in decimal degrees from north of a
+   straight line connecting points 85- and 10-percent
+   of distance from gage to divide.  Basin and
+   streamflow characteristic no 18, AZIMUTH.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  LATCTR    INDEX    96
+$TYPE     REAL
+$LENGTH   1
+$DESC     Latitude of center of basin, decimal degrees.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Latitude of center of basin, decimal degrees.
+   Basin and streamflow characteristic no 19, LAT.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  LNGCTR    INDEX    97
+$TYPE     REAL
+$LENGTH   1
+$DESC     Longitude of center of basin, decimal degrees.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Longitude of center of basin, decimal degrees.
+   Basin and streamflow characteristic no 20, LONG.
+   See WATSTORE users guide, Appendix.
+#ATTRIBUTE  TMTOPK    INDEX    98
+$TYPE     REAL
+$LENGTH   1
+$DESC     Time to peak, in hours.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Time, in hours, measured as time difference
+   between center of mass of total rainfall and peak
+   discharge.  Basin and streamflow characteristic no
+   21, TIMETOPK.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  I24010    INDEX    99
+$TYPE     REAL
+$LENGTH   1
+$DESC     24-hour rainfall intensity, 10-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Precipitation intensity, 24-hour rainfall, in
+   inches, expected on the average once each 10
+   years.  Estimated from U.S. Weather Bureau
+   technical Paper 40 except for western states
+   where NOAA Atlas 2 exists).  Basin and streamflow
+   characteristic no 34, I24,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  I24025    INDEX   100
+$TYPE     REAL
+$LENGTH   1
+$DESC     24-hour rainfall intensity, 25-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Precipitation intensity, 24-hour rainfall, in
+   inches, expected on the average once each 25
+   years.  Estimated from U.S. Weather Bureau
+   technical Paper 40 except for western states
+   where NOAA Atlas 2 exists).  Basin and streamflow
+   characteristic no 35, I24,25.  See WATSTORE users
+   manual, Appendix.
+  END DATA
+END DSN

@@ -1,0 +1,71 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HPRBUT">HPRBUT</a>
+<p>Called By
+   <a href="../HDATUT/ENDATE">ENDATE</a>,
+   <a href="../HDATUT/STDATE">STDATE</a>,
+   <a href="../HDATUT/TIMHTW">TIMHTW</a>,
+   <a href="../HRINTS/FINSTR">FINSTR</a>,
+   <a href="../HRINTS/NETBLK">NETBLK</a>,
+   <a href="../HRINTS/OPNTS">OPNTS</a>,
+   <a href="../HRINTS/MEMTS">MEMTS</a>,
+   <a href="../HRINTS/PAIRS">PAIRS</a>,
+   <a href="../HRINTS/SCHBLK">SCHBLK</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CHMSG">CHMSG</a>
+<p>Includes 
+   <a href="../../Dimensions/PHMSG">PHMSG</a>
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+C
+      SUBROUTINE   OMSTI
+     I                  (IVAL)
+C
+C     + + + PURPOSE + + +
+C     save an integer value to output with a hspf message
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   IVAL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IVAL   - value to save
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'phmsg.inc'
+      INCLUDE 'chmsg.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     increment counter of values saved
+      ICNT= ICNT+ 1
+      IF (ICNT .LE. MXMSI) THEN
+C       save value
+        IMSVL(ICNT)= IVAL
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

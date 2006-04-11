@@ -1,0 +1,15 @@
+<p>Referenced by 
+  <a href="../CommonBlocks/CRIN1">CRIN1</a>,
+  <a href="../CommonBlocks/CRIN2">CRIN2</a>
+<p>Code
+<pre>
+C     maximum number of ftables
+C
+C     + + + PARAMETERS + + +
+      INTEGER        MAXFTB
+      PARAMETER     (MAXFTB=500)
+</pre>
+
+
+
+

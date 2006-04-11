@@ -1,0 +1,527 @@
+Purpose - Interpret the blocks which deal with time series 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1">make local copies of file unit numbers</a>
+<li><a href="#L2">processing message</a>
+<li><a href="#L3">initialize keyworks, etc for timeseries</a>
+<li><a href="#L4">if tss file is being used in this run, look at tss descriptor</a>
+<li><a href="#L5">if wdm files are being used in this run, initialize wdm file</a>
+<li><a href="#L6">check open dss files</a>
+<li><a href="#L7">initialize the tsget/tsput files</a>
+<li><a href="#L8">get keys to external sources block from uci</a>
+<li><a href="#L9">get keys to formats block from uci</a>
+<li><a href="#L10">get keys to schematic block from uci</a>
+<li><a href="#L11">get keys to network block from uci</a>
+<li><a href="#L12">get keys to external targets block from uci</a>
+<li><a href="#L13">exgroup loop</a>
+    <ul>
+    <li><a href="#L14">find the starting and ending operations</a>
+    <li><a href="#L15">call workio to initialize max key</a>
+    <li><a href="#L16">initialize keys to entries which may be written to workfl</a>
+    <li><a href="#L17">if external sources block is present, process it</a>
+    <li><a href="#L18">is schematic block or network block present</a>
+        <ul>
+        <li><a href="#L19">if schematic block is present, process it</a>
+        <li><a href="#L20">if network block is present, process it</a>
+        </ul>
+    <li><a href="#L21">if network/schematic entries were written to workfl</a>
+        <ul>      
+        <li><a href="#L22">chain them in source opn sequence order and keep workfl keys in opntab</a>
+        <li><a href="#L23">chain in target opn sequence order</a>
+        </ul>
+    <li><a href="#L24">if external targets block is present, process it</a>
+    <li><a href="#L25">chain all occurrences of the same source/stkind/sttran combination, in ext sources block, considering entries in target opn sequence order</a>
+    <li><a href="#L26">chain all occurrences of the same source in the network block, considering entries in target opn sequence order</a>
+    <li><a href="#L27">loop through operations in exgroup</a>
+        <ul>
+        <li><a href="#L28">chain all occurrences of the same source in external targets and network blocks, considering entries in source operation sequence order</a>
+        <li><a href="#L29">chain all occurrences of the same internal target in network and external sources blocks, considering entries in target operation sequence order</a>
+        </ul>
+    <li><a href="#L29a">allocate rows in the inpad and generate primitive tsget/tsput instructions</a>
+    <li><a href="#L30">assign values to the flag pointers in each osv for this exgroup</a>
+    <li><a href="#L31">generate final tsget/tsput instructions from primitive instructions</a>
+    <li><a href="#L32">end processing xgrp message</a>
+    </ul>
+<li><a href="#L33">end processing timeseries linkages message</a>
+</ul>
+<p>Code Group 
+   <a href="../HSPFEC">HSPFEC</a>
+<p>Called By
+   <a href="../HSPF/INTERP">INTERP
+</a><p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3">CRIN3</a>,
+<p>Calls
+   <a href="../HRINTSS/CHKTSS">CHKTSS</a>,
+   <a href="../HWDMUT/CHKWDM">CHKWDM</a>,
+   <a href="../HRINTS/GPFINT">GPFINT</a>,
+   <a href="../HIOUCI/DUMPER">DUMPER</a>,
+   CHKDSS,
+   HDMES2,
+   <a href="../HIOWRK/WORKIO">WORKIO</a>,
+   <a href="../HRINTS/SRCBLK">SRCBLK</a>,
+   <a href="../HRINTS/SCHBLK">SCHBLK</a>,
+   <a href="../HRINTS/NETBLK">NETBLK</a>,
+   <a href="../HTSINSI/CHAIN">CHAIN</a>,
+   <a href="../HTSINSI/WKDMP1">WKDMP1</a>,
+   <a href="../HRINTS/TARBLK">TARBLK</a>,
+   <a href="../HTSINSI/SAME">SAME</a>,
+   <a href="../HTSINSI/ALLOC">ALLOC</a>,
+   <a href="../HTSINSI/OSVFPT">OSVFPT</a>,
+   <a href="../HTSINSI/WKDMP2">WKDMP2</a>,
+   <a href="../HTSINSZ/TINSTR">TINSTR</a>,
+   <a href="../HRINTS/HRITSI">HRITSI</a>,
+   <a href="../HIOUCI/GETSE">GETSE</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   TIMSER
+     I                    (SDATIM,EDATIM,MAXMLK,MSLINX,NMLTBS,RUNWID,
+     I                     IHMFG)
+C
+C     + + + PURPOSE + + +
+C     Process the blocks which deal with time series
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    EDATIM(5),SDATIM(5),MAXMLK,MSLINX(MAXMLK,3),NMLTBS,
+     $           RUNWID,IHMFG
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     MAXMLK - ???
+C     MSLINX - ???
+C     NMLTBS - ???
+C     RUNWID - ???
+C     IHMFG  - IHM flag (normal-0,IHM control-1)
+C
+C     + + + COMMON BLOCKS- INTERP3 + + +
+      INCLUDE '<a href="../../CommonBlocks/CRIN3">CRIN3</a>.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   FMTKND,FMTKST,GPKEY,GRPND,GRPST,
+     $          I1,I2,I3,I4,I5,IDUM1,IDUM2,ITYP,J,MSGFL,
+     $          MESSU,NETKND,NETKST,OPND,OPST,
+     $          OPTNO,OPTYPI(2),PGPKEY,SRCKND,SRCKST,
+     $          TARKND,TARKST,TSSFL,WDMSFL(4),
+     $          WKEY,WKND,WKNDES,WKNDNT,WKND1,WKSTX,WKNDX,
+     $          WKND2,WKST,WKSTES,WKSTNT,WKST1,WKST2,XGRP,
+     $          SCHKST,SCHKND,MXKY,I0,DREC(1),IOPT
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  CHKTSS,CHKWDM,GPFINT,DUMPER,CHKDSS,HDMES2
+      EXTERNAL  WORKIO,SRCBLK,SCHBLK,NETBLK,CHAIN,WKDMP1
+      EXTERNAL  TARBLK,SAME,ALLOC,OSVFPT,WKDMP2,TINSTR,HRITSI,GETSE
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' ',132('='),
+     $        /,' PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES')
+ 2010 FORMAT (/,' PROCESSING ENTRIES FOR EXGROUP NO.',I4)
+ 2020 FORMAT (/,' SITUATION AFTER OCCURRENCES OF IDENTICAL SOURCES ',
+     $          'AND TARGETS HAVE BEEN CHAINED:')
+ 2030 FORMAT (/,' SITUATION AFTER ALLOCATION OF INPAD ROWS:')
+ 2040 FORMAT (/,' DUMPING PRIMITIVE TSGET/TSPUT INSTRUCTIONS')
+ 2050 FORMAT (' ',2A4,I4)
+ 2060 FORMAT (/,' TSGET INSTRUCTIONS')
+ 2070 FORMAT (/,' TSPUT INSTRUCTIONS')
+ 2080 FORMAT (/,' FINISHED PROCESSING ENTRIES FOR EXGROUP NO.',I4,
+     $          '                MAXIMUM WRKSPA RECORD = ',I5)
+ 2090 FORMAT (/,' FINISHED PROCESSING BLOCKS CONTAINING TIME ',
+     $          'SERIES LINKAGES',
+     $        /,' ',132('='))
+C
+C     + + + HISTORY + + +
+C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0    = 0
+      I1    = 1
+C
+      <a name="L1">MESSU = FILE(1)
+      TSSFL = FILE(10)
+      DO 5 J= 1, 4
+        WDMSFL(J)= FILE(10+J)
+ 5    CONTINUE
+      MSGFL = FILE(15)
+C
+      IF (OUTLEV .GT. 0) THEN
+C       <a name="L2">processing message
+        WRITE (MESSU,2000)
+      END IF
+C
+C     <a name="L3">initialize keyworks, etc for timeseries
+      CALL <a href="../HRINTS/HRITSI">HRITSI</a> (MSGFL)
+C
+      IF (TSSFL .GT. 0) THEN
+C       <a name="L4">tssfl is being used in this run, look at tss descriptor
+        CALL <a href="../HRINTSS/CHKTSS">CHKTSS</a> (TSSFL,MESSU,MSGFL,
+     M               ECOUNT,
+     O               TDFREC,TDDS,TOTDS,RECLT,TDSIZE)
+      END IF
+C
+      DO 10 J= 1, 4
+        IF (WDMSFL(J) .GT. 0) THEN
+C         <a name="L5">wdmsfl is being used in this run, initialize wdms file
+          CALL <a href="../HWDMUT/CHKWDM">CHKWDM</a> (WDMSFL(J),MESSU,MSGFL,
+     M                 ECOUNT)
+        END IF
+ 10   CONTINUE
+C
+C     <a name="L6">check open dss files
+      CALL CHKDSS (MESSU,MSGFL,
+     M             ECOUNT)
+C
+C     <a name="L7">initialize the tsget/tsput files
+      CALL <a href="../HRINTS/GPFINT">GPFINT</a>(RECLT,FILE,GPKEY)
+      PGPKEY= GPKEY
+C
+C     <a name="L8">get keys to users ext sour block
+      ITYP= 5
+      CALL <a href="../HIOUCI/GETSE">GETSE</a>(ITYP,I1,
+     O           SRCKST,SRCKND)
+      IF (SRCKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
+C       echo user's control input
+        CALL <a href="../HIOUCI/DUMPER">DUMPER</a> (SRCKST,SRCKND,MESSU)
+      END IF
+C
+C     <a name="L9">get keys to users formats block
+      ITYP= 6
+      CALL <a href="../HIOUCI/GETSE">GETSE</a>(ITYP,I1,
+     O           FMTKST,FMTKND)
+      IF (FMTKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
+C       echo user's control input
+        CALL <a href="../HIOUCI/DUMPER">DUMPER</a> (FMTKST,FMTKND,MESSU)
+      END IF
+C
+C     <a name="L10">get keys to users schematic block
+      ITYP= 10
+      CALL <a href="../HIOUCI/GETSE">GETSE</a>(ITYP,I1,
+     O           SCHKST,SCHKND)
+      IF (SCHKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
+C       echo user's control input
+        CALL <a href="../HIOUCI/DUMPER">DUMPER</a> (SCHKST,SCHKND,MESSU)
+      END IF
+C
+C     <a name="L11">get keys to users network block
+      ITYP= 7
+      CALL <a href="../HIOUCI/GETSE">GETSE</a>(ITYP,I1,
+     O           NETKST,NETKND)
+      IF (NETKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
+C       echo user's control input
+        CALL <a href="../HIOUCI/DUMPER">DUMPER</a> (NETKST,NETKND,MESSU)
+      END IF
+C
+C     <a name="L12">get keys to users external targets block
+      ITYP= 8
+      CALL <a href="../HIOUCI/GETSE">GETSE</a>(ITYP,I1,
+     O           TARKST,TARKND)
+      IF (TARKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
+C       echo user's control input
+        CALL <a href="../HIOUCI/DUMPER">DUMPER</a> (TARKST,TARKND,MESSU)
+      END IF
+C
+C     <a name="L13">exgroup loop
+      DO 100 XGRP= 1,NXGRPS
+C       <a name="L14">find the starting and ending operations
+        GRPST= EXGTAB(1,XGRP)
+        OPST = GRPTAB(1,GRPST)
+        GRPND= EXGTAB(2,XGRP)
+        OPND = GRPTAB(2,GRPND)
+C
+C       <a name="L15">call workio to initialize max key
+        MXKY= -1
+        DREC(1)= 0
+        CALL <a href="../HIOWRK/WORKIO">WORKIO</a> (I0,I1,I1,
+     M               DREC,MXKY)
+C
+        IF (OUTLEV .GT. 3) THEN
+C         processing xgrp message
+          WRITE (MESSU,2010) XGRP
+        END IF
+C
+C       <a name="L16">initialize keys to entries which may be written to workfl
+        WKEY= 0
+        DO 60 OPNO= OPST,OPND
+          DO 50 J= 9,20
+            OPNTAB(J,OPNO)= 0
+ 50       CONTINUE
+ 60     CONTINUE
+C
+        WKSTES= 0
+        WKNDES= 0
+        WKSTNT= 0
+        WKNDNT= 0
+C
+        <a name="L17">IF (SRCKST .GT. 0) THEN
+C         ext sources block is present - process it
+          IOPT= 2
+          ITYP= 5
+          CALL HDMES2(IOPT,ITYP,I1)
+          CALL <a href="../HRINTS/SRCBLK">SRCBLK</a> (OPST,OPND,SRCKST,SRCKND,SDATIM,EDATIM,
+     I                 FMTKST,FMTKND,IHMFG,
+     M                 WKEY,WKSTES,WKNDES)
+        END IF
+C
+        <a name="L18">IF (SCHKST .GT. 0 .OR. NETKST .GT. 0) THEN
+C         schematic block or network block is present
+          WKSTX = WKEY + 1
+C
+          <a name="L19">IF (SCHKST .GT. 0) THEN
+C           schematics block is present - process it
+            IOPT= 2
+            ITYP= 10
+            CALL HDMES2(IOPT,ITYP,I1)
+            CALL <a href="../HRINTS/SCHBLK">SCHBLK</a>
+     I                  (OPST,OPND,SCHKST,SCHKND,MAXMLK,
+     I                   MSLINX,NMLTBS,
+     M                   WKEY)
+          END IF
+C
+          <a name="L20">IF (NETKST .GT. 0) THEN
+C           network block is present - process it
+            IOPT= 2
+            ITYP= 7
+            CALL HDMES2(IOPT,ITYP,I1)
+            CALL <a href="../HRINTS/NETBLK">NETBLK</a> (OPST,OPND,NETKST,NETKND,
+     M                   WKEY)
+          END IF
+C
+C         the following chaining has been moved up to timser from netblk
+C         because this process needs to be performed for all entries
+C         originating from both schematic and network blocks
+          <a name="L21">IF (WKEY .GE. WKSTX) THEN
+C           network/schematic entries were written to workfl
+            WKNDX= WKEY
+C
+C           <a name="L22">chain them in source opn sequence order and keep workfl
+C           keys in opntab
+            I1= 3
+            I2= 15
+            I3= 11
+            I4= 12
+            CALL <a href="../HTSINSI/CHAIN">CHAIN</a> (OPST,OPND,WKSTX,WKNDX,I1,I2,I3,I4,MAXOPN,
+     M                  OPNTAB,
+     O                  IDUM1,IDUM2)
+C
+C           <a name="L23">chain in target opn sequence order
+            I1= 29
+            I2= 41
+            I3= 13
+            I4= 14
+            CALL <a href="../HTSINSI/CHAIN">CHAIN</a> (OPST,OPND,WKSTX,WKNDX,I1,I2,I3,I4,MAXOPN,
+     M                  OPNTAB,
+     O                  WKSTNT,WKNDNT)
+C
+            IF (OUTLEV .GT. 5) THEN
+C             dump records written to workfl
+              CALL <a href="../HTSINSI/WKDMP1">WKDMP1</a> (WKSTX,WKNDX,MESSU)
+            END IF
+          END IF
+        END IF
+C
+        <a name="L24">IF (TARKST .GT. 0) THEN
+C         ext targets block is present - process it
+          IOPT= 2
+          ITYP= 8
+          I1  = 1
+          CALL HDMES2(IOPT,ITYP,I1)
+          CALL <a href="../HRINTS/TARBLK">TARBLK</a> (OPST,OPND,TARKST,TARKND,SDATIM,EDATIM,
+     I                 FMTKST,FMTKND,IHMFG,
+     M                 WKEY)
+        END IF
+C
+C       <a name="L25">chain all occurrences of the same source/stkind/sttran
+C       combination, in ext sources block, considering entries in
+C       target opn sequence order
+        WKST1= WKSTES
+        WKND1= WKNDES
+C
+        WKST2= 0
+        WKND2= 0
+C
+        I1= 1
+        I2= 41
+        I3= 16
+        I4= 3
+        I5= 11
+        CALL <a href="../HTSINSI/SAME">SAME</a> (I1,I2,I3,I4,I5,WKST1,WKND1,WKST2,WKND2,
+     I             MESSU,MSGFL,
+     M             ECOUNT)
+C
+C       <a name="L26">chain all occurrences of the same source in the network
+C       block, considering entries in target opn sequence order
+        WKST1= WKSTNT
+        WKND1= WKNDNT
+C
+        WKST2= 0
+        WKND2= 0
+C
+        I1= 0
+        I2= 41
+        I3= 16
+        I4= 3
+        I5= 11
+        CALL <a href="../HTSINSI/SAME">SAME</a> (I1,I2,I3,I4,I5,WKST1,WKND1,WKST2,WKND2,
+     I             MESSU,MSGFL,
+     M             ECOUNT)
+C
+        <a name="L27">DO 70 OPNO= OPST,OPND
+C         <a name="L28">chain all occurrences of the same source in ext targets
+C         and network blocks, considering entries in source opn'
+C         sequence order
+          WKST1= OPNTAB(15,OPNO)
+          WKND1= OPNTAB(16,OPNO)
+C
+          WKST2= OPNTAB(11,OPNO)
+          WKND2= OPNTAB(12,OPNO)
+C
+          I1= 0
+          I2= 15
+          I3= 17
+          I4= 3
+          I5= 11
+          CALL <a href="../HTSINSI/SAME">SAME</a> (I1,I2,I3,I4,I5,WKST1,WKND1,WKST2,WKND2,
+     I               MESSU,MSGFL,
+     M               ECOUNT)
+C
+C         <a name="L29">chain all occurrences of the same internal target in
+C         network and ext sources blocks, considering entries in
+C         target opn sequence order
+          WKST1= OPNTAB(13,OPNO)
+          WKND1= OPNTAB(14,OPNO)
+C
+          WKST2= OPNTAB(9,OPNO)
+          WKND2= OPNTAB(10,OPNO)
+C
+          I1= -1
+          I2= 41
+          I3= 42
+          I4= 29
+          I5= 37
+          CALL <a href="../HTSINSI/SAME">SAME</a> (I1,I2,I3,I4,I5,WKST1,WKND1,WKST2,WKND2,
+     I               MESSU,MSGFL,
+     M               ECOUNT)
+C
+ 70     CONTINUE
+C
+        IF (OUTLEV .GT. 5) THEN
+C         dump contents of workfl
+          WRITE (MESSU,2020)
+          I1= 1
+          CALL <a href="../HTSINSI/WKDMP1">WKDMP1</a> (I1,WKEY,MESSU)
+        END IF
+C
+C       <a name="L29a">allocate rows in the inpad and generate primitive
+C       tsget/tsput instructions
+        CALL <a href="../HTSINSI/ALLOC">ALLOC</a> (PGPKEY,GRPST,GRPND,RUNWID)
+C
+        IF (OUTLEV .GT. 5) THEN
+C         dump workfl
+          WRITE (MESSU,2030)
+          I1=1
+          CALL <a href="../HTSINSI/WKDMP1">WKDMP1</a> (I1,WKEY,MESSU)
+        END IF
+C
+C       <a name="L30">assign values to the flag pointers in each osv for this
+C       exgroup
+        CALL <a href="../HTSINSI/OSVFPT">OSVFPT</a> (GRPST,GRPND)
+C
+        IF (OUTLEV .GT. 5) THEN
+C         dump primitive tsget and tsput instructions
+          WRITE (MESSU,2040)
+          DO 90 OPNO= OPST,OPND
+            DO 80 J= 1,2
+              OPTYPI(J)= OPNTAB(J,OPNO)
+ 80         CONTINUE
+            OPTNO= OPNTAB(3,OPNO)
+            WRITE (MESSU,2050)  OPTYPI, OPTNO
+C
+C           tsget instructions
+            WRITE (MESSU,2060)
+            WKST= OPNTAB(17,OPNO)
+            WKND= OPNTAB(18,OPNO)
+            IF (WKST .GT. 0) THEN
+C             dump instructions
+              CALL <a href="../HTSINSI/WKDMP2">WKDMP2</a> (WKST,WKND,MESSU)
+            END IF
+C
+C           tsput instructions
+            WRITE (MESSU,2070)
+            WKST= OPNTAB(19,OPNO)
+            WKND= OPNTAB(20,OPNO)
+            IF (WKST .GT. 0) THEN
+C             dump instructions
+              CALL <a href="../HTSINSI/WKDMP2">WKDMP2</a> (WKST,WKND,MESSU)
+            END IF
+ 90       CONTINUE
+        END IF
+C
+C       <a name="L31">generate final tsget/tsput instructions from primitive
+C       instructions
+        CALL <a href="../HTSINSZ/TINSTR">TINSTR</a>(SDATIM,EDATIM,OPST,OPND,GPKEY)
+C
+C       call workio to get max key
+        I0  = 0
+        I1  = 1
+        MXKY= 0
+        DREC(1)= 0
+        CALL <a href="../HIOWRK/WORKIO">WORKIO</a> (I0,I1,I1,
+     M               DREC,MXKY)
+C
+        IF (OUTLEV .GT. 3) THEN
+C         <a name="L32">end processing xgrp message
+          WRITE (MESSU,2080)  XGRP,MXKY
+        END IF
+ 100  CONTINUE
+C
+      IF (OUTLEV .GT. 0) THEN
+C       <a name="L33">end processing timeseries message
+        WRITE (MESSU,2090)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

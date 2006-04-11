@@ -1,0 +1,1318 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  Message file clusters for find/edit data-set buffer utilities (AWFEB.F77)
+END COMMENT
+CLU           24    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  AWFEB
+  END LABEL
+  DATA   CLU    24
+#GROUP    1  TYPE MENU
+$WINDOW Select (&S)
+$SCREEN
+Select a buffer management option for active data sets.
+  
+By data-set number:                 Other methods:    
+ @Add                                @Browse 
+ @Drop                               @Find
+ @List                               @Input     
+ @Clear                              @Output                      
+ @Sort                               @Return     
+$DEFAULT   1
+$LENGTH    6
+$OPTION Add
+_DESC - to the buffer
+$OPTION Drop  
+_DESC - from the buffer
+$OPTION List
+_DESC - contents of buffer
+$OPTION Clear
+_DESC - the buffer
+$OPTION Sort
+_DESC - numbers in buffer
+$OPTION Browse
+_DESC - thru data sets to select
+$OPTION Find
+_DESC - with Boolean criteria
+$OPTION Input
+_DESC - data-set numbers from file
+$OPTION Output
+_DESC - data-set numbers to file
+$OPTION Return
+_DESC - from data-set selection
+$HELP
+There are 4 ways to select data sets:  ADD, BROWSE, FIND, and INPUT.  If you 
+know the numbers of the data sets you want to use, select the ADD option.  
+Otherwise, you may BROWSE the data sets to make a selection.  For FIND, you 
+can specify a data-set type or range of numbers to search for.  You can also 
+search for data sets based on attribute values, using Boolean logic.  Selected 
+data-set numbers that have been stored in a file with the OUTPUT option may be 
+retrieved using the INPUT option.  The remaining menu options let you manage 
+the data-set numbers already selected.
+#GROUP    2  TYPE PRM1
+$WINDOW Add (&SA)
+$SCREEN 
+  Enter up to @Q data-set numbers to Add to the buffer.
+
+  [@PRM2]  [@PRM3]  [@PRM4]  [@PRM5]  [@PRM6]  [@PRM7]  [@PRM8]  [@PRM9]
+
+  [@PRMA]  [@PRMB]  [@PRMC]  [@PRMD]  [@PRME]  [@PRMF]  [@PRMG]  [@PRMH]
+
+  [@PRMI]  [@PRMJ]  [@PRMK]  [@PRML]  [@PRMM]  [@PRMN]  [@PRMO]  [@PRMP]
+
+$FIELD Q       
+_TYPE INTEGER
+_PROTECT PROTECTED
+_RANGE   1 : 24
+_DEFAULT 24
+$FIELD PRM2   
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM3  
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM4
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM5
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM6
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRM7
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRM8
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM9
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRMA
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMB
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMC
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMD
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRME
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMF
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRMG
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMH
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMI
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMJ
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMK
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRML
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMM
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMN
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRMO
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMP  
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$HELP
+Each data set is assigned a unique number.  Enter up to as many data-set 
+numbers as shown on the first line.  Any numbers entered which don't corres-
+pond to existing data sets will be shown on the next screen.
+#GROUP    3  TYPE FILE
+$WINDOW Input (&SI)
+$SCREEN
+
+
+                      Name of input file?
+
+  [@FILE...........................................................]
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM   FORMATTED
+#GROUP    4  TYPE FILE
+$WINDOW Output (&SO)
+$SCREEN
+
+
+                      Name of output file?
+
+  [@FILE...........................................................]
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM   FORMATTED
+#GROUP    5  TYPE TEXT
+$WINDOW Drop (&SD) Problem
+$TEXT
+Data-set number & is not in the
+data-set buffer and thus may not be Dropped.     
+#GROUP    6  TYPE TEXT
+$TEXT
+& data sets are currently in the buffer.
+
+#GROUP    7  TYPE PRM1
+$WINDOW Browse (&SB)
+$SCREEN
+
+  Select the source of the data-set numbers and
+  the identifying information to be included.
+
+    Source  [@PRM1......]   (Wdm, Buffer)
+
+    Include [@PRM2......]   (Description, Location, Period of record)
+$FIELD PRM1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID WDM, BUFFER
+_DEFAULT WDM
+_HELP
+There are two sets of data sets that can be shown on the screen:  those in the
+buffer of already selected data sets, or all the data sets in the WDM file.  
+$FIELD PRM2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID DESCRIPTION, LOCATION, PERIOD
+_DEFAULT DESCRIPTION
+_HELP
+There are three choices for identification information to be shown for each
+data set:  "Description" will show the station description or station name and 
+ID number; "Location" gives latitude-longitude-state-county information; 
+"Period of record" displays the start and end date of the data.  
+#GROUP    8  TYPE TEXT
+$TEXT
+1 data set is currently in the buffer.
+
+#GROUP    9  TYPE TEXT
+$TEXT
+NO data sets are currently in the buffer.
+
+#GROUP   10  TYPE TEXT
+$WINDOW Drop (&SD) Problem
+$TEXT
+There are currently no data sets in the buffer,
+thus, no data sets may be Dropped.    
+#GROUP   11  TYPE TEXT
+$WINDOW Input (&SI) Problem
+$TEXT
+Problem reading input file containing data-set numbers.
+#GROUP   12  TYPE PRM1
+$WINDOW Browse - & of & (&SB) WDM Description 
+$SCREEN  
+  Add  <Data set>
+ (y/n)  no. type  Tstype  Description
+  @P1 @PA...................................................................
+  @P2 @PB...................................................................
+  @P3 @PC...................................................................
+  @P4 @PD...................................................................
+  @P5 @PE...................................................................
+  @P6 @PF...................................................................
+  @P7 @PG...................................................................
+  @P8 @PH...................................................................
+$FIELD P1     
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA     
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to add a data set to the buffer of active data sets, enter "yes."  
+If you want to remove a previously selected data set from the buffer, enter 
+"no."  Data sets will only be added or removed from the buffer when the Accept
+command is used to continue on to the next screen.
+#GROUP   13  TYPE PRM1
+$WINDOW Browse - & of & (&SB) WDM Location 
+$SCREEN 
+ Add  <Data set>                                       State
+(y/n)  no. type  Tstype   Latitude Longitude      Elev  code  Station id
+ @P1 @PA......................................................................
+ @P2 @PB......................................................................
+ @P3 @PC......................................................................
+ @P4 @PD......................................................................
+ @P5 @PE......................................................................
+ @P6 @PF......................................................................
+ @P7 @PG......................................................................
+ @P8 @PH......................................................................
+$FIELD P1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to add a data set to the buffer of active data sets, enter "yes."  
+If you want to remove a previously selected data set from the buffer, enter 
+"no."  Data sets will only be added or removed from the buffer when the Accept
+command is used to continue on to the next screen.
+#GROUP   14  TYPE PRM1
+$WINDOW Browse - & of & (&SB) WDM Period 
+$SCREEN
+  Add  <Data set>         <---Period of record---->
+ (y/n)  no. type  Tstype     start         end       Station id
+  @P1 @PA............................................................
+  @P2 @PB............................................................
+  @P3 @PC............................................................
+  @P4 @PD............................................................
+  @P5 @PE............................................................
+  @P6 @PF............................................................
+  @P7 @PG............................................................
+  @P8 @PH............................................................
+$FIELD P1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to add a data set to the buffer of active data sets, enter "yes."  
+If you want to remove a previously selected data set from the buffer, enter 
+"no."  Data sets will only be added or removed from the buffer when the Accept
+command is used to continue on to the next screen.
+#GROUP   15  TYPE PRM1
+$WINDOW Scan - & of & (&SS)
+$SCREEN
+    Load to 
+    buffer?    Site description
+      @P1      @PA...............................................
+      @P2      @PB...............................................
+      @P3      @PC...............................................
+      @P4      @PD...............................................
+      @P5      @PE...............................................
+      @P6      @PF...............................................
+      @P7      @PG...............................................
+      @P8      @PH...............................................
+$FIELD P1     
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA     
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to add a site to the buffer of active sites, enter "yes."  
+If you want to remove a previously selected site from the buffer, enter 
+"no."  Sites will only be added or removed from the buffer when the Accept
+command is used to continue on to the next screen.
+#GROUP   16  TYPE PRM1
+$WINDOW Browse - & of & (&SB) Buffer Description
+$SCREEN
+ Keep  <Data set>
+ (y/n)  no. type  Tstype  Description
+  @P1 @PA...................................................................
+  @P2 @PB...................................................................
+  @P3 @PC...................................................................
+  @P4 @PD...................................................................
+  @P5 @PE...................................................................
+  @P6 @PF...................................................................
+  @P7 @PG...................................................................
+  @P8 @PH...................................................................
+$FIELD P1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to remove a data set from the buffer of active data sets, 
+enter "no."  
+#GROUP   17  TYPE PRM1
+$WINDOW Browse - & of & (&SB) Buffer Location 
+$SCREEN
+Keep  <Data set>                                       State
+(y/n)  no. type  Tstype   Latitude Longitude      Elev  code  Station id
+ @P1 @PA......................................................................
+ @P2 @PB......................................................................
+ @P3 @PC......................................................................
+ @P4 @PD......................................................................
+ @P5 @PE......................................................................
+ @P6 @PF......................................................................
+ @P7 @PG......................................................................
+ @P8 @PH......................................................................
+$FIELD P1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to remove a data set from the buffer of active data sets, 
+enter "no."  
+#GROUP   18  TYPE PRM1
+$WINDOW Browse - & of & (&SB) Buffer Period 
+$SCREEN
+ Keep  <Data set>         <---Period of record---->
+ (y/n)  no. type  Tstype     start         end       Station id
+  @P1 @PA............................................................
+  @P2 @PB............................................................
+  @P3 @PC............................................................
+  @P4 @PD............................................................
+  @P5 @PE............................................................
+  @P6 @PF............................................................
+  @P7 @PG............................................................
+  @P8 @PH............................................................
+$FIELD P1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to remove a data set from the buffer of active data sets, 
+enter "no."  
+#GROUP   19  TYPE PRM1
+$WINDOW List - & of & (&SL)
+$SCREEN
+    Keep in 
+    buffer?    Site description
+      @P1      @PA...............................................
+      @P2      @PB...............................................
+      @P3      @PC...............................................
+      @P4      @PD...............................................
+      @P5      @PE...............................................
+      @P6      @PF...............................................
+      @P7      @PG...............................................
+      @P8      @PH...............................................
+$FIELD P1     
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES
+_DEFAULT NO
+$FIELD PA     
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+If you want to remove a site from the buffer of active sites, enter "no."  
+#GROUP   20  TYPE TEXT
+$WINDOW Browse (&B) Problem
+$TEXT
+The last data set selected on the previous screen was not placed 
+in the data-set buffer.
+
+The maximum number of data sets--&--was previously selected.
+#GROUP   21  TYPE TEXT
+$WINDOW Browse (&B) Problem
+$TEXT
+The last & data sets selected on the previous screen were not placed 
+in the data-set buffer.
+
+The maximum number of data sets--&--was previously selected.
+#GROUP   22  TYPE PRM1
+$WINDOW Drop (&SD)
+$SCREEN 
+  Enter up to @Q data-set numbers to Drop from the buffer.
+
+  [@PRM2]  [@PRM3]  [@PRM4]  [@PRM5]  [@PRM6]  [@PRM7]  [@PRM8]  [@PRM9]
+
+  [@PRMA]  [@PRMB]  [@PRMC]  [@PRMD]  [@PRME]  [@PRMF]  [@PRMG]  [@PRMH]
+
+  [@PRMI]  [@PRMJ]  [@PRMK]  [@PRML]  [@PRMM]  [@PRMN]  [@PRMO]  [@PRMP]
+
+$FIELD Q       
+_TYPE INTEGER
+_PROTECT PROTECTED
+_RANGE   1 : 24
+_DEFAULT 24
+$FIELD PRM2   
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM3  
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM4
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM5
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM6
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRM7
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRM8
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRM9
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRMA
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMB
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMC
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMD
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRME
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMF
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRMG
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMH
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMI
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMJ
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMK
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRML
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMM
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMN
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$FIELD PRMO
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0   
+$FIELD PRMP  
+_TYPE INTEGER
+_RANGE   0 : 32000
+_DEFAULT 0    
+$HELP
+Each data set has a unique number that points directly to the data set.
+Enter up as many data sets as shown on the first line.  Data sets numbers
+not in the buffer will be ignored.  Those in the buffer will be removed.
+#GROUP   23  TYPE MENU
+$WINDOW Find (&SF)
+$SCREEN
+              Select a data-set buffer Find option.
+  (Execute with no domain or criteria selects all data sets.)
+
+Set domain for search:  @Type      - of data sets
+                        @Number    - range of data-set numbers
+                        @Subset    - of data sets in the buffer
+     Specify criteria:  @Attributes- value range(s) for search
+   Identify data sets:  @Execute   - search for data sets
+
+                        @Return    - to the Select screen
+$DEFAULT   1
+$LENGTH   10
+$OPTION Type
+$OPTION Number
+$OPTION Subset
+$OPTION Attributes
+$OPTION Execute
+$OPTION Return
+$HELP
+The domain of a search can be limited to a TYPE of data set, a range
+of data-set NUMBERs, or a SUBSET of the data sets currently in the
+data-set buffer.  The selection of data sets may be restricted to
+data sets containing ATTRIBUTES that meet some criteria.
+#GROUP   24  TYPE MENU
+$WINDOW Type (&SFT)
+$TITLE Which type data set (or ALL)?
+$DEFAULT   1
+$LENGTH   12
+$WIDTH    39
+$COLENGTH  5
+$OPTION ALl
+$OPTION TImeseries
+$OPTION TAble
+$OPTION Vector
+$OPTION SPace-time
+$OPTION ATtribute
+$OPTION Message
+$HELP
+ Searches are done by data-set type.  If you want to search
+ on more than one type, enter ALL or cycle through this
+ process more than once.  At the end of searches for one of
+ the types you can select the option to process another type.
+#GROUP   25  TYPE PRM1
+$WINDOW Attribute (&SFA)
+$SCREEN
+
+                       Which search attributes?
+
+     [@PRM1.]         [@PRM2.]         [@PRM3.]         [@PRM4.]
+  
+     [@PRM5.]         [@PRM6.]         [@PRM7.]         [@PRM8.]
+  
+               (Enter HELP to get a list of attributes)
+$FIELD @PRM1
+_TYPE CHARACTER
+$FIELD @PRM2
+_TYPE CHARACTER
+$FIELD @PRM3
+_TYPE CHARACTER
+$FIELD @PRM4
+_TYPE CHARACTER
+$FIELD @PRM5
+_TYPE CHARACTER
+$FIELD @PRM6
+_TYPE CHARACTER
+$FIELD @PRM7
+_TYPE CHARACTER
+$FIELD @PRM8
+_TYPE CHARACTER
+$HELP
+ Search attributes are identified by a 6 character code.
+ For a listing of the codes, enter HELP.
+#GROUP   26  TYPE MENU
+$WINDOW Attribute (&SFA)
+$TITLE More conditions?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  2
+$OPTION No
+$OPTION Yes
+$HELP
+ Enter 'Yes' to indicate more conditionals to use.
+#GROUP   27  TYPE TEXT
+$WINDOW Attribute (&SFA) Problem
+$TEXT
+Not a valid search attribute.
+#GROUP   28  TYPE TEXT
+$WINDOW Execute (&SFE) Problem
+$TEXT
+Data-set buffer is full, no more data sets will be added.
+#GROUP   29  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+& data sets without requested search attribute.
+#GROUP   30  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+& data sets matching and added to buffer.
+#GROUP   32  TYPE PRM1
+$WINDOW Attribute (&SFA)
+$SCREEN
+
+ For attribute @PRM4.:
+
+     Minimum value for the attribute? [@PRM1..]
+
+     Maximum value for the attribute? [@PRM2..]
+
+     Add to buffer if TRUE or FALSE?  [@PRM3..]
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE   -999:-999
+_DEFAULT -999
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE   -999:-999
+_DEFAULT -999
+$FIELD @PRM3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID TRUE,FALSE
+_DEFAULT TRUE
+$FIELD @PRM4
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+Enter range for attribute.  Select TRUE if you want to select the data set
+when the attribute value for the data set is within the range specified.
+Select FALSE if you want to select the data sets with values that are
+outside the specified range.
+#GROUP   34  TYPE PRM1
+$WINDOW Attribute (&SFA)
+$SCREEN
+
+ For attribute @PRM4.:
+ 
+     Minimum value for this attribute? [@PRM1..]
+
+     Maximum value for this attribute? [@PRM2..]
+
+     Add to buffer if TRUE or FALSE?   [@PRM3..]
+$FIELD @PRM1
+_TYPE REAL
+_RANGE   -999.:-999.
+_DEFAULT -999.
+$FIELD @PRM2
+_TYPE REAL
+_RANGE   -999.:-999.
+_DEFAULT -999.
+$FIELD @PRM3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID TRUE,FALSE
+_DEFAULT TRUE
+$FIELD @PRM4
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+Enter range for attribute.  Select TRUE if you want to select the data set
+when the attribute value for the data set is within the range specified.
+Select FALSE if you want to select the data sets with values that are
+outside the specified range.
+#GROUP   36  TYPE PRM1
+$WINDOW Attribute (&SFA)
+$SCREEN
+
+                      Value for attribute @PRM2.?
+
+[@PRM1.....................................................................]
+
+Add to buffer if TRUE or FALSE?  [@YoN..]
+
+$FIELD @PRM1
+_TYPE CHARACTER
+_HELP
+The value for the attribute.  This is case sensitive, text must exactly
+match the value in the data set.  For example, PEAK is not equal to peak.
+$FIELD @YoN
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID TRUE,FALSE
+_DEFAULT TRUE
+_HELP
+Enter:  NO - if you want to select the data set when the attibute value
+             for the data set equals the value specified.
+       YES - if you do not want to select the data set when the attribute
+             value for the data set equals the value specified.
+If the data set is to be added to the buffer only when the
+condition is not true, enter YES, else enter NO.
+$FIELD @PRM2
+_TYPE CHARACTER
+_PROTECT PROTECTED
+#GROUP   37  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+& data sets which didn't match.
+#GROUP   39  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+& data sets checked.
+#GROUP   40  TYPE PRM1
+$WINDOW Number (&SFN)
+$SCREEN
+
+     Minimum DSN to search? @PRM1..
+
+     Maximum DSN to search? @PRM2..
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE   1:32000
+_DEFAULT 1
+_HELP
+Data sets below the entered number will not be included
+in the search.
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE   1:32000
+_DEFAULT 32000
+_HELP
+Data sets above the entered number will not be included
+in the search.
+#GROUP   42  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+& data sets matching but already in buffer.
+#GROUP   44  TYPE MENU
+$WINDOW Attribute (&SFA)
+$TITLE Additional 'OR' condition?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  2
+$OPTION No
+$OPTION Yes
+$HELP
+ Up to 3 sets of OR conditions can be used.  Each set, one of
+ which you have just specified, is a sequence of AND and NOT
+ conditions.
+#GROUP   45  TYPE TEXT
+$WINDOW Find (&SF)
+$TEXT
+& data sets in the buffer.
+
+#GROUP   46  TYPE TEXT
+$WINDOW Subset (&SFS) Problem
+$TEXT
+Buffer is empty, cannot subset.
+#GROUP   51  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+Finding a subset of data sets in the data-set buffer.
+#GROUP   52  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+Finding data sets from & to &.
+#GROUP   53  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+Finding data sets of type:
+#GROUP   54  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+No search criteria will be used.
+#GROUP   55  TYPE TEXT
+$WINDOW Execute (&SFE)
+$TEXT
+Search criteria:
+#GROUP   56  TYPE TEXT
+$TEXT
+ NOT         <=        <=          AND
+#GROUP   57  TYPE TEXT
+$TEXT
+                  OR
+#GROUP   61  TYPE TEXT
+$WINDOW Add/Input (&SA/I) Problem
+$TEXT
+Data-set number & is already in the
+data-set buffer and thus may not be Added.
+#GROUP   62  TYPE TEXT
+$WINDOW Add/Input (&SA/I) Problem
+$TEXT
+Data-set number & does not exist in the WDM file
+and thus may not be added to the buffer.
+#GROUP   63  TYPE TEXT
+$WINDOW Add/Input (&SA/I) Problem
+$TEXT
+Data-set buffer is full, data-set number &
+was not added to the buffer.
+  END DATA
+END CLU

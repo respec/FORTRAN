@@ -1,0 +1,728 @@
+DATE
+WDMSFL
+SYSTEM
+CLU          155    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  COMPARE
+  END LABEL
+  DATA   CLU   155
+#GROUP    1  TYPE MENU
+$WINDOW Compare (&C)
+$SCREEN
+Choose a Compare option.
+
+      @Select  - pairs of simulated and observed data sets to Compare
+      @Output  - file and graphics and print options
+      @Define  - time period, time step, and missing value indicators
+      @Class   - intervals for analysis
+      @Analyze - the selected data sets
+      @Return  - to the Statistics screen
+$DEFAULT    6
+$LENGTH    8
+$OPTION Return
+_HELP
+ Select when no more compares are to be done.
+$OPTION Output
+_HELP
+ Options for output to a file, screen or graphics device.
+$OPTION Define
+_HELP
+ By default, the analysis will be for the available period of record
+ at the time step of the data.  The value of the attribute TSFILL will
+ be used to identify missing time steps.
+$OPTION Class
+_HELP
+ Up to 35 intervals may be specified.  Default intervals are based on a
+ minimum of 1.0 and maximum of 10000.0 and distributed logarithmetically.
+$OPTION Analyze
+_HELP
+ Must be selected to get results.   Data sets must be selected first.
+$OPTION Select
+_HELP
+ Identify pairs of data sets to be compared.  The first data set of
+ the pair will be considered the 'simulated' time series and the second
+ will be considered the 'observed' time series.
+#GROUP    2  TYPE PRM1
+$WINDOW Output (&CO)
+$SCREEN
+
+  Modify output parameters and options as needed.
+
+  File name [@OUTFILE........................................................]
+
+  Generate plot?  [@P]                   Statistics to screen    [@SCRN]
+     LP=log-prob,  AP=arith-prob,                                      
+     LA=log-arith, AA=arith-arith
+     NO=no plot
+$FIELD @OUTFILE
+_TYPE CHARACTER
+_HELP
+Enter the name of the file for statistical analysis output.
+$FIELD @P
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, LP, AP, LA, AA
+_DEFAULT LP
+_HELP
+ First character is for y-axis and can be Logarithmetic or Arithmetic.  The
+ second character is for the x-axis and can be Probability or Arithmetic.
+ The probability axis uses a Gausian transformation.
+$FIELD @SCRN
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NO, YES                  
+_DEFAULT YES
+_HELP
+ Enter Yes to get a summary of the results on the screen.  The full tables
+ for all computed statistics for all class intervals is on the output file.
+#GROUP    3  TYPE FILE
+$SCREEN
+
+                        Name of output file?
+
+ [@FILE...........................................................]
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ Enter file name for current directory or full path name.  An existing or
+ new file name can be used.
+#GROUP    4  TYPE TEXT
+$WINDOW Output (&CO) Problem
+$TEXT
+Unable to open specified file for statistical output.
+
+Use the 'Prev'ious command to go back to the Output screen
+and specify another file for output,
+
+OR
+
+Use the 'Accept' command to continue and output
+statistics to the default file COMPAR.OUT.
+#GROUP    5  TYPE PRM1
+$WINDOW Define (&CD)
+$SCREEN
+
+Modify as needed:
+
+   Period of record to use  [@PERIOD.] (Full, Common, or Specify)
+   Time step for analysis   [@TSTU...] (Default or Specify)
+
+   Missing value, simulated [@MissS....]
+   Missing value, observed  [@MissO....]
+$FIELD @PERIOD
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID FULL, COMMON, SPECIFY
+_DEFAULT FULL
+_HELP
+Use FULL to use the available period of record for each pair of data sets.
+    COMMON to specify a common period or record for all pairs of data sets.
+    SPECIFY to be given the oportunity to modify the start and end dates
+               for each pair of data sets (during analysis).
+$FIELD @TSTU
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID DEFAULT, SPECIFY
+_DEFAULT DEFAULT
+_HELP
+ Enter DEFAULT to use the available time step and time units for each
+ pair of data sets.  These must have been set when data was added to WDM 
+ File.  Enter SPECIFY to be given the opportunity to modify the time step
+ and time units for each pair of data sets (during analysis).
+$FIELD @MissS
+_TYPE REAL
+_RANGE    -999. : -999.
+_DEFAULT  -99999.
+_HELP
+By default, the values of TSFILL from the first 'simulated' and 'observed'
+data sets will be recognized as the missing value indicators for all pairs
+of data sets.  You may wish to modify these if TSFILL is 0.0.
+$FIELD @MissO
+_TYPE REAL
+_RANGE    -999. : -999.
+_DEFAULT  -99999.
+_HELP
+By default, the values of TSFILL from the first 'simulated' and 'observed'
+data sets will be recognized as the missing value indicators for all pairs
+of data sets.  You may wish to modify these if TSFILL is 0.0.
+#GROUP    6  TYPE PRM1
+$WINDOW Define (&CD) Warning
+$SCREEN
+
+*** Warning!  Using a zero value for the missing value may cause
+              some of your data to be skipped in the analysis.  If
+              this is what you want, leave these values unchanged.
+              Otherwise, modify them now.
+
+              Missing value, simulated [@MissS....]
+              Missing value, observed  [@MissO....]
+$FIELD @MissS
+_TYPE REAL
+_RANGE    -999. : -999.
+_DEFAULT  -99999.
+_HELP
+By default, the values of TSFILL from the first 'simulated' and 'observed'
+data sets will be recognized as the missing value indicators for all pairs
+of data sets.  You may wish to modify these if TSFILL is 0.0.
+$FIELD @MissO
+_TYPE REAL
+_RANGE    -999. : -999.
+_DEFAULT  -99999.
+_HELP
+By default, the values of TSFILL from the first 'simulated' and 'observed'
+data sets will be recognized as the missing value indicators for all pairs
+of data sets.  You may wish to modify these if TSFILL is 0.0.
+#GROUP    8  TYPE PRM1
+$WINDOW Class (&CC)
+$SCREEN
+
+ Define the class limits
+
+   [@] Standard      boundaries for class limits:  lower [@bndlow.]
+                                                   upper [@bndup..]
+   [@] Specify       number of class limits [@no]
+$FIELD @] Standard
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] Specify
+_OFFON @] Specify
+_HIDE OFF @bndlow 4 20 4 68
+_HIDE OFF @bndup  5 20 5 68
+_HELP
+Select Standard for 34 classes logrithmically distributed between
+lower and upper bounds that you specify.
+$FIELD @] Specify
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] Standard
+_OFFON @] Standard
+_HIDE OFF @no 6 20 6 68
+_HELP
+Select Specify to input up to 34 class limits.
+$FIELD @bndlow
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.000001 : 1000.
+_DEFAULT  1.
+_HELP
+ Top of first class interval.  Must be greater than 0.0.
+$FIELD @bndup
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE   1. : 10000000.
+_DEFAULT 10000.
+_HELP
+ Top of next-to-last interval above which all values will be in the
+ highest class interval (ie, last class interval will go from this
+ value to infinity.
+$FIELD @no
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE    2 : 35
+_DEFAULT  35
+_HELP
+ You will need to input the upper limit of each class.
+#GROUP    9  TYPE PRM2
+$WINDOW Specify (&CCS)
+$HEADER
+
+     Class Limit        Class Limit
+     Number             Value
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 35
+_HELP
+ This is just a sequence number and cannot be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_ORDER ASCENDING
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE  -10000000. : 10000000.
+_HELP
+ Each number must be larger than the previous.  This defines the top of
+ the interval.  The first value should be 0.0 if you want an interval to
+ count the number of values that are less than or equal to 0.0.
+#GROUP   10  TYPE PRM1
+$WINDOW Analyze (&CA)
+$SCREEN
+
+  Enter the common time period for analysis of data sets.
+
+            Year    Month   Day     Hour    Minute  Second
+  Start    [@PRM1] [@PRM2] [@PRM3] [@PRM4] [@PRM5] [@PRM6]
+  End      [@PRM7] [@PRM8] [@PRM9] [@PRMA] [@PRMB] [@PRMC]
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$HELP
+ Use all four digits for the year.  Use 1 for Jan ... 12 for Dec. Be sure
+ day doesn't exceed number of days in a month (only check is less than 31).
+ Hour is 0-24.  Start date is beginning of time step, ie hour usually 0.
+ End date is end of time step, ie hour usually 24.
+#GROUP   11  TYPE TEXT
+$WINDOW Analyze (&CA) Problem
+$TEXT
+The dates specified are not valid as they are not within
+the period of record common to all of the data sets.
+
+You must specify dates which are within the following period:
+
+               Year/Mo/Dy/Hr/Mi/Sc
+Starting Date: &/&/&/&/&/&
+  Ending Date: &/&/&/&/&/&
+#GROUP   12  TYPE TEXT
+$WINDOW Analyze (&CA) Problem
+$TEXT
+Unable to determine a comon period for the data sets
+being analyzed as no common period could be found for them.
+
+Currently, the method for determining the period of analysis
+has been set to use the Full period for each data set.
+
+If you want to change this method, select the 'Previous' command to
+return to the Compare menu and the select the Period option.
+#GROUP   13  TYPE TEXT
+$TEXT
+
+  For data-set number &,
+#GROUP   14  TYPE PRM1
+$WINDOW Analyze (&CA)
+$SCREEN
+
+  Specify Starting and Ending dates.
+
+            Year    Month   Day     Hour    Minute  Second
+  Start    [@PRM1] [@PRM2] [@PRM3] [@PRM4] [@PRM5] [@PRM6]
+  End      [@PRM7] [@PRM8] [@PRM9] [@PRMA] [@PRMB] [@PRMC]
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$HELP
+ Use all four digits for the year.  Use 1 for Jan ... 12 for Dec. Be sure
+ day doesn't exceed number of days in a month (only check is less than 31).
+ Hour is 0-24.  Start date is beginning of time step, ie hour usually 0.
+ End date is end of time step, ie hour usually 24.
+#GROUP   15  TYPE PRM1
+$WINDOW Analyze (&CA)
+$SCREEN
+
+  Specify time step, time units, and any needed data transformation.
+
+                   Time step            [@TSTP1]
+                   Time units          [@TUNIT1]
+                   Data transformation [@DTRAN1]
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+ Enter number of time units for the analysis interval.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+_HELP
+ Time step and unit must divide evenly into 1 day, month or year.
+ (ie, 17 hours, 11 months are not acceptable).
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN
+_DEFAULT AVERAGE
+_HELP
+ AVERAGE or SUM are usually used.  MIN and MAX have not been tested (BEWARE).
+#GROUP   16  TYPE PRM1
+$WINDOW Analyze (&CA)
+$SCREEN
+  Specify dates, time step, time units, and data transformation.
+
+            Year    Month   Day     Hour    Minute  Second
+  Start    [@PRM1] [@PRM2] [@PRM3] [@PRM4] [@PRM5] [@PRM6]
+  End      [@PRM7] [@PRM8] [@PRM9] [@PRMA] [@PRMB] [@PRMC]
+
+           Time step    Time units   Data transformation
+            [@TSTP1]     [@TUNIT1]        [@DTRAN1]
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN
+_DEFAULT AVERAGE
+_HELP
+ This is only used when the analysis time step is different from the
+ time step of the input data. When analysis time step is larger a mean
+ is computed, the values are totaled, or the minimum or maximum value
+ is used.  If the analysis time step is shorter same or divide is used.
+$HELP
+ Use all four digits for the year.  Use 1 for Jan ... 12 for Dec. Be sure
+ day doesn't exceed number of days in a month (only check is less than 31).
+ Hour is 0-24.  Start date is beginning of time step, ie hour usually 0.
+ End date is end of time step, ie hour usually 24.
+#GROUP   17  TYPE TEXT
+$WINDOW Analysis (&CA) Problem
+$TEXT
+The dates entered on the previous screen are invalid
+as the starting date falls after the ending date.
+
+The dates must be specified correctly for the
+Analysis to be completed.
+#GROUP   18  TYPE MENU
+$WINDOW Analyze-Plot (&CA)
+$SCREEN
+ Select an option.
+
+       @Modify - parameters for the plot
+       @Plot   - to the specified output device
+
+       @Return - from plotting to the Analysis
+$DEFAULT    1
+$LENGTH    6
+$OPTION Modify
+_HELP
+ You may modify the specifications for the plot before and/or after
+ the plot is made.  Line type, symbol etc may be changed.
+$OPTION Plot
+_HELP
+ Must be selected to get the plot. The plot is generated according to the
+ specifications provided as defaults or modifications you made, and put on
+ the selected output graphics device.
+$OPTION Return
+_HELP
+ Select if finished plotting and modifying the plot.
+#GROUP   19  TYPE TEXT
+$WINDOW Analyze (&CA) Problem
+$TEXT
+Unable to perform statistical Analysis as there are
+no data sets with which to work.
+
+To select data sets for use, choose the
+Select option from the Compare screen.
+#GROUP   21  TYPE TEXT
+$TEXT
+Streamflow, in cubic feet per second
+#GROUP   22  TYPE TEXT
+$TEXT
+Percent chance flow exceeded
+#GROUP   23  TYPE TEXT
+$TEXT
+Reading data from WDM file.
+#GROUP   24  TYPE TEXT
+$TEXT
+ Error reading WDM file. Error code is &.
+#GROUP   25  TYPE TEXT
+$WINDOW Output (&CO) Problem
+$TEXT
+You have specified to output compare plots to a graphics device.
+
+However, graphics is not currently available,
+thus no compare plots will be generated.
+
+If you have GKS graphics available on your system,
+add the line "GRAPHS YES" (no quotes) to your TERM.DAT
+file to make graphics available to ANNIE/AIDE.
+#GROUP   40  TYPE PRM1
+$WINDOW Analyze (&CA)
+$SCREEN
+                 Mean               Root mean
+  Number    absolute error(1)     square error(2)        Bias(3)
+    of     ------------------- ------------------- -------------------
+   cases   Average    Percent   Average    Percent  Average   Percent
+ --------- --------- --------- --------- --------- --------- ---------
+ @PRM1.... @PRM2.... @PRM3.... @PRM4.... @PRM5.... @PRM6.... @PRM7....
+
+ Standard error of estimate = @PRM8....
+          = square root((n/n-1)*((tot.col.5)**2 - (tot.col.7)**2))
+$FIELD @PRM1
+_TYPE REAL
+_PROTECT PROTECTED
+$FIELD @PRM2
+_TYPE REAL
+_PROTECT PROTECTED
+$FIELD @PRM3
+_TYPE REAL
+_PROTECT PROTECTED
+$FIELD @PRM4
+_TYPE REAL
+_PROTECT PROTECTED
+$FIELD @PRM5
+_TYPE REAL
+_PROTECT PROTECTED
+$FIELD @PRM6
+_TYPE REAL
+_PROTECT PROTECTED
+$FIELD @PRM7
+_TYPE REAL
+_PROTECT PROTECTED
+$FIELD @PRM8
+_TYPE REAL
+_PROTECT PROTECTED
+$HELP
+ (1) Average = sum(|S-O|/n)
+     Percent = 100 * (sum(|S-O|/O))/n  for all O > 0
+ (2) Average = square root(sum((S-O)**2)/n)
+     Percent = 100 * square root(sum(((S-O)/O)**2)/n) for all O > 0
+ (3) Average = sum (S-O)/n
+     Percent = 100 * sum ((S-O)/O)/n)  for all O > 0
+#GROUP   41  TYPE TEXT
+$WINDOW Analyze (&CA)
+$TEXT
+
+                  COUNTS OF ZERO FLOWS
+                  --------------------
+
+ Observed values are zero                            &
+ Simulated values are zero                           &
+ Observed values are zero when simulated are zero    &
+ Observed values are zero when simulated are not     &
+ Observed values are not zero when simulated are     &
+#GROUP   42  TYPE PRM1
+$WINDOW Analyze (&CA)
+$SCREEN
+               Number of deviations between indicated value
+  -------------------------------------------------------------------------
+             -60     -30     -10       0      10      30      60
+  -------------------------------------------------------------------------
+      @PRM1.. @PRM2.. @PRM3.. @PRM4.. @PRM5.. @PRM6.. @PRM7.. @PRM8..
+$FIELD @PRM1
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @PRM2
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @PRM3
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @PRM4
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @PRM5
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @PRM6
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @PRM7
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @PRM8
+_TYPE INTEGER
+_PROTECT PROTECTED
+#GROUP   43  TYPE TEXT
+$WINDOW Analyze (&CA) Problem
+$TEXT
+Unable to perform all compare analyses as there are
+an odd number of data sets to compare.
+
+Either select another data set or delete one from the
+buffer using the Select option from the Compare screen.
+#GROUP   44  TYPE TEXT
+$WINDOW Analyze (&CA) progress
+$TEXT
+Processed data sets & and &.
+#GROUP   45  TYPE TEXT
+$WINDOW Analyze (&CA) finished
+$TEXT
+Finished processing all stations.
+#GROUP   46  TYPE TEXT
+$WINDOW Analyze (&CA)
+$TEXT
+
+                  COUNTS OF ZERO FLOWS
+                  --------------------
+
+ DataSet2 values are zero                                  &
+ DataSet1 values are zero                                  &
+ DataSet2 values are zero when DataSet1 values are zero    &
+ DataSet2 values are zero when DataSet1 values are not     &
+ DataSet2 values are not zero when DataSet1 values are     &
+#GROUP   50  TYPE MENU
+$WINDOW Compare (&C)
+$SCREEN
+Choose a Compare option.
+
+      @Output  - file and graphics and print options
+      @Define  - time period, time step, and missing value indicators
+      @Class   - intervals for analysis
+      @Analyze - the selected data sets
+      @Return  - to the Statistics screen
+$DEFAULT    2
+$LENGTH    8
+$OPTION Return
+_HELP
+ Select when no more compares are to be done.
+$OPTION Output
+_HELP
+ Options for output to a file, screen or graphics device.
+$OPTION Define
+_HELP
+ By default, the analysis will be for the available period of record
+ at the time step of the data.  The value of the attribute TSFILL will
+ be used to identify missing time steps.
+$OPTION Class
+_HELP
+ Up to 35 intervals may be specified.  Default intervals are based on a
+ minimum of 1.0 and maximum of 10000.0 and distributed logarithmetically.
+$OPTION Analyze
+_HELP
+ Must be selected to get results.  Data sets must be selected first.
+  END DATA
+END CLU

@@ -1,0 +1,103 @@
+YR                    84 MON                   85 DAY                   86
+HR                    87 MIN                   88 SPOUT                 98
+SURLI                320 PETINP               325 CSNOFG               328
+IWPM1    5           328 RTOPFG               329 VRSFG                330
+VNNFG                331 RTLIFG               332 LSUR                 333
+IWPM2    2           333 SLSUR                334 PETMAX               335
+IWPM3    2           335 PETMIN               336 RETSCM  12           337
+NSURM   12           349 SMSFG                361 FSMSFG               362  
+RETS                 364 IWST1    2           364 SURS                 365
+IWST2                366 PETADJ               366 IMPS                 367
+RETSC                372 NSUR                 373 SRC                  374
+DEC                  375 SUPY                 380 SURO                 381 
+PET                  382 IMPEV                383 RETO                 410
+SURI                 411 SLSLD                417 VASDFG               423
+SLDPM1   3           423 VRSDFG               424 SDOPFG               425
+ACCSDM  12           426 REMSDM  12           438 KEIM                 450
+JEIM                 451 DRYDFG               452 SLDS                 453
+ACCSDP               455 REMSDP               456 SOSLD                457
+SLITMP               463 SLIDOX               464 SLICO2               465
+WTFVFG               469 ELEVGC               470 AWTFM   12           471
+BWTFM   12           483 LIFAC    2           495 AIRTC                497
+SOTMP                498 IGST1    3           498 SODOX                499
+SOCO2                500 AWTF                 504 BWTF                 505
+SOHT                 506 SODOXM               507 SOCO2M               508
+SLIQO    7           524 SLIQSP   7           559 IQADFG  20           603
+VPFWFG   7           643 VQOFG    7           670 IQAFXM  12  10       717
+IQACNM  12  10       837 POTFWM  12   7       957 ACQOPM  12   7      1041
+REMQOM  12   7      1125 WSFAC    7          1209 SQO      7          1216
+POTFW    7          1223 ACQOP    7          1230 REMQOP   7          1237
+SOQSP    7          1244 SOQS     7          1265 SOQO     7          1300
+SOQOC    7          1335 SOQUAL  10          1342 SOQC    10          1352
+IQADDR  10          1362 IQADWT  10          1412 IQADEP  10          1462
+
+
+
+
+GATMP                113
+LAPSE   24           117
+ELDAT                141
+AIRTMP               142
+AIRTS                143
+PREC                 145
+DTMPG                150
+WINMOV               151
+SOLRAD               152
+ICEFG                157
+SNOPFG               158
+VKMFG                159
+SVP     40           160
+LAT                  200
+SNPM1    7           200
+MELEV                201
+SHADE                202
+SNOWCF               203
+COVIND               204
+KMELT                205
+TBASE                206
+RDCSN                207
+SNPM2    6           207
+TSNOW                208
+SNOEVP               209
+CCFACT               210
+MWATER               211
+MGMELT               212
+KMELTM  12           213
+DRYFG                225
+SNOFFG               227
+RAINFG               228
+PACKF                233
+SNST1    7           233
+PACKW                234
+PACKI                235
+PDEPTH               236
+COVINX               237
+NEGHTS               238
+XLNMLT               239
+RDENPF               240
+SNST2    5           240
+SKYCLR               241
+SNOCOV               242
+DULL                 243
+ALBEDO               244
+PAKTMP               245
+SNST3    3           245
+DEWTMP               246
+SNOTMP               247
+PACK                 248
+RDNSN                253
+MNEGHS               254
+PACKWC               255
+NEGHT                256
+GMELTR               257
+COMPCT               258
+SNOWEP               259
+MOSTHT               260
+VAP                  261
+SNOWF                278
+PRAIN                279
+SNOWE                280
+WYIELD               281
+MELT                 282
+RAINF                313
+

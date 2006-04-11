@@ -1,0 +1,852 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           62    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  SSCENA
+  END LABEL
+  DATA   CLU    62
+#GROUP  39  TYPE PRM1
+$WINDOW Characteristics (SMC)
+$SCREEN
+
+  Name of Reach to Modify [@RCHNAM.]
+
+$FIELD @RCHNAM
+_TYPE    CHARACTER
+$HELP
+ Enter the name of the reach you wish to modify.  The reach name specified
+ must exist in the uci file as a valid reach name.
+#GROUP  40  TYPE MENU
+$WINDOW Modify (SM)
+$SCREEN
+Select a Scenario Modify option.
+
+@General !                                    Input to Reaches:
+                                                @Land !
+@ADd !                                          @Upstream !
+@DElete !
+@Characteristics !                            Output from Reaches:
+                                                @DOwnstream !
+@Return !                                       @ANalysis !
+
+$DEFAULT   1
+$LENGTH    18
+$OPTION General
+_DESC - specifications
+$OPTION ADd
+_DESC - a channel or pond
+$OPTION DElete
+_DESC - a channel or pond
+$OPTION Characteristics
+_DESC - of a channel or pond
+$OPTION Land
+_DESC - Surface Table
+$OPTION Upstream
+_DESC - Table
+$OPTION DOwnstream
+_DESC - Table
+$OPTION ANalysis
+_DESC - Table
+$OPTION Return
+_DESC - to scenario menu
+$HELP
+ Choose an option to modify for this scenario.
+#GROUP  41  TYPE PRM1
+$WINDOW General (SMG)
+$SCREEN
+ General scenario parameters.
+
+        Name [@SENNAM.]
+ Description [@SENDES.......................................................]
+
+
+                                  Year    Mo    Dy
+                  Starting Date  [@SYR] [@SM] [@SD]
+                  Ending Date    [@EYR] [@EM] [@ED]
+
+$FIELD @SENNAM
+_TYPE    CHARACTER
+_PROTECT PROTECTED
+$FIELD @SENDES
+_TYPE    CHARACTER
+$FIELD @SYR
+_TYPE    INTEGER
+_PROTECT CORRECT
+_RANGE   1492 : -999
+$FIELD @SM
+_TYPE    INTEGER
+_PROTECT CORRECT
+_RANGE   1 : 12
+_HELP
+ 1 = JANUARY ... 12 = DECEMBER
+$FIELD @SD
+_TYPE    INTEGER
+_PROTECT CORRECT
+_RANGE   1 : 31
+$FIELD @EYR
+_TYPE    INTEGER
+_PROTECT CORRECT
+_RANGE   1492 : -999
+$FIELD @EM
+_TYPE    INTEGER
+_PROTECT CORRECT
+_RANGE   1 : 12
+_HELP
+ 1 = JANUARY ... 12 = DECEMBER
+$FIELD @ED
+_TYPE    INTEGER
+_PROTECT CORRECT
+_RANGE   1 : 31
+$HELP
+ Enter the general scenario parameters as desired.
+#GROUP  42  TYPE PRM1
+$WINDOW ADd (SMAd-1)
+$SCREEN
+  Name of New Reach [@RCHNAM.]       Take Defaults from Reach [@DEFRCH.]
+
+  Method of Cross-section Input      Reach Characteristics
+    [@] XY Pairs                       Slope          [@SLOPE]
+    [@] Trapezoid                      Length         [@LENTH]
+    [@] File                           Manning's N    [@MANNI]
+    [@] Default Ftable                 Initial Volume [@INIVOL]
+
+  [@] Precip Into Reach Considered   [@] Evap From Reach Considered
+        From Station [@PCPNAM.]            From Station [@EVPNAM.]
+$FIELD @RCHNAM
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$FIELD @DEFRCH
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$FIELD @] XY
+_TYPE    OPTION
+_SET     1
+_WIDTH 1
+$FIELD @] Tr
+_TYPE    OPTION
+_SET     1
+_WIDTH 1
+$FIELD @] Fi
+_TYPE    OPTION
+_SET     1
+_WIDTH 1
+_HIDE ON @SLOPE 4 36 4 63
+_HIDE ON @LENTH 5 36 5 63
+_HIDE ON @MANNI 6 36 6 63
+$FIELD @] De
+_TYPE    OPTION
+_SET     1
+_WIDTH 1
+_HIDE ON @MANNI 6 36 6 63
+$FIELD @SLOPE
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.0:-999
+_DEFAULT 0.0
+$FIELD @LENTH
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.01:-999
+_DEFAULT 0.01
+$FIELD @MANNI
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.0:-999
+_DEFAULT 0.0
+$FIELD @INIVOL
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.0:-999
+_DEFAULT 0.0
+$FIELD @] Pre
+_TYPE    OPTION
+_SET     2
+_WIDTH 1
+_HIDE OFF @PCPNAM 10 7 10 31
+$FIELD @PCPNAM
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$FIELD @] Eva
+_TYPE    OPTION
+_SET     2
+_WIDTH 1
+_HIDE OFF @EVPNAM 10 42 10 66
+$FIELD @EVPNAM
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$HELP
+ Enter the name of the new reach and the parameters as desired.
+ The new reach name must not be the same as an existing reach name.
+ Also enter the reach name from which to take defaults.
+#GROUP  43  TYPE PRM1
+$WINDOW DElete (SMDe)
+$SCREEN
+
+  Name of Reach to Delete  [@RCHNAM.]
+
+  [@] Re-connect upstream/downstream reaches
+
+$FIELD @RCHNAM
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$FIELD @] Re
+_TYPE    OPTION
+_SET     1
+_WIDTH   1
+$HELP
+ Enter the reach to delete.  Toggle the reconnect option to preserve
+ the linkages between upstream and downstream reaches.
+#GROUP  44  TYPE PRM1
+$WINDOW Characteristics (SMC-1)
+$SCREEN
+  Reach @RCHNAM.
+
+  Method of Cross-section Input      Reach Characteristics
+    [@] XY Pairs                       Slope          [@SLOPE]
+    [@] Trapezoid                      Length         [@LENTH]
+    [@] File                           Manning's N    [@MANNI]
+    [@] No modification to Ftable      Initial Volume [@INIVOL]
+
+  [@] Precip Into Reach Considered   [@] Evap From Reach Considered
+        From Station [@PCPNAM.]            From Station [@EVPNAM.]
+$FIELD @RCHNAM
+_TYPE    CHARACTER
+_PROTECT PROTECTED
+$FIELD @] XY
+_TYPE    OPTION
+_SET     1
+_WIDTH   1
+$FIELD @] Tr
+_TYPE    OPTION
+_SET     1
+_WIDTH   1
+$FIELD @] Fi
+_TYPE    OPTION
+_SET     1
+_WIDTH   1
+_HIDE ON @SLOPE 4 36 4 63
+_HIDE ON @LENTH 5 36 5 63
+_HIDE ON @MANNI 6 36 6 63
+$FIELD @] No
+_TYPE    OPTION
+_SET     1
+_WIDTH   1
+_HIDE ON @MANNI 6 36 6 63
+$FIELD @SLOPE
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.0:-999
+_DEFAULT 0.0
+$FIELD @LENTH
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.01:-999
+_DEFAULT 0.01
+$FIELD @MANNI
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.0:999.9
+_DEFAULT 0.0
+$FIELD @INIVOL
+_TYPE    REAL
+_PROTECT CORRECT
+_RANGE 0.0:999.9
+_DEFAULT 0.0
+$FIELD @] Pre
+_TYPE    OPTION
+_SET     2
+_WIDTH 1
+_HIDE OFF @PCPNAM 10 7 10 31
+$FIELD @PCPNAM
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$FIELD @] Eva
+_TYPE    OPTION
+_SET     2
+_WIDTH 1
+_HIDE OFF @EVPNAM 10 42 10 66
+$FIELD @EVPNAM
+_TYPE    CHARACTER
+_PROTECT CORRECT
+$HELP
+ Modify the characteristics of the specified reach as desired.
+#GROUP   45  CLASS PRM2
+$WINDOW Land (SML)
+$HEADER
+ --------  ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+$FIELD  FIELD1
+_TYPE CHARACTER
+_WIDTH   8
+_COLUMN  2
+_PROTECT PROTECTED
+$FIELD  FIELD2
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  12
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD3
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  17
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD4
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  22
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD5
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  27
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD6
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  32
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD7
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  37
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD8
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  42
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD9
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  47
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD10
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  52
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD11
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  57
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD12
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  62
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD  FIELD13
+_TYPE  REAL
+_WIDTH   4
+_COLUMN  67
+_PROTECT CORRECT
+_RANGE 0:9999
+$HELP
+ Edit the number of acres of each land use type associated with each reach.
+#GROUP   46  CLASS PRM2
+$WINDOW Upstream (SMU)
+$HEADER
+ Rch Name         Upstream Reach Names (up to 7)
+ --------  -------- -------- -------- -------- -------- -------- --------
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  2
+_PROTECT PROTECTED
+_TYPE CHARACTER
+$FIELD  FIELD2
+_WIDTH   8
+_COLUMN  12
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  21
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN  30
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD5
+_WIDTH   8
+_COLUMN  39
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD6
+_WIDTH   8
+_COLUMN  48
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD7
+_WIDTH   8
+_COLUMN  57
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD8
+_WIDTH   8
+_COLUMN  66
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$HELP
+ Edit the reaches directly upstream of each reach.
+#GROUP   47  CLASS PRM2
+$WINDOW Downstream (SMD)
+$HEADER
+ Rch Name        Downstream Reach Names (up to 5)
+ --------  -------- -------- -------- -------- --------
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  2
+_PROTECT PROTECTED
+_TYPE CHARACTER
+$FIELD  FIELD2
+_WIDTH   8
+_COLUMN  12
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  21
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN  30
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD5
+_WIDTH   8
+_COLUMN  39
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$FIELD  FIELD6
+_WIDTH   8
+_COLUMN  48
+_TYPE CHARACTER
+_VALID ?RCHNAM
+$HELP
+ Edit the reaches directly downstream of each reach.
+#GROUP   48  CLASS PRM2
+$WINDOW ANalysis (SMAn)
+$HEADER
+ Rch Name    Output Time Series For Analysis
+ --------    -------------------------------
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  2
+_PROTECT PROTECTED
+_TYPE CHARACTER
+$FIELD  FIELD2
+_WIDTH   4
+_COLUMN  14
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID  NO, YES
+_DEFAULT NO
+$HELP
+ Specify 'yes' if you wish to create a time series data set
+ for output from that reach.
+#GROUP  49  CLASS TEXT
+$WINDOW Modify (SM) Problem
+$TEXT
+  No scenario is active to modify.
+  A scenario must first be made active using the 'Activate' option
+  or created using the 'Create' option.
+#GROUP  51  TYPE TEXT
+$WINDOW XY Pairs (SMAdX) Problem
+$TEXT
+ Generating Ftable from XY Pairs not yet implemented.
+#GROUP  52  TYPE PRM1
+$WINDOW Trapezoid (SMAdT)
+$SCREEN
+
+  Bottom channel width  > @BOTTOM.
+  Top channel width     > @TOPWID.
+  Channel depth         > @CHADEP.
+
+  Flood plain slope     > @FSLOPE.
+  Flood plain roughness > @FROUGH.
+
+$FIELD @BOTTOM
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @TOPWID
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @CHADEP
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @FSLOPE
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @FROUGH
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$HELP
+ When the trapezoid option is completed, this data will be
+ used to create an ftable for this reach.
+#GROUP  53  TYPE TEXT
+$WINDOW Trapezoid (SMAdT) Problem
+$TEXT
+ Generating Ftable from Trapezoid not yet implemented.
+#GROUP  54  TYPE TEXT
+$WINDOW File (SMAdF) Problem
+$TEXT
+ Problem reading Ftable from a file.  Ftable has not been added.
+#GROUP  55  TYPE TEXT
+$WINDOW Characteristics (SMCX) Problem
+$TEXT
+ Generating Ftable from XY Pairs not yet implemented.
+#GROUP  56  TYPE PRM1
+$WINDOW Trapezoid (SMCT)
+$SCREEN
+
+  Bottom channel width  > @BOTTOM.
+  Top channel width     > @TOPWID.
+  Channel depth         > @CHADEP.
+
+  Flood plain slope     > @FSLOPE.
+  Flood plain roughness > @FROUGH.
+
+$FIELD @BOTTOM
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @TOPWID
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @CHADEP
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @FSLOPE
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$FIELD @FROUGH
+_TYPE REAL
+_RANGE   0.0 : -999.0
+_DEFAULT -999.
+$HELP
+ When the trapezoid option is completed, this data will be
+ used to modify the ftable for this reach.
+#GROUP  57  TYPE TEXT
+$WINDOW Trapezoid (SMCT) Problem
+$TEXT
+ Generating Ftable from Trapezoid not yet implemented.
+#GROUP  58  TYPE TEXT
+$WINDOW File (SMCF) Problem
+$TEXT
+ Problem overwriting Ftable with Ftable in specified file.
+ Ftable had not been modified.
+#GROUP  59  TYPE TEXT
+$WINDOW Return (SMR)
+$TEXT
+ Processing Scenario Data
+#GROUP  60  TYPE TEXT
+$WINDOW Modify (SM)
+$TEXT
+ Processing Scenario Data
+#GROUP  61  TYPE PRM1
+$WINDOW File (SMAdF)
+$SCREEN
+
+
+  Enter name of file containing Ftable for this reach:
+
+  [@FTFILE.........................................................]
+
+
+
+
+
+$FIELD @FTFILE
+_TYPE FILE
+_VALID STATUS:OLD
+$HELP
+ An Ftable will be added for this reach using the file specified.
+ The file must include the entire Ftable in the format required by
+ HSPF.  The Ftable number will be modified to correspond to the
+ appropriate reach number.
+#GROUP  62  TYPE PRM1
+$WINDOW File (SMCF)
+$SCREEN
+
+
+  Enter name of file containing Ftable for this reach:
+
+  [@FTFILE.........................................................]
+
+
+
+
+
+$FIELD @FTFILE
+_TYPE FILE
+_VALID STATUS:OLD
+$HELP
+ An Ftable will be overwritten for this reach using the file specified.
+ The file must include the entire Ftable in the format required by
+ HSPF.  The Ftable number will be modified to correspond to the
+ appropriate reach number.
+#GROUP  63  TYPE TEXT
+$WINDOW ADd (SMAd) Problem
+$TEXT
+  Cannot add another reach to this scenario because
+  the number of reaches has reached its limit.
+#GROUP  64  TYPE TEXT
+$WINDOW DElete (SMDe) Problem
+$TEXT
+  Cannot delete a reach from this scenario because
+  no reaches exist.
+#GROUP  65  TYPE TEXT
+$WINDOW Characteristics (SMC) Problem
+$TEXT
+  Cannot edit reach characteristics because
+  no reaches exist.
+#GROUP  66  CLASS TEXT
+$WINDOW Land (SML) Problem
+$TEXT
+  Cannot edit land use table because
+  no reaches exist.
+#GROUP  67  CLASS TEXT
+$WINDOW Upstream (SMU) Problem
+$TEXT
+  Cannot edit upstream table because
+  no reaches exist.
+#GROUP  68  CLASS TEXT
+$WINDOW Downstream (SMD) Problem
+$TEXT
+  Cannot edit downstream table because
+  no reaches exist.
+#GROUP  69  CLASS TEXT
+$WINDOW ANalysis (SMAn) Problem
+$TEXT
+  Cannot edit analysis table because
+  no reaches exist.
+#GROUP  81  TYPE PRM1
+$WINDOW Characteristics (SMC-2)
+$SCREEN
+      @LA1 @LA2 @LA3 @LA4 @LA5 @LA6 @LA7 @LA8 @LA9 @L10 @L11 @L12
+
+  Upstream Reaches        Downstream Reaches        Output Time
+  [@UPSTRE1] [@UPSTRE5]   [@DOWNST1] [@DOWNST4]     Series For
+  [@UPSTRE2] [@UPSTRE6]   [@DOWNST2] [@DOWNST5]     Analysis
+  [@UPSTRE3] [@UPSTRE7]   [@DOWNST3]                [@DSN]
+  [@UPSTRE4]
+
+$FIELD @LA1
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA2
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA3
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA4
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA5
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA6
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA7
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA8
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA9
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @L10
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @L11
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @L12
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @UPSTRE1
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE2
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE3
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE4
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE5
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE6
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE7
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST1
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST2
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST3
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST4
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST5
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DSN
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID  NO, YES
+_DEFAULT NO
+$HELP
+ Modify the given information as desired for this reach.
+#GROUP  82  TYPE PRM1
+$WINDOW ADd (SMAd-2)
+$SCREEN
+      @LA1 @LA2 @LA3 @LA4 @LA5 @LA6 @LA7 @LA8 @LA9 @L10 @L11 @L12
+
+  Upstream Reaches        Downstream Reaches        Output Time
+  [@UPSTRE1] [@UPSTRE5]   [@DOWNST1] [@DOWNST4]     Series For
+  [@UPSTRE2] [@UPSTRE6]   [@DOWNST2] [@DOWNST5]     Analysis
+  [@UPSTRE3] [@UPSTRE7]   [@DOWNST3]                [@DSN]
+  [@UPSTRE4]
+
+$FIELD @LA1
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA2
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA3
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA4
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA5
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA6
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA7
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA8
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @LA9
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @L10
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @L11
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @L12
+_TYPE  REAL
+_PROTECT CORRECT
+_RANGE 0:9999
+$FIELD @UPSTRE1
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE2
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE3
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE4
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE5
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE6
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @UPSTRE7
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST1
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST2
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST3
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST4
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DOWNST5
+_TYPE  CHARACTER
+_VALID ?RCHNAM
+$FIELD @DSN
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID  NO, YES
+_DEFAULT NO
+$HELP
+ Add the information as desired for this reach.
+  END DATA
+END CLU

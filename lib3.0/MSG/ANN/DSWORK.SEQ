@@ -1,0 +1,134 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  prwdst.seq
+END COMMENT 
+CLU           26    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  PRWDST                                                              
+  END LABEL   
+  DATA   CLU    26
+#GROUP    1  TYPE MENU
+$TITLE Select a Datasets option.
+$DEFAULT   1
+$LENGTH   10
+$WIDTH    78
+$COLENGTH  8
+$OPTION Attributes
+_DESC - process attributes on WDM data sets
+$OPTION Timeseries
+_DESC - process time-series data values on WDM data sets
+$OPTION Select
+_DESC - WDM data sets
+$OPTION Delete
+_DESC - delete existing data sets
+$OPTION Number
+_DESC - renumber WDM data sets
+$OPTION Build
+_DESC - a new data set and add required attributes
+$OPTION Return
+_DESC - to Opening screen
+$WINDOW Datasets (D)
+#GROUP    2  TYPE TEXT
+$TEXT
+Unable to perform delete option as there
+are no data sets in the buffer to delete.
+
+To put data sets in the buffer, select the
+Select option on the Datasets screen.
+$WINDOW Delete (DD) Problem
+#GROUP   10  TYPE MENU
+$TITLE What type of dataset values do you want to work with?
+$DEFAULT   1
+$LENGTH   10
+$WIDTH    78
+$COLENGTH  4
+$OPTION TImeseries
+_DESC - data is stored as a single time series
+$OPTION TAble
+_DESC - data is stored in a tabular format
+$OPTION Vector
+_DESC - format for storing DLG data
+$OPTION Return
+_DESC - to Datasets
+$HELP
+Other dataset types not yet available.
+$WINDOW Values (DV)
+#GROUP   11  TYPE TEXT
+$TEXT
+Work on this type of data set is not currently implemented.
+$WINDOW Values (DV) Problem
+#GROUP   20  TYPE PRM1
+$SCREEN
+
+  Renumber data-set numbers from [@PRM1] to [@PRM2]  by [@PRM3],
+
+             to data-set numbers [@PRM4] incremented by [@PRM5].
+$FIELD @PRM1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE  1 : 32000              
+_DEFAULT -999
+$FIELD @PRM3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$FIELD @PRM4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$FIELD @PRM5
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$WINDOW Number (DN)
+#GROUP   21  TYPE TEXT
+$TEXT
+Data-set number & does not exist.
+$WINDOW Number (DN) Problem
+#GROUP   22  TYPE TEXT
+$TEXT
+New data-set number & is already being used.
+$WINDOW Number (DN) Problem
+#GROUP   23  TYPE TEXT
+$TEXT
+Data-set & renumbered to &.
+$WINDOW Number (DN)
+#GROUP   40  TYPE TEXT
+$TEXT
+ Attributes of data-set &
+#GROUP   41  TYPE TEXT
+$TEXT
+ Data available &/&/& &:&:& to &/&/& &:&:&.
+#GROUP   42  TYPE TEXT
+$TEXT
+
+ No information available for data-set &.
+
+#GROUP   43  TYPE MENU
+$WINDOW Delete (DD)
+$SCREEN
+
+Are you sure you want to Delete?    @No  @Yes
+$DEFAULT   1
+$LENGTH    4
+$OPTION No
+$OPTION Yes
+#GROUP   44  TYPE TEXT
+$WINDOW Delete (DD)
+$TEXT
+Delete complete.
+#GROUP   45  TYPE TEXT
+$WINDOW Delete (DD)
+$TEXT
+Delete NOT completed.
+  END DATA
+END CLU 

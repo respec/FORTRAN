@@ -1,0 +1,562 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  attributes 351 - 400
+END COMMENT
+DSN           12    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN    12
+#ATTRIBUTE  GQU800    INDEX   351
+$TYPE     REAL
+$LENGTH   1
+$DESC      .80 based on GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  .80 quantile based on the Generalized Extreme Value distribution
+  using lmoments.  80 percent chance of being less than this value or
+  a nonexceedance probability of .80.  Attribute added by LMOMNT.  
+#ATTRIBUTE  GQU900    INDEX   352
+$TYPE     REAL
+$LENGTH   1
+$DESC      .90 based on GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  .90 quantile based on the Generalized Extreme Value distribution
+  using lmoments.  90 percent chance of being less than this value or
+  a nonexceedance probability of .90.  Attribute added by LMOMNT.
+#ATTRIBUTE  GQU950    INDEX   353
+$TYPE     REAL
+$LENGTH   1
+$DESC      .95 based on GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  .95 quantile based on the Generalized Extreme Value distribution
+  using lmoments.  95 percent chance of being less than this value or 
+  a nonexceedance probability of .95.  Attribute added by LMOMNT.
+#ATTRIBUTE  GQU980    INDEX   354
+$TYPE     REAL
+$LENGTH   1
+$DESC      .98 based on GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  .98 quantile based on the Generalized Extreme Value distribution  
+  using lmoments.  98 percent chance of being less than this value or
+  a nonexceedance probability of .98.  Attribute added by LMOMNT.
+#ATTRIBUTE  GQU990    INDEX   355
+$TYPE     REAL
+$LENGTH   1
+$DESC      .99 based on GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  .99 quantile based on the Generalized Extreme Value distribution 
+  using lmoments.  99 percent chance of being less than this value or
+  a nonexceedance probability of .99.  Attribute added by LMOMNT.
+#ATTRIBUTE  GQU995    INDEX   356
+$TYPE     REAL
+$LENGTH   1
+$DESC      .995 based on GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  .995 quantile based on the Generalized Extreme Value distribution 
+  using lmoments.  99.5 percent chance of being less than this value or
+  a nonexceedance probability of .995.  Attribute added by LMOMNT.
+#ATTRIBUTE  GQU998    INDEX   357
+$TYPE     REAL
+$LENGTH   1
+$DESC      .998 based on GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  .998 quantile based on the Generalized Extreme Value distribution
+  using lmoments.  99.8 percent chance of being less than this value or
+  a nonexceedance probability of .998.  Attribute added by LMOMNT>
+#ATTRIBUTE  LMO002    INDEX   358
+$TYPE     REAL
+$LENGTH   1
+$DESC     2-year recurrence based on 3-parameter lognormal, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 2-year recurrence interval (exceedance probability of 0.50)
+  based on the 3-parameter lognormal distribution, method of moments.  
+  Attribute added by program CFA.
+#ATTRIBUTE  LMO005    INDEX   359
+$TYPE     REAL
+$LENGTH   1
+$DESC     5-year recurrence based on 3-parameter lognormal, method of moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 5-year recurrence interval (exceedance probability of 0.20)
+  based on the 3-parameter lognormal distribution, method of moments.  
+  Attribute added by program CFA.
+#ATTRIBUTE  LMO010    INDEX   360
+$TYPE     REAL
+$LENGTH   1
+$DESC     10-year recurrence based on 3-parameter lognormal, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 10-year recurrence interval (exceedance probability of 0.10)
+  based on the 3-parameter lognormal distribution, method of moments.     
+  Attribute added by program CFA.
+#ATTRIBUTE  LMO020    INDEX   361
+$TYPE     REAL
+$LENGTH   1
+$DESC     20-year recurrence based on 3-parameter lognormal, method of moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 20-year recurrence interval (exceedance probability of 0.05)
+  based on the 3-parameter lognormal distribution, method of moments.
+  Attribute added by program CFA.
+#ATTRIBUTE  LMO050    INDEX   362 
+$TYPE     REAL
+$LENGTH   1
+$DESC     50-year recurrence based on 3-parameter lognormal, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 50-year recurrence interval (exceedance probability of 0.02)
+  based on the 3-parameter lognormal distribution, method of moments.
+  Attribute added by program CFA.
+#ATTRIBUTE  LMO100    INDEX   363
+$TYPE     REAL
+$LENGTH   1
+$DESC     100-year recurrence based on 3-parameter lognormal, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 100-year recurrence interval (exceedance probability of 0.01)
+  based on the 3-parameter lognormal distribution, method of moments.
+  Attribute added by program CFA.
+#ATTRIBUTE  LMO200    INDEX   364
+$TYPE     REAL
+$LENGTH   1
+$DESC     200-year recurrence based on 3-parameter lognormal, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 200-year recurrence interval (exceedance probability of 0.005)
+  based on the 3-parameter lognormal distribution, method of moments.
+  Attribute added by program CFA.
+#ATTRIBUTE  LMO500    INDEX   365
+$TYPE     REAL
+$LENGTH   1
+$DESC     500-year recurrence based on 3-parameter lognormal, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 500-year recurrence interval (exceedance probability of 0.002)
+  based on the 3-parameter lognormal distribution, method of moments.
+  Attribute added by program CFA.
+#ATTRIBUTE  GMO002    INDEX   366
+$TYPE     REAL
+$LENGTH   1
+$DESC     2-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 2-year recurrence interval (exceedance probability of 0.50)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA.
+#ATTRIBUTE  GMO005    INDEX   367
+$TYPE     REAL
+$LENGTH   1
+$DESC     5-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 5-year recurrence interval (exceedance probability of 0.20)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA.
+#ATTRIBUTE  GMO010    INDEX   368
+$TYPE     REAL
+$LENGTH   1
+$DESC     10-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 10-year recurrence interval (exceedance probability of 0.10)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA.
+#ATTRIBUTE  GMO020    INDEX   369
+$TYPE     REAL
+$LENGTH   1
+$DESC     20-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 20-year recurrence interval (exceedance probability of 0.05)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA. 
+#ATTRIBUTE  GMO050    INDEX   370
+$TYPE     REAL
+$LENGTH   1
+$DESC     50-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 50-year recurrence interval (exceedance probability of 0.02)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA.
+#ATTRIBUTE  GMO100    INDEX   371
+$TYPE     REAL
+$LENGTH   1
+$DESC     100-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 100-year recurrence interval (exceedance probability of 0.01)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA.
+#ATTRIBUTE  GMO200    INDEX   372
+$TYPE     REAL
+$LENGTH   1
+$DESC     200-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 200-year recurrence interval (exceedance probability of 0.005)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA.
+#ATTRIBUTE  GMO500    INDEX   373
+$TYPE     REAL
+$LENGTH   1
+$DESC     500-year recurrence based on GEV, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 500-year recurrence interval (exceedance probability of 0.002)
+  based on the GEV distribution, method of moments.  Attribute added by
+  program CFA.
+#ATTRIBUTE  PMO002    INDEX   374
+$TYPE     REAL
+$LENGTH   1
+$DESC     2-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 2-year recurrence interval (exceedance probability of 0.50)  
+  based on the Pearson Type III distribution, method of moments.  Attribute
+  added by program SWSTAT.
+#ATTRIBUTE  PMO005    INDEX   375
+$TYPE     REAL
+$LENGTH   1
+$DESC     5-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 5-year recurrence interval (exceedance probability of 0.20)
+  based on the Pearson Type III distribution, method of moments.  Attribute
+  added by program SWSTAT.
+#ATTRIBUTE  PMO010    INDEX   376
+$TYPE     REAL
+$LENGTH   1
+$DESC     10-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 10-year recurrence interval (exceedance probability of 0.10)
+  based on the Pearson Type III distribution, method of moments.  Attribute
+  added by program SWSTAT.
+#ATTRIBUTE  PMO020    INDEX   377
+$TYPE     REAL
+$LENGTH   1
+$DESC     20-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 20-year recurrence interval (exceedance probability of 0.05)
+  based on the Pearson Type III distribution, method of moments.  Attribute
+  added by program SWSTAT.
+#ATTRIBUTE  PMO050    INDEX   378
+$TYPE     REAL
+$LENGTH   1
+$DESC     50-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 50-year recurrence interval (exceedance probability of 0.02)
+  based on the Pearson Type III distribution, method of moments.  Attribute
+  added by program SWSTAT.
+#ATTRIBUTE  PMO100    INDEX   379
+$TYPE     REAL
+$LENGTH   1
+$DESC     100-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 100-year recurrence interval (exceedance probability of 0.01)
+  based on the Pearson Type III distribution, method of moments.  Attribute   
+  added by program SWSTAT.
+#ATTRIBUTE  PMO200    INDEX   380 
+$TYPE     REAL
+$LENGTH   1
+$DESC     200-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 200-year recurrence interval (exceedance probability of 0.005)
+  based on the Pearson Type III distribution, method of moments.  Attribute
+  added by program SWSTAT.
+#ATTRIBUTE  PMO500    INDEX   381
+$TYPE     REAL
+$LENGTH   1
+$DESC     500-year recurrence based on Pearson Type III, method of moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 500-year recurrence interval (exceedance probability of 0.002)
+  based on the Pearson Type III distribution, method of moments.  Attribute
+  added by program SWSTAT.
+#ATTRIBUTE  LML002    INDEX   382
+$TYPE     REAL
+$LENGTH   1
+$DESC     2-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 2-year recurrence interval (exceedance probability of 0.50) 
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  LML005    INDEX   383
+$TYPE     REAL
+$LENGTH   1
+$DESC     5-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 5-year recurrence interval (exceedance probability of 0.20)
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  LML010    INDEX   384
+$TYPE     REAL
+$LENGTH   1
+$DESC     10-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 10-year recurrence interval (exceedance probability of 0.10)
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  LML020    INDEX   385
+$TYPE     REAL
+$LENGTH   1
+$DESC     20-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 20-year recurrence interval (exceedance probability of 0.05)
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  LML050    INDEX   386
+$TYPE     REAL
+$LENGTH   1
+$DESC     50-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 50-year recurrence interval (exceedance probability of 0.02)
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  LML100    INDEX   387
+$TYPE     REAL
+$LENGTH   1
+$DESC     100-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 100-year recurrence interval (exceedance probability of 0.01)
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  LML200    INDEX   388
+$TYPE     REAL
+$LENGTH   1
+$DESC     200-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 200-year recurrence interval (exceedance probability of 0.005)
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  LML500    INDEX   389
+$TYPE     REAL
+$LENGTH   1
+$DESC     500-year recurrence based on 3-parameter lognormal, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 500-year recurrence interval (exceedance probability of 0.002)
+  based on the 3-parameter lognormal distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  GML002    INDEX   390
+$TYPE     REAL
+$LENGTH   1
+$DESC     2-year recurrence based on GEV, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 2-year recurrence interval (exceedance probability of 0.50)
+  based on the GEV, maximum likelihood estimate.  Attribute added by program
+  CFA or MAX.
+#ATTRIBUTE  GML005    INDEX   391
+$TYPE     REAL
+$LENGTH   1
+$DESC     5-year recurrence based on GEV, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 5-year recurrence interval (exceedance probability of 0.20)
+  based on the GEV, maximum likelihood estimate.  Attribute added by program
+  CFA or MAX.
+#ATTRIBUTE  GML010    INDEX   392
+$TYPE     REAL
+$LENGTH   1
+$DESC     10-year recurrence based on GEV, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 10-year recurrence interval (exceedance probability of 0.10)
+  based on the GEV, maximum likelihood estimate.  Attribute added by program
+  CFA or MAX.
+#ATTRIBUTE  GML020    INDEX   393
+$TYPE     REAL
+$LENGTH   1
+$DESC     20-year recurrence based on GEV, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 20-year recurrence interval (exceedance probability of 0.05)
+  based on the GEV, maximum likelihood estimate.  Attribute added by program
+  CFA or MAX.
+#ATTRIBUTE  GML050    INDEX   394
+$TYPE     REAL
+$LENGTH   1
+$DESC     50-year recurrence based on GEV, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 50-year recurrence interval (exceedance probability of 0.02) 
+  based on the GEV, maximum likelihood estimate.  Attribute added by program
+  CFA or MAX.
+#ATTRIBUTE  GML100    INDEX   395
+$TYPE     REAL
+$LENGTH   1
+$DESC     100-year recurrence based on GEV, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 100-year recurrence interval (exceedance probability of 0.01)
+  based on the GEV, maximum likelihood estimate.  Attribute added by program
+  CFA or MAX.
+#ATTRIBUTE  GML200    INDEX   396
+$TYPE     REAL
+$LENGTH   1
+$DESC     200-year recurrence based on GEV, maximum likelihood 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 200-year recurrence interval (exceedance probability of 0.005)
+  based on the GEV, maximum likelihood estimate.  Attribute added by program
+  CFA or MAX.
+#ATTRIBUTE  GML500    INDEX   397
+$TYPE     REAL
+$LENGTH   1
+$DESC     500-year recurrence based on GEV, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 500-year recurrence interval (exceedance probability of 0.002)
+  based on the GEV, maximum likelihood estimate.  Attribute added by program 
+  CFA or MAX.
+#ATTRIBUTE  CML002    INDEX   398
+$TYPE     REAL
+$LENGTH   1
+$DESC     2-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 2-year recurrence interval (exceedance probability of 0.50)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  CML005    INDEX   399
+$TYPE     REAL
+$LENGTH   1
+$DESC     5-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 5-year recurrence interval (exceedance probability of 0.20)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  CML010    INDEX   400 
+$TYPE     REAL
+$LENGTH   1
+$DESC     10-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+  An event with a 10-year recurrence interval (exceedance probability of 0.10)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+  END DATA
+END CLU

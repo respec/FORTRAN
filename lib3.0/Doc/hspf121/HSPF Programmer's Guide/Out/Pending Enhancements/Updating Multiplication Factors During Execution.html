@@ -1,0 +1,64 @@
+<html><head><title>Updating Multiplication Factors During Execution</title></head>
+<body bgcolor="#ffffff">
+<a name="Updating Multiplication Factors During Execution"><h2>Updating Multiplication Factors During Execution</h2></a>
+ 
+HSPF currently uses timeseries multiplication factors that are not changeable during the time period of a run.  The factors are specified in the timeseries blocks (EXT SOURCES, NETWORK, EXT TARGET, SCHEMATIC, and MASS LINK) of the UCI file.  
+<p>
+The purpose of this HSPF enhancement is to allow updates to timeseries multiplication factors during the timespan of a run.  It is proposed that updates may come from an external program through HSPF subroutine EXT_UPDATE or through a special action specified in the UCI file.  This design contains details of 
+<a href="Updating Multiplication Factors During Execution/Specification of Updates.html">specification of updates</a> by the user in either an update file or entry in the special actions block of the UCI, required 
+<a href="Updating Multiplication Factors During Execution/HSPF Changes.html">HSPF code changes</a> and
+<a href="Updating Multiplication Factors During Execution/Example.html">examples</a> showing details of how the changes will work.
+<p>
+It is estimated that these changes can be implemented, documented and tested with an effort by AQUA TERRA Consultants of x hours and a budget of $x.  A beta version updated HSPF could be completed in 2 months from authorization to proceed.  A production version could be completed 1 month after receipt of comments on the beta.  
+<p>
+Note that this effort does not include any changes to the driver program that will be needed to produce the multiplication factor change instructions described here.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="Updating Multiplication Factors During Execution">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,203 @@
+<html><head><title>SOURCE</title></head>
+<body bgcolor="#ffffff">
+<a name="SOURCE"><h3>SOURCE</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+Purpose -  Process entries from the network or ext targets block, considering operation as a source
+<p>Flow of Execution
+<ul>
+<li><a href="#L1">If entries are available for this operation</a>
+    <ul>
+    <li><a href="#L2">Loop through available entries</a>
+        <ul>
+        <li><a href="#L3">Source row available?</a>
+            <ul>
+            <li><a href="#L3a">No: Allocate row for source and update later references</a>
+            </ul>
+        <li><a href="#L4">Process source to External Target</a>
+        <li><a href="#L5">Process source to Network</a>
+        </ul>
+    <li><a href="#L6">End loop</a>
+    </ul>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI.html">HTSINSI</a>
+<p>Called By
+   <a href="ALLOC.html">ALLOC</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="ROW.html">ROW</a>,
+   CHKSTR,
+   <a href="../HIOWRK/WORKIO.html">WORKIO</a>,
+   <a href="CHANGE.html">CHANGE</a>,
+   <a href="TSINS.html">TSINS</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SOURCE
+     I                   (EXTTFG,WKST,WKND,MROW,
+     I                    MESSU,MSGFL,EXTKW1,
+     M                    PRPKEY,AVFG,ECOUNT,MAXROW,
+     O                    RELFG)
+C
+C     + + + PURPOSE + + +
+C     Process entries from the network or ext targets block,
+C     considering operation as a source
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MROW,
+     $            AVFG(MROW),ECOUNT,
+     $            MSGFL,EXTTFG,MAXROW,MESSU,PRPKEY,RELFG(MROW),
+     $            WKND,WKST
+      CHARACTER*1 EXTKW1(16)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     EXTTFG - ???
+C     TSPUTF - ???
+C     WKST   - ???
+C     WKND   - ???
+C     MROW   - ???
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     EXTKW1 - ???
+C     PRPKEY - ???
+C     AVFG   - flag indicating whether or not each IMPAD row is available
+C     ECOUNT - count(s) of specific errors
+C     MAXROW - ???
+C     RELFG  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    REC(50),NEWKEY,SAMDCD,SCHAIN,SDELT,SGAPCD,SGRPN(2),
+     $           SINF(22),SMEMN(2),SMEMSB(2),SNUM,SOFFST,SROW,
+     $           SSNXT,STKIND,STNXT,STTRAN,SVOL(2),TAMDCD,TCHAIN,
+     $           TDELT,TGAPCD,TGRPN(2),TINF(22),TMEMN(2),TMEMSB(2),
+     $           TNUM,TOFFST,TROW,TSNXT,TTNXT,TVOL(2),WKEY,MXKY,
+     $           I,I0,I2,I4,I17,I18,RWFG,LEN,SFRC,TFRC,KWDNO
+      REAL       A,B
+      CHARACTER*4 CHSTR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE(CHSTR,CHSTR1)
+      CHARACTER*1 CHSTR1(4)
+      EQUIVALENCE  (REC(1),SINF(1)),          (REC(1),SVOL(1)),
+     $             (REC(3),SNUM),             (REC(4),SDELT),
+     $             (REC(5),SGRPN(1)),         (REC(7),SMEMN(1)),
+     $             (REC(9),SMEMSB(1)),       (REC(11),SOFFST),
+     $             (REC(12),SAMDCD),          (REC(13),SGAPCD),
+     $             (REC(14),SFRC),            (REC(15),SCHAIN),
+     $             (REC(16),STNXT),           (REC(17),SSNXT),
+     $             (REC(18),SROW),            (REC(23),STKIND),
+     $             (REC(24),STTRAN),          (REC(25),A),
+     $             (REC(26),B)
+C
+      EQUIVALENCE  (REC(27),TINF(1)),         (REC(27),TVOL(1)),
+     $             (REC(29),TNUM),            (REC(30),TDELT),
+     $             (REC(31),TGRPN(1)),        (REC(33),TMEMN(1)),
+     $             (REC(35),TMEMSB(1)),       (REC(37),TOFFST),
+     $             (REC(38),TAMDCD),          (REC(39),TGAPCD),
+     $             (REC(40),TFRC),            (REC(41),TCHAIN),
+     $             (REC(42),TTNXT),           (REC(43),TSNXT),
+     $             (REC(44),TROW)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER    ROW,CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   ROW,CHKSTR,WORKIO,CHANGE,TSINS
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A4)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0  = 0
+      I2  = 2
+      I4  = 4
+      I17 = 17
+      I18 = 18
+      RWFG= 0
+      LEN = 50
+      <a name="L1">IF (WKST .GT. 0) THEN
+C       there are entries for this operation
+        NEWKEY= WKST
+C       <a name="L2">dountil wkey= wknd
+ 10     CONTINUE
+          WKEY= NEWKEY
+          MXKY= 0
+C
+          CALL <a href="../HIOWRK/WORKIO.html">WORKIO</a> (RWFG,LEN,WKEY,
+     M                 REC,MXKY)
+          <a name="L3">IF (SROW .EQ. 0) THEN
+C           <a name="L3a">this source does not yet have a row
+            SROW= <a href="ROW.html">ROW</a>(MROW,MESSU,MSGFL,
+     M                AVFG,ECOUNT,MAXROW)
+C
+C           change this and any subsequent references to this
+C           source (in ext targets and network blocks) to refer to
+C           this row
+            CALL <a href="CHANGE.html">CHANGE</a> (I0,I0,I0,I0,WKEY,SROW,I17,I18)
+C
+          END IF
+C
+          IF (EXTTFG .EQ. 1) THEN
+C           <a name="L4">ext targets block
+C           volume is 1 for tss and seq, 2 for wdms and dss
+            I = 1
+C           search last two keywords
+            WRITE (CHSTR,2000) TVOL(1)
+            CHSTR1(4)= ' '
+            KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
+            IF (KWDNO .NE. 0) THEN
+C             wdm or dss
+              I = 2
+            END IF
+            CALL <a href="TSINS.html">TSINS</a> (I,TNUM,TDELT,SROW,TOFFST,STKIND,
+     I                  STTRAN,I0,A,B,TMEMSB,TAMDCD,TGAPCD,TFRC,
+     M                  PRPKEY)
+C
+C           flag the row for release - this instruction may be
+C           reversed when network entries are processed
+            RELFG(SROW)= 1
+C
+          ELSE
+C           <a name="L5">network block - no action required
+C           don't release this row because that will be done when
+C           the last operation for which it is a source is processed
+            RELFG(SROW)= 0
+C
+          END IF
+          NEWKEY= SCHAIN
+C
+        <a name="L6">IF (WKEY .NE. WKND) GO TO 10
+C
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="SOURCE">
+</Object>
+
+</body>
+</html>
+

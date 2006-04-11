@@ -1,0 +1,263 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  atdisp.seq for lib ann
+END COMMENT 
+CLU           23    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  ATDISP                                                              
+  END LABEL   
+  DATA   CLU    23
+#GROUP    1  TYPE MENU
+$WINDOW List (DAL)
+$TITLE Select an attribute List option.
+$DEFAULT   1
+$LENGTH   10
+$WIDTH    78
+$COLENGTH  8
+$OPTION Both
+_DESC - list all data-set attributes and period of record
+$OPTION All
+_DESC - list all data-set attributes (no Dates)
+$OPTION Selected
+_DESC - list selected data-set attributes (no Dates)
+$OPTION Dates
+_DESC - list only the data-set period of record
+$OPTION Return
+_DESC - to the Attributes screen
+#GROUP    2  TYPE TEXT
+$WINDOW Execute (DAVE)
+$TEXT
+Attributes of DSN &
+
+#GROUP    3  TYPE TEXT
+$TEXT
+  Starts :
+#GROUP    4  TYPE TEXT
+$TEXT
+  Ends   :
+#GROUP    5  TYPE TEXT
+$TEXT
+No data is present in this dataset.
+#GROUP    6  TYPE TEXT
+$TEXT
+No date information exists for this type of dataset.
+#GROUP   11  TYPE MENU
+$TITLE Select an Attribute View option.
+$DEFAULT   1
+$LENGTH    8
+$WIDTH    78
+$COLENGTH  8
+$OPTION Output
+_DESC - specify form (List or Table) and target for output
+$OPTION Standard
+_DESC - use standard set of attributes
+$OPTION Full
+_DESC - use full set of attributes on datasets (List form only)
+$OPTION Period
+_DESC - include the period of record (start/end date)
+$OPTION Add
+_DESC - selected attributes to include
+$OPTION Drop
+_DESC - selected attributes to remove
+$OPTION Execute
+_DESC - specified view of attributes
+$OPTION Return
+_DESC - to the Attribute screen
+$WINDOW View (DAV)
+$HELP
+ The following attributes are viewed using the Standard set:
+     ISTAID   STAID   TSTYPE   TCODE   TSSTEP
+ The period of record will also be included.
+#GROUP   12  TYPE TEXT
+$WINDOW Add (DATA) Problem
+$TEXT
+Unable to table ALL attributes as the number of available
+attributes is too large to be meaningfully displayed.
+#GROUP   13  TYPE TEXT
+$TEXT
+     5 The following are the default list for tabling attributes (name, index no., length, type, sign dig, decimal)
+ISTAID   51    1    1    Integer station ID
+STAID     2   16    3    Character station ID
+TSTYPE    1    4    3    Type of timeseries
+TCODE    17    1    1    Time code: 1-second, 2-minute, 3-hour, 4-day, 5-month, 6-year, 7-century
+TSSTEP   33    1    1    Primary timestep, in TCODE units
+#GROUP   14  TYPE PRM1
+$SCREEN
+
+ Enter title for table
+ @PRM1........................................................................
+$FIELD @PRM1
+_TYPE CHARACTER
+#GROUP   15  TYPE TEXT
+$TEXT
+The output width of the attributes selected to table
+exceeds the total available output width.
+
+If you still want to table more attributes, you can
+increase the available output width by Returning to
+the Table screen and then selecting the Output option.
+
+Otherwise, Return from the Add Attributes screen and select
+the Execute option to table the attributes selected so far.
+$WINDOW Add (DATA)
+#GROUP   16  TYPE PRM1
+$SCREEN
+
+     Enter the number of significant digits for output [@SGFD]
+
+     Enter the number of decimal places for output     [@DECP]
+$FIELD @SGFD
+_TYPE INTEGER
+_RANGE  1 : 5                  
+_DEFAULT 5
+_HELP
+ 23000. has 2, 22716. has 5 significant digits.
+$FIELD @DECP
+_TYPE INTEGER
+_RANGE  -1 : 5                 
+_DEFAULT 0
+_HELP
+ 3.47 has 2 decimal places, 73. has 0, 0.0039 has 4, etc.
+ Enter -1 to let it be determined by the size of the number.
+$WINDOW Add (DATA)
+#GROUP   17  TYPE TEXT
+$TEXT
+Approaching output width limit, spaces remaining: &
+$WINDOW Add (DATA)
+#GROUP   18  TYPE TEXT
+$TEXT
+  DSN   PERIOD OF RECORD       ----- ---------------------            BEGIN        END
+#GROUP   19  TYPE PRM1
+$SCREEN
+
+ Enter a title for the table:
+ @TITLE.......................................................................
+$FIELD @TITLE
+_TYPE CHARACTER
+$WINDOW Output (DATO)
+#GROUP   20  TYPE TEXT
+$TEXT
+Unable to Drop attributes from being tabled as
+there are currently no attributes selected to be tabled.
+$WINDOW Drop (DATD) Problem
+#GROUP   21  TYPE TEXT
+$TEXT
+Attributes to view  (    available characters):
+#GROUP   22  TYPE TEXT
+$TEXT
+No attributes specified to be viewed  (    available characters).
+#GROUP   23  TYPE TEXT
+$TEXT
+Dates  22,
+#GROUP   24  TYPE PRM1
+$WINDOW Output (DAVO)
+$SCREEN
+   Modify Output parameters as needed.
+
+   Format for viewing        [@FORM...]  (list, table)
+   Destination for output    [@OUTOPT.]  (terminal, file, both)
+   Number of characters/line [@NCHARS.]
+   Number of lines to screen [@SLINES.]
+   Number of lines to file   [@FLINES.]
+
+   If Destination for output is a File, enter a header for the file:
+@HEADER.......................................................................
+$FIELD @FORM
+_TYPE CHARACTER
+_VALID LIST, TABLE
+_DEFAULT LIST
+_HELP
+Select List to generate a single column listing of attributes
+for the selected datasets.
+Select Table to generate a table with specified attributes as columns
+and selected datasets as rows.
+$FIELD @OUTOPT
+_TYPE CHARACTER
+_VALID TERMINAL, FILE, BOTH
+_DEFAULT TERMINAL
+_HELP
+Select Terminal to send the output to your screen.
+Select File to send the output to a specified file (specified on next screen).
+Select Both to send output to both the screen and a specified file.
+$FIELD @NCHARS
+_TYPE INTEGER
+_RANGE  40 : 250               
+_DEFAULT 80
+_HELP
+Maximum allowable characters output on a line.
+$FIELD @SLINES
+_TYPE INTEGER
+_RANGE  5 : 45
+_DEFAULT 16
+_HELP
+Enter the number of lines output before a pause.
+$FIELD @FLINES
+_TYPE INTEGER
+_RANGE  5 : 200000             
+_DEFAULT 20
+_HELP
+Enter the number of lines output before fortran carriage control.
+$FIELD @HEADER
+_HELP
+This header will appear at the top of the file
+to which the output is sent.
+_TYPE CHARACTER
+#GROUP   25  TYPE FILE
+$WINDOW Output-2 (DAVO)
+$SCREEN
+
+ Name of output file for Attribute View?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS NEW
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP   26  TYPE TEXT
+$WINDOW Output (DAVO) Problem
+$TEXT
+The attribute view has been specified to go to an output file,
+but the output file was not able to be opened.
+
+Currently, the table will be output to the screen only.
+
+If you want to try to send the table to an output file,
+select the Output option from the Table screen.
+#GROUP   27  TYPE TEXT
+$WINDOW Output (DAVO) Problem
+$TEXT
+The table has been specified to go to the screen,
+but the specified number of characters per line is
+too large to fit on the screen.
+
+Currently, the number of characters per line will be set to 78.
+
+If you want to generate a table with larger number of characters
+per line, use the 'Prev' command to go to the previous screen and
+specify the destination for output as FILE.
+#GROUP   28  TYPE TEXT
+$TEXT
+Full set of attributes
+#GROUP   29  TYPE TEXT
+$WINDOW Output (DAVO) Problem
+$TEXT
+Currently, the Full set of attributes available for each data set has been
+specified to be viewed.  When viewing attributes in the Table format, it
+is not possible to use the full set of attributes due to size limitations.
+
+If the Table format is still desired, use the Accept (F2) command.
+Initially, no attributes will be selected for tabular viewing.
+
+If the Full set of attributes is still desired, use the Prev (F4)
+command to reset the view format to List.
+#GROUP   30  TYPE TEXT
+$WINDOW Full (DAVF) Problem
+$TEXT
+Unable to use the full set of attributes when viewing attributes
+in the Table format.
+
+If you want to use the full set of attributes, first select the
+Output option and specify List for the Format for Viewing.
+  END DATA
+END CLU 

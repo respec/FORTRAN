@@ -1,0 +1,235 @@
+ 
+ Successful open of old WDM file \LIB3.0\MESSAGE.WDM
+ 
+ 
+ Importing from file MESSAGE.SEQ
+ General information from the IMPORT file:
+ DATE
+ WDMSFL
+ SYSTEM
+ COMMENT
+   General information and parameter groups for ANNIE-IDE utilities
+ END COMMENT
+ 
+ Importing DSN/CLU number     1.
+ For group number   1 type is TEXT
+ For group number   2 type is TEXT
+ For group number   3 type is TEXT
+ For group number   4 type is TEXT
+ For group number   5 type is TEXT
+ For group number   6 type is TEXT
+ For group number   7 type is TEXT
+ For group number   8 type is TEXT
+ For group number   9 type is TEXT
+ For group number  10 type is TEXT
+ For group number  11 type is TEXT
+ For group number  12 type is TEXT
+ For group number  13 type is TEXT
+ For group number  14 type is TEXT
+ For group number  15 type is TEXT
+ For group number  16 type is TEXT
+ For group number  17 type is TEXT
+ For group number  18 type is TEXT
+ For group number  19 type is TEXT
+ For group number  20 type is TEXT
+ For group number  21 type is TEXT
+ For group number  22 type is TEXT
+ For group number  23 type is TEXT
+ For group number  24 type is TEXT
+ For group number  25 type is TEXT
+ For group number  26 type is TEXT
+ For group number  27 type is TEXT
+ For group number  28 type is TEXT
+ For group number  29 type is TEXT
+ For group number  30 type is TEXT
+ For group number  31 type is TEXT
+ For group number  32 type is TEXT
+ For group number  33 type is TEXT
+ For group number  34 type is TEXT
+ For group number  35 type is TEXT
+ For group number  36 type is TEXT
+ For group number  37 type is TEXT
+ For group number  38 type is TEXT
+ For group number  39 type is TEXT
+ For group number  40 type is TEXT
+ For group number  41 type is TEXT
+ For group number  42 type is TEXT
+ For group number  43 type is TEXT
+ For group number  44 type is TEXT
+ For group number  45 type is TEXT
+ For group number  46 type is TEXT
+ For group number  47 type is TEXT
+ For group number  48 type is TEXT
+ For group number  49 type is TEXT
+ For group number  50 type is TEXT
+ For group number  51 type is TEXT
+ For group number  52 type is TEXT
+ For group number  53 type is TEXT
+ For group number  54 type is TEXT
+ For group number  55 type is TEXT
+ For group number  56 type is TEXT
+ For group number  57 type is TEXT
+ For group number  58 type is TEXT
+ For group number  59 type is TEXT
+ For group number  60 type is TEXT
+ For group number  61 type is TEXT
+ For group number  62 type is TEXT
+ For group number  63 type is TEXT
+ For group number  64 type is TEXT
+ For group number  65 type is TEXT
+ For group number  66 type is TEXT
+ For group number  67 type is TEXT
+ For group number  68 type is TEXT
+ For group number  69 type is TEXT
+ For group number  70 type is TEXT
+ For group number  71 type is TEXT
+ For group number  72 type is TEXT
+ For group number  73 type is TEXT
+ For group number  74 type is TEXT
+ For group number  75 type is TEXT
+ For group number  76 type is TEXT
+ For group number  77 type is TEXT
+ For group number  78 type is TEXT
+ For group number  79 type is TEXT
+ For group number  80 type is TEXT
+ For group number  81 type is TEXT
+ For group number  82 type is TEXT
+ For group number  83 type is MENU
+ For group number  84 type is TEXT
+ For group number  85 type is TEXT
+ For group number  86 type is TEXT
+ For group number  87 type is TEXT
+ 
+ Importing DSN/CLU number     2.
+ For group number   4 type is TEXT
+ For group number  10 type is TEXT
+ For group number  12 type is FILE
+ For group number  14 type is MENU
+ For group number  15 type is MENU
+ For group number  16 type is TEXT
+ For group number  17 type is MENU
+ For group number  27 type is TEXT
+ For group number  28 type is TEXT
+ For group number  29 type is FILE
+ For group number  31 type is FILE
+ For group number  32 type is FILE
+ For group number  33 type is FILE
+ For group number  34 type is FILE
+ For group number  36 type is FILE
+ For group number  40 type is FILE
+ For group number  41 type is FILE
+ For group number  42 type is FILE
+ For group number  45 type is FILE
+ For group number  46 type is FILE
+ For group number  51 type is TEXT
+ For group number  57 type is PRM1
+ For group number  58 type is TEXT
+ For group number  59 type is TEXT
+ For group number  60 type is FILE
+ For group number  61 type is MENU
+ For group number  62 type is FILE
+ 
+ Import of DSN/CLUs complete.
+ 
+ 
+ Importing from file PARMPC.SEQ
+ General information from the IMPORT file:
+ DATE
+ WDMSFL
+ SYSTEM
+ COMMENT
+   clu  grpnam  description
+   ___  ______  ___________________________________________
+     3  uparms  term.dat parameters for computer type PC
+     4  emife   instruct window and command line text
+ END COMMENT
+ 
+ Importing DSN/CLU number     3.
+ For group number   1 type is TEXT
+ For group number 120 type is TEXT
+ For group number 121 type is TEXT
+ For group number 122 type is TEXT
+ For group number 123 type is TEXT
+ 
+ Importing DSN/CLU number     4.
+ For group number   1 type is TEXT
+ For group number   2 type is TEXT
+ For group number   3 type is TEXT
+ For group number   5 type is TEXT
+ For group number   6 type is TEXT
+ For group number   7 type is TEXT
+ For group number   8 type is TEXT
+ For group number   9 type is TEXT
+ For group number  10 type is TEXT
+ For group number  11 type is TEXT
+ For group number  12 type is TEXT
+ For group number  13 type is TEXT
+ For group number  14 type is TEXT
+ For group number  15 type is TEXT
+ For group number  16 type is TEXT
+ For group number  17 type is TEXT
+ For group number  18 type is TEXT
+ For group number  19 type is TEXT
+ For group number  20 type is TEXT
+ For group number  21 type is TEXT
+ For group number  22 type is TEXT
+ For group number  23 type is TEXT
+ For group number  24 type is TEXT
+ For group number  25 type is TEXT
+ For group number  26 type is TEXT
+ For group number  27 type is TEXT
+ For group number  28 type is TEXT
+ For group number  29 type is TEXT
+ For group number  30 type is TEXT
+ For group number  31 type is TEXT
+ For group number  41 type is TEXT
+ For group number  42 type is TEXT
+ For group number  43 type is TEXT
+ For group number  51 type is TEXT
+ For group number  52 type is TEXT
+ For group number  61 type is TEXT
+ For group number  62 type is TEXT
+ For group number  63 type is TEXT
+ For group number  64 type is TEXT
+ For group number  65 type is TEXT
+ For group number  66 type is TEXT
+ For group number  67 type is TEXT
+ For group number  71 type is TEXT
+ For group number  72 type is TEXT
+ For group number  73 type is TEXT
+ For group number  74 type is TEXT
+ For group number  75 type is TEXT
+ For group number  76 type is TEXT
+ For group number  77 type is TEXT
+ For group number  78 type is TEXT
+ For group number  79 type is TEXT
+ For group number  80 type is TEXT
+ For group number  81 type is TEXT
+ For group number  82 type is TEXT
+ For group number  83 type is TEXT
+ For group number  85 type is TEXT
+ For group number  86 type is TEXT
+ For group number  87 type is TEXT
+ For group number  88 type is TEXT
+ For group number  89 type is TEXT
+ For group number  91 type is TEXT
+ For group number  92 type is TEXT
+ For group number  93 type is TEXT
+ For group number  94 type is TEXT
+ For group number  95 type is TEXT
+ For group number  96 type is TEXT
+ For group number  97 type is TEXT
+ For group number  98 type is TEXT
+ For group number  99 type is TEXT
+ For group number 100 type is TEXT
+ For group number 101 type is TEXT
+ For group number 110 type is TEXT
+ For group number 111 type is TEXT
+ For group number 112 type is TEXT
+ For group number 113 type is TEXT
+ For group number 114 type is TEXT
+ For group number 115 type is TEXT
+ For group number 116 type is TEXT
+ 
+ Import of DSN/CLUs complete.
+ 

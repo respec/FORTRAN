@@ -1,0 +1,171 @@
+<html><head><title>AIUNC</title></head>
+<body bgcolor="#ffffff">
+<a name="AIUNC"><h3>AIUNC</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4.html">CRIN4</a> 
+<p>Calls
+   BCWCAL,
+   WBUFF,
+   PVAL,
+   OMSG,
+   OMSTI
+<p>Code
+<pre>
+C
+C     3.5.8.2.3.2.2
+C
+      SUBROUTINE AIUNC
+     I                (STIME,SINT,DELT)
+C
+C     + + + PURPOSE + + +
+C     Adjust existing uncompressed tsb for add access mode
+C     Needs 21 real words of workspace in common
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     DELT,STIME,SINT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STIME  - ???
+C     SINT   - ???
+C     DELT   - simulation time interval in minutes
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE     'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     ADR,ADRBCW,I,N,OFF(1),REM,WORDI,SCLU,SGRP
+      REAL        WORDR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (WORDR,WORDI)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER    BCWCAL
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   BCWCAL,WBUFF,GWORD,PVAL,OMSG,OMSTI
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 216
+      IF (STIME .NE. TZERO) GO TO 10
+C       starting time is at initial point of tsb
+C       restart tsb
+        NREM  =RATIO
+        BCWNOV=0
+        VOTFRM=VOTSB +1
+        FRMTIM=STIME
+        TLAST =TZERO -DELTAT
+C       write the bcw for the tsb
+        WORDI =BCWCAL(BCWBTI,BCWNOV)
+        TBUFF(VOTSB-VOBUFF+1)=WORDR
+        CALL WBUFF(TRCNO,RECLT,TSSFL,TBUFF)
+        BMTFLG= 1
+        GO TO 80
+ 10   CONTINUE
+        N   =(STIME-TZERO)/DELTAT
+        REM =(STIME-TZERO) -N*DELTAT
+        NREM=RATIO -REM/DELT
+        IF (REM .NE. 0) GO TO 30
+C         starting time at a point stored in tsb
+C         but not initial nor last point
+C         revise tsb and initiate new tsb
+          BCWNOV=N+1
+          WORDI =BCWCAL(BCWBTI,BCWNOV)
+          TBUFF(VOTSB-VOBUFF+1)=WORDR
+          CALL WBUFF(TRCNO,RECLT,TSSFL,TBUFF)
+          BMTFLG= 1
+C         set up new bcw
+          VOTSB=VOTSB +BCWNOV*TOTCOM +1
+          BCWBTI=1
+          BCWNOV=0
+          VOTFRM=VOTSB +1
+          VOLFRM=VOTSB -TOTCOM
+          TZERO =SINT-DELTAT
+          IF (TZERO .EQ. STIME) GO TO 20
+C           program bug
+C           timing error : stime not= tzero
+            SGRP = 135
+            CALL OMSTI (FILE)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+ 20       CONTINUE
+          TLAST =TZERO -DELTAT
+          FRMTIM=STIME
+          ADRBCW=VOTSB +1
+C         make sure correct record is in buffer
+          CALL GWORD(ADRBCW,      WORDR)
+          WORDI =BCWCAL(BCWBTI,BCWNOV)
+          TBUFF(ADRBCW-VOBUFF)=WORDR
+          CALL WBUFF(TRCNO,RECLT,TSSFL,TBUFF)
+          BMTFLG= 1
+          GO TO 70
+ 30     CONTINUE
+C         starting time not at any point stored in tsb
+          VOLFRM=0
+          BCWNOV=N+1
+          IF (BCWNOV .NE. 1) GO TO  40
+C           revise current tsb
+            VOTFRM=VOTSB +1 +TOTCOM
+            WORDI =BCWCAL(BCWBTI,BCWNOV)
+            TBUFF(VOTSB-VOBUFF+1) = WORDR
+            CALL WBUFF(TRCNO,RECLT,TSSFL,TBUFF)
+            BMTFLG= 1
+            GO TO  60
+ 40       CONTINUE
+C           revise current tsb and create a new tsb
+            WORDI=BCWCAL(BCWBTI,BCWNOV)
+            TBUFF(VOTSB-VOBUFF+1) = WORDR
+            CALL WBUFF(TRCNO,RECLT,TSSFL,TBUFF)
+            BMTFLG= 1
+C           read last frame of the revised tsb
+            VOTFRM=VOTSB +1 +N*TOTCOM
+              DO 50 I=1,TOTCOM
+                ADR=VOTFRM +I
+                CALL GWORD(ADR,WS(I+1))
+ 50           CONTINUE
+            VOTSB=VOTSB +BCWNOV*TOTCOM +1
+            BCWNOV=1
+            BCWBTI=1
+            WORDI =BCWCAL(BCWBTI,BCWNOV)
+            WS(1) =WORDR
+            VOTFRM=VOTSB +1 +TOTCOM
+            ADRBCW=VOTSB +1
+C           make sure correct record is in buffer
+            CALL GWORD(ADRBCW,WORDR)
+            CWF   = 1
+            FORFLG= 1
+            N     =TOTCOM +1
+            OFF(1)=0
+            CALL PVAL(N,OFF,WS,VOTSB)
+ 60       CONTINUE
+          TZERO =SINT -DELTAT
+          TLAST =TZERO
+          FRMTIM=SINT
+ 70     CONTINUE
+ 80   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="AIUNC">
+</Object>
+
+</body>
+</html>
+

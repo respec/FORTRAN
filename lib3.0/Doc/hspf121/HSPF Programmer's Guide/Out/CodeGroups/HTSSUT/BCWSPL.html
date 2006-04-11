@@ -1,0 +1,59 @@
+<html><head><title>BCWSPL</title></head>
+<body bgcolor="#ffffff">
+<a name="BCWSPL"><h3>BCWSPL</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSSUT.html">HTSSUT</a>
+<p>Called By
+
+<p>Common Blocks 
+    
+<p>Calls
+
+<p>Code
+<pre>
+C
+C     1.2.24
+C
+      SUBROUTINE   BCWSPL
+     I                  (BCW,
+     O                   BCWBTI,BCWNOV)
+C
+C     + + + PURPOSE + + +
+C     Split up a bcw into BCWBTI, BCWNOV
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    BCW,BCWBTI,BCWNOV
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     BCW    - ???
+C     BCWBTI - block control word type indicator
+C     BCWNOV - number of time frames represented by the tsb
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      BCWNOV= 0
+      BCWBTI= BCW
+      IF(BCW .GT. 0) THEN
+        BCWBTI= BCW/65536
+        BCWNOV= BCW-(BCWBTI*65536)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="BCWSPL">
+</Object>
+
+</body>
+</html>
+

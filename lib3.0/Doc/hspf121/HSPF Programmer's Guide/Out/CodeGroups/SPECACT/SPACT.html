@@ -1,0 +1,354 @@
+<html><head><title>SPACT</title></head>
+<body bgcolor="#ffffff">
+<a name="SPACT"><h3>SPACT</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT.html">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPACT
+     I                   (MESSU,SPIVL,SPOPNO,SPOUT,
+     M                    LSPPTR,SPAFP,
+     O                    SORTFG)
+C
+C     + + + PURPOSE + + +
+C     Perform a Special Action.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MESSU,SPIVL,SPOPNO,SPOUT,LSPPTR,SPAFP,SORTFG
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     SPIVL  - interval of run
+C     SPOPNO - index of target operation
+C     SPOUT  - runtime Special Action output level
+C     LSPPTR - pointer to current Special Action
+C     SPAFP  - current Special Action instruction record number
+C     SORTFG - flag indicating whether resort is needed
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE     'cmdum.inc'
+      INCLUDE     'cmpad.inc'
+C     special action file in memory
+      INCLUDE     'pspins.inc'
+      INCLUDE     'cspins.inc'
+C     special action distributions
+      INCLUDE     'pspdst.inc'
+      INCLUDE     'cspdst.inc'
+C
+C    + + + LOCAL VARIABLES + + +
+      INTEGER          LSPAC(LENSPI),ADDR2,I,UVTYP,EXDAT(5),ICURVL,
+     $                 CONDCK,INEWVL,DADD,I0,I1,I2
+      REAL             R,CFRAC,RCURVL,RCURV2,RNEWVL,RNEWV2
+      DOUBLE PRECISION DCURVL,DNEWVL
+      CHARACTER*20     CACTVA,CACTV2
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (LSPAC(6),TYPCOD),(LSPAC(7),ADDR),(LSPAC(8),ACTCOD),
+     $            (LSPAC(9),RVAL),(LSPAC(9),IVAL),(LSPAC(14),TARUVQ),
+     $            (LSPAC(15),DSIND),(LSPAC(16),DSPOS),
+     $            (LSPAC(17),DEFFRC),(LSPAC(18),LOGBLK),
+     $            (LSPAC(19),ACTUVQ),(LSPAC(20),ALLDEL),
+     $            (LSPAC(21),ACCADD),(LSPAC(23),HDRPTR),
+     $            (LSPAC(24),HDRNUM),(LSPAC(25),FTRPTR),
+     $            (LSPAC(26),FTRNUM)
+      INTEGER      TYPCOD,ADDR,ACTCOD,IVAL,TARUVQ,DSIND,DSPOS,LOGBLK,
+     $             ACTUVQ,ALLDEL,ACCADD,HDRPTR,HDRNUM,FTRPTR,FTRNUM
+      REAL         RVAL,DEFFRC
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      DADDR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    FLOAT,INT,DBLE
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     SPCKDT,GTQUAN,SPDIST,EXDATE,DADDR,SPONAM,
+     $             SPBKCK,SPNEWV,SPVQUP,SPNXDT
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I0,I1,I2/0,1,2/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT ('    SPECIAL ACTION SKIPPED - CONDITION FALSE ')
+ 2010 FORMAT ('    DEFERRING UNTIL',I5,'/',I2,'/',I2,1X,I2,':',I2)
+ 2020 FORMAT ('WARNING: ON',I5,4('/',I2),' USING DISTRIBUTION',I3,
+     $        ' A FRACTION OF',F8.4,' WAS LOST DUE TO FAILURE OF ',
+     $        'LOGICAL CONDITIONS ON THE LAST INTERVAL')
+ 2030 FORMAT ('    DEFERRING A FRACTION OF',F8.4,' FROM DISTRIBUTION',
+     $         I4,' UNTIL',I5,'/',I2,'/',I2,1X,I2,':',I2)
+ 2040 FORMAT (A80)
+ 2050 FORMAT (A20)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     make a local copy of current action to use equiv
+      DO 10 I= 1, LENSPI
+        LSPAC(I)= SPINS(I,LSPPTR)
+ 10   CONTINUE
+      ADDR2= 0
+C
+      IF (ACTUVQ .GT. 0) THEN
+C       action value is a variable, so fetch current value
+        IF (SPOUT .GE. 9) THEN
+C         echo actuvq
+          WRITE (MESSU,*) 'fetching variable action value',ACTUVQ
+        END IF
+        CALL GTQUAN (ACTUVQ,SPIVL,SPOPNO,
+     O               I,R,UVTYP)
+        IF (UVTYP .EQ. 2) THEN
+C         quantity is integer
+          IF (SPOUT .GE. 9) THEN
+C           echo integer value
+            WRITE (MESSU,*) 'value is',I
+          END IF
+          IF (TYPCOD .EQ. 2) THEN
+C           use integer value
+            IVAL= I
+          ELSE
+C           convert integer value to real
+            RVAL= FLOAT (I)
+          END IF
+        ELSE
+C         quantity is real
+          IF (SPOUT .GE. 9) THEN
+C           echo real value
+            WRITE (MESSU,*) 'value is',R
+          END IF
+          IF (TYPCOD .EQ. 2) THEN
+C           convert real value to integer
+            IVAL= INT (R)
+          ELSE
+C           use real value
+            RVAL= R
+          END IF
+        END IF
+      END IF
+C
+      IF (DSIND .NE. 0) THEN
+C       a distribution is in use
+        CALL SPDIST (MESSU,SPOUT,DSIND,DSPOS,
+     M               RVAL,DEFFRC,
+     O               CFRAC)
+C       update instruction with new deferred fraction
+        SPINSR(17,LSPPTR)= DEFFRC
+      END IF
+C
+      IF (ADDR .LT. 0) THEN
+C       get current value from pipes
+        CALL GTQUAN (TARUVQ,SPIVL,SPOPNO,
+     O               ICURVL,RCURVL,UVTYP)
+        IF (TYPCOD .EQ. 4) THEN
+C         convert real to double
+          DCURVL= DBLE (RCURVL)
+        END IF
+      ELSE
+C       current value from pad
+        ICURVL= IPAD(ADDR)
+        IF (TYPCOD .EQ. 3) THEN
+C         real
+          IF (ICURVL .EQ. -999) THEN
+C           current value is undefined - set to zero
+            RCURVL= 0.0
+          ELSE
+C           current value is good
+            RCURVL= PAD(ADDR)
+          END IF
+        ELSE IF (TYPCOD .EQ. 4) THEN
+C         double prec
+          IF (ICURVL .EQ. -999) THEN
+C           current value is undefined - set to zero
+            DCURVL= 0.0
+          ELSE
+C           current value is good
+            DCURVL= DPPAD(DADDR (ADDR))
+          END IF
+        END IF
+      END IF
+C
+      IF (SPOUT .GE. 2) THEN
+C       describe variable being acted on
+        CALL SPONAM (LSPAC(10),LSPAC(12),LSPAC(7),LSPAC(6),
+     O               CACTVA)
+      END IF
+C
+      IF (LOGBLK .EQ. 0) THEN
+C       no conditions to check
+        CONDCK= 1
+      ELSE
+C       check condition
+        CALL SPBKCK (LOGBLK,SPIVL,SPOPNO,SPOUT,MESSU,
+     O               CONDCK)
+      END IF
+C
+      SORTFG= 0
+C
+      IF ( (SPOUT .GE. 4) .AND. (HDRNUM .GE. 1) ) THEN
+C       echo headers
+        DO 20 I= HDRPTR, HDRPTR+ HDRNUM- 1
+          WRITE (MESSU,2040) SPHDR(I)
+ 20     CONTINUE
+      END IF
+C
+      IF (CONDCK .GE. 1) THEN
+C       take the special action
+C
+        IF (ACTCOD .GE. 14) THEN
+C         mix two locations up, need next action
+          SPAFP= SPAFP+ 1
+          LSPPTR= SPPTR(SPAFP)
+          ADDR2= SPINS(7,LSPPTR)
+          IF (ADDR2 .LT. 0) THEN
+C           get current value from pipes
+            CALL GTQUAN (SPINS(14,LSPPTR),SPIVL,SPOPNO,
+     O                   I,RCURV2,UVTYP)
+          ELSE
+C           get current value from pad
+            RCURV2= PAD(ADDR2)
+          END IF
+          CALL SPONAM (SPINS(10,LSPPTR),SPINS(12,LSPPTR),
+     I                 SPINS(7,LSPPTR),SPINS(6,LSPPTR),
+     O                 CACTV2)
+        END IF
+C
+C       compute new value
+        CALL SPNEWV (MESSU,SPOUT,ACTCOD,TYPCOD,ICURVL,RCURVL,
+     I               RCURV2,DCURVL,IVAL,RVAL,CACTVA,CACTV2,
+     O               INEWVL,RNEWVL,RNEWV2,DNEWVL)
+C
+C       update values in osv and uvquans as necessary
+C
+        IF (ADDR .GT. 0) THEN
+C         update in osv
+          IF (TYPCOD .EQ. 2) THEN
+C           integer
+            IPAD(ADDR)= INEWVL
+          ELSE IF (TYPCOD .EQ. 3) THEN
+C           real
+            PAD(ADDR)= RNEWVL
+            IF (ACCADD .GT. 0) THEN
+C             increment accumulator
+              PAD(ACCADD)= PAD(ACCADD)+ RVAL
+            END IF
+          ELSE IF (TYPCOD .EQ. 4) THEN
+C           double precision
+            DADD= DADDR (ADDR)
+            DPPAD(DADD)= DNEWVL
+            IF (ACCADD .GT. 0) THEN
+C             increment accumulator
+              DADD= DADDR (ACCADD)
+              DPPAD(DADD)= DPPAD(DADD)+ DBLE (RVAL)
+            END IF
+          END IF
+        END IF
+        IF (ADDR2 .GT. 0) THEN
+C         second value in osv
+          PAD(ADDR2)= RNEWV2
+        END IF
+C
+C       check all osv and workspace uvquans to see if their base
+C       variable was changed
+        CALL SPVQUP (SPIVL,SPOPNO,ADDR,ADDR2,ACCADD,INEWVL,RVAL,
+     I               RNEWVL,RNEWV2,DNEWVL,I0)
+C
+      ELSE IF (CONDCK .EQ. 0) THEN
+C       condition not satisfied - action skipped
+        IF (SPOUT .GE. 5) THEN
+C         echo message for skipped action
+          WRITE (MESSU,2000)
+        END IF
+        IF (ACTCOD .GE. 14) THEN
+C         must also skip second instruction
+          SPAFP= SPAFP+ 1
+        ELSE IF (DSIND .GT. 0) THEN
+C         action is distributed
+          IF (SPDDFG(DSIND) .GE. 2) THEN
+C           defer current fraction in distribution
+            DEFFRC= DEFFRC+ CFRAC
+            SPINSR(17,LSPPTR)= DEFFRC
+          END IF
+        ELSE IF (ALLDEL .LT. 0) THEN
+C         action is deferred on failure
+          I= -ALLDEL
+          CALL SPNXDT (I2,I,I1,
+     M                 SPINS(1,LSPPTR))
+          IF (SPOUT .GE. 2) THEN
+C           echo new date
+            WRITE (MESSU,2010) (SPINS(I,LSPPTR),I=1,5)
+          END IF
+          SORTFG= 1
+        END IF
+      ELSE
+C       error in spbkck
+        WRITE (*,*) 'PROGRAM BUG - ERROR IN SPBKCK'
+      END IF
+C
+      IF (DSIND .GT. 0) THEN
+C       check if done with distribution
+        IF (DSPOS .EQ. SPDCNT(DSIND)) THEN
+C         all done with current distribution
+          IF (SPOUT .GE. 9) THEN
+C           echo distrib done
+            WRITE (MESSU,*) 'done distrib:',DSIND,DSPOS,
+     $                       SPDCNT(DSIND),DEFFRC
+          END IF
+C
+          IF (DEFFRC .GT. 0.0) THEN
+C           notify user of lost fraction
+            WRITE (MESSU,2020) (LSPAC(I),I=1,5),DSIND,DEFFRC
+          END IF
+        ELSE
+C         more to do fraction in this distribution
+          SPINS(16,LSPPTR)= DSPOS+ 1
+C         increment date to next one, internal format
+          CALL SPNXDT (SPDTCD(DSIND),SPDTST(DSIND),I1,
+     M                 SPINS(1,LSPPTR))
+          IF ( (CONDCK .LE. 0) .AND. (SPDDFG(DSIND) .GE. 2) .AND.
+     $         (SPOUT .GE. 2) ) THEN
+C           write deferral message
+            CALL EXDATE (SPINS(1,LSPPTR),
+     O                   EXDAT)
+            WRITE (MESSU,2030) DEFFRC,DSIND,EXDAT
+          END IF
+          IF (SPOUT .GE. 9) THEN
+C           echo next distrib
+            WRITE (MESSU,*) 'next distrib:',DSIND,
+     $                       SPINS(16,LSPPTR),
+     $                      (SPINS(I,LSPPTR),I=1,5)
+          END IF
+          SORTFG= 1
+        END IF
+      END IF
+C
+      IF ( (SPOUT .GE. 1) .AND. (FTRNUM .GE. 1) ) THEN
+C       echo footers
+        DO 30 I= FTRPTR, FTRPTR+ FTRNUM- 1
+          WRITE (MESSU,2050) SPFTR(I)
+ 30     CONTINUE
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="SPACT">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,52 @@
+<p>Changes to a multiplication factor will be made based on an instruction from an external driver like HIMDRIVER or an internal HSPF SPECIAL ACTION.  
+
+<p>Whether coming from HIMDRIVER or a SPECIAL ACTION, the following information will be contained in the instruction: 
+   <ol>
+   <li>source volume name (WDM1, PERLND, etc.) 
+   <li>source volume number 
+   <li>source group name <i>(optional)</i>
+   <li>source member name <i>(optional)</i>
+   <li>source member subscripts <i>(optional)</i>
+   <li>new multiplication factor 
+   <li>mathematical operation indicator 
+   <li>target volume name (RCHRES, WDM1, etc.) 
+   <li>target volume number 
+   <li>target group name <i>(optional)</i>
+   <li>target member name <i>(optional)</i>
+   <li>target member subscripts <i>(optional)</i>
+   </ol>
+The mathmatical operation indicator dictates how the new multiplication factor will be applied.  The valid values for this indicator will be =, +, -, and *.  = indicates that the value specified in the instruction will be the new value used as the multiplication factor, and will be the default for this instruction.  + indicates that the new value will be added to the current multiplication factor, - indicates that the new value will be subtracted from the existing multiplication factor, and * indicates that the new value will be multiplied by the existing multiplication factor.
+<p>
+<b>HIMDRIVER</b> is currently capable of sending update information to HSPF through the HIMDRIVER update file.  Instructions in this file contain the HSPF operation name, operation number, variable name, variable subscript, and new value [FORMAT (A6,I5,1X,A6,I5,1X,F10.0)].  For instance, an instruction to update LZSN for HSPF operation PERLND 101 looks like the following:
+<p>
+<pre>
+PERLND  101 LZSN      0        6.5
+</pre>
+<p>
+A change to a multiplication factor from HIMDRIVER will be specified in the same update file.  A multiplication factor change will be indicated by a four-character identifier "MULT" at the beginning of the record.  The "MULT" identifier will be followed by the values of the variables listed above (source volume name, source volume number, source group name, source member name, source member subscripts, new multiplication factor, mathematical operation indicator, target volume name, target volume number, target group name, target member name, target member subscripts), formatted as A4,1X,A6,I4,A6,A6,2I2,F10.0,A1,1X,A6,I4,A6,A6,2I2.  Several examples of these are listed below.  
+<p>
+<pre>
+MULT WDM1   105      HPCP             0.9= PERLND 101EXTNL PREC
+MULT WDM1  7011      FLOW             1.1* RCHRES   4INFLOWIVOL
+MULT PERLND 101PQUAL POQUAL 1         120+ RCHRES   1INFLOWIDQAL  1   
+MULT PERLND 101                       120- RCHRES   1
+</pre>
+<p>
+In the first example, the input precipitation from WDM1 in data set number 105 going to PERLND 101 EXTNL PREC will be set to the value of 0.9.  In the second example, the input flow (e.g. from a treatment plant discharge) from WDM1 in data set number 7011 going to RCHRES 4 INFLOW IVOL will be multiplied by 1.1.  The third and fourth examples demonstrate the use of the + and - indicators to specify that the multiplication factor should be increased or decreased the specified amount.
+<p>
+Notice that some of the variables in the examples are not assigned values.  Where a variable is not assigned a value, any timeseries instruction that meets the specified variables will be modified.  For instance, the fourth example will subtract 120 from all timeseries instructions with a source of PERLND 101 and a target of RCHRES 1, such as might be the case if the user wishes to subtract 120 acres of one PERLND operation contributing to one RCHRES operation.
+<p>
+Note that in many cases a schematic/mass-link combination contains multiplication factors in both the schematic and mass-link portions of the connection.  In that case the new multiplication factor will be applied to only the schematic block portion of the connection, i.e. the area factor.   *** is this complete?
+<p>
+The <b>SPECIAL ACTIONS</b> feature of HSPF is currently capable of changing the value of an HSPF variable.  An enhancement to the HSPF SPECIAL ACTIONS will allow a change to be made to the multiplication factors through the SPECIAL ACTIONS block.  A multiplication factor change will be indicated by a four-character identifier "MULT" at the beginning of the record in the SPECIAL ACTIONS block, followed by the values of the same variables listed above (source volume name, source volume number, source group name, source member name, source member subscripts, new multiplication factor, mathematical operation indicator, target volume name, target volume number, target group name, target member name, target member subscripts).  In addition, the SPECIAL ACTIONS record will include the date and time the action is to be performed.  The format will add year, month, day, hour and minute, as format I4,4I2.  An example of this type of SPECIAL ACTIONS record is below.
+<p>
+<pre>
+MULT WDM1   105      HPCP             0.9= PERLND 101EXTNL PREC      199001010101 
+</pre>
+<p>
+The length of this record is 80 characters, which is the maximum record length in an HSPF UCI file.  This action will always take place at the specified date and time -- i.e. there is no type of deferral or repeat action available for this new type of SPECIAL ACTION.
+
+
+
+
+

@@ -1,0 +1,5 @@
+C     common block CDAOBS.INC
+C
+      REAL*8    HDOBS
+      INTEGER*4 NDOBS
+      COMMON /DAOBS/ NDOBS(MXPRT),HDOBS(MXTIM,MXPRT)

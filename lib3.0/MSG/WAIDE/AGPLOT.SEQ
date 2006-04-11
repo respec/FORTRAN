@@ -1,0 +1,2214 @@
+DATE
+WDMSFL
+SYSTEM
+CLU           32    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  AGPLOT
+  END LABEL
+  DATA   CLU    32
+#GROUP    1  TYPE MENU
+$WINDOW & (&)
+$TITLE Select a modify option.
+$DEFAULT  1
+$LENGTH   7
+$OPTION Device
+_DESC - select an output device
+_HELP
+ You can select Screen (graphics monitor), Printer (laser), Plotter (Pen)
+ or depending on computer Meta files.  The specific device under each
+ category can be modified with a TERM.DAT file using a code number
+ dependent on the GKS implementation. See site administrator.
+$OPTION Axes
+_DESC - change type of axes
+_HELP
+ Logarithmic, arithmetic, time, auxiliary, or probability axes are
+ available.
+$OPTION Titles
+_DESC - for axis and plot titles
+_HELP
+ You may modify axes titles and the plot title.
+$OPTION Curves
+_DESC - characteristics
+_HELP
+ You may set or change the specifications for each curve to be
+ plotted such as line type, color, symbol, pattern, etc.
+$OPTION Min/Max
+_DESC - scale for axes
+_HELP
+ You may change the limits of the scales used for the axes.
+ The minimums and maximums of the data will be provided to help you select.
+$OPTION Extra
+_DESC - description, blanked field and legend location
+_HELP
+  You may add text (up to 120 characters) in any number of lines anywhere
+  on the plot and for x-y plots create a rectangular space where no data
+  is to be plotted.  The latter is often used for pen plotters when a lot
+  of points are plotted near the origin.  Also position legend.
+$OPTION Size
+_DESC - of plot and/or X window position
+_HELP
+ You may change the overall size of the plot and the position of the plot
+ in the plotting space.  The letter size may also be modified. If running
+ under X windows, you may position the plot space (window) on the monitor.
+$OPTION Return
+_DESC - to plot the data
+_HELP
+ When you have finished customizing the plot, Return to plot the data.
+#GROUP    2  TYPE TEXT
+$TEXT
+Device Axes   Titles Curves Min/MaxExtras Size
+$HELP
+List of the options on the modify menu
+#GROUP    3  TYPE TEXT
+$WINDOW & (&&) problem
+$TEXT
+This option's parameters may not be modified for this plot.
+#GROUP    4  TYPE TEXT
+$WINDOW & (&&) problem
+$TEXT
+The following options must be used to set undefined parameters
+before generating a plot:
+ 
+#GROUP   10  TYPE PRM1
+$WINDOW Axes (&A)
+$SCREEN
+ 
+           Modify types of axes as needed:
+ 
+               Left Y-axis     [@PRM1]
+ 
+               Right Y-axis    [@PRM2]
+ 
+               Auxiliary axis  [@PRM3]
+$FIELD  @PRM1
+_TYPE CHARACTER
+_VALID ARITH   ,LOG
+_DEFAULT ARITH
+_HELP
+ Type of scale for the left vertical axis.
+$FIELD  @PRM2
+_TYPE CHARACTER
+_VALID NONE    ,ARITH   ,LOG
+_DEFAULT NONE
+_HELP
+ Type of scale for the right vertical axis.
+ Use NO if no right axis.
+$FIELD  @PRM3
+_TYPE CHARACTER
+_VALID NONE    ,ARITH
+_DEFAULT NONE
+_HELP
+ Optional plot that will appear above the main plot.
+ Drawn the width of the main plot and usually about 1 inch high.
+ Often used to plot precipitation or evaporation.
+#GROUP   11  TYPE PRM1
+$WINDOW Axes (&A)
+$SCREEN
+ 
+           Modify types of axes as needed:
+ 
+               X-axis       [@PRM1]
+ 
+               Left y-axis  [@PRM2]
+ 
+               Right y-axis [@PRM3]
+$FIELD  @PRM1
+_TYPE CHARACTER
+_VALID ARITH   ,LOG     ,PROB%   ,RI      ,PROBF
+_DEFAULT ARITH
+_HELP
+ Type of scale for the x-axis.  Axis type must be consistent with data.
+ Data must be in standard deviates for probability plots.
+ PROB% - probability in percent,
+ RI - recurrence interval in years, PROBF - fraction from 0 to 1.
+$FIELD  @PRM2
+_TYPE CHARACTER
+_VALID ARITH   ,LOG
+_DEFAULT ARITH
+_HELP
+ Type of scale for the left vertical (y) axis.
+$FIELD  @PRM3
+_TYPE CHARACTER
+_VALID NO  , ARITH   ,LOG
+_DEFAULT NO
+_HELP
+ Type of scale for the right vertical (y) axis.
+ Use NO if no right axis.
+#GROUP   15  TYPE TEXT
+$WINDOW Axes (&A) Warning
+$TEXT
+ A right y-axis or an auxiliary axis was selected, but no curves have been
+ selected for that type axis.  Select the "Curves" option to make those 
+ selections.
+#GROUP   16  TYPE TEXT
+$WINDOW Axes (&A) Warning
+$TEXT
+ A right y-axis was selected, but no curves have been selected for that type
+ axis.  Select the "Curves" option to make that selection. 
+#GROUP   20  TYPE PRM1
+$WINDOW Curves (&C)
+$SCREEN
+ 
+      Modify curve parameters as needed.
+ 
+        Type of line           [@PRM1....]
+        Color for line/symbol  [@PRM2....]
+        Type of symbol         [@PRM3....]
+        Shade pattern          [@PRM4....]
+ 
+      Plot data as MEAN(average or sum) or POINT(instantaneous) > @PRM5
+$FIELD  @PRM1
+_TYPE CHARACTER
+_VALID ?LINETYPE
+_DEFAULT SOLID
+_HELP
+ Select a line type if you want points connected, otherwise use NONE.
+ Use Limits command (F5) for available line types.
+ USER line types require information in a TERM.DAT file.
+$FIELD  @PRM2
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT BLACK
+_HELP
+ Use Limits command (F5) for available colors.
+$FIELD  @PRM3
+_TYPE CHARACTER
+_VALID ?SYMBOL
+_DEFAULT NONE
+_HELP
+ Select a symbol type if you want a symbol drawn at each data point,
+ otherwise use NONE.  USER symbols require information in a TERM.DAT file.
+ Use Limits command (F5) for available symbols.
+$FIELD  @PRM4
+_TYPE CHARACTER
+_VALID ?FILL
+_DEFAULT NONE
+_HELP
+ The area below the curve will be filled with the selected shade pattern.
+ Use NONE for no shading.  Use Limits command (F5) for available patterns.
+ USER shade patterns require information in a TERM.DAT file.
+ Caution: SOLID on pen plotters may take a long time.
+$FIELD  @PRM5
+_TYPE CHARACTER
+_VALID MEAN   ,POINT
+_DEFAULT MEAN
+_HELP
+ Select MEAN for data which is the average or sum over the time step.
+        MEAN produces a "stepped" line.
+ Select POINT for instantaneous measurements.
+        POINT produces a "smooth" line.
+#GROUP   21  TYPE PRM2
+$WINDOW Curves (&C)
+$HEADER
+Enter or modify specifications for each line.
+                                 MEAN
+  line                   shade    or     which
+  type   color   symbol pattern  POINT    axis    label for legend
+<-----> <-----> <-----> <-----> <-----> <-----> <------------------>
+$FIELD  FIELD1
+_WIDTH   7
+_COLUMN  1
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID ?LINETYPE
+_DEFAULT SOLID
+_HELP
+ Select a line type if you want points connected, otherwise use NONE.
+ Use Limits command (F5) for available line types.
+ USER line types require information in a TERM.DAT file.
+$FIELD  FIELD2
+_WIDTH   7
+_COLUMN  9
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT BLACK
+_HELP
+ Use Limits command (F5) for available colors.
+$FIELD  FIELD3
+_WIDTH   7
+_COLUMN 17
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID ?SYMBOL
+_DEFAULT NONE
+_HELP
+ Select a symbol type if you want a symbol drawn at each data point,
+ otherwise use NONE.  USER symbols require information in a TERM.DAT file.
+ Use Limits command (F5) for available symbols.
+$FIELD  FIELD4
+_WIDTH   7
+_COLUMN 25
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID ?FILL
+_DEFAULT NONE
+_HELP
+ The area below the curve will be filled with the selected shade pattern.
+ Use NONE for no shading.  Use Limits command (F5) for available patterns.
+ USER shade patterns require information in a TERM.DAT file.
+ Caution: SOLID on pen plotters may take a long time.
+$FIELD  FIELD5
+_WIDTH   7
+_COLUMN 33
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID MEAN   ,POINT
+_DEFAULT MEAN
+_HELP
+ Select MEAN for data which is the average or sum over the time step.
+        MEAN produces a "stepped" line.
+ Select POINT for instantaneous measurements.
+        POINT produces a "smooth" line.
+$FIELD  FIELD6
+_WIDTH   7
+_COLUMN 41
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID LEFT   ,RIGHT  ,AUX
+_DEFAULT LEFT
+_HELP
+ Specify the y-axis that the data should be plotted against:
+   LEFT - vertical scale on the left of the main plot
+  RIGHT - vertical scale on the right of the main plot
+    AUX - vertical axis of the small plot above the main plot.
+$FIELD  FIELD7
+_WIDTH  20
+_COLUMN 49
+_PROTECT NONE
+_TYPE CHARACTER
+_HELP
+ Brief description (up to 20 characters) of the curve.  Used in
+ the legend.  By default, the legend will appear in the upper left 
+ of the plotting field.  If you do not want a legend or if you want
+ to specify the location select Extra/Legend from the Modify menu.
+#GROUP   30  TYPE TEXT
+$WINDOW Curves (&C) problem
+$TEXT
+*** Data with variable time step can only be plotted on main plot.
+#GROUP   31  TYPE TEXT
+$WINDOW Curves (&C) problem
+$TEXT
+*** There is a curve with NONE specified for line type and symbol.
+#GROUP   32  TYPE TEXT
+$WINDOW Curves (&C) problem
+$TEXT
+*** Auxiliary axis was selected for use, but no curve selected for it.
+#GROUP   33  TYPE TEXT
+$WINDOW Curves (&C) problem
+$TEXT
+*** A curve was selected for auxiliary axis, but axis was not selected.
+#GROUP   34  TYPE TEXT
+$WINDOW Curves (&C) problem
+$TEXT
+*** Right y-axis was selected for use, but no curve selected for it.
+#GROUP   35  TYPE TEXT
+$WINDOW Curves (&C) problem
+$TEXT
+*** A curve was selected for the right y-axis, but axis was not selected.
+#GROUP   36  TYPE MENU
+$WINDOW Curves (&C) problem
+$SCREEN
+
+ How do you want to handle problems?    (Note:  You may want to modify
+                                                     o  Titles
+     @Change                                         o  Min/Max       )
+     @Accept
+$DEFAULT  1
+$LENGTH   6
+$OPTION Change
+_DESC - the curves
+$OPTION Accept
+_DESC - program adjustments
+$HELP
+ CHANGE - returns to the Curves screen so you can modify the curves
+ ACCEPT - the program will make the minimum necessary changes required
+          to plot the curves as requested.
+#GROUP   40  TYPE PRM1
+$WINDOW Curves (&C)
+$SCREEN
+ 
+Number of curves? @PRM1
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE          1:         9
+_DEFAULT          1
+#GROUP   41  TYPE PRM1
+$WINDOW Curves (&C)
+$SCREEN
+         Modify appropriate items as needed.
+ 
+         Code number for x-axis from status box  [@PRM1]
+         Code number for y-axis from status box  [@PRM2]
+ 
+         Type of line           [@PRM3....]
+         Color for line/symbol  [@PRM4....]
+         Type of symbol         [@PRM5....]
+ 
+$FIELD  @PRM1
+_TYPE INTEGER
+_RANGE          1:        18
+_DEFAULT          1
+_HELP
+ Number refers to variables listed in the status box.
+$FIELD  @PRM2
+_TYPE INTEGER
+_RANGE          1:        18
+_DEFAULT          2
+_HELP
+ Number refers to variables listed in the status box.
+$FIELD  @PRM3
+_TYPE CHARACTER
+_VALID ?LINETYPE
+_DEFAULT NONE
+_HELP
+ Select a line type if you want points connected, otherwise use NONE.
+ Use Limits command (F5) for available line types.
+ USER line types require information in a TERM.DAT file.
+$FIELD  @PRM4
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT BLACK
+_HELP
+  Use Limits command (F5) for available colors.
+$FIELD  @PRM5
+_TYPE CHARACTER
+_VALID ?SYMBOL
+_DEFAULT O
+_HELP
+ Select a symbol type if you want a symbol drawn at each data point,
+ otherwise use NONE.  USER symbols require information in a TERM.DAT file.
+ Use Limits command (F5) for available symbols.
+#GROUP   42  TYPE PRM2
+$WINDOW Curves (&C)
+$HEADER
+                   Enter or modify appropriate items.
+ sequence number
+ in status block
+ ---------------  Lft/Rt   line
+  x-axis  y-axis  y-axis   type   color   symbol   label for legend
+ <-----> <-----> <-----> <-----> <-----> <-----> <------------------>
+$FIELD  FIELD1
+_WIDTH   7
+_COLUMN  2
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE          1:        18
+_DEFAULT          1
+_HELP
+ Number refers to variables listed in the status block.
+$FIELD  FIELD2
+_WIDTH   7
+_COLUMN  10
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE          1:        18
+_DEFAULT          2
+_HELP
+ Number refers to variables listed in the status block.
+$FIELD  FIELD3
+_WIDTH   7
+_COLUMN 18
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID LEFT   ,RIGHT
+_DEFAULT LEFT
+_HELP
+ Y value for curve can be plotted against left or right axis.
+ At least one curve should be plotted using the left y-axis.
+$FIELD  FIELD4
+_WIDTH   7
+_COLUMN 26
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID ?LINETYPE
+_DEFAULT NONE
+_HELP
+ Select a line type if you want points connected, otherwise use NONE.
+ Use Limits command (F5) for available line types.
+ USER line types require information in a TERM.DAT file.
+$FIELD  FIELD5
+_WIDTH   7
+_COLUMN 34
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT BLACK
+_HELP
+ Use Limits command (F5) for available colors.
+$FIELD  FIELD6
+_WIDTH   7
+_COLUMN 42
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_VALID ?SYMBOL
+_DEFAULT O
+_HELP
+ Select a symbol type if you want a symbol drawn at each data point,
+ otherwise use NONE.  USER symbols require information in a TERM.DAT file.
+ Use Limits command (F5) for available symbols.
+$FIELD  FIELD7
+_WIDTH  20
+_COLUMN 50
+_PROTECT NONE
+_TYPE CHARACTER
+_HELP
+ Brief description (up to 20 characters) of the curve.  Used in
+ the legend.  By default, the legend will appear in the upper left
+ of the plotting field.  If you do not want a legend or if you want
+ to specify the location select Extra/Legend from the Modify menu.
+#GROUP   70  TYPE MENU
+$WINDOW Extra (&E)
+$SCREEN
+  Select an Extra option:
+
+     @Add
+     @Locate
+     @Blank
+
+     @Return
+$DEFAULT 1
+$LENGTH  6
+$OPTION Return
+_DESC - done entering Extra information
+$OPTION Add
+_DESC - a block of text
+_HELP
+ A block of text consisting of up to 120 characters may be added to
+ the plot.  The number of characters per line, the number of lines,
+ and the location of the text block are user specified.
+$OPTION Locate
+_DESC - the legend
+_HELP
+ By default, the legend will appear in the upper left of the plotting
+ field.  The Locate option can be used to reposition the legend or to
+ "turn off" the legend.
+$OPTION Blank
+_DESC - a window in the plotting field
+_HELP
+ Data points will not be drawn in the specified window.  This is often
+ used with pen plotters when lots of data points occur at or near the
+ origin.
+#GROUP   71  TYPE MENU
+$WINDOW Extra (&E)
+$SCREEN
+  Select an Extra option:
+ 
+     @Add
+     @Locate
+ 
+     @Return
+$DEFAULT 1
+$LENGTH  6
+$OPTION Return
+_DESC - done entering Extra information
+$OPTION Add
+_DESC - a block of text
+_HELP
+ A block of text consisting of up to 120 characters may be added to
+ the plot.  The number of characters per line, the number of lines,
+ and the location of the text block are user specified.
+$OPTION Locate
+_DESC - the legend
+_HELP
+ By default, the legend will appear in the upper left of the plotting
+ field.  The Locate option can be used to reposition the legend or to
+ "turn off" the legend.
+#GROUP   72  TYPE MENU
+$WINDOW Extra (&E)
+$SCREEN
+  Select an Extra option:
+ 
+     @Add
+     @Blank
+ 
+     @Return
+$DEFAULT 1
+$LENGTH  6
+$OPTION Return
+_DESC - done entering Extra information
+$OPTION Add
+_DESC - a block of text
+_HELP
+ A block of text consisting of up to 120 characters may be added to
+ the plot.  The number of characters per line, the number of lines,
+ and the location of the text block are user specified.
+$OPTION Blank
+_DESC - a window in the plotting field
+_HELP
+ Data points will not be drawn in the specified window.  This is often
+ used with pen plotters when lots of data points occur at or near the
+ origin.
+#GROUP   73  TYPE MENU
+$WINDOW Extra (&E)
+$SCREEN
+  Select an Extra option:
+ 
+     @Add
+ 
+     @Return
+$DEFAULT 1
+$LENGTH  6
+$OPTION Return
+_DESC - done entering Extra information
+$OPTION Add
+_DESC - a block of text
+_HELP
+ A block of text consisting of up to 120 characters may be added to
+ the plot.  The number of characters per line, the number of lines,
+ and the location of the text block are user specified.
+#GROUP   75  TYPE PRM1
+$WINDOW Add (&EA)
+$SCREEN
+           Enter specifications for text block to be added:
+ 
+Location of upper left corner:        Size of the text block:      
+    Left (x: 0.0-1.0) [@Lft.]             Characters per line [@Cpl.]
+    Top  (y: 0.0-1.0) [@Top.]             Number of lines     [@Nol.]
+
+ Text:  [@Txt1.......................................................]
+        [@Txt2.......................................................]
+        |         |         |         |         |         |         |
+        (Note:  text will be spaced according to the characters/line.)
+$FIELD  @Lft
+_TYPE REAL
+_RANGE         0.:        1.
+_DEFAULT         0.6
+_HELP
+ Location of left side of text block.  A fraction of the horizontal (X)
+ space for the graph.  The left edge of the plotting field is 0.0, the
+ right edge is 1.0.
+$FIELD  @Top
+_TYPE REAL
+_RANGE         0.:        1.
+_DEFAULT         0.25
+_HELP
+ Location of the top of the text block.  A fraction of the vertical (Y)
+ space for the graph.  The bottom edge of the plotting field is 0.0, the
+ top edge is 1.0.
+$FIELD  @Cpl
+_TYPE INTEGER
+_RANGE          1:       120
+_DEFAULT         40
+_HELP
+ Up to 120 characters can be used in any combination of characters per
+ line and number of lines.  The characters per line times the number of
+ lines cannot exceed 120.
+$FIELD  @Nol
+_TYPE INTEGER
+_RANGE          1:        60
+_DEFAULT          3
+_HELP
+ Up to 120 characters can be used in any combination of characters per
+ line and number of lines.  The characters per line times the number of
+ lines cannot exceed 120.
+$FIELD @Txt1
+_TYPE CHARACTER
+_HELP
+ First 60 characters of the text.  If you have 60 characters per line and
+ 2 lines, all of the text will be on this first line.  If you have 1 line
+ of 70 characters, the first 60 characters will be on this first line and
+ the remaining 10 characters will be on the second line.
+$FIELD @Txt2
+_TYPE CHARACTER
+_HELP
+ Second 60 characters of the text.  If you have 30 characters per line and
+ 4 lines, the first line above will contain your first 2 lines of text and
+ this second line will contain your second 2 lines of text.
+#GROUP   76  TYPE TEXT
+$WINDOW Add (&EA) problem
+$TEXT
+The number of lines multiplied by the number of characters per line
+exceeds the maximum of 120.  Reenter one or both of these values.
+#GROUP   77  TYPE PRM1
+$WINDOW Locate (&EL)
+$SCREEN
+
+ Legend location option [@Option]   (Custom,Default,None)
+
+     If custom:  Left (x) [@Lft.]   (Default is 0.05)
+                 Top  (y) [@Top.]   (Default is 0.95)
+
+$FIELD  @Option
+_TYPE CHARACTER
+_VALID CUSTOM, DEFAULT, NONE
+_DEFAULT DEFAULT
+_HELP 
+ Select 
+  Custom  to use values specified to position upper left corner of legend, 
+  Default to use 0.05 and 0.95 to position in upper left corner of plot, and
+  None    to not include the legend on the plot.
+$FIELD  @Lft
+_TYPE REAL
+_RANGE       -0.9:        1.9
+_DEFAULT         0.05
+_HELP
+ Location of left side of the legend block.  A fraction of the width (X)
+ of the plotting field.  The left edge of the plotting field is 0.0, the
+ right edge is 1.0. 
+$FIELD  @Top
+_TYPE REAL
+_RANGE       -0.9:        1.9
+_DEFAULT         0.95
+_HELP
+ Location of the top of the legend block.  A fraction of the height (Y)
+ of the plotting field.  The bottom edge of the plotting field is 0.0, the
+ top edge is 1.0.
+#GROUP   78  TYPE PRM1
+$WINDOW Blank (&EB)
+$SCREEN
+ Location of rectangle to blank out plotted points:
+
+ Location of upper left corner:      Location of lower right corner:
+      Left (x: 0.0-1.0) [@Lft.]          Right  (x: 0.0-1.0) [@Rte.]
+      Top  (y: 0.0-1.0) [@Top.]          Bottom (y: 0.0-1.0) [@Btm.]
+
+ (Notes:  There will be no indication on the plot that points were deleted.
+          Enter 0.0 for all coordinates to plot all data points.)
+$FIELD  @Lft
+_TYPE REAL
+_RANGE         0.:        1.
+_DEFAULT         0.
+_HELP
+ Location of left side of blanking box.  A fraction of the horizontal (X)
+ space for the graph.  The left edge of the plotting field is 0.0, the
+ right edge is 1.0.
+$FIELD  @Rte
+_TYPE REAL
+_RANGE         0.:        1.
+_DEFAULT         0.
+_HELP
+ Location of right side of blanking box.  A fraction of the horizontal (X)
+ space for the graph.  The left edge of the plotting field is 0.0, the
+ right edge is 1.0.
+$FIELD  @Btm
+_TYPE REAL
+_RANGE         0.:        1.
+_DEFAULT         0.
+_HELP
+ Location of the bottom of the blanking box.  A fraction of the vertical (Y)
+ space for the graph.  The bottom edge of the plotting field is 0.0, the
+ top edge is 1.0.
+$FIELD  @Top
+_TYPE REAL
+_RANGE         0.:        1.
+_DEFAULT         0.
+_HELP
+ Location of the top of the blanking box.  A fraction of the vertical (Y)
+ space for the graph.  The bottom edge of the plotting field is 0.0, the
+ top edge is 1.0.
+#GROUP   80  TYPE PRM1
+$WINDOW Size (&S)
+$SCREEN
+Enter or modify sizes as needed.       (( All sizes relative,  ))
+     Vertical      Horizontal          (( actual size will be  ))
+       (y)            (x)              (( adjusted for device. ))
+     --------       --------
+     @PRM1...       @PRM2...       plotting space (inches)
+     @PRM3...       @PRM4...       axes lengths (inches)
+     @PRM5...       @PRM6...       location of origin (inches)
+ 
+     Size of lettering (inches)        [@PRM7...]
+     Height of auxiliary axis (inches) [@PRM8...]
+$FIELD  @PRM1
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT        6.4
+_HELP
+ Vertical distance for plotting surface.
+$FIELD  @PRM2
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT         8.
+_HELP
+ Horizontal distance for plotting surface.
+$FIELD  @PRM3
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT        4.2
+_HELP
+ Length of Y-axis not including label and border.  Must be less
+ than vertical plotting space to leave room for X-axis label, plot
+ title, and auxiliary axis if used.
+$FIELD  @PRM4
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT        4.4
+_HELP
+ Length of X-axis not including label and border.  Must be less
+ than horizontal plotting space to leave room for Y-axis label on
+ left side (and right side if used).
+$FIELD  @PRM5
+_TYPE REAL
+_RANGE         0.:       36.
+_DEFAULT        1.5
+_HELP
+ This may be used to locate the plot on pre-printed
+ paper or position the plot on a small portion of the space.
+ Values must be consistent with the available space and length of axis.
+$FIELD  @PRM6
+_TYPE REAL
+_RANGE         1.:       36.
+_DEFAULT        1.5
+_HELP
+ This may be used to locate the plot on pre-printed
+ paper or position the plot on a small portion of the space.
+ Values must be consistent with the available space and length of axis.
+$FIELD  @PRM7
+_TYPE REAL
+_RANGE         .01:       1.0
+_DEFAULT         .1
+_HELP
+ Use recommended size unless you have specific needs.  The
+ other sizes might need to be altered if the lettering size
+ is increased.
+$FIELD  @PRM8
+_TYPE REAL
+_RANGE         0.:        6.
+_DEFAULT         1.
+_HELP
+ Height of the auxiliary plot on top for a time-series plot.
+ Usually 1.0 inch.  Value must be consistent with vertical
+ plotting space and main Y-axis length.
+#GROUP   81  TYPE PRM1
+$WINDOW Size (&S)
+$SCREEN
+Enter or modify sizes as needed.       (( All sizes relative,  ))
+     Vertical      Horizontal          (( actual size will be  ))
+       (y)            (x)              (( adjusted for device. ))
+     --------       --------
+     @PRM1...       @PRM2...       plotting space (inches)
+     @PRM3...       @PRM4...       axes lengths (inches)
+     @PRM5...       @PRM6...       location of origin (inches)
+ 
+     size of lettering (inches)  @PRM7...
+$FIELD  @PRM1
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT         8.
+_HELP
+ Vertical distance for plotting surface.
+$FIELD  @PRM2
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT        10.
+_HELP
+ Horizontal distance for plotting surface.
+$FIELD  @PRM3
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT         6.
+_HELP
+ Length of Y-axis not including label and border.  Must be less
+ than vertical plotting space to leave room for X-axis label, plot
+ title, and auxiliary axis if used.
+$FIELD  @PRM4
+_TYPE REAL
+_RANGE         1.:       38.
+_DEFAULT         7.
+_HELP
+ Length of X-axis not including label and border.  Must be less
+ than horizontal plotting space to leave room for Y-axis label on
+ left side (and right side if used).
+$FIELD  @PRM5
+_TYPE REAL
+_RANGE         0.:       36.
+_DEFAULT         0.
+_HELP
+ This may be used to locate the plot on pre-printed
+ paper or position the plot on a small portion of the space.
+ Values must be consistent with the available space and length of axis.
+$FIELD  @PRM6
+_TYPE REAL
+_RANGE         1.:       36.
+_DEFAULT         1.
+_HELP
+ This may be used to locate the plot on pre-printed
+ paper or position the plot on a small portion of the space.
+ Values must be consistent with the available space and length of axis.
+$FIELD  @PRM7
+_TYPE REAL
+_RANGE         .01:       1.0
+_DEFAULT         .1
+_HELP
+ Use recommended size unless you have specific needs.  The
+ other sizes might need to be altered if the lettering size
+ is increased.
+#GROUP   82  TYPE TEXT
+$WINDOW Size (&S) problem
+$TEXT
+*** Origin + Y-axis length too big: (1) increase vertical space, (2) reduce
+    Y-axis length, or (3) reduce vertical location of origin.
+#GROUP   83  TYPE TEXT
+$WINDOW Size (&S) problem
+$TEXT
+*** Origin + X-axis length too big: (1) increase horizontal space, (2) reduce
+    X-axis length, or (3) reduce horizontal location of origin.
+#GROUP   84  TYPE TEXT
+$WINDOW Size (&S) problem
+$TEXT
+*** Size of lettering too big for Y-axis length.
+#GROUP   85  TYPE TEXT
+$WINDOW Size (&S) problem
+$TEXT
+*** Size of lettering too big for number of tics on auxiliary axis.
+#GROUP   86  TYPE TEXT
+$WINDOW Size (&S) problem
+$TEXT
+
+Problems with axis lengths need to be fixed.
+#GROUP   87  TYPE MENU
+$WINDOW Size (&S) problem
+$SCREEN
+       How do you want to handle letter size problems?
+            @Ignore
+            @Change
+$DEFAULT  1
+$LENGTH   6
+$OPTION Ignore
+_DESC - warnings and see what it looks like
+_HELP
+ Text may overlap or run off the edge of the page.
+$OPTION Change
+_DESC - the size of the letters or the axes
+_HELP
+ You will be returned to the Size screen to make change.
+#GROUP   90  TYPE PRM1
+$WINDOW Size (&S) X-window
+$SCREEN
+ 
+           Enter position of the X window on the monitor.
+ 
+              Values are fractions of the monitor size
+                   measured from the left and top.
+ 
+                       Left side    [@PRM1.]
+                       Top          [@PRM2.]
+                       Right side   [@PRM3.]
+                       Bottom       [@PRM4.]
+$FIELD @PRM1
+_TYPE REAL
+_RANGE 0.0:0.95
+_DEFAULT 0.0
+$FIELD @PRM2
+_TYPE REAL
+_RANGE 0.0:0.95
+_DEFAULT 0.0
+$FIELD @PRM3
+_TYPE REAL
+_RANGE 0.05:1.0
+_DEFAULT 0.5
+$FIELD @PRM4
+_TYPE REAL
+_RANGE 0.05:1.0
+_DEFAULT 0.5
+$HELP
+ To put window in upper left quadrant enter 0.0, 0.0, 0.5, and 0.5.
+ To put window in lower right quadrant enter 0.5, 0.5, 1.0, and 1.0.
+ To put window in middle of monitor enter 0.25, 0.25, 0.75, and 0.75.
+ To fill the monitor with the window enter 0.0, 0.0, 1.0, and 1.0.
+#GROUP  101  TYPE PRM1
+$WINDOW Titles (&T)
+$SCREEN
+ Title (up to 3 lines, each 78 characters wide)
+@Titl1........................................................................
+@Titl2........................................................................
+@Titl3........................................................................
+
+ Left y-axis: [@Left1.................................]
+              [@Left2.................................]
+$FIELD @Titl1
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl2
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl3
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Left1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Left2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+#GROUP  102  TYPE PRM1
+$WINDOW Titles (&T)
+$SCREEN
+ Title (up to 3 lines, each 78 characters wide)
+@Titl1........................................................................
+@Titl2........................................................................
+@Titl3........................................................................
+
+                                                            Auxiliary axis
+ Left y-axis: [@Left1.................................]     [@Aux1.......]
+              [@Left2.................................]     [@Aux2.......]
+                                                            [@Aux3.......]
+                                                            [@Aux4.......]
+$FIELD @Titl1
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl2
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl3
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Left1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Left2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Aux1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+$FIELD @Aux2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+$FIELD @Aux3
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+$FIELD @Aux4
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+#GROUP  103  TYPE PRM1
+$WINDOW Titles (&T)
+$SCREEN
+ Title (up to 3 lines, each 78 characters wide)
+@Titl1........................................................................
+@Titl2........................................................................
+@Titl3........................................................................
+
+                                                            Auxiliary axis
+ Left y-axis: [@Left1.................................]     [@Aux1.......]
+              [@Left2.................................]     [@Aux2.......]
+Right y-axis: [@Rght1.................................]     [@Aux3.......]
+              [@Rght2.................................]     [@Aux4.......]
+$FIELD @Titl1
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl2
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl3
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Left1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Left2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Rght1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the right y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Rght2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the right y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Aux1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+$FIELD @Aux2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+$FIELD @Aux3
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+$FIELD @Aux4
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the auxiliary axis of the plot.
+ Enter up to 4 lines of 12 characters each.
+ One or more lines may be left blank.
+ All lines will be centered along the axis.
+#GROUP  104  TYPE PRM1
+$WINDOW Titles (&T)
+$SCREEN
+ Title (up to 3 lines, each 78 characters wide)
+@Titl1........................................................................
+@Titl2........................................................................
+@Titl3........................................................................
+
+ Left y-axis: [@Left1.................................]
+              [@Left2.................................]
+Right y-axis: [@Rght1.................................]
+              [@Rght2.................................]
+$FIELD @Titl1
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl2
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl3
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Left1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Left2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Rght1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the right y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Rght2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the right y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+#GROUP  105  TYPE PRM1
+$WINDOW Titles (&T)
+$SCREEN
+ Title (up to 3 lines, each 78 characters wide)
+@Titl1........................................................................
+@Titl2........................................................................
+@Titl3........................................................................
+
+ Left y-axis: [@Left1.................................]
+              [@Left2.................................]
+      x-axis: [@Botm1.................................]
+              [@Botm2.................................]
+$FIELD @Titl1
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl2
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl3
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Left1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Left2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Botm1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the bottom x-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Botm2
+_TYPE CHARACTER
+_HELP
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+#GROUP  106  TYPE PRM1
+$WINDOW Titles (&T)
+$SCREEN
+ Title (up to 3 lines, each 78 characters wide)
+@Titl1........................................................................
+@Titl2........................................................................
+@Titl3........................................................................
+ Left y-axis: [@Left1.................................]
+              [@Left2.................................]
+Right y-axis: [@Rght1.................................]
+              [@Rght2.................................]
+      x-axis: [@Botm1.................................]
+              [@Botm2.................................]
+$FIELD @Titl1
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl2
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Titl3
+_TYPE CHARACTER
+_HELP
+ Will be displayed at the bottom of the plot.
+ Enter up to 3 lines of 78 characters each.
+$FIELD @Left1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Left2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the left y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Rght1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the right y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Rght2
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the right y-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Botm1
+_TYPE CHARACTER
+_HELP
+ Will be displayed parallel to the bottom x-axis.
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+$FIELD @Botm2
+_TYPE CHARACTER
+_HELP
+ Enter up to 2 lines of 39 characters each.
+ One or both lines may be left blank.
+ Both lines of text will be centered along the axis.
+#GROUP  111  TYPE PRM1
+$WINDOW Min/Max (&M)
+$SCREEN
+ Enter the scale and number of tics for each axis:
+ 
+           @Desc1..............
+            minimum    maximum   
+    data:  @Rng1...   @Rng2...
+ 
+   scale: [@Scl1...] [@Scl2...]
+    tics:        [@Tic1]
+ 
+For data off-scale: top [@Bnd1.] bottom [@Bnd2.]
+$FIELD @Scl1
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl2
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Tic1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Bnd1
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd2
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Desc1
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Rng1
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng2
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+#GROUP  112  TYPE PRM1
+$WINDOW Min/Max (&M)
+$SCREEN
+ Enter the scale and number of tics for each axis:
+ 
+           @Desc1..............   @Desc2..............
+            minimum    maximum     minimum    maximum 
+    data:  @Rng1...   @Rng2...    @Rng3...   @Rng4...
+ 
+   scale: [@Scl1...] [@Scl2...]  [@Scl3...] [@Scl4...]
+    tics:        [@Tic1]                [@Tic2]
+ 
+For data off-scale: top [@Bnd1.] bottom [@Bnd2.]
+$FIELD @Scl1
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl2
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl3
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl4
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Tic1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Tic2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Bnd1
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd2
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Desc1
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Desc2
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Rng1
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng2
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+$FIELD @Rng3
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng4
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+#GROUP  113  TYPE PRM1
+$WINDOW Min/Max (&M)
+$SCREEN
+ Enter the scale and number of tics for each axis:
+ 
+           @Desc1..............   @Desc2..............   @Desc3..............
+            minimum    maximum     minimum    maximum     minimum    maximum
+    data:  @Rng1...   @Rng2...    @Rng3...   @Rng4...    @Rng5...   @Rng6...
+ 
+   scale: [@Scl1...] [@Scl2...]  [@Scl3...] [@Scl4...]  [@Scl5...] [@Scl6...]
+    tics:        [@Tic1]                [@Tic2]                [@Tic3]
+ 
+For data off-scale: top [@Bnd1.] bottom [@Bnd2.]
+$FIELD @Scl1
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl2
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl3
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl4
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl5
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl6
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Tic1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Tic2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Tic3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Bnd1
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd2
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Desc1
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Desc2
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Desc3
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Rng1
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng2
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+$FIELD @Rng3
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng4
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+$FIELD @Rng5
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng6
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+#GROUP  114  TYPE PRM1
+$WINDOW Min/Max (&M)
+$SCREEN
+ Enter the scale and number of tics for each axis:
+ 
+           @Desc1..............   @Desc2..............
+            minimum    maximum     minimum    maximum
+    data:  @Rng1...   @Rng2...    @Rng3...   @Rng4...
+ 
+   scale: [@Scl1...] [@Scl2...]  [@Scl3...] [@Scl4...]
+    tics:        [@Tic1]                [@Tic2]
+ 
+For data off-scale: top [@Bnd1.] bottom [@Bnd2.]
+$FIELD @Scl1
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl2
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl3
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl4
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Tic1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Tic2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Bnd1
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd2
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Desc1
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Desc2
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Rng1
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng2
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+$FIELD @Rng3
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng4
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+#GROUP  115  TYPE PRM1
+$WINDOW Min/Max (&M)
+$SCREEN
+ Enter the scale and number of tics for each axis:
+ 
+           @Desc1..............   @Desc2..............
+            minimum    maximum     minimum    maximum
+    data:  @Rng1...   @Rng2...    @Rng3...   @Rng4...
+ 
+   scale: [@Scl1...] [@Scl2...]  [@Scl3...] [@Scl4...]
+    tics:        [@Tic1]                [@Tic2]
+ 
+For data off-scale: top [@Bnd1.] bottom [@Bnd2.] left [@Bnd3.] right [@Bnd4.]
+$FIELD @Scl1
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl2
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl3
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl4
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Tic1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Tic2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Bnd1
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd2
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd3
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd4
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Desc1
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Desc2
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Rng1
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng2
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+$FIELD @Rng3
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng4
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+#GROUP  116  TYPE PRM1
+$WINDOW Min/Max (&M)
+$SCREEN
+ Enter the scale and number of tics for each axis:
+
+           @Desc1..............   @Desc2..............   @Desc3..............
+            minimum    maximum     minimum    maximum     minimum    maximum
+    data:  @Rng1...   @Rng2...    @Rng3...   @Rng4...    @Rng5...   @Rng6...
+
+   scale: [@Scl1...] [@Scl2...]  [@Scl3...] [@Scl4...]  [@Scl5...] [@Scl6...]
+    tics:        [@Tic1]                [@Tic2]                [@Tic3]
+
+For data off-scale: top [@Bnd1.] bottom [@Bnd2.] left [@Bnd3.] right [@Bnd4.]
+$FIELD @Scl1
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl2
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl3
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl4
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl5
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Minimum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Scl6
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  -999. : -999.
+_HELP
+Maximum value for the axis.
+Log scale requires full cycles, with a maximum of 7 cycles.
+$FIELD @Tic1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Tic2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Tic3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 20
+_HELP
+Number of intervals for tic marks for the axis.
+Not applicable for log scales.
+$FIELD @Bnd1
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd2
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd3
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Bnd4
+_TYPE CHRACTER
+_PROTECT CORRECT
+_VALID CLIP,SKIP,ARROW,IGNORE
+_DEFAULT IGNORE
+_HELP
+  CLIP - Draws line to border.  Ignores symbols
+  SKIP - Breaks line and restarts with next good point.  Ignores symbols.
+ ARROW - Breaks line and draws arrow where point goes off scale.
+IGNORE - Assumes point does not exist.
+$FIELD @Desc1
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Desc2
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Desc3
+_TYPE CHARACTER
+_PROTECT PROTECTED
+_HELP
+Axis location and type.
+$FIELD @Rng1
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng2
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+$FIELD @Rng3
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng4
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+$FIELD @Rng5
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Lowest value to be plotted against this axis.
+$FIELD @Rng6
+_TYPE REAL
+_PROTECT PROTECTED
+_HELP
+Highest value to be plotted against this axis.
+#GROUP  140  TYPE TEXT
+$WINDOW Plot (&P) problem
+$TEXT
+ Graphics not available or could not set up graphics device.
+ Review file ERROR.FIL for problems.
+#GROUP  142  TYPE MENU
+$WINDOW Device (&D)
+$SCREEN
+ Select an output device:
+
+ @Screen
+ @Laser
+ @Plotter
+ 
+$DEFAULT   1
+$LENGTH    8
+$OPTION Screen
+_DESC - graphics monitor or graphics CRT
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSDIS parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+$OPTION Laser
+_DESC - laser printer or dot matrix printer
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPRT parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+$OPTION Plotter
+_DESC - pen plotter
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPLT parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+#GROUP  143  TYPE MENU
+$WINDOW Device (&D)
+$SCREEN
+ Select an output device:
+
+ @Screen
+ @Laser
+ @Plotter
+ @Meta
+
+$DEFAULT   1
+$LENGTH    8
+$OPTION Screen
+_DESC - graphics monitor or graphics CRT
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSDIS parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Laser
+_DESC - post script file or output to matrix printer
+_HELP
+  not a line printer.
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPRT parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Plotter
+_DESC - pen plotter
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPLT parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Meta
+_DESC - meta file for DISPOP
+_HELP
+  This option will allow you to put plot on any device with DISPOP.
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSMET parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+#GROUP  144  TYPE MENU
+$WINDOW Device (&D)
+$SCREEN
+ Select an output device:
+ 
+ @Screen
+ @Laser
+ @Plotter
+ @Meta
+ 
+$DEFAULT   1
+$LENGTH    8
+$OPTION Screen
+_DESC - graphics monitor or graphics CRT
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSDIS parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Laser
+_DESC - post script file or output to matrix printer
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPRT parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Plotter
+_DESC - pen plotter
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPLT parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Meta
+_DESC - Gks meta file
+_HELP
+  GKS meta file could be used later.
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSMET parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+#GROUP  145  TYPE MENU
+$WINDOW Device (&D)
+$SCREEN
+ Select an output device:
+ 
+ @Screen
+ @Laser
+ @Plotter
+ @Meta
+ 
+$DEFAULT   1
+$LENGTH    8
+$OPTION Screen
+_DESC - graphics monitor or graphics CRT
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSDIS parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Laser
+_DESC - laser printer or dot matrix printer or postscript file
+_HELP
+  Not a line printer.
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPRT parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+$OPTION Plotter
+_DESC - pen plotter
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPLT parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+$OPTION Meta
+_DESC - Cgm meta file
+_HELP
+  CGM meta files can be used as input to graphics editing programs.
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSMET parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+#GROUP  146  TYPE MENU
+$WINDOW Device (&D)
+$SCREEN
+ Select an output device:
+ 
+ @Screen
+ @Laser
+ @Plotter
+ @Meta
+ 
+$DEFAULT   1
+$LENGTH    8
+$OPTION Screen
+_DESC - graphics monitor or graphics CRT
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSDIS parameter to your TERM.DAT file.  See
+  site administrator or GKS manual for the appropriate code number.
+$OPTION Laser
+_DESC - laser printer or dot matrix printer or postscript file
+_HELP
+  Not a line printer.
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPRT parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+$OPTION Plotter
+_DESC - pen plotter
+_HELP
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSPLT parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+$OPTION Meta
+_DESC - Cgm meta file
+_HELP
+  CGM meta files can be used as input to graphics editing programs.
+  The graphics device is set by a default code number which can be
+  changed by adding the GKSMET parameter to your TERM.DAT file.  See
+  you site administrator or GKS manual for the appropriate code number.
+#GROUP  149  TYPE FILE
+$WINDOW & (&D&)
+$SCREEN
+             Enter name of file for graphics output.
+ 
+  [@FILE...........................................................]
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ Enter name of file for current directory or full path name.  You may
+ overwrite an old file or create a new file.
+#GROUP  150  TYPE TEXT
+$WINDOW Screen (&DS) problem
+$TEXT
+User's TERM.DAT file has no display device specified.
+#GROUP  151  TYPE TEXT
+$WINDOW Laser (&DL) problem
+$TEXT
+User's TERM.DAT file has no printer device specified.
+#GROUP  152  TYPE TEXT
+$WINDOW Plotter (&DP) problem
+$TEXT
+User's TERM.DAT file has no pen plotter specified.
+#GROUP  153  TYPE TEXT
+$WINDOW Meta (&DM) problem
+$TEXT
+User's TERM.DAT file has no meta file specifications.
+  END DATA
+END CLU

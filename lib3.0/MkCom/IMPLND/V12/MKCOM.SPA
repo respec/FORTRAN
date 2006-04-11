@@ -1,0 +1,163 @@
+YR                    66
+MON                   67
+DAY                   68
+HR                    69
+MIN                   70
+SPOUT                 79
+GATMP                 94
+LAPSE   24            98
+ELDAT                122
+AIRTMP               123
+AIRTS                124
+PREC                 126
+DTMPG                131
+WINMOV               132
+SOLRAD               133
+ICEFG                138
+SNOPFG               139
+VKMFG                140
+SVP     40           141
+LAT                  181
+SNPM1    7           181
+MELEV                182
+SHADE                183
+SNOWCF               184
+COVIND               185
+KMELT                186
+TBASE                187
+RDCSN                188
+SNPM2    6           188
+TSNOW                189
+SNOEVP               190
+CCFACT               191
+MWATER               192
+MGMELT               193
+KMELTM  12           194
+DRYFG                206
+SNOFFG               208
+RAINFG               209
+PACKF                214
+SNST1    7           214
+PACKW                215
+PACKI                216
+PDEPTH               217
+COVINX               218
+NEGHTS               219
+XLNMLT               220
+RDENPF               221
+SNST2    5           221
+SKYCLR               222
+SNOCOV               223
+DULL                 224
+ALBEDO               225
+PAKTMP               226
+SNST3    3           226
+DEWTMP               227
+SNOTMP               228
+PACK                 229
+RDNSN                234
+MNEGHS               235
+PACKWC               236
+NEGHT                237
+GMELTR               238
+COMPCT               239
+SNOWEP               240
+MOSTHT               241
+VAP                  242
+SNOWF                259
+PRAIN                260
+SNOWE                261
+WYIELD               262
+MELT                 263
+RAINF                294
+SURLI                301
+PETINP               306
+CSNOFG               309
+IWPM1    5           309
+RTOPFG               310
+VRSFG                311
+VNNFG                312
+RTLIFG               313
+LSUR                 314
+IWPM2    2           314
+SLSUR                315
+PETMAX               316
+IWPM3    2           316
+PETMIN               317
+RETSCM  12           318
+NSURM   12           330
+SMSFG                342
+FSMSFG               343
+RETS                 345
+IWST1    2           345
+SURS                 346
+IWST2                347
+PETADJ               347
+IMPS                 348
+RETSC                353
+NSUR                 354
+SRC                  355
+DEC                  356
+SUPY                 361
+SURO                 362
+PET                  363
+IMPEV                364
+RETO                 391
+SURI                 392
+SLSLD                398
+VASDFG               404
+SLDPM1   3           404
+VRSDFG               405
+SDOPFG               406
+ACCSDM  12           407
+REMSDM  12           419
+KEIM                 431
+JEIM                 432
+DRYDFG               433
+SLDS                 434
+ACCSDP               436
+REMSDP               437
+SOSLD                438
+SLITMP               444
+SLIDOX               445
+SLICO2               446
+WTFVFG               450
+ELEVGC               451
+AWTFM   12           452
+BWTFM   12           464
+LIFAC    2           476
+AIRTC                478
+SOTMP                479
+IGST1    3           479
+SODOX                480
+SOCO2                481
+AWTF                 485
+BWTF                 486
+SOHT                 487
+SODOXM               488
+SOCO2M               489
+SLIQO    7           505
+SLIQSP   7           540
+IQADFG  20           584
+VPFWFG   7           624
+VQOFG    7           651
+IQAFXM  12  10       698
+IQACNM  12  10       818
+POTFWM  12   7       938
+ACQOPM  12   7      1022
+REMQOM  12   7      1106
+WSFAC    7          1190
+SQO      7          1197
+POTFW    7          1204
+ACQOP    7          1211
+REMQOP   7          1218
+SOQSP    7          1225
+SOQS     7          1246
+SOQO     7          1281
+SOQOC    7          1316
+SOQUAL  10          1323
+SOQC    10          1333
+IQADDR  10          1343
+IQADWT  10          1393
+IQADEP  10          1443
+

@@ -1,0 +1,71 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HPRBUT">HPRBUT</a>
+<p>Called By
+   <a href="../HSPFEC/GTTMRC">GTTMRC</a>,
+   <a href="../HRINTS/NETBLK">NETBLK</a>,
+   <a href="../HRINTS/OPNTS">OPNTS</a>,
+   <a href="../HRINTS/MEMTS">MEMTS</a>,
+   <a href="../HRINTS/PAIRS">PAIRS</a>,
+   <a href="../HRINTS/SCHBLK">SCHBLK</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CHMSG">CHMSG</a>
+<p>Includes 
+   <a href="../../Dimensions/PHMSG">PHMSG</a>
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   OMSTC
+     I                  (CLEN,CVAL)
+C
+C     + + + PURPOSE + + +
+C     save character value to output with a hspf message
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     CLEN
+      CHARACTER*1 CVAL(CLEN)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     CLEN   - length of character string
+C     CVAL   - character string
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'phmsg.inc'
+      INCLUDE 'chmsg.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      DO 10 I= 1,CLEN
+C       increment counter of values saved
+        CCNT= CCNT+ 1
+        IF (CCNT .LE. MXMSC) THEN
+C         save value
+          CMSVL(CCNT)= CVAL(I)
+        END IF
+ 10   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,3 @@
+NQUAL        600
+NQSD         601
+NQOF         602

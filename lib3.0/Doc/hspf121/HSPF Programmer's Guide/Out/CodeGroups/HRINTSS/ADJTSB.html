@@ -1,0 +1,94 @@
+<html><head><title>ADJTSB</title></head>
+<body bgcolor="#ffffff">
+<a name="ADJTSB"><h3>ADJTSB</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4.html">CRIN4</a> 
+<p>Calls
+   RPUNC,
+   AIUNC,
+   AICOMP,
+   OMSG,
+   OMSTI
+<p>Code
+<pre>
+C
+C     3.5.8.2.3.2
+C
+      SUBROUTINE ADJTSB
+     I                 (STIME,SINT,DELT)
+C     + + + PURPOSE + + +
+C     Adjust existing tsb to be ready for writing from puttss.
+C     the tss record containing the bcw for the tsb is assumed
+C     to be in tbuff as left by fitsb.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DELT,STIME,SINT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STIME  - ???
+C     SINT   - ???
+C     DELT   - simulation time interval in minutes
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE   'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   SCLU,SGRP
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  RPUNC,AIUNC,AICOMP,OMSG,OMSTI
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU  = 216
+C     compute time step ratio.  ratio = 0 if deltat < delt
+      RATIO = DELTAT/DELT
+      IF (AMODE .NE.  3 ) GO TO 10
+        CALL RPUNC(STIME,SINT,DELT)
+        GO TO 60
+ 10   CONTINUE
+        GO TO (20,30,40,50), BCWBTI
+ 20       CONTINUE
+            CALL AIUNC(STIME,SINT,DELT)
+            GO TO 55
+ 30       CONTINUE
+            CALL AICOMP(STIME,SINT,DELT)
+            GO TO 55
+ 40       CONTINUE
+            CALL AICOMP(STIME,SINT,DELT)
+            GO TO 55
+ 50       CONTINUE
+C           program bug
+C           linear variation bti encountered when such bti's
+C           are not yet supported
+            SGRP = 137
+            CALL OMSTI (FILE)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+ 55     CONTINUE
+ 60   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="ADJTSB">
+</Object>
+
+</body>
+</html>
+

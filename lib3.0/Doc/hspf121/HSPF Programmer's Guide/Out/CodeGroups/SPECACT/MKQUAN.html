@@ -1,0 +1,122 @@
+<html><head><title>MKQUAN</title></head>
+<body bgcolor="#ffffff">
+<a name="MKQUAN"><h3>MKQUAN</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT.html">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   MKQUAN
+     I                    (MESSU,MSGFL,SCLU,MXSPV1,UVQNM1,NVQD,TYPCOD,
+     M                     QUAN,ERRFLG,ECOUNT,IVAL,RVAL,UVQIDX)
+C
+C     + + + PURPOSE + + +
+C     Determine if a quantity is constant or a variable and return
+C     the value or a pointer as applicable.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      MESSU,MSGFL,SCLU,MXSPV1,NVQD,TYPCOD,ERRFLG,ECOUNT,
+     $             IVAL,UVQIDX
+      REAL         RVAL
+      CHARACTER*1  UVQNM1(MXSPV1)
+      CHARACTER*10 QUAN
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - unit number to write messages on
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
+C     MXSPV1 - maximum number of characters in variable quantity names
+C     UVQNM1 - library of variable quantity names
+C     NVQD   - number of active variable quantity names
+C     TYPCOD - type code: 2=integer, 3=real, 4=double precision
+C     QUAN   - String containing either a real number or the name of
+C              a user-defined variable quantity
+C     ERRFLG - error flag
+C     ECOUNT - error count
+C     IVAL   - integer value in QUAN, or left unaltered
+C     RVAL   - real value in QUAN, or left unaltered
+C     UVQIDX - index of UVQUAN name, or 0 if invalid, or unaltered
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      I,I6,I10,SGRP
+      REAL         R
+      CHARACTER*6  NAME
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (NAME,NAME1)
+      CHARACTER*1  NAME1(6)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     CHKSTR,OMSTC,OMSG,LFTSTR
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I6,I10/6,10/
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (I10)
+ 1010 FORMAT (F10.0)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      UVQIDX= 0
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       try to read as a number
+        IF (TYPCOD .EQ. 2) THEN
+C         read as integer
+          READ (QUAN,1000,ERR=10) I
+          IVAL= I
+        ELSE
+C         read as real
+          READ (QUAN,1010,ERR=10) R
+          RVAL= R
+        END IF
+        GO TO 20
+ 10     CONTINUE
+C         assume quan contains a user-defined name
+          IF (NVQD .GT. 0) THEN
+C           compare against list of names
+            CALL LFTSTR (I10,
+     M                   QUAN)
+            NAME= QUAN(1:6)
+            UVQIDX= CHKSTR (I6,NVQD,NAME1,UVQNM1)
+          END IF
+          IF (UVQIDX .EQ. 0) THEN
+C           invalid user-defined name given
+            ERRFLG= 1
+            CALL OMSTC (I10,QUAN)
+            SGRP= 7
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+ 20     CONTINUE
+      END IF
+C 
+      RETURN
+      END
+</pre>
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="MKQUAN">
+</Object>
+
+</body>
+</html>
+

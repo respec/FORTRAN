@@ -1,0 +1,4 @@
+OBJS      = grcomn.obj grutil.obj grdata.obj graxis.obj \
+            grtext.obj grgks90.obj  grcaxe.obj grccrv.obj \
+            grclay.obj grcmeg.obj grcvar.obj grmark.obj \
+            grsy$(FC).obj gksint90.obj

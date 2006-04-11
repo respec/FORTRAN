@@ -1,0 +1,632 @@
+DATE
+WDMSFL
+SYSTEM
+CLU          159    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  DURANI
+  END LABEL
+  DATA   CLU   152
+#GROUP    1  TYPE MENU
+$WINDOW Duration (AD)
+$SCREEN
+
+                 @Initialize !
+ @General !                              @Threshold !
+ @Output  !                              @DUration  !
+ @DAte    !                              @Curves    !
+                 @Analyze !
+                 @View    !
+
+                 @Return !
+$DEFAULT   1
+$LENGTH   11
+$OPTION Initialize
+_DESC - a new duration analysis
+_HELP
+ This option resets conditions to the defaults.
+$OPTION General
+_DESC - modify general parameters
+_HELP
+ Sets number of thresholds, durations, and lethality curves
+ as well as title for tables.
+$OPTION Output
+_DESC - modify output options
+_HELP
+ Set output file name and output levels.
+$OPTION DAte
+_DESC - activate/modify date sets
+_HELP
+ Activates one of the preset dates.
+$OPTION Threshold
+_DESC - specify levels
+_HELP
+ Up to 35(or as limited in General option) thresholds may be specified.
+ Default intervals are based on a minimum of 1.0 and maximum of 10000.0
+ and distributed logarithmetically.
+$OPTION DUration
+_DESC - specify time intervals
+_HELP
+ Up to 10 (or as limited in General option) durations may be specified.
+$OPTION Curves
+_DESC - specify lethality curves
+_HELP
+ Up to 10 (or as limited in General option) curves may be specified.
+$OPTION Analyze
+_DESC - perform Duration analysis
+_HELP
+ Must be selected to get results.
+$OPTION View
+_DESC - results of Duration analysis
+_HELP
+ Select to pick from a list of output tables of the results.
+$OPTION Return
+_DESC - to the opening screen
+_HELP
+ Select when no more durations analyses are to be done.
+#GROUP   10  TYPE PRM1
+$WINDOW General (ADG)
+$SCREEN
+
+  Modify general parameters:
+
+  Title [@TITLE..................................]
+
+  Number of thresholds                [@CLINT]
+  Number of durations                 [@TIINT]
+  Number of lethality curves          [@CRINT]
+  Lethal if Greater Than or Less Than [@GL]
+
+$FIELD @TITLE
+_TYPE CHARACTER
+_HELP
+ Enter a title for this Duration analysis.
+$FIELD @CLINT
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:35
+_DEFAULT 1
+_HELP
+ Enter the desired number of thresholds to use.  These are generally
+ the rows in the tables produced.
+$FIELD @TIINT
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:10
+_DEFAULT 1
+_HELP
+ Enter the desired number of duration time intervals.  Generally a table
+ is prepared for each duration.
+$FIELD @CRINT
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 0:5
+_DEFAULT 0
+_HELP
+ Enter the desired number of lethality curves.  A curves requires a
+ lethal level for each of the durations entered.
+$FIELD @GL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID    GT,LT
+_DEFAULT  GT
+_HELP
+ Enter whether values 'greater than' or 'less than' the levels
+ will be lethal.
+#GROUP   20  TYPE PRM1
+$WINDOW Output (ADO)
+$SCREEN
+
+ Specify file for duration analysis output:
+
+ File name [@OUTFILE........................................................]
+
+ Output Level [@OUTLEV]             Lethality Analysis Output Level [@CROUT.]
+
+$FIELD @OUTFILE
+_TYPE FILE
+_VALID STATUS: UNKNOWN
+_HELP
+ Enter the name of the file for Duration analysis output.
+$FIELD @OUTLEV
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 0:7
+_DEFAULT 7
+_HELP
+ Enter the desired output level for the basic duration analysis.
+ 0-basic table only, 1-fraction of time, 2-relative fraction of time,
+ 3-time spent, 4-number of events, 5-average duration,
+ 6-std dev of durations, 7-fraction events.
+$FIELD @CROUT
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 0:3
+_DEFAULT 3
+_HELP
+ Enter the desired level of lethal level output.
+#GROUP   21  TYPE TEXT
+$WINDOW Output (ADO) Problem
+$TEXT
+Unable to open specified file for output.
+
+Use the 'Prev'ious command to go back to the Output screen
+and specify another file for output,
+
+OR
+
+Use the 'Accept' command to continue and output
+to the default file DURANL.OUT.
+#GROUP   40  TYPE PRM1
+$WINDOW Threshold (ADT)
+$SCREEN
+
+  Select a method for defining thresholds.
+
+  [@] User
+  [@] Standard
+
+    Enter boundaries for Standard thresholds.
+      Lower bound  [@LOWBND.]
+      Upper bound  [@UPBND..]
+
+$FIELD @] User
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] Standard
+_OFFON @] Standard
+_HELP
+ User allows you to enter up to 35 thresholds.  Standard allows
+ you to enter a lower and upper bounds which will then be interpolated
+ logarithmetically when more than 2 thresholds have been selected.
+$FIELD @] Standard
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] User
+_OFFON @] User
+_HIDE OFF @LOWBND 7 2 8 78
+_HIDE OFF @UPBND 9 2 9 78
+_HELP
+ User allows you to enter up to 35 thresholds.  Standard allows
+ you to enter a lower and upper bounds which will then be interpolated
+ logarithmetically to 35 thresholds.
+$FIELD @LOWBND
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.000001 : 1000.
+_DEFAULT  1.
+_HELP
+ First threshold.  Must be greater than 0.0.
+$FIELD @UPBND
+_TYPE REAL
+_RANGE   1. : 10000000.
+_DEFAULT 10000.
+_HELP
+ Highest threshold.
+#GROUP   41  TYPE PRM2
+$WINDOW User (ADTU)
+$HEADER
+  Enter thresholds.
+
+   Threshold          Threshold
+     Order              Value
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 35
+_HELP
+ This is just a sequence number and cannot be changed.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_ORDER ASCENDING
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE  0. : 10000000.
+_HELP
+ Each number must be larger than the previous.
+#GROUP   42  TYPE TEXT
+$WINDOW User (ADTU) Problem
+$TEXT
+  Some numbers in the threshold list are not in ascending order.
+
+  Each threshold number must be larger than the previous.
+#GROUP   50  TYPE PRM2
+$WINDOW Duration (ADDu)
+$HEADER
+  Enter duration intervals.
+
+     Duration Interval            Duration
+     Number                       Value
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 10
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 35
+_RANGE    1 : 1000
+_DEFAULT  1
+$HELP
+ The interval number is just a sequence number and cannot be changed.
+ Enter a value for each duration.  The value is the number of time
+ steps for the data.  Thus if data is hourly values and you want a
+ "daily" (24-hour) duration, enter 24.
+#GROUP   60  TYPE PRM2
+$WINDOW Curves (ADC)
+$HEADER
+  Enter coordinates for lethality curve.
+
+     Duration           Lethal
+     Interval           level
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 10
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE   -999:-999
+_DEFAULT  0.0
+$HELP
+ For the previously specified durations, enter the appropriate lethal
+ levels.
+#GROUP   61  TYPE PRM2
+$WINDOW Curves (ADC)
+$HEADER
+  Enter coordinates for lethality curves.
+
+                        Curve 1   Curve 2
+    Specified           lethal    lethal
+    Durations            level     level
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 10
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD3
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 35
+_RANGE   -999:-999
+_DEFAULT  0.0
+$HELP
+ For each of the previously specified durations and specified number
+ of curves, enter the appropriate lethal levels.
+#GROUP   62  TYPE PRM2
+$WINDOW Curves (ADC)
+$HEADER
+  Enter coordinates for lethality curves.
+
+                        Curve 1   Curve 2   Curve 3
+     Duration           lethal    lethal    lethal
+     Interval            level     level     level
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 10
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD3
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 35
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD4
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 45
+_RANGE   -999:-999
+_DEFAULT  0.0
+$HELP
+ For each of the previously specified durations and specified number
+ of curves, enter the appropriate lethal levels.
+#GROUP   63  TYPE PRM2
+$WINDOW Curves (ADC)
+$HEADER
+  Enter coordinates for lethality curves.
+
+                        Curve 1   Curve 2   Curve 3   Curve 4
+     Duration           lethal    lethal    lethal    lethal
+     Interval           level     level     level     level
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 10
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD3
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 35
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD4
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 45
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD5
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 55
+_RANGE   -999:-999
+_DEFAULT  0.0
+$HELP
+ For each of the previously specified durations and specified number
+ of curves, enter the appropriate lethal levels.
+#GROUP   64  TYPE PRM2
+$WINDOW Curves (ADC)
+$HEADER
+  Enter coordinates for lethality curves.
+
+                        Curve 1   Curve 2   Curve 3   Curve 4   Curve 5
+     Duration           lethal    lethal    lethal    lethal    lethal
+     Interval           level     level     level     level     level
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 10
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD3
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 35
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD4
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 45
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD5
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 55
+_RANGE   -999:-999
+_DEFAULT  0.0
+$FIELD FIELD6
+_TYPE REAL
+_WIDTH  8
+_PROTECT CORRECT
+_COLUMN 65
+_RANGE   -999:-999
+_DEFAULT  0.0
+$HELP
+ For each of the previously specified durations and specified number
+ of curves, enter the appropriate lethal levels.
+#GROUP   69  TYPE TEXT
+$WINDOW Curves (ADC)
+$TEXT
+  The number of lethality curves specified
+  in the 'General (ADG)' screen is zero.
+
+  If you wish to enter lethality curves, you
+  must first use the 'General (ADG)' screen to specify
+  the number of lethality curves desired.
+#GROUP   70  TYPE TEXT
+$WINDOW Analyze (ADA)
+$TEXT
+ Performing Duration Analysis
+#GROUP   71  TYPE TEXT
+$WINDOW View (ADV)
+$TEXT
+ No results are available for viewing since
+ the analysis has not been performed.
+
+ Use the 'Analyze (ADA)' option to perform
+ the duration analysis.
+#GROUP   80  TYPE MENU
+$WINDOW View (ADV)
+$SCREEN
+ Select an option for viewing results:
+
+ Detail Tables                                           General Tables
+   @1 !                                                    @Summary
+   @2 !                                                    @Lethality
+   @3 !
+   @4 !
+   @5 !
+   @6 !
+   @7 !                                                  @Return
+$DEFAULT  1
+$LENGTH  27
+$OPTION Summary
+$OPTION Lethality
+$OPTION 1
+_DESC - Fraction of time relative to total
+$OPTION 2
+_DESC - Fraction of time relative to time per level
+$OPTION 3
+_DESC - Time spent at each level
+$OPTION 4
+_DESC - Number of events at each level
+$OPTION 5
+_DESC - Average duration of events at each level
+$OPTION 6
+_DESC - Standard deviation of events per level
+$OPTION 7
+_DESC - Fraction of events with duration 'n'
+$OPTION Return
+$HELP
+ Each selection will place a table of results on the screen.
+ Select Return when no more results are to be reviewed.
+#GROUP   81  TYPE TEXT
+$WINDOW Summary (ADVS)
+$TEXT
+ Duration Analysis: &
+
+ Start date: &/&/& &: &  End date: &/&/& &: &
+ Analysis season starts: &/&  Ends: &/&
+ Time units: &  Time step: &
+ Transformation function: &
+
+ Total length of defined events:   & intervals
+ Total length of undefined events: & intervals
+ Total length of analysis:         & days
+
+ Sample size: &
+ Sample maximum: &         Sample mean: &
+ Sample minimum: &         Sample standard deviation: &
+#GROUP   82  TYPE TEXT
+$WINDOW 1 (ADV1)
+$TEXT
+
+ Fraction of time each level equaled or exceeded with duration >=
+ the specified durations.  Fraction is relative to total time span.
+
+ Events greater than
+
+                       Durations
+#GROUP   83  TYPE TEXT
+$WINDOW 2 (ADV2)
+$TEXT
+
+ Fraction of time spent in events at each level with duration >=
+ the specified durations.  Fraction is relative to the time spent in
+ events at each level.
+
+ Events greater than
+
+                       Durations
+#GROUP   84  TYPE TEXT
+$WINDOW 3 (ADV3)
+$TEXT
+
+ Time spent in events at each level with duration >= the
+ specified durations.
+
+ Events greater than
+
+                       Durations
+#GROUP   85  TYPE TEXT
+$WINDOW 4 (ADV4)
+$TEXT
+
+ Number of events at each level with duration >= the
+ specified durations.
+
+ Events greater than
+
+                       Durations
+#GROUP   86  TYPE TEXT
+$WINDOW 5 (ADV5)
+$TEXT
+
+ Average duration of events at each level given that the
+ duration >= the specified durations.
+
+ Events greater than
+
+                       Durations
+#GROUP   87  TYPE TEXT
+$WINDOW 6 (ADV6)
+$TEXT
+
+ Standard deviation of duration of events at each level given
+ that the duration >= the specified durations.
+
+ Events greater than
+
+                       Durations
+#GROUP   88  TYPE TEXT
+$WINDOW 7 (ADV7)
+$TEXT
+
+ Fraction of events with duration n with respect to the total
+ number of events (duration 1) for each level.
+
+ Events greater than
+
+                       Durations
+#GROUP   91  TYPE TEXT
+$TEXT
+
+ Events less than
+
+                       Durations
+#GROUP   92  TYPE TEXT
+$TEXT
+
+ Undefined Events (No Water)
+
+                       Durations
+#GROUP   93  TYPE TEXT
+$WINDOW Lethal (ADVL)
+$TEXT
+      Lethal Level Exceedence Summary
+     --------------------------------
+     Curve Number   Fraction Exceeded
+
+#GROUP   94  TYPE TEXT
+$WINDOW Lethal (ADVL)
+$TEXT
+ No lethality results are available for viewing
+ since no lethal levels were specified for analysis.
+
+ To use the lethality feature, use the 'General (DG)'
+ option to specify the number of lethality curves.
+ Next specify the lethal levels using the 'Curves (DL)'
+ option.  Then perform the analysis again.
+  END DATA
+END CLU

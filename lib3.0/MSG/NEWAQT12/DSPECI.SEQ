@@ -1,0 +1,274 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           63    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  SSPECI
+  END LABEL
+  DATA   CLU    63
+#GROUP   2  TYPE PRM2
+$WINDOW Pick (&P)
+$HEADER 
+Set Action to manage subsets (rows) and to select data for analysis:
+         |                               Constit            # of Datasets
+ Action  |  Status    Scenario  Location  -uent     #Locs  Avail  Selected
+ ------  |  --------  --------  --------  --------  -----  ---------------
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  2
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NONE,BROWSE,MODIFY,DROP,COPY,SELECT,UNSEL,ACTIV,DEACT
+_HELP
+ Select an Action, then Accept:F2 to take that action.
+ To select subsets for consideration use ACTIVate and DEACTivate.
+ To create or modify subsets (rows) use the COPY, MODIFY, and DROP options.
+ To select data sets within a subset use BROWSE, SELECT, UNSELect.
+$FIELD  FIELD2
+_WIDTH   1
+_COLUMN  10
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID |
+_DEFAULT |
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  13
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID INACTIVE,ACTIVE
+_HELP
+ Status of this subset.  Active makes it available for further
+ processing, analysis, graphics, and tables.
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN  23
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ For information only.  User named scenario associated with this subset.
+$FIELD  FIELD5
+_WIDTH   8
+_COLUMN  33
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ For information only.  User named location associated with this subset.
+$FIELD  FIELD6
+_WIDTH   8
+_COLUMN  43
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ For information only.  User named constituent associated with this subset.
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN  53
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Summary information for this subset.
+ Number of locations meeting criteria.
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN  60
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Summary information for this subset.
+ Number of datasets meeting criteria.
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN  67
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Summary information for this subset.
+ Number of datasets selected.
+#GROUP   12  TYPE PRM1
+$WINDOW Browse (&PB) & of &
+$SCREEN  
+ Select                                            start       end
+ (u/s)          dsn  scenario  location  constit   yr   mo dy  yr   mo dy
+  @P1 @PA.....................................................................
+  @P2 @PB.....................................................................
+  @P3 @PC.....................................................................
+  @P4 @PD.....................................................................
+  @P5 @PE.....................................................................
+  @P6 @PF.....................................................................
+  @P7 @PG.....................................................................
+  @P8 @PH.....................................................................
+$FIELD P1     
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD P2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD P3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD P4
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD P5
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD P6
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD P7
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD P8
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID UNS, SEL
+_DEFAULT UNS
+$FIELD PA     
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PB
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PC
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PD
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PE
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PF
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PG
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$FIELD PH
+_TYPE CHARACTER
+_PROTECT PROTECTED
+$HELP
+ If you want to add the data set to the buffer of active data sets (select)
+ enter Yes (if already Yes, then data set is already in the buffer).  If you
+ want to remove a data set from the buffer, enter No.  Changes will only be
+ made when F2 or F6 are used.  F4 if shown will only go back one screen.
+#GROUP   13  TYPE TEXT
+$WINDOW Browse (&PB) Problem
+$TEXT
+No data sets fit the required parameters.
+#GROUP   14  TYPE TEXT
+$WINDOW Select (&PS) Problem
+$TEXT
+No data sets fit the required parameters.
+#GROUP   15  TYPE TEXT
+$WINDOW Unselect (&PU) Problem
+$TEXT
+No data sets fit the required parameters.
+#GROUP   23  TYPE PRM1
+$WINDOW Modify (&PM)
+$SCREEN
+  Specify Scenarios, Locations, and Constituents for this subset:
+
+    Scenario -----> [@] All Scenarios
+                    [@] One Scenario -----> [@SCENARI]
+
+    Location -----> [@] All Locations
+                    [@] One Location -----> [@LOCATIO]
+
+    Constituent --> [@] All Constituents
+                    [@] One Constituent --> [@CONSTIT]
+$FIELD @] All S
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @SCENARI 4 38 4 54
+_ONOFF @] One S
+_OFFON @] One S
+$FIELD @] One S
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] All S
+_OFFON @] All S
+$FIELD @SCENARI
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?SCENARI
+$FIELD @] All L
+_TYPE OPTION
+_SET 2
+_WIDTH 1
+_HIDE ON @LOCATIO 7 38 7 54
+_ONOFF @] One L
+_OFFON @] One L
+$FIELD @] One L
+_TYPE OPTION
+_SET 2
+_WIDTH 1
+_ONOFF @] All L
+_OFFON @] All L
+$FIELD @LOCATIO
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?LOCATIO
+$FIELD @] All C
+_TYPE OPTION
+_SET 3
+_WIDTH 1
+_HIDE ON @CONSTIT 10 41 10 54
+_ONOFF @] One C
+_OFFON @] One C
+$FIELD @] One C
+_TYPE OPTION
+_SET 3
+_WIDTH 1
+_ONOFF @] All C
+_OFFON @] All C
+$FIELD @CONSTIT
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?CONSTIT
+$HELP
+ Toggle the "All" or "One" option for each subset category.  If "One" is
+ toggled on, an input field is provided.  Use the Limits:F5 command to see
+ your options.  If there are too many options (... at end of last line)
+ enter a single character to list only the options starting with that char.
+#GROUP   40  TYPE TEXT
+$WINDOW Drop (&PD) Problem
+$TEXT
+Cannot drop the only remaining subset.
+#GROUP   41  TYPE TEXT
+$WINDOW Drop (&PD) Warning
+$TEXT
+Subset (row) & is about to be dropped from this list.
+
+If you still want this subset in the list, hit 'Prev', F4.
+To confirm that you would like this subset dropped, hit 'Accept', F2.
+#GROUP   42  TYPE TEXT
+$WINDOW Copy (&PC) Problem
+$TEXT
+  The maximum number of subsets (rows), &, has been reached.
+
+  Thus a subset cannot be copied.
+$HELP
+  To copy a subset, first remove an existing subset using
+  the 'Drop' action.
+  END DATA
+END CLU

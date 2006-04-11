@@ -1,0 +1,69 @@
+<html><head><title>HDMEST</title></head>
+<body bgcolor="#ffffff">
+<a name="HDMEST"><h3>HDMEST</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA.html">HSPSTA</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   WMSGTT,
+   <a href="UPDWIN.html">UPDWIN</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   HDMEST
+     I                   (IOPT,MESSFL,SCLU,SGRP)
+C
+C     + + + PURPOSE + + +
+C     write message file text to window
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     IOPT,MESSFL,SCLU,SGRP
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IOPT   - position to output
+C     MESSFL - message file unit number
+C     SCLU   - screen cluster number
+C     SGRP   - screen message group
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     INITFG, OLEN, CONT
+      CHARACTER*1 TXT(72)
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    WMSGTT,UPDWIN
+C
+C     + + +  END SPECIFICATIONS + + +
+C
+      INITFG = 1
+      OLEN   = 72
+      CALL WMSGTT (MESSFL,SCLU,SGRP,INITFG,
+     M             OLEN,
+     O             TXT,CONT)
+C
+      CALL <a href="UPDWIN.html">UPDWIN</a>(IOPT,OLEN,TXT)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="HDMEST">
+</Object>
+
+</body>
+</html>
+

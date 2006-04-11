@@ -1,0 +1,163 @@
+<html><head><title>INTERP3</title></head>
+<body>
+<a name="INTERP3"><hr size=7><h2>INTERP3</h2><hr size=7></a>
+ 
+<pre>
+Version INTERP3 of Common Block CRINTP used by Run Interpreter to process time
+series linkages
+ 
+ 2 CRINTP                 See documentation of version INTERP1
+
+ 2 CRITSG                 Additional information for processing time series
+                          linkages
+ 
+  3 Data for source time series  
+ 
+   4 SVOL(2)         I4_C "Volume" (TSS, SEQ, PERLND, etc.)  
+   4 SVOLNO          I4   For TSS, dataset number  
+                          For SEQ, Fortran unit number   
+                          For operation, OPN_type number (OPTNO)   
+   4 SNUM            I4   For TSS, dataset number  
+                          For SEQ, _ve value of Fortran unit number  
+                          For operation, internal operation number (OPNO)  
+   4 SDELT           I4   Time interval of source time series (minutes)  
+   4 SUNITS          I4   For TSS or SEQ, system in which time series are  
+                          recorded externally  
+                          For operation feeding an external target, system   
+                          in which time series are to be recorded on target  
+                          For operation feeding another operation, internal  
+                          system used by source operation  
+                          Code: 1=English, 2=Metric  
+   4 SGRPN(2)        I4_C (For Operation only) name of time series group   
+                          (eg. EXTNL)  
+   4 SAMDCD          I4   Not used   
+   4 SGAPCD          I4   (For SEQ only) gap code. 0 means missing records   
+                          are zeros, 1 means they are of undefined value   
+   4 SFRC            I4   (For TSS only) number of first record of this TSS  
+                          dataset  
+   4 SNTS            I4   Number of component time series in table below   
+                          (up to 100)   
+
+   4 STABL(10,100)   I4_| Tables containing data on each component time series
+   4 STABLR(10,100)  R4_| (STABL and STABLR equivalenced)
+                          First subscript selects information described below,
+                          second selects the component
+    5 MEMN(2)        I4_C Member name
+    5 MEMSB(2)       I4   For Operation, member subscripts
+                          For SEQ, format class code and format address
+    5 OFFST          I4   For TSS, offset of this component time series  
+                          For Operation, offset of flag_pointer for this time  
+                          series, in OSV   
+ 
+    5 KIND           I4   Time series kind: 1 for point_valued, 2 for mean_  
+                          valued   
+    5 SPTRN          I4   Not used yet   
+    5 ADD            R4 _|  Values used to transform time series from external   
+    5 MULT           R4  |  to internal units: internal value = (ext value+ADD)*   
+                        _|  MULT
+
+  3 Data for target time series. This has similar structure to that for source   
+    time series (above), with the following differences:   
+ 
+    TUNITS           I4   For TSS or SEQ, system on which time series are
+                          to be recorded externally
+                          For Operation fed by an external source, system
+                          in which data are recorded on source
+                          For Operation fed by another Operation, internal
+                          system used by source Operation
+    TAMDCD           I4   (For TSS only) access mode code
+
+  3 EXTKWL(1,4)      I4_C External sources/targets keyword library.
+                          Accomodates one 4_character keywords (TSS,SEQ,WDM,DSS)
+  3 AMDKWL(1,3)      I4_C Access mode keyword library (ADD, INST, REPL)  
+  3 SYSKWL(1,2)      I4_C Unit system keyword library (ENGL, METR)   
+  3 GAPKWL(1,2)      I4_C Gap code keyword library (ZERO, UNDF)  
+
+  3 FMTKWL(2,6)      I4_C Format class keyword library.
+  3 FMTINF(2,6)      I4   Time step and "kind" of data handled by each format
+                          class
+
+  3 TDFREC           I4   Record number of first TSS record in the TSS directory   
+  3 TDDS             I4   Dataset number of the TSS directory (default=1)  
+  3 TOTDS            I4   Total number of datasets allowed in the TSS  
+  3 RECLT            I4   Length of the buffer portion of TBUFF and  
+                          also the record length of the TSS.  The  
+                          remainder of TBUFF is called the extension.  
+  3 TDSIZE           I4   Record length in R4 words of the TSS directory   
+                          dataset  
+
+  3 TRNKWL(1,8)      I4_C Transformation code keyword library (SAME, DIV, etc.)  
+  3 TRNTAB(9,3,3)    I4   Transformation code table (indicates default and   
+                          permissible transformation codes for each "case"   
+                          and STKND)   
+  3 AVFG(1800)       I4   Flag indicating whether each IMPAD row   
+                          is available (1) or not (0)
+  3 RELFG(1800)      I4   Flag indicating whether or not each IMPAD row  
+                          is to be released (1 yes, 0 no)
+
+ 2 TBUFF(545)        R4   Time series dataset label and buffer   
+ 
+  3 DSLABL(256)      R4   Dataset label  
+ 
+   4 DSDSNO          I4   Dataset number   
+   4 LBLSZ           I4   Label size in REAL words   
+   4 DSFREC          I4   Record number of the first TSS record in the dataset   
+   4 DSLREC          I4   Record number of the last TSS record in the dataset  
+   4 VOFRWD          I4   Virtual origin of first free word in the dataset   
+   4 VOYEAR          I4   Virtual origin of year used for updating label   
+   4 LASTYR          I4   Last chronological year stored in the dataset  
+                          with value of zero if no data is present   
+   4 DSSEC           I4   Write protect flag   
+   4 BASEYR          I4   Base year for the keying system  
+   4 VOKEY           I4   Virtual origin for next set of VOKEY and KEYS  
+                          Multiple keys feature not yet implemented  
+   4 KEYS(100)       I4   Virtual origin of each calendar year   
+   4 NAME(2)         I4   Name for the dataset( 6 characters permitted).   
+   4 UNITS           I4   Code giving the units of measurement of the data   
+   4 DSCMPR          I4   Code for dataset compression:  
+     (COMPR)               1_uncompressed  
+                           2_zero and/or undefined compressed  
+   4 YEAROR          I4   Flag to indicate that the data is stored in  
+                          chronological year order.  
+   4 OBSTIM          I4   Observation time   
+   4 STA(2)          I4   Station name   
+   4 LOCATN(10)      I4   Description of the location of the data source   
+   4 GAPCOD          I4   Code for handling of any leading or  
+                          trailing gaps in a calendar year for   
+                          an uncompressed dataset. If ABS(GAPCOD)=   
+                          1 then both leading and trailing gaps filled   
+                            with uncompressed TSB's  
+                          2 then trailing gaps filled using compressed   
+                            TSB's; leading gaps filled using uncompressed  
+                            TSB's  
+                          3 then leading gaps filled using compressed  
+                            TSB's; trailing gaps filled using  
+                            uncompressed TSB's   
+                          4 then both leading and trailing gaps filled   
+                            using compressed TSB's   
+ 
+                            Default is GAPCOD= 1   
+                          If GAPCOD > 0 then the time frames in the gaps   
+                          are set to zero. If GAPCOD < 0 then the time   
+                          frames in the gaps are set to undefined. All   
+                          leading and trailing gaps are compressed if  
+                          the dataset is compressed.   
+
+   4 DSDELT          I4   Value of the time step in minutes(limit 1440)  
+     (DELTAT)  
+   4 NMEMS           I4   Number of members in the dataset   
+ 
+   4 MEMNAM(2,20)    I4   Member name(limit of 6 characters) 
+
+   4 MSUB(20)        I4   Number of components 
+
+   4 MKIND(20)       I4   Kind of time series(point=1 or mean=2 value) 
+   4 FMT(20)         I4   Format code for each member  
+</pre>
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="INTERP3">
+</Object>
+
+</body>
+</html>
+

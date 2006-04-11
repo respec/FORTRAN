@@ -1,0 +1,64 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOOSV">HIOOSV</a>
+<p>Called By
+
+<p>Includes 
+   <a href="../../Dimensions/POSVM">POSVM</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/COSVM">COSVM</a>
+<p>Calls <i>none</i>    
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PTOSVR
+     I                    (RECORD,OFFSET,RVAL)
+C
+C     + + + PURPOSE + + +
+C     Reset a single integer value directly into the OSV file
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   RECORD,OFFSET
+      REAL      RVAL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     RECORD - index of OSV block
+C     OFFSET - address within OSV block
+C     RVAL   - value being replaced
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'posvm.inc'
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cosvm.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      REAL    R
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (I,R)
+      INTEGER I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      R= RVAL
+      OSVM(OFFSET,RECORD)= I
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+

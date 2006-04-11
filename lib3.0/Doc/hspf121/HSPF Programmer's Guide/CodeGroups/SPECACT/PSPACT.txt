@@ -1,0 +1,884 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+   OMSTC,
+   OMSG,
+   <a href="../HRINGEUT/TOPTNO">TOPTNO</a>,
+   MKQUAN,
+   CKRWID,
+   CKTCOD,
+   OMSTI,
+   CHKSTR,
+   MKADDR,
+   COPYI,
+   <a href="../HDATUT/STDATE">STDATE</a>,
+   <a href="../HDATUT/DIFTIM">DIFTIM</a>,
+   EXDATE,
+   DECCHX,
+   SPNXDT,
+   LFTSTR,
+   QUPCAS 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PSPACT
+     I                    (UCIBUF,MESSU,MSGFL,SCLU,LOCDIR,SDATIM,EDATIM,
+     I                     NDAMON,MXSPBF,MXSPDS,SPDCNT,DELT,CURBLK,
+     I                     VACFST,VACCNT,MXVACC,VRFADD,VACADD,SPOUT,
+     I                     LLNPSP,
+     M                     FIRSTH,NUMHDR,LREPT,SPOS,SPBF,SPBFR,SPBDAT,
+     M                     RUNWID)
+C
+C     + + + PURPOSE + + +
+C     read and process an old style special action from ucifl
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      MESSU,MSGFL,SCLU,LOCDIR,SDATIM(5),EDATIM(5),
+     $             NDAMON(12),MXSPBF,MXSPDS,SPDCNT(MXSPDS),DELT,CURBLK,
+     $             VACFST(10),VACCNT(10),MXVACC,VRFADD(MXVACC),
+     $             VACADD(MXVACC),SPOUT,LLNPSP,FIRSTH,NUMHDR,LREPT,
+     $             SPOS,SPBF(LLNPSP,MXSPBF),SPBDAT(MXSPBF),RUNWID
+      REAL         SPBFR(LLNPSP,MXSPBF)
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UCIBUF - buffer containing current record from uci file
+C     MESSU  - unit number to write messages on
+C     MSGFL  - unit number of file containing error text
+C     SCLU   - cluster in file containing error text
+C     LOCDIR - specs method(s) available for spec. actions input
+C              0 - variable name required;
+C              1 - either variable name or address required;
+C              2 - address required
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     NDAMON - no. of days in each month of calendar year
+C     MXSPBF - max size of special actions buffer
+C     MXSPDS - maximum number of distributions
+C     SPDCNT - count of fractions for this distribution
+C     DELT   - simulation interval in minutes
+C     CURBLK - current logic block
+C     VACFST - first variable accumulator reference for each operation type
+C     VACCNT - number of variable accumulator references for each operation type
+C     MXVACC - maximum number of variable accumulator references
+C     VRFADD - variable accumulator reference addresses
+C     VACADD - variable accumulator addresses
+C     SPOUT  - runtime Special Action output level
+C     LLNPSP - local length of special action in buffer
+C     FIRSTH - index of first header for upcoming action line
+C     NUMHDR - number of header lines for upcoming action line
+C     LREPT  - number of times last action was repeated
+C     SPOS   - position in special actions instr buffer
+C     SPBF   - special action instruction buffer (integer version)
+C     SPBFR  - special action instruction buffer (real version)
+C     SPBDAT - special action instruction date
+C     RUNWID - maximum run span width allowed by user-defined variable
+C              quantities - 0 if no restrictions
+C
+C     + + + COMMON BLOCK- SPEC + + +
+      INCLUDE     'cspec.inc'
+C     user defined variable names
+      INCLUDE     'pspuvr.inc'
+      INCLUDE     'cspuvr.inc'
+C     conditions
+      INCLUDE     'pspcnd.inc'
+      INCLUDE     'cspcnd.inc'
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER       ERRFLG,TOPFST,TOPLST,TSTEP(2),DATIM(5),DSIND,TYPCOD,
+     $              ACTCD,NUMINC,I,SGRP,TOPTYP,OECNT,I6,UVQ,BGRP,IVAL,
+     $              ACTUVQ,TCMIN(4),DSPOS,UKWDNO,NSUB(3),ADDR,XKWDNO,
+     $              UPOS,MOVFLG,TACTCD,I2,EXDAT(5),RLEN,SDIG,DECP,I0,
+     $              I5,TCODE(2),ALLDEL,IMIN,IMAX,DIF1,DIF2,CNDIND,
+     $              ICHAIN,UVQIND,ACCADD,HDRPTR,HDRNUM,I60
+      REAL          RVAL,TRVAL
+      CHARACTER*2   CTCODE(2),CODES(6)
+      CHARACTER*3   CACUSR
+      CHARACTER*4   CACTCD(16)
+      CHARACTER*6   COPTYP,OBUFF,BLANK,VNAME,UVNAME
+      CHARACTER*10  CACTVL
+      CHARACTER*120 ECHBUF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE  (COPTYP,COPTY1(1)),(ECHBUF,ECHBU1)
+      EQUIVALENCE  (CACUSR,CACUS1),(OBUFF,OBUF1)
+      CHARACTER*1   COPTY1(6),ECHBU1(120),CACUS1(3),OBUF1(6)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER       CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL      OMSTC,OMSG,TOPTNO,MKQUAN,CKRWID,CKTCOD,OMSTI,CHKSTR,
+     $              MKADDR,COPYI,STDATE,DIFTIM,EXDATE,DECCHX,SPNXDT,
+     $              LFTSTR,QUPCAS
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I0,I2,I5,I6,I60/0,2,5,6,60/
+      DATA CACTCD/'=   ','+=  ','-=  ','*=  ','/=  ','MIN ','MAX ',
+     $            'ABS ','INT ','^=  ','LN  ','LOG ','MOD ','MOVT',
+     $            'MOV1','MOV2'/
+      DATA CODES/'  ','MI','HR','DY','MO','YR'/
+      DATA RLEN,SDIG,DECP/10,5,-5/
+      DATA TCMIN/0,1,60,1440/
+      DATA BLANK/'      '/
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (2X,A6,I3,I4,A2,I3,I4,4(1X,I2),2I2,2X,15X,A3,A10,1X,A2,1X,
+     $        2I3)
+ 1010 FORMAT (I3)
+ 1020 FORMAT (A6)
+ 1030 FORMAT (A4,A2)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A6)
+ 2010 FORMAT (/,' ACTION DEFINITIONS',
+     $        /,'   OPERATION       DEFERRAL DATE AND TIME     TYPE',
+     $          '  DIST VARIABLE SUBSCRPTS        ADDR   ACT      VALUE',
+     $        /,'   TYPE     #   # STEP CODE YEAR/MO/DY HR:MN  CODE',
+     $          '       NAME   #1 #2 #3                 CODE')
+ 2020 FORMAT (2X,A6,I4,I4,1X,I4,3X,A2,1X,I4,4(1X,I2),2X,I4,2X,I4,21X,
+     $        I10,2X,A4)
+ 2030 FORMAT (I10)
+ 2040 FORMAT (76X,I10)
+ 2050 FORMAT (I3)
+ 2060 FORMAT (' ',A120)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     assume no error
+      ERRFLG= 0
+      BGRP= 106
+C
+C     get needed info from uci record buffer
+      READ (UCIBUF,1000,ERR=10) COPTYP,TOPFST,TOPLST,CTCODE(1),
+     $                          TSTEP(1),(DATIM(I),I=1,5),DSIND,TYPCOD,
+     $                          CACUSR,CACTVL,CTCODE(2),TSTEP(2),NUMINC
+      GO TO 20
+ 10   CONTINUE
+C       error - read format error
+        ECHBUF= UCIBUF
+        I= 80
+        CALL OMSTC(I,ECHBU1)
+        SGRP= 10
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+        ERRFLG= 1
+ 20   CONTINUE
+      IF (SPOUT .GE. 10) THEN
+C       echo initial read
+        WRITE (MESSU,*) ':',COPTYP,':',TOPFST,TOPLST,':',CTCODE(1),':',
+     $                  TSTEP(1),(DATIM(I),I=1,5),DSIND,TYPCOD,':',
+     $                  CACUSR,':',CTCODE(2),':',TSTEP(2),NUMINC
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       check operation type and store in integer version
+        TOPTYP= CHKSTR (I6,I60,COPTY1,OPTYL1)
+        IF (TOPTYP .LE. 0) THEN
+C         error - operation type not recognized
+          ERRFLG= 1
+        ELSE IF (LOSPFL(TOPTYP) .EQ. 0) THEN
+C         error - specified operation type not supported for spec actions
+          ERRFLG= 1
+        END IF
+        IF (ERRFLG .EQ. 1) THEN
+C         write error message
+          I= 6
+          CALL OMSTC(I,COPTY1)
+          SGRP= 11
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          TOPTYP= 0
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo operation type
+          WRITE (MESSU,*) '  operation type',TOPTYP
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       check that specified operation-type range is valid
+        OECNT= ECOUNT
+        CALL <a href="../HRINGEUT/TOPTNO">TOPTNO</a> (MESSU,MSGFL,
+     M               TOPFST,TOPLST,ECOUNT)
+        IF (OECNT .NE. ECOUNT) THEN
+C         an error was found
+          ERRFLG= 1
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo target operation range
+          WRITE (MESSU,*) '  topfst,toplst',TOPFST,TOPLST
+        END IF
+      END IF
+C
+      DO 30 I= 1,2
+C       check time units code
+        CALL CKTCOD (CTCODE(I),MESSU,MSGFL,SCLU,
+     M               ECOUNT,ERRFLG,
+     O               TCODE(I))
+        IF (SPOUT .GE. 10) THEN
+C         echo time code
+          WRITE (MESSU,*) '  time code',TCODE(I)
+        END IF
+C
+        IF (ERRFLG .EQ. 0) THEN
+          IF ( (I .EQ. 1) .AND. (TCODE(I) .GT. 4) ) THEN
+C           error - tcode cannot be months or years for deferral
+            CALL OMSTC (I2,CTCODE(1))
+            SGRP= 12
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ERRFLG= 1
+          ELSE
+C           check time step
+            IF ( (TSTEP(I) .EQ. 0) .AND. (I .EQ. 2) ) THEN
+C             repeat time step defaults to one
+              TSTEP(I)= 1
+            END IF
+C           timestep
+            IF (TSTEP(I) .LT. 0) THEN
+              CALL OMSTI (TSTEP(I))
+              SGRP= 16
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFLG= 1
+            END IF
+            IF (SPOUT .GE. 10) THEN
+C             echo time step
+              WRITE (MESSU,*) '  time step',TSTEP
+            END IF
+          END IF
+        END IF
+ 30   CONTINUE
+C
+      IF ( (ERRFLG .EQ. 0) .AND. (TSTEP(1) .GT. 0) )THEN
+C       convert deferral time code and step to minutes
+        ALLDEL= -TSTEP(1)*(TCMIN(TCODE(1)))
+      ELSE
+C       no deferral
+        ALLDEL= 0
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       check parameters, first type code
+        IF (TYPCOD .EQ. 0) THEN
+C         default to real
+          TYPCOD= 3
+        END IF
+        IMIN= 2
+        IMAX= 4
+        IF ( (TYPCOD .LT. IMIN) .OR. (TYPCOD .GT. IMAX) ) THEN
+C         error - bad type code
+          CALL OMSTI(TYPCOD)
+          CALL OMSTI(IMIN)
+          CALL OMSTI(IMAX)
+          SGRP= 13
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo type code
+          WRITE (MESSU,*) '  type code',TYPCOD
+        END IF
+C       number of times to repeat
+        IF (NUMINC .EQ. 0) THEN
+C         number of repeats defaults to one
+          NUMINC= 1
+        END IF
+        IF (NUMINC .LT. 1) THEN
+C         error - repeat value was negative
+          CALL OMSTI (NUMINC)
+          SGRP= 15
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo number of repeats
+          WRITE (MESSU,*) '  number of repeats',NUMINC
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       read value - format depends on type.
+        RVAL= 0.0
+        IVAL=   0
+        ACTUVQ= 0
+        I= MXSPVQ* 6
+        CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,
+     M               CACTVL,ERRFLG,ECOUNT,IVAL,RVAL,ACTUVQ)
+        IF (SPOUT .GE. 10) THEN
+C         echo action info
+          IF (ACTUVQ .NE. 0) THEN
+C           variable
+            WRITE (MESSU,*) '  action uvq',ACTUVQ
+          ELSE IF (TYPCOD .EQ. 2) THEN
+C           integer
+            WRITE (MESSU,*) '  action value',IVAL
+          ELSE
+C           real
+            WRITE (MESSU,*) '  action value',RVAL
+          END IF
+        END IF
+      END IF
+C
+      IF ( (ERRFLG .EQ. 0) .AND. (RUNWID .NE. 1) ) THEN
+C       check for tighter run width restriction
+        IF (SPOUT .GE. 10) THEN
+C         echo mesage for beginning of run width check
+          WRITE (MESSU,*) '  Beginning to calculate RUNWID',RUNWID
+        END IF
+        IF (ACTUVQ .GT. 0) THEN
+C         check action quantity
+          IF (UVQOPX(ACTUVQ) .GT. 0) THEN
+C           base variable is in osv, not workspace
+            CALL CKRWID (UVQOPX(ACTUVQ),UVQLAG(ACTUVQ),COPTYP,TOPFST,
+     I                   TOPLST,MAXOPN,OPNTAB,NOPNS,
+     M                   RUNWID)
+          END IF
+        END IF
+        IF ( (CURBLK .GT. 0) .AND. (RUNWID .NE. 1) ) THEN
+C         check all logic chains for current logic block
+C
+          ICHAIN= 1
+ 40       CONTINUE
+C           do-while no more links
+            CNDIND= CHNCND(BLKPOS(CURBLK)+ ICHAIN- 1)
+            IF (CNDIND .GT. 0) THEN
+C             check chain
+ 50           CONTINUE
+C               check user-defined quantities in individual condition
+                IF ( (CNDIND .GT. 0) .AND. (RUNWID .NE. 1) ) THEN
+C                 find index of possible user-defined quantities
+                  DO 60 I= 1, 2
+C                   check comparison values
+                    UVQIND= CNDUVQ(I,CNDIND)
+                    IF (UVQIND .GT. 0) THEN
+C                     quantity is a user-defined variable quantity
+                      IF (UVQOPX(UVQIND) .GT. 0) THEN
+C                       base variable is in osv, not workspace
+                        CALL CKRWID (UVQOPX(UVQIND),UVQLAG(UVQIND),
+     I                               COPTYP,TOPFST,TOPLST,MAXOPN,OPNTAB,
+     I                               NOPNS,
+     M                               RUNWID)
+                      END IF
+                    END IF
+ 60               CONTINUE
+                END IF
+C
+C               check link
+                CNDIND= CNDLNK(CNDIND)
+C             end of do-until loop on links
+              IF ( (CNDIND .GT. 0) .AND. (RUNWID .NE. 1) ) GO TO 50
+            END IF
+            IF (SPOUT .GE. 10) THEN
+C             echo message for end of run width calculating
+              WRITE (MESSU,*) '  Finished calculating RUNWID',RUNWID
+            END IF
+C
+C         end if do-until loop on chains
+          ICHAIN= ICHAIN+ 1
+          IF ( (ICHAIN .LE. BLKCNT(CURBLK)) .AND.
+     $         (RUNWID .NE. 1) ) GO TO 40
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       action code
+C
+        READ (CACUSR,1010,ERR=70) ACTCD
+C       number was input
+C
+C       check action code
+        IMIN= 1
+        IMAX= 16
+        IF ( (ACTCD .LT. IMIN) .OR. (ACTCD .GT. IMAX) ) THEN
+C         error - bad action code
+          CALL OMSTI (ACTCD)
+          CALL OMSTI (IMIN)
+          CALL OMSTI (IMAX)
+          SGRP= 14
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+        END IF
+        GO TO 90
+C
+ 70     CONTINUE
+C       character was input - left justify, make uppercase, and evaluate
+        I= 3
+        CALL LFTSTR (I,
+     M               CACUS1)
+        CALL QUPCAS (I,
+     M               CACUS1)
+        ACTCD= 0
+        DO 80 I= 1, 13
+          IF (CACUSR .EQ. CACTCD(I)(1:3) ) THEN
+C           found character action code
+            ACTCD= I
+          END IF
+ 80     CONTINUE
+        IF (ACTCD .EQ. 0) THEN
+C         error - bad character action code
+          I= 3
+          CALL OMSTC (I,CACUS1)
+          SGRP= 9
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+        END IF
+C
+ 90     CONTINUE
+        IF (SPOUT .GE. 10) THEN
+C         echo action code
+          WRITE (MESSU,*) '  action code',ACTCD
+        END IF
+      END IF
+C
+      IF ( (ERRFLG .EQ. 0) .AND. (DSIND .NE. 0) ) THEN
+C       check distribution stuff
+        IF ( (DSIND .GT. 0) .AND. (DSIND .LT. MXSPDS) ) THEN
+C         index in allowable range
+          IF (SPDCNT(DSIND) .EQ. 0) THEN
+C           a distribution does not exist
+            DSPOS= 0
+          ELSE
+C           start with first fraction
+            DSPOS= 1
+          END IF
+        ELSE
+C         distribution number out of range
+          DSPOS= 0
+        END IF
+        IF (DSPOS .EQ. 0) THEN
+C         problem with distribution
+          CALL OMSTI (DSIND)
+          SGRP= 17
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+        END IF
+      ELSE
+C       no distribution for this action
+        DSPOS= 0
+      END IF
+      IF (SPOUT .GE. 10) THEN
+C       echo distribution index
+        WRITE (MESSU,*) '  distribution ID',DSIND
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+        IF (SPUCNT .GT. 0) THEN
+C         check for user defined name
+          READ (UCIBUF(43:48),1020) UVNAME
+          OBUFF(1:6)= UVNAME
+          UKWDNO= CHKSTR (I6,SPUCNT,OBUF1,SPUVN1)
+          IF (UKWDNO .NE. 0) THEN
+C           the variable specified is user defined
+            IF (SPOUT .GE. 10) THEN
+C             echo uvname index
+              WRITE (MESSU,*) '  user defined target variable:',UKWDNO
+            END IF
+C
+            IF (SPUTYP(UKWDNO) .EQ. 0) THEN
+C             target variable is in workspace
+              TOPTYP= 0
+            ELSE IF (TOPTYP .NE. SPUTYP(UKWDNO)) THEN
+C             wrong operation type
+              ECHBUF(1:6)= UCIBUF(43:48)
+              ECHBUF(7:12)= COPTYP
+              I= 12
+              CALL OMSTC(I,ECHBU1)
+              SGRP= 18
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFLG= 1
+            END IF
+          END IF
+        ELSE
+C         no user names available
+          UKWDNO= 0
+        END IF
+        IF (UKWDNO .EQ. 0) THEN
+C         need to determine address
+          CALL MKADDR (LOCDIR,UCIBUF(43:57),MESSU,MSGFL,SCLU,BGRP,
+     M                 TOPTYP,ERRFLG,
+     O                 VNAME,NSUB,ADDR)
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo address of target variable
+          WRITE (MESSU,*) '  target address',ADDR
+        END IF
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       process headers
+        HDRPTR= FIRSTH
+        HDRNUM= NUMHDR
+        NUMHDR= 0
+        FIRSTH= 0
+        LREPT=  NUMINC
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       process dates
+C       loop here for repeat instruction
+ 100    CONTINUE
+          IF (DATIM(1) .EQ. 0) THEN
+C           action is undated
+            IF (NUMINC .GT. 1) THEN
+C             error - undated action doesn't need to be repeated
+              CALL OMSTI (NUMINC)
+              SGRP= 19
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFLG= 1
+            ELSE IF (DSIND .NE. 0) THEN
+C             error - undated action cannot be distributed
+              CALL OMSTI (DSIND)
+              SGRP= 20
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFLG= 1
+            ELSE IF (ACTCD .GE. 14) THEN
+C             error - undated action incompatible with MOV* action
+              WRITE (OBUFF,2000) UVNAME
+              I= 6
+              CALL OMSTC (I,OBUF1(1))
+              CALL OMSTI (ACTCD)
+              SGRP= 21
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFLG= 1
+            ELSE IF (CURBLK .GT. 0) THEN
+C             undated conditional - check if deferral is specified
+              IF (ALLDEL .LT. 0) THEN
+C               error - undated action cannot be deferred
+                SGRP= 22
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+                ERRFLG= 1
+              END IF
+            END IF
+            IF (ERRFLG .EQ. 0) THEN
+C             store delt as flag and temporarily use run start date
+              ALLDEL= DELT
+              CALL COPYI (I5,SDATIM,
+     O                    DATIM)
+            END IF
+            IF (SPOUT .GE. 10) THEN
+C             echo undated message
+              WRITE (MESSU,*) '  undated, alldel',ALLDEL,' datim',
+     $                           (DATIM(I),I=1,5)
+            END IF
+          ELSE
+C           check supplied date/time and convert to internal format
+            OECNT = ECOUNT
+            CALL <a href="../HDATUT/STDATE">STDATE</a> (NDAMON,MESSU,MSGFL,
+     M                   ECOUNT,DATIM)
+            IF (OECNT .NE. ECOUNT) THEN
+C             an error was found
+              ERRFLG= 1
+            END IF
+            IF (SPOUT .GE. 10) THEN
+C             echo date
+              WRITE (MESSU,*) '  date',DATIM
+            END IF
+          END IF
+C
+          IF (ERRFLG .EQ. 0) THEN
+C           if the time for this entry is outside run span, ignore it
+            CALL <a href="../HDATUT/DIFTIM">DIFTIM</a> (SDATIM,DATIM,NDAMON,
+     O                   DIF1)
+            CALL <a href="../HDATUT/DIFTIM">DIFTIM</a> (DATIM,EDATIM,NDAMON,
+     O                   DIF2)
+            IF (SPOUT .GE. 10) THEN
+C             echo time differences
+              WRITE (MESSU,*) '      DIF1:',DIF1,DIF2
+            END IF
+            IF ( (DIF1 .GE. 0) .AND. (DIF2 .GE. 0) ) THEN
+C             this entry in run span, echo and save instruction
+C             local copy of user defined variable index
+              XKWDNO= UKWDNO
+              IF (UKWDNO .GT. 0) THEN
+                UPOS= SPUPOS(UKWDNO)
+              END IF
+C             assume no movement between locations
+              MOVFLG= 0
+ 110          CONTINUE
+C               may loop thru variables referenced by user variables
+                IF (XKWDNO .NE. 0) THEN
+C                 user defined variable name
+                  IF (SPUTYP(UKWDNO) .EQ. 0) THEN
+C                   target variable is in workspace
+                    VNAME= SPUVNM(UPOS)
+                    NSUB(1)= 0
+                    NSUB(2)= 0
+                    NSUB(3)= 0
+                  ELSE
+C                   osv variable
+                    VNAME= SPUNAM(UPOS)
+                    NSUB(1)= SPUSUB(1,UPOS)
+                    NSUB(2)= SPUSUB(2,UPOS)
+                    NSUB(3)= SPUSUB(3,UPOS)
+                  END IF
+                  ADDR= SPUADD(UPOS)
+                  IF (TYPCOD .GE. 3) THEN
+C                   adjust value by fraction
+                    TRVAL= RVAL* SPUFRC(UPOS)
+                  END IF
+                  IF (SPUACT(UPOS) .GE. 1) THEN
+C                   need to move between values
+                    IF (DSIND .NE. 0) THEN
+C                     movement not compatible with distribution
+                      SGRP= 23
+                      CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                           ECOUNT)
+                      ERRFLG= 1
+                    END IF
+                    IF (CURBLK .NE. 0) THEN
+C                     check condition for deferral on failure
+                      IF (ALLDEL .LT. 0) THEN
+C                       movement not compatible with deferral on condition
+C                       failure
+                        SGRP= 24
+                        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                             ECOUNT)
+                        ERRFLG= 1
+                      END IF
+                    END IF
+                    IF (ERRFLG .EQ. 0) THEN
+C                     movement is ok - modify instruction
+                      TACTCD= SPUACT(UPOS)+ 13
+                      TRVAL = SPUFRC(UPOS)
+                      MOVFLG= 1
+                    END IF
+                  ELSE
+C                   use general action code from instruction
+                    TACTCD= ACTCD
+                  END IF
+                  UPOS= UPOS+ 1
+                  IF (UPOS .GE. SPUPOS(XKWDNO+1)) THEN
+C                   all done user defined name
+                    XKWDNO= 0
+                  END IF
+                ELSE
+C                 not user defined - no adjustment to action code or value
+                  TACTCD= ACTCD
+                  IF (TYPCOD .GE. 3) THEN
+C                   real or double precision
+                    TRVAL = RVAL
+                  END IF
+                END IF
+C
+C               check for accumulator address
+                ACCADD= 0
+                IF ( (TACTCD .EQ. 2) .AND. (TOPTYP .GT. 0) ) THEN
+C                 check this "increment" action to see if it requires
+C                 updating an accumulator
+                  IF (VACFST(TOPTYP) .GT. 0) THEN
+C                   there are accumulators defined for this operation type
+                    I= VACFST(TOPTYP)- 1
+                    IMAX= I+ VACCNT(TOPTYP)
+ 120                CONTINUE
+                      I= I+ 1
+                      IF (ADDR .EQ. VRFADD(I)) THEN
+C                       this action must be accumulated in osv
+                        ACCADD= VACADD(I)
+                      END IF
+                    IF ( (ACCADD .EQ. 0) .AND. (I .LT. IMAX) ) GO TO 120
+                  END IF
+                END IF
+C
+C               echo and store an individual action in the buffer
+                SPOS= SPOS+ 1
+                IF (SPOUT .GE. 10) THEN
+C                 echo instruction position
+                  WRITE (MESSU,*) '   save at:',SPOS
+                END IF
+C
+                IF (OUTLEV .GT. 2) THEN
+C                 echo instruction
+                  IF (SPOS .EQ. 1) THEN
+C                   details echo header
+                    WRITE (MESSU,2010)
+                  END IF
+C
+C                 convert time to external format
+                  CALL EXDATE (DATIM,
+     O                         EXDAT)
+                  IF (MOVFLG .LE. 1) THEN
+C                   full output
+                    WRITE (ECHBUF,2020) COPTYP,TOPFST,TOPLST,TSTEP(1),
+     $                                  CODES(TCODE(1)),EXDAT,TYPCOD,
+     $                                  DSIND,ADDR,CACTCD(TACTCD)
+                    IF (ACTUVQ .GE. 1) THEN
+C                     user-defined variable quantity
+                      WRITE (ECHBUF(98:103),2000) UVQNAM(ACTUVQ)
+                    ELSE IF (TYPCOD .EQ. 2) THEN
+C                     integer
+                      WRITE (ECHBUF(94:103),2030) IVAL
+                    ELSE
+C                     real or double
+                      CALL DECCHX (TRVAL,RLEN,SDIG,DECP,
+     O                             ECHBU1(94))
+                    END IF
+                    IF (MOVFLG .EQ. 1) THEN
+C                     partial output next time
+                      MOVFLG= 2
+                    END IF
+                  ELSE
+C                   partial output with second variable of move
+                    WRITE (ECHBUF,2040) ADDR
+C                   partial output complete
+                    MOVFLG= 0
+                  END IF
+C
+                  IF (VNAME .NE. BLANK) THEN
+C                   output variable name
+                    ECHBUF(57:62)= VNAME
+                    IF (NSUB(1) .GE. 1) THEN
+C                     at least one subscript
+                      WRITE (ECHBUF(63:65),2050) NSUB(1)
+                    END IF
+                    IF (NSUB(2) .GE. 1) THEN
+C                     at least two subscripts
+                      WRITE (ECHBUF(66:68),2050) NSUB(2)
+                    END IF
+                    IF (NSUB(3) .GE. 1) THEN
+C                     at least three subscripts
+                      WRITE (ECHBUF(69:71),2050) NSUB(3)
+                    END IF
+                  END IF
+C                 write the echo buffer
+                  WRITE (MESSU,2060) ECHBUF
+                END IF
+C
+                IF (ADDR .LT. 0) THEN
+C                 target variable is in workspace
+                  UVQ= 0
+ 130              CONTINUE
+                    UVQ= UVQ+ 1
+                    IF (UVQ .LE. NVQD) THEN
+C                     check this
+                      IF (ADDR .EQ. UVQADD(UVQ)) THEN
+C                       put index into last subscript with negative value
+                        NSUB(3)= -UVQ
+                      END IF
+                    END IF
+                  IF ((NSUB(3) .EQ. 0) .AND. (UVQ .LT. NVQD)) GO TO 130
+C
+                  IF (NSUB(3) .EQ. 0) THEN
+C                   error - no uvquan found at target address
+                    WRITE (OBUFF,2000) UVNAME
+                    I= 6
+                    CALL OMSTC (I,OBUF1(1))
+                    I= -ADDR
+                    CALL OMSTI (I)
+                    SGRP= 29
+                    CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                         ECOUNT)
+                    ERRFLG= 1
+                  END IF
+                END IF
+C
+C               save instruction in memory
+                IF (ALLDEL .LE. 0) THEN
+C                 dated
+                  DO 140 I= 1,5
+                    SPBF(I,SPOS)= DATIM(I)
+ 140              CONTINUE
+                ELSE
+C                 undated
+                  DO 150 I= 1,5
+                    SPBF(I,SPOS)= 0
+ 150              CONTINUE
+                END IF
+                SPBF(6,SPOS)= TYPCOD
+                SPBF(7,SPOS)= ADDR
+                SPBF(8,SPOS)= TACTCD
+                IF (TYPCOD .EQ. 2) THEN
+C                 integer type
+                  SPBF(9,SPOS)= IVAL
+                ELSE
+C                 real or double precision
+                  SPBFR(9,SPOS)= TRVAL
+                END IF
+                READ (VNAME,1030) SPBF(10,SPOS),SPBF(11,SPOS)
+                SPBF(12,SPOS) = NSUB(1)
+                SPBF(13,SPOS) = NSUB(2)
+                SPBF(14,SPOS) = NSUB(3)
+                READ (COPTYP,1030) SPBF(15,SPOS),SPBF(16,SPOS)
+                SPBF(17,SPOS) = TOPFST
+                SPBF(18,SPOS) = TOPLST
+C               distribution index
+                SPBF(19,SPOS) = DSIND
+C               current positon within distribution
+                SPBF(20,SPOS) = DSPOS
+C               deferred fraction of distribuiton
+                SPBFR(21,SPOS)= 0.0
+C               logic block
+                SPBF(22,SPOS)= CURBLK
+C               uvquan for action value
+                SPBF(23,SPOS)= ACTUVQ
+C               tstep for continuous action or deferral
+                SPBF(24,SPOS)= ALLDEL
+C               address for accumulator
+                SPBF(25,SPOS)= ACCADD
+C               uci order key for sorting mixed dated and undated actions
+                SPBF(26,SPOS)= SPOS
+C               pointer to first header line in buffer
+                SPBF(27,SPOS)= HDRPTR
+C               number of header lines in buffer
+                SPBF(28,SPOS)= HDRNUM
+C               initialize footer pointers
+                SPBF(29,SPOS)= 0
+                SPBF(30,SPOS)= 0
+C               offset from beginning of run - will be zero for undated
+                SPBDAT(SPOS)= DIF1
+C             loop back for more references from user defined name
+              IF (XKWDNO .GT. 0) GO TO 110
+            ELSE
+C             this date is not active
+              IF (LREPT .GT. 1) THEN
+C               don't repeat footer for this action
+                LREPT= LREPT- 1
+              END IF
+            END IF
+C           one less action to do
+            NUMINC= NUMINC- 1
+            IF (NUMINC .GT. 0) THEN
+              CALL SPNXDT (TCODE(2),TSTEP(2),I0,
+     M                     DATIM)
+              IF (SPOUT .GE. 10) THEN
+C               echo new date for repeated action
+                WRITE (MESSU,*) '     new DATIM:',DATIM,NUMINC
+              END IF
+            END IF
+          END IF
+        IF ( (NUMINC .GT. 0) .AND. (ERRFLG .EQ. 0) ) GO TO 100
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

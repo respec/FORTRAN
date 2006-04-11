@@ -1,0 +1,532 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  attributes 301 - 350 
+END COMMENT 
+DSN           11    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN    11
+#ATTRIBUTE  PCLT02    INDEX   301
+$TYPE     REAL
+$LENGTH   1
+$DESC     2% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Two percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT05    INDEX   302
+$TYPE     REAL
+$LENGTH   1
+$DESC     5% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Five percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT10    INDEX   303
+$TYPE     REAL
+$LENGTH   1
+$DESC     10% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ten percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT20    INDEX   304
+$TYPE     REAL
+$LENGTH   1
+$DESC     20% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Twenty percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT25    INDEX   305
+$TYPE     REAL
+$LENGTH   1
+$DESC     25% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Twenty five percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT50    INDEX   306
+$TYPE     REAL
+$LENGTH   1
+$DESC     50% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Fifty percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT75    INDEX   307
+$TYPE     REAL
+$LENGTH   1
+$DESC     75% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Seventy five percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT80    INDEX   308
+$TYPE     REAL
+$LENGTH   1
+$DESC     80% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Eighty percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT90    INDEX   309
+$TYPE     REAL
+$LENGTH   1
+$DESC     90% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ninety percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT95    INDEX   310
+$TYPE     REAL
+$LENGTH   1
+$DESC     95% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ninety five percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT98    INDEX   311
+$TYPE     REAL
+$LENGTH   1
+$DESC     98% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ninety eight percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  PCLT99    INDEX   312
+$TYPE     REAL
+$LENGTH   1
+$DESC     99% of values are less
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ninety nine percent of time values are less than this value.  Attribute
+   is computed by the Weibull plotting position.
+#ATTRIBUTE  LQU010    INDEX   313
+$TYPE     REAL
+$LENGTH   1
+$DESC     .01 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   1 percent chance of being less than this value or a nonexceedance 
+   probability of .01.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU020    INDEX   314
+$TYPE     REAL
+$LENGTH   1
+$DESC     .02 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   2 percent chance of being less than this value or a nonexceedance
+   probability of .02.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU050    INDEX   315
+$TYPE     REAL
+$LENGTH   1
+$DESC     .05 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   5 percent chance of being less than this value or a nonexceedance
+   probability of .05.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU100    INDEX   316
+$TYPE     REAL
+$LENGTH   1
+$DESC     .10 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   10 percent chance of being less than this value or a nonexceedance
+   probability of .10.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU200    INDEX   317
+$TYPE     REAL
+$LENGTH   1
+$DESC     .20 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   20 percent chance of being less than this value or a nonexceedance
+   probability of .20.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU500    INDEX   318
+$TYPE     REAL
+$LENGTH   1
+$DESC     .50 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   50 percent chance of being less than this value or a nonexceedance
+   probability of .50.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU800    INDEX   319
+$TYPE     REAL
+$LENGTH   1
+$DESC     .80 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   80 percent chance of being less than this value or a nonexceedance
+   probability of .80.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU900    INDEX   320
+$TYPE     REAL
+$LENGTH   1
+$DESC     .90 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   90 percent chance of being less than this value or a nonexceedance
+   probability of .90.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU950    INDEX   321
+$TYPE     REAL
+$LENGTH   1
+$DESC     .95 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   95 percent chance of being less than this value or a nonexceedance
+   probability of .95.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU980    INDEX   322
+$TYPE     REAL
+$LENGTH   1
+$DESC     .98 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   98 percent chance of being less than this value or a nonexceedance
+   probability of .98.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU990    INDEX   323
+$TYPE     REAL
+$LENGTH   1
+$DESC     .99 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   99 percent chance of being less than this value or a nonexceedance
+   probability of .99.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU995    INDEX   324
+$TYPE     REAL
+$LENGTH   1
+$DESC     .995 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   99.5 percent chance of being less than this value or a nonexceedance
+   probability of .995.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LQU998    INDEX   325
+$TYPE     REAL
+$LENGTH   1
+$DESC     .998 quantile based on distribution in LDIST using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   99.8 percent chance of being less than this value or a nonexceedance
+   probability of .998.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LDIST     INDEX   326
+$TYPE     CHARACTER
+$LENGTH   4
+$DESC     distribution used for calculation of quantiles
+$OPTIONAL  TIMESERIES, TABLE
+$HELP
+   Quantiles estimated by the following frequency distributions:
+   logistic, Wakeby, Pareto, and exponential.  Attribute added by 
+   program LMOMNT.
+#ATTRIBUTE  LMOM1     INDEX   327
+$TYPE     REAL
+$LENGTH   1
+$DESC     first L-moment (mean)
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   The first L-moment which is a linear comination of the ordered
+   observations equal to the sample mean.  Attribute added by 
+   program LMOMNT.
+#ATTRIBUTE  LMOM2     INDEX   328
+$TYPE     REAL
+$LENGTH   1
+$DESC     second L-moment
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   The second L-moment which is a linear combination of the ordered
+   observations and is analogous to the sample standard deviation.
+   Attribute added by program LMOMNT.
+#ATTRIBUTE  LMOM3     INDEX   329
+$TYPE     REAL
+$LENGTH   1
+$DESC     third L-moment ratio
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ratio of the third to second L-moment, analogous to the sample
+   skewness.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LMOM4     INDEX   330
+$TYPE     REAL
+$LENGTH   1
+$DESC     fourth L-moment ratio
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ratio of the fourth to second L-moment, analogous to the sample
+   Kurtosis.  Attribute added by program LMOMNT.
+#ATTRIBUTE  LMOM5     INDEX   331
+$TYPE     REAL
+$LENGTH   1
+$DESC     fifth L-moment ratio
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0.
+$HELP
+   Ratio of the fifth to second L-moment.  Attribute added by
+   program LMOMNT.
+#ATTRIBUTE  PQU010    INDEX   332
+$TYPE     REAL
+$LENGTH   1
+$DESC     .01 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+   .01 quantile based on the Pearson Type III distribution using L-moments.
+   1 percent chance of being less than this value or a nonexceedance
+   probability of .01.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU020    INDEX   333
+$TYPE     REAL
+$LENGTH   1
+$DESC     .02 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .02 quantile based on the Pearson Type III distribution using L-moments.
+   2 percent chance of being less than this value or a nonexceedance
+   probability of .02.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU050    INDEX   334
+$TYPE     REAL
+$LENGTH   1
+$DESC     .05 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0 
+$HELP
+   .05 quantile based on the Pearson Type III distribution using L-moments.
+   5 percent chance of being less than this value or a nonexceedance
+   probability of .05.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU100    INDEX   335
+$TYPE     REAL
+$LENGTH   1
+$DESC     .10 quantile based on the Pearson Type III distribution, L-moments 
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .10 quantile based on the Pearson Type III distribution using L-moments.
+   10 percent chance of being less than this value or a nonexceedance
+   probability of .10.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU200    INDEX   336
+$TYPE     REAL
+$LENGTH   1
+$DESC     .20 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .20 quantile based on the Pearson Type III distribution using L-moments.
+   20 percent chance of being less than this value or a nonexceedance
+   probability of .20.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU500    INDEX   337
+$TYPE     REAL
+$LENGTH   1
+$DESC     .50 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .50 quantile based on the Pearson Type III distribution using L-moments.
+   50 percent chance of being less than this value or a nonexceedance
+   probability of .50.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU800    INDEX   338
+$TYPE     REAL
+$LENGTH   1
+$DESC     .80 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP   
+   .80 quantile based on the Pearson Type III distribution using L-moments.
+   80 percent chance of being less than this value or a nonexceedance
+   probability of .80.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU900    INDEX   339
+$TYPE     REAL
+$LENGTH   1
+$DESC     .90 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .90 quantile based on the Pearson Type III distribution using L-moments.
+   90 percent chance of being less than this value or a nonexceedance
+   probability of .90.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU950    INDEX   340
+$TYPE     REAL
+$LENGTH   1
+$DESC     .95 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .95 quantile based on the Pearson Type III distribution using L-moments.
+   95 percent chance of being less than this value or a nonexceedance
+   probability of .95.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU980    INDEX   341
+$TYPE     REAL
+$LENGTH   1
+$DESC     .98 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .98 quantile based on the Pearson Type III distribution using L-moments.
+   98 percent chance of being less than this value or a nonexceedance
+   probability of .98.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU990    INDEX   342
+$TYPE     REAL
+$LENGTH   1
+$DESC     .99 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .99 quantile based on the Pearson Type III distribution using L-moments.
+   99 percent chance of being less than this value or a nonexceedance
+   probability of .99.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU995    INDEX   343
+$TYPE     REAL
+$LENGTH   1
+$DESC     .995 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .995 quantile based on the Pearson Type III distribution using L-moments.
+   99.5 percent chance of being less than this value or a nonexceedance
+   probability of .995.  Attribute added by program LMOMNT.
+#ATTRIBUTE  PQU998    INDEX   344
+$TYPE     REAL
+$LENGTH   1
+$DESC     .998 quantile based on the Pearson Type III distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+   .998 quantile based on the Pearson Type III distribution using L-moments.
+   99.8 percent chance of being less than this value or a nonexceedance
+   probability of .998.  Attribute added by program LMOMNT.
+#ATTRIBUTE  GQU010    INDEX   345
+$TYPE     REAL
+$LENGTH   1
+$DESC     .01 quantile based on the GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+  .01 quantile based on the Generalized Extreme Value distribution
+  using L-moments.  1 percent chance of being less than this value or    
+  a nonexceedance probability of .01.  Attribute added by program LMOMNT.
+#ATTRIBUTE  GQU020    INDEX   346
+$TYPE     REAL
+$LENGTH   1
+$DESC     .02 quantile based on the GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+  .02 quantile based on the Generalized Extreme Value distribution
+  using L-moments.  2 percent chance of being less than this value or
+  a nonexceedance probability of .02.  Attribute added by program LMOMNT.
+#ATTRIBUTE  GQU050    INDEX   347
+$TYPE     REAL
+$LENGTH   1
+$DESC     .05 quantile based on the GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+  .05 quantile based on the Generalized Extreme Value distribution
+  using L-moments.  5 percent chance of being less than this value or
+  a nonexceedance probability of .05.  Attribute added by program LMOMNT. 
+#ATTRIBUTE  GQU100    INDEX   348
+$TYPE     REAL
+$LENGTH   1
+$DESC     .10 quantile based on the GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+  .10 quantile based on the Generalized Extreme Value distribution
+  using L-moments.  10 percent chance of being less than this value or 
+  a nonexceedance probability of .10.  Attribute added by program LMOMNT.  
+#ATTRIBUTE  GQU200    INDEX   349
+$TYPE     REAL
+$LENGTH   1
+$DESC     .20 quantile based on the GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+  .20 quantile based on the Generalize Extreme Value distribution
+  using L-moments.  20 percent chance of being less than this value or
+  a nonexceedance probability of .20.  Attribute added by program LMOMNT.
+#ATTRIBUTE  GQU500    INDEX   350
+$TYPE     REAL
+$LENGTH   1
+$DESC     .50 quantile based on the GEV distribution using L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE     -999. : -999.
+$DEFAULT      0
+$HELP
+  .50 quantile based on the Generalized Extreme Value distribution
+  using L-moments.  50 percent chance of being less than this value or
+  a nonexceedance probability of .50.  Attribute added by program LMOMNT.  
+  END DATA
+END CLU
