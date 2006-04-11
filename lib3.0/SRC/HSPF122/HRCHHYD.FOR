@@ -4068,12 +4068,12 @@ C     external units
 C       printout is in english units
         IF (UUNITS .EQ. 1) THEN
 C         english to english
-          VFACTA= 2.296E-05
+          VFACTA= 2.295684E-05
           VFACTB= 0.0
           LFACTA= 1.0
           LFACTB= 0.0
           L2FACT= 12.0
-          AFACTA= 2.296E-05
+          AFACTA= 2.295684E-05
           SFACTA= 1.0
           TFACTA= 1.0
         ELSE

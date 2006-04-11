@@ -238,9 +238,6 @@ C     + + + PURPOSE + + +
 C     Remove a WDM file from the open WDM buffer and adjust
 C     buffer accordingly.
 C
-C     + + + HISTORY + + +
-C     2005/06/30 JLK allow message file to be closed
-C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   WDMSFL,RETCOD
 C
@@ -254,63 +251,81 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cfbuff.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I, J
+      INTEGER   I,J
 C
 C     + + + EXTERNALS + + +
-C     EXTERNAL  DMP_CFBUFF
+      EXTERNAL   WDFLNU
 C
 C     + + + END SPECIFICATIONS + + +
 C
       RETCOD= 0
+C      WRITE(*,*) 'WDFLCL want:',WDMSFL,' open:',
+C     #              (WDMOPN(I),I=1,WDMCNT)
 C
-C     CALL DMP_CFBUFF ('WDFLCL:entry')
-C
-C     loop to thru open files
-      I = 1
-      DO WHILE (I .LE. WDMCNT)
-C       WRITE(99,*) 'WDFLCL:I,WDMOPN(I),WDMSFL:',I,WDMOPN(I),WDMSFL
-        IF (WDMOPN(I) .NE. WDMSFL) THEN
-C         try next one
-          I = I+ 1
-        ELSE
-C         this file is open
-
-C         check pointers in wdm file
-C         TODO: how slow is this?
-C         CALL WDMCHK(WDMSFL,RETCOD)
-
-C         close the file
-          CLOSE (UNIT=WDMSFL)
-C         WRITE(99,*) 'WDFLCL:close',WDMSFL
-
-C         mark records in buffer as not usable
-          DO 20 J= 1, CONREC
-            IF (WDMFUN(J) .EQ. WDMSFL) THEN
-C             unusable
-              WDMFUN(J)= 0
-              RECNO(J) = 0
+      IF (WDMCNT.GT.1) THEN
+C       see if file already open
+        I= 1
+ 10     CONTINUE
+          I= I+ 1
+          IF (WDMOPN(I).EQ.WDMSFL) THEN
+C           its open
+C           check pointers in wdm file
+            CALL WDMCHK(WDMSFL,RETCOD)
+            IF (I.LT.WDMCNT) THEN
+C             move later wdm unit numbers
+              DO 20 J= I+1,WDMCNT
+                WDMOPN(J-1)= WDMOPN(J)
+                MAXREC(J-1)= MAXREC(J)
+ 20           CONTINUE
             END IF
- 20       CONTINUE
-
-          IF (I .LT. WDMCNT) THEN
-C           move later wdm unit numbers
-            DO 30 J= I+1, WDMCNT
-              WDMOPN(J-1)= WDMOPN(J)
-              MAXREC(J-1)= MAXREC(J)
- 30         CONTINUE
-          ELSE
-C           just reset last values
-            WDMOPN(I)= 0
-            MAXREC(I)= 0
+C           be sure io is complete
+            CALL FLUSH(WDMSFL)
+C           close the file
+            CLOSE (UNIT=WDMSFL)
+C           reset the count
+            WDMCNT= WDMCNT- 1
+C           mark records in buffer as not usable
+            CALL WDFLNU(WDMSFL)
           END IF
-
-C         reset the count
-          WDMCNT= WDMCNT- 1
-          I     = WDMCNT+ 1
-        END IF
-      END DO
+        IF (I.LT.WDMCNT) GO TO 10
+      ELSE
+C       cant close message file
+        RETCOD= -87
+      END IF
 C
-C     CALL DMP_CFBUFF ('WDFLCL:exit')
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   WDFLNU
+     I                   (WDMSFL)
+C
+C     + + + PURPOSE + + +
+C     mark records in buffer as not usable
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   WDMSFL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     WDMSFL - Fortran unit number of WDM file
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cfbuff.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     mark records in buffer as not usable
+      DO 30 I= 1,CONREC
+        IF (WDMFUN(I).EQ.WDMSFL) THEN
+C         unusable
+          WDMFUN(I)= 0
+          RECNO(I) = 0
+        END IF
+ 30   CONTINUE      
 C
       RETURN
       END
@@ -337,10 +352,6 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   RREC,I
       INTEGER*4 IOS
-      CHARACTER*256 WDNAME
-C
-C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(1X,A,I4,2I6,1X,A)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -349,9 +360,7 @@ C
       GO TO 20
  10   CONTINUE
 C       big problem writing to wdm file
-        INQUIRE(UNIT=WDMSFL,NAME=WDNAME)
-        WRITE(*,2000) 'WDRCUP ERROR,WDMSFL,RREC,IOS:',
-     1                WDMSFL,RREC,MOD(IOS,16384),TRIM(WDNAME)
+        WRITE (*,*) 'WDRCUP, ERROR ON WRITE, RREC, IOS:',RREC,IOS
 C       STOP
  20   CONTINUE
 C
@@ -1400,55 +1409,6 @@ C           find next dsn w/in that directory based on INCR
           END IF
         END IF
       IF (DONFG .EQ. 0) GO TO 10
-C
-      RETURN
-      END
-C
-C
-C
-      SUBROUTINE DMP_CFBUFF
-     I                     (MSG)
-C
-C     + + + PURPOSE + + +
-C     dump current state of common block CFBUFF
-C
-C     + + + DUMMY ARGUMENTS + + +
-      CHARACTER(LEN=*) MSG
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cfbuff.inc'
-C
-C     + + + LOCAL VARIABLES + + +
-      LOGICAL       OPN
-      INTEGER       I
-      CHARACTER*256 FNAME
-C
-C     + + + END SPECIFICATIONS + + +
-C
-      INQUIRE(UNIT=99,OPENED=OPN)
-      IF (.NOT. OPN) THEN
-        OPEN(UNIT=99,FILE='ERROR.FIL')
-      END IF
-C
-      WRITE(99,*) 'DMP_CFBUFF:' // MSG
-      WRITE(99,*) '       CONREC,MXWDM,FREPOS,WDMCNT:', 
-     1                    CONREC,MXWDM,FREPOS,WDMCNT
-      WRITE(99,*) '       IND,WDMOPN,MAXREC,OPN:'
-      DO 10 I= 1,MXWDM
-        INQUIRE(UNIT=WDMOPN(I),OPENED=OPN)
-        IF (OPN) THEN
-          INQUIRE(UNIT=WDMOPN(I),NAME=FNAME)
-        ELSE
-          FNAME= ''
-        END IF
-        WRITE(99,*) '     ',I,WDMOPN(I),MAXREC(I),
-     1                      OPN,TRIM(FNAME)
- 10   CONTINUE
-      WRITE(99,*) '       IND,RECNO,WDMFUN,NXTPOS,PREPOS:'
-      DO 20 I= 1,CONREC
-        WRITE(99,*) '     ',I,RECNO(I),WDMFUN(I),
-     1                      NXTPOS(I),PREPOS(I)
- 20   CONTINUE
 C
       RETURN
       END

@@ -1905,7 +1905,7 @@ _HELP
 A  value  of 1 for AUX3FG  means the shear velocity  and bed
 shear  stress will  be calculated.   These are  used in  the
 calculation of  deposition and scour of  sediment (inorganic
-and organic).  AUX3FG may only be  turned ON (=1)  if AUX1FG
+and organic).  AUX3FG may only be  turned ON (=1) if AUX1FG
 and AUX2FG are also =1.
 _PNAME  AUX3FG
 $FIELD  FIELD7
@@ -2886,6 +2886,7 @@ _RANGE  0 : 20
 _DEFAULT  0
 _HELP
 Number of category G(T) demands to be specified in Table-Type HYDR-CDEMAND.
+_PNAME  NOCGT
 #GROUP  309  TYPE TEXT
 $TEXT
 (1X,7(6X,A4),I10)
@@ -11735,30 +11736,30 @@ _WIDTH  5
 _COLUMN 9
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 100
-_DEFAULT  0
+_RANGE  1 : 3  
+_DEFAULT  3
 _HELP
-ACFLAG(*) are option flags for the acid mine module.
+ACFLAG(1) determines the units of printout for the acid mine module.
 _PNAME  ACFLAG(1)
 $FIELD  FIELD4
 _WIDTH  5
 _COLUMN 14
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 100
-_DEFAULT  0
+_RANGE  1 : 4  
+_DEFAULT  4
 _HELP
-ACFLAG(*) are option flags for the acid mine module.
+ACFLAG(2) selects one four optional methods for the chemical simulation used by the acid mine module.
 _PNAME  ACFLAG(2)
 $FIELD  FIELD5
 _WIDTH  5
 _COLUMN 19
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 100
-_DEFAULT  0
+_RANGE  1 : 5  
+_DEFAULT  1
 _HELP
-ACFLAG(*) are option flags for the acid mine module.
+ACFLAG(3) selects the Gibbsite solubility product used if chemical simulation method 1 is used.
 _PNAME  ACFLAG(3)
 $FIELD  FIELD6
 _WIDTH  5
@@ -11894,50 +11895,55 @@ _WIDTH  10
 _COLUMN  9
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0.000 : -999.
-_DEFAULT  0.000
+_RANGE  0.0001 : 10.
+_DEFAULT  1.0
 _HELP
-ACPARM(*) are parameters for the acid mine drainage module.
+ACPARM(1) is the ratio of actual CO2 concentration in the RCHRES to the 
+value that would occur in equilibrium with the atmosphere.
 _PNAME  ACPARM(1)
 $FIELD  FIELD4
 _WIDTH  10
 _COLUMN 19
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0.000 : -999.
-_DEFAULT  0.000
+_RANGE  1.E-35 : 1.E-25
+_DEFAULT  6.5E-32
 _HELP
-ACPARM(*) are parameters for the acid mine drainage module.
+ACPARM(2) is the user specified Gibbsite solubility product; 
+this value is used if ACFLAG(2) = 5.
 _PNAME  ACPARM(2)
 $FIELD  FIELD5
 _WIDTH  10
 _COLUMN 29
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0.000 : -999.
-_DEFAULT  0.000
+_RANGE  -1.0 : 212.
+_DEFAULT  -1.0
 _HELP
-ACPARM(*) are parameters for the acid mine drainage module.
+ACPARM(3) is a constant value of water temperature to be 
+used by the acid mine drainage module.
 _PNAME  ACPARM(3)
 $FIELD  FIELD6
 _WIDTH  10
 _COLUMN 39
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0.000 : -999.
-_DEFAULT  0.000
+_RANGE  0.50 : 1.0
+_DEFAULT  0.95
 _HELP
-ACPARM(*) are parameters for the acid mine drainage module.
+ACPARM(4) is the coefficient to predict the removal efficiency for
+precipitated metals; used when ACFLAG(2)= 4.
 _PNAME  ACPARM(4)
 $FIELD  FIELD7
 _WIDTH  10
 _COLUMN 49
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0.000 : -999.
-_DEFAULT  0.000
+_RANGE  1.50 : 3.0
+_DEFAULT  2.50
 _HELP
-ACPARM(*) are parameters for the acid mine drainage module.
+ACPARM(5) is the coefficient that adjusts the remaining metal concentration 
+that resists precipitation; used when ACFLAG(2)= 4.
 _PNAME  ACPARM(5)
 $FIELD  FIELD8
 _WIDTH  10

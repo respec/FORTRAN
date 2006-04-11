@@ -3731,7 +3731,7 @@ C
       IF (LPERC .GT. 0.0) THEN
 C       if necessary, recalculate the fraction of infiltration plus
 C       percolation which will be taken by lower zone
-        IF (ABS (LZRAT- RLZRAT) .GT. 0.02) THEN
+        IF (ABS (LZRAT- RLZRAT) .GT. 0.02 .OR. IFRDFG .NE. 0) THEN
 C         it is time to recalculate
           RLZRAT= LZRAT
           IF (LZRAT .LE. 1.0) THEN

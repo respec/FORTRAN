@@ -156,7 +156,7 @@ ISQAL   3  3     3    -8 2   0      0  2609 ENG qty/iv     0       1   0       1
   Inflows of sed-assoc qual                 MET qty/iv     0       1   0       1
 #GROUP   38  TYPE TEXT
 $TEXT
-IOX     2  1     2     1 2   0      0  2693 ENG lb/iv      0       1   0  0.4536
+IOX     2  1     2     1 2   0      0  2963 ENG lb/iv      0       1   0  0.4536
   Inflows of DO and BOD                     MET kg/iv      0   2.205   0       1
 #GROUP   39  TYPE TEXT
 $TEXT
