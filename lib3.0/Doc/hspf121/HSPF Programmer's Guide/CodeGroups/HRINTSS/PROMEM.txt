@@ -1,0 +1,120 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+
+<p>Calls
+   OMSG,
+   OMSTI
+<p>Code
+<pre>
+C
+C     3.5.2.2.1.2
+C
+      SUBROUTINE PROMEM
+     I                  (MESSU,MSGFL,MNUM,VOMEM,SUB,NSUB,
+     I                   MEMNAM,MKIND,SVOLNO,OUTLEV,MAXTTB,
+     M                   NTS,ECOUNT,
+     O                   TABL,TABLR)
+C
+C     + + + PURPOSE + + +
+C     Process a member
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MESSU,MSGFL,MNUM,VOMEM,SUB,NSUB,
+     $            MKIND(20),SVOLNO,MAXTTB,
+     $            OUTLEV,NTS,ECOUNT,TABL(10,MAXTTB)
+      REAL        TABLR(10,MAXTTB)
+      CHARACTER*6 MEMNAM(20)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     MNUM   - ???
+C     VOMEM  - ???
+C     SUB    - ???
+C     NSUB   - ???
+C     MEMNAM - ???
+C     MKIND  - ???
+C     SVOLNO - ???
+C     OUTLEV - run interpreter output level
+C     MAXTTB - ???
+C     NTS    - ???
+C     ECOUNT - count(s) of specific errors
+C     TABL   - ???
+C     TABLR  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   SCLU,SGRP,K,OFFS,I
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   OMSG,OMSTI
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT(A4,A2)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2010 FORMAT(' BEGIN PROCESSING MEMBER/MEMBERS')
+ 2020 FORMAT(' END PROCESSING MEMBER/MEMBERS')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 216
+      IF (OUTLEV .GT. 7) WRITE(MESSU,2010)
+C
+      IF (SUB .NE. 0) GO TO 30
+C       all components implied
+        DO 20 I=1,NSUB
+          NTS =NTS+1
+          OFFS=VOMEM+I
+          READ (MEMNAM(MNUM),1000) (TABL(K,NTS),K=1,2)
+          TABL(3,NTS) =I
+          TABL(4,NTS) =0
+          TABL(5,NTS) =OFFS
+          TABL(6,NTS) =MKIND(MNUM)
+          TABLR(8,NTS)=0.0
+          TABLR(9,NTS)=1.0
+ 20     CONTINUE
+C
+        GO TO 70
+ 30   CONTINUE
+C
+C       single subscript implied
+        IF (SUB .GE. 1 .AND. SUB .LE. NSUB) GO TO 40
+C         error-member subscript out of range
+          SGRP = 90
+          CALL OMSTI (SVOLNO)
+          CALL OMSTI (SUB)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+C
+          GO TO 60
+ 40     CONTINUE
+C
+          NTS =NTS+1
+          OFFS=VOMEM+SUB
+          READ (MEMNAM(MNUM),1000) (TABL(K,NTS),K=1,2)
+          TABL(3,NTS) =SUB
+          TABL(4,NTS) =0
+          TABL(5,NTS) =OFFS
+          TABL(6,NTS) =MKIND(MNUM)
+          TABLR(8,NTS)=0.0
+          TABLR(9,NTS)=1.0
+ 60     CONTINUE
+ 70   CONTINUE
+C
+      IF (OUTLEV .GT. 7) WRITE(MESSU,2020)
+C
+      RETURN
+      END
+</pval>
+
+
+
+

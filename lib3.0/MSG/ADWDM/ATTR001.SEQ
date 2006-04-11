@@ -1,0 +1,514 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  test export
+END COMMENT
+DSN            5    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN     5
+#ATTRIBUTE  TSTYPE    INDEX     1
+$TYPE     CHARACTER
+$LENGTH   4
+$DESC     Type of timeseries data.
+$REQUIRED  TIMESERIES
+$OPTIONAL  TABLE
+$HELP
+   User-defined four-character descriptor.  Used to
+   describe the contents of the data set, for
+   example:
+       PRCP, RAIN, SNOW - Precipitation
+       FLOW, DISC, PEAK - discharge
+       TEMP, TMIN, TMAX - temperature
+       EVAP, PET        - evapotranspiration
+   Some models and application programs may require a
+   specific TSTYPE for datasets they use.
+#ATTRIBUTE  STAID     INDEX     2
+$TYPE     CHARACTER
+$LENGTH  16
+$DESC     Station identification, up to 16 alpha-numeric characters.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$HELP
+   Alpha-numberic station id.
+#ATTRIBUTE  STCODE    INDEX     3
+$TYPE     CHARACTER
+$LENGTH   4
+$DESC     State abbreviation code
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$VALID   NON AL  AK  AZ  AR  CA  CO  CT  DE  FL  GA  HI  ID  IL  IN  IA  KS
+  KY  LA  ME  MD  MA  MI  MN  MS  MO  MT  NE  NV  NH  NJ  NM  NY  NC  ND  OH  OK
+  OR  PA  RI  SC  SD  TN  TX  UT  VT  VA  WA  WV  WI  WY  PR  DC  VI  PI  GU
+$HELP
+   Standard 2-character post office
+   abbreviation, includes
+       DC - Washington, District of Columbia
+       PR - Puerto Rico
+       VI - Virgin Islands
+       GU - Guam
+       PI - Pacific Trust Territories
+   Use NON for no state abbreviation.
+#ATTRIBUTE  HUCODE    INDEX     4
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Hydrologic unit code (8 digits).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999: 100000000
+$DEFAULT       -999
+$HELP
+   Hydrologic unit code (8 digits).  These codes are
+   given in the U.S. Geological Survey map series
+   "State Hydrologic Unit Maps," Open File Report 84-
+   708.
+#ATTRIBUTE  SUBHUC    INDEX     5
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Extension to hydrologic unit code (HUCODE).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:     10000
+$DEFAULT       -999
+$HELP
+   Extension to hydrologic unit code (HUCODE).  See
+   the U.S. Geological Survey map series "State
+   Hydrologic unit maps," Open File Report 84-708.
+#ATTRIBUTE  COCODE    INDEX     6
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     County or parish code.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:       999
+$DEFAULT       -999
+$HELP
+   County or parish code.  See WATSTORE users manual,
+   Appendix C.
+#ATTRIBUTE  ELEV      INDEX     7
+$TYPE     REAL
+$LENGTH   1
+$DESC     Elevation (msl).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Elevation (mean sea level).
+#ATTRIBUTE  LATDEG    INDEX     8
+$TYPE     REAL
+$LENGTH   1
+$DESC     Latitude (degrees).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Latitude in decimal degrees.
+#ATTRIBUTE  LNGDEG    INDEX     9
+$TYPE     REAL
+$LENGTH   1
+$DESC     Longitude (degrees).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Longitude in decimal degrees.
+#ATTRIBUTE  DESCRP    INDEX    10
+$TYPE     CHARACTER
+$LENGTH  80
+$DESC     Data-set description.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$HELP
+   Data-set description.  Might be name and/or
+   location, or some anecdotal information.
+#ATTRIBUTE  DAREA     INDEX    11
+$TYPE     REAL
+$LENGTH   1
+$DESC     Drainage area.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Total drainage area, in square miles, including
+   non-contributing areas.
+#ATTRIBUTE  MINVAL    INDEX    12
+$TYPE     REAL
+$LENGTH   1
+$DESC     Minimum value in dataset.
+$OPTIONAL  TIMESERIES
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Minimum value in data set, general use.
+#ATTRIBUTE  MAXVAL    INDEX    13
+$TYPE     REAL
+$LENGTH   1
+$DESC     Maximum value in dataset.
+$OPTIONAL  TIMESERIES
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Maximum value in data set, general use.
+#ATTRIBUTE  MEANVL    INDEX    14
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean value of values in dataset.
+$OPTIONAL  TIMESERIES
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Mean of values in data set, general use.
+#ATTRIBUTE  STDDEV    INDEX    15
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation of values in dataset.
+$OPTIONAL  TIMESERIES
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation of values in data set, general
+   use.
+#ATTRIBUTE  SKEWCF    INDEX    16
+$TYPE     REAL
+$LENGTH   1
+$DESC     Skew coefficient
+$OPTIONAL  TIMESERIES
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Skew coefficient of values in data set, general
+   use.
+#ATTRIBUTE  TCODE     INDEX    17
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Time units code.
+$UPDATE
+$REQUIRED  TIMESERIES
+$OPTIONAL  TABLE, SCHEMATIC
+$RANGE            1:         7
+$DEFAULT          2
+$HELP
+   Time units code.
+      1 - seconds       4 - days
+      2 - minutes       5 - months
+      3 - hours         6 - years
+
+   Used in combination with TSSTEP.
+#ATTRIBUTE  LCODE     INDEX    18
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Length units code.
+$OPTIONAL  TIMESERIES, TABLE, SCHEMATIC
+$RANGE            1:        17
+$DEFAULT          6
+$HELP
+   Length units code, user defined.
+#ATTRIBUTE  ACODE     INDEX    19
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Area units code.
+$OPTIONAL  TIMESERIES, TABLE, SCHEMATIC
+$RANGE            1:        17
+$DEFAULT          5
+$HELP
+   Area units code, user defined.
+#ATTRIBUTE  VCODE     INDEX    20
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Volume units code.
+$OPTIONAL  TIMESERIES, TABLE, SCHEMATIC
+$RANGE            1:        17
+$DEFAULT          5
+$HELP
+   Volume units code, user defined.
+#ATTRIBUTE  VLCODE    INDEX    21
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Velocity units code
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT       -999
+$HELP
+   Velocity units code, user defined.
+#ATTRIBUTE  DCODE     INDEX    22
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Attribute DCODE
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT       -999
+$HELP
+   Attribute DCODE
+#ATTRIBUTE  GCODE     INDEX    23
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Angle (slope) code.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:         3
+$DEFAULT          3
+$HELP
+   Angle (slope) code, user defined.
+#ATTRIBUTE  SLOPE     INDEX    24
+$TYPE     REAL
+$LENGTH   1
+$DESC     Slope.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Slope, units are user defined.
+#ATTRIBUTE  RMILE     INDEX    25
+$TYPE     REAL
+$LENGTH   1
+$DESC     Distance from mouth, in miles.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP     Distance from basin outlet, in miles.
+#ATTRIBUTE  LENGTH    INDEX    26
+$TYPE     REAL
+$LENGTH   1
+$DESC     Channel length.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Channel length, units user defined.
+#ATTRIBUTE  TSBYR     INDEX    27
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Base year.
+$UPDATE
+$REQUIRED  TIMESERIES
+$RANGE            1:   1000000
+$DEFAULT       1900
+$HELP
+   Starting year for time-series data in a data set.
+   Defaults to year 1900.
+#ATTRIBUTE  TSBMO     INDEX    28
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Base month
+$UPDATE
+$OPTIONAL  TIMESERIES
+$RANGE            1:        12
+$DEFAULT          1
+$HELP
+   Starting month for time-series data in a data set.
+   Defaults to month 1 (January).
+#ATTRIBUTE  TSBDY     INDEX    29
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Base day.
+$UPDATE
+$OPTIONAL  TIMESERIES
+$RANGE            1:        31
+$DEFAULT          1
+$HELP
+   Starting day for time-series data in a data set.
+   Defaults to day 1.
+#ATTRIBUTE  TSBHR     INDEX    30
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Base hour.
+$UPDATE
+$OPTIONAL  TIMESERIES
+$RANGE            0:        23
+$DEFAULT          0
+$HELP
+   Starting hour for time-series data in a data set.
+   Defaults to hour 1.
+#ATTRIBUTE  TSPREC    INDEX    31
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     New group, new record flag.
+$UPDATE
+$REQUIRED  VECTOR, SPACE-TIME
+$OPTIONAL  TIMESERIES
+$RANGE            0:         1
+$DEFAULT          0
+$HELP
+   New group, new record flag:
+   0 - start new group at the end of the last group
+   (default)
+   1 - start new group at the beginning of a record.
+#ATTRIBUTE  TSFILL    INDEX    32
+$TYPE     REAL
+$LENGTH   1
+$DESC     Timeseries filler value.
+$UPDATE
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Time-series filler value.  This value will be used
+   for missing values.  The default is 0.0.
+#ATTRIBUTE  TSSTEP    INDEX    33
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Primary timestep, in TCODE units.
+$UPDATE
+$REQUIRED  TIMESERIES
+$OPTIONAL  TABLE
+$RANGE            1:      1440
+$DEFAULT       -999
+$HELP
+   Time step, in TCODE units (used in combination
+   with TCODE).
+#ATTRIBUTE  TGROUP    INDEX    34
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Unit for group pointers.
+$UPDATE
+$REQUIRED  TIMESERIES
+$RANGE            3:         7
+$DEFAULT          6
+$HELP
+   Unit for group pointers, depending on the time
+   step of the data, may effect the speed of data
+   retrievals.  The default group pointer is 6
+   (years).  For timeseries data with a timestep
+   of an hour or less, monthly or even daily
+   group pointers may be more efficient.
+      3 - hours        6 - years
+      4 - days         7 - centuries
+      5 - months
+#ATTRIBUTE  RWFLAG    INDEX    35
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Read/Write flag.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            0:         1
+$DEFAULT          0
+$HELP
+   Read/Write flag:
+   0 - read and write
+   1 - read only
+#ATTRIBUTE  TOLR      INDEX    36
+$TYPE     REAL
+$LENGTH   1
+$DESC     Data compression tolerance.
+$OPTIONAL  TIMESERIES
+$RANGE    -999.000 : -999.000
+$DEFAULT  1.000E-08
+$HELP
+   Data compression tolerance.  Data values within +-
+   of TOLR will be considered the same value and
+   compressed in the data set.  Once data has been
+   compressed, the original values can not be
+   retrieved.
+#ATTRIBUTE  HELP      INDEX    37
+#ATTRIBUTE  DONE      INDEX    38
+#ATTRIBUTE  ALL       INDEX    39
+#ATTRIBUTE  AGENCY    INDEX    40
+$TYPE     CHARACTER
+$LENGTH   8
+$DESC     Agency code.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$HELP
+   Agency code.  See WATSTORE users manual, volume 1,
+   chapter 3.
+#ATTRIBUTE  STFIPS    INDEX    41
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     State FIPS code.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:        99
+$DEFAULT       -999
+$HELP
+   State FIPS code, see WATSTORE users manual,
+   Appendix B.
+#ATTRIBUTE  DSCODE    INDEX    42
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     District code.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            0:        99
+$DEFAULT          0
+$HELP
+   State code of the Geological Survey office that
+   operates the station.  Usually the same as the
+   state code (STPIPS).  See WATSTORE Users manual,
+   Appendix B.
+#ATTRIBUTE  CONTDA    INDEX    43
+$TYPE     REAL
+$LENGTH   1
+$DESC     Contributing drainage area.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Drainage area, in square miles, that contributes
+   to surface runoff.
+#ATTRIBUTE  SITECO    INDEX    44
+$TYPE     CHARACTER
+$LENGTH   4
+$DESC     Site Code
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$VALID   SW  SP  ES  GW  LK  ME
+$HELP
+   Site code, see WATSTORE users manual, volume 1,
+   chapter 3.
+   SW - stream
+   SP - spring
+   ES - estuary
+   GW - well
+   LK - lake or reservoir
+   ME - meteorological
+#ATTRIBUTE  STANAM    INDEX    45
+$TYPE     CHARACTER
+$LENGTH  48
+$DESC     Station name (48 characters).
+$REQUIRED  TIMESERIES
+$OPTIONAL  TABLE, MESSAGE, SCHEMATIC, PROJECT, SPACE-TIME
+$HELP
+   Short name or description of the data set.
+#ATTRIBUTE  GUCODE    INDEX    46
+$TYPE     CHARACTER
+$LENGTH  12
+$DESC     Geologic unit code  (7 characters).
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$HELP
+   Geologic unit code.  See WATSTORE users manual,
+   Appendix F.
+#ATTRIBUTE  WELLDP    INDEX    47
+$TYPE     REAL
+$LENGTH   1
+$DESC     Well depth.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Depth of well, in feet.  The greatest depth at
+   which water can enter the well.  See WATSTORE
+   users manual, volume 1, chapter 3.
+#ATTRIBUTE  AQTYPE    INDEX    48
+$TYPE     CHARACTER
+$LENGTH   4
+$DESC     Aquifer type.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$VALID   U   N   C   M   X
+$HELP
+   Aquifer type.  See WATSTORE users manual, volume
+   1, chapter 3..
+   U - unconfined single aquifer
+   N - unconfined multiple aquifers
+   C - confined single aquifer
+   M - confined multiple aquifers
+   X - mixed multiple aquifers
+#ATTRIBUTE  BASEQ     INDEX    49
+$TYPE     REAL
+$LENGTH   1
+$DESC     Base discharge.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Base discharge, in cubic feet per second.  See
+   WATSTORE user manual, volume 1, chapter ?.
+#ATTRIBUTE  DATE      INDEX    50
+$TYPE     INTEGER
+$LENGTH   6
+$DESC     Date (year,mo,dy,hr,mi,sc)
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE         -999:      -999
+$DEFAULT          0
+$HELP
+   Date string.  User defined use.
+  END DSN
+END DATA

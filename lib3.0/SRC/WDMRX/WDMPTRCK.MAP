@@ -1,0 +1,729 @@
+386|LINK: 8.0_Lahey2 -- Copyright (C) 1986-96 Phar Lap Software, Inc.
+
+Linking for 32-bit protected mode
+
+
+Command line switches:
+
+-LIBPATH C:\LF90\LIB
+@C:\WINDOWS\TEMP\TMP4.$$$
+C:\LF90\BIN\lfinit.obj
+C:\LF90\BIN\ptest.obj
+wdmptrck.obj
+-lib lf90.lib
+-lib dosx.lib
+-lib ..\..\lf90libs\adwdm.lib ..\..\lf90libs\util.lib ..\..\lf90libs\wdm.lib
+-stack 20000h
+-offset 8192
+-exeformat exp
+-exe wdmptrck.exe
+-stub gotntvm
+-maxdata 0
+-minreal 0h
+-maxreal ffffh
+
+
+Input module(s):
+
+Stub "GOTNTVM" from file "C:\LF90\LIB\dosx.lib"  [Mon Dec 19 20:27:30 1994].
+"lfinit" from file "C:\LF90\BIN\lfinit.obj"  [Thu Aug 01 17:33:36 1996].
+"pentest" from file "C:\LF90\BIN\ptest.obj"  [Mon Feb 27 11:16:14 1995].
+"wdmptrck" from file "wdmptrck.obj"  [Fri Mar 05 16:12:30 1999].
+"fcheqs" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fmtin" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fmtot" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"minimum" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"open" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"memory" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"flg2rt" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"inter" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"chkstack" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"errpub" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"cifstub" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"extender" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"mw_asm0" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"afmtio" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"ereport" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fcb" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fmtio" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"iomisc" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pause" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"dosio" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"lfsold" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"errno" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"lfctype" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"adirect" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fmtnomod" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"location" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"lfgetenv" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"cstring" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"utwdmd" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"wdoppc90" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"wdmchk" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"msexpt" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"utwdt1" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"utwdmf" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"utchar" from file "..\..\lf90libs\util.lib"  [Tue Jun 30 09:18:04 1998].
+"utnumb" from file "..\..\lf90libs\util.lib"  [Tue Jun 30 09:18:04 1998].
+"utdate" from file "..\..\lf90libs\util.lib"  [Tue Jun 30 09:18:04 1998].
+"utcpgn" from file "..\..\lf90libs\util.lib"  [Tue Jun 30 09:18:04 1998].
+"wdatrb" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wdexpt" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wdtms2" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wdatm2" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"tsbufr" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wdmid" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wdbtch" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wdtms1" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wdtble" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"wddlg" from file "..\..\lf90libs\wdm.lib"  [Thu Oct 02 09:42:32 1997].
+"flog10" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"flog10f" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pow_dd_v" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pow_di_v" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pow_ii_v" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pow_ri_v" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pow_rr_v" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"close" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fchcmp" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fmtck" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"rewind" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"unfio" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"index" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"fheap" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"_lf_pow" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"log10" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"log10f" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"powf" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"aunfio" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pow_tbl1" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"pow_tbl2" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"exp" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"wdatm1" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"wdmess" from file "..\..\lf90libs\adwdm.lib"  [Fri Mar 05 16:09:04 1999].
+"datsys90" from file "..\..\lf90libs\util.lib"  [Tue Jun 30 09:18:04 1998].
+"datetime" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+"present" from file "C:\LF90\LIB\lf90.lib"  [Thu Oct 10 18:23:32 1996].
+
+
+Segment map
+
+     Name         Group         Class     Type   Offset     Size
+------------  ------------  ------------  ----  --------  --------
+??code        CGROUP        CODE          PUB   00002000  00001AD3
+_TEXT         CGROUP        CODE          PUB   00003AD4  00042A80
+??lfusrtrm    CGROUP        CODE          PUB   00046554  00000000
+??lfusrnit    CGROUP        CODE          PUB   00046554  00000000
+??data        DGROUP        DATA          PUB   00047000  000010DF
+_DATA         DGROUP        DATA          PUB   000480E0  0000792E
+_lc__FLG2RT   DGROUP        DATA          COM   0004FA10  00000040
+_lc__rt_com-  DGROUP        DATA          COM   0004FA50  00000001
+_lc_CFBUFF    DGROUP        DATA          COM   0004FA60  00005100
+_lc_CDRLOC    DGROUP        DATA          COM   00054B60  00000018
+_lc_RCONST    DGROUP        DATA          COM   00054B80  00000010
+_lc_DCONST    DGROUP        DATA          COM   00054B90  00000018
+_lc_ICONST    DGROUP        DATA          COM   00054BB0  00000008
+_lc_CTBLBC    DGROUP        DATA          COM   00054BC0  00000200
+_lc_CTBLBD    DGROUP        DATA          COM   00054DC0  00000200
+_lc_CTSBUF    DGROUP        DATA          COM   00054FC0  000E5C00
+_lc_CWDMID    DGROUP        DATA          COM   0013ABC0  00000030
+_lc_CWDMIC    DGROUP        DATA          COM   0013ABF0  00000018
+_lc_CWTSDS    DGROUP        DATA          COM   0013AC10  00000044
+CONST2        DGROUP        DATA          PUB   0013AC54  00000000
+CONST         DGROUP        CONST         PUB   0013AC54  00000882
+??bss         DGROUP        BSS           PUB   0013B4D8  00000000
+_BSS          DGROUP        BSS           PUB   0013B4D8  00012F0E
+_EBSS_        DGROUP        BSS           PUB   0014E3E8  00000000
+c_common      DGROUP        BSS           PUB   0014E3F0  00000000
+??stack       DGROUP        STACK         STK   0014E3F0  00020000
+
+
+Public symbols
+
+     Name       Value      Module        Segment      Size
+------------  --------  ------------  ------------  --------
+$$GOTNTVM     00000001                              
+_ebss         0014E3E8  lfinit        _EBSS_        
+_edata        0013B4D8                _BSS          
+_lc__FLG2RT   0004FA10  wdmptrck      _lc__FLG2RT   
+_lc_CDRLOC    00054B60  utwdmd        _lc_CDRLOC    
+_lc_CFBUFF    0004FA60  utwdmd        _lc_CFBUFF    
+_lc_CTBLBC    00054BC0  wdexpt        _lc_CTBLBC    
+_lc_CTBLBD    00054DC0  wdexpt        _lc_CTBLBD    
+_lc_CTSBUF    00054FC0  tsbufr        _lc_CTSBUF    
+_lc_CWDMIC    0013ABF0  wdmid         _lc_CWDMIC    
+_lc_CWDMID    0013ABC0  wdmid         _lc_CWDMID    
+_lc_CWTSDS    0013AC10  wdtms1        _lc_CWTSDS    
+_lc_DCONST    00054B90  utchar        _lc_DCONST    
+_lc_ICONST    00054BB0  utchar        _lc_ICONST    
+_lc_RCONST    00054B80  utchar        _lc_RCONST    
+_lf_7_close   000082CC  minimum       _TEXT         
+_lf_7_open    0000DC18  dosio         _TEXT         
+_lf_7_read    0000DDBC  dosio         _TEXT         
+_lf_7_write   0000DE40  dosio         _TEXT         
+_lf___close   0000DD0C  dosio         _TEXT         
+_lf__back1_-  0000D440  iomisc        _TEXT         
+_lf__create   0000DCCC  dosio         _TEXT         
+_lf__drst     0000D538  iomisc        _TEXT         
+_lf__gpvc     0000D3A0  iomisc        _TEXT         
+_lf__lseek    0000DD30  dosio         _TEXT         
+_lf__lsize    0000DD74  dosio         _TEXT         
+_lf__prompt   00048BEC  iomisc        _DATA         
+_lf__unlink   0000DE88  dosio         _TEXT         
+_lf_absolut-  0000B2B8  ereport       _TEXT         
+_lf_adjust_-  000464C0  datetime      _TEXT         
+_lf_alloc_b-  00008440  minimum       _TEXT         
+_lf_allocat-  00046540  present       _TEXT         
+_lf_alocfcb   0000BC08  fcb           _TEXT         
+_lf_altreta   0000A3B5  errpub        _TEXT         
+_lf_ascii_t-  00005F1C  fmtin         _TEXT         
+_lf_ascii_t-  00006030  fmtin         _TEXT         
+_lf_assign_-  0000A4A8  errpub        _TEXT         
+_lf_brakdfl   000038BC  inter         ??code        
+_lf_braklog   00003890  inter         ??code        
+_lf_buffer_-  000485E8  flg2rt        _DATA         
+_lf_c_shutd-  0000A52C  cifstub       _TEXT         
+_lf_c_start-  0000A528  cifstub       _TEXT         
+_lf_calloc    00009C1C  memory        _TEXT         
+_lf_check_d-  0000DC58  dosio         _TEXT         
+_lf_check_f-  0000BCFC  fcb           _TEXT         
+_lf_check_p-  0000C7AC  fmtio         _TEXT         
+_lf_check_s-  0000A2F0  chkstack      _TEXT         
+_lf_chopfil   0000DEA4  dosio         _TEXT         
+_lf_clear_i-  0000A36C  errpub        _TEXT         
+_lf_clenflag  0000CF88  fmtio         _TEXT         
+_lf_close     00040ACC  close         _TEXT         
+_lf_cmp_name  0000D1E4  iomisc        _TEXT         
+_lf_codeend   00047004  lfinit        ??data        
+_lf_codesta-  00047000  lfinit        ??data        
+_lf_command-  00047038  lfinit        ??data        
+_lf_command-  00047034  lfinit        ??data        
+_lf_conflsh   000081D8  minimum       _TEXT         
+_lf_create_-  0000DB90  dosio         _TEXT         
+_lf_crrnt_c-  00048AFB  fmtio         _DATA         
+_lf_ctype_    0013B240  lfctype       CONST         
+_lf_curfcb    000483E4  minimum       _DATA         
+_lf_datasta-  00047008  lfinit        ??data        
+_lf_date_an-  00045FC0  datetime      _TEXT         
+_lf_date_an-  00046124  datetime      _TEXT         
+_lf_date_an-  00046044  datetime      _TEXT         
+_lf_date_an-  00046244  datetime      _TEXT         
+_lf_date_an-  00046338  datetime      _TEXT         
+_lf_dcode     0000436C  fmtin         _TEXT         
+_lf_default-  000485E4  flg2rt        _DATA         
+_lf_deinsta-  00003344  inter         ??code        
+_lf_deinsta-  00003064  inter         ??code        
+_lf_deinsta-  000030B8  inter         ??code        
+_lf_deinsta-  000030F4  inter         ??code        
+_lf_deinsta-  00003130  inter         ??code        
+_lf_delfcb    0000816C  minimum       _TEXT         
+_lf_determi-  0000BDF4  fmtio         _TEXT         
+_lf_display   0000DB28  pause         _TEXT         
+_lf_doinc0a   0000A415  errpub        _TEXT         
+_lf_dpmi_fl-  0004714C  lfinit        ??data        
+_lf_dpowuw    000080DC  fmtot         _TEXT         
+_lf_ebp_of_-  000483D4  minimum       _DATA         
+_lf_eip_of_-  000483D0  minimum       _DATA         
+_lf_emergen-  00002554  lfinit        ??code        
+_lf_emit_er-  0000AC30  ereport       _TEXT         
+_lf_emit_me-  000024EC  lfinit        ??code        
+_lf_emit_me-  00002518  lfinit        ??code        
+_lf_end_inp-  0000C7EC  fmtio         _TEXT         
+_lf_end_out-  0000C958  fmtio         _TEXT         
+_lf_ensure_-  0000D8E0  iomisc        _TEXT         
+_lf_env_len-  00047144  lfinit        ??data        
+_lf_env_poi-  00047148  lfinit        ??data        
+_lf_EOL_FF    00005DCC  fmtin         _TEXT         
+_lf_err_fcb   000483DC  minimum       _DATA         
+_lf_err_pos-  000483D8  minimum       _DATA         
+_lf_errno     00048C64  errno         _DATA         
+_lf_error_e-  00048928  ereport       _DATA         
+_lf_error_e-  00048930  ereport       _DATA         
+_lf_error_e-  0004892C  ereport       _DATA         
+_lf_error_i-  0000A50E  errpub        _TEXT         
+_lf_excepti-  0000B2C8  ereport       _TEXT         
+_lf_exitdos   000023B4  lfinit        ??code        
+_lf_exp       00042B80  exp           _TEXT         
+_lf_extende-  0000A588  extender      _TEXT         
+_lf_extende-  0000A5C8  extender      _TEXT         
+_lf_extende-  0000A59C  extender      _TEXT         
+_lf_extende-  0000A5B0  extender      _TEXT         
+_lf_extende-  0000A5E0  extender      _TEXT         
+_lf_f90_con-  00048604  flg2rt        _DATA         
+_lf_fcalloc   000422BC  fheap         _TEXT         
+_lf_fcb_list  000483E0  minimum       _DATA         
+_lf_fchcmp    00040BC8  fchcmp        _TEXT         
+_lf_fcheqs    000040C0  fcheqs        _TEXT         
+_lf_feeble_-  00046300  datetime      _TEXT         
+_lf_ffree     00042260  fheap         _TEXT         
+_lf_file_of-  0004893C  ereport       _DATA         
+_lf_finish_-  0000253D  lfinit        ??code        
+_lf_flush_u-  0000DA20  iomisc        _TEXT         
+_lf_fmalloc   00042234  fheap         _TEXT         
+_lf_fmalloc-  0000B3EC  ereport       _TEXT         
+_lf_fmt_ini-  0000BE50  fmtio         _TEXT         
+_lf_fmt_lis-  0000BEB8  fmtio         _TEXT         
+_lf_fmtck     00040C4C  fmtck         _TEXT         
+_lf_fmtflag   00048AE8  fmtio         _DATA         
+_lf_fmtmod    0000E104  fmtnomod      _TEXT         
+_lf_fndname   0000BBB4  fcb           _TEXT         
+_lf_fndunit   00008120  minimum       _TEXT         
+_lf_fpu_con-  00047423  lfinit        ??data        
+_lf_frealloc  00042278  fheap         _TEXT         
+_lf_free      00009D34  memory        _TEXT         
+_lf_get_byte  00008548  minimum       _TEXT         
+_lf_get_cur-  0000BC88  fcb           _TEXT         
+_lf_get_fmt-  0000CE88  fmtio         _TEXT         
+_lf_get_n_d   0000DEF0  adirect       _TEXT         
+_lf_get_n_f-  0000A754  afmtio        _TEXT         
+_lf_getenv    0000E120  lfgetenv      _TEXT         
+_lf_inchr     000048B4  fmtin         _TEXT         
+_lf_incmx16   0000462C  fmtin         _TEXT         
+_lf_incmx8    00004604  fmtin         _TEXT         
+_lf_index     00042188  index         _TEXT         
+_lf_indnf     000043DC  fmtin         _TEXT         
+_lf_indnfa    00004470  fmtin         _TEXT         
+_lf_indnu     00041D4C  unfio         _TEXT         
+_lf_inint1    00004524  fmtin         _TEXT         
+_lf_inint2    00004548  fmtin         _TEXT         
+_lf_inint4    000044DC  fmtin         _TEXT         
+_lf_inint8    00004500  fmtin         _TEXT         
+_lf_init      00002020  lfinit        ??code        
+_lf_init_de-  00005C40  fmtin         _TEXT         
+_lf_init_fcb  0000BC90  fcb           _TEXT         
+_lf_init_in-  0000BD18  fmtio         _TEXT         
+_lf_initial-  00002000  lfinit        ??code        
+_lf_initial-  0000A190  memory        _TEXT         
+_lf_inlog1    000047F8  fmtin         _TEXT         
+_lf_inlog4    000047D4  fmtin         _TEXT         
+_lf_inrel4    00004494  fmtin         _TEXT         
+_lf_inrel8    000044B8  fmtin         _TEXT         
+_lf_install-  000032D4  inter         ??code        
+_lf_install-  0000316C  inter         ??code        
+_lf_install-  0000322C  inter         ??code        
+_lf_install-  00003280  inter         ??code        
+_lf_install-  000031D8  inter         ??code        
+_lf_intdos    0000A634  mw_asm0       _TEXT         
+_lf_intrin_-  0000B448  ereport       _TEXT         
+_lf_intrin_-  0000A343  errpub        _TEXT         
+_lf_intzf     00004158  fmtin         _TEXT         
+_lf_intzfa    000042D8  fmtin         _TEXT         
+_lf_intzu     00041C6C  unfio         _TEXT         
+_lf_inunlen   00042ADC  aunfio        _TEXT         
+_lf_io_emit-  0000B284  ereport       _TEXT         
+_lf_ioerr     0000A320  errpub        _TEXT         
+_lf_iostat    000483CC  minimum       _DATA         
+_lf_iostat_-  0000B1A0  ereport       _TEXT         
+_lf_itemsize  0000CFDC  fmtio         _TEXT         
+_lf_line_of-  00048938  ereport       _DATA         
+_lf_link_th-  00048600  flg2rt        _DATA         
+_lf_log10     00042890  log10         _TEXT         
+_lf_log10f    00042960  log10f        _TEXT         
+_lf_lsl_ds    00002468  lfinit        ??code        
+_lf_main      00003B30  wdmptrck      _TEXT         
+_lf_main_er-  0000DEED  lfsold        _TEXT         
+_lf_malloc    00009C00  memory        _TEXT         
+_lf_margin_-  00007BEC  fmtot         _TEXT         
+_lf_memchr    0000E250  cstring       _TEXT         
+_lf_memcmp    0000E214  cstring       _TEXT         
+_lf_memcmpr   0000D310  iomisc        _TEXT         
+_lf_memcopy   0000D380  iomisc        _TEXT         
+_lf_memmem    0000E270  cstring       _TEXT         
+_lf_message-  00048934  ereport       _DATA         
+_lf_nbrak     000038AC  inter         ??code        
+_lf_nchin     00041E5C  unfio         _TEXT         
+_lf_nchot     00042134  unfio         _TEXT         
+_lf_ncode     0000629C  fmtot         _TEXT         
+_lf_negdima   0000A445  errpub        _TEXT         
+_lf_next_bu-  000085B8  minimum       _TEXT         
+_lf_next_wr-  00008678  minimum       _TEXT         
+_lf_nl_flag   00048AFA  fmtio         _DATA         
+_lf_no_head-  000485E0  flg2rt        _DATA         
+_lf_ntznumf   0000CFD0  fmtio         _TEXT         
+_lf_null_pr-  0000DEEF  lfsold        _TEXT         
+_lf_ontzf     0000607C  fmtot         _TEXT         
+_lf_ontzfa    00006234  fmtot         _TEXT         
+_lf_ontzu     00041EE0  unfio         _TEXT         
+_lf_open      000086D0  open          _TEXT         
+_lf_osmajor   00047150  lfinit        ??data        
+_lf_osminor   00047151  lfinit        ??data        
+_lf_otchr     00006938  fmtot         _TEXT         
+_lf_otcmx16   000066B8  fmtot         _TEXT         
+_lf_otcmx8    00006658  fmtot         _TEXT         
+_lf_otdnf     0000630C  fmtot         _TEXT         
+_lf_otdnu     00041FF0  unfio         _TEXT         
+_lf_otint1    00006488  fmtot         _TEXT         
+_lf_otint2    000064D4  fmtot         _TEXT         
+_lf_otint4    00006520  fmtot         _TEXT         
+_lf_otint8    0000656C  fmtot         _TEXT         
+_lf_otlog1    00006840  fmtot         _TEXT         
+_lf_otlog4    00006864  fmtot         _TEXT         
+_lf_otrel4    000063D0  fmtot         _TEXT         
+_lf_otrel8    0000642C  fmtot         _TEXT         
+_lf_otunlen   00042A2C  aunfio        _TEXT         
+_lf_output_-  00048AE4  fmtio         _DATA         
+_lf_page_lo-  00003000  inter         ??code        
+_lf_pause     0000DA90  pause         _TEXT         
+_lf_pause1    0000DAA0  pause         _TEXT         
+_lf_penttest  00003AD4  pentest       _TEXT         
+_lf_pfill     000482F5  fmtot         _DATA         
+_lf_pow       000422D0  _lf_pow       _TEXT         
+_lf_powf      00042A0C  powf          _TEXT         
+_lf_present-  0004652C  present       _TEXT         
+_lf_program-  0004702C  lfinit        ??data        
+_lf_ptr_asg-  0000A4DB  errpub        _TEXT         
+_lf_put_byte  000085D8  minimum       _TEXT         
+_lf_put_fmt-  0000CB0C  fmtio         _TEXT         
+_lf_put_n_d   0000DFF4  adirect       _TEXT         
+_lf_put_n_f-  0000A8C0  afmtio        _TEXT         
+_lf_put_n_u   00042B20  aunfio        _TEXT         
+_lf_read_bu-  0000D800  iomisc        _TEXT         
+_lf_realloc   00009C78  memory        _TEXT         
+_lf_refbnda   0000A385  errpub        _TEXT         
+_lf_release-  0000BCB4  fcb           _TEXT         
+_lf_rep_cnt   0013B600  fmtin         _BSS          
+_lf_resize_-  00002470  lfinit        ??code        
+_lf_rewind    00041B34  rewind        _TEXT         
+_lf_rt_io_e-  0000B2E8  ereport       _TEXT         
+_lf_rtp_fla-  00048000  inter         ??data        
+_lf_scan_di-  00005C54  fmtin         _TEXT         
+_lf_set_ios-  0000DA6C  iomisc        _TEXT         
+_lf_set_loc-  0000E110  location      _TEXT         
+_lf_set_name  00008488  minimum       _TEXT         
+_lf_set_rea-  0000D05C  iomisc        _TEXT         
+_lf_set_rec-  0000D4DC  iomisc        _TEXT         
+_lf_set_wri-  0000D0B0  iomisc        _TEXT         
+_lf_setup_f-  0000A250  flg2rt        _TEXT         
+_lf_shape_e-  0000A475  errpub        _TEXT         
+_lf_show_pr-  0000DB60  pause         _TEXT         
+_lf_sold_ea-  0000DEE0  lfsold        _TEXT         
+_lf_sold_ND-  0000DEEE  lfsold        _TEXT         
+_lf_spindri-  00009BAC  open          _TEXT         
+_lf_spindri-  00048C58  dosio         _DATA         
+_lf_spindri-  00009A88  open          _TEXT         
+_lf_spindri-  00009BE8  open          _TEXT         
+_lf_stack_e-  0000B3F8  ereport       _TEXT         
+_lf_stack_f-  00002540  lfinit        ??code        
+_lf_stackbo-  00047024  lfinit        ??data        
+_lf_stackli-  00047020  lfinit        ??data        
+_lf_stackma-  0004701C  lfinit        ??data        
+_lf_stacktop  00047018  lfinit        ??data        
+_lf_status    00047425  lfinit        ??data        
+_lf_stop      0000822C  minimum       _TEXT         
+_lf_stop1     0000823C  minimum       _TEXT         
+_lf_strcat    0000D230  iomisc        _TEXT         
+_lf_strchr    0000E1F4  cstring       _TEXT         
+_lf_strcmpr   0000D268  iomisc        _TEXT         
+_lf_strcopy   0000D33C  iomisc        _TEXT         
+_lf_strcpy    0000E1B0  cstring       _TEXT         
+_lf_strncpy   0000E1C8  cstring       _TEXT         
+_lf_strpbrk   0000E348  cstring       _TEXT         
+_lf_strstr    0000E300  cstring       _TEXT         
+_lf_subbnda   0000A3E5  errpub        _TEXT         
+_lf_tag_fcb   000081B8  minimum       _TEXT         
+_lf_trace     00048608  flg2rt        _DATA         
+_lf_trace_b-  0000B7A8  ereport       _TEXT         
+_lf_trap_ma-  00047028  lfinit        ??data        
+_lf_truncate  0000D148  iomisc        _TEXT         
+_lf_unit_ch-  0000D1B8  iomisc        _TEXT         
+_lf_unused11  0004860C  flg2rt        _DATA         
+_lf_unused12  00048610  flg2rt        _DATA         
+_lf_unused13  00048614  flg2rt        _DATA         
+_lf_unused14  00048618  flg2rt        _DATA         
+_lf_unused15  0004861C  flg2rt        _DATA         
+_lf_unused16  00048620  flg2rt        _DATA         
+_lf_vect_le-  0000B418  ereport       _TEXT         
+_lf_write_b-  000083C0  minimum       _TEXT         
+_lfacos_err-  0000B308  ereport       _TEXT         
+_lfasin_err-  0000B314  ereport       _TEXT         
+_lfc_div_c_-  0000B3BC  ereport       _TEXT         
+_lfcabs_err-  0000B368  ereport       _TEXT         
+_lfccos_err-  0000B374  ereport       _TEXT         
+_lfcexp_err-  0000B380  ereport       _TEXT         
+_lfcheck_de-  00009938  open          _TEXT         
+_lfclog_err-  0000B38C  ereport       _TEXT         
+_lfcosh_err-  0000B320  ereport       _TEXT         
+_lfcsin_err-  0000B398  ereport       _TEXT         
+_lfcsqrt_er-  0000B3A4  ereport       _TEXT         
+_lfdz_div_e-  0000B3E0  ereport       _TEXT         
+_lfexp_error  0000B32C  ereport       _TEXT         
+_lffltused    0004FA50  mw_asm0       _lc__rt_com-  
+_lflog10      000408A0  flog10        _TEXT         
+_lflog10_er-  0000B338  ereport       _TEXT         
+_lflog10f     000408D4  flog10f       _TEXT         
+_lflog_error  0000B344  ereport       _TEXT         
+_lfpow_dd_v-  00040908  pow_dd_v      _TEXT         
+_lfpow_di_v-  00040944  pow_di_v      _TEXT         
+_lfpow_ii_v-  000409BC  pow_ii_v      _TEXT         
+_lfpow_ri_v-  00040A20  pow_ri_v      _TEXT         
+_lfpow_rr_v-  00040A98  pow_rr_v      _TEXT         
+_lfpower_er-  0000B3B0  ereport       _TEXT         
+_lfrc_div_e-  0000B3D4  ereport       _TEXT         
+_lfsinh_err-  0000B350  ereport       _TEXT         
+_lfsqrt_err-  0000B35C  ereport       _TEXT         
+_lftrunc_     0000A600  mw_asm0       _TEXT         
+_lftruncu_    0000A600  mw_asm0       _TEXT         
+_lfz_div_z_-  0000B3C8  ereport       _TEXT         
+ADCOMA        00023B20  utchar        _TEXT         
+AWVRSN        00010B20  utwdmd        _TEXT         
+CARVAR        00019330  utchar        _TEXT         
+CHDECE        00019570  utchar        _TEXT         
+CHINTE        000195F0  utchar        _TEXT         
+CHKDPR        000242C0  utnumb        _TEXT         
+CHKINT        00024060  utnumb        _TEXT         
+CHKREA        000240E0  utnumb        _TEXT         
+CHKSTR        000197D0  utchar        _TEXT         
+CHRCHR        00019950  utchar        _TEXT         
+CHRDEC        00019A00  utchar        _TEXT         
+CHRDEL        0001A4F0  utchar        _TEXT         
+CHRDIG        0001A620  utchar        _TEXT         
+CHRDPR        00019F80  utchar        _TEXT         
+CHRINS        0001A6D0  utchar        _TEXT         
+CHRINT        0001A900  utchar        _TEXT         
+CKDATE        000254D0  utdate        _TEXT         
+CKNBLK        0001A940  utchar        _TEXT         
+CKNBLV        00023830  utchar        _TEXT         
+CMPTIM        000255E0  utdate        _TEXT         
+CMPTM2        000258E0  utdate        _TEXT         
+COPYC         0001AA00  utchar        _TEXT         
+COPYD         000277C0  utcpgn        _TEXT         
+COPYI         00027850  utcpgn        _TEXT         
+COPYR         000278E0  utcpgn        _TEXT         
+CRINTE        0001AAB0  utchar        _TEXT         
+CRINTX        0001AD10  utchar        _TEXT         
+CTRSTR        0001AD50  utchar        _TEXT         
+CVARAR        0001B0A0  utchar        _TEXT         
+DATCHK        00025A90  utdate        _TEXT         
+DATCHR        0001B2E0  utchar        _TEXT         
+DATCMN        00027590  utdate        _TEXT         
+DATLST        0001B550  utchar        _TEXT         
+DATNXT        00025C50  utdate        _TEXT         
+DAYMON        00025FB0  utdate        _TEXT         
+DCALCT        000276D0  utdate        _TEXT         
+DECCHR        0001BB50  utchar        _TEXT         
+DECCHX        00020E60  utchar        _TEXT         
+DECPRC        00024BE0  utnumb        _TEXT         
+DIGCHR        00021870  utchar        _TEXT         
+DLIMIT        000260B0  utdate        _TEXT         
+do_test       00003AF8  pentest       _TEXT         
+DPRCHR        0001DD70  utchar        _TEXT         
+DTMCMN        000272B0  utdate        _TEXT         
+DWDIGS        00020DA0  utchar        _TEXT         
+INTCHR        00021950  utchar        _TEXT         
+inv_b_hi      0004E500  pow_tbl1      _DATA         
+JDMODY        000262C0  utdate        _TEXT         
+LENSTR        00021FC0  utchar        _TEXT         
+LFTSTR        00022080  utchar        _TEXT         
+NUMINI        000244A0  utnumb        _TEXT         
+NUMPTS        000263F0  utdate        _TEXT         
+PRMSAE        0002DE90  wdexpt        _TEXT         
+PRMSFE        00015860  msexpt        _TEXT         
+PRMSME        00015220  msexpt        _TEXT         
+PRMSPE        00013810  msexpt        _TEXT         
+PRMSTA        00015C60  msexpt        _TEXT         
+PRMSTE        00014FE0  msexpt        _TEXT         
+PRTLIN        00022370  utchar        _TEXT         
+PRTLNO        00022810  utchar        _TEXT         
+PRTSTR        00023270  utchar        _TEXT         
+PRWMAE        0002D400  wdexpt        _TEXT         
+PRWMDE        0002CA40  wdexpt        _TEXT         
+PRWMME        000133D0  msexpt        _TEXT         
+PRWMTE        0002A5B0  wdexpt        _TEXT         
+PRWMXE        0002B2D0  wdexpt        _TEXT         
+QUPCAS        000236F0  utchar        _TEXT         
+RHTSTR        000238F0  utchar        _TEXT         
+RWDIGS        00020CE0  utchar        _TEXT         
+SHIFTD        00024C70  utnumb        _TEXT         
+SHIFTI        00024EE0  utnumb        _TEXT         
+SHIFTR        00025150  utnumb        _TEXT         
+STRFND        00022C00  utchar        _TEXT         
+STRLNX        00022E10  utchar        _TEXT         
+SYDATM        00045EF0  datsys90      _TEXT         
+t_hi          0004E910  pow_tbl2      _DATA         
+t_lo          0004ED18  pow_tbl2      _DATA         
+TIMADD        000265F0  utdate        _TEXT         
+TIMBAK        00026970  utdate        _TEXT         
+TIMCHK        00026B70  utdate        _TEXT         
+TIMCNV        00026D20  utdate        _TEXT         
+TIMCVT        00026D90  utdate        _TEXT         
+TIMDFX        00027150  utdate        _TEXT         
+TIMDIF        00026E10  utdate        _TEXT         
+TSBCLR        00033520  tsbufr        _TEXT         
+TSBGET        00031B40  tsbufr        _TEXT         
+TSBINI        00033C70  tsbufr        _TEXT         
+TSBTIM        00031AA0  tsbufr        _TEXT         
+TSBWDS        00031AF0  tsbufr        _TEXT         
+UTVRSN        000253C0  utnumb        _TEXT         
+WADADI        00043100  wdatm1        _TEXT         
+WADDSI        00043CD0  wdatm1        _TEXT         
+WADGDF        00031670  wdatm2        _TEXT         
+WADGDS        000317F0  wdatm2        _TEXT         
+WADGHL        000319A0  wdatm2        _TEXT         
+WADGRA        00031280  wdatm2        _TEXT         
+WADGTL        00043970  wdatm1        _TEXT         
+WADGTN        00031220  wdatm2        _TEXT         
+WADGVA        00031460  wdatm2        _TEXT         
+WADNSA        00042EC0  wdatm1        _TEXT         
+WADQCK        00042CD0  wdatm1        _TEXT         
+WATTCL        00016CF0  utwdt1        _TEXT         
+WATTSP        00016E20  utwdt1        _TEXT         
+WATTUS        00016EB0  utwdt1        _TEXT         
+WATWDC        00016F70  utwdt1        _TEXT         
+WATWDS        00016FB0  utwdt1        _TEXT         
+WBCWCL        00016130  utwdt1        _TEXT         
+WBCWSP        00015FA0  utwdt1        _TEXT         
+WBCWSQ        00016540  utwdt1        _TEXT         
+WCH2UD        00034420  wdmid         _TEXT         
+WDAINF        00030E90  wdtms2        _TEXT         
+WDATCL        00016240  utwdt1        _TEXT         
+WDATCP        00030950  wdtms2        _TEXT         
+WDATIM        00030CA0  wdtms2        _TEXT         
+WDATSP        000161C0  utwdt1        _TEXT         
+WDBASE        00033300  tsbufr        _TEXT         
+WDBCRL        00034510  wdbtch        _TEXT         
+WDBFIN        00010360  utwdmd        _TEXT         
+WDBOPN        00010E30  wdoppc90      _TEXT         
+WDBSAC        00027BD0  wdatrb        _TEXT         
+WDBSAD        00028730  wdatrb        _TEXT         
+WDBSAI        00028000  wdatrb        _TEXT         
+WDBSAR        000283D0  wdatrb        _TEXT         
+WDBSGC        000345B0  wdbtch        _TEXT         
+WDBSGI        000348E0  wdbtch        _TEXT         
+WDBSGR        00034AE0  wdbtch        _TEXT         
+WDBSGX        00029590  wdatrb        _TEXT         
+WDCKDT        00010190  utwdmd        _TEXT         
+WDCRDT        00044510  wdatm1        _TEXT         
+WDCREA        00010550  utwdmd        _TEXT         
+WDDPAR        00028DB0  wdatrb        _TEXT         
+WDDRRC        0000FD20  utwdmd        _TEXT         
+WDDSCK        00010230  utwdmd        _TEXT         
+WDDSCL        00035060  wdbtch        _TEXT         
+WDDSDL        00044840  wdmess        _TEXT         
+WDDSNP        00010B60  utwdmd        _TEXT         
+WDDSNX        00010AE0  utwdmd        _TEXT         
+WDDSRN        00034CE0  wdbtch        _TEXT         
+WDDTFG        00044BD0  wdmess        _TEXT         
+WDFCUP        00044F00  wdmess        _TEXT         
+WDFDUP        00044C80  wdmess        _TEXT         
+WDFLCK        0000EC40  utwdmd        _TEXT         
+WDFLCL        0000F090  utwdmd        _TEXT         
+WDFNCK        00029E70  wdatrb        _TEXT         
+WDFNDS        000296A0  wdatrb        _TEXT         
+WDGCVL        000109B0  utwdmd        _TEXT         
+WDGDRT        00010AD0  utwdmd        _TEXT         
+WDGIVL        00010880  utwdmd        _TEXT         
+WDGRVL        00010910  utwdmd        _TEXT         
+WDIINI        00033E80  wdmid         _TEXT         
+WDLANG        0003F300  wddlg         _TEXT         
+WDLBAD        00035440  wdbtch        _TEXT         
+WDLBAX        00045910  wdmess        _TEXT         
+WDLBCV        00016BF0  utwdt1        _TEXT         
+WDLBSP        00016C60  utwdt1        _TEXT         
+WDLGET        0003FF70  wddlg         _TEXT         
+WDLICV        00016AF0  utwdt1        _TEXT         
+WDLISP        00016B60  utwdt1        _TEXT         
+WDLLCK        00040440  wddlg         _TEXT         
+WDLLSU        00040610  wddlg         _TEXT         
+WDLPUT        0003F6E0  wddlg         _TEXT         
+WDMCHK        000110E0  wdmchk        _TEXT         
+WDMDUMP       00011950  wdmchk        _TEXT         
+WDMEXP        00012080  wdmchk        _TEXT         
+WDMODT        00044570  wdatm1        _TEXT         
+WDNXDV        00017E80  utwdmf        _TEXT         
+WDNXPS        00017D80  utwdmf        _TEXT         
+WDPRPS        00017F20  utwdmf        _TEXT         
+WDPTCL        00015E80  utwdt1        _TEXT         
+WDPTSP        00015EA0  utwdt1        _TEXT         
+WDRCAD        0000F9D0  utwdmd        _TEXT         
+WDRCDL        00045490  wdmess        _TEXT         
+WDRCGN        0000F460  utwdmd        _TEXT         
+WDRCGO        0000E380  utwdmd        _TEXT         
+WDRCGX        0000F950  utwdmd        _TEXT         
+WDRCUP        0000F2C0  utwdmd        _TEXT         
+WDSAFI        00028EB0  wdatrb        _TEXT         
+WDSAFL        00028D60  wdatrb        _TEXT         
+WDSAGY        00027970  wdatrb        _TEXT         
+WDSASP        00044940  wdmess        _TEXT         
+WDSASV        00010730  utwdmd        _TEXT         
+WDSCHA        0000FFA0  utwdmd        _TEXT         
+WDSCHK        0000FF40  utwdmd        _TEXT         
+WDSETD        000445C0  wdatm1        _TEXT         
+WDSKBK        00037660  wdtms1        _TEXT         
+WDSYSD        00045DB0  datsys90      _TEXT         
+WDTBCG        0003F120  wdtble        _TEXT         
+WDTBDL        0003E660  wdtble        _TEXT         
+WDTBFN        0003B400  wdtble        _TEXT         
+WDTBFX        0003B290  wdtble        _TEXT         
+WDTBSP        0003B810  wdtble        _TEXT         
+WDTBSU        0003C480  wdtble        _TEXT         
+WDTBTM        0003A950  wdtble        _TEXT         
+WDTGET        000354D0  wdtms1        _TEXT         
+WDTPFX        00038EC0  wdtms1        _TEXT         
+WDTPUT        0003A820  wdtms1        _TEXT         
+WDVRSN        0002A570  wdatrb        _TEXT         
+WID2UA        00034230  wdmid         _TEXT         
+WID2UD        000341E0  wdmid         _TEXT         
+WIDADD        00033E90  wdmid         _TEXT         
+WMSADI        00017780  utwdmf        _TEXT         
+WMSANG        00017550  utwdmf        _TEXT         
+WMSBCS        00016760  utwdt1        _TEXT         
+WMSBCV        000166F0  utwdt1        _TEXT         
+WMSBCX        00018C50  utwdmf        _TEXT         
+WMSBTR        000187E0  utwdmf        _TEXT         
+WMSFBC        00018D70  utwdmf        _TEXT         
+WMSGTE        000183C0  utwdmf        _TEXT         
+WMSGTO        00018A80  utwdmf        _TEXT         
+WMSIDP        00019110  utwdmf        _TEXT         
+WMSMNS        00016870  utwdt1        _TEXT         
+WMSMNV        000167F0  utwdt1        _TEXT         
+WMSP2S        00016A30  utwdt1        _TEXT         
+WMSP2V        000169A0  utwdt1        _TEXT         
+WMSPIS        00016970  utwdt1        _TEXT         
+WMSPIV        00016930  utwdt1        _TEXT         
+WMSPOS        000171D0  utwdt1        _TEXT         
+WMSPOV        00017130  utwdt1        _TEXT         
+WMSPTE        00017FB0  utwdmf        _TEXT         
+WMSQCK        000173C0  utwdmf        _TEXT         
+WMSSKB        00019280  utwdmf        _TEXT         
+WOPWDC        000172C0  utwdt1        _TEXT         
+WOPWDS        00017330  utwdt1        _TEXT         
+WSTGCL        00016FE0  utwdt1        _TEXT         
+WSTGSP        00017070  utwdt1        _TEXT         
+WTBCLN        0003EFA0  wdtble        _TEXT         
+WTBCOD        0003C9A0  wdtble        _TEXT         
+WTBDCD        0003D130  wdtble        _TEXT         
+WTBDCL        00016410  utwdt1        _TEXT         
+WTBDSP        000164B0  utwdt1        _TEXT         
+WTBGET        0003DFE0  wdtble        _TEXT         
+WTBICL        000162F0  utwdt1        _TEXT         
+WTBISP        00016330  utwdt1        _TEXT         
+WTBPUT        0003D8F0  wdtble        _TEXT         
+WTBSPA        0003C150  wdtble        _TEXT         
+WTBYFX        00036180  wdtms1        _TEXT         
+WTDATE        000309D0  wdtms2        _TEXT         
+WTDDEL        0002FB70  wdtms2        _TEXT         
+WTDSCU        0002ED20  wdtms2        _TEXT         
+WTDSPM        00035EE0  wdtms1        _TEXT         
+WTDSPX        00036580  wdtms1        _TEXT         
+WTEGRP        00030480  wdtms2        _TEXT         
+WTFNDG        00035BD0  wdtms1        _TEXT         
+WTFNDT        0002E2A0  wdtms2        _TEXT         
+WTGPCK        000393F0  wdtms1        _TEXT         
+WTGTNV        00038C50  wdtms1        _TEXT         
+WTGTVL        00037710  wdtms1        _TEXT         
+WTNWBK        0003A760  wdtms1        _TEXT         
+WTPMCK        000359D0  wdtms1        _TEXT         
+WTPTVL        000397D0  wdtms1        _TEXT         
+WTSCSC        00035980  wdtms1        _TEXT         
+WTSGRP        000306F0  wdtms2        _TEXT         
+WTSKVL        00036780  wdtms1        _TEXT         
+WTSKVX        000368C0  wdtms1        _TEXT         
+WUA2ID        00033FF0  wdmid         _TEXT         
+WUD2ID        00033F80  wdmid         _TEXT         
+ZIPC          00022F50  utchar        _TEXT         
+ZIPD          00024A60  utnumb        _TEXT         
+ZIPI          00024AE0  utnumb        _TEXT         
+ZIPR          00024B60  utnumb        _TEXT         
+ZLJUST        00022FF0  utchar        _TEXT         
+ZLNTXT        000233C0  utchar        _TEXT         
+ZTRIM         00023510  utchar        _TEXT         

@@ -1,0 +1,11 @@
+tsbufr.obj: ctsbuf.inc
+wdatrb.obj: fversn.inc cfbuff.inc cdrloc.inc
+wdbtch.obj:            cfbuff.inc cdrloc.inc
+wddlg.obj:             cfbuff.inc
+wdexpt.obj: ctblab.inc cfbuff.inc
+wdmid.obj:  cwdmid.inc
+wdsptm.obj:            cfbuff.inc
+wdtble.obj:            cfbuff.inc
+wdtms1.obj: cwtsds.inc cfbuff.inc
+wdtms2.obj:            cfbuff.inc
+wdtms3.obj: cwtsds.inc cfbuff.inc

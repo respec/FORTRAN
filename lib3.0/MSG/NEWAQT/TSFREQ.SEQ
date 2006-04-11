@@ -1,0 +1,159 @@
+DATE
+WDMSFL
+SYSTEM
+CLU           72    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  TSFREQ
+  END LABEL
+  DATA   CLU    72
+#GROUP    1  TYPE MENU
+$TITLE Select a Frequency option.
+$WINDOW Frequency (AF)
+$DEFAULT    1
+$LENGTH    8
+$OPTION Specs
+_DESC - for analysis
+_HELP
+Use this option to change indicate high or low flows, transformation
+function, and n-days for this frequency analysis.
+$OPTION Output
+_DESC - change defaults for parameters and options
+_HELP
+Use this option to change the name of the output file, select log 
+transformations, set period of record to analyze, and direct output
+to the screen and/or WDM file data-set attributes.
+$OPTION Analyze
+_DESC - perform Frequency analysis
+_HELP
+Select this option to perform the analysis as specified.
+$OPTION Return
+_DESC - to the Opening screen
+_HELP
+Choose Return when finished processing all data for a frequency analysis.
+#GROUP   10  TYPE PRM1
+$WINDOW Specs (AFS)
+$SCREEN
+
+  Specify high or low flows for analysis:
+       [@] High
+       [@] Low
+
+  Transformation Function  [@TRAN]
+  N-Day Flows              [@NDAY]
+
+
+
+$FIELD  @] High
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] Low
+_OFFON @] Low
+_HELP
+Toggle this option on to perform a frequency analysis on high flows.
+$FIELD  @] Low
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] High
+_OFFON @] High
+_HELP
+Toggle this option on to perform a frequency analysis on low flows.
+$FIELD  @TRAN
+_TYPE CHARACTER
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID  AVER,SUM,MAX,MIN
+_DEFAULT  MAX
+_HELP
+Transformation function to use for computing n-day flows.
+$FIELD  @NDAY
+_TYPE CHARACTER
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID  1,2,3,7,10,30,60,90,183,365
+_DEFAULT 1
+_HELP
+Number of days to use for computing n-day flows.
+$HELP
+Specify high or low flows, transformation function,
+and n-days for this analysis.
+#GROUP   12  TYPE TEXT
+$TEXT
+Processing input data-set number &
+$WINDOW Frequency (AFA)
+#GROUP   13  TYPE TEXT
+$TEXT
+Skipping & in analysis, year contains missing record.
+#GROUP   14  TYPE TEXT
+$TEXT
+Problem retrieving data from WDM file, return code is &.
+The data will be considered to be missing.
+#GROUP   15  TYPE TEXT
+$TEXT
+& years processed.
+#GROUP   20  TYPE PRM1
+$WINDOW Analyze (AFA)
+$SCREEN
+
+  Specify wdm file and data set number for output:
+      WDM [@WDM]      Data Set Number [@DSN.]
+
+  Scenario     [@SCENARI]
+  Location     [@LOCATIO]
+  Constituent  [@CONSTIT]
+
+
+
+$FIELD  @WDM
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?WDID
+_HELP
+ WDM file where output data will be stored.
+$FIELD @DSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:32000
+_HELP
+ Data set on which output data will be stored.
+$FIELD @SCENARI
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?SCENARI
+_HELP
+ Scenario ID for this data set.
+$FIELD @LOCATIO
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?LOCATIO
+_HELP
+ Location ID for this data set.
+$FIELD @CONSTIT
+_TYPE CHARACTER
+_HELP
+ Constituent ID for this data set.
+#GROUP   21  TYPE TEXT
+$WINDOW Analyze (AFA) Problem
+$TEXT
+Specified data set already exists, so unable to create this data set.
+
+Return to the analyze screen and enter a different data set.
+#GROUP   31  TYPE TEXT
+$WINDOW Graph (AGP) Problem
+$TEXT
+  Not enough data values exist in this data set to draw a frequency plot.
+
+  Using the 'Date' screen, expand the range of data to use.
+#GROUP   32  TYPE TEXT
+$WINDOW Graph (AGP) Problem
+$TEXT
+  The current data set is not the correct type for drawing
+  a frequency plot.  A data set containing n-day annual peaks
+  must be used.
+#GROUP   33  TYPE TEXT
+$WINDOW Graph (AGP) Problem
+$TEXT
+  Problem with frequency computations for this data set.
+  END DATA
+END CLU

@@ -1,0 +1,55 @@
+<html><head><title>OSVFL</title></head>
+<body>
+<a name="OSVFL"><hr size=7><h2>OSVFL</h2><hr size=7></a>
+ 
+<a name="OPERATION STATUS VECTOR FILE"><Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="OPERATION STATUS VECTOR FILE">
+</Object>
+<b>OPERATION STATUS VECTOR FILE</b>  
+
+<p>Function
+
+<p>This virtual file (stored in Common Block <a href="../CommonBlocks/COSVM.html">COSVM</a>) stores the OSVs (parameters, state variables, etc.) for those operations which are "asleep," so that they can start correctly when the time comes for them to "wake" (resume execution).  Access to this virtual file is through subroutines in code group <a href="../CodeGroups/HIOOSV.html">HIOOSV</a>.
+
+<p> Method of Operation 
+<ol>
+<li>Initially, it is written by the Run Interpreter, using default values, user_supplied values, and values derived from other user_supplied data.  
+
+<li>The OSV for a given operation is read into common SCRTCH whenever its associated Operating Module is called.  At the end of each INSPAN, the Operations Supervisor transfers the OSV back to the same location in <a href="../CommonBlocks/COSVM.html">COSVM</a> from which it came.  In this way the latest values of all state variables are saved for possible later use.  
+</ol>
+
+<p>Structure 
+
+<pre>
+1 OSVFL  
+ 
+ 2 Exgroup_data           Repeats for each EXGROUP in the run  
+ 
+  3 Ingroup_data          Repeats for each INGROUP in the EXGROUP  
+ 
+   4 Operation_OSV        Repeats for each operation in the INGROUP  
+ 
+    5 OSV_chunk      REC  A chunk of the OSV. An OSV is divided into chunks  
+       (NRECS)            (records) consisting of 500 4_byte words each. 
+                          For the exact arrangement of data within a chunk,  
+                          see the OSV documentation for the  
+                          Operating Module concerned.  
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="OSVFL">
+</Object>
+
+</body>
+</html>
+

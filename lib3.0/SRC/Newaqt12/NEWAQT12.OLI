@@ -1,0 +1,12 @@
+OBJS      = agmap.obj  damap.obj  grmap.obj  utmap.obj  \
+            wdmap.obj  utplot.obj prwplt.obj durbat.obj stsput.obj \
+            wsgutl.obj ucirea.obj uciwrt.obj hspsta.obj watinp.obj \
+            ucimod.obj wsgsim.obj utdir.obj  dspeci.obj sglabl.obj \
+            tsplot.obj utclas.obj sgdate.obj durani.obj wsgsys.obj \
+            sglist.obj sgtabl.obj mapseg.obj tsfreq.obj stspec.obj \
+            sturbn.obj hget.obj   utwin.obj  exsutl.obj ftabcr.obj \
+            scnutl.obj ucsupr.obj ftabat.obj mpsbat.obj ucibat.obj \
+            ucdoit.obj ucputm.obj ucgetm.obj ucirept.obj
+
+INCOTHER  = graph\pbfmax.inc  graph\ptsmax.inc  graph\cplotb.inc  \
+            aide\pmesfl.inc   waide\ctslst.inc

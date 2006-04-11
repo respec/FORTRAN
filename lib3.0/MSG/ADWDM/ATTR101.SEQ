@@ -1,0 +1,619 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  attributes 101 - 150
+END COMMENT
+DSN            7    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN     7
+#ATTRIBUTE  I24050    INDEX   101
+$TYPE     REAL
+$LENGTH   1
+$DESC     24-hour rainfall intensity, 50-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Precipitation intensity, 24-hour rainfall, in
+   inches, expected on the average once each 50
+   years.  Estimated from U.S. Weather Bureau
+   technical Paper 40 except for western states
+   where NOAA Atlas 2 exists).  Basin and streamflow
+   characteristic no 36, I24,50.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  I24100    INDEX   102
+$TYPE     REAL
+$LENGTH   1
+$DESC     24-hour rainfall intensity, 100-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Precipitation intensity, 24-hour rainfall, in
+   inches, expected on the average once each 100
+   years.  Estimated from U.S. Weather Bureau
+   technical Paper 40 except for western states
+   where NOAA Atlas 2 exists).  Basin and streamflow
+   characteristic no 37, I24,100.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  PRCOCT    INDEX   103
+$TYPE     REAL
+$LENGTH   1
+$DESC     October mean monthly precipitation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   October mean monthly precipitation, in inches.
+   Basin and streamflow characteristic no 41, PRC10.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCNOV    INDEX   104
+$TYPE     REAL
+$LENGTH   1
+$DESC     November mean monthly precipitation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   November mean monthly precipitation, in inches.
+   Basin and streamflow characteristic no 42, PRC11.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCDEC    INDEX   105
+$TYPE     REAL
+$LENGTH   1
+$DESC     December mean monthly precipitation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   December mean monthly precipitation, in inches.
+   Basin and streamflow characteristic no 43, PRC12.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCJAN    INDEX   106
+$TYPE     REAL
+$LENGTH   1
+$DESC     January mean monthly precipitation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   January mean monthly precipitation, in inches.
+   Basin and streamflow characteristic no 44, PRC12.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCFEB    INDEX   107
+$TYPE     REAL
+$LENGTH   1
+$DESC     February mean monthly precipitation, in inches
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   February mean monthly precipitation, in inches
+   Basin and streamflow characteristic no 45, PRC2.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCMAR    INDEX   108
+$TYPE     REAL
+$LENGTH   1
+$DESC     March mean monthly precipitation, in inches
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   March mean monthly precipitation, in inches
+   Basin and streamflow characteristic no 46, PR3.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCAPR    INDEX   109
+$TYPE     REAL
+$LENGTH   1
+$DESC     April mean monthly precipitation, in inches
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   April mean monthly precipitation, in inches
+   Basin and streamflow characteristic no 47, PR4.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCMAY    INDEX   110
+$TYPE     REAL
+$LENGTH   1
+$DESC     May mean monthly precipitation, in inches
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   May mean monthly precipitation, in inches
+   Basin and streamflow characteristic no 48, PRC5.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCJUN    INDEX   111
+$TYPE     REAL
+$LENGTH   1
+$DESC     June mean monthly precipitation, in inches
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   June mean monthly precipitation, in inches
+   Basin and streamflow characteristic no 49, PRC6.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCJUL    INDEX   112
+$TYPE     REAL
+$LENGTH   1
+$DESC     July mean monthly precipitation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   July mean monthly precipitation, in inches.
+   Basin and streamflow characteristic no 50, PRC7.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCAUG    INDEX   113
+$TYPE     REAL
+$LENGTH   1
+$DESC     August mean monthly precipitation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   August mean monthly precipitation, in inches.
+   Basin and streamflow characteristic no 51, PRC8.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PRCSEP    INDEX   114
+$TYPE     REAL
+$LENGTH   1
+$DESC     September mean monthly precipitation, in inches
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   September mean monthly precipitation, in inches
+   Basin and streamflow characteristic no 52, PRC9.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  SNOFAL    INDEX   115
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean annual snowfall, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean annual snowfall, in inches.  From U. S.
+   Weather Bureau, "Climates of States".  Basin
+   and streamflow characteristic no 53, SNOFALL.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  SNOMAR    INDEX   116
+$TYPE     REAL
+$LENGTH   1
+$DESC     March 1 mean water equivalent of snow cover.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean water equivalent, in inches, of snow cover as
+   of March 1.  From U. S. Weather Bureau, Technical
+   Paper 50.  Basin and streamflow characteristic no
+   54, SNOMAR.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  SNOAPR    INDEX   117
+$TYPE     REAL
+$LENGTH   1
+$DESC     April 30, mean water equivalent of snow cover.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean water equivalent, in inches, of snow cover as
+   of April 30.  From U. S. Weather Bureau, Technical
+   Paper 50.  Basin and streamflow characteristic no
+   55, SNOAPR.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  SN002     INDEX   118
+$TYPE     REAL
+$LENGTH   1
+$DESC     March 15 max water equiv, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Maximum water equivalent, in inches, of snow cover
+   as of March 15, 2-year recurrence interval.  From
+   U.S. Weather Bureau, Technical Paper 50.  Basin
+   and streamflow characteristic no 56, SN2.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  SN010     INDEX   119
+$TYPE     REAL
+$LENGTH   1
+$DESC      March 15 max water equiv, 10-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Maximum water equivalent, in inches, of snow cover
+   as of March 15, 10-year recurrence interval.  From
+   U.S. Weather Bureau, Technical Paper 50.  Basin
+   and streamflow characteristic no 57, SN10.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  SN025     INDEX   120
+$TYPE     REAL
+$LENGTH   1
+$DESC      March 15 max water equiv, 25-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Maximum water equivalent, in inches, of snow cover
+   as of March 15, 25-year recurrence interval.  From
+   U.S. Weather Bureau, Technical Paper 50.  Basin
+   and streamflow characteristic no 58, SN25.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  SN100     INDEX   121
+$TYPE     REAL
+$LENGTH   1
+$DESC     March 15 max water equiv, 100-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Maximum water equivalent, in inches, of snow cover
+   as of March 15, 100-year recurrence interval.  From
+   U.S. Weather Bureau, Technical Paper 50.  Basin
+   and streamflow characteristic no 59, SN100.  See
+   WATSTORE users manual, Appendix.
+#ATTRIBUTE  JANAVE    INDEX   122
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean temperature for January, in degrees F.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Mean monthly temperature for January, in degrees
+   F.  From U.S. Weather Bureau, "Climates of States".
+   Basin and streamflow characteristic no 61, JANAV.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  MARMAX    INDEX   123
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean maximum March temperature, in degrees F.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Mean maximum March temperature, in degrees F.
+   From U.S. Weather Bureau, "Climates of States".
+   Basin and streamflow characteristic no 62, MARMAX.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  JULMAX    INDEX   124
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean maximum July temperature, in degrees F.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Mean maximum July temperature, in degrees F.
+   From U.S. Weather Bureau, "Climates of States".
+   Basin and streamflow characteristic no 63, JULYMAX.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  JULAVE    INDEX   125
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean temperature for July, in degrees F.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    -999.000 : -999.000
+$DEFAULT  0.000E-01
+$HELP
+   Mean monthly temperature for July, in degrees F.
+   From U.S. Weather Bureau, "Climates of States".
+   Basin and streamflow characteristic no 64, JULYAV
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  WEMAR2    INDEX   126
+$TYPE     REAL
+$LENGTH   1
+$DESC     March snow cover water equiv, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Water equivalent, in inches, of snow cover as of
+   the first week in March, 2-year recurrence
+   interval.  Data compiled by the New Your District
+   USGS.  Basin and streamflow characteristic no 65,
+   WE MAR2.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  LKEVAP    INDEX   127
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean annual lake evaporation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean annual lake evaporation, in inches.
+   From U.S. Weather Bureau, Technical Paper 37.
+   Basin and streamflow characteristic no 70, EVAP.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  PNEVAP    INDEX   128
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean annual Class A pan evaporation, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean annual Class A pan evaporation, in inches.
+   From U.S. Weather Bureau, Technical Paper 37.
+   Basin and streamflow characteristic no 71, EVAPAN.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  FROST     INDEX   129
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean frost depth on February 28, in inches.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean frost depth on February 28, in inches.
+   From U.S. Weather Bureau, "Climates of States".
+   Basin and streamflow characteristic no 72, FROST.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QANN      INDEX   130
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean annual discharge, in cfs.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean annual discharge, in cubic feet per second,
+   from WATSTORE flow variability program W4422.
+   Basin and streamflow characteristic no 86, QA.
+   See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QSDANN    INDEX   131
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation of mean annual discharge.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation of mean annual discharge, in
+   cubic feet per second, from WATSTORE flow
+   variabliity program W4422.  Basin and streamflow
+   characteristic no 87, QSDANN.  See WATSTORE
+   users manual, Appendix.
+#ATTRIBUTE  QOCT      INDEX   132
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for October.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   October, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   88, Q10.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QNOV      INDEX   133
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for November.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   November, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   89, Q11.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QDEC      INDEX   134
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for December.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   December, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   90, Q12.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QJAN      INDEX   135
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for January.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   January, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   91, Q1.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QFEB      INDEX   136
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for February.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   February, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   92, Q2.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QMAR      INDEX   137
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for March.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   March, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   93, Q3.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QAPR      INDEX   138
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for April.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   April, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   94, Q4.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QMAY      INDEX   139
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for May.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   May, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   95, Q5.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QJUN      INDEX   140
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs for June.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   June, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   96, Q6.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QJUL      INDEX   141
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for July.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   July, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   97, Q7.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QAUG      INDEX   142
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for August.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   August, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   98, Q8.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QSEP      INDEX   143
+$TYPE     REAL
+$LENGTH   1
+$DESC     Mean discharge, in cfs, for September.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Mean discharge, in cubic feet per second, for
+   September, from WATSTORE flow variability program
+   W4422.  Basin and streamflow characteristic no
+   99, Q9.  See WATSTORE users manual, Appendix.
+#ATTRIBUTE  QSDOCT    INDEX   144
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discarge October.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for October.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 100, SDQ10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDNOV    INDEX   145
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge November.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for November.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 101, SDQ11.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDDEC    INDEX   146
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge December.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for December.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 102, SDQ12.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDJAN    INDEX   147
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge January.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for January.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 103, SDQ1.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDFEB    INDEX   148
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge February.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for February.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 104, SDQ2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDMAR    INDEX   149
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge March.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for March.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 105, SDQ3.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDAPR    INDEX   150
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge April
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for April.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 106, SDQ4.  See WATSTORE users
+   manual, Appendix.
+  END DATA
+END CLU

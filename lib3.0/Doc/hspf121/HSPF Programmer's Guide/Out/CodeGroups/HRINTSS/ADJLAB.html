@@ -1,0 +1,120 @@
+<html><head><title>ADJLAB</title></head>
+<body bgcolor="#ffffff">
+<a name="ADJLAB"><h3>ADJLAB</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4.html">CRIN4</a> 
+<p>Calls
+   WBUFF,
+   RBUFF
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE ADJLAB
+     I                 (YR)
+C     + + + PURPOSE + + +
+C     Adjust label of dataset as needed and transfer the
+C      updated label to the tss
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   YR
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     YR     - ???
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE   'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,ISTART
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  WBUFF,RBUFF
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     Input label-it may have been overwritten in tbuff
+C     By previous operations.
+C
+      CALL RBUFF(FREC,RECLT,TSSFL,TBUFF)
+      IF (AMODE .NE. 1) GO TO 60
+        IF (KEYS(YR-BASEYR) .NE. 0) GO TO 30
+          IF (YR .GE. LASTYR) GO TO 10
+C           add used to place data before any pre-existing data in
+C           the dataset. initialize as if dataset were empty
+            LASTYR= 0
+            VOYEAR= LBLSZ
+            GO TO 20
+ 10       CONTINUE
+C           add used to place data immediately after last year
+C           of data
+            VOYEAR= VOFRWD
+ 20       CONTINUE
+          GO TO 40
+ 30     CONTINUE
+C         add used to place data within pre-existing data
+          VOYEAR= KEYS(YR-BASEYR)
+ 40     CONTINUE
+C       erase keys information for overwritten pre-existing data
+        ISTART= YR- BASEYR+ 1
+        IF (ISTART .GT. 100) ISTART= 100
+        DO 50 I= ISTART,100
+          KEYS(I)= 0
+ 50     CONTINUE
+        GO TO 70
+ 60   CONTINUE
+        VOYEAR=VOFRWD
+ 70   CONTINUE
+C
+C     write updated label to tss
+      CALL WBUFF(FREC,RECLT,TSSFL,TBUFF)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="ADJLAB">
+</Object>
+
+</body>
+</html>
+

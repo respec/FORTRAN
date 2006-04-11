@@ -1,0 +1,448 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  Sequential file for tabling time-series data - goes with code in TSTABL.FOR
+END COMMENT 
+CLU           41    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  TSTABL
+  END LABEL   
+  DATA   CLU    41
+#GROUP    1  TYPE MENU
+$WINDOW Table (&T)
+$TITLE Select a timeseries Table option.
+$DEFAULT   1
+$LENGTH    8
+$OPTION File
+_DESC - specify output file for tables
+_HELP
+Use the File option to specify the file to which the tables will be output.
+The output file must be specified before tabling of data may be Executed.
+$OPTION Time
+_DESC - specify 1st and last months for columns and time period to table
+_HELP
+Use the Time option to specify the first and last months to use as table
+columns.  Also specify the period of record to table for each data set.
+$OPTION Define
+_DESC - characteristics of output table
+_HELP
+Use the Define option to specify precision of data values, any needed
+data transformations, and titles for the tables.
+$OPTION Execute
+_DESC - tabling of specified time-series data
+_HELP
+Use the Execute option to output the specified data in table form.
+$OPTION Return
+_DESC - to Timeseries screen
+_HELP
+Use the Return option to get back to the Timeseries menu.
+#GROUP    3  TYPE  TEXT
+$WINDOW Execute (&TE) Problem
+$TEXT
+Unable to output tables of time-series data as no file has
+been specified to which the tables are to be output.
+
+To specify a file, select the File option.
+#GROUP   10  TYPE  PRM1
+$WINDOW File (&TF)
+$SCREEN
+
+  Enter File for tables of daily values?
+
+  @FILE...........................................................
+$FIELD @FILE
+_TYPE CHARACTER
+$HELP
+All output tables produced for each data set selected will be stored
+in this file.
+#GROUP   20  TYPE  PRM1
+$WINDOW Time - 1 (&TT)
+$SCREEN
+
+  Specify table characteristics.
+
+    Month for 1st column          @M1
+    Month for last column         @M2
+
+    Period of data to table       @PERIOD.
+$FIELD @M1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+_HELP
+The output table will have days for rows and months for columns.
+Specify the month which is to be the leftmost column.
+$FIELD @M2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+_HELP
+The output table will have days for rows and months for columns.
+Specify the month which is to be the rightmost column.
+$FIELD @PERIOD
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID COMMON, CONSTANT, FULL, SPECIFY
+_HELP
+Use COMMON to have all data sets being tabled use a starting and ending
+date common to all data sets.  Use CONSTANT to have all data sets being
+tabled use a starting and ending date specified by the user.  Use FULL
+to table the full available period of data for each data set selected.
+Use SPECIFY to have the opportunity to specify a subset of the total
+available period of data for each data set for tabling.  SPECIFY also
+allows you to change the transformation code for data not stored as
+daily values.
+#GROUP   21  TYPE  TEXT
+$TEXT
+Earliest common starting date for data sets to be tabled:  &/&
+ Latest  common  ending  date for data sets to be tabled:  &/&
+#GROUP   22  TYPE  TEXT
+$TEXT
+Earliest available starting date for data sets to be tabled:  &/&
+ Latest  available  ending  date for data sets to be tabled:  &/&
+#GROUP   23  TYPE  PRM1
+$WINDOW Time - 2 (&TT)
+$SCREEN
+
+  Specify the period of data to be tabled:
+
+                 Year  Month
+    Start date   @YR1  @M1.
+    End date     @YR2  @M2.
+$FIELD @YR1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1492:9999
+$FIELD @M1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+$FIELD @YR2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1492:9999
+$FIELD @M2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+$HELP
+The default values displayed correspond to the common period of data
+available for the data sets to be tabled.  You may specify a subset of
+this period of data for tabling.
+#GROUP   24  TYPE  PRM1
+$WINDOW Time - 2 (&TT)
+$SCREEN
+
+  Specify the period of data to be tabled:
+
+                 Year  Month
+    Start date   @YR1  @M1.
+    End date     @YR2  @M2.
+$FIELD @YR1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1492:9999
+$FIELD @M1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+$FIELD @YR2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1492:9999
+$FIELD @M2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+$HELP
+The default values displayed correspond to the largest period of data
+available for the data sets to be tabled.  You may specify a subset of
+this period of data for tabling.
+#GROUP   25  TYPE  PRM2
+$WINDOW Time - 2 (&TT)
+$HEADER
+  Specify period of record to table for each data set.
+
+  Dataset      Starting Date      Ending Date     Transformation
+  Number        Year  Month       Year  Month          code
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH   5
+_COLUMN  4
+_PROTECT PROTECTED
+_HELP
+This field contains the numbers of the data sets to be tabled.
+This field may not be modified.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH   4
+_COLUMN  17
+_PROTECT CORRECT
+_RANGE 1492 : 9999
+_HELP
+The default values displayed correspond to the period of data available
+for this data set.  You may specify a subset of the full period of data
+for tabling.
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH   4
+_COLUMN  24
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+_HELP
+The default values displayed correspond to the period of data available
+for this data set.  You may specify a subset of the full period of data
+for tabling.
+$FIELD FIELD4
+_TYPE INTEGER
+_WIDTH   4
+_COLUMN  35
+_PROTECT CORRECT
+_RANGE 1492 : 9999
+_HELP
+The default values displayed correspond to the period of data available
+for this data set.  You may specify a subset of the full period of data
+for tabling.
+$FIELD FIELD5
+_TYPE CHARACTER
+_WIDTH   4
+_COLUMN  42
+_PROTECT CORRECT
+_VALID JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+_HELP
+The default values displayed correspond to the period of data available
+for this data set.  You may specify a subset of the full period of data
+for tabling.
+$FIELD FIELD6
+_TYPE CHARACTER
+_WIDTH   7
+_COLUMN  55
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_HELP
+RATE    - average or same
+TOTAL   - sum or divide
+MAXIMUM - maximum over the time step
+MINIMUM - minimum over the time step
+#GROUP   26  TYPE  TEXT
+$WINDOW Time (&TT) error in dates
+$TEXT
+Invalid period of data specified.  Reenter period to be tabled.
+#GROUP   27  TYPE  TEXT
+$WINDOW Time (&TT) error in dates
+$TEXT
+Start and/or end date specified falls outside available range of data.
+Respecify period of data to be tabled.
+#GROUP   28  TYPE  TEXT
+$WINDOW Time (&TT) error in dates
+$TEXT
+Start and/or end month specified does not fall within months requested
+as first and last columns in table.
+
+You will be returned to the previous screen to respecify the period
+of data to be tabled.  You may use the 'Previous' command at that
+point to return to the table characteristics screen if you would like
+to modify the starting and ending month for the table.
+#GROUP   31  TYPE  PRM2
+$WINDOW Define (&TD)
+$HEADER
+Dataset Signif Deciml Bad val
+Number  Digits Places   code   Title, indicating type of data
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH   5
+_COLUMN  2
+_PROTECT PROTECTED
+_RANGE   1 : 32000
+_HELP
+This field contains the numbers of the data sets to be tabled.
+This field may not be modified.
+$FIELD FIELD2
+_TYPE INTEGER
+_WIDTH   2
+_COLUMN  11
+_PROTECT CORRECT
+_RANGE   1 : 8
+_DEFAULT 5
+_HELP
+Specify the number of significant digits of the daily values to be displayed.
+Examples:     23000. has 2 significant digits
+              227.16 has 5 significant digits
+              23.30 has 3 significant digits
+$FIELD FIELD3
+_TYPE INTEGER
+_WIDTH   2
+_COLUMN 18
+_PROTECT CORRECT
+_RANGE   0 : 7
+_DEFAULT 2
+_HELP
+Specify the number of decimal places to be displayed for the daily values.
+$FIELD FIELD4
+_TYPE REAL       
+_WIDTH   8
+_COLUMN  22
+_PROTECT CORRECT
+_RANGE  -999. : 999.                     
+_HELP
+If the value indicated here is the same as a data value, a "-" will be
+placed in the output table. The default is the TSFILL attribute value
+for the data set and defaults to 0.0.  If 0.0 is to be shown on the 
+output table, the bad value code should be a large negative number.
+$FIELD FIELD5
+_TYPE CHARACTER
+_WIDTH  48
+_COLUMN 31
+_HELP
+This line will be the portion of the table header which indicates the type
+and units of the data in the table (e.g. PRECIPITATION, IN INCHES).
+#GROUP   46  TYPE  TEXT
+$WINDOW Execute (&TE) error
+$TEXT
+Problem in retrieving &-month period of data
+ending in & from data set &.
+#GROUP   47  TYPE  TEXT
+$WINDOW Execute (&TE)
+$TEXT
+Tabling &-month period ending in &.
+#GROUP   51  TYPE  TEXT
+$TEXT
+January
+#GROUP   52  TYPE  TEXT
+$TEXT
+February
+#GROUP   53  TYPE  TEXT
+$TEXT
+March
+#GROUP   54  TYPE  TEXT
+$TEXT
+April
+#GROUP   55  TYPE  TEXT
+$TEXT
+May
+#GROUP   56  TYPE  TEXT
+$TEXT
+June
+#GROUP   57  TYPE  TEXT
+$TEXT
+July
+#GROUP   58  TYPE  TEXT
+$TEXT
+August
+#GROUP   59  TYPE  TEXT
+$TEXT
+September
+#GROUP   60  TYPE  TEXT
+$TEXT
+October
+#GROUP   61  TYPE  TEXT
+$TEXT
+November
+#GROUP   62  TYPE  TEXT
+$TEXT
+December
+#GROUP   63  TYPE  TEXT
+$TEXT
+Station number
+#GROUP   67  TYPE  TEXT
+$TEXT
+Drainage area
+#GROUP   68  TYPE  TEXT
+$TEXT
+Total
+#GROUP   69  TYPE  TEXT
+$TEXT
+Mean
+#GROUP   70  TYPE  TEXT
+$TEXT
+Minimum
+#GROUP   71  TYPE  TEXT
+$TEXT
+Maximum
+#GROUP   72  TYPE  TEXT
+$TEXT
+Inches
+#GROUP  101  TYPE  TEXT
+$TEXT
+X-sect location, feet from R bank looking upstrm
+#GROUP  102  TYPE  TEXT
+$TEXT
+X-sect location, percent from R bank look upstrm
+#GROUP  103  TYPE  TEXT
+$TEXT
+Sampling depth, in feet
+#GROUP  104  TYPE  TEXT
+$TEXT
+Stream width, in feet
+#GROUP  105  TYPE  TEXT
+$TEXT
+X-sect location, vertical (percent total depth)
+#GROUP  106  TYPE  TEXT
+$TEXT
+X-sect location, feet from L bank look downstrm
+#GROUP  107  TYPE  TEXT
+$TEXT
+Temperature, water (deg. C)
+#GROUP  108  TYPE  TEXT
+$TEXT
+Temperature, evaportaion, 48 in. pan (deg. C)
+#GROUP  109  TYPE  TEXT
+$TEXT
+Temperature, evaportaion, 24 in. pan (deg. C)
+#GROUP  110  TYPE  TEXT
+$TEXT
+Temperature, wet bulb (deg. C)
+#GROUP  111  TYPE  TEXT
+$TEXT
+Temperature, air (deg. C)
+#GROUP  112  TYPE  TEXT
+$TEXT
+Barometric pressure (mm of hg)
+#GROUP  113  TYPE  TEXT
+$TEXT
+Solar radiation, incident, intens (cal/cm2/day)
+#GROUP  114  TYPE  TEXT
+$TEXT
+Wind speed (mph)
+#GROUP  115  TYPE  TEXT
+$TEXT
+Wind direction, degrees from true N (clockwise)
+#GROUP  116  TYPE  TEXT
+$TEXT
+Rainfall, accumulated (inches)
+#GROUP  117  TYPE  TEXT
+$TEXT
+Evaporation, total (inches per day)
+#GROUP  118  TYPE  TEXT
+$TEXT
+Humidity, relative (percent)
+#GROUP  119  TYPE  TEXT
+$TEXT
+Reservoir storage (ac-ft)
+#GROUP  120  TYPE  TEXT
+$TEXT
+Stream velocity (feet per second)
+#GROUP  121  TYPE  TEXT
+$TEXT
+Discharge, in cubic feet per second
+#GROUP  122  TYPE  TEXT
+$TEXT
+Gage height, (feet above datum)
+#GROUP  123  TYPE  TEXT
+$TEXT
+(jtu)
+#GROUP  124  TYPE  TEXT
+$TEXT
+(ntu)
+#GROUP  125  TYPE  TEXT
+$TEXT
+(platinum-cobalt units)
+#GROUP  126  TYPE  TEXT
+$TEXT
+Oxidation reduction potential (millivolts)
+#GROUP  127  TYPE  TEXT
+$TEXT
+Specific conductance, micro siemens/cm, 25 deg C
+  END DATA
+END CLU

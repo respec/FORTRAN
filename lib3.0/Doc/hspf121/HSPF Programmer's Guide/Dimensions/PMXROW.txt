@@ -1,0 +1,13 @@
+<p>Referenced by 
+  <a href="../CommonBlocks/CRIN3">CRIN3</a>,
+  <a href="../CommonBlocks/CRIN4">CRIN4</a>
+<p>Code
+<pre>
+C     maximum number of inpad rows
+C
+C     + + + PARAMETERS + + +
+      INTEGER        MXROW
+      PARAMETER     (MXROW=4000)
+</pre>
+
+

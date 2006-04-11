@@ -1,0 +1,34 @@
+<html><head><title>CPEST</title></head>
+<body>
+<a name="CPEST"><hr size=7><h2>CPEST</h2><hr size=7></a>
+ 
+<p>Includes 
+   <a href="../Dimensions/PMXPST.html">PMXPST</a>
+<p>Referenced by 
+   <a href="../CodeGroups/HPESTUT/SETPST.html">SETPST</a>,
+   <a href="../CodeGroups/HPESTUT/GETVEC.html">GETVEC</a>
+<p>Code
+<pre>
+C
+C     information from pest supplemental file
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxpst.inc'
+C
+      COMMON/CPEST/ USED,NUM,        ID,       
+     $              SUPVAR
+      INTEGER       USED,NUM(MAXVEC),ID(MAXVEC)
+      REAL          SUPVAR(MAXNUM,MAXVEC)
+C
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="CPEST">
+</Object>
+
+</body>
+</html>
+

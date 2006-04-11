@@ -1,0 +1,73 @@
+<html><head><title>FNDGAP</title></head>
+<body bgcolor="#ffffff">
+<a name="FNDGAP"><h3>FNDGAP</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+
+<p>Calls
+   YROFF
+<p>Code
+<pre>
+C
+C     3.5.8.2.3.5
+C
+      SUBROUTINE FNDGAP
+     I                 (ENDR,DELTAT,TGAP)
+C
+C     + + + PURPOSE + + +
+C     Compute the number of intervals in any gap at end of
+C     a year
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   ENDR(5),DELTAT,TGAP
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     ENDR   - ???
+C     DELTAT - time step in minutes for source/target
+C     TGAP   - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   REND,TEMP(5),YEND
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  YROFF
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     compute minute for date time in endr
+C
+      CALL YROFF(ENDR,REND)
+C
+C     compute minute of end of year
+C
+      TEMP(1) = ENDR(1)
+      TEMP(2) = 12
+      TEMP(3) = 31
+      TEMP(4) = 24
+      TEMP(5) = 60
+      CALL YROFF(TEMP,YEND)
+C
+      TGAP = (YEND-REND+DELTAT-1)/DELTAT
+C
+      RETURN
+      END
+</pre>
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="FNDGAP">
+</Object>
+
+</body>
+</html>
+

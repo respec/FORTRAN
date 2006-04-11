@@ -1,0 +1,304 @@
+<pre>
+RUN
+ 
+GLOBAL
+  UCI Created by WinHSPF for westpat
+  START       1985/10/01 00:00  END    1989/04/30 24:00
+  RUN INTERP OUTPT LEVELS   10    0
+  RESUME     0 RUN     1                          UNITS    1
+END GLOBAL
+ 
+FILES
+&lt;FILE&gt;  &lt;UN#&gt;***&lt;----FILE NAME-------------------------------------------------&gt;
+MESSU      24   simple.ech
+           91   simple.out
+WDM        26   ..\sediment.wdm
+END FILES
+ 
+OPN SEQUENCE
+    INGRP              INDELT 01:00
+      PERLND     101
+      RCHRES       1
+    END INGRP
+END OPN SEQUENCE
+ 
+PERLND
+  ACTIVITY
+*** &lt;PLS &gt;               Active Sections                               ***
+*** x -  x ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC ***
+  101         0    0    1    1    0    0    0    0    0    0    0    0
+  END ACTIVITY
+
+  PRINT-INFO
+*** &lt; PLS&gt;                       Print-flags                           PIVL  PYR
+*** x  - x ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC
+  101         4    4    5    4    4    4    4    4    4    4    4    4    1    9
+  END PRINT-INFO
+
+  GEN-INFO
+***             Name                  Unit-systems   Printer BinaryOut
+*** &lt;PLS &gt;                                t-series Engl Metr Engl Metr
+*** x -  x                                 in  out
+  101     Forest Land                       1    1    0    0    0    0
+  END GEN-INFO
+
+  PWAT-PARM1
+*** &lt;PLS &gt;                   Flags
+*** x -  x CSNO RTOP UZFG  VCS  VUZ  VNN VIFW VIRC  VLE IFFC  HWT IRRG IFRD
+  101         0    1    1    1    0    0    0    0    1    1    0    0    0
+  END PWAT-PARM1
+
+  PWAT-PARM2
+*** &lt; PLS&gt;    FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+*** x  - x                (in)   (in/hr)      (ft)              (1/in)   (1/day)
+  101             0.        7.      0.04      300.    0.0351        0.      0.99
+  END PWAT-PARM2
+
+  PWAT-PARM3
+*** &lt; PLS&gt;    PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+*** x  - x   (deg F)   (deg F)
+  101            40.       35.        2.        2.        0.      0.02        0.
+  END PWAT-PARM3
+
+  PWAT-PARM4
+*** &lt;PLS &gt;     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+*** x -  x      (in)      (in)                       (1/day)
+  101             0.       1.2      0.35        2.      0.85        0.
+  END PWAT-PARM4
+
+  PWAT-STATE1
+*** &lt; PLS&gt;  PWATER state variables (in)
+*** x  - x      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+  101             0.        0.       1.5        0.       7.5        1.        0.
+  END PWAT-STATE1
+
+  MON-INTERCEP
+*** &lt;PLS &gt;  Interception storage capacity at start of each month (in)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.06 0.06 0.06  0.1 0.16 0.16 0.16 0.16 0.16  0.1 0.06 0.06
+  END MON-INTERCEP
+
+  MON-UZSN
+*** &lt;PLS &gt;  Upper zone storage at start of each month  (inches)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01
+  END MON-UZSN
+
+  MON-MANNING
+*** &lt;PLS &gt;  Manning's n at start of each month
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01
+  END MON-MANNING
+
+  MON-LZETPARM
+*** &lt;PLS &gt;  Lower zone evapotransp   parm at start of each month
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101       0.3  0.3  0.3  0.4  0.7  0.7  0.7  0.7  0.6  0.5  0.4  0.3
+  END MON-LZETPARM
+
+  SED-PARM1
+*** &lt;PLS &gt;  Sediment parameters 1
+*** x -  x  CRV VSIV SDOP
+  101         1    0    1
+  END SED-PARM1
+
+  SED-PARM2
+*** &lt;PLS &gt;      SMPF      KRER      JRER     AFFIX     COVER      NVSI
+*** x -  x                                  (/day)           lb/ac-day
+  101              1     0.325         2     0.002      0.88         2
+  END SED-PARM2
+
+  SED-PARM3
+*** &lt;PLS &gt;  Sediment parameter 3
+*** x -  x      KSER      JSER      KGER      JGER
+  101              5         2         0         1
+  END SED-PARM3
+
+  MON-COVER
+*** &lt;PLS &gt;  Monthly values for erosion related cover
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.97 0.97 0.97 0.97 0.97 0.97 0.97 0.97 0.97 0.97 0.97 0.97
+  END MON-COVER
+
+  SED-STOR
+*** &lt;PLS &gt;  Detached sediment storage (tons/acre)
+*** x -  x      DETS
+  101            0.1
+  END SED-STOR
+
+END PERLND
+  
+RCHRES
+  ACTIVITY
+*** RCHRES  Active sections
+*** x -  x HYFG ADFG CNFG HTFG SDFG GQFG OXFG NUFG PKFG PHFG
+    1         1    1    0    0    1    0    0    0    0    0
+  END ACTIVITY
+
+  PRINT-INFO
+*** RCHRES  Printout level flags
+*** x -  x HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB PIVL  PYR
+    1         4    4    4    4    4    4    4    4    4    4    1    9
+  END PRINT-INFO
+
+  GEN-INFO
+***              Name        Nexits   Unit Systems   Printer
+*** RCHRES                               t-series  Engl Metr LKFG
+*** x -  x                                 in  out
+    1     Western Branch Patux    1         1    1   91    0    0    0    0
+  END GEN-INFO
+
+  HYDR-PARM1
+***         Flags for HYDR section
+***RC HRES  VC A1 A2 A3  ODFVFG for each *** ODGTFG for each     FUNCT  for each
+*** x  - x  FG FG FG FG  possible   exit *** possible   exit     possible   exit
+    1        0  1  1  1    4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+  END HYDR-PARM1
+
+  HYDR-PARM2
+*** RCHRES FTBW FTBU       LEN     DELTH     STCOR        KS      DB50
+*** x -  x             (miles)      (ft)      (ft)                (in)
+    1        0.   1.      9.66       56.        0.       0.5      0.01
+  END HYDR-PARM2
+
+  HYDR-INIT
+***         Initial conditions for HYDR section
+***RC HRES       VOL  CAT Initial value  of COLIND     initial  value  of OUTDGT
+*** x  - x     ac-ft      for each possible   exit  for each possible exit,ft3
+    1            10.        4.   4.   4.   4.   4.        0.   0.   0.   0.   0.
+  END HYDR-INIT
+
+  SANDFG
+*** RCHRES
+*** x -  x SNDFG
+    1         3
+  END SANDFG
+
+  SED-GENPARM
+*** RCHRES    BEDWID    BEDWRN       POR
+*** x -  x      (ft)      (ft)
+    1             30         6       0.5
+  END SED-GENPARM
+
+  SAND-PM
+*** RCHRES         D         W       RHO     KSAND    EXPSND
+*** x -  x      (in)  (in/sec)  (gm/cm3)
+    1          0.005      0.02       2.5       0.1         2
+  END SAND-PM
+
+  SILT-CLAY-PM
+*** RCHRES         D         W       RHO     TAUCD     TAUCS         M
+*** x -  x      (in)  (in/sec)    gm/cm3    lb/ft2    lb/ft2  lb/ft2.d
+    1         0.0004    0.0003       2.2       0.1       0.3      0.01
+  END SILT-CLAY-PM
+
+  SILT-CLAY-PM
+*** RCHRES         D         W       RHO     TAUCD     TAUCS         M
+*** x -  x      (in)  (in/sec)    gm/cm3    lb/ft2    lb/ft2  lb/ft2.d
+    1         0.0001   0.00001         2       0.1       0.3      0.01
+  END SILT-CLAY-PM
+
+  SSED-INIT
+*** RCHRES     Suspended sed concs (mg/l)
+*** x -  x      Sand      Silt      Clay
+    1              5        25        25
+  END SSED-INIT
+
+  BED-INIT
+*** RCHRES    BEDDEP  Initial bed composition
+*** x -  x      (ft)      Sand      Silt      Clay
+    1              2       0.8       0.1       0.1
+  END BED-INIT
+
+END RCHRES
+ 
+FTABLES
+ 
+  FTABLE      1
+ rows cols                               ***
+   18    4
+     depth      area    volume  outflow1 ***
+        0.        0.        0.        0.
+      0.32      8.92      1.85      1.56
+      0.65     13.82      5.74      7.66
+      0.97      18.6     11.24     19.21
+       1.3     21.52     18.08     38.37
+      1.62     23.34     25.56     64.41
+      1.94     25.06     33.36      95.4
+      2.27     26.77     41.48    130.86
+      2.59     28.47     49.92    170.48
+      2.91     30.17     58.68    214.12
+      3.24     31.39     67.74    264.18
+      3.56     32.61      77.1    318.73
+      3.89     33.83     86.76    377.73
+      7.14    554.16   1624.22   4434.47
+     10.39    601.94   3607.08   14282.1
+     13.65    644.67   5727.08   28439.7
+      16.9    713.73   8031.52   45656.9
+     20.16    809.37   10624.5   65738.6
+  END FTABLE  1
+ 
+END FTABLES
+  
+<a name="L1">EXT SOURCES
+&lt;-Volume-&gt; &lt;Member&gt; SsysSgap&lt;--Mult--&gt;Tran &lt;-Target vols&gt; &lt;-Grp&gt; &lt;-Member-&gt; ***
+&lt;Name&gt;   x &lt;Name&gt; x tem strg&lt;-factor-&gt;strg &lt;Name&gt;   x   x        &lt;Name&gt; x x ***
+*** Met Seg UPMARLBR,PI:PETINP=0.8
+WDM    105 HPCP     ENGL                   PERLND 101     EXTNL  PREC  
+WDM    122 ATMP     ENGL                   PERLND 101     EXTNL  GATMP 
+WDM    151 DEWP     ENGL              SAME PERLND 101     EXTNL  DTMPG 
+WDM    141 WIND     ENGL              SAME PERLND 101     EXTNL  WINMOV
+WDM    161 SOLR     ENGL              SAME PERLND 101     EXTNL  SOLRAD
+WDM    111 EVAP     ENGL           0.8DIV  PERLND 101     EXTNL  PETINP
+*** Met Seg UPMARLBR,PI:PETINP=0.8
+WDM    105 HPCP     ENGL                   RCHRES   1     EXTNL  PREC  
+WDM    122 ATMP     ENGL                   RCHRES   1     EXTNL  GATMP 
+WDM    151 DEWP     ENGL              SAME RCHRES   1     EXTNL  DEWTMP
+WDM    141 WIND     ENGL              SAME RCHRES   1     EXTNL  WIND  
+WDM    161 SOLR     ENGL              SAME RCHRES   1     EXTNL  SOLRAD
+WDM    131 CLDC     ENGL              SAME RCHRES   1     EXTNL  CLOUD 
+WDM    111 EVAP     ENGL           0.8DIV  RCHRES   1     EXTNL  POTEV 
+END EXT SOURCES
+ 
+<a name="L2">SCHEMATIC
+&lt;-Volume-&gt;                  &lt;--Area--&gt;     &lt;-Volume-&gt;  &lt;ML#&gt; ***       &lt;sb&gt;
+&lt;Name&gt;   x                  &lt;-factor-&gt;     &lt;Name&gt;   x        ***        x x
+PERLND 101                        5785     RCHRES   1      2
+PERLND 102                        2830     RCHRES   1      2
+PERLND 103                        6255     RCHRES   1      2
+PERLND 104                         382     RCHRES   1      2
+END SCHEMATIC
+ 
+EXT TARGETS
+&lt;-Volume-&gt; &lt;-Grp&gt; &lt;-Member-&gt;&lt;--Mult--&gt;Tran &lt;-Volume-&gt; &lt;Member&gt; Tsys Aggr Amd ***
+&lt;Name&gt;   x        &lt;Name&gt; x x&lt;-factor-&gt;strg &lt;Name&gt;   x &lt;Name&gt;qf  tem strg strg***
+PERLND 101 SEDMNT SOSED  1 1          SUM  WDM1  1001 SOSED  1 ENGL AGGR REPL
+PERLND 101 SEDMNT DETS   1 1          AVER WDM1  1007 DETS   1 ENGL AGGR REPL
+END EXT TARGETS
+ 
+<a name="L3">MASS-LINK
+ 
+  MASS-LINK        2
+&lt;-Volume-&gt; &lt;-Grp&gt; &lt;-Member-&gt;&lt;--Mult--&gt;     &lt;-Target vols&gt; &lt;-Grp&gt; &lt;-Member-&gt;  ***
+&lt;Name&gt;            &lt;Name&gt; x x&lt;-factor-&gt;     &lt;Name&gt;                &lt;Name&gt; x x  ***
+PERLND     PWATER PERO       0.0833333     RCHRES         INFLOW IVOL    
+PERLND     SEDMNT SOSED  1        0.05     RCHRES         INFLOW ISED   1
+PERLND     SEDMNT SOSED  1         0.7     RCHRES         INFLOW ISED   2
+PERLND     SEDMNT SOSED  1        0.25     RCHRES         INFLOW ISED   3
+  END MASS-LINK    2
+ 
+END MASS-LINK
+ 
+SPEC-ACTIONS
+  &lt;oper&gt;&lt;f&gt;&lt;-l&gt; *** &lt;yr&gt;&lt;m&gt;&lt;d&gt;&lt;h&gt;&lt;n&gt;dstp  &lt;vari&gt;&lt;1&gt;&lt;2&gt;&lt;3&gt;&lt;a&gt;&lt;-value--&gt; tc tst nu
+  PERLND101         1986  1  1  0  0   3  INFILT  0  0  0  1     0.045
+  PERLND101         1986  3  1  0  0   3  INFILT  0  0  0  1     0.060 YR   1  5
+  PERLND101         1986 12  1  0  0   3  INFILT  0  0  0  1     0.045 YR   1  5
+END SPEC-ACTIONS
+ 
+END RUN
+</pre>
+
+
+
+

@@ -1,0 +1,250 @@
+<html><head><title>SEQINP</title></head>
+<body bgcolor="#ffffff">
+<a name="SEQINP"><h3>SEQINP</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSGQ.html">HRUNTSGQ</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CMPAD.html">CMPAD</a> and 
+   <a href="../../CommonBlocks/GETCOM-PUTCOM.html">GETCOM-PUTCOM</a>
+   (built from sections 
+   <a href="../../CommonBlocks/CTSIN.html">CTSIN</a>,
+   <a href="../../CommonBlocks/CTSEX.html">CTSEX</a>,
+   <a href="../../CommonBlocks/CTSER.html">CTSER</a>,
+   <a href="../../CommonBlocks/CTSBU.html">CTSBU</a>,
+   <a href="../../CommonBlocks/CTSBX.html">CTSBX</a>) 
+<p>Calls
+   OMSTD,
+   OMSG,
+   OMSTI,
+   <a href="../HRUNTSUT/INMOD.html">INMOD</a>,
+   LPYEAR,
+   <a href="../HRUNTSUT/LTRAN.html">LTRAN</a>
+   <a href="../HDATUT/FDATIM.html">FDATIM</a>
+<p>Code
+<pre>
+C
+C     4.1.2.1
+C
+      SUBROUTINE SEQINP
+     I                  (DELT,INPEND,SUBNAM,   INPTIM)
+C
+C     + + + PURPOSE + + +
+C     Read a sequential file using proper format,
+C     and fill an inpad row
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     DELT,INPEND,INPTIM
+      EXTERNAL    SUBNAM
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DELT   - simulation time interval in minutes
+C     INPEND - ???
+C     SUBNAM - ???
+C     INPTIM - points to the end of the interval containing the mean
+C              value being transferred.
+C
+C     + + + COMMON BLOCKS- SCRTCH, VERSION GETCOM + + +
+      INCLUDE     'ctsin.inc'
+      INCLUDE     'ctsex.inc'
+      INCLUDE     'ctser.inc'
+      INCLUDE     'ctsbu.inc'
+      INCLUDE     'ctsbx.inc'
+      INCLUDE     'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     CRDCNT,ENDMIN,I1,MAXCNT,MIN,NPTS,SCLU,SGRP,DATIM(5)
+      REAL        CRDVAL(545),TLOC(12)
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CRDVAL(1),TBUFF(1))
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  OMSTD,OMSG,OMSTI,INMOD,LPYEAR,LTRAN,FDATIM
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' ENTERING SEQINP')
+ 2010 FORMAT (3X,'FMTCLS=',I6,3X,'INPEND=',I12)
+ 2030 FORMAT (3X,'CRDCNT=',I6,3X,'NPTS=',I6,3X,
+     $        'INPTIM=',I12, 3X, 'VALUE PLACED ON INPAD=',E16.7)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 232
+      I1   = 1
+      IF (TESTFG .GE. 1) WRITE (MESSU,2000)
+      IF (TESTFG .GE. 2) WRITE (MESSU,2010) FMTCLS,INPEND
+C
+C     Npts is the offset from vopadr at which values
+C     are placed in the inpad.  npts=1 for mean
+C     value data and npts=0 for point value data.
+C     mean value data is currently supported.
+C
+      NPTS=1
+C
+C     Call subroutine that reads a card or record with the proper
+C     Format and returns min, endmin, crdval(*), and maxcnt.
+      CALL SUBNAM (ENDMIN,MAXCNT,MIN,TLOC)
+C
+C     Crdcnt points to a data value in crdval
+      CRDCNT= 1
+C
+C     Do until inptim> inpend or inptim > tendr
+ 50   CONTINUE
+        IF(MIN .LE. ENDMIN) GO TO 60
+C         read next card and return min, endmin, crdval(*) and maxcnt
+          CALL SUBNAM (ENDMIN,MAXCNT,MIN,TLOC)
+C
+          CRDCNT= 1
+ 60     CONTINUE
+C
+        IF(MIN .GE. INPTIM) GO TO 140
+C         check if time needed is on this card
+C         whiledo endmin< inptim
+ 80       CONTINUE
+          IF (ENDMIN .GE. INPTIM) GO TO 100
+C           read next card and return min, endmin, crdval(*) and maxcnt
+            CALL SUBNAM (ENDMIN,MAXCNT,MIN,TLOC)
+C
+            CRDCNT= 1
+            GO TO 80
+C         enddo
+ 100      CONTINUE
+C
+C         check if present card has inptim
+          IF ((MIN .GT. INPTIM) .OR. (INPTIM .GT. ENDMIN)) GO TO 120
+C            get value and time on card that is at inptim
+            CRDCNT= (INPTIM- MIN)/DELTAT+ 1
+            MIN   = INPTIM
+ 120     CONTINUE
+ 140    CONTINUE
+C
+        IF(MIN.LE. INPTIM) GO TO 260
+C         fill gaps with zero or undefined values
+          IF (GAPVAL .LE. UNDEF) GO TO 200
+C           set suitfg off except for first mean value
+            IF (STKIND(1) .NE. 1) GO TO 160
+              SUITFG= 0
+              GO TO 180
+ 160        CONTINUE
+C             mean data on inpad
+              IF (INPSTR .NE. INPTIM) SUITFG=0
+ 180        CONTINUE
+ 200      CONTINUE
+C
+C         do until inptim> or = min or inptim> inpend or inptim> tendr
+ 220      CONTINUE
+C           place gapval on inpad at inptim
+            XVAR(1)= GAPVAL
+            NPTS   = NPTS+ 1
+            CALL <a href="../HRUNTSUT/INMOD.html">INMOD</a> (NPTS)
+            INPTIM = INPTIM+ DELT
+C
+C           check for crossing year end boundary
+            IF (INPTIM .LE. TYREND) GO TO 235
+              YEAR= YEAR+ 1
+C             set lpyrfg for this new year
+              CALL LPYEAR (YEAR,      LPYRFG)
+              IF (LPYRFG .EQ. 0) GO TO 225
+                TYREND= 527040+ TYREND
+                GO TO 230
+ 225          CONTINUE
+                TYREND= 525600+ TYREND
+ 230          CONTINUE
+ 235        CONTINUE
+            IF (INPTIM .LT. MIN .AND. INPTIM .LE. INPEND .AND.
+     $        INPTIM .LE. TENDR) GO TO 220
+C
+C         enddo
+          GO TO 300
+C
+ 260    CONTINUE
+C
+C         min= inptim
+C         check that crdcnt never exceeds allowable size for number
+C         of values read in this format
+          IF (CRDCNT .LE. MAXCNT) GO TO 280
+            CALL <a href="../HDATUT/FDATIM.html">FDATIM</a> (INPTIM,YEAR,TYREND,DATIM)
+            CALL OMSTD (DATIM)
+            CALL OMSTI (FILE)
+            CALL OMSTI (MAXCNT)
+            CALL OMSTI (CRDCNT)
+            CALL OMSTI (FILE)
+            SGRP = 13
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 KNT)
+ 280      CONTINUE
+C
+          XVAR(1)= CRDVAL(CRDCNT)
+C         perform linear transformation
+          IF (LTRNFG .EQ. 1) CALL LTRAN (I1,A,B,   XVAR)
+C
+          NPTS= NPTS+ 1
+C         insert on inpad
+          CALL <a href="../HRUNTSUT/INMOD.html">INMOD</a> (NPTS)
+C
+          INPTIM= INPTIM+ DELT
+C
+C         check for crossing year end boundary
+          IF (INPTIM .LE. TYREND) GO TO 295
+            YEAR= YEAR+ 1
+C           set lpyrfg for this new year
+            CALL LPYEAR (YEAR,      LPYRFG)
+            IF (LPYRFG .EQ. 0) GO TO 285
+              TYREND= 527040+ TYREND
+              GO TO 290
+ 285        CONTINUE
+              TYREND= 525600+ TYREND
+ 290        CONTINUE
+ 295      CONTINUE
+C
+          CRDCNT= CRDCNT+ 1
+          MIN   = MIN+ DELTAT
+ 300    CONTINUE
+C
+        IF (TESTFG.GE.2) WRITE(MESSU,2030) CRDCNT,NPTS,INPTIM,XVAR(1)
+C
+        IF (INPTIM.LE.INPEND .AND. INPTIM.LE.TENDR) GO TO 50
+C
+C     Enddo
+C
+C     If all values on present card not used, backspace to reread
+C     This card
+      IF (ENDMIN .LT. INPEND) GO TO 370
+        BACKSPACE FILE
+C       reset checking for sequential input
+        CRDNO = -1
+ 370  CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="SEQINP">
+</Object>
+
+</body>
+</html>
+

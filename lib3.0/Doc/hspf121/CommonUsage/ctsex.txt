@@ -1,0 +1,61 @@
+D:\lib3.0\SRC\HSPF121\CTSEX.INC   (1 KB,  4/22/1996 11:55:40 AM)
+1	C    FROM CTSEX.COM
+3	C     FROM CTSEXT
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGP.FOR   (8 KB,  6/27/2000 4:14:14 PM)
+30	      INCLUDE   'ctsex.inc'
+193	      INCLUDE   'ctsex.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGQ.FOR   (50 KB,  7/20/2000 11:56:36 AM)
+202	      INCLUDE     'ctsex.inc'
+389	      INCLUDE     'ctsex.inc'
+518	      INCLUDE     'ctsex.inc'
+642	      INCLUDE   'ctsex.inc'
+804	      INCLUDE     'ctsex.inc'
+938	      INCLUDE     'ctsex.inc'
+1093	      INCLUDE     'ctsex.inc'
+1191	      INCLUDE     'ctsex.inc'
+1386	      INCLUDE     'ctsex.inc'
+1562	      INCLUDE     'ctsex.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGT.FOR   (20 KB,  7/11/2000 8:34:10 PM)
+22	      INCLUDE     'ctsex.inc'
+191	      INCLUDE   'ctsex.inc'
+448	      INCLUDE     'ctsex.inc'
+638	      INCLUDE   'ctsex.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGW.FOR   (7 KB,  9/11/2002 10:42:06 AM)
+22	      INCLUDE   'ctsex.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSPT.FOR   (48 KB,  6/27/2000 4:28:44 PM)
+21	      INCLUDE     'ctsex.inc'
+96	      INCLUDE   'ctsex.inc'
+240	      INCLUDE     'ctsex.inc'
+306	      INCLUDE   'ctsex.inc'
+473	      INCLUDE     'ctsex.inc'
+616	      INCLUDE   'ctsex.inc'
+691	      INCLUDE   'ctsex.inc'
+762	      INCLUDE   'ctsex.inc'
+818	      INCLUDE   'ctsex.inc'
+983	      INCLUDE   'ctsex.inc'
+1279	      INCLUDE   'ctsex.inc'
+1402	      INCLUDE     'ctsex.inc'
+1480	      INCLUDE   'ctsex.inc'
+1547	      INCLUDE   'ctsex.inc'
+1631	      INCLUDE     'ctsex.inc'
+1759	      INCLUDE   'ctsex.inc'
+1848	      INCLUDE   'ctsex.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSPW.FOR   (7 KB,  9/11/2002 10:41:42 AM)
+67	      INCLUDE   'ctsex.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSUT.FOR   (11 KB,  7/11/2000 8:32:40 PM)
+21	      INCLUDE   'ctsex.inc'
+105	      INCLUDE   'ctsex.inc'
+216	      INCLUDE   'ctsex.inc'
+
+D:\lib3.0\SRC\HSPF121\HTSSUT.FOR   (11 KB,  6/27/2000 4:33:58 PM)
+126	      INCLUDE   'ctsex.inc'
+203	      INCLUDE   'ctsex.inc'
+277	      INCLUDE   'ctsex.inc'
+

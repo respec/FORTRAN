@@ -1,0 +1,49 @@
+SI        22000
+CO   CRINTP
+HE   run interpreter common
+PF   pmxopn.inc
+PF   pmxftb.inc
+PF   pmxmdt.inc
+PF   pmxtab.inc
+PM   MAXOPN  MO       500   1
+PM   MAXFTB  MF       500   2
+PM   MAXMDT  MM        50   3
+PM   MAXTTP  MT       150   4
+PM   MAXTBL  MB       400   4
+SE   CRIN1.INC
+HE 1   first version
+VA 1 FILE    15   0   0   0 I P                         11
+VA 1 DUMT1    0   0   0   0 I P                         11
+VA 1 DUMT2    0   0   0   0 I P                         11
+VA 1 DUMT3    0   0   0   0 I P                         11
+VA 1 WCOUNT  10   0   0   0 I P                         11
+VA 1 ECOUNT   0   0   0   0 I P                         11
+VA 1 OUTLEV   0   0   0   0 I P                         11
+VA 1 RESMFG   0   0   0   0 I P                         11
+VA 1 NIVLS    0   0   0   0 I P                         11
+VA 1 IVLLIB  20   0   0   0 I P                         11
+VA 1 NXGRPS   0   0   0   0 I P                         11
+VA 1 EXGTAB   5  10   0   0 I P                         11
+VA 1 NGRPS    0   0   0   0 I P                         11
+VA 1 GRPTAB   5  10   0   0 I P                         11
+VA 1 NOPNS    0   0   0   0 I P                         11
+VA 1 OPNO     0   0   0   0 I P                         11
+VA 1 OPNTAB  20  MO   0   0 I P                         11
+VA 1 NFTABS   0   0   0   0 I P                         11
+VA 1 TABINX  MF   3   0   0 I P                         11
+VA 1 NMDATS   0   0   0   0 I P                         11
+VA 1 MDTINX  MM   3   0   0 I P                         11
+
+SE   CRIN2.INC
+HE 2   second version
+VA 1 DUMT4    2   0   0   0 I P                         01
+VA 1 OPTNO    0   0   0   0 I P                         01
+VA 1 NTABTS   0   0   0   0 I P                         01
+VA 1 LTABTS   0   0   0   0 I P                         01
+VA 1 DUMT5    3  MT   0   0 I P                         01
+VA 1 TABDIM  MT   0   0   0 I P                         01
+VA 1 KYST    MB   0   0   0 I P                         01
+VA 1 TABKST  MB   0   0   0 I P                         01
+VA 1 TABKND  MB   0   0   0 I P                         01
+
+WR

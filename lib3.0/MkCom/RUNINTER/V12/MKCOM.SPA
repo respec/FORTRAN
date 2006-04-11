@@ -1,0 +1,31 @@
+FILE    15             1
+DUMT1                 16
+DUMT2                 17
+DUMT3                 18
+WCOUNT  10            19
+ECOUNT                29
+OUTLEV                30
+RESMFG                31
+NIVLS                 32
+IVLLIB  20            33
+NXGRPS                53
+EXGTAB   5  10        54
+NGRPS                104
+GRPTAB   5  10       105
+NOPNS                155
+OPNO                 156
+OPNTAB  20 500       157
+NFTABS             10157
+TABINX 500   3     10158
+NMDATS             11658
+MDTINX  50   3     11659
+DUMT4    2         11809
+OPTNO              11811
+NTABTS             11812
+LTABTS             11813
+DUMT5    3 150     11814
+TABDIM 150         12264
+KYST   400         12414
+TABKST 400         12814
+TABKND 400         13214
+

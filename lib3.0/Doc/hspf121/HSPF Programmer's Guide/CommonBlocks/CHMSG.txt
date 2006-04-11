@@ -1,0 +1,23 @@
+<p>Referenced by 
+   <a href="../CodeGroups/HPRBUT/OMSG">OMSG</a>,
+   <a href="../CodeGroups/HPRBUT/OMSINI">OMSINI</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTI">OMSTI</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTR">OMSTR</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTC">OMSTC</a>,
+   <a href="../CodeGroups/HPRBUT/OMSTD">OMSTD</a>
+<p>Code
+<pre>
+C
+C     common block to store variables to be output with next message
+C
+      COMMON /CHMSG/ICNT,IMSVL,RCNT,RMSVL,DATIM,CCNT
+      INTEGER       ICNT,IMSVL(MXMSI),RCNT,DATIM(5),CCNT
+      REAL          RMSVL(MXMSR)
+C
+      COMMON /CHMSGC/CMSVL
+      CHARACTER*1    CMSVL(MXMSC)
+C
+</pre>
+
+
+

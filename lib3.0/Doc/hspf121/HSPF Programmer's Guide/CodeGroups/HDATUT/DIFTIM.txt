@@ -1,0 +1,96 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+   <a href="../HRINGEN/GLOBLK">GLOBLK</a>,
+   <a href="../SPECACT/PSPACT">PSPACT</a>,
+   <a href="YRMINS">YRMINS</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C     1.2.22
+C
+      SUBROUTINE   DIFTIM
+     I                  (SDATIM,EDATIM,NDAMON,
+     O                   DIFMIN)
+C
+C     + + + PURPOSE + + +
+C     Find the difference, in minutes, between an ending and a starting
+C     date/time (both given in internal format)
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    DIFMIN,EDATIM(5),
+     $           NDAMON(12),SDATIM(5)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     NDAMON - no. of days in each month of calendar year
+C     DIFMIN - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    DDATIM(5),EYR,EYROFF,SYR,SYROFF,YR,YROFF
+C
+C     + + + EXTERNAL + + +
+      EXTERNAL   YRMINS
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SYR= SDATIM(1)
+      EYR= EDATIM(1)
+C
+      IF (SYR .GT. EYR) THEN
+C     dummy value
+        DIFMIN= -9999
+      ELSE
+C       find the offset of the starting date/time from the start of
+C       it's year
+        CALL YRMINS
+     I              (SDATIM,NDAMON,
+     O               SYROFF)
+C       find the offset of the ending date/time from the start of its
+C       year
+        CALL YRMINS
+     I              (EDATIM,NDAMON,
+     O               EYROFF)
+        DIFMIN= EYROFF- SYROFF
+C
+C       add in the length of any intervening years
+        YR= SYR
+C       whiledo yr< eyr
+ 20     CONTINUE
+        IF (YR .LT. EYR) THEN
+C         ddatim is the end of year yr
+          DDATIM(1)= YR
+          DDATIM(2)= 12
+          DDATIM(3)= 31
+          DDATIM(4)= 24
+          DDATIM(5)= 60
+C
+          CALL YRMINS
+     I                (DDATIM,NDAMON,
+     O                 YROFF)
+          DIFMIN= DIFMIN+ YROFF
+          YR= YR+ 1
+          GO TO 20
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+

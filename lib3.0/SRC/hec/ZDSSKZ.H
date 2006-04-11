@@ -1,0 +1,30 @@
+C     ---------------------------------------
+C
+C     DSS main pointers common block
+C
+C     NBSIZE is the record length (buffer size) in 32 bit integer words
+C     PARAMETER (NBSIZE=448)                                            H
+      PARAMETER (NBSIZE=127)                                            MLlgms
+C     PARAMETER (NBSIZE=512)                                            c
+C     PARAMETER (NBSIZE=128)
+C
+      COMMON /ZDSSKZ/ KNV, KUNIT, KMULT, KPERM, KDSS, KNRECS, KFSIZE,
+     * KHSIZE, KLOCK, KDEAD, KVERS, KCREAT, KLWDAT, KLWTIM, KTAGS,
+     * KREADO, KHASH, KTABLE, KBNBLK, KBNREM, KBNSIZ, KAFBIN, KSEQNO,
+     * KANBIN, KFILEW, KPNHEA, KPNDAT, KLPFOU, KINTAB, KIQUAL,
+     * KAINFO, KDTYPE, KLPATL, KLPATH, KBSTAT, KBNPAT,
+     * KBPATH, KBAINF, KBNHEA, KBNDAT, KBTYPE, KBLNDA,
+     * KBTAG, KBRES1, KIFLAG, KICOMP, KMXREC, KBSADD,
+     * KISTAT, KINPAT, KIPATH, KIPASS, KMXPRT, KIRES, KIADAT, KILNDA,
+     * KINDAT, KITYPE, KIVER, KIPROG, KIDATE, KITIME, KITAG,
+     * KIAIHE, KINIHE, KIACHE, KINCHE, KIAUHE, KINUHE,
+     * KIPREC, KPADD, KPJBIN, KEY1, KEY2, KEY3, KBHASH, KTAGBK,
+     * KBINS, KHUSED, KBOVER, KMAXPH, KMAXHC, KRBNPA, KRBHBE, KRBHEN,
+     * KRBDBE, KRBDEN, KRBPAT, KWBNPA, KWBSIZ, KWBHAD, KWBDAD,
+     * KWBPAT, KCOMPI, KCOMPN, KCOMP, KHANDL, KFILES, KNAME,
+     * KITSIN, KITSDA, KITSMO, KITSYE, KITSDE, KITSCE, KWLOCK,
+     * KEXCL, KSUSER, KFPASS
+C
+C
+C
+C     ---------------------------------------

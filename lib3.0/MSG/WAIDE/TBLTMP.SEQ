@@ -1,0 +1,177 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  clu  grpnam  description
+  ___  ______  _____________________________________________
+   20  tbltmp  table templates: 1-peak flow
+END COMMENT
+CLU           20    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  TBLTMP
+  END LABEL
+  DATA   DSN    20
+#GROUP   1  TYPE PRM2
+$HEADER
+J407 WDM TABLE
+calendar annual peak disch  assoc. gage    annual peak gage
+-------- ------------------ -----------high----------------
+ yr  m d   cfs qualif codes height code yr  m d height code
+$TNAME  AN.PEAKS
+_ACLUSTER     0
+_AGROUP       0
+$FIELD  FIELD1
+_WIDTH   4
+_COLUMN  1
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE       1492:      9999
+_DEFAULT       1492
+_HELP
+Calendar year of annual peak discharge.
+_PNAME  YR
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD2
+_WIDTH   2
+_COLUMN  5
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT          1
+_HELP
+Month of annual peak discharge.
+_PNAME  MTH
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD3
+_WIDTH   2
+_COLUMN  7
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE          1:        31
+_DEFAULT          1
+_HELP
+Day of annual peak discharge.
+_PNAME  DAY
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD4
+_WIDTH   7
+_COLUMN  9
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE REAL
+_RANGE         0.:     -999.
+_DEFAULT      -999.
+_HELP
+Annual peak discharge, in cfs.
+_PNAME  PEAK
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD5
+_WIDTH  12
+_COLUMN 16
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_HELP
+Annual peak discharge qualification codes.
+_PNAME  PKQUAL
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD6
+_WIDTH   8
+_COLUMN 28
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE REAL
+_RANGE         0.:     -999.
+_DEFAULT         0.
+_HELP
+Gage height associated with annual peak discharge.
+_PNAME  ASGAGE
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD7
+_WIDTH   4
+_COLUMN 36
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_HELP
+Gage height qualification codes
+_PNAME  ASQUAL
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD8
+_WIDTH   4
+_COLUMN 40
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE       1492:      9999
+_DEFAULT       1492
+_HELP
+"Highest since" year.  Represents the calendar year after
+which the given peak discharge is known to be the highest.
+_PNAME  HIYR
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD9
+_WIDTH   2
+_COLUMN 44
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT          1
+_HELP
+Month annual peak gage height occured.
+_PNAME  HIMTH
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD10
+_WIDTH   2
+_COLUMN 46
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE INTEGER
+_RANGE          1:        12
+_DEFAULT          1
+_HELP
+Day annual peak gage height occured.
+_PNAME  HIDAY
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD11
+_WIDTH   8
+_COLUMN 48
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE REAL
+_RANGE         0.:     -999.
+_DEFAULT         0.
+_HELP
+Annual peak gage height.
+_PNAME  HIGAGE
+_PCODE  -999
+_UCODE  -999
+$FIELD  FIELD12
+_WIDTH   4
+_COLUMN 56
+_PROTECT NONE
+_ORDER RANDOM
+_TYPE CHARACTER
+_HELP
+Annual peak gage height qualification codes.
+_PNAME  HIQUAL
+_PCODE  -999
+_UCODE  -999
+$HELP
+Table of annual peak flow
+  END DATA
+END CLU

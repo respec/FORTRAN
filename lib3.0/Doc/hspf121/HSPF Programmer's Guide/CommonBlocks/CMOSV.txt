@@ -1,0 +1,54 @@
+<table width="100%" border="1">
+<caption>Version CMOSV of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>OSV(7000)<td>I4<td>Area reserved for OSV of Application Module (integer)</tr>
+<tr><td>1<td>OSVR(7000)<td>R4<td>Area reserved for OSV of Application Module (real)</tr>
+<tr><td>1<td>ASVEC(*)<td>I4<td>Marker for beginning of SCRTCH for all versions</tr>
+<tr>&nbsp;<td></tr>
+</table>
+
+<p>Variables in this Common Block allow access to the OSV portion of SCRTCH.
+<p>Referenced by
+   <a href="../CodeGroups/HOSUPER/OSUPER">OSUPER</a>,
+   <a href="../CodeGroups/HRINTS/NETBLK">NETBLK</a>,
+   <a href="../CodeGroups/HRINTS/SCHBLK">SCHBLK</a>,
+   <a href="../CodeGroups/HRINTS/SRCBLK">SRCBLK</a>
+<p>Includes
+   <a href="../Dimensions/PMXOSV">PMXOSV</a>
+<p>Code
+<pre>
+C    FROM CMOSV.COM
+C    AREA RESERVED FOR OSVS:
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxosv.inc'
+C
+C     SPECIAL COMMON SCRTCH
+       COMMON/SCRTCH/ OSV
+       INTEGER        OSV(MAXOSV)
+C
+       INTEGER   ASVEC(2)
+       REAL      OSVR(MAXOSV)
+       EQUIVALENCE (OSV(1),OSVR(1)),(OSV(1),ASVEC(1))
+C    END: BYTE 72000
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

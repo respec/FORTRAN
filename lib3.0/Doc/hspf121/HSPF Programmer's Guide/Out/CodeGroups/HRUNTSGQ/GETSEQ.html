@@ -1,0 +1,196 @@
+<html><head><title>GETSEQ</title></head>
+<body bgcolor="#ffffff">
+<a name="GETSEQ"><h3>GETSEQ</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSGQ.html">HRUNTSGQ</a>
+<p>Called By
+   <a href="../HRUNTSGP/TSGET.html">TSGET</a>
+<p>Common Blocks 
+ 
+<p>Calls
+   FIVCRD,
+   FIFCRD,
+   HRCRD,
+   DACRD,
+   SMOCRD,
+   MOCRD,
+   SEQINP,
+   OMSTD,
+   OMSG,
+   OMSTI,
+   FDATIM
+<p>Code
+<pre>
+C
+C     4.1.2
+C
+      SUBROUTINE GETSEQ
+     I                  (DELT,WIDTH)
+C
+C     + + + PURPOSE + + +
+C     Get values from a sequential file and fill a row of the inpad
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DELT,WIDTH
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DELT   - simulation time interval in minutes
+C     WIDTH  - inpad width
+C
+C     + + + COMMON BLOCKS- SCRTCH, VERSION GETCOM + + +
+      INCLUDE   'ctsin.inc'
+      INCLUDE   'ctsex.inc'
+      INCLUDE   'ctser.inc'
+      INCLUDE   'ctsbu.inc'
+      INCLUDE   'ctsbx.inc'
+      INCLUDE   'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   INPEND,INPTIM,WORDI,SCLU,SGRP,DATIM(5)
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  FIVCRD,FIFCRD,HRCRD,DACRD,SMOCRD,MOCRD,SEQINP
+      EXTERNAL  OMSTD,OMSG,OMSTI,FDATIM
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' ENTERING GETSEQ')
+ 2010 FORMAT (3X,'INPAD DELT AND WIDTH=',I6,I12,3X,'INPSTR=',I12,
+     $         3X,'FORMAT CLASS=',I6)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 232
+      IF (TESTFG. LT. 1) GO TO 10
+        WRITE (MESSU,2000)
+ 10   CONTINUE
+      IF (TESTFG .LT. 2) GO TO 20
+         WRITE (MESSU,2010) DELT,WIDTH,INPSTR,FMTCLS
+ 20   CONTINUE
+C
+C     Agg/disagg is not allowed
+C     Check delt and delta are equal if not monthly or semi-monthly data
+      IF (FMTCLS .EQ. 3 .OR. FMTCLS .EQ. 4) GO TO 50
+        IF (DELT .EQ. DELTAT) GO TO 40
+          CALL FDATIM (INPSTR,YEAR,TYREND,DATIM)
+          CALL OMSTD (DATIM)
+          CALL OMSTI (FILE)
+          CALL OMSTI (DELT)
+          CALL OMSTI (DELTAT)
+          CALL OMSTI (FILE)
+          SGRP = 10
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               KNT)
+ 40     CONTINUE
+ 50   CONTINUE
+C
+      INPTIM= INPSTR
+C
+C     Calculate end time of inpad
+      WORDI =WIDTH
+      INPEND= (WORDI- 1)*DELT+ INPSTR
+C
+C     Case entry fmtcls
+      GO TO (70,90,110,150,180,185,190), FMTCLS
+C
+C     Case hydrocomp hourly mean data
+ 70   CONTINUE
+C       increment inptim to point to first interval
+        INPTIM= INPTIM+ DELT
+        CALL SEQINP (DELT,INPEND,HRCRD,   INPTIM)
+        GO TO 210
+C
+C     Case hydrocomp daily mean data
+ 90   CONTINUE
+C       increment inptim to point to first interval
+        INPTIM= INPTIM+ DELT
+        CALL SEQINP (DELT,INPEND,DACRD,   INPTIM)
+        GO TO 210
+C
+C     Case hydrocomp semi-monthly mean data
+ 110  CONTINUE
+        IF (DELT .EQ. 1440) GO TO 130
+C         time interval on inpad is not daily
+          CALL FDATIM (INPSTR,YEAR,TYREND,DATIM)
+          CALL OMSTD (DATIM)
+          CALL OMSTI (FILE)
+          CALL OMSTI (DELT)
+          CALL OMSTI (DELTAT)
+          CALL OMSTI (FILE)
+          CALL OMSTI (FMTCLS)
+          SGRP = 11
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               KNT)
+ 130    CONTINUE
+C
+C       increment inptim to point to first interval
+        INPTIM= INPTIM+ DELT
+        CALL SEQINP (DELT,INPEND,SMOCRD,INPTIM)
+        GO TO 210
+C
+C     Case hydrocomp monthly mean data
+ 150  CONTINUE
+        IF (DELT .EQ. 1440) GO TO 170
+C         time interval on inpad is not daily
+          CALL FDATIM (INPSTR,YEAR,TYREND,DATIM)
+          CALL OMSTD (DATIM)
+          CALL OMSTI (FILE)
+          CALL OMSTI (DELT)
+          CALL OMSTI (DELTAT)
+          CALL OMSTI (FILE)
+          CALL OMSTI (FMTCLS)
+          SGRP = 11
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               KNT)
+ 170    CONTINUE
+C
+C       increment inptim to point to first interval
+        INPTIM= INPTIM+ DELT
+        CALL SEQINP (DELT,INPEND,MOCRD,INPTIM)
+        GO TO 210
+C
+C     Case hydrocomp 5-minute mean data
+ 180  CONTINUE
+C       increment inptim to point to first interval
+        INPTIM= INPTIM+ DELT
+        CALL SEQINP (DELT,INPEND,FIVCRD,INPTIM)
+        GO TO 210
+C
+C     Case hydrocomp 15-minute mean data
+ 185  CONTINUE
+C       increment inptim to point to first interval
+        INPTIM= INPTIM+ DELT
+        CALL SEQINP (DELT,INPEND,FIFCRD,   INPTIM)
+        GO TO 210
+C
+C     Case error
+ 190  CONTINUE
+        CALL FDATIM (INPSTR,YEAR,TYREND,DATIM)
+        CALL OMSTD (DATIM)
+        CALL OMSTI (FILE)
+        CALL OMSTI (FMTCLS)
+        CALL OMSTI (FILE)
+        SGRP = 12
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             KNT)
+C
+C     Endcase
+ 210  CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="GETSEQ">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+<html><head><title>CWORK</title></head>
+<body>
+<a name="CWORK"><hr size=7><h2>CWORK</h2><hr size=7></a>
+ 
+<table width="100%" border="1">
+<caption>Version CWORK of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>ASVEC(MAXOSV)<td>I4<td>Space holder for largest possible OSV in SCRTCH</tr>
+<tr><td>MAXOSV<td>WRKSPA<td>I4<td>Workspace for primitive timeseries instructions</tr>
+<tr>&nbsp;<td></tr>
+</table>
+
+<p>Referenced by 
+   <a href="../CodeGroups/HIOWRK/WORKIO.html">WORKIO</a>
+<p>Includes 
+   <a href="../Dimensions/PMXOSV.html">PMXOSV</a>
+<p>Code
+<pre>
+C     from CWORK.INC   
+C     run interpreter common
+C     workfile version
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxosv.inc'
+C
+      COMMON/SCRTCH/ ASVEC,        WRKSPA
+      INTEGER        ASVEC(MAXOSV),WRKSPA(50,30000)
+</pre>
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="CWORK">
+</Object>
+
+</body>
+</html>
+

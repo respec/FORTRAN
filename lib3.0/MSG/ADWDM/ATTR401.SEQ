@@ -1,0 +1,496 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  attributes 401 - 447
+END COMMENT
+DSN           13    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN    13
+#ATTRIBUTE  CML020    INDEX   401
+$TYPE     REAL
+$LENGTH   1
+$DESC     20-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 20-year recurrence interval (exceedance probability of 0.05)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  CML050    INDEX   402
+$TYPE     REAL
+$LENGTH   1
+$DESC     50-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 50-year recurrence interval (exceedance probability of 0.02)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  CML100    INDEX   403
+$TYPE     REAL
+$LENGTH   1
+$DESC     100-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 100-year recurrence interval (exceedance probability of 0.01)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  CML200    INDEX   404
+$TYPE     REAL
+$LENGTH   1
+$DESC     200-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 200-year recurrence interval (exceedance probability of 0.005)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  CML500    INDEX   405
+$TYPE     REAL
+$LENGTH   1
+$DESC     500-year recurrence based on log-Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 500-year recurrence interval (exceedance probability of 0.002)
+  based on the log-Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  PML002    INDEX   406
+$TYPE     REAL
+$LENGTH   1
+$DESC     2-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 2-year recurrence interval (exceedance probability of 0.50)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program CFA or MAX.
+#ATTRIBUTE  PML005    INDEX   407
+$TYPE     REAL
+$LENGTH   1
+$DESC     5-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 5-year recurrence interval (exceedance probability of 0.20)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program MAX.
+#ATTRIBUTE  PML010    INDEX   408
+$TYPE     REAL
+$LENGTH   1
+$DESC     10-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 10-year recurrence interval (exceedance probability of 0.10)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program MAX.
+#ATTRIBUTE  PML020    INDEX   409
+$TYPE     REAL
+$LENGTH   1
+$DESC     20-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 20-year recurrence interval (exceedance probability of 0.05)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program MAX.
+#ATTRIBUTE  PML050    INDEX   410 
+$TYPE     REAL
+$LENGTH   1
+$DESC     50-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 50-year recurrence interval (exceedance probability of 0.02)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program MAX.
+#ATTRIBUTE  PML100    INDEX   411
+$TYPE     REAL
+$LENGTH   1
+$DESC     100-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 100-year recurrence interval (exceedance probability of 0.01)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program MAX.
+#ATTRIBUTE  PML200    INDEX   412
+$TYPE     REAL
+$LENGTH   1
+$DESC     200-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 200-year recurrence interval (exceedance probability of 0.005)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program MAX.
+#ATTRIBUTE  PML500    INDEX   413
+$TYPE     REAL
+$LENGTH   1
+$DESC     500-year recurrence based on Pearson Type III, maximum likelihood
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  An event with a 500-year recurrence interval (exceedance probability of 0.002)
+  based on the Pearson Type III distribution, maximum likelihood estimate.
+  Attribute added by program MAX.
+#ATTRIBUTE  NQU010    INDEX   414
+$TYPE     REAL
+$LENGTH   1
+$DESC     .01 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .01 quantile based on the 3-parameter lognormal distribution using 
+  L-moments.  1 percent chance of being less than this value or a nonexceedance
+  probability of .01.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU020    INDEX   415
+$TYPE     REAL
+$LENGTH   1
+$DESC     .02 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .02 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  2 percent chance of being less than this value or a nonexceedance
+  probability of .02.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU050    INDEX   416
+$TYPE     REAL
+$LENGTH   1
+$DESC     .05 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .05 quantile based on the 3-parameter lognormal distribution using   
+  L-moments.  5 percent chance of being less than this value or a nonexceedance
+  probability of .05.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU100    INDEX   417
+$TYPE     REAL
+$LENGTH   1
+$DESC     .10 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .10 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  10 percent chance of being less than this value or a nonexceedance
+  probability of .10.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU200    INDEX   418
+$TYPE     REAL
+$LENGTH   1
+$DESC     .20 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .20 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  20 percent chance of being less than this value or a nonexceedance
+  probability of .20.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU500    INDEX   419
+$TYPE     REAL
+$LENGTH   1
+$DESC     .50 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .50 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  50 percent chance of being less than this value or a nonexceedance
+  probability of .50.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU800    INDEX   420
+$TYPE     REAL
+$LENGTH   1
+$DESC     .80 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .80 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  80 percent chance of being less than this value or a nonexceedance
+  probability of .80.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU900    INDEX   421
+$TYPE     REAL
+$LENGTH   1
+$DESC     .90 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .90 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  90 percent chance of being less than this value or a nonexceedance
+  probability of .90.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU950    INDEX   422
+$TYPE     REAL
+$LENGTH   1
+$DESC      .95 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .95 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  95 percent chance of being less than this value or a nonexceedance
+  probability of .95.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU980    INDEX   423
+$TYPE     REAL
+$LENGTH   1
+$DESC      .98 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .98 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  98 percent chance of being less than this value or a nonexceedance
+  probability of .98.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU990    INDEX   424
+$TYPE     REAL
+$LENGTH   1
+$DESC     .99 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .99 quantile based on the 3-parameter lognormal distribution using 
+  L-moments.  99 percent chance of being less than this value or a nonexceedance
+  probability of .99.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU995    INDEX   425
+$TYPE     REAL
+$LENGTH   1
+$DESC     .995 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .995 quantile based on the 3-parameter lognormal distribution using 
+  L-moments.  99.5 percent chance of being less than this value or a
+  nonexceedance probability of .995.  Attribute added by program LMOMNT.
+#ATTRIBUTE  NQU998    INDEX   426
+$TYPE     REAL
+$LENGTH   1
+$DESC     .998 quantile based on 3-parameter lognormal distribution, L-moments
+$OPTIONAL  TIMESERIES, TABLE
+$RANGE    -999. : -999.
+$DEFAULT     0
+$HELP
+  .998 quantile based on the 3-parameter lognormal distribution using
+  L-moments.  99.8 percent chance of being less than this value or a
+  nonexceedance probability of .998.  Attribute added by program LMOMNT.
+#ATTRIBUTE  QEX99P    INDEX   427
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 99 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 99 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX98P    INDEX   428
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 98 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 98 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX85P    INDEX   429
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 85 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 85 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX80P    INDEX   430
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 80 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 80 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX65P    INDEX   431
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 65 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 65 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX60P    INDEX   432
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 60 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 60 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX55P    INDEX   433
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 55 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 55 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX45P    INDEX   434
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 45 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 45 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX40P    INDEX   435
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 40 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 40 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX35P    INDEX   436
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 35 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 35 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX30P    INDEX   437
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 30 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 30 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX20P    INDEX   438
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 20 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 20 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX15P    INDEX   439
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 15 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 15 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEXO5P    INDEX   440
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 5 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 5 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX02P    INDEX   441
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 2 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 2 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  QEX01P    INDEX   442
+$TYPE     REAL
+$LENGTH   1
+$DESC     Discharge exceeded 1 percent of the time.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+  Discharge, in cubic feet per second, exceeded 1 percent of the time.
+  Calculated by daily flow duration, program swstat, option duration.
+#ATTRIBUTE  DATCRE    INDEX   443
+$TYPE     CHARACTER
+$LENGTH  16
+$DESC     System date and time of dataset creation "yyyymmddhhmmss  "
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE, ATTRIBUTE, SCHEMATIC
+$HELP
+  System date and time of dataset creation "yyyymmddhhmmss  "
+#ATTRIBUTE  DATMOD    INDEX   444
+$TYPE     CHARACTER
+$LENGTH  16
+$DESC     System date and time of last dataset modification "yyyymmddhhmmss  "
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE, ATTRIBUTE, SCHEMATIC
+$HELP
+  System date and time of last dataset modification "yyyymmddhhmmss  "
+#ATTRIBUTE  SEADBG    INDEX   446
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Day season begins
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:        31
+$DEFAULT          1
+$HELP
+   Beginning day of a user defined season that begins in
+   the month specified by attribute SEASBG.  Used with
+   attributes SEASND and SEADND to define a specific time
+   period, ofter a year.
+#ATTRIBUTE  SEADND    INDEX   447
+$TYPE     INTEGER
+$LENGTH   1
+$DESC     Day season ends
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE            1:        31
+$DEFAULT         31
+$HELP
+   Ending day of a user defined season that ends in
+   the month specified by attribute SEASND.  Used with
+   attributes SEASBG and SEADBG to define a specific time
+   period, ofter a year.
+  END DATA
+END CLU

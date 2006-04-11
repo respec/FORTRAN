@@ -1,0 +1,54 @@
+<html><head><title>TSGETFL</title></head>
+<body>
+<a name="TSGETFL"><hr size=7><h2>TSGETFL</h2><hr size=7></a>
+ 
+<a name="TSGET INSTRUCTION FILE"><Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="TSGET INSTRUCTION FILE">
+</Object>
+<b>TSGET INSTRUCTION FILE</b>
+
+<p>Function
+
+<p>This virtual file (stored in Common Block <a href="../CommonBlocks/CTSGPM.html">CTSGPM</a>) contains instructions which will ensure that module TSGET correctly inserts the set of required input time series into the INPAD, ready for an operation to commence a new INSPAN. Access to this virtual file is through subroutines 
+<a href="../CodeGroups/HIOTSIN/GETTSI.html">GETTSI</a> and 
+<a href="../CodeGroups/HIOTSIN/PUTTSI.html">PUTTSI</a> in code group 
+<a href="../CodeGroups/HIOTSIN.html">HIOTSIN</a>.
+
+<p>Method of Operation 
+<ol>           
+  <li>It is created by the Run Interpreter (subroutine GPFINT and subroutine group TINSTR)          
+  <li>Each time an operation is worked on TSGET is called, if the operation requires any input time series. The function of TSGET is to supply the segments of input time series required by the operation.  To perform its work, TSGET obtains instructions from the disk file TSGETF.  The first record on the file contains general information and is always read.  The instructions for a given operation reside in in a set of contiguous records: the Operations Supervisor provides the keys at which TSGET is to commence and finish reading these instructions for the operation being serviced.  Because most runs cover many INSPANS, the instructions are usually read repetitively during a RUN.  The instruction records also contain some state variables for the TSGET module.  Thus, TSGET writes updated "instructions" back to TSGETF after its work is done (every time it is called). 
+  <li>Each instruction directs TSGET to transfer one or more time series from a source (sequential file or dataset in TSS or WDM file) to the INPAD.  It may also instruct TSGET to transform the time series to different kinds (e.g. "point" to "mean") and/or perform linear transformations.
+</ol>
+
+<p>Structure 
+<pre>
+1 TSGETF   
+ 
+ 2 First record           Contains general information   
+  3 TESTFG           I4   Test flag. Governs printing of diagnostic information.   
+  3 RECL             I4   TSS record length in R4 words  
+  3 UNDEF            R4   Value used for undefined data (_1.0E30)  
+  3 EBASE            I4   Base record for messages in ERRFL  
+  3 EOFFST(30)       I4   Offsets from EBASE to messages in ERRFL  
+ 
+ 2 Exgroup_data           Repeats for each EXGROUP in the run  
+ 
+  3 Ingroup_data          Repeats for each INGROUP in this EXGROUP   
+
+   4 Operation_data       Repeats for each operation in this INGROUP 
+
+    5 INSTR(200)     I4   Record containing one instruction. Repeats for 
+                          each instruction for this operation  
+
+     For contents of an instruction, see documentation of <a href="../CommonBlocks/CTSIN.html">CTSIN</a>
+</pre>
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="TSGETFL">
+</Object>
+
+</body>
+</html>
+

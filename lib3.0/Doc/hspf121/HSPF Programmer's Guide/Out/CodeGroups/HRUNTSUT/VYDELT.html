@@ -1,0 +1,68 @@
+<html><head><title>VYDELT</title></head>
+<body>
+<a name="VYDELT"><hr size=7><h2>VYDELT</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSUT.html">HRUNTSUT</a>
+<p>Called By
+ 
+<p>Common Blocks <i>none</i>
+<p>Calls  
+   <a href="../HDATUT/LPYEAR.html">LPYEAR</a>
+<p>Code
+<pre>
+C
+C
+C
+      INTEGER FUNCTION   VYDELT
+     I                          (YEAR)
+C
+C     + + + PURPOSE + + +
+C     Calculate number of minutes in a year, accounting for leap year
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER  YEAR
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     YEAR   - year
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER  LPYRFG,MIN365,MINDAY,MINS
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL LPYEAR
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA MINDAY,MIN365/1440,525600/
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CALL LPYEAR (YEAR,
+     O             LPYRFG)
+C
+      MINS= MIN365
+      IF (LPYRFG .EQ. 1) THEN
+C       add leap day
+        MINS= MINS+ MINDAY
+      END IF
+C
+      VYDELT= MINS
+C
+      RETURN
+      END
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="VYDELT">
+</Object>
+
+</body>
+</html>
+

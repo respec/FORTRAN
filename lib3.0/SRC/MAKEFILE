@@ -1,0 +1,57 @@
+#
+# MKMF template makefile for libraries.
+#
+
+LIBLOC    = ..\$(FC)libs
+OBJLOC    = $(LIBLOC)\$(LNAME)
+LIBRARY   = $(LIBLOC)\$(LNAME).lib
+
+VPATH     = $(LNAME);$(OBJLOC)
+
+!include $(LNAME)\$(LNAME).oli
+
+FF        =
+FFLAGS    = $(FF) -i $(LNAME)
+
+.BEFORE:
+    !if $(FC) == LH
+      kill_dbos
+    !elif $(FC) == LF90
+    !elif $(FC) == OT
+    !else
+      !error **** UNKNOWN COMPILER: $(FC)
+    !endif
+    !if -d $(LNAME)
+      echo rebuilding $(LNAME) with $(FC)
+    !else
+      !error **** UNKNOWN LIBRARY: $(LNAME)
+    !endif
+    !foreach x $(INCOTHER)
+      copy $(x) $(LNAME)
+    !end
+
+$(LIBRARY): $(OBJLOC)\$(OBJS)
+    !if -e $(LNAME)\*.obj
+      copy $(LNAME)\*.obj $(OBJLOC)
+    !endif
+    !if $(FC) == OT
+       ERASE $(LIBLOC)\$(LNAME)LIB.OBJ
+       COPY $(OBJLOC)\*.OBJ/B TEMP.OBJ
+       MKLIB77 TEMP.OBJ $(LIBLOC)\$(LNAME)LIB.OBJ
+       ERASE TEMP.OBJ
+    !else
+       386LIB $(LIBRARY) -REPLACE $(?) -PAGESIZE 128
+    !endif
+    !if -e $(LNAME)\*.obj
+      erase $(LNAME)\*.obj
+    !endif
+
+.AFTER:
+    !foreach y $(INCOTHER)
+      erase $(LNAME)\$(y,F)
+    !end
+
+!include $(LNAME)\$(LNAME).dep
+
+.for.obj:
+    $(FC) $< $(FFLAGS)

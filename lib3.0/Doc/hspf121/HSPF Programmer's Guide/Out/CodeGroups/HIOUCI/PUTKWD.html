@@ -1,0 +1,123 @@
+<html><head><title>PUTKWD</title></head>
+<body>
+<a name="PUTKWD"><hr size=7><h2>PUTKWD</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI.html">HIOUCI</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM.html">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PUTKWD
+     I                   (KWDDIM,KWDTYP,KNAM1,SREC,EREC,
+     O                    RETCOD)
+C
+C     + + + PURPOSE + + +
+C     save info about where a keyword was found
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     KWDDIM,KWDTYP,SREC,EREC,RETCOD
+      CHARACTER*1 KNAM1(12)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     KWDDIM - max number of occurances allowed
+C     KWDTYP - type of keyword
+C     KNAM   - name of keyword
+C     SREC   - start rec of block
+C     EREC   - end rec of block
+C     RETCOD - return code - 0:added ok, 1:too many
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER       NEWFLG,I,NXTPOS
+      CHARACTER*12  KNAME
+C
+C     + + + OUTPUT FORMATS + + +
+2000  FORMAT(12A1)
+C
+C     + + + END SPECIFCATIONS + + +
+C
+C     save name
+      WRITE(KNAME,2000) KNAM1
+C     record type
+      TYPREC(SREC)= KWDTYP
+C
+      RETCOD= 0
+C     assume a new keyword
+      NEWFLG= 1
+C
+      IF (NUKWD .GT. 0) THEN
+C       check if not new
+        I= 0
+ 10     CONTINUE
+          I= I+ 1
+          IF (KNAME.EQ.UKWD(I) .AND. KWDTYP.EQ.UKWDTY(I)) THEN
+C           already have this one
+            NEWFLG= 0
+            NXTPOS= UKWDFP(I)
+ 20         CONTINUE
+              IF (UKWPTN(NXTPOS) .EQ. 0) THEN
+C               at the end of the chain
+                IF (UKWDCT(I) .LT. KWDDIM) THEN
+C                 room for another
+                  UKWDCT(I) = UKWDCT(I)+ 1
+                  NUKWLC        = NUKWLC+ 1
+                  UKWPTN(NXTPOS)= NUKWLC
+                  UKWSRC(NUKWLC)= SREC
+                  UKWERC(NUKWLC)= EREC
+                  UKWPTN(NUKWLC)= 0
+                ELSE
+C                 no room for this one
+                  RETCOD= 1
+                END IF
+C               force exit of this inner loop
+                NXTPOS = 0
+              ELSE
+                NXTPOS = UKWPTN(NXTPOS)
+              END IF
+            IF (NXTPOS .GT. 0) GOTO 20
+          END IF
+        IF (NEWFLG.EQ.1 .AND. I.LT.NUKWD) GO TO 10
+      END IF
+C
+      IF (NEWFLG .EQ. 1) THEN
+C       a new keyword
+        NUKWD         = NUKWD+ 1
+        UKWD(NUKWD)   = KNAME
+        UKWDCT(NUKWD) = 1
+        UKWDTY(NUKWD) = KWDTYP
+        NUKWLC        = NUKWLC+ 1
+        UKWDFP(NUKWD) = NUKWLC
+        UKWSRC(NUKWLC)= SREC
+        UKWERC(NUKWLC)= EREC
+        UKWPTN(NUKWLC)= 0
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="PUTKWD">
+</Object>
+
+</body>
+</html>
+

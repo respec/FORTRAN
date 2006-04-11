@@ -1,0 +1,6 @@
+OBJS      = utchar.obj  utdate.obj  utgnrl.obj utnumb.obj \
+            utsort.obj utscxx.obj uscn$(FC).obj utsc$(FC).obj \
+            utcpgn.obj ckfspc.obj datsys90.obj
+
+# For OTG, compile the following code groups without checks (FTN77no)
+# utchar.for  utscxx.for

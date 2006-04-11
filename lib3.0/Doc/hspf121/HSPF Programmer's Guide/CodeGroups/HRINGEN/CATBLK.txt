@@ -1,0 +1,201 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINGEN">HRINGEN</a>
+<p>Called By
+   <a href="../HEXTUTIL/UCIGEN">UCIGEN</a>
+<p>Includes 
+   PHCAT
+<p>Common Blocks 
+   CHCAT
+<p>Calls
+   OMSTC,
+   OMSG,
+   <a href="../HIOUCI/GETUCI">GETUCI</a>,
+   <a href="../HIOUCI/GETSE">GETSE</a>,
+   PMXTFT,
+   HDMES2,
+   CHKSTR
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   CATBLK
+     I                   (MESSU,OUTLEV,MSGFL,
+     M                    ECOUNT)
+C
+C     + + + PURPOSE + + +
+C     process the category block
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MESSU,OUTLEV,MSGFL,ECOUNT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     OUTLEV - run interpreter output level
+C     MSGFL  - fortran unit number of HSPF message file
+C     ECOUNT - count of errors
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'phcat.inc'
+      INCLUDE 'chcat.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      KEY,SCLU,SGRP,I,KEYST,KEYND,I1,I0,ITYP,
+     #             ERRFLG,ICH,I2,IOPT
+      CHARACTER*2  CATID
+      CHARACTER*16 LCATNM
+      CHARACTER*22 TBUFF
+      CHARACTER*80 UCIBF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (TBUFF,TBUF1),(CATID,CATID1)
+      CHARACTER*1  TBUF1(22),CATID1(2)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      CHKSTR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    ICHAR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     OMSTC,OMSG,GETUCI,GETSE,PMXTFT,HDMES2,CHKSTR
+C
+C     + + + INPUT FORMATS + + +
+ 1020 FORMAT (3X,A2,1X,A16)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2030 FORMAT (4X,A2,4X,A16)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0= 0
+      I1= 1
+      I2= 2
+C
+C     cluster containing error message text
+      SCLU= 211
+C
+C     initialize common block
+      NCAT= 0
+      DO 10 I= 1, MXCAT
+        CATNAM(I)= '<unknown>       '
+ 10   CONTINUE
+C
+C     find table in uci (type 13 from hspf.seq, grp 22, col 3
+      ITYP= 13
+      CALL <a href="../HIOUCI/GETSE">GETSE</a> (ITYP,I1,
+     O            KEYST,KEYND)
+C
+      IF (KEYST .EQ. 0) THEN
+C       no category block
+        IF (OUTLEV .GT. 0) THEN
+C         message to that effect
+          SGRP= 64
+          CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        END IF
+      ELSE
+        IOPT= 2
+        CALL HDMES2 (IOPT,ITYP,I1)
+        IF (OUTLEV .GT. 0) THEN
+C         processing message
+          SGRP= 65
+          CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        END IF
+C       read past the uci heading
+        KEY= KEYST
+        CALL <a href="../HIOUCI/GETUCI">GETUCI</a> (I0,
+     M               KEY,
+     O               UCIBF)
+        IF (KEY .NE. KEYND) THEN
+          IF (OUTLEV .GT. 2) THEN
+C           header
+            SGRP= 66
+            CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+          END IF
+C         loop to read categories
+ 20       CONTINUE
+            ERRFLG= 0
+C           process this category
+            READ (UCIBF,1020,ERR=30) CATID,LCATNM
+            IF (OUTLEV .GT. 2) THEN
+C             echo this category
+              WRITE(MESSU,2030) CATID,LCATNM
+            END IF
+C
+            IF (NCAT .GT. 0) THEN
+C             check for duplicate category
+              I= CHKSTR (I2,NCAT,CATID1,CATTG1)
+              IF (I .GT. 0) THEN
+C               dup category id
+                CALL OMSTC (I2,CATID1)
+                SGRP= 62
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+                ERRFLG= 1
+              END IF
+            END IF
+C
+C           check that first character is a letter
+            ICH= ICHAR (CATID1(1))
+            IF ( ( (ICH .LT. 97) .OR. (ICH .GT. 122) ) .AND.
+     $           ( (ICH .LT. 65) .OR. (ICH .GT.  90) ) ) THEN
+C             invalid id
+              CALL OMSTC (I2,CATID1)
+              SGRP= 62
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFLG= 1
+            END IF
+            IF (ERRFLG .EQ. 0) THEN
+C             good new category
+              NCAT= NCAT+ 1
+              CATNAM(NCAT)= LCATNM
+              CATTAG(NCAT)= CATID
+            END IF
+C           skip format error
+            GO TO 40
+ 30         CONTINUE
+C             format error
+              I= 22
+              CALL OMSTC (I,TBUF1)
+              SGRP= 63
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+ 40         CONTINUE
+C           read the next record
+            CALL <a href="../HIOUCI/GETUCI">GETUCI</a> (I0,
+     M                   KEY,
+     O                   UCIBF)
+          IF (KEY .NE. KEYND) GO TO 20
+        ELSE
+C         no categories in block
+          IF (OUTLEV .GT. 0) THEN
+C           message to that effect
+            SGRP= 67
+            CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+          END IF
+        END IF
+      END IF
+C
+      IF (OUTLEV .GT. 0) THEN
+C       end processing message
+        SGRP = 68
+        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

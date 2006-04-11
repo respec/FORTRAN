@@ -1,0 +1,105 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINGEN">HRINGEN</a>
+<p>Called By
+   <a href="SEQBLK">SEQBLK</a>
+<p>Common Blocks  <i>none</i>
+<p>Calls
+   OMSG,
+   <a href="ENDEXG">ENDEXG</a>,
+   PMXTFT
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   ENDING
+     I                   (INFG,EXFG,ICOUNT,XCOUNT,GRPNO,XGRPNO,OPNO,
+     I                    NDELT,XDELT,MESSU,MSGFL,SCLU,OUTLEV,
+     M                    ECOUNT,WCOUNT,
+     O                    GRPTAB,EXGTAB)
+C
+C     + + + PURPOSE + + +
+C     User has specified end ingroup - check whether this is legal and
+C     make appropriate closing entries
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    ECOUNT,MSGFL,EXFG,EXGTAB(5,10),GRPNO,GRPTAB(5,10),
+     #           ICOUNT,INFG,MESSU,NDELT,OPNO,OUTLEV,WCOUNT(10),XCOUNT,
+     #           XDELT,XGRPNO,SCLU
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     INFG   - ???
+C     EXFG   - ???
+C     ICOUNT - ???
+C     XCOUNT - ???
+C     GRPNO  - ???
+C     XGRPNO - ???
+C     OPNO   - ???
+C     NDELT  - simulation time interval in minutes
+C     XDELT  - ???
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     SCLU   - cluster containing messages for this routine
+C     OUTLEV - run interpreter output level
+C     ECOUNT - count(s) of specific errors
+C     WCOUNT - ???
+C     GRPTAB - ???
+C     EXGTAB - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    SGRP
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   OMSG,ENDEXG,PMXTFT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (INFG.EQ.0) THEN
+C       error - end ingroup found, but corresponding valid ingroup
+C       heading didn't precede it - command ignored
+        SGRP = 35
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      ELSE
+        INFG= 0
+        IF (ICOUNT.EQ.0) THEN
+C         warning - there are no operations in this ingroup -
+C         instruction ignored
+          SGRP = 3
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               WCOUNT(3))
+        ELSE
+          IF (GRPNO.LE.10) THEN
+C           write closing entry for this ingroup
+            GRPTAB(2,GRPNO)= OPNO
+            GRPTAB(3,GRPNO)= NDELT
+          END IF
+        END IF
+C
+        IF (EXFG.EQ.0) THEN
+C         not in a user specified exgroup.  close the generated
+C         exgroup
+          IF (OUTLEV.GE.5) THEN
+            SGRP= 37
+            CALL PMXTFT(MSGFL,MESSU,SCLU,SGRP)
+          END IF
+          CALL ENDEXG (INFG,XCOUNT,XGRPNO,GRPNO,XDELT,
+     I                 MESSU,MSGFL,SCLU,
+     M                 ECOUNT,WCOUNT,EXGTAB,
+     O                 EXFG)
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

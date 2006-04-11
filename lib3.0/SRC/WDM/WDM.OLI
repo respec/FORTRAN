@@ -1,0 +1,6 @@
+OBJS      = wdbtch.obj wdatrb.obj wdatm2.obj wdsptm.obj \
+            wdimpt.obj wdexpt.obj wdtms2.obj wdtms1.obj \
+            wdtble.obj wdtbl2.obj wddlg.obj  wdatru.obj \
+            tsbufr.obj wdtms3.obj wdmid.obj
+
+INCOTHER  = adwdm\cdrloc.inc  adwdm\cfbuff.inc

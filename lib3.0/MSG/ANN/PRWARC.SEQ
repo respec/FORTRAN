@@ -1,0 +1,319 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  prwarc.seq for lib ann
+END COMMENT 
+CLU           30    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  PRWARC                                                              
+  END LABEL   
+  DATA   CLU    30
+#GROUP    1  TYPE MENU
+$TITLE Select an Archive option.
+$DEFAULT   1
+$LENGTH    6
+$WIDTH    78
+$COLENGTH  8
+$OPTION Import
+_DESC - data to your WDM file
+$OPTION Export
+_DESC - data from your WDM file
+$OPTION Dump
+_DESC - contents of your WDM file
+$OPTION Return
+_DESC - to Opening screen
+$WINDOW Archive (A)
+#GROUP   11  TYPE FILE
+$SCREEN
+
+ Name of import file?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS OLD
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$WINDOW Import (AI)
+#GROUP   12  TYPE TEXT
+$TEXT
+DSN END COM LAB POI DAT
+#GROUP   13  TYPE TEXT
+$TEXT
+TIMETABLSCHEPROJVECTRASTSPTIATTRMESS
+#GROUP   14  TYPE TEXT
+$TEXT
+General information from the IMPORT file:
+$WINDOW Import (AI)
+#GROUP   15  TYPE TEXT
+$TEXT
+Importing DSN no. &
+
+$WINDOW Import (AI)
+#GROUP   16  TYPE MENU
+$TITLE DSN already exists, what should be done?
+$DEFAULT   1
+$LENGTH    9
+$WIDTH    78
+$COLENGTH  5
+$OPTION Change
+_DESC - the dataset number to create a new dataset
+$OPTION Skip
+_DESC - skip to the next dataset on the import file
+$OPTION Add
+_DESC - import data only to already existing dataset
+$OPTION Overwrite
+_DESC - replace existing dataset with data on import file
+$OPTION Interrupt
+_DESC - stop importing immediately
+$HELP
+ Be careful here, overwrite will destroy the existing dataset
+ on your WDM file.
+$WINDOW Import (AI) Problem
+#GROUP   17  TYPE PRM1
+$SCREEN
+
+     New DSN number? @PRM1
+$FIELD @PRM1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 32000              
+_DEFAULT -999
+$WINDOW Change (AIC)
+#GROUP   18  TYPE TEXT
+$TEXT
+Problem on Label add, return code: &
+$WINDOW Import (AI) Problem
+#GROUP   19  TYPE TEXT
+$TEXT
+Possible problem, no attributes for new dataset on Import file.
+$WINDOW Import (AI) Problem
+#GROUP   20  TYPE TEXT
+$TEXT
+ Import of dataset type & not yet implemented.
+$WINDOW Import (AI) Problem
+#GROUP   21  TYPE TEXT
+$TEXT
+Import of WDM datasets complete.
+$WINDOW Import (AI)
+#GROUP   22  TYPE TEXT
+$TEXT
+Import of WDM datasets interrupted.
+$WINDOW Import (AI)
+#GROUP   23  TYPE TEXT
+$TEXT
+No IMPORT file specified
+  OR
+user interrupted after reviewing comments.
+$WINDOW Import (AI) Problem
+#GROUP   31  TYPE MENU
+$TITLE Select an Export option.
+$DEFAULT   1
+$LENGTH    9
+$WIDTH    78
+$COLENGTH  8
+$OPTION Open
+_DESC - file for export output
+$OPTION Select
+_DESC - data sets to be exported (if not exporting all data sets)
+$OPTION Define
+_DESC - what is to be exported (data, attributes, or both)
+$OPTION Comments
+_DESC - enter any comments to be added to the export file
+$OPTION Execute
+_DESC - specified export of data sets to output file
+$OPTION Return
+_DESC - to the Archive screen
+$WINDOW Export (AE)
+#GROUP   32  TYPE FILE
+$SCREEN
+
+ Enter name of export file?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS NEW
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$WINDOW Open (AEO)
+#GROUP   33  TYPE PRM1
+$SCREEN
+
+Enter comment lines for export file (up to five lines).
+
+@PRM1.........................................................................
+@PRM2.........................................................................
+@PRM3.........................................................................
+@PRM4.........................................................................
+@PRM5.........................................................................
+$FIELD @PRM1
+_TYPE CHARACTER
+$FIELD @PRM2
+_TYPE CHARACTER
+$FIELD @PRM3
+_TYPE CHARACTER
+$FIELD @PRM4
+_TYPE CHARACTER
+$FIELD @PRM5
+_TYPE CHARACTER
+$WINDOW Comments (AEC)
+#GROUP   34  TYPE TEXT
+$TEXT
+TIMETABLSCHEPROJVECTRASTSPTIATTRMESS
+#GROUP   35  TYPE TEXT
+$TEXT
+WDMSFL  DATE    SYSTEM  COMMENT LABEL   POINT   END
+#GROUP   36  TYPE TEXT
+$TEXT
+Dataset & doesn't exist.  Try another.
+$WINDOW Execute (AEE) Problem
+#GROUP   37  TYPE TEXT
+$TEXT
+DSN                 TYPE         NDN       NUP       NSA       NSP       NDP
+#GROUP   38  TYPE PRM1
+$SCREEN
+
+     Export what parts of the dataset?
+
+     Attributes @PARM1
+     Data       @PARM2
+
+     Pause between datasets?  @PARM3
+$FIELD @PARM1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES,NO
+_DEFAULT YES
+_HELP
+YES means that the dataset attributes will be included in the export file.
+$FIELD @PARM2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES,NO
+_DEFAULT YES
+_HELP
+YES means that the dataset data will be included in the export file.
+$FIELD @PARM3
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES,NO
+_DEFAULT YES
+_HELP
+YES means that the user has a chance to review the export in detail
+while it is going on.
+$WINDOW Define (AED)
+#GROUP   39  TYPE TEXT
+$TEXT
+Beginning export of DSN no. &
+$WINDOW Execute (AEE)
+#GROUP   40  TYPE TEXT
+$TEXT
+This type of dataset (&) may not be exported.
+$WINDOW Execute (AEE) Problem
+#GROUP   41  TYPE TEXT
+$TEXT
+Completed export of DSN no. &
+$WINDOW Execute (AEE)
+#GROUP   42  TYPE TEXT
+$TEXT
+Completed export of all specified data sets.
+$WINDOW Execute (AEE)
+#GROUP   43  TYPE TEXT
+$TEXT
+Export of data sets interrupted.
+$WINDOW Execute (AEE) Problem
+#GROUP   44  TYPE TEXT
+$TEXT
+Unable to perform Export at this time as no output file
+has been opened to which the exported data can be put.
+
+To open an output file, select the Open option
+from the Export screen.
+$WINDOW Execute (AEE) Problem
+#GROUP   45  TYPE MENU
+$TITLE File opened for export, but export not performed. Sure you want to Return?
+$DEFAULT   1
+$LENGTH    4
+$WIDTH    78
+$COLENGTH  8
+$OPTION Yes
+_DESC - return to the Archive screen and don't perform Export
+$OPTION No
+_DESC - remain in Export menu and have another chance to perform Export
+$WINDOW Execute (AEE) Problem
+#GROUP   51  TYPE TEXT
+$TEXT
+No timeseries data to export for DSN no. &
+$WINDOW Execute (AEE) Problem
+#GROUP   52  TYPE MENU
+$TITLE Export what time period for time-series data sets?
+$DEFAULT   1
+$LENGTH    8
+$WIDTH    78
+$COLENGTH  3
+$OPTION Common
+_DESC - time period for each data set
+$OPTION Specify
+_DESC - time period for each data set
+$OPTION All
+_DESC - data for each data set
+$WINDOW Execute (AEE)
+#GROUP   61  TYPE TEXT
+$TEXT
+The output may look like bad data is in the file, but the
+strange numbers are usually ok since they represent a bit
+pattern which only the software easily deciphers.
+Only one of the 3 forms printed for each 4-byte word should
+make sense depending on whether it is a decimal number,
+integer number or character string (but words for bit
+patterns won't make sense under any of the 3 columns).
+$WINDOW Dump (AD)
+#GROUP   62  TYPE PRM1
+$SCREEN
+
+  Starting record to dump:     @PRM1  (0 if finished)
+  Ending record to dump:       @PRM2
+
+  Starting position in record: @PRM3
+  Ending position in record:   @PRM4
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE  0 : 32000              
+_DEFAULT 0
+_HELP
+Record 1 is the file specs dataset which has pointers to
+directory datasets.  Record 3 is usually a directory
+dataset which has pointers to all the other dataset with
+DSN's from 1-500.  All other records are the other type
+datasets.
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE  1 : 32000              
+_DEFAULT 1
+_HELP
+Last record you want dumped.  You get up to 4 records
+on a line and you get up to 512 lines per 4 records,
+so judge accordingly.
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE  1 : 512                
+_DEFAULT 1
+_HELP
+Use defaults unless you know what you are doing.
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE  1 : 512                
+_DEFAULT 512
+_HELP
+Use default unless you know what you are doing.
+$WINDOW Dump (AD)
+#GROUP   63  TYPE FILE
+$SCREEN
+
+ Name of file to write dump results on?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS NEW
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$WINDOW Dump (AD)
+  END DATA
+END CLU 

@@ -1,0 +1,276 @@
+<html><head><title>INTERP</title></head>
+<body bgcolor="#ffffff">
+<a name="INTERP"><h3>INTERP</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPF.html">HSPF</a>
+<p>Called By
+   <a href="HSPF.html">HSPF</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN1.html">CRIN1</a> 
+<p>Calls
+   <a href="../HRINGEN/TABBLK.html">TABBLK</a>,
+   <a href="../HRINGEN/MSLKBK.html">MSLKBK</a>,
+   <a href="OPNBLK.html">OPNBLK</a>,
+   <a href="../HIOUCI/DUMPER.html">DUMPER</a>,
+   HDMES3
+   <a href="../HSPFEC/TIMSER.html">TIMSER</a>,
+   <a href="../HIOOSUP/OSUP.html">OSUP</a>,
+   <a href="../SPECACT/PSPECL.html">PSPECL</a>,
+   ZIPI,
+   <a href="../HRINGEN/MDATBK.html">MDATBK</a>,
+   <a href="../HRINGEN/PTHBLK.html">PTHBLK</a>,
+   <a href="../HIOUCI/GETSE.html">GETSE</a>,
+   PMXTFT,
+   <a href="../HEXTUTIL/UCIGEN.html">UCIGEN</a>,
+   <a href="../HIOUCI/CLOUCI.html">CLOUCI</a>,
+   <a href="../HPESTUT/SETPST.html">SETPST</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   INTERP
+     I                    (UCLOFG,MKFILS,
+     M                     FILES,
+     O                     EMFG,RETCOD)
+C
+C     + + + PURPOSE + + +
+C     Read and process a run data set in the user's control input
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    UCLOFG,MKFILS,FILES(15),EMFG,RETCOD
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UCLOFG - uci may be closed flag - 0 - leave open
+C     MKFILS - flag to indicate if instruction files should be written,
+C                0-no,1-yes
+C     FILES  - array of file unit numbers
+C     EMFG   - english/metric units flag (english-1,metric-2)
+C     RETCOD - return code 0:interp ok
+C                          1:no execution desired
+C                          2:errors found
+C                         -1:user interrupt
+C
+C     + + + PARAMETERS + + +
+      INTEGER      MAXBLK,MAXMLK
+      PARAMETER    (MAXBLK=30)
+      PARAMETER    (MAXMLK=50)
+C
+C     + + + COMMON BLOCKS- SCRTCH, VERSION INTERP1 + + +
+      INCLUDE    'crin1.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      RUNWID,I,I1,I0,KEYND,KEYST,CONDFG,
+     $             MESSU,MSGFL,STFIL,LKWOPR,NKWOPR,
+     $             NDAMON(12),RUNMIN,RUNFG,SEDAT(10),IOPT,
+     $             SCLU,SGRP,MSLINX(MAXMLK,3),NMLTBS,KTYP,SPOUT,IHMFG
+      CHARACTER*80 CHSTR,DUMCHR
+      CHARACTER*12 BLNK12
+      CHARACTER*1  KWDOPR(8,MAXBLK)
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR,CHSTR1),(SEDAT,SDATIM),(SEDAT(6),EDATIM)
+      CHARACTER*1  CHSTR1(80)
+      INTEGER      SDATIM(5),EDATIM(5)
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   TABBLK,MSLKBK,OPNBLK,DUMPER,HDMES3
+      EXTERNAL   TIMSER,OSUP,PSPECL,ZIPI,MDATBK
+      EXTERNAL   PTHBLK,GETSE,PMXTFT,UCIGEN,CLOUCI
+      EXTERNAL   SETPST
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA NDAMON/31, 0,31,30,31,30,31,31,30,31,30,31/
+C
+C     + + + HISTORY + + +
+C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     WRITE(*,*) 'HSPF:INTERP:entry'
+      RETCOD= 0
+C
+      I0= 0
+      I1= 1
+C
+      MESSU= FILES(1)
+      MSGFL= FILES(15)
+      STFIL= FILES(9)
+C
+      SCLU= 201
+C
+C     put file unit numbers in common block
+      DO 10 I= 1, 15
+        FILE(I)= FILES(I)
+ 10   CONTINUE
+C
+C     interp message to output file
+      SGRP= 5
+      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+C
+C     warning info
+      I= 10
+      CALL ZIPI (I,I0,
+     O           WCOUNT)
+C
+C     error info
+      ECOUNT= 0
+C
+      CALL UCIGEN (MSGFL,MESSU,FILES(8),MKFILS,MAXOPN,MAXBLK,
+     M             ECOUNT,WCOUNT,
+     O             SEDAT,SDATIM,EDATIM,RUNMIN,OUTLEV,
+     O             RESMFG,RUNFG,EMFG,IHMFG,DUMCHR,NIVLS,IVLLIB,
+     O             EXGTAB,GRPTAB,OPNTAB,NXGRPS,NGRPS,
+     O             NOPNS,LKWOPR,NKWOPR,KWDOPR,SPOUT)
+C
+      IF (FILE(7) .GT. 0) THEN
+C       pest supplemental file
+        CALL SETPST (MESSU, MSGFL, FILE(7), OUTLEV,
+     M               ECOUNT)
+      END IF
+C
+C     ftables block
+      KTYP= 4
+      CALL <a href="../HIOUCI/GETSE.html">GETSE</a> (KTYP,I1,
+     O            KEYST,KEYND)
+      CALL <a href="../HRINGEN/TABBLK.html">TABBLK</a> (KEYST,KEYND,OUTLEV,MESSU,
+     I             MSGFL,MAXFTB,
+     M             ECOUNT,
+     O             TABINX,NFTABS)
+C
+C     mass-link block
+      CALL <a href="../HRINGEN/MSLKBK.html">MSLKBK</a> (OUTLEV,MESSU,
+     I             MSGFL,MAXMLK,
+     M             ECOUNT,
+     O             MSLINX,NMLTBS)
+C
+C     month-data block
+      KTYP= 14
+      CALL <a href="../HIOUCI/GETSE.html">GETSE</a> (KTYP,I1,
+     O            KEYST,KEYND)
+      CALL MDATBK (KEYST,KEYND,OUTLEV,MESSU,
+     I             MSGFL,MAXMDT,
+     M             ECOUNT,
+     O             MDTINX,NMDATS)
+C
+C     pathnames block
+      KTYP= 15
+      CALL <a href="../HIOUCI/GETSE.html">GETSE</a> (KTYP,I1,
+     O            KEYST,KEYND)
+      CALL PTHBLK (KEYST,KEYND,OUTLEV,MESSU,MSGFL,
+     M             ECOUNT)
+C
+C     process the operation-type blocks
+      CALL <a href="OPNBLK.html">OPNBLK</a> (SDATIM,EDATIM,NDAMON,EMFG,SCLU,
+     I             LKWOPR,NKWOPR,KWDOPR,
+     O             RUNWID,RETCOD)
+C     black out table name on screen
+      BLNK12 = '            '
+      IOPT   = 3
+      CALL HDMES3 (IOPT,BLNK12)
+      IOPT   = 4
+      CALL HDMES3 (IOPT,BLNK12)
+C
+C     process any special action instructions
+      KTYP= 9
+      CALL <a href="../HIOUCI/GETSE.html">GETSE</a> (KTYP,I1,
+     O            KEYST,KEYND)
+      CALL PSPECL (KEYST,KEYND,NDAMON,SDATIM,EDATIM,SPOUT,
+     I             STFIL,
+     M             RUNWID,
+     O             CONDFG)
+cthj  added next 7 lines so special action variable names still in 
+cthj  common block crintp when status file is read - moved from osuper
+C
+C     status file read
+C      WRITE(99,*) 'HSPF:status file unit:',STFIL
+      IF ( (MKFILS .EQ. 1) .AND. (STFIL .NE. 0) ) THEN
+C        WRITE(99,*) 'HSPF:read status file'
+        CALL GSTVFL (MESSU,MSGFL,STFIL,SDATIM)
+      END IF
+C
+C     look for formats block
+      KTYP= 6
+      CALL <a href="../HIOUCI/GETSE.html">GETSE</a> (KTYP,I1,
+     O            KEYST,KEYND)
+      IF ( (KEYST .NE. 0) .AND. (OUTLEV .GT. 2) ) THEN
+C       formats block is present, processing message
+        SGRP= 10
+        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+C       dump formats block
+        CALL <a href="../HIOUCI/DUMPER.html">DUMPER</a> (KEYST,KEYND,MESSU)
+C       end processing message
+        SGRP= 11
+        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+      END IF
+C
+C     process blocks dealing with time series linkages -
+C     ext sources, network, and ext targets
+      CALL TIMSER (SDATIM,EDATIM,MAXMLK,MSLINX,NMLTBS,RUNWID,IHMFG)
+C
+      IF (MKFILS .EQ. 1) THEN
+C       write the operations supervisor instruction file
+        CALL OSUP (SDATIM,EDATIM,RUNMIN,RUNWID)
+      END IF
+C
+C     interp complete message
+      SGRP= 12
+      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+C
+      IF (RUNFG .EQ. 0) THEN
+C       user did not want to execute
+        SGRP= 14
+        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        RETCOD= 1
+      END IF
+C
+      IF (ECOUNT .GT. 0) THEN
+C       errors found in uci
+        SGRP= 13
+        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        RETCOD= 2
+      END IF
+C
+      IF (CONDFG.EQ.0 .AND. UCLOFG.NE.0) THEN
+C       free up space for keywords and uci recs
+        CALL CLOUCI
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="INTERP">
+</Object>
+
+</body>
+</html>
+

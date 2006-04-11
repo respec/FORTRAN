@@ -1,0 +1,512 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           71    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  TSPLOTSG
+  END LABEL
+  DATA   CLU    71
+#GROUP    1  TYPE MENU
+$WINDOW Graph (AG)
+$SCREEN
+
+   Select a graph option.
+
+   @DEvice !                          @Type    !
+   @DAtes  !                          @Produce !
+   @Specs  !
+   @Window !
+   @Axis   !                          @Return  !
+
+$DEFAULT   1
+$LENGTH   11
+$OPTION DEvice
+_DESC - to make plot on
+_HELP
+  Generally this is the screen or monitor.  Other options
+  can be selected to get a hard copy of the plot.
+$OPTION DAtes
+_DESC - for plot
+_HELP
+  The plot will be drawn for the date range specified in this option.
+$OPTION Specs
+_DESC - of plot
+_HELP
+  Use this option to change the appearance of the plot.
+$OPTION Window
+_DESC - for screen output
+_HELP
+  Up to 7 windows (if available with your computer system) can be
+  specified.  Use this option to select which one to use for the plot.
+$OPTION Axis
+_DESC - type and scale
+_HELP
+  Use this option to specify log or arithmetic axes and the percent of
+  scale to make visible on the plot.
+$OPTION Type
+_DESC - of plot
+_HELP
+  Use this option to set the type of plot, such as standard timeseries,
+  x-y, bar chart, etc.
+$OPTION Produce
+_DESC - specified plot
+_HELP
+  This option must be selected to produce the plot.
+$OPTION Return
+_DESC - one level up
+_HELP
+  Use to exit this screen.
+$HELP
+ Use the options on the left to control the appearance of the graph.
+ Use 'Type' to specify which type of graph to produce, and use 'Produce'
+ to actual draw the graph.
+#GROUP   11  TYPE MENU
+$WINDOW DEvice (AGDe)
+$SCREEN
+
+  Select a graph output device.
+
+  @Display
+  @PRinter
+  @PLotter
+
+$DEFAULT   1
+$LENGTH    7
+$OPTION Display
+_DESC - to screen
+$OPTION PRinter
+_DESC - or print file
+$OPTION PLotter
+_DESC - or print file
+$HELP
+  There are default physical devices preselected based on the type
+  of computer.  Generally the Display is the monitor, PRinter is a
+  postscript file and PLotter is an HPGL file.  Use the TERM.DAT
+  file to change the defaults.
+#GROUP   31  TYPE PRM2
+$WINDOW Specs (AGS)
+$HEADER
+Graph Specifications.
+
+                              line           fill            which
+Scenerio                      type   color  pattern  symbol  axis
+<------------------>        <-----> <-----> <-----> <-----> <----->
+$FIELD  FIELD1
+_WIDTH   20
+_COLUMN  1
+_PROTECT PROTECT
+_TYPE CHARACTER
+$FIELD  FIELD2
+_WIDTH   7
+_COLUMN 29
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?LINETY
+_DEFAULT SOLID
+_HELP
+ Check limits for the line types currently available.
+$FIELD  FIELD3
+_WIDTH   7
+_COLUMN 37
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?COLOR
+_DEFAULT WHITE
+_HELP
+ Check limits for the colors currently available.
+$FIELD  FIELD4
+_WIDTH   7
+_COLUMN 45
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?FILL
+_DEFAULT NONE
+_HELP
+ Select a fill pattern.  Caution: SOLID on pen
+ plotters may take a long time.
+$FIELD  FIELD5
+_WIDTH   7
+_COLUMN 53
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID ?SYMBOL
+_DEFAULT NONE
+_HELP
+ Check limits for the symbol types currently available.
+$FIELD  FIELD6
+_WIDTH   7
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE    CHARACTER
+_VALID LEFT,RIGHT,AUXIL
+_DEFAULT LEFT
+_HELP
+ Select an axis on which to plot this data set.
+#GROUP   40  TYPE TEXT
+$WINDOW Graph (AG)
+$TEXT
+  Retrieving data for specified graph.
+#GROUP   41  TYPE TEXT
+$WINDOW Graph (AGP) Problem
+$TEXT
+Unable to retrieve data for selected station, data-set number &
+#GROUP   42  TYPE TEXT
+$WINDOW Graph (AGP) Status
+$TEXT
+Graphs partially completed,
+
+ACCEPT to view next graph,
+INTRPT to interrupt plotting.
+#GROUP   43  TYPE TEXT
+$WINDOW Graph complete (AG)
+$TEXT
+ Time plot completed and put on file "gksplt.out&".
+#GROUP   44  TYPE TEXT
+$WINDOW Graph complete (AG)
+$TEXT
+ Flow duration plot completed and put on file "gksplt.out&".
+#GROUP   45  TYPE TEXT
+$WINDOW Graph (AGP) Status
+$TEXT
+ Writing plot to specified device.
+#GROUP   46  TYPE TEXT
+$WINDOW Graph (AGP) Problem
+$TEXT
+Number of data points exceeds maximum.
+
+Reduce number of data points by shortening
+time span, increasing time step, or
+eliminating variables to be plotted.
+$HELP
+ A finite number of points can be included on one plot, and in this case it
+ has been exceeded.  Action needs to be taken to reduce the number of points.
+#GROUP   47  TYPE TEXT
+$WINDOW Graph (AGP) Problem
+$TEXT
+Number of data points is zero.
+
+Provide data points by changing the
+start and end dates.
+$HELP
+ The active date set specifies a time span that does not include any
+ data points.  Use the 'Dates' option to change the time span.
+#GROUP   48  TYPE TEXT
+$WINDOW Graph complete (AG)
+$TEXT
+ XY plot completed and put on file "gksplt.out&".
+#GROUP   50  TYPE TEXT
+$WINDOW Residual (AGR) Problem
+$TEXT
+ Residual plots require that two data sets be specified.
+$HELP
+ Return to the pick screen to select two data sets, or else choose
+ a different type of plot.
+#GROUP   51  TYPE PRM1
+$WINDOW Window (AGW)
+$SCREEN
+
+      Active Graph Window  [@WIND.]
+$FIELD  @WIND
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1:7
+_DEFAULT 1
+_HELP
+ Select the window you would like active.
+#GROUP   52  TYPE TEXT
+$WINDOW Cumulative (AGC) Problem
+$TEXT
+ Cumulative difference plots require that two data sets be specified.
+$HELP
+ Return to the pick screen to select two data sets, or else choose
+ a different type of plot.
+#GROUP   53  TYPE TEXT
+$WINDOW Bar (AGB) Problem
+$TEXT
+ Too many points to produce a bar chart.
+
+ Reduce the number of points by changing the time span or time units,
+ or by decreasing the number of data sets to plot.
+$HELP
+ A finite number of points can be included on one plot, and in this case it
+ has been exceeded.  Action needs to be taken to reduce the number of points.
+#GROUP   54  TYPE TEXT
+$WINDOW Difference (AGD) Problem
+$TEXT
+ Difference plots require that two data sets be specified.
+$HELP
+ Return to the pick screen to select two data sets, or else choose
+ a different type of plot.
+#GROUP   55  TYPE TEXT
+$WINDOW XY (AGX) Problem
+$TEXT
+ XY plots require that two data sets be specified.
+$HELP
+ Return to the pick screen to select two data sets, or else choose
+ a different type of plot.
+#GROUP   56  TYPE TEXT
+$WINDOW XY (AGX) Problem
+$TEXT
+ Storm dates cannot be found within this short a time span.
+
+ Lengthen the time span on the 'Dates' screen or choose a
+ different type of plot.
+#GROUP   59  TYPE PRM2
+$WINDOW XY (AGX) Storm Summary
+$HEADER 
+ ----------  ---- -- --  ---- -- --  -------------------- --------------------
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  2
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NO,YES
+_HELP
+ Enter 'Yes' to add this storm period to the date sets.
+$FIELD  FIELD2
+_WIDTH   4
+_COLUMN  14
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting year of this storm.
+$FIELD  FIELD3
+_WIDTH   2
+_COLUMN  19
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting month of this storm.
+$FIELD  FIELD4
+_WIDTH   2
+_COLUMN  22
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting day of this storm.
+$FIELD  FIELD5
+_WIDTH   4
+_COLUMN  26
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending year of this storm.
+$FIELD  FIELD6
+_WIDTH   2
+_COLUMN  31
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending month of this storm.
+$FIELD  FIELD7
+_WIDTH   2
+_COLUMN  34
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending day of this storm.
+$FIELD  FIELD8
+_WIDTH   7
+_COLUMN  38
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Average storm volumes for the first data set.
+$FIELD  FIELD9
+_WIDTH   7
+_COLUMN  48
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Storm peaks for the first data set.
+$FIELD  FIELD10
+_WIDTH   7
+_COLUMN  59
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Average storm volumes for the second data set.
+$FIELD  FIELD11
+_WIDTH   7
+_COLUMN  69
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Storm peaks for the second data set.
+#GROUP   61  TYPE PRM1
+$WINDOW Axis (AGA)
+$SCREEN
+
+ Type and scale for Y axis:
+
+     [@] ARITH LEFT AXIS     [@] LOG LEFT AXIS
+     [@] ARITH RIGHT AXIS    [@] LOG RIGHT AXIS
+
+      % of arithmetic scale to use   [@ARPCSC]
+
+$FIELD  @] ARITH L
+_TYPE    OPTION
+_SET     1
+_WIDTH   1
+_ONOFF   @] LOG L
+_OFFON   @] LOG L
+_HELP
+ Choose this option to use an arithmetic scale on the left axis.
+$FIELD  @] LOG L
+_TYPE    OPTION
+_SET     1
+_WIDTH   1
+_ONOFF   @] ARITH L
+_OFFON   @] ARITH L
+_HELP
+ Choose this option to use an logarithmic scale on the left axis.
+$FIELD  @] ARITH R
+_TYPE    OPTION
+_SET     2
+_WIDTH   1
+_ONOFF   @] LOG R
+_OFFON   @] LOG R
+_HELP
+ Choose this option to use an arithmetic scale on the right axis.
+$FIELD  @] LOG R
+_TYPE    OPTION
+_SET     2
+_WIDTH   1
+_ONOFF   @] ARITH R
+_OFFON   @] ARITH R
+_HELP
+ Choose this option to use an logarithmic scale on the right axis.
+$FIELD  @ARPCSC
+_PROTECT CORRECT
+_TYPE    REAL
+_RANGE   0.01 : 500.0
+_DEFAULT 100.0
+_HELP
+ Adjust the scale to less than 100. to look at the lower portion of plot.
+#GROUP   62  TYPE TEXT
+$TEXT
+ Add To      --Start---  ---End----  & &
+#GROUP   63  TYPE TEXT
+$TEXT
+ Date Sets?  Year Mo Dy  Year Mo Dy  AvgStmVol StormPeak  AveStmVol StormPeak
+#GROUP   71  TYPE MENU
+$WINDOW Type (AGT)
+$SCREEN
+   Select a graph type.
+
+   @Standard Timeseries
+   @Residual (dsn2-dsn1 vs. time)
+   @Cumulative differences vs. time
+   @Bar Chart
+   @FLow/Duration
+   @Difference (dsn2-dsn1 vs. dsn1)
+   @XY (dsn2 vs. dsn1)
+   @FRequency
+$DEFAULT   1
+$LENGTH   31
+$OPTION Standard Timeseries
+_HELP
+ Choose this option to produce a plot of each
+ selected data set versus time.
+$OPTION Residual (dsn2-dsn1 vs. time)
+_HELP
+ Choose this option to produce a plot of the difference
+ between two selected time series versus time.
+$OPTION Cumulative differences vs. time
+_HELP
+ Choose this option to produce a plot of the cumulative difference
+ between two selected time series versus time.
+$OPTION Bar Chart
+_HELP
+ Choose this option to produce a bar chart of each
+ selected data set versus time.
+$OPTION FLow/Duration
+_HELP
+ Choose this option to produce a flow/duration plot
+ for each selected data set.
+$OPTION Difference (dsn2-dsn1 vs. dsn1)
+_HELP
+ Choose this option to produce an x-y plot of the differences between
+ two selected data sets versus the first data set.
+$OPTION XY (dsn2 vs. dsn1)
+_HELP
+ Choose this option to produce an x-y plot of the second
+ selected data set versus the first selected data set.
+$OPTION FRequency
+_HELP
+ Choose this option to produce a frequency plot for selected annual
+ series data sets.
+#GROUP   72  TYPE PRM1
+$WINDOW XY (AGTX)
+$SCREEN
+
+   Do you want a 45 degree line and regression line on this plot?
+     [@] yes
+     [@] no
+
+   Use storms or specified time period?
+     [@] storms --------------------> maximum number of storms  [@NSTRM]
+     [@] specified time period        storm definition constant [@FSTRM]
+                                      plot peaks or volumes     [@PEKVOL]
+
+$FIELD  @] yes
+_TYPE   OPTION
+_SET    1
+_WIDTH  1
+_ONOFF  @] no
+_OFFON  @] no
+_HELP
+ Choose this option to calculate and display the regression line.
+$FIELD  @] no
+_TYPE   OPTION
+_SET    1
+_WIDTH  1
+_ONOFF  @] yes
+_OFFON  @] yes
+_HELP
+ Choose this option to not calculate the regression line.
+$FIELD  @] st
+_TYPE   OPTION
+_SET    2
+_WIDTH  1
+_ONOFF  @] sp
+_OFFON  @] sp
+_HIDE OFF @NSTRM 7 16 7 74
+_HIDE OFF @FSTRM 8 37 8 74
+_HIDE OFF @PEKVOL 9 37 9 74
+_HELP
+ Choose this option to calculate storm events for the time span specified
+ in the 'Dates' option.
+$FIELD  @] sp
+_TYPE   OPTION
+_SET    2
+_WIDTH  1
+_ONOFF  @] st
+_OFFON  @] st
+_HELP
+ Choose this option to use the time span specified in the 'Dates' option.
+$FIELD @NSTRM
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE    1 : 1000
+_DEFAULT  50
+_HELP
+ Enter the number of storm events to find.
+$FIELD @FSTRM
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    -100.0 : 1000.0
+_DEFAULT  99.0
+_HELP
+  If < 0 percent of peak which defines storm
+  If > 0 flow duration percent which defines storm
+$FIELD @PEKVOL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID PEAK,VOLUME
+_HELP
+ Specify whether to plot storm peaks or volumes.
+  END DATA
+END CLU

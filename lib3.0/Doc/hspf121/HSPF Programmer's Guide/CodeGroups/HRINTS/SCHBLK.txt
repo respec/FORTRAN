@@ -1,0 +1,254 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTS">HRINTS</a>
+<p>Called By
+   <a href="../HSPFEC/TIMSER">TIMSER</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3">CRIN3</a>,
+   <a href="../../CommonBlocks/CRIN3C">CRIN3C</a>
+   <a href="../../CommonBlocks/CMPAD">CMPAD</a>,
+   <a href="../../CommonBlocks/CMOSV">CMOSV</a>
+<p>Calls
+   <a href="../HRINGEUT/OPNNO">OPNNO</a>,
+   <a href="../HSPFEC/PSCHEM">PSCHEM</a>,
+   <a href="OPNTS">OPNTS</a>,
+   <a href="../HRINGEUT/TOPTNO">TOPTNO</a>,
+   <a href="../HPRBUT/OMSG">OMSG</a>,
+   <a href="../HPRBUT/OMSTI">OMSTI</a>,
+   <a href="../HPRBUT/OMSTC">OMSTC</a>,
+   <a href="PAIRS">PAIRS</a>,
+   <a href="../HSPFEC/GTTMRC">GTTMRC</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SCHBLK
+     I                   (OPST,OPND,KEYST,KEYND,MAXMLK,
+     I                    MSLINX,NMLTBS,
+     M                    WKEY)
+C
+C     + + + PURPOSE + + +
+C     Expand and check any entries for a given exgrp, in the schematics
+C     block.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   KEYND,KEYST,OPND,OPST,WKEY,MAXMLK,MSLINX(MAXMLK,3),
+     #          NMLTBS
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     OPST   - ???
+C     OPND   - ???
+C     KEYST  - starting record number
+C     KEYND  - ending record number
+C     MAXMLK - maximum number of mass-link tables
+C     MSLINX - ???
+C     NMLTBS - ???
+C     WKEY   - ???
+C
+C     + + + PARAMETERS + + +
+      INTEGER    MAXCNX
+      PARAMETER (MAXCNX=150)
+C
+C     + + + COMMON BLOCKS- INTERP3, OSV + + +
+      INCLUDE    'crin3.inc'
+      INCLUDE    'crin3c.inc'
+      INCLUDE    'cmosv.inc'
+      INCLUDE    'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     EUNITS,MSGFL,MESSU,BGRP,RWFG,SGRP,SMEMSB(2),
+     $            SXGRP,TGRP,TMEMSB(2),TXGRP,I,MSLKTB,
+     $            SMMSUB(2,MAXCNX),
+     #            TMMSUB(2,MAXCNX),NUMCON,CNNXN,
+     #            DUMSMS(2),DTMSUB(2),
+     #            TSBKCD,ITSR,GTCOD,DUMTPL,SCLU,GRP,I6
+      REAL        MFACTR,MFCT(MAXCNX),AREA
+      CHARACTER*6 SMEMN,TMEMN,SGPNAM(MAXCNX),SMMNAM(MAXCNX),
+     #            TGPNAM(MAXCNX),TMMNAM(MAXCNX),
+     #            DUMSGN,DUMTGN,DUMSMB,DUMTMB
+      CHARACTER*4 TRAN,TRANSF(MAXCNX),DUMTSY,DUMTGP,DUMAMD,
+     #            DUMSSY,DUMTRN,DUMSGP
+C
+C     + + + FUNCTIONS + + +
+      INTEGER     OPNNO
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    OPNNO,PSCHEM,OPNTS,TOPTNO,OMSG,OMSTI,OMSTC
+      EXTERNAL    PAIRS,GTTMRC
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' PROCESSING ANY ENTRIES IN SCHEMATICS BLOCK')
+ 2010 FORMAT (/,' THE FOLLOWING TARGET OPN-ID SPECIFICATION ',
+     $          'IS NOT IN THE')
+ 2020 FORMAT (' SAME INGRP AS THE SOURCE OPN - ENTRY IGNORED    ',
+     $        A6,I4)
+ 2060 FORMAT (/,' FINISHED PROCESSING ANY ENTRIES IN SCHEMATICS BLOCK')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU  = 215
+      MESSU = FILE(1)
+      MSGFL = FILE(15)
+      I6    = 6
+C
+      IF (OUTLEV .GT. 4) THEN
+C       processing message
+        WRITE (MESSU,2000)
+      END IF
+C
+      TSBKCD= 4
+      ITSR= KEYST
+      BGRP= 54
+C
+10    CONTINUE
+C       get a schematic entry (first schematic entry if first time through)
+        CALL <a href="../HSPFEC/GTTMRC">GTTMRC</a>
+     I              (TSBKCD,KEYND,MESSU,MSGFL,SCLU,BGRP,
+     M               ITSR,ECOUNT,
+     O               SVOLC,SVOLNO,DUMSGN,DUMSMB,DUMSMS,DUMSSY,DUMSGP,
+     O               AREA,DUMTRN,TVOLC,TVOLNO,MSLKTB,DUMTPL,DUMTGN,
+     O               DUMTMB,DTMSUB,DUMTSY,DUMTGP,DUMAMD,GTCOD)
+C
+        IF (GTCOD .EQ. 4) THEN
+C         schematic entry, expand it
+          CALL PSCHEM
+     I                (MSGFL,MESSU,MAXOPN,OPNTAB,OPST,OPND,SVOLC,SVOLNO,
+     I                 TVOLC,TVOLNO,AREA,MAXMLK,MSLINX,NMLTBS,MSLKTB,
+     I                 MAXCNX,
+     M                 ECOUNT,
+     O                 SGPNAM,SMMNAM,SMMSUB,MFCT,TRANSF,
+     O                 TGPNAM,TMMNAM,TMMSUB,NUMCON)
+          IF (NUMCON .GT. 0) THEN
+C           process each connection implied by the schematic entry
+            DO 50 CNNXN = 1, NUMCON
+C             assign necessary variables for subroutines opnts and pairs
+              MFACTR= MFCT(CNNXN)
+              TRAN  = TRANSF(CNNXN)
+              SGRPN = SGPNAM(CNNXN)
+              SMEMN = SMMNAM(CNNXN)
+              TGRPN = TGPNAM(CNNXN)
+              TMEMN = TMMNAM(CNNXN)
+              DO 20 I= 1,2
+                SMEMSB(I)= SMMSUB(I,CNNXN)
+                IF (TMMSUB(I,CNNXN) .GE. 1) THEN
+C                 mass-link specified subscript overrides schematic default
+                  TMEMSB(I)= TMMSUB(I,CNNXN)
+                ELSE
+C                 use default
+                  TMEMSB(I)= DTMSUB(I)
+                END IF
+ 20           CONTINUE
+C
+C             check the source opn-id
+              SNUM= <a href="../HRINGEUT/OPNNO">OPNNO</a>(SVOLC,SVOLNO,SVOLNO,MAXOPN,OPNTAB,OPST,OPND)
+C
+              IF (SNUM .GT. 0) THEN
+C               entry in this exgrp matches the source spec
+                SXGRP = OPNTAB(5,SNUM)
+                SGRP  = OPNTAB(6,SNUM)
+                SDELT = GRPTAB(3,SGRP)
+C               dummy values
+                SAMDCD= 0
+                SGAPCD= 0
+                SFRC  = 0
+C               check the supplied group and member-ids
+                EUNITS= 0
+C               reading timseries
+                RWFG  = 2
+                CALL <a href="OPNTS">OPNTS</a> (SNUM,MAXOPN,OPNTAB,MSGFL,MESSU,
+     I                      SGRPN,RWFG,SMEMN,SMEMSB,MAXOSV,MAXTTB,
+     M                      ECOUNT,EUNITS,
+     O                      OSV,SNTS,STABL,STABLR)
+C
+C               check the supplied target opn-id
+C               check that the opn-type number is valid
+                CALL <a href="../HRINGEUT/TOPTNO">TOPTNO</a> (MESSU,MSGFL,
+     M                       TVOLNO,TVOLNO,ECOUNT)
+C
+C               check the target opn-id
+                TNUM= <a href="../HRINGEUT/OPNNO">OPNNO</a>(TVOLC,TVOLNO,TVOLNO,MAXOPN,OPNTAB,OPST,OPND)
+C
+                IF (TNUM .EQ. 0) THEN
+C                 nothing in this exin group matches target
+                  IF (OUTLEV .GT. 4) THEN
+                    WRITE (MESSU,2010)
+                    WRITE (MESSU,2020)  TVOLC, TVOLNO
+                  END IF
+                ELSE
+C                 process the target
+                  TGRP  = OPNTAB(6,TNUM)
+                  TDELT = GRPTAB(3,TGRP)
+C                 dummy values
+                  TAMDCD= 0
+                  TGAPCD= 0
+                  TFRC  = 0
+C                 writing timseries
+                  RWFG  = 1
+C                 check and expand supplied group and member ids
+                  CALL <a href="OPNTS">OPNTS</a> (TNUM,MAXOPN,OPNTAB,MSGFL,MESSU,
+     I                        TGRPN,RWFG,TMEMN,TMEMSB,MAXOSV,
+     I                        MAXTTB,
+     M                        ECOUNT,EUNITS,
+     O                        OSV,TNTS,TTABL,TTABLR)
+C
+C                 check that source/target relationship is valid
+                  TXGRP= OPNTAB(6,TNUM)
+                  IF (SNUM .GE. TNUM .OR. SXGRP .NE. TXGRP) THEN
+C                   error - source/target operations are incompatible;
+C                   will be ignored
+                    CALL OMSTC (I6,SVOLC1)
+                    CALL OMSTI (SVOLNO)
+                    CALL OMSTC (I6,TVOLC1)
+                    CALL OMSTI (TVOLNO)
+                    GRP = 119
+                    CALL OMSG (MESSU,MSGFL,SCLU,GRP,
+     M                         ECOUNT)
+                  ELSE
+C                   match individual time series now situated in
+C                   source and target tables.  write matched entries
+C                   to workfl
+                    CALL <a href="PAIRS">PAIRS</a> (TRAN,
+     M                          MFACTR,WKEY)
+                  END IF
+                END IF
+              END IF
+ 50         CONTINUE
+          END IF
+        END IF
+C
+      IF (GTCOD .EQ. 4) GO TO 10
+C
+      IF (OUTLEV .GT. 4) THEN
+C       end processing message
+        WRITE (MESSU,2060)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

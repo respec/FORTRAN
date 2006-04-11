@@ -1,0 +1,1093 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           64    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  WSGSYS
+  END LABEL
+  DATA   CLU    64
+#GROUP    1  TYPE MENU
+$WINDOW Change (C)
+$SCREEN
+
+ Select a system specification to change.
+
+ @Date      !
+ @Window    !
+ @Save      !
+ @Basin     !
+
+ @Return    !
+
+$DEFAULT   1
+$LENGTH   11
+$OPTION Date
+_DESC - set specifications
+_HELP
+ Choose this option to manage the sets of date specifications used in
+ the analysis options.
+$OPTION Window
+_DESC - management
+_HELP
+ Choose this option to manage the output windows for maps and graphs.
+$OPTION Save
+_DESC - state of system
+_HELP
+ Choose this option to save the current state of the system for later use.
+$OPTION Basin
+_DESC - management
+_HELP
+ Choose this option to manage the available basins, including available
+ time series wdm files and the path to the uci files.
+$OPTION Return
+_DESC - to opening screen
+_HELP
+ Choose this option to go back to the main menu.
+#GROUP   2  TYPE PRM2
+$HEADER 
+Select date row to make active, modify, drop, or copy:
+       |                   -----Start------ ------End------- Season Time
+Action | Status   Date ID  Year Mo Dy Hr Mi Year Mo Dy Hr Mi  (y/n) Step TU AG
+------ | -------- -------- ---- -- -- -- -- ---- -- -- -- -- ------ ---- -- --
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  1
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NONE,ACTIVE,MODIFY,DROP,COPY
+_HELP
+ Select an Action, then Accept:F2 to take that action.
+ To select a row to make active use ACTIVE.
+ To create or modify a row use the COPY, MODIFY, and DROP options.
+$FIELD  FIELD2
+_WIDTH   1
+_COLUMN  8
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID |
+_DEFAULT |
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  10
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID INACTIVE,ACTIVE
+_HELP
+ Status of this date row.  Only one date row may be active at a time.
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN  19
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ ID for this date row.
+$FIELD  FIELD5
+_WIDTH   4
+_COLUMN  28
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting year of this date row.
+$FIELD  FIELD6
+_WIDTH   2
+_COLUMN  33
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting month of this date row.
+$FIELD  FIELD7
+_WIDTH   2
+_COLUMN  36
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting day of this date row.
+$FIELD  FIELD8
+_WIDTH   2
+_COLUMN  39
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting hour of this date row.
+$FIELD  FIELD9
+_WIDTH   2
+_COLUMN  42
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Starting minute of this date row.
+$FIELD  FIELD10
+_WIDTH   4
+_COLUMN  45
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending year of this date row.
+$FIELD  FIELD11
+_WIDTH   2
+_COLUMN  50
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending month of this date row.
+$FIELD  FIELD12
+_WIDTH   2
+_COLUMN  53
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending day of this date row.
+$FIELD  FIELD13
+_WIDTH   2
+_COLUMN  56
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending hour of this date row.
+$FIELD  FIELD14
+_WIDTH   2
+_COLUMN  59
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Ending minute of this date row.
+$FIELD  FIELD15
+_WIDTH   4
+_COLUMN  63
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID   NO,YES
+_HELP
+ Seasons associated with this date row.
+$FIELD  FIELD16
+_WIDTH   4
+_COLUMN  69
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Time Step of this date row.
+$FIELD  FIELD17
+_WIDTH   2
+_COLUMN  74
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID   SE,MI,HR,DY,MO,YR
+_HELP
+ Time Units of this date row: seconds,minutes,hours,days,months,years
+$FIELD  FIELD18
+_WIDTH   2
+_COLUMN  77
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID AV,SM,MX,MN
+_HELP
+ Data transformation for this date row: average,sum,max,min
+#GROUP   5  TYPE PRM2
+$WINDOW Animate (MA)
+$HEADER 
+Select animation row to make active, modify, drop, or copy:
+
+Action | Status   Animation ID
+------ | -------- ---------------------
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  1
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NONE,ACTIVE,LIST,DROP,COPY,MODIFY
+_HELP
+ Select an Action, then Accept:F2 to take that action.
+ To select a row to make active use ACTIVE.
+ To create or modify a row use the COPY, MODIFY, and DROP options.
+ To view/modify the individual specifications for a row use LIST.
+$FIELD  FIELD2
+_WIDTH   1
+_COLUMN  8
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID |
+_DEFAULT |
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  10
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID INACTIVE,ACTIVE
+_HELP
+ Status of this animation.  Only one animation may be active at a time.
+$FIELD  FIELD4
+_WIDTH   20
+_COLUMN  19
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ ID for this animation.  Use list to see contents of this animation.
+#GROUP   6  TYPE PRM1
+$WINDOW Modify (MAM)
+$SCREEN
+
+  Modify the name of this row of map animation specifications:
+
+              [@PRM1...............]
+
+
+
+
+
+$FIELD @PRM1
+_TYPE CHARACTER
+_HELP
+ Enter any character string to name this row of animation specifications.
+#GROUP   7  TYPE TEXT
+$WINDOW Drop (MAD) Problem
+$TEXT
+  Cannot drop this row of map animation specifications.
+
+  At least one row of map animation specifications must remain at all times.
+$HELP
+  GENSCN requires at least one animation to exist at all times.
+#GROUP   8  TYPE TEXT
+$WINDOW Copy (MAC) Problem
+$TEXT
+  Cannot copy this row of map animation specifications.
+
+  The maximum allowable number of map animation
+  specifications has been reached.
+$HELP
+  Remove a row of animation specifications if you want to add another.
+#GROUP   10  TYPE PRM2
+$WINDOW List (MAL)
+$HEADER 
+Select row of line specifications to modify, drop, or copy:
+       | Segment  WDM  DataSet Lower Upper Low   Mid   High  Low   Mid   High
+Action | Name     File Number  Value Value Color Color Color Width Width Width
+------ | -------- ---- ------- ----- ----- ----- ----- ----- ----- ----- -----
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  1
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NONE,MODIFY,DROP,COPY,SETALL
+_HELP
+ Action to take for this row: none, modify, drop, copy, setall
+$FIELD  FIELD2
+_WIDTH   1
+_COLUMN  8
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID |
+_DEFAULT |
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  10
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ Segment name for this row of line specifications.
+$FIELD  FIELD4
+_WIDTH   4
+_COLUMN  19
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID ?WDID
+_HELP
+ WDM file for this row.
+$FIELD  FIELD5
+_WIDTH   6
+_COLUMN  24
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Data set number for this row.
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN  32
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Minimum value for this row to be true.
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN  38
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Maximum value for this row to be true.
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN  44
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID ?COLOR
+_HELP
+ Color 1 for this row.
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN  50
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID ?COLOR
+_HELP
+ Color 2 for this row.
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN  56
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID ?COLOR
+_HELP
+ Color 3 for this row.
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN  62
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Line width 1 for this row.
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN  68
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Line width 2 for this row.
+$FIELD  FIELD13
+_WIDTH   5
+_COLUMN  74
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Line width 3 for this row.
+#GROUP   11  TYPE PRM1
+$WINDOW Modify (MALM)
+$SCREEN
+  Modify characteristics of this map animation list row:
+
+    Segment Name [@PRM1...]    WDM File [@PR2]    Data Set Number [@PRM3..]
+
+        -------------------------------------------------------------
+                       Lower Boundary            Upper Boundary
+                          [@PRM4]                   [@PRM5]
+                   Low       |         Middle          |      High
+        Color   [@PRM6...]   |       [@PRM7...]        |   [@PRM8...]
+        Width   [@PRM9]      |       [@PR10]           |   [@PR11]
+$FIELD @PRM1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?REACHNA
+_DEFAULT NONE
+$FIELD @PR2
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?WDID
+$FIELD @PRM3..
+_TYPE INTEGER
+_RANGE 0:10000
+_DEFAULT 0
+$FIELD @PRM4
+_TYPE REAL
+_RANGE -999:-999
+_DEFAULT -999
+$FIELD @PRM5
+_TYPE REAL
+_RANGE -999:-999
+_DEFAULT -999
+$FIELD @PRM6...
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @PRM7...
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @PRM8...
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @PRM9
+_TYPE REAL
+_RANGE 1.0:-999
+_DEFAULT 1.0
+$FIELD @PR10
+_TYPE REAL
+_RANGE 1.0:-999
+_DEFAULT 1.0
+$FIELD @PR11
+_TYPE REAL
+_RANGE 1.0:-999
+_DEFAULT 1.0
+$HELP
+ Specify characteristics for drawing this map segment.  Up to three colors
+ and line widths can be used.  Make sure the upper boundary is greater
+ than the lower boundary.
+#GROUP   12  TYPE TEXT
+$WINDOW Drop (MALD) Problem
+$TEXT
+  Cannot drop this row of map animation list specifications.
+
+  At least one row of map animation list specifications
+  must remain at all times.
+$HELP
+  GENSCN requires at least one row of list specifications to exist.
+  If you want to remove all rows use 'Drop' in the animation screen.
+#GROUP   13  TYPE PRM1
+$WINDOW SetAll (MALS)
+$SCREEN
+
+  Choose which field(s) to set for all rows and enter the value:
+
+     [@] Segment Name     [@PRM1...]     [@] Low_Color      [@PRM6...]
+     [@] WDM File         [@PR2]         [@] Mid_Color      [@PRM7...]
+     [@] Data Set Number  [@PRM3..]      [@] High_Color     [@PRM8...]
+     [@] Lower Boundary   [@PRM4]        [@] Low_Width      [@PRM9...]
+     [@] Upper Boundary   [@PRM5]        [@] Mid_Width      [@PR10...]
+                                         [@] High_Width     [@PR11...]
+
+$FIELD @] Segment
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM1 4 26 4 36
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] WDM
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PR2 5 26 5 36
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] Data
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM3 6 26 6 36
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] Lower
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM4 7 26 7 36
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] Upper
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM5 8 26 8 36
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] Low_C
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM6 4 60 4 72
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] Mid_C
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM7 5 60 5 72
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] High_C
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM8 6 60 6 72
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] Low_W
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PRM9 7 60 7 72
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] Mid_W
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PR10 8 60 8 72
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @] High_W
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE OFF @PR11 9 60 9 72
+_HELP
+  Toggle to use this for all rows of the animation list.
+$FIELD @PRM1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?REACHNA
+_DEFAULT NONE
+$FIELD @PR2
+_TYPE CHARACTER
+_VALID ?WDID
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 0:10000
+_DEFAULT 0
+$FIELD @PRM4
+_TYPE REAL
+_RANGE -999:-999
+_DEFAULT -999
+$FIELD @PRM5
+_TYPE REAL
+_RANGE -999:-999
+_DEFAULT -999
+$FIELD @PRM6
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @PRM7
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @PRM8
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @PRM9
+_TYPE REAL
+_RANGE 1.0:-999
+_DEFAULT 1.0
+$FIELD @PR10
+_TYPE REAL
+_RANGE 1.0:-999
+_DEFAULT 1.0
+$FIELD @PR11
+_TYPE REAL
+_RANGE 1.0:-999
+_DEFAULT 1.0
+$HELP
+ Toggle the field to set for all rows.  Then enter the value to be used for
+ all rows in this animation.
+#GROUP   14  TYPE TEXT
+$WINDOW Animate (MA) Problem
+$TEXT
+  No map animation segments are available
+  to manage in this version of GENSCN.
+$HELP
+  See your system administrator to add map segments to the boundary
+  wdm file so that animation can be used.
+#GROUP   15  TYPE TEXT
+$WINDOW Copy (MALC) Problem
+$TEXT
+  The maximum number of rows of animation list specifications, &,
+  has been reached.
+
+  Thus a row of animation list specifications cannot be copied.
+$HELP
+  To copy a row of animation list specifications, first remove an
+  existing row of animation list specifications using the 'Drop' action.
+#GROUP   23  TYPE PRM1
+$SCREEN
+  Modify specifications for this date row:
+
+            Year    Mon   Day   Hr    Min                      Mon   Day
+    Start  [@PRM1] [@P1] [@P2] [@P3] [@P4]      Season Start  [@PA] [@PB]
+    End    [@PRM2] [@P6] [@P7] [@P8] [@P9]      Season End    [@PC] [@PD]
+
+    Date ID        Time step    Time units   Data transformation
+    [@DATESET]     [@TSTP1]     [@TUNIT1]    [@DTRAN1]
+
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:2000
+_DEFAULT 1900
+_HELP
+ Starting year of this date row.
+$FIELD @P1
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+_HELP
+ Starting month of this date row.
+$FIELD @P2
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+_HELP
+ Starting day of this date row.
+$FIELD @P3
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+_HELP
+ Starting hour of this date row.
+$FIELD @P4
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+ Starting minute of this date row.
+$FIELD @PA
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+_HELP
+ Seasons starting month associated with this date row.
+$FIELD @PB
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+_HELP
+ Seasons starting day associated with this date row.
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:2000
+_DEFAULT 1990
+_HELP
+ Ending year of this date row.
+$FIELD @P6
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+_HELP
+ Ending month of this date row.
+$FIELD @P7
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+_HELP
+ Ending day of this date row.
+$FIELD @P8
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+_HELP
+ Ending hour of this date row.
+$FIELD @P9
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+_HELP
+ Ending minute of this date row.
+$FIELD @PC
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+_HELP
+ Seasons ending month associated with this date row.
+$FIELD @PD
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+_HELP
+ Seasons ending day associated with this date row.
+$FIELD @DATESET
+_TYPE CHARACTER
+_HELP
+ ID for this date row.
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+ Time Step of this date row.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+_HELP
+ Time Units of this date row: seconds,minutes,hours,days,months,years
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN
+_DEFAULT AVERAGE
+_HELP
+ Data transformation for this date row: average,sum,max,min
+#GROUP   24  TYPE TEXT
+$TEXT
+  Cannot drop this row of date specifications.
+
+  At least one row of date specifications must remain at all times.
+$HELP
+  GENSCN requires at least one row of date specifications to exist
+  at all times.
+#GROUP   25  TYPE TEXT
+$TEXT
+  The maximum number of rows of date specifications, &,
+  has been reached.
+
+  Thus a row of date specifications cannot be copied.
+$HELP
+  To copy a row of date specifications, first remove an existing
+  row of date specifications using the 'Drop' action.
+#GROUP   30  TYPE PRM2
+$HEADER 
+Select map/graph window to make active, modify, drop, or copy:
+
+Action | Status   Window ID  Type   Left   Top   Right  Bottom
+------ | -------- --------- ------ ------ ------ ------ ------
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  1
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NONE,ACTIVE,MODIFY,DROP,COPY
+_HELP
+ Select an Action, then Accept:F2 to take that action.
+ To select a row to make active use ACTIVE.
+ To create or modify a row use the COPY, MODIFY, and DROP options.
+$FIELD  FIELD2
+_WIDTH   1
+_COLUMN  8
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID |
+_DEFAULT |
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  10
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID INACTIVE,ACTIVE
+_HELP
+ Status of this window row.
+ One map window and one graph window may be active at one time.
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN  21
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Integer window ID for this window row.
+$FIELD  FIELD5
+_WIDTH   6
+_COLUMN  29
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID  MAP,GRAPH
+_HELP
+ Type of window:  map or graph.
+$FIELD  FIELD6
+_WIDTH   6
+_COLUMN  36
+_PROTECT PROTECTED
+_TYPE REAL
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the left edge of this window.
+$FIELD  FIELD7
+_WIDTH   6
+_COLUMN  43
+_PROTECT PROTECTED
+_TYPE REAL
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the top edge of this window.
+$FIELD  FIELD8
+_WIDTH   6
+_COLUMN  50
+_PROTECT PROTECTED
+_TYPE REAL
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the right edge of this window.
+$FIELD  FIELD9
+_WIDTH   6
+_COLUMN  57
+_PROTECT PROTECTED
+_TYPE REAL
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the bottom edge of this window.
+#GROUP   31  TYPE PRM1
+$SCREEN
+
+  Dimensions for this window:
+                             Top [@TOP..]
+              Left [@LEFT.]                 Right [@RIGHT]
+                            Bottom [@BOT..]
+
+  Choose a window type:
+                        [@] Map
+                        [@] Graph
+
+$FIELD  @LEFT.
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the left edge of this window.
+$FIELD  @TOP..
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the top edge of this window.
+$FIELD  @RIGHT
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the right edge of this window.
+$FIELD  @BOT..
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE  0.0:1.0
+_DEFAULT  0.0
+_HELP
+ Location of the bottom edge of this window.
+$FIELD  @] Map
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HELP
+  Toggle to make this a map window.
+  Note that a window must be inactive to change the type.
+$FIELD  @] Graph
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HELP
+  Toggle to make this a graph window.
+  Note that a window must be inactive to change the type.
+#GROUP   32  TYPE TEXT
+$TEXT
+  The dimensions of window & have been altered.
+#GROUP   33  TYPE TEXT
+$TEXT
+  Also, the dimensions of window & have been altered.
+#GROUP   34  TYPE TEXT
+$TEXT
+
+  The above window(s) will be drawn according to the new
+  dimensions when graphic output is next sent there.
+
+#GROUP   35  TYPE TEXT
+$TEXT
+  Cannot drop active map window.
+$HELP
+  Since a map window must be active at all times, make another map window
+  active before dropping this one.
+#GROUP   36  TYPE TEXT
+$TEXT
+  Cannot drop active graph window.
+$HELP
+  Since a graph window must be active at all times, make another graph
+  window active before dropping this one.
+#GROUP   37  TYPE TEXT
+$TEXT
+  Cannot change type of active window.
+$HELP
+  One window of each type must be active at all times.
+  Make a different window of this type active so that this window becomes
+  inactive.  Then change the type of this window.
+#GROUP   38  TYPE TEXT
+$TEXT
+  The maximum number of rows of window specifications, &,
+  has been reached.
+
+  Thus a row of window specifications cannot be copied.
+$HELP
+  To copy a row of window specifications, first remove an existing
+  row of window specifications using the 'Drop' action.
+#GROUP   50  TYPE PRM2
+$WINDOW Basin (CB)
+$HEADER 
+Select basin to make active, modify, drop, or copy:
+       |          Basin                         Number of
+Action | Status   Name     Basin Description    WDM Files Path to UCI Files
+------ | -------- -------- -------------------- --------- --------------------
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  1
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NONE,ACTIV,MODIFY,DROP,COPY
+_HELP
+ GENSCN manages multiple basins.  Each basin may have up to two WDM files
+ associated with it, and the uci files associated with each basin may be
+ stored in a unique directory.  Only one basin can be active at one time.
+ Use 'ACTIV' to change active basins.  Use 'MODIFY' to modify a basin's
+ specifications.  Use 'DROP' to drop a basin from the list.  Use 'COPY'
+ to copy a line in the list, creating another basin.
+$FIELD  FIELD2
+_WIDTH   1
+_COLUMN  8
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID |
+_DEFAULT |
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  10
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID INACTIVE,ACTIVE
+_HELP
+ Status of this basin.  Only one basin may be active at a time.
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN  19
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ Basin Name.
+$FIELD  FIELD5
+_WIDTH   20
+_COLUMN  28
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ Basin Description.
+$FIELD  FIELD6
+_WIDTH   3
+_COLUMN  52
+_PROTECT PROTECTED
+_TYPE INTEGER
+_HELP
+ Number of WDM files for this basin.
+$FIELD  FIELD7
+_WIDTH   20
+_COLUMN  59
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ Path to the UCI files for this basin.
+#GROUP  52  TYPE TEXT
+$WINDOW Basin (CB)
+$TEXT
+
+
+
+
+              Active basin has changed.
+
+               Re-initializing System
+
+[0----------------Percent Complete-------------100]
+
+#GROUP  54  TYPE TEXT
+$WINDOW Basin (CB) Problem
+$TEXT
+  ERROR opening WDM file specified for this basin, code: &
+
+  Check to be sure the name is correct, the file exists, and that
+  you have write access to it.  Also be sure that each wdm file
+  name and associated four character id is unique.
+$HELP
+  Check that the file exists as specified.
+#GROUP  56  TYPE TEXT
+$WINDOW Basin (CB) Problem
+$TEXT
+  One, and only one, basin must be active at all times.
+#GROUP  57  TYPE TEXT
+$WINDOW Basin (CB) Problem
+$TEXT
+  The maximum number of rows of basin specifications, &,
+  has been reached.
+
+  Thus a row of basin specifications cannot be copied.
+$HELP
+  To copy a row of basin specifications, first remove an existing
+  row of basin specifications using the 'Drop' action.
+#GROUP  62  TYPE TEXT
+$WINDOW Drop (CBD)
+$TEXT
+  Cannot drop this row of basin specifications.
+
+  At least one row of basin specifications must remain at all times.
+$HELP
+  GENSCN requires that a basin always be specified.
+#GROUP  65  TYPE PRM1
+$WINDOW Modify (CBM)
+$SCREEN
+ Modify parameters for this basin:
+
+         Name [@BASNAM.]
+  Description [@BASDES.....................................................]
+
+   WDM ID   Name of Basin-Specific WDM File
+ 1 [@WD1]  [@WDMNAM1........................................................]
+ 2 [@WD2]  [@WDMNAM2........................................................]
+
+  UCI Path [@UCIPTH.........................................................]
+$FIELD @BASNAM
+_TYPE    CHARACTER
+_PROTECT CORRECT
+_HELP
+ Enter a character string by which to identify this basin.
+$FIELD @BASDES
+_TYPE    CHARACTER
+_HELP
+ Enter descriptive information about this basin.
+$FIELD @WD1
+_TYPE    CHARACTER
+_HELP
+ Enter a four character WDM file id for the first basin-specific WDM file.
+ This WDM file will only be available when this basin is active.  Leave
+ this field blank if no basin-specific wdm files are desired.
+ Only basin-specific WDM files are shown on this screen.  System-wide
+ WDM file names cannot be edited from within GENSCN.
+$FIELD @WDMNAM1
+_TYPE    CHARACTER
+_HELP
+ Enter the full path and file name of this basin-specific WDM file.
+ If no WDM file id has been entered on this line this field should be
+ left blank.
+ Only basin-specific WDM files are shown on this screen.  System-wide
+ WDM file names cannot be edited from within GENSCN.
+$FIELD @WD2
+_TYPE    CHARACTER
+_HELP
+ Enter a four character WDM file id for the second basin-specific WDM file.
+ This WDM file will only be available when this basin is active.  Leave
+ this field blank if a second basin-specific wdm file is not desired.
+ Only basin-specific WDM files are shown on this screen.  System-wide
+ WDM file names cannot be edited from within GENSCN.
+$FIELD @WDMNAM2
+_TYPE    CHARACTER
+_HELP
+ Enter the full path and file name of this basin-specific WDM file.
+ If no WDM file id has been entered on this line this field should be
+ left blank.
+ Only basin-specific WDM files are shown on this screen.  System-wide
+ WDM file names cannot be edited from within GENSCN.
+$FIELD @UCIPTH
+_TYPE    CHARACTER
+_HELP
+ Enter the full path to the uci files for this basin.  This path name
+ should include all characters preceding the actual uci file names, but
+ it should not include the actual file names.  This field may be left
+ blank if the uci files reside in the directory in which GENSCN is being
+ run.  Relative path names are also acceptable.
+#GROUP  70  TYPE PRM1
+$WINDOW Save (CS)
+$SCREEN
+
+
+  About to save the state of the system in the following file:
+
+  [@FNAME..........................................................]
+
+  Use 'Accept' to save the state of the system, or use 'Previous'
+  to return to the previous menu without saving.
+
+
+$FIELD @FNAME
+_TYPE  FILE
+_VALID STATUS: UNKNOWN
+$HELP
+ Enter the name of the file on which to save the state of the system.
+  END DATA
+END CLU

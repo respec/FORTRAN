@@ -1,0 +1,2 @@
+OBJS      = stutil.obj profdr.obj tscmpr.obj a193.obj  \
+            uta193.obj tscbat.obj

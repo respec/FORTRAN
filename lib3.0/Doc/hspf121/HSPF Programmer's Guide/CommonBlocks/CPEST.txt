@@ -1,0 +1,23 @@
+<p>Includes 
+   <a href="../Dimensions/PMXPST">PMXPST</a>
+<p>Referenced by 
+   <a href="../CodeGroups/HPESTUT/SETPST">SETPST</a>,
+   <a href="../CodeGroups/HPESTUT/GETVEC">GETVEC</a>
+<p>Code
+<pre>
+C
+C     information from pest supplemental file
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxpst.inc'
+C
+      COMMON/CPEST/ USED,NUM,        ID,       
+     $              SUPVAR
+      INTEGER       USED,NUM(MAXVEC),ID(MAXVEC)
+      REAL          SUPVAR(MAXNUM,MAXVEC)
+C
+</pre>
+
+
+
+

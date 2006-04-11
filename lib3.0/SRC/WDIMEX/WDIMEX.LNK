@@ -1,0 +1,17 @@
+LO wdimex.obj
+LO \lib3.0\otlibs\aidelib.obj
+LO \lib3.0\otlibs\wdmlib.obj
+LO \lib3.0\otlibs\adwdmlib.obj
+LO \lib3.0\otlibs\utillib.obj
+LO \lib3.0\otlibs\aidelib.obj
+LO \lib3.0\otlibs\wdmlib.obj
+LO \lib3.0\otlibs\utillib.obj
+LO \lib3.0\otlibs\adwdmlib.obj
+LO \lib3.0\otlibs\wdmlib.obj
+LO \lib3.0\otlibs\adwdmlib.obj
+LO \lib3.0\otlibs\utillib.obj
+LO \lib3.0\otlibs\wdmlib.obj
+LO \lib3.0\otlibs\utillib.obj
+LO \lib3.0\otlibs\utillib.obj
+LO \lib3.0\otlibs\utillib.obj
+file \lib3.0\bin\wdimexo.exe

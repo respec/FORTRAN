@@ -1,0 +1,120 @@
+<html><head><title>NEWYR</title></head>
+<body bgcolor="#ffffff">
+<a name="NEWYR"><h3>NEWYR</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4.html">CRIN4</a> 
+<p>Calls
+   WBUFF,
+   GWORD,
+   OMSTI,
+   OMSG,
+   PVAL
+<p>Code
+<pre>
+C
+C     3.5.8.2.3.3
+C
+      SUBROUTINE NEWYR
+     I                (YR,PYR,DELT)
+C
+C     + + + PURPOSE + + +
+C     Set up initial bcw's for a new year. keys is not updated until
+C     the end of the calendar year or the end of the run
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     YR,PYR,DELT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     YR     - ???
+C     PYR    - ???
+C     DELT   - simulation time interval in minutes
+C
+C     + + + COMMON BLOCKS- VERSION INTERP4 + + +
+      INCLUDE     'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     N,OFF(1),SPLIT(2),SCLU,SGRP,
+     $            ADR,VO,VOFREE,WORDI
+      REAL        VAL(2),WORDR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (WORDR,WORDI),(VAL(1),SPLIT(1))
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  WBUFF,GWORD,OMSTI,OMSG,PVAL
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 216
+C     wordr and wordi occupy the same space in the data structure,
+C      as do val(1) and split(1)
+C
+C     save the value of vofrwd because call to gword destroys
+C       the contents of the buffer.
+      VOFREE=VOFRWD
+      IF (PYR .LE. 0) GO TO 20
+C       update linking bcw in previous year
+        VO = VOLFRM+TOTCOM
+C       get linking bcw
+        ADR = VO+1
+        CALL GWORD(ADR,      WORDR)
+        BCW = WORDI
+        IF (BCW .EQ. 0) GO TO 10
+C         program bug
+          SGRP = 138
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 10     CONTINUE
+        WORDI = -VOFREE
+        TBUFF(VO-VOBUFF+1) = WORDR
+        CALL WBUFF (TRCNO,RECLT,TSSFL,TBUFF)
+        BMTFLG = 1
+        TRCNO  = 0
+ 20   CONTINUE
+C
+C     set up the year word and the initial bcw for the new year
+C     tsb is initiated as uncompressed
+      SPLIT(1) = YR
+      SPLIT(2) = 0
+      BCWBTI   = 1
+      BCWNOV   = 0
+      VOTSB    = VOFREE+1
+      VOTFRM   = VOTSB+1
+      TZERO    = 0
+      TLAST    = -DELTAT
+      FRMTIM   = TZERO
+      NREM     = DELTAT/DELT
+      ADR      = VOFREE+1
+C     make sure correct record is in buffer
+      CALL GWORD(ADR,      WORDR)
+      CWF      = 1
+      FORFLG   = 1
+      OFF(1)   = 0
+      N        = 2
+      CALL PVAL(N,OFF,VAL,VOFREE)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="NEWYR">
+</Object>
+
+</body>
+</html>
+

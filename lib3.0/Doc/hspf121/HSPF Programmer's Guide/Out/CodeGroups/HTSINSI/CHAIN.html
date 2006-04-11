@@ -1,0 +1,137 @@
+<html><head><title>CHAIN</title></head>
+<body bgcolor="#ffffff">
+<a name="CHAIN"><h3>CHAIN</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI.html">HTSINSI</a>
+<p>Called By
+   <a href="../HSPFEC/TIMSER.html">TIMSER</a>,
+   <a href="../HRINTS/SRCBLK.html">SRCBLK</a>,
+   <a href="../HRINTS/TARBLK.html">TARBLK</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="../HIOWRK/WORKIO.html">WORKIO</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   CHAIN
+     I                  (OPST,OPND,WKST,WKND,SRTCOL,RESCOL,ST,
+     I                   ND,MAXOPN,
+     O                   OPNTAB,WKSTCH,WKNDCH)
+C
+C     + + + PURPOSE + + +
+C     Sort records wkst thru wknd in workfl in opn sequence order.
+C     the sort is made on values in field srtcol and the result is
+C     stored in field rescol.  the keys to the records at which
+C     entries for each operation start and end are stored in columns
+C     st and nd of opntab
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   ND,OPND,MAXOPN,OPNTAB(20,MAXOPN),OPST,RESCOL,SRTCOL,ST,
+     $          WKND,WKNDCH,WKST,WKSTCH
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     OPST   - ???
+C     OPND   - ???
+C     WKST   - ???
+C     WKND   - ???
+C     SRTCOL - ???
+C     RESCOL - ???
+C     ST     - ???
+C     ND     - ???
+C     MAXOPN - ???
+C     OPNTAB - ???
+C     WKSTCH - ???
+C     WKNDCH - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   J,OPNO,PREVKY,PREVOP,REC1(50),REC2(50),WKEY,RWFG,LEN,
+     $          MXKY
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  WORKIO
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     initialize keys for start and end of chain
+      WKSTCH= 0
+      WKNDCH= 0
+      LEN   = 50
+C
+      PREVOP= 0
+C     loop thru operations
+      DO 70 OPNO= OPST,OPND
+C       loop thru workfile records
+        DO 60 WKEY= WKST,WKND
+          RWFG= 0
+          MXKY= 0
+          CALL WORKIO (RWFG,LEN,WKEY,
+     M                 REC2,MXKY)
+          IF (REC2(SRTCOL) .EQ. OPNO) THEN
+C           this is the next entry
+            IF (OPNO .NE. PREVOP) THEN
+C             operation has changed - keep the starting key
+              OPNTAB(ST,OPNO)= WKEY
+C
+              IF (PREVOP.GT.0) THEN
+C               keep ending key for previous operation
+                OPNTAB(ND,PREVOP)= PREVKY
+              ELSE
+C               keep key to start of chain
+                WKSTCH= WKEY
+              END IF
+            END IF
+C
+            IF (PREVOP .GT. 0) THEN
+C             record the previous entry, with chaining information
+              REC1(RESCOL)= WKEY
+              RWFG= 1
+              MXKY= 0
+              CALL WORKIO (RWFG,LEN,PREVKY,
+     M                     REC1,MXKY)
+            END IF
+C
+C           "present" data now become "previous" data
+            DO 40 J=1,50
+              REC1(J)= REC2(J)
+ 40         CONTINUE
+            PREVOP= OPNO
+            PREVKY= WKEY
+          END IF
+ 60     CONTINUE
+ 70   CONTINUE
+C
+      IF (PREVOP .GT. 0) THEN
+C       keep key for the last entry
+        OPNTAB(ND,PREVOP)= PREVKY
+C       keep key to end of chain
+        WKNDCH= PREVKY
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="CHAIN">
+</Object>
+
+</body>
+</html>
+

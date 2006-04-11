@@ -1,0 +1,56 @@
+<html><head><title>RBUFF</title></head>
+<body bgcolor="#ffffff">
+<a name="RBUFF"><h3>RBUFF</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSSUT.html">HTSSUT</a>
+<p>Called By
+   <a href="../HRINTS/FINSTR.html">FINSTR</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C     1.2.16
+C
+      SUBROUTINE   RBUFF
+     I                 (REC,RECL,TSSFL,
+     O                  BUFF)
+C
+C     + + + PURPOSE + + +
+C     Read rec-th record into buff from file tssfl
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    REC,RECL,TSSFL
+      REAL       BUFF(RECL)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     REC    - ???
+C     RECL   - ???
+C     TSSFL  - fortran unit number of time series store file
+C     BUFF   - ???
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      READ (TSSFL,REC=REC) BUFF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="RBUFF">
+</Object>
+
+</body>
+</html>
+

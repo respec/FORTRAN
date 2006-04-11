@@ -1,0 +1,1 @@
+make lname=%1 fc=lf90 ff=-c >compile_%1.out

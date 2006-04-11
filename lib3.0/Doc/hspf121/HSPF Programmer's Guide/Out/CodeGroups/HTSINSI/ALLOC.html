@@ -1,0 +1,254 @@
+<html><head><title>ALLOC</title></head>
+<body bgcolor="#ffffff">
+<a name="ALLOC"><h3>ALLOC</h3></a>
+ 
+Purpose -  Allocate rows in the inpad and generate tsget/tsput instructions
+<p>Flow of Execution
+<ul>
+<li><a href="#L1">Start allocating message</a>
+<li><a href="#L2">Ingrp loop</a>
+    <ul>
+    <li><a href="#L3">Initialize osv size to space taken by tsget/tsput instructions - 1000 r4 words</a>
+    <li><a href="#L4">Operation loop</a>
+        <ul>
+        <li><a href="#L5">Consider this operation as a target in network block</a>
+        <li><a href="#L6">Consider operation as a target in ext sources block</a>
+        <li><a href="#L7">Release rows occupied by inputs to this operation, so they can be reused by outputs, as long as no conditional special actions prevent release</a>
+        <li><a href="#L8">Save keys in opntab as some primitive instructions were written</a>
+        <li><a href="#L9">Consider this operation as a source in the ext targets block</a>
+        <li><a href="#L10">Consider this operation as a source in the network block</a>
+        <li><a href="#L11">Release rows, as long as no conditional special actions prevent release</a>
+        <li><a href="#L12">Save keys in opntab as some primitive tsput instructions were written</a>
+        <li><a href="#L13">Find and update space occupied by osv for this operation</a>
+        </ul>
+    <li><a href="#L14">Calculate inpad row width - number of r4 values</a>
+    </ul>
+<li><a href="#L15">Done allocating message</a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI.html">HTSINSI</a>
+<p>Called By
+   <a href="../HSPFEC/TIMSER.html#L29a">TIMSER</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3.html">CRIN3</a>,
+   <a href="../../CommonBlocks/CRIN3C.html">CRIN3C</a>,
+   <a href="../../CommonBlocks/CMDUM.html">CMDUM</a>,
+   <a href="../../CommonBlocks/CMPAD.html">CMPAD</a>
+<p>Calls
+   <a href="TARGET.html">TARGET</a>,
+   <a href="RELESE.html">RELESE</a>,
+   <a href="SOURCE.html">SOURCE</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   ALLOC
+     I                  (PGPKEY,GRPST,GRPND,RUNWID)
+C
+C     + + + PURPOSE + + +
+C     Allocate rows in the inpad and generate tsget/tsput instructions
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   GRPND,GRPST,PGPKEY,RUNWID
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     PGPKEY - ???
+C     GRPST  - ???
+C     GRPND  - ???
+C     RUNWID - ???
+C
+C     + + + COMMON BLOCKS- INTERP3 + + +
+      INCLUDE    '<a href="../../CommonBlocks/CRIN3.html">crin3</a>.inc'
+      INCLUDE    '<a href="../../CommonBlocks/CRIN3C.html">crin3c</a>.inc'
+      INCLUDE    '<a href="../../CommonBlocks/CMDUM.html">cmdum</a>.inc'
+      INCLUDE    '<a href="../../CommonBlocks/CMPAD.html">cmpad</a>.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   MSGFL,GRP,I0,I1,J,MAXROW,MESSU,MROW,OPND,
+     $          OPST,OSVREC,OSVSZ,PADVO,ROWLEN,TSGKST,
+     $          TSPKST,WIDTH,WKND,WKST
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  MAX0
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  TARGET,RELESE,SOURCE
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' ALLOCATING INPAD ROWS AND GENERATING PRIMITIVE ',
+     $          'TSGET/TSPUT INSTRUCTIONS')
+ 2010 FORMAT (/,' INGROUP NO.',I3,'    OSVSZ=',I5,'    INPAD WIDTH=',
+     $          I6,' INTERVALS','    MAXROW=',I5,'  RUNWID=',I5)
+ 2020 FORMAT (/,' FINISHED ALLOCATING INPAD ROWS AND GENERATING ',
+     $          'TSGET/TSPUT INSTRUCTIONS')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0    = 0
+      I1    = 1
+C
+      MESSU = FILE(1)
+      MSGFL = FILE(15)
+C
+      <a name="L1">IF (OUTLEV .GT. 4) THEN
+C       allocating message
+        WRITE (MESSU,2000)
+      END IF
+C
+C     maximum possible no. of rows in inpad
+      MROW= MXROW
+C
+C     <a name="L2">ingrp loop
+      DO 30 GRP= GRPST,GRPND
+C       initialize
+        DO 10 J= 1,MROW
+          AVFG(J) = 1
+          RELFG(J)= 0
+ 10     CONTINUE
+        MAXROW= 0
+C
+C       <a name="L3">initialize osv size to space taken by tsget/tsput
+C       instructions - 1000 r4 words
+        OSVSZ= 1000
+C
+C       <a name="L4">operation loop
+        OPST= GRPTAB(1,GRP)
+        OPND= GRPTAB(2,GRP)
+C
+        DO 20 OPNO= OPST,OPND
+C         tsgkst is key at which first primitive tsget instruction
+C         will be written, if there are any
+          TSGKST= PGPKEY+ 1
+C
+C         <a name="L5">consider this operation as a target in network block
+          WKST  = OPNTAB(13,OPNO)
+          WKND  = OPNTAB(14,OPNO)
+C
+          CALL <a href="TARGET.html">TARGET</a> (I0,WKST,WKND,MROW,
+     I                 MESSU,MSGFL,EXTKW1,RUNWID,
+     M                 PGPKEY,AVFG,ECOUNT,MAXROW,
+     O                 RELFG)
+C
+C         <a name="L6">consider operation as a target in ext sources block
+          WKST= OPNTAB(9,OPNO)
+          WKND= OPNTAB(10,OPNO)
+C
+          CALL <a href="TARGET.html">TARGET</a> (I1,WKST,WKND,MROW,
+     I                 MESSU,MSGFL,EXTKW1,RUNWID,
+     M                 PGPKEY,AVFG,ECOUNT,MAXROW,
+     O                 RELFG)
+C
+          <a name="L7">IF ( (RUNWID .EQ. 0) .AND. (MAXROW .GT. 0) ) THEN
+C           release rows occupied by inputs to this operation,
+C           so they can be reused by outputs, as long as no
+C           conditional special actions prevent release
+            CALL <a href="RELESE.html">RELESE</a> (MAXROW,
+     M                   RELFG,
+     O                   AVFG)
+          END IF
+C
+          <a name="L8">IF (PGPKEY .GE. TSGKST) THEN
+C           some primitive instructions were written
+            OPNTAB(17,OPNO)= TSGKST
+            OPNTAB(18,OPNO)= PGPKEY
+          END IF
+C
+C         <a name="L9">consider this operation as a source in the ext targets block
+          TSPKST= PGPKEY+ 1
+          WKST  = OPNTAB(15,OPNO)
+          WKND  = OPNTAB(16,OPNO)
+C
+          CALL <a href="SOURCE.html">SOURCE</a> (I1,WKST,WKND,MROW,
+     I                 MESSU,MSGFL,EXTKW1,
+     M                 PGPKEY,AVFG,ECOUNT,MAXROW,
+     O                 RELFG)
+C
+C         <a name="L10">consider this operation as a source in the network block
+          WKST= OPNTAB(11,OPNO)
+          WKND= OPNTAB(12,OPNO)
+C
+          CALL <a href="SOURCE.html">SOURCE</a> (I0,WKST,WKND,MROW,
+     I                 MESSU,MSGFL,EXTKW1,
+     M                 PGPKEY,AVFG,ECOUNT,MAXROW,
+     O                 RELFG)
+C
+          <a name="L11">IF ( (RUNWID .EQ. 0) .AND. (MAXROW .GT. 0) ) THEN
+C           release rows, as long as no
+C           conditional special actions prevent release
+            CALL <a href="RELESE.html">RELESE</a> (MAXROW,
+     M                   RELFG,
+     O                   AVFG)
+          END IF
+C
+          <a name="L12">IF (PGPKEY .GE. TSPKST) THEN
+C           some primitive tsput instructions were written
+            OPNTAB(19,OPNO)= TSPKST
+            OPNTAB(20,OPNO)= PGPKEY
+          END IF
+C
+C         <a name="L13">find space occupied by osv for this operation
+          OSVREC= OPNTAB(8,OPNO)- OPNTAB(7,OPNO)+ 1
+C
+C         update space required by osv's in this ingrp
+          OSVSZ= MAX0(OSVSZ,OSVREC*500)
+C
+ 20     CONTINUE
+C
+C       inpad virtual origin
+        PADVO= OSVSZ
+C
+C       <a name="L14">calculate inpad row width - no. of r4 values
+        IF (MAXROW .GT. 0) THEN
+          ROWLEN= (SCRSIZ - PADVO)/MAXROW
+          WIDTH = ROWLEN- 1
+        ELSE
+C         undefined
+          WIDTH= -999
+        END IF
+C
+        GRPTAB(4,GRP)= PADVO
+        GRPTAB(5,GRP)= WIDTH
+        IF (OUTLEV .GT. 2) THEN
+C         tell about the pad
+          WRITE (MESSU,2010) GRP,OSVSZ,WIDTH,MAXROW,RUNWID
+        END IF
+C
+ 30   CONTINUE
+C
+      <a name="L15">IF (OUTLEV .GT. 4) THEN
+C       done message
+        WRITE (MESSU,2020)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="ALLOC">
+</Object>
+
+</body>
+</html>
+

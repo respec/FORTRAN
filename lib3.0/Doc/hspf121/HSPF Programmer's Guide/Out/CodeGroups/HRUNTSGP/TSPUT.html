@@ -1,0 +1,195 @@
+<html><head><title>TSPUT</title></head>
+<body bgcolor="#ffffff">
+<a name="TSPUT"><h3>TSPUT</h3></a>
+ 
+Purpose - Put a time series segment from the inpad onto tss, sequential file, dss, wdm file, expad or inpad.
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSGP.html">HRUNTSGP</a>
+<p>Called By
+   <a href="../HOSUPER/OSUPER.html">OSUPER</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CTSIN.html">CTSIN</a>,
+   <a href="../../CommonBlocks/CTSEX.html">CTSEX</a>,
+   <a href="../../CommonBlocks/CTSER.html">CTSER</a>,
+   <a href="../../CommonBlocks/CTSBU.html">CTSBU</a>,
+   <a href="../../CommonBlocks/CTSBX.html">CTSBX</a>,
+   <a href="../../CommonBlocks/CMPAD.html">CMPAD</a>
+<p>Calls
+   <a href="../HRUNTSUT/GPDUMP.html">GPDUMP</a>,
+   <a href="../HRUNTSUT/MOVROW.html">MOVROW</a>,
+   <a href="../HRUNTSPT/PUTTSS.html">PUTTSS</a>,
+   PUTDSS,
+   <a href="../HIOTSIN/GETTSI.html">GETTSI</a>,
+   <a href="../HIOTSIN/PUTTSI.html">PUTTSI</a>,
+   <a href="../HRUNTSPW/PUTWDM.html">PUTWDM</a>,
+   OMSG,
+   OMSTD,
+   OMSTI,
+   <a href="../HDATUT/FDATIM.html">FDATIM</a>
+<p>Code
+<pre>
+C
+C     4.3
+C
+      SUBROUTINE   TSPUT
+     I                   (FILES,TSPKST,TSPKND,DELT,STIVL,WID,FSTCAL,
+     I                    LSTCAL,EXTFG)
+C
+C     + + + PURPOSE + + +
+C     Put a time series segment from the inpad
+C     onto tss, sequential file, dss, wdm file, expad or inpad
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   FILES(15),TSPKST,TSPKND,DELT,STIVL,WID,FSTCAL,LSTCAL,
+     #          EXTFG
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     FILES  - ???
+C     TSPKST - ???
+C     TSPKND - ???
+C     DELT   - simulation time interval in minutes
+C     STIVL  - index of first interval in INSPAN
+C     WID    - number of intervals being simulated
+C     FSTCAL - flag indicating first interval of run
+C     LSTCAL - flag indicating last interval of run
+C     EXTFG  - flag indicating which instructions to put:
+C              0 - all
+C              1 - external only
+C              2 - internal only
+C
+C     + + + COMMON BLOCKS- SCRTCH, VERSION PUTCOM + + +
+      INCLUDE   'ctsin.inc'
+      INCLUDE   'ctsex.inc'
+      INCLUDE   'ctser.inc'
+      INCLUDE   'ctsbu.inc'
+      INCLUDE   'ctsbx.inc'
+      INCLUDE   'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   GPFLAG,I,WIDTH,WORDI,WDMSFL(4),SCLU,SGRP,DATIM(5),I200,
+     #          I3,I2,DUMIN(3),SKIPFG,WDMIDX
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (DUMIN,RDUMIN)
+      REAL         RDUMIN(3)
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  GPDUMP,MOVROW,PUTTSS,PUTDSS,GETTSI,PUTTSI
+      EXTERNAL  PUTWDM,OMSG,OMSTD,OMSTI,FDATIM
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU   = 231
+      BLEN   = 545
+      KNT    = 0
+      WIDTH= WID +1
+      I2     = 2
+      I3     = 3
+      I200   = 200
+C
+C     set the local file numbers
+      MESSU  = FILES(1)
+      TSSFL  = FILES(10)
+      DO 5 I= 1, 4
+        WDMSFL(I)= FILES(10+I)
+ 5    CONTINUE
+      MSGFL  = FILES(15)
+C
+C     read the undefined value and the error offsets
+C     from the second record of the instruction file
+C
+      CALL GETTSI (I3,I2,
+     O             DUMIN)
+      TESTFG= DUMIN(1)
+      RECLT= DUMIN(2)
+      UNDEF= RDUMIN(3)
+C
+C     process the instructions
+      DO 10 I = TSPKST,TSPKND
+        CALL GETTSI (I200,I,
+     O               INSTR)
+        IF (TESTFG.NE.0) THEN
+          GPFLAG = 2
+          CALL GPDUMP (I,GPFLAG,WIDTH,DELT)
+        END IF
+C
+        IF ( (EXTFG .EQ. 1) .AND. (VOLCOD .EQ. 3) ) THEN
+C         external only - skip movrow
+          SKIPFG= 1
+        ELSE IF ( (EXTFG .EQ. 2) .AND. (VOLCOD .NE. 3) ) THEN
+C         internal only - skip all but movrow
+          SKIPFG= 1
+        ELSE
+C         do instruction
+          SKIPFG= 0
+        END IF
+C
+        IF (SKIPFG .EQ. 0) THEN
+C         put a t.s. entry
+          IF (VOLCOD .EQ. 3) THEN
+C           pad to pad
+            CALL <a href="../HRUNTSUT/MOVROW.html">MOVROW</a> (FILE,VOPADR(1),STIVL,WIDTH)
+          ELSE IF (VOLCOD .EQ. 4) THEN
+C           put in tss file
+            CALL <a href="../HRUNTSPT/PUTTSS.html">PUTTSS</a> (FSTCAL,LSTCAL,DELT,WIDTH)
+          ELSE IF (VOLCOD .LT. 0) THEN
+C           put in wdm file
+            WDMIDX= -VOLCOD
+            CALL PUTWDM (DELT,WIDTH,WDMSFL(WDMIDX),FSTCAL,LSTCAL)
+          ELSE IF (VOLCOD .EQ. 6) THEN
+C           put in dss file
+            CALL PUTDSS (DELT,WIDTH,FSTCAL)
+          ELSE
+C           program bug
+C           invalid option - not yet supported
+            CALL <a href="../HDATUT/FDATIM.html">FDATIM</a> (FRMTIM,YEAR,TYREND,DATIM)
+            CALL OMSTD (DATIM)
+            CALL OMSTI (FILE)
+            SGRP = 2
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 KNT)
+          END IF
+C
+C         update inpad start time for next inpad
+          WORDI  = DELT
+          INPSTR = INPSTR + WORDI*(WIDTH-1)
+C
+          IF (TESTFG.NE.0) THEN
+            GPFLAG = 2
+            CALL GPDUMP(I,GPFLAG,WIDTH,DELT)
+          END IF
+C
+C         output the instruction
+          CALL PUTTSI (I200,I,INSTR)
+C
+        END IF
+C
+ 10   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="TSPUT">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+<p>Referenced by 
+   <a href="../CodeGroups/HIOOSV/GETOSV">GETOSV</a>,
+   <a href="../CodeGroups/HIOOSV/PUTOSV">PUTOSV</a>,
+   <a href="../CodeGroups/HIOOSV/GTOSVI">GTOSVI</a>,
+   <a href="../CodeGroups/HIOOSV/PTOSVI">PTOSVI</a>,
+   <a href="../CodeGroups/HIOOSV/GTOSVR">GTOSVR</a>,
+   <a href="../CodeGroups/HIOOSV/PTOSVR">PTOSVR</a>
+<p>Code
+<pre>
+C
+C     parameter for size of in memory OSV file
+      INTEGER   POSVSZ
+      PARAMETER(POSVSZ=15000)
+C
+</pre>
+
+
+
+

@@ -1,0 +1,63 @@
+CLU           29    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  ATINFO
+  END LABEL
+  DATA   CLU    29
+#GROUP    1  TYPE PRM1
+$WINDOW Attributes (&SFA)
+$SCREEN
+
+     Which search attribute [@PRM1...]
+
+     (DONE - when finished entering search attributes)
+     (HELP - for detailed information about specific attributes)
+
+$FIELD @PRM1
+_TYPE CHARACTER
+$HELP
+ Search attributes are identified by a 6 character code.
+ For a listing of the codes enter all 4 characters HELP.
+#GROUP    2  TYPE TEXT
+$WINDOW Attributes (&SFA) Problem
+$TEXT
+
+Unknown or conflicting search attribute.  Try again.
+#GROUP    3  TYPE TEXT
+$TEXT
+Attribute no.    ,        is  INTEGER   REAL      CHARACTER Length is   , type is
+#GROUP    4  TYPE PRM1
+$WINDOW Help (&SFAHelp)
+$SCREEN
+
+     ****** HELP MODE ******
+
+     Which search attribute for details [@PRM1...]
+
+     (DONE - when finished getting help for search attributes)
+$FIELD @PRM1
+_TYPE CHARACTER
+_HELP
+ You're in loop to list definition and index number of attributes.
+ Typing the first character or two will yield a list of all attributes
+ matching that string.  Type all characters of desired attribute
+ or (DONE) to exit HELP MODE.
+#GROUP    5  TYPE TEXT
+$TEXT
+Any string is allowed.
+#GROUP    6  TYPE TEXT
+$TEXT
+Unable to give help on All attributes at once.
+
+Enter the first letter of the attribute in question
+to see a list of any conflicting attribute names,
+OR
+Enter enough of the attribute name to make it unique
+to get help information on the attribute.
+#GROUP   10  TYPE TEXT
+$TEXT
+Attribute index number & not found on message file.
+#GROUP   20  TYPE TEXT
+$TEXT
+Conflicting attribute, could be any of the following:
+  END DATA
+END CLU

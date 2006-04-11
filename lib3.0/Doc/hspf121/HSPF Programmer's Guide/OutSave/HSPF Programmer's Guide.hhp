@@ -1,0 +1,458 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 Or later
+Compiled file=HSPF Programmer's Guide.chm
+Contents file=HSPF Programmer's Guide.hhc
+Default topic=Pending Enhancements.html
+Display compile progress=Yes
+Enhanced decompilation=Yes
+Full-text search=Yes
+Index file = HSPF Programmer's Guide.hhk
+Language=0x409 English (United States)
+Title=HSPF Programmer's Guide
+
+[Files]
+HSPF Programmer's Guide Table of Contents.html
+Pending Enhancements.html
+Pending Enhancements\Design for Updating Multiplication Factors During Execution.html
+CodeGroups.html
+CodeGroups\HSPF.html
+CodeGroups\HSPF\HSPF.html
+CodeGroups\HSPF\INTERP.html
+CodeGroups\HSPF\OPNBLK.html
+CodeGroups\HSPFEC.html
+CodeGroups\HSPFEC\TIMSER.html
+CodeGroups\HSPFEC\GTTMRC.html
+CodeGroups\HSPFEC\PSCHEM.html
+CodeGroups\HSPFEC\EXTTS.html
+CodeGroups\HSPFEC\RDMFAC.html
+CodeGroups\HRINTS.html
+CodeGroups\HRINTS\HRITSI.html
+CodeGroups\HRINTS\GPFINT.html
+CodeGroups\HRINTS\HRIMSI.html
+CodeGroups\HRINTS\FINSTR.html
+CodeGroups\HRINTS\NETBLK.html
+CodeGroups\HRINTS\OPNTS.html
+CodeGroups\HRINTS\MEMTS.html
+CodeGroups\HRINTS\IVALUE.html
+CodeGroups\HRINTS\PAIRS.html
+CodeGroups\HRINTS\SCHBLK.html
+CodeGroups\HRINTS\SRCBLK.html
+CodeGroups\HRINTS\TARBLK.html
+CodeGroups\HTSINSI.html
+CodeGroups\HTSINSI\ALLOC.html
+CodeGroups\HTSINSI\CHAIN.html
+CodeGroups\HTSINSI\CHANGE.html
+CodeGroups\HTSINSI\OSVFPT.html
+CodeGroups\HTSINSI\OSVPRO.html
+CodeGroups\HTSINSI\RELESE.html
+CodeGroups\HTSINSI\ROW.html
+CodeGroups\HTSINSI\SAME.html
+CodeGroups\HTSINSI\SOURCE.html
+CodeGroups\HTSINSI\TARGET.html
+CodeGroups\HTSINSI\TSINS.html
+CodeGroups\HTSINSI\WKDMP1.html
+CodeGroups\HTSINSI\WKDMP2.html
+CodeGroups\HTSINSZ.html
+CodeGroups\HTSINSZ\CRTP.html
+CodeGroups\HTSINSZ\TINOUT.html
+CodeGroups\HTSINSZ\TINSTR.html
+CodeGroups\HSPSTA.html
+CodeGroups\HSPSTA\HSPSTA.html
+CodeGroups\HSPSTA\HDMEST.html
+CodeGroups\HSPSTA\HDMES2.html
+CodeGroups\HSPSTA\HDMES3.html
+CodeGroups\HSPSTA\HDMESN.html
+CodeGroups\HSPSTA\CHKUSR.html
+CodeGroups\HSPSTA\UPDWIN.html
+CodeGroups\HSPSTA\SDELAY.html
+CodeGroups\HSPSTA\HSPF_INI.html
+CodeGroups\HSPSTA\EXT_UPDATE.html
+CodeGroups\HRINGEUT.html
+CodeGroups\HRINGEUT\OPNNO.html
+CodeGroups\HRINGEUT\TOPTNO.html
+CodeGroups\HRINGEUT\VALNO.html
+CodeGroups\HRINGEUT\TAGVAL.html
+CodeGroups\HRINSEQ.html
+CodeGroups\HRINSEQ\SEQDS.html
+CodeGroups\HRINTSS.html
+CodeGroups\HRINTSS\ADJLAB.html
+CodeGroups\HRINTSS\ADJTSB.html
+CodeGroups\HRINTSS\AICOMP.html
+CodeGroups\HRINTSS\AIUNC.html
+CodeGroups\HRINTSS\CHKTSS.html
+CodeGroups\HRINTSS\DSCHK.html
+CodeGroups\HRINTSS\FITTSB.html
+CodeGroups\HRINTSS\FLFRM.html
+CodeGroups\HRINTSS\FNDGAP.html
+CodeGroups\HRINTSS\GINIT.html
+CodeGroups\HRINTSS\GWORD.html
+CodeGroups\HRINTSS\NEWYR.html
+CodeGroups\HRINTSS\PINIT.html
+CodeGroups\HRINTSS\PROMEM.html
+CodeGroups\HRINTSS\PVAL.html
+CodeGroups\HRINTSS\RPUNC.html
+CodeGroups\HRINTSS\TSSDS.html
+CodeGroups\HRINWDM.html
+CodeGroups\HRINWDM\PROWDS.html
+CodeGroups\HRINWDM\WDMDS.html
+CodeGroups\HTSSUT.html
+CodeGroups\HTSSUT\BCWCAL.html
+CodeGroups\HTSSUT\BCWSPL.html
+CodeGroups\HTSSUT\MEXT.html
+CodeGroups\HTSSUT\RBUFF.html
+CodeGroups\HTSSUT\TFUNE.html
+CodeGroups\HTSSUT\TFUNG.html
+CodeGroups\HTSSUT\TFUNL.html
+CodeGroups\HTSSUT\XVINIT.html
+CodeGroups\HRUNTSGQ.html
+CodeGroups\HRUNTSGQ\SEQINP.html
+CodeGroups\HRUNTSGT.html
+CodeGroups\HRUNTSGT\GETTSS.html
+CodeGroups\HRUNTSGW.html
+CodeGroups\HRUNTSGW\GETWDM.html
+CodeGroups\HRUNTSPT.html
+CodeGroups\HRUNTSPT\PUTTSS.html
+CodeGroups\HRUNTSPW.html
+CodeGroups\HRUNTSPW\PUTWDM.html
+CodeGroups\HRUNTSUT.html
+CodeGroups\HRUNTSUT\LTRAN.html
+CodeGroups\HWDMUT.html
+CodeGroups\HWDMUT\CHKWDM.html
+CodeGroups\HPESTUT.html
+CodeGroups\HPESTUT\SETPST.html
+CodeGroups\HPESTUT\GETVEC.html
+CodeGroups\HDATUT.html
+CodeGroups\HDATUT\ADDTIM.html
+CodeGroups\HDATUT\DAYMNH.html
+CodeGroups\HDATUT\DIFTIM.html
+CodeGroups\HDATUT\DYPMON.html
+CodeGroups\HDATUT\ENDATE.html
+CodeGroups\HDATUT\HDATIM.html
+CodeGroups\HDATUT\EXDATE.html
+CodeGroups\HDATUT\FDATIM.html
+CodeGroups\HDATUT\FIRINT.html
+CodeGroups\HDATUT\LPYEAR.html
+CodeGroups\HDATUT\STDATE.html
+CodeGroups\HDATUT\TDIF.html
+CodeGroups\HDATUT\TIMHTW.html
+CodeGroups\HDATUT\YRMINS.html
+CodeGroups\HDATUT\YROFF.html
+CodeGroups\HDATUT\TDIFX.html
+CodeGroups\HDATUT\MJDATE.html
+CodeGroups\HPRBUT.html
+CodeGroups\HPRBUT\OMSG.html
+CodeGroups\HPRBUT\OMSINI.html
+CodeGroups\HPRBUT\OMSTI.html
+CodeGroups\HPRBUT\OMSTR.html
+CodeGroups\HPRBUT\OMSTC.html
+CodeGroups\HPRBUT\OMSTD.html
+CodeGroups\HIOOSV.html
+CodeGroups\HIOOSV\GETOSV.html
+CodeGroups\HIOOSV\PUTOSV.html
+CodeGroups\HIOOSV\GTOSVI.html
+CodeGroups\HIOOSV\PTOSVI.html
+CodeGroups\HIOOSV\GTOSVR.html
+CodeGroups\HIOOSV\PTOSVR.html
+CodeGroups\HIOTSIN.html
+CodeGroups\HIOTSIN\GETTSI.html
+CodeGroups\HIOTSIN\PUTTSI.html
+CodeGroups\HIOWRK.html
+CodeGroups\HIOWRK\WORKIO.html
+CodeGroups\HIOUCI.html
+CodeGroups\HIOUCI\DELUCI.html
+CodeGroups\HIOUCI\DMPKEY.html
+CodeGroups\HIOUCI\DUMPER.html
+CodeGroups\HIOUCI\GETEND.html
+CodeGroups\HIOUCI\GETKNM.html
+CodeGroups\HIOUCI\GETSE.html
+CodeGroups\HIOUCI\GETUCI.html
+CodeGroups\HIOUCI\GETUCIEX.html
+CodeGroups\HIOUCI\GETIND.html
+CodeGroups\HIOUCI\INIUCI.html
+CodeGroups\HIOUCI\INIKEY.html
+CodeGroups\HIOUCI\KEYUCI.html
+CodeGroups\HIOUCI\PUTKWD.html
+CodeGroups\HIOUCI\DELKWD.html
+CodeGroups\HIOUCI\PUTOLV.html
+CodeGroups\HIOUCI\PUTUCI.html
+CodeGroups\HIOUCI\PUTUCX.html
+CodeGroups\HIOUCI\PREUCI.html
+CodeGroups\HIOUCI\REPUCI.html
+CodeGroups\HIOUCI\REPUCX.html
+CodeGroups\HIOUCI\COMKEY.html
+CodeGroups\HIOUCI\UCIINP.html
+CodeGroups\HIOUCI\DELKWO.html
+CodeGroups\HIOUCI\CLOUCI.html
+Dimensions.html
+Dimensions\PHCAT.html
+Dimensions\PHMSG.html
+Dimensions\PMXFTB.html
+Dimensions\PMXOPN.html
+Dimensions\PMXOSV.html
+Dimensions\PMXPST.html
+Dimensions\PMXROW.html
+Dimensions\PMXTAB.html
+Dimensions\PMXTTB.html
+Dimensions\POSVM.html
+CommonBlocks.html
+CommonBlocks\CHCAT.html
+CommonBlocks\CHMSG.html
+CommonBlocks\CMDUM.html
+CommonBlocks\CMOSV.html
+CommonBlocks\CMPAD.html
+CommonBlocks\COSVM.html
+CommonBlocks\CPEST.html
+CommonBlocks\CPTHNM.html
+CommonBlocks\CRIN1.html
+CommonBlocks\CRIN2.html
+CommonBlocks\CRIN2C.html
+CommonBlocks\CRIN3.html
+CommonBlocks\CRIN3C.html
+CommonBlocks\CRIN4.html
+CommonBlocks\CSPEC.html
+CommonBlocks\CTSBU.html
+CommonBlocks\CTSBX.html
+CommonBlocks\CTSER.html
+CommonBlocks\CTSEX.html
+CommonBlocks\CTSIN.html
+CommonBlocks\CTSGPM.html
+CommonBlocks\CUCIM.html
+CommonBlocks\CWORK.html
+CommonBlocks\COSUPM.html
+CommonBlocks\INTERP1.html
+CommonBlocks\INTERP2.html
+CommonBlocks\INTERP3.html
+CommonBlocks\INTERP4.html
+CommonBlocks\GETCOM-PUTCOM.html
+Files.html
+Files\OSUPFL.html
+Files\TSGETFL.html
+Files\TSPUTFL.html
+Files\OSVFL.html
+Files\SPACFL.html
+Files\WORKFL.html
+
+[ALIAS]
+HSPF_Programmer_s_Guide_Table_of_Contents = HSPF Programmer's Guide Table of Contents.html
+Pending_Enhancements = Pending Enhancements.html
+Design_for_Updating_Multiplication_Factors_During_Execution = Pending Enhancements\Design for Updating Multiplication Factors During Execution.html
+CodeGroups = CodeGroups.html
+HSPF = CodeGroups\HSPF.html
+HSPF = CodeGroups\HSPF\HSPF.html
+INTERP = CodeGroups\HSPF\INTERP.html
+OPNBLK = CodeGroups\HSPF\OPNBLK.html
+HSPFEC = CodeGroups\HSPFEC.html
+TIMSER = CodeGroups\HSPFEC\TIMSER.html
+GTTMRC = CodeGroups\HSPFEC\GTTMRC.html
+PSCHEM = CodeGroups\HSPFEC\PSCHEM.html
+EXTTS = CodeGroups\HSPFEC\EXTTS.html
+RDMFAC = CodeGroups\HSPFEC\RDMFAC.html
+HRINTS = CodeGroups\HRINTS.html
+HRITSI = CodeGroups\HRINTS\HRITSI.html
+GPFINT = CodeGroups\HRINTS\GPFINT.html
+HRIMSI = CodeGroups\HRINTS\HRIMSI.html
+FINSTR = CodeGroups\HRINTS\FINSTR.html
+NETBLK = CodeGroups\HRINTS\NETBLK.html
+OPNTS = CodeGroups\HRINTS\OPNTS.html
+MEMTS = CodeGroups\HRINTS\MEMTS.html
+IVALUE = CodeGroups\HRINTS\IVALUE.html
+PAIRS = CodeGroups\HRINTS\PAIRS.html
+SCHBLK = CodeGroups\HRINTS\SCHBLK.html
+SRCBLK = CodeGroups\HRINTS\SRCBLK.html
+TARBLK = CodeGroups\HRINTS\TARBLK.html
+HTSINSI = CodeGroups\HTSINSI.html
+ALLOC = CodeGroups\HTSINSI\ALLOC.html
+CHAIN = CodeGroups\HTSINSI\CHAIN.html
+CHANGE = CodeGroups\HTSINSI\CHANGE.html
+OSVFPT = CodeGroups\HTSINSI\OSVFPT.html
+OSVPRO = CodeGroups\HTSINSI\OSVPRO.html
+RELESE = CodeGroups\HTSINSI\RELESE.html
+ROW = CodeGroups\HTSINSI\ROW.html
+SAME = CodeGroups\HTSINSI\SAME.html
+SOURCE = CodeGroups\HTSINSI\SOURCE.html
+TARGET = CodeGroups\HTSINSI\TARGET.html
+TSINS = CodeGroups\HTSINSI\TSINS.html
+WKDMP_ = CodeGroups\HTSINSI\WKDMP1.html
+WKDMP_ = CodeGroups\HTSINSI\WKDMP2.html
+HTSINSZ = CodeGroups\HTSINSZ.html
+CRTP = CodeGroups\HTSINSZ\CRTP.html
+TINOUT = CodeGroups\HTSINSZ\TINOUT.html
+TINSTR = CodeGroups\HTSINSZ\TINSTR.html
+HSPSTA = CodeGroups\HSPSTA.html
+HSPSTA = CodeGroups\HSPSTA\HSPSTA.html
+HDMEST = CodeGroups\HSPSTA\HDMEST.html
+HDMES_ = CodeGroups\HSPSTA\HDMES2.html
+HDMES_ = CodeGroups\HSPSTA\HDMES3.html
+HDMESN = CodeGroups\HSPSTA\HDMESN.html
+CHKUSR = CodeGroups\HSPSTA\CHKUSR.html
+UPDWIN = CodeGroups\HSPSTA\UPDWIN.html
+SDELAY = CodeGroups\HSPSTA\SDELAY.html
+HSPF_INI = CodeGroups\HSPSTA\HSPF_INI.html
+EXT_UPDATE = CodeGroups\HSPSTA\EXT_UPDATE.html
+HRINGEUT = CodeGroups\HRINGEUT.html
+OPNNO = CodeGroups\HRINGEUT\OPNNO.html
+TOPTNO = CodeGroups\HRINGEUT\TOPTNO.html
+VALNO = CodeGroups\HRINGEUT\VALNO.html
+TAGVAL = CodeGroups\HRINGEUT\TAGVAL.html
+HRINSEQ = CodeGroups\HRINSEQ.html
+SEQDS = CodeGroups\HRINSEQ\SEQDS.html
+HRINTSS = CodeGroups\HRINTSS.html
+ADJLAB = CodeGroups\HRINTSS\ADJLAB.html
+ADJTSB = CodeGroups\HRINTSS\ADJTSB.html
+AICOMP = CodeGroups\HRINTSS\AICOMP.html
+AIUNC = CodeGroups\HRINTSS\AIUNC.html
+CHKTSS = CodeGroups\HRINTSS\CHKTSS.html
+DSCHK = CodeGroups\HRINTSS\DSCHK.html
+FITTSB = CodeGroups\HRINTSS\FITTSB.html
+FLFRM = CodeGroups\HRINTSS\FLFRM.html
+FNDGAP = CodeGroups\HRINTSS\FNDGAP.html
+GINIT = CodeGroups\HRINTSS\GINIT.html
+GWORD = CodeGroups\HRINTSS\GWORD.html
+NEWYR = CodeGroups\HRINTSS\NEWYR.html
+PINIT = CodeGroups\HRINTSS\PINIT.html
+PROMEM = CodeGroups\HRINTSS\PROMEM.html
+PVAL = CodeGroups\HRINTSS\PVAL.html
+RPUNC = CodeGroups\HRINTSS\RPUNC.html
+TSSDS = CodeGroups\HRINTSS\TSSDS.html
+HRINWDM = CodeGroups\HRINWDM.html
+PROWDS = CodeGroups\HRINWDM\PROWDS.html
+WDMDS = CodeGroups\HRINWDM\WDMDS.html
+HTSSUT = CodeGroups\HTSSUT.html
+BCWCAL = CodeGroups\HTSSUT\BCWCAL.html
+BCWSPL = CodeGroups\HTSSUT\BCWSPL.html
+MEXT = CodeGroups\HTSSUT\MEXT.html
+RBUFF = CodeGroups\HTSSUT\RBUFF.html
+TFUNE = CodeGroups\HTSSUT\TFUNE.html
+TFUNG = CodeGroups\HTSSUT\TFUNG.html
+TFUNL = CodeGroups\HTSSUT\TFUNL.html
+XVINIT = CodeGroups\HTSSUT\XVINIT.html
+HRUNTSGQ = CodeGroups\HRUNTSGQ.html
+SEQINP = CodeGroups\HRUNTSGQ\SEQINP.html
+HRUNTSGT = CodeGroups\HRUNTSGT.html
+GETTSS = CodeGroups\HRUNTSGT\GETTSS.html
+HRUNTSGW = CodeGroups\HRUNTSGW.html
+GETWDM = CodeGroups\HRUNTSGW\GETWDM.html
+HRUNTSPT = CodeGroups\HRUNTSPT.html
+PUTTSS = CodeGroups\HRUNTSPT\PUTTSS.html
+HRUNTSPW = CodeGroups\HRUNTSPW.html
+PUTWDM = CodeGroups\HRUNTSPW\PUTWDM.html
+HRUNTSUT = CodeGroups\HRUNTSUT.html
+LTRAN = CodeGroups\HRUNTSUT\LTRAN.html
+HWDMUT = CodeGroups\HWDMUT.html
+CHKWDM = CodeGroups\HWDMUT\CHKWDM.html
+HPESTUT = CodeGroups\HPESTUT.html
+SETPST = CodeGroups\HPESTUT\SETPST.html
+GETVEC = CodeGroups\HPESTUT\GETVEC.html
+HDATUT = CodeGroups\HDATUT.html
+ADDTIM = CodeGroups\HDATUT\ADDTIM.html
+DAYMNH = CodeGroups\HDATUT\DAYMNH.html
+DIFTIM = CodeGroups\HDATUT\DIFTIM.html
+DYPMON = CodeGroups\HDATUT\DYPMON.html
+ENDATE = CodeGroups\HDATUT\ENDATE.html
+HDATIM = CodeGroups\HDATUT\HDATIM.html
+EXDATE = CodeGroups\HDATUT\EXDATE.html
+FDATIM = CodeGroups\HDATUT\FDATIM.html
+FIRINT = CodeGroups\HDATUT\FIRINT.html
+LPYEAR = CodeGroups\HDATUT\LPYEAR.html
+STDATE = CodeGroups\HDATUT\STDATE.html
+TDIF = CodeGroups\HDATUT\TDIF.html
+TIMHTW = CodeGroups\HDATUT\TIMHTW.html
+YRMINS = CodeGroups\HDATUT\YRMINS.html
+YROFF = CodeGroups\HDATUT\YROFF.html
+TDIFX = CodeGroups\HDATUT\TDIFX.html
+MJDATE = CodeGroups\HDATUT\MJDATE.html
+HPRBUT = CodeGroups\HPRBUT.html
+OMSG = CodeGroups\HPRBUT\OMSG.html
+OMSINI = CodeGroups\HPRBUT\OMSINI.html
+OMSTI = CodeGroups\HPRBUT\OMSTI.html
+OMSTR = CodeGroups\HPRBUT\OMSTR.html
+OMSTC = CodeGroups\HPRBUT\OMSTC.html
+OMSTD = CodeGroups\HPRBUT\OMSTD.html
+HIOOSV = CodeGroups\HIOOSV.html
+GETOSV = CodeGroups\HIOOSV\GETOSV.html
+PUTOSV = CodeGroups\HIOOSV\PUTOSV.html
+GTOSVI = CodeGroups\HIOOSV\GTOSVI.html
+PTOSVI = CodeGroups\HIOOSV\PTOSVI.html
+GTOSVR = CodeGroups\HIOOSV\GTOSVR.html
+PTOSVR = CodeGroups\HIOOSV\PTOSVR.html
+HIOTSIN = CodeGroups\HIOTSIN.html
+GETTSI = CodeGroups\HIOTSIN\GETTSI.html
+PUTTSI = CodeGroups\HIOTSIN\PUTTSI.html
+HIOWRK = CodeGroups\HIOWRK.html
+WORKIO = CodeGroups\HIOWRK\WORKIO.html
+HIOUCI = CodeGroups\HIOUCI.html
+DELUCI = CodeGroups\HIOUCI\DELUCI.html
+DMPKEY = CodeGroups\HIOUCI\DMPKEY.html
+DUMPER = CodeGroups\HIOUCI\DUMPER.html
+GETEND = CodeGroups\HIOUCI\GETEND.html
+GETKNM = CodeGroups\HIOUCI\GETKNM.html
+GETSE = CodeGroups\HIOUCI\GETSE.html
+GETUCI = CodeGroups\HIOUCI\GETUCI.html
+GETUCIEX = CodeGroups\HIOUCI\GETUCIEX.html
+GETIND = CodeGroups\HIOUCI\GETIND.html
+INIUCI = CodeGroups\HIOUCI\INIUCI.html
+INIKEY = CodeGroups\HIOUCI\INIKEY.html
+KEYUCI = CodeGroups\HIOUCI\KEYUCI.html
+PUTKWD = CodeGroups\HIOUCI\PUTKWD.html
+DELKWD = CodeGroups\HIOUCI\DELKWD.html
+PUTOLV = CodeGroups\HIOUCI\PUTOLV.html
+PUTUCI = CodeGroups\HIOUCI\PUTUCI.html
+PUTUCX = CodeGroups\HIOUCI\PUTUCX.html
+PREUCI = CodeGroups\HIOUCI\PREUCI.html
+REPUCI = CodeGroups\HIOUCI\REPUCI.html
+REPUCX = CodeGroups\HIOUCI\REPUCX.html
+COMKEY = CodeGroups\HIOUCI\COMKEY.html
+UCIINP = CodeGroups\HIOUCI\UCIINP.html
+DELKWO = CodeGroups\HIOUCI\DELKWO.html
+CLOUCI = CodeGroups\HIOUCI\CLOUCI.html
+Dimensions = Dimensions.html
+PHCAT = Dimensions\PHCAT.html
+PHMSG = Dimensions\PHMSG.html
+PMXFTB = Dimensions\PMXFTB.html
+PMXOPN = Dimensions\PMXOPN.html
+PMXOSV = Dimensions\PMXOSV.html
+PMXPST = Dimensions\PMXPST.html
+PMXROW = Dimensions\PMXROW.html
+PMXTAB = Dimensions\PMXTAB.html
+PMXTTB = Dimensions\PMXTTB.html
+POSVM = Dimensions\POSVM.html
+CommonBlocks = CommonBlocks.html
+CHCAT = CommonBlocks\CHCAT.html
+CHMSG = CommonBlocks\CHMSG.html
+CMDUM = CommonBlocks\CMDUM.html
+CMOSV = CommonBlocks\CMOSV.html
+CMPAD = CommonBlocks\CMPAD.html
+COSVM = CommonBlocks\COSVM.html
+CPEST = CommonBlocks\CPEST.html
+CPTHNM = CommonBlocks\CPTHNM.html
+CRIN_ = CommonBlocks\CRIN1.html
+CRIN_ = CommonBlocks\CRIN2.html
+CRIN_C = CommonBlocks\CRIN2C.html
+CRIN_ = CommonBlocks\CRIN3.html
+CRIN_C = CommonBlocks\CRIN3C.html
+CRIN_ = CommonBlocks\CRIN4.html
+CSPEC = CommonBlocks\CSPEC.html
+CTSBU = CommonBlocks\CTSBU.html
+CTSBX = CommonBlocks\CTSBX.html
+CTSER = CommonBlocks\CTSER.html
+CTSEX = CommonBlocks\CTSEX.html
+CTSIN = CommonBlocks\CTSIN.html
+CTSGPM = CommonBlocks\CTSGPM.html
+CUCIM = CommonBlocks\CUCIM.html
+CWORK = CommonBlocks\CWORK.html
+COSUPM = CommonBlocks\COSUPM.html
+INTERP_ = CommonBlocks\INTERP1.html
+INTERP_ = CommonBlocks\INTERP2.html
+INTERP_ = CommonBlocks\INTERP3.html
+INTERP_ = CommonBlocks\INTERP4.html
+GETCOM_PUTCOM = CommonBlocks\GETCOM-PUTCOM.html
+Files = Files.html
+OSUPFL = Files\OSUPFL.html
+TSGETFL = Files\TSGETFL.html
+TSPUTFL = Files\TSPUTFL.html
+OSVFL = Files\OSVFL.html
+SPACFL = Files\SPACFL.html
+WORKFL = Files\WORKFL.html
+[MAP]
+#include HSPF Programmer's Guide.ID

@@ -1,0 +1,707 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  attributes 151 - 200
+END COMMENT
+DSN            8    TYPE  ATTR   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+  END LABEL
+  DATA   DSN     8
+#ATTRIBUTE  QSDMAY    INDEX   151
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge May.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for May.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 107, SDQ5.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDJUN    INDEX   152
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge June.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for June.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 108, SDQ6.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDJUL    INDEX   153
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge July.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for July.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 109, SDQ7.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDAUG    INDEX   154
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge August
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for August.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 110, SDQ8.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  QSDSEP    INDEX   155
+$TYPE     REAL
+$LENGTH   1
+$DESC     Standard deviation for mean discharge September
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Standard deviation, in cubic feet per second, of
+   mean discarge for September.  From flow variability
+   computer program no. W4422.  Basin and streamflow
+   characteristic no 111, SDQ9.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L01002    INDEX   156
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day low flow, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 1-day mean discharge, in cubic feet
+   per second, for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 112, M1,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L01010    INDEX   157
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day low flow, 10-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 1-day mean discharge, in cubic feet
+   per second, for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 113, M1,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L01020    INDEX   158
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day low flow, 20-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 1-day mean discharge, in cubic feet
+   per second, for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 114, M1,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L03002    INDEX   159
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day low flow, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 3-day mean discharge, in cubic feet
+   per second, for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 115, M3,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L03010    INDEX   160
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day low flow, 10-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 3-day mean discharge, in cubic feet
+   per second, for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 116, M3,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L03020    INDEX   161
+$TYPE     REAL
+$LENGTH   1
+$DESC     Annual mininum 3-day mean discharge, 20-year re
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 3-day mean discharge, in cubic feet
+   per second, for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 117, M3,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L07002    INDEX   162
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day low flow, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 7-day mean discharge, in cubic feet
+   per second, for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 118, M7,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L07005    INDEX   163
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day low flow, 5-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 7-day mean discharge, in cubic feet
+   per second, for 5-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 119, M7,5.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L07010    INDEX   164
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day low flow, 10-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 7-day mean discharge, in cubic feet
+   per second, for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 120, M7,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L07020    INDEX   165
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day low flow, 20-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 7-day mean discharge, in cubic feet
+   per second, for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 121, M7,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L14002    INDEX   166
+$TYPE     REAL
+$LENGTH   1
+$DESC     14-day low flow, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 14-day mean discharge, in cubic feet
+   per second, for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 122, M14,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L14010    INDEX   167
+$TYPE     REAL
+$LENGTH   1
+$DESC     14-day low flow, 10-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 14-day mean discharge, in cubic feet
+   per second, for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 123, M14,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L14020    INDEX   168
+$TYPE     REAL
+$LENGTH   1
+$DESC     14-day low flow, 20-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 14-day mean discharge, in cubic feet
+   per second, for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 124, M14,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L30002    INDEX   169
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day low flow, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 30-day mean discharge, in cubic feet
+   per second, for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 125, M30,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L30010    INDEX   170
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day low flow, 10-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 30-day mean discharge, in cubic feet
+   per second, for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 126, M30,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L30020    INDEX   171
+$TYPE     REAL
+$LENGTH   1
+$DESC     30-day low flow, 20 year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 30-day mean discharge, in cubic feet
+   per second, for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 127, M30,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L90002    INDEX   172
+$TYPE     REAL
+$LENGTH   1
+$DESC     90-day low flow, 2-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 90-day mean discharge, in cubic feet
+   per second, for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 128, M90,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L90010    INDEX   173
+$TYPE     REAL
+$LENGTH   1
+$DESC     90-day low flow, 10-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 90-day mean discharge, in cubic feet
+   per second, for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 129, M90,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  L90020    INDEX   174
+$TYPE     REAL
+$LENGTH   1
+$DESC     90-day low flow, 20-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual minimum 90-day mean discharge, in cubic feet
+   per second, for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 130, M90,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H01002    INDEX   175
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day high flow, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 1-day mean discharge, in cubic feet
+   per second for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 136, V1,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H01005    INDEX   176
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day high flow, 5-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 1-day mean discharge, in cubic feet
+   per second for 5-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 137, V1,5.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H01010    INDEX   177
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day high flow, 10-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 1-day mean discharge, in cubic feet
+   per second for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 138, V1,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H01020    INDEX   178
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day high flow, 20-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 1-day mean discharge, in cubic feet
+   per second for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 139, V1,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H01025    INDEX   179
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day high flow, 25-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 1-day mean discharge, in cubic feet
+   per second for 25-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 140, V1,25.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H01050    INDEX   180
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day high flow, 50-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 1-day mean discharge, in cubic feet
+   per second for 50-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 141, V1,50.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H01100    INDEX   181
+$TYPE     REAL
+$LENGTH   1
+$DESC     1-day high flow, 100-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 1-day mean discharge, in cubic feet
+   per second for 100-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 131, V1,100.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H03002    INDEX   182
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day high flow, 2-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 3-day mean discharge, in cubic feet
+   per second for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 142, V3,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H03005    INDEX   183
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day high flow, 5-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 3-day mean discharge, in cubic feet
+   per second for 5-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 143, V3,5.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H03010    INDEX   184
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day high flow, 10-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 3-day mean discharge, in cubic feet
+   per second for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 144, V3,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H03020    INDEX   185
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day high flow, 20-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 3-day mean discharge, in cubic feet
+   per second for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 145, V3,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H03025    INDEX   186
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day high flow, 25-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 3-day mean discharge, in cubic feet
+   per second for 25-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 146, V3,25.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H03050    INDEX   187
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day high flow, 50-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 3-day mean discharge, in cubic feet
+   per second for 50-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 147, V3,50.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H03100    INDEX   188
+$TYPE     REAL
+$LENGTH   1
+$DESC     3-day high flow, 100-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 3-day mean discharge, in cubic feet
+   per second for 100-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 148, V3,100.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H07002    INDEX   189
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day high flow, 2-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 7-day mean discharge, in cubic feet
+   per second for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 149, V7,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H07005    INDEX   190
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day high flow, 5-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 7-day mean discharge, in cubic feet
+   per second for 5-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 150, V7,5.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H07010    INDEX   191
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day high flow, 10-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 7-day mean discharge, in cubic feet
+   per second for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 151, V7,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H07020    INDEX   192
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day high flow, 20-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 7-day mean discharge, in cubic feet
+   per second for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 152, V7,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H07025    INDEX   193
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day high flow, 25-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 7-day mean discharge, in cubic feet
+   per second for 25-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 153, V7,25.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H07050    INDEX   194
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day high flow, 50-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 7-day mean discharge, in cubic feet
+   per second for 50-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 154, V7,50.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H07100    INDEX   195
+$TYPE     REAL
+$LENGTH   1
+$DESC     7-day high flow, 100-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 7-day mean discharge, in cubic feet
+   per second for 100-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 155, V7,100.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H15002    INDEX   196
+$TYPE     REAL
+$LENGTH   1
+$DESC     15-day high flow, 2-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 15-day mean discharge, in cubic feet
+   per second for 2-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 156, V15,2.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H15005    INDEX   197
+$TYPE     REAL
+$LENGTH   1
+$DESC     15-day high flow, 5-year recurrence
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 15-day mean discharge, in cubic feet
+   per second for 5-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 132, V15,5.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H15010    INDEX   198
+$TYPE     REAL
+$LENGTH   1
+$DESC     15-day high flow, 10-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 15-day mean discharge, in cubic feet
+   per second for 10-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 157, V15,10.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H15020    INDEX   199
+$TYPE     REAL
+$LENGTH   1
+$DESC     15-day high flow, 20-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 15-day mean discharge, in cubic feet
+   per second for 20-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 158, V15,20.  See WATSTORE users
+   manual, Appendix.
+#ATTRIBUTE  H15025    INDEX   200
+$TYPE     REAL
+$LENGTH   1
+$DESC     15-day high flow, 25-year recurrence.
+$OPTIONAL  TIMESERIES, TABLE, VECTOR, SPACE-TIME, MESSAGE
+$RANGE    0.000E-01: -999.
+$DEFAULT  0.000E-01
+$HELP
+   Annual maximum 15-day mean discharge, in cubic feet
+   per second for 25-year recurrence interval,
+   defined by log-Pearson Type III fitting in ANNIE
+   or WATSTORE program A969.  Basin and streamflow
+   characteristic no 159, V15,25.  See WATSTORE users
+   manual, Appendix.
+  END DATA
+END CLU

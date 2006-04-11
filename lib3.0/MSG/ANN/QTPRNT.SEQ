@@ -1,0 +1,211 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  Message file cluster for QTPRNT.F77 (WDM Error Print) code group
+END COMMENT
+CLU           50    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  WDM ER
+  END LABEL
+  DATA   CLU    50
+#GROUP    1  TYPE TEXT
+$TEXT
+Non-specific error on WDM file open.
+#GROUP    4  TYPE TEXT
+$TEXT
+Copy/update failed due to data overlap problem - part of source needed.
+#GROUP    5  TYPE TEXT
+$TEXT
+Copy/update failed due to data overlap problem.
+#GROUP    6  TYPE TEXT
+$TEXT
+No data present on data set.
+#GROUP    8  TYPE TEXT
+$TEXT
+Bad dates specified.
+SEC,MIN,HOUR < 0             DAY,MONTH,YEAR < 1
+SEC,MIN > 59                 HOUR > 24
+MONTH > 12                   YEAR > 1000000
+#GROUP    9  TYPE TEXT
+$TEXT
+Data present in current group.
+#GROUP   10  TYPE TEXT
+$TEXT
+No data in requested group.
+#GROUP   11  TYPE TEXT
+$TEXT
+No non-missing data, data has not started yet.
+#GROUP   14  TYPE TEXT
+$TEXT
+Date specified not within valid range for data set.
+#GROUP   15  TYPE TEXT
+$TEXT
+Time units and time step must match label exactly with VBTIME=1.
+#GROUP   20  TYPE TEXT
+$TEXT
+Problem with one or more of the following parameters:
+  GPFLG, DXX, NVAL, QUALVL, LTSTEP, LTUNIT
+#GROUP   21  TYPE TEXT
+$TEXT
+Dates from WDM file do not match expected date.
+#GROUP   23  TYPE TEXT
+$TEXT
+Not a valid table.
+#GROUP   24  TYPE TEXT
+$TEXT
+Not a valid associated table.
+#GROUP   25  TYPE TEXT
+$TEXT
+Template already exists.
+#GROUP   26  TYPE TEXT
+$TEXT
+No space to add another table.
+  OR
+No space for another question.
+#GROUP   27  TYPE TEXT
+$TEXT
+No tables to return information about.
+#GROUP   28  TYPE TEXT
+$TEXT
+Table does not currently exist.
+#GROUP   30  TYPE TEXT
+$TEXT
+Trying to get or put more than whole table.
+#GROUP   31  TYPE TEXT
+$TEXT
+Trying to get or put more than whole extension.
+#GROUP   32  TYPE TEXT
+$TEXT
+Data header doesn't match.
+#GROUP   33  TYPE TEXT
+$TEXT
+Problems with row/space specifications.
+#GROUP   36  TYPE TEXT
+$TEXT
+Missing needed following data for a get.
+#GROUP   37  TYPE TEXT
+$TEXT
+No data present.
+#GROUP   38  TYPE TEXT
+$TEXT
+Missing part of time required.
+#GROUP   39  TYPE TEXT
+$TEXT
+Missing data group.
+#GROUP   40  TYPE TEXT
+$TEXT
+No data available.
+#GROUP   41  TYPE TEXT
+$TEXT
+No data to read.
+#GROUP   42  TYPE TEXT
+$TEXT
+Overlap an existing group.
+#GROUP   43  TYPE TEXT
+$TEXT
+Can't add another space time group.
+#GROUP   44  TYPE TEXT
+$TEXT
+Trying to get/put more data than in block.
+#GROUP   45  TYPE TEXT
+$TEXT
+Types don't match.
+#GROUP   46  TYPE TEXT
+$TEXT
+Bad space time group specification parameter.
+#GROUP   47  TYPE TEXT
+$TEXT
+Bad direction flag.
+#GROUP   48  TYPE TEXT
+$TEXT
+Conflicting spec of space time dim and number of timeseries data sets.
+#GROUP   49  TYPE TEXT
+$TEXT
+Group doesn't exist.
+#GROUP   50  TYPE TEXT
+$TEXT
+Requested attributes missing from this data set.
+#GROUP   51  TYPE TEXT
+$TEXT
+No space for another DLG.
+#GROUP   61  TYPE TEXT
+$TEXT
+Old data set does not exist.
+#GROUP   62  TYPE TEXT
+$TEXT
+New data set already exists.
+#GROUP   71  TYPE TEXT
+$TEXT
+Data set already exists.
+#GROUP   72  TYPE TEXT
+$TEXT
+Old data set does not exist.
+#GROUP   73  TYPE TEXT
+$TEXT
+New data set already exists.
+#GROUP   81  TYPE TEXT
+$TEXT
+Data set does not exist.
+#GROUP   82  TYPE TEXT
+$TEXT
+Data set exists, but is wrong DSTYP.
+#GROUP   83  TYPE TEXT
+$TEXT
+WDM file already open, can't create it.
+#GROUP   84  TYPE TEXT
+$TEXT
+Data set number out of valid range.
+#GROUP   85  TYPE TEXT
+$TEXT
+Trying to write to a read-only data set.
+#GROUP   87  TYPE TEXT
+$TEXT
+Can't remove message WDM file from buffer.
+#GROUP   88  TYPE TEXT
+$TEXT
+Can't open another WDM file.
+#GROUP   89  TYPE TEXT
+$TEXT
+Check digit on 1st record of WDM file is bad.
+#GROUP  101  TYPE TEXT
+$TEXT
+Incorrect character value for attribute.
+#GROUP  102  TYPE TEXT
+$TEXT
+Attribute already on label.
+#GROUP  103  TYPE TEXT
+$TEXT
+No room on label for attribute.
+#GROUP  104  TYPE TEXT
+$TEXT
+Data present, can't update attribute.
+#GROUP  105  TYPE TEXT
+$TEXT
+Attribute not allowed for this type data set.
+#GROUP  106  TYPE TEXT
+$TEXT
+Can't delete attribute, its required.
+#GROUP  107  TYPE TEXT
+$TEXT
+Attribute not present on this data set.
+#GROUP  108  TYPE TEXT
+$TEXT
+Incorrect integer value for attribute.
+#GROUP  109  TYPE TEXT
+$TEXT
+Incorrect real value for attribute.
+#GROUP  110  TYPE TEXT
+$TEXT
+Attributes not found on message file.
+#GROUP  111  TYPE TEXT
+$TEXT
+Attribute name not found (no match).
+#GROUP  112  TYPE TEXT
+$TEXT
+More attributes exist which match SAFNAM.
+#GROUP  121  TYPE TEXT
+$TEXT
+No space for another attribute.
+  END DATA
+END CLU

@@ -1,0 +1,6 @@
+hrindss.obj:   cpthnm.inc  cifltb.inc
+hdssut.obj:    cifltb.inc
+hruntsgd.obj:  ctsin.inc  ctsex.inc  ctser.inc  ctsbu.inc  ctsbx.inc \
+               cmpad.inc  cifltb.inc
+hruntspd.obj:  ctsin.inc  ctsex.inc  ctser.inc  ctsbu.inc  ctsbx.inc \
+               cmpad.inc  cifltb.inc

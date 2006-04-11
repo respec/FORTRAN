@@ -1,0 +1,89 @@
+SI        1000          0
+CO   SCRTCH
+HE   TSGET/TSPUT common
+SE   CTSGP.INC
+HE 1 instruction
+VA 1 AMODE    0   0   0   0 I P                         1            
+EQ 1 INSTR  200   0   0   0 I P AMODE                   1            
+VA 1 NCOMPS   0   0   0   0 I P                         1            
+VA 1 VOLCOD   0   0   0   0 I P                         1            
+VA 1 FILE     0   0   0   0 I P                         1            
+VA 1 DELTAT   0   0   0   0 I P                         1            
+VA 1 FREC     0   0   0   0 I P                         1            
+VA 1 LREC     0   0   0   0 I P                         1            
+VA 1 COMPR    0   0   0   0 I P                         1            
+EQ 1 QLFG     0   0   0   0 I P COMPR                   1            
+VA 1 TOTCOM   0   0   0   0 I P                         1            
+VA 1 FMTCLS   0   0   0   0 I P                         1            
+VA 1 BEGYR    0   0   0   0 I P                         1            
+VA 1 TENDR    0   0   0   0 I P                         1            
+VA 1 LGAP     0   0   0   0 I P                         1            
+VA 1 TGAP     0   0   0   0 I P                         1            
+VA 1 GAPVAL   0   0   0   0 R P                         1            
+VA 1 LTRNFG   0   0   0   0 I P                         1            
+VA 1 VOTSB    0   0   0   0 I P                         1            
+EQ 1 CRDSEQ   3   0   0   0 I P VOTSB                   1            
+VA 1 VOLFRM   0   0   0   0 I P                         1            
+VA 1 VOTFRM   0   0   0   0 I P                         1            
+VA 1 BCWBTI   0   0   0   0 I P                         1            
+EQ 1 BCW      0   0   0   0 I P BCWBTI                  1            
+VA 1 BCWNOV   0   0   0   0 I P                         1            
+VA 1 INPSTR   0   0   0   0 I P                         1            
+VA 1 ENDF     0   0   0   0 I P                         1            
+VA 1 YEAR     0   0   0   0 I P                         1            
+VA 1 MO       0   0   0   0 I P                         1            
+VA 1 DAY      0   0   0   0 I P                         1            
+VA 1 LPYRFG   0   0   0   0 I P                         1            
+EQ 1 AGGRFG   0   0   0   0 I P LPYRFG                  1            
+VA 1 NREM     0   0   0   0 I P                         1            
+VA 1 TYREND   0   0   0   0 I P                         1            
+VA 1 FRMTIM   0   0   0   0 I P                         1            
+VA 1 TZERO    0   0   0   0 I P                         1            
+EQ 1 OLDOFF   0   0   0   0 I P TZERO                   1            
+VA 1 TLAST    0   0   0   0 I P                         1            
+VA 1 UCNT     0   0   0   0 I P                         1            
+EQ 1 CRDNO    0   0   0   0 I P UCNT                    1            
+VA 1 ZCNT     0   0   0   0 I P                         1            
+VA 1 VOPADR  20   0   0   0 I P                         1            
+VA 1 OFFSET  20   0   0   0 I P                         1            
+VA 1 STKIND  20   0   0   0 I P                         1            
+VA 1 STTRAN  20   0   0   0 I P                         1            
+VA 1 INMODE  20   0   0   0 I P                         1            
+VA 1 A       20   0   0   0 R P                         1            
+VA 1 B       20   0   0   0 R P                         1            
+VA 1 PVAR    20   0   0   0 R P                         1            
+VA 1 INPDAT   6   0   0   0 I P                         1            
+VA 1 TSGETF   0   0   0   0 I P                         1            
+EQ 1 TSPUTF   0   0   0   0 I P TSGETF                  1            
+VA 1 XOLD    20   0   0   0 R P                         1            
+VA 1 XNEW    20   0   0   0 R P                         1            
+VA 1 XVAR    20   0   0   0 R P                         1            
+VA 1 XZERO   20   0   0   0 R P                         1            
+VA 1 XLAST   20   0   0   0 R P                         1            
+VA 1 TXOLD    0   0   0   0 I P                         1            
+VA 1 TXNEW    0   0   0   0 I P                         1            
+VA 1 TXVAR    0   0   0   0 I P                         1            
+VA 1 RRATIO   0   0   0   0 R P                         1            
+VA 1 RATIO    0   0   0   0 I P                         1            
+VA 1 SUITFG   0   0   0   0 I P                         1            
+VA 1 TESTFG   0   0   0   0 I P                         1            
+VA 1 UFLAG    0   0   0   0 I P                         1            
+VA 1 ZFLAG    0   0   0   0 I P                         1            
+VA 1 UNDEF    0   0   0   0 I P                         1            
+VA 1 MSGFL    0   0   0   0 I P                         1            
+VA 1 MESSU    0   0   0   0 I P                         1            
+VA 1 KNT      0   0   0   0 I P                         1            
+VA 1 TSSFL    0   0   0   0 I P                         1            
+VA 1 BADR     0   0   0   0 I P                         1            
+VA 1 BLEN     0   0   0   0 I P                         1            
+VA 1 CWF      0   0   0   0 I P                         1            
+VA 1 FORFLG   0   0   0   0 I P                         1            
+VA 1 BMTFLG   0   0   0   0 I P                         1            
+VA 1 EXTF     0   0   0   0 I P                         1            
+VA 1 RECLT    0   0   0   0 I P                         1            
+VA 1 TRCNO    0   0   0   0 I P                         1            
+VA 1 VOBUFF   0   0   0   0 I P                         1            
+VA 1 ENDBUF   0   0   0   0 I P                         1            
+VA 1 TBUFF  545   0   0   0 R P                         1            
+
+WR

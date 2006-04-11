@@ -1,0 +1,119 @@
+
+MKCOM is a program for revising and maintaining the HSPF Operations
+Status Vector common blocks.  This program builds the common blocks
+from the data structure specified in the input file 'MKCOM.INP'.
+_______________________________________________________________________
+
+
+An input file to MKCOM can contain several possible card types, each
+of which is explained below:
+
+
+  MO - module name (format A2,3X,A6)
+     Example:
+     MO   RCHRES
+
+The MO card is used to indicate the module name, such as PERLND, IMPLND
+or RCHRES.
+
+
+  SI - size of OSV (format A2,3X,2I10)
+     Example:
+     SI         6000         0
+
+The SI card is used to indicate the size of the OSV.  The first integer
+is the total size and the second integer indicates the starting position
+in the OSV.
+
+
+  CO - common block name (format A2,3X,A6)
+     Example:
+     CO   SCRTCH
+
+The CO card is used to enter the common block name.
+
+
+  HE - header (format A2,I2,1X,A75)
+     Example:
+     HE   RCHRES module common
+
+The HE card is used to enter header information which will appear in a
+comment line in the include file.
+
+
+  SE - output file name (format A2,3X,A12,I2,1X,20I1)
+     Example:
+     SE   CRHGE.INC
+
+The SE card is used to indicate the name of the include file into which
+the common block will be written.
+
+
+  EQ - equivalence variable
+       (format A2,3X,A6,3I4,2(1X,A1),1X,A16,1X,A6,1X,20I1)
+     Example:
+     EQ   ASVEC   11   0   0 I P HYDRFG                  11111111
+
+The EQ card is used to indicate variables that are equivalenced to a member
+of that common block.  The first character string is the name of the
+equivalence variable, followed by three integer fields indicating the
+dimensions of this variable.  The next character indicates the variable
+type (I-integer, R-real or D-double precision), followed by a character
+to indicate a code such as parameter or state variable.  The next character
+field is used to indicate the variable to which this variable is equivalenced.
+The series of integer fields is used to indicate in which other sections this
+variable is used.  A '1' in the first of these fields indicates that this
+variable is used in the first section of this module, a '1' in the second
+indicates that this variable is used the second section, etc.  A value of
+'0' indicates that this variable is not used in that particular section.
+
+
+  VA - variable name
+       (format A2,3X,A6,3I4,2(1X,A1),1X,A16,1X,A6,1X,20I1)
+     Example:
+     VA   HYDRFG   0   0   0 I P                         11111111
+
+The VA card is used to indicate variables in the common block.  The first
+character string is the name of the variable, followed by three integer
+fields indicating the dimensions of this variable.  The next character
+indicates the variable type (I-integer, R-real or D-double precision),
+followed by a character to indicate a code such as parameter, dummy, or
+state variable.  The series of integer fields at the end of the card is
+used to indicate in which other sections this variable is used.  A '1' in
+the first of these fields indicates that this variable is used in the
+first section of this module, a '1' in the second indicates that this
+variable is used the second section, etc.  A value of '0' indicates that
+this variable is not used in that particular section.
+
+
+  WR - write (format A2)
+     Example:
+     WR
+
+The WR card indicates the end of the input data.
+
+
+
+
+
+
+Once MKCOM.INP is built the program can be run.  The common
+blocks specified in the input file will be produced along with
+three other files:  mkcom.out, mkcom.spa, and mkcom.spe.
+
+The .spa file contains the addresses of the variables in the common
+blocks.  At this point the user should check to see that all double
+precision variables start at the beginning of a word.  Where these
+variables do not start at the beginning of a word, a dummy varaible
+should be added before that variable.
+
+After the double precision variables have been corrected, MKCOM can
+be run again.  Note that the input file for MKCOM can handle only three
+subscripts in the varaible names.  After the common blocks have been
+produced this final time the dimensions of these variables should be
+manually changed in the .inc files.
+
+Note also that the flag pointers in the *ts.seq files will have to be
+corrected.  The correct values for the flag pointers can be found in
+MKCOM.OUT.  The variable positions in *ts.seq should also be updated
+according to the values in MKCOM.SPA.

@@ -1,0 +1,57 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSSUT">HTSSUT</a>
+<p>Called By
+
+<p>Common Blocks 
+    
+<p>Calls
+
+<p>Code
+<pre>
+C
+C     1.2.20
+C
+      SUBROUTINE   MEXT
+     I                (RECLT,BLEN,
+     M                BADR,TBUFF)
+C
+C     + + + PURPOSE + + +
+C     Move extension into buffer area as needed
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    BADR,BLEN,RECLT
+      REAL       TBUFF(BLEN)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     RECLT  - length of buffer portion of tbuff
+C     BLEN   - length of tbuff in real words
+C     BADR   - largest address filled in vector tbuff
+C     TBUFF  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    NEXT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      NEXT = BADR -RECLT
+      BADR = NEXT
+      IF (BADR .LT. 0) BADR=0
+   10 CONTINUE
+      IF ((NEXT .GT. 0)) THEN
+        TBUFF(NEXT) = TBUFF(RECLT+NEXT)
+        NEXT        = NEXT -1
+        GO TO 10
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+

@@ -1,0 +1,74 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+   <a href="DYPMON">DYPMON</a>,
+   <a href="FDATIM">FDATIM</a>,
+   <a href="../HRUNTSUT/VYDELT">VYDELT</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C     1.2.18
+C
+      SUBROUTINE   LPYEAR
+     I                  (YEAR,
+     O                  LPYRFG)
+C
+C     + + + PURPOSE + + +
+C     Returns a leap year flag, lpyrfg, that is on if the year is a
+C     leap year.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    LPYRFG,YEAR
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     YEAR   - ???
+C     LPYRFG - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    I4,I100,I400
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  MOD
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I4   = 4
+      I100 = 100
+      I400 = 400
+C
+      IF ( MOD(YEAR,I100) .EQ. 0) THEN
+C       on a century boundary
+        IF ( MOD(YEAR,I400) .EQ. 0) THEN
+C         on a 400 year boundary
+          LPYRFG= 1
+        ELSE
+          LPYRFG= 0
+        END IF
+      ELSE
+        IF ( MOD(YEAR,I4) .EQ. 0) THEN
+C         leap year
+          LPYRFG= 1
+        ELSE
+          LPYRFG= 0
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+

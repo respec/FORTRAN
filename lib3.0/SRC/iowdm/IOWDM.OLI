@@ -1,0 +1,5 @@
+OBJS      = inwatx.obj inwatg.obj indsop.obj inwdmu.obj \
+            iowdmu.obj ckspac.obj inflts.obj \
+            inflat.obj infbat.obj indbat.obj inwbat.obj inxbat.obj
+
+INCOTHER  =

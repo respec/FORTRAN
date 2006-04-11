@@ -1,0 +1,83 @@
+<html><head><title>SPWSUP</title></head>
+<body bgcolor="#ffffff">
+<a name="SPWSUP"><h3>SPWSUP</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT.html">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPWSUP
+     I                    (SPIVL)
+C
+C     + + + PURPOSE + + +
+C     Update user-defined quantities for Global Workspace variables.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     SPIVL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     SPIVL  - interval of run
+C
+C     + + + COMMON BLOCKS + + +
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER          UVQ,PTR1,PTR2
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    MOD
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      DO 10 UVQ= 1, NVQD
+        IF (UVQOPX(UVQ) .LE. 0) THEN
+C         this is a workspace variable or an internal boolean
+          PTR2= MOD (SPIVL- 1,UVQLEN(UVQ))+ UVQPOS(UVQ)
+          IF (UVQOPX(UVQ) .EQ. 0) THEN
+C           workspace
+            IF (SPIVL .GT. 1) THEN
+C             update value from previous interval
+              PTR1= MOD (SPIVL- 2+ UVQLEN(UVQ),UVQLEN(UVQ))+
+     $              UVQPOS(UVQ)
+              IF (UVQTYP(UVQ) .EQ. 2) THEN
+C               integer
+                IVQPIP(PTR2)= IVQPIP(PTR1)
+              ELSE
+C               real or dp
+                UVQPIP(PTR2)= UVQPIP(PTR1)
+              END IF
+            END IF
+          ELSE
+C           internal boolean
+            IVQPIP(PTR2)= -1
+          END IF
+        END IF
+ 10   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="SPWSUP">
+</Object>
+
+</body>
+</html>
+

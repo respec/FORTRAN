@@ -1,0 +1,597 @@
+PROCESSING C:\LIB3.0\HSPFMSG.WDM                                           
+CHECK WDM:          11 WITH PTSNUM          32
+  TYPE:           1
+    NO DATASETS
+  TYPE:           2
+    NO DATASETS
+  TYPE:           3
+    NO DATASETS
+  TYPE:           4
+    NO DATASETS
+  TYPE:           5
+    NO DATASETS
+  TYPE:           6
+    NO DATASETS
+  TYPE:           7
+    NO DATASETS
+  TYPE:           8
+    LOOKING FOR            9 DATASETS,FROM           47
+    GOOD POINTERS FOR           13
+    GOOD POINTERS FOR           12
+    GOOD POINTERS FOR           11
+    GOOD POINTERS FOR           10
+    GOOD POINTERS FOR            9
+    GOOD POINTERS FOR            8
+    GOOD POINTERS FOR            7
+    GOOD POINTERS FOR            6
+    GOOD POINTERS FOR            5
+  TYPE:           9
+    LOOKING FOR          101 DATASETS,FROM           49
+    GOOD POINTERS FOR          347
+    GOOD POINTERS FOR          121
+    GOOD POINTERS FOR          123
+    GOOD POINTERS FOR          122
+    GOOD POINTERS FOR          127
+    GOOD POINTERS FOR          341
+    GOOD POINTERS FOR          313
+    GOOD POINTERS FOR          141
+    GOOD POINTERS FOR          203
+    GOOD POINTERS FOR          220
+    GOOD POINTERS FOR           62
+    GOOD POINTERS FOR           72
+    GOOD POINTERS FOR          159
+    GOOD POINTERS FOR           71
+    GOOD POINTERS FOR           64
+    GOOD POINTERS FOR           63
+    GOOD POINTERS FOR           54
+    GOOD POINTERS FOR           56
+    GOOD POINTERS FOR           55
+    GOOD POINTERS FOR           53
+    GOOD POINTERS FOR           51
+    GOOD POINTERS FOR           52
+    GOOD POINTERS FOR           41
+    GOOD POINTERS FOR          129
+    GOOD POINTERS FOR          128
+    GOOD POINTERS FOR          126
+    GOOD POINTERS FOR          125
+    GOOD POINTERS FOR          124
+    GOOD POINTERS FOR          149
+    GOOD POINTERS FOR          148
+    GOOD POINTERS FOR          147
+    GOOD POINTERS FOR          146
+    GOOD POINTERS FOR          145
+    GOOD POINTERS FOR          144
+    GOOD POINTERS FOR          143
+    GOOD POINTERS FOR          142
+    GOOD POINTERS FOR          208
+    GOOD POINTERS FOR          216
+    GOOD POINTERS FOR          215
+    GOOD POINTERS FOR          240
+    GOOD POINTERS FOR          239
+    GOOD POINTERS FOR          237
+    GOOD POINTERS FOR          372
+    GOOD POINTERS FOR          236
+    GOOD POINTERS FOR          233
+    GOOD POINTERS FOR          231
+    GOOD POINTERS FOR          300
+    GOOD POINTERS FOR          307
+    GOOD POINTERS FOR          232
+    GOOD POINTERS FOR          308
+    GOOD POINTERS FOR          323
+    GOOD POINTERS FOR          320
+    GOOD POINTERS FOR          234
+    GOOD POINTERS FOR          219
+    GOOD POINTERS FOR          217
+    GOOD POINTERS FOR          214
+    GOOD POINTERS FOR          238
+    GOOD POINTERS FOR          371
+    GOOD POINTERS FOR          370
+    GOOD POINTERS FOR          299
+    GOOD POINTERS FOR          209
+    GOOD POINTERS FOR          206
+    GOOD POINTERS FOR          349
+    GOOD POINTERS FOR          344
+    GOOD POINTERS FOR          345
+    GOOD POINTERS FOR          350
+    GOOD POINTERS FOR          346
+    GOOD POINTERS FOR          351
+    GOOD POINTERS FOR          303
+    GOOD POINTERS FOR          348
+    GOOD POINTERS FOR          309
+    GOOD POINTERS FOR          310
+    GOOD POINTERS FOR          311
+    GOOD POINTERS FOR          302
+    GOOD POINTERS FOR          202
+    GOOD POINTERS FOR          201
+    GOOD POINTERS FOR          211
+    GOOD POINTERS FOR          207
+    GOOD POINTERS FOR          212
+    GOOD POINTERS FOR          204
+    GOOD POINTERS FOR          340
+    GOOD POINTERS FOR          218
+    GOOD POINTERS FOR          326
+    GOOD POINTERS FOR          213
+    GOOD POINTERS FOR          235
+    GOOD POINTERS FOR          205
+    GOOD POINTERS FOR          210
+    GOOD POINTERS FOR           50
+    GOOD POINTERS FOR           42
+    GOOD POINTERS FOR           32
+    GOOD POINTERS FOR          153
+    GOOD POINTERS FOR          155
+    GOOD POINTERS FOR          152
+    GOOD POINTERS FOR           40
+    GOOD POINTERS FOR           29
+    GOOD POINTERS FOR           25
+    GOOD POINTERS FOR           24
+    GOOD POINTERS FOR            4
+    GOOD POINTERS FOR            3
+    GOOD POINTERS FOR            2
+    GOOD POINTERS FOR            1
+
+PROCESSING d:\housa\genscn\hous.wdm                                        
+CHECK WDM:          12 WITH PTSNUM          32
+  TYPE:           1
+    LOOKING FOR          170 DATASETS,FROM           33
+    GOOD POINTERS FOR          592
+    GOOD POINTERS FOR          591
+    GOOD POINTERS FOR          590
+    GOOD POINTERS FOR          589
+    GOOD POINTERS FOR          588
+    GOOD POINTERS FOR          587
+    GOOD POINTERS FOR          586
+    GOOD POINTERS FOR          585
+    GOOD POINTERS FOR          584
+    GOOD POINTERS FOR          583
+    GOOD POINTERS FOR          582
+    GOOD POINTERS FOR          581
+    GOOD POINTERS FOR          556
+    GOOD POINTERS FOR          555
+    GOOD POINTERS FOR          554
+    GOOD POINTERS FOR          553
+    GOOD POINTERS FOR          552
+    GOOD POINTERS FOR          551
+    GOOD POINTERS FOR          503
+    GOOD POINTERS FOR          502
+    GOOD POINTERS FOR          501
+    GOOD POINTERS FOR          482
+    GOOD POINTERS FOR          481
+    GOOD POINTERS FOR          462
+    GOOD POINTERS FOR          461
+    GOOD POINTERS FOR          442
+    GOOD POINTERS FOR          441
+    GOOD POINTERS FOR          422
+    GOOD POINTERS FOR          421
+    GOOD POINTERS FOR          405
+    GOOD POINTERS FOR          404
+    GOOD POINTERS FOR          403
+    GOOD POINTERS FOR          402
+    GOOD POINTERS FOR          401
+    GOOD POINTERS FOR          400
+    GOOD POINTERS FOR          399
+    GOOD POINTERS FOR          398
+    GOOD POINTERS FOR          397
+    GOOD POINTERS FOR          396
+    GOOD POINTERS FOR          395
+    GOOD POINTERS FOR          394
+    GOOD POINTERS FOR          393
+    GOOD POINTERS FOR          392
+    GOOD POINTERS FOR          391
+    GOOD POINTERS FOR          390
+    GOOD POINTERS FOR          389
+    GOOD POINTERS FOR          388
+    GOOD POINTERS FOR          387
+    GOOD POINTERS FOR          386
+    GOOD POINTERS FOR          385
+    GOOD POINTERS FOR          384
+    GOOD POINTERS FOR          383
+    GOOD POINTERS FOR          382
+    GOOD POINTERS FOR          381
+    GOOD POINTERS FOR          380
+    GOOD POINTERS FOR          379
+    GOOD POINTERS FOR          378
+    GOOD POINTERS FOR          377
+    GOOD POINTERS FOR          376
+    GOOD POINTERS FOR          375
+    GOOD POINTERS FOR          374
+    GOOD POINTERS FOR          373
+    GOOD POINTERS FOR          372
+    GOOD POINTERS FOR          371
+    GOOD POINTERS FOR          370
+    GOOD POINTERS FOR          369
+    GOOD POINTERS FOR          368
+    GOOD POINTERS FOR          367
+    GOOD POINTERS FOR          366
+    GOOD POINTERS FOR          365
+    GOOD POINTERS FOR          364
+    GOOD POINTERS FOR          363
+    GOOD POINTERS FOR          362
+    GOOD POINTERS FOR          361
+    GOOD POINTERS FOR          360
+    GOOD POINTERS FOR          359
+    GOOD POINTERS FOR          358
+    GOOD POINTERS FOR          357
+    GOOD POINTERS FOR          356
+    GOOD POINTERS FOR          355
+    GOOD POINTERS FOR          354
+    GOOD POINTERS FOR          353
+    GOOD POINTERS FOR          352
+    GOOD POINTERS FOR          351
+    GOOD POINTERS FOR          350
+    GOOD POINTERS FOR          349
+    GOOD POINTERS FOR          348
+    GOOD POINTERS FOR          347
+    GOOD POINTERS FOR          346
+    GOOD POINTERS FOR          345
+    GOOD POINTERS FOR          344
+    GOOD POINTERS FOR          343
+    GOOD POINTERS FOR          342
+    GOOD POINTERS FOR          341
+    GOOD POINTERS FOR          340
+    GOOD POINTERS FOR          339
+    GOOD POINTERS FOR          338
+    GOOD POINTERS FOR          337
+    GOOD POINTERS FOR          336
+    GOOD POINTERS FOR          335
+    GOOD POINTERS FOR          334
+    GOOD POINTERS FOR          333
+    GOOD POINTERS FOR          332
+    GOOD POINTERS FOR          331
+    GOOD POINTERS FOR          330
+    GOOD POINTERS FOR          329
+    GOOD POINTERS FOR          328
+    GOOD POINTERS FOR          327
+    GOOD POINTERS FOR          326
+    GOOD POINTERS FOR          325
+    GOOD POINTERS FOR          324
+    GOOD POINTERS FOR          323
+    GOOD POINTERS FOR          322
+    GOOD POINTERS FOR          321
+    GOOD POINTERS FOR          309
+    GOOD POINTERS FOR          308
+    GOOD POINTERS FOR          307
+    GOOD POINTERS FOR          306
+    GOOD POINTERS FOR          305
+    GOOD POINTERS FOR          304
+    GOOD POINTERS FOR          303
+    GOOD POINTERS FOR          302
+    GOOD POINTERS FOR          301
+    GOOD POINTERS FOR          221
+    GOOD POINTERS FOR          220
+    GOOD POINTERS FOR          211
+    GOOD POINTERS FOR          210
+    GOOD POINTERS FOR          201
+    GOOD POINTERS FOR          200
+    GOOD POINTERS FOR          196
+    GOOD POINTERS FOR          195
+    GOOD POINTERS FOR          194
+    GOOD POINTERS FOR          193
+    GOOD POINTERS FOR          192
+    GOOD POINTERS FOR          191
+    GOOD POINTERS FOR          181
+    GOOD POINTERS FOR          180
+    GOOD POINTERS FOR          170
+    GOOD POINTERS FOR          160
+    GOOD POINTERS FOR          150
+    GOOD POINTERS FOR          141
+    GOOD POINTERS FOR          140
+    GOOD POINTERS FOR          131
+    GOOD POINTERS FOR          130
+    GOOD POINTERS FOR          123
+    GOOD POINTERS FOR          122
+    GOOD POINTERS FOR          121
+    GOOD POINTERS FOR          120
+    GOOD POINTERS FOR          119
+    GOOD POINTERS FOR          118
+    GOOD POINTERS FOR          117
+    GOOD POINTERS FOR          116
+    GOOD POINTERS FOR          115
+    GOOD POINTERS FOR          114
+    GOOD POINTERS FOR          113
+    GOOD POINTERS FOR          112
+    GOOD POINTERS FOR          111
+    GOOD POINTERS FOR          110
+    GOOD POINTERS FOR          109
+    GOOD POINTERS FOR          108
+    GOOD POINTERS FOR          107
+    GOOD POINTERS FOR          106
+    GOOD POINTERS FOR          105
+    GOOD POINTERS FOR          104
+    GOOD POINTERS FOR          103
+    GOOD POINTERS FOR          102
+    GOOD POINTERS FOR          101
+    GOOD POINTERS FOR          100
+    GOOD POINTERS FOR           24
+    GOOD POINTERS FOR           21
+  TYPE:           2
+    NO DATASETS
+  TYPE:           3
+    NO DATASETS
+  TYPE:           4
+    NO DATASETS
+  TYPE:           5
+    NO DATASETS
+  TYPE:           6
+    NO DATASETS
+  TYPE:           7
+    NO DATASETS
+  TYPE:           8
+    NO DATASETS
+  TYPE:           9
+    NO DATASETS
+
+PROCESSING d:\housa\genscn25\hous2.wdm                                     
+CHECK WDM:          13 WITH PTSNUM          32
+  TYPE:           1
+    LOOKING FOR          170 DATASETS,FROM           33
+    GOOD POINTERS FOR          592
+    GOOD POINTERS FOR          591
+    GOOD POINTERS FOR          590
+    GOOD POINTERS FOR          589
+    GOOD POINTERS FOR          588
+    GOOD POINTERS FOR          587
+    GOOD POINTERS FOR          586
+    GOOD POINTERS FOR          585
+    GOOD POINTERS FOR          584
+    GOOD POINTERS FOR          583
+    GOOD POINTERS FOR          582
+    GOOD POINTERS FOR          581
+    GOOD POINTERS FOR          556
+    GOOD POINTERS FOR          555
+    GOOD POINTERS FOR          554
+    GOOD POINTERS FOR          553
+    GOOD POINTERS FOR          552
+    GOOD POINTERS FOR          551
+    GOOD POINTERS FOR          503
+    GOOD POINTERS FOR          502
+    GOOD POINTERS FOR          501
+    GOOD POINTERS FOR          482
+    GOOD POINTERS FOR          481
+    GOOD POINTERS FOR          462
+    GOOD POINTERS FOR          461
+    GOOD POINTERS FOR          442
+    GOOD POINTERS FOR          441
+    GOOD POINTERS FOR          422
+    GOOD POINTERS FOR          421
+    GOOD POINTERS FOR          405
+    GOOD POINTERS FOR          404
+    GOOD POINTERS FOR          403
+    GOOD POINTERS FOR          402
+    GOOD POINTERS FOR          401
+    GOOD POINTERS FOR          400
+    GOOD POINTERS FOR          399
+    GOOD POINTERS FOR          398
+    GOOD POINTERS FOR          397
+    GOOD POINTERS FOR          396
+    GOOD POINTERS FOR          395
+    GOOD POINTERS FOR          394
+    GOOD POINTERS FOR          393
+    GOOD POINTERS FOR          392
+    GOOD POINTERS FOR          391
+    GOOD POINTERS FOR          390
+    GOOD POINTERS FOR          389
+    GOOD POINTERS FOR          388
+    GOOD POINTERS FOR          387
+    GOOD POINTERS FOR          386
+    GOOD POINTERS FOR          385
+    GOOD POINTERS FOR          384
+    GOOD POINTERS FOR          383
+    GOOD POINTERS FOR          382
+    GOOD POINTERS FOR          381
+    GOOD POINTERS FOR          380
+    GOOD POINTERS FOR          379
+    GOOD POINTERS FOR          378
+    GOOD POINTERS FOR          377
+    GOOD POINTERS FOR          376
+    GOOD POINTERS FOR          375
+    GOOD POINTERS FOR          374
+    GOOD POINTERS FOR          373
+    GOOD POINTERS FOR          372
+    GOOD POINTERS FOR          371
+    GOOD POINTERS FOR          370
+    GOOD POINTERS FOR          369
+    GOOD POINTERS FOR          368
+    GOOD POINTERS FOR          367
+    GOOD POINTERS FOR          366
+    GOOD POINTERS FOR          365
+    GOOD POINTERS FOR          364
+    GOOD POINTERS FOR          363
+    GOOD POINTERS FOR          362
+    GOOD POINTERS FOR          361
+    GOOD POINTERS FOR          360
+    GOOD POINTERS FOR          359
+    GOOD POINTERS FOR          358
+    GOOD POINTERS FOR          357
+    GOOD POINTERS FOR          356
+    GOOD POINTERS FOR          355
+    GOOD POINTERS FOR          354
+    GOOD POINTERS FOR          353
+    GOOD POINTERS FOR          352
+    GOOD POINTERS FOR          351
+    GOOD POINTERS FOR          350
+    GOOD POINTERS FOR          349
+    GOOD POINTERS FOR          348
+    GOOD POINTERS FOR          347
+    GOOD POINTERS FOR          346
+    GOOD POINTERS FOR          345
+    GOOD POINTERS FOR          344
+    GOOD POINTERS FOR          343
+    GOOD POINTERS FOR          342
+    GOOD POINTERS FOR          341
+    GOOD POINTERS FOR          340
+    GOOD POINTERS FOR          339
+    GOOD POINTERS FOR          338
+    GOOD POINTERS FOR          337
+    GOOD POINTERS FOR          336
+    GOOD POINTERS FOR          335
+    GOOD POINTERS FOR          334
+    GOOD POINTERS FOR          333
+    GOOD POINTERS FOR          332
+    GOOD POINTERS FOR          331
+    GOOD POINTERS FOR          330
+    GOOD POINTERS FOR          329
+    GOOD POINTERS FOR          328
+    GOOD POINTERS FOR          327
+    GOOD POINTERS FOR          326
+    GOOD POINTERS FOR          325
+    GOOD POINTERS FOR          324
+    GOOD POINTERS FOR          323
+    GOOD POINTERS FOR          322
+    GOOD POINTERS FOR          321
+    GOOD POINTERS FOR          309
+    GOOD POINTERS FOR          308
+    GOOD POINTERS FOR          307
+    GOOD POINTERS FOR          306
+    GOOD POINTERS FOR          305
+    GOOD POINTERS FOR          304
+    GOOD POINTERS FOR          303
+    GOOD POINTERS FOR          302
+    GOOD POINTERS FOR          301
+    GOOD POINTERS FOR          221
+    GOOD POINTERS FOR          220
+    GOOD POINTERS FOR          211
+    GOOD POINTERS FOR          210
+    GOOD POINTERS FOR          201
+    GOOD POINTERS FOR          200
+    GOOD POINTERS FOR          196
+    GOOD POINTERS FOR          195
+    GOOD POINTERS FOR          194
+    GOOD POINTERS FOR          193
+    GOOD POINTERS FOR          192
+    GOOD POINTERS FOR          191
+    GOOD POINTERS FOR          181
+    GOOD POINTERS FOR          180
+    GOOD POINTERS FOR          170
+    GOOD POINTERS FOR          165
+    GOOD POINTERS FOR          164
+    GOOD POINTERS FOR          163
+    GOOD POINTERS FOR          162
+    GOOD POINTERS FOR          161
+    GOOD POINTERS FOR          160
+    GOOD POINTERS FOR          159
+    GOOD POINTERS FOR          158
+    GOOD POINTERS FOR          157
+    GOOD POINTERS FOR          156
+    GOOD POINTERS FOR          155
+    GOOD POINTERS FOR          154
+    GOOD POINTERS FOR          153
+    GOOD POINTERS FOR          152
+    GOOD POINTERS FOR          151
+    GOOD POINTERS FOR          150
+    GOOD POINTERS FOR          149
+    GOOD POINTERS FOR          148
+    GOOD POINTERS FOR          147
+    GOOD POINTERS FOR          146
+    GOOD POINTERS FOR          141
+    GOOD POINTERS FOR          140
+    GOOD POINTERS FOR          131
+    GOOD POINTERS FOR          130
+    GOOD POINTERS FOR          121
+    GOOD POINTERS FOR          120
+    GOOD POINTERS FOR          111
+    GOOD POINTERS FOR          110
+    GOOD POINTERS FOR          101
+    GOOD POINTERS FOR          100
+    GOOD POINTERS FOR           24
+    GOOD POINTERS FOR           21
+  TYPE:           2
+    NO DATASETS
+  TYPE:           3
+    NO DATASETS
+  TYPE:           4
+    NO DATASETS
+  TYPE:           5
+    NO DATASETS
+  TYPE:           6
+    NO DATASETS
+  TYPE:           7
+    NO DATASETS
+  TYPE:           8
+    NO DATASETS
+  TYPE:           9
+    NO DATASETS
+
+PROCESSING d:\housa\genscn\copy<2~1.wdm                                    
+
+PROCESSING d:\housa\genscn\copyof~1.wdm                                    
+CHECK WDM:          15 WITH PTSNUM          32
+  TYPE:           1
+    LOOKING FOR          174 DATASETS,FROM           33
+    GOOD POINTERS FOR          592
+    GOOD POINTERS FOR          591
+    GOOD POINTERS FOR          590
+    GOOD POINTERS FOR          589
+    GOOD POINTERS FOR          588
+    GOOD POINTERS FOR          587
+    GOOD POINTERS FOR          586
+    GOOD POINTERS FOR          585
+    GOOD POINTERS FOR          584
+    GOOD POINTERS FOR          583
+    GOOD POINTERS FOR          582
+    GOOD POINTERS FOR          581
+    GOOD POINTERS FOR          400
+    GOOD POINTERS FOR          399
+    GOOD POINTERS FOR          398
+    GOOD POINTERS FOR          397
+    GOOD POINTERS FOR          396
+    GOOD POINTERS FOR          395
+    GOOD POINTERS FOR          394
+    GOOD POINTERS FOR          393
+    GOOD POINTERS FOR          392
+    GOOD POINTERS FOR          391
+    GOOD POINTERS FOR          390
+    GOOD POINTERS FOR          389
+    GOOD POINTERS FOR          556
+    GOOD POINTERS FOR          555
+    GOOD POINTERS FOR          554
+    GOOD POINTERS FOR          553
+    GOOD POINTERS FOR          552
+    GOOD POINTERS FOR          551
+    GOOD POINTERS FOR          380
+    GOOD POINTERS FOR          379
+    GOOD POINTERS FOR          378
+    GOOD POINTERS FOR          377
+    GOOD POINTERS FOR          376
+    GOOD POINTERS FOR          375
+    GOOD POINTERS FOR          374
+    GOOD POINTERS FOR          373
+    GOOD POINTERS FOR          372
+    GOOD POINTERS FOR          371
+    GOOD POINTERS FOR          370
+    GOOD POINTERS FOR          369
+    GOOD POINTERS FOR          368
+    GOOD POINTERS FOR          367
+    GOOD POINTERS FOR          366
+    GOOD POINTERS FOR          365
+    GOOD POINTERS FOR          364
+WDMCHK:dsn          363 points to itself
+WDMCHK:count for type            1 does not match           47         174
+
+PROCESSING d:\housa\hous.wdm                                               
+CHECK WDM:          16 WITH PTSNUM          32
+  TYPE:           1
+    LOOKING FOR           93 DATASETS,FROM           33
+    GOOD POINTERS FOR          388
+    GOOD POINTERS FOR          123
+    GOOD POINTERS FOR          122
+    GOOD POINTERS FOR          119
+    GOOD POINTERS FOR          118
+    GOOD POINTERS FOR          117
+    GOOD POINTERS FOR          116
+    GOOD POINTERS FOR          115
+    GOOD POINTERS FOR          114
+    GOOD POINTERS FOR          113
+    GOOD POINTERS FOR          112
+    GOOD POINTERS FOR          109
+    GOOD POINTERS FOR          108
+    GOOD POINTERS FOR          107
+    GOOD POINTERS FOR          106
+    GOOD POINTERS FOR          105
+    GOOD POINTERS FOR          104
+    GOOD POINTERS FOR          103
+    GOOD POINTERS FOR          102
+    GOOD POINTERS FOR          462
+    GOOD POINTERS FOR          461
+WDMCHK:dsn          441 points to itself
+WDMCHK:count for type            1 does not match           21          93
+

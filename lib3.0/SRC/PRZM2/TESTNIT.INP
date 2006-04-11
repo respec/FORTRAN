@@ -1,0 +1,115 @@
+NITROGEN SIMULATION, TEMPERATURE CORRECTION, PRZM INPUT FOR LA PLATA, CO
+HYDOLOGY PARAMETERS
+    0.75    0.44       0  15.000       1       2
+       0
+       1
+       1    0.20    50.0  95.000       1  58  58  58 0.0 0.0 0.0             0.0
+       1
+  020157  010557  011157       1
+PESTICIDE TRANSPORT AND TRANSFORMATION AND APPLICATION PARAMETERS
+       1       1       0
+ALDICARB
+  120582       0     2.5    1.00
+       1       1
+SOILS PARAMETERS (HAPLOBOROLLS)
+   250.0     0.0   0   0   0   0   0   0   1   1   0
+   0.0E0  0.0E00  0.0E00
+ 0.60 0.60 0.45 0.16 0.25 0.25 0.25 0.25 0.25 0.25 0.18 0.16 0.97 10.0
+ 6.0  5.0  5.0  6.0  8.0 10.0 13.0 13.0 11.0  9.0  6.0  6.0
+       5
+       1     5.0    1.27    0.25     0.0     0.0
+             0.0     0.0   0.000
+             1.0    0.25    0.12    2.32     0.0
+             5.0    50.0    23.0     0.0     0.0
+       2    45.0    1.27    0.25     0.0     0.0
+             0.0     0.0   0.000
+             5.0    0.25    0.12    1.16     0.0
+             7.0    50.0    23.0     0.0     0.0
+       3    10.0    0.20    0.05     0.0     0.0
+             0.0     0.0   0.000
+             2.0    0.05    0.01    40.0     0.0
+             7.0     5.0     2.0     0.0     0.0
+       4    30.0     2.2    0.10     0.0     0.0
+             0.0     0.0   0.000
+             5.0    0.10    0.02    0.03     0.0
+             7.5    30.0     5.0     0.0     0.0
+       5   160.0    1.37    0.20     0.0     0.0
+             0.0     0.0   0.000
+            20.0    0.20    0.09    0.15     0.0
+             8.0    52.0    22.0     0.0     0.0
+       0       0
+    WATR    MNTH       1    NITR    MNTH       1    CONC    MNTH       1
+       7    YEAR
+    RFLX1   TSER          1.0E05   
+    RUNF    TSER                   
+    STMP    TSER       5
+    STMP    TSER      14
+    STMP    TSER      19
+    STMP    TSER      25
+    STMP    TSER      33
+NITROGEN PARAMETERS
+*** septic effluent horizon, fraction to refractory, DSNs for effluent t-series
+    4   .7
+***vnut fora imax nupt fixn amvo alpn vnpr
+    0    1  100    1    0    1    1    0
+*** deposition flags (AM  NO3  ORGN, 3 dry, 3 wet)
+   -2   -2    0    0    0    0
+  .01  .01  .01  .01  .01  .01  .01  .01  .01  .01  .01  .01
+ .005 .005 .005 .005 .005 .005 .005 .005 .005 .005 .005 .005
+*** kpln - for nupt=0
+***     0.1    0.05
+*** plant uptake target and max uptake ratio (nupt=1)
+    60.0     2.0
+*** fractions of total uptake
+ .013  .03  .05  .07  .13  .19  .20  .15 .085  .05 .028 .004
+*** horizon fractions of uptake
+  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05
+  .85  .85  .85  .85  .85  .85  .85  .85  .85  .85  .85  .85
+  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05
+  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05
+  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+*** above-ground plant uptake (vnut=0)
+    0.40    0.40    0.40    0.40    0.40
+*** general parameters
+*** NOfr   NH3fr    plnt     des     ads  NO3imm     min  denitr    nitr  NH3imm
+     0.8     0.2    1.07    1.05    1.05    1.07    1.07    1.07    1.05    1.07
+*** 1st order rates
+***  ads     des  NO3imm     min   denit dni-thr   nitri  NH3imm
+     0.0     0.0     0.0  0.0005     0.0     0.0     2.0     0.5
+     0.0     0.0     0.0  0.0003     0.0     0.0     1.0     0.5
+     0.0     0.0     0.0  0.0003     0.0     0.0     1.0     0.2
+     0.0     0.0     0.1  0.0003     0.5     0.2     0.5     0.3
+     0.0     0.0     0.1  0.0003     1.5     0.2     0.5     0.1
+*** max solubility
+  5000.0
+***  xfix    kf      n1
+     3.5     1.0     1.2
+     3.5     1.0     1.2
+     3.5     5.0     1.2
+     3.5    0.05     1.0
+     3.5     0.5     1.1
+*** ammonia volatilization parameters
+***theta   ref T     rates for each horizon
+    1.05    25.0     0.3    0.03     0.1    0.05    0.05
+*** organic partitioning coeffs, conversion labile--> refract, temp correction
+  1000.0   5000.  0.0001    1.07
+  1000.0   5000.  0.0001    1.07
+  1000.0   5000.  0.0001    1.07
+  1000.0   5000.  0.0001    1.07
+  1000.0   5000.  0.0001    1.07
+*** plant N return rates
+*** fraction to refractory, BG return rates per horizon
+     0.3   0.002  0.0025   0.002   0.002     0.0
+*** plant>litter rate, litter>soil return rate, fraction to refractory
+   0.001  0.0005     0.3
+*** initial storages
+*** LONP    LONS    RONP    RONS   AMSed   AMSol     NO3      BG
+   300.0     0.0  1020.0     0.0    10.0     0.0     3.0     2.0
+  1250.0     0.0  4600.0     0.0   150.0     0.0    15.0    16.0
+   190.0     0.0   760.0     0.0    45.0     0.0     5.0     1.0
+    34.0     0.0   137.0     0.0     8.0     0.0     1.0     1.0
+   650.0     0.0  2280.0     0.0    50.0     0.0     7.0     0.0
+*** total storages
+***2424.          8797.            263.             31.     20.  /total 11535
+*** AG-N   Litter N
+     5.0     3.0

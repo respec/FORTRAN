@@ -1,0 +1,72 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOOSV">HIOOSV</a>
+<p>Called By
+   <a href="../HTSINSI/OSVFPT">OSVFPT</a> ,
+   <a href="../HOSUPER/OSUPER">OSUPER</a>
+<p>Includes 
+   <a href="../../Dimensions/POSVM">POSVM</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/COSVM">COSVM</a>
+<p>Calls  
+   COPYI
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PUTOSV
+     I                    (KEYST,KEYND,MAXOSV,OSV)
+C
+C     + + + PURPOSE + + +
+C     Move an osv from memory to osvfl
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    KEYND,KEYST,MAXOSV,OSV(MAXOSV)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     KEYST  - starting record number
+C     KEYND  - ending record number
+C     MAXOSV - maximum size of osv
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'posvm.inc'
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cosvm.inc'
+C
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   KEY,ILEN,START
+C
+C     + + + EXTERNAL + + +
+      EXTERNAL  COPYI
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     start at first position
+      START= 1
+C     how much to read
+      ILEN = 500
+C
+      DO 10 KEY= KEYST,KEYND
+C       loop thru records
+C       write a record to memory
+        CALL COPYI(ILEN,OSV(START),
+     O             OSVM(1,KEY))
+C       next position in memory
+        START= START+ ILEN
+ 10   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

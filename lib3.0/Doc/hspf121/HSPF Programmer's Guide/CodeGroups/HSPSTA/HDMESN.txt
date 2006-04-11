@@ -1,0 +1,54 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="UPDWIN">UPDWIN</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   HDMESN
+     I                   (IOPT,INUM)
+C
+C     + + + PURPOSE + + +
+C     write integer number to window
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER       IOPT, INUM
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IOPT   - position to output
+C     INUM   - number
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      ILEN
+      CHARACTER*6  CNUM
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     UPDWIN
+C
+C     + + + OUTPUT FORMATS + + +
+2000  FORMAT(I6)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      WRITE(CNUM,2000) INUM
+      ILEN = 6
+      CALL <a href="UPDWIN">UPDWIN</a>(IOPT,ILEN,CNUM)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

@@ -1,0 +1,11 @@
+agplot.obj: ptsmax.inc cplot.inc   \
+            pbfmax.inc cplotb.inc
+awfeb.obj:  cparam.inc fversn.inc  \
+            cdrloc.inc cfbuff.inc
+prwfil.obj: cdrloc.inc cfbuff.inc
+qtdate.obj: pmesfl.inc
+tslegn.obj: pbfmax.inc ptsmax.inc cplotb.inc \
+            ctslst.inc
+tslign.obj: pbfmax.inc ptsmax.inc cplotb.inc \
+            ctslst.inc
+tslist.obj: ctslst.inc

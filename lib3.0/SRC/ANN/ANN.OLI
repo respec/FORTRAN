@@ -1,0 +1,7 @@
+OBJS      = wdplot.obj dswork.obj prwarc.obj dsbld.obj \
+            atwork.obj atdisp.obj \
+            tswork.obj qtprnt.obj pgener.obj algebr.obj pgebat.obj
+
+INCOTHER  = adwdm\pmxfld.inc  adwdm\cfbuff.inc  adwdm\cdrloc.inc \
+            adwdm\pmxrsl.inc  adwdm\cscren.inc  adwdm\zcntrl.inc  \
+            graph\ptsmax.inc  graph\pbfmax.inc

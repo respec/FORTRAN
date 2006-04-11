@@ -1,0 +1,265 @@
+<html><head><title>TSSDS</title></head>
+<body bgcolor="#ffffff">
+<a name="TSSDS"><h3>TSSDS</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+   <a href="../HSPFEC/EXTTS.html">EXTTS</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3.html">CRIN3</a> 
+   <a href="../../CommonBlocks/CRIN3C.html">CRIN3C</a> 
+<p>Calls
+   DSCHK,
+   CHKSTR,
+   OMSG,
+   OMSTC,
+   OMSTI,
+   PROMEM
+<p>Code
+<pre>
+C
+C     3.5.2.2.1
+C
+      SUBROUTINE TSSDS
+     I                 (MSGFL,MESSU,TSSFL,MEMN,MEMSB,
+     I                  AMDST,SDATIM,EDATIM,VOLNO,TRFLAG,MXTSTB,
+     O                  NUM,DELT,UNT,NTS,AMDCD,FRC,
+     O                  TABL,TABLR)
+C
+C     + + + PURPOSE + + +
+C     Check and if necessary expand a users reference to a tss
+C      dataset
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MSGFL,MESSU,TSSFL,MEMSB,MXTSTB,
+     $            SDATIM(5),EDATIM(5),VOLNO,TRFLAG,
+     $            NUM,DELT,UNT,NTS,AMDCD,FRC,TABL(10,MXTSTB)
+      REAL        TABLR(10,MXTSTB)
+      CHARACTER*6 MEMN
+      CHARACTER*4 AMDST
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MSGFL  - fortran unit number of HSPF message file
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     TSSFL  - fortran unit number of time series store file
+C     MEMN   - ???
+C     MEMSB  - ???
+C     AMDST  - ???
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     VOLNO  - ???
+C     TRFLAG - ???
+C     MXTSTB - ???
+C     NUM    - ???
+C     DELT   - simulation time interval in minutes
+C     UNT    - ???
+C     NTS    - ???
+C     AMDCD  - ???
+C     FRC    - ???
+C     TABL   - ???
+C     TABLR  - ???
+C
+C     + + + COMMON BLOCKS- INTERP3 + + +
+      INCLUDE   'crin3.inc'
+      INCLUDE   'crin3c.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      EYR,SYR,SCLU,SGRP,I,I3,I4,I6,OK,VOMEM,N,
+     $             MNUM,NSUB
+      CHARACTER*6  CHSTR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR,CHSTR1)
+      CHARACTER*1  CHSTR1(6)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER    DSCHK,CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   DSCHK,CHKSTR,OMSG,OMSTC,OMSTI,PROMEM
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A4,A2)
+ 2010 FORMAT (' BEGIN CHECKING/EXPANDING TSS REFERENCE')
+ 2020 FORMAT (' END CHECKING/EXPANDING TSS REFERENCE')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I3  = 3
+      I4  = 4
+      I6  = 6
+      SCLU= 216
+      IF (OUTLEV .GT. 6) THEN
+        WRITE(MESSU,2010)
+      END IF
+C
+      NTS= 0
+C     initialize unt in case dataset not found in tss
+C     subr memts needs a valid value of eunits
+      UNT= 0
+      IF (DSCHK(MESSU,MSGFL,TSSFL,VOLNO) .GT. 0) THEN
+C       dataset exists and label is already present in common
+C       check for data being present for all years of the run
+        EYR= EDATIM(1)
+        SYR= SDATIM(1)
+        IF (SDATIM(2) .EQ. 12) THEN
+          IF (SDATIM(3) .EQ. 31) THEN
+            IF (SDATIM(4) .EQ. 24) THEN
+              IF (SDATIM(5) .EQ. 60) THEN
+                SYR= SYR +1
+              END IF
+            END IF
+          END IF
+        END IF
+C
+        SYR= SYR -BASEYR
+        EYR= EYR -BASEYR
+        IF (SYR .LT. 1 .OR. SYR .GT. 100) THEN
+C         error-year containing initial interval of the run is
+C         outside the valid range for the dataset.
+C         valid range is from baseyr+1 through baseyr+100.
+          SGRP = 80
+          CALL OMSTI (VOLNO)
+          CALL OMSTI (BASEYR)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
+C
+        IF (TRFLAG .EQ. 1) THEN
+          IF (DSSEC .EQ. 1) THEN
+C           error - dataset is write protected -
+C           unable to output data to the given
+C           external target
+            SGRP = 81
+            CALL OMSTI (VOLNO)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+        END IF
+C
+        IF (EYR .LT. 1 .OR. EYR .GT. 100) THEN
+C         error-year containing final interval of the run
+C         lies outside the valid range for the dataset.
+C         the valid range is from baseyr+1 through baseyr+100.
+          SGRP = 82
+          CALL OMSTI (VOLNO)
+          CALL OMSTI (BASEYR)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
+C
+        IF (TRFLAG .EQ. 0) THEN
+          OK= 1
+          DO 65 I=SYR,EYR
+            IF (KEYS(I) .EQ. 0) OK= 0
+ 65       CONTINUE
+          IF (OK .EQ. 0) THEN
+C           error-one or more years of data missing in the dataset
+            SGRP = 83
+            CALL OMSTI (VOLNO)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+        END IF
+C
+C       set general data
+        NUM = VOLNO
+        DELT= DSDELT
+        FRC = DSFREC
+        UNT = UNITS
+C       process access mode
+        IF (TRFLAG .EQ. 1) THEN
+          CHSTR(1:4)= AMDST
+          AMDCD     = CHKSTR(I4,I3,CHSTR1,AMDKW1)
+          IF (AMDCD .EQ. 0) THEN
+C           error - unknown access mode given
+            SGRP = 84
+            CALL OMSTI (VOLNO)
+            CHSTR= AMDST
+            CALL OMSTC (I4,CHSTR1)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+        END IF
+C
+C       copy member name from label to character common
+        DO 100 I= 1, NMEMS
+          WRITE (MEMNAM(I),2000) (IMEMNM(N,I),N=1,2)
+ 100    CONTINUE
+C
+C       process member/subscript information
+        IF (MEMN .EQ. '      ') THEN
+C         member name is blank. all members implied
+          VOMEM=0
+          DO 120 I=1,NMEMS
+            NSUB = MSUB(I)
+            CALL PROMEM (MESSU,MSGFL,I,VOMEM,MEMSB,NSUB,
+     I                   MEMNAM,MKIND,SVOLNO,OUTLEV,MXTSTB,
+     M                   NTS,ECOUNT,
+     O                   TABL,TABLR)
+            VOMEM= VOMEM+NSUB
+ 120      CONTINUE
+        ELSE
+C         user has specified a single member. find it.
+          CHSTR= MEMN
+          MNUM = CHKSTR(I4,NMEMS,CHSTR1,MEMNA1)
+C
+          IF (MNUM .GT. 0) THEN
+C           match found
+            VOMEM= 0
+            N    = MNUM -1
+            IF (N .GT. 0) THEN
+              DO 140 I= 1,N
+                VOMEM= VOMEM +MSUB(I)
+ 140          CONTINUE
+            END IF
+C
+            NSUB=MSUB(MNUM)
+            CALL PROMEM (MESSU,MSGFL,MNUM,VOMEM,MEMSB,NSUB,
+     I                   MEMNAM,MKIND,SVOLNO,OUTLEV,MXTSTB,
+     M                   NTS,ECOUNT,
+     O                   TABL,TABLR)
+C
+          ELSE
+C           error-given member name not found
+            SGRP = 85
+            CALL OMSTI (VOLNO)
+            CHSTR= MEMN
+            CALL OMSTC (I6,CHSTR1)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+        END IF
+      ELSE
+C       error-dataset not found in tss
+        SGRP = 86
+        CALL OMSTI (VOLNO)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
+      IF (OUTLEV .GT. 6) THEN
+        WRITE(MESSU,2020)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="TSSDS">
+</Object>
+
+</body>
+</html>
+

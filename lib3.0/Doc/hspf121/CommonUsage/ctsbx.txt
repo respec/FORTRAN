@@ -1,0 +1,60 @@
+D:\lib3.0\SRC\HSPF121\CTSBX.INC   (1 KB,  4/22/1996 11:55:34 AM)
+1	C    FROM CTSBX.COM
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGP.FOR   (8 KB,  6/27/2000 4:14:14 PM)
+33	      INCLUDE   'ctsbx.inc'
+196	      INCLUDE   'ctsbx.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGQ.FOR   (50 KB,  7/20/2000 11:56:36 AM)
+205	      INCLUDE     'ctsbx.inc'
+392	      INCLUDE     'ctsbx.inc'
+521	      INCLUDE     'ctsbx.inc'
+645	      INCLUDE   'ctsbx.inc'
+807	      INCLUDE     'ctsbx.inc'
+941	      INCLUDE     'ctsbx.inc'
+1096	      INCLUDE     'ctsbx.inc'
+1194	      INCLUDE     'ctsbx.inc'
+1389	      INCLUDE     'ctsbx.inc'
+1565	      INCLUDE     'ctsbx.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGT.FOR   (20 KB,  7/11/2000 8:34:10 PM)
+25	      INCLUDE     'ctsbx.inc'
+194	      INCLUDE   'ctsbx.inc'
+451	      INCLUDE     'ctsbx.inc'
+641	      INCLUDE   'ctsbx.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGW.FOR   (7 KB,  9/11/2002 10:42:06 AM)
+25	      INCLUDE   'ctsbx.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSPT.FOR   (48 KB,  6/27/2000 4:28:44 PM)
+24	      INCLUDE     'ctsbx.inc'
+99	      INCLUDE   'ctsbx.inc'
+243	      INCLUDE     'ctsbx.inc'
+309	      INCLUDE   'ctsbx.inc'
+476	      INCLUDE     'ctsbx.inc'
+619	      INCLUDE   'ctsbx.inc'
+694	      INCLUDE   'ctsbx.inc'
+765	      INCLUDE   'ctsbx.inc'
+821	      INCLUDE   'ctsbx.inc'
+986	      INCLUDE   'ctsbx.inc'
+1282	      INCLUDE   'ctsbx.inc'
+1405	      INCLUDE     'ctsbx.inc'
+1483	      INCLUDE   'ctsbx.inc'
+1550	      INCLUDE   'ctsbx.inc'
+1634	      INCLUDE     'ctsbx.inc'
+1762	      INCLUDE   'ctsbx.inc'
+1851	      INCLUDE   'ctsbx.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSPW.FOR   (7 KB,  9/11/2002 10:41:42 AM)
+70	      INCLUDE   'ctsbx.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSUT.FOR   (11 KB,  7/11/2000 8:32:40 PM)
+24	      INCLUDE   'ctsbx.inc'
+108	      INCLUDE   'ctsbx.inc'
+219	      INCLUDE   'ctsbx.inc'
+
+D:\lib3.0\SRC\HSPF121\HTSSUT.FOR   (11 KB,  6/27/2000 4:33:58 PM)
+129	      INCLUDE   'ctsbx.inc'
+206	      INCLUDE   'ctsbx.inc'
+280	      INCLUDE   'ctsbx.inc'
+

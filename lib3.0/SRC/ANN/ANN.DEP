@@ -1,0 +1,7 @@
+atwork.obj: pmxrsl.inc cscren.inc zcntrl.inc \
+            pmxfld.inc cfbuff.inc
+dsbld.obj:  cfbuff.inc
+dswork.obj: cdsn.inc   fversn.inc
+prwarc.obj: cdsn.inc   cdrloc.inc cfbuff.inc
+tswork.obj: cfbuff.inc
+wdplot.obj: pwdplt.inc ptsmax.inc pbfmax.inc

@@ -1,0 +1,98 @@
+<html><head><title>ENDEXG</title></head>
+<body bgcolor="#ffffff">
+<a name="ENDEXG"><h3>ENDEXG</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINGEN.html">HRINGEN</a>
+<p>Called By
+   <a href="ENDING.html">ENDING</a>,
+   <a href="SEQBLK.html">SEQBLK</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   OMSG
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   ENDEXG
+     I                   (INFG,XCOUNT,XGRPNO,GRPNO,XDELT,
+     I                    MESSU,MSGFL,SCLU,
+     M                    ECOUNT,WCOUNT,EXGTAB,
+     O                    EXFG)
+C
+C     + + + PURPOSE + + +
+C     User has explicitly or implicitly specified end exgroup - check
+C     whether this is legal and make entry in exgtab
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    ECOUNT,MSGFL,SCLU,EXFG,
+     $           EXGTAB(5,10),GRPNO,INFG,MESSU,
+     $           WCOUNT(10),XCOUNT,XDELT,XGRPNO
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     INFG   - ???
+C     XCOUNT - ???
+C     XGRPNO - ???
+C     GRPNO  - ???
+C     XDELT  - ???
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     SCLU   - cluster containing messages for this routine
+C     ECOUNT - count(s) of specific errors
+C     WCOUNT - ???
+C     EXGTAB - ???
+C     EXFG   - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    SGRP
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   OMSG
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     exgroup no longer active
+      EXFG= 0
+C
+      IF (INFG.EQ.1) THEN
+C       error - end exgroup found before end of current ingroup
+        SGRP = 36
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
+      IF (XCOUNT.EQ.0) THEN
+C       warning - there are no operations in this exgroup -
+C       instruction ignored
+        SGRP = 4
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             WCOUNT(4))
+      ELSE
+C       write closing entries for this exgroup
+        IF (XGRPNO.LE.10) THEN
+          EXGTAB(2,XGRPNO)= GRPNO
+          EXGTAB(3,XGRPNO)= XDELT
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="ENDEXG">
+</Object>
+
+</body>
+</html>
+

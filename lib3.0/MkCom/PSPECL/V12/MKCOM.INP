@@ -1,0 +1,37 @@
+SI        22000
+CO   CRINTP
+HE   run interpreter common
+PF   pmxopn.inc
+PF   pmxvnm.inc
+PM   MAXOPN  MO       500   1
+PM   MAXVNM  MV      1700   2
+SE   CSPEC.INC
+HE 1 special action version
+VA   FILE    15   0   0   0 I P                         11
+VA   DUMT1    0   0   0   0 I P                         11
+VA   DUMT2    0   0   0   0 I P                         11
+VA   DUMT3    0   0   0   0 I P                         11
+VA   WCOUNT  10   0   0   0 I P                         11
+VA   ECOUNT   0   0   0   0 I P                         11
+VA   OUTLEV   0   0   0   0 I P                         11
+VA   RESMFG   0   0   0   0 I P                         11
+VA   NIVLS    0   0   0   0 I P                         11
+VA   IVLLIB  20   0   0   0 I P                         11
+VA   NXGRPS   0   0   0   0 I P                         11
+VA   EXGTAB   5  10   0   0 I P                         11
+VA   NGRPS    0   0   0   0 I P                         11
+VA   GRPTAB   5  10   0   0 I P                         11
+VA   NOPNS    0   0   0   0 I P                         11
+VA   OPNO     0   0   0   0 I P                         11
+VA   OPNTAB  20  MO   0   0 I P                         11
+VA   VDIM     3  MV   0   0 I P                         11
+VA   VLOC    MV   0   0   0 I P                         11
+VA   LOSPFL  15   0   0   0 I P                         11
+VA   LOSPST  15   0   0   0 I P                         11
+VA   LOSPKY  15   0   0   0 I P                         11
+VA   LOSPLV  15   0   0   0 I P                         11
+VA   LOSPNU  15   0   0   0 I P                         11
+VA   LONAM   15   0   0   0 I P                         11
+VA   LONUM   15   0   0   0 I P                         11
+
+WR

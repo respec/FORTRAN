@@ -1,0 +1,50 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSSUT">HTSSUT</a>
+<p>Called By
+
+<p>Common Blocks 
+    
+<p>Calls
+
+<p>Code
+<pre>
+C
+C     1.2.23
+C
+      INTEGER FUNCTION   BCWCAL
+     I                          (BCWBTI,BCWNOV)
+C
+C     + + + PURPOSE + + +
+C     Calculate a bcw from BCWBTI, BCWNOV
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    BCWBTI,BCWNOV
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     BCWBTI - block control word type indicator
+C     BCWNOV - number of time frames represented by the tsb
+C
+C     + + + END SPECIFICATIONS + + +
+      BCWCAL= BCWBTI*65536+BCWNOV
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+

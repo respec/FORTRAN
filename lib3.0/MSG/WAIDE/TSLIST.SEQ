@@ -1,0 +1,828 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  Sequential file for listing time-series data - goes with code in TSLIST.FOR
+END COMMENT 
+CLU           40    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  TSLIST
+  END LABEL   
+  DATA   CLU    40
+#GROUP    1  TYPE MENU
+$WINDOW List (&L)
+$TITLE Select a timeseries List option.
+$DEFAULT   1
+$LENGTH    9
+$WIDTH    78
+$COLENGTH  8
+$OPTION Dates
+_DESC - specify start/end date and time step/units for listing
+$OPTION Output
+_DESC - specify output options
+$OPTION Aggregate
+_DESC - specify any data summaries for listing
+$OPTION Limits
+_DESC - specify the range of values to either be listed or screened
+$OPTION Execute
+_DESC - the specified times-series data listing
+$OPTION Return
+_DESC - one level up
+$HELP
+ Default values have been set for all options that will list all data
+ greater than 0 to the screen with no summaries.  You must Execute
+ to get the listing.  Use the other options to change the defaults.
+#GROUP    2  TYPE TEXT
+$WINDOW List (&L) Notice
+$TEXT
+Currently, the Listing is set to be output to the screen, to which a
+maximum of 7 data sets may be output.  As there are more than 7 data
+sets in the buffer, only the first 7 in the buffer will be Listed.
+
+A maximum of 30 data sets may be output to a file.  Thus, if you
+wish to generate a listing with more than 7 data sets, change the
+output destination from Screen to File by selecting the Output option.
+
+If you want to list a different set of data sets to the screen than the
+first 7 in the current buffer, use the Previous (F4) command to return
+from the List option and then rearrange the contents of the buffer.
+#GROUP    3  TYPE TEXT
+$WINDOW List (&L) Notice
+$TEXT
+Currently, the Listing is set to be output to the screen, to which a
+maximum of 7 data sets may be output.  As there are more than 7 data
+sets in the buffer, only the first 7 in the buffer will be Listed.
+
+A maximum of 30 data sets may be output to a file.  Thus, if you
+wish to generate a listing with more than 7 data sets, change the
+output destination from Screen to File by selecting the Output option.
+
+If you want to list a different set of data sets to the screen than the
+first 7 in the current buffer, select the Return option to leave the List
+option and then rearrange the buffer contents from where List was called.
+#GROUP    4  TYPE TEXT
+$WINDOW List (&L) Notice
+$TEXT
+Currently, the Listing is set to be output to a file, to which a
+maximum of 30 data sets may be output.  As there are more than 30 data
+sets in the buffer, only the first 30 in the buffer will be Listed.
+
+If you want to list a different set of data sets to a file than the
+first 30 in the current buffer, use the Return option to leave the List
+option and then rearrange the buffer contents from where List was called.
+#GROUP   21  TYPE PRM1
+$WINDOW Dates - 1 (&LT)
+$SCREEN
+For the time-series data to be listed:
+
+ <---Date to begin listing data--->    <----Date to end listing data---->
+ Year   Mon   Day  Hour  Min    Sec    Year   Mon   Day  Hour  Min    Sec
+ @SYR  @SM.  @SD.  @SH.  @SI.  @SS.    @EYR  @EM.  @ED.  @EH.  @EI.  @ES.
+
+  Time step  [@TSTP.]
+  Time units [@TUNIT]
+$FIELD @SYR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1492 : 9999            
+_DEFAULT -999
+_HELP
+year (4 digits)
+$FIELD @SM
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 12                 
+_DEFAULT 1
+_HELP
+month
+$FIELD @SD
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 31                 
+_DEFAULT 1
+_HELP
+day
+$FIELD @SH
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 24                 
+_DEFAULT 0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @SI
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @SS
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+second, use 0
+$FIELD @EYR
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1492 : 9999            
+_DEFAULT -999
+_HELP
+year (4 digits)
+$FIELD @EM
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 12                 
+_DEFAULT 1
+_HELP
+month
+$FIELD @ED
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  1 : 31                 
+_DEFAULT 1
+_HELP
+day
+$FIELD @EH
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 24                 
+_DEFAULT 0
+_HELP
+hour, use 24 for daily or midnight
+$FIELD @EI
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+minute, use 0 for daily or midnight
+$FIELD @ES
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE  0 : 59                 
+_DEFAULT 0
+_HELP
+second, use 0
+$FIELD @TSTP
+_TYPE INTEGER
+_RANGE  1 : 1440               
+_DEFAULT 1
+_HELP
+ Time step of the data.
+$FIELD @TUNIT
+_TYPE CHARACTER
+_VALID SECOND, MINUTE, HOUR, DAY, MONTH, YEAR
+_DEFAULT DAY
+_HELP
+ This is the units for the time step.
+#GROUP   22  TYPE PRM2
+$WINDOW Dates - 2 (&LT)
+$HEADER
+Enter any needed data transformation for each data set.
+  DSN Number       Transformation
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH     6
+_COLUMN     5
+_PROTECT PROTECTED
+$FIELD FIELD2
+_TYPE CHARACTER
+_WIDTH     8
+_COLUMN    23
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT AVERAGE
+_HELP
+ Rainfall is usually TOTAL, streamflow is usually RATE. The response is 
+ used when desired timestep is different from the timestep on the WDM data 
+ set.  For the case when the desired time step is less than the time
+ step on the WDM file, TOTAL will repeat the value and RATE will divide. 
+#GROUP   23  TYPE TEXT
+$WINDOW Dates - 1 (&LT) Problem
+$TEXT
+One or more values in the starting date entered are not valid.
+
+Check starting date carefully as this screen must be correct to continue.
+#GROUP   24  TYPE TEXT
+$WINDOW Dates - 1 (&LT) Problem
+$TEXT
+One or more values in the ending date entered are not valid.
+
+Check starting date carefully as this screen must be correct to continue.
+#GROUP   25  TYPE TEXT
+$WINDOW Dates - 1 (&LT) Problem
+$TEXT
+The date to start listing data falls after the date to end listing the data.
+
+The starting must be earlier than the ending date for the listing.
+
+Check dates carefully as this screen must be correct to continue.
+#GROUP   41  TYPE MENU
+$WINDOW Limits (&LL)
+$TITLE Do you want to List or Screen the data?
+$DEFAULT   1
+$LENGTH    6
+$WIDTH    78
+$COLENGTH  8
+$OPTION List
+_DESC - lists data within a certain range
+$OPTION Screen
+_DESC - lists data outside a range or tolerance
+#GROUP   42  TYPE PRM1
+$WINDOW List (&LLL)
+$SCREEN
+Enter conditions for Listing the data values.
+
+  Value is above [@ABOVE....]
+  Value is below [@BELOW....]
+
+  Quality flag   [@QFLG.]
+
+  Number of decimal places     [@DCPLA]
+  Number of significant digits [@SIGDG]
+$FIELD @ABOVE
+_TYPE REAL
+_RANGE  -1.000E+20 : 1.0000E+20
+_DEFAULT 0.0
+_HELP
+ Any number above this value will be listed.
+$FIELD @BELOW
+_TYPE REAL
+_RANGE  -1.000E+20 : 1.0000E+20
+_DEFAULT 900000.
+_HELP
+ Any number below this value will be listed.
+$FIELD @QFLG
+_TYPE INTEGER
+_RANGE  0 : 30                 
+_DEFAULT 0
+_HELP
+ Maximum value of quality flag on WDM file to use data.
+$FIELD @DCPLA
+_TYPE INTEGER
+_RANGE  -1 : 5                 
+_DEFAULT 0
+_HELP
+ Decimal places desired. Use -1 to have ANNIE select.
+$FIELD @SIGDG
+_TYPE INTEGER
+_RANGE  1 : 5                  
+_DEFAULT 5
+_HELP
+ Significant digits to use on listing.
+$HELP
+Values less than the minimum or greater than the maximum
+Limits or with a larger quality flag will not be listed.
+#GROUP   43  TYPE PRM1
+$WINDOW Screen (&LLS)
+$SCREEN
+Enter conditions for Screening the data values.
+
+  Value is below [@BELOW....]
+  Value is above [@ABOVE....]
+  Percent change exceeds  [@CHGPCT...]
+  Absolute change exceeds [@CHGABS...]
+
+  Quality flag [@QFLG]
+  Number of decimal places     [@DCPLA]
+  Number of significant digits [@SIGDG]
+$FIELD @BELOW
+_TYPE REAL
+_RANGE  -1.000E+20 : 1.0000E+20
+_DEFAULT 0.0
+_HELP
+Any number below this value will be listed.
+$FIELD @ABOVE
+_TYPE REAL
+_RANGE  -1.000E+20 : 1.0000E+20
+_DEFAULT 900000.0
+_HELP
+Any number above this value will be listed.
+$FIELD @CHGPCT
+_TYPE REAL
+_RANGE       0.000 : 1.0000E+20
+_DEFAULT -999.
+_HELP
+Any percent change greater than this will be listed.
+$FIELD @CHGABS
+_TYPE REAL
+_RANGE       0.000 : 1.0000E+20
+_DEFAULT -999.
+_HELP
+Any absolute change greater than this will be listed.
+$FIELD @QFLG
+_TYPE INTEGER
+_RANGE  0 : 30                 
+_DEFAULT 0
+_HELP
+Maximum value of quality flag on WDM file to use data.
+$FIELD @DCPLA
+_TYPE INTEGER
+_RANGE  -1 : 5                 
+_DEFAULT 0
+_HELP
+Decimal places desired. Use -1 to have ANNIE select.
+$FIELD @SIGDG
+_TYPE INTEGER
+_RANGE  1 : 5                  
+_DEFAULT 5
+_HELP
+Significant digits to use on listing.
+$HELP
+ List values outside the range minimum to maximum values,
+ or values that exceed the absolute or percent change from
+ one timestep to the next.
+#GROUP   51  TYPE PRM1
+$WINDOW Aggregate (&LA)
+$SCREEN
+
+  Specify which summations should be made.
+
+  Grand total     [@GRT...]
+
+NOTE: start date and timestep must be consistent
+      with summation options to get the sums.
+$FIELD @GRT
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no grand total summary.
+ Enter SUM to sum up the values to a grand total.
+ Enter AVERAGE to average all of the values listed.
+#GROUP   52  TYPE PRM1
+$WINDOW Aggregate (&LA)
+$SCREEN
+
+  Specify which summations should be made.
+
+  Grand total     [@GRT...]
+  Annual summary  [@ANN...]
+
+NOTE: start date and timestep must be consistent
+      with summation options to get the sums.
+$FIELD @GRT
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no grand total summary.
+ Enter SUM to sum up the values to a grand total.
+ Enter AVERAGE to average all of the values listed.
+$FIELD @ANN
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no annual summary.
+ Enter SUM to sum up the values for each year.
+ Enter AVERAGE to average the values for each year.
+#GROUP   53  TYPE PRM1
+$WINDOW Aggregate (&LA)
+$SCREEN
+
+  Specify which summations should be made.
+
+  Grand total     [@GRT...]
+  Annual summary  [@ANN...]
+  Monthly summary [@MON...]
+
+NOTE: start date and timestep must be consistent
+      with summation options to get the sums.
+$FIELD @GRT
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no grand total summary.
+ Enter SUM to sum up the values to a grand total.
+ Enter AVERAGE to average all of the values listed.
+$FIELD @ANN
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no annual summary.
+ Enter SUM to sum up the values for each year.
+ Enter AVERAGE to average the values for each year.
+$FIELD @MON
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no monthly summary.
+ Enter SUM to sum up the values for each month.
+ Enter AVERAGE to average the values for each month.
+#GROUP   54  TYPE PRM1
+$WINDOW Aggregate (&LA)
+$SCREEN
+
+  Specify which summations should be made.
+
+  Grand total     [@GRT...]
+  Annual summary  [@ANN...]
+  Monthly summary [@MON...]
+  Daily summary   [@DAY...]
+
+NOTE: start date and timestep must be consistent
+      with summation options to get the sums.
+$FIELD @GRT
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no grand total summary.
+ Enter SUM to sum up the values to a grand total.
+ Enter AVERAGE to average all of the values listed.
+$FIELD @ANN
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no annual summary.
+ Enter SUM to sum up the values for each year.
+ Enter AVERAGE to average the values for each year.
+$FIELD @MON
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no monthly summary.
+ Enter SUM to sum up the values for each month.
+ Enter AVERAGE to average the values for each month.
+$FIELD @DAY
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no daily summary.
+ Enter SUM to sum up the values for each day.
+ Enter AVERAGE to average the values for each day.
+#GROUP   55  TYPE PRM1
+$WINDOW Aggregate (&LA)
+$SCREEN
+
+  Specify which summations should be made.
+
+  Grand total     [@GRT...]
+  Annual summary  [@ANN...]
+  Monthly summary [@MON...]
+  Daily summary   [@DAY...]
+  Hourly summary  [@HRL...]
+
+NOTE: start date and timestep must be consistent
+      with summation options to get the sums.
+$FIELD @GRT
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no grand total summary.
+ Enter SUM to sum up the values to a grand total.
+ Enter AVERAGE to average all of the values listed.
+$FIELD @ANN
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no annual summary.
+ Enter SUM to sum up the values for each year.
+ Enter AVERAGE to average the values for each year.
+$FIELD @MON
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no monthly summary.
+ Enter SUM to sum up the values for each month.
+ Enter AVERAGE to average the values for each month.
+$FIELD @DAY
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no daily summary.
+ Enter SUM to sum up the values for each day.
+ Enter AVERAGE to average the values for each day.
+$FIELD @HRL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, SUM, AVERAGE
+_DEFAULT NONE
+_HELP
+ Enter NONE for no hourly summary.
+ Enter SUM to sum up the values for each hour.
+ Enter AVERAGE to average the values for each hour.
+#GROUP   56  TYPE PRM1
+$WINDOW Aggregate - 2 (&LA)
+$SCREEN
+
+  For annual summation,
+  enter which month will end the year [@PRM1]
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE  1 : 12                 
+_DEFAULT 12
+_HELP
+  Water year would be 9, calendar year would be 12.
+#GROUP   57  TYPE TEXT
+$WINDOW Aggregate (&LA) Problem
+$TEXT
+Currently, you are screening the data values,
+thus no summaries may be performed.
+
+If you wish to perform summaries on the data values,
+select the Range option from the List menu and then
+select the List option from the Range screen.
+After specifying to List the data values, you may then
+return here and specify which summaries are to be performed.
+#GROUP   61  TYPE TEXT
+$WINDOW Execute (&LE)
+$TEXT
+ & values will be checked.
+
+#GROUP   62  TYPE TEXT
+$TEXT
+          ( * ) is for out-of-range data
+
+#GROUP   63  TYPE TEXT
+$TEXT
+ Data-set number      Data-set name
+#GROUP   64  TYPE TEXT
+$TEXT
+ Total
+#GROUP   65  TYPE TEXT
+$TEXT
+ Average
+#GROUP   66  TYPE TEXT
+$WINDOW Execute (&LE)
+$TEXT
+Finished listing data.
+#GROUP   67  TYPE TEXT
+$WINDOW Execute (&LE) Problem
+$TEXT
+Problem retrieving data for data-set number &  (Return Code = &).
+
+Use the Accept command (F2) to continue with data listing.
+
+Use the Interrupt command (F6) to stop data listing.
+#GROUP   70  TYPE PRM1
+$WINDOW Generate-List/Edit (&LG)
+$SCREEN
+
+  Should you desire to edit the first column (data set) of values,
+  the time-series values for that data set will need to be stored,
+  at least temporarily, on another data set until listing/editing
+  has been completed.  Upon completion, you will be given the option
+  to store the edited time-series values on the original data set.
+
+  Enter the temporary data-set number: [@TDSN]
+    (use 0 if editing not desired)
+$FIELD @TDSN
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 0 : 32000
+_HELP
+As the time-series data is listed and edited, it will be stored on this
+data set.  After completion of listing/editing, you will have the option
+of keeping this data set, or returning the values stored on it to the
+original data set.
+#GROUP   71  TYPE PRM2
+$WINDOW Generate-List/Edit (&LG)
+$HEADER
+$FIELD FIELD1
+_TYPE CHARACTER
+_WIDTH     22
+_COLUMN     2
+_PROTECT PROTECTED
+_HELP
+This field displays the date of the values being listed.
+It may not be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH      8
+_COLUMN    25
+_RANGE -999.0 : -999.0
+_HELP
+Data values in this field only may be edited as the data is listed.
+#GROUP   72  TYPE PRM2
+$WINDOW Generate-List/Edit (&LG)
+$HEADER
+$FIELD FIELD1
+_TYPE CHARACTER
+_WIDTH     22
+_COLUMN     2
+_PROTECT PROTECTED
+_HELP
+This field displays the date of the values being listed.
+It may not be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH      8
+_COLUMN    25
+_RANGE -999.0 : -999.0
+_HELP
+Only data values in this field may be edited as the data is listed.
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH     12
+_COLUMN    35
+_PROTECT PROTECTED
+_HELP
+The string of data values in this field may not be edited.
+#GROUP   73  TYPE PRM2
+$WINDOW Generate-List/Edit (&LG)
+$HEADER
+$FIELD FIELD1
+_TYPE CHARACTER
+_WIDTH     22
+_COLUMN     2
+_PROTECT PROTECTED
+_HELP
+This field displays the date of the values being listed.
+It may not be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH      8
+_COLUMN    25
+_RANGE -999.0 : -999.0
+_HELP
+Only data values in this field may be edited as the data is listed.
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH     24
+_COLUMN    35
+_PROTECT PROTECTED
+_HELP
+The string of data values in this field may not be edited.
+#GROUP   74  TYPE PRM2
+$WINDOW Generate-List/Edit (&LG)
+$HEADER
+$FIELD FIELD1
+_TYPE CHARACTER
+_WIDTH     22
+_COLUMN     2
+_PROTECT PROTECTED
+_HELP
+This field displays the date of the values being listed.
+It may not be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH      8
+_COLUMN    25
+_RANGE -999.0 : -999.0
+_HELP
+Only data values in this field may be edited as the data is listed.
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH     36
+_COLUMN    35
+_PROTECT PROTECTED
+_HELP
+The string of data values in this field may not be edited.
+#GROUP   75  TYPE PRM2
+$WINDOW Generate-List/Edit (&LG)
+$HEADER
+$FIELD FIELD1
+_TYPE CHARACTER
+_WIDTH     22
+_COLUMN     2
+_PROTECT PROTECTED
+_HELP
+This field displays the date of the values being listed.
+It may not be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH      8
+_COLUMN    25
+_RANGE -999.0 : -999.0
+_HELP
+Only data values in this field may be edited as the data is listed.
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH     44
+_COLUMN    34
+_PROTECT PROTECTED
+_HELP
+The string of data values in this field may not be edited.
+#GROUP   76  TYPE PRM2
+$WINDOW Generate-List/Edit (&LG)
+$HEADER
+$FIELD FIELD1
+_TYPE CHARACTER
+_WIDTH     22
+_COLUMN     2
+_PROTECT PROTECTED
+_HELP
+This field displays the date of the values being listed.
+It may not be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH      8
+_COLUMN    25
+_RANGE -999.0 : -999.0
+_HELP
+Only data values in this field may be edited as the data is listed.
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH     45
+_COLUMN    34
+_PROTECT PROTECTED
+_HELP
+The string of data values in this field may not be edited.
+#GROUP   77  TYPE PRM2
+$WINDOW Generate-List/Edit (&LG)
+$HEADER
+$FIELD FIELD1
+_TYPE CHARACTER
+_WIDTH     22
+_COLUMN     1
+_PROTECT PROTECTED
+_HELP
+This field displays the date of the values being listed.
+It may not be modified.
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH      8
+_COLUMN    23
+_RANGE -999.0 : -999.0
+_HELP
+Only data values in this field may be edited as the data is listed.
+$FIELD FIELD3
+_TYPE CHARACTER
+_WIDTH     48
+_COLUMN    31
+_PROTECT PROTECTED
+_HELP
+The string of data values in this field may not be edited.
+#GROUP   78  TYPE TEXT
+$WINDOW Generate-List/Edit (&LG) Problem
+$TEXT
+  This data set already exists, thus it may not be used
+  for temporary storage of edited values.
+
+  If you still wish to be able to edit the listed time-series data,
+  use the Previous command (F4) to return to the last screen
+  and enter the number of a non-existing data set.
+
+  If you do not wish to edit the listed time-series data,
+  use the Accept command (F2) to continue the listing
+  of time-series data (without the editing capability).
+#GROUP   79  TYPE TEXT
+$WINDOW Generate-List/Edit (&LG) Problem
+$TEXT
+  Problem creating this data set, thus it may not be used
+  for temporary storage of edited values.
+
+  If you still wish to be able to edit the listed time-series data,
+  use the Previous command (F4) to return to the last screen
+  and enter the number of a non-existing data set.
+
+  If you do not wish to edit the listed time-series data,
+  use the Accept command (F2) to continue the listing
+  of time-series data (without the editing capability).
+#GROUP   80  TYPE PRM1
+$WINDOW Generate-List/Edit (&LG)
+$SCREEN
+
+  Do you want to copy the edited data stored on
+  the new data set back to the original data set?  [@CPY]
+
+  If NO to the above question, do you want to save
+  the new data set on which the edited data is stored?  [@SAV]
+$FIELD @CPY
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES, NO
+_DEFAULT YES
+_HELP
+Use YES to overwrite all of the original time-series data
+with the new edited time-series data.
+Use NO to keep both the original time-series data and the
+new edited time-series data.
+$FIELD @SAV
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES, NO
+_DEFAULT YES
+_HELP
+Use YES to save the new edited time-series data on the new data set.
+Use NO to delete the new edited time-series data and the new data set.
+  END DATA
+END CLU 

@@ -1,0 +1,870 @@
+DATE
+WDMSFL
+SYSTEM
+CLU          152    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  DURANL
+  END LABEL
+  DATA   CLU   152
+#GROUP    1  TYPE MENU
+$WINDOW Duration (SD)
+$SCREEN
+Choose a Duration option.
+
+       @Select  - data sets for analysis
+       @Define  - general input and output options
+       @Modify  - statitics computation options
+       @Analyze - selected data sets
+
+    Or
+
+       @Return  - to the Statistics screen
+
+$DEFAULT    1
+$LENGTH     7
+$OPTION Select
+_HELP
+ Choose Select to identify the data sets to be analyzed.
+ There are no default data sets.
+ Only time-series type (not table data type) data sets may be analyzed.
+$OPTION Define
+_HELP
+ Choose Define to modify the general processing options.  They include
+ period of record and time step to be used, type of graphics desired,
+ statistics to be viewed on the screen, and statistics to be saved to wdm.
+$OPTION Modify
+_HELP
+ Choose Mofify to modify the class intervals for the analysis and to
+ specify which statistics should be saved to the data sets.
+ Up to 35 intervals may be specified.  Default intervals are based on a
+ minimum of 1.0 and maximum of 10000.0 and distributed logarithmetically.
+$OPTION Analyze
+_HELP
+ Must be selected to get results.   Data sets must be selected first.
+$OPTION Return
+_HELP
+ Select when no more durations analyses are to be done.
+#GROUP    2  TYPE PRM1
+$WINDOW Define (SDD)
+$SCREEN
+Modify general input and output options as needed.
+
+  Input - Period of record [@Period.] (Default, Common, or Specify)
+          Time step        [@Tstu...] (Default, or Specify)
+
+ Output - Type of graphics output [@Plt...] (LP, AP, LA, AA, NONE)
+          Statistics to screen    [@Scrn..] (NONE, Percent, Count, or Accum)
+          Statistics to wdm file  [@Wdm...] (NO, Yes)
+
+File name [@OUTFILE........................................................]
+$FIELD @Period
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   DEFAULT, COMMON, SPECIFY
+_DEFAULT DEFAULT
+_HELP
+ Enter DEFAULT to use the available period of record for each data set.
+ Enter COMMON to specify a common period or record for all data sets.
+ Enter SPECIFY to be given the oportunity to modify the start
+ and end dates for each data set (during analysis).
+$FIELD @Tstu
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   DEFAULT, SPECIFY
+_DEFAULT DEFAULT
+_HELP
+ Enter DEFAULT to use the available time step and time units for each
+ data set.  These must have been set when data was added to WDM file.
+ Enter SPECIFY to be given the opportunity to modify the time step
+ and time units for each data set (during analysis).
+$FIELD @Plt
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID NONE, LP, AP, LA, AA
+_DEFAULT LP
+_HELP
+ First character is for y-axis and can be Logarithmetic or Arithmetic.  The
+ second character is for the x-axis and can be Probability or Arithmetic.
+ The probability axis uses a Gausian transformation.
+$FIELD @Scrn
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NONE, PERCENT, COUNT, ACCUM
+_DEFAULT PERCENT
+_HELP
+The class intervals with the 1) percent of values within the interval,
+(PCT), 2) the number of values in the interval, (COUNT), or 3) the percent
+of values equal to or exceeding the interval (ACCUM) can be displayed on
+the screen.  The table output file includes all computed statistics.
+$FIELD @Wdm
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+_HELP
+Enter YES to put percentiles on the WDM file data sets as attributes.  This
+is needed for Generalized Least Squares analysis, but may be used for other
+purposes.  By default, you will get 95, 90, 75, 70, 50, 25, and 10 percents.
+See "Percents" under "Modify" to select a different set of percents.
+$FIELD @OUTFILE
+_TYPE CHARACTER
+_HELP
+Enter the name of the file for statistical analysis output.
+#GROUP    3  TYPE FILE
+$SCREEN
+
+ Name of output file?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ Enter file name for current directory or full path name.  An existing or
+ new file name can be used.
+#GROUP    4  TYPE TEXT
+$TEXT
+Unable to open specified file for statistical output.
+
+Use the 'Prev'ious command to go back to the Output screen
+and specify another file for output,
+
+OR
+
+Use the 'Accept' command to continue and output
+statistics to the default file DURANL.OUT.
+$WINDOW Output (SDO) Problem
+#GROUP    5  TYPE PRM1
+$WINDOW Percents (SDMP)
+$SCREEN
+Select percents to be written to wdm file.
+  %  optn    %  optn    %  optn
+ 99 [@P99]  65 [@P65]  25 [@P25]
+ 98 [@P98]  60 [@P60]  20 [@P20]    optn:  NO - do not save in wdm file
+ 95 [@P95]  55 [@P55]  15 [@P15]          YES - save in wdm file
+ 90 [@P90]  50 [@P50]  10 [@P10]
+ 85 [@P85]  45 [@P45]   5 [@P05]
+ 80 [@P80]  40 [@P40]   2 [@P02]    Note:  all percents will be included
+ 75 [@P75]  35 [@P35]   1 [@P01]           in the print file.
+ 70 [@P70]  30 [@P30]
+$FIELD @P99
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P98
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P95
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+$FIELD @P90
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+$FIELD @P85
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P80
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P75
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+$FIELD @P70
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+$FIELD @P65
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P60
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P55
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P50
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+$FIELD @P45
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P40
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P35
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P30
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P25
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+$FIELD @P20
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P15
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P10
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT YES
+$FIELD @P05
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P02
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$FIELD @P01
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   NO, YES
+_DEFAULT NO
+$HELP
+The program will compute the exceedence values for the indicated
+percents.  The percents with YES will be written to the wdm file.
+The percents with NO will not be written to the wdm file.
+#GROUP    6  TYPE MENU
+$WINDOW Modify (SDM)
+$SCREEN
+Define class limits and/or percentiles calculated.
+
+       @Standard - to set lower and upper bounds
+       @User     - to set individual class limits
+
+       @Percents - to choose percentiles to be calculated
+
+       @Return   - to the Duration menu
+$DEFAULT    1
+$LENGTH     9
+$OPTION Standard
+_HELP
+Select Standard to get 34 limits logrithmically distributed between
+a lower and upper bound that you specify.  If you select Standard,
+you cannot also select User.
+$OPTION User
+_HELP
+Select User to define up to 34 class limits.  If you select User,
+you cannot also select Standard.
+$OPTION Percents
+_HELP
+Select Percents to specify which Percentiles should be written to
+the wdm file.
+$OPTION Return
+_HELP
+Select Return to return to the Duration screen
+#GROUP    7  TYPE PRM1
+$WINDOW Standard (SDMS)
+$SCREEN
+
+  Enter boundaries for Standard class limits.
+
+    Lower bound for class limits  [@LOWBND.]
+
+    Upper bound for class limits  [@UPBND..]
+$FIELD @LOWBND
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.000001 : 1000.
+_DEFAULT  1.
+_HELP
+ Top of first class interval.  Must be greater than 0.0.
+$FIELD @UPBND
+_TYPE REAL
+_RANGE   1. : 10000000.
+_DEFAULT 10000.
+_HELP
+ Top of next-to-last interval above which all values will be in the
+ highest class interval (ie, last class interval will go from this
+ value to infinity.
+#GROUP    8  TYPE PRM1
+$WINDOW User (SDMU) 1 of 2
+$SCREEN
+
+  Enter the number of class limits  [@PRM1]
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE    2 : 35
+_DEFAULT  35
+$HELP
+ You will need to input the upper limit of each class.
+#GROUP    9  TYPE PRM2
+$WINDOW User (SDMU) 2 of 2
+$HEADER
+
+     Class Limit        Class Limit
+     Number             Value
+$FIELD FIELD1
+_TYPE INTEGER
+_WIDTH  6
+_ORDER ASCENDING
+_PROTECT PROTECTED
+_COLUMN 6
+_RANGE    1 : 35
+$FIELD FIELD2
+_TYPE REAL
+_WIDTH  8
+_ORDER ASCENDING
+_PROTECT CORRECT
+_COLUMN 25
+_RANGE  0. : 10000000.
+_HELP
+ Each number must be larger than the previous.
+#GROUP   10  TYPE PRM1
+$SCREEN
+
+  Enter the common time period for analysis of data sets.
+
+            Year    Month   Day     Hour    Minute  Second
+  Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+  End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$WINDOW Analyze (SDA)
+#GROUP   11  TYPE TEXT
+$TEXT
+The dates specified are not valid as they are not within
+the period of record common to all of the data sets.
+
+You must specify dates which are within the following period:
+
+               Year/Mo/Dy/Hr/Mi/Sc
+Starting Date: &/&/&/&/&/&
+  Ending Date: &/&/&/&/&/&
+#GROUP   12  TYPE TEXT
+$TEXT
+Unable to determine a comon period for the data sets
+being analyzed as no common period could be found for them.
+
+Currently, the method for determining the period of analysis
+has been set to use the Full period for each data set.
+
+If you want to change this method, select the 'Previous' command to
+return to the Duration menu and the select the Period option.
+$WINDOW Analyze (SDA) Problem
+#GROUP   13  TYPE TEXT
+$TEXT
+
+  For data-set number &,
+#GROUP   14  TYPE PRM1
+$WINDOW Analyze (SDA)
+$SCREEN
+
+  Specify Starting and Ending dates.
+
+            Year    Month   Day     Hour    Minute  Second
+  Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+  End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+#GROUP   15  TYPE PRM1
+$WINDOW Analyze (SDA)
+$SCREEN
+
+  Specify time step, time units, and any needed data transformation.
+
+           Time step    Time units   Data transformation
+           [@TSTP1]     [@TUNIT1]    [@DTRAN1]
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+_HELP
+ Enter number of time units for the analysis interval.
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+_HELP
+ Time step and unit must divide evenly into 1 day, month or year.
+ (ie, 17 hours, 11 months are not acceptable).
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN
+_DEFAULT AVERAGE
+_HELP
+ AVERAGE or SUM are usually used.  MIN and MAX have not been tested (BEWARE).
+#GROUP   16  TYPE PRM1
+$WINDOW Analyze (SDA)
+$SCREEN
+  Specify dates, time step, time units, and data transformation.
+
+            Year    Month   Day     Hour    Minute  Second
+  Start     @PRM1   @PRM2   @PRM3   @PRM4   @PRM5   @PRM6
+  End       @PRM7   @PRM8   @PRM9   @PRMA   @PRMB   @PRMC
+
+           Time step    Time units   Data transformation
+           [@TSTP1]     [@TUNIT1]    [@DTRAN1]
+$FIELD @PRM1
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1900
+$FIELD @PRM2
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @PRM3
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @PRM4
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @PRM5
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM6
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRM7
+_TYPE INTEGER
+_RANGE 1:9999
+_DEFAULT 1990
+$FIELD @PRM8
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @PRM9
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @PRMA
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @PRMB
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @PRMC
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN
+_DEFAULT AVERAGE
+#GROUP   17  TYPE TEXT
+$TEXT
+The dates entered on the previous screen are invalid
+as the starting date falls after the ending date.
+
+The dates must be specified correctly for the
+Analysis to be completed.
+$WINDOW Analysis (SDA) Problem
+#GROUP   18  TYPE MENU
+$TITLE Select an option.
+$DEFAULT    1
+$LENGTH    6
+$OPTION Modify
+_DESC - parameters for the plot
+_HELP
+ You may modify the specifications for the plot before and/or after
+ the plot is made.  Line type, symbol etc may be changed.
+$OPTION Plot
+_DESC - to the specified output device
+_HELP
+ Must be selected to get the plot. The plot is generated according to the
+ specifications provided as defaults or modifications you made, and put on
+ the selected output graphics device.
+$OPTION Return
+_DESC - from plotting to the Analysis
+_HELP
+ Select if finished plotting and modifying the plot.
+$WINDOW Analyze-Plot (SDA)
+#GROUP   19  TYPE TEXT
+$TEXT
+Unable to perform statistical Analysis as there are
+no data sets with which to work.
+
+To select data sets for use, choose the
+Select option from the Duration screen.
+$WINDOW Analyze (SDA) Problem
+#GROUP   20  TYPE TEXT
+$TEXT
+              Cases equal or
+              exceeding lower    Cases equal or
+              limit and less     exceeding lower
+   Lower     than upper limit      class limit
+   class   ------------------- -------------------
+   limit     Cases    Percent    Cases    Percent
+ --------- --------- --------- --------- ---------
+#GROUP   21  TYPE TEXT
+$TEXT
+Streamflow, in cubic feet per second
+#GROUP   22  TYPE TEXT
+$TEXT
+Percent chance flow exceeded
+#GROUP   23  TYPE TEXT
+$TEXT
+Reading data from WDM file.
+#GROUP   24  TYPE TEXT
+$TEXT
+ Error reading WDM file. Error code is &.
+#GROUP   25  TYPE TEXT
+$TEXT
+You have specified to output duration plots to a graphics device.
+
+However, graphics is not currently available,
+thus no duration plots will be generated.
+
+If you have GKS graphics available on your system,
+add the line "GRAPHS YES" (no quotes) to your TERM.DAT
+file to make graphics available to ANNIE/AIDE.
+$WINDOW Output (SDO) Problem
+#GROUP   26  TYPE TEXT
+$TEXT
+   Lower      Cases      Lower      Cases      Lower      Cases
+#GROUP   27  TYPE TEXT
+$TEXT
+   class     within      class     within      class     within
+#GROUP   28  TYPE TEXT
+$TEXT
+   limit   interval,%    limit   interval,%    limit   interval,%
+#GROUP   29  TYPE TEXT
+$TEXT
+ --------   --------   --------   --------   --------   --------
+#GROUP   30  TYPE TEXT
+$TEXT
+   Lower      Cases      Lower      Cases      Lower      Cases
+#GROUP   31  TYPE TEXT
+$TEXT
+   class     within      class     within      class     within
+#GROUP   32  TYPE TEXT
+$TEXT
+   limit    interval     limit    interval     limit    interval
+#GROUP   33  TYPE TEXT
+$TEXT
+ --------   --------   --------   --------   --------   --------
+#GROUP   34  TYPE TEXT
+$TEXT
+   Lower      Cases      Lower      Cases      Lower      Cases
+#GROUP   35  TYPE TEXT
+$TEXT
+   class   exceeding     class   exceeding     class   exceeding
+#GROUP   36  TYPE TEXT
+$TEXT
+   limit      limit      limit      limit      limit      limit
+#GROUP   37  TYPE TEXT
+$TEXT
+ --------   --------   --------   --------   --------   --------
+#GROUP   38  TYPE PRM1
+$WINDOW Analyze (SDA) Percent exceedence
+$SCREEN
+ Percent time value was exceeded.
+   FLOW    %      FLOW    %      FLOW     %
+ @P99...  99    @P65...  65    @P25....  25
+ @P98...  98    @P60...  60    @P20....  20
+ @P95...  95    @P55...  55    @P15....  15
+ @P90...  90    @P50...  50    @P10....  10
+ @P85...  85    @P45...  45    @P05....   5
+ @P80...  80    @P40...  40    @P02....   2
+ @P75...  75    @P35...  35    @P01....   1
+ @P70...  70    @P30...  30
+$FIELD @P99
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P98
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P95
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT YES
+$FIELD @P90
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT YES
+$FIELD @P85
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P80
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P75
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT YES
+$FIELD @P70
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P65
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P60
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P55
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P50
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P45
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P40
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P35
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P30
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P25
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P20
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P15
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P10
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P05
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P02
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$FIELD @P01
+_TYPE REAL
+_PROTECT PROTECT
+_RANGE  0.0 : -999.
+_DEFAULT 0.0
+$HELP
+The computed exceedence values for the indicated percents.
+#GROUP   39  TYPE PRM1
+$WINDOW Analyze (SDA) Warning
+$SCREEN
+
+Warning:  There was a problem writing some of the requested percentile
+          percentile attributes to the current data set.
+
+          @Knt = number of problem attributes
+          @Rtc = return code
+$FIELD @Knt
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+$FIELD @Rtc
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0
+#GROUP   41  TYPE MENU
+$WINDOW Percents (SDMP) Warning
+$SCREEN
+ Warning:  The wdm output option (Define screen) has been set to NO.
+           You have just selected output to the wdm file.
+
+ Do you want to output selected percents to the wdm file?
+
+           @YES - output to the wdm file
+           @NO  - don't output to the wdm file
+$DEFAULT  2
+$LENGTH   3
+$OPTION NO
+$OPTION YES
+$HELP
+The "Statistics to wdm file" option is set to NO.  This option defaults
+to NO, and can be modified under the Define screen.  It can also be
+modified in this screen.
+  END DATA
+END CLU

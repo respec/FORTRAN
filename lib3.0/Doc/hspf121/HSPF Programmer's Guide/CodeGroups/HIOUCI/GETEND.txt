@@ -1,0 +1,43 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI">HIOUCI</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   GETEND
+     O                   (CEND)
+C
+C     + + + PURPOSE + + +
+C     get the end keyword
+C
+C     + + + DUMMY ARGUMENTS + + +
+      CHARACTER*4 CEND
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     CEND    - end keyword
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CEND = UEND
+C
+      RETURN
+      END
+</pre>
+
+
+
+

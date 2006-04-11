@@ -1,0 +1,45 @@
+      SUBROUTINE PUFCA ( CCHAR, IATT, NCHS, IROW, ICOL )
+C
+      CHARACTER*1 CCHAR
+      INTEGER*4 INTARY(9)
+      INTEGER*4 EAX, EBX, ECX, EDX
+      INTEGER*4 DS, ES, EDI, ESI, FLG
+      INTEGER*4 AL
+C
+      EQUIVALENCE ( INTARY(1), EAX )
+      EQUIVALENCE ( INTARY(2), EBX )
+      EQUIVALENCE ( INTARY(3), ECX )
+      EQUIVALENCE ( INTARY(4), EDX )
+      EQUIVALENCE ( INTARY(5), DS  )
+      EQUIVALENCE ( INTARY(6), ES  )
+      EQUIVALENCE ( INTARY(7), EDI )
+      EQUIVALENCE ( INTARY(8), ESI )
+      EQUIVALENCE ( INTARY(9), FLG )
+C
+C     CALL PUFCUR ( IROW, ICOL )
+C
+C --- POSITION CURSOR ON SCREEN
+C
+C     EAX = ICAT ( 2, 0 )
+C     EBX = ICAT ( 0, 0 )
+C     EDX = ICAT ( IROW, ICOL )
+C
+      EAX = 512
+      EBX = 0
+      EDX = IROW*256 + ICOL
+C
+      NTRUP = 16
+      CALL INTRUP ( INTARY,  NTRUP )
+C
+C
+      AL = ICHAR ( CCHAR )
+C     EAX = ICAT ( 9, AL )
+C     EBX = ICAT ( 0, IATT )
+C     ECX = ICAT ( 0, NCHS )
+      EAX = 2304 + AL
+      EBX = IATT
+      ECX = NCHS
+      CALL INTRUP ( INTARY, 16 )
+C
+      RETURN
+      END

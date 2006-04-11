@@ -1,0 +1,74 @@
+<html><head><title>CMPAD</title></head>
+<body>
+<a name="CMPAD"><hr size=7><h2>CMPAD</h2><hr size=7></a>
+ 
+<table width="100%" border="1">
+<caption>Version CMPAD of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>PAD(256000)<td>R4<td>Name for entire Common block (real)</tr>
+<tr><td>1<td>IPAD(256000)<td>I4<td>Name for entire Common block (integer)</tr>
+<tr><td>1<td>DPPAD(128000)<td>R8<td>Name for entire Common block (double precision)</tr>
+<tr><td>1<td>ASVEC(*)<td>I4<td>Marker for beginning of SCRTCH for all versions</tr>
+<tr>&nbsp;<td></tr>
+</table>
+
+<p>Variables in this Common Block allow access to all of SCRTCH.
+<p>Referenced by 
+   <a href="../CodeGroups/HOSUPER/OSUPER.html">OSUPER</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSGET.html">TSGET</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSPUT.html">TSPUT</a>,
+   <a href="../CodeGroups/HTSINSI/ALLOC.html">ALLOC</a>,
+   <a href="../CodeGroups/HRUNTSGQ/SEQINP.html">SEQINP</a>,
+   <a href="../CodeGroups/HRUNTSGT/GETTSS.html">GETTSS</a>,
+   <a href="../CodeGroups/HRUNTSGW/GETWDM.html">GETWDM</a>,
+   <a href="../CodeGroups/HRUNTSPT/PUTTSS.html">PUTTSS</a>,
+   <a href="../CodeGroups/HRUNTSPW/PUTWDM.html">PUTWDM</a>,
+   <a href="../CodeGroups/HRINTS/NETBLK.html">NETBLK</a>,
+   <a href="../CodeGroups/HRINTS/SCHBLK.html">SCHBLK</a>,
+   <a href="../CodeGroups/HRINTS/SRCBLK.html">SRCBLK</a>
+<p>Code
+<pre>
+C     from CMPAD.INC
+C     scratch pad is the entire common block
+      INTEGER   SCRSIZ,SCRSZ2
+      PARAMETER (SCRSIZ=518000)
+      PARAMETER (SCRSZ2=259000)
+C
+      INTEGER IPAD(SCRSIZ)
+      REAL    PAD(SCRSIZ)
+      DOUBLE PRECISION DPPAD(SCRSZ2)
+C
+      EQUIVALENCE (ASVEC(1),IPAD(1)),(ASVEC(1),PAD(1)),
+     1            (ASVEC(1),DPPAD(1))
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="CMPAD">
+</Object>
+
+</body>
+</html>
+

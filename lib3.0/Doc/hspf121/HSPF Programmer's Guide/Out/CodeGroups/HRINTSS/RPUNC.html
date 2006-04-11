@@ -1,0 +1,98 @@
+<html><head><title>RPUNC</title></head>
+<body bgcolor="#ffffff">
+<a name="RPUNC"><h3>RPUNC</h3></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS.html">HRINTSS</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4.html">CRIN4</a> 
+<p>Calls
+   OMSTI,
+   OMSG
+<p>Code
+<pre>
+C
+C     3.5.8.2.3.2.1
+C
+      SUBROUTINE RPUNC
+     I                (STIME,SINT,DELT)
+C
+C     + + + PURPOSE + + +
+C     Compute control words for replace access mode
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DELT,STIME,SINT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STIME  - ???
+C     SINT   - ???
+C     DELT   - simulation time interval in minutes
+C
+C     + + + COMMON BLOCKS- VERSION INTERP4 + + +
+      INCLUDE   'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   SCLU,SGRP,N,REM
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  OMSG,OMSTI
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     check for invalid tsb
+      SCLU = 216
+      IF (BCWBTI .EQ. 1) GO TO 10
+C       error
+C       invalid time series block encountered during setup
+C       for replace access.  block must be type uncompressed.
+        SGRP = 134
+        CALL OMSTI (FILE)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+ 10   CONTINUE
+C
+      IF (STIME .NE. TZERO) GO TO 20
+C       starting time is at initial point of tsb
+        NREM  =RATIO
+        VOTFRM=VOTSB +1
+        FRMTIM=STIME
+        GO TO 50
+ 20   CONTINUE
+        N   =(STIME-TZERO)/DELTAT
+        REM =(STIME-TZERO) -N*DELTAT
+        NREM=RATIO -REM/DELT
+C
+        IF (REM .NE. 0) GO TO 30
+C         starting point at point stored in tsb but
+C         not initial point nor last point
+          VOTFRM=VOTSB +TOTCOM*N +1
+          FRMTIM=STIME
+          GO TO 40
+ 30     CONTINUE
+C         starting point not at any point stored in the tsb
+          VOTFRM=VOTSB +(N+1)*TOTCOM +1
+          FRMTIM=SINT
+ 40     CONTINUE
+C
+ 50   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="RPUNC">
+</Object>
+
+</body>
+</html>
+

@@ -1,0 +1,366 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          341    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRCHHYD
+  END LABEL
+  DATA   CLU   341
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5              5   -4
+&D
+
+ RCHRES: &I
+
+ The determinant DET, used to solve the simultaneous linear equations in
+ subroutine SOLVE, is zero.  It will be reset to 0.001 and program will
+ attempt to continue execution, unless the maximum count for this error
+ has been reached.  Relevant data are:
+
+         V1         V2       ROD1       ROD2
+ &R         &R         &R         &R
+$HELP
+ V1,V2 are the "volume" values in RCHTAB corresponding to the segment of
+       equation 8 currently being dealt with (see documentation).
+ ROD1,ROD2 are the corresponding total outflow demands.
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5              5   -4
+&D
+
+ RCHRES: &I
+
+ Subroutine SOLVE has become trapped, in searching for the solution to the
+ routing equations.  It is yo-yoing back and forth between two adjacent
+ segments of the "total outflow demand vs volume" curve (equation 8).
+ If it occurs once or twice - no problem.  If it stops the run you
+ probably have an equation 8 with unusual shape and your ftable
+ probably needs alteration.  Relevant data are:
+
+  MOVE   PREMOV
+ &I       &I
+$HELP
+ MOVE and PREMOV indicate latest and previous directions of movement
+ along the curve.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5              5   -4
+&D
+
+ RCHRES: &I
+
+ The calculation of relative depth in subroutine AUXIL, using Newton's
+ method of successive approximations, did not converge.  Probable reason --
+ unusual or bad entries in RCHTAB.  Relevant data are:
+
+          A          B          C      RDEP1      RDEP2  COUNT
+ &R         &R         &R         &R         &R          &I
+$HELP
+ A,B and C are factors used to calculate RDEP2 (see documentation)
+ RDEP1,RDEP2 are prior and posterior estimates of relative depth for the
+      final iteration, i.e. (DEP-DEP1)/(DEP2-DEP1)
+ COUNT is the number of the final iteration.
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5              5   -4
+&D
+
+ RCHRES: &I
+
+ Calculation of relative depth, using Newton's method of successive
+ approximations, converged to an invalid value (not in range 0.0 to 1.0).
+ Probably ftable was extrapolated.  If extrapolation was small, no problem.
+ Remedy; extend ftable.  Relevant data are:
+
+          A          B          C      RDEP1      RDEP2  COUNT
+ &R         &R         &R         &R         &R          &I
+$HELP
+ A,B and C are factors used to calculate RDEP2 (see documentation)
+ RDEP1,RDEP2 are prior and posterior estimates of relative depth for the
+      final iteration, i.e. (DEP-DEP1)/(DEP2-DEP1)
+ COUNT is the number of the final iteration
+#GROUP    6  TYPE TEXT
+$TEXT
+   20   11    0    5              5   -4
+&D
+
+ RCHRES: &I
+
+ The volume of water in this reach/mixed reservoir is greater than the value
+ in the "volume" column of the last row of RCHTAB().  To continue the
+ simulation the table has been extrapolated, based on information contained
+ in the last two rows.  This will usually result in some loss of accuracy.
+ If depth is being calculated it will also cause an error condition.
+ Relevant data are:
+
+ NROWS         V1         V2        VOL
+ &I    &R         &R         &R
+$HELP
+ NROWS is the no. of rows in RCHTAB
+ V1,V2 are the volumes tabulated in the second-last and last rows of RCHTAB
+ VOL is the volume in the RCHRES
+#GROUP    7  TYPE TEXT
+$TEXT
+   20   11    0    5              5   -4
+&D
+
+ RCHRES: &I
+
+ The continuity error between the sum of the category volumes CVOL(*)
+ and the total volume VOL is greater than 1 part in 1000 and is
+ therefore considered high.
+
+ Did you specify any "special actions" that alter the sum of CVOL without
+ changing VOL accordingly?  If so, this could account for the problem.
+
+ Relevant data are:
+
+        VOL      CKVOL      CCORR
+ &R         &R         &R        
+$HELP
+ VOL is the volume in the RCHRES
+ CKVOL is the sum of the category volumes in the RCHRES
+#GROUP    8  TYPE TEXT
+$TEXT
+   20   11    0    5              5   -4
+&D
+
+ RCHRES: &I
+
+ The sum of the category volumes CVOL(*) is zero, but the total volume
+ VOL is positive.  CVOL for the first category will be set to VOL.
+
+ Did you specify any "special actions" that alter the sum of CVOL without
+ changing VOL accordingly?  If so, this could account for the problem.
+
+ Relevant data are:
+
+        VOL      CKVOL
+ &R         &R        
+$HELP
+ VOL is the volume in the RCHRES
+ CKVOL is the sum of the category volumes in the RCHRES
+ CCORR is the renormalization factor VOL/CKVOL
+#GROUP   10  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Inconsistent input in section HYDR of the RCHRES module.
+ If AUX2FG is on (i.e. not 0), then AUX1FG must also be on.
+ Similarly, AUX3FG on requires that AUX2FG be on.
+
+ These requirements were not met.
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The priority for a COTDGT time series specified in HYDR-CDEMAND is not in
+ proper format.  The input value is "&CCCCCCCCCCC".  The proper format for
+ a priority date is:                " YYYY/MM/DD ".  The slashes are optional.
+ Also, a real number may be given directly.  Blank defaults to lowest priority.
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in RCHRES block.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP   13  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in RCHRES block, but no category
+  tags were defined in the CATEGORY block.
+#GROUP   14  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The FTABLE &I    was referred to in the RCHRES block of the
+ user's control input but not found in the FTABLEs block.  Is the
+ number in error, or is it in the wrong columns, in either place?
+#GROUP   15  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The layout of an FTABLE must satisfy all of the following conditions:
+   1. NROWS >=1
+   2. 3 <= NCOLS <= 8
+   3. (NROWS*NCOLS) <= 500
+
+ One or more of these conditions is not true for the following FTABLE:
+     FTABNO     NROWS     NCOLS
+      &I        &I        &I
+#GROUP   16  TYPE TEXT
+$TEXT
+   20    1    1    5
+ If the following FTABLE were to contain the stated no. of rows, it would
+ continue beyond the record where its delimiter (END) was found.
+
+     FTABNO     NROWS    KEYND
+      &I        &I       &I
+$HELP
+ NROWS is the no. of rows, as stated in the UCI
+ KEYND is the record no., in UCIFL, where the delimiter (END) for this
+ ftable is located
+#GROUP   17  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are 1 or more negative values in the following ftable:
+     FTABNO   ROW NO.
+      &I        &I
+#GROUP   18  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The depth and volume fields of an ftable may not contain values
+ which decrease as the row no. increases.  However, this condition
+ is violated in row &I    of ftable &I   .
+#GROUP   19  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The value in the volume field of the first row of an ftable must be
+ zero.  This is not the case for the following WDM ftable:
+     FTABNO    VZERPT
+      &I        &I
+$HELP
+ VZERPT is the variable which indicates the highest row no. for which
+ the volume is still zero.
+#GROUP   20  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The following WDM ftable was referred to in the rchres block of
+ the user's control input, but no WDM file is available.  The
+ ftable cannot be processed.
+     FTBDSN    FTABNO
+      &I        &I
+#GROUP   21  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The following WDM ftable was referred to in the RCHRES block
+ of the user's control input but not found in the WDM file.  Are
+ the numbers in error or in the wrong columns?
+     FTBDSN    FTABNO
+      &I        &I
+#GROUP   22  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The layout of an ftable must satisfy all of the following conditions:
+   1. NROWS >=1
+   2. 3 <= NCOLS <= 8
+   3. (NROWS*NCOLS)<=100
+ One or more of these conditions is not true for the following WDM ftable:
+     FTBDSN    FTABNO     NROWS     NCOLS
+      &I        &I        &I        &I
+#GROUP   23  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are 1 or more negative values in the following WDM ftable:
+     FTBDSN    FTABNO   ROW NO.
+      &I        &I        &I
+#GROUP   24  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The depth and volume fields of an ftable may not contain values
+ which decrease as the row no. increases.  However, this condition
+ is violated in the following row of the following WDM ftable:
+     FTBDSN    FTABNO   ROW NO.
+      &I        &I        &I
+#GROUP   25  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The value in the volume field of the first row of an ftable must be
+ zero.  This is not the case for the following WDM ftable:
+     FTBDSN    FTABNO    VZERPT
+      &I        &I        &I
+$HELP
+ VZERPT is the variable which indicates the highest row no. for which
+ the volume is still zero.
+#GROUP   26  TYPE TEXT
+$TEXT
+    5    1    1    5
+ A non zero return code was returned from subroutine WDTBSP.
+
+     FTBDSN    FTABNO    RETCOD
+      &I        &I        &I
+#GROUP   27  TYPE TEXT
+$TEXT
+    5    1    1    5
+ A non zero return code was returned from subroutine WTBGET.
+
+     FTBDSN    FTABNO    RETCOD
+      &I        &I        &I
+#GROUP   28  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The number of rows and columns for FTABLE &I    contains invalid
+ numeric input.  The input string was:
+
+                NROW NCOL
+               &CCCCCCCCC
+#GROUP   29  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Data row number &I    for FTABLE &I    contains invalid
+ numeric input.  The input string was:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   30  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Exit number &I    has been specified as the irrigation exit for withdrawals
+ from PERLND.  This exit may not have any other demands, and thus ODFVFG and
+ ODGTFG must both be set to zero for this exit.
+#GROUP   31  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown category &C was specified as the initial category in the
+ HYDR-INIT table.  All categories in this table must be present in
+ the CATEGORY block.
+#GROUP   32  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown category &C was specified in field &I    in the HYDR-CATEGORY
+ table.  All categories in this table must be present in the CATEGORY
+ block.
+#GROUP   33  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown category &C was specified in field &I    in the HYDR-CINIT
+ table.  All categories in this table must be present in the CATEGORY
+ block.
+#GROUP   34  TYPE TEXT
+$TEXT
+    5    1    1    5
+ In table HYDR-CINIT, the specified fractions sum to &R         .  They
+ must either sum to unity or all be zero.
+#GROUP   35  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown category &C was specified in field &I    in the HYDR-CPREC
+ table.  All categories in this table must be present in the CATEGORY
+ block.
+#GROUP   36  TYPE TEXT
+$TEXT
+    5    1    1    5
+ In table HYDR-CPREC, the specified fractions sum to &R         .  They
+ must either sum to unity or all be zero.
+#GROUP   37  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown category &C was specified in field &I    in the HYDR-CEVAP
+ table.  All categories in this table must be present in the CATEGORY
+ block.
+#GROUP   38  TYPE TEXT
+$TEXT
+    5    1    1    5
+ In table HYDR-CEVAP, the specified fractions for priority level &I   
+ sum to &R         .  They must either sum to unity or all be zero.
+#GROUP   39  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown category &C was specified in field &I    in the HYDR-CFVOL
+ table.  All categories in this table must be present in the CATEGORY
+ block.
+#GROUP   40  TYPE TEXT
+$TEXT
+    5    1    1    5
+ In table HYDR-CEVAP, the specified fractions for priority level &I   
+ sum to &R         .  They must either sum to unity or all be zero.
+  END DATA
+END CLU

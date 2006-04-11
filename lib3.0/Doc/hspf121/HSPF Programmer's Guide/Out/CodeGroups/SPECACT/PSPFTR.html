@@ -1,0 +1,78 @@
+<html><head><title>PSPFTR</title></head>
+<body bgcolor="#ffffff">
+<a name="PSPFTR"><h3>PSPFTR</h3></a>
+ 
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT.html">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PSPFTR
+     I                    (UCIBUF,SPOS,LLNPSP,MXSPBF,LREPT,
+     M                     SPBF,ALLFTR)
+C
+C     + + + PURPOSE + + +
+C     Store new special action footer and update pointers
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      SPOS,LLNPSP,MXSPBF,LREPT,SPBF(LLNPSP,MXSPBF),ALLFTR
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UCIBUF - buffer containing current record from uci file
+C     SPOS   - position in special actions instr buffer
+C     LLNPSP - local length of special action in buffer
+C     MXSPBF - max size of special actions buffer
+C     LREPT  - number of times last action was repeated
+C     SPBF   - special action instruction buffer
+C     ALLFTR - total number of footer lines read so far
+C
+C     + + + COMMON BLOCKS + + +
+C     special action file in memory
+      INCLUDE     'pspins.inc'
+      INCLUDE     'cspins.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER POS
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (ALLFTR .LT. MXSPHF) THEN
+C       room to store footer
+        ALLFTR= ALLFTR+ 1
+        SPFTR(ALLFTR)= UCIBUF(1:20)
+C
+C       update pointers for all applicable actions
+        DO 10 POS= SPOS- LREPT+ 1, SPOS
+          IF (SPBF(30,POS) .EQ. 0) THEN
+C           this is first footer
+            SPBF(29,POS)= ALLFTR
+          END IF
+          SPBF(30,POS)= SPBF(30,POS)+ 1
+ 10     CONTINUE
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="PSPFTR">
+</Object>
+
+</body>
+</html>
+

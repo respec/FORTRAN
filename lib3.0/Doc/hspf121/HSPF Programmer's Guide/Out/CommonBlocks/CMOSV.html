@@ -1,0 +1,65 @@
+<html><head><title>CMOSV</title></head>
+<body>
+<a name="CMOSV"><hr size=7><h2>CMOSV</h2><hr size=7></a>
+ 
+<table width="100%" border="1">
+<caption>Version CMOSV of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>OSV(7000)<td>I4<td>Area reserved for OSV of Application Module (integer)</tr>
+<tr><td>1<td>OSVR(7000)<td>R4<td>Area reserved for OSV of Application Module (real)</tr>
+<tr><td>1<td>ASVEC(*)<td>I4<td>Marker for beginning of SCRTCH for all versions</tr>
+<tr>&nbsp;<td></tr>
+</table>
+
+<p>Variables in this Common Block allow access to the OSV portion of SCRTCH.
+<p>Referenced by
+   <a href="../CodeGroups/HOSUPER/OSUPER.html">OSUPER</a>,
+   <a href="../CodeGroups/HRINTS/NETBLK.html">NETBLK</a>,
+   <a href="../CodeGroups/HRINTS/SCHBLK.html">SCHBLK</a>,
+   <a href="../CodeGroups/HRINTS/SRCBLK.html">SRCBLK</a>
+<p>Includes
+   <a href="../Dimensions/PMXOSV.html">PMXOSV</a>
+<p>Code
+<pre>
+C    FROM CMOSV.COM
+C    AREA RESERVED FOR OSVS:
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxosv.inc'
+C
+C     SPECIAL COMMON SCRTCH
+       COMMON/SCRTCH/ OSV
+       INTEGER        OSV(MAXOSV)
+C
+       INTEGER   ASVEC(2)
+       REAL      OSVR(MAXOSV)
+       EQUIVALENCE (OSV(1),OSVR(1)),(OSV(1),ASVEC(1))
+C    END: BYTE 72000
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="CMOSV">
+</Object>
+
+</body>
+</html>
+

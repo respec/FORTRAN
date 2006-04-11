@@ -1,0 +1,12 @@
+<p>Referenced by 
+   <a href="../CodeGroups/HRINGEUT/TAGVAL">TAGVAL</a>
+<p>Code
+<pre>
+C
+C     + + + PARAMETERS + + +
+      INTEGER    MXCAT,MXCUSR
+      PARAMETER (MXCAT=100)
+      PARAMETER (MXCUSR=20)
+</pre>
+
+

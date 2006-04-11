@@ -1,0 +1,81 @@
+<html><head><title>GETKNM</title></head>
+<body>
+<a name="GETKNM"><hr size=7><h2>GETKNM</h2><hr size=7></a>
+ 
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI.html">HIOUCI</a>
+<p>Called By
+   <a href="../HSPF/OPNBLK.html">OPNBLK</a>,
+   <a href="../HSPSTA/HDMES2.html">HDMES2</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM.html">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   GETKNM
+     I                  (KTYP,KRPT,
+     O                   KNAME)
+C
+C     + + + PURPOSE + + +
+C     get the next keyword associated with a type
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      KTYP,KRPT
+      CHARACTER*12 KNAME
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     KTYP    - type of keyword
+C     KRPT    - repeat of keyword
+C     KNAME   - associated name
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,J
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      KNAME= ' '
+C
+      IF (NUKWD .GT. 0) THEN
+C       keys to check
+        I= 0
+        J= 0
+ 10     CONTINUE
+          I= I+ 1
+          IF (UKWDTY(I) .EQ. KTYP) THEN
+C           right type
+            J= J+ 1
+            IF (J .EQ. KRPT) THEN
+              KNAME= UKWD(I)
+              I    = NUKWD
+            END IF
+          END IF
+        IF (I .LT. NUKWD) GOTO 10
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="GETKNM">
+</Object>
+
+</body>
+</html>
+

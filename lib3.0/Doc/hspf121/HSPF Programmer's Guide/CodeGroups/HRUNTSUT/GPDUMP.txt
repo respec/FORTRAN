@@ -1,0 +1,112 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSUT">HRUNTSUT</a>
+<p>Called By
+   <a href="../HRUNTSGP/TSGET">TSGET</a>,
+   <a href="../HRUNTSGP/TSPUT">TSPUT</a>
+<p>Common Blocks  
+   <a href="../../CommonBlocks/CTSIN">CTSIN</a>,
+   <a href="../../CommonBlocks/CTSEX">CTSEX</a>,
+   <a href="../../CommonBlocks/CTSER">CTSER</a>,
+   <a href="../../CommonBlocks/CTSBU">CTSBU</a>,
+   <a href="../../CommonBlocks/CTSBX">CTSBX</a>,
+   <a href="../../CommonBlocks/CMPAD">CMPAD</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C     4.1.06
+C
+      SUBROUTINE GPDUMP
+     I                 (KY,GPFLAG,WIDTH,DELT)
+C
+C     + + + PURPOSE + + +
+C     Dump instruction for debugging
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DELT,GPFLAG,KY,WIDTH
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     KY     - ???
+C     GPFLAG - ???
+C     WIDTH  - ???
+C     DELT   - simulation time interval in minutes
+C
+C     + + + COMMON BLOCKS- SCRTCH, VERSION GETCOM + + +
+      INCLUDE   'ctsin.inc'
+      INCLUDE   'ctsex.inc'
+      INCLUDE   'ctser.inc'
+      INCLUDE   'ctsbu.inc'
+      INCLUDE   'ctsbx.inc'
+      INCLUDE   'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   J
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(1X,'TSGET INSTRUCTION AT KEY=',3I5)
+ 2010 FORMAT(1X,'TSPUT INSTRUCTION AT KEY=',3I5)
+ 2020 FORMAT(1X,10I10,/,1X,4I10,1PE10.3,5I10,/,1X,10I10,
+     $       /1X,3I10)
+ 2030 FORMAT(1X,'VOPADR',20I6)
+ 2040 FORMAT(1X,'OFFSET',20I6)
+ 2050 FORMAT(1X,'STKIND',20I6)
+ 2060 FORMAT(1X,'STTRAN',20I6)
+ 2070 FORMAT(1X,'INMODE',20I6)
+ 2080 FORMAT(1X,'A     ',10(1PE12.5),/,1X,6X,10(1PE12.5))
+ 2090 FORMAT(1X,'B     ',10(1PE12.5),/,1X,6X,10(1PE12.5))
+ 2100 FORMAT(1X,'PVAR  ',10(1PE12.5),/,1X,6X,10(1PE12.5))
+ 2110 FORMAT(1X,'FORMAT',19A4)
+ 2120 FORMAT(1X,'PATH',19A4,/,1X,'AGGVAL',1PE12.5)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     Write headings
+C
+      IF (GPFLAG.NE.1) GO TO 10
+        WRITE(MESSU,2000) KY,WIDTH,DELT
+        GO TO 20
+ 10   CONTINUE
+        WRITE(MESSU,2010) KY,WIDTH,DELT
+ 20   CONTINUE
+C
+C     write the instruction
+C
+      WRITE(MESSU,2020) AMODE,NCOMPS,VOLCOD,FILE,DELTAT,
+     $      FREC,LREC,COMPR,TOTCOM,FMTCLS,BEGYR,
+     $      TENDR,LGAP,TGAP,GAPVAL,LTRNFG,VOTSB,
+     $      VOLFRM,VOTFRM,BCWBTI,BCWNOV,INPSTR,
+     $      YEAR,MO,DAY,LPYRFG,NREM,TYREND,
+     $      FRMTIM,TZERO,TLAST,UCNT,ZCNT
+C
+      WRITE(MESSU,2030) (VOPADR(J),J=1,NCOMPS)
+      WRITE(MESSU,2040) (OFFSET(J),J=1,NCOMPS)
+      WRITE(MESSU,2050) (STKIND(J),J=1,NCOMPS)
+      WRITE(MESSU,2060) (STTRAN(J),J=1,NCOMPS)
+      WRITE(MESSU,2070) (INMODE(J),J=1,NCOMPS)
+      WRITE(MESSU,2080) (A(J),J=1,NCOMPS)
+      WRITE(MESSU,2090) (B(J),J=1,NCOMPS)
+C
+      IF (VOLCOD .EQ. 1) THEN
+C       seq
+        WRITE(MESSU,2110) (PVAR(J),J=1,19)
+      ELSE IF (VOLCOD .EQ. 4) THEN
+C       dss
+        WRITE(MESSU,2120) (PVAR(J),J=1,20)
+      ELSE
+C       tss or wdm
+        WRITE(MESSU,2100) (PVAR(J),J=1,NCOMPS)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

@@ -1,0 +1,25 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           55    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  UCIREA
+  END LABEL
+  DATA   CLU    55
+#GROUP  16  TYPE TEXT
+$TEXT
+Specified file is not a valid HSPF UCI file.
+
+See file 'error.fil' for more information.
+$HELP
+ HSPF has found some problems interpreting this UCI file and cannot continue.
+#GROUP 104  TYPE TEXT
+$TEXT
+START  RUN INTRESUME END GLO
+#GROUP 105  TYPE TEXT
+$TEXT
+EXGRP  INGRP  PERLND IMPLND RCHRES COPY   PLTGEN DISPLY DURANL GENER  MUTSIN END OPN
+  END DATA
+END CLU

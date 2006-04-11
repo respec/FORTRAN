@@ -1,0 +1,32 @@
+aninit.obj: cterif.inc faidep.inc fversn.inc \
+            fmsgwd.inc
+qtchar.obj: zcntrl.inc cscren.inc cqrsp.inc  pmesfl.inc pmxrsl.inc \
+            pmxfld.inc
+qtfile.obj: pmesfl.inc zcntrl.inc pmxrsl.inc
+qtnumb.obj: cscren.inc zcntrl.inc pmxrsl.inc \
+            pmxfld.inc
+qtscn1.obj: cqrsp.inc  cscren.inc pmesfl.inc zcntrl.inc pmxrsl.inc \
+            color.inc  pmxfld.inc
+qtstgt.obj: cscren.inc czhide.inc czoptn.inc zcntrl.inc pmxrsl.inc \
+            const.inc  pmxfld.inc
+utmisc.obj: cscren.inc cterif.inc zcntrl.inc pmxrsl.inc \
+            pmxfld.inc
+utuprm.obj: cusrpm.inc pmesfl.inc pmxprm.inc faidep.inc
+z0util.obj: cscren.inc czhide.inc czoptn.inc zcntrl.inc pmxrsl.inc cclbak.inc \
+            const.inc  pmxfld.inc
+z1util.obj: cscren.inc zcntrl.inc pmxrsl.inc \
+            pmxfld.inc
+z4util.obj: cqrsp.inc  zcntrl.inc pmxrsl.inc
+zclbak.obj: cclbak.inc
+zsyslh.obj: zcntrl.inc pmxrsl.inc
+zsysot.obj: zcntrl.inc pmxrsl.inc
+zsyspc.obj: zcntrl.inc pmxrsl.inc
+ztscn1.obj: cscren.inc zcntrl.inc pmxrsl.inc \
+            pmxfld.inc const.inc
+zutil.obj:  cqrsp.inc  cscren.inc czhide.inc czoptn.inc zcntrl.inc czglvl.inc \
+            faidep.inc  \
+            pmxfld.inc const.inc   color.inc
+zutilx.obj: czhide.inc czoptn.inc zcntrl.inc faidep.inc pmxrsl.inc \
+            cscren.inc cqrsp.inc  \
+            const.inc  pmxfld.inc
+zutily.obj: zcntrl.inc pmxrsl.inc pmxfld.inc cqrsp.inc cscren.inc

@@ -1,0 +1,390 @@
+HSPF Programmer's Guide Table of Contents
+Pending Enhancements
+  Updating Multiplication Factors During Execution
+    Specification of Updates
+    HSPF Changes
+    Example
+      simple.uci
+      simple.ech
+CodeGroups
+  HSPF
+    HSPF
+    INTERP
+    OPNBLK
+  HOSUPER
+    OSUPER
+  HSPFEC
+    TIMSER
+    GTTMRC
+    PSCHEM
+    EXTTS
+    RDMFAC
+  HRUNTSGP
+    TSGET
+    TSPUT
+  HEXTUTIL
+    UCIGET
+    UCIGEN
+  HRINGEN
+    ENDEXG
+    ENDING
+    GLOBLK
+    MSLKBK
+    MDATBK
+    NEWEXG
+    NEWING
+    NEWOPN
+    SEQBLK
+    TABBLK
+    CATBLK
+    PTHBLK
+  HRINTS
+    HRITSI
+    GPFINT
+    HRIMSI
+    FINSTR
+    NETBLK
+    OPNTS
+    MEMTS
+    IVALUE
+    PAIRS
+    SCHBLK
+    SRCBLK
+    TARBLK
+  HTSINSI
+    ALLOC
+    CHAIN
+    CHANGE
+    OSVFPT
+    OSVPRO
+    RELESE
+    ROW
+    SAME
+    SOURCE
+    TARGET
+    TSINS
+    WKDMP1
+    WKDMP2
+  HTSINSZ
+    CRTP
+    TINOUT
+    TINSTR
+  HRINGEUT
+    OPNNO
+    TOPTNO
+    VALNO
+    TAGVAL
+  SPECACT
+    PSPECL
+    PSPUCI
+    PSPKEY
+    PSPIPS
+    PSPHDR
+    PSPFTR
+    PSPUVQ
+    PSPCON
+    PSPDIS
+    PSPUVN
+    PSPACT
+    CKTCOD
+    MKADDR
+    XPNXDT
+    SPCKDT
+    SPWSUP
+    SPDIST
+    SPVQUP
+    SPSORT
+    SPNEWV
+    SPACT
+    SPECL
+    SPONAM
+    SPBKCK
+    MKQUAN
+    UPQUAN
+    GTQUAN
+    DADDR
+    CKRWID
+    SPARSE
+    SPITEM
+  HSPSTA
+    HSPSTA
+    HDMEST
+    HDMES2
+    HDMES3
+    HDMESN
+    CHKUSR
+    UPDWIN
+    SDELAY
+    HSPF_INI
+    EXT_UPDATE
+  HRINSEQ
+    SEQDS
+  HRINTSS
+    ADJLAB
+    ADJTSB
+    AICOMP
+    AIUNC
+    CHKTSS
+    DSCHK
+    FITTSB
+    FLFRM
+    FNDGAP
+    GINIT
+    GWORD
+    NEWYR
+    PINIT
+    PROMEM
+    PVAL
+    RPUNC
+    TSSDS
+  HRINWDM
+    PROWDS
+    WDMDS
+  HTSSUT
+    BCWCAL
+    BCWSPL
+    MEXT
+    RBUFF
+    TFUNE
+    TFUNG
+    TFUNL
+    XVINIT
+  HRUNTSGQ
+    CHKSEQ
+    DACRD
+    FIFCRD
+    FIVCRD
+    GETSEQ
+    HRCRD
+    MOCRD
+    MOVAL
+    SEQINP
+    SMOCRD
+    SMOVAL
+    SEQRD
+  HRUNTSGT
+    GETTSS
+  HRUNTSGW
+    GETWDM
+  HRUNTSPT
+    PUTTSS
+  HRUNTSPW
+    PUTWDM
+  HRUNTSUT
+    GPDUMP
+    INMOD
+    LTRAN
+    MOVROW
+    VYDELT
+  HWDMUT
+    CHKWDM
+  HPESTUT
+    SETPST
+    GETVEC
+  HDATUT
+    ADDTIM
+    DAYMNH
+    DIFTIM
+    DYPMON
+    ENDATE
+    HDATIM
+    EXDATE
+    FDATIM
+    FIRINT
+    LPYEAR
+    STDATE
+    TDIF
+    TIMHTW
+    YRMINS
+    YROFF
+    TDIFX
+    MJDATE
+  HPRBUT
+    OMSG
+    OMSINI
+    OMSTI
+    OMSTR
+    OMSTC
+    OMSTD
+  HIOOSUP
+    OSUP
+    PUTOSU
+  HIOOSV
+    GETOSV
+    PUTOSV
+    GTOSVI
+    PTOSVI
+    GTOSVR
+    PTOSVR
+  HIOTSIN
+    GETTSI
+    PUTTSI
+  HIOWRK
+    WORKIO
+  HIOUCI
+    DELUCI
+    DMPKEY
+    DUMPER
+    GETEND
+    GETKNM
+    GETSE
+    GETUCI
+    GETUCIEX
+    GETIND
+    INIUCI
+    INIKEY
+    KEYUCI
+    PUTKWD
+    DELKWD
+    PUTOLV
+    PUTUCI
+    PUTUCX
+    PREUCI
+    REPUCI
+    REPUCX
+    COMKEY
+    UCIINP
+    DELKWO
+    CLOUCI
+Dimensions
+  PHCAT
+  PHMSG
+  PMXFTB
+  PMXOPN
+  PMXOSV
+  PMXPST
+  PMXROW
+  PMXTAB
+  PMXTTB
+  POSVM
+CommonBlocks
+  CHCAT
+  CHMSG
+  CMDUM
+  CMOSV
+  CMPAD
+  COSUPM
+  COSVM
+  CPEST
+  CPTHNM
+  CRIN1
+  CRIN2
+  CRIN2C
+  CRIN3
+  CRIN3C
+  CRIN4
+  CSPEC
+  CTSBU
+  CTSBX
+  CTSER
+  CTSEX
+  CTSIN
+  CTSGPM
+  CUCIM
+  CWORK
+  INTERP1
+  INTERP2
+  INTERP3
+  INTERP4
+  GETCOM-PUTCOM
+Files
+  OSUPFL
+  TSGETFL
+  TSPUTFL
+  OSVFL
+  SPACFL
+  WORKFL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,23 @@
+<p>This  section  describes the function, manner of operation arrangement of data in the files (virtual or disk) used by the operations  portion  of  HSPF. However, it does not cover the Time Series Store; that is done in Appendix III of the User's Manual. 
+
+<p>The documentation of each file consists of three sections: 
+<ol>
+<li>Function.  The purpose of the file is briefly described. 
+<li>Manner of Operation.  This section gives a brief summary of how the file is prepared and how it is used. 
+<li>Structure.  The technique used to document the structure of data in a file is similar to that used to describe an Operation Status Vector (See dataset DATSTR). 
+</ol>          
+<p>Note that identifiers which describe data records are labeled in upper case. The "type" of the variable ("I" for integer, "R" for real, "D" for double precision) and size is indicated.
+
+<p>All of these files are of the direct access type, that is, any record can be accessed directly if the appropriate key is known. 
+
+<ul> 
+<li>Operations Supervisor Instruction File (<a href="Files/OSUPFL">OSUPFL</a>)<p> 
+<li>TSGET Instruction File (<a href="Files/TSGETFL">TSGETF</a>)<p>  
+<li>TSPUT Instruction File (<a href="Files/TSPUTFL">TSPUTF</a>)<p> 
+<li>Operation Status Vector File (<a href="Files/OSVFL">OSVFL</a>)<p>  
+<li>Special Action Instruction File (<a href="Files/SPACFL">SPACFL</a>)<p>  
+<li>Working File (<a href="Files/WORKFL">WORKFL</a>) 
+</ul>
+
+
+

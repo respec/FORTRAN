@@ -1,0 +1,67 @@
+<html><head><title>VALNO</title></head>
+<body bgcolor="#ffffff">
+<a name="VALNO"><h3>VALNO</h3></a>
+ 
+<p>Code Group 
+   <a href="../HRINGEUT.html">HRINGEUT</a>
+<p>Called By
+   
+
+
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      INTEGER FUNCTION   VALNO
+     I                         (NVALS,VALLIB,VAL)
+C
+C     + + + PURPOSE + + +
+C     Check whether a given integer value val is equal to a value in
+C     a library vallib.  return the value no., zero if not found
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    NVALS
+      INTEGER    VAL,VALLIB(NVALS)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     NVALS  - ???
+C     VALLIB - ???
+C     VAL    - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      VALNO= 0
+C
+C     whiledo i<= nvals and valno= 0
+      I = 0
+ 10   CONTINUE
+        I = I + 1
+        IF (VAL .EQ. VALLIB(I)) THEN
+C         a match
+          VALNO= I
+        END IF
+C       loop back if needed
+      IF (I .LT. NVALS .AND. VALNO .EQ. 0) GO TO 10
+C     end whiledo
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="VALNO">
+</Object>
+
+</body>
+</html>
+

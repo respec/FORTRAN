@@ -1,0 +1,150 @@
+<html><head><title>CTSIN</title></head>
+<body>
+<a name="CTSIN"><hr size=7><h2>CTSIN</h2><hr size=7></a>
+ 
+<table width="100%" border="1">
+<caption>CTSIN portion of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Relative Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>INSTR(200)<td>I4<td>TSGET-TSPUT instruction
+<tr><td>1<td>AMODE<td>I4<td>Code giving access method for PUTTSS in TSPUT: 
+<ol>
+<li>ADD 
+<li>INSERT
+<li>REPLACE  
+</ol>
+<tr><td>2<td>NCOMPS<td>I4<td>Number of components to transfer in this dataset
+<tr><td>3<td>VOLCOD<td>I4<td>Source/target for the transfer.
+<ol>
+<li>sequential file
+<li>EXPAD
+<li>INPAD
+<li>TSS
+<li>WDM
+</ol>
+<tr><td>4<td>FILE<td>I4<td>Unit number if VOLCOD=1, row number if VOLCOD=2, virtual origin of INPAD row if VOLCOD=3, and dataset number if VOLCOD=4 or 5
+<tr><td>5<td>DELTAT<td>I4<td>Time step in minutes for source/target given by VOLUME   
+<tr><td>6<td>FREC<td>I4<td>Number of the first TSS record in the TSS dataset  
+<tr><td>7<td>LREC<td>I4<td>Number of the last TSS record in the TSS dataset   
+<tr><td>8<td>COMPR<td>I4<td>Code for the nature of the compression in a TSS dataset: 1_uncompressed; 2_compressed; 3_linear variation
+<tr><td>8<td>QLFG<td>I4<td>WDM quality code
+<tr><td>9<td>TOTCOM<td>I4<td>Total number of components for a TSS dataset   
+<tr><td>10<td>FMTCLS<td>I4<td>Format class for sequential files 
+<ol>
+<li>Hydrocomp hourly mean data
+<li>Hydrocomp daily mean data
+<li>Hydrocomp semi-monthly mean data
+<li>Hydrocomp monthly mean data
+<li>Hydrocomp 5 minute mean data
+<li>Hydrocomp 15 minute mean data   
+</ol>
+<tr><td>11<td>BEGYR<td>I4<td>Year at start of run   
+<tr><td>12<td>TENDR<td>I4<td>Time at end of run in minutes.  All times in the instruction have as origin the start of the calendar year containing the first minute of the run
+<tr><td>13<td>LGAP<td>I4<td>Number of time intervals to fill leading gap(TSPUT). If LGAP < 0 then use compressed TSB'S; else if LGAP >0 then use uncompressed TSB'S   
+<tr><td>14<td>TGAP<td>I4<td>Number of time intervals to fill trailing gap(TSPUT). If TGAP < 0 then use compressed TSB's; else if TGAP > 0 then use uncompressed TSB's  
+<tr><td>15<td>GAPVAL<td>R4<td>Value used to fill gaps_either zero or undefined
+<tr><td>16<td>LTRNFG<td>I4<td>Flag ON if at least one component requires linear transformation. OFF otherwise  
+<tr><td>17<td>VOTSB<td>I4<td>Virtual origin of the current time series block  
+<tr><td>17<td> CRDSEQ(3)<td>I4<td>Year/month/day for previous card in sequential file  
+<tr><td>18<td>VOLFRM<td>I4<td>Virtual origin for the last frame in the previous TSB(TSPUT only)   
+<tr><td>19<td>VOTFRM<td>I4<td>Virtual origin of the time frame last read(TSGET) Virtual origin of the next time frame written(TSPUT). Both VOLFRM and VOTFRM refer to time frames which are physically stored in the TSB.  A TSB may(if it is not uncompressed) represent time frames which are not in fact physically stored in the TSB.   
+<tr><td>20<td>BCWBTI/BCW<td>I4<td>Block control word type indicator: 1_uncompressed; 2_zero compressed; 3_undefined compressed; 4_linear variation   
+<tr><td>21<td>BCWNOV<td>I4<td>Number of time frames represented by the TSB(TSGET). Number of time frames currently represented by the TSB(TSPUT)  
+<tr><td>22<td>INPSTR<td>I4<td>Time at start of INPAD.(First time point; not first interval.)   
+<tr><td>23<td>ENDF<td>I4<td>end of file flag for sequential file input. ENDF set to 1 on end of file; ENDF=0 otherwise   
+<tr><td>24<td>YEAR<td>I4<td>Year for the current time frame  
+<tr><td>25<td>MO<td>I4<td>Month for the current time frame   
+<tr><td>26<td>DAY<td>I4<td>Day for the current time frame   
+<tr><td>27<td>LPYRFG<td>I4<td>Leap year flag _ ON if current year is a leap year.
+<tr><td>27<td>AGGRFG<td>I4<td>Aggregation flag for TSPUT for WDM datasets
+<tr><td>28<td>NREM<td>I4<td>Number of intervals remainng to complete process variable(TSPUT).  NREM is set even if aggregation is not required.  
+<tr><td>29<td>TYREND<td>I4<td>Time in minutes for the end of year  
+<tr><td>30<td>FRMTIM<td>I4<td>Minute for next frame written to the TSB(TSPUT). Minute for last frame read from TSB(TSGET)   
+<tr><td>31<td>TZERO<td>I4<td>Minute for first frame in TSB  
+<tr><td>31<td>OLDOFF<td>I4<td>Offset from BEGYR for previous card  
+<tr><td>32<td>TLAST<td>I4<td>Minute for last frame in TSB   
+<tr><td>33<td>UCNT<td>I4<td>Number of uncompressed consecutive undefined frames (TSPUT)  
+<tr><td>33<td>CRDNO<td>I4<td>Card number for previous card.  Suppress sequence checking if < 0.   
+<tr><td>34<td>ZCNT<td>I4<td>Number of uncompressed consecutive zero frames (TSPUT)  
+<tr><td>35<td>VOPADR(20)<td>I4<td>Virtual origin of the INPAD row which serves as the target for TSGET and the source for TSPUT  
+<tr><td>55<td>OFFSET(20)<td>I4<td>Offset of the component from virtual origin for the time frame   
+<tr><td>75<td>STKIND(20)<td>I4<td>Code for source/target kind. 1_point to point; 2_mean to mean; 3_point to mean.
+<tr><td>95<td>STTRAN(20)<td>I4<td>Code for source to target transform. 1_SAME; 2_DIVIDE; 3_AVERAGE; 4_SUM; 5_MAX; 6_MIN;  
+<tr><td>115<td>INMODE(20)<td>I4<td>Flag for mode of placing data in the INPAD. 0_Replace; 1_Add   
+<tr><td>135<td>A(20)<td>R4<td>Multiplying factor for the linear transform:A*X + B  
+<tr><td>155<td>B(20)<td>R4<td>Shift value for the linear transform.  
+<tr><td>175<td>PVAR(20)<td>R4<td>Process variable for partially completed aggregation in TSPUT; also used for location for object time format
+<tr><td>195<td>INPDAT(6)<td>I4<td>Date of start of current INPAD
+</tbody></table>
+
+<p>The offset to be used to calculate the absolute address from the relative address given in the table is 0 words.
+
+<p>This Include File is used in version <a href="GETCOM-PUTCOM.html">GETCOM-PUTCOM</a> of SCRTCH.  It always starts SCRTCH and proceeds <a href="CTSEX.html">CTSEX</a>. 
+
+<p>Referenced by 
+   <a href="../CodeGroups/HRUNTSGP/TSGET.html">TSGET</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSPUT.html">TSPUT</a>,
+   <a href="../CodeGroups/HTSINSI/ALLOC.html">ALLOC</a>,
+   <a href="../CodeGroups/HRUNTSGQ/SEQINP.html">SEQINP</a>,
+   <a href="../CodeGroups/HRUNTSGT/GETTSS.html">GETTSS</a>,
+   <a href="../CodeGroups/HRUNTSGW/GETWDM.html">GETWDM</a>,
+   <a href="../CodeGroups/HRUNTSPT/PUTTSS.html">PUTTSS</a>,
+   <a href="../CodeGroups/HRUNTSPW/PUTWDM.html">PUTWDM</a>,
+   <a href="../CodeGroups/HRUNTSUT/MOVROW.html">MOVROW</a>
+<p>Variable Usage
+
+<p>Code
+<pre>
+C    FROM CTSIN.COM
+C    INSTRUCTION SECTION OF TSS OSV:
+C     SPECIAL COMMON SCRTCH
+      COMMON/SCRTCH/ AMODE,NCOMPS,VOLCOD,FILE,DELTAT,FREC,LREC,
+     1 COMPR,TOTCOM,FMTCLS,BEGYR,TENDR,LGAP,TGAP,GAPVAL,LTRNFG,
+     2 VOTSB,VOLFRM,VOTFRM,BCWBTI,BCWNOV,INPSTR,ENDF,YEAR,MO,DAY,
+     3 LPYRFG,NREM,TYREND,FRMTIM,TZERO,TLAST,UCNT,ZCNT,VOPADR,
+     4 OFFSET,    STKIND,    STTRAN,    INMODE,    A,    B,
+     5 PVAR,    INPDAT
+      INTEGER        AMODE,NCOMPS,VOLCOD,FILE,DELTAT,FREC,LREC,
+     1 COMPR,TOTCOM,FMTCLS,BEGYR,TENDR,LGAP,TGAP,       LTRNFG,
+     2 VOTSB,VOLFRM,VOTFRM,BCWBTI,BCWNOV,INPSTR,ENDF,YEAR,MO,DAY,
+     3 LPYRFG,NREM,TYREND,FRMTIM,TZERO,TLAST,UCNT,ZCNT,VOPADR(20),
+     4 OFFSET(20),STKIND(20),STTRAN(20),INMODE(20),
+     5          INPDAT(6)
+      REAL
+     1                                           GAPVAL,
+     4                                             A(20),B(20),
+     5 PVAR(20)
+C
+      INTEGER   BCW,CRDNO,CRDSEQ(3),INSTR(200),OLDOFF,ASVEC(2),
+     1          QLFG,AGGRFG,CTYPI(2)
+      EQUIVALENCE (BCWBTI,BCW),(AMODE,INSTR(1)),(CTYPI(1),FREC),
+     1            (VOTSB,CRDSEQ(1)),(TZERO,OLDOFF),(UCNT,CRDNO),
+     2            (AMODE,ASVEC(1)),(COMPR,QLFG),(LPYRFG,AGGRFG)
+C    END BYTE 800
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+    <param name="Keyword" value="CTSIN">
+</Object>
+
+</body>
+</html>
+

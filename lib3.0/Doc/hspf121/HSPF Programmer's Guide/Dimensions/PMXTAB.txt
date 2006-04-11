@@ -1,0 +1,13 @@
+<p>Referenced by 
+  <a href="../CommonBlocks/CRIN2">CRIN2</a>
+<p>Code
+<pre>
+C
+C     + + + PARAMETERS + + +
+      INTEGER        MAXTTP,MAXTBL
+      PARAMETER     (MAXTTP=150)
+      PARAMETER     (MAXTBL=400)
+</pre>
+
+
+

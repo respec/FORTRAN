@@ -1,0 +1,290 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           54    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  WSGUTL
+  END LABEL
+  DATA   CLU    54
+#GROUP    1  TYPE MENU
+$WINDOW Opening screen
+$SCREEN
+
+ Select an option.
+   @Map     !                         @Change   !
+   @Pick    !                         @Scenario !
+   @Analyze !                         @Generate !
+
+   @Query   !                         @Return   !
+$DEFAULT   1
+$LENGTH    11
+$OPTION Map
+_DESC - basin
+$OPTION Pick
+_DESC - data to analyze
+$OPTION Analyze
+_DESC - scenario data
+$OPTION Query
+_DESC - about this program
+$OPTION Change
+_DESC - system specifications
+$OPTION Scenario
+_DESC - manage, edit and run
+$OPTION Generate
+_DESC - timeseries
+$OPTION Return
+_DESC - to operating system
+$HELP
+ The options on the left side are post-processing options to pick, from the
+ often large volumes of results, the data and then to analyze the picked
+ data.  The options on the right are to set up the system, pre-processing,
+ and processing a model simulation.
+#GROUP    2  TYPE TEXT
+$TEXT
+                   U.S. GEOLOGICAL SURVEY
+#GROUP    3  TYPE TEXT
+$TEXT
+   &
+#GROUP    4  TYPE TEXT
+$WINDOW Query (Q)
+$TEXT
+  The Scenario Generator is based on the program GENSCN developed by
+  the U.S. Geological Survey.
+
+  This program provides hydrologic information on a river basin at selected
+  locations for various scenarios as determined by time period, constituent,
+  land use/land cover, control structures and operating rules, and meteorologic
+  inputs.  The information is generated with a calibrated and tested river
+  basin simulation model(s).
+
+  Within this program you may modify the simulation conditions (a new
+  scenario), run the model for the new conditions, and analyze the results
+  from the new scenario and compare the results with a previous scenario.
+  Results can be provided as graphs and tables.
+#GROUP    5  TYPE TEXT
+$WINDOW Output (AO) Problem
+$TEXT
+  Output option not yet implemented.
+#GROUP    6  TYPE TEXT
+$WINDOW Initialization Problem
+$TEXT
+  ERROR opening WDM file specified in the status file, code: &
+
+  Check to be sure the name is correct, the file exists, and that
+  you have write access to it.  Also be sure that each wdm file
+  name and associated four character id is unique.
+$HELP
+  The system cannot find or open the WDM file specified in the .sta file.
+#GROUP    7  TYPE TEXT
+$WINDOW SImulate (Si) Problem
+$TEXT
+Program does not know how to simulate with the DAFLOW model yet.
+
+Contact AMLUMB for details of when this will be available.
+#GROUP    8  TYPE TEXT
+$WINDOW SImulate (Si) Problem
+$TEXT
+Program does not know how to simulate with a MODLID of &.
+
+Contact AMLUMB for details of when this will be available.
+#GROUP    9  TYPE TEXT
+$WINDOW Map (M) Problem
+$TEXT
+            No boundary data has been input.
+
+  A file containing boundary data must be input before
+                a map can be produced.
+#GROUP   10  TYPE TEXT
+$WINDOW Initialization Problem
+$TEXT
+  ERROR opening boundary file 'huc.wdm', code: &
+
+  Check the file name and path in the file 'BOUNPATH'.
+$HELP
+ 'BOUNPATH' contains the file name and path to the boundary file.
+#GROUP   11  TYPE TEXT
+$WINDOW SImulate (Si) Problem
+$TEXT
+Simulate option is not available.
+
+Contact your Scenario Generator system manager about
+availability of this option.
+#GROUP   12  TYPE TEXT
+$WINDOW Graph (AG) Problem
+$TEXT
+           No stations have been selected.
+
+  Plot does not work before stations have been selected.
+  Choose the 'Locate' option first.
+#GROUP   13  TYPE TEXT
+$WINDOW Initialization
+$TEXT
+
+
+
+                   Initializing System
+
+   [0----------------Percent Complete-------------100]
+
+#GROUP  14  TYPE TEXT
+$WINDOW Initialization Problem
+$TEXT
+  ERROR reading '.sta' file.
+
+  Check to be sure the name is correct, the file exists, that you have
+  write access to it, and that the file is current.
+$HELP
+ The format of this file may be incorrect.  Check the format and try again.
+#GROUP   15  TYPE TEXT
+$TEXT
+                          U.S. GEOLOGICAL SURVEY
+#GROUP   16  TYPE TEXT
+$TEXT
+          &
+#GROUP  20  TYPE MENU
+$WINDOW Pre-Initialization
+$TITLE Select a basin to initialize.
+$LENGTH 63
+$OPTION Dum
+$HELP
+Multiple basins have been defined in this scenario generator.
+Select the basin to be initialized.
+#GROUP  25  TYPE PRM1
+$WINDOW Pre-Initialization
+$SCREEN
+
+   Enter the name of the file (.sta) containing the current state of GENSCN:
+
+      [@FNAME..........................................................]
+$FIELD @FNAME
+_TYPE  FILE
+_PROTECT CORRECT
+_VALID STATUS: OLD
+$HELP
+ Enter the name of the file on which the current state of GENSCN is saved.
+ This file is required.  If it does not exist contact your GENSCN system
+ administrator.
+#GROUP  30  TYPE MENU
+$WINDOW Analyze (A)
+$SCREEN
+
+ Select an analysis option.
+
+ @Graph     !                      @Map    !
+ @Duration  !                      @Pick   !
+ @Output    !
+ @Compare   !
+ @Frequency !                      @Return !
+
+
+$DEFAULT   1
+$LENGTH    13
+$OPTION Graph
+_DESC - selected data
+$OPTION Duration
+_DESC - analysis
+$OPTION Output
+_DESC - lists or tables
+$OPTION Compare
+_DESC - analysis
+$OPTION Frequency
+_DESC - analysis
+$OPTION Map
+_DESC - basin
+$OPTION Pick
+_DESC - data to analyze
+$OPTION Return
+_DESC - one level up
+$HELP
+ The options on the left side are to analyze the picked data.
+ The options on the right are options to pick the data to analyze.
+#GROUP   60  TYPE TEXT
+$TEXT
+                   AQUA TERRA CONSULTANTS
+#GROUP   61  TYPE TEXT
+$TEXT
+                          AQUA TERRA CONSULTANTS
+#GROUP   71  TYPE MENU
+$WINDOW Output (AO)
+$TITLE Select an Output option.
+$DEFAULT   1
+$LENGTH    6
+$OPTION List
+_DESC - time-series data with analysis sets as columns, time as rows
+$OPTION Table
+_DESC - time-series data in daily intervals with months as columns
+$OPTION Return
+_DESC - to opening screen
+$HELP
+ List and Table are the two major forms of output.
+#GROUP  90  TYPE TEXT
+$WINDOW Graph (AG) Problem
+$TEXT
+  Graph analysis cannot be performed until after
+  analysis sets are specified.
+
+  Use the 'Pick' or 'Map' options to specify analysis sets.
+$HELP
+ Analysis sets must be seleted before analysis may begin.
+#GROUP  91  TYPE TEXT
+$WINDOW Output (AO) Problem
+$TEXT
+  Output analysis cannot be performed until after
+  analysis sets are specified.
+
+  Use the 'Pick' or 'Map' options to specify analysis sets.
+$HELP
+ Analysis sets must be seleted before analysis may begin.
+#GROUP  92  TYPE TEXT
+$WINDOW Duration (AD) Problem
+$TEXT
+  Duration analysis cannot be performed until after
+  analysis sets are specified.
+
+  Use the 'Pick' or 'Map' options to specify analysis sets.
+$HELP
+ Analysis sets must be seleted before analysis may begin.
+#GROUP  93  TYPE TEXT
+$WINDOW Compare (AC) Problem
+$TEXT
+  Compare analysis cannot be performed until after
+  analysis sets are specified.
+
+  Use the 'Pick' or 'Map' options to specify analysis sets.
+$HELP
+ Analysis sets must be seleted before analysis may begin.
+#GROUP  94  TYPE TEXT
+$WINDOW Frequency (AF) Problem
+$TEXT
+  Frequency analysis cannot be performed until after
+  analysis sets are specified.
+
+  Use the 'Pick' or 'Map' options to specify analysis sets.
+$HELP
+ Analysis sets must be seleted before analysis may begin.
+#GROUP  110  TYPE PRM1
+$WINDOW Return (R)
+$SCREEN
+
+  About to return to the operating system.
+  The current state of GENSCN will be saved in the following file:
+
+  [@FNAME..........................................................]
+
+  Use 'Accept' to save and return to the operating system,
+  or use 'Previous' to return to the opening screen without saving.
+
+
+$FIELD @FNAME
+_TYPE  FILE
+_VALID STATUS: UNKNOWN
+$HELP
+ Enter the name of the file on which to save the current state of GENSCN.
+#GROUP  111  TYPE TEXT
+$WINDOW Return (R)
+$TEXT
+ Exiting GENSCN and returning to the operating system.
+  END DATA
+END CLU

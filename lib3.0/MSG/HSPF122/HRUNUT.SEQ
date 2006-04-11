@@ -1,0 +1,110 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          238    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRUNUT
+  END LABEL
+  DATA   CLU   238
+#GROUP    1  TYPE TEXT
+$TEXT
+    5   11    0    5              5   -4
+ The continuity error reported below is greater than 1 part in 1000 and is
+ therefore considered high.
+
+ Did you specify any "special actions"?  If so, they could account for it.
+
+ Relevant data are:
+&D
+
+ &CCCCC :&I
+
+     RELERR       STORS        STOR       MATIN      MATDIF
+ &R          &R          &R          &R          &R
+
+ Where:
+
+ RELERR is the relative error (ERROR/REFVAL).
+ ERROR  is (STOR-STORS) - MATDIF.
+ REFVAL is the reference value (STORS+MATIN).
+ STOR   is the storage of material in the processing unit (land-segment or
+           reach/reservior) at the end of the present interval.
+ STORS  is the storage of material in the pu at the start of the present
+           printout reporting period.
+ MATIN  is the total inflow of material to the pu during the present printout
+           reporting period.
+ MATDIF is the net inflow (inflow-outflow) of material to the pu during the
+           present printout reporting period.
+#GROUP   11  TYPE TEXT
+$TEXT
+    1    1    1    5   10    5   -4
+&D
+
+ &CCCCC :&I
+
+The required input timeseries &CCCCC &I    &I    was omitted for this
+operation.  It is always required for this operation type.  It must
+appear as an input to this operation in the EXT SOURCES, NETWORK, and/or
+SCHEMATIC/MASS-LINK blocks.
+#GROUP   12  TYPE TEXT
+$TEXT
+    1    1    1    5   10    5   -4
+&D
+
+ &CCCCC :&I
+
+The required input timeseries &CCCCC &I    &I    was omitted for this
+operation.  It is required for this operation type whenever section
+&CCCCC is active.  It must appear as an input to this operation in the
+EXT SOURCES, NETWORK, and/or SCHEMATIC/MASS-LINK blocks.
+#GROUP   13  TYPE TEXT
+$TEXT
+    1    1    1    5   10    5   -4
+&D
+
+ &CCCCC :&I
+
+The required input timeseries &CCCCC &I    &I    was omitted for this
+operation.  It is required for this operation type whenever section
+&CCCCC is active but section &CCCCC is inactive.  It must appear as
+an input to this operation in the EXT SOURCES, NETWORK, and/or
+SCHEMATIC/MASS-LINK blocks.
+#GROUP   14  TYPE TEXT
+$TEXT
+    1    1    1    5   10    5   -4
+&D
+
+ &CCCCC :&I
+
+The required input timeseries &CCCCC &I    &I    was omitted for this
+operation.  It is required for this operation type whenever section
+&CCCCC is active and the value of flag &CCCCC equals &I   .  It must
+appear as an input to this operation in the EXT SOURCES, NETWORK,
+and/or SCHEMATIC/MASS-LINK blocks.
+#GROUP   15  TYPE TEXT
+$TEXT
+    1    1    1    5   10    5   -4
+&D
+
+ &CCCCC :&I
+
+The required input timeseries &CCCCC &I    &I    was omitted for this
+operation.  It is required for this operation type whenever section
+&CCCCC is active, section &CCCCC is inactive, and the value of flag
+&CCCCC equals &I   .  It must appear as an input to this operation in
+the EXT SOURCES, NETWORK, and/or SCHEMATIC/MASS-LINK blocks.
+#GROUP   16  TYPE TEXT
+$TEXT
+    1    1    1    5   10    5   -4
+&D
+
+ &CCCCC :&I
+
+The required input timeseries &CCCCC &I    &I    was omitted for this
+operation.  It is required for this operation type whenever the value
+of flag &CCCCC equals &I   .  It must appear as an input to this operation
+in the EXT SOURCES, NETWORK, and/or SCHEMATIC/MASS-LINK blocks.
+  END DATA
+END CLU

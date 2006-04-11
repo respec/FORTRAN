@@ -1,0 +1,586 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU           52    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  AGMAP 
+  END LABEL
+  DATA   CLU    52
+#GROUP   20  TYPE MENU
+$SCREEN
+
+  Select a map option.
+
+  @DEvice   !                          @Specify  !
+  @Coverage !                          @Animate  !
+  @Marker   !
+  @Window   !                          @DRaw     !
+  @Option   !                          @Generate !
+
+  @Pick     !                          @Return   !
+$DEFAULT   1
+$LENGTH   10
+$OPTION DEvice
+_DESC - to draw map on
+_HELP
+  Generally this is the screen or monitor.  Other options
+  can be selected to get a hard copy of the map.
+$OPTION Coverage
+_DESC - displayed
+_HELP
+  Use this option to change coverages to be drawn which usually
+  contain hydrologic boundaries, state and county boundaries,
+  and hydrologic regions.
+$OPTION Marker
+_DESC - specifications
+_HELP
+  Use this option to define markers for each class or scenario defined.
+$OPTION Window
+_DESC - for map output
+_HELP
+  Up to 7 windows (if available with your computer system) can be
+  specified.  Use this option to select which one to use for the map.
+$OPTION Option
+_DESC - buttons size and color
+_HELP
+  Select this option to change the color and size of the map menu
+  buttons at the bottom of the map.
+$OPTION Pick
+_DESC - data to analyze
+_HELP
+  Select this option to manage the data sets available for analysis
+  and the subsets of the time series directory for viewing on the map.
+$OPTION Specify
+_DESC - which map
+_HELP
+  Select this option to change the map to draw.  Boundaries, title and
+  legend specifications can also be changed using this option.
+$OPTION Animate
+_DESC - specifications
+_HELP
+  This option must be selected to set up a map animation.
+$OPTION DRaw
+_DESC - specified map
+_HELP
+  Select this option to draw (or redraw) the map.
+$OPTION Generate
+_DESC - animation
+_HELP
+  This option will produce the map as well as provide a view through time
+  according to the specifications in the 'Animate' screen.
+$OPTION Return
+_DESC - to main menu
+_HELP
+  Use to exit this screen.
+#GROUP   21  TYPE MENU
+$SCREEN
+
+  Select a map output device.
+
+  @Display
+  @PRinter
+  @PLotter
+
+$DEFAULT   1
+$LENGTH    7
+$OPTION Display
+_DESC - to screen
+$OPTION PRinter
+_DESC - or print file
+$OPTION PLotter
+_DESC - or print file
+$HELP
+  There are default physical devices preselected based on the type
+  of computer.  Generally the Display is the monitor, PRinter is a
+  postscript file and PLotter is an HPGL file.  Use the TERM.DAT
+  file to change the defaults.
+#GROUP  22  TYPE PRM2
+$HEADER 
+Specify a map row to make active, modify, drop, or copy:
+       |                     ------Boundaries-------  Legend  Title
+Action | Status     Map ID    Top  Bottm Right Left    Y/N     Y/N
+------ | --------  --------  ----- ----- ----- -----  ------  -----
+$FIELD  FIELD1
+_WIDTH   6
+_COLUMN  1
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NONE,ACTIVE,MODIFY,DROP,COPY
+_HELP
+ Select an Action, then Accept:F2 to take that action.
+ To select a row to make active use ACTIVE.
+ To create or modify a row use the COPY, MODIFY, and DROP options.
+$FIELD  FIELD2
+_WIDTH   1
+_COLUMN  8
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID |
+_DEFAULT |
+$FIELD  FIELD3
+_WIDTH   8
+_COLUMN  10
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID INACTIVE,ACTIVE
+_HELP
+ Status of this map row.  Only one map row may be active at a time.
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN  20
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+ ID for this map row.
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN  30
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Latitude of the top of this map.
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN  36
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Latitude of the bottom of this map.
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN  42
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Longitude of the right edge of this map.
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN  48
+_PROTECT PROTECTED
+_TYPE REAL
+_HELP
+ Longitude of the left edge of this map.
+$FIELD  FIELD9
+_WIDTH   3
+_COLUMN  56
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID   NO,YES
+_HELP
+ Legend to be included on the map.
+$FIELD  FIELD10
+_WIDTH   3
+_COLUMN  64
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_VALID   NO,YES
+_HELP
+ Title to be included on the map.
+#GROUP   23  TYPE PRM1
+$SCREEN
+  Modify specifications for this map:
+
+                              Map ID [@MAPID..]
+    Top [@TOP....]  Bottom [@BOTTOM.]  Right [@RIGHT..]  Left [@LEFT...]
+
+   [@] Title  [@] No Title                       [@] Legend  [@] No Legend
+Map Title                                     Color of Legend Text [@LEGCOL.]
+  [@MAPTIT.................................]  Size of Legend Text  [@LEGSIZ.]
+Color of Title Text [@TILCOL.]                X Position of Legend [@LEGXPO.]
+Size of Title Text  [@TILSIZ.]                Y Position of Legend [@LEGYPO.]
+$FIELD @MAPID
+_TYPE CHARACTER
+_HELP
+ Specify a name to identify this map.
+$FIELD @TOP
+_TYPE REAL
+_RANGE -90.0:90.0
+_DEFAULT  50.0
+_HELP
+  Enter the latitude of the top of the map in degrees (you must convert
+  minutes/seconds to a fraction of a degree) to define plotting space
+  for the map.
+$FIELD @BOTTOM
+_TYPE REAL
+_RANGE -90.0:90.0
+_DEFAULT  24.0
+_HELP
+_HELP
+  Enter the latitude of the bottom of the map in degrees (you must convert
+  minutes/seconds to a fraction of a degree) to define plotting space
+  for the map.
+$FIELD @RIGHT
+_TYPE REAL
+_RANGE -180.0:180.0
+_DEFAULT   66.0
+_HELP
+  Enter the longitude of the right edge of the map in degrees (you must
+  convert minutes/seconds to a fraction of a degree) to define plotting
+  space for the map.
+$FIELD @LEFT
+_TYPE REAL
+_RANGE -180.0:180.0
+_DEFAULT  125.0
+_HELP
+  Enter the longitude of the left edge of the map in degrees (you must
+  convert minutes/seconds to a fraction of a degree) to define plotting
+  space for the map.
+$FIELD @] Title
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_ONOFF @] No Title
+_OFFON @] No Title
+_HELP
+  Toggle this box if a title is desired on the map.
+$FIELD @] No Title
+_TYPE OPTION
+_SET 1
+_WIDTH 1
+_HIDE ON @MAPTIT 7 1 8 44
+_HIDE ON @TILCOL 9 1 9 44
+_HIDE ON @TILSIZ 10 1 10 44
+_ONOFF @] Title
+_OFFON @] Title
+_HELP
+  Toggle this box if no title is desired on the map.
+$FIELD @MAPTIT
+_TYPE CHARACTER
+_HELP
+  Up to 40 characters may be used for a map title that is placed at the
+  top of the map.
+$FIELD @TILCOL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?COLOR
+_DEFAULT NONE
+_HELP
+  Specify the color that is to be used for the title text.
+$FIELD @TILSIZ
+_TYPE REAL
+_RANGE  0.000:1.000
+_DEFAULT   .015
+_HELP
+  Specify the size of the title text.
+$FIELD @] Legend
+_TYPE OPTION
+_SET 2
+_WIDTH 1
+_ONOFF @] No Legend
+_OFFON @] No Legend
+_HELP
+  Toggle this box if a legend is desired on the map.
+$FIELD @] No Legend
+_TYPE OPTION
+_SET 2
+_WIDTH 1
+_HIDE ON @LEGCOL 7 45 7 78
+_HIDE ON @LEGSIZ 8 45 8 78
+_HIDE ON @LEGXPO 9 45 9 78
+_HIDE ON @LEGYPO 10 45 10 78
+_ONOFF @] Legend
+_OFFON @] Legend
+_HELP
+  Toggle this box if no legend is desired on the map.
+$FIELD @LEGCOL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?COLOR
+_DEFAULT NONE
+_HELP
+ Specify the color of the legend text.
+$FIELD @LEGSIZ
+_TYPE REAL
+_RANGE  0.000:1.000
+_DEFAULT   .015
+_HELP
+ Specify the size of the legend text.
+$FIELD @LEGXPO
+_TYPE REAL
+_RANGE  0.000:1.000
+_DEFAULT   .02
+_HELP
+ Specify the horizontal position of the legend text as a fractional distance
+ from the left edge of the window relative to the width of the window.
+$FIELD @LEGYPO
+_TYPE REAL
+_RANGE  0.000:1.000
+_DEFAULT   .50
+_HELP
+ Specify the vertical position of the legend text as a fractional distance
+ from the bottom edge of the window relative to the height of the window.
+#GROUP   24  TYPE TEXT
+$TEXT
+  Cannot drop this row of map specifications.
+
+  At least one row of map specifications must remain at all times.
+#GROUP   25  TYPE TEXT
+$TEXT
+  Cannot draw map.  One row of map specifications must be active.
+
+  Return to the 'Specify (MS)' screen to make a map active.
+#GROUP   26  TYPE TEXT
+$TEXT
+  The maximum number of rows of map specifications, &,
+  has been reached.
+
+  Thus a row of map specifications cannot be copied.
+$HELP
+  To copy a row of map specifications, first remove an
+  existing row of map specifications using the 'Drop' action.
+#GROUP   41  TYPE PRM1
+$SCREEN
+  Indicate color of coverages to outline.
+
+  Boundary display                    Hydrography display
+    State              [@STATE.]        All streams          [@HYDALL]
+      County           [@COUNTY]        Major streams        [@HYDMAJ]
+    Hydrologic region  [@HYDREG]      Other
+      Accounting unit  [@ACCTUN]        MLRA                 [@MLRA..]
+
+  Layer to fill  [@FILLL.]
+     Fill color  [@FILLC.]
+$FIELD @STATE
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @COUNTY
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @HYDREG
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @ACCTUN
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @HYDALL
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @HYDMAJ
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$FIELD @MLRA
+_TYPE CHARACTER
+_VALID NONE
+_DEFAULT NONE
+$FIELD @FILLL
+_TYPE CHARACTER
+_VALID NONE,STATE,COUNTY,HYDREG,ACCTUN
+_DEFAULT NONE
+$FIELD @FILLC
+_TYPE CHARACTER
+_VALID ?COLOR
+_DEFAULT NONE
+$HELP
+  Select appropriate colors to emphasize most important features.
+  If the feature has a closed polygon it may be selected for fill.
+  If it is not a closed polygon you get a strange looking map.
+  If a fill layer is specified, choose a fill color as well.
+#GROUP   51  TYPE PRM2
+$HEADER
+                      Constit           Marker    Marker  Select    Unselect
+  Scenario  Location  -uent     Active  Type      Size    Color     Color
+  --------  --------  --------  ------  --------  ------  --------  --------
+$FIELD FIELD1
+_WIDTH 8
+_COLUMN 3
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+  Scenario associated with this subset.  A blank field means all
+  scenarios are associated with this subset.
+$FIELD FIELD2
+_WIDTH 8
+_COLUMN 13
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+  Location associated with this subset.  A blank field means all
+  locations are associated with this subset.
+$FIELD FIELD3
+_WIDTH 8
+_COLUMN 23
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+  Constituent associated with this subset.  A blank field means all
+  constituents are associated with this subset.
+$FIELD FIELD4
+_WIDTH 4
+_COLUMN 35
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID NO,YES
+_HELP
+  Use this field to make subsets active or inactive.  Active subsets
+  will be displayed on the map; inactive subsets will not.
+$FIELD FIELD5
+_WIDTH 8
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID ?SYMBOL
+_HELP
+  Use 'Limits' to see available marker types.  These markers will appear
+  at each location where a data set exists in this subset.
+$FIELD FIELD6
+_WIDTH 6
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.01:10.00
+_DEFAULT   1.00
+_HELP
+ Specify the size of the map markers as a multiplier to the default size.
+ Use 'Limits' to see range of available marker sizes.
+$FIELD FIELD7
+_WIDTH 8
+_COLUMN 59
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID ?COLOR
+_HELP
+  Use 'Limits' to see available colors.
+$FIELD FIELD8
+_WIDTH 8
+_COLUMN 69
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID ?COLOR
+_HELP
+  Use 'Limits' to see available colors.
+#GROUP   53  TYPE PRM1
+$SCREEN
+
+      Active Map Window  [@WIND.]
+$FIELD  @WIND
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1:7
+_DEFAULT 1
+_HELP
+ Select the window you would like active.  Window dimensions are defined
+ from the main menu using 'CHange' and then 'Window' menu options.
+#GROUP   55  TYPE PRM1
+$SCREEN
+
+      Specifications for Map Option Buttons:
+
+      Size of Map Buttons        [@FUNSIZ.]
+      Select Foreground Color    [@FUNSFC.]
+      Unselect Foreground Color  [@FUNUFC.]
+      Select Background Color    [@FUNSBC.]
+      Unselect Background Color  [@FUNUBC.]
+
+$FIELD @FUNSIZ
+_TYPE REAL
+_RANGE  0.000:1.000
+_DEFAULT   .010
+_HELP
+  Specify the size of the map option buttons as a fraction of the
+  plotting space.
+$FIELD @FUNSFC
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?COLOR
+_DEFAULT NONE
+_HELP
+ Specify the foreground color of the selected option buttons.
+$FIELD @FUNUFC
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?COLOR
+_DEFAULT NONE
+_HELP
+ Specify the foreground color of the unselected option buttons.
+$FIELD @FUNSBC
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?COLOR
+_DEFAULT NONE
+_HELP
+ Specify the background color of the selected option buttons.
+$FIELD @FUNUBC
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ?COLOR
+_DEFAULT NONE
+_HELP
+ Specify the background color of the unselected option buttons.
+#GROUP  61  TYPE TEXT
+$TEXT
+  writing hydrologic accounting unit boundaries to map
+#GROUP  62  TYPE TEXT
+$TEXT
+  writing hydrologic region boundaries to map
+#GROUP  63  TYPE TEXT
+$TEXT
+  writing state boundaries to map
+#GROUP  64  TYPE TEXT
+$TEXT
+  writing hydrography to map
+#GROUP  65  TYPE TEXT
+$TEXT
+ Map completed and put on file "gksplt.out&".
+#GROUP  66  TYPE TEXT
+$TEXT
+ Choose an option in the map window.
+#GROUP  67  TYPE TEXT
+$TEXT
+  writing county boundaries to map
+#GROUP  68  TYPE TEXT
+$TEXT
+  writing border of map
+#GROUP  69  TYPE TEXT
+$WINDOW Generate (MG)
+$TEXT
+  Date and time of map display:             Percent complete:
+#GROUP  70  TYPE MENU
+$WINDOW Generate (MG)
+$TITLE Map Animation Interrupt.  Want action do you want?
+$DEFAULT   1
+$LENGTH    6
+$OPTION Resume
+_DESC - the map animation
+$OPTION Single
+_DESC - step
+$OPTION Quit
+_DESC - the map animation
+$HELP
+  Resume allows the animation to continue running.
+  Single step moves forward one time step.
+  Quit returns to the main map menu.
+#GROUP  71  TYPE TEXT
+$TEXT
+  Animation is not available using this version of 'huc.wdm'.
+
+  Map segments have to be stored with individual attributes
+  in order for map animation to function.
+#GROUP  72  TYPE TEXT
+$WINDOW Generate (MG) Problem
+$TEXT
+  Animation cannot be generated because no map animation
+  specifications are active.
+
+  To activate an animation, use the 'Animate' screen.
+#GROUP  110  TYPE MENU
+$TITLE Do you want to save the zoomed map?
+$DEFAULT   2
+$LENGTH    3
+$OPTION Yes
+_DESC - Save the zoomed map for future use.
+$OPTION No
+_DESC - I do not want to save the map this way.
+$HELP
+  Saving the zoomed map will enter the specs of this map into the map
+  specifications list.  This will enable the user to return to the
+  zoomed portion of the map when 'Draw' or 'Generate' is chosen.
+  END DATA
+END CLU

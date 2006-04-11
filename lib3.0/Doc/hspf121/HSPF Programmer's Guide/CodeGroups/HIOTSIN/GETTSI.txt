@@ -1,0 +1,59 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOTSIN">HIOTSIN</a>
+<p>Called By
+   <a href="../HRINTS/FINSTR">FINSTR</a>,
+   <a href="../HRUNTSGP/TSGET">TSGET</a>,
+   <a href="../HRUNTSGP/TSPUT">TSPUT</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CTSGPM">CTSGPM</a>
+<p>Calls
+   COPYI
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   GETTSI
+     I                  (ILEN,KEY,
+     O                   INSTR)
+C
+C     + + + PURPOSE + + +
+C     Retrieve a time series instruction
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   ILEN,KEY,INSTR(ILEN)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     ILEN   - length of instruction - max 200
+C     KEY    - record number
+C     INSTR  - time series instruction
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'ctsgpm.inc'
+C
+C     + + + EXTERNAL + + +
+      EXTERNAL  COPYI
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CALL COPYI (ILEN,TSGPM(1,KEY),
+     O            INSTR)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+

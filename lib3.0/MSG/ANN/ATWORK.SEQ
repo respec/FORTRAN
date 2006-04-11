@@ -1,0 +1,93 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+  atwork.seq from lib ann
+END COMMENT 
+CLU           22    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL   
+    GRPNAM  ATWORK                                                              
+  END LABEL   
+  DATA   CLU    22
+#GROUP    1  TYPE MENU
+$TITLE Select an Attribute option.
+$DEFAULT   1
+$LENGTH    6
+$WIDTH    78
+$COLENGTH  8
+$OPTION Select
+_DESC - data sets on which to perform attribute actions
+$OPTION Modify
+_DESC - add or edit attribute values
+$OPTION Delete
+_DESC - existing attributes
+$OPTION View
+_DESC - dataset attributes and/or dates
+$OPTION Return
+_DESC - to the Datasets screen
+$WINDOW Attribute (DA)
+#GROUP    2  TYPE TEXT
+$WINDOW Add (DAA) Problem
+$TEXT
+Unable to Add attributes as no data sets have been selected.
+
+To specify data sets to which attributes should be added,
+choose the Select option on this menu.
+#GROUP    3  TYPE TEXT
+$WINDOW Modify (DAM) Problem
+$TEXT
+Unable to Modify attributes as no data sets have been selected.
+
+To specify data sets for which attributes should be modified,
+choose the Select option on this menu.
+#GROUP    4  TYPE TEXT
+$WINDOW Delete (DAD) Problem
+$TEXT
+Unable to Delete attributes as no data sets have been selected.
+
+To specify data sets from which attributes should be deleted,
+choose the Select option on this menu.
+#GROUP    5  TYPE TEXT
+$WINDOW View (DAV) Problem
+$TEXT
+Unable to View attributes as no data sets have been selected.
+
+To specify data sets for which attributes should be viewed,
+choose the Select option on this menu.
+#GROUP   10  TYPE TEXT
+$TEXT
+Attribute not allowed on this type data set.
+ (data set number &)
+#GROUP   11  TYPE TEXT
+$TEXT
+Updating not allowed for DSN: &
+Data is already present.
+#GROUP   12  TYPE TEXT
+$TEXT
+ADD/MODIFY search attribute for DSN &.
+#GROUP   14  TYPE TEXT
+$TEXT
+Attribute & has been deleted from dataset number &.
+$WINDOW Delete (DAD)
+#GROUP   15  TYPE TEXT
+$TEXT
+Attribute & can not be deleted from data-set number &
+  as that data set does not exist.
+$WINDOW Delete (DAD)
+#GROUP   16  TYPE TEXT
+$TEXT
+Attribute & is not present on data set &
+  and thus can not be deleted.
+$WINDOW Delete (DAD)
+#GROUP   17  TYPE TEXT
+$TEXT
+Attribute & can not be deleted
+  as there is data present on data set &.
+$WINDOW Delete (DAD)
+#GROUP   18  TYPE TEXT
+$TEXT
+Attribute & can not be deleted
+  as it is required for data set &.
+$WINDOW Delete (DAD)
+  END DATA
+END CLU 
