@@ -1,0 +1,79 @@
+-VERSION
+FEQ: 8.87
+
+-FILES
+TEST.FEO                                                        
+TEST.TSD                                                        
+TEST.FTF                                                        
+
+
+-UNITS
+STATION_UNIT_NAME= miles               
+ELEVATION_UNIT_NAME= feet              
+FLOW_UNIT_NAME= Cubic feet per second  
+GATE_OPENING_UNIT_NAME= feet           
+STORAGE_UNIT_NAME= acre-feet           
+STORAGE_UNIT_FACTOR=2.295684E-5        
+SURFACE_AREA_UNIT_NAME=square miles    
+SURFACE_AREA-FACTOR=3.587006e-8        
+
+
+-FTF
+NUMBER_OF_FULL_RECORDS=      10
+ITEMS_PER_RECORD=     512
+LETOVER_ITEM_KNT=     458
+
+
+-TSDDIR
+      FEQ LOCTN BRAN   NODE         STATION     INVERT        USERID     FTAB   Series
+    LABEL CLASS   #      ID                   ELEVATION       STRING    index   offset
+ -------- ----- -----  ----- --------------- ---------- ------------ -------- --------
+ DNSTREAM BNODE     0     D1    0.000000E+00   101.0000 EXNOD D1          239        1
+ RESERV   LPR       0     F2   -1.000000E+30    95.0000 EXNOD F2           59        3
+ OVERFLOW FNODE     0     F4   -1.000000E+30    95.0000 EXNOD F4            0        5
+ UPSTREAM BNODE     1    100    0.000000E+00   101.0000 Branch 1          136        7
+          BNODE     1    101    1.000000E-01   100.9000 Branch 1          420        9
+          BNODE     1    102    2.000000E-01   100.8000 Branch 1          631       11
+          BNODE     1    103    3.000000E-01   100.7000 Branch 1          842       13
+          BNODE     1    104    4.000000E-01   100.6000 Branch 1         1053       15
+          BNODE     1    105    5.000000E-01   100.5000 Branch 1         1264       17
+          BNODE     1    106    6.000000E-01   100.4000 Branch 1         1475       19
+          BNODE     1    107    7.000000E-01   100.3000 Branch 1         1686       21
+          BNODE     1    108    8.000000E-01   100.2000 Branch 1         1897       23
+          BNODE     1    109    9.000000E-01   100.1000 Branch 1         2108       25
+ DNSTREAM BNODE     1    110    1.000000E+00   100.0000 Branch 1          239       27
+ UPSTREAM BNODE     2    200    0.000000E+00   100.0000 Branch 2          239       29
+          BNODE     2    201    1.000000E-01    99.5000 Branch 2         2319       31
+          BNODE     2    202    2.000000E-01    99.0000 Branch 2         2500       33
+          BNODE     2    203    3.000000E-01    98.5000 Branch 2         2681       35
+          BNODE     2    204    4.000000E-01    98.0000 Branch 2         2862       37
+          BNODE     2    205    5.000000E-01    97.5000 Branch 2         3043       39
+          BNODE     2    206    6.000000E-01    97.0000 Branch 2         3224       41
+          BNODE     2    207    7.000000E-01    96.5000 Branch 2         3405       43
+          BNODE     2    208    8.000000E-01    96.0000 Branch 2         3586       45
+          BNODE     2    209    9.000000E-01    95.5000 Branch 2         3767       47
+ DNSTREAM BNODE     2    210    1.000000E+00    95.0000 Branch 2          239       49
+ UPSTREAM BNODE     3    300    0.000000E+00    95.0000 Branch 3          239       51
+          BNODE     3    301    1.000000E-01    95.0000 Branch 3         3948       53
+          BNODE     3    302    2.000000E-01    95.0000 Branch 3         4129       55
+          BNODE     3    303    3.000000E-01    95.0000 Branch 3         4310       57
+          BNODE     3    304    4.000000E-01    95.0000 Branch 3         4491       59
+          BNODE     3    305    5.000000E-01    95.0000 Branch 3         4672       61
+          BNODE     3    306    6.000000E-01    95.0000 Branch 3         4853       63
+          BNODE     3    307    7.000000E-01    95.0000 Branch 3         5034       65
+          BNODE     3    308    8.000000E-01    95.0000 Branch 3         5215       67
+          BNODE     3    309    9.000000E-01    95.0000 Branch 3         5396       69
+ DNSTREAM BNODE     3    310    1.000000E+00    95.0000 Branch 3          239       71
+                   -1
+
+
+-TSD
+LOCATION_KNT=      36
+ SYR SMN SDY    SHOUR          SJTIME       SREC
+1990   1   1  0.00000  47892.00000000          1
+ EYR EMN EDY    EHOUR          EJTIME       EREC
+1990   1   2 12.00000  47893.50000000        433
+
+
+-TERMINATION
+NORMAL  

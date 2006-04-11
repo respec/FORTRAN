@@ -1,0 +1,713 @@
+RUN
+
+GLOBAL
+  Special Actions Case Study #2 - Agricultural Operations
+  START       1984              END    1991
+  RUN INTERP OUTPUT LEVEL    3    4
+  RESUME     0 RUN     1                   UNIT SYSTEM     1
+END GLOBAL
+
+FILES      
+<FILE>  <UN#>***<----FILE NAME------------------------------------------------->
+WDM        24   case.wdm
+MESSU      25   case2.ech
+           90   case2.out
+END FILES
+
+OPN SEQUENCE
+    INGRP              INDELT 01:00
+      PERLND       1     
+    END INGRP
+END OPN SEQUENCE
+
+SPEC-ACTIONS
+
+*** User-Defined Variable Quantity Lines
+***                          addr
+***                        <------>
+*** kwd  varnam optyp  opn  vari  s1 s2 s3 tp multiply  lc ls ac as agfn ***
+  <****> <----> <----> <-> <----><-><-><-><-><--------> <><-> <><-> <--> ***
+  UVQUAN surwat PERLND   1 SURS
+
+*** Distribution Lines
+*** kwd  ds  ct tc ts   dff     f1   f2   f3   f4   f5   f6   f7   f8   f9  f10
+  <****>< > < > <> < > <--->  <---><---><---><---><---><---><---><---><---><--->
+*** Daily distribution over five days, with five extra days to make up any
+    missed fraction. ***
+  DISTRB  1  10 DY   1 ACCUM    .20  .20  .20  .20  .20    0    0    0    0    0
+
+*** User-Defined Variable Name Lines
+***                   addr                          addr
+***                 <------>                      <------>
+*** kwd   varnam ct  vari  s1 s2 s3  frac oper     vari  s1 s2 s3  frac oper
+  <****>  <----><-> <----><-><-><-> <---> <-->    <----><-><-><-> <---> <-->
+*** Manure 50%/50% surface/upper as tons/ac.  Multipliers give lb/ac of N or P.
+  UVNAME  MANURE  8 SAMAD            1.82 QUAN    UAMAD            1.82 QUAN
+                    SORGN            2.73 QUAN    UORGN            2.73 QUAN
+                    SP4AD            .675 QUAN    UP4AD            .675 QUAN
+                    SORGP            .675 QUAN    UORGP            .675 QUAN
+
+*** Nitrogen Fertilizer 50%/50% surface/upper as lbs N/acre
+  UVNAME  FERTN5  4 SAMAD            .375 QUAN    UAMAD            .375 QUAN
+                    SNO3             .125 QUAN    UNO3             .125 QUAN
+
+*** Nitrogen Fertilizer 10%/90% surface/upper as lbs N/acre
+  UVNAME  FERTN1  4 SAMAD            .075 QUAN    UAMAD            .675 QUAN
+                    SNO3             .025 QUAN    UNO3             .225 QUAN
+
+*** Phosphorus Fertilizer 10%/90% surface/upper as lbs P/acre
+  UVNAME  FERTP1  2 SP4AD              .1 QUAN    UP4AD              .9 QUAN
+
+*** Incorporation of cover crop by moldboard plow - Assumes 6.4% of upper layer
+    storages remain on surface, while surface storages are completely ***
+    incorporated into the upper layer. ***
+    Soil mass ratio= (0.39*74.9)/(5.61*81.2) = .064 ***
+    See Table-type SOIL-DATA. ***
+  UVNAME  INCORP 14 SAMAD            .064 MOV2    UAMAD
+                    SNO3             .064 MOV2    UNO3
+                    SAMSU            .064 MOV2    UAMSU
+                    SORGN            .064 MOV2    UORGN
+                    SP4AD            .064 MOV2    UP4AD
+                    SP4SU            .064 MOV2    UP4SU
+                    SORGP            .064 MOV2    UORGP
+  UVNAME  PLANT   8 SPLTN               1 QUAN    UPLTN               1 QUAN
+                    LPLTN               1 QUAN    APLTN               1 QUAN
+                    SPLTP               1 QUAN    UPLTP               1 QUAN
+                    LPLTP               1 QUAN    APLTP               1 QUAN
+
+*** Action Lines
+***                                       <-addr->              <uvqn>
+***optyp range dc ds yr  mo da hr mn d t   vari  s1 s2 s3 ac  value    tc ts num
+  <****><-><--><>< ><--><-><-><-><-><><>  <----><-><-><-><-><--------> <> < >< >
+
+                 *** Winter Cover Crop ***
+
+IF (surwat = 0.0) THEN
+  *** Planting of winter cover crop
+  PERLND  1    DY  11984 10 15 12         DETS             =       1.0 YR   1  8
+
+  *** Manure (as N+P) Application- 50% Surface, 50% Upper - Split 3 times
+      during the fall and winter on cover crop ***
+  PERLND  1    DY  11984 10 20 12         MANURE          +=      9.52 YR   1  8
+  PERLND  1    DY  11984 12 20 12         MANURE          +=      9.52 YR   1  8
+  PERLND  1    DY  11984  2 20 12         MANURE          +=      9.52 YR   1  8
+END IF
+
+  *** Incorporate winter cover crop with moldboard plow
+  PERLND  1         1984  4 13 12         DETS             =       3.0 YR   1  8
+  PERLND  1         1984  4 13 12         PLANT            =       0.0 YR   1  8
+  PERLND  1         1984  4 13 12         INCORP           =           YR   1  8
+  *** Reset Organic N and P storages to simulate return of plant N and P from
+      residue and roots ***
+  PERLND  1         1984  4 13 12         SORGN            =     180.0 YR   1  8
+  PERLND  1         1984  4 13 12         UORGN            =     500.0 YR   1  8
+  PERLND  1         1984  4 13 12         LORGN            =    1200.0 YR   1  8
+  PERLND  1         1984  4 13 12         SORGP            =      50.0 YR   1  8
+  PERLND  1         1984  4 13 12         UORGP            =     100.0 YR   1  8
+  PERLND  1         1984  4 13 12         LORGP            =      60.0 YR   1  8
+
+                 *** Summer Crop ***
+
+IF (surwat = 0.0) THEN
+  *** Planting of Summer Crop
+  PERLND  1    DY  11984  4 15 12         DETS             =       1.0 YR   1  8
+
+  *** N and P Fertilizer applied - 10% Surface, 90% Upper
+  PERLND  1         1984  4 20 12    1    FERTN1          +=     48.98 YR   1  8
+  PERLND  1         1984  4 20 12    1    FERTP1          +=     22.31 YR   1  8
+
+  *** Tillage Operation ***
+  PERLND  1    DY  11984  5 12 12         DETS             =       1.5 YR   1  8
+
+  *** MANURE Application Split 3 times during the season
+  PERLND  1    DY  11984  5 15 12         MANURE          +=     33.12 YR   1  8
+  PERLND  1    DY  11984  7  1 12         MANURE          +=     33.12 YR   1  8
+  PERLND  1    DY  11984  8 15 12         MANURE          +=     33.12 YR   1  8
+
+  *** Pesticide applied - 100% Surface adsorbed storage - 2.5 lb/ac spread over
+      3 weeks ***
+  PERLND  1    DY  11984  6  5 12         SPS     2  1    +=     0.625 YR   1  8
+  PERLND  1    DY  11984  6 13 12         SPS     2  1    +=     1.250 YR   1  8
+  PERLND  1    DY  11984  6 20 12         SPS     2  1    +=     0.625 YR   1  8
+
+  *** N Fertilizer applied - 50% Surface, 50% Upper
+  PERLND  1         1984  6 15 12    1    FERTN5          +=     48.85 YR   1  8
+END IF
+
+*** Set pesticide decay rate high to reflect high volatilization at application
+  PERLND  1         1984  6  5            SPSPM   8  1     =      0.12 YR   1  8
+*** Reduce pesticide decay rate to reflect less volatilization later in season
+  PERLND  1         1984  6 30            SPSPM   8  1     1      0.06 YR   1  8
+
+  *** Harvest Summer crop
+  PERLND  1         1984  9 30 12         PLANT            =       0.0 YR   1  8
+  *** Reset Organic N and P storages to simulate return of plant N and P from
+      residue and roots ***
+  PERLND  1         1984  9 30 12         SORGN            =     180.0 YR   1  8
+  PERLND  1         1984  9 30 12         UORGN            =     500.0 YR   1  8
+  PERLND  1         1984  9 30 12         LORGN            =    1200.0 YR   1  8
+  PERLND  1         1984  9 30 12         SORGP            =      50.0 YR   1  8
+  PERLND  1         1984  9 30 12         UORGP            =     100.0 YR   1  8
+  PERLND  1         1984  9 30 12         LORGP            =      60.0 YR   1  8
+END SPEC-ACTIONS
+
+PERLND
+  ACTIVITY       
+    #    # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC   ***
+    1         1    0    1    1    1    1    1    1    1    1    1    0
+  END ACTIVITY
+ 
+  PRINT-INFO     
+    #    # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC PIVL***PY
+    1         5         5    5    5    5    5    5    5    4    4             12
+  END PRINT-INFO     
+ 
+  GEN-INFO       
+    #    #      NAME                       IN  OUT ENGL METR  ***
+    1     HIGH TILL CROPLAND                1    1   90    0
+  END GEN-INFO       
+ 
+  ATEMP-DAT
+    ELEVATION DIFFERENCE BETWEEN GAGE AND PLS ***      
+    #    #     ELDAT    AIRTMP ***
+    1         -592.0      32.1
+  END ATEMP-DAT
+
+  PWAT-PARM1     
+    #    # CSNO RTOP UZFG  VCS  VUZ  NVV VIFW VIRC  VLE  ***
+    1         0    1    1    1    1    1    0    0    1
+  END PWAT-PARM1     
+ 
+  PWAT-PARM2     
+    #    # ***FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY      AGWR
+    1          0.000     8.000    0.0300      300.   0.07000     0.000     0.985
+  END PWAT-PARM2     
+ 
+  PWAT-PARM4     
+    #    #     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP  ***
+    1           0.00     0.800     0.090     1.000     0.600     0.420
+  END PWAT-PARM4     
+ 
+  MON-INTERCEP   
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1     0.0300.0300.0300.0300.0150.0600.1200.1430.1350.1050.0500.040
+  END MON-INTERCEP   
+ 
+  MON-UZSN       
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1     0.3000.3000.3000.3000.2800.2500.2500.2500.2500.3000.3000.300
+  END MON-UZSN       
+ 
+  MON-MANNING    
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      .100 .100 .100 .080 .080 .080 .080 .090 .090 .100 .100 .100
+  END MON-MANNING    
+ 
+  MON-LZETPARM   
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1     0.1000.1000.1000.1000.2500.5500.5500.5500.4500.2500.1500.100
+  END MON-LZETPARM   
+ 
+  PWAT-STATE1    
+    #    # ***  CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+    1          0.000     0.000     1.500     0.000     7.900     1.006     0.000
+  END PWAT-STATE1    
+
+  SED-PARM1      
+    #    #  CRV VSIV SDOP  ***
+    1         1    0    1
+  END SED-PARM1      
+ 
+  SED-PARM2      
+    #    #      SMPF      KRER      JRER     AFFIX     COVER      NVSI  ***
+    1          1.000     0.320     2.000     0.010     0.000     1.000
+  END SED-PARM2      
+ 
+  SED-PARM3      
+    #    #      KSER      JSER      KGER      JGER  ***
+    1           0.75     2.000     0.000     2.000
+  END SED-PARM3      
+ 
+  MON-COVER      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      .230 .220 .150 .170 .280 .500 .750 .930 .930 .320 .290 .240
+  END MON-COVER      
+ 
+  SED-STOR       
+    #    #      DETS  ***
+    1           0.70
+  END SED-STOR       
+ 
+  PSTEMP-PARM1   
+    #    # SLTV ULTV LGTV TSOP  ***
+    1         1    1    1    1
+  END PSTEMP-PARM1   
+ 
+  PSTEMP-PARM2   
+    #    #      ASLT      BSLT     ULTP1     ULTP2     LGTP1     LGTP2  ***
+    1           32.0      0.95      32.0      0.90      32.0       0.0
+  END PSTEMP-PARM2   
+
+  MON-ASLT      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      33.9 33.9 37.5 43.0 49.6 55.8 59.8 59.8 53.5 44.8 40.0 35.7
+  END MON-ASLT
+
+  MON-BSLT      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50
+  END MON-BSLT
+     
+  MON-ULTP1      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      34.6 34.6 40.7 50.7 62.4 74.0 81.2 81.2 69.7 53.2 45.2 37.7
+  END MON-ULTP1
+
+  MON-ULTP2      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10
+  END MON-ULTP2
+ 
+  MON-LGTP1      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      50.0 50.0 52.0 54.0 56.0 58.0 60.0 62.0 58.0 55.0 52.0 50.0
+  END MON-LGTP1      
+ 
+  PSTEMP-TEMPS   
+    #    #     AIRTC     SLTMP     ULTMP     LGTMP  ***
+    1           32.0      32.0      32.0      49.0
+  END PSTEMP-TEMPS   
+    
+  PWT-PARM1      
+    #    #  IDV  ICV  GDV  GCV  ***
+    1         1    0    1    0
+  END PWT-PARM1      
+ 
+  PWT-PARM2      
+    #    #      ELEV     IDOXP     ICO2P     ADOXP     ACO2P  ***
+    1          1880.      8.80      0.00      8.80      0.00
+  END PWT-PARM2      
+ 
+  MON-IFWDOX     
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      12.7 12.7 11.2 9.70 7.40 6.50 5.50 5.50 6.00 8.40 9.40 11.6
+  END MON-IFWDOX     
+ 
+  MON-GRNDDOX    
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      12.0 12.0 11.0 10.0 7.50 5.50 4.50 4.00 4.50 7.50  9.0 10.0
+  END MON-GRNDDOX    
+ 
+  PWT-GASES      
+    #    #     SODOX     SOCO2     IODOX     IOCO2     AODOX     AOCO2  ***
+    1           14.5       0.0      12.7       0.0      10.0       0.0
+  END PWT-GASES      
+ 
+  NQUALS         
+    #    # NQAL  ***
+    1         1
+  END NQUALS 
+
+  QUAL-PROPS     
+    #    #<--QUALID-->    QTID  QSD VPFW VPFS  QSO  VQO QIFW VIQC QAGW VAQC  ***
+    1              BOD     LBS    1    2    0    0    0    1    4    1    4
+  END QUAL-PROPS     
+ 
+  MON-POTFW      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      184. 184. 230. 230. 230. 230. 345. 345. 345. 345. 345. 184.
+  END MON-POTFW      
+ 
+  MON-IFLW-CONC  
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      11.0 11.0 11.0 11.0 11.0 11.0 11.0 11.0 11.0 11.0 11.0 11.0
+  END MON-IFLW-CONC  
+ 
+  MON-GRND-CONC  
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      5.50 5.50 5.50 5.50 5.50 5.50 5.50 5.50 5.50 5.50 5.50 5.50
+  END MON-GRND-CONC  
+
+  MST-PARM
+    <PLS > FACTORS USED TO ADJUST SOLUTE LEACHING RATES ***
+    #    #     SLMPF      ULPF      LLPF   ***
+    1            0.9       3.0       1.5
+  END MST-PARM
+
+  SOIL-DATA
+    <PLS > SOIL LAYER DEPTHS AND BULK DENSITIES  ***
+    # -  #           DEPTHS (IN)               BULK DENSITY (LB/FT3) ***
+           SURFACE   UPPER   LOWER GROUNDW SURFACE   UPPER   LOWER GROUNDW   ***
+    1         0.39    5.61   41.30     60.    74.9    81.2    84.3    90.5
+  END SOIL-DATA
+
+  PEST-FLAGS
+    <PLS >  Options for simulation of up to 3 different pesticides ***
+    # -  # NPST MAX ITERATIONS ADSORP OPTION                       ***
+                PST1 PST2 PST3 PST1 PST2 PST3                      ***
+    1         1   20              1
+  END PEST-FLAGS
+
+  PEST-ID
+    <PLS >                     ***
+    # -  #<--Pesticide Name--> ***
+    1     Pesticide #1
+  END PEST-ID
+
+  PEST-FIRSTPM      SURFACE LAYER
+    <PLS >First-order parms (/day) ***
+    # -  #     KDSPS     KADPS     ***
+    1            .02       .05
+  END PEST-FIRSTPM
+
+  PEST-FIRSTPM      UPPER LAYER
+    <PLS >First-order parms (/day) ***
+    # -  #     KDSPS     KADPS     ***
+    1            .02       .05
+  END PEST-FIRSTPM
+
+  PEST-FIRSTPM      LOWER LAYER
+    <PLS >First-order parms (/day) ***
+    # -  #     KDSPS     KADPS     ***
+    1            .02       .05
+  END PEST-FIRSTPM
+
+  PEST-FIRSTPM      GROUNDWATER LAYER
+    <PLS >First-order parms (/day) ***
+    # -  #     KDSPS     KADPS     ***
+    1            .02       .05
+  END PEST-FIRSTPM
+
+  PEST-DEGRAD
+    <PLS >  Pesticide degradation rates (/day)     ***
+    # -  #   SURFACE     UPPER     LOWER   GROUNDW ***
+    1           0.06     0.045      0.04      0.04
+  END PEST-DEGRAD
+
+  NIT-FLAGS
+    <PLS > NITROGEN FLAGS   ***
+    # -  # VNUT FORA ITMX BNUM CNUM NUPT FIXN AMVO ALPN VNPR ***
+    1              1  100    3    1    1         1
+  END NIT-FLAGS
+  
+  NIT-AD-FLAGS
+             Atmospheric Deposition Flags ***
+                 NO3            NH3            ORGN    ***
+    <PLS >    sur    upp     sur    upp     sur    upp ***
+    # -  #   F  C   F  C    F  C   F  C    F  C   F  C ***
+    1       -1  0   0  0   -1  0   0  0   -1  0   0  0
+  END NIT-AD-FLAGS
+
+  SOIL-DATA2
+    <PLS >    SWILTP    UWILTP    LWILTP    AWILTP ***
+    # -  #   (IN/IN)   (IN/IN)   (IN/IN)   (IN/IN) ***
+    1           0.01      0.02      0.05      0.18
+  END SOIL-DATA2
+
+  CROP-DATES
+    <PLS >              CROP 1            CROP 2            CROP 3    ***
+    # -  # NCRP     PM PD   HM HD     PM PD   HM HD     PM PD   HM HD ***
+    1         2     10 15    4 13      4 15    9 30
+  END CROP-DATES
+
+  NIT-YIELD
+    <PLS >    NUPTGT    NMXRAT ***
+    # -  #   (LB/AC)           ***
+    1         145.00       2.0
+  END NIT-YIELD
+
+  MON-NUPT-FR1
+    <PLS >  Monthly fractions for plant uptake target                  ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .01  .04  .09 .115 .135 .145  .15  .14 .095  .05 .025 .005
+  END MON-NUPT-FR1
+
+  MON-NUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from surface     ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .01  .01  .01  .01  .01  .01  .01  .01  .01  .01  .01  .01
+  END MON-NUPT-FR2
+
+  MON-NUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from upper       ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .56  .56  .65  .65  .65  .65  .60  .55  .50  .45  .56  .56
+  END MON-NUPT-FR2
+
+  MON-NUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from lower       ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .43  .43  .34  .34  .34  .34  .39  .44  .49  .54  .43  .43
+  END MON-NUPT-FR2
+
+  MON-NUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from active gw   ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1        .0   .0   .0   .0   .0   .0   .0   .0   .0   .0   .0   .0
+  END MON-NUPT-FR2
+
+  NIT-FSTGEN
+    <PLS > UPT-FRAC.<----  TEMP-PARMS(THETA)               >***
+    #    #  NO3  NH4  PLN KDSA KADA KIMN  KAM KDNI  KNI KIMA***
+    1       0.8  0.2 1.07 1.05 1.05 1.07 1.07 1.07 1.05 1.07
+  END NIT-FSTGEN
+
+  NIT-FSTPM
+    <PLS >*** NITROGEN FIRST-ORDER RATES FOR SURFACE LAYER (/DAY)
+    #    #***  KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+    1                                 .0      .001        .0       10.       5.0
+  END NIT-FSTPM
+
+  NIT-FSTPM
+    <PLS >*** NITROGEN FIRST-ORDER RATES FOR UPPER LAYER (/DAY)
+    #    #***  KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+    1                                 .0    .00015      .000       5.0       2.0
+  END NIT-FSTPM
+
+  NIT-FSTPM
+    <PLS >*** NITROGEN FIRST-ORDER RATES FOR LOWER LAYER (/DAY)
+    #    #***  KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+    1                                 .0    .00015      .005       3.0        .2
+  END NIT-FSTPM
+
+  NIT-FSTPM
+    <PLS >*** NITROGEN FIRST-ORDER RATES FOR GROUNDWATER LAYER (/DAY)
+    #    #***  KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+    1                                 .0       0.0      .030       .50        .0
+  END NIT-FSTPM
+
+  NIT-CMAX
+    <PLS >     MAXIMUM SOLUBILITY OF AMMONIUM      ***
+    #    #     CMAX                                ***
+              (PPM)                                ***
+    1          5000.
+  END NIT-CMAX
+
+  NIT-SVALPM        SURFACE
+    NITROGEN SINGLE VALUE FREUNDLICH ADSORPTION/DESORPTION PARAMTERS ***
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1             5.       1.0      1.50
+  END NIT-SVALPM
+
+  NIT-SVALPM        UPPER
+    NITROGEN SINGLE VALUE FREUNDLICH ADSORPTION/DESORPTION PARAMETERS ***
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1             5.       1.0      1.20
+  END NIT-SVALPM
+
+  NIT-SVALPM        LOWER
+    NITROGEN SINGLE VALUE FREUNDLICH ADSORPTOIN/DESORPTION PARAMETERS ***
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1             .7       0.5      1.20
+  END NIT-SVALPM
+
+  NIT-SVALPM        GROUNDWATER
+    NITROGEN SINGLE VALUE FREUNDLICH ADSORPTION/DESORPTION PARAMETERS ***
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1             .3       0.5      1.10
+  END NIT-SVALPM
+
+  NIT-AMVOLAT
+    <PLS >     SKVOL     UKVOL     LKVOL     AKVOL     THVOL    TRFVOL ***
+    #    #    (/day)    (/day)    (/day)    (/day)       (-)   (deg C) ***
+    1            0.0       0.0       0.0         0      1.07       20.
+  END NIT-AMVOLAT
+
+  NIT-STOR1         SURFACE
+    <PLS >INITIAL STORAGE OF N FORMS IN SURFACE LAYER LB/AC ***
+    #    #      ORGN      AMAD      AMSU       NO3      PLTN***
+    1           180.      1.00      0.03       0.3        .0
+  END NIT-STOR1
+
+  NIT-STOR1         UPPER
+    <PLS >INITIAL STORAGE OF N FORMS IN UPPER LAYER LB/AC ***
+    #    #      ORGN      AMAD      AMSU       NO3      PLTN***
+    1           500.       5.0       0.5       2.0        .0
+  END NIT-STOR1
+
+  NIT-STOR1        LOWER LAYER   
+    <PLS >INITIAL STORAGE OF N FORMS IN LOWER LAYER LB/AC ***
+    #    #      ORGN      AMAD      AMSU       NO3      PLTN***
+    1          1200.       5.0       1.0        8.        .0
+  END NIT-STOR1
+
+  NIT-STOR1        GROUNDWATER LAYER
+    <PLS >INITIAL STORAGE OF N FORMS IN GROUNDWATER LAYER LB/AC ***
+    #    #      ORGN      AMAD      AMSU       NO3      PLTN***
+    1           800.      6.00      0.50       1.0        .0
+  END NIT-STOR1
+
+  PHOS-FLAGS
+           PHOSPHOROUS FLAGS ***
+    <PLS > VPUT FORP ITMX BMUM CNUM PUPT ***
+    # -  #                               ***
+    1              1  100    3    1    1
+  END PHOS-FLAGS
+
+  PHOS-AD-FLAGS    
+             Atmospheric Deposition Flags ***
+                 PO4            ORGP        ***
+    <PLS >    sur    upp     sur    upp     ***
+    # -  #   F  C   F  C    F  C   F  C     ***
+    1       -1  0   0  0   -1  0   0  0         
+  END PHOS-AD-FLAGS    
+
+  MON-PHOSUPT
+    <PLS > PLANT UPTAKE OF PHOSPHOROUS IN SURFACE LAYER (/DAY) ***
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .25  .25  .25  .35  1.0  1.5  1.5  1.5  1.5  1.2  .25  .25
+  END MON-PHOSUPT
+
+  MON-PHOSUPT
+    <PLS > PLANT UPTAKE OF PHOSPHOROUS IN UPPER LAYER (/DAY) ***
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .25  .25  .25  .35  1.2  3.5  4.5  4.5  4.5  4.5  .55  .25
+  END MON-PHOSUPT
+
+  MON-PHOSUPT
+    <PLS > PLANT UPTAKE OF PHOSPHOROUS IN LOWER LAYER (/DAY) ***
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .15  .15  .15  .35  .90  5.2  6.0  6.0  6.0  6.0  .15  .15
+  END MON-PHOSUPT
+
+  PHOS-YIELD
+    <PLS >    PUPTGT    PMXRAT ***
+    # -  #   (LB/AC)           ***
+    1          25.00       1.8
+  END PHOS-YIELD
+
+  MON-PUPT-FR1
+    <PLS >  Monthly fractions for plant uptake target                  ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .01  .04  .09 .115 .135 .145  .15  .14 .095  .05 .025 .005
+  END MON-PUPT-FR1
+
+  MON-PUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from surface     ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05  .05
+  END MON-PUPT-FR2
+
+  MON-PUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from upper       ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .80  .80  .80  .80  .80  .80  .80  .80  .80  .80  .80  .80
+  END MON-PUPT-FR2
+
+  MON-PUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from lower       ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1       .15  .15  .15  .15  .15  .15  .15  .15  .15  .15  .15  .15
+  END MON-PUPT-FR2
+
+  MON-PUPT-FR2
+    <PLS >  Monthly fractions for plant uptake target from active gw   ***
+    # -  #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1        .0   .0   .0   .0   .0   .0   .0   .0   .0   .0   .0   .0
+  END MON-PUPT-FR2
+
+  PHOS-FSTGEN
+    <PLS > TEMPERATURE CORRECTION PARAMETERS FOR PHOSPHOROUS REACTIONS ***
+    #    #     THPLP    THKDSP    THKADP    THKIMP     THKMP           ***
+    1           1.07                          1.07       1.05
+  END PHOS-FSTGEN
+
+  PHOS-FSTPM
+    <PLS > PHOSPHOROUS FIRST-ORDER RATES FOR SURFACE LAYER (/DAY)    ***
+    #    #      KDSP      KADP      KIMP       KMP                   ***
+    1                               10.0     .0007
+  END PHOS-FSTPM
+
+  PHOS-FSTPM
+    <PLS > PHOSPHOROUS FIRST-ORDER RATES FOR UPPER LAYER (/DAY)      ***
+    #    #      KDSP      KADP      KIMP       KMP                   ***
+    1                               2.00    .00003
+  END PHOS-FSTPM
+
+  PHOS-FSTPM
+    <PLS > PHOSPHOROUS FIRST-ORDER RATES FOR LOWER LAYER (/DAY)      ***
+    #    #      KDSP      KADP      KIMP       KMP                   ***
+    1                               .100    .00005
+  END PHOS-FSTPM
+
+  PHOS-FSTPM
+    <PLS > PHOSPHOROUS FIRST-ORDER RATES FOR GROUNDWATER LAYER (/DAY)    ***
+    #    #      KDSP      KADP      KIMP       KMP                       ***
+    1                                 0.      0.00
+  END PHOS-FSTPM
+
+  PHOS-CMAX
+    <PLS > MAXIMUM SOLUBILITY OF PHOSPHATE   ***
+    #    #      CMAX                         ***
+               (PPM)                         ***
+    1           50.0
+  END PHOS-CMAX
+
+  PHOS-SVALPM        SURFACE
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1            25.        5.      1.50
+  END PHOS-SVALPM
+
+  PHOS-SVALPM        UPPER
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1            15.        5.      1.50
+  END PHOS-SVALPM
+
+  PHOS-SVALPM        LOWER
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1            10.        5.      1.50
+  END PHOS-SVALPM
+
+  PHOS-SVALPM        GROUNDWATER
+    <PLS >      XFIX        K1        N1***
+    #    #     (PPM)                    ***
+    1            12.        6.      1.50
+  END PHOS-SVALPM
+
+  PHOS-STOR1
+    <PLS > INITIAL PHOSPHOROUS STORAGE IN SURFACE LAYER LB/AC ***
+    #    #      ORGP      P4AD      P4SU      PLTP            ***
+    1            50.      2.00      0.00        0.
+  END PHOS-STOR1
+
+  PHOS-STOR1
+    <PLS > INITIAL PHOSPHOROUS STORAGE IN UPPER LAYER LB/AC   ***
+    #    #      ORGP      P4AD      P4SU      PLTP            ***
+    1           100.      28.0      1.00        0.    
+  END PHOS-STOR1
+
+  PHOS-STOR1
+    <PLS > INITIAL PHOSPHOROUS STORAGE IN LOWER LAYER LB/AC   ***
+    #    #      ORGP      P4AD      P4SU      PLTP            ***
+    1            60.     130.0       1.5        0.    
+  END PHOS-STOR1
+
+  PHOS-STOR1
+    <PLS > INITIAL PHOSPHOROUS STORAGE IN GROUNDWATER LAYER LB/AC ***
+    #    #      ORGP      P4AD      P4SU      PLTP                ***
+    1            30.      210.      01.0        0.    
+  END PHOS-STOR1
+END PERLND
+
+EXT SOURCES
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member-> ***
+<Name>   # <Name> # tem strg<-factor->strg <Name>   #   #        <Name> # # ***
+WDM    105 HPRC  10 ENGLZERO          SAME PERLND   1     EXTNL  PREC  
+WDM     40 EVAP     ENGLZERO     0.86 DIV  PERLND   1     EXTNL  PETINP
+WDM     49 ATMP     ENGL              SAME PERLND   1     EXTNL  GATMP
+WDM    541 NH4X     ENGL              DIV  PERLND   1     EXTNL  NIADFX 2 1
+WDM    542 NO3X     ENGL              DIV  PERLND   1     EXTNL  NIADFX 1 1
+WDM    543 NO3X     ENGL              DIV  PERLND   1     EXTNL  NIADFX 1 1
+WDM    545 ORGN     ENGL              DIV  PERLND   1     EXTNL  NIADFX 3 1
+WDM    544 PO4X     ENGL              DIV  PERLND   1     EXTNL  PHADFX 1 1
+WDM    546 ORGP     ENGL              DIV  PERLND   1     EXTNL  PHADFX 2 1
+END EXT SOURCES
+
+END RUN

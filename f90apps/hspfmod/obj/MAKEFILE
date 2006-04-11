@@ -1,0 +1,32 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = LF90
+PROGRAM   = ..\bin\driver
+
+FFLAGS    = -c -o1
+LDFLAGS   =
+LDMAP     = ..\bin\driver.map
+
+MAKEFILE  = Makefile
+MODS      = uci.lib tsins.lib osv.lib
+OBJS      = driver.obj
+
+VPATH  = ..\src
+
+$(PROGRAM):  $(MODS) $(OBJS)
+          $(FC) $(OBJS) $(MODS) -EXE $@ -MAP $(LDMAP) $(LDFLAGS) -PACK
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif
+
+
+uci.lib: $(@,B).for
+     $(FC) $? $(FFLAGS)
+
+tsins.lib: $(@,B).for
+     $(FC) $? $(FFLAGS)
+
+osv.lib: $(@,B).for
+     $(FC) $? $(FFLAGS)

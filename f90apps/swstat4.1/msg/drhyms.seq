@@ -1,0 +1,636 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  clu  grpnam  description
+  ___  ______  ____________________________________________
+  160  duranl  screens for duration hydrograph analysis
+END COMMENT
+CLU          160    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  DURANL
+  END LABEL
+  DATA   CLU   160
+#GROUP    1  TYPE MENU
+$WINDOW Hydrograph (H)
+$SCREEN
+   Select a Hydrograph duration option.
+
+         @Select  - data sets 
+         @Modify  - parameters and options
+         @Define  - percentiles to be used
+         @Analyze - duration hydrographs
+
+         @Return  - to Statistics screen
+$DEFAULT    1
+$LENGTH    8
+$OPTION Select
+_HELP
+ Input time-series data is from WDM file data sets.  Select data sets
+ before you Analyze.  There are no default data sets.  If you have not
+ selected a WDM file, return to top menu and select one.
+$OPTION Modify
+_HELP
+ Options include:  name of output file
+                   period of record, season, and data transformation
+                   plot options (include, device, axis type, shading)
+                   table options (include, # digits, # decimal places, width)
+$OPTION Define
+_HELP
+ Up to 12 percentiles can be selected.  Default values are 0.0, 0.1,
+ 0.3, 0.5, 0.7, 0.8, 0.9, 1.0.  0.0 is maximum value and 1.0 is minimum
+ value.
+$OPTION Analyze
+_HELP
+ Must be selected to get results.   Data sets must be selected first.
+$OPTION Return
+_HELP
+ Select when no more durations analyses are to be done.
+#GROUP    6  TYPE PRM1
+$WINDOW Modify (HM)
+$SCREEN
+ Modify parameters and options as needed.
+
+ File name [@OUTFILE........................................................]
+
+ Period of record [@PERIOD.]
+ Year (or season) [@STMO....] to [@EDMO....]
+ Transformation   [@Dtran..]
+ 
+  Generate plot?  [@PL]   Device [@DEVICE.]  Y-axis [@AORL]  Shading [@CL]
+  Generate table? [@T.]   Digits [@SD.....]  Decimal [@DP.]  Width   [@FW]
+$FIELD @OUTFILE
+_TYPE CHARACTER
+_HELP
+ Enter the name of the file for duration hydrograph table.
+$FIELD @PERIOD
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID FULL, COMMON, SPECIFY
+_DEFAULT FULL
+_HELP
+Enter FULL to use the available period of record for each data set.
+Enter COMMON to specify a common period or record for each data set.
+Enter SPECIFY to be given the opportunity to modify the start
+and end dates for each data set (during analysis).
+$FIELD @STMO
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT OCTOBER
+_HELP
+The beginning month for the year or season.  The water year is
+October-September, climatic year is April-March, calendar year
+is January-December.  A season might be June-September.  Data
+values outside a season will not be included.
+$FIELD @EDMO
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT SEPTEMBER
+_HELP
+The ending month for the year or season.  The water year is
+October-September, climatic year is April-March, calendar year
+is January-December.  A season might be June-September.  Data
+values outside a season will not be included.
+$FIELD Dtran
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN
+_DEFAULT AVERAGE
+_HELP
+If the time step is shorter than a day, the data will be aggregated to
+a daily time step.  Typically, time series that are rates (such as
+discharge) are AVERAGEd.  Time series that are totals (such as rain)
+are SUMmed.  Use MAX or MIN for the daily extremes (not tested!).
+$FIELD @PL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES, NO
+_DEFAULT YES
+_HELP
+ Enter YES to create a plot.
+$FIELD @DEVICE
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID SCREEN, LASER, PLOTTER, META
+_DEFAULT SCREEN
+_HELP
+Enter SCREEN to make the plot on the monitor(terminal).
+Enter LASER to create a postscript file that can be sent to a laser printer.
+Enter PLOTTER for pen plotters (default is HPGL file).
+Enter META to create a CGM file or other type meta file.
+$FIELD @AORL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID ARITH, LOG
+_DEFAULT LOG
+_HELP
+The y-axis can be an arithmetic or logarithmic scale.
+$FIELD @CL
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES, NO
+_DEFAULT NO
+_HELP
+Solid color can be used to shade the space between each curve.
+Only useful for presentation on the monitor.
+$FIELD @T
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID YES, NO
+_DEFAULT YES
+_HELP
+Enter YES to create a duration hydrograph table that will be written to the 
+specified file.
+$FIELD @SD
+_TYPE INTEGER
+_RANGE 1:7
+_HELP
+Machine precision does not go beyond 6 or 7 digits and measured data seldom
+goes beyond 3 or 4 digits.
+$FIELD @DP
+_TYPE INTEGER
+_RANGE 0:5
+_HELP
+ This the number of digits to the right of the decimal point.
+$FIELD @FW
+_TYPE INTEGER
+_RANGE 5:14
+_HELP
+10 spaces are used for the day and number of years.  So: 
+If # percentiles is  8, max width  80, then field width should be  8.
+If # percentiles is  9, max width 120, then field width should be 12. 
+If # percentiles is 12, max width 132, then field width should be 10.  
+#GROUP    7  TYPE FILE
+$WINDOW Output (HMO)
+$SCREEN
+
+ Name of output file?
+ @FILE...........................................................
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+ Enter file name for current directory or full path name.  An existing or
+ new file name can be used.
+#GROUP    8  TYPE TEXT
+$WINDOW Output (HMO) Problem
+$TEXT
+Unable to open specified file for duration hydrograph table.
+
+Use the 'Prev'ious command to go back to the Output screen
+and specify another file for output,
+
+OR
+
+Use the 'Accept' command to continue and output
+duration hydrograph table to the default file DURHYD.OUT.
+#GROUP    10  TYPE PRM1
+$WINDOW Define (HD)
+$SCREEN
+
+            Enter percentiles to be tabled or plotted.
+
+  1st [@PRM1]      2nd [@PRM2]      3rd [@PRM3]      4th [@PRM4] 
+
+  5th [@PRM5]      6th [@PRM6]      7st [@PRM7]      8nd [@PRM8]
+
+  9th [@PRM9]     10th [@PRMA]     11th [@PRMB]     12th [@PRMC]
+
+ Note:  Order small to large. Must enter at least 2.
+
+$FIELD @PRM1
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM2
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM3
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM4
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM5
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM6
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM7
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM8
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRM9
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRMA
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRMB
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$FIELD @PRMC
+_TYPE REAL
+_PROTECT CORRECT
+_RANGE    0.0:1.0
+_DEFAULT  0.0
+$HELP
+ Enter low values to high values.  0.0 after highest will be ignored.  
+ First value must be 0.0 to include the maximum value.  Last value 
+ must be 1.0 to include the minimum value.  Trailing 0.0's will be
+ ignored.
+#GROUP   11  TYPE PRM1
+$WINDOW Analyze (HA)
+$SCREEN
+
+   For all of the data sets,
+   Enter the common time period.
+
+                   Year   Month   Day
+        Start    [ @yrb ] [@mb ] [@db ]
+        End      [ @yre ] [@me ] [@de ]
+
+$FIELD @yrb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1900
+$FIELD @mb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @db
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @yre
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1990
+$FIELD @me
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @de
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 31
+#GROUP   12 TYPE PRM1
+$WINDOW Analyze (HA) Problem
+$SCREEN
+The dates specified were not valid, specify dates within
+the common range @b1. @b @c thru @e1. @e @x
+
+                   Year   Month   Day
+        Start    [ @yrb ] [@mb ] [@db ]
+        End      [ @yre ] [@me ] [@de ]
+
+$FIELD @yrb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1900
+$FIELD @mb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @db
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @yre
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1990
+$FIELD @me
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @de
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @b1
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:3000
+$FIELD @b
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:12
+$FIELD @c
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:31
+$FIELD @e1
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:3000
+$FIELD @e
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:12
+$FIELD @x
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:31
+#GROUP   13  TYPE MENU
+$WINDOW Analyze (HA) Problem
+$SCREEN
+There is no common time period for the data sets being analyzed.
+You may:
+
+      @Default - to the full available time period for each data set
+      @Specify - the time period for each data set
+      @Return  - to the hydrograph menu
+$DEFAULT 1
+$LENGTH  9
+$OPTION Default
+$OPTION Specify
+$OPTION Return
+$HELP
+No common time period was found for the selected data sets.  This
+can occur because one of the data sets ends before another starts.
+This can also occur if one of the data sets is empty or is not a
+time-series data set.
+#GROUP   14  TYPE PRM1
+$WINDOW Analyze (HA)
+$SCREEN
+
+  For data-set number @dsn.
+  Specify dates
+
+                   Year   Month   Day
+        Start    [ @yrb ] [@mb ] [@db ]
+        End      [ @yre ] [@me ] [@de ]
+
+$FIELD @yrb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1900
+$FIELD @mb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @db
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @yre
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1990
+$FIELD @me
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @de
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @dsn
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:32000
+_HELP
+This is the data set currently being analyzed.
+This data field cannot be modified.
+#GROUP   15  TYPE PRM1
+$WINDOW Analyze (HA)
+$SCREEN
+
+  For data-set number @dsn.
+  Specify the data transformation.
+
+  transformation [ @dtran. ]
+$FIELD @dtran
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID AVERAGE, SUM, MAX, MIN
+_DEFAULT AVERAGE
+_HELP
+If the time step is shorter than a day, the data will be aggregated to
+a daily time step.  Typically, time series that are rates (such as
+discharge) are AVERAGEd.  Time series that are totals (such as rain)
+are SUMmed.  Use MAX or MIN to use the daily extremes (not tested!).
+$FIELD @dsn
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:32000
+_HELP
+This is the data set currently being analyzed.
+This data field cannot be modified.
+#GROUP   16  TYPE PRM1
+$WINDOW Analyze (HA)
+$SCREEN
+  For data-set number @dsn.
+  Specify dates.
+
+                   Year   Month   Day
+        Start    [ @yrb ] [@mb ] [@db ]
+        End      [ @yre ] [@me ] [@de ]
+
+$FIELD @yrb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1900
+$FIELD @mb
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @db
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @yre
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:3000
+_DEFAULT 1990
+$FIELD @me
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @de
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @dsn
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1:32000
+_HELP
+This is the data set currently being analyzed.
+This data field cannot be modified.
+#GROUP   17  TYPE TEXT
+$WINDOW Analysis (HA) Problem
+$TEXT
+The dates entered on the previous screen are invalid
+as the starting date falls after the ending date.
+
+The dates must be specified correctly for the
+Analysis to be completed.
+#GROUP   18  TYPE TEXT
+$WINDOW Analysis-Plot (HA) Problem
+$TEXT
+
+  The requested plot is not available, for all days
+  and all probabilities, there were no percentiles.
+
+#GROUP   19  TYPE TEXT
+$WINDOW Analyze (HA) Problem
+$TEXT
+ Unable to perform duration hydrograph analysis
+ as there are no data sets with which to work.
+
+ To select data sets for use, choose the
+ Select option.
+#GROUP   20  TYPE TEXT
+$TEXT
+ 
+  For data-set number &,
+
+#GROUP   21  TYPE TEXT
+$TEXT
+  
+ Computations finished.   Table written to the file.
+ 
+#GROUP   22  TYPE TEXT
+$WINDOW Analyze (HA) Problem
+$TEXT
+
+ Unable to Analyze data-set number &.
+
+ Most likely, the data set is either empty, or
+              the data set is not a time-series data set.
+#GROUP   23  TYPE TEXT
+$TEXT
+Reading year & from WDM file.
+#GROUP   24  TYPE TEXT
+$TEXT
+ Error reading WDM file. Error code is &.
+#GROUP   25  TYPE TEXT
+$TEXT
+You have specified to output duration hydrograph 
+plots to a graphics device.
+
+However, graphics is not currently available,
+thus no duration plots will be generated.
+
+If you have GKS graphics available on your system,
+add the line "GRAPHS YES" (no quotes) to a TERM.DAT
+file in your current directory.
+#GROUP   26  TYPE TEXT
+$WINDOW Output (HO) Problem
+$TEXT
+                           NOTICE
+
+ There were an insufficient number of values to compute the 
+ percentiles for some or all days for some probabilities that 
+ were near 0.0 and/or 1.00.  Minimum and maximum probabilities
+ are 1/(n+1) and n/(n+1) respectively, where n is number of 
+ years with a value for a given day.
+#GROUP   30  TYPE MENU
+$WINDOW Analyze-Plot (HA)
+$SCREEN
+
+ Computations finished and table written to output file.
+
+ Select an option.
+
+ @Modify - parameters for the plot
+ @Plot   - to the specified output device
+
+ @Return - to the hydrograph menu
+$DEFAULT    1
+$LENGTH    6
+$OPTION Modify
+_HELP
+ You may modify the specifications for the plot before and/or after
+ the plot is made.  Line type, symbol etc may be changed.
+$OPTION Plot
+_HELP
+ Must be selected to get the plot. The plot is generated according to the
+ specifications provided as defaults or modifications you made, and put on
+ the selected output graphics device.
+$OPTION Return
+_HELP
+ Select if finished plotting and modifying the plot.
+#GROUP   31  TYPE MENU
+$WINDOW Analyze-Plot (HA)
+$SCREEN
+
+ Computations finished.
+
+ Select an option.
+
+ @Modify - parameters for the plot
+ @Plot   - to the specified output device
+
+ @Return - to the hydrograph menu
+$DEFAULT    1
+$LENGTH    6
+$OPTION Modify
+_HELP
+ You may modify the specifications for the plot before and/or after
+ the plot is made.  Line type, symbol etc may be changed.
+$OPTION Plot
+_HELP
+ Must be selected to get the plot. The plot is generated according to the
+ specifications provided as defaults or modifications you made, and put on
+ the selected output graphics device.
+$OPTION Return
+_HELP
+ Select if finished plotting and modifying the plot.
+  END DATA
+END CLU

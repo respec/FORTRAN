@@ -1,0 +1,39 @@
+Lahey MAKE, Version 5.31
+Copyright OPUS Software.  All rights reserved.
+
+LF90 -c -i ..\src\;\lib3.0\src\hspf12 ..\src\ucirept.for
+Lahey Fortran 90 Compiler Release 3.00b  S/N: f9358012  
+Copyright (C) 1994-1996 Lahey Computer Systems.  All rights reserved.
+Copyright (C) 1985-1996 Intel Corp.  All rights reserved.
+Registered to:	Paul Duda                              
+		AQUA TERRA Consultants                 
+Compiling file ..\src\ucirept.for.
+Compiling program unit REPEXT at line 4.
+Compiling program unit ADDREPT at line 43.
+Compiling program unit DELREPT at line 632.
+Compiling program unit DELALLR at line 671.
+Compiling program unit REPMLSC at line 701.
+Compiling program unit REPEXSO at line 1020.
+Encountered 0 errors, 0 warnings in file ..\src\ucirept.for.
+
+copy ..\src\*.obj
+..\src\UCIREPT.OBJ
+        1 file(s) copied
+lf90 report.obj hspsta.obj ucirept.obj -EXE ..\bin\report.exe -MAP ..\bin\report.map -LIB wdm.lib   adwdm.lib util.lib  aide.lib  hspf12b.lib  newaqt12.lib  hspnodss.lib -LIBP \lib3.0\lf90libs -lisk -bind -pack
+Lahey Fortran 90 Compiler Release 3.00b  S/N: f9358012  
+Copyright (C) 1994-1996 Lahey Computer Systems.  All rights reserved.
+Copyright (C) 1985-1996 Intel Corp.  All rights reserved.
+Registered to:	Paul Duda                              
+		AQUA TERRA Consultants                 
+386|LINK: 8.0_Lahey2 -- Copyright (C) 1986-96 Phar Lap Software, Inc.
+rebindb: 7.0 -- Copyright (C) 1986-94 Phar Lap Software, Inc.
+
+FILES:
+
+       Stub: GOTNTB.EXE               [Internal]     (6432 bytes)
+Application: ..\bin\report.exe                       (2148812 bytes)
+   File Dir: TNTB.EXE                 [Internal]     (203604 bytes)
+   File Dir: vmmdrvb.exp              [Internal]     (17669 bytes)
+
+Output File: ..\bin\report.exe                       (2376709 bytes)
+erase ..\src\*.obj

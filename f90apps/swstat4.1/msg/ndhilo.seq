@@ -1,0 +1,632 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  clu  grpnam  description
+  ___  ______  ____________________________________________
+  154  ndhilo  screens for n-day high and low flow analysis
+END COMMENT
+CLU          154    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  NDHILO
+  END LABEL
+  DATA   CLU   154
+#GROUP    1  TYPE MENU
+$WINDOW N-day (SN)
+$SCREEN
+Choose an N-day statistics option,
+
+  @Select  - data sets for N-day analysis
+  @Modify  - output options and parameters
+  @Define  - durations and seasons
+  @Period  - of record
+
+  @Analyze - perform N-day statistical analysis
+
+  @Return  - to the Statistics screen
+$DEFAULT 1
+$LENGTH  8
+$OPTION Select
+_HELP
+ Select data sets before you choose Analyze, there are no default data sets.
+ Time-series data must come from WDM file data sets.  The time step of the
+ data must be daily or shorter.  For time steps shorter than a day, the
+ data will be aggregated to a daily time step.
+$OPTION Modify
+_HELP
+  Select Modify to change defaults for (1) output file:  WDM, print FILE,
+  or BOTH (def BOTH), (2) starting dsn for output to wdm (def 501),
+  (3) print file formatting: decimal places, significant digits, file width
+  (def 0, 3, and WIDE), and (4) name of print file (def NDAY.OUT).
+$OPTION Define
+_HELP
+  Select Define to change defaults for (1) statistics to be computed
+  (default YES for both low and high flow statistics,) (2) up to 10
+  durations for each statistic, (3) year or season for the low flow
+  (default April-March) and high flow (default October-September).
+$OPTION Period
+_HELP
+  Select Period to change the analysis period.  By default, the full
+  period of record will be used for each selected data set.  You may
+  request a specific time period common to all selected data sets.
+$OPTION Analyze
+_HELP
+  Select Analyze to calculate the n-day time series.  Note that no
+  value will be calculated for a year or season that does not have
+  a complete record.
+$OPTION Return
+_HELP
+ Select Return when you are finished with all n-day analyses.
+#GROUP    2  TYPE PRM1
+$WINDOW Modify (SNM)
+$SCREEN
+ Modify output options as needed.
+
+ Statistical output     [@OPT]  (WDM, FILE, BOTH)
+ For WDM output:
+  Starting data set no. [@DSN.]
+ For file output:                  
+  Decimal places        [@DCP]       
+  Significant digits    [@SGD]       
+  Table width           [@WIDTH] (NARROW, WIDE)
+  File name [@OUTFILE........................................................]
+$FIELD @OPT
+_TYPE CHARACTER
+_VALID BOTH, FILE, WDM
+_DEFAULT BOTH
+_HELP
+ Select FILE to get a file containing 80 character records
+ of computed results.
+ Select WDM to put computed data on WDM file data sets.
+ Select BOTH to send output to both a specified file and the WDM file.
+$FIELD @DSN
+_TYPE INTEGER
+_RANGE    1 : 32000
+_DEFAULT  501
+_HELP
+ You should pick a number with no data sets existing for the next 20
+ numbers.  Data-set numbers for output of annual series will be added to
+ WDM file based on the first DSN number provided.  The generated data
+ sets can then be further processed with additional statistical analyses.
+$FIELD @DCP
+_TYPE INTEGER
+_RANGE    0 : 5
+_DEFAULT  0
+_HELP
+ Number of digits to the right of the decimal point.
+$FIELD @SGD
+_TYPE INTEGER
+_RANGE    1 : 6
+_DEFAULT  4
+_HELP
+ Number of non-zero leading or trailing digits in the value.
+$FIELD @WIDTH
+_TYPE CHARACTER
+_VALID NARROW, WIDE
+_DEFAULT WIDE
+_HELP
+Enter NARROW to have the output contained within 80 characters.
+Enter WIDE to have the output contained within 132 characters.  If there
+is not enough room for all fields, two tables will be created, one
+following the other.
+$FIELD @OUTFILE
+_TYPE CHARACTER
+_HELP
+Enter file name in current directory or full pathname for another directory.
+May be an existing or new file.
+#GROUP    3  TYPE FILE
+$SCREEN
+
+                   Name of output file?
+
+ [@FILE...........................................................]
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+#GROUP    4  TYPE TEXT
+$WINDOW Modify (SNM) Problem
+$TEXT
+Unable to open specified file for statistical output.
+
+Use the 'Prev'ious command to go back to the Output screen
+and specify another file for output,
+
+OR
+
+Use the 'Accept' command to continue and not output
+statistics to a file.
+#GROUP    5  TYPE PRM1
+$WINDOW Define (SND)
+$SCREEN
+Define the flow statistics and durations to be included in the analysis:
+        include   <---- days for each duration (use 0 to omit duration) ---->
+  low:   [@Ld]    [@L1] [@L2] [@L3] [@L4] [@L5] [@L6] [@L7] [@L8] [@L9] [@L0]
+ high:   [@Hd]    [@H1] [@H2] [@H3] [@H4] [@H5] [@H6] [@H7] [@H8] [@H9] [@H0]
+
+Define the seasons or months to be analyzed
+                             <--------- year or season --------->
+  [@] Seasons     low flow:  [@Lbgn....][@w] thru [@Lend....][@x]
+                 high flow:  [@Hbgn....][@y] thru [@Hend....][@z]
+  [@] Months       include:    [@Mbgn....]   thru   [@Mend....]
+$FIELD @Ld
+_TYPE CHARACTER
+_VALID   YES, NO
+_DEFAULT YES
+_HELP
+ Enter YES to search for the lowest n-day period(s) each year or season.
+ Enter NO if you are not interested in any low flow periods.
+$FIELD @L1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 1
+$FIELD @L2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 2
+$FIELD @L3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 3
+$FIELD @L4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 7
+$FIELD @L5
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 10
+$FIELD @L6
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 30
+$FIELD @L7
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 60
+$FIELD @L8
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 90
+$FIELD @L9
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 183
+$FIELD @L0
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 365
+$FIELD @Hd
+_TYPE CHARACTER
+_VALID   YES, NO
+_DEFAULT YES
+_HELP
+ YES to search for the highest n-day period(s) each year or season.
+ NO if you are not interested in any high flow periods.
+$FIELD @H1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 1
+$FIELD @H2
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 2
+$FIELD @H3
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 3
+$FIELD @H4
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 7
+$FIELD @H5
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 10
+$FIELD @H6
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 30
+$FIELD @H7
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 60
+$FIELD @H8
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 90
+$FIELD @H9
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 183
+$FIELD @H0
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 365
+_DEFAULT 365
+$FIELD @] Seasons
+_TYPE OPTION
+_SET 1
+_WIDTH 11
+_ONOFF @] Months
+_OFFON @] Months
+_HIDE OFF @Lbgn 8 16 8 40
+_HIDE OFF @w 8 41 8 50
+_HIDE OFF @Lend 8 51 8 61
+_HIDE OFF @x 8 62 8 66
+_HIDE OFF @Hbgn 9 16 9 40
+_HIDE OFF @y 9 41 9 50
+_HIDE OFF @Hend 9 51 9 61
+_HIDE OFF @z 9 62 9 66
+_HELP
+ There are two options for specifying the time periods to be used.
+
+    (1) - specify Seasons of 1 year of shorter
+    (2) - specify up to 12 Months to be used as seasons.
+$FIELD @] Months
+_TYPE OPTION
+_SET 1
+_WIDTH 11
+_ONOFF @] Seasons
+_OFFON @] Seasons
+_HIDE OFF @Mbgn 10 16 10 45
+_HIDE OFF @Mend 10 46 10 63
+_HELP
+ There are two options for specifying the time periods to be used.
+
+    (1) - specify Seasons of 1 year of shorter
+    (2) - specify up to 12 Months to be used as seasons.
+$FIELD @Lbgn
+_TYPE CHARACTER
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT APRIL
+_HELP
+ The beginning month for the low-flow season, usually the climatic year
+ April 1 thru March 31.  The water year is October 1 thru September 30,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @w
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 31
+_DEFAULT 1
+_HELP
+ The beginning day for the low-flow season, usually the climatic year
+ April 1 thru March 31.  The water year is October 1 thru September 30,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @Lend
+_TYPE CHARACTER
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT MARCH
+_HELP
+ The ending month for the low-flow season, usually the climatic year
+ April 1 thru March 31.  The water year is October 1 thru September 30,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @x
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 31
+_DEFAULT 30
+_HELP
+ The ending day for the low-flow season, usually the climatic year
+ April 1 thru March 31.  The water year is October 1 thru September 30,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @Hbgn
+_TYPE CHARACTER
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT OCTOBER
+_HELP
+ The beginning month for the high-flow season, usually the water year
+ October 1 thru September 30.  The climatic year is April 1 thru March 31,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @y
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 31
+_DEFAULT 1
+_HELP
+ The beginning day for the high-flow season, usually the water year
+ October 1 thru September 30.  The climatic year is April 1 thru March 31,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @Hend
+_TYPE CHARACTER
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT SEPTEMBER
+_HELP
+ The ending month for the high-flow season, usually the water year
+ October 1 thru September 30.  The climatic year is April 1 thru March 31,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @z
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   0 : 31
+_DEFAULT 30
+_HELP
+ The ending day for the high-flow season, usually the water year
+ October 1 thru September 30.  The climatic year is April 1 thru March 31,
+ calendar year is January 1 thru December 31.  A season might be March 15
+ thru September 30.  Dates outside a season will not be included.
+$FIELD @Mbgn
+_TYPE CHARACTER
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT JANUARY
+_HELP
+ The beginning month for the monthly low and high flow seasons.  Low
+ and (or) high durations of 30 days or less will be computed for the
+ range of months specified.
+$FIELD @Mend
+_TYPE CHARACTER
+_VALID JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
+   OCTOBER, NOVEMBER, DECEMBER
+_DEFAULT DECEMBER
+_HELP
+ The ending month for the monthly low and high flow seasons.  Low
+ and (or) high durations of 30 days or less will be computed for the
+ range of months specified.
+$HELP
+ Enter the number of days for each duration.  If you want less then
+ 10 low flow durations or less than 10 high flow durations, enter 0
+ for the remaining duration fields.
+#GROUP    6  TYPE TEXT
+$WINDOW Define (SND) Warning
+$TEXT
+There was a problem with one or more of the days entered for
+the season.  These have been defaulted to valid values.
+
+Please verify that the dates for the seasons are correct.
+#GROUP    7  TYPE PRM1
+$WINDOW Period (SNP)
+$SCREEN
+
+           Select time period to be used for analysis:
+
+           Analyze data for:
+
+               @ Full time period
+               @ Common time period   from [@YrB] to [@YrE]
+                                      (use calendar years)
+$FIELD @ Full
+_TYPE OPTION
+_SET 1
+_WIDTH 19
+_ONOFF @ Common
+_OFFON @ Common
+_HIDE ON @YrB 7 38 8 51
+_HIDE ON @YrE 7 52 8 60
+_HELP
+  Full will use the maximum period available for each selected data set.
+$FIELD @ Common
+_TYPE OPTION
+_SET 1
+_WIDTH 19
+_ONOFF @ Full
+_OFFON @ Full
+_HIDE OFF @YrB 7 38 7 51
+_HIDE OFF @YrE 7 52 7 60
+_HELP
+  Common will allow you to specify a common time period to be used
+  for all selected data sets.  By default, this will be the period
+  or record that is common to all of the selected data sets.
+$FIELD @YrB
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE       1800:      2000
+_DEFAULT       1942
+_HELP
+ Enter the calendar years for the analysis.  For example, if you want
+ high flows for Oct 1984 - Sep 1990 (water years 1985-1990), and low
+ flows for Apr 1985 - Mar 1990, you would specify 1984 to 1990.
+$FIELD @YrE
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE       1801:      2001
+_DEFAULT       2000
+_HELP
+ Enter the calendar years for the analysis.  For example, if you want
+ high flows for Oct 1984 - Sep 1990 (water years 1985-1990), and low
+ flows for Apr 1985 - Mar 1990, you would specify 1984 to 1990.
+#GROUP    8  TYPE TEXT
+$WINDOW Period (SNP) Problem
+$TEXT
+ The start year must be before the end year, or
+ the same as the end year.  Reenter the common
+ time period to be used.
+#GROUP    9  TYPE TEXT
+$WINDOW Period (SND)
+$TEXT
+ There is no common time period for the selected data sets.
+ The FULL period of record will be used.
+#GROUP   10  TYPE TEXT
+$WINDOW Analyze (SNA) Problem
+$TEXT
+Unable to perform statistical analysis as there are
+no data sets with which to work.
+
+To select data sets for use, choose the
+Select option from the N-day screen.
+#GROUP   11  TYPE TEXT
+$WINDOW Analyze (SNA) Problem
+$TEXT
+Unable to perform statistical analysis as there
+is no output target specified.
+
+To specify an output target, select the Output
+option from the N-day screen.
+#GROUP   12  TYPE TEXT
+$WINDOW Analyze (SNA)
+$TEXT
+Processing input data-set number &
+#GROUP   13  TYPE TEXT
+$TEXT
+Skipping & in analysis, year contains missing record.
+#GROUP   14  TYPE TEXT
+$TEXT
+Problem retrieving data from WDM file, return code is &.
+The data will be considered to be missing.
+#GROUP   15  TYPE TEXT
+$TEXT
+& years processed.
+#GROUP   16  TYPE TEXT
+$TEXT
+&-day low flow written to data-set &.
+#GROUP   17  TYPE TEXT
+$TEXT
+&-day low flow NOT written to data-set &, return code = &.
+#GROUP   18  TYPE TEXT
+$TEXT
+&-day high flow written to data-set &.
+#GROUP   19  TYPE TEXT
+$TEXT
+&-day high flow NOT written to data-set &, return code = &.
+#GROUP   20  TYPE TEXT
+$TEXT
+Station number
+#GROUP   21  TYPE TEXT
+$TEXT
+mean value and ranking for the following number of consecutive days
+#GROUP   22  TYPE TEXT
+$TEXT
+Discharge, in cubic feet per second
+#GROUP   23  TYPE TEXT
+$TEXT
+for the season
+#GROUP   24  TYPE TEXT
+$TEXT
+to
+#GROUP   30  TYPE TEXT
+$WINDOW Selet (SNS) Problem
+$TEXT
+Data-set number & will not be included in analysis.
+
+     Is the time step daily or shorter?
+     Is there data in the data set?
+#GROUP   35  TYPE TEXT
+$WINDOW Common (SNPC) Problem
+$TEXT
+The starting year must precede the ending year
+for the common period of analysis.
+
+These values must be entered correctly.
+#GROUP   36  TYPE TEXT
+$WINDOW Common (SNPC) Problem
+$TEXT
+Unable to determine a common period for the data sets being analyzed
+      as no common period could be found for them.
+
+Currently, the method for determining the period of analysis has been
+      set to use the Full period for each data set.
+
+If you want to change this method,
+      choose the Period option from the N-day screen and modify the
+      field for determining the period of record,
+ or   choose the Select option to get data sets with a common period.
+#GROUP   37  TYPE TEXT
+$TEXT
+The time units for data-set number &
+are too large for N-day analysis.
+
+The time units for N-day analysis must
+be a daily time step or less.
+#GROUP   38  TYPE PRM1
+$WINDOW Analyze (SNA)
+$SCREEN
+
+  Unable to determine time step and/or
+  time units for data-set number @DSN.
+
+  Enter the time step and time units to be used for this data set.
+
+  Time step   [@TSTEP.]
+  Time units  [@TUNITS]
+$FIELD @DSN
+_TYPE INTEGER
+_PROTECT PROTECTED
+$FIELD @TSTEP
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1 : 1440
+_DEFAULT 1
+$FIELD @TUNITS
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS
+_DEFAULT DAYS
+#GROUP   40  TYPE PRM1
+$WINDOW Analyze (SNA)
+$SCREEN
+
+   The time units are not daily for data-set @dsn.
+
+   What data transformation should be used to aggregate the data?
+
+       [@AvrSum] (Average or Sum)
+$FIELD @AvrSum
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   AVERAGE, SUM
+_DEFAULT AVERAGE
+_HELP
+ The individual readings in a day can be either AVERAGEd or SUMmed
+ over the 24 hour period from midnight to midnight to generate the
+ daily values.
+$FIELD @dsn
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE 1 : 32000
+_HELP
+ Number of the data set with time step shorter than 1 day.
+#GROUP   41  TYPE TEXT
+$WINDOW Analyze (SNA) Problem
+$TEXT
+ Problem retrieving data from data-set &.
+ This data set will not be analyzed.
+
+ Return code = &.
+as there is no data on that data set.
+#GROUP   42  TYPE TEXT
+$WINDOW Analyze (SNA) Problem
+$TEXT
+One or more durations were greater than the defined season and
+were dropped from the list.
+#GROUP   45  TYPE TEXT
+$WINDOW Analyze (SNA) Problem
+$TEXT
+
+
+ Unknown problem creating new data sets, analysis abandoned.
+
+ Check:  Do you have write access to the wdm file?
+         Is there room on the disk?
+ 
+  END DATA
+END CLU

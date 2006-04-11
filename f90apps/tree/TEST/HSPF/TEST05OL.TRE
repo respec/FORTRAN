@@ -1,0 +1,642 @@
+==================== HSPF TREE OPT:           1           2
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM PERLND   1 EXTNL  PREC  
+  PERLND   1 EXTNL  PREC  
+    WDM     39        PREC  
+***** TREE U FROM PERLND   2 EXTNL  PREC  
+  PERLND   2 EXTNL  PREC  
+    WDM     39        PREC  
+***** TREE U FROM PERLND   3 EXTNL  PREC  
+  PERLND   3 EXTNL  PREC  
+    WDM    131        PREC  
+***** TREE U FROM PERLND   1 ATEMP  AIRTMP
+  PERLND   1 ATEMP  AIRTMP
+    WDM    123        ATMP  
+***** TREE U FROM PERLND   2 ATEMP  AIRTMP
+  PERLND   2 ATEMP  AIRTMP
+    WDM    123        ATMP  
+***** TREE U FROM PERLND   3 ATEMP  AIRTMP
+  PERLND   3 ATEMP  AIRTMP
+    WDM    122        ATMP  
+***** TREE U FROM PERLND   1 EXTNL  PETINP
+  PERLND   1 EXTNL  PETINP
+    WDM     41        EVAP  
+***** TREE U FROM PERLND   2 EXTNL  PETINP
+  PERLND   2 EXTNL  PETINP
+    WDM     41        EVAP  
+***** TREE U FROM PERLND   3 EXTNL  PETINP
+  PERLND   3 EXTNL  PETINP
+    WDM     41        EVAP  
+***** TREE U FROM PERLND   1 EXTNL  WINMOV
+  PERLND   1 EXTNL  WINMOV
+    WDM     42        WIND  
+***** TREE U FROM PERLND   2 EXTNL  WINMOV
+  PERLND   2 EXTNL  WINMOV
+    WDM     42        WIND  
+***** TREE U FROM PERLND   3 EXTNL  WINMOV
+  PERLND   3 EXTNL  WINMOV
+    WDM     42        WIND  
+***** TREE U FROM PERLND   1 EXTNL  SOLRAD
+  PERLND   1 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM PERLND   2 EXTNL  SOLRAD
+  PERLND   2 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM PERLND   3 EXTNL  SOLRAD
+  PERLND   3 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM PERLND   1 EXTNL  DTMPG 
+  PERLND   1 EXTNL  DTMPG 
+    WDM    126        DEWP  
+***** TREE U FROM PERLND   2 EXTNL  DTMPG 
+  PERLND   2 EXTNL  DTMPG 
+    WDM    126        DEWP  
+***** TREE U FROM PERLND   3 EXTNL  DTMPG 
+  PERLND   3 EXTNL  DTMPG 
+    WDM    125        DEWP  
+***** TREE U FROM PLTGEN   1 INPUT  MEAN  
+  PLTGEN   1 INPUT  MEAN  
+    WDM    136        FLOW  
+    COPY     1 OUTPUT MEAN  
+    COPY     2 OUTPUT MEAN  
+    COPY     3 OUTPUT MEAN  
+***** TREE U FROM COPY     1 INPUT  MEAN  
+  COPY     1 INPUT  MEAN  
+    PERLND   1 PWATER AGWO  
+    PERLND   2 PWATER AGWO  
+    PERLND   3 PWATER AGWO  
+***** TREE U FROM COPY     2 INPUT  MEAN  
+  COPY     2 INPUT  MEAN  
+    PERLND   1 PWATER IFWO  
+    PERLND   2 PWATER IFWO  
+    PERLND   3 PWATER IFWO  
+    COPY     1 OUTPUT MEAN  
+***** TREE U FROM COPY     3 INPUT  MEAN  
+  COPY     3 INPUT  MEAN  
+    PERLND   1 PWATER PERO  
+    PERLND   2 PWATER PERO  
+    PERLND   3 PWATER PERO  
+***** TREE U FROM DISPLY   1 INPUT  TIMSER
+  DISPLY   1 INPUT  TIMSER
+    COPY     3 OUTPUT MEAN  
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM WDM     39        PREC  
+  WDM     39        PREC  
+    PERLND   1 EXTNL  PREC  
+    PERLND   2 EXTNL  PREC  
+***** TREE D FROM WDM    131        PREC  
+  WDM    131        PREC  
+    PERLND   3 EXTNL  PREC  
+***** TREE D FROM WDM    123        ATMP  
+  WDM    123        ATMP  
+    PERLND   1 ATEMP  AIRTMP
+    PERLND   2 ATEMP  AIRTMP
+***** TREE D FROM WDM    122        ATMP  
+  WDM    122        ATMP  
+    PERLND   3 ATEMP  AIRTMP
+***** TREE D FROM WDM     41        EVAP  
+  WDM     41        EVAP  
+    PERLND   1 EXTNL  PETINP
+    PERLND   2 EXTNL  PETINP
+    PERLND   3 EXTNL  PETINP
+***** TREE D FROM WDM     42        WIND  
+  WDM     42        WIND  
+    PERLND   1 EXTNL  WINMOV
+    PERLND   2 EXTNL  WINMOV
+    PERLND   3 EXTNL  WINMOV
+***** TREE D FROM WDM     46        SOLR  
+  WDM     46        SOLR  
+    PERLND   1 EXTNL  SOLRAD
+    PERLND   2 EXTNL  SOLRAD
+    PERLND   3 EXTNL  SOLRAD
+***** TREE D FROM WDM    126        DEWP  
+  WDM    126        DEWP  
+    PERLND   1 EXTNL  DTMPG 
+    PERLND   2 EXTNL  DTMPG 
+***** TREE D FROM WDM    125        DEWP  
+  WDM    125        DEWP  
+    PERLND   3 EXTNL  DTMPG 
+***** TREE D FROM WDM    136        FLOW  
+  WDM    136        FLOW  
+    PLTGEN   1 INPUT  MEAN  
+***** TREE D FROM PERLND   1 PWATER AGWO  
+  PERLND   1 PWATER AGWO  
+    COPY     1 INPUT  MEAN  
+***** TREE D FROM PERLND   2 PWATER AGWO  
+  PERLND   2 PWATER AGWO  
+    COPY     1 INPUT  MEAN  
+***** TREE D FROM PERLND   3 PWATER AGWO  
+  PERLND   3 PWATER AGWO  
+    COPY     1 INPUT  MEAN  
+***** TREE D FROM PERLND   1 PWATER IFWO  
+  PERLND   1 PWATER IFWO  
+    COPY     2 INPUT  MEAN  
+***** TREE D FROM PERLND   2 PWATER IFWO  
+  PERLND   2 PWATER IFWO  
+    COPY     2 INPUT  MEAN  
+***** TREE D FROM PERLND   3 PWATER IFWO  
+  PERLND   3 PWATER IFWO  
+    COPY     2 INPUT  MEAN  
+***** TREE D FROM COPY     1 OUTPUT MEAN  
+  COPY     1 OUTPUT MEAN  
+    COPY     2 INPUT  MEAN  
+    PLTGEN   1 INPUT  MEAN  
+***** TREE D FROM PERLND   1 PWATER PERO  
+  PERLND   1 PWATER PERO  
+    COPY     3 INPUT  MEAN  
+***** TREE D FROM PERLND   2 PWATER PERO  
+  PERLND   2 PWATER PERO  
+    COPY     3 INPUT  MEAN  
+***** TREE D FROM PERLND   3 PWATER PERO  
+  PERLND   3 PWATER PERO  
+    COPY     3 INPUT  MEAN  
+***** TREE D FROM COPY     3 OUTPUT MEAN  
+  COPY     3 OUTPUT MEAN  
+    DISPLY   1 INPUT  TIMSER
+    PLTGEN   1 INPUT  MEAN  
+***** TREE D FROM COPY     2 OUTPUT MEAN  
+  COPY     2 OUTPUT MEAN  
+    PLTGEN   1 INPUT  MEAN  
+==================== HSPF TREE OPT:           2          33
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM PLTGEN   1              
+  PLTGEN   1              
+    WDM    136 FLOW         
+    COPY     1              
+      PERLND   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   2              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   3              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+    COPY     2              
+      PERLND   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   2              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   3              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+      COPY     1              
+        PERLND   1              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+        PERLND   2              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+        PERLND   3              
+          WDM    131 PREC         
+          WDM    122 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    125 DEWP         
+    COPY     3              
+      PERLND   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   2              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   3              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+***** TREE U FROM DISPLY   1              
+  DISPLY   1              
+    COPY     3              
+      PERLND   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   2              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+      PERLND   3              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM WDM     39 PREC         
+  WDM     39 PREC         
+    PERLND   1              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   2              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM    131 PREC         
+  WDM    131 PREC         
+    PERLND   3              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM    123 ATMP         
+  WDM    123 ATMP         
+    PERLND   1              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   2              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM    122 ATMP         
+  WDM    122 ATMP         
+    PERLND   3              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM     41 EVAP         
+  WDM     41 EVAP         
+    PERLND   1              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   2              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   3              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM     42 WIND         
+  WDM     42 WIND         
+    PERLND   1              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   2              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   3              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM     46 SOLR         
+  WDM     46 SOLR         
+    PERLND   1              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   2              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   3              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM    126 DEWP         
+  WDM    126 DEWP         
+    PERLND   1              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+    PERLND   2              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM    125 DEWP         
+  WDM    125 DEWP         
+    PERLND   3              
+      COPY     1              
+        COPY     2              
+          PLTGEN   1              
+        PLTGEN   1              
+      COPY     2              
+        PLTGEN   1              
+      COPY     3              
+        DISPLY   1              
+        PLTGEN   1              
+***** TREE D FROM WDM    136 FLOW         
+  WDM    136 FLOW         
+    PLTGEN   1              
+==================== HSPF TREE OPT:           3          33
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM DISPLY   1              
+  DISPLY   1              
+    COPY     3              
+      PERLND   1              
+      PERLND   2              
+      PERLND   3              
+***** TREE U FROM PLTGEN   1              
+  PLTGEN   1              
+    COPY     1              
+      PERLND   1              
+      PERLND   2              
+      PERLND   3              
+    COPY     2              
+      PERLND   1              
+      PERLND   2              
+      PERLND   3              
+      COPY     1              
+        PERLND   1              
+        PERLND   2              
+        PERLND   3              
+    COPY     3              
+      PERLND   1              
+      PERLND   2              
+      PERLND   3              
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM PERLND   1              
+  PERLND   1              
+    COPY     1              
+      COPY     2              
+        PLTGEN   1              
+      PLTGEN   1              
+    COPY     2              
+      PLTGEN   1              
+    COPY     3              
+      DISPLY   1              
+      PLTGEN   1              
+***** TREE D FROM PERLND   2              
+  PERLND   2              
+    COPY     1              
+      COPY     2              
+        PLTGEN   1              
+      PLTGEN   1              
+    COPY     2              
+      PLTGEN   1              
+    COPY     3              
+      DISPLY   1              
+      PLTGEN   1              
+***** TREE D FROM PERLND   3              
+  PERLND   3              
+    COPY     1              
+      COPY     2              
+        PLTGEN   1              
+      PLTGEN   1              
+    COPY     2              
+      PLTGEN   1              
+    COPY     3              
+      DISPLY   1              
+      PLTGEN   1              
+==================== HSPF TREE OPT:           4          33
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM COPY     2              
+  COPY     2              
+    PERLND   1              
+    PERLND   2              
+    PERLND   3              
+    COPY     1              
+      PERLND   1              
+      PERLND   2              
+      PERLND   3              
+***** TREE U FROM COPY     3              
+  COPY     3              
+    PERLND   1              
+    PERLND   2              
+    PERLND   3              
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM PERLND   1              
+  PERLND   1              
+    COPY     1              
+      COPY     2              
+    COPY     2              
+    COPY     3              
+***** TREE D FROM PERLND   2              
+  PERLND   2              
+    COPY     1              
+      COPY     2              
+    COPY     2              
+    COPY     3              
+***** TREE D FROM PERLND   3              
+  PERLND   3              
+    COPY     1              
+      COPY     2              
+    COPY     2              
+    COPY     3              
+==================== HSPF TREE OPT:           5          33
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM PERLND EXTNL  PREC      
+  PERLND EXTNL  PREC      
+    WDM    PREC             
+***** TREE U FROM PERLND ATEMP  AIRTMP    
+  PERLND ATEMP  AIRTMP    
+    WDM    ATMP             
+***** TREE U FROM PERLND EXTNL  PETINP    
+  PERLND EXTNL  PETINP    
+    WDM    EVAP             
+***** TREE U FROM PERLND EXTNL  WINMOV    
+  PERLND EXTNL  WINMOV    
+    WDM    WIND             
+***** TREE U FROM PERLND EXTNL  SOLRAD    
+  PERLND EXTNL  SOLRAD    
+    WDM    SOLR             
+***** TREE U FROM PERLND EXTNL  DTMPG     
+  PERLND EXTNL  DTMPG     
+    WDM    DEWP             
+***** TREE U FROM PLTGEN INPUT  MEAN      
+  PLTGEN INPUT  MEAN      
+    WDM    FLOW             
+    COPY   OUTPUT MEAN      
+***** TREE U FROM COPY   INPUT  MEAN      
+  COPY   INPUT  MEAN      
+    PERLND PWATER AGWO      
+    PERLND PWATER IFWO      
+    COPY   OUTPUT MEAN      
+    PERLND PWATER PERO      
+***** TREE U FROM DISPLY INPUT  TIMSER    
+  DISPLY INPUT  TIMSER    
+    COPY   OUTPUT MEAN      
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM WDM    PREC             
+  WDM    PREC             
+    PERLND EXTNL  PREC      
+***** TREE D FROM WDM    ATMP             
+  WDM    ATMP             
+    PERLND ATEMP  AIRTMP    
+***** TREE D FROM WDM    EVAP             
+  WDM    EVAP             
+    PERLND EXTNL  PETINP    
+***** TREE D FROM WDM    WIND             
+  WDM    WIND             
+    PERLND EXTNL  WINMOV    
+***** TREE D FROM WDM    SOLR             
+  WDM    SOLR             
+    PERLND EXTNL  SOLRAD    
+***** TREE D FROM WDM    DEWP             
+  WDM    DEWP             
+    PERLND EXTNL  DTMPG     
+***** TREE D FROM WDM    FLOW             
+  WDM    FLOW             
+    PLTGEN INPUT  MEAN      
+***** TREE D FROM PERLND PWATER AGWO      
+  PERLND PWATER AGWO      
+    COPY   INPUT  MEAN      
+***** TREE D FROM PERLND PWATER IFWO      
+  PERLND PWATER IFWO      
+    COPY   INPUT  MEAN      
+***** TREE D FROM COPY   OUTPUT MEAN      
+  COPY   OUTPUT MEAN      
+    COPY   INPUT  MEAN      
+    DISPLY INPUT  TIMSER    
+    PLTGEN INPUT  MEAN      
+***** TREE D FROM PERLND PWATER PERO      
+  PERLND PWATER PERO      
+    COPY   INPUT  MEAN      

@@ -1,0 +1,46 @@
+
+Copyright, GLIGKS:
+
+ * Copyright @ 1984 - 1994   Josef Heinen
+ *
+ * Permission to use, copy, and distribute this software and its
+ * documentation for any purpose with or without fee is hereby granted,
+ * provided that the above copyright notice appear in all copies and
+ * that both that copyright notice and this permission notice appear
+ * in supporting documentation.
+ *
+ * Permission to modify the software is granted, but not the right to
+ * distribute the modified code.  Modifications are to be distributed
+ * as patches to released version.
+ *
+ * This software is provided "as is" without express or implied warranty.
+ *
+ * Send your comments or suggestions to
+ *  J.Heinen@kfa-juelich.de.
+ *
+
+
+This program uses the GLIGKS graphics library, V4.5.24, to generate 
+graphics.  You do not need to install the GLIGKS graphics library on
+your computer to use this pre-compiled distribution.  You do need the
+GLIGKS file gksfont.dat; the bin_data subdirectory of this distribution
+contains a copy of the file.  The program expects to find the file in
+the /usr/local/lib directory, but, you can install it elsewhere.  If
+you do not already have gksfont.dat installed:
+
+  o  For the standard installation, copy the file to /usr/local/lib,
+     from the bin_data directory of this distribtution:
+
+     cp -p gksfont.dat /usr/local/lib
+
+     (note that you may need system administrator rights)
+
+
+  o  If you install the file elsewhere, you will need to tell GLIGKS
+     about the new font path:
+
+         setenv GLI_HOME path
+     or  export GLI_HOME=path
+
+     (Note that each user of the software will need to set the path
+     for GLI_HOME.)

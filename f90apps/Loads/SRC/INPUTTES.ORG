@@ -1,0 +1,116 @@
+	program testit
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	Author:		Tim Cohn
+c	Date:		June 30, 1994
+c
+c	Program:	testit
+c	Purpose:	tests input files for estimator package
+c
+c	To Compile:  ghf77 input_test.f readd_94.f getdat_e_92.f 
+c						utilities_92.f -limslib
+c
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c		***** DO NOT MODIFY THIS PROGRAM WITHOUT THE AUTHOR'S PERMISSION *****
+c             Tim Cohn, 703/648-5711, tacohn@rvares.er.usgs.gov
+c
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+
+	implicit double precision (a-h,o-z)
+	
+	write(*,1000)
+1000	format(//,' ************',//)
+	write(*,*) ' Step 1:  testing discharge data set '
+	write(*,1000)
+	call testq
+	write(*,1000)
+	write(*,*) ' Step 2:  testing water quality data set '
+	write(*,1000)
+	call testqw
+	write(*,1000)
+	stop
+	end
+c
+	subroutine testq
+	implicit double precision (a-h,o-z)
+	dimension flow(30000),iyear(30000),imonth(30000),iday(30000)
+	
+		nf		=	0
+		nzero	=	0
+
+	call getdat_e(ista,n,iyear,imonth,iday,flow)
+	
+	do 10 i=1,n
+		if(flow(i) .gt. 1.d-12) then
+			if(nf .eq. 0) then
+				nf	=	i
+				nct	=	1
+			else
+				nl	=	i
+				nct	=	nct + 1
+			endif
+		else
+			nzero	=	nzero + 1
+		endif
+10	continue
+
+	write(*,1000)
+1000	format(//,' ************',//)
+	write(*,'('' number of obs.'',t22,i12,/)') n
+	write(*,'('' number of zero obs.'',t22,i12,/)') nzero
+	
+	write(*,'('' first observation'')')
+	write(*,'(3i10,3f36.5)') iyear(1),imonth(1),iday(1),flow(1)
+	write(*,'('' first observation > 0'')')
+	write(*,'(3i10,3f36.5)') iyear(nf),imonth(nf),iday(nf),flow(nf)
+	write(*,'('' last observation > 0'')')
+	write(*,'(3i10,3f36.5)') iyear(nl),imonth(nl),iday(nl),flow(nl)
+	write(*,'('' last observation'')')
+	write(*,'(3i10,3f36.5)') iyear(n),imonth(n),iday(n),flow(n)
+	write(*,1000)
+	
+	return
+	end
+c
+	subroutine testqw
+	implicit double precision (a-h,o-z)
+	parameter (ldi=10000)
+	dimension ihead(ldi,5),xdata(ldi),thresh(ldi),flow(ldi)
+	
+		nf	=	0
+		
+	call readd(ipcode,no,ihead,ldi,xdata,thresh,flow)
+	
+	do 10 i=1,no
+		if(xdata(i) .gt. 0.d0) then
+			if(nf .eq. 0) then
+				nf	=	i
+				nct	=	1
+			else
+				nl	=	i
+				nct	=	nct + 1
+			endif
+		endif
+10	continue
+	
+	write(*,'('' number of obs.'',t22,i12)') no
+	write(*,'('' number of obs. > 0'',t22,i12)') nct
+	write(*,*) ' '
+	
+	write(*,'(t57,''data'',t67,''cens. thresh'',t87,''q'')')
+	write(*,'('' first observation'')')
+	write(*,'(5i10,3f14.5)') (ihead(1,k),k=1,5)
+	1		,xdata(1),thresh(1),flow(1)
+	write(*,'('' first observation > 0'')')
+	write(*,'(5i10,3f14.5)') (ihead(nf,k),k=1,5)
+	1		,xdata(nf),thresh(nf),flow(nf)
+	write(*,'('' last observation'')')
+	write(*,'(5i10,3f14.5)') (ihead(no,k),k=1,5)
+	1		,xdata(no),thresh(no),flow(no)
+	write(*,'('' last observation > 0'')')
+	write(*,'(5i10,3f14.5)') (ihead(nl,k),k=1,5)
+	1		,xdata(nl),thresh(nl),flow(nl)
+	
+	return
+	end

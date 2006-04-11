@@ -1,0 +1,40 @@
+                                                           File:   UPDATE.TXT
+
+
+                   SWMM Model System Release Notes
+
+            Center for Exposure Assessment Modeling (CEAM)
+           U.S. Environmental Protection Agency (U.S. EPA)
+               Office of Research and Development (ORD)
+               Environmental Research Laboratory (ERL)
+                       960 College Station Road
+                      Athens, Georgia 30605-2720
+
+                             706/546-3549
+
+
+
+-----------------------------------------------------------------------------
+
+For explanations and examples of undocumented changes in the SWMM modeling
+system since the publication of the user's manual, refer to the following
+files within the default installation sub-directory (e.g., C:\SWMM):
+
+         COMB.DOC
+        STATS.DOC
+         TEMP.DOC
+        GRAPH.DOC
+         RAIN.DOC
+         STRT.DOC
+       EXTRAN.DOC
+        TRANS.DOC
+       RUNOFF.DOC
+
+-----------------------------------------------------------------------------
+
+Changes
+~~~~~~~
+No further changes as of: Friday, 13 May 1994.  Time: 11:33:53.
+
+-----------------------------------------------------------------------------
+

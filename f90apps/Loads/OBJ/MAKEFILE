@@ -1,0 +1,36 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = LF90
+PROGRAM   = ..\bin\loadsl.exe
+LDMAP     = ..\bin\loadsl.map
+
+LSLOC     = \lib3.0\src
+LSLOCH    = $(LSLOC)\hspf12
+FFLAGS    = -c -i ..\src\;$(LSLOCH)
+LDFLAGS   = -lisk -bind -pack # -bind -win32s
+
+LBLOC     = \lib3.0\lf90libs
+LIBS      = util.lib stats.lib
+#            adwdm.lib \
+#            util.lib  \
+#            hspf12.lib  \
+#            hspnodss.lib
+
+OBJS      = boxpit94.obj estimato.obj \
+            getdate.obj getdatc2.obj graphres.obj  \
+            regress.obj logload.obj readd.obj rsquare.obj \
+            tacit013.obj utility.obj dummy.obj main.obj \
+            NEW3.obj dlngam.obj
+
+VPATH = ..\src
+
+$(PROGRAM):     $(OBJS) $(LIBS)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+          !endif
+          $(LINKER) $(OBJS) -EXE $@ -MAP $(LDMAP) \
+                            -LIB $(LIBS) -LIBP $(LBLOC) $(LDFLAGS)
+          !if -e $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif

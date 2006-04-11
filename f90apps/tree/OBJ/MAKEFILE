@@ -1,0 +1,64 @@
+SRCLOC    = ..\src
+VPATH     = $(SRCLOC)
+BINLOC    = ..\bin
+HSPLOC    = ..\..\hspf11.0
+OLOC      = ..\..\hspfuci
+MLOC      = ..\..\hspfmod
+HLIBLOC   = \lib3.0\src\hspf12
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(HLIBLOC);$(HSPLOC)\src
+
+LDFLAGS   = -lisk -bind -pack # -bind -win32s
+LDMAP     = $(BINLOC)\treedrv.map
+PROGRAM   = $(BINLOC)\treedrv.exe
+LDMAP2    = $(BINLOC)\hsptdrv.map
+PROGRAM2  = $(BINLOC)\hsptdrv.exe
+LBLOC     = \lib3.0\lf90libs;$(MLOC)\obj
+LIBS      = hspf12.lib   \
+            hspnodss.lib \
+            stats.lib    \
+            graph.lib    \
+            uci.lib      \
+            osv.lib      \
+            tsins.lib    \
+            wdm.lib      \
+            adwdm.lib    \
+            util.lib
+
+MODS      = tree.lib bldhspt.lib
+
+OBJS2     = hsptdrv.obj hsptstr.obj $(OBJSH)
+OBJS      = treedrv.obj bldgen.obj bldinp.obj $(OBJSH)
+OBJSH     = hspsta.obj \
+            $(OLOC)\obj\hiouci.obj $(OLOC)\obj\hiotsin.obj \
+            $(OLOC)\obj\hioosv.obj $(OLOC)\obj\hosuper.obj
+
+ALL: $(PROGRAM2) $(PROGRAM)
+
+$(PROGRAM2):  $(MODS)  $(OBJS2)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+          !endif
+          $(LINKER) $(OBJS2) $(MODS) -EXE $@ -MAP $(LDMAP2) $(LDFLAGS) \
+                            -LIB $(LIBS) -LIBP $(LBLOC)
+          !if -e $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif
+
+$(PROGRAM):  $(MODS)  $(OBJS)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+          !endif
+          $(LINKER) $(OBJS) $(MODS) -EXE $@ -MAP $(LDMAP) $(LDFLAGS) \
+                            -LIB $(LIBS) -LIBP $(LBLOC)
+          !if -e $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif
+
+tree.lib: $(@,B).for
+     $(FC) $? $(FFLAGS)
+
+bldhspt.lib: $(@,B).for
+     $(FC) $? $(FFLAGS)
+

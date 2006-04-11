@@ -1,0 +1,20 @@
+SRCLOC    = ..\src
+BINLOC    = ..\bin
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(SRCLOC)
+
+DLL       = $(BINLOC)\debug.dll
+LDMAP     = $(BINLOC)\debug.map
+OBJX      = debug.obj 
+
+$(DLL): $(OBJX) 
+        $(FC) $(OBJX) -MAP $(LDMAP) -OUT $(DLL) \
+               -win -dll -ml msvb -mapn 32 -mapw 132 \
+               -export F90_DEBUG
+
+$(OBJX): $(SRCLOC)\$(*).f90
+     $(FC) $(SRCLOC)\$(*).f90 -nfix $(FFLAGS) -win -dll -ml msvb -mod $(TLOC)\obj
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj
+

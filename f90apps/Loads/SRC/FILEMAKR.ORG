@@ -1,0 +1,69 @@
+	program testit
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	Author:		Tim Cohn
+c	Date:		June 30, 1994
+c
+c	Program:	testit
+c	Purpose:	tests input files for estimator package
+c
+c	To Compile:  f77 file_maker.f readd_94.f getdat_e_92.f utilities_92.f -limslib
+c
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c		***** DO NOT MODIFY THIS PROGRAM WITHOUT THE AUTHOR'S PERMISSION *****
+c             Tim Cohn, 703/648-5711, tacohn@rvares.er.usgs.gov
+c
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+
+	implicit double precision (a-h,o-z)
+
+	parameter (ldi=10000,ldq=30000)
+	dimension 
+	1	flowq(ldq),iyear(ldq),imonth(ldq),iday(ldq),
+	2	ihead(ldi,5),xdata(ldi),thresh(ldi),flowqw(ldi)
+c
+c	1: daily values for discharge
+c
+	call getdat_e(ista,nq,iyear,imonth,iday,flowq)
+		index  =  ndays2(iday(1),imonth(1),iyear(1))-1	
+	write(*,*) ' enter output filename for q'
+	read(*,'(a100)') fname
+	open(unit=12,file=fname,status='new')
+	
+	write(*,*) ' enter first year and month to output (2i)'
+	read(*,*) ibeg_y, ibeg_m
+	
+	write(*,*) ' enter last year and month to output (2i)'
+	read(*,*) iend_y, iend_m
+	
+	do 10 i=1,nq
+		if(iyear(i) .ge. ibeg_y .and. iyear(i) .le. iend_y) then
+			if(imonth(i) .ge. ibeg_m .and. imonth(i) .le. iend_m) then
+				write(12,'(i5,2i3,f12.2)') 
+	1				iyear(i),imonth(i),iday(i),flowq(i)
+			endif
+		endif
+10	continue
+	close(12)
+c
+c	1: water quality data
+c
+	call readd(ipcode,no,ihead,ldi,xdata,thresh,flowqw)
+	write(*,*) ' enter output filename for qw'
+	read(*,'(a100)') fname
+	open(unit=12,file=fname,status='new')
+	
+	do 20 i=1,no
+		if(xdata(i) .gt. 0.d0) then
+			iq	=	ndays2(ihead(i,4),ihead(i,3),ihead(i,2))-index
+				dflow	=	flowq(iq)
+			write(12,'(i5,2i3,4f12.2)') 
+	1			(ihead(i,k),k=2,4),
+	2			dflow,xdata(i),thresh(i),flowqw(i)
+		endif
+20	continue
+	close(12)
+
+	stop
+	end

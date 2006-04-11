@@ -1,0 +1,17 @@
+grep sydatm *.* >  ..\serch.out
+grep date   *.* >> ..\serch.out
+grep time   *.* >> ..\serch.out
+grep secnds *.* >> ..\serch.out
+grep timdat *.* >> ..\serch.out
+grep year   *.* >> ..\serch.out
+grep start  *.* >> ..\serch.out
+grep begin  *.* >> ..\serch.out
+grep strt   *.* >> ..\serch.out
+grep dend   *.* >> ..\serch.out
+grep dbgn   *.* >> ..\serch.out
+grep 1999   *.* >> ..\serch.out
+grep 2000   *.* >> ..\serch.out
+grep 1900   *.* >> ..\serch.out
+grep 2001   *.* >> ..\serch.out
+grep 2010   *.* >> ..\serch.out
+grep 2020   *.* >> ..\serch.out

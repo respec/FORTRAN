@@ -1,0 +1,432 @@
+386|LINK: 8.04-Lahey -- Copyright (C) 1986-97 Phar Lap Software, Inc.
+
+
+Linking for 32-bit protected mode
+
+
+Command line switches:
+
+-LIBPATH C:\LF90\Lib
+@C:\WINNT\TEMP\LFT356.
+"c:\lf90\bin\ptest.obj"
+"vinitl.obj"
+"vheadr.obj"
+"viparms.obj"
+"vmloop.obj"
+"vnblank.obj"
+"vgetpt.obj"
+"vround.obj"
+"vwrtpt.obj"
+"vtype2.obj"
+"vprint2.obj"
+"vprint3.obj"
+"vrcard.obj"
+"vdcard.obj"
+"vtype1.obj"
+"type34.obj"
+"print.obj"
+"print4.obj"
+"angle.obj"
+"vaskpt.obj"
+"interp.obj"
+"vfhelp.obj"
+"vfgrid.obj"
+"vcoeff.obj"
+"vsurf.obj"
+"initl.obj"
+"headr.obj"
+"menu.obj"
+"ngrids.obj"
+"iparms.obj"
+"mloop.obj"
+"endrep.obj"
+"grids.obj"
+"dgrids.obj"
+"sgrids.obj"
+"nblank.obj"
+"fhelp.obj"
+"getpt.obj"
+"transf.obj"
+"openfl.obj"
+"askpt.obj"
+"type1.obj"
+"type2.obj"
+"type3.obj"
+"to83.obj"
+"hms.obj"
+"wrtpt.obj"
+"report.obj"
+"diagrm.obj"
+"ccard.obj"
+"dcard.obj"
+"fgrid.obj"
+"intrp.obj"
+"print1.obj"
+"print2.obj"
+"print3.obj"
+"putarea.obj"
+"coeff.obj"
+"surf.obj"
+"meters.obj"
+"nad_ent.obj"
+-lib import1.lib import2.lib import3.lib
+-lib lf90w.lib
+-lib lf90wiod.lib
+-stack 20000h
+-subsystem windows
+-start _DLLUserEntry
+-exeformat portexe
+-stub lfdummy.exe
+-offset 10000h
+-order class CODE
+-order class DATA
+-order class CONST
+-order class BSS
+-order class STACK
+-order class RSRC
+-empty class BSS
+-dll "..\bin\nadcon.dll"
+-twocase
+-export    F90_NADINIT 
+-export    F90_NADCON 
+-export    F90_HMS 
+-export    F90_VERTINIT 
+-export    F90_VERTCON  
+-map "..\bin\nadcon.map"
+-mapnames 32
+-mapwidth 132
+
+
+Input module(s):
+
+Stub "lfdummy" from file "c:\lf90\bin\lfdummy.exe"  [Sat Mar 21 19:55:36 1998].
+"pentest" from file "c:\lf90\bin\ptest.obj"  [Sat Apr 25 13:18:30 1998].
+"vinitl" from file "vinitl.obj"  [Thu Mar 11 15:42:12 1999].
+"vheadr" from file "vheadr.obj"  [Thu Mar 11 15:44:14 1999].
+"viparms" from file "viparms.obj"  [Fri Jan 28 13:27:40 2000].
+"vmloop" from file "vmloop.obj"  [Thu Mar 11 15:44:20 1999].
+"vnblank" from file "vnblank.obj"  [Thu Mar 11 15:44:24 1999].
+"vgetpt" from file "vgetpt.obj"  [Thu Mar 11 15:44:26 1999].
+"vround" from file "vround.obj"  [Thu Mar 11 15:44:28 1999].
+"vwrtpt" from file "vwrtpt.obj"  [Thu Mar 11 15:44:30 1999].
+"vtype2" from file "vtype2.obj"  [Thu Mar 11 15:44:32 1999].
+"vprint2" from file "vprint2.obj"  [Thu Mar 11 15:44:34 1999].
+"vprint3" from file "vprint3.obj"  [Thu Mar 11 15:44:36 1999].
+"vrcard" from file "vrcard.obj"  [Thu Mar 11 15:44:38 1999].
+"vdcard" from file "vdcard.obj"  [Thu Mar 11 15:44:40 1999].
+"vtype1" from file "vtype1.obj"  [Thu Mar 11 15:44:42 1999].
+"type34" from file "type34.obj"  [Thu Mar 11 15:44:44 1999].
+"print" from file "print.obj"  [Thu Mar 11 15:44:46 1999].
+"print4" from file "print4.obj"  [Thu Mar 11 15:44:48 1999].
+"angle" from file "angle.obj"  [Thu Mar 11 15:44:50 1999].
+"vaskpt" from file "vaskpt.obj"  [Thu Mar 11 15:44:52 1999].
+"interp" from file "interp.obj"  [Fri Jan 28 13:27:42 2000].
+"vfhelp" from file "vfhelp.obj"  [Thu Mar 11 15:44:56 1999].
+"vfgrid" from file "vfgrid.obj"  [Thu Mar 11 15:44:58 1999].
+"vcoeff" from file "vcoeff.obj"  [Thu Mar 11 15:44:58 1999].
+"vsurf" from file "vsurf.obj"  [Thu Mar 11 15:45:00 1999].
+"initl" from file "initl.obj"  [Thu Mar 11 15:45:02 1999].
+"headr" from file "headr.obj"  [Thu Mar 11 15:45:04 1999].
+"menu" from file "menu.obj"  [Thu Mar 11 15:45:06 1999].
+"ngrids" from file "ngrids.obj"  [Thu Mar 11 15:45:08 1999].
+"iparms" from file "iparms.obj"  [Fri Jan 28 13:27:44 2000].
+"mloop" from file "mloop.obj"  [Thu Mar 11 15:45:12 1999].
+"endrep" from file "endrep.obj"  [Thu Mar 11 15:45:14 1999].
+"grids" from file "grids.obj"  [Fri Jan 28 13:27:44 2000].
+"dgrids" from file "dgrids.obj"  [Thu Mar 11 15:45:18 1999].
+"sgrids" from file "sgrids.obj"  [Thu Mar 11 15:45:20 1999].
+"nblank" from file "nblank.obj"  [Thu Mar 11 15:45:22 1999].
+"fhelp" from file "fhelp.obj"  [Thu Mar 11 15:45:24 1999].
+"getpt" from file "getpt.obj"  [Thu Mar 11 15:45:26 1999].
+"transf" from file "transf.obj"  [Thu Mar 11 15:45:28 1999].
+"openfl" from file "openfl.obj"  [Fri Jan 28 13:27:46 2000].
+"askpt" from file "askpt.obj"  [Thu Mar 11 15:45:32 1999].
+"type1" from file "type1.obj"  [Thu Mar 11 15:45:34 1999].
+"type2" from file "type2.obj"  [Thu Mar 11 15:45:36 1999].
+"type3" from file "type3.obj"  [Thu Mar 11 15:45:38 1999].
+"to83" from file "to83.obj"  [Fri Mar 12 13:30:22 1999].
+"hms" from file "hms.obj"  [Thu Mar 11 15:45:42 1999].
+"wrtpt" from file "wrtpt.obj"  [Thu Mar 11 15:45:42 1999].
+"report" from file "report.obj"  [Thu Mar 11 15:45:44 1999].
+"diagrm" from file "diagrm.obj"  [Thu Mar 11 15:45:46 1999].
+"ccard" from file "ccard.obj"  [Thu Mar 11 15:45:48 1999].
+"dcard" from file "dcard.obj"  [Thu Mar 11 15:45:50 1999].
+"fgrid" from file "fgrid.obj"  [Thu Mar 11 15:45:52 1999].
+"intrp" from file "intrp.obj"  [Thu Mar 11 15:45:54 1999].
+"print1" from file "print1.obj"  [Thu Mar 11 15:45:56 1999].
+"print2" from file "print2.obj"  [Thu Mar 11 15:45:58 1999].
+"print3" from file "print3.obj"  [Thu Mar 11 15:46:00 1999].
+"putarea" from file "putarea.obj"  [Fri Mar 12 16:01:22 1999].
+"coeff" from file "coeff.obj"  [Thu Mar 11 15:46:02 1999].
+"surf" from file "surf.obj"  [Thu Mar 11 15:46:04 1999].
+"meters" from file "meters.obj"  [Thu Mar 11 15:46:06 1999].
+"nad_ent" from file "nad_ent.obj"  [Fri Jan 28 13:30:28 2000].
+"fcos" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"fsin" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"fsqrt" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"pow_ii_v" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"INDEX" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"BC_DEFS" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"USERDLL" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"f_cos" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"f_sin" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"nsqrt" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"ERRNO" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"CSTRING" from file "C:\LF90\Lib\lf90w.lib"  [Thu Apr 30 00:01:28 1998].
+"_lf_check_stack" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_close" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_ctype_" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_dcode" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_emit_message_string_c" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_exitdos" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_fchcmp" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_fcheqs" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_finish_message" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_inchr" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_indnf" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_indnu" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_inint4" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_inquire" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_inrel4" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_inrel8" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_intzf" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_intzu" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_ioerr" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_memcmpr" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_nchin" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_newmodule" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_ontzf" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_open" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_otchr" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_otdnf" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_otint4" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_otrel4" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_otrel8" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_refbnda" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_setup_flg2rt" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_stop1" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_strcat" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lf_subbnda" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+"_lfsqrt_error" from file "C:\LF90\Lib\lf90wiod.lib"  [Tue Apr 21 18:22:42 1998].
+
+
+Segment map
+
+     Name                             Group                             Class                         Type   Offset     Size
+------------                      ------------                      ------------                      ----  --------  --------
+REAL STUB                                                                                                   00010000  0000036C
+PE HEADER                                                                                                   0001036C  000000F8
+OBJECT TABLE                                                                                                00010464  000000C8
+_TEXT                             CGROUP                            CODE                              PUB   00011000  00020EFC
+.jdata                                                              CODE                              PUB   00031F00  000000D2
+_DATA                             DGROUP                            DATA                              PUB   00031FD4  0000ACD0
+_lc_GSTUFF                        DGROUP                            DATA                              COM   0003CCB0  00000200
+_lc_VGRIDS                        DGROUP                            DATA                              COM   0003CEB0  00000078
+_lc_VINOUT                        DGROUP                            DATA                              COM   0003CF30  00000020
+_lc_VCURNT                        DGROUP                            DATA                              COM   0003CF50  00000060
+_lc__FLG2RT                       DGROUP                            DATA                              COM   0003CFB0  00000040
+_lc_INOUT                         DGROUP                            DATA                              COM   0003CFF0  00000058
+_lc_CURNT                         DGROUP                            DATA                              COM   0003D050  00000050
+_lc_GDINFO                        DGROUP                            DATA                              COM   0003D0A0  00000200
+_lc_AREAS                         DGROUP                            DATA                              COM   0003D2A0  00000078
+CONST                             DGROUP                            CONST                             PUB   0003D318  0000004E
+_BSS                              DGROUP                            BSS                               PUB   0003E000  00002520
+.idata                                                              IMPORTS                           PUB   00041000  00000350
+.edata                                                              EXPORTS                           PUB   00042000  00000200
+.reloc                                                              RELOCS                            PUB   00043000  00003000
+
+
+Portable .EXE (PE) Sections
+
+  Name    Address     Size    File Off  File Sz    Flags
+--------  --------  --------  --------  --------  --------
+CODE      00011000  0002C366  00000600  0002C400  E0000020  
+.bss      0003E000  0000251E  00000000  00002600  C0000080  
+.idata    00041000  00000350  0002CA00  00000400  C0000040  
+.edata    00042000  00000200  0002CE00  00000200  C0000040  
+.reloc    00043000  00003000  0002D000  00003000  42000040  
+
+
+Public symbols
+
+     Name                           Value      Module                            Segment                          Size
+------------                      --------  ------------                      ------------                      --------
+$$lfdummy                         00000001                                                                      
+ANGLE                             00018210  angle                             _TEXT                             
+ASKPT                             000250C0  askpt                             _TEXT                             
+CCARD                             0002B5D0  ccard                             _TEXT                             
+CLOSEGRD                          0001A293  interp                            _TEXT                             
+COEFF                             00030870  coeff                             _TEXT                             
+DCARD                             0002BAE0  dcard                             _TEXT                             
+DGRIDS                            00020710  dgrids                            _TEXT                             
+DIAGRM                            0002AAC0  diagrm                            _TEXT                             
+ENDREP                            0001F170  endrep                            _TEXT                             
+F90_HMS                           00031740  nad_ent                           _TEXT                             EXPORT
+F90_NADCON                        00031600  nad_ent                           _TEXT                             EXPORT
+F90_NADINIT                       00030BE0  nad_ent                           _TEXT                             EXPORT
+F90_VERTCON                       000318C0  nad_ent                           _TEXT                             EXPORT
+F90_VERTINIT                      000317A0  nad_ent                           _TEXT                             EXPORT
+FGRID                             0002C0F0  fgrid                             _TEXT                             
+FHELP                             00021410  fhelp                             _TEXT                             
+GETPT                             00022130  getpt                             _TEXT                             
+GRIDS                             0001FAE0  grids                             _TEXT                             
+HEADR                             0001C480  headr                             _TEXT                             
+HMS                               00029380  hms                               _TEXT                             
+INITL                             0001C1C0  initl                             _TEXT                             
+INTERP                            00019360  interp                            _TEXT                             
+INTRP                             0002C260  intrp                             _TEXT                             
+IPARMS                            0001CBE0  iparms                            _TEXT                             
+LOADGRD                           00019740  interp                            _TEXT                             
+MENU                              0001C790  menu                              _TEXT                             
+METERS                            00030A20  meters                            _TEXT                             
+MLOOP                             0001E800  mloop                             _TEXT                             
+NBLANK                            000211B0  nblank                            _TEXT                             
+NGRIDS                            0001C9B0  ngrids                            _TEXT                             
+OPENFL                            00022B80  openfl                            _TEXT                             
+PRINT                             000177A0  print                             _TEXT                             
+PRINT1                            0002CBE0  print1                            _TEXT                             
+PRINT2                            0002DCB0  print2                            _TEXT                             
+PRINT3                            0002E750  print3                            _TEXT                             
+PRINT4                            00017D20  print4                            _TEXT                             
+PUTAREA                           000302D0  putarea                           _TEXT                             
+PUTVERT                           000306B0  putarea                           _TEXT                             
+REPORT                            00029A20  report                            _TEXT                             
+SGRIDS                            00020CE0  sgrids                            _TEXT                             
+SURF                              00030930  surf                              _TEXT                             
+TO83                              00028860  to83                              _TEXT                             
+TRANSF                            000225D0  transf                            _TEXT                             
+TYPE1                             00026590  type1                             _TEXT                             
+TYPE2                             00027230  type2                             _TEXT                             
+TYPE3                             00027E90  type3                             _TEXT                             
+TYPE34                            000169C0  type34                            _TEXT                             
+VASKPT                            00018350  vaskpt                            _TEXT                             
+VCOEFF                            0001C010  vcoeff                            _TEXT                             
+VDCARD                            00015710  vdcard                            _TEXT                             
+VFGRID                            0001BA90  vfgrid                            _TEXT                             
+VFHELP                            0001A400  vfhelp                            _TEXT                             
+VGETPT                            000135B0  vgetpt                            _TEXT                             
+VHEADR                            00011280  vheadr                            _TEXT                             
+VINITL                            00011060  vinitl                            _TEXT                             
+VIPARMS                           00011590  viparms                           _TEXT                             
+VMLOOP                            00013090  vmloop                            _TEXT                             
+VNBLANK                           00013350  vnblank                           _TEXT                             
+VPRINT2                           00014B20  vprint2                           _TEXT                             
+VPRINT3                           00014CB0  vprint3                           _TEXT                             
+VRCARD                            00015100  vrcard                            _TEXT                             
+VROUND                            00013AC0  vround                            _TEXT                             
+VSURF                             0001C0D0  vsurf                             _TEXT                             
+VTYPE1                            00015D20  vtype1                            _TEXT                             
+VTYPE2                            00013E90  vtype2                            _TEXT                             
+VWRTPT                            00013B80  vwrtpt                            _TEXT                             
+WRTPT                             000294B0  wrtpt                             _TEXT                             
+_DLLUserEntry                     00031AE8  USERDLL                           _TEXT                             
+_lc_AREAS                         0003D2A0  grids                             _lc_AREAS                         
+_lc_CURNT                         0003D050  initl                             _lc_CURNT                         
+_lc_GDINFO                        0003D0A0  ngrids                            _lc_GDINFO                        
+_lc_GSTUFF                        0003CCB0  vinitl                            _lc_GSTUFF                        
+_lc_INOUT                         0003CFF0  initl                             _lc_INOUT                         
+_lc_VCURNT                        0003CF50  vinitl                            _lc_VCURNT                        
+_lc_VGRIDS                        0003CEB0  vinitl                            _lc_VGRIDS                        
+_lc_VINOUT                        0003CF30  vinitl                            _lc_VINOUT                        
+_lc__FLG2RT                       0003CFB0  vinitl                            _lc__FLG2RT                       
+_lf_bad_pentium_chip_message      0003CB90  USERDLL                           _DATA                             
+_lf_check_stack                   00031F00  _lf_check_stack                   .jdata                            IMPORT
+_lf_close                         00031F06  _lf_close                         .jdata                            IMPORT
+_lf_contact_intel_message         0003CB94  USERDLL                           _DATA                             
+_lf_cos                           00031B60  f_cos                             _TEXT                             
+_lf_ctype_                        00031F0C  _lf_ctype_                        .jdata                            IMPORT
+_lf_dcode                         00031F12  _lf_dcode                         .jdata                            IMPORT
+_lf_emit_message_string_c         00031F18  _lf_emit_message_string_c         .jdata                            IMPORT
+_lf_errno                         0003CC54  ERRNO                             _DATA                             
+_lf_exitdos                       00031F1E  _lf_exitdos                       .jdata                            IMPORT
+_lf_fchcmp                        00031F24  _lf_fchcmp                        .jdata                            IMPORT
+_lf_fcheqs                        00031F2A  _lf_fcheqs                        .jdata                            IMPORT
+_lf_finish_message                00031F30  _lf_finish_message                .jdata                            IMPORT
+_lf_inchr                         00031F36  _lf_inchr                         .jdata                            IMPORT
+_lf_index                         00031A48  INDEX                             _TEXT                             
+_lf_indnf                         00031F3C  _lf_indnf                         .jdata                            IMPORT
+_lf_indnu                         00031F42  _lf_indnu                         .jdata                            IMPORT
+_lf_inint4                        00031F48  _lf_inint4                        .jdata                            IMPORT
+_lf_inquire                       00031F4E  _lf_inquire                       .jdata                            IMPORT
+_lf_inrel4                        00031F54  _lf_inrel4                        .jdata                            IMPORT
+_lf_inrel8                        00031F5A  _lf_inrel8                        .jdata                            IMPORT
+_lf_intel_numbers_message         0003CB98  USERDLL                           _DATA                             
+_lf_intzf                         00031F60  _lf_intzf                         .jdata                            IMPORT
+_lf_intzu                         00031F66  _lf_intzu                         .jdata                            IMPORT
+_lf_ioerr                         00031F6C  _lf_ioerr                         .jdata                            IMPORT
+_lf_memchr                        00031DA0  CSTRING                           _TEXT                             
+_lf_memcmp                        00031CEE  CSTRING                           _TEXT                             
+_lf_memcmpr                       00031F72  _lf_memcmpr                       .jdata                            IMPORT
+_lf_memicmp                       00031D22  CSTRING                           _TEXT                             
+_lf_memmem                        00031DBE  CSTRING                           _TEXT                             
+_lf_nchin                         00031F78  _lf_nchin                         .jdata                            IMPORT
+_lf_newmodule                     00031F7E  _lf_newmodule                     .jdata                            IMPORT
+_lf_ontzf                         00031F84  _lf_ontzf                         .jdata                            IMPORT
+_lf_open                          00031F8A  _lf_open                          .jdata                            IMPORT
+_lf_otchr                         00031F90  _lf_otchr                         .jdata                            IMPORT
+_lf_otdnf                         00031F96  _lf_otdnf                         .jdata                            IMPORT
+_lf_otint4                        00031F9C  _lf_otint4                        .jdata                            IMPORT
+_lf_otrel4                        00031FA2  _lf_otrel4                        .jdata                            IMPORT
+_lf_otrel8                        00031FA8  _lf_otrel8                        .jdata                            IMPORT
+_lf_penttest                      00011000  pentest                           _TEXT                             
+_lf_refbnda                       00031FAE  _lf_refbnda                       .jdata                            IMPORT
+_lf_setup_flg2rt                  00031FB4  _lf_setup_flg2rt                  .jdata                            IMPORT
+_lf_sin                           00031B90  f_sin                             _TEXT                             
+_lf_sqrt                          00031BC0  nsqrt                             _TEXT                             
+_lf_stop1                         00031FBA  _lf_stop1                         .jdata                            IMPORT
+_lf_strcat                        00031FC0  _lf_strcat                        .jdata                            IMPORT
+_lf_strchr                        00031CD3  CSTRING                           _TEXT                             
+_lf_strcpy                        00031C84  CSTRING                           _TEXT                             
+_lf_strncpy                       00031CA0  CSTRING                           _TEXT                             
+_lf_strpbrk                       00031E8F  CSTRING                           _TEXT                             
+_lf_strstr                        00031E4C  CSTRING                           _TEXT                             
+_lf_subbnda                       00031FC6  _lf_subbnda                       .jdata                            IMPORT
+_lfcos                            00031990  fcos                              _TEXT                             
+_lffltused                        0004051D  BC_DEFS                           _BSS                              
+_lfpow_ii_val                     000319E4  pow_ii_v                          _TEXT                             
+_lfsin                            000319A0  fsin                              _TEXT                             
+_lfsqrt                           000319B0  fsqrt                             _TEXT                             
+_lfsqrt_error                     00031FCC  _lfsqrt_error                     .jdata                            IMPORT
+_mwINIT                           0004051C  BC_DEFS                           _BSS                              
+do_test                           00011024  pentest                           _TEXT                             
+memcpy                            00031EBB  CSTRING                           _TEXT                             
+memset                            00031EDE  CSTRING                           _TEXT                             
+
+
+Public symbols imported from DLLs
+
+   _lf_check_stack=lf90wiod.dll._lf_check_stack
+   _lf_close=lf90wiod.dll._lf_close
+   _lf_ctype_=lf90wiod.dll._lf_ctype_
+   _lf_dcode=lf90wiod.dll._lf_dcode
+   _lf_emit_message_string_c=lf90wiod.dll._lf_emit_message_string_c
+   _lf_exitdos=lf90wiod.dll._lf_exitdos
+   _lf_fchcmp=lf90wiod.dll._lf_fchcmp
+   _lf_fcheqs=lf90wiod.dll._lf_fcheqs
+   _lf_finish_message=lf90wiod.dll._lf_finish_message
+   _lf_inchr=lf90wiod.dll._lf_inchr
+   _lf_indnf=lf90wiod.dll._lf_indnf
+   _lf_indnu=lf90wiod.dll._lf_indnu
+   _lf_inint4=lf90wiod.dll._lf_inint4
+   _lf_inquire=lf90wiod.dll._lf_inquire
+   _lf_inrel4=lf90wiod.dll._lf_inrel4
+   _lf_inrel8=lf90wiod.dll._lf_inrel8
+   _lf_intzf=lf90wiod.dll._lf_intzf
+   _lf_intzu=lf90wiod.dll._lf_intzu
+   _lf_ioerr=lf90wiod.dll._lf_ioerr
+   _lf_memcmpr=lf90wiod.dll._lf_memcmpr
+   _lf_nchin=lf90wiod.dll._lf_nchin
+   _lf_newmodule=lf90wiod.dll._lf_newmodule
+   _lf_ontzf=lf90wiod.dll._lf_ontzf
+   _lf_open=lf90wiod.dll._lf_open
+   _lf_otchr=lf90wiod.dll._lf_otchr
+   _lf_otdnf=lf90wiod.dll._lf_otdnf
+   _lf_otint4=lf90wiod.dll._lf_otint4
+   _lf_otrel4=lf90wiod.dll._lf_otrel4
+   _lf_otrel8=lf90wiod.dll._lf_otrel8
+   _lf_refbnda=lf90wiod.dll._lf_refbnda
+   _lf_setup_flg2rt=lf90wiod.dll._lf_setup_flg2rt
+   _lf_stop1=lf90wiod.dll._lf_stop1
+   _lf_strcat=lf90wiod.dll._lf_strcat
+   _lf_subbnda=lf90wiod.dll._lf_subbnda
+   _lfsqrt_error=lf90wiod.dll._lfsqrt_error

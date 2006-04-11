@@ -1,0 +1,93 @@
+
+swstat files that may differ by operating system
+
+________________________________________________________________________________
+
+Table 1.--Files containing variables that may need to be modified and a
+          description of those variables.
+
+________________________________________________________________________________
+
+                           variables may need to be modified, see below
+                           --------------------------------------------
+                            version     compiler
+    file name              variables  flags  name  library     shell
+    ---------------------  ---------  -----------  -------  -----------
+    src/Makefile           WrdA Libr  FFLAGS  FC     LGks   SHELL shCmd
+                                      FFVrsn
+                                      LdA LdB
+                                      LdC
+                                      Strip
+        fstmes.inc         FNAME
+    msg/wdimex.sh          WrdA Libr
+                           Iowd
+    test/test.sh           WrdA Stat
+                           Iowd Anne
+                           Gks
+________________________________________________________________________________
+
+variable   current value         description
+--------   --------------------  -----------------------------------------------
+WrdA       /usr/opt/wrdapp       Path name of directory containing the
+                                 program, related programs, and required
+                                 libraries.  The libanne libraries (version
+                                 4.0, or later) are expected to be in this
+                                 directory.
+Libr       $(WrdA)/libanne4.0    Path name to libanne library, must be version
+                                 4.0, or later.
+FFLAGS     $(OptM) $(FFVrsn)     Fortran compiler flags
+FC         f77                   Fortran compiler name
+FFVrsn     $(FFUnix)             Target operating system.  Specifies any
+                                 platform and (or) compiler specific
+                                 compile options; assumes generic Unix.
+                                 FFAIX provided.  Use FFSun, FFDG, FFDec,
+                                 FFLinux, or FFHP to add specific options.
+LdA        $(LdSunA) --+   +---  Platform specific load options.  Ld___A,
+                       |   |     Ld___B, Ld___C and LGks are combined.  Use
+LdB        $(LdSunB)   +---+     the Unix versions for system defaults.  The
+                       |   |     Sun versions are used to create a static
+LdC        $(LdSunC) --+   |     executable on the Sun so that the user does
+                           |     not need to have Fortran installed on their
+                           |     computer if all they want to do is run the
+                           +---  program.
+LGks       $(GliGks_S)           GKS graphics library, options provided for:
+                                     GLIGKS (Static and Dynamic)
+                                     XGKS (Static and Dynamic)
+                                 Depending on how the graphics library has been
+                                 installed on your system, you may need to
+                                 adjust the load options or define your own.
+Strip      $(Strip_Y)            Option to strip out unneeded symbol table,
+                                 string table, and line number information
+                                 from the executable; options provided for:
+                                   Strip_Y = strip     (yes, strip it out)
+                                   Strip_N = [blank]   (no, keep it in)
+                                 Do not strip if you want debug information.
+SHELL      /bin/sh               The make file contains commands for the
+                                 Bourne shell, sh.  This will override
+                                 implementations of make that use the
+                                 SHELL environment variable.  If this is
+                                 changed, additional changes will probably
+                                 have to be made in the make file.
+shCmd      sh                    The shell command is sh.  If SHELL is
+                                 changed, this may need to be modified.
+
+FNAME      /usr/opt/wrdapp       Full path name of the required message
+               /swstat4.1/...    file.  If you install the program in a
+                                 directory other than /usr/opt/wrdapp,
+                                 you will have to change this.  This is
+                                 usually the last line in the file.
+
+Stat       $WrdA/swstat4.1       Path name to swstat program
+Iowd       $WrdA/iowdm4.1        Path name to iowdm program (must be
+                                 version 4.0 or later)
+Anne       $WrdA/annie4.0        Path name to annie program (must be
+                                 version 4.0 or later)
+Gks        $GliGks               Graphics library being used, options
+                                 provided for:
+                                    GliGks = [blank]  (include ps output)
+                                      Xgks = x        (no ps output)
+                                  PriorGks = [blank]  (include ps output)
+                                 If Gks is defined to 'x', only screen
+                                 graphs will be generated.  If Gks is
+                                 defined to ' ', PostScript and (or) Cgm
+                                 files will also be generated.

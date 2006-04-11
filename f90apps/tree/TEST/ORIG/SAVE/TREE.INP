@@ -1,0 +1,33 @@
+method FldFrqCalc
+output FldPeakVal
+input PtLocn
+input RetPer
+input AnnPks
+
+method RegRegEqn
+output FldPeakVal
+input PtLocn
+input RetPer
+input RegParms
+
+method RegParmGet
+output RegParms
+input RegParmDB
+input PtLocn
+
+method NDHiLow
+output AnnPks
+input DailyVals
+input NDParms
+
+method NwisGet
+output DailyVals
+input NwisDB
+
+method HSPF
+output DailyVals
+input HspfParms
+
+method PRMS
+output DailyVals
+input PrmsParms

@@ -1,0 +1,55 @@
+HLOC      = ..\..\hasslibs
+SRCLOC    = ..\src
+BINLOC    = ..\bin
+HLIBLOC   = \hspfdll\lib3.0\src\hspf
+ALIBLOC   = \hspfdll\lib3.0\src\adwdm
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(SRCLOC)
+
+DLL       = $(BINLOC)\debug.dll
+LDMAP     = $(BINLOC)\debug.map
+LBLOC     = \lib3.0\lf90libs
+LIBS      = hspf121.lib \
+            hspdss.lib \
+            hec.lib \
+            wdm.lib \
+            adwdm.lib \
+            util.lib \
+            newaqt12.lib \
+            ann.lib \
+            iowdm.lib \
+            stats.lib \
+            graph.lib \
+            awstat.lib 
+
+!OBJ       = bldgen.obj bldinp.obj
+OBJX      = debug.obj 
+!himutil.obj
+!OBJ1      = vb_tree.obj hass_dum.obj
+!OBJ2      = scenmod.lib
+!OBJ3      = vb_scen.obj
+!OBJS      = hspsta.obj
+!RES       = ..\res\hass_ent.res
+
+$(DLL): $(OBJ2) $(OBJ3) $(OBJ1) $(OBJX) $(OBJS) $(OBJ) $(RES) #$(LIBS)
+          $(FC) $(OBJX) $(OBJ1) $(OBJ) $(OBJ3) $(OBJSH) $(OBJS) $(RES) -MAP $(LDMAP) -OUT $(DLL) \
+               -LIB $(LIBS) -LIBP $(LBLOC) \
+               -win -dll -ml msvb -mapn 32 -mapw 132 \
+               @..\src\debug.xp$$ 
+          !if -e $(SRCLOC)\*.dll
+            copy $(SRCLOC)\*.dll ..\bin
+            erase $(SRCLOC)\*.dll
+            erase $(SRCLOC)\*.def
+            erase $(SRCLOC)\*.xpo
+            erase $(SRCLOC)\*.obj
+          !endif
+          
+
+
+
+$(OBJX): $(SRCLOC)\$(*).f90
+     $(FC) $(SRCLOC)\$(*).f90 -nfix $(FFLAGS) -win -dll -ml msvb -mod $(TLOC)\obj
+     copy $(SRCLOC)\$(*).obj
+     erase $(SRCLOC)\$(*).obj
+

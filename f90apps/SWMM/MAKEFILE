@@ -1,0 +1,187 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = LF90
+PROGRAM   = swmmlf90.exe
+LDMAP     = swmmlf90.map
+
+LSLOC     = \lib3.0\src
+LSLOCH    = $(LSLOC)\hspf12
+FFLAGS    = -c -i ..\src\;$(LSLOCH)
+LDFLAGS   = -lisk -bind -pack #-bind -win32s
+
+LBLOC     = \lib3.0\lf90libs
+LIBS      = wdm.lib   \
+            adwdm.lib \
+            util.lib  \
+            aide.lib  \
+            hspf12b.lib  \
+            newaqt12.lib  \
+            hspnodss.lib
+
+OBJS      = PPLOT.obj    \
+            CKFILE.obj   \
+            RUNOF.obj    \
+            CLINELH.obj  \
+            EXTBLK.obj   \
+            CLINE.obj    \
+            RAINAVG.obj  \
+            RAINCD.obj   \
+            KDATE.obj    \
+            STIME.obj    \
+            JDATE.obj    \
+            NDATE.obj    \
+            DATED.obj    \
+            CLINEDVS.obj \
+            M2INTER.obj  \
+            SWMMDATE.obj \
+            NTIME.obj    \
+            BLKMN.obj    \
+            RUNOFF.obj   \
+            QINT.obj     \
+            MAIN.obj     \
+            GQUAL.obj    \
+            MKRAIN.obj   \
+            RDIIREAD.obj \
+            FINDSC.obj   \
+            AREAL.obj    \
+            MELT.obj     \
+            SNOW.obj     \
+            HORTON.obj   \
+            OVERLND.obj  \
+            WSHED.obj    \
+            READNEXT.obj \
+            RDIISHED.obj \
+            BUILD.obj    \
+            RHYDRO2.obj  \
+            RSPLIT.obj   \
+            FILTH.obj    \
+            CIRCLE.obj   \
+            NEWTON.obj   \
+            ERROR.obj    \
+            PRPOLL.obj   \
+            SNOWIN.obj   \
+            GROUND.obj   \
+            GAMP.obj     \
+            RHYDRO1.obj  \
+            CATCH.obj    \
+            QHYDRO.obj   \
+            WSTAT.obj    \
+            PRFLOW.obj   \
+            TSTORG.obj   \
+            TSTRDT.obj   \
+            BFFMONTH.obj \
+            COMB1.obj    \
+            COMBIN.obj   \
+            DEPTHX.obj   \
+            G3RAIN.obj   \
+            G9RAIN.obj   \
+            POWER.obj    \
+            GETSUM.obj   \
+            GETDEP.obj   \
+            DEPTH.obj    \
+            DPSI.obj     \
+            FINDA.obj    \
+            SLOP.obj     \
+            INTRAN.obj   \
+            FIRST.obj    \
+            PSI.obj      \
+            INFIL.obj    \
+            ROUTE.obj    \
+            QUAL.obj     \
+            GRAPH.obj    \
+            CURVE.obj    \
+            GTCOLD.obj   \
+            NIN.obj      \
+            HCURVE.obj   \
+            HTIDES.obj   \
+            HYDRAD.obj   \
+            HYSTAT.obj   \
+            IERROR.obj   \
+            INFACE.obj   \
+            INDAT3.obj   \
+            INTCHR.obj   \
+            INTERP.obj   \
+            MOMENT.obj   \
+            OGATES.obj   \
+            NHEAD.obj    \
+            OTRAIN.obj   \
+            PINE.obj     \
+            PCT.obj      \
+            PRINTF.obj   \
+            PRINTQ.obj   \
+            RADH.obj     \
+            SBTABL.obj   \
+            SEDEPTH.obj  \
+            SCALE.obj    \
+            SETIA.obj    \
+            SETZER.obj   \
+            SHELL.obj    \
+            SORT.obj     \
+            VEL.obj      \
+            SHELR.obj    \
+            SSSTATUS.obj \
+            TEMP.obj     \
+            STRDAT.obj   \
+            TIDEFILE.obj \
+            TIDCF.obj    \
+            TRBLK.obj    \
+            TINTRP.obj   \
+            STCOST.obj   \
+            STRT.obj     \
+            EQUATE.obj   \
+            CONTRL.obj   \
+            UNIT.obj     \
+            PLUGS.obj    \
+            STATA.obj    \
+            POINTS.obj   \
+            STATS.obj    \
+            GTRAIN.obj   \
+            RAIN.obj     \
+            DWLOAD.obj   \
+            INITAL.obj   \
+            LINK.obj     \
+            INFLOW.obj   \
+            VOLUME.obj   \
+            INTERCON.obj \
+            ZROUTE.obj   \
+            OUTPUT.obj   \
+            YROUTE.obj   \
+            WASP.obj     \
+            HYDRO.obj    \
+            GUTNR.obj    \
+            QSHED.obj    \
+            WRTFLOW.obj  \
+            GETCUR.obj   \
+            CHECKSTC.obj \
+            GUTTER.obj   \
+            TRANS.obj    \
+            BRIDGES.obj  \
+            SMSTAT.obj   \
+            PRINTP.obj   \
+            COMB2.obj    \
+            FILECK.obj   \
+            EXTRAN.obj   \
+            BOUND.obj    \
+            RDIIRES.obj  \
+            XROUTE.obj   \
+            STRIP.obj    \
+            ASCHEAD.obj  \
+            ASCOUT.obj   \
+            ASCRESA.obj  \
+            TRANSX.obj   \
+            INDAT2.obj   \
+            INDAT1.obj   \
+            VERSION.obj
+
+VPATH = ..\src
+
+$(PROGRAM):     $(OBJS) #$(LIBS)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+          !endif
+          $(LINKER) $(OBJS) -EXE $@ -MAP $(LDMAP) \
+                            -LIB $(LIBS) -LIBP $(LBLOC) $(LDFLAGS)
+          !if -e $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif

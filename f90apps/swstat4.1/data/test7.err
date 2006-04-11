@@ -1,0 +1,473 @@
+ * output log file is open on  31
+ * open input logfile, name length is  40
+   ok open of logfile  1
+   on unit             32
+   other units         5  5  31
+
+
+ wdmchk: checking pointers in wdm file
+
+         wdmsfl =       33
+         ptsnum =       32
+
+               no. dsn
+         type expected   dsn pointers
+         ---- -------- ----- ------------------------------
+            1       76
+                         224 good
+                         223 good
+                         222 good
+                         221 good
+                         220 good
+                         219 good
+                         218 good
+                         217 good
+                         216 good
+                         215 good
+                         214 good
+                         213 good
+                         212 good
+                         211 good
+                         210 good
+                         209 good
+                         208 good
+                         207 good
+                         206 good
+                         205 good
+                         204 good
+                         203 good
+                         202 good
+                         201 good
+                         174 good
+                         173 good
+                         172 good
+                         171 good
+                         170 good
+                         169 good
+                         168 good
+                         167 good
+                         166 good
+                         165 good
+                         164 good
+                         163 good
+                         162 good
+                         161 good
+                         160 good
+                         155 good
+                         154 good
+                         153 good
+                         152 good
+                         151 good
+                         150 good
+                         120 good
+                         119 good
+                         118 good
+                         117 good
+                         116 good
+                         115 good
+                         114 good
+                         113 good
+                         112 good
+                         111 good
+                         110 good
+                         109 good
+                         108 good
+                         107 good
+                         106 good
+                         105 good
+                         104 good
+                         103 good
+                         102 good
+                         101 good
+                          16 good
+                          15 good
+                          14 good
+                          13 good
+                          12 good
+                          11 good
+                          10 good
+                           4 good
+                           3 good
+                           2 good
+                           1 good
+            2        5
+                           9 good
+                           8 good
+                           7 good
+                           6 good
+                           5 good
+            3     none
+            4     none
+            5     none
+            6     none
+            7     none
+            8     none
+            9     none
+
+ wdmchk: finished checking pointers in wdm file, no problems.
+
+
+ wdmchk: checking pointers in wdm file
+
+         wdmsfl =       33
+         ptsnum =       32
+
+               no. dsn
+         type expected   dsn pointers
+         ---- -------- ----- ------------------------------
+            1       76
+                         224 good
+                         223 good
+                         222 good
+                         221 good
+                         220 good
+                         219 good
+                         218 good
+                         217 good
+                         216 good
+                         215 good
+                         214 good
+                         213 good
+                         212 good
+                         211 good
+                         210 good
+                         209 good
+                         208 good
+                         207 good
+                         206 good
+                         205 good
+                         204 good
+                         203 good
+                         202 good
+                         201 good
+                         174 good
+                         173 good
+                         172 good
+                         171 good
+                         170 good
+                         169 good
+                         168 good
+                         167 good
+                         166 good
+                         165 good
+                         164 good
+                         163 good
+                         162 good
+                         161 good
+                         160 good
+                         155 good
+                         154 good
+                         153 good
+                         152 good
+                         151 good
+                         150 good
+                         120 good
+                         119 good
+                         118 good
+                         117 good
+                         116 good
+                         115 good
+                         114 good
+                         113 good
+                         112 good
+                         111 good
+                         110 good
+                         109 good
+                         108 good
+                         107 good
+                         106 good
+                         105 good
+                         104 good
+                         103 good
+                         102 good
+                         101 good
+                          16 good
+                          15 good
+                          14 good
+                          13 good
+                          12 good
+                          11 good
+                          10 good
+                           4 good
+                           3 good
+                           2 good
+                           1 good
+            2        5
+                           9 good
+                           8 good
+                           7 good
+                           6 good
+                           5 good
+            3     none
+            4     none
+            5     none
+            6     none
+            7     none
+            8     none
+            9     none
+
+ wdmchk: finished checking pointers in wdm file, no problems.
+ OPEN GKS
+ 
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ State of system is  1
+ WORKSTATION ID IS   1
+ ABOUT TO OPEN DEVICE  210 WSID=  1
+ ACTIVATE WORKSTATION  1
+ GET WORKSTATION CHARACTERISTICS
+   WORKSTATION STATE & ERROR CODE  1  0
+   JUST INQUIRED ABOUT WORKSTATION, ERROR  0
+        UNITS,SIZES ARE  0   0.320000   0.240000  1280  1024
+   NORMALIZED DEVICE COORDINATES:    1.00000   0.750000
+   JUST INQUIRED COLOR  0  980  1  8
+  X:    1.50000   10.00000    1.00000   0.320000   0.320000    3.20000E-02
+  Y:    1.50000    8.00000   0.750000   0.240000   0.240000    3.00000E-02
+  HIGHER:    10.6667    8.00000    1.33333
+   JUST SET GLOBAL WINDOW (WC)   -1.50000    9.16667   -1.50000    6.50000
+   JUST SET GLOBAL VIEWPORT, (NDC)    1.00000   0.750000
+   JUST SELECTED NORMALIZATION TRANSFORMATION  1
+   JUST SET WORKSTATION WINDOW (NDC)   0.937500   0.750000
+   JUST SET WORKSTATION VIEWPORT (DC)   0.300000   0.240000
+   FONT, PRECISION, ERROR CODE ARE   1  1  0
+   EXPANSION FACTOR AND ERROR CODE    1.00000  0
+   CHARACTER SPACING AND ERROR CODE  0.  0
+   TEXT ALIGNMENT   0  0
+   CHARACTER HEIGHT (WC) AND ERROR CODE    1.00000E-02  0
+ DEACTIVATE WORKSTATION  1
+ CLOSE WORKSTATION  1
+ 
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ State of system is  1
+ WORKSTATION ID IS   1
+ ABOUT TO OPEN DEVICE  8 WSID=  1
+ ACTIVATE WORKSTATION  1
+ GET WORKSTATION CHARACTERISTICS
+   WORKSTATION STATE & ERROR CODE  1  0
+   JUST INQUIRED ABOUT WORKSTATION, ERROR  0
+        UNITS,SIZES ARE  0    1.00000    1.00000  65536  65536
+   NORMALIZED DEVICE COORDINATES:    1.00000    1.00000
+   JUST INQUIRED COLOR  0  980  1  8
+  X:    1.50000   10.00000    1.00000    1.00000    1.00000    1.00000E-01
+  Y:    1.50000    8.00000    1.00000    1.00000    1.00000   0.125000
+  WIDER:   10.00000   10.00000    1.00000
+   JUST SET GLOBAL WINDOW (WC)   -1.50000    8.50000   -1.50000    8.50000
+   JUST SET GLOBAL VIEWPORT, (NDC)    1.00000    1.00000
+   JUST SELECTED NORMALIZATION TRANSFORMATION  1
+   JUST SET WORKSTATION WINDOW (NDC)    1.00000    1.00000
+   JUST SET WORKSTATION VIEWPORT (DC)    1.00000    1.00000
+   FONT, PRECISION, ERROR CODE ARE   1  1  0
+   EXPANSION FACTOR AND ERROR CODE    1.00000  0
+   CHARACTER SPACING AND ERROR CODE  0.  0
+   TEXT ALIGNMENT   0  0
+   CHARACTER HEIGHT (WC) AND ERROR CODE   0.110000  0
+ DEACTIVATE WORKSTATION  1
+ CLOSE WORKSTATION  1
+ 
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ State of system is  1
+ WORKSTATION ID IS   1
+ ABOUT TO OPEN DEVICE  210 WSID=  1
+ ACTIVATE WORKSTATION  1
+ GET WORKSTATION CHARACTERISTICS
+   WORKSTATION STATE & ERROR CODE  1  0
+   JUST INQUIRED ABOUT WORKSTATION, ERROR  0
+        UNITS,SIZES ARE  0   0.320000   0.240000  1280  1024
+   NORMALIZED DEVICE COORDINATES:    1.00000   0.750000
+   JUST INQUIRED COLOR  0  980  1  8
+  X:    1.50000   10.00000    1.00000   0.320000   0.320000    3.20000E-02
+  Y:    1.50000    8.00000   0.750000   0.240000   0.240000    3.00000E-02
+  HIGHER:    10.6667    8.00000    1.33333
+   JUST SET GLOBAL WINDOW (WC)   -1.50000    9.16667   -1.50000    6.50000
+   JUST SET GLOBAL VIEWPORT, (NDC)    1.00000   0.750000
+   JUST SELECTED NORMALIZATION TRANSFORMATION  1
+   JUST SET WORKSTATION WINDOW (NDC)   0.937500   0.750000
+   JUST SET WORKSTATION VIEWPORT (DC)   0.300000   0.240000
+   FONT, PRECISION, ERROR CODE ARE   1  1  0
+   EXPANSION FACTOR AND ERROR CODE    1.00000  0
+   CHARACTER SPACING AND ERROR CODE  0.  0
+   TEXT ALIGNMENT   0  0
+   CHARACTER HEIGHT (WC) AND ERROR CODE   0.110000  0
+ DEACTIVATE WORKSTATION  1
+ 
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ State of system is  2
+ WORKSTATION ID IS   1
+ ACTIVATE WORKSTATION  1
+ GET WORKSTATION CHARACTERISTICS
+   WORKSTATION STATE & ERROR CODE  1  0
+   JUST INQUIRED ABOUT WORKSTATION, ERROR  0
+        UNITS,SIZES ARE  0   0.320000   0.240000  1280  1024
+   NORMALIZED DEVICE COORDINATES:    1.00000   0.750000
+   JUST INQUIRED COLOR  0  980  1  8
+  X:    1.50000   10.00000    1.00000   0.320000   0.320000    3.20000E-02
+  Y:    1.50000    8.00000   0.750000   0.240000   0.240000    3.00000E-02
+  HIGHER:    10.6667    8.00000    1.33333
+   JUST SET GLOBAL WINDOW (WC)   -1.50000    9.16667   -1.50000    6.50000
+   JUST SET GLOBAL VIEWPORT, (NDC)    1.00000   0.750000
+   JUST SELECTED NORMALIZATION TRANSFORMATION  1
+   JUST SET WORKSTATION WINDOW (NDC)   0.937500   0.750000
+   JUST SET WORKSTATION VIEWPORT (DC)   0.300000   0.240000
+   FONT, PRECISION, ERROR CODE ARE   1  1  0
+   EXPANSION FACTOR AND ERROR CODE    1.00000  0
+   CHARACTER SPACING AND ERROR CODE  0.  0
+   TEXT ALIGNMENT   0  0
+   CHARACTER HEIGHT (WC) AND ERROR CODE   0.110000  0
+ DEACTIVATE WORKSTATION  1
+ CLOSE WORKSTATION  1
+ DNPLTW: Workstation  1 is not open
+ 
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ State of system is  1
+ WORKSTATION ID IS   1
+ ABOUT TO OPEN DEVICE  62 WSID=  1
+ ACTIVATE WORKSTATION  1
+ GET WORKSTATION CHARACTERISTICS
+   WORKSTATION STATE & ERROR CODE  1  0
+   JUST INQUIRED ABOUT WORKSTATION, ERROR  0
+        UNITS,SIZES ARE  0   0.285750   0.196850  6750  4650
+   NORMALIZED DEVICE COORDINATES:    1.00000   0.688889
+   JUST INQUIRED COLOR  0  980  1  8
+  X:    1.50000   10.00000    1.00000   0.285750   0.285750    2.85750E-02
+  Y:    1.50000    8.00000   0.688889   0.196850   0.196850    2.46063E-02
+  HIGHER:    11.6129    8.00000    1.45161
+   JUST SET GLOBAL WINDOW (WC)   -1.50000   10.11290   -1.50000    6.50000
+   JUST SET GLOBAL VIEWPORT, (NDC)    1.00000   0.688889
+   JUST SELECTED NORMALIZATION TRANSFORMATION  1
+   JUST SET WORKSTATION WINDOW (NDC)   0.861111   0.688889
+   JUST SET WORKSTATION VIEWPORT (DC)   0.246063   0.196850
+   FONT, PRECISION, ERROR CODE ARE   1  1  0
+   EXPANSION FACTOR AND ERROR CODE    1.00000  0
+   CHARACTER SPACING AND ERROR CODE  0.  0
+   TEXT ALIGNMENT   0  0
+   CHARACTER HEIGHT (WC) AND ERROR CODE   0.110000  0
+ DEACTIVATE WORKSTATION  1
+ 
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ State of system is  2
+ WORKSTATION ID IS   1
+ ACTIVATE WORKSTATION  1
+ GET WORKSTATION CHARACTERISTICS
+   WORKSTATION STATE & ERROR CODE  1  0
+   JUST INQUIRED ABOUT WORKSTATION, ERROR  0
+        UNITS,SIZES ARE  0   0.285750   0.196850  6750  4650
+   NORMALIZED DEVICE COORDINATES:    1.00000   0.688889
+   JUST INQUIRED COLOR  0  980  1  8
+  X:    1.50000   10.00000    1.00000   0.285750   0.285750    2.85750E-02
+  Y:    1.50000    8.00000   0.688889   0.196850   0.196850    2.46063E-02
+  HIGHER:    11.6129    8.00000    1.45161
+   JUST SET GLOBAL WINDOW (WC)   -1.50000   10.11290   -1.50000    6.50000
+   JUST SET GLOBAL VIEWPORT, (NDC)    1.00000   0.688889
+   JUST SELECTED NORMALIZATION TRANSFORMATION  1
+   JUST SET WORKSTATION WINDOW (NDC)   0.861111   0.688889
+   JUST SET WORKSTATION VIEWPORT (DC)   0.246063   0.196850
+   FONT, PRECISION, ERROR CODE ARE   1  1  0
+   EXPANSION FACTOR AND ERROR CODE    1.00000  0
+   CHARACTER SPACING AND ERROR CODE  0.  0
+   TEXT ALIGNMENT   0  0
+   CHARACTER HEIGHT (WC) AND ERROR CODE   0.110000  0
+ DEACTIVATE WORKSTATION  1
+ CLOSE WORKSTATION  1
+ DNPLTW: Workstation  1 is not open
+ DNPLTW: Workstation  1 is not open
+
+
+ wdmchk: checking pointers in wdm file
+
+         wdmsfl =       33
+         ptsnum =       32
+
+               no. dsn
+         type expected   dsn pointers
+         ---- -------- ----- ------------------------------
+            1       76
+                         224 good
+                         223 good
+                         222 good
+                         221 good
+                         220 good
+                         219 good
+                         218 good
+                         217 good
+                         216 good
+                         215 good
+                         214 good
+                         213 good
+                         212 good
+                         211 good
+                         210 good
+                         209 good
+                         208 good
+                         207 good
+                         206 good
+                         205 good
+                         204 good
+                         203 good
+                         202 good
+                         201 good
+                         174 good
+                         173 good
+                         172 good
+                         171 good
+                         170 good
+                         169 good
+                         168 good
+                         167 good
+                         166 good
+                         165 good
+                         164 good
+                         163 good
+                         162 good
+                         161 good
+                         160 good
+                         155 good
+                         154 good
+                         153 good
+                         152 good
+                         151 good
+                         150 good
+                         120 good
+                         119 good
+                         118 good
+                         117 good
+                         116 good
+                         115 good
+                         114 good
+                         113 good
+                         112 good
+                         111 good
+                         110 good
+                         109 good
+                         108 good
+                         107 good
+                         106 good
+                         105 good
+                         104 good
+                         103 good
+                         102 good
+                         101 good
+                          16 good
+                          15 good
+                          14 good
+                          13 good
+                          12 good
+                          11 good
+                          10 good
+                           4 good
+                           3 good
+                           2 good
+                           1 good
+            2        5
+                           9 good
+                           8 good
+                           7 good
+                           6 good
+                           5 good
+            3     none
+            4     none
+            5     none
+            6     none
+            7     none
+            8     none
+            9     none
+
+ wdmchk: finished checking pointers in wdm file, no problems.

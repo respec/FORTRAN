@@ -1,0 +1,159 @@
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+	subroutine readd(ipcode,nobs,ihead,ldi,xdata,thresh,flow)
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	Author:		Tim Cohn & Greg Baier
+c	Date:		July 28, 1992
+c	 modified:	May 28, 1992 (tac & wgb) ** errors corrected **
+c	 modified:	Jun 30, 1993 (tac & wgb) ** error corrected **
+c				** (problem when mod(nvars,8)=0) **
+c
+c	Program:	readd
+c	Purpose:	reads the standard PSTAT output files from QWDATA and
+c				interprets it for the estimator92 program.
+c
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c		***** DO NOT MODIFY THIS PROGRAM WITHOUT THE AUTHOR'S PERMISSION *****
+c             Tim Cohn, 703/648-5711, tacohn@rvares.er.usgs.gov
+c
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+
+		implicit double precision (a-h,o-z)
+c
+		dimension ihead(ldi,5),xdata(*),thresh(*),flow(*),
+     1			ipvars(1000)
+c
+		character*10 adata(1000)
+		character*100 fname
+		character*7 qvars(11)
+
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	get the pstat file name, open the corresponding '.cmnd' file
+c		
+		write(*,*) ' ENTER THE PSTAT FILE NAME'
+		read(*,'(a100)') fname
+		open(unit=11,file=fname,status='old')
+		do 10 i=100,1,-1
+			if(fname(i:i) .ne. ' ') then
+				write(fname(i+1:i+6),'(a5)') '.cmnd'
+				open(unit=12,file=fname,status='old')
+				goto 30
+			endif
+10		continue
+30		continue
+
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	read the '.cmnd' file
+c
+			read(12,'(/)',end=99)
+			nvars  =  0
+		do 50 i=1,10
+			read(12,'(11(a7))',end=70) (qvars(k),k=1,11)
+		do 50 k=1,11
+			read(qvars(k),'(2x,i5)') ipvars(nvars+1)
+			if(ipvars(nvars+1) .eq. 0) goto 70
+				nvars	=	nvars + 1
+50		continue
+70		continue
+		close (12)
+c
+            write(*,*)
+			write(*,*) ' PARAMETER CODES CONTAINED IN FILE:'
+            write(*,*)
+			write(*,'(10('' P'',i5.5)/)') (ipvars(k),k=1,nvars)
+            write(*,*)
+			write(*,*) ' ENTER PARAMETER TO USE (I5):'
+			read(*,*) ipcode
+		do 71 k=1,nvars
+			if(ipvars(k) .eq. ipcode) then
+				ichoice	=	k
+				goto 72
+			endif
+71		continue
+			write(*,*) ' VALUE NOT FOUND IN LIST ',ipcode
+			stop
+72		continue
+		do 73 k=1,nvars
+			if(ipvars(k) .eq. 61) then
+				iflow	=	k
+				goto 74
+			endif
+73		continue
+			write(*,*) ' INSTANTANEOUS FLOW NOT AVAILABLE '
+            iflow  =  0
+			flow(1)	=	-99.d0
+74		continue
+
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	begin processing the data in the pstat file
+c		ihead(i,*) contains the st. id, yr, mo, day and hour, respectively
+c
+		do 80 i=1,1000000
+		read(11,1000,end=99) (ihead(i,k),k=1,5)
+1000		format(i8,t18,i4,2i2,t28,i4)
+		do 85 k2=1,nvars,8
+			read(11,'(8a10)') (adata(k),k=k2,min(k2+7,nvars) )
+85		continue
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	check each observation for remark codes (e.g. no-detects) and overflows
+c
+		j=ichoice
+		 do 95 k=1,9
+			 if( adata(j)(k:k) .eq. '<') then
+				 read(adata(j)(k+1:10),'(f10.0)',err=95) thresh(i)
+				 xdata(i)		=	thresh(i)/2.d0
+				 goto 90
+			 else if( adata(j)(k:k) .eq. 'E') then
+				 xdata(i)		=	-99.d0
+				 thresh(i)		=	-99.d0
+				 goto 90
+			 else if( adata(j)(k:k+1) .eq. '- ') then
+				 xdata(i)		=	-99.d0
+				 thresh(i)		=	-99.d0
+				 goto 90
+			 else if( adata(j)(k:k+1) .eq. '**') then
+                             xdata(i)            =      1.d308
+				 thresh(i)		=	-99.d0
+				 goto 90
+			 endif
+95		 continue
+c====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////		
+c
+c	everything OK--read the data
+c
+				if(iflow .ne. 0) then
+					read(adata(iflow),'(f10.0)',err=101) flow(i)
+					goto 102
+101					continue
+					flow(i)	=	0.d0
+				endif
+102					continue
+c
+				read(adata(j),'(f10.0)',err=100) xdata(i)
+				thresh(i)	=	-99.d0
+				 if(xdata(i) .le. 0.d0) then
+ 				   write(*,*) ' zero or negative value found in line',i
+				   write(*,'(i10,i5,2i3,i5,1x,a10)') (ihead(i,k),k=1,5),
+     1												adata(j)
+				 endif
+				goto 90
+100		continue
+				write(*,*) ' unrecognized remark code found in line',i
+				write(*,'(i10,i5,2i3,i5,1x,a10)') (ihead(i,k),k=1,5),
+     1												adata(j)
+				write(*,*) ' recoded as missing value'
+				 xdata(i)		=	-99.d0
+				 thresh(i)		=	-99.d0
+90		continue
+80		continue
+c
+99		continue
+			nobs	=	i-1
+			close(11)
+			return
+		end

@@ -1,0 +1,3010 @@
+386|LINK: 9.1fix1 -- Copyright (C) 1986-98 Phar Lap Software, Inc.
+
+
+Linking for 32-bit protected mode
+
+
+Command line switches:
+
+-LIBPATH C:\LF9045\Lib
+@C:\WINNT\TEMP\LFT487.
+"c:\lf9045\bin\lfinit.obj"
+"c:\lf9045\bin\ptest.obj"
+"..\src\hspfbat.obj"
+"hspsta.obj"
+-lib lf90.lib
+-lib dosx.lib
+-lib lisk.lib
+-lib hspf121.lib hspdss.lib hec.lib wdm.lib  aide.lib adwdm.lib util.lib
+-libpath \lib3.0\lf90libs,".","c:\lf9045\lib"
+-stack 20000h
+-offset 8192
+"c:\lf9045\bin\lfsold.obj"
+-cvsym
+-nocvpack
+-publist byvalue
+-exeformat portexe
+-subsystem dosstyle
+-markphar
+-exe "..\bin\hspfbatl.exe"
+-map "..\bin\hspfbatl.map"
+-maxdata 0
+-minreal 0h
+-maxreal ffffh
+-pack
+
+
+Input module(s):
+
+Stub "GOTNT" from file "C:\LF9045\Lib\dosx.lib"  [Fri Jun 13 14:08:10 1997].
+"lfinit" from file "c:\lf9045\bin\lfinit.obj"  [Wed Apr 08 15:32:14 1998].
+"pentest" from file "c:\lf9045\bin\ptest.obj"  [Sat Apr 25 13:18:30 1998].
+"hspfbat" from file "..\src\hspfbat.obj"  [Wed Aug 04 09:59:18 2004].
+"hspsta" from file "hspsta.obj"  [Wed Aug 04 09:52:14 2004].
+"lfsold" from file "c:\lf9045\bin\lfsold.obj"  [Wed Apr 08 11:35:08 1998].
+"close" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fcheqs" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fmtin" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fmtin2" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fmtot" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fmtot2" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"inquire" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"iomisc" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"minimum" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"open" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"rewind" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"memory" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"flg2rt" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"inter" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"chkstack" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"errpub" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"cifstub" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"extender" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"mw_asm0" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lftimer" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"_lf_invalop" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"_lf_undfl" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"afmtio" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"ereport" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fcb" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fmtio" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"location" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pause" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"dosio" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"errno" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lfctype" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"adirect" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fmtnomod" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lfgetenv" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"cstring" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"hfiles" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hspf" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hioosv" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hiouci" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hspfec" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"himp" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hioosup" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hper" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hprbut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrch" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hringen" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hringeut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hutopinp" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"specact" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hutdura" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hextutil" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hiosta" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hirrig" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hreport" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hbmprac" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpestut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hosuper" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hspfitab" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hdatut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"himpgas" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"himpqua" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"himpsld" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"himpwat" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hiowrk" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hperagut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hperair" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpergas" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpermst" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hperpes" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hperpho" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hperqua" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpersed" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpertmp" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpertra" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hperwat" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpernit" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hpersno" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchaci" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchcon" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchgqu" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchhtr" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchnut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchoxr" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchphc" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchplk" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchrq" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchhyd" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchsed" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrinseq" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrints" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrunut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hruntsgp" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrintss" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrinwdm" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"htsinsi" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"htsinsz" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hutop" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hwdmut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hgenut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hiotsin" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrinoput" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hruntsgq" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hruntsgt" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hruntsgw" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hruntsut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hruntspt" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hruntspw" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"htssut" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrchshd" from file "\lib3.0\lf90libs\hspf121.lib"  [Wed Aug 04 09:59:06 2004].
+"hrindss" from file "\lib3.0\lf90libs\hspdss.lib"  [Mon Nov 03 12:45:08 2003].
+"hdssut" from file "\lib3.0\lf90libs\hspdss.lib"  [Mon Nov 03 12:45:08 2003].
+"hruntsgd" from file "\lib3.0\lf90libs\hspdss.lib"  [Mon Nov 03 12:45:08 2003].
+"hruntspd" from file "\lib3.0\lf90libs\hspdss.lib"  [Mon Nov 03 12:45:08 2003].
+"attachpc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"datjul" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"datymd" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"ihm2m" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"inctim" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"juldat" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"m2ihm" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"ymddat" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zchkpn" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zclose" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zgintl" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zinqir" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zofset" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zopen" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zrrts" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zset" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zsrts" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zupath" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"attcrkpc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"attdcd" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"attmat" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"attopn" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"attsubpc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"chrfil" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"chrflb" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"chrhol" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"chrlnb" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"datcll" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"datime" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"getnam" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"holchr" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"idaywk" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"intgr" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"iscan" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"iymdjl90" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"jliymd" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"nscan" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"remblk" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"upcase" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"when" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zabort" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zbdump" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zfnamepc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zfsize" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zgetad" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zgetrw90" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zgtrec" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zinit" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zlahey" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zmultu" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zptrec" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zrrtsx" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zsrtsx" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"abort" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"bkdatwpc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"cdate" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"ctime" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dcreal" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dureal" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"findlm" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"getholpc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"hol2ch" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"indexr" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"nindx" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"nindxr" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"nopers" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"putholpc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"setdlm" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"wind" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zbegdt" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zcheck" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zerror" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zgetci" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zincbk" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zmovbk" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"znwrit" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zowrit" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zpath" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zrdinf" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zrrec" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zrrtsb" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zufpn" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zuprts" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zwrec" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"ch2hol" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"chdlm" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"chgtyp" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dcdltr" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dcrept" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dcsd3r" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dhinfo" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dhinit" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dudltr" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"durept" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dusd3r" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"leqner" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zdebug" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zgetag" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"zhash" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"znwbin" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"bits" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"dhchek" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"r2sd3" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"sd32r" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"xrealc" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"lbtest" from file "\lib3.0\lf90libs\hec.lib"  [Thu Feb 07 17:11:44 2002].
+"wdbtch" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"wdtble" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"wdtms2" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"wdtms1" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"wdatrb" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"tsbufr" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"wdmid" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"wdatm2" from file "\lib3.0\lf90libs\wdm.lib"  [Tue May 29 14:37:38 2001].
+"usyslf90" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"wdatm1" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"utwdmf" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"prtfil" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"utwdt1" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"wdmess" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"ztwdmf" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"wdoppc90" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"utwdmd" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"adutil" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"ehutlf90" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"wdmchk" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"utnumb" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utsort" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"uscnlf90" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utchar" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"datsys90" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utscxx" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utdate" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utcopy90" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utsclf90" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"facosf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fasinf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fatanf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fcosf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fexp" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fexpf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"flog10" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"flog10f" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"flogf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fsinf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fsqrt" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fsqrtf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"ftanf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_dd_v" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_di_v" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_ii_v" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_rd_v" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_ri_v" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_rr_v" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"backsp" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"endfile" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fchcmp" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fmtck" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"unfio" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"adjustl" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"datetime" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"len_trim" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"trim" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"index" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fheap" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lfsystem" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lfdate" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lfgetcl" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lftime" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"lfflush" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"_lf_pow" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"acosf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"asinf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"atanf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"exp" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"expf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fast_cosf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fast_sinf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"fast_tanf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"log10" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"log10f" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"logf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"sqrt" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"sqrtf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"powf" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"aunfio" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"present" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_tbl1" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"pow_tbl2" from file "C:\LF9045\Lib\lf90.lib"  [Mon Nov 23 14:32:48 1998].
+"z0util" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtfile" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"utuprm" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zutil" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zutilx" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zutily" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zclbak" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zsyslf90" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"aninit" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtchar" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"prtaid" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"utmisc" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"z1util" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch1" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch2" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch3" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch4" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch5" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch6" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch7" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch8" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch9" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl1" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl2" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl3" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl4" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl5" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl6" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl7" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl8" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl9" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex1" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex2" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex3" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex4" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex5" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex6" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex7" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex8" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex9" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtscn1" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"z4util" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"ztscn1" from file "\lib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"msimpt" from file "\lib3.0\lf90libs\adwdm.lib"  [Fri Mar 19 11:21:02 2004].
+"ckfspc" from file "\lib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+
+
+Segment map
+
+     Name         Group         Class     Type   Offset     Size
+------------  ------------  ------------  ----  --------  --------
+REAL STUB                                       00002000  00001950
+PE HEADER                                       00003950  000000F8
+OBJECT TABLE                                    00003A48  000000C8
+??code        CGROUP        CODE          PUB   00004000  00001AE3
+_TEXT         CGROUP        CODE          PUB   00005AE4  0026094C
+??lfusrtrm    CGROUP        CODE          PUB   00266430  00000000
+??lfusrnit    CGROUP        CODE          PUB   00266430  00000000
+??data        DGROUP        DATA          PUB   00267000  000010DF
+_DATA         DGROUP        DATA          PUB   002680E0  000621C8
+_lc__FLG2RT   DGROUP        DATA          COM   002CA2B0  00000040
+_lc__rt_com-  DGROUP        DATA          COM   002CA2F0  00000001
+_lc_ZDSSMZ    DGROUP        DATA          COM   002CA300  0000000C
+_lc_WORDS     DGROUP        DATA          COM   002CA310  00000028
+_lc_ZDSSBZ    DGROUP        DATA          COM   002CA340  00000D00
+_lc_ZDSSKZ    DGROUP        DATA          COM   002CB040  00000200
+_lc_ZDSSCZ    DGROUP        DATA          COM   002CB240  000000B8
+_lc_ZDSSNZ    DGROUP        DATA          COM   002CB300  00000088
+_lc_ZDSSIZ    DGROUP        DATA          COM   002CB390  00000400
+_lc_ZDSSFZ    DGROUP        DATA          COM   002CB790  00000004
+_lc_ZDSSLZ    DGROUP        DATA          COM   002CB7A0  00000050
+_lc_DCDBUG    DGROUP        DATA          COM   002CB7F0  00000008
+_lc_ZDSSCM    DGROUP        DATA          COM   002CB800  00000014
+_lc_ZDSSCP    DGROUP        DATA          COM   002CB820  00000014
+_lc_ZDSSTS    DGROUP        DATA          COM   002CB840  00002800
+_lc_ZDSSDC    DGROUP        DATA          COM   002CE040  00000200
+_lc_CFBUFF    DGROUP        DATA          COM   002CE240  00005100
+_lc_CDRLOC    DGROUP        DATA          COM   002D3340  00000018
+_lc_CWTSDS    DGROUP        DATA          COM   002D3360  00000044
+_lc_CTSBUF    DGROUP        DATA          COM   002D33B0  000E5C00
+_lc_CWDMID    DGROUP        DATA          COM   003B8FB0  0000002C
+_lc_CWDMIC    DGROUP        DATA          COM   003B8FE0  00000014
+_lc_ZCNTL1    DGROUP        DATA          COM   003B9000  00003200
+_lc_ZCNTL2    DGROUP        DATA          COM   003BC200  0003B000
+_lc_ZCNTL3    DGROUP        DATA          COM   003F7200  00000048
+_lc_CZGLVC    DGROUP        DATA          COM   003F7250  00001100
+_lc_CZGLVL    DGROUP        DATA          COM   003F8350  00004F00
+_lc_COLOR     DGROUP        DATA          COM   003FD250  00000040
+_lc_CSCREC    DGROUP        DATA          COM   003FD290  00004000
+_lc_CSCREN    DGROUP        DATA          COM   00401290  00003400
+_lc_CQRSPI    DGROUP        DATA          COM   00404690  00000400
+_lc_CQRSPC    DGROUP        DATA          COM   00404A90  00000400
+_lc_CSCRED    DGROUP        DATA          COM   00404E90  00001100
+_lc_RCONST    DGROUP        DATA          COM   00405F90  00000010
+_lc_DCONST    DGROUP        DATA          COM   00405FA0  00000018
+_lc_ICONST    DGROUP        DATA          COM   00405FC0  00000008
+CONST2        DGROUP        DATA          PUB   00405FC8  00000000
+_lc_CZOPTN    DGROUP        DATA          COM   00405FD0  00002500
+_lc_CZHIDE    DGROUP        DATA          COM   004084D0  00000F00
+_lc_CCLBAK    DGROUP        DATA          COM   004093D0  0000000C
+_lc_CCLBAC    DGROUP        DATA          COM   004093E0  00000050
+_lc_CUSRPM    DGROUP        DATA          COM   00409430  00000200
+_lc_TERI      DGROUP        DATA          COM   00409630  00000010
+CONST         DGROUP        CONST         PUB   00409640  00000AAE
+??bss         DGROUP        BSS           PUB   0040A0F0  00000000
+_BSS          DGROUP        BSS           PUB   0040A0F0  0093B274
+_EBSS_        DGROUP        BSS           PUB   00D45364  00000000
+c_common      DGROUP        BSS           PUB   00D45370  05542A20
+??stack       DGROUP        STACK         STK   06287D90  00004000
+.reloc                      RELOCS        PUB   0628C000  00040200
+
+
+Portable .EXE (PE) Sections
+
+  Name    Address     Size    File Off  File Sz    Flags
+--------  --------  --------  --------  --------  --------
+CODE      00004000  004060EE  00001C00  00406200  E0000020  
+.bss      0040B000  05E80D90  00000000  05E80E00  C0000080  
+.reloc    0628C000  00040200  00407E00  00040200  42000040  
+$$DOSX    062CD000  00000200  00448000  00000200  42000040  
+.debug    062CE000  0000001C  00448200  00000200  40000040  
+
+
+Public symbols
+
+  Value      Name
+--------  ------------
+00000001     $$GOTNT
+
+00004000  Segment ??code of module lfinit.asm (c:\lf9045\bin\lfinit.obj)
+00004000     _lf_initial_registers
+00004020     _lf_init
+000043B4     _lf_exitdos
+00004468     _lf_lsl_ds
+00004470     _lf_resize_ds
+000044EC     _lf_emit_message_string_c
+00004518     _lf_emit_message_string_f
+0000453D     _lf_finish_message
+00004540     _lf_stack_free_inquiry
+00004554     _lf_emergency_exit
+
+00005000  Segment ??code of module inter.asm (C:\LF9045\Lib\lf90.lib)
+00005000     _lf_page_lock
+00005064     _lf_deinstall_fpu
+000050B8     _lf_deinstall_gp
+000050F4     _lf_deinstall_sf
+00005130     _lf_deinstall_zero_divide
+0000516C     _lf_install_fpu
+000051D8     _lf_install_zero_divide
+0000522C     _lf_install_gp
+00005280     _lf_install_sf
+000052D4     _lf_install_control_c
+00005344     _lf_deinstall_control_c
+00005890     _lf_braklog
+000058AC     _lf_nbrak
+000058BC     _lf_brakdfl
+
+00005AE4  Segment _TEXT of module pentest.c (c:\lf9045\bin\ptest.obj)
+00005AE4     _lf_penttest
+00005B08     do_test
+
+00005B40  Segment _TEXT of module ..\src\hspfbat.for (..\src\hspfbat.obj)
+00005B40     _lf_main
+
+000066D0  Segment _TEXT of module ..\src\hspsta.for (hspsta.obj)
+000066D0     HSPSTA
+00006A90     HDMESC
+00006B90     HDMESI
+00006C40     HDMEST
+00006CE0     HDMES2
+00006D50     HDMES3
+00006D90     HDMESN
+00006E60     CKUSER
+00006E80     UPDWIN
+00006EA0     SDELAY
+00006F20     HSPF_INI
+000076E0     EXT_UPDATE
+00008180     QUERY_DRIVER
+
+000081A0  Segment _TEXT of module lfsold.asm (c:\lf9045\bin\lfsold.obj)
+000081A0     _lf_sold_early_exit
+000081AD     _lf_main_error
+000081AE     _lf_sold_NDP_error
+000081AF     _lf_null_proc
+
+000081B0  Segment _TEXT of module close.c (C:\LF9045\Lib\lf90.lib)
+000081B0     _lf_close
+
+000082AC  Segment _TEXT of module fcheqs.c (C:\LF9045\Lib\lf90.lib)
+000082AC     _lf_fcheqs
+
+00008348  Segment _TEXT of module fmtin.c (C:\LF9045\Lib\lf90.lib)
+00008348     _lf_intzf
+000084C8     _lf_intzfa
+0000855C     _lf_indnf
+000085EC     _lf_indnfa
+00008624     _lf_q_fmt_input
+00008728     _lf_recover_error
+000087A0     _lf_init_dec_scan
+000087B4     _lf_scan_digits
+00008890     _lf_skip_spaces
+000088DC     _lf_EOL_FF
+000088FC     _lf_ascii_to_long
+00008948     _lf_dcode
+000089B8     _lf_char_free_fmt_input
+00008B54     _lf_isdigit
+00008B64     _lf_toupper
+
+00008B7C  Segment _TEXT of module fmtin2.c (C:\LF9045\Lib\lf90.lib)
+00008B7C     _lf_incmx8
+00008BA4     _lf_incmx16
+000091BC     _lf_ascii_to_float
+00009CD8     _lf_inrel4
+00009CFC     _lf_inint4
+00009D20     _lf_inint8
+00009D44     _lf_inint1
+00009D68     _lf_inint2
+00009D8C     _lf_inlog4
+00009DB0     _lf_inlog1
+00009E6C     _lf_inchr
+0000A0F0     _lf_delimitr
+0000A150     _lf_inrel8
+
+0000A174  Segment _TEXT of module fmtot.c (C:\LF9045\Lib\lf90.lib)
+0000A174     _lf_ontzf
+0000A32C     _lf_ontzfa
+0000A394     _lf_ncode
+0000A404     _lf_otdnf
+0000A494     _lf_margin_check
+0000A51C     _lf_a_fmt_output
+
+0000A608  Segment _TEXT of module fmtot2.c (C:\LF9045\Lib\lf90.lib)
+0000A638     _lf_otrel4
+0000A694     _lf_otrel8
+0000A6F0     _lf_otint1
+0000A73C     _lf_otint2
+0000A788     _lf_otint4
+0000A7D4     _lf_otint8
+0000A8C0     _lf_otcmx8
+0000A920     _lf_otcmx16
+0000AAA8     _lf_otlog1
+0000AACC     _lf_otlog4
+0000ABA0     _lf_otchr
+0000BD74     _lf_output_fill
+0000C218     _lf_dpowuw
+
+0000C25C  Segment _TEXT of module inquire.c (C:\LF9045\Lib\lf90.lib)
+0000C25C     _lf_inquire
+
+0000CBF0  Segment _TEXT of module iomisc.c (C:\LF9045\Lib\lf90.lib)
+0000CBF0     _lf_set_read_mode
+0000CC44     _lf_set_write_mode
+0000CCDC     _lf_truncate
+0000CD4C     _lf_unit_check
+0000CD78     _lf_cmp_name
+0000CDC4     _lf_strcat
+0000CDFC     _lf_strcmpr
+0000CEA4     _lf_memcmpr
+0000CED0     _lf_strcopy
+0000CF14     _lf_memcopy
+0000CF34     _lf__gpvc
+0000CFD4     _lf__back1_sequential
+0000D070     _lf_set_record
+0000D0CC     _lf__drst
+0000D388     _lf_read_buffer
+0000D4A4     _lf_ensure_tty
+0000D5F0     _lf_flush_unit
+0000D63C     _lf_set_iostat
+0000D660     _lf_set_io_callback
+
+0000D6A8  Segment _TEXT of module minimum.c (C:\LF9045\Lib\lf90.lib)
+0000D6A8     _lf_fndunit
+0000D6F4     _lf_delfcb
+0000D740     _lf_tag_fcb
+0000D760     _lf_conflsh
+0000D7B4     _lf_stop
+0000D7C4     _lf_stop1
+0000D854     _lf_7_close
+0000D948     _lf_write_buffer
+0000DA0C     _lf_alloc_buffer
+0000DA54     _lf_set_name
+0000DB14     _lf_get_byte
+0000DB84     _lf_next_buffer
+0000DBA4     _lf_put_byte
+0000DC44     _lf_next_wr_buffer
+
+0000DC9C  Segment _TEXT of module open.c (C:\LF9045\Lib\lf90.lib)
+0000DC9C     _lf_open
+0000EF90     _lfcheck_device_names
+0000F0E0     _lf_spindrift_open
+0000F204     _lf_spindrift_close
+0000F240     _lf_spindrift_unit
+
+0000F258  Segment _TEXT of module rewind.c (C:\LF9045\Lib\lf90.lib)
+0000F258     _lf_rewind
+
+0000F394  Segment _TEXT of module memory.c (C:\LF9045\Lib\lf90.lib)
+0000F394     _lf_malloc
+0000F3B0     _lf_calloc
+0000F40C     _lf_realloc
+0000F4C8     _lf_free
+0000F928     _lf_initialize_heap_manager
+
+0000F9F0  Segment _TEXT of module flg2rt.asm (C:\LF9045\Lib\lf90.lib)
+0000F9F0     _lf_setup_flg2rt
+
+0000FA90  Segment _TEXT of module chkstack.asm (C:\LF9045\Lib\lf90.lib)
+0000FA90     _lf_check_stack
+
+0000FAC0  Segment _TEXT of module errpub.asm (C:\LF9045\Lib\lf90.lib)
+0000FAC0     _lf_ioerr
+0000FAE3     _lf_intrin_stat
+0000FB0C     _lf_clear_intrin_stat
+0000FB25     _lf_refbnda
+0000FB55     _lf_altreta
+0000FB85     _lf_subbnda
+0000FBB5     _lf_doinc0a
+0000FBE5     _lf_negdima
+0000FC15     _lf_shape_error
+0000FC48     _lf_assign_goto_error
+0000FC7B     _lf_ptr_asgn_len_error
+0000FCAE     _lf_error_intrin
+
+0000FCC8  Segment _TEXT of module cifstub.c (C:\LF9045\Lib\lf90.lib)
+0000FCC8     _lf_c_startup
+0000FCCC     _lf_c_shutdown
+
+0000FCD4  Segment _TEXT of module extender.c (C:\LF9045\Lib\lf90.lib)
+0000FD28     _lf_extender_query_dpmi
+0000FD3C     _lf_extender_query_fpu
+0000FD50     _lf_extender_query_psp
+0000FD68     _lf_extender_query_env
+0000FD80     _lf_extender_query_vmm
+
+0000FDA0  Segment _TEXT of module mw_asm0.asm (C:\LF9045\Lib\lf90.lib)
+0000FDA0     _lftrunc_
+0000FDA0     _lftruncu_
+0000FDD4     _lf_intdos
+
+0000FEF4  Segment _TEXT of module lftimer.c (C:\LF9045\Lib\lf90.lib)
+0000FEF4     _lf_timer
+
+0000FF50  Segment _TEXT of module _lf_invalop (C:\LF9045\Lib\lf90.lib)
+0000FF50     _lf_invalop
+
+0000FFB0  Segment _TEXT of module _lf_undfl (C:\LF9045\Lib\lf90.lib)
+0000FFB0     _lf_undfl
+
+00010004  Segment _TEXT of module afmtio.c (C:\LF9045\Lib\lf90.lib)
+00010004     _lf_get_n_fmt_bytes
+00010180     _lf_put_n_fmt_bytes
+
+0001025C  Segment _TEXT of module ereport.c (C:\LF9045\Lib\lf90.lib)
+000104F0     _lf_emit_error
+00010A64     _lf_iostat_msg_subroutine
+00010B40     _lf_io_emit_err
+00010B74     _lf_absolute_error
+00010B84     _lf_exception
+00010BA4     _lf_rt_io_error
+00010BC4     _lfacos_error
+00010BD0     _lfasin_error
+00010BDC     _lfcosh_error
+00010BE8     _lfexp_error
+00010BF4     _lfno_exp_error
+00010BF8     _lflog10_error
+00010C04     _lflog_error
+00010C10     _lfsinh_error
+00010C1C     _lfsqrt_error
+00010C28     _lfcabs_error
+00010C34     _lfccos_error
+00010C40     _lfcexp_error
+00010C4C     _lfclog_error
+00010C58     _lfcsin_error
+00010C64     _lfcsqrt_error
+00010C70     _lfpower_error
+00010C7C     _lfc_div_c_error
+00010C88     _lfz_div_z_error
+00010C94     _lfrc_div_error
+00010CA0     _lfdz_div_error
+00010CAC     _lf_fmalloc_error
+00010CB8     _lf_stack_error
+00010CD8     _lf_vect_len_error
+00010D08     _lf_intrin_error
+0001105C     _lf_trace_back
+
+00011468  Segment _TEXT of module fcb.c (C:\LF9045\Lib\lf90.lib)
+00011468     _lf_fndname
+000114BC     _lf_alocfcb
+0001153C     _lf_get_current_fcb
+00011544     _lf_init_fcb
+00011568     _lf_release_fcb
+000115B0     _lf_check_for_io
+
+000115CC  Segment _TEXT of module fmtio.c (C:\LF9045\Lib\lf90.lib)
+000115CC     _lf_init_internal
+000116A8     _lf_determine_advance_type
+00011704     _lf_fmt_initialize
+0001176C     _lf_fmt_list_process
+00012084     _lf_check_position
+000120C4     _lf_end_input_record
+00012240     _lf_end_output_record
+000123F4     _lf_put_fmt_byte
+00012778     _lf_get_fmt_byte
+00012878     _lf_clenflag
+000128C0     _lf_ntznumf
+000128CC     _lf_itemsize
+
+00012950  Segment _TEXT of module location.asm (C:\LF9045\Lib\lf90.lib)
+00012950     _lf_set_location
+
+00012960  Segment _TEXT of module pause.c (C:\LF9045\Lib\lf90.lib)
+00012960     _lf_pause
+00012970     _lf_pause1
+000129F8     _lf_display
+00012A30     _lf_show_prompt
+
+00012A60  Segment _TEXT of module dosio.asm (C:\LF9045\Lib\lf90.lib)
+00012A60     _lf_create_scratch_file
+00012AE8     _lf_7_open
+00012B28     _lf_check_device
+00012B9C     _lf__create
+00012BDC     _lf___close
+00012C00     _lf__lseek
+00012C44     _lf__lsize
+00012C8C     _lf_7_read
+00012D10     _lf_7_write
+00012D58     _lf__unlink
+00012D74     _lf_chopfil
+
+00012DB0  Segment _TEXT of module adirect.c (C:\LF9045\Lib\lf90.lib)
+00012DB0     _lf_get_n_d
+00012EB4     _lf_put_n_d
+
+00012FC4  Segment _TEXT of module fmtnomod.c (C:\LF9045\Lib\lf90.lib)
+00012FC4     _lf_fmtmod
+
+00012FC8  Segment _TEXT of module lfgetenv.c (C:\LF9045\Lib\lf90.lib)
+00012FC8     _lf_getenv
+00013068     _lf_get_env
+000130B0     _lf_get_env_size
+
+000131B4  Segment _TEXT of module cstring.c (C:\LF9045\Lib\lf90.lib)
+000131B4     _lf_strcpy
+000131CC     _lf_strncpy
+000131F8     _lf_strchr
+00013218     _lf_memcmp
+00013254     _lf_memicmp
+000132AC     _lf_memchr
+000132CC     _lf_memmem
+0001335C     _lf_strstr
+000133A4     _lf_strpbrk
+
+000133D0  Segment _TEXT of module hspf121\hfiles.for (\lib3.0\lf90libs\hspf121.lib)
+000133D0     FILBLK
+000158D0     FILOPN
+00015D30     HSCKFL
+00015D70     HSCKFLX
+00016230     RDFLBK
+00016900     FILCLO
+00016B70     FILTSF
+00016DF0     REPFIL
+00016F20     HSVRSN
+
+00016F60  Segment _TEXT of module hspf121\hspf.for (\lib3.0\lf90libs\hspf121.lib)
+00016F60     HSPF
+000173B0     INTERP
+00017BA0     OPNBLK
+
+00018B10  Segment _TEXT of module hspf121\hioosv.for (\lib3.0\lf90libs\hspf121.lib)
+00018B10     GETOSV
+00018C10     PUTOSV
+00018D10     GTOSVI
+00018D80     PTOSVI
+00018DF0     GTOSVR
+00018E70     PTOSVR
+
+00018EF0  Segment _TEXT of module hspf121\hiouci.for (\lib3.0\lf90libs\hspf121.lib)
+00018EF0     DELUCI
+00019180     DMPKEY
+00019310     DUMPER
+00019610     GETEND
+00019650     GETKNM
+000197D0     GETSE
+00019B10     GETUCI
+00019B50     GETUCIEX
+00019D70     GETIND
+00019DD0     INIUCI
+0001A0B0     INIKEY
+0001A0D0     KEYUCI
+0001AD60     PUTKWD
+0001B3E0     DELKWD
+0001B5D0     PUTOLV
+0001B5F0     PUTUCI
+0001B640     PUTUCX
+0001B910     PREUCI
+0001B960     REPUCI
+0001B9D0     REPUCX
+0001BA90     COMKEY
+0001BAE0     UCIINP
+0001C080     DELKWO
+0001C1C0     CLOUCI
+
+0001C1E0  Segment _TEXT of module hspf121\hspfec.for (\lib3.0\lf90libs\hspf121.lib)
+0001C1E0     TIMSER
+0001D950     GTTMRC
+0001EB80     PSCHEM
+0001F720     EXTTS
+0001FEA0     RDMFAC
+
+000200D0  Segment _TEXT of module hspf121\himp.for (\lib3.0\lf90libs\hspf121.lib)
+000200D0     PIMPLN
+00020880     PIGEN
+000213C0     IMPLND
+00021670     IBAROT
+000216D0     IMPACC
+000217C0     IMPPRT
+00021C90     IMPRST
+00021D60     IPRINT
+00022630     IPTOT
+
+000226A0  Segment _TEXT of module hspf121\hioosup.for (\lib3.0\lf90libs\hspf121.lib)
+000226A0     OSUP
+000235C0     PUTOSU
+
+00023890  Segment _TEXT of module hspf121\hper.for (\lib3.0\lf90libs\hspf121.lib)
+00023890     PPERLN
+00024330     PPGEN
+00024F40     PERLND
+00025260     PBAROT
+00025310     PERACC
+000254B0     PERPRT
+00025DB0     PERRST
+00025F10     PPRINT
+000267F0     PPTOT
+
+000268D0  Segment _TEXT of module hspf121\hprbut.for (\lib3.0\lf90libs\hspf121.lib)
+000268D0     OMSG
+00027AE0     OMSINI
+00027B80     OMSTI
+00027BE0     OMSTR
+00027C40     OMSTC
+00027D30     OMSTD
+
+00027D60  Segment _TEXT of module hspf121\hrch.for (\lib3.0\lf90libs\hspf121.lib)
+00027D60     PRCHRE
+00028570     PRGEN
+000292C0     RCHRES
+00029580     RBAROT
+00029630     RCHACC
+00029800     RCHPRT
+0002A140     RCHRST
+0002A2C0     RPRINT
+0002AB90     RPTOT
+
+0002AC40  Segment _TEXT of module hspf121\hringen.for (\lib3.0\lf90libs\hspf121.lib)
+0002AC40     ENDEXG
+0002AD80     ENDING
+0002AF60     GLOBLK
+0002BDC0     MSLKBK
+0002CDD0     MDATBK
+0002DE00     NEWEXG
+0002DFC0     NEWING
+0002E1F0     NEWOPN
+0002E920     SEQBLK
+000303A0     TABBLK
+00031600     CATBLK
+00031D50     PTHBLK
+
+00033140  Segment _TEXT of module hspf121\hringeut.for (\lib3.0\lf90libs\hspf121.lib)
+00033140     OPNNO
+00033360     TOPTNO
+00033460     VALNO
+00033530     TAGVAL
+
+00033760  Segment _TEXT of module hspf121\hutopinp.for (\lib3.0\lf90libs\hspf121.lib)
+00033760     PCOPY
+00033BF0     PDISPL
+00035580     PGENER
+00035AB0     PMUTSN
+00035F70     PPLTGN
+00036C60     HEDTSF
+
+00037C50  Segment _TEXT of module hspf121\specact.for (\lib3.0\lf90libs\hspf121.lib)
+00037C50     PSPECL
+00039140     PSPUCI
+00039CB0     PSPKEY
+0003B8A0     PSPIPS
+0003CEE0     PSPHDR
+0003CF90     PSPFTR
+0003D1A0     PSPUVQ
+0003F710     PSPCON
+000411A0     PSPDIS
+00042210     PSPUVN
+000438F0     PSPACT
+00048120     CKTCOD
+00048330     MKADDR
+000493F0     SPNXDT
+00049750     SPCKDT
+000498B0     SPWSUP
+00049C30     SPDIST
+00049FC0     SPVQUP
+0004A7D0     SPSORT
+0004AFF0     SPNEWV
+0004C3D0     SPACT
+0004DAE0     SPECL
+0004E080     SPONAM
+0004E4C0     SPBKCK
+0004FD30     MKQUAN
+0004FFA0     UPQUAN
+00050350     GTQUAN
+00051010     DADDR
+00051040     CKRWID
+00051160     SPARSE
+00053250     SPITEM
+
+00053D40  Segment _TEXT of module hspf121\hutdura.for (\lib3.0\lf90libs\hspf121.lib)
+00053D40     PDURAN
+00054560     DURANL
+00054A60     DURCLC
+00055CE0     DURINI
+000566D0     DURDMP
+00056A50     DURFIN
+00058940     DURPUT
+000595B0     DUROUT
+
+0005A280  Segment _TEXT of module hspf121\hextutil.for (\lib3.0\lf90libs\hspf121.lib)
+0005A280     UCIGET
+0005A480     UCIGEN
+
+0005AB30  Segment _TEXT of module hspf121\hiosta.for (\lib3.0\lf90libs\hspf121.lib)
+0005AB30     GSTVFL
+0005C6C0     PSTVFL
+
+0005D920  Segment _TEXT of module hspf121\hirrig.for (\lib3.0\lf90libs\hspf121.lib)
+0005D920     PPIRRG
+0005DE80     PIRRIG
+0005ECE0     PIRSKD
+0005EEC0     PIRGTR
+0005F320     PIRSTR
+0005F6A0     PIRSTF
+0005F6C0     PIRGTF
+0005F6E0     PIRAWD
+000605A0     STGSEL
+
+00060A30  Segment _TEXT of module hspf121\hreport.for (\lib3.0\lf90libs\hspf121.lib)
+00060A30     PREPRT
+00061F20     REPORT
+00063010     RPTLAB
+00063380     REPWRT
+00067C40     RPINDX
+00067ED0     REPPTR
+
+00067F20  Segment _TEXT of module hspf121\hbmprac.for (\lib3.0\lf90libs\hspf121.lib)
+00067F20     PBMPRC
+00069A80     BMPRAC
+0006CD70     BMPRST
+0006DA40     BBAROT
+0006F810     BMPACC
+00070AA0     BMPPRT
+00074860     BPRINT
+
+00074FF0  Segment _TEXT of module hspf121\hpestut.for (\lib3.0\lf90libs\hspf121.lib)
+00074FF0     SETPST
+00075E30     GETVEC
+
+000768F0  Segment _TEXT of module hspf121\hosuper.for (\lib3.0\lf90libs\hspf121.lib)
+000768F0     OSUPER
+
+00077460  Segment _TEXT of module hspf121\hspfitab.for (\lib3.0\lf90libs\hspf121.lib)
+00077460     ITABLE
+00079100     RTABLE
+0007BBE0     MDATBL
+
+0007C100  Segment _TEXT of module hspf121\hdatut.for (\lib3.0\lf90libs\hspf121.lib)
+0007C100     ADDTIM
+0007C3C0     DAYMNH
+0007C4A0     DIFTIM
+0007C5D0     DYPMON
+0007C6B0     ENDATE
+0007C980     HDATIN
+0007CA40     EXDATE
+0007CAF0     FDATIM
+0007CDC0     FIRINT
+0007CF30     LPYEAR
+0007CFE0     STDATE
+0007D280     TDIF
+0007D410     TIMHTW
+0007D4F0     YRMINS
+0007D5E0     YROFF
+0007D640     TDIFX
+0007D6B0     MJDATE
+
+0007D830  Segment _TEXT of module hspf121\himpgas.for (\lib3.0\lf90libs\hspf121.lib)
+0007D830     PIWTGS
+0007DB90     IWTGAS
+0007E370     IWGACC
+0007E400     IWGPRT
+0007FE30     IWGRST
+0007FEB0     IWGSIB
+0007FF90     IWGSIP
+
+00080070  Segment _TEXT of module hspf121\himpqua.for (\lib3.0\lf90libs\hspf121.lib)
+00080070     PIQUAL
+000817E0     IQUAL
+00082AB0     IQACC
+00082EE0     IQALIB
+00083550     IQALIP
+00083810     IQPRT
+00088A00     IQRST
+00088C20     WASHOF
+00089040     WASHSD
+
+00089170  Segment _TEXT of module hspf121\himpsld.for (\lib3.0\lf90libs\hspf121.lib)
+00089170     PSOLID
+00089490     SOLIDS
+00089880     ACCUM
+00089A20     SLDACC
+00089B00     SLDIB
+00089B60     SLDIP
+00089BC0     SLDPRT
+0008AD40     SLDRST
+0008ADE0     SOSLD1
+0008AED0     SOSLD2
+
+0008AF90  Segment _TEXT of module hspf121\himpwat.for (\lib3.0\lf90libs\hspf121.lib)
+0008AF90     PIWATR
+0008B280     IWATER
+0008BBA0     EVRETN
+0008BC10     IROUTE
+0008C200     IWAACC
+0008C370     IWAPRT
+0008DDB0     IWARST
+0008DF00     IWATIB
+0008E060     IWATIP
+0008E180     RETN
+
+0008E270  Segment _TEXT of module hspf121\hiowrk.for (\lib3.0\lf90libs\hspf121.lib)
+0008E270     WORKIO
+
+0008E410  Segment _TEXT of module hspf121\hperagut.for (\lib3.0\lf90libs\hspf121.lib)
+0008E410     FIRSTP
+0008E840     FSTTAB
+0008ECA0     PLNTPM
+0008F030     SVALP
+0008F380     SVTAB
+0008F420     SOLDAT
+0008F5D0     STORGE
+0008FCF0     TOPMOV
+0008FF00     AGRGET
+00090390     ITER
+00090820     SDFRAC
+00090980     SUBMOV
+00090AF0     SV
+00090D50     FIRORD
+00090E70     SEDMOV
+00090EC0     CYLDPM
+000917C0     CKCRDT
+00091860     YUPTGT
+00091B90     YUPLAY
+00091E10     YUPINI
+00092160     CRPSEL
+000924E0     SOLDA2
+00092540     SOLDA3
+000925A0     CROPDT
+
+00092C50  Segment _TEXT of module hspf121\hperair.for (\lib3.0\lf90libs\hspf121.lib)
+00092C50     PATEMP
+00092EC0     ATEMP
+00093110     AIRPRT
+000940E0     AIRTPT
+
+00094140  Segment _TEXT of module hspf121\hpergas.for (\lib3.0\lf90libs\hspf121.lib)
+00094140     PPWTGS
+00094550     PWTGAS
+00095770     PWGACC
+00095880     PWGPRT
+00098530     PWGRST
+00098620     PWGSPB
+00098960     PWGSPT
+
+00098BD0  Segment _TEXT of module hspf121\hpermst.for (\lib3.0\lf90libs\hspf121.lib)
+00098BD0     PMSTLA
+00099100     MSTLAY
+00099DB0     MSTLPT
+00099F60     MSTPRT
+0009ADF0     SUBLAY
+0009AF90     TOPLAY
+
+0009B210  Segment _TEXT of module hspf121\hperpes.for (\lib3.0\lf90libs\hspf121.lib)
+0009B210     PPEST
+0009C780     PEST
+0009EC70     NONSVP
+0009EFC0     NSVTAB
+0009F070     DEGRAS
+0009F170     NONSV
+0009F6A0     PESPRT
+000A6F70     PESTPB
+000A7B80     PESTPT
+000A8310     PSTRXN
+000A8B10     PSTACC
+000A92F0     PSTRST
+
+000A97F0  Segment _TEXT of module hspf121\hperpho.for (\lib3.0\lf90libs\hspf121.lib)
+000A97F0     PPHOS
+000AA820     PHOS
+000AC150     PHOACC
+000AC7A0     PHOPRT
+000B2500     PHORST
+000B2960     PHORXN
+000B3390     PHOSPB
+000B3C50     PHOSPT
+
+000B41C0  Segment _TEXT of module hspf121\hperqua.for (\lib3.0\lf90libs\hspf121.lib)
+000B41C0     PPQUAL
+000B6660     PQUAL
+000B85A0     PQACC
+000B8C10     PQALPB
+000B97D0     PQALPT
+000B9CD0     PQPRT
+000C0130     PQRST
+000C0440     QUALGW
+000C05B0     QUALIF
+000C0720     QUALOF
+000C0B70     QUALSD
+
+000C0DC0  Segment _TEXT of module hspf121\hpersed.for (\lib3.0\lf90libs\hspf121.lib)
+000C0DC0     PSEDMT
+000C1230     SEDMNT
+000C19C0     ATACH
+000C19F0     DETACH
+000C1B70     SDACC
+000C1CC0     SDPRT
+000C36F0     SDRST
+000C3810     SOSED1
+000C3970     SOSED2
+000C3A90     SEDTPB
+000C3BF0     SEDTPT
+
+000C3CD0  Segment _TEXT of module hspf121\hpertmp.for (\lib3.0\lf90libs\hspf121.lib)
+000C3CD0     PPSTMP
+000C4350     PSTEMP
+000C4910     PSTPT
+000C4A30     PTPRT
+
+000C54D0  Segment _TEXT of module hspf121\hpertra.for (\lib3.0\lf90libs\hspf121.lib)
+000C54D0     PTRACR
+000C5CB0     TRACER
+000C6A00     TRACC
+000C6CF0     TRACPB
+000C70F0     TRACPT
+000C72A0     TRAPRT
+000C97B0     TRRST
+
+000C99F0  Segment _TEXT of module hspf121\hperwat.for (\lib3.0\lf90libs\hspf121.lib)
+000C99F0     PPWATR
+000CC380     SUTABL
+000CCCC0     PWATER
+000CD870     PWATRX
+000CDEA0     PWAHWT
+000CEA00     DSPHWT
+000CEC10     EVAPHW
+000CF080     EVSUR
+000CF110     INTFHW
+000CF4D0     SURFHW
+000CF6F0     SUROHW
+000CF950     SUROFT
+000CFC10     ADJGWE
+000D06F0     UZGWDR
+000D0850     UZGWRS
+000D09A0     DISPOS
+000D0C30     DIVISN
+000D0CF0     ETAGW
+000D0DD0     ETBASE
+000D0E80     ETLZON
+000D1100     ETUZON
+000D1170     ETUZS
+000D1230     EVAPT
+000D1450     EVICEP
+000D14E0     GWATER
+000D1680     ICEPT
+000D1780     INTFLW
+000D1940     LZONE
+000D1B10     PROUTE
+000D2070     SURFAC
+000D23C0     UZINF
+000D2830     UZINF2
+000D2950     UZONE
+000D2A30     PWAACC
+000D2E50     PWAPRT
+000D7B30     PWARST
+000D7EB0     PWATPB
+000D86B0     PWATPT
+
+000D8A30  Segment _TEXT of module hspf121\hpernit.for (\lib3.0\lf90libs\hspf121.lib)
+000D8A30     PNITR
+000DBB40     NITR
+000DF1A0     NITACC
+000E00A0     NITPRT
+000F3030     NITRPB
+000F46C0     NITRPT
+000F4D40     NITRST
+000F5960     NITRXN
+
+000F72E0  Segment _TEXT of module hspf121\hpersno.for (\lib3.0\lf90libs\hspf121.lib)
+000F72E0     PSNOW
+000F7BE0     SNOW
+000F89A0     COMPAC
+000F8A50     COOLER
+000F8B70     EFFPRC
+000F8CA0     GMELT
+000F8DF0     HEXCHR
+000F9030     ICING
+000F9190     LIQUID
+000F92F0     MELTER
+000F93C0     METEOR
+000F96D0     NOPACK
+000F9800     SNOACC
+000F9960     SNOWEV
+000F9AE0     VAPOR
+000F9CC0     WARMUP
+000F9DB0     SNOPRT
+000FC410     SNORST
+000FC560     SNOWPB
+000FC710     SNOWPT
+000FCB60     ALBED
+000FCC80     DEGDAY
+
+000FCD50  Segment _TEXT of module hspf121\hrchaci.for (\lib3.0\lf90libs\hspf121.lib)
+000FCD50     PACID
+000FD2D0     ACINIT
+000FD5A0     ACIDPH
+000FE760     ACCAL1
+000FF310     ACCAL2
+000FFEF0     ACCAL3
+00100CC0     ACDATA
+00100FF0     ACIACC
+00101360     ACIDRB
+00101880     ACIDRP
+00101A80     ACIPRT
+00107880     ACIRST
+00107BC0     CONV
+00107E00     NEWTON
+
+00108050  Segment _TEXT of module hspf121\hrchcon.for (\lib3.0\lf90libs\hspf121.lib)
+00108050     PCONS
+001088D0     CONS
+00109490     CONACC
+00109770     CONPRT
+0010F1F0     CONRST
+0010F4E0     CONSRB
+0010FA60     CONSRP
+
+0010FB60  Segment _TEXT of module hspf121\hrchgqu.for (\lib3.0\lf90libs\hspf121.lib)
+0010FB60     PGQUAL
+00112C60     GQUAL
+00116D30     ADECAY
+00116FD0     ADSDES
+00117550     ADVQAL
+00117AA0     DDECAY
+00117FA0     GQACC
+00118A00     GQPRT
+00120460     GQRB
+00121520     GQRP
+00121A20     GQRST
+
+001221E0  Segment _TEXT of module hspf121\hrchhtr.for (\lib3.0\lf90libs\hspf121.lib)
+001221E0     PHTRCH
+00122A50     HTRCH
+00123C30     BEDHT2
+00123D30     HTPRT
+00126450     HTRB
+001266E0     HTRP
+001267D0     HTRST
+00126990     RATEMP
+00126A50     HTACC
+
+00126C20  Segment _TEXT of module hspf121\hrchnut.for (\lib3.0\lf90libs\hspf121.lib)
+00126C20     PNUTRX
+001286F0     NUTRX
+0012B130     ADDSNU
+0012B550     ADVNUT
+0012B980     AMMION
+0012BAF0     DENIT
+0012BBE0     HCINTP
+0012BE10     INTRP1
+0012C300     NH3VOL
+0012C4F0     NITRIF
+0012C890     NUTACC
+0012D680     NUTPRT
+00139C40     NUTRB
+0013AC70     NUTRP
+0013B1B0     NUTRST
+
+0013BD60  Segment _TEXT of module hspf121\hrchoxr.for (\lib3.0\lf90libs\hspf121.lib)
+0013BD60     POXRX
+0013C380     OXRX
+0013CA40     BODDEC
+0013CB10     OXACC
+0013CDD0     OXBEN
+0013CF00     OXPRT
+001401C0     OXRB
+00140630     OXRP
+00140760     OXRST
+
+00140A10  Segment _TEXT of module hspf121\hrchphc.for (\lib3.0\lf90libs\hspf121.lib)
+00140A10     PPHCAR
+00140CF0     PHCARB
+001417B0     PHCALC
+00141CC0     PHACC
+00141F20     PHPRT
+00144600     PHRB
+001449D0     PHRP
+00144B00     PHRST
+
+00144D00  Segment _TEXT of module hspf121\hrchplk.for (\lib3.0\lf90libs\hspf121.lib)
+00144D00     PPLANK
+00146580     PLANK
+00149860     ADVPLK
+00149AE0     ALGRO
+00149FB0     BALDTH
+0014A0D0     BALRX
+0014A650     GROCHK
+0014A860     LITRCH
+0014A9F0     NUTRUP
+0014AC80     ORGBAL
+0014ACE0     PHYDTH
+0014ADC0     PHYRX
+0014B310     PLKACC
+0014BD20     PLKPRT
+0015A2C0     PLKRB
+0015AF30     PLKRP
+0015B3E0     PLKRST
+0015BC10     ZORX
+0015C0C0     PKSUMS
+0015C250     ALGRO2
+0015C6B0     BALREM
+0015C7D0     NUTUP2
+0015CAA0     BALRX2
+
+0015DD30  Segment _TEXT of module hspf121\hrchrq.for (\lib3.0\lf90libs\hspf121.lib)
+0015DD30     PRQUAL
+0015E270     RQUAL
+0015E7F0     BENTH
+0015E890     DECBAL
+0015E900     SINK
+
+0015E9D0  Segment _TEXT of module hspf121\hrchut.for (\lib3.0\lf90libs\hspf121.lib)
+0015E9D0     PADCAL
+0015EB30     ADCALC
+0015F040     ADVECT
+0015F2A0     OXREA
+
+0015F5C0  Segment _TEXT of module hspf121\hrchhyd.for (\lib3.0\lf90libs\hspf121.lib)
+0015F5C0     PHYDR
+00163190     CATFRC
+00163ED0     CATSRT
+00164A90     DISCH
+00165DE0     FTABLE
+00166820     FTBWDM
+00167A80     HYDR
+00169BA0     DEMAND
+0016A7A0     CATADJ
+0016B740     CATALL
+0016CB40     FNDROW
+0016CD30     NOROUT
+0016D970     ROUTE
+0016E690     SOLVE
+0016EE50     AUXIL
+0016F3E0     SHEAR
+0016F4E0     HYDACC
+0016F8B0     HYDPRT
+0017A150     HYDRRB
+0017A6A0     HYDRRP
+0017AE10     HYDRST
+0017B170     HYIRST
+
+0017B1B0  Segment _TEXT of module hspf121\hrchsed.for (\lib3.0\lf90libs\hspf121.lib)
+0017B1B0     PSED
+0017BE50     SEDTRN
+0017D300     BDEXCH
+0017D4F0     COHESV
+0017D9C0     COLBY
+0017F460     SANDLD
+0017FA30     SEDACC
+0017FC80     SEDPRT
+00182D90     SEDRB
+00183130     SEDRP
+001833E0     SEDRST
+00183630     TOFFAL
+
+00183F50  Segment _TEXT of module hspf121\hrinseq.for (\lib3.0\lf90libs\hspf121.lib)
+00183F50     SEQDS
+
+001848F0  Segment _TEXT of module hspf121\hrints.for (\lib3.0\lf90libs\hspf121.lib)
+001848F0     HRITSI
+00185150     GPFINT
+001852F0     HRIMSI
+00185750     FINSTR
+00186980     NETBLK
+001873C0     OPNTS
+00187FB0     MEMTS
+00188F50     IVALUE
+00188FE0     PAIRS
+0018AA40     SCHBLK
+0018B850     SRCBLK
+0018C010     TARBLK
+
+0018C6D0  Segment _TEXT of module hspf121\hrunut.for (\lib3.0\lf90libs\hspf121.lib)
+0018C6D0     ACCVEC
+0018C790     BALCHK
+0018CA80     DAYVAL
+0018CAF0     TRNVEC
+0018CF80     SETVEC
+0018D020     HREQTS
+
+0018D4D0  Segment _TEXT of module hspf121\hruntsgp.for (\lib3.0\lf90libs\hspf121.lib)
+0018D4D0     TSGET
+0018D990     TSPUT
+
+0018DDF0  Segment _TEXT of module hspf121\hrintss.for (\lib3.0\lf90libs\hspf121.lib)
+0018DDF0     ADJLAB
+0018DFB0     ADJTSB
+0018E0E0     AICOMP
+0018E650     AIUNC
+0018ECE0     CHKTSS
+0018EE00     DSCHK
+0018F1D0     FITSB
+0018F3B0     FLFRM
+0018F4C0     FNDGAP
+0018F570     GINIT
+0018F780     GWORD
+0018F930     NEWYR
+0018FB70     PINIT
+00190360     PROMEM
+00190AA0     PVAL
+00191030     RPUNC
+00191180     TSSDS
+
+00191BD0  Segment _TEXT of module hspf121\hrinwdm.for (\lib3.0\lf90libs\hspf121.lib)
+00191BD0     PROWDS
+00192BE0     WDMDS
+
+001930C0  Segment _TEXT of module hspf121\htsinsi.for (\lib3.0\lf90libs\hspf121.lib)
+001930C0     ALLOC
+00193BF0     CHAIN
+00193F90     CHANGE
+00194120     OSVFPT
+00194D90     OSVPRO
+00195800     RELESE
+00195920     ROW
+00195A80     SAME
+001963A0     SOURCE
+00196750     TARGET
+001971B0     TSINS
+00197420     WKDMP1
+00197750     WKDMP2
+
+001979A0  Segment _TEXT of module hspf121\htsinsz.for (\lib3.0\lf90libs\hspf121.lib)
+001979A0     CRTP
+00197CD0     TINOUT
+00198EC0     TINSTR
+
+00199580  Segment _TEXT of module hspf121\hutop.for (\lib3.0\lf90libs\hspf121.lib)
+00199580     COPY
+00199E10     MUTSIN
+0019AC50     HDISPL
+0019B430     SHDISP
+0019BDE0     AGGREG
+0019C090     TRANS
+0019C150     YRDISP
+0019D290     GENER
+0019DF40     PLTAGG
+0019E080     PLTGEN
+
+001A01C0  Segment _TEXT of module hspf121\hwdmut.for (\lib3.0\lf90libs\hspf121.lib)
+001A01C0     CHKWDM
+
+001A0260  Segment _TEXT of module hspf121\hgenut.for (\lib3.0\lf90libs\hspf121.lib)
+001A0260     CELSUS
+
+001A02A0  Segment _TEXT of module hspf121\hiotsin.for (\lib3.0\lf90libs\hspf121.lib)
+001A02A0     GETTSI
+001A0310     PUTTSI
+
+001A0380  Segment _TEXT of module hspf121\hrinoput.for (\lib3.0\lf90libs\hspf121.lib)
+001A0380     TABREC
+
+001A0740  Segment _TEXT of module hspf121\hruntsgq.for (\lib3.0\lf90libs\hspf121.lib)
+001A0740     CHKSEQ
+001A0CC0     DACRD
+001A1400     FIFCRD
+001A1960     FIVCRD
+001A1EC0     GETSEQ
+001A2490     HRCRD
+001A2A00     MOCRD
+001A2FC0     MOVAL
+001A3380     SEQINP
+001A3A30     SMOCRD
+001A4060     SMOVAL
+001A45B0     SEQRD
+
+001A51D0  Segment _TEXT of module hspf121\hruntsgt.for (\lib3.0\lf90libs\hspf121.lib)
+001A51D0     BCWUPD
+001A5A80     FILLWS
+001A6D70     GETTSS
+001A77E0     GTSSRC
+001A7B40     WBUFF
+
+001A7BE0  Segment _TEXT of module hspf121\hruntsgw.for (\lib3.0\lf90libs\hspf121.lib)
+001A7BE0     GETWDM
+
+001A85C0  Segment _TEXT of module hspf121\hruntsut.for (\lib3.0\lf90libs\hspf121.lib)
+001A85C0     GPDUMP
+001A9640     INMOD
+001A9B30     LTRAN
+001A9CD0     MOVROW
+001AA8E0     VYDELT
+
+001AA930  Segment _TEXT of module hspf121\hruntspt.for (\lib3.0\lf90libs\hspf121.lib)
+001AA930     GTWORD
+001AAB60     BUFINT
+001AB170     CLSTSB
+001AB240     FILTSS
+001AB670     FINIS
+001AB920     HFRAME
+001ABDF0     NEWTSB
+001ABF00     PTFRAM
+001AC080     PTVAL
+001AC750     PUTTSS
+001AD660     REPLC
+001AD940     RGET
+001ADBF0     RINIT
+001ADD50     RPUT
+001AE0D0     SQUISH
+001AE290     UPDLAB
+001AE370     WFBUFF
+001AE4C0     XVEXP
+001AE6A0     XVPUT
+
+001AE740  Segment _TEXT of module hspf121\hruntspw.for (\lib3.0\lf90libs\hspf121.lib)
+001AE740     AGGWDS
+001AE7F0     PUTWDM
+
+001AEF90  Segment _TEXT of module hspf121\htssut.for (\lib3.0\lf90libs\hspf121.lib)
+001AEF90     BCWCAL
+001AEFB0     BCWSPL
+001AF000     MEXT
+001AF0C0     RBUFF
+001AF160     TFUNE
+001AF530     TFUNG
+001AF930     TFUNL
+001AFE40     XVINIT
+
+001B0200  Segment _TEXT of module hspf121\hrchshd.for (\lib3.0\lf90libs\hspf121.lib)
+001B0200     PSHADE
+001B04F0     RTOPOG
+001B1E20     RVEG
+001B31C0     SHADEH
+001B3650     SHDCLC
+
+001B5830  Segment _TEXT of module hspdss\hrindss.for (\lib3.0\lf90libs\hspdss.lib)
+001B5830     DSSDS
+
+001B6A20  Segment _TEXT of module hspdss\hdssut.for (\lib3.0\lf90libs\hspdss.lib)
+001B6A20     CHKDSS
+001B6BC0     TIM2CH
+001B6CD0     CH2TIM
+001B6DA0     ADDCDT
+001B6EB0     DSSCLO
+
+001B6F70  Segment _TEXT of module hspdss\hruntsgd.for (\lib3.0\lf90libs\hspdss.lib)
+001B6F70     GETDSS
+001B7F30     DSSGET
+
+001B8FE0  Segment _TEXT of module hspdss\hruntspd.for (\lib3.0\lf90libs\hspdss.lib)
+001B8FE0     PUTDSS
+001B9F70     DSSPUT
+
+001BABD0  Segment _TEXT of module hec\attachpc.for (\lib3.0\lf90libs\hec.lib)
+001BABD0     ATTACH
+001BBB81     ATTEND
+001BBD94     ATTSET
+
+001BBE10  Segment _TEXT of module hec\datjul.for (\lib3.0\lf90libs\hec.lib)
+001BBE10     DATJUL
+
+001BBE90  Segment _TEXT of module hec\datymd.for (\lib3.0\lf90libs\hec.lib)
+001BBE90     DATYMD
+
+001BC770  Segment _TEXT of module hec\ihm2m.for (\lib3.0\lf90libs\hec.lib)
+001BC770     IHM2M
+
+001BC860  Segment _TEXT of module hec\inctim.for (\lib3.0\lf90libs\hec.lib)
+001BC860     INCTIM
+
+001BCBD0  Segment _TEXT of module hec\juldat.for (\lib3.0\lf90libs\hec.lib)
+001BCBD0     JULDAT
+
+001BCC60  Segment _TEXT of module hec\m2ihm.for (\lib3.0\lf90libs\hec.lib)
+001BCC60     M2IHM
+
+001BCDF0  Segment _TEXT of module hec\ymddat.for (\lib3.0\lf90libs\hec.lib)
+001BCDF0     YMDDAT
+
+001BDA70  Segment _TEXT of module hec\zchkpn.for (\lib3.0\lf90libs\hec.lib)
+001BDA70     ZCHKPN
+
+001BE2A0  Segment _TEXT of module hec\zclose.for (\lib3.0\lf90libs\hec.lib)
+001BE2A0     ZCLOSE
+
+001BE880  Segment _TEXT of module hec\zgintl.for (\lib3.0\lf90libs\hec.lib)
+001BE880     ZGINTL
+
+001BEAF0  Segment _TEXT of module hec\zinqir.for (\lib3.0\lf90libs\hec.lib)
+001BEAF0     ZINQIR
+
+001BFBA0  Segment _TEXT of module hec\zofset.for (\lib3.0\lf90libs\hec.lib)
+001BFBA0     ZOFSET
+
+001C0060  Segment _TEXT of module hec\zopen.for (\lib3.0\lf90libs\hec.lib)
+001C0060     ZOPEN
+
+001C2A80  Segment _TEXT of module hec\zrrts.for (\lib3.0\lf90libs\hec.lib)
+001C2A80     ZRRTS
+
+001C2B90  Segment _TEXT of module hec\zset.for (\lib3.0\lf90libs\hec.lib)
+001C2B90     ZSET
+
+001C38D0  Segment _TEXT of module hec\zsrts.for (\lib3.0\lf90libs\hec.lib)
+001C38D0     ZSRTS
+
+001C3A20  Segment _TEXT of module hec\zupath.for (\lib3.0\lf90libs\hec.lib)
+001C3A20     ZUPATH
+
+001C3D20  Segment _TEXT of module hec\attcrkpc.for (\lib3.0\lf90libs\hec.lib)
+001C3D20     ATTCRK
+
+001C4B30  Segment _TEXT of module hec\attdcd.for (\lib3.0\lf90libs\hec.lib)
+001C4B30     ATTDCD
+
+001C5C80  Segment _TEXT of module hec\attmat.for (\lib3.0\lf90libs\hec.lib)
+001C5C80     ATTMAT
+
+001C60E0  Segment _TEXT of module hec\attopn.for (\lib3.0\lf90libs\hec.lib)
+001C60E0     ATTOPN
+
+001C7110  Segment _TEXT of module hec\attsubpc.for (\lib3.0\lf90libs\hec.lib)
+001C7110     ATTSUB
+
+001C74B0  Segment _TEXT of module hec\chrfil.for (\lib3.0\lf90libs\hec.lib)
+001C74B0     CHRFIL
+
+001C7570  Segment _TEXT of module hec\chrflb.for (\lib3.0\lf90libs\hec.lib)
+001C7570     CHRFLB
+
+001C75E0  Segment _TEXT of module hec\chrhol.for (\lib3.0\lf90libs\hec.lib)
+001C75E0     CHRHOL
+
+001C76D0  Segment _TEXT of module hec\chrlnb.for (\lib3.0\lf90libs\hec.lib)
+001C76D0     CHRLNB
+
+001C7710  Segment _TEXT of module hec\datcll.for (\lib3.0\lf90libs\hec.lib)
+001C7710     DATCLL
+
+001C77F0  Segment _TEXT of module hec\datime.for (\lib3.0\lf90libs\hec.lib)
+001C77F0     DATIME
+
+001C79E0  Segment _TEXT of module hec\getnam.for (\lib3.0\lf90libs\hec.lib)
+001C79E0     GETNAM
+
+001C7AE0  Segment _TEXT of module hec\holchr.for (\lib3.0\lf90libs\hec.lib)
+001C7AE0     HOLCHR
+
+001C7C00  Segment _TEXT of module hec\idaywk.for (\lib3.0\lf90libs\hec.lib)
+001C7C00     IDAYWK
+
+001C7C40  Segment _TEXT of module hec\intgr.for (\lib3.0\lf90libs\hec.lib)
+001C7C40     INTGR
+
+001C7EC0  Segment _TEXT of module hec\iscan.for (\lib3.0\lf90libs\hec.lib)
+001C7EC0     ISCAN
+
+001C83A0  Segment _TEXT of module hec\iymdjl90.for (\lib3.0\lf90libs\hec.lib)
+001C83A0     IYMDJL
+
+001C8550  Segment _TEXT of module hec\jliymd.for (\lib3.0\lf90libs\hec.lib)
+001C8550     JLIYMD
+
+001C8700  Segment _TEXT of module hec\nscan.for (\lib3.0\lf90libs\hec.lib)
+001C8700     NSCAN
+
+001C8BB0  Segment _TEXT of module hec\remblk.for (\lib3.0\lf90libs\hec.lib)
+001C8BB0     REMBLK
+
+001C8D70  Segment _TEXT of module hec\upcase.for (\lib3.0\lf90libs\hec.lib)
+001C8D70     UPCASE
+
+001C8ED0  Segment _TEXT of module hec\when.for (\lib3.0\lf90libs\hec.lib)
+001C8ED0     WHEN
+
+001C8F80  Segment _TEXT of module hec\zabort.for (\lib3.0\lf90libs\hec.lib)
+001C8F80     ZABORT
+
+001C90D0  Segment _TEXT of module hec\zbdump.for (\lib3.0\lf90libs\hec.lib)
+001C90D0     ZBDUMP
+
+001CA280  Segment _TEXT of module hec\zfnamepc.for (\lib3.0\lf90libs\hec.lib)
+001CA280     ZFNAME
+
+001CA6E0  Segment _TEXT of module hec\zfsize.for (\lib3.0\lf90libs\hec.lib)
+001CA6E0     ZFSIZE
+
+001CAD50  Segment _TEXT of module hec\zgetad.for (\lib3.0\lf90libs\hec.lib)
+001CAD50     ZGETAD
+
+001CADA0  Segment _TEXT of module hec\zgetrw90.for (\lib3.0\lf90libs\hec.lib)
+001CADA0     ZGETRW
+
+001CAE00  Segment _TEXT of module hec\zgtrec.for (\lib3.0\lf90libs\hec.lib)
+001CAE00     ZGTREC
+
+001CC280  Segment _TEXT of module hec\zinit.for (\lib3.0\lf90libs\hec.lib)
+001CC280     ZINIT
+001CCB20     ZBKDAT
+
+001CCB30  Segment _TEXT of module hec\zlahey.for (\lib3.0\lf90libs\hec.lib)
+001CCB30     ZLAHEY
+
+001CCE50  Segment _TEXT of module hec\zmultu.for (\lib3.0\lf90libs\hec.lib)
+001CCE50     ZMULTU
+
+001CD560  Segment _TEXT of module hec\zptrec.for (\lib3.0\lf90libs\hec.lib)
+001CD560     ZPTREC
+
+001CF410  Segment _TEXT of module hec\zrrtsx.for (\lib3.0\lf90libs\hec.lib)
+001CF410     ZRRTSX
+
+001D1860  Segment _TEXT of module hec\zsrtsx.for (\lib3.0\lf90libs\hec.lib)
+001D1860     ZSRTSX
+
+001D4C10  Segment _TEXT of module hec\abort.for (\lib3.0\lf90libs\hec.lib)
+001D4C10     ABORT
+
+001D4D00  Segment _TEXT of module hec\bkdatwpc.for (\lib3.0\lf90libs\hec.lib)
+001D4D00     BKDATW
+
+001D4D10  Segment _TEXT of module hec\cdate.for (\lib3.0\lf90libs\hec.lib)
+001D4D10     CDATE
+
+001D4DE0  Segment _TEXT of module hec\ctime.for (\lib3.0\lf90libs\hec.lib)
+001D4DE0     CTIME
+
+001D4E80  Segment _TEXT of module hec\dcreal.for (\lib3.0\lf90libs\hec.lib)
+001D4E80     DCREAL
+
+001D55C0  Segment _TEXT of module hec\dureal.for (\lib3.0\lf90libs\hec.lib)
+001D55C0     DUREAL
+
+001D5980  Segment _TEXT of module hec\findlm.for (\lib3.0\lf90libs\hec.lib)
+001D5980     FINDLM
+
+001D6730  Segment _TEXT of module hec\getholpc.for (\lib3.0\lf90libs\hec.lib)
+001D6730     GETHOL
+
+001D6860  Segment _TEXT of module hec\hol2ch.for (\lib3.0\lf90libs\hec.lib)
+001D6860     HOL2CH
+
+001D6940  Segment _TEXT of module hec\indexr.for (\lib3.0\lf90libs\hec.lib)
+001D6940     INDEXR
+
+001D6AB0  Segment _TEXT of module hec\nindx.for (\lib3.0\lf90libs\hec.lib)
+001D6AB0     NINDX
+
+001D6C30  Segment _TEXT of module hec\nindxr.for (\lib3.0\lf90libs\hec.lib)
+001D6C30     NINDXR
+
+001D6DA0  Segment _TEXT of module hec\nopers.for (\lib3.0\lf90libs\hec.lib)
+001D6DA0     NOPERS
+
+001D7010  Segment _TEXT of module hec\putholpc.for (\lib3.0\lf90libs\hec.lib)
+001D7010     PUTHOL
+001D71D0     BKDAT
+
+001D71E0  Segment _TEXT of module hec\setdlm.for (\lib3.0\lf90libs\hec.lib)
+001D71E0     SETDLM
+
+001D7500  Segment _TEXT of module hec\wind.for (\lib3.0\lf90libs\hec.lib)
+001D7500     WIND
+
+001D75C0  Segment _TEXT of module hec\zbegdt.for (\lib3.0\lf90libs\hec.lib)
+001D75C0     ZBEGDT
+
+001D76C0  Segment _TEXT of module hec\zcheck.for (\lib3.0\lf90libs\hec.lib)
+001D76C0     ZCHECK
+
+001D9300  Segment _TEXT of module hec\zerror.for (\lib3.0\lf90libs\hec.lib)
+001D9300     ZERROR
+
+001D9760  Segment _TEXT of module hec\zgetci.for (\lib3.0\lf90libs\hec.lib)
+001D9760     ZGETCI
+
+001DABB0  Segment _TEXT of module hec\zincbk.for (\lib3.0\lf90libs\hec.lib)
+001DABB0     ZINCBK
+
+001DACB0  Segment _TEXT of module hec\zmovbk.for (\lib3.0\lf90libs\hec.lib)
+001DACB0     ZMOVBK
+
+001DB810  Segment _TEXT of module hec\znwrit.for (\lib3.0\lf90libs\hec.lib)
+001DB810     ZNWRIT
+
+001DD630  Segment _TEXT of module hec\zowrit.for (\lib3.0\lf90libs\hec.lib)
+001DD630     ZOWRIT
+
+001DF620  Segment _TEXT of module hec\zpath.for (\lib3.0\lf90libs\hec.lib)
+001DF620     ZPATH
+
+001DFD40  Segment _TEXT of module hec\zrdinf.for (\lib3.0\lf90libs\hec.lib)
+001DFD40     ZRDINF
+
+001E02B0  Segment _TEXT of module hec\zrrec.for (\lib3.0\lf90libs\hec.lib)
+001E02B0     ZRREC
+
+001E03B0  Segment _TEXT of module hec\zrrtsb.for (\lib3.0\lf90libs\hec.lib)
+001E03B0     ZRRTSB
+
+001E1000  Segment _TEXT of module hec\zufpn.for (\lib3.0\lf90libs\hec.lib)
+001E1000     ZUFPN
+
+001E1660  Segment _TEXT of module hec\zuprts.for (\lib3.0\lf90libs\hec.lib)
+001E1660     ZUPRTS
+
+001E2910  Segment _TEXT of module hec\zwrec.for (\lib3.0\lf90libs\hec.lib)
+001E2910     ZWREC
+
+001E29F0  Segment _TEXT of module hec\ch2hol.for (\lib3.0\lf90libs\hec.lib)
+001E29F0     CH2HOL
+
+001E2AD0  Segment _TEXT of module hec\chdlm.for (\lib3.0\lf90libs\hec.lib)
+001E2AD0     CHDLM
+
+001E2C90  Segment _TEXT of module hec\chgtyp.for (\lib3.0\lf90libs\hec.lib)
+001E2C90     CHGTYP
+
+001E2CB0  Segment _TEXT of module hec\dcdltr.for (\lib3.0\lf90libs\hec.lib)
+001E2CB0     DCDLTR
+
+001E3880  Segment _TEXT of module hec\dcrept.for (\lib3.0\lf90libs\hec.lib)
+001E3880     DCREPT
+
+001E3B20  Segment _TEXT of module hec\dcsd3r.for (\lib3.0\lf90libs\hec.lib)
+001E3B20     DCSD3R
+
+001E3DC0  Segment _TEXT of module hec\dhinfo.for (\lib3.0\lf90libs\hec.lib)
+001E3DC0     DHINFO
+
+001E43B0  Segment _TEXT of module hec\dhinit.for (\lib3.0\lf90libs\hec.lib)
+001E43B0     DHINIT
+
+001E4A60  Segment _TEXT of module hec\dudltr.for (\lib3.0\lf90libs\hec.lib)
+001E4A60     DUDLTR
+
+001E4CB0  Segment _TEXT of module hec\durept.for (\lib3.0\lf90libs\hec.lib)
+001E4CB0     DUREPT
+
+001E4E90  Segment _TEXT of module hec\dusd3r.for (\lib3.0\lf90libs\hec.lib)
+001E4E90     DUSD3R
+
+001E50C0  Segment _TEXT of module hec\leqner.for (\lib3.0\lf90libs\hec.lib)
+001E50C0     LEQNER
+
+001E5110  Segment _TEXT of module hec\zdebug.for (\lib3.0\lf90libs\hec.lib)
+001E5110     ZDEBUG
+
+001E56E0  Segment _TEXT of module hec\zgetag.for (\lib3.0\lf90libs\hec.lib)
+001E56E0     ZGETAG
+
+001E5DC0  Segment _TEXT of module hec\zhash.for (\lib3.0\lf90libs\hec.lib)
+001E5DC0     ZHASH
+
+001E6240  Segment _TEXT of module hec\znwbin.for (\lib3.0\lf90libs\hec.lib)
+001E6240     ZNWBIN
+
+001E6A60  Segment _TEXT of module hec\bits.for (\lib3.0\lf90libs\hec.lib)
+001E6A60     BITS
+
+001E6BC0  Segment _TEXT of module hec\dhchek.for (\lib3.0\lf90libs\hec.lib)
+001E6BC0     DHCHEK
+
+001E6EA0  Segment _TEXT of module hec\r2sd3.for (\lib3.0\lf90libs\hec.lib)
+001E6EA0     R2SD3
+
+001E7120  Segment _TEXT of module hec\sd32r.for (\lib3.0\lf90libs\hec.lib)
+001E7120     SD32R
+
+001E72F0  Segment _TEXT of module hec\xrealc.for (\lib3.0\lf90libs\hec.lib)
+001E72F0     XREALC
+
+001E78F0  Segment _TEXT of module hec\lbtest.for (\lib3.0\lf90libs\hec.lib)
+001E78F0     LBTEST
+
+001E7950  Segment _TEXT of module wdm\wdbtch.for (\lib3.0\lf90libs\wdm.lib)
+001E7950     WDBCRL
+001E79F0     WDBSGC
+001E7D20     WDBSGI
+001E7F20     WDBSGR
+001E8120     WDDSRN
+001E84A0     WDDSCL
+001E8880     WDLBAD
+
+001E8910  Segment _TEXT of module wdm\wdtble.for (\lib3.0\lf90libs\wdm.lib)
+001E8910     WDTBTM
+001E9250     WDTBFX
+001E93C0     WDTBFN
+001E97D0     WDTBSP
+001EA110     WTBSPA
+001EA440     WDTBSU
+001EA960     WTBCOD
+001EB0F0     WTBDCD
+001EB8B0     WTBPUT
+001EBFA0     WTBGET
+001EC620     WDTBDL
+001ECF60     WTBCLN
+001ED0E0     WDTBCG
+
+001ED2C0  Segment _TEXT of module wdm\wdtms2.for (\lib3.0\lf90libs\wdm.lib)
+001ED2C0     WTFNDT
+001EDD40     WTDSCU
+001EEB90     WTDDEL
+001EF4A0     WTEGRP
+001EF710     WTSGRP
+001EF970     WDATCP
+001EF9F0     WTDATE
+001EFCC0     WDATIM
+001EFEB0     WDAINF
+
+001F0240  Segment _TEXT of module wdm\wdtms1.for (\lib3.0\lf90libs\wdm.lib)
+001F0240     WDTGET
+001F0700     WTSCSC
+001F0750     WTPMCK
+001F0950     WTFNDG
+001F0C60     WTDSPM
+001F0F00     WTBYFX
+001F1300     WTDSPX
+001F1500     WTSKVL
+001F1640     WTSKVX
+001F23E0     WDSKBK
+001F2490     WTGTVL
+001F39D0     WTGTNV
+001F3C40     WDTPFX
+001F4170     WTGPCK
+001F4550     WTPTVL
+001F5500     WTNWBK
+001F55C0     WDTPUT
+
+001F56F0  Segment _TEXT of module wdm\wdatrb.for (\lib3.0\lf90libs\wdm.lib)
+001F56F0     WDSAGY
+001F5950     WDBSAC
+001F5D80     WDBSAI
+001F6150     WDBSAR
+001F64B0     WDBSAD
+001F6AE0     WDSAFL
+001F6B30     WDDPAR
+001F6C30     WDSAFI
+001F7310     WDBSGX
+001F7420     WDFNDS
+001F7BF0     WDFNCK
+001F82F0     WDVRSN
+
+001F8330  Segment _TEXT of module wdm\tsbufr.for (\lib3.0\lf90libs\wdm.lib)
+001F8330     TSBTIM
+001F8380     TSBWDS
+001F83D0     TSBGET
+001F9B90     WDBASE
+001F9DB0     TSBCLR
+001FA500     TSBINI
+
+001FA710  Segment _TEXT of module wdm\wdmid.for (\lib3.0\lf90libs\wdm.lib)
+001FA710     WDIINI
+001FA730     WIDADD
+001FA900     WUD2ID
+001FA970     WUA2ID
+001FAB60     WID2UD
+001FABB0     WID2UA
+001FADA0     WCH2UD
+
+001FAE90  Segment _TEXT of module wdm\wdatm2.for (\lib3.0\lf90libs\wdm.lib)
+001FAE90     WADGTN
+001FAEF0     WADGRA
+001FB0D0     WADGVA
+001FB2E0     WADGDF
+001FB460     WADGDS
+001FB610     WADGHL
+
+001FB710  Segment _TEXT of module adwdm\usyslf90.for (\lib3.0\lf90libs\adwdm.lib)
+001FB710     XOSVAR
+001FB780     XGTARG
+001FBB00     XGTCHR
+001FBB80     XCLRSC
+001FBBD0     XGTRCL
+001FBBE0     XPLFRM
+
+001FBC20  Segment _TEXT of module adwdm\wdatm1.for (\lib3.0\lf90libs\adwdm.lib)
+001FBC20     WADQCK
+001FBE10     WADNSA
+001FC050     WADADI
+001FC8C0     WADGTL
+001FCC20     WADDSI
+001FD460     WDCRDT
+001FD4C0     WDMODT
+001FD510     WDSETD
+
+001FD790  Segment _TEXT of module adwdm\utwdmf.for (\lib3.0\lf90libs\adwdm.lib)
+001FD790     WMSQCK
+001FD920     WMSANG
+001FDB50     WMSADI
+001FE150     WDNXPS
+001FE250     WDNXDV
+001FE2F0     WDPRPS
+001FE380     WMSPTE
+001FE790     WMSGTE
+001FEBB0     WMSBTR
+001FEE50     WMSGTO
+001FF020     WMSBCX
+001FF140     WMSFBC
+001FF4E0     WMSIDP
+001FF650     WMSSKB
+
+001FF700  Segment _TEXT of module adwdm\prtfil.for (\lib3.0\lf90libs\adwdm.lib)
+001FF700     PMXTFI
+001FF790     PMXTFR
+001FF820     PMXTFC
+001FF8B0     PMXTXF
+001FFB40     PMXTFT
+001FFD50     TXMULT
+
+002004F0  Segment _TEXT of module adwdm\utwdt1.for (\lib3.0\lf90libs\adwdm.lib)
+002004F0     WDPTCL
+00200520     WDPTSP
+00200620     WBCWSP
+002007B0     WBCWCL
+00200840     WDATSP
+002008D0     WDATCL
+00200980     WTBICL
+002009C0     WTBISP
+00200AA0     WTBDCL
+00200B40     WTBDSP
+00200BD0     WBCWSQ
+00200D80     WMSBCV
+00200DF0     WMSBCS
+00200E80     WMSMNV
+00200F00     WMSMNS
+00200FC0     WMSPIV
+00201010     WMSPIS
+00201050     WMSP2V
+002010E0     WMSP2S
+002011A0     WDLICV
+00201220     WDLISP
+002012B0     WDLBCV
+00201320     WDLBSP
+002013B0     WATTCL
+002014E0     WATTSP
+00201570     WATTUS
+00201630     WATWDC
+00201680     WATWDS
+002016C0     WSTGCL
+00201750     WSTGSP
+00201810     WMSPOV
+002018C0     WMSPOS
+002019B0     WOPWDC
+00201A30     WOPWDS
+
+00201AC0  Segment _TEXT of module adwdm\wdmess.for (\lib3.0\lf90libs\adwdm.lib)
+00201AC0     WDDSDL
+00201BC0     WDSASP
+00201E50     WDDTFG
+00201F00     WDFDUP
+00202180     WDFCUP
+00202710     WDRCDL
+00202B90     WDLBAX
+00203030     WDGTAT
+
+002033D0  Segment _TEXT of module adwdm\ztwdmf.for (\lib3.0\lf90libs\adwdm.lib)
+002033D0     WMSGTP
+00207FD0     WMSGTT
+002084F0     WMSGTM
+0020A5D0     WMSGTF
+0020ACF0     WMSGTX
+0020B360     WMSGTW
+0020B3B0     WMSSPS
+0020B8E0     WMSCON
+0020CAB0     WMSDLM
+0020CD40     WMSGFD
+0020CE80     WMSGPN
+0020D050     WMSGTV
+0020D2E0     WMSGTH
+
+0020D370  Segment _TEXT of module adwdm\wdoppc90.for (\lib3.0\lf90libs\adwdm.lib)
+0020D370     WDBOPN
+
+0020D610  Segment _TEXT of module adwdm\utwdmd.for (\lib3.0\lf90libs\adwdm.lib)
+0020D610     WDRCGO
+0020DF40     WDFLCK
+0020E390     WDFLCL
+0020E5D0     WDRCUP
+0020E770     WDRCGN
+0020EC60     WDRCGX
+0020ECE0     WDRCAD
+0020F030     WDDRRC
+0020F250     WDSCHK
+0020F2B0     WDSCHA
+0020F4A0     WDCKDT
+0020F540     WDDSCK
+0020F670     WDBFIN
+0020F860     WDCREA
+0020FA40     WDSASV
+0020FB90     WDGIVL
+0020FC20     WDGRVL
+0020FCC0     WDGCVL
+0020FDE0     WDGDRT
+0020FE00     WDDSNX
+0020FE40     AWVRSN
+0020FE80     WDDSNP
+
+00210130  Segment _TEXT of module adwdm\adutil.for (\lib3.0\lf90libs\adwdm.lib)
+00210130     ZSTCMA
+00210190     ZSCINI
+002103B0     GSTGLV
+00210BA0     GGTGLV
+00211150     GGTGLA
+00211300     ZCHKST
+00211460     ZCNTER
+
+00211960  Segment _TEXT of module adwdm\ehutlf90.for (\lib3.0\lf90libs\adwdm.lib)
+00211960     EHIN
+00211A90     EHOUT
+00211AC0     EHSCNM
+
+002129D0  Segment _TEXT of module adwdm\wdmchk.for (\lib3.0\lf90libs\adwdm.lib)
+002129D0     WDMCHK
+00213AA0     WDATFX
+
+00214030  Segment _TEXT of module util\utnumb.for (\lib3.0\lf90libs\util.lib)
+00214030     CHKINT
+002140B0     CHKREA
+00214290     CHKDPR
+00214470     NUMINI
+00214A30     ZIPD
+00214AB0     ZIPI
+00214B30     ZIPR
+00214BB0     DECPRC
+00214C40     SHIFTD
+00214EB0     SHIFTI
+00215120     SHIFTR
+00215390     UTVRSN
+
+002154A0  Segment _TEXT of module util\utsort.for (\lib3.0\lf90libs\util.lib)
+002154A0     ASRTC
+00215B10     ASRTI
+00215F30     ASRTIP
+002160C0     ASRTR
+002164D0     ASRTRP
+00216660     ASRTD
+00216CF0     ASRTDP
+
+00216E80  Segment _TEXT of module util\uscnlf90.for (\lib3.0\lf90libs\util.lib)
+00216E80     SCCLAL
+00216FA0     SCCLR
+00217030     SCCUMV
+00217200     SCCURM
+
+00217620  Segment _TEXT of module util\utchar.for (\lib3.0\lf90libs\util.lib)
+00217620     CARVAR
+00217860     CHDECE
+002178E0     CHINTE
+00217AC0     CHKSTR
+00217C40     CHRCHR
+00217CF0     CHRDEC
+00218270     CHRDPR
+002187E0     CHRDEL
+00218910     CHRDIG
+002189C0     CHRINS
+00218BF0     CHRINT
+00218C30     CKNBLK
+00218CF0     COPYC
+00218DA0     CRINTE
+00219000     CRINTX
+00219040     CTRSTR
+00219390     CVARAR
+002195D0     DATCHR
+00219840     DATLST
+00219E40     DECCHR
+0021C060     DPRCHR
+0021EFD0     RWDIGS
+0021F090     DWDIGS
+0021F150     DECCHX
+0021FB60     DIGCHR
+0021FC40     INTCHR
+002202B0     LENSTR
+00220370     LFTSTR
+00220660     PRTLIN
+00220B00     PRTLNO
+00220EF0     STRFND
+00221100     STRLNX
+00221240     ZIPC
+002212E0     ZLJUST
+00221560     PRTSTR
+002216B0     ZLNTXT
+00221800     ZTRIM
+002219E0     QUPCAS
+00221B20     CKNBLV
+00221BE0     RHTSTR
+00221E10     ADCOMA
+
+00222350  Segment _TEXT of module util\datsys90.for (\lib3.0\lf90libs\util.lib)
+00222350     WDSYSD
+00222490     SYDATM
+
+00222560  Segment _TEXT of module util\utscxx.for (\lib3.0\lf90libs\util.lib)
+00222560     QCHR
+002225E0     SCCUHM
+00222620     SCPRST
+00222670     SCPRBF
+00222990     COLSET
+00222A30     COLGET
+00222A60     ZBEEP
+00222AB0     ZFMTWR
+00222B30     ZWRSCR
+
+00222B80  Segment _TEXT of module util\utdate.for (\lib3.0\lf90libs\util.lib)
+00222B80     CKDATE
+00222C90     CMPTIM
+00222F90     CMPTM2
+00223140     DATCHK
+00223300     DATNXT
+00223660     DAYMON
+00223760     DLIMIT
+00223970     JDMODY
+00223AB0     NUMPTS
+00223CB0     TIMADD
+002240A0     TIMBAK
+002242A0     TIMCHK
+00224490     TIMCNV
+00224500     TIMCVT
+00224580     TIMDIF
+00224A90     TIMDFX
+00224C00     DTMCMN
+00224ED0     DATCMN
+
+00225010  Segment _TEXT of module utcopy90.for (\lib3.0\lf90libs\util.lib)
+00225010     COPYD
+00225050     COPYI
+00225090     COPYR
+
+002250D0  Segment _TEXT of module util\utsclf90.for (\lib3.0\lf90libs\util.lib)
+002250D0     GETKEY
+002252A0     SCPRBN
+00225690     C1IN
+002257A0     C1INT
+002257B0     OSDIRL
+
+00225D30  Segment _TEXT of module facosf.c (C:\LF9045\Lib\lf90.lib)
+00225D30     _lfacosf
+
+00225D64  Segment _TEXT of module fasinf.c (C:\LF9045\Lib\lf90.lib)
+00225D64     _lfasinf
+
+00225D98  Segment _TEXT of module fatanf.c (C:\LF9045\Lib\lf90.lib)
+00225D98     _lfatanf
+
+00225DA8  Segment _TEXT of module fcosf.c (C:\LF9045\Lib\lf90.lib)
+00225DA8     _lfcosf
+
+00225DB8  Segment _TEXT of module fexp.c (C:\LF9045\Lib\lf90.lib)
+00225DB8     _lfexp
+
+00225DEC  Segment _TEXT of module fexpf.c (C:\LF9045\Lib\lf90.lib)
+00225DEC     _lfexpf
+
+00225E04  Segment _TEXT of module flog10.c (C:\LF9045\Lib\lf90.lib)
+00225E04     _lflog10
+
+00225E38  Segment _TEXT of module flog10f.c (C:\LF9045\Lib\lf90.lib)
+00225E38     _lflog10f
+
+00225E6C  Segment _TEXT of module flogf.c (C:\LF9045\Lib\lf90.lib)
+00225E6C     _lflogf
+
+00225EA0  Segment _TEXT of module fsinf.c (C:\LF9045\Lib\lf90.lib)
+00225EA0     _lfsinf
+
+00225EB0  Segment _TEXT of module fsqrt.c (C:\LF9045\Lib\lf90.lib)
+00225EB0     _lfsqrt
+
+00225EE4  Segment _TEXT of module fsqrtf.c (C:\LF9045\Lib\lf90.lib)
+00225EE4     _lfsqrtf
+
+00225F18  Segment _TEXT of module ftanf.c (C:\LF9045\Lib\lf90.lib)
+00225F18     _lftanf
+
+00225F28  Segment _TEXT of module pow_dd_v.c (C:\LF9045\Lib\lf90.lib)
+00225F28     _lfpow_dd_val
+
+00225F40  Segment _TEXT of module pow_di_v.c (C:\LF9045\Lib\lf90.lib)
+00225F40     _lfpow_di_val
+
+00225FB0  Segment _TEXT of module pow_ii_v.c (C:\LF9045\Lib\lf90.lib)
+00225FB0     _lfpow_ii_val
+
+00226014  Segment _TEXT of module pow_rd_v.c (C:\LF9045\Lib\lf90.lib)
+00226014     _lfpow_rd_val
+
+00226030  Segment _TEXT of module pow_ri_v.c (C:\LF9045\Lib\lf90.lib)
+00226030     _lfpow_ri_val
+
+002260A0  Segment _TEXT of module pow_rr_v.c (C:\LF9045\Lib\lf90.lib)
+002260A0     _lfpow_rr_val
+
+002260B0  Segment _TEXT of module backsp.c (C:\LF9045\Lib\lf90.lib)
+002260B0     _lf_backsp
+
+002263B0  Segment _TEXT of module endfile.c (C:\LF9045\Lib\lf90.lib)
+002263B0     _lf_endfile
+
+0022642C  Segment _TEXT of module fchcmp.c (C:\LF9045\Lib\lf90.lib)
+0022642C     _lf_fchcmp
+
+002264B0  Segment _TEXT of module fmtck.c (C:\LF9045\Lib\lf90.lib)
+002264B0     _lf_fmtck
+
+0022739C  Segment _TEXT of module unfio.c (C:\LF9045\Lib\lf90.lib)
+0022739C     _lf_intzu
+0022747C     _lf_indnu
+00227584     _lf_nchin
+00227604     _lf_ontzu
+00227714     _lf_otdnu
+00227858     _lf_nchot
+
+002278AC  Segment _TEXT of module adjustl.c (C:\LF9045\Lib\lf90.lib)
+002278AC     _lf_adjustl
+
+0022790C  Segment _TEXT of module datetime.c (C:\LF9045\Lib\lf90.lib)
+0022790C     _lf_date_and_time
+00227990     _lf_date_and_time_time
+00227A70     _lf_date_and_time_date
+00227B90     _lf_date_and_time_values
+00227C4C     _lf_feeble_atoi
+00227C84     _lf_date_and_time_zone
+00227E0C     _lf_adjust_zone
+00227E84     _lf_gregorian_to_julian
+
+00227EE8  Segment _TEXT of module len_trim.c (C:\LF9045\Lib\lf90.lib)
+00227EE8     _lf_len_trim_
+
+00227F14  Segment _TEXT of module trim.c (C:\LF9045\Lib\lf90.lib)
+00227F14     _lf_trim
+
+00227F48  Segment _TEXT of module index.c (C:\LF9045\Lib\lf90.lib)
+00227F48     _lf_index
+
+00227FF4  Segment _TEXT of module fheap.c (C:\LF9045\Lib\lf90.lib)
+00227FF4     _lf_fmalloc
+00228024     _lf_ffree
+0022804C     _lf_frealloc
+00228098     _lf_fcalloc
+
+002280A4  Segment _TEXT of module lfsystem.c (C:\LF9045\Lib\lf90.lib)
+002280A4     _lf_system
+
+0022818C  Segment _TEXT of module lfdate.c (C:\LF9045\Lib\lf90.lib)
+0022818C     _lf_date
+
+00228270  Segment _TEXT of module lfgetcl.c (C:\LF9045\Lib\lf90.lib)
+00228270     _lf_getcl
+
+00228304  Segment _TEXT of module lftime.c (C:\LF9045\Lib\lf90.lib)
+00228304     _lf_time
+
+002283EC  Segment _TEXT of module lfflush.c (C:\LF9045\Lib\lf90.lib)
+002283EC     _lf_flush
+
+00228410  Segment _TEXT of module _lf_pow (C:\LF9045\Lib\lf90.lib)
+00228410     _lf_pow
+
+002289D0  Segment _TEXT of module acosf (C:\LF9045\Lib\lf90.lib)
+002289D0     _lf_acosf
+
+00228A50  Segment _TEXT of module asinf (C:\LF9045\Lib\lf90.lib)
+00228A50     _lf_asinf
+
+00228AC0  Segment _TEXT of module atanf (C:\LF9045\Lib\lf90.lib)
+00228AC0     _lf_atanf
+
+00228AD0  Segment _TEXT of module exp (C:\LF9045\Lib\lf90.lib)
+00228AD0     _lf_exp
+
+00228C40  Segment _TEXT of module expf (C:\LF9045\Lib\lf90.lib)
+00228C40     _lf_expf
+
+00228DA0  Segment _TEXT of module fast_cosf (C:\LF9045\Lib\lf90.lib)
+00228DA0     _lf_cosf
+
+00228DD0  Segment _TEXT of module fast_sinf (C:\LF9045\Lib\lf90.lib)
+00228DD0     _lf_sinf
+
+00228E00  Segment _TEXT of module fast_tanf (C:\LF9045\Lib\lf90.lib)
+00228E00     _lf_tanf
+
+00228E30  Segment _TEXT of module log10 (C:\LF9045\Lib\lf90.lib)
+00228E30     _lf_log10
+
+00228F00  Segment _TEXT of module log10f (C:\LF9045\Lib\lf90.lib)
+00228F00     _lf_log10f
+
+00228FB0  Segment _TEXT of module logf (C:\LF9045\Lib\lf90.lib)
+00228FB0     _lf_logf
+
+00229060  Segment _TEXT of module sqrt (C:\LF9045\Lib\lf90.lib)
+00229060     _lf_sqrt
+
+00229130  Segment _TEXT of module sqrtf (C:\LF9045\Lib\lf90.lib)
+00229130     _lf_sqrtf
+
+002291DC  Segment _TEXT of module powf.c (C:\LF9045\Lib\lf90.lib)
+002291DC     _lf_powf
+
+002291FC  Segment _TEXT of module aunfio.c (C:\LF9045\Lib\lf90.lib)
+002291FC     _lf_otunlen
+002292AC     _lf_inunlen
+002292F0     _lf_put_n_u
+
+00229350  Segment _TEXT of module present.c (C:\LF9045\Lib\lf90.lib)
+00229350     _lf_present_s
+00229364     _lf_allocated
+
+00229380  Segment _TEXT of module aide\z0util.for (\lib3.0\lf90libs\aide.lib)
+00229380     ZEDT0M
+0022C2D0     ZARCMP
+0022D070     ZLOCFD
+0022E2C0     ZOPFLD
+00231580     ZOPOFF
+00231970     ZOPON
+00231DC0     ZHIDFD
+00232380     ZHIDCK
+00232450     Q1INIT
+002325C0     Q1EDIT
+002325F0     Q1EDSC
+00232620     ZFILVF
+00233DD0     FLDHID
+
+00233E90  Segment _TEXT of module aide\qtfile.for (\lib3.0\lf90libs\aide.lib)
+00233E90     QFOPEN
+00233F60     QFOPFN
+00234B30     ZMNWLD
+00235450     QFCLOS
+00235520     QFSTAT
+00235710     GETFUN
+00235890     IOESET
+00235980     RECSET
+00235A60     CKNAME
+00236140     QFDPRS
+
+00236490  Segment _TEXT of module aide\utuprm.for (\lib3.0\lf90libs\aide.lib)
+00236490     ANPRGT
+00236550     ANPRRD
+002371C0     GLVINI
+
+00237510  Segment _TEXT of module aide\zutil.for (\lib3.0\lf90libs\aide.lib)
+00237510     ZEMIFE
+00237F60     ZGTKYD
+002387F0     ZCMDEX
+00239120     ZXPAD
+0023A210     ZCMDIS
+0023AEF0     ZVERIF
+0023BD10     ZWRTB2
+0023BE30     ZWRTB3
+0023C240     ZWRHLP
+0023CC00     ZPRTMN
+0023CCE0     ZBLDWR
+0023D550     ZLIMIT
+00240AB0     ZSTRPR
+00241020     ZCURMV
+00241580     ZTXINI
+00241620     ZQUIET
+00241730     ZWINDO
+002417B0     ZCHRCH
+00241920     ZVALPS
+
+00241BF0  Segment _TEXT of module aide\zutilx.for (\lib3.0\lf90libs\aide.lib)
+00241BF0     ZB2ON
+00241DD0     ZCOLOR
+00241E70     ZCKINT
+002420D0     ZDELET
+002421B0     ZDRWDW
+00242BC0     ZDRWSC
+00242FA0     ZEMSTP
+00243260     ZGTRET
+00243280     ZLNSTR
+00243400     ZMNSST
+00243420     ZSTADD
+00243460     ZSTADQ
+00243680     ZSTORE
+00243C50     ZSTWRT
+00244070     ZUNCNT
+00244440     ZWRTCM
+00244AC0     ZWRTMN
+00245160     ZWTREA
+002454A0     ZWNSET
+00245560     ZCMDON
+002455C0     ZCKREA
+00245770     ZANSET
+00245820     ZWNSOP
+
+002458D0  Segment _TEXT of module aide\zutily.for (\lib3.0\lf90libs\aide.lib)
+002458D0     ZTUTOR
+00246120     ZRFRSH
+002464F0     ZMVMSE
+00246930     ZCMMSE
+
+00246EF0  Segment _TEXT of module aide\zclbak.for (\lib3.0\lf90libs\aide.lib)
+00246EF0     ZCBCHR
+002470F0     ZCBFLD
+002472F0     ZCBEXT
+002474B0     ZCBSST
+00247500     ZCBGST
+00247550     QSETCB
+
+00247580  Segment _TEXT of module aide\zsyslf90.for (\lib3.0\lf90libs\aide.lib)
+00247580     ZWRVDR
+002475F0     GT1ST
+00247610     GTNXT
+
+00247630  Segment _TEXT of module aide\aninit.for (\lib3.0\lf90libs\aide.lib)
+00247630     ANINIT
+002476B0     ANINIX
+00247720     ANINIZ
+00248060     ANCLOS
+00248210     GETPTH
+002488B0     BLDFNM
+
+002489A0  Segment _TEXT of module aide\qtchar.for (\lib3.0\lf90libs\aide.lib)
+002489A0     GETTXT
+00248A50     QTSTR
+00248C80     QRSPIN
+00248D70     QRESP
+00248EC0     QRESPS
+002491F0     CHKANS
+00249650     CHKANQ
+00249920     PRTANS
+
+00249B00  Segment _TEXT of module aide\prtaid.for (\lib3.0\lf90libs\aide.lib)
+00249B00     PRNTXT
+00249B60     PMXTXT
+00249BB0     PRTXLC
+00249C10     PMXCNT
+00249C70     PMXCNW
+00249DE0     PRNTXI
+00249E70     PMXTXI
+00249FB0     PRNTXR
+0024A040     PMXTXR
+0024A180     PRNTXD
+0024A210     PMXTXD
+0024A350     PRNTXA
+0024A3F0     PMXTXA
+0024A520     PMXTXM
+0024A7B0     PMXUPD
+
+0024ADF0  Segment _TEXT of module aide\utmisc.for (\lib3.0\lf90libs\aide.lib)
+0024ADF0     ZGTKEY
+0024CCA0     MACWIN
+0024CF10     ARRINP
+0024D160     TRMINL
+
+0024D190  Segment _TEXT of module aide\z1util.for (\lib3.0\lf90libs\aide.lib)
+0024D190     ZEDIT1
+00250700     ZLOCAR
+002517B0     ZWRMN1
+002519C0     Q2INIT
+00251B30     Q2EDIT
+
+00251B60  Segment _TEXT of module aide\zcbch1.for (\lib3.0\lf90libs\aide.lib)
+00251B60     ZCBCH1
+
+00251B80  Segment _TEXT of module aide\zcbch2.for (\lib3.0\lf90libs\aide.lib)
+00251B80     ZCBCH2
+
+00251BA0  Segment _TEXT of module aide\zcbch3.for (\lib3.0\lf90libs\aide.lib)
+00251BA0     ZCBCH3
+
+00251BC0  Segment _TEXT of module aide\zcbch4.for (\lib3.0\lf90libs\aide.lib)
+00251BC0     ZCBCH4
+
+00251BE0  Segment _TEXT of module aide\zcbch5.for (\lib3.0\lf90libs\aide.lib)
+00251BE0     ZCBCH5
+
+00251C00  Segment _TEXT of module aide\zcbch6.for (\lib3.0\lf90libs\aide.lib)
+00251C00     ZCBCH6
+
+00251C20  Segment _TEXT of module aide\zcbch7.for (\lib3.0\lf90libs\aide.lib)
+00251C20     ZCBCH7
+
+00251C40  Segment _TEXT of module aide\zcbch8.for (\lib3.0\lf90libs\aide.lib)
+00251C40     ZCBCH8
+
+00251C60  Segment _TEXT of module aide\zcbch9.for (\lib3.0\lf90libs\aide.lib)
+00251C60     ZCBCH9
+
+00251C80  Segment _TEXT of module aide\zcbfl1.for (\lib3.0\lf90libs\aide.lib)
+00251C80     ZCBFL1
+
+00251CA0  Segment _TEXT of module aide\zcbfl2.for (\lib3.0\lf90libs\aide.lib)
+00251CA0     ZCBFL2
+
+00251CC0  Segment _TEXT of module aide\zcbfl3.for (\lib3.0\lf90libs\aide.lib)
+00251CC0     ZCBFL3
+
+00251CE0  Segment _TEXT of module aide\zcbfl4.for (\lib3.0\lf90libs\aide.lib)
+00251CE0     ZCBFL4
+
+00251D00  Segment _TEXT of module aide\zcbfl5.for (\lib3.0\lf90libs\aide.lib)
+00251D00     ZCBFL5
+
+00251D20  Segment _TEXT of module aide\zcbfl6.for (\lib3.0\lf90libs\aide.lib)
+00251D20     ZCBFL6
+
+00251D40  Segment _TEXT of module aide\zcbfl7.for (\lib3.0\lf90libs\aide.lib)
+00251D40     ZCBFL7
+
+00251D60  Segment _TEXT of module aide\zcbfl8.for (\lib3.0\lf90libs\aide.lib)
+00251D60     ZCBFL8
+
+00251D80  Segment _TEXT of module aide\zcbfl9.for (\lib3.0\lf90libs\aide.lib)
+00251D80     ZCBFL9
+
+00251DA0  Segment _TEXT of module aide\zcbex1.for (\lib3.0\lf90libs\aide.lib)
+00251DA0     ZCBEX1
+
+00251DC0  Segment _TEXT of module aide\zcbex2.for (\lib3.0\lf90libs\aide.lib)
+00251DC0     ZCBEX2
+
+00251DE0  Segment _TEXT of module aide\zcbex3.for (\lib3.0\lf90libs\aide.lib)
+00251DE0     ZCBEX3
+
+00251E00  Segment _TEXT of module aide\zcbex4.for (\lib3.0\lf90libs\aide.lib)
+00251E00     ZCBEX4
+
+00251E20  Segment _TEXT of module aide\zcbex5.for (\lib3.0\lf90libs\aide.lib)
+00251E20     ZCBEX5
+
+00251E40  Segment _TEXT of module aide\zcbex6.for (\lib3.0\lf90libs\aide.lib)
+00251E40     ZCBEX6
+
+00251E60  Segment _TEXT of module aide\zcbex7.for (\lib3.0\lf90libs\aide.lib)
+00251E60     ZCBEX7
+
+00251E80  Segment _TEXT of module aide\zcbex8.for (\lib3.0\lf90libs\aide.lib)
+00251E80     ZCBEX8
+
+00251EA0  Segment _TEXT of module aide\zcbex9.for (\lib3.0\lf90libs\aide.lib)
+00251EA0     ZCBEX9
+
+00251EC0  Segment _TEXT of module aide\qtscn1.for (\lib3.0\lf90libs\aide.lib)
+00251EC0     QRESPM
+00251F80     QRESPX
+00252020     QRESCN
+00252120     QRESCX
+002521E0     QRESCD
+00252300     QRESCR
+002523D0     QRESCZ
+00252F00     COLINI
+00252FA0     QSCSET
+002530F0     QSCSTI
+00253250     QSCSTR
+002533B0     QSCSTD
+00253510     QSCSTC
+002535F0     QSCSTV
+002542B0     QUESET
+00254300     HLPSET
+002543D0     INITM
+00254440     INITMD
+
+002545D0  Segment _TEXT of module aide\z4util.for (\lib3.0\lf90libs\aide.lib)
+002545D0     ZSLMNN
+002565F0     Z4POS
+
+00256650  Segment _TEXT of module aide\ztscn1.for (\lib3.0\lf90libs\aide.lib)
+00256650     ZSCDEF
+00256DB0     ZFLOUT
+00257F20     ZFILVL
+
+00258D70  Segment _TEXT of module adwdm\msimpt.for (\lib3.0\lf90libs\adwdm.lib)
+00258D70     PRWMSI
+002596D0     PRMSPA
+00260900     PRMSTI
+002611F0     PRMSMI
+00263560     PRMSFI
+002648E0     PRMSIT
+00264BC0     FSPARS
+
+002659F0  Segment _TEXT of module util\ckfspc.for (\lib3.0\lf90libs\util.lib)
+002659F0     CKFSPC
+
+00267000  Segment ??data of module lfinit.asm (c:\lf9045\bin\lfinit.obj)
+00267000     _lf_codestart
+00267004     _lf_codeend
+00267008     _lf_datastart
+00267018     _lf_stacktop
+0026701C     _lf_stackmargin
+00267020     _lf_stacklimit
+00267024     _lf_stackbottom
+00267028     _lf_trap_mask
+0026702C     _lf_program_name
+00267034     _lf_command_tail_length
+00267038     _lf_command_tail
+00267144     _lf_env_length
+00267148     _lf_env_pointer
+0026714C     _lf_dpmi_flag
+00267150     _lf_osmajor
+00267151     _lf_osminor
+00267423     _lf_fpu_control_word
+00267425     _lf_status
+
+00268000  Segment ??data of module inter.asm (C:\LF9045\Lib\lf90.lib)
+00268000     _lf_rtp_flags
+
+0026877C  Segment _DATA of module fmtin.c (C:\LF9045\Lib\lf90.lib)
+002687E0     _lf_repeat_pointer
+
+002687E4  Segment _DATA of module fmtin2.c (C:\LF9045\Lib\lf90.lib)
+00268844     _lf_input_fmt
+00268850     _lf_input_repeat_type
+0026885C     _lfrep_char_alloc
+00268864     _lf_repeat_length
+
+002688DC  Segment _DATA of module fmtot2.c (C:\LF9045\Lib\lf90.lib)
+0026893C     _lf_output_fmt
+00268954     _lf_max_print
+00268958     _lf_pfill
+
+00268AB4  Segment _DATA of module iomisc.c (C:\LF9045\Lib\lf90.lib)
+00268B30     _lf__prompt
+
+00268B38  Segment _DATA of module minimum.c (C:\LF9045\Lib\lf90.lib)
+00268B9C     _lf_iostat
+00268BA0     _lf_eip_of_error
+00268BA4     _lf_ebp_of_error
+00268BA8     _lf_err_position
+00268BAC     _lf_err_fcb
+00268BB0     _lf_fcb_list
+00268BB4     _lf_curfcb
+
+00268E1C  Segment _DATA of module flg2rt.asm (C:\LF9045\Lib\lf90.lib)
+00268E1C     _lf_no_head_flag
+00268E20     _lf_default_fcb_buffer_size
+00268E24     _lf_buffer_size_default
+00268E3C     _lf_link_threads_flag
+00268E40     _lf_f90_conforming_flag
+00268E44     _lf_trace
+00268E48     _lf_unused11
+00268E4C     _lf_unused12
+00268E50     _lf_unused13
+00268E54     _lf_unused14
+00268E58     _lf_unused15
+00268E5C     _lf_unused16
+
+00269164  Segment _DATA of module ereport.c (C:\LF9045\Lib\lf90.lib)
+00269198     _lf_error_ebp
+0026919C     _lf_error_esp
+002691A0     _lf_error_eip
+002691A4     _lf_message_width
+002691A8     _lf_line_of_error
+002691AC     _lf_file_of_error
+
+002692F4  Segment _DATA of module fmtio.c (C:\LF9045\Lib\lf90.lib)
+00269354     _lf_output_append_reset_by_input
+00269358     _lf_fmtflag
+0026936A     _lf_nl_flag
+0026936B     _lf_crrnt_char
+
+00269444  Segment _DATA of module dosio.asm (C:\LF9045\Lib\lf90.lib)
+00269444     _lf_spindrift_io
+
+00269450  Segment _DATA of module errno.c (C:\LF9045\Lib\lf90.lib)
+00269450     _lf_errno
+
+002C2990  Segment _DATA of module pow_tbl1.asm (C:\LF9045\Lib\lf90.lib)
+002C2990     inv_b_hi
+
+002C2DA0  Segment _DATA of module pow_tbl2.asm (C:\LF9045\Lib\lf90.lib)
+002C2DA0     t_hi
+002C31A8     t_lo
+
+002CA2B0  Segment _lc__FLG2RT of module ..\src\hspfbat.for (..\src\hspfbat.obj)
+002CA2B0     _lc__FLG2RT
+
+002CA2F0  Segment _lc__rt_common of module mw_asm0.asm (C:\LF9045\Lib\lf90.lib)
+002CA2F0     _lffltused
+
+002CA300  Segment _lc_ZDSSMZ of module hec\zchkpn.for (\lib3.0\lf90libs\hec.lib)
+002CA300     _lc_ZDSSMZ
+
+002CA310  Segment _lc_WORDS of module hec\zclose.for (\lib3.0\lf90libs\hec.lib)
+002CA310     _lc_WORDS
+
+002CA340  Segment _lc_ZDSSBZ of module hec\zclose.for (\lib3.0\lf90libs\hec.lib)
+002CA340     _lc_ZDSSBZ
+
+002CB040  Segment _lc_ZDSSKZ of module hec\zclose.for (\lib3.0\lf90libs\hec.lib)
+002CB040     _lc_ZDSSKZ
+
+002CB240  Segment _lc_ZDSSCZ of module hec\zinqir.for (\lib3.0\lf90libs\hec.lib)
+002CB240     _lc_ZDSSCZ
+
+002CB300  Segment _lc_ZDSSNZ of module hec\zinqir.for (\lib3.0\lf90libs\hec.lib)
+002CB300     _lc_ZDSSNZ
+
+002CB390  Segment _lc_ZDSSIZ of module hec\zinqir.for (\lib3.0\lf90libs\hec.lib)
+002CB390     _lc_ZDSSIZ
+
+002CB790  Segment _lc_ZDSSFZ of module hec\zinqir.for (\lib3.0\lf90libs\hec.lib)
+002CB790     _lc_ZDSSFZ
+
+002CB7A0  Segment _lc_ZDSSLZ of module hec\zinqir.for (\lib3.0\lf90libs\hec.lib)
+002CB7A0     _lc_ZDSSLZ
+
+002CB7F0  Segment _lc_DCDBUG of module hec\zset.for (\lib3.0\lf90libs\hec.lib)
+002CB7F0     _lc_DCDBUG
+
+002CB800  Segment _lc_ZDSSCM of module hec\zset.for (\lib3.0\lf90libs\hec.lib)
+002CB800     _lc_ZDSSCM
+
+002CB820  Segment _lc_ZDSSCP of module hec\zsrts.for (\lib3.0\lf90libs\hec.lib)
+002CB820     _lc_ZDSSCP
+
+002CB840  Segment _lc_ZDSSTS of module hec\zrrtsx.for (\lib3.0\lf90libs\hec.lib)
+002CB840     _lc_ZDSSTS
+
+002CE040  Segment _lc_ZDSSDC of module hec\zsrtsx.for (\lib3.0\lf90libs\hec.lib)
+002CE040     _lc_ZDSSDC
+
+002CE240  Segment _lc_CFBUFF of module wdm\wdbtch.for (\lib3.0\lf90libs\wdm.lib)
+002CE240     _lc_CFBUFF
+
+002D3340  Segment _lc_CDRLOC of module wdm\wdbtch.for (\lib3.0\lf90libs\wdm.lib)
+002D3340     _lc_CDRLOC
+
+002D3360  Segment _lc_CWTSDS of module wdm\wdtms1.for (\lib3.0\lf90libs\wdm.lib)
+002D3360     _lc_CWTSDS
+
+002D33B0  Segment _lc_CTSBUF of module wdm\tsbufr.for (\lib3.0\lf90libs\wdm.lib)
+002D33B0     _lc_CTSBUF
+
+003B8FB0  Segment _lc_CWDMID of module wdm\wdmid.for (\lib3.0\lf90libs\wdm.lib)
+003B8FB0     _lc_CWDMID
+
+003B8FE0  Segment _lc_CWDMIC of module wdm\wdmid.for (\lib3.0\lf90libs\wdm.lib)
+003B8FE0     _lc_CWDMIC
+
+003B9000  Segment _lc_ZCNTL1 of module adwdm\adutil.for (\lib3.0\lf90libs\adwdm.lib)
+003B9000     _lc_ZCNTL1
+
+003BC200  Segment _lc_ZCNTL2 of module adwdm\adutil.for (\lib3.0\lf90libs\adwdm.lib)
+003BC200     _lc_ZCNTL2
+
+003F7200  Segment _lc_ZCNTL3 of module adwdm\adutil.for (\lib3.0\lf90libs\adwdm.lib)
+003F7200     _lc_ZCNTL3
+
+003F7250  Segment _lc_CZGLVC of module adwdm\adutil.for (\lib3.0\lf90libs\adwdm.lib)
+003F7250     _lc_CZGLVC
+
+003F8350  Segment _lc_CZGLVL of module adwdm\adutil.for (\lib3.0\lf90libs\adwdm.lib)
+003F8350     _lc_CZGLVL
+
+003FD250  Segment _lc_COLOR of module adwdm\ehutlf90.for (\lib3.0\lf90libs\adwdm.lib)
+003FD250     _lc_COLOR
+
+003FD290  Segment _lc_CSCREC of module adwdm\ehutlf90.for (\lib3.0\lf90libs\adwdm.lib)
+003FD290     _lc_CSCREC
+
+00401290  Segment _lc_CSCREN of module adwdm\ehutlf90.for (\lib3.0\lf90libs\adwdm.lib)
+00401290     _lc_CSCREN
+
+00404690  Segment _lc_CQRSPI of module adwdm\ehutlf90.for (\lib3.0\lf90libs\adwdm.lib)
+00404690     _lc_CQRSPI
+
+00404A90  Segment _lc_CQRSPC of module adwdm\ehutlf90.for (\lib3.0\lf90libs\adwdm.lib)
+00404A90     _lc_CQRSPC
+
+00404E90  Segment _lc_CSCRED of module adwdm\ehutlf90.for (\lib3.0\lf90libs\adwdm.lib)
+00404E90     _lc_CSCRED
+
+00405F90  Segment _lc_RCONST of module util\utnumb.for (\lib3.0\lf90libs\util.lib)
+00405F90     _lc_RCONST
+
+00405FA0  Segment _lc_DCONST of module util\utnumb.for (\lib3.0\lf90libs\util.lib)
+00405FA0     _lc_DCONST
+
+00405FC0  Segment _lc_ICONST of module util\utnumb.for (\lib3.0\lf90libs\util.lib)
+00405FC0     _lc_ICONST
+
+00405FD0  Segment _lc_CZOPTN of module aide\z0util.for (\lib3.0\lf90libs\aide.lib)
+00405FD0     _lc_CZOPTN
+
+004084D0  Segment _lc_CZHIDE of module aide\z0util.for (\lib3.0\lf90libs\aide.lib)
+004084D0     _lc_CZHIDE
+
+004093D0  Segment _lc_CCLBAK of module aide\z0util.for (\lib3.0\lf90libs\aide.lib)
+004093D0     _lc_CCLBAK
+
+004093E0  Segment _lc_CCLBAC of module aide\z0util.for (\lib3.0\lf90libs\aide.lib)
+004093E0     _lc_CCLBAC
+
+00409430  Segment _lc_CUSRPM of module aide\utuprm.for (\lib3.0\lf90libs\aide.lib)
+00409430     _lc_CUSRPM
+
+00409630  Segment _lc_TERI of module aide\aninit.for (\lib3.0\lf90libs\aide.lib)
+00409630     _lc_TERI
+
+00409CFC  Segment CONST of module lfctype.c (C:\LF9045\Lib\lf90.lib)
+00409CFC     _lf_ctype_
+
+0040A0F0  Segment _BSS of module lfinit.asm (c:\lf9045\bin\lfinit.obj)
+0040A0F0     _edata
+
+0040BB18  Segment _BSS of module fmtin.c (C:\LF9045\Lib\lf90.lib)
+0040BB18     _lf_rep_cnt
+
+0040C5E0  Segment _BSS of module lfgetenv.c (C:\LF9045\Lib\lf90.lib)
+0040C5E0     env_var_length
+
+00D45364  Segment _EBSS_ of module lfinit.asm (c:\lf9045\bin\lfinit.obj)
+00D45364     _ebss
+
+00D45370  Segment c_common
+00D45370     _lc_CFILBC
+00D46ED0     _lc_CFILBI
+00D47070     _lc_CHCAT
+00D47080     _lc_CHCATC
+00D47790     _lc_CHMSG
+00D47830     _lc_CHMSGC
+00D47900     _lc_CIOSTA
+0120CA60     _lc_CIOSTC
+0127A850     _lc_CIRRIG
+0127B040     _lc_COSUPM
+012809D0     _lc_COSVM
+02F1CD50     _lc_CPEST
+02F21220     _lc_CPTHNM
+02F32B80     _lc_CRINC
+02F33290     _lc_CRINTP
+02F49090     _lc_CSPCH
+02F553E0     _lc_CSPCND
+02FA8410     _lc_CSPDST
+02FA99F0     _lc_CSPINS
+036DF540     _lc_CSPUVR
+037027D0     _lc_CSPVQD
+0377C900     _lc_CTSGPM
+05601100     _lc_CUCIM
+0571B4C0     _lc_CUCIMC
+05C756B0     _lc_DSSINF
+05C785A0     _lc_IFLTAB
+05C79D30     _lc_SCRTCH
+062637F0     _lc_SPUVNC
+0626F370     _lc_SPUVQC
+06285300     _lc_VNAMES

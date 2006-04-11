@@ -1,0 +1,17 @@
+"Configurations"
+{
+    "Debug|Win32"
+    {
+    "StartApplication" = ""
+    "StartWorkingDirectory" = ""
+    "StartArguments" = ""
+    "Project:NeedsRebuild" = "False"
+    }
+    "Release|Win32"
+    {
+    "StartApplication" = ""
+    "StartWorkingDirectory" = ""
+    "StartArguments" = ""
+    "Project:NeedsRebuild" = "False"
+    }
+}

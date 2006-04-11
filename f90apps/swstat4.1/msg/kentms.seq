@@ -1,0 +1,539 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+  clu  grpnam  description
+  ___  ______  ____________________________________________
+  131  kentau  screens for kendall's tau analysis
+CLU          131    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  KENTAU
+  END LABEL
+  DATA   CLU    131
+#GROUP    1  TYPE MENU
+$WINDOW Trend (ST)          
+$SCREEN 
+Choose a Trend statistics option for Kendall's Tau
+
+       @Select  - data sets for trend analysis
+       @Define  - processing options
+       @Output  - file name
+       @Compute - trends using Kendall Tau test
+       @View    - computed trend statistics
+    Or
+       @Return  - to the Statistics screen
+$DEFAULT 1
+$LENGTH  8
+$OPTION Select
+_HELP
+One or more data sets (stations) must be selected for analysis.
+$OPTION Define
+_HELP
+Use this option to modify processing options.  These include
+specifying a time period, minimum and maximum limits, and output
+file options.
+$OPTION Output
+_HELP
+Use this option to open a new file for "printed" output.
+$OPTION Compute
+_HELP
+Use this option to compute the trend statistics for the Selected
+data sets using the Defined processing options.
+$OPTION View
+_HELP
+Look at the Computed Trend statistics on the screen.
+$OPTION Return
+_HELP
+Select this option when you are done processing Trend statistics.
+#GROUP    3  TYPE PRM1
+$WINDOW Define (STM)
+$SCREEN
+ Do you want to:
+               limit analysis by data set  [@lm.]   (Yes or No)
+               write statistics to the wdm [@wd.]   (Yes or No)
+               write statistics to a file  [@fl...] (No, List, Narrow, Wide)
+ Specify default values for
+       all dsn:  Minimum value to include  [@minimum]
+                 Maximum value to include  [@maximum]
+    time-series dsn:  Transformation code  [@Transf]
+                      Qualification code   [@qc]
+          table dsn:  Qualification codes  [@codes......]
+$FIELD  @lm
+_TYPE CHARACTER
+_VALID NO, YES
+_DEFAULT NO
+_HELP
+If NO is specified, the entire period of available record for each dsn will
+be analyzed using the default values from this form.  If YES is specified,
+the values from this form will be initial defaults for the analysis, you
+will have the opportunity to modify these with each data set analyzed.
+$FIELD @wd
+_TYPE CHARACTER
+_VALID YES, NO
+_DEFAULT YES
+_HELP
+Option to write trend statistics to the wdm file as
+attributes KENTAU, KENPLV, KENSLP:
+Yes - statistics will be saved as attributes in the wdm file
+No  - statistics will not be saved in the wdm file
+$FIELD @fl
+_TYPE CHARACTER
+_VALID NO, LIST, NARROW, WIDE
+_DEFAULT NARROW
+_HELP
+    No - statistics will not be written to a file
+  List - statistics written to user's file in a list format
+Narrow - statistics written to user's file in tabular format, narrow
+  Wide - statistics written to user's file in tabular format, wide
+$FIELD  @minimum
+_TYPE REAL
+_RANGE 0.0 : -999.
+_DEFAULT         0.
+_HELP
+ Values below this value will be skipped in analysis.         
+$FIELD  @maximum
+_TYPE REAL
+_RANGE 0.0 : -999.
+_DEFAULT     1.0E+10
+_HELP
+ Values above this value will be skipped in analysis.         
+$FIELD  @Transf
+_TYPE CHARACTER
+_VALID AVERAGE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT AVERAGE
+_HELP
+Trend option expects annual time series.  For time series dsn with a time
+step shorter than 1 year, data will be aggregated as specified.  By default,
+this value will be used for all selected time series dsn, but can be
+overridden for specific dsn is you limit the analysis by data set.
+$FIELD  @qc
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE     0 : 30
+_DEFAULT  30
+_HELP
+All data values in a time series data set have an associated quality code.
+Data values with a quality code greater than specified will not be included
+in the analysis.  (Data is usually stored with a quaity code of 0, entering
+a value of 30 will guarantee that all data values will be included.)
+$FIELD @codes
+_TYPE CHARACTER
+_HELP
+Peaks with the entered qualifications will not be included in analysis.
+Each peak in a table data set can have one or more qualification codes:
+8 - Q greater than indicated              E - only peak available for year
+4 - Q less than minimum recordable value  D - base Q changed during year
+6 - regulation or diversion, >= 10%       B - month/day unknown/not exact
+5 - unknown regulation or diversion       A - year unknow/not exact
+3 - dam failure                           7 - historic peak
+C - urbanization/mining/agricultural/etc. 2 - estimated peak
+9 - extreme climate event                 1 - maximum daily average
+#GROUP    4  TYPE FILE
+$WINDOW Output (STO)
+$SCREEN
+
+                  Enter name of output file.
+
+  [@FILE...........................................................]
+$NAME @FILE
+$STATUS UNKNOWN
+$HELP
+Name of file for output of trend statistics.
+#GROUP    5  TYPE PRM1
+$WINDOW OUTPUT (STO)
+$SCREEN
+
+                  Enter name of output file.
+
+  [@File...........................................................]
+$FIELD @File
+_TYPE   FILE
+_VALID STATUS: UNKNOWN
+_HELP
+Name of file to be opened for trend statistics.
+If the file exists, it will be overwritten.
+#GROUP    6  TYPE PRM1
+$WINDOW OUTPUT (STO)
+$SCREEN
+
+ The file [@OldFile........................................................]
+ is already open, to continue writing to this use Prev (function key F4).
+
+ To close this file and write to a new one, enter the new name below and
+ use Accept (function key F2)
+ 
+
+          [@NewFile........................................................]
+$FIELD @NewFile
+_TYPE   FILE
+_VALID STATUS: UNKNOWN
+_HELP
+Name of file to be opened for trend statistics.  
+If the file exists, it will be overwritten.
+$FIELD @OldFile
+_TYPE CHARACTER
+_PROTECT PROTECT
+_HELP
+
+#GROUP    7  TYPE TEXT
+$WINDOW Compute (STC) data set check 
+$TEXT
+No data selected.
+
+Select data sets for analysis before you Compute trend statistics.
+#GROUP   14  TYPE TEXT
+$WINDOW Compute (STC-D) problem with dates
+$TEXT
+At least 2 years are required for an anlysis, reenter dates.
+#GROUP   15  TYPE PRM1
+$WINDOW Compute (STC-D)
+$SCREEN
+            For data set number @dsn...
+
+           Period of analysis:
+                    begin year  [@byr]
+                      end year  [@eyr]
+            Range of data:
+                       minimum  [@minimum]
+                       maximum  [@maximum]
+           Qualification code:  [@qc]
+          Transformation code:  [@Transf]
+$FIELD  @byr
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE     1 : -999
+_DEFAULT  -999
+_HELP
+Starting year for analysis.
+$FIELD  @eyr
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE     1 : -999
+_DEFAULT  -999
+_HELP
+Ending year of analysis.
+$FIELD  @minimum
+_TYPE REAL
+_RANGE 0.0 : 99999.
+_DEFAULT         0.
+_HELP
+ Values below this value will be skipped in analysis.
+$FIELD  @maximum
+_TYPE REAL
+_RANGE 0.0 : 99999.
+_DEFAULT         0.
+_HELP
+ Values above this value will be skipped in analysis.
+$FIELD  @qc
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE     0 : 30
+_DEFAULT  30
+_HELP
+All data values in a time series data set have an associated quality code.
+Data values with a quality code greater than specified will not be included
+in the analysis.  (Data is usually stored with a quaity code of 0, entering
+a value of 30 will guarantee that all data values will be included.)
+$FIELD  @Transf
+_TYPE CHARACTER
+_VALID AVERAGE, TOTAL, MAXIMUM, MINIMUM
+_DEFAULT AVERAGE
+_HELP
+Trend option expects annual time series.  For time series dsn with a time
+step shorter than 1 year, data will be aggregated as specified.  By default,
+this value will be used for all selected time series dsn, but can be
+overridden for specific dsn is you limit the analysis by data set.
+$FIELD  @dsn
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE     1 : 32000
+_DEFAULT  -999
+_HELP
+Data set to be processed.
+#GROUP   16  TYPE PRM1
+$WINDOW Compute (STC-D)
+$SCREEN
+            For data set number @dsn...
+
+           Period of analysis:
+                    begin year  [@byr]
+                      end year  [@eyr]
+            Range of data:
+                       minimum  [@minimum]
+                       maximum  [@maximum]
+          Qualification codes:  [@qcodes.....]
+$FIELD  @byr
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE     1 : -999
+_DEFAULT  -999
+_HELP
+Starting year for analysis.
+$FIELD  @eyr
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE     1 : -999
+_DEFAULT  -999
+_HELP
+Ending year of analysis.
+$FIELD  @minimum
+_TYPE REAL
+_RANGE 0.0 : 99999.
+_DEFAULT         0.
+_HELP
+ Values below this value will be skipped in analysis.
+$FIELD  @maximum
+_TYPE REAL
+_RANGE 0.0 : 99999.
+_DEFAULT         0.
+_HELP
+ Values above this value will be skipped in analysis.
+$FIELD @qcodes
+_TYPE CHARACTER
+_HELP
+Each peak value has one or more associated qualification code:
+     1 - discharge is maximum daily average
+     2 - discharge is an estimate
+     3 - discharge affected by dam failure
+     4 - discharge less than indicated value
+     5 - discharge affected to unknown degree by regualtion or diversion
+     6 - discharge affected by regulation or diversions
+     7 - discharge is an historic peak
+     8 - discharge actually > indicated value
+     9 - discharge due to snowmelt, hurricane, ice-jam or debris dam breakup
+     A - year is unknown or not exact
+     B - month or day is unknown or not exact
+     C - all or part of record affected by urbanization, mining,
+         agricultural changes, channelization or others
+     D - base discharge changed during year
+     E - only annual maximum peak available for this year
+$FIELD  @dsn
+_TYPE INTEGER
+_PROTECT PROTECT
+_RANGE     1 : 32000
+_DEFAULT  -999
+_HELP
+Data set to be processed.
+#GROUP   17 TYPE TEXT
+$WINDOW Analyze (STA) no data
+$TEXT
+Data set number & skipped.  Return code is &.
+
+  No data found in data set if return code is zero.
+
+  Problem retrieving data set if return is not zero.
+#GROUP   25 TYPE TEXT
+$WINDOW View (SKV) Problem
+$TEXT
+Statistics have not been computed.
+
+Select Compute before you View the statistics.
+#GROUP   26 TYPE PRM2
+$WINDOW View (SKV)
+$HEADER
+  DATA-                       MEDIAN    PERIOD OF       NUMBER      NON-ZERO
+  SET    KENDALL'S           SLOPE OF    RECORD     OF DATA VALUES  RETURNS
+ NUMBER     TAU     P-LEVEL    TREND    FROM  TO      USED  UNUSED  CODE CNT
+ ------  --------- --------- ---------  ---- ----  ------- -------  ---- ---
+$FIELD DSN
+_TYPE    INTEGER
+_WIDTH   5
+_COLUMN  3
+_PROTECT PROTECT
+_RANGE   1:32000
+_DEFAULT 1
+_HELP
+Number of data set analyzed.
+$FIELD TAU
+_TYPE    REAL
+_WIDTH   9
+_COLUMN  10
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Kendall's Tau.
+If WDM output selected, saved as attribute KENTAU.
+$FIELD PLEVEL
+_TYPE    REAL
+_WIDTH   9
+_COLUMN  20
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+P-level for Kendall Tau.
+If WDM output selected, saved as attribute KENPLV. 
+$FIELD SLOPE
+_TYPE    REAL
+_WIDTH   9
+_COLUMN  30
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Median slope of time-series trend.
+If WDM output selected, saved as attribute KENSLP.
+$FIELD BGN
+_TYPE    INTEGER
+_WIDTH   4
+_COLUMN  41
+_PROTECT PROTECT
+_RANGE   1:-999
+_DEFAULT 0
+_HELP
+Beginning year of period used for statistics.
+$FIELD END
+_TYPE    INTEGER
+_WIDTH   4
+_COLUMN  46
+_PROTECT PROTECT
+_RANGE   1:-999
+_DEFAULT 0
+_HELP
+Ending year of period used for statistics.
+$FIELD GOOD
+_TYPE    INTEGER
+_WIDTH   7
+_COLUMN  52
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values used in computing statistics.
+Values less then -99998. will not be included in the computations.  Data
+values with unacceptable qualification / quality codes (Modify menu) will
+not be included in the computations.
+$FIELD BAD
+_TYPE    INTEGER
+_WIDTH   7
+_COLUMN  60
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values used in computing statistics.
+Values less then -99998. will not be included in the computations.  Data
+values with unacceptable qualification or quality codes (see Modify menu)
+will not be included in the computations.
+$FIELD RETC
+_TYPE    INTEGER
+_WIDTH   4
+_COLUMN  69
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0
+_HELP
+Error code.  If no errors occured, this will be 0.  Some non-zero values are:
+  -6 - no data present in data set   -82 - not a time series data set
+ -20 - problem with time step       -103 - no room in data set for attribute
+ -21 - problem with dates in dsn    -109 - out-of-range value for attributes
+$FIELD COUNT
+_TYPE    INTEGER
+_WIDTH   3
+_COLUMN  74
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0
+_HELP
+Number of errors that occured.  If this number is larger than 1, the
+error code is the code number for the last error that occured.
+#GROUP   27 TYPE PRM1
+$WINDOW View (SKV)
+$SCREEN
+
+         For data-set number @dsn.
+
+             Kendall's Tau:  @kndt....      Beginning year:  @bgn
+                   P-level:  @plvl....         Ending year:  @end
+     Median Slope of Trend:  @slope...         Values used:  @use
+                                            Values skipped:  @skp
+                                               Return code:  @rtc
+                                            Non-zero count:  @cnt
+$FIELD @dsn
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   1:32000
+_DEFAULT 1
+_HELP
+Number of data set analyzed.
+$FIELD @kndt
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Kendall's Tau.
+If WDM output selected, saved as attribute KENTAU.
+$FIELD @plvl
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+P-level for Kendall Tau.
+If WDM output selected, saved as attribute KENPLV.
+$FIELD @slope
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Median slope of time-series trend.
+If WDM output selected, saved as attribute KENSLP.
+
+$FIELD @bgn
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   1:-999
+_DEFAULT 0
+_HELP
+Beginning year of period used for statistics.
+$FIELD @end
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   1:-999
+_DEFAULT 0
+_HELP
+Ending year of period used for statistics.
+$FIELD @use
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values used in computing statistics.
+Values less then -99998. will not be included in the computations.  Data
+values with unacceptable qualification / quality codes (Modify menu) will
+not be included in the computations.
+$FIELD @skp
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values used in computing statistics.
+Values less then -99998. will not be included in the computations.  Data
+values with unacceptable qualification or quality codes (see Modify menu)
+will not be included in the computations.
+
+$FIELD @rtc
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0
+_HELP
+Error code.  If no errors occured, this will be 0.  Some non-zero values are:
+  -6 - no data present in data set   -82 - not a time series data set
+ -20 - problem with time step       -103 - no room in data set for attribute
+ -21 - problem with dates in dsn    -109 - out-of-range value for attributes
+$FIELD @cnt
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0
+_HELP
+Number of errors that occured.  If this number is larger than 1, the
+error code is the code number for the last error that occured.
+  END DATA
+END CLU

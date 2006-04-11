@@ -1,0 +1,2048 @@
+==================== HSPF TREE OPT:           1           2
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM PERLND   1 EXTNL  PREC  
+  PERLND   1 EXTNL  PREC  
+    WDM     39        PREC  
+***** TREE U FROM IMPLND   1 EXTNL  PREC  
+  IMPLND   1 EXTNL  PREC  
+    WDM    131        PREC  
+***** TREE U FROM RCHRES   1 EXTNL  PREC  
+  RCHRES   1 EXTNL  PREC  
+    WDM     39        PREC  
+***** TREE U FROM RCHRES   2 EXTNL  PREC  
+  RCHRES   2 EXTNL  PREC  
+    WDM     39        PREC  
+***** TREE U FROM RCHRES   3 EXTNL  PREC  
+  RCHRES   3 EXTNL  PREC  
+    WDM     39        PREC  
+***** TREE U FROM RCHRES   4 EXTNL  PREC  
+  RCHRES   4 EXTNL  PREC  
+    WDM    131        PREC  
+***** TREE U FROM RCHRES   5 EXTNL  PREC  
+  RCHRES   5 EXTNL  PREC  
+    WDM    131        PREC  
+***** TREE U FROM PERLND   1 ATEMP  AIRTMP
+  PERLND   1 ATEMP  AIRTMP
+    WDM    123        ATMP  
+***** TREE U FROM IMPLND   1 ATEMP  AIRTMP
+  IMPLND   1 ATEMP  AIRTMP
+    WDM    122        ATMP  
+***** TREE U FROM RCHRES   1 EXTNL  GATMP 
+  RCHRES   1 EXTNL  GATMP 
+    WDM    123        ATMP  
+***** TREE U FROM RCHRES   2 EXTNL  GATMP 
+  RCHRES   2 EXTNL  GATMP 
+    WDM    123        ATMP  
+***** TREE U FROM RCHRES   3 EXTNL  GATMP 
+  RCHRES   3 EXTNL  GATMP 
+    WDM    123        ATMP  
+***** TREE U FROM RCHRES   4 EXTNL  GATMP 
+  RCHRES   4 EXTNL  GATMP 
+    WDM    122        ATMP  
+***** TREE U FROM RCHRES   5 EXTNL  GATMP 
+  RCHRES   5 EXTNL  GATMP 
+    WDM    122        ATMP  
+***** TREE U FROM PERLND   1 EXTNL  PETINP
+  PERLND   1 EXTNL  PETINP
+    WDM     41        EVAP  
+***** TREE U FROM IMPLND   1 EXTNL  PETINP
+  IMPLND   1 EXTNL  PETINP
+    WDM     41        EVAP  
+***** TREE U FROM RCHRES   1 EXTNL  POTEV 
+  RCHRES   1 EXTNL  POTEV 
+    WDM     41        EVAP  
+***** TREE U FROM RCHRES   2 EXTNL  POTEV 
+  RCHRES   2 EXTNL  POTEV 
+    WDM     41        EVAP  
+***** TREE U FROM RCHRES   3 EXTNL  POTEV 
+  RCHRES   3 EXTNL  POTEV 
+    WDM     41        EVAP  
+***** TREE U FROM RCHRES   4 EXTNL  POTEV 
+  RCHRES   4 EXTNL  POTEV 
+    WDM     41        EVAP  
+***** TREE U FROM RCHRES   5 EXTNL  POTEV 
+  RCHRES   5 EXTNL  POTEV 
+    WDM     41        EVAP  
+***** TREE U FROM PERLND   1 EXTNL  WINMOV
+  PERLND   1 EXTNL  WINMOV
+    WDM     42        WIND  
+***** TREE U FROM IMPLND   1 EXTNL  WINMOV
+  IMPLND   1 EXTNL  WINMOV
+    WDM     42        WIND  
+***** TREE U FROM RCHRES   1 EXTNL  WIND  
+  RCHRES   1 EXTNL  WIND  
+    WDM     42        WIND  
+***** TREE U FROM RCHRES   2 EXTNL  WIND  
+  RCHRES   2 EXTNL  WIND  
+    WDM     42        WIND  
+***** TREE U FROM RCHRES   3 EXTNL  WIND  
+  RCHRES   3 EXTNL  WIND  
+    WDM     42        WIND  
+***** TREE U FROM RCHRES   4 EXTNL  WIND  
+  RCHRES   4 EXTNL  WIND  
+    WDM     42        WIND  
+***** TREE U FROM RCHRES   5 EXTNL  WIND  
+  RCHRES   5 EXTNL  WIND  
+    WDM     42        WIND  
+***** TREE U FROM PERLND   1 EXTNL  SOLRAD
+  PERLND   1 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM IMPLND   1 EXTNL  SOLRAD
+  IMPLND   1 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM RCHRES   1 EXTNL  SOLRAD
+  RCHRES   1 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM RCHRES   2 EXTNL  SOLRAD
+  RCHRES   2 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM RCHRES   3 EXTNL  SOLRAD
+  RCHRES   3 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM RCHRES   4 EXTNL  SOLRAD
+  RCHRES   4 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM RCHRES   5 EXTNL  SOLRAD
+  RCHRES   5 EXTNL  SOLRAD
+    WDM     46        SOLR  
+***** TREE U FROM PERLND   1 EXTNL  DTMPG 
+  PERLND   1 EXTNL  DTMPG 
+    WDM    126        DEWP  
+***** TREE U FROM IMPLND   1 EXTNL  DTMPG 
+  IMPLND   1 EXTNL  DTMPG 
+    WDM    125        DEWP  
+***** TREE U FROM RCHRES   1 EXTNL  DEWTMP
+  RCHRES   1 EXTNL  DEWTMP
+    WDM    126        DEWP  
+***** TREE U FROM RCHRES   2 EXTNL  DEWTMP
+  RCHRES   2 EXTNL  DEWTMP
+    WDM    126        DEWP  
+***** TREE U FROM RCHRES   3 EXTNL  DEWTMP
+  RCHRES   3 EXTNL  DEWTMP
+    WDM    126        DEWP  
+***** TREE U FROM RCHRES   4 EXTNL  DEWTMP
+  RCHRES   4 EXTNL  DEWTMP
+    WDM    125        DEWP  
+***** TREE U FROM RCHRES   5 EXTNL  DEWTMP
+  RCHRES   5 EXTNL  DEWTMP
+    WDM    125        DEWP  
+***** TREE U FROM RCHRES   1 EXTNL  COLIND
+  RCHRES   1 EXTNL  COLIND
+    WDM    140        CLND  
+***** TREE U FROM PERLND   1 EXTNL  CLOUD 
+  PERLND   1 EXTNL  CLOUD 
+    WDM    135        CLDC  
+***** TREE U FROM IMPLND   1 EXTNL  CLOUD 
+  IMPLND   1 EXTNL  CLOUD 
+    WDM    135        CLDC  
+***** TREE U FROM RCHRES   1 EXTNL  CLOUD 
+  RCHRES   1 EXTNL  CLOUD 
+    WDM    135        CLDC  
+***** TREE U FROM RCHRES   2 EXTNL  CLOUD 
+  RCHRES   2 EXTNL  CLOUD 
+    WDM    135        CLDC  
+***** TREE U FROM RCHRES   3 EXTNL  CLOUD 
+  RCHRES   3 EXTNL  CLOUD 
+    WDM    135        CLDC  
+***** TREE U FROM RCHRES   4 EXTNL  CLOUD 
+  RCHRES   4 EXTNL  CLOUD 
+    WDM    135        CLDC  
+***** TREE U FROM RCHRES   5 EXTNL  CLOUD 
+  RCHRES   5 EXTNL  CLOUD 
+    WDM    135        CLDC  
+***** TREE U FROM RCHRES   1 INFLOW IVOL  
+  RCHRES   1 INFLOW IVOL  
+    PERLND   1 PWATER PERO  
+***** TREE U FROM RCHRES   1 INFLOW IHEAT 
+  RCHRES   1 INFLOW IHEAT 
+    PERLND   1 PWTGAS POHT  
+***** TREE U FROM RCHRES   1 INFLOW OXIF  
+  RCHRES   1 INFLOW OXIF  
+    PERLND   1 PWTGAS PODOXM
+***** TREE U FROM RCHRES   1 INFLOW PHIF  
+  RCHRES   1 INFLOW PHIF  
+    PERLND   1 PWTGAS POCO2M
+***** TREE U FROM RCHRES   5 INFLOW IVOL  
+  RCHRES   5 INFLOW IVOL  
+    IMPLND   1 IWATER SURO  
+    RCHRES   4 ROFLOW ROVOL 
+***** TREE U FROM RCHRES   5 INFLOW ISED  
+  RCHRES   5 INFLOW ISED  
+    IMPLND   1 SOLIDS SOSLD 
+    RCHRES   4 ROFLOW ROSED 
+***** TREE U FROM RCHRES   5 INFLOW IHEAT 
+  RCHRES   5 INFLOW IHEAT 
+    IMPLND   1 IWTGAS SOHT  
+    RCHRES   4 ROFLOW ROHEAT
+***** TREE U FROM RCHRES   5 INFLOW OXIF  
+  RCHRES   5 INFLOW OXIF  
+    IMPLND   1 IWTGAS SODOXM
+    IMPLND   1 IQUAL  SOQUAL
+    RCHRES   4 ROFLOW OXCF1 
+***** TREE U FROM RCHRES   5 INFLOW PHIF  
+  RCHRES   5 INFLOW PHIF  
+    IMPLND   1 IWTGAS SOCO2M
+    RCHRES   4 ROFLOW PHCF1 
+***** TREE U FROM RCHRES   2 INFLOW IVOL  
+  RCHRES   2 INFLOW IVOL  
+    RCHRES   1 OFLOW  OVOL  
+***** TREE U FROM RCHRES   2 INFLOW ICON  
+  RCHRES   2 INFLOW ICON  
+    RCHRES   1 OFLOW  OCON  
+***** TREE U FROM RCHRES   2 INFLOW IHEAT 
+  RCHRES   2 INFLOW IHEAT 
+    RCHRES   1 OFLOW  OHEAT 
+***** TREE U FROM RCHRES   2 INFLOW ISED  
+  RCHRES   2 INFLOW ISED  
+    RCHRES   1 OFLOW  OSED  
+***** TREE U FROM RCHRES   2 INFLOW IDQAL 
+  RCHRES   2 INFLOW IDQAL 
+    RCHRES   1 OFLOW  ODQAL 
+***** TREE U FROM RCHRES   2 INFLOW ISQAL 
+  RCHRES   2 INFLOW ISQAL 
+    RCHRES   1 OFLOW  OSQAL 
+***** TREE U FROM RCHRES   2 INFLOW OXIF  
+  RCHRES   2 INFLOW OXIF  
+    RCHRES   1 OFLOW  OXCF2 
+***** TREE U FROM RCHRES   2 INFLOW NUIF1 
+  RCHRES   2 INFLOW NUIF1 
+    RCHRES   1 OFLOW  NUCF9 
+***** TREE U FROM RCHRES   2 INFLOW NUIF2 
+  RCHRES   2 INFLOW NUIF2 
+    RCHRES   1 OFLOW  OSNH4 
+    RCHRES   1 OFLOW  OSPO4 
+***** TREE U FROM RCHRES   2 INFLOW PKIF  
+  RCHRES   2 INFLOW PKIF  
+    RCHRES   1 OFLOW  PKCF2 
+***** TREE U FROM RCHRES   2 INFLOW PHIF  
+  RCHRES   2 INFLOW PHIF  
+    RCHRES   1 OFLOW  PHCF2 
+***** TREE U FROM RCHRES   3 INFLOW IVOL  
+  RCHRES   3 INFLOW IVOL  
+    RCHRES   1 OFLOW  OVOL  
+***** TREE U FROM RCHRES   3 INFLOW ICON  
+  RCHRES   3 INFLOW ICON  
+    RCHRES   1 OFLOW  OCON  
+***** TREE U FROM RCHRES   3 INFLOW IHEAT 
+  RCHRES   3 INFLOW IHEAT 
+    RCHRES   1 OFLOW  OHEAT 
+***** TREE U FROM RCHRES   3 INFLOW ISED  
+  RCHRES   3 INFLOW ISED  
+    RCHRES   1 OFLOW  OSED  
+***** TREE U FROM RCHRES   3 INFLOW IDQAL 
+  RCHRES   3 INFLOW IDQAL 
+    RCHRES   1 OFLOW  ODQAL 
+***** TREE U FROM RCHRES   3 INFLOW ISQAL 
+  RCHRES   3 INFLOW ISQAL 
+    RCHRES   1 OFLOW  OSQAL 
+***** TREE U FROM RCHRES   3 INFLOW OXIF  
+  RCHRES   3 INFLOW OXIF  
+    RCHRES   1 OFLOW  OXCF2 
+***** TREE U FROM RCHRES   3 INFLOW NUIF1 
+  RCHRES   3 INFLOW NUIF1 
+    RCHRES   1 OFLOW  NUCF9 
+***** TREE U FROM RCHRES   3 INFLOW NUIF2 
+  RCHRES   3 INFLOW NUIF2 
+    RCHRES   1 OFLOW  OSNH4 
+    RCHRES   1 OFLOW  OSPO4 
+***** TREE U FROM RCHRES   3 INFLOW PKIF  
+  RCHRES   3 INFLOW PKIF  
+    RCHRES   1 OFLOW  PKCF2 
+***** TREE U FROM RCHRES   3 INFLOW PHIF  
+  RCHRES   3 INFLOW PHIF  
+    RCHRES   1 OFLOW  PHCF2 
+***** TREE U FROM RCHRES   4 INFLOW IVOL  
+  RCHRES   4 INFLOW IVOL  
+    RCHRES   2 ROFLOW ROVOL 
+    RCHRES   3 ROFLOW ROVOL 
+***** TREE U FROM RCHRES   4 INFLOW ICON  
+  RCHRES   4 INFLOW ICON  
+    RCHRES   2 ROFLOW ROCON 
+    RCHRES   3 ROFLOW ROCON 
+***** TREE U FROM RCHRES   4 INFLOW IHEAT 
+  RCHRES   4 INFLOW IHEAT 
+    RCHRES   2 ROFLOW ROHEAT
+    RCHRES   3 ROFLOW ROHEAT
+***** TREE U FROM RCHRES   4 INFLOW ISED  
+  RCHRES   4 INFLOW ISED  
+    RCHRES   2 ROFLOW ROSED 
+    RCHRES   3 ROFLOW ROSED 
+***** TREE U FROM RCHRES   4 INFLOW IDQAL 
+  RCHRES   4 INFLOW IDQAL 
+    RCHRES   2 ROFLOW RODQAL
+    RCHRES   3 ROFLOW RODQAL
+***** TREE U FROM RCHRES   4 INFLOW ISQAL 
+  RCHRES   4 INFLOW ISQAL 
+    RCHRES   2 ROFLOW ROSQAL
+    RCHRES   3 ROFLOW ROSQAL
+***** TREE U FROM RCHRES   4 INFLOW OXIF  
+  RCHRES   4 INFLOW OXIF  
+    RCHRES   2 ROFLOW OXCF1 
+    RCHRES   3 ROFLOW OXCF1 
+***** TREE U FROM RCHRES   4 INFLOW NUIF1 
+  RCHRES   4 INFLOW NUIF1 
+    RCHRES   2 ROFLOW NUCF1 
+    RCHRES   3 ROFLOW NUCF1 
+***** TREE U FROM RCHRES   4 INFLOW NUIF2 
+  RCHRES   4 INFLOW NUIF2 
+    RCHRES   2 ROFLOW NUCF2 
+    RCHRES   3 ROFLOW NUCF2 
+***** TREE U FROM RCHRES   4 INFLOW PKIF  
+  RCHRES   4 INFLOW PKIF  
+    RCHRES   2 ROFLOW PKCF1 
+    RCHRES   3 ROFLOW PKCF1 
+***** TREE U FROM RCHRES   4 INFLOW PHIF  
+  RCHRES   4 INFLOW PHIF  
+    RCHRES   2 ROFLOW PHCF1 
+    RCHRES   3 ROFLOW PHCF1 
+***** TREE U FROM RCHRES   5 INFLOW ICON  
+  RCHRES   5 INFLOW ICON  
+    RCHRES   4 ROFLOW ROCON 
+***** TREE U FROM RCHRES   5 INFLOW IDQAL 
+  RCHRES   5 INFLOW IDQAL 
+    RCHRES   4 ROFLOW RODQAL
+***** TREE U FROM RCHRES   5 INFLOW ISQAL 
+  RCHRES   5 INFLOW ISQAL 
+    RCHRES   4 ROFLOW ROSQAL
+***** TREE U FROM RCHRES   5 INFLOW NUIF1 
+  RCHRES   5 INFLOW NUIF1 
+    RCHRES   4 ROFLOW NUCF1 
+***** TREE U FROM RCHRES   5 INFLOW NUIF2 
+  RCHRES   5 INFLOW NUIF2 
+    RCHRES   4 ROFLOW NUCF2 
+***** TREE U FROM RCHRES   5 INFLOW PKIF  
+  RCHRES   5 INFLOW PKIF  
+    RCHRES   4 ROFLOW PKCF1 
+***** TREE U FROM DISPLY   5 INPUT  TIMSER
+  DISPLY   5 INPUT  TIMSER
+    RCHRES   1 HTRCH  TW    
+***** TREE U FROM DISPLY   1 INPUT  TIMSER
+  DISPLY   1 INPUT  TIMSER
+    RCHRES   1 OXRX   DOX   
+***** TREE U FROM GENER    1 INPUT  ONE   
+  GENER    1 INPUT  ONE   
+    RCHRES   1 GQUAL  RSQAL 
+***** TREE U FROM GENER    1 INPUT  TWO   
+  GENER    1 INPUT  TWO   
+    RCHRES   1 SEDTRN RSED  
+***** TREE U FROM DISPLY   2 INPUT  TIMSER
+  DISPLY   2 INPUT  TIMSER
+    GENER    1 OUTPUT TIMSER
+***** TREE U FROM PLTGEN   1 INPUT  MEAN  
+  PLTGEN   1 INPUT  MEAN  
+    RCHRES   1 HYDR   ROVOL 
+    RCHRES   5 HYDR   ROVOL 
+***** TREE U FROM PLTGEN   2 INPUT  POINT 
+  PLTGEN   2 INPUT  POINT 
+    RCHRES   4 HYDR   AVDEP 
+    RCHRES   4 HTRCH  TW    
+    RCHRES   4 PHCARB PHST  
+***** TREE U FROM PLTGEN   2 INPUT  MEAN  
+  PLTGEN   2 INPUT  MEAN  
+    RCHRES   4 HTRCH  HTEXCH
+***** TREE U FROM DISPLY   3 INPUT  TIMSER
+  DISPLY   3 INPUT  TIMSER
+    RCHRES   5 OXRX   DOX   
+***** TREE U FROM GENER    2 INPUT  ONE   
+  GENER    2 INPUT  ONE   
+    RCHRES   5 GQUAL  RSQAL 
+***** TREE U FROM GENER    2 INPUT  TWO   
+  GENER    2 INPUT  TWO   
+    RCHRES   5 SEDTRN RSED  
+***** TREE U FROM DISPLY   4 INPUT  TIMSER
+  DISPLY   4 INPUT  TIMSER
+    GENER    2 OUTPUT TIMSER
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM WDM     39        PREC  
+  WDM     39        PREC  
+    PERLND   1 EXTNL  PREC  
+    RCHRES   1 EXTNL  PREC  
+    RCHRES   2 EXTNL  PREC  
+    RCHRES   3 EXTNL  PREC  
+***** TREE D FROM WDM    131        PREC  
+  WDM    131        PREC  
+    IMPLND   1 EXTNL  PREC  
+    RCHRES   4 EXTNL  PREC  
+    RCHRES   5 EXTNL  PREC  
+***** TREE D FROM WDM    123        ATMP  
+  WDM    123        ATMP  
+    PERLND   1 ATEMP  AIRTMP
+    RCHRES   1 EXTNL  GATMP 
+    RCHRES   2 EXTNL  GATMP 
+    RCHRES   3 EXTNL  GATMP 
+***** TREE D FROM WDM    122        ATMP  
+  WDM    122        ATMP  
+    IMPLND   1 ATEMP  AIRTMP
+    RCHRES   4 EXTNL  GATMP 
+    RCHRES   5 EXTNL  GATMP 
+***** TREE D FROM WDM     41        EVAP  
+  WDM     41        EVAP  
+    PERLND   1 EXTNL  PETINP
+    IMPLND   1 EXTNL  PETINP
+    RCHRES   1 EXTNL  POTEV 
+    RCHRES   2 EXTNL  POTEV 
+    RCHRES   3 EXTNL  POTEV 
+    RCHRES   4 EXTNL  POTEV 
+    RCHRES   5 EXTNL  POTEV 
+***** TREE D FROM WDM     42        WIND  
+  WDM     42        WIND  
+    PERLND   1 EXTNL  WINMOV
+    IMPLND   1 EXTNL  WINMOV
+    RCHRES   1 EXTNL  WIND  
+    RCHRES   2 EXTNL  WIND  
+    RCHRES   3 EXTNL  WIND  
+    RCHRES   4 EXTNL  WIND  
+    RCHRES   5 EXTNL  WIND  
+***** TREE D FROM WDM     46        SOLR  
+  WDM     46        SOLR  
+    PERLND   1 EXTNL  SOLRAD
+    IMPLND   1 EXTNL  SOLRAD
+    RCHRES   1 EXTNL  SOLRAD
+    RCHRES   2 EXTNL  SOLRAD
+    RCHRES   3 EXTNL  SOLRAD
+    RCHRES   4 EXTNL  SOLRAD
+    RCHRES   5 EXTNL  SOLRAD
+***** TREE D FROM WDM    126        DEWP  
+  WDM    126        DEWP  
+    PERLND   1 EXTNL  DTMPG 
+    RCHRES   1 EXTNL  DEWTMP
+    RCHRES   2 EXTNL  DEWTMP
+    RCHRES   3 EXTNL  DEWTMP
+***** TREE D FROM WDM    125        DEWP  
+  WDM    125        DEWP  
+    IMPLND   1 EXTNL  DTMPG 
+    RCHRES   4 EXTNL  DEWTMP
+    RCHRES   5 EXTNL  DEWTMP
+***** TREE D FROM WDM    140        CLND  
+  WDM    140        CLND  
+    RCHRES   1 EXTNL  COLIND
+***** TREE D FROM WDM    135        CLDC  
+  WDM    135        CLDC  
+    PERLND   1 EXTNL  CLOUD 
+    IMPLND   1 EXTNL  CLOUD 
+    RCHRES   1 EXTNL  CLOUD 
+    RCHRES   2 EXTNL  CLOUD 
+    RCHRES   3 EXTNL  CLOUD 
+    RCHRES   4 EXTNL  CLOUD 
+    RCHRES   5 EXTNL  CLOUD 
+***** TREE D FROM PERLND   1 PWATER PERO  
+  PERLND   1 PWATER PERO  
+    RCHRES   1 INFLOW IVOL  
+***** TREE D FROM PERLND   1 PWTGAS POHT  
+  PERLND   1 PWTGAS POHT  
+    RCHRES   1 INFLOW IHEAT 
+***** TREE D FROM PERLND   1 PWTGAS PODOXM
+  PERLND   1 PWTGAS PODOXM
+    RCHRES   1 INFLOW OXIF  
+***** TREE D FROM PERLND   1 PWTGAS POCO2M
+  PERLND   1 PWTGAS POCO2M
+    RCHRES   1 INFLOW PHIF  
+***** TREE D FROM IMPLND   1 IWATER SURO  
+  IMPLND   1 IWATER SURO  
+    RCHRES   5 INFLOW IVOL  
+***** TREE D FROM IMPLND   1 SOLIDS SOSLD 
+  IMPLND   1 SOLIDS SOSLD 
+    RCHRES   5 INFLOW ISED  
+***** TREE D FROM IMPLND   1 IWTGAS SOHT  
+  IMPLND   1 IWTGAS SOHT  
+    RCHRES   5 INFLOW IHEAT 
+***** TREE D FROM IMPLND   1 IWTGAS SODOXM
+  IMPLND   1 IWTGAS SODOXM
+    RCHRES   5 INFLOW OXIF  
+***** TREE D FROM IMPLND   1 IWTGAS SOCO2M
+  IMPLND   1 IWTGAS SOCO2M
+    RCHRES   5 INFLOW PHIF  
+***** TREE D FROM IMPLND   1 IQUAL  SOQUAL
+  IMPLND   1 IQUAL  SOQUAL
+    RCHRES   5 INFLOW OXIF  
+***** TREE D FROM RCHRES   1 OFLOW  OVOL  
+  RCHRES   1 OFLOW  OVOL  
+    RCHRES   2 INFLOW IVOL  
+    RCHRES   3 INFLOW IVOL  
+***** TREE D FROM RCHRES   1 OFLOW  OCON  
+  RCHRES   1 OFLOW  OCON  
+    RCHRES   2 INFLOW ICON  
+    RCHRES   3 INFLOW ICON  
+***** TREE D FROM RCHRES   1 OFLOW  OHEAT 
+  RCHRES   1 OFLOW  OHEAT 
+    RCHRES   2 INFLOW IHEAT 
+    RCHRES   3 INFLOW IHEAT 
+***** TREE D FROM RCHRES   1 OFLOW  OSED  
+  RCHRES   1 OFLOW  OSED  
+    RCHRES   2 INFLOW ISED  
+    RCHRES   3 INFLOW ISED  
+***** TREE D FROM RCHRES   1 OFLOW  ODQAL 
+  RCHRES   1 OFLOW  ODQAL 
+    RCHRES   2 INFLOW IDQAL 
+    RCHRES   3 INFLOW IDQAL 
+***** TREE D FROM RCHRES   1 OFLOW  OSQAL 
+  RCHRES   1 OFLOW  OSQAL 
+    RCHRES   2 INFLOW ISQAL 
+    RCHRES   3 INFLOW ISQAL 
+***** TREE D FROM RCHRES   1 OFLOW  OXCF2 
+  RCHRES   1 OFLOW  OXCF2 
+    RCHRES   2 INFLOW OXIF  
+    RCHRES   3 INFLOW OXIF  
+***** TREE D FROM RCHRES   1 OFLOW  NUCF9 
+  RCHRES   1 OFLOW  NUCF9 
+    RCHRES   2 INFLOW NUIF1 
+    RCHRES   3 INFLOW NUIF1 
+***** TREE D FROM RCHRES   1 OFLOW  OSNH4 
+  RCHRES   1 OFLOW  OSNH4 
+    RCHRES   2 INFLOW NUIF2 
+    RCHRES   3 INFLOW NUIF2 
+***** TREE D FROM RCHRES   1 OFLOW  OSPO4 
+  RCHRES   1 OFLOW  OSPO4 
+    RCHRES   2 INFLOW NUIF2 
+    RCHRES   3 INFLOW NUIF2 
+***** TREE D FROM RCHRES   1 OFLOW  PKCF2 
+  RCHRES   1 OFLOW  PKCF2 
+    RCHRES   2 INFLOW PKIF  
+    RCHRES   3 INFLOW PKIF  
+***** TREE D FROM RCHRES   1 OFLOW  PHCF2 
+  RCHRES   1 OFLOW  PHCF2 
+    RCHRES   2 INFLOW PHIF  
+    RCHRES   3 INFLOW PHIF  
+***** TREE D FROM RCHRES   2 ROFLOW ROVOL 
+  RCHRES   2 ROFLOW ROVOL 
+    RCHRES   4 INFLOW IVOL  
+***** TREE D FROM RCHRES   2 ROFLOW ROCON 
+  RCHRES   2 ROFLOW ROCON 
+    RCHRES   4 INFLOW ICON  
+***** TREE D FROM RCHRES   2 ROFLOW ROHEAT
+  RCHRES   2 ROFLOW ROHEAT
+    RCHRES   4 INFLOW IHEAT 
+***** TREE D FROM RCHRES   2 ROFLOW ROSED 
+  RCHRES   2 ROFLOW ROSED 
+    RCHRES   4 INFLOW ISED  
+***** TREE D FROM RCHRES   2 ROFLOW RODQAL
+  RCHRES   2 ROFLOW RODQAL
+    RCHRES   4 INFLOW IDQAL 
+***** TREE D FROM RCHRES   2 ROFLOW ROSQAL
+  RCHRES   2 ROFLOW ROSQAL
+    RCHRES   4 INFLOW ISQAL 
+***** TREE D FROM RCHRES   2 ROFLOW OXCF1 
+  RCHRES   2 ROFLOW OXCF1 
+    RCHRES   4 INFLOW OXIF  
+***** TREE D FROM RCHRES   2 ROFLOW NUCF1 
+  RCHRES   2 ROFLOW NUCF1 
+    RCHRES   4 INFLOW NUIF1 
+***** TREE D FROM RCHRES   2 ROFLOW NUCF2 
+  RCHRES   2 ROFLOW NUCF2 
+    RCHRES   4 INFLOW NUIF2 
+***** TREE D FROM RCHRES   2 ROFLOW PKCF1 
+  RCHRES   2 ROFLOW PKCF1 
+    RCHRES   4 INFLOW PKIF  
+***** TREE D FROM RCHRES   2 ROFLOW PHCF1 
+  RCHRES   2 ROFLOW PHCF1 
+    RCHRES   4 INFLOW PHIF  
+***** TREE D FROM RCHRES   3 ROFLOW ROVOL 
+  RCHRES   3 ROFLOW ROVOL 
+    RCHRES   4 INFLOW IVOL  
+***** TREE D FROM RCHRES   3 ROFLOW ROCON 
+  RCHRES   3 ROFLOW ROCON 
+    RCHRES   4 INFLOW ICON  
+***** TREE D FROM RCHRES   3 ROFLOW ROHEAT
+  RCHRES   3 ROFLOW ROHEAT
+    RCHRES   4 INFLOW IHEAT 
+***** TREE D FROM RCHRES   3 ROFLOW ROSED 
+  RCHRES   3 ROFLOW ROSED 
+    RCHRES   4 INFLOW ISED  
+***** TREE D FROM RCHRES   3 ROFLOW RODQAL
+  RCHRES   3 ROFLOW RODQAL
+    RCHRES   4 INFLOW IDQAL 
+***** TREE D FROM RCHRES   3 ROFLOW ROSQAL
+  RCHRES   3 ROFLOW ROSQAL
+    RCHRES   4 INFLOW ISQAL 
+***** TREE D FROM RCHRES   3 ROFLOW OXCF1 
+  RCHRES   3 ROFLOW OXCF1 
+    RCHRES   4 INFLOW OXIF  
+***** TREE D FROM RCHRES   3 ROFLOW NUCF1 
+  RCHRES   3 ROFLOW NUCF1 
+    RCHRES   4 INFLOW NUIF1 
+***** TREE D FROM RCHRES   3 ROFLOW NUCF2 
+  RCHRES   3 ROFLOW NUCF2 
+    RCHRES   4 INFLOW NUIF2 
+***** TREE D FROM RCHRES   3 ROFLOW PKCF1 
+  RCHRES   3 ROFLOW PKCF1 
+    RCHRES   4 INFLOW PKIF  
+***** TREE D FROM RCHRES   3 ROFLOW PHCF1 
+  RCHRES   3 ROFLOW PHCF1 
+    RCHRES   4 INFLOW PHIF  
+***** TREE D FROM RCHRES   4 ROFLOW ROVOL 
+  RCHRES   4 ROFLOW ROVOL 
+    RCHRES   5 INFLOW IVOL  
+***** TREE D FROM RCHRES   4 ROFLOW ROCON 
+  RCHRES   4 ROFLOW ROCON 
+    RCHRES   5 INFLOW ICON  
+***** TREE D FROM RCHRES   4 ROFLOW ROHEAT
+  RCHRES   4 ROFLOW ROHEAT
+    RCHRES   5 INFLOW IHEAT 
+***** TREE D FROM RCHRES   4 ROFLOW ROSED 
+  RCHRES   4 ROFLOW ROSED 
+    RCHRES   5 INFLOW ISED  
+***** TREE D FROM RCHRES   4 ROFLOW RODQAL
+  RCHRES   4 ROFLOW RODQAL
+    RCHRES   5 INFLOW IDQAL 
+***** TREE D FROM RCHRES   4 ROFLOW ROSQAL
+  RCHRES   4 ROFLOW ROSQAL
+    RCHRES   5 INFLOW ISQAL 
+***** TREE D FROM RCHRES   4 ROFLOW OXCF1 
+  RCHRES   4 ROFLOW OXCF1 
+    RCHRES   5 INFLOW OXIF  
+***** TREE D FROM RCHRES   4 ROFLOW NUCF1 
+  RCHRES   4 ROFLOW NUCF1 
+    RCHRES   5 INFLOW NUIF1 
+***** TREE D FROM RCHRES   4 ROFLOW NUCF2 
+  RCHRES   4 ROFLOW NUCF2 
+    RCHRES   5 INFLOW NUIF2 
+***** TREE D FROM RCHRES   4 ROFLOW PKCF1 
+  RCHRES   4 ROFLOW PKCF1 
+    RCHRES   5 INFLOW PKIF  
+***** TREE D FROM RCHRES   4 ROFLOW PHCF1 
+  RCHRES   4 ROFLOW PHCF1 
+    RCHRES   5 INFLOW PHIF  
+***** TREE D FROM RCHRES   1 HTRCH  TW    
+  RCHRES   1 HTRCH  TW    
+    DISPLY   5 INPUT  TIMSER
+***** TREE D FROM RCHRES   1 OXRX   DOX   
+  RCHRES   1 OXRX   DOX   
+    DISPLY   1 INPUT  TIMSER
+***** TREE D FROM RCHRES   1 GQUAL  RSQAL 
+  RCHRES   1 GQUAL  RSQAL 
+    GENER    1 INPUT  ONE   
+***** TREE D FROM RCHRES   1 SEDTRN RSED  
+  RCHRES   1 SEDTRN RSED  
+    GENER    1 INPUT  TWO   
+***** TREE D FROM GENER    1 OUTPUT TIMSER
+  GENER    1 OUTPUT TIMSER
+    DISPLY   2 INPUT  TIMSER
+***** TREE D FROM RCHRES   1 HYDR   ROVOL 
+  RCHRES   1 HYDR   ROVOL 
+    PLTGEN   1 INPUT  MEAN  
+***** TREE D FROM RCHRES   4 HYDR   AVDEP 
+  RCHRES   4 HYDR   AVDEP 
+    PLTGEN   2 INPUT  POINT 
+***** TREE D FROM RCHRES   4 HTRCH  TW    
+  RCHRES   4 HTRCH  TW    
+    PLTGEN   2 INPUT  POINT 
+***** TREE D FROM RCHRES   4 PHCARB PHST  
+  RCHRES   4 PHCARB PHST  
+    PLTGEN   2 INPUT  POINT 
+***** TREE D FROM RCHRES   4 HTRCH  HTEXCH
+  RCHRES   4 HTRCH  HTEXCH
+    PLTGEN   2 INPUT  MEAN  
+***** TREE D FROM RCHRES   5 OXRX   DOX   
+  RCHRES   5 OXRX   DOX   
+    DISPLY   3 INPUT  TIMSER
+***** TREE D FROM RCHRES   5 GQUAL  RSQAL 
+  RCHRES   5 GQUAL  RSQAL 
+    GENER    2 INPUT  ONE   
+***** TREE D FROM RCHRES   5 SEDTRN RSED  
+  RCHRES   5 SEDTRN RSED  
+    GENER    2 INPUT  TWO   
+***** TREE D FROM GENER    2 OUTPUT TIMSER
+  GENER    2 OUTPUT TIMSER
+    DISPLY   4 INPUT  TIMSER
+***** TREE D FROM RCHRES   5 HYDR   ROVOL 
+  RCHRES   5 HYDR   ROVOL 
+    PLTGEN   1 INPUT  MEAN  
+==================== HSPF TREE OPT:           2         222
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM DISPLY   5              
+  DISPLY   5              
+    RCHRES   1              
+      WDM     39 PREC         
+      WDM    123 ATMP         
+      WDM     41 EVAP         
+      WDM     42 WIND         
+      WDM     46 SOLR         
+      WDM    126 DEWP         
+      WDM    140 CLND         
+      WDM    135 CLDC         
+      PERLND   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+        WDM    135 CLDC         
+***** TREE U FROM DISPLY   1              
+  DISPLY   1              
+    RCHRES   1              
+      WDM     39 PREC         
+      WDM    123 ATMP         
+      WDM     41 EVAP         
+      WDM     42 WIND         
+      WDM     46 SOLR         
+      WDM    126 DEWP         
+      WDM    140 CLND         
+      WDM    135 CLDC         
+      PERLND   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+        WDM    135 CLDC         
+***** TREE U FROM DISPLY   2              
+  DISPLY   2              
+    GENER    1              
+      RCHRES   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+        WDM    140 CLND         
+        WDM    135 CLDC         
+        PERLND   1              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+          WDM    135 CLDC         
+***** TREE U FROM PLTGEN   1              
+  PLTGEN   1              
+    RCHRES   1              
+      WDM     39 PREC         
+      WDM    123 ATMP         
+      WDM     41 EVAP         
+      WDM     42 WIND         
+      WDM     46 SOLR         
+      WDM    126 DEWP         
+      WDM    140 CLND         
+      WDM    135 CLDC         
+      PERLND   1              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+        WDM    135 CLDC         
+    RCHRES   5              
+      WDM    131 PREC         
+      WDM    122 ATMP         
+      WDM     41 EVAP         
+      WDM     42 WIND         
+      WDM     46 SOLR         
+      WDM    125 DEWP         
+      WDM    135 CLDC         
+      IMPLND   1              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+        WDM    135 CLDC         
+      RCHRES   4              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+        WDM    135 CLDC         
+        RCHRES   2              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+          WDM    135 CLDC         
+          RCHRES   1              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    140 CLND         
+            WDM    135 CLDC         
+            PERLND   1              
+              WDM     39 PREC         
+              WDM    123 ATMP         
+              WDM     41 EVAP         
+              WDM     42 WIND         
+              WDM     46 SOLR         
+              WDM    126 DEWP         
+              WDM    135 CLDC         
+        RCHRES   3              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+          WDM    135 CLDC         
+          RCHRES   1              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    140 CLND         
+            WDM    135 CLDC         
+            PERLND   1              
+              WDM     39 PREC         
+              WDM    123 ATMP         
+              WDM     41 EVAP         
+              WDM     42 WIND         
+              WDM     46 SOLR         
+              WDM    126 DEWP         
+              WDM    135 CLDC         
+***** TREE U FROM PLTGEN   2              
+  PLTGEN   2              
+    RCHRES   4              
+      WDM    131 PREC         
+      WDM    122 ATMP         
+      WDM     41 EVAP         
+      WDM     42 WIND         
+      WDM     46 SOLR         
+      WDM    125 DEWP         
+      WDM    135 CLDC         
+      RCHRES   2              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+        WDM    135 CLDC         
+        RCHRES   1              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+          WDM    140 CLND         
+          WDM    135 CLDC         
+          PERLND   1              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    135 CLDC         
+      RCHRES   3              
+        WDM     39 PREC         
+        WDM    123 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    126 DEWP         
+        WDM    135 CLDC         
+        RCHRES   1              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+          WDM    140 CLND         
+          WDM    135 CLDC         
+          PERLND   1              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    135 CLDC         
+***** TREE U FROM DISPLY   3              
+  DISPLY   3              
+    RCHRES   5              
+      WDM    131 PREC         
+      WDM    122 ATMP         
+      WDM     41 EVAP         
+      WDM     42 WIND         
+      WDM     46 SOLR         
+      WDM    125 DEWP         
+      WDM    135 CLDC         
+      IMPLND   1              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+        WDM    135 CLDC         
+      RCHRES   4              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+        WDM    135 CLDC         
+        RCHRES   2              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+          WDM    135 CLDC         
+          RCHRES   1              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    140 CLND         
+            WDM    135 CLDC         
+            PERLND   1              
+              WDM     39 PREC         
+              WDM    123 ATMP         
+              WDM     41 EVAP         
+              WDM     42 WIND         
+              WDM     46 SOLR         
+              WDM    126 DEWP         
+              WDM    135 CLDC         
+        RCHRES   3              
+          WDM     39 PREC         
+          WDM    123 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    126 DEWP         
+          WDM    135 CLDC         
+          RCHRES   1              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    140 CLND         
+            WDM    135 CLDC         
+            PERLND   1              
+              WDM     39 PREC         
+              WDM    123 ATMP         
+              WDM     41 EVAP         
+              WDM     42 WIND         
+              WDM     46 SOLR         
+              WDM    126 DEWP         
+              WDM    135 CLDC         
+***** TREE U FROM DISPLY   4              
+  DISPLY   4              
+    GENER    2              
+      RCHRES   5              
+        WDM    131 PREC         
+        WDM    122 ATMP         
+        WDM     41 EVAP         
+        WDM     42 WIND         
+        WDM     46 SOLR         
+        WDM    125 DEWP         
+        WDM    135 CLDC         
+        IMPLND   1              
+          WDM    131 PREC         
+          WDM    122 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    125 DEWP         
+          WDM    135 CLDC         
+        RCHRES   4              
+          WDM    131 PREC         
+          WDM    122 ATMP         
+          WDM     41 EVAP         
+          WDM     42 WIND         
+          WDM     46 SOLR         
+          WDM    125 DEWP         
+          WDM    135 CLDC         
+          RCHRES   2              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    135 CLDC         
+            RCHRES   1              
+              WDM     39 PREC         
+              WDM    123 ATMP         
+              WDM     41 EVAP         
+              WDM     42 WIND         
+              WDM     46 SOLR         
+              WDM    126 DEWP         
+              WDM    140 CLND         
+              WDM    135 CLDC         
+              PERLND   1              
+                WDM     39 PREC         
+                WDM    123 ATMP         
+                WDM     41 EVAP         
+                WDM     42 WIND         
+                WDM     46 SOLR         
+                WDM    126 DEWP         
+                WDM    135 CLDC         
+          RCHRES   3              
+            WDM     39 PREC         
+            WDM    123 ATMP         
+            WDM     41 EVAP         
+            WDM     42 WIND         
+            WDM     46 SOLR         
+            WDM    126 DEWP         
+            WDM    135 CLDC         
+            RCHRES   1              
+              WDM     39 PREC         
+              WDM    123 ATMP         
+              WDM     41 EVAP         
+              WDM     42 WIND         
+              WDM     46 SOLR         
+              WDM    126 DEWP         
+              WDM    140 CLND         
+              WDM    135 CLDC         
+              PERLND   1              
+                WDM     39 PREC         
+                WDM    123 ATMP         
+                WDM     41 EVAP         
+                WDM     42 WIND         
+                WDM     46 SOLR         
+                WDM    126 DEWP         
+                WDM    135 CLDC         
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM WDM     39 PREC         
+  WDM     39 PREC         
+    PERLND   1              
+      RCHRES   1              
+        RCHRES   2              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        RCHRES   3              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        DISPLY   5              
+        DISPLY   1              
+        GENER    1              
+          DISPLY   2              
+        PLTGEN   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+    RCHRES   2              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   3              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+***** TREE D FROM WDM    131 PREC         
+  WDM    131 PREC         
+    IMPLND   1              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+    RCHRES   4              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+      PLTGEN   2              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+***** TREE D FROM WDM    123 ATMP         
+  WDM    123 ATMP         
+    PERLND   1              
+      RCHRES   1              
+        RCHRES   2              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        RCHRES   3              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        DISPLY   5              
+        DISPLY   1              
+        GENER    1              
+          DISPLY   2              
+        PLTGEN   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+    RCHRES   2              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   3              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+***** TREE D FROM WDM    122 ATMP         
+  WDM    122 ATMP         
+    IMPLND   1              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+    RCHRES   4              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+      PLTGEN   2              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+***** TREE D FROM WDM     41 EVAP         
+  WDM     41 EVAP         
+    PERLND   1              
+      RCHRES   1              
+        RCHRES   2              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        RCHRES   3              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        DISPLY   5              
+        DISPLY   1              
+        GENER    1              
+          DISPLY   2              
+        PLTGEN   1              
+    IMPLND   1              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+    RCHRES   2              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   3              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   4              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+      PLTGEN   2              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+***** TREE D FROM WDM     42 WIND         
+  WDM     42 WIND         
+    PERLND   1              
+      RCHRES   1              
+        RCHRES   2              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        RCHRES   3              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        DISPLY   5              
+        DISPLY   1              
+        GENER    1              
+          DISPLY   2              
+        PLTGEN   1              
+    IMPLND   1              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+    RCHRES   2              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   3              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   4              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+      PLTGEN   2              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+***** TREE D FROM WDM     46 SOLR         
+  WDM     46 SOLR         
+    PERLND   1              
+      RCHRES   1              
+        RCHRES   2              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        RCHRES   3              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        DISPLY   5              
+        DISPLY   1              
+        GENER    1              
+          DISPLY   2              
+        PLTGEN   1              
+    IMPLND   1              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+    RCHRES   2              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   3              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   4              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+      PLTGEN   2              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+***** TREE D FROM WDM    126 DEWP         
+  WDM    126 DEWP         
+    PERLND   1              
+      RCHRES   1              
+        RCHRES   2              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        RCHRES   3              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        DISPLY   5              
+        DISPLY   1              
+        GENER    1              
+          DISPLY   2              
+        PLTGEN   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+    RCHRES   2              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   3              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+***** TREE D FROM WDM    125 DEWP         
+  WDM    125 DEWP         
+    IMPLND   1              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+    RCHRES   4              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+      PLTGEN   2              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+***** TREE D FROM WDM    140 CLND         
+  WDM    140 CLND         
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+***** TREE D FROM WDM    135 CLDC         
+  WDM    135 CLDC         
+    PERLND   1              
+      RCHRES   1              
+        RCHRES   2              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        RCHRES   3              
+          RCHRES   4              
+            RCHRES   5              
+              DISPLY   3              
+              GENER    2              
+                DISPLY   4              
+              PLTGEN   1              
+            PLTGEN   2              
+        DISPLY   5              
+        DISPLY   1              
+        GENER    1              
+          DISPLY   2              
+        PLTGEN   1              
+    IMPLND   1              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+    RCHRES   2              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   3              
+      RCHRES   4              
+        RCHRES   5              
+          DISPLY   3              
+          GENER    2              
+            DISPLY   4              
+          PLTGEN   1              
+        PLTGEN   2              
+    RCHRES   4              
+      RCHRES   5              
+        DISPLY   3              
+        GENER    2              
+          DISPLY   4              
+        PLTGEN   1              
+      PLTGEN   2              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+==================== HSPF TREE OPT:           3         222
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM DISPLY   5              
+  DISPLY   5              
+    RCHRES   1              
+      PERLND   1              
+***** TREE U FROM DISPLY   1              
+  DISPLY   1              
+    RCHRES   1              
+      PERLND   1              
+***** TREE U FROM DISPLY   2              
+  DISPLY   2              
+    GENER    1              
+      RCHRES   1              
+        PERLND   1              
+***** TREE U FROM PLTGEN   1              
+  PLTGEN   1              
+    RCHRES   1              
+      PERLND   1              
+    RCHRES   5              
+      IMPLND   1              
+      RCHRES   4              
+        RCHRES   2              
+          RCHRES   1              
+            PERLND   1              
+        RCHRES   3              
+          RCHRES   1              
+            PERLND   1              
+***** TREE U FROM PLTGEN   2              
+  PLTGEN   2              
+    RCHRES   4              
+      RCHRES   2              
+        RCHRES   1              
+          PERLND   1              
+      RCHRES   3              
+        RCHRES   1              
+          PERLND   1              
+***** TREE U FROM DISPLY   3              
+  DISPLY   3              
+    RCHRES   5              
+      IMPLND   1              
+      RCHRES   4              
+        RCHRES   2              
+          RCHRES   1              
+            PERLND   1              
+        RCHRES   3              
+          RCHRES   1              
+            PERLND   1              
+***** TREE U FROM DISPLY   4              
+  DISPLY   4              
+    GENER    2              
+      RCHRES   5              
+        IMPLND   1              
+        RCHRES   4              
+          RCHRES   2              
+            RCHRES   1              
+              PERLND   1              
+          RCHRES   3              
+            RCHRES   1              
+              PERLND   1              
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM PERLND   1              
+  PERLND   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            DISPLY   3              
+            GENER    2              
+              DISPLY   4              
+            PLTGEN   1              
+          PLTGEN   2              
+      DISPLY   5              
+      DISPLY   1              
+      GENER    1              
+        DISPLY   2              
+      PLTGEN   1              
+***** TREE D FROM IMPLND   1              
+  IMPLND   1              
+    RCHRES   5              
+      DISPLY   3              
+      GENER    2              
+        DISPLY   4              
+      PLTGEN   1              
+==================== HSPF TREE OPT:           4         222
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM GENER    1              
+  GENER    1              
+    RCHRES   1              
+      PERLND   1              
+***** TREE U FROM GENER    2              
+  GENER    2              
+    RCHRES   5              
+      IMPLND   1              
+      RCHRES   4              
+        RCHRES   2              
+          RCHRES   1              
+            PERLND   1              
+        RCHRES   3              
+          RCHRES   1              
+            PERLND   1              
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM PERLND   1              
+  PERLND   1              
+    RCHRES   1              
+      RCHRES   2              
+        RCHRES   4              
+          RCHRES   5              
+            GENER    2              
+      RCHRES   3              
+        RCHRES   4              
+          RCHRES   5              
+            GENER    2              
+      GENER    1              
+***** TREE D FROM IMPLND   1              
+  IMPLND   1              
+    RCHRES   5              
+      GENER    2              
+==================== HSPF TREE OPT:           5         222
+^^^^^^^^^^^^^^^^^^^^ TREE UP
+***** TREE U FROM PERLND EXTNL  PREC      
+  PERLND EXTNL  PREC      
+    WDM    PREC             
+***** TREE U FROM IMPLND EXTNL  PREC      
+  IMPLND EXTNL  PREC      
+    WDM    PREC             
+***** TREE U FROM RCHRES EXTNL  PREC      
+  RCHRES EXTNL  PREC      
+    WDM    PREC             
+***** TREE U FROM PERLND ATEMP  AIRTMP    
+  PERLND ATEMP  AIRTMP    
+    WDM    ATMP             
+***** TREE U FROM IMPLND ATEMP  AIRTMP    
+  IMPLND ATEMP  AIRTMP    
+    WDM    ATMP             
+***** TREE U FROM RCHRES EXTNL  GATMP     
+  RCHRES EXTNL  GATMP     
+    WDM    ATMP             
+***** TREE U FROM PERLND EXTNL  PETINP    
+  PERLND EXTNL  PETINP    
+    WDM    EVAP             
+***** TREE U FROM IMPLND EXTNL  PETINP    
+  IMPLND EXTNL  PETINP    
+    WDM    EVAP             
+***** TREE U FROM RCHRES EXTNL  POTEV     
+  RCHRES EXTNL  POTEV     
+    WDM    EVAP             
+***** TREE U FROM PERLND EXTNL  WINMOV    
+  PERLND EXTNL  WINMOV    
+    WDM    WIND             
+***** TREE U FROM IMPLND EXTNL  WINMOV    
+  IMPLND EXTNL  WINMOV    
+    WDM    WIND             
+***** TREE U FROM RCHRES EXTNL  WIND      
+  RCHRES EXTNL  WIND      
+    WDM    WIND             
+***** TREE U FROM PERLND EXTNL  SOLRAD    
+  PERLND EXTNL  SOLRAD    
+    WDM    SOLR             
+***** TREE U FROM IMPLND EXTNL  SOLRAD    
+  IMPLND EXTNL  SOLRAD    
+    WDM    SOLR             
+***** TREE U FROM RCHRES EXTNL  SOLRAD    
+  RCHRES EXTNL  SOLRAD    
+    WDM    SOLR             
+***** TREE U FROM PERLND EXTNL  DTMPG     
+  PERLND EXTNL  DTMPG     
+    WDM    DEWP             
+***** TREE U FROM IMPLND EXTNL  DTMPG     
+  IMPLND EXTNL  DTMPG     
+    WDM    DEWP             
+***** TREE U FROM RCHRES EXTNL  DEWTMP    
+  RCHRES EXTNL  DEWTMP    
+    WDM    DEWP             
+***** TREE U FROM RCHRES EXTNL  COLIND    
+  RCHRES EXTNL  COLIND    
+    WDM    CLND             
+***** TREE U FROM PERLND EXTNL  CLOUD     
+  PERLND EXTNL  CLOUD     
+    WDM    CLDC             
+***** TREE U FROM IMPLND EXTNL  CLOUD     
+  IMPLND EXTNL  CLOUD     
+    WDM    CLDC             
+***** TREE U FROM RCHRES EXTNL  CLOUD     
+  RCHRES EXTNL  CLOUD     
+    WDM    CLDC             
+***** TREE U FROM RCHRES INFLOW IVOL      
+  RCHRES INFLOW IVOL      
+    PERLND PWATER PERO      
+    IMPLND IWATER SURO      
+    RCHRES OFLOW  OVOL      
+    RCHRES ROFLOW ROVOL     
+***** TREE U FROM RCHRES INFLOW IHEAT     
+  RCHRES INFLOW IHEAT     
+    PERLND PWTGAS POHT      
+    IMPLND IWTGAS SOHT      
+    RCHRES OFLOW  OHEAT     
+    RCHRES ROFLOW ROHEAT    
+***** TREE U FROM RCHRES INFLOW OXIF      
+  RCHRES INFLOW OXIF      
+    PERLND PWTGAS PODOXM    
+    IMPLND IWTGAS SODOXM    
+    IMPLND IQUAL  SOQUAL    
+    RCHRES OFLOW  OXCF2     
+    RCHRES ROFLOW OXCF1     
+***** TREE U FROM RCHRES INFLOW PHIF      
+  RCHRES INFLOW PHIF      
+    PERLND PWTGAS POCO2M    
+    IMPLND IWTGAS SOCO2M    
+    RCHRES OFLOW  PHCF2     
+    RCHRES ROFLOW PHCF1     
+***** TREE U FROM RCHRES INFLOW ISED      
+  RCHRES INFLOW ISED      
+    IMPLND SOLIDS SOSLD     
+    RCHRES OFLOW  OSED      
+    RCHRES ROFLOW ROSED     
+***** TREE U FROM RCHRES INFLOW ICON      
+  RCHRES INFLOW ICON      
+    RCHRES OFLOW  OCON      
+    RCHRES ROFLOW ROCON     
+***** TREE U FROM RCHRES INFLOW IDQAL     
+  RCHRES INFLOW IDQAL     
+    RCHRES OFLOW  ODQAL     
+    RCHRES ROFLOW RODQAL    
+***** TREE U FROM RCHRES INFLOW ISQAL     
+  RCHRES INFLOW ISQAL     
+    RCHRES OFLOW  OSQAL     
+    RCHRES ROFLOW ROSQAL    
+***** TREE U FROM RCHRES INFLOW NUIF1     
+  RCHRES INFLOW NUIF1     
+    RCHRES OFLOW  NUCF9     
+    RCHRES ROFLOW NUCF1     
+***** TREE U FROM RCHRES INFLOW NUIF2     
+  RCHRES INFLOW NUIF2     
+    RCHRES OFLOW  OSNH4     
+    RCHRES OFLOW  OSPO4     
+    RCHRES ROFLOW NUCF2     
+***** TREE U FROM RCHRES INFLOW PKIF      
+  RCHRES INFLOW PKIF      
+    RCHRES OFLOW  PKCF2     
+    RCHRES ROFLOW PKCF1     
+***** TREE U FROM DISPLY INPUT  TIMSER    
+  DISPLY INPUT  TIMSER    
+    RCHRES HTRCH  TW        
+    RCHRES OXRX   DOX       
+    GENER  OUTPUT TIMSER    
+***** TREE U FROM GENER  INPUT  ONE       
+  GENER  INPUT  ONE       
+    RCHRES GQUAL  RSQAL     
+***** TREE U FROM GENER  INPUT  TWO       
+  GENER  INPUT  TWO       
+    RCHRES SEDTRN RSED      
+***** TREE U FROM PLTGEN INPUT  MEAN      
+  PLTGEN INPUT  MEAN      
+    RCHRES HYDR   ROVOL     
+    RCHRES HTRCH  HTEXCH    
+***** TREE U FROM PLTGEN INPUT  POINT     
+  PLTGEN INPUT  POINT     
+    RCHRES HYDR   AVDEP     
+    RCHRES HTRCH  TW        
+    RCHRES PHCARB PHST      
+^^^^^^^^^^^^^^^^^^^^ TREE DOWN
+***** TREE D FROM WDM    PREC             
+  WDM    PREC             
+    PERLND EXTNL  PREC      
+    IMPLND EXTNL  PREC      
+    RCHRES EXTNL  PREC      
+***** TREE D FROM WDM    ATMP             
+  WDM    ATMP             
+    PERLND ATEMP  AIRTMP    
+    IMPLND ATEMP  AIRTMP    
+    RCHRES EXTNL  GATMP     
+***** TREE D FROM WDM    EVAP             
+  WDM    EVAP             
+    PERLND EXTNL  PETINP    
+    IMPLND EXTNL  PETINP    
+    RCHRES EXTNL  POTEV     
+***** TREE D FROM WDM    WIND             
+  WDM    WIND             
+    PERLND EXTNL  WINMOV    
+    IMPLND EXTNL  WINMOV    
+    RCHRES EXTNL  WIND      
+***** TREE D FROM WDM    SOLR             
+  WDM    SOLR             
+    PERLND EXTNL  SOLRAD    
+    IMPLND EXTNL  SOLRAD    
+    RCHRES EXTNL  SOLRAD    
+***** TREE D FROM WDM    DEWP             
+  WDM    DEWP             
+    PERLND EXTNL  DTMPG     
+    IMPLND EXTNL  DTMPG     
+    RCHRES EXTNL  DEWTMP    
+***** TREE D FROM WDM    CLND             
+  WDM    CLND             
+    RCHRES EXTNL  COLIND    
+***** TREE D FROM WDM    CLDC             
+  WDM    CLDC             
+    PERLND EXTNL  CLOUD     
+    IMPLND EXTNL  CLOUD     
+    RCHRES EXTNL  CLOUD     
+***** TREE D FROM PERLND PWATER PERO      
+  PERLND PWATER PERO      
+    RCHRES INFLOW IVOL      
+***** TREE D FROM PERLND PWTGAS POHT      
+  PERLND PWTGAS POHT      
+    RCHRES INFLOW IHEAT     
+***** TREE D FROM PERLND PWTGAS PODOXM    
+  PERLND PWTGAS PODOXM    
+    RCHRES INFLOW OXIF      
+***** TREE D FROM PERLND PWTGAS POCO2M    
+  PERLND PWTGAS POCO2M    
+    RCHRES INFLOW PHIF      
+***** TREE D FROM IMPLND IWATER SURO      
+  IMPLND IWATER SURO      
+    RCHRES INFLOW IVOL      
+***** TREE D FROM IMPLND SOLIDS SOSLD     
+  IMPLND SOLIDS SOSLD     
+    RCHRES INFLOW ISED      
+***** TREE D FROM IMPLND IWTGAS SOHT      
+  IMPLND IWTGAS SOHT      
+    RCHRES INFLOW IHEAT     
+***** TREE D FROM IMPLND IWTGAS SODOXM    
+  IMPLND IWTGAS SODOXM    
+    RCHRES INFLOW OXIF      
+***** TREE D FROM IMPLND IWTGAS SOCO2M    
+  IMPLND IWTGAS SOCO2M    
+    RCHRES INFLOW PHIF      
+***** TREE D FROM IMPLND IQUAL  SOQUAL    
+  IMPLND IQUAL  SOQUAL    
+    RCHRES INFLOW OXIF      
+***** TREE D FROM RCHRES OFLOW  OVOL      
+  RCHRES OFLOW  OVOL      
+    RCHRES INFLOW IVOL      
+***** TREE D FROM RCHRES OFLOW  OCON      
+  RCHRES OFLOW  OCON      
+    RCHRES INFLOW ICON      
+***** TREE D FROM RCHRES OFLOW  OHEAT     
+  RCHRES OFLOW  OHEAT     
+    RCHRES INFLOW IHEAT     
+***** TREE D FROM RCHRES OFLOW  OSED      
+  RCHRES OFLOW  OSED      
+    RCHRES INFLOW ISED      
+***** TREE D FROM RCHRES OFLOW  ODQAL     
+  RCHRES OFLOW  ODQAL     
+    RCHRES INFLOW IDQAL     
+***** TREE D FROM RCHRES OFLOW  OSQAL     
+  RCHRES OFLOW  OSQAL     
+    RCHRES INFLOW ISQAL     
+***** TREE D FROM RCHRES OFLOW  OXCF2     
+  RCHRES OFLOW  OXCF2     
+    RCHRES INFLOW OXIF      
+***** TREE D FROM RCHRES OFLOW  NUCF9     
+  RCHRES OFLOW  NUCF9     
+    RCHRES INFLOW NUIF1     
+***** TREE D FROM RCHRES OFLOW  OSNH4     
+  RCHRES OFLOW  OSNH4     
+    RCHRES INFLOW NUIF2     
+***** TREE D FROM RCHRES OFLOW  OSPO4     
+  RCHRES OFLOW  OSPO4     
+    RCHRES INFLOW NUIF2     
+***** TREE D FROM RCHRES OFLOW  PKCF2     
+  RCHRES OFLOW  PKCF2     
+    RCHRES INFLOW PKIF      
+***** TREE D FROM RCHRES OFLOW  PHCF2     
+  RCHRES OFLOW  PHCF2     
+    RCHRES INFLOW PHIF      
+***** TREE D FROM RCHRES ROFLOW ROVOL     
+  RCHRES ROFLOW ROVOL     
+    RCHRES INFLOW IVOL      
+***** TREE D FROM RCHRES ROFLOW ROCON     
+  RCHRES ROFLOW ROCON     
+    RCHRES INFLOW ICON      
+***** TREE D FROM RCHRES ROFLOW ROHEAT    
+  RCHRES ROFLOW ROHEAT    
+    RCHRES INFLOW IHEAT     
+***** TREE D FROM RCHRES ROFLOW ROSED     
+  RCHRES ROFLOW ROSED     
+    RCHRES INFLOW ISED      
+***** TREE D FROM RCHRES ROFLOW RODQAL    
+  RCHRES ROFLOW RODQAL    
+    RCHRES INFLOW IDQAL     
+***** TREE D FROM RCHRES ROFLOW ROSQAL    
+  RCHRES ROFLOW ROSQAL    
+    RCHRES INFLOW ISQAL     
+***** TREE D FROM RCHRES ROFLOW OXCF1     
+  RCHRES ROFLOW OXCF1     
+    RCHRES INFLOW OXIF      
+***** TREE D FROM RCHRES ROFLOW NUCF1     
+  RCHRES ROFLOW NUCF1     
+    RCHRES INFLOW NUIF1     
+***** TREE D FROM RCHRES ROFLOW NUCF2     
+  RCHRES ROFLOW NUCF2     
+    RCHRES INFLOW NUIF2     
+***** TREE D FROM RCHRES ROFLOW PKCF1     
+  RCHRES ROFLOW PKCF1     
+    RCHRES INFLOW PKIF      
+***** TREE D FROM RCHRES ROFLOW PHCF1     
+  RCHRES ROFLOW PHCF1     
+    RCHRES INFLOW PHIF      
+***** TREE D FROM RCHRES HTRCH  TW        
+  RCHRES HTRCH  TW        
+    DISPLY INPUT  TIMSER    
+    PLTGEN INPUT  POINT     
+***** TREE D FROM RCHRES OXRX   DOX       
+  RCHRES OXRX   DOX       
+    DISPLY INPUT  TIMSER    
+***** TREE D FROM RCHRES GQUAL  RSQAL     
+  RCHRES GQUAL  RSQAL     
+    GENER  INPUT  ONE       
+***** TREE D FROM RCHRES SEDTRN RSED      
+  RCHRES SEDTRN RSED      
+    GENER  INPUT  TWO       
+***** TREE D FROM GENER  OUTPUT TIMSER    
+  GENER  OUTPUT TIMSER    
+    DISPLY INPUT  TIMSER    
+***** TREE D FROM RCHRES HYDR   ROVOL     
+  RCHRES HYDR   ROVOL     
+    PLTGEN INPUT  MEAN      
+***** TREE D FROM RCHRES HYDR   AVDEP     
+  RCHRES HYDR   AVDEP     
+    PLTGEN INPUT  POINT     
+***** TREE D FROM RCHRES PHCARB PHST      
+  RCHRES PHCARB PHST      
+    PLTGEN INPUT  POINT     
+***** TREE D FROM RCHRES HTRCH  HTEXCH    
+  RCHRES HTRCH  HTEXCH    
+    PLTGEN INPUT  MEAN      

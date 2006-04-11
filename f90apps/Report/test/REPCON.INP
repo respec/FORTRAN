@@ -1,0 +1,119 @@
+   13
+TSS       SEDIMENT(TONS)
+          NO3(LBS)
+NH3       NH3(LBS)
+          NO2(LBS)
+          NO23(LBS)
+          ORGANIC N(LBS)
+          TOTAL N(LBS)
+PHOS      PO4(LBS)
+          ORGP(LBS)
+PHOS      TOTP(LBS)
+FECA      FECAL COLI(#M ORGS)
+DO        DO(LBS)
+BOD5      BOD(LBS)X
+
+PERLND     SEDMNT SOSED                    REPORT         INPUT  TIMSER 1       
+PERLND     PQUAL  POQUAL 2                 REPORT         INPUT  TIMSER 2       
+PERLND     PQUAL  POQUAL 1                 REPORT         INPUT  TIMSER 3       
+PERLND     PQUAL  POQUAL 2   0.000001      REPORT         INPUT  TIMSER 4       
+PERLND     PQUAL  POQUAL 2                 REPORT         INPUT  TIMSER 5       
+PERLND     PQUAL  POQUAL 4   0.0480        REPORT         INPUT  TIMSER 6       
+PERLND     PQUAL  POQUAL 1                 REPORT         INPUT  TIMSER 7       
+PERLND     PQUAL  POQUAL 2                 REPORT         INPUT  TIMSER 7       
+PERLND     PQUAL  POQUAL 4   0.0480        REPORT         INPUT  TIMSER 7       
+PERLND     PQUAL  POQUAL 3                 REPORT         INPUT  TIMSER 8       
+PERLND     PQUAL  POQUAL 4   0.0023        REPORT         INPUT  TIMSER 9       
+PERLND     PQUAL  POQUAL 3                 REPORT         INPUT  TIMSER10       
+PERLND     PQUAL  POQUAL 4   0.0023        REPORT         INPUT  TIMSER10       
+PERLND     PQUAL  POQUAL 4   0.4000        REPORT         INPUT  TIMSER13       
+PERLND     PQUAL  POQUAL 5      1.0E-6     REPORT         INPUT  TIMSER11       
+PERLND     PWTGAS PODOXM                   REPORT         INPUT  TIMSER12       
+                                                                                
+IMPLND     SOLIDS SOSLD                    REPORT         INPUT  TIMSER 1       
+IMPLND     IQUAL  SOQUAL 2                 REPORT         INPUT  TIMSER 2       
+IMPLND     IQUAL  SOQUAL 1                 REPORT         INPUT  TIMSER 3       
+IMPLND     IQUAL  SOQUAL 2   .0000001      REPORT         INPUT  TIMSER 4       
+IMPLND     IQUAL  SOQUAL 2                 REPORT         INPUT  TIMSER 5       
+IMPLND     IQUAL  SOQUAL 4   0.0480        REPORT         INPUT  TIMSER 6       
+IMPLND     IQUAL  SOQUAL 1                 REPORT         INPUT  TIMSER 7       
+IMPLND     IQUAL  SOQUAL 2                 REPORT         INPUT  TIMSER 7       
+IMPLND     IQUAL  SOQUAL 4   0.0480        REPORT         INPUT  TIMSER 7       
+IMPLND     IQUAL  SOQUAL 3                 REPORT         INPUT  TIMSER 8       
+IMPLND     IQUAL  SOQUAL 4   0.0023        REPORT         INPUT  TIMSER 9       
+IMPLND     IQUAL  SOQUAL 3                 REPORT         INPUT  TIMSER10       
+IMPLND     IQUAL  SOQUAL 4   0.0023        REPORT         INPUT  TIMSER10       
+IMPLND     IQUAL  SOQUAL 5      1.0E-6     REPORT         INPUT  TIMSER11       
+IMPLND     IWTGAS SODOXM                   REPORT         INPUT  TIMSER12       
+IMPLND     IQUAL  SOQUAL 4   0.4000        REPORT         INPUT  TIMSER13       
+
+RCHRES     SEDTRN ROSED  4                 REPORT         INPUT  TIMSER 1       
+RCHRES     NUTRX  NUCF1  1                 REPORT         INPUT  TIMSER 2       
+RCHRES     NUTRX  NUCF1  2                 REPORT         INPUT  TIMSER 3       
+RCHRES     NUTRX  NUCF2  4 1               REPORT         INPUT  TIMSER 3       
+RCHRES     NUTRX  NUCF1  3                 REPORT         INPUT  TIMSER 4       
+RCHRES     NUTRX  NUCF1  1                 REPORT         INPUT  TIMSER 5       
+RCHRES     NUTRX  NUCF1  3                 REPORT         INPUT  TIMSER 5       
+RCHRES     OXRX   OXCF1  2      .0480      REPORT         INPUT  TIMSER 6       
+RCHRES     NUTRX  NUCF1  1                 REPORT         INPUT  TIMSER 7       
+RCHRES     NUTRX  NUCF1  3                 REPORT         INPUT  TIMSER 7       
+RCHRES     OXRX   OXCF1  2      .0480      REPORT         INPUT  TIMSER 7       
+RCHRES     NUTRX  NUCF1  4                 REPORT         INPUT  TIMSER 8       
+RCHRES     NUTRX  NUCF2  4 2               REPORT         INPUT  TIMSER 8       
+RCHRES     OXRX   OXCF1  2      .0023      REPORT         INPUT  TIMSER 9       
+RCHRES     NUTRX  NUCF1  4                 REPORT         INPUT  TIMSER10       
+RCHRES     NUTRX  NUCF2  4 2               REPORT         INPUT  TIMSER10       
+RCHRES     OXRX   OXCF1  2      .0023      REPORT         INPUT  TIMSER10       
+RCHRES     GQUAL  TROQAL 1      1.0E-6     REPORT         INPUT  TIMSER11       
+RCHRES     OXRX   OXCF1  1                 REPORT         INPUT  TIMSER12       
+RCHRES     OXRX   OXCF1  2                 REPORT         INPUT  TIMSER13       
+                                                                                
+RCHRES     SEDTRN DEPSCR 4         -1.     REPORT         INPUT  TIMSER 1       
+RCHRES     NUTRX  NUCF4  7         -1.     REPORT         INPUT  TIMSER 2       
+RCHRES     NUTRX  NUCF3  4 1       -1.     REPORT         INPUT  TIMSER 3       
+RCHRES     NUTRX  NUCF5  8         -1.     REPORT         INPUT  TIMSER 3       
+RCHRES     NUTRX  NUCF6  1         -1.     REPORT         INPUT  TIMSER 4       
+RCHRES     NUTRX  NUCF4  7         -1.     REPORT         INPUT  TIMSER 5       
+RCHRES     NUTRX  NUCF6  1         -1.     REPORT         INPUT  TIMSER 5       
+RCHRES     OXRX   OXCF4  8     -0.0480     REPORT         INPUT  TIMSER 6       
+RCHRES     NUTRX  NUCF4  7         -1.     REPORT         INPUT  TIMSER 7       
+RCHRES     NUTRX  NUCF6  1         -1.     REPORT         INPUT  TIMSER 7       
+RCHRES     OXRX   OXCF4  8     -0.0480     REPORT         INPUT  TIMSER 7       
+RCHRES     NUTRX  NUCF7  6         -1.     REPORT         INPUT  TIMSER 8       
+RCHRES     NUTRX  NUCF3  4 2       -1.     REPORT         INPUT  TIMSER 8       
+RCHRES     OXRX   OXCF4  8     -0.0023     REPORT         INPUT  TIMSER 9       
+RCHRES     NUTRX  NUCF7  6         -1.     REPORT         INPUT  TIMSER10       
+RCHRES     NUTRX  NUCF3  4 2       -1.     REPORT         INPUT  TIMSER10       
+RCHRES     OXRX   OXCF4  8     -0.0023     REPORT         INPUT  TIMSER10       
+RCHRES     GQUAL  DDQAL  7     -1.0E-6     REPORT         INPUT  TIMSER11       
+RCHRES     OXRX   OXCF3  8         -1.     REPORT         INPUT  TIMSER12       
+RCHRES     OXRX   OXCF4  8         -1.     REPORT         INPUT  TIMSER13       
+                                                                                
+BMPRAC     REMOVE RMSED  1        -1.      REPORT         INPUT  TIMSER 1       
+BMPRAC     REMOVE RMSED  2        -1.      REPORT         INPUT  TIMSER 1       
+BMPRAC     REMOVE RMSED  3        -1.      REPORT         INPUT  TIMSER 1       
+BMPRAC     REMOVE RMDNUT 1        -1.      REPORT         INPUT  TIMSER 2
+BMPRAC     REMOVE RMDNUT 2        -1.      REPORT         INPUT  TIMSER 3
+BMPRAC     REMOVE RMSNUT 1 1      -1.      REPORT         INPUT  TIMSER 3
+BMPRAC     REMOVE RMSNUT 1 1      -1.      REPORT         INPUT  TIMSER 3
+BMPRAC     REMOVE RMSNUT 3 1      -1.      REPORT         INPUT  TIMSER 3
+BMPRAC     REMOVE RMDNUT 3        -1.      REPORT         INPUT  TIMSER 4
+BMPRAC     REMOVE RMDNUT 1        -1.      REPORT         INPUT  TIMSER 5
+BMPRAC     REMOVE RMDNUT 3        -1.      REPORT         INPUT  TIMSER 5
+BMPRAC     REMOVE RMOX   2    -0.0480      REPORT         INPUT  TIMSER 6
+BMPRAC     REMOVE RMDNUT 1        -1.      REPORT         INPUT  TIMSER 7
+BMPRAC     REMOVE RMDNUT 3        -1.      REPORT         INPUT  TIMSER 7
+BMPRAC     REMOVE RMOX   2    -0.0480      REPORT         INPUT  TIMSER 7
+BMPRAC     REMOVE RMDNUT 4        -1.      REPORT         INPUT  TIMSER 8
+BMPRAC     REMOVE RMSNUT 1 2      -1.      REPORT         INPUT  TIMSER 8
+BMPRAC     REMOVE RMSNUT 2 2      -1.      REPORT         INPUT  TIMSER 8
+BMPRAC     REMOVE RMSNUT 3 2      -1.      REPORT         INPUT  TIMSER 8
+BMPRAC     REMOVE RMOX   2    -0.0023      REPORT         INPUT  TIMSER 9
+BMPRAC     REMOVE RMDNUT 4        -1.      REPORT         INPUT  TIMSER10
+BMPRAC     REMOVE RMSNUT 1 2      -1.      REPORT         INPUT  TIMSER10
+BMPRAC     REMOVE RMSNUT 2 2      -1.      REPORT         INPUT  TIMSER10
+BMPRAC     REMOVE RMSNUT 3 2      -1.      REPORT         INPUT  TIMSER10
+BMPRAC     REMOVE RMOX   2    -0.0023      REPORT         INPUT  TIMSER10
+BMPRAC     REMOVE RMDQAL 1     -1.0E-6     REPORT         INPUT  TIMSER11
+BMPRAC     REMOVE RMOX   1        -1.      REPORT         INPUT  TIMSER12
+BMPRAC     REMOVE RMOX   2        -1.      REPORT         INPUT  TIMSER13

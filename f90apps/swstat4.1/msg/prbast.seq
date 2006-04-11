@@ -1,0 +1,499 @@
+DATE
+WDMSFL
+SYSTEM
+CLU          151    TYPE  MESS   NDN  10   NUP  20   NSA  20   NSP  50   NDP 200
+  LABEL
+    GRPNAM  PRBAST
+  END LABEL
+  DATA   CLU   151
+#GROUP    1  TYPE MENU
+$WINDOW Basic (SB)
+$SCREEN
+Choose a Basic statistics option.
+
+       @Select  - data sets for analysis
+       @Define  - input and output options
+       @Compute - statistics for selected data sets
+       @View    - computed statistics
+
+    Or
+
+       @Return   - to Statistics screen
+$DEFAULT  1
+$LENGTH   7
+$OPTION Select
+_HELP
+ Choose Select to identify the data sets to be analyzed.
+ There are no default data sets.
+ Only time-series type (not table type) data sets may be analyzed.
+$OPTION Define
+_HELP
+ Choose Define to modify the default processing options.  The include
+ Quality code for data (0), 
+ Dates and time step (uses entire period at the data set time step)
+ output options (Screen, wdm file, and/or file)
+$OPTION Compute
+_HELP
+ Calculate the minimum, maximum, mean, and standard deviation for the
+ selected data set(s) for the selected time period(s) at the selected
+ time step(s).  
+$OPTION View
+_HELP
+ Look at the computed statistics on the screen.
+$OPTION Return
+_HELP
+ Select this option when you are finished processing Basic statistics.
+#GROUP    2  TYPE TEXT
+$WINDOW Compute (SBC) Problem
+$TEXT
+No data Selected.
+
+Select data sets for analysis before you Compute statistics.
+#GROUP    3 TYPE TEXT
+$WINDOW View (SBV) Problem
+$TEXT
+Statistics have not been computed.
+
+Select Compute before you View the statistics.
+#GROUP    5  TYPE PRM1
+$WINDOW Define (SBD)
+$SCREEN
+
+    Modify input and output options as needed.
+
+     Input - Dates and time steps [@datm..] (Default, Common, or Specify)
+             Quality code of data [@qc....]
+
+    Output - Write statistics to the wdm [@wd.] (Yes or No)
+             Write statistics to a file  [@fl.] (Yes or No)
+
+$FIELD @datm
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   DEFAULT, COMMON, SPECIFY
+_DEFAULT DEFAULT
+_HELP
+You may specify the period of record, time step, and transformation.
+Default - all data at the data's time step will be used for all data sets.
+Common  - use a single date and time step for all data sets.
+Specify - enter date and time step for each data set.
+$FIELD @qc
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE    0 : 30
+_DEFAULT  0
+_HELP
+ Maximum value of quality code for data.
+ Date with a higher quality code will not be used.
+ Most data in a wdm file has a quality code of 0.
+ If you are unsure about your data, use 30 to be sure all data is included.
+$FIELD @wd
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   YES, NO
+_DEFAULT YES
+_HELP
+Option to write basic statistics to the wdm file as attributes
+MINVAL, MAXVAL, MEANVL, and STDDEV.
+Yes - statistics will be saved as attributes in the wdm file
+No  - statistics will not be saved in the wdm file
+$FIELD @fl
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   YES, NO
+_DEFAULT YES
+_HELP
+Option to write basic statistics to an output file
+Yes - statistics will be written to a file
+No  - statistics will not be written to a file
+#GROUP    6 TYPE FILE
+$WINDOW Define (SBD) continued
+$SCREEN
+
+                        Name of output file?
+
+ [@FILE...........................................................]
+$NAME @FILE
+$STATUS UNKNOWN
+$ACCESS SEQUENTIAL
+$FORM FORMATTED
+$HELP
+Name of file for output of basic statistics.
+#GROUP   10  TYPE TEXT
+$WINDOW Compute (SBC) Problem
+$TEXT
+Statistics will not be Computed for data-set number &
+Problems retrieving the period or record and/or time step.
+#GROUP   11 TYPE TEXT
+$WINDOW Compute (SBC)
+$TEXT
+Computing basic statistics for data-set number &.
+#GROUP   12 TYPE TEXT
+$WINDOW Compute (SBC)
+$TEXT
+Finished computing basic statistics for selected data sets.
+#GROUP   15 TYPE TEXT
+$TEXT
+
+ Computation of Basic statistics.
+
+  DATA-                                                      NUMBER     NON-ZERO
+   SET                                        STANDARD   OF DATA VALUES RETURNS
+ NUMBER    MINIMUM     MAXIMUM        MEAN   DEVIATION     USED  UNUSED CODE NO.
+ ------ ---------- ----------- ----------- -----------  ------- ------- ---- ---
+#GROUP   16 TYPE TEXT
+$TEXT
+ -------------------------------------------------------------------------------
+   Return codes:   0 - all operations successful
+                  -6 - no data present in data set
+                 -14 - date specified not within valid range for data set
+                 -20 - problem with requested time step
+                 -21 - problem with dates in wdm file
+                 -82 - data set exists, but is not time series
+                -103 - no room in data set for attribute value
+                -109 - out-of-range value for attributes
+#GROUP   17 TYPE PRM2
+$WINDOW View (SBV)
+$HEADER
+ DATA-                                                     NUMBER     NON-ZERO
+  SET                                        STANDARD  OF DATA VALUES RETURNS
+NUMBER    MINIMUM     MAXIMUM        MEAN   DEVIATION    USED  UNUSED CODE NO.
+------ ---------- ----------- ----------- ----------- ------- ------- ---- ---
+$FIELD DSN
+_TYPE    INTEGER
+_WIDTH   5
+_COLUMN  1
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data set analyzed.
+$FIELD MIN
+_TYPE    REAL
+_WIDTH   12
+_COLUMN  6
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Minimum data value over selected time period.
+
+If WDM output selected, saved as attribute MINVAL.
+$FIELD MAX
+_TYPE    REAL
+_WIDTH   12
+_COLUMN  18
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Maximum data value over selected time period.
+
+If WDM output selected, saved as attribute MAXVAL.
+$FIELD MEAN
+_TYPE    REAL
+_WIDTH   12
+_COLUMN  30
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Mean of data values over selected time period.
+
+If WDM output selected, saved as attribute MEANVL.
+$FIELD STDV
+_TYPE    REAL
+_WIDTH   12
+_COLUMN  42
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Standard deviation of data values over selected time period.
+
+If WDM output selected, saved as attribute STDDEV.
+$FIELD GOOD
+_TYPE    INTEGER
+_WIDTH   8
+_COLUMN  53
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values used in computing statistics.
+Values equal to the attribute TSFILL are not included in the computation.
+This may give unexpected results if you have a TSFILL of 0.0 in a data set
+containing lots of "valid" zero data.
+$FIELD BAD
+_TYPE    INTEGER
+_WIDTH   8
+_COLUMN  62
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values not used in computing statistics.
+Values equal to the attribute TSFILL are not included in the computation.
+This may give unexpected results if you have a TSFILL of 0.0 in a data set
+containing lots of "valid" zero data.
+$FIELD RETC
+_TYPE    INTEGER
+_WIDTH   5
+_COLUMN  70
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0
+_HELP
+Error code.  If no errors occured, this will be 0.  Some non-zero values are:
+  -6 - no data present in data set   -82 - not a time series data set
+ -20 - problem with time step       -103 - no room in data set for attribute
+ -21 - problem with dates in dsn    -109 - out-of-range value for attributes
+$FIELD COUNT
+_TYPE    INTEGER
+_WIDTH   3
+_COLUMN  75
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of errors that occured.  If this number is larger than 1, the
+error code is the code number for the last error that occured.
+#GROUP   18  TYPE PRM1
+$WINDOW View (SBV)
+$SCREEN
+For data-set number @dsn..
+
+Minimum value      = @Min......    Number of values used     = @Gcnt.....
+Maximum value      = @Max......    Number of values not used = @Bcnt.....
+Mean               = @Mean.....
+Standard deviation = @Stdv.....
+$FIELD @Min
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Minimum data value over selected time period.
+
+If WDM output selected, saved as attribute MINVAL.
+$FIELD @Max
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Maximum data value over selected time period.
+
+If WDM output selected, saved as attribute MAXVAL.
+$FIELD @Mean
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Mean of data values over selected time period.
+
+If WDM output selected, saved as attribute MEANVL.
+$FIELD @Stdv
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Standard deviation of data values over selected time period.
+
+If WDM output selected, saved as attribute STDDEV.
+$FIELD @Gcnt
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values used in computing statistics.
+$FIELD @Bcnt
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values not used in computing statistics.
+$FIELD @dsn
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data set analyzed.
+#GROUP   19  TYPE prm1
+$WINDOW View (SBV)
+$SCREEN
+
+For data-set number @dsn..
+
+Minimum value      = @Min......    Number of values used     = @Gcnt.....
+Maximum value      = @Max......    Number of values not used = @Bcnt.....
+Mean               = @Mean.....    Return code from wdm      = @Retc.....
+Standard deviation = @Stdv.....    Return code count         = @Count....
+$FIELD @Min
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Minimum data value over selected time period.
+
+If WDM output selected, saved as attribute MINVAL.
+$FIELD @Max
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Maximum data value over selected time period.
+
+If WDM output selected, saved as attribute MAXVAL.
+$FIELD @Mean
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Mean of data values over selected time period.
+
+If WDM output selected, saved as attribute MEANVL.
+$FIELD @Stdv
+_TYPE    REAL
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0.0
+_HELP
+Standard deviation of data values over selected time period.
+
+If WDM output selected, saved as attribute STDDEV.
+$FIELD @Gcnt
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values used in computing statistics.
+$FIELD @Bcnt
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data values not used in computing statistics.
+$FIELD @Retc
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   -999:-999
+_DEFAULT 0
+_HELP
+Error code.  If no errors occured, this will be 0.  Some non-zero values are:
+  -6 - no data present in data set   -82 - not a time series data set
+ -20 - problem with time step       -103 - no room in data set for attribute
+ -21 - problem with dates in dsn    -109 - out-of-range value for attributes
+$FIELD Count
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of errors that occured.  If this number is larger than 1, the
+error code is the code number for the last error that occured.
+$FIELD @dsn
+_TYPE    INTEGER
+_PROTECT PROTECT
+_RANGE   0:-999
+_DEFAULT 0
+_HELP
+Number of data set analyzed.
+#GROUP   20  TYPE PRM1
+$WINDOW Compute (SBC)
+$SCREEN
+
+Enter period of record to use for computation of statistics.
+
+           Year    Month   Day     Hour    Minute  Second
+ Start     @YRS.   @MOS.   @DYS.   @HRS.   @MNS.   @SCS.
+ End       @YRE.   @MOE.   @DYE.   @HRE.   @MNE.   @SCE.
+
+                                  transfor-
+                   <- time step >  mation
+                   @TSTP1 @TUNIT1  @DTRAN1
+$FIELD @YRS
+_TYPE INTEGER
+_RANGE 1:2000
+_DEFAULT 1900
+$FIELD @MOS
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 1
+$FIELD @DYS
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 1
+$FIELD @HRS
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 0
+$FIELD @MNS
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @SCS
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @YRE
+_TYPE INTEGER
+_RANGE 1:2000
+_DEFAULT 1990
+$FIELD @MOE
+_TYPE INTEGER
+_RANGE 1:12
+_DEFAULT 12
+$FIELD @DYE
+_TYPE INTEGER
+_RANGE 1:31
+_DEFAULT 31
+$FIELD @HRE
+_TYPE INTEGER
+_RANGE 0:24
+_DEFAULT 24
+$FIELD @MNE
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @SCE
+_TYPE INTEGER
+_RANGE 0:60
+_DEFAULT 0
+$FIELD @TSTP1
+_TYPE INTEGER
+_PROTECT CORRECT
+_RANGE   1:1440
+_DEFAULT 1
+$FIELD @TUNIT1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID   SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS
+_DEFAULT DAYS
+$FIELD @DTRAN1
+_TYPE CHARACTER
+_PROTECT CORRECT
+_VALID RATE, TOTAL, MAX, MIN
+_DEFAULT RATE
+#GROUP   21  TYPE TEXT
+$WINDOW Compute (SBC) Problem
+$TEXT
+The Ending date does not follow the Starting date.
+
+The dates must be correctly specified before continuing.
+#GROUP   22 TYPE TEXT
+$WINDOW Dates (SBGD) problem
+$TEXT
+Selected dates outside available range, reenter.
+  END DATA
+END CLU

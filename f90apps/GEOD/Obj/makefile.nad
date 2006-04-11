@@ -1,0 +1,26 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = LF90
+PROGRAM   = ..\bin\nadcon.exe
+LDMAP     = ..\bin\nadcon.map
+LIBP      = \lf90\lib
+
+FFLAGS    = -c -i ..\srcAll -trace -g
+LDFLAGS   = -g -bind 
+
+OBJS      = nadcon.obj initl.obj headr.obj menu.obj ngrids.obj iparms.obj mloop.obj endrep.obj \
+            grids.obj dgrids.obj sgrids.obj nblank.obj fhelp.obj getpt.obj transf.obj \
+            openfl.obj askpt.obj type1.obj type2.obj type3.obj to83.obj hms.obj \
+            wrtpt.obj report.obj diagrm.obj ccard.obj dcard.obj \
+            fgrid.obj intrp.obj print1.obj print2.obj print3.obj coeff.obj surf.obj meters.obj
+
+VPATH     = ..\srcAll
+
+$(PROGRAM):     $(OBJS) $(LIBS)
+          $(FC) $(OBJS) -EXE $@ -MAP $(LDMAP) -LIBP $(LIBP) $(LDFLAGS)
+          !if -e $(VPATH)\*.obj
+            copy $(VPATH)\*.obj
+            erase $(VPATH)\*.obj
+          !endif
+

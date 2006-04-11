@@ -1,0 +1,21 @@
+#
+# MKMF template makefile for protected mode executables.
+#
+FC        = lf90
+LINKER    = lf90
+PROGRAM   = binout.exe
+FFLAGS    = -c -g
+LDFLAGS   = -lisk -bind -pack -g
+LDMAP     = nul
+MAKEFILE  = Makefile
+OBJS      = binout.obj himutil.obj
+
+# Re-define suffix rules to compile object files
+
+.for.obj:
+	$(FC) $(@,R,>.for) $(FFLAGS) 
+
+$(PROGRAM):     $(OBJS) $(LIBS)
+          $(LINKER) $(OBJS) -EXE $@ -MAP $(LDMAP) $(LDFLAGS)
+
+### OPUS MKMF:  Do not remove this line!  Automatic dependencies follow.

@@ -1,0 +1,923 @@
+RUN
+ 
+GLOBAL
+  UCI Created by WinHSPF for tutorial
+  START       1990/01/01 00:00  END    1990/12/31 24:00
+  RUN INTERP OUTPT LEVELS    1    0
+  RESUME     0 RUN     1                          UNITS    1
+END GLOBAL
+ 
+FILES
+<FILE>  <UN#>***<----FILE NAME------------------------------------------------->
+MESSU      24   tutorial.ech
+           91   tutorial.out
+WDM1       25   c:\basins\data\temp.wdm
+WDM2       26   c:\basins\data\met_data\tutorial.wdm
+END FILES
+ 
+OPN SEQUENCE
+    INGRP              INDELT 01:00
+      PERLND     101
+      PERLND     102
+      PERLND     103
+      PERLND     104
+      PERLND     105
+      IMPLND     101
+      RCHRES       1
+      RCHRES       2
+      RCHRES       3
+    END INGRP
+END OPN SEQUENCE
+ 
+PERLND
+  ACTIVITY
+*** <PLS >               Active Sections                               ***
+*** x -  x ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC ***
+  101  105    1    0    1    1    1    1    1    0    0    0    0    0
+  END ACTIVITY
+
+  PRINT-INFO
+*** < PLS>                       Print-flags                           PIVL  PYR
+*** x  - x ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC
+  101  105    4    4    4    4    4    4    4    4    4    4    4    4    1    9
+  END PRINT-INFO
+
+  GEN-INFO
+***             Name                  Unit-systems   Printer BinaryOut
+*** <PLS >                                t-series Engl Metr Engl Metr
+*** x -  x                                 in  out
+  101     Forest Land                       1    1   91    0   
+  102     Agricultural Land                 1    1   91    0  
+  103     Urban or Built-up La              1    1   91    0   
+  104     Barren Land                       1    1   91    0   
+  105     Water                             1    1   91    0   
+  END GEN-INFO
+
+  PWAT-PARM1
+*** <PLS >                   Flags
+*** x -  x CSNO RTOP UZFG  VCS  VUZ  VNN VIFW VIRC  VLE IFFC  HWT IRRG IFRD
+  101  105    0    1    1    1    0    0    0    0    1    1    0    0    0
+  END PWAT-PARM1
+
+  PWAT-PARM2
+*** < PLS>    FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+*** x  - x                (in)   (in/hr)      (ft)              (1/in)   (1/day)
+  101             1.       6.5      0.16       300  0.045574        0.      0.98
+  102  104        0.        6.      0.16       300  0.045574        0.      0.98
+  105             0.        4.      0.16       300  0.045574        0.      0.98
+  END PWAT-PARM2
+
+  PWAT-PARM3
+*** < PLS>    PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+*** x  - x   (deg F)   (deg F)
+  101  105       40.       35.        2.        2.       0.1      0.02        0.
+  END PWAT-PARM3
+
+  PWAT-PARM4
+*** <PLS >     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+*** x -  x      (in)      (in)                       (1/day)
+  101  105       0.1     1.128       0.2      0.75       0.5       0.1
+  END PWAT-PARM4
+
+  PWAT-STATE1
+*** < PLS>  PWATER state variables (in)
+*** x  - x      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+  101  105      0.01      0.01       0.3      0.01       1.5      0.01      0.01
+  END PWAT-STATE1
+
+  MON-INTERCEP
+*** <PLS >  Interception storage capacity at start of each month (in)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101  105  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1
+  END MON-INTERCEP
+
+  MON-LZETPARM
+*** <PLS >  Lower zone evapotransp   parm at start of each month
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101  105  0.2  0.2  0.3  0.3  0.4  0.4  0.4  0.4  0.4  0.3  0.2  0.2
+  END MON-LZETPARM
+
+  SED-PARM1
+*** <PLS >  Sediment parameters 1
+*** x -  x  CRV VSIV SDOP
+  101  105    1    0    1
+  END SED-PARM1
+
+  SED-PARM2
+*** <PLS >      SMPF      KRER      JRER     AFFIX     COVER      NVSI
+*** x -  x                                  (/day)           lb/ac-day
+  101             1.       0.3        2.      0.01        1.        1.
+  102             1.       0.3        2.      0.01        0.        2.
+  103             1.       0.3        2.      0.01        0.        1.
+  104             1.       0.3        2.      0.01        1.        1.
+  105             1.       0.3        2.      0.01        0.        1.
+  END SED-PARM2
+
+  SED-PARM3
+*** <PLS >  Sediment parameter 3
+*** x -  x      KSER      JSER      KGER      JGER
+  101           0.25        2.        0.        2.
+  102            1.2        2.        0.        2.
+  103            0.5        2.        0.        2.
+  104           0.25        2.        0.        2.
+  105            0.1        2.        0.        2.
+  END SED-PARM3
+
+  MON-COVER
+*** <PLS >  Monthly values for erosion related cover
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.85 0.85 0.85  0.9 0.95 0.95 0.95 0.95 0.95 0.95 0.85 0.85
+  102       0.4  0.4 0.25 0.28 0.38 0.65 0.85 0.88 0.88  0.6  0.4 0.35
+  103      0.75 0.75 0.75 0.78  0.8  0.8  0.8  0.8 0.78 0.76 0.75 0.75
+  104      0.85 0.85 0.85  0.9 0.95 0.95 0.95 0.95 0.95 0.95 0.85 0.85
+  105      0.98 0.98 0.98 0.98 0.98 0.98 0.98 0.98 0.98 0.98 0.98 0.98
+  END MON-COVER
+
+  SED-STOR
+*** <PLS >  Detached sediment storage (tons/acre)
+*** x -  x      DETS
+  101           0.05
+  102             1.
+  103            0.1
+  104           0.05
+  105            0.1
+  END SED-STOR
+
+  PSTEMP-PARM2
+*** <PLS >      ASLT      BSLT     ULTP1     ULTP2     LGTP1     LGTP2
+*** x -  x   (deg F)   (deg F)             (deg F)             (deg F)
+  101  105       24.       0.5       24.       0.5       40.        0.
+  END PSTEMP-PARM2
+
+  PWT-PARM1
+*** <PLS >  Flags for section PWTGAS
+*** x -  x  IDV  ICV  GDV  GVC
+  101  105    1    0    1    0
+  END PWT-PARM1
+
+  PWT-PARM2
+***         Second group of PWTGAS parms
+*** <PLS >      ELEV     IDOXP     ICO2P     ADOXP     ACO2P
+*** x -  x      (ft)    (mg/l)  (mg C/l)    (mg/l)  (mg C/l)
+  101  105     1074.       8.8        0.       8.8        0.
+  END PWT-PARM2
+
+  MON-IFWDOX
+*** <PLS > Value at start of each month for interflow DO concentration (mg/l)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101  105 12.7 12.7 11.2  9.7  7.4  6.6  6.2  6.2   7.  8.4  9.4 11.6
+  END MON-IFWDOX
+
+  MON-GRNDDOX
+*** <PLS >Value at start of each month for groundwater DO concentration (mg/l)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101  105  10.  10.  10.  10.  7.5  5.5   5.   5.  5.5  7.5   9.  10.
+  END MON-GRNDDOX
+
+  PWT-GASES
+***                   Initial DO and CO2 concentrations
+*** <PLS >     SODOX     SOCO2     IODOX     IOCO2     AODOX     AOCO2
+*** x -  x    (mg/l)  (mg C/l)    (mg/l)   (mg C/l)   (mg/l)  (mg C/l)
+  101  105      14.5        0.      12.7        0.       10.        0.
+  END PWT-GASES
+
+  NQUALS
+*** <PLS >
+*** x -  xNQUAL
+  101  105    4
+  END NQUALS
+
+  QUAL-PROPS
+*** <PLS >  Identifiers and Flags
+*** x -  x    QUALID      QTID  QSD VPFW VPFS  QSO  VQO QIFW VIQC QAGW VAQC
+  101  105NH3+NH4         LBS     0    0    0    1    1    1    3    1    3
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   POTFS   ACQOP  SQOLIM   WSQOP    IOQC    AOQC
+*** <PLS >  qty/ac qty/ton qty/ton    qty/  qty/ac   in/hr qty/ft3 qty/ft3
+*** x -  x                          ac.day
+  101        0.033      0.      0.      0.      0.     0.7      0.      0.
+  102         0.03      0.      0.      0.      0.     0.5      0.      0.
+  103        0.365      0.      0.      0.      0.     0.5      0.      0.
+  104         0.03      0.      0.      0.      0.     0.5      0.      0.
+  105        0.065      0.      0.      0.      0.     0.2      0.      0.
+  END QUAL-INPUT
+
+  MON-ACCUM
+*** <PLS >  Value at start of each month for accum rate of QUALOF (lb/ac.day)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101     .00340.0040.0050.0120.0120.0120.0120.0120.0120.0080.004.0033
+  102     0.0030.0030.0050.007 0.01 0.01 0.01 0.01 0.01 0.010.0050.003
+  103      0.01 0.01 0.01 0.05 0.05 0.05 0.05 0.05 0.05 0.01 0.01 0.01
+  104     0.0030.0030.0050.007 0.01 0.01 0.01 0.01 0.01 0.010.0050.003
+  105     0.0070.008 0.010.0230.0230.0230.0230.0230.0230.0170.0080.007
+  END MON-ACCUM
+
+  MON-SQOLIM
+*** <PLS >  Value at start of month for limiting storage of QUALOF (lb/ac)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101     0.0040.0050.0070.0150.0150.0150.0150.0150.0150.0110.0050.004
+  102     0.0080.0080.0130.0330.0510.0510.0380.0360.0330.0250.0130.008
+  103     0.0510.0540.0580.0690.0690.0690.0690.0690.0690.0580.0540.051
+  104     0.0080.0080.0130.0330.0510.0510.0380.0360.0330.0250.0130.008
+  105     0.017 0.020.0250.0580.0580.0580.0580.0580.0580.042 0.020.017
+  END MON-SQOLIM
+
+  MON-IFLW-CONC
+*** <PLS >  Conc of QUAL in interflow outflow for each month (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.06 0.06 0.06 0.03 0.03 0.03 0.03 0.03 0.03 0.06 0.06 0.06
+  102       0.2  0.2  0.2 0.12 0.12 0.12 0.12 0.12 0.12  0.2  0.2  0.2
+  103      0.15 0.15 0.15 0.12 0.12 0.12 0.12 0.12 0.12 0.15 0.15 0.15
+  104       0.2  0.2  0.2 0.12 0.12 0.12 0.12 0.12 0.12  0.2  0.2  0.2
+  105      0.06 0.06 0.06 0.03 0.03 0.03 0.03 0.03 0.03 0.06 0.06 0.06
+  END MON-IFLW-CONC
+
+  MON-GRND-CONC
+*** <PLS >  Value at start of month for conc of QUAL in groundwater (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.04 0.04 0.040.0250.0250.0250.0250.0250.025 0.04 0.04 0.04
+  102      0.15 0.15 0.15 0.08 0.08 0.08 0.08 0.08 0.08 0.15 0.15 0.15
+  103       0.1  0.1  0.1 0.08 0.08 0.08 0.08 0.08 0.08  0.1  0.1  0.1
+  104      0.15 0.15 0.15 0.08 0.08 0.08 0.08 0.08 0.08 0.15 0.15 0.15
+  105      0.04 0.04 0.040.0250.0250.0250.0250.0250.025 0.04 0.04 0.04
+  END MON-GRND-CONC
+
+  QUAL-PROPS
+*** <PLS >  Identifiers and Flags
+*** x -  x    QUALID      QTID  QSD VPFW VPFS  QSO  VQO QIFW VIQC QAGW VAQC
+  101  105NO3             LBS     0    0    0    1    1    1    3    1    3
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   POTFS   ACQOP  SQOLIM   WSQOP    IOQC    AOQC
+*** <PLS >  qty/ac qty/ton qty/ton    qty/  qty/ac   in/hr qty/ft3 qty/ft3
+*** x -  x                          ac.day
+  101         0.25      0.      0.      0.      0.     0.7      0.      0.
+  102          1.4      0.      0.      0.      0.     0.5      0.      0.
+  103         0.45      0.      0.      0.      0.     0.5      0.      0.
+  104          1.4      0.      0.      0.      0.     0.5      0.      0.
+  105          0.5      0.      0.      0.      0.     0.2      0.      0.
+  END QUAL-INPUT
+
+  MON-ACCUM
+*** <PLS >  Value at start of each month for accum rate of QUALOF (lb/ac.day)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101     0.0130.0150.0160.0180.0180.0180.0180.0180.0180.0160.0150.013
+  102      0.42 0.48 0.51 1.05 1.05 1.05 0.63 0.63 0.63 0.54 0.48 0.42
+  103      0.09 0.12 0.15 0.18 0.18 0.18 0.18 0.18 0.18 0.15 0.12 0.09
+  104      0.42 0.48 0.51 1.05 1.05 1.05 0.63 0.63 0.63 0.54 0.48 0.42
+  105      0.010.0120.0130.0140.0140.0140.0140.0140.0140.0130.012 0.01
+  END MON-ACCUM
+
+  MON-SQOLIM
+*** <PLS >  Value at start of month for limiting storage of QUALOF (lb/ac)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.09 0.11 0.12 0.13 0.13 0.13 0.13 0.13 0.13 0.12 0.11 0.09
+  102      1.26 1.46 1.58 3.16 3.16 3.16 1.89 1.89 1.89 1.58 1.46 1.26
+  103      0.36 0.48  0.6 0.72 0.72 0.72 0.72 0.72 0.72  0.6 0.48 0.36
+  104      1.26 1.46 1.58 3.16 3.16 3.16 1.89 1.89 1.89 1.58 1.46 1.26
+  105      0.070.0840.0910.0980.0980.0980.0980.0980.0980.0910.084 0.07
+  END MON-SQOLIM
+
+  MON-IFLW-CONC
+*** <PLS >  Conc of QUAL in interflow outflow for each month (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101       0.6  0.6  0.6  0.4  0.4  0.4  0.4  0.4  0.4  0.8  0.8  0.8
+  102        1.   1.   3.  18.  19.  15.  15.  12.  12.  12.   5.   2.
+  103       1.5  1.5  1.5  2.5  2.5  2.5  2.5  2.5  2.5  1.5  1.5  1.5
+  104        1.   1.   3.  18.  19.  15.  15.  12.  12.  12.   5.   2.
+  105       0.5  0.5  0.5  0.3  0.3  0.3  0.3  0.3  0.3  0.7  0.7  0.7
+  END MON-IFLW-CONC
+
+  MON-GRND-CONC
+*** <PLS >  Value at start of month for conc of QUAL in groundwater (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101       0.5  0.5  0.5  0.3  0.3  0.3  0.3  0.3  0.3  0.7  0.7  0.7
+  102        1.   1.   2.  12.  12.  10.  10.   7.   7.   7.   4.  1.5
+  103       1.5  1.5  1.5  2.5  2.5  2.5  2.5  2.5  2.5  1.5  1.5  1.5
+  104        1.   1.   2.  12.  12.  10.  10.   7.   7.   7.   4.  1.5
+  105       0.5  0.5  0.5  0.3  0.3  0.3  0.3  0.3  0.3  0.7  0.7  0.7
+  END MON-GRND-CONC
+
+  QUAL-PROPS
+*** <PLS >  Identifiers and Flags
+*** x -  x    QUALID      QTID  QSD VPFW VPFS  QSO  VQO QIFW VIQC QAGW VAQC
+  101  105ORTHO P         LBS     0    0    0    1    1    1    3    1    3
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   POTFS   ACQOP  SQOLIM   WSQOP    IOQC    AOQC
+*** <PLS >  qty/ac qty/ton qty/ton    qty/  qty/ac   in/hr qty/ft3 qty/ft3
+*** x -  x                          ac.day
+  101        0.017      0.      0.      0.      0.     0.7      0.      0.
+  102         0.38      0.      0.      0.      0.     0.5      0.      0.
+  103         0.04      0.      0.      0.      0.     0.6      0.      0.
+  104         0.38      0.      0.      0.      0.     0.5      0.      0.
+  105         0.04      0.      0.      0.      0.     0.2      0.      0.
+  END QUAL-INPUT
+
+  MON-ACCUM
+*** <PLS >  Value at start of each month for accum rate of QUALOF (lb/ac.day)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101     .00330.0040.0050.0120.0120.0120.0120.0120.0120.0080.004.0033
+  102     0.0030.0030.0050.007 0.01 0.01 0.01 0.01 0.01 0.010.0050.003
+  103      0.01 0.01 0.01 0.05 0.05 0.05 0.05 0.05 0.05 0.01 0.01 0.01
+  104     0.0030.0030.0050.007 0.01 0.01 0.01 0.01 0.01 0.010.0050.003
+  105     0.0070.008 0.010.0230.0230.0230.0230.0230.0230.0170.0080.007
+  END MON-ACCUM
+
+  MON-SQOLIM
+*** <PLS >  Value at start of month for limiting storage of QUALOF (lb/ac)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101     0.0040.0050.0070.0150.0150.0150.0150.0150.0150.0110.0050.004
+  102     0.0080.0080.0130.0330.0510.0510.0380.0360.0330.0250.0130.008
+  103     0.0510.0540.0580.0690.0690.0690.0690.0690.0690.0580.0540.051
+  104     0.0080.0080.0130.0330.0510.0510.0380.0360.0330.0250.0130.008
+  105     0.017 0.020.0250.0580.0580.0580.0580.0580.0580.042 0.020.017
+  END MON-SQOLIM
+
+  MON-IFLW-CONC
+*** <PLS >  Conc of QUAL in interflow outflow for each month (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101     0.0090.0090.0090.0090.0090.0090.0090.0090.0090.0090.0090.009
+  102       0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1
+  103      0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05
+  104       0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1  0.1
+  105     0.0090.0090.0090.0090.0090.0090.0090.0090.0090.0090.0090.009
+  END MON-IFLW-CONC
+
+  MON-GRND-CONC
+*** <PLS >  Value at start of month for conc of QUAL in groundwater (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101     0.0050.0050.0050.0050.0050.0050.0050.0050.0050.0050.0050.005
+  102      0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05
+  103      0.03 0.03 0.03 0.03 0.03 0.03 0.03 0.03 0.03 0.03 0.03 0.03
+  104      0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05
+  105     0.0050.0050.0050.0050.0050.0050.0050.0050.0050.0050.0050.005
+  END MON-GRND-CONC
+
+  QUAL-PROPS
+*** <PLS >  Identifiers and Flags
+*** x -  x    QUALID      QTID  QSD VPFW VPFS  QSO  VQO QIFW VIQC QAGW VAQC
+  101  105BOD             LBS     0    0    0    1    1    1    3    1    3
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   POTFS   ACQOP  SQOLIM   WSQOP    IOQC    AOQC
+*** <PLS >  qty/ac qty/ton qty/ton    qty/  qty/ac   in/hr qty/ft3 qty/ft3
+*** x -  x                          ac.day
+  101           1.      0.      0.      0.      0.     0.7      0.      0.
+  102           5.      0.      0.      0.      0.     0.5      0.      0.
+  103           3.      0.      0.      0.      0.     0.5      0.      0.
+  104           5.      0.      0.      0.      0.     0.5      0.      0.
+  105           1.      0.      0.      0.      0.     0.2      0.      0.
+  END QUAL-INPUT
+
+  MON-ACCUM
+*** <PLS >  Value at start of each month for accum rate of QUALOF (lb/ac.day)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.18 0.18 0.18 0.24 0.24 0.24 0.28 0.28 0.28 0.28 0.18 0.18
+  102      0.41 0.41 0.41 0.65 0.65 0.65 0.65 0.65 0.65 0.41 0.41 0.41
+  103       0.6  0.6  0.6  0.8  0.8  0.8  0.8  0.8  0.8  0.6  0.6  0.6
+  104      0.41 0.41 0.41 0.65 0.65 0.65 0.65 0.65 0.65 0.41 0.41 0.41
+  105      0.18 0.18 0.18 0.24 0.24 0.24 0.28 0.28 0.28 0.28 0.18 0.18
+  END MON-ACCUM
+
+  MON-SQOLIM
+*** <PLS >  Value at start of month for limiting storage of QUALOF (lb/ac)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101       1.6  1.6  1.6   2.   2.   2.  2.4  2.4  2.4  2.4  1.6  1.6
+  102        6.   6.   8.  12.  12.  12.  9.6  9.6  9.6   6.   6.   6.
+  103        9.   9.   9.  12.  12.  12.  12.  12.  12.   9.   9.   9.
+  104        6.   6.   8.  12.  12.  12.  9.6  9.6  9.6   6.   6.   6.
+  105       1.6  1.6  1.6   2.   2.   2.  2.4  2.4  2.4  2.4  1.6  1.6
+  END MON-SQOLIM
+
+  MON-IFLW-CONC
+*** <PLS >  Conc of QUAL in interflow outflow for each month (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101        1.   1.   1.  1.5  1.5  1.5  1.5  1.5  1.5  2.5   2.   1.
+  102       12.  12.  15.  15.  15.  12.  12. 14.4 14.4 14.4  12.  12.
+  103       9.6  9.6  9.6 14.4 14.4 14.4 14.4 14.4 14.4  9.6  9.6  9.6
+  104       12.  12.  15.  15.  15.  12.  12. 14.4 14.4 14.4  12.  12.
+  105        1.   1.   1.  1.5  1.5  1.5  1.5  1.5  1.5  2.5   2.   1.
+  END MON-IFLW-CONC
+
+  MON-GRND-CONC
+*** <PLS >  Value at start of month for conc of QUAL in groundwater (qty/ft3)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101        1.   1.   1.  1.5  1.5  1.5  1.5  1.5   2.   2.   1.   1.
+  102       9.6  9.6  9.6 10.8 10.8 10.8 10.8  12.  12.  12.  9.6  9.6
+  103       9.6  9.6  9.6 14.4 14.4 14.4 14.4 14.4 14.4  9.6  9.6  9.6
+  104       9.6  9.6  9.6 10.8 10.8 10.8 10.8  12.  12.  12.  9.6  9.6
+  105        1.   1.   1.  1.5  1.5  1.5  1.5  1.5   2.   2.   1.   1.
+  END MON-GRND-CONC
+
+END PERLND
+ 
+IMPLND
+  ACTIVITY
+*** <ILS >               Active Sections
+*** x -  x ATMP SNOW IWAT  SLD  IWG IQAL
+  101         1    0    1    1    1    1
+  END ACTIVITY
+
+  PRINT-INFO
+*** <ILS > ******** Print-flags ******** PIVL  PYR
+*** x -  x ATMP SNOW IWAT  SLD  IWG IQAL *********
+  101         4    4    4    4    4    4    1    9
+  END PRINT-INFO
+
+  GEN-INFO
+***             Name             Unit-systems   Printer BinaryOut
+*** <ILS >                           t-series Engl Metr Engl Metr
+*** x -  x                            in  out
+  101     Urban or Built-up La         1    1   91    0   
+  END GEN-INFO
+
+  IWAT-PARM1
+*** <ILS >        Flags
+*** x -  x CSNO RTOP  VRS  VNN RTLI
+  101         0    0    0    0    0
+  END IWAT-PARM1
+
+  IWAT-PARM2
+*** <ILS >      LSUR     SLSUR      NSUR     RETSC
+*** x -  x      (ft)                          (in)
+  101            300  0.045574      0.05       0.1
+  END IWAT-PARM2
+
+  IWAT-PARM3
+*** <ILS >    PETMAX    PETMIN
+*** x -  x   (deg F)   (deg F)
+  101            40.       35.
+  END IWAT-PARM3
+
+  IWAT-STATE1
+*** <ILS >  IWATER state variables (inches)
+*** x -  x      RETS      SURS
+  101           0.01      0.01
+  END IWAT-STATE1
+
+  SLD-PARM1
+*** <ILS >     Flags
+*** x -  x VASD VRSD SDOP
+  101         0    0    1
+  END SLD-PARM1
+
+  SLD-PARM2
+***             KEIM      JEIM    ACCSDP    REMSDP
+*** <ILS >                         tons/      /day
+*** x -  x                        ac.day
+  101           0.03        2.      0.01      0.01
+  END SLD-PARM2
+
+  SLD-STOR
+*** <ILS >  Solids storage (tons/acre)
+*** x -  x
+  101            0.7
+  END SLD-STOR
+
+  IWT-PARM1
+*** <ILS >  Flags for section IWTGAS
+*** x -  x WTFV CSNO
+  101         1    1
+  END IWT-PARM1
+
+  IWT-PARM2
+***         Second group of IWTGAS parms
+*** <ILS >      ELEV      AWTF      BWTF
+*** x -  x      (ft)   (deg F) (deg F/F)
+  101          1074.       34.       0.3
+  END IWT-PARM2
+
+  MON-AWTF
+*** <ILS >  Value of AWTF at start of each month (deg F)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101       29.  29.  30.  34.  54.  63.  65.  64.  60.  48.  35.  30.
+  END MON-AWTF
+
+  MON-BWTF
+*** <ILS >  Value of BWTF at start of each month (deg F/F)
+*** x -  x  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC
+  101      0.55 0.55 0.65 0.75  0.9  1.1  1.2  1.1   1. 0.65 0.65  0.6
+  END MON-BWTF
+
+  NQUALS
+*** <ILS >
+*** x -  xNQUAL
+  101         4
+  END NQUALS
+
+  QUAL-PROPS
+*** <ILS >    Identifiers and Flags
+*** x -  x      QUALID    QTID  QSD VPFW  QSO  VQO
+  101     NH3+NH4         LBS     0    0    1    0
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   ACQOP  SQOLIM   WSQOP
+*** <ILS >  qty/ac qty/ton    qty/  qty/ac   in/hr
+*** x -  x                  ac.day
+  101       0.0297      0.  0.0038  0.0756     0.5
+  END QUAL-INPUT
+
+  QUAL-PROPS
+*** <ILS >    Identifiers and Flags
+*** x -  x      QUALID    QTID  QSD VPFW  QSO  VQO
+  101     NO3             LBS     0    0    1    0
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   ACQOP  SQOLIM   WSQOP
+*** <ILS >  qty/ac qty/ton    qty/  qty/ac   in/hr
+*** x -  x                  ac.day
+  101          0.4      0.  0.0415  0.2668     0.5
+  END QUAL-INPUT
+
+  QUAL-PROPS
+*** <ILS >    Identifiers and Flags
+*** x -  x      QUALID    QTID  QSD VPFW  QSO  VQO
+  101     ORTHO P         LBS     0    0    1    0
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   ACQOP  SQOLIM   WSQOP
+*** <ILS >  qty/ac qty/ton    qty/  qty/ac   in/hr
+*** x -  x                  ac.day
+  101         0.05      0.  0.0034  0.0163     0.5
+  END QUAL-INPUT
+
+  QUAL-PROPS
+*** <ILS >    Identifiers and Flags
+*** x -  x      QUALID    QTID  QSD VPFW  QSO  VQO
+  101     BOD             LBS     0    0    1    0
+  END QUAL-PROPS
+
+  QUAL-INPUT
+***         Storage on surface and nonseasonal parameters
+***            SQO   POTFW   ACQOP  SQOLIM   WSQOP
+*** <ILS >  qty/ac qty/ton    qty/  qty/ac   in/hr
+*** x -  x                  ac.day
+  101         0.81      0.  0.1611    2.13     0.5
+  END QUAL-INPUT
+
+END IMPLND
+ 
+RCHRES
+  ACTIVITY
+*** RCHRES  Active sections
+*** x -  x HYFG ADFG CNFG HTFG SDFG GQFG OXFG NUFG PKFG PHFG
+    1    3    1    1    0    1    1    0    1    1    1    0
+  END ACTIVITY
+
+  PRINT-INFO
+*** RCHRES  Printout level flags
+*** x -  x HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB PIVL  PYR
+    1    3    4    4    4    4    4    4    4    4    4    4    1    9
+  END PRINT-INFO
+
+  GEN-INFO
+***              Name        Nexits   Unit Systems   Printer
+*** RCHRES                               t-series  Engl Metr LKFG
+*** x -  x                                 in  out
+    1     STREAM 1                1         1    1   91    0    0   
+    2     STREAM 2                1         1    1   91    0    0   
+    3     STREAM 3                1         1    1   91    0    0   
+  END GEN-INFO
+
+  HYDR-PARM1
+***         Flags for HYDR section
+***RC HRES  VC A1 A2 A3  ODFVFG for each *** ODGTFG for each     FUNCT  for each
+*** x  - x  FG FG FG FG  possible   exit *** possible   exit     possible   exit
+    1    3   0  1  1  1    4  0  0  0  0       0  0  0  0  0       1  1  1  1  1
+  END HYDR-PARM1
+
+  HYDR-PARM2
+*** RCHRES FTBW FTBU       LEN     DELTH     STCOR        KS      DB50
+*** x -  x             (miles)      (ft)      (ft)                (in)
+    1        0.    1     15.36       351       3.2       0.5      0.01
+    2        0.    2     11.82       597       3.2       0.5      0.01
+    3        0.    3      9.27       102       3.2       0.5      0.01
+  END HYDR-PARM2
+
+  HYDR-INIT
+***         Initial conditions for HYDR section
+***RC HRES       VOL  CAT Initial value  of COLIND     initial  value  of OUTDGT
+*** x  - x     ac-ft      for each possible   exit  for each possible exit,ft3
+    1    3      0.01       4.2  4.5  4.5  4.5  4.2       2.1  1.2  0.5  1.2  1.8
+  END HYDR-INIT
+
+  SANDFG
+*** RCHRES
+*** x -  x SNDFG
+    1    3    3
+  END SANDFG
+
+  SED-GENPARM
+*** RCHRES    BEDWID    BEDWRN       POR
+*** x -  x      (ft)      (ft)
+    1    3       50.        4.       0.4
+  END SED-GENPARM
+
+  SAND-PM
+*** RCHRES         D         W       RHO     KSAND    EXPSND
+*** x -  x      (in)  (in/sec)  (gm/cm3)
+    1    3     0.005      0.02       2.5      0.03        5.
+  END SAND-PM
+
+  SILT-CLAY-PM
+*** RCHRES         D         W       RHO     TAUCD     TAUCS         M
+*** x -  x      (in)  (in/sec)    gm/cm3    lb/ft2    lb/ft2  lb/ft2.d
+    1    3    0.0004    0.0001       2.2       0.1      0.32     0.005
+  END SILT-CLAY-PM
+
+  SILT-CLAY-PM
+*** RCHRES         D         W       RHO     TAUCD     TAUCS         M
+*** x -  x      (in)  (in/sec)    gm/cm3    lb/ft2    lb/ft2  lb/ft2.d
+    1    3    0.0001    0.0001       2.2      0.06       0.3      0.01
+  END SILT-CLAY-PM
+
+  SSED-INIT
+*** RCHRES     Suspended sed concs (mg/l)
+*** x -  x      Sand      Silt      Clay
+    1    3        0.        8.        8.
+  END SSED-INIT
+
+  BED-INIT
+*** RCHRES    BEDDEP  Initial bed composition
+*** x -  x      (ft)      Sand      Silt      Clay
+    1    3        2.      0.38      0.46      0.16
+  END BED-INIT
+
+  BENTH-FLAG
+*** RCHRES  Benthic release flag
+*** x -  x BENF
+    1    3    1
+  END BENTH-FLAG
+
+  OX-FLAGS
+*** RCHRES Oxygen flags
+*** x -  x REAM
+    1    3    3
+  END OX-FLAGS
+
+  OX-GENPARM
+*** RCHRES    KBOD20     TCBOD    KODSET    SUPSAT
+*** x -  x       /hr               ft/hr
+    1    3     0.004     1.047     0.027      1.15
+  END OX-GENPARM
+
+  OX-BENPARM
+*** RCHRES     BENOD     TCBEN     EXPOD  BRBOD(1)  BRBOD(2)   EXPREL
+*** x -  x  mg/m2.hr                      mg/m2.hr  mg/m2.hr
+    1    3       50.     1.074      1.22     0.001     0.001      2.82
+  END OX-BENPARM
+
+  OX-REAPARM
+*** RCHRES    TCGINV      REAK    EXPRED    EXPREV
+*** x -  x                 /hr
+    1    3     1.024       0.2    -1.673     0.969
+  END OX-REAPARM
+
+  OX-INIT
+*** RCHRES       DOX       BOD     SATDO
+*** x -  x      mg/l      mg/l      mg/l
+    1    3      12.8       3.5      13.5
+  END OX-INIT
+
+  NUT-FLAGS
+*** RCHRES  Nutrient flags
+*** x -  x  NH3  NO2  PO4  AMV  DEN ADNH ADPO PHFL
+    1    3    1    0    1    0    1    0    0    2
+  END NUT-FLAGS
+
+  CONV-VAL1
+*** RCHRES      CVBO     CVBPC     CVBPN    BPCNTC
+*** x -  x     mg/mg  mols/mol  mols/mol
+    1    3      1.63      106.       16.       49.
+  END CONV-VAL1
+
+  NUT-BENPARM
+*** RCHRES  BRNIT(1)  BRNIT(2)  BRPO4(1)  BRPO4(2)     ANAER
+*** x -  x  mg/m2.hr  mg/m2.hr  mg/m2.hr  mg/m2.hr      mg/l
+    1    3        0.        0.        0.        0.     0.001
+  END NUT-BENPARM
+
+  NUT-NITDENIT
+*** RCHRES    KTAM20    KNO220     TCNIT    KNO320     TCDEN    DENOXT
+*** x -  x       /hr       /hr                 /hr                mg/l
+    1    3     0.015     0.002      1.07     0.002      1.04        5.
+  END NUT-NITDENIT
+
+  NUT-DINIT
+*** RCHRES       NO3       TAM       NO2       PO4
+*** x -  x      mg/l      mg/l      mg/l      mg/l
+    1    3        4.       0.1        0.      0.05        7.
+  END NUT-DINIT
+
+  PLNK-FLAGS
+*** RCHRES Plankton flags
+*** x -  x PHYF ZOOF BALF SDLT AMRF DECF NSFG ZFOO  BNP
+    1    3    1    0    1    0    0    1    1    2    0
+  END PLNK-FLAGS
+
+  PLNK-PARM1
+***RC HRES    RATCLP    NONREF    LITSED     ALNPR      EXTB     MALGR    PARADF
+*** x  - x                       l/mg.ft                 /ft       /hr
+    1    3      0.68       0.5        0.      0.25       0.3     0.085        1.
+  END PLNK-PARM1
+
+  PLNK-PARM2
+***RC HRES     CMMLT      CMMN     CMMNP      CMMP    TALGRH    TALGRL    TALGRM
+*** x  - x    ly/min      mg/l      mg/l      mg/l     deg F     deg F     deg F
+    1    3      0.01     0.025    0.0001     0.005       95.      -20.       86.
+  END PLNK-PARM2
+
+  PLNK-PARM3
+*** RCHRES     ALR20      ALDH      ALDL     OXALD     NALDH     PALDH
+*** x -  x       /hr       /hr       /hr       /hr      mg/l      mg/l
+    1    3     0.005      0.02     0.001      0.03      0.01     0.002
+  END PLNK-PARM3
+
+  PHYTO-PARM
+*** RCHRES      SEED    MXSTAY      OREF    CLALDH    PHYSET    REFSET
+*** x -  x      mg/l      mg/l     ft3/s      ug/l     ft/hr     ft/hr
+    1    3        1.        2.      100.       20.      0.02     0.025
+  END PHYTO-PARM
+
+  BENAL-PARM
+***RC HRES      MBAL    CFBALR    CFBALG    MINBAL     CAMPR     FRAVL    NMAXFX
+*** x  - x     mg/m2                         mg/m2      mg/l                mg/l
+    1    3     2500.      0.35        1.     1.e-4     0.001        0.       10.
+  END BENAL-PARM
+
+  PLNK-INIT
+*** RCHRES     PHYTO       ZOO     BENAL       ORN       ORP       ORC
+*** x -  x      mg/l     org/l     mg/m2      mg/l      mg/l      mg/l
+    1    3       0.5      0.03     2500.       0.5       0.1       0.5
+  END PLNK-INIT
+
+END RCHRES
+ 
+FTABLES
+ 
+  FTABLE      1
+ rows cols                               ***
+    8    4
+     depth      area    volume  outflow1 ***
+        0.    158.88        0.        0.
+      0.33    160.12     52.98       45.
+      3.32    171.25    548.24   2078.01
+      4.15    174.34    691.71   3011.76
+      5.19    524.57   1232.15     3839.
+      6.23    532.29   1780.62   7015.56
+    106.91   1282.02  93110.95  2747893.
+    207.58   2031.74 259921.52 11080325.
+  END FTABLE  1
+ 
+  FTABLE      2
+ rows cols                               ***
+    8    4
+     depth      area    volume  outflow1 ***
+        0.     96.39        0.        0.
+      0.28     97.21     27.55     24.11
+      2.85    104.55    285.95   1113.21
+      3.56    106.59    361.07   1613.49
+      4.45    320.79    644.11    2063.7
+      5.34    325.89    931.69   3774.04
+     91.61    820.42   50378.61516650.75
+    177.88   1314.95 142489.02 6206155.5
+  END FTABLE  2
+ 
+  FTABLE      3
+ rows cols                               ***
+    8    4
+     depth      area    volume  outflow1 ***
+        0.    154.92        0.        0.
+      0.45    155.94     70.55     50.19
+      4.54    165.12    726.33   2318.94
+      5.67    167.67    915.14   3360.86
+      7.09     504.3   1625.92   4257.82
+      8.51    510.67   2345.73   7770.91
+    146.09    1129.1 115149.06  2904721.
+    283.68   1747.52 313037.56 11377289.
+  END FTABLE  3
+END FTABLES
+ 
+EXT SOURCES
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member-> ***
+<Name>   x <Name> x tem strg<-factor->strg <Name>   x   x        <Name> x x ***
+*** Met Seg PA004390
+WDM2    11 PREC     ENGLZERO          SAME PERLND 101 105 EXTNL  PREC  
+WDM2    13 ATEM     ENGL              SAME PERLND 101 105 EXTNL  GATMP 
+WDM2    17 DEWP     ENGL              SAME PERLND 101 105 EXTNL  DTMPG 
+WDM2    14 WIND     ENGL              SAME PERLND 101 105 EXTNL  WINMOV
+WDM2    15 SOLR     ENGL              SAME PERLND 101 105 EXTNL  SOLRAD
+WDM2    16 PEVT     ENGL              SAME PERLND 101 105 EXTNL  PETINP
+*** Met Seg PA004390
+WDM2    11 PREC     ENGLZERO          SAME IMPLND 101     EXTNL  PREC  
+WDM2    13 ATEM     ENGL              SAME IMPLND 101     EXTNL  GATMP 
+WDM2    17 DEWP     ENGL              SAME IMPLND 101     EXTNL  DTMPG 
+WDM2    14 WIND     ENGL              SAME IMPLND 101     EXTNL  WINMOV
+WDM2    15 SOLR     ENGL              SAME IMPLND 101     EXTNL  SOLRAD
+WDM2    16 PEVT     ENGL              SAME IMPLND 101     EXTNL  PETINP
+*** Met Seg PA004390
+WDM2    11 PREC     ENGLZERO          SAME RCHRES   1   3 EXTNL  PREC  
+WDM2    13 ATEM     ENGL              SAME RCHRES   1   3 EXTNL  GATMP 
+WDM2    17 DEWP     ENGL              SAME RCHRES   1   3 EXTNL  DEWTMP
+WDM2    14 WIND     ENGL              SAME RCHRES   1   3 EXTNL  WIND  
+WDM2    15 SOLR     ENGL              SAME RCHRES   1   3 EXTNL  SOLRAD
+WDM2    18 CLOU     ENGL              SAME RCHRES   1   3 EXTNL  CLOUD 
+WDM2    12 EVAP     ENGL              SAME RCHRES   1   3 EXTNL  POTEV 
+END EXT SOURCES
+ 
+SCHEMATIC
+<-Volume->                  <--Area-->     <-Volume->  <ML#> ***       <sb>
+<Name>   x                  <-factor->     <Name>   x        ***        x x
+PERLND 101                       27228     RCHRES   1      2
+PERLND 102                       13675     RCHRES   1      2
+PERLND 103                         115     RCHRES   1      2
+IMPLND 101                         115     RCHRES   1      1
+PERLND 104                         623     RCHRES   1      2
+PERLND 105                          58     RCHRES   1      2
+PERLND 101                       23472     RCHRES   2      2
+PERLND 102                        3104     RCHRES   2      2
+PERLND 105                          62     RCHRES   2      2
+PERLND 103                         759     RCHRES   2      2
+IMPLND 101                         759     RCHRES   2      1
+PERLND 104                         279     RCHRES   2      2
+PERLND 101                       16478     RCHRES   3      2
+PERLND 102                        4118     RCHRES   3      2
+PERLND 104                         327     RCHRES   3      2
+PERLND 103                          71     RCHRES   3      2
+IMPLND 101                          71     RCHRES   3      1
+RCHRES   1                                 RCHRES   3      3
+RCHRES   2                                 RCHRES   3      3
+END SCHEMATIC
+ 
+EXT TARGETS
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Volume-> <Member> Tsys Aggr Amd ***
+<Name>   x        <Name> x x<-factor->strg <Name>   x <Name>qf  tem strg strg***
+RCHRES   3 HYDR   RO     1 1          AVER WDM1   103 FLOW   1 ENGL AGGR REPL
+END EXT TARGETS
+ 
+MASS-LINK
+ 
+  MASS-LINK        2
+<-Volume-> <-Grp> <-Member-><--Mult-->     <-Target vols> <-Grp> <-Member->  ***
+<Name>            <Name> x x<-factor->     <Name>                <Name> x x  ***
+PERLND     PWATER PERO       0.0833333     RCHRES         INFLOW IVOL    
+PERLND     PWTGAS POHT                     RCHRES         INFLOW IHEAT  1
+PERLND     PEST   POPST  1                 RCHRES         INFLOW IDQAL  1
+PERLND     PEST   SOSDPS 1                 RCHRES         INFLOW ISQAL  1 1
+PERLND     PEST   SOSDPS 1                 RCHRES         INFLOW ISQAL  2 1
+PERLND     PEST   SOSDPS 1                 RCHRES         INFLOW ISQAL  3 1
+PERLND     PQUAL  POQUAL 1                 RCHRES         INFLOW NUIF1  2
+PERLND     PQUAL  POQUAL 2                 RCHRES         INFLOW NUIF1  1
+PERLND     PQUAL  POQUAL 3                 RCHRES         INFLOW NUIF1  4
+PERLND     PQUAL  POQUAL 4         0.4     RCHRES         INFLOW OXIF   2
+PERLND     PQUAL  POQUAL 4       0.048     RCHRES         INFLOW PKIF   3
+PERLND     PQUAL  POQUAL 4      0.0023     RCHRES         INFLOW PKIF   4
+PERLND     PQUAL  POQUAL 4       0.301     RCHRES         INFLOW PKIF   5
+PERLND     SEDMNT SOSED  1        0.05     RCHRES         INFLOW ISED   1
+PERLND     SEDMNT SOSED  1        0.55     RCHRES         INFLOW ISED   2
+PERLND     SEDMNT SOSED  1         0.4     RCHRES         INFLOW ISED   3
+PERLND     PWTGAS PODOXM                   RCHRES         INFLOW OXIF   1
+  END MASS-LINK    2
+ 
+  MASS-LINK        1
+<-Volume-> <-Grp> <-Member-><--Mult-->     <-Target vols> <-Grp> <-Member->  ***
+<Name>            <Name> x x<-factor->     <Name>                <Name> x x  ***
+IMPLND     IWATER SURO       0.0833333     RCHRES         INFLOW IVOL    
+IMPLND     IWTGAS SOHT                     RCHRES         INFLOW IHEAT  1
+IMPLND     IQUAL  SOQUAL 1                 RCHRES         INFLOW NUIF1  2
+IMPLND     IQUAL  SOQUAL 2                 RCHRES         INFLOW NUIF1  1
+IMPLND     IQUAL  SOQUAL 3                 RCHRES         INFLOW NUIF1  4
+IMPLND     IQUAL  SOQUAL 4         0.4     RCHRES         INFLOW OXIF   2
+IMPLND     IQUAL  SOQUAL 4       0.048     RCHRES         INFLOW PKIF   3
+IMPLND     IQUAL  SOQUAL 4      0.0023     RCHRES         INFLOW PKIF   4
+IMPLND     IQUAL  SOQUAL 4       0.301     RCHRES         INFLOW PKIF   5
+IMPLND     SOLIDS SOSLD  1        0.05     RCHRES         INFLOW ISED   1
+IMPLND     SOLIDS SOSLD  1        0.55     RCHRES         INFLOW ISED   2
+IMPLND     SOLIDS SOSLD  1         0.4     RCHRES         INFLOW ISED   3
+IMPLND     IWTGAS SODOXM                   RCHRES         INFLOW OXIF   1
+  END MASS-LINK    1
+ 
+  MASS-LINK        3
+<-Volume-> <-Grp> <-Member-><--Mult-->     <-Target vols> <-Grp> <-Member->  ***
+<Name>            <Name> x x<-factor->     <Name>                <Name> x x  ***
+RCHRES     ROFLOW                          RCHRES         INFLOW         
+  END MASS-LINK    3
+END MASS-LINK
+ 
+END RUN

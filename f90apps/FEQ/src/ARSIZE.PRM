@@ -1,0 +1,54 @@
+C     DEFINITION OF PARAMETERS USED TO SET SIZE OF ARRAYS AND 
+C     VECTORS IN FEQ.  THIS FILE MUST BE INCLUDED IF ANY ARRAYS
+C     OR VECTORS ARE BEING DECLARED IN A PROGRAM UNIT.
+
+      INTEGER CD5TY1, CD5TY2, CD5TY3, CD5TY4, CD5TY5, CD5TY6, CD5TY7,
+     A        CD5TY8, CD5TY9, XTIOFF, OFF234
+      INTEGER MORG, MNBRA, MNFREE, MEXTRA, MNEX, MNBN, MRMAT, MLPDA, 
+     1          MRMBLK, MREMC, MRFTAB, MFTNUM, MNBLK, MNDEP, MCPFPT, 
+     2          MNDIFA, MNDBUF, MSPKNT, MNMID, MNSOUT, MNFRDT, MNITER,
+     3          MRPFPT, MNCD6, MRRBUF, MNFOUT, MXGAGE, MXGLU, MCTD10,
+     4          MNETRY, MNGATE, MNSPROW, MXN_TS, MXN_DEST,
+     5          MXN_TS_F, MXN_LU_G
+      PARAMETER(MORG=1)
+      PARAMETER(MNBRA=190, MNFREE=250, MEXTRA=1200)
+      PARAMETER(MNEX=2*MNBRA + MNFREE, MNBN=2*MNBRA + MEXTRA)
+      PARAMETER(MRMAT=2*(MNBN + MNFREE), MLPDA=40*MRMAT, 
+     1          MRMBLK=2*MNBRA + 1, MREMC=8000, 
+     2          MRFTAB=2000000, MFTNUM=10000, MNBLK=50, MNDEP=500,
+     3          MCPFPT=10, MNDBUF=512, MSPKNT=100, 
+     4          MNMID=150, MNSOUT=40, MNFRDT=10, MNITER=16,
+     5          MRPFPT=3, MNCD6=60,  MRRBUF=6000,
+     6          MNFOUT=20, MXGAGE=7, MXN_LU_G=5, 
+     6          MNDIFA=MXGAGE*MXN_LU_G, MXGLU=MNDIFA,  MCTD10=1,
+     7          MNETRY = 2*MNEX, MNGATE=50, MNSPROW=8,
+     8          MXN_TS=80, MXN_DEST=2*MXN_TS, MXN_TS_F=60)
+      PARAMETER(CD5TY1=7, CD5TY2=12, CD5TY3=17, CD5TY4=10, CD5TY5=3, 
+     A          CD5TY6=5, CD5TY7=10, CD5TY8=7, CD5TY9=9, XTIOFF=7,
+     B           OFF234=5)
+
+C     MNGATE- maximum number of gates for output of special values to
+C             the special output file.
+
+C     MNSPROW-maximum number of extra rows allowed in special output.
+C             There are always 2 rows by default.  The rows defined
+C             by this parameter are in addition to the original 2 
+C             rows. 
+
+C     MXN_TS -maximum number of unique time-series references allowed.
+C             The same time series may appear more than once but is
+C             only counted once for MXN_TS accounting. 
+
+C     MXN_TS - maximum number of unique time-series file references
+C              allowed.  Excludes those involved in the diffuse inflow
+C              computations.  Those counted are those that have 
+C              destinations of forced boundary, evaporation on 
+C              water surfaces, precipitation on water surfaces, 
+C              and others yet to come that will be attached at
+C              various points. 
+C     MXN_DEST-maximum number of time-series referenes counting any
+C              duplicates. 
+
+C     MXN_LU_G - maximum number of land uses per gage. 
+
+

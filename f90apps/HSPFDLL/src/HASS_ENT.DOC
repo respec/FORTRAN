@@ -1,0 +1,84 @@
+      !adwdm:ztwdmf
+      SUBROUTINE F90_WMSGTX_XX (MESSFL,SCLU,SGRP,                 &
+!     Get selected information about a table 2d parm screen
+
+      !newaqt:umakpr
+      SUBROUTINE F90_UMAKPR (WDMSFL,OUTLEV,RESMFG,RUNFG, &
+!     supervisor subroutine to prepare to create a uci file
+!     from gis output files
+
+      !newaqt:umakdo
+      SUBROUTINE F90_UMAKDO (MESSFL,EXPFG,NEWNAME)
+!     make a new uci file
+
+      !newaqt:simnet
+      SUBROUTINE F90_SIMNET (IRANK,RLARGE,RSMALL,RETCOD, &
+!     simplify a network of reaches
+
+      !newaqt:ucgnrc
+      SUBROUTINE F90_UCGNRC (NR)
+!     get number of reaches for new uci
+
+      !newaqt:ucgnco
+      SUBROUTINE F90_UCGNCO (NC)
+!     get number of reach connections for new uci
+
+      !newaqt:ucgnla
+      SUBROUTINE F90_UCGNLA (NL)
+!     get number of land uses for new uci
+
+      !newaqt:ucgnex
+      SUBROUTINE F90_UCGNEX (NE)
+!     get number of external source data sets for new uci
+
+      !newaqt:ucgnme
+      SUBROUTINE F90_UCGNME (NM,NE)
+!     get number of met segments for new uci
+
+      !newaqt:ucgout
+      SUBROUTINE F90_UCGOUT (NR,OUT)
+!     get number of external targets for new uci
+
+      !newaqt:ucgirc
+      SUBROUTINE F90_UCGIRC_XX (IR,INAME)
+!     get name of this reach for new uci
+
+      !newaqt:stspec
+      SUBROUTINE F90_STSPGG_XX (INITFG,RETCOD,INAME,IDESC)
+!     get group name and description for special actions translator
+
+      !newaqt:stspec
+      SUBROUTINE F90_STSPGU_XX (INITFG,RETCOD,INAME,IGROUP,IDESC, &
+!     get uvquan name and description for special actions translator
+
+      !newaqt:stspec
+      SUBROUTINE F90_STSPFN_XX (INTFG,KEY, &
+!     find next use of this uvquan within the special actions block
+
+      !newaqt:stspec
+      SUBROUTINE F90_STSPPN (AKEY, AVAL, INTFG, &
+!     put uvquan name line to special actions block
+
+      !newaqt:ucirept
+      FUNCTION F90_REPEXT (REPID)
+!     check to see if a standard report exists
+
+      !newaqt:ucirept
+      SUBROUTINE F90_ADDREPT (WDMSFL,REPID)
+!     add a standard report
+
+      !newaqt:ucirept
+      SUBROUTINE F90_DELREPT (REPID)
+!     delete a standard report
+
+      !newaqt:ucirept
+      SUBROUTINE F90_DELALLR
+!     delete all reports
+
+      !newaqt:ucirept
+      SUBROUTINE F90_ADDBMP (WDMSFL,BMPID)
+!     add bmp tables
+
+      !newaqt:getocr
+      SUBROUTINE F90_GETOCR (ITYPE, &
+!     get number of occurrances of this table

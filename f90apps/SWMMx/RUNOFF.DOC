@@ -1,0 +1,1313 @@
+*
+*             <<<<<<<<  SWMM 4.3 RUNOFF DATA FILE >>>>>>>>>
+*
+* Note, this file last updated by WCH, 4/21/94.
+*
+*	This is an input data file to the SWMM 4.3 (beta) Runoff Block for 
+*       modeling watershed quantity and quality.  All lines with an 
+*       asterisk in column 1 are comment lines and are ignored
+*       by the program.
+*
+*       Input data are free format and may be up to 230 columns wide.  
+*       You must have a value for every data column even if the program
+*       will not actually use a given value.  A slash (/) may be used
+*       to indicate that remaining fields should be filled with zeroes.
+*       (See example for data group L1.)  A very common data input error is 
+*       to accidentally omit required parameters at the end of a data group.  
+*       There must be at least one space (or comma) between every input 
+*       value.  
+*
+*       Caution!  Data lines that are "wrapped around" (continued on
+*       two or more lines) should have a blank in column 1, unless a
+*       card identifier is needed.  
+*
+*       Alphanumeric data ($ANUM option) should be enclosed in single 
+*       quotes.  These include all references to subcatchment and
+*       channel/pipe/inlet names.  
+*
+*       In general, SWMM parameters with names that begin with the letters
+*       I,J,K,L,M,N are integers (e.g., NSCRAT() ), following the usual 
+*       Fortran convention, and entered values must not include a 
+*       decimal point.  
+*
+*       To avoid literary quotes being printed in output, use $NOQUOTE
+*       after MM line.
+*
+*       SWMM uses both U.S. customary units and metric units.  The
+*       examples use feet, cfs, acres, inches, inches/hour, and miles/hr.  
+*       If metric is specified substitute meters, cms, hectares, 
+*       millimeters, millimeters/hour, and km/hr.
+*============================================================================
+*	The SW card sets up the interface files to be used or created. 
+*	There is one output file (#9) which will contain the time series
+*       of flows and pollutant loads for subsequent blocks.
+*============================================================================
+*  NBLOCK  JIN(1)  JOUT(1)
+SW    1      0       9  
+*============================================================================
+*   The MM card opens the scratch files to be used by different subroutines.
+*   Up to 8 scratch files are required by the Runoff Block. 
+*============================================================================
+*  NITCH  NSCRAT(1) NSCRAT(2) NSCRAT(3) NSCRAT(4) NSCRAT(5) NSCRAT(6) NSCRAT(7)
+MM   8       1         2          3        10         11        12       13
+*         NSCRAT(8)
+           14
+*============================================================================
+*     The @ command is used to permanently save an interface or 
+*     scratch file.  This line should be placed before the first SWMM
+*     block call.  The format of the @ command is as follows:
+*============================================================================
+*Column 1    Unit number of the       Name of the interface
+*            interface file saved     file (any valid DOS filename),
+*            or utilized              including optional path.
+*
+@             9                       'RUNOFF.DNT'
+*============================================================================
+*Column 1
+* $ANUM  ==> Use alphanumeric labels for subcatchment and channel/pipe
+*            labels -- WHEREVER ENCOUNTERED AND IN ALL SUBSEQUENT BLOCKS.
+*            Names (IDs) must be enclosed in single quotes.  A maximum length
+*            of 6 characters for a label is recommended.  Longer names (max
+*            of 8 characters) may not print out correctly but will 
+*            be input OK.
+*============================================================================
+*Column 1
+* $NOQUOTE ==> Omit on-screen and printed literary quotations in SWMM output.
+*============================================================================
+$RUNOFF      Call the RUNOFF block with a '$' in first column.
+*============================================================================
+*	Create title lines for the simulation.  There are two title lines 
+*       for the Runoff Block.  Titles are enclosed in single quotes.
+*============================================================================
+*	A1 Line       :
+*          Title      :  Two lines (both with A1 identifier) with heading 
+*                        to be printed on output.
+*                        Each line has format A76 (76 characters, maximum).
+*============================================================================
+A1  'RUNOFF example: parabolic channels, groundwater, water quality'
+A1  'Lake modeled as a wide parabolic channel with outlet weir'
+*============================================================================
+*	The 'B' lines are for program control purposes. 
+*============================================================================
+*	B1 Line       :
+*          METRIC     :  Metric input-output.
+*                        = 0, Use U.S. customary units
+*                        = 1, Use metric units.  Metric input indicated
+*                             in brackets [] in remainder of this table.
+*          ISNOW      :  Snowmelt parameter.
+*                        = 0, Snowmelt not simulated.
+*                        = 1, Single event snowmelt simulation.
+*                        = 2, Continuous snowmelt simulation.
+*          NRGAG      :  Number of hyetographs (rain gages),
+*                        maximum of 10 hyetographs.
+*          INFILM     :  Choice of infiltration equation
+*                        = 0, Horton equation used.
+*                        = 1, Green-Ampt equation used.
+*          KWALTY     :  Quality (or erosion) simulated?
+*                        = 0, No.
+*                        = 1, Yes.
+*          IVAP       :  Evaporation parameter
+*                        = 0, Evaporation data not read in,
+*                             default rate used of 0.1 in/day [2.5 mm/day].
+*                        = 1, Read monthly evaporation data in Group F1
+*                             in units of inch/day [mm/day].
+*                        = 2, Read monthly evaporation data in Group F1
+*                             in units of inch/month [mm/month].
+*                        = 3, Read monthly evaporation data on lines 
+*                             F1 and F2,
+*                             in units of inch/month [mm/month].
+*                        = 4, Read evaporation time series on NSCRAT(3) 
+*                             file as created by the TEMP Block of SWMM.
+*                     NOTE! If it is desired to have no (zero) evaporation
+*                     during time steps when it is raining or snowing, input
+*                     IVAP as a negative number, i.e., IVAP = -1, -2, -3
+*                     or -4 instead of a positive number.  This option can
+*                     only be used if IVAP not equal to 0.  If IVAP < 0, 
+*                     there will be zero surface or subsurface evaporation 
+*                     during any time step with rain or snow on that 
+*                     subcatchment and zero evaporation from all channel/
+*                     pipes if there is rain or snow on any subcatchment.
+*                     Normal evaporation continues when precipitation = 0.
+*
+*          NHR        :  Hour of day of start of storm (24 hour clock,
+*                        midnight = 00).
+*          NMN        :  Minute of hour of start of storm (0 - 59).
+*          NDAY       :  Day of month of start of simulation ( 1 - 31).
+*          MONTH      :  Month of start of simulation (1 - 12).
+*          IYRSTR     :  Year of start of simulation (0 - 99).
+*============================================================================
+*  METRIC ISNOW NRGAG INFILM KWALTY IVAP NHR NMN NDAY MONTH IYRSTR
+B1   0      0    1     1      1      1   00   0   1    10     89
+*============================================================================
+*	B2 Line       :
+*          IPRN(1)    :  Print control for SWMM input.
+*                        = 0, Print all input data.
+*                        = 1, Do not print channel/pipe, snowmelt, 
+*                        subcatchment, or quality data, only control 
+*                        information is printed.
+*                        = K, where K equals possible combinations of
+*                        channel/pipe(2), snowmelt(3), subcatchment(4),
+*                        or water quality(5).  For example:
+*                        Channel/pipe + subcatchment would be 24,
+*                        Channel/pipe + subcatchment + quality would be 245.
+*          IPRN(2)    :  Print control for Runoff Block graphs.
+*                        = 0, Plot all graphs.
+*                        = 1, Do not plot hyetograph(s) (for each gage),
+*                             or inlet hydrograph (sum of all inlets). 
+*          IPRN(3)    :  Print control for output of SWMM.  'Totals'
+*                        below refer to precipitation, runoff and all
+*                        quality parameters.  Done for each inlet.  Daily,
+*                        monthly, and yearly printouts only function if 
+*                        simulation is long enough.
+*                        = 0, Do not print daily, monthly, or yearly totals.
+*                        = 1, Monthly and annual totals only, one year
+*                             per page.
+*                        = 2, Daily, monthly and annual totals, two months
+*                             per page.  Daily totals are printed whenever
+*                             there is non-zero precipitation and/or runoff.
+*
+*              The following parameter is truly optional and may
+*              be omitted from line B2 without an error.
+*
+*          IRPNGW        = 0, Print up to 10,000 ground water routine error
+*                             messages. 
+*                        > 0, Print limit of IPRNGW ground water routine
+*                             error messages.
+*============================================================================
+*   IPRN(1) IPRN(2) IPRN(3)  IRPNGW
+B2     0       0       1
+*============================================================================
+*	B3 Line       :
+*          WET        :  Wet time step (seconds). WET must be => 1 second.
+*                        Typical: 60-300-900 sec for event simulation; 900
+*                        or 3600 sec for continuous simulation.  WET time
+*                        step is used only during time steps with precip.
+*          WETDRY     :  Transition (no rain but water on surface or in 
+*                        channels) between wet and dry time step (seconds). 
+*                        WETDRY is used during 1) residual overland flow 
+*                        (no precipitation), 2) residual channel/pipe flow,
+*                        3) snowmelt, 4) groundwater outflow to channel/
+*                        pipes.  WETDRY should be greater than or equal
+*                        to WET and less than or equal to DRY.
+*                        Typical: = WET for event simulation; 3600 - 7200
+*                        for continuous simulation.
+*                        Note, decrease WETDRY toward WET for better 
+*                        resolution and lower continuity errors, but at
+*                        the expense of greater computer time during 
+*                        continuous simulation.  
+*          DRY        :  Dry time step (seconds).  DRY must be greater
+*                        than or equal to WET.  Typical: = WET for event
+*                        simulation; 7200 - 86400 sec for continuous
+*                        simulation.  DRY time step principally affects
+*                        groundwater ET and deep percolation and residual
+*                        surface evaporation and infiltration.  
+*
+*        Note: DRY and WETDRY time steps are only approximated during
+*        time intervals with no precipitation.  Thus, print-outs may 
+*        occur at intervals that do not correspond exactly to DRY
+*        or WETDRY.
+*
+*          LUNIT      :  Units of LONG (simulation length).
+*                        = 0, seconds.    = 1, minutes.
+*                        = 2, hours.      = 3, days.
+*                        = 4, ending date, a six figure number
+*                          (yr/mo/dy), e.g. 870730.
+*          LONG       :  Simulation length (units from LUNIT).
+*============================================================================
+*                                SIMULATION LENGTH OF 10 DAYS
+*    WET    WET/DRY  DRY    LUNIT LONG
+B3   600.   1200.0   7200.   3     6.0
+*============================================================================
+*   B4 is an optional data group.  The B4 data group is used only when the
+*    user desires to modify one of SWMM's subcatchment default parameters.
+*============================================================================
+*	B4 Line       :
+*          PCTZER     :  Percent of impervious area with zero detention 
+*                        (immediate runoff).
+*          REGEN      :  For continuous SWMM, infiltration capacity is 
+*                        regenerated using a Horton type exponential rate
+*                        constant equal to REGEN*DECAY, where DECAY is the 
+*                        Horton rate constant read in for each subcatchment in
+*                        group H1.  Not required for Green-Ampt infiltration.
+*============================================================================
+*             Use line C1 to input general snow input data.   
+*              If ISNOW = 0 in group B1, skip to group D1.
+*============================================================================
+*	C1 Line       :
+*          ELEV       :  Average watershed elevation, ft, msl [m, msl].
+*          FWFRAC(1)  :  Ratio of free water holding capacity to snow depth
+*                        (in. or mm w.e.= water equivalent) on snow 
+*                        covered impervious area.
+*          FWFRAC(2)  :  Ratio of free water holding capacity to snow depth
+*                        (in. or mm w.e.) on snow covered pervious area.
+*============================================================================
+*     Note:  The following parameters are required only for ISNOW=2.
+*============================================================================
+*          FWFRAC(3)  :  Ratio of free water holding capacity to snow depth
+*                        (in. or mm w.e.) for snow on normally bare
+*                        impervious area.
+*          SNOTMP     :  Dividing temperature between snow and rain, 
+*                        F [C].  Precipitation occurring at air 
+*                        temperatures above this value will be rain,
+*                        at or below will be snow.
+*          SCF        :  Snow gage catch correction factor.
+*                        Snow depths computed from NWS precipitation tape
+*                        will be multiplied by this value.
+*          TIPM       :  Weight used to compute antecedent temperature index,
+*                        0 <= TIPM <= 1.0.  Low values (e.g., 0.1) give
+*                        more weight to past temperatures.  Values > 0.5
+*                        essentially give weight to temperatures only 
+*                        during the past day.
+*          RNM        :  Ratio of negative melt coefficient to melt 
+*                        coefficient.  "Negative melt coefficient" is used
+*                        when snow is warming or cooling below the base melt
+*                        temperature without producing liquid melt.  RNM is 
+*                        usually <= 1.0 with a typical value of 0.6.
+*          ANGLAT     :  Average latitude of watershed, degrees north.
+*          DTLONG     :  Longitude correction, standard time minus
+*                        mean solar time, minutes (of time).
+*============================================================================
+*   Use line C2 to input average Monthly Wind Speeds.  Enter pairs of values 
+*   (month number, wind speed) only for months with potential snow
+*   melt.  Enter values for months in any order.  Months not entered
+*   are assumed to have zero wind. 
+*============================================================================
+*	C2 Line       :
+*          NUMB       :  Enter number of months with wind speed data.
+*                        (Maximum = 12)
+*                        [NOTE. Option on page 69 of User's Manual to
+*                        set NUMB = 999 to indicate NOAA wind data is
+*                        not valid.  Use ISNOW=2 to indicate use of 
+*                        NOAA data on NSCRAT(3) from Temp Block.]
+*          MONTH      :  Integer number of first month.
+*          WIND(MONTH):  Average wind speed for first month, mi/hr [km/hr].
+*              .                         .                                    
+*          MONTH      :  Integer number of last month.
+*          WIND(MONTH):  Average wind speed for last month, mi/hr [km/hr].
+*============================================================================
+*     Use line C3 to input Areal Depletion Curve for Impervious Area.
+*              IF ISNOW=1 IN GROUP B1, SKIP TO DATA GROUP C5.
+*============================================================================
+*	C3 Line       :
+*          ADCI(1)    :  Fraction of area covered by snow (ASC) at "zero+"
+*                        ratio of snow depth to depth at 100 percent
+*                        cover (AWESI).
+*          ADCI(2)    :  Value of ASC for AWESI = 0.1.
+*          ADCI(3)    :  Value of ASC for AWESI = 0.2.
+*             .                        .                                    
+*          ADCI(9)    :  Value of ASC for AWESI = 0.8.
+*          ADCI(10)   :  Value of ASC for AWESI = 0.9.
+*  Note:  Program automatically assigns value of ADCI=1.0 when AWESI = 1.0.
+*============================================================================
+*     Use the C4 line to define an Areal Depletion Curve for Pervious Area.
+*============================================================================
+*	C4 Line       :
+*          ADCP(1)    :  Fraction of area covered by snow (ASC) at "zero+" 
+*                        ratio of snow depth to depth at 100 percent cover
+*                        (AWESI).
+*          ADCP(2)    :  Value of ASC for AWESI = 0.1.
+*          ADCP(3)    :  Value of ASC for AWESI = 0.2.
+*            .                         .
+*          ADCP(9)    :  Value of ASC for AWESI = 0.8.
+*          ADCP(10)   :  Value of ASC for AWESI = 0.9.
+*  Note: Program automatically assigns value of ADCP = 1.0 when AWESI = 1.0.
+*============================================================================
+*     READ GROUP C5 ONLY IF ISNOW = 1.  SKIP TO GROUP D1 IF ISNOW = 2.
+*
+*        For ISNOW = 2 (continuous SWMM), air temperatures are entered 
+*   in the Temp Block.  For ISNOW = 1, read an air temperature for each
+*   time interval DTAIR, for a total of NAIRT values.  (Maximum number
+*   of values = 200.  If more are needed, use ISNOW = 2 option.)  DTAIR,
+*   the time step of air temperatures, is not necessarily equal to the
+*   time steps entered on data group B1.  Air temperatures are considered
+*   constant over the air time step.
+*============================================================================
+*	C5 Line       :
+*          DTAIR      :  Time interval for input of air temperatures, 
+*                        hours.  First line only. 
+*          NAIRT      :  Number of air temperatures read.  First line only.
+*          TAIR(1)    :  Air temperature during time interval 1, F [C].
+*            .                              . 
+*          TAIR(NAIRT):  Air temperature during time interval NAIRT, F [C].
+*============================================================================
+*        Line D1 is the first rainfall control line.
+*============================================================================
+*	D1 Line       :
+*          ROPT       :  Precipitation input option.
+*                        = 0, Read NRGAG hyetographs on E1, E2 and E3
+*                        data groups.  (Rain data can be saved permanently
+*                        on NSCRAT(1) using the @ function.)
+*                        = 1, Read processed precipitation file on NSCRAT(1)
+*                        file [not JIN!].  This file is either from the Rain 
+*                        Block (earlier saved JOUT file) or from a previous 
+*                        run of the Runoff Block (earlier saved NSCRAT(1) 
+*                        file).  Unless blocks are run as part of a single 
+*                        overall SWMM run, access to earlier saved files is 
+*                        through the @ function described at the beginning  
+*                        of this file.
+*============================================================================
+*     ROPT
+D1       0
+*============================================================================
+*        Line E1 is the second rainfall control line.
+*============================================================================
+*	E1 Line     :
+*          KTYPE    :  Type of precipitation input.  Precipitation
+*                      is in units of in./hr [mm/hr] for THISTO minutes or
+*                      hours.  Use variable KTIME to select units of time.
+*                      = 0, Read KINC precipitation values per line.
+*                      = 1, Read KINC time and precipitation pairs per line.
+*                      = 2, Read time and NRGAG precipitation values per line.
+*          KINC     :  Number of precipitation values or time/precipitation
+*                      pairs per line.  Enter any number if KTYPE = 2.
+*          KPRINT   :  Print control for precipitation input.
+*                      = 0, Print all precipitation input.
+*                      = 1, Suppress all but summary of precipitation input.
+*          KTHIS    :  Variable THISTO option.  Data input on E2 lines.
+*                      = 0, precipitation interval (THISTO) is constant.
+*                      = K, where K is the number of variable precipitation 
+*                           intervals entered on the E2 data group lines.
+*                      Precipitation values outside the time frame
+*                      of any variable rainfall interval uses THISTO
+*                      as the precipitation interval.
+*          KTIME    :  Precipitation time units.
+*                      = 0, time in minutes.
+*                      = 1, time in hours.                   
+*          KPREP    :  Precipitation unit type.
+*                      = 0, intensity, in./hr [mm/hr].
+*                      = 1, total precipitation volume over
+*                           the interval, in. [mm]
+*          NHISTO   :  Number of data points for each hyetograph.
+*          THISTO   :  Time interval between values (and duration of
+*                      precipitation value), units of KTIME.
+*          TZRAIN   :  Initial time of day of precipitation input, units
+*                      of KTIME.  Added to times entered in groups E2 
+*                      and E3.  (If first time entered in groups E2 
+*                      and/or E3 is 0.0, TZRAIN will ordinarily correspond 
+*                      to time of start of storm entered on group B1.)
+*============================================================================
+* KTYPE KINC KPRINT KTHIS KTIME KPREP NHISTO THISTO TZRAIN
+E1  1    1     0      0     1     1     24     1.0    0.0
+*============================================================================
+*       Line E2 lists the variable rainfall interval information.  
+*  Required only if KTHIS > 0.  Enter variable precipitation intervals,
+*  10 per line for a total of KTHIS intervals.  This data group is used 
+*  to interleave rainfall records of differing intervals, for example, a
+*  period of 5 minute rainfall between periods of 15 minute rainfall. 
+*============================================================================
+*	E2 Line     :
+*     WTHIS(1,1)    :  Start time for first variable precipitation
+*                      interval.  Units of KTIME.
+*     WTHIS(1,2)    :  End time for first variable precipitation
+*                      interval.  Units of KTIME.
+*     WTHIS(1,3)    :  Length of THISTO for the first precipitation
+*                      interval.  Units of KTIME.
+*           .                      .
+*     WTHIS(KTHIS,1):  Start time for last variable precipitation
+*                      interval.  Units of KTIME.
+*     WTHIS(KTHIS,2):  End time for last variable precipitation
+*                      interval.  Units of KTIME.
+*     WTHIS(KTHIS,3):  Length of THISTO for the last precipitation
+*                      interval.  Units of KTIME.
+*============================================================================
+*      Use line E3 to input precipitation input.  Input is a function 
+*                  of the parameter KTYPE on data group E1.
+*
+*  Note:  If ISNOW = 1, snowfall during a time step may be entered as
+*         a negative value.  Units are in. [mm] water equivalent/hr.
+*============================================================================
+*                  Precipitation input if KTYPE = 0.
+*    
+*          KINC precipitation values per line, up to NHISTO values. 
+*           Repeat group E3 for each hyetograph, up to NRGAG times. 
+*============================================================================
+*	E3 Line     :
+*        RAIN(1)    :  Rainfall intensity, first interval, in./hr [mm/hr].
+*          .                           .                                    
+*        RAIN(KINC) :  Rainfall intensity, last interval per line,
+*                      in./hr [mm/hr].
+*============================================================================
+*                  Precipitation input if KTYPE = 1.
+*
+*           Read KINC pairs per line, up to NHISTO values.  
+*       Repeat group E3 for each hyetograph, up to NRGAG times. 
+*============================================================================
+*	E3 Line     :
+*     REIN(1)       :  Time of first precipitation.  Units of KTIME.
+*     REIN(2)       :  Precipitation in./hr [mm/hr], for first interval.
+*         .                           .                                    
+*     REIN(2*KINC-1):  Time of last precipitation.  Units of KTIME.
+*     REIN(2*KINC)  :  Precipitation for last interval, in./hr [mm/hr].
+*============================================================================
+*                  Precipitation input if KTYPE = 2.
+*
+*      Read NRGAG precipitation values per line.  Repeat NHISTO times.
+*============================================================================
+*	E3 Line     :
+*     REIN(1)       :  Time of precipitation.  Units of KTIME.
+*     REIN(2)       :  Precipitation, first raingage, in./hr [mm/hr].
+*         .                         .                                    
+*     REIN(NRGAG+1) :  Precipitation, last raingage, in./hr [mm/hr].
+*============================================================================
+*  STEP-FUNCTION HYETOGRAPH
+*  TIME=REIN(1)  RAIN=REIN(2)
+E3    0.0           0.5
+E3    1.0           1.0
+E3    2.0           0.2
+E3   10.0           0.4
+E3   11.0           0.2
+E3   20.0           0.1
+E3   21.0           0.2
+E3   22.0           0.3
+E3   23.0           0.1
+E3   30.0           1.5
+E3   40.0           0.2
+E3   41.0           0.2
+E3   42.0           0.2
+E3   50.0           2.0
+E3   60.0           0.5
+E3   61.0           0.4
+E3   63.0           0.2
+E3   64.0           0.1
+E3  120.0           0.2
+E3  121.0           0.3
+E3  122.0           0.4
+E3  123.0           0.2
+E3  124.0           0.1
+E3  125.0           0.1
+*============================================================================
+*   Use the F1 line to input evaporation data if IVAP = 1 on group B1.
+*============================================================================
+*	F1 Line    :
+*   Note, units depend on value of IVAP.  This example is for IVAP = 1.
+*          VAP(1)  :  Evaporation rate for month 1 (January)
+*                     in./day [mm/day].                         
+*            .                      .
+*          VAP(12) :  Evaporation rate for month 12 (December)
+*                     in./day [mm/day].
+*============================================================================
+*  EVAPORATION DATA
+F1 0.1 0.2 0.2 0.2 0.3 0.4 0.5 0.5 0.4 0.3 0.2 0.1 
+*============================================================================
+*   Use the F1 and F2 lines to input evaporation data if 
+*                              IVAP = 3 on data group B1.
+*============================================================================
+*    F1  line : 
+*                Only for IVAP = 3:
+*    NVAP(1)  : Start year of evaporation data (2-digit integer)
+*    NVAP(2)  : Number of months of evaporation data to be 
+*               entered (maximum = 600).  First month must be for January. 
+*                          NVAP(1)                              NVAP(2)
+*F1                              80                                  120
+*============================================================================
+*
+* Line F2:  Read 12 monthly values per line to a maximum of 600 values.
+*     #1     #2    #3    #4    #5    #6    #7    #8    #9   #10  #11  #12
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*F2   1.0    2.0   3.0   4.0   5.0   6.0   6.0   5.0   4.0   3.0  2.0  1.0
+*===========================================================================
+* Rainfall-Dependent Infiltration/Inflow (RDII or I/I) Data, Lines F3 and F4.
+*              New, 9/4/93.  Chuck Moore
+*              Camp, Dresser and McKee, Inc., Annandale, VA
+*
+*  These lines, plus H5 lines, define triangular unit hydrographs (UH) 
+*  to compute subcatchment I/I response from rainfall record on NSCRAT(1).
+*  The response is computed before the time step simulation and stored on
+*  NSCRAT(8) (required if this I/I procedure is used).  
+*  An initial abstraction of up to DSTORE in [mm] is subtracted from
+*  rainfall before computing rainfall excess at each time step.  The
+*  initial abstraction is regenerated during dry weather at a rate of
+*  DREC in/day [mm/day].  
+*  Up to five sets of three triangular UHs may be input in the F4 lines.
+*  Any subcatchment may use a fraction (defined on H5 lines) of flow 
+*  produced from each of three UHs selected from any of the up to 
+*  five sets input on the F4 lines.
+*
+*  The triangles are defined by TP = time to peak and K = ratio of recession
+*  limb to TP, so that the time base = TP*(1+K).  Peak flow, Qp, is then 
+*  calculated in the program so that the volume (area) of the triangle =
+*  1 cfs/ac-in or 1 cms/ha-mm.
+*  
+*  Three triangles may be used (all starting at the same time) so that 
+*  one may define a fast response, one a delayed response, and one a 
+*  lengthy response, if desired.
+*
+*  The time step TSTEP (UH duration) must equal the rainfall time 
+*  step (THISTO).  Rainfall can be input on the E-lines as usual, or 
+*  rainfall already stored on NSCRAT(1) may be used, i.e., from prior 
+*  Runoff or Rain Block runs.
+*  Time step TSTEP2 is the time step used for computation of the UH 
+*  response and should be an integer fraction of (or equal to) TSTEP.
+*  TSTEP2 = WET time step in the Runoff Block is a good idea. 
+*  There is a limit of 300 UH points for a given rainfall increment.  An 
+*  error message is printed if this is exceeded, which can be caused by 
+*  too long a time base and too short a value of TSTEP2.  
+*  The RDII routine is designed to be compatible with the variable time
+*  step used in the Runoff Block.  Values of I/I are linearly interpolated 
+*  from the file on NSCRAT(8) at each time during the simulation.
+*
+*  H5 lines may be entered only for desired subcatchments.
+*  If quality is simulated, constant concentrations for I/I are entered
+*  on data line J6.
+*
+*==========================================================================
+*  Lines F3 and F4 are optional and may be omitted.
+*
+*   F3 Line : Line identifier
+*   IIRDII  : = 0, compute new I/I response from rainfall and
+*                  store on NSCRAT(8).
+*             = 1, use I/I response already calculated during previous
+*                  run.  (NSCRAT(8) must be defined on @-line)
+*   TSTEP   : Time interval for rainfall, hr.  (Must equal value from
+*             E-lines or from Rain Block.)  TSTEP is the duration of
+*             each of the three UHs.  
+*   TSTEP2  : Time step for computation of I/I response, hr.  Must be
+*             equal to or integer fraction of TSTEP.  
+*==========================================================================
+* IIRDII  RAINFALL TIME STEP (hr)    RDII TIME STEP (hr)
+F3  0         1.0                       0.25
+*==========================================================================
+*   Enter up to five F4 lines, with identifier.
+*
+*   F4 Line : Line identifier
+*   NRDHYET : Number of hyetograph (rain gage) to use for these 
+*             triangular UHs.
+*   RDIIT   : Time to peak of triangular UH, hr.
+*   RDIIK   : Ratio of recession limb to time to peak.
+*   DSTORE  : Maximum initial abstraction, to compute rainfall excess for
+*             UH, in. [mm].
+*   STORAGE : Initial storage (max = DSTORE), in. [mm].
+*   DREC    : Recovery rate for storage (initial abstraction) during dry 
+*             time steps, in./day [mm/day].
+*=========================================================================
+*REPEAT F4 FOR UP TO 5 SETS OF I/I BASE RESPONSE CURVES
+* NNRDHYET RDIIK  STORAGE   etc.
+*    RDIIT    DSTORE   DREC   etc.
+F4 1  1.0  2.0 0.1 0.1 0.05   3.0 2.0 0.1 0.1 0.05    10.0 2.0 1.1 0.1 0.05 
+*  slower response
+F4 1  2.0  2.0 0.1 0.1 0.05   4.0 2.0 0.1 0.1 0.05    15.0 2.0 1.1 0.1 0.05 
+*  even slower response
+F4 1  4.0  2.0 0.1 0.1 0.05   5.0 2.0 0.1 0.1 0.05    20.0 2.0 1.1 0.1 0.05 
+*============================================================================
+*                 Enter Channel/Pipe data on line G1.
+*
+*        Channel/pipe data: one line per channel/pipe (if none, leave out).
+*  Maximum number of channels or pipes plus inlets is defined by parameter
+*  NG on the 'TAPES.INC' common.  An inlet is any location identified by NGTO
+*  on a G1 or H1 line that is not listed in group G1 as a channel or pipe. 
+*  All inlets (and only these inlets) are saved on the output interface 
+*  file, if JOUT > 0.
+*
+*  Note:  Variables with asterisks can be modified using the Default/Ratio 
+*  option.  A -1 entered for NAMEG means non-zero entries for data with
+*  asterisks are ratios, by which subsequent entries for those parameters
+*  will be multiplied.  E.g., enter a ratio of 1.2 to increase all 
+*  parameters by 20%.  A -2 entered for NAMEG means non-zero entries for 
+*  data with asterisks are default values.  If a data line has a zero for
+*  a parameter for which a default value has been defined, the parameter
+*  is assigned this value.  As many ratio and default lines may be inserted
+*  as desired within a data group.  Of course, if the alphanumeric option
+*  is being used, the -1 or -2 should be enclosed in single quotes, e.g., 
+*  '-1' or '-2'. 
+*============================================================================
+*	G1 Line      :
+*        NAMEG       :  Channel/pipe number or name.
+*        NGTO        :  Channel/pipe or inlet number or name for drainage.
+*        NPG=NP      :  Type of channel or pipe.
+*                       = 1 for trapezoidal channel,
+*                       = 2 for circular pipe,
+*                       = 3 for dummy channel/pipe, inflow = outflow,
+*                       = 4 for parabolic channel,
+*                       = 5 for trapezoidal channel with weir or orifice
+*                          (follow with G2 data group),
+*                       = 6 for circular pipe with weir or orifice
+*                          (follow with G2 data group), and
+*                       = 7 for parabolic channel with weir or orifice
+*                          (follow with G2 data group).
+*============================================================================
+*           The following parameters are not used if NP = 3.
+*============================================================================
+*        GWIDTH*   :  Bottom width of trapezoidal channel, diameter.
+*                     of pipe, or top width of parabolic channel, ft [m].
+*        GLEN*     :  Length of channel/pipe, ft [m].
+*        G3*       :  Invert slope, ft/ft (dimensionless).
+*        GS1       :  Left-hand side slope, ft/ft.  (Slope = horiz./vert.).
+*        GS2       :  Right-hand side slope, ft/ft.
+*        G6*       :  Manning's roughness coefficient.
+*        DFULL*    :  Depth of channel when full, ft [m].
+*                     (N.R. if NP equals 2, 3, or 6)
+*        GDEPTH*   :  Starting depth of pipe/channel, ft [m].
+*============================================================================
+*   CHANNEL 20 - CIRCULAR PIPE
+*   CHANNEL 30 - TRAPEZOIDAL CHANEL
+*   CHANNEL  1 - PARABOLIC CHANNEL
+*   CHANNEL  2 - LAKE (PARABOLIC) CHANNEL WITH WEIR
+*  NAMEG NGTO NPG  GWIDTH GLEN  G3    GS1   GS2  G6  DFULL  GDEPTH
+*G1 -1    0    0    0      0.8   0    0     0    0     0     0
+*G1 -2    0    0    0       0    0    0     0   0.020  0     0
+G1  20    2    2    3.0   1000. 0.01 0.00  0.00 0.020  0.0  0.0
+G1  30    2    1   10.0    500. 0.01 5.00  4.00 0.030  8.0  0.0
+G1  1     2    4   20.0   5000. 0.01 0.00  0.00 0.020 10.0  0.0
+G1  2     3    7  500.0   2000. 0.01 0.00  0.00 0.020 10.0  3.0
+*============================================================================
+*                Enter control structure data on line G2.
+*
+*  Note:  A G2 data group must follow a G1 line if NPG is greater than 4.
+*  Then continue with further G1 lines and/or G1-G2 pairs.  
+*============================================================================
+*	G2 Line    :
+*        WTYPE     :  Type of weir/orifice,
+*                     = 0, Broad or narrow crested weir,
+*                     = 1, V-notched weir, or
+*                     = 2, Orifice.
+*        WELEV     :  Elevation of weir (bottom of notch for V-notch) or
+*                     of orifice centerline, referenced to bottom of 
+*                     channel/pipe, ft [m].
+*        WDIS      :  Discharge coefficient of the weir or orifice
+*                     (parameter C in equations 4-5, 4-6, 4-7).  Units
+*                     for equations 4-5 or 4-6: ft1/2/sec [m1/2/sec]. 
+*                     Parameter Cd in equation 4-7 is dimensionless.
+*        SPILL     :  Weir length (e.g., width of spillway) for a broad 
+*                     or narrow crested weir, ft [m].  The angle (degrees) 
+*                     of the notch for a V-notch weir.  The cross 
+*                     sectional area of the outflow orifice, ft2 [m2].
+*============================================================================
+*  WTYE WELEV  WDIS SPILL
+G2  0    3.0    3.3  10.0   
+*============================================================================
+*    Enter Subcatchment Data on line H1.  Repeat for each subcatchment
+*                (Maximum of NW different subcatchments).
+*
+*          Note:  Variables with asterisks can be modified using
+*          the Default/Ratio option.  If any of H2-H5 lines follow for
+*          this subcatchment, must have a non-ratio/default line follow
+*          this ratio/default line.  That is, cannot have H1 ratio/default
+*          line followed immediately by H2 or H5 line.  
+*============================================================================
+*	H1 Line    :
+*        JK        :  Hyetograph number (based on the order
+*                     in which they are input, in Group E3).
+*        NAMEW     :  Subcatchment number or name.
+*        NGTO      :  Channel/pipe or inlet (manhole) number for drainage.
+*        WW(1)*    :  Width of subcatchment, ft [m].
+*                     This term actually refers to the physical width of 
+*                     overland flow in the subcatchment and may be estimated
+*                     as illustrated in the text or by ratio of subcatchment
+*                     area to average length of overland flow.
+*        WAREA*    :  Area of subcatchment, acres [ha].
+*        WW(3)*    :  Percent imperviousness of subcatchment,
+*                     (percent hydraulically effective or directly 
+*                      connected impervious area).
+*        WSLOPE*   :  Ground slope, ft/ft (dimensionless).
+*        WW(5)*    :  Impervious area Manning's roughness.
+*        WW(6)*    :  Pervious area Manning's roughness.
+*        WSTORE1*  :  Impervious area depression storage, in. [mm].
+*        WSTORE2*  :  Pervious area depression storage, in. [mm].
+*============================================================================
+*        Last three parameters on line H1 if Horton equation 
+*                   is used, INFILM = 0 on data group B1.
+*============================================================================
+*        WLMAX*    :  Maximum initial infiltration rate, in./hr [mm/hr].
+*        WLMIN*    :  Minimum (asymptotic) infiltration rate, in./hr [mm/hr].
+*        DECAY*    :  Decay rate of infiltration in Horton's equation, 1/sec.
+*============================================================================
+*        Last three parameters on line H1 if Green-Ampt equation 
+*                   is used, INFILM = 1 on group B1.
+*============================================================================
+*        SUCT*     :  Average capillary suction, in. [mm] of water.
+*        HYDCON*   :  Saturated hydraulic conductivity of soil, 
+*                     in./hr [mm/hr].
+*        SMDMAX*   :  Initial moisture deficit for soil, volume
+*                       air/volume voids (fraction).
+*============================================================================
+*  =====> SURFACE WATER DATA
+*  JK  NAMEW  NGTO  WIDTH  AREA    %IMP  SLP   IMPN    PERVN   IDS    PDS    SUCT HYDCON SMDMAX
+H1  1   100    1     100.0   300.    20.0 .001   .04    .30      .05   .10    4.00   1.00  .34
+*============================================================================
+*         Input Groundwater Subcatchment Data on lines H2, H3 and H4.
+*
+*   Data groups H2, H3, and H4 describe the groundwater portion of the
+*   subcatchment.  They should follow the correct H1 data group line.  There
+*   are a maximum of NGW subcatchments with groundwater simulation allowed.
+*
+*     Note:  Variables with asterisks can be modified using the 
+*     the Default/Ratio option.  Indicator variable is NMSUB.  Be sure
+*     to include all three H2-H4 lines if entering Default/Ratio data.
+*============================================================================
+*	H2 Line    :
+*        NMSUB     :  Subsurface subcatchment indicator variable,
+*                     must be same as preceding NAMEW on H1 line.
+*        NGWGW     :  Number or name of inlet, channel or pipe for
+*                     subsurface drainage.  Does not have to be the
+*                     same as preceding NGTO for surface runoff.
+*        ISFPF     :  Indicator variable for saving soil moisture,
+*                     water table elevation and outflow for printing.
+*                     = 0, do not save subsurface information, or
+*                     = 1, save subsurface information for printing.
+*        ISFGF     :  Indicator variable for saving soil moisture,
+*                     water table elvation and outflow for graphing.
+*                     = 0, do not save subsurface information, or
+*                     = 1, save subsurface information for graphing.
+*============================================================================
+*        Note:  See Figure X-1 for definition of elevation variables.
+*============================================================================
+*        BELEV*    :  Elevation of bottom of water table aquifer, ft [m].
+*        GRELEV*   :  Elevation of ground surface, ft [m].
+*        STG*      :  Elevation of initial water table stage, ft [m].
+*        BC*       :  Elevation of channel bottom or threshold stage 
+*                     for groundwater flow, ft [m].
+*        TW*       :  Channel water influence parameter
+*                     >= BC, average elevation of water in channel
+*                        or pipe over run, ft [m] or,
+*                     < 0, (e.g., -1) channel water influence will be
+*                     determined by depth in channel or pipe at the end
+*                     of the previous time step.
+*============================================================================
+*  GROUNDWATER DATA
+*  NMSUB NGWGW ISFPF ISFGF BELEV GRELEV STG   BC   TW
+H2  100   1     1      0    0.0   20.0  5.00 5.00 5.00
+*============================================================================
+*        Input Groundwater Flow Coefficients And Exponents from
+*                 (Equations X-24 and X-25) on line H3.
+*============================================================================
+*	H3 Line    :
+*        A1*       :  Groundwater flow coefficient, in/hr-ft^B1 [mm/hr-m^B1].
+*        B1*       :  Groundwater flow exponent, dimensionless.
+*        A2*       :  Coefficient for channel water influence,
+*                     in/hr-ft^B2 [mm/hr-m^B2].
+*        B2*       :  Exponent for channel water influence, dimensionless.
+*        A3*       :  Coefficient for the cross product between groundwater
+*                     flow and channel water, in/hr-ft^2 [mm/hr-m^2].
+*        POR*      :  Porosity expressed as a fraction.
+*        WP*       :  Wilting point expressed as a fraction.
+*        FC*       :  Field capacity expressed as a fraction.
+*        HKSAT*    :  Saturated hydraulic conductivity, in./hr [mm/hr].
+*        TH1*      :  Initial upper zone moisture expressed as a fraction.
+*============================================================================
+*  A1      B1   A2  B2  A3  POR  WP  FC  HKSAT  TH1
+H3 4.5E-5 2.6  0.0  1.0 0.0 .46 .15  .30 5.0    .301
+*============================================================================
+*                   Input more groundwater parameters on line H4.
+*============================================================================
+*	H4 Line    :
+*        HCO*      :  Hydraulic conductivity vs. moisture content
+*                     curve-fitting parameter (Eqn. X-21), dimensionless.
+*        PCO*      :  Average slope of tension versus soil
+*                     soil moisture curve (see Figures X-2, X-3 and
+*                     X-4), ft/fraction [m/fraction].
+*        CET*      :  Fraction of maximum ET rate assigned to the upper zone.
+*        DP*       :  Coefficient for unquantified losses,
+*                     (Eqn. X-23), in./hr [mm/hr].
+*        DET*      :  Maximum depth over which significant lower zone
+*                       transpiration occurs, ft [m].
+*============================================================================
+*  HCO  PCO   CET  DP     DET  
+H4  10.  15.  0.35 2.E-03 14.0
+*============================================================================
+*   Define subcatchment response to infiltration/inflow on H5 line.
+*   See explanation of F3 and F4 lines for additional detail.
+*
+*   Any desired subcatchment may define response parameters.  Generated I/I
+*   will enter in channel/pipe or inlet NGTO.  The sewered area defined on
+*   the H5 line is used, not the subcatchment area.  The response is defined
+*   as a fraction RDIIR from each of the three triangular UHs defined on
+*   one of the F4 lines.  The fractions do not have to sum to 1.0.
+*============================================================================
+*  Input H5 line only for a subcatchment for which I/I response is desired.
+*  Lines H1-H5 follow in groups.  Do not "cluster" all H5 lines together.
+*
+*  H5 Line  : Line identifer
+*  SEWAREA  : Sewered area, ac [ha]
+*  RDIIR(1) : Fraction of first UH response toward total I/I response.
+*  RDIIR(2) : Fraction of second UH response toward total I/I response.
+*  RDIIR(3) : Fraction of third UH response toward total I/I response.
+*  ICURVE   : Indicator for which set of three UHs to use, from sequence
+*             of F4 lines.  (E.g., if ICURVE = 2, use second set for 
+*             this subcatchment.)
+*============================================================================
+*   SEWAREA RDIIR1 RDIIR2 RDIIR3 ICURVE
+H5    100  0.03333 0.03333  0.0    1
+*============================================================================
+*  Additional subcatchments with no subsurface data or I/I data.
+*  JK  NAMEW  NGTO  WIDTH  AREA    %IMP  SLP   IMPN    PERVN   IDS    PDS    SUCT HYDCON SMDMAX
+H1  1   200    20    50.0   100.    30.0 .001   .04    .30      .05   .10    3.00   1.00  .34
+H1  1   300    30   150.0   400.    10.0 .002   .04    .30      .05   .10    4.00   0.50  .34
+*============================================================================
+*   Enter Subcatchment Snow Input Data on data groups I1 and I2 (if modeled).
+*============================================================================
+*                     
+*                Note: If ISNOW = 0, skip to group J1.
+*                      If ISNOW = 1, read only group I1.
+*                      If ISNOW = 2, read both groups I1 and I2, in pairs.  
+*
+*        Order of subcatchments must be same as in group H1, and there
+*   must be snow data group(s) for each H1 line.   All snow-depth related
+*   parameters refer to depth of snow water equivalent (w.e.).
+*
+*                Note:  Variables with asterisks can be modified 
+*                       using the Default/Ratio option.
+*============================================================================
+*	I1 Line    :
+*      JK1         :  Subcatchment number or name.  Must correspond to NAMEW 
+*                     entered in Group H1.
+*      SNN1        :  Fraction of impervious area with 100 percent  
+*                     snow cover (ISNOW = 1) or subject to areal
+*                     depletion curve (ISNOW = 2).
+*      SNCP(N)     :  Fraction of pervious area subject to 100 percent
+*                     snow cover (ISNOW = 1).  N.R. if ISNOW = 2.
+*      WSNOW(N,1)  :  Initial snow depth of impervious area that is 
+*                     normally snow covered, in. water equivalent
+*                     [mm w.e.]
+*      WSNOW(N,2)  :  Initial snow depth on pervious area,
+*                     in. w.e. [mm w.e.].
+*      FW(N,1)     :  Initial free water on snow covered impervious
+*                     area, in. [mm].
+*      FW(N,2)     :  Initial free water on snow covered pervious 
+*                     area, in. [mm].
+*      DHMAX(N,1)* :  Melt coefficient (ISNOW = 1) or maximum melt 
+*                     coefficient, occurring on June 21 (ISNOW = 2) 
+*                     for snow covered impervious area, 
+*                     in. w.e./hr-F [mm w.e./hr-C].
+*      DHMAX(N,2)* :  Melt coefficient (ISNOW = 1) or maximum melt 
+*                     coefficient, occurring on June 21 (ISNOW = 2)
+*                     for snow covered pervious area, 
+*                     in. w.e./hr-F [mm w.e./hr-C].
+*      TBASE(N,1)* :  Snow melt base temperature for snow covered
+*                     impervious area, F [C].
+*      TBASE N,2)* :  Snow melt base temperature for snow covered
+*                     pervious area, F [C].
+*============================================================================
+*     Enter Subcatchment Snow Input Data on data group I2 if ISNOW = 2.
+*============================================================================
+*	I2 Line    :
+*      JK2         :  Subcatchment number or name.  Must correspond to JK1 
+*                     on Line I1 and NAMEW in Group H1.
+*      WSNOW(N,3)  :  Initial snow depth on impervious area that is
+*                     normally bare, in. [mm].
+*      FW(N,3)     :  Initial free water on impervious area that is
+*                     normally bare, in. [mm].
+*      DHMAX(N,3)* :  Maximum melt coefficient occurring on June 21,
+*                     for snow on normally bare impervious area, 
+*                     in. w.e./hr-F [mm w.e./hr-C].
+*      TBASE(N,3)* :  Snow melt base temperature for normally bare
+*                     impervious area, F [C].
+*      DHMIN(N,1)* :  Minimum melt coefficient occurring on December 21
+*                     for snow covered impervious area, in. w.e./hr-F
+*                     [mm w.e./hr-C].
+*      DHMIN(N,2)* :  Minimum melt coefficient occurring on December 21
+*                     for snow covered pervious area, in. w.e./hr-F
+*                     [mm w.e./hr-C].
+*      DHMIN(N,3)* :  Minimum melt coefficient occurring on December 21
+*                     for snow on normally bare impervious area, 
+*                     in. w.e./hr-F [mm w.e./hr-C].
+*      SI(N,1)*    :  Snow depth above which there is 100 percent cover
+*                     on snow covered impervious areas, in. [mm] w.e.
+*      SI(N,2)*    :  Snow depth above which there is 100 percent cover
+*                     on snow covered pervious areas, in. [mm] w.e.
+*      WEPLOW(N)   :  Redistribution (plowing) depth on normally bare
+*                     impervious area, in. [mm] w.e.  Snow above this 
+*                     depth redistributed according to fractions below.
+*
+*  Note:  Redistribution (plowing) fractions (see Figure 4-25).  Snow above
+*         WEPLOW in. [mm] w.e. on normally bare impervious area will be
+*         transferred to area(s) indicated below.  The five fractions should
+*         sum to 1.0.
+*
+*      SFRAC(N,1)  :  Fraction transferred to snow covered impervious area.
+*      SFRAC(N,2)  :  Fraction transferred to snow covered pervious area.
+*      SFRAC(N,3)  :  Fraction transferred to snow covered pervious area 
+*                     in last catchment.
+*      SFRAC(N,4)  :  Fraction transferred out of watershed.
+*      SFRAC(N,5)  :  Fraction converted to immediate melt on
+*                     normally bare impervious area.
+*============================================================================
+*          IF KWALTY = 0 on data group B1 skip to data group M1.
+*###########################################################################
+*            Optional input of multiple land uses per subcatchment.
+*
+*            IMUL is a variable to trigger multiple land uses
+*            per subcatchment.   Any value > 0 will cause the 
+*            model to use JLAND land uses per subcatchment.
+*            CAUTION: IMUL > 0 requires input on L2 lines
+*            for each subcatchment, even if JLAND = 1.
+*            ALSO, if IMUL > 0 and JLAND > 1, read JLAND J3 lines
+*            for each constituent.
+*   IMUL 
+JJ     1
+*############################################################################
+*             Enter General Quality Control on data group J1.
+*============================================================================
+*	J1 Line    :
+*      NQS         :  Number of quality constituents maximum = 10.  Must
+*                     have 1 < NQS <= 9 if erosion is simulated (IROS = 1).
+*      JLAND       :  Number of land uses (Max of 5).
+*      IROS        :  Erosion simulation parameter
+*                     = 0, Erosion not simulated.
+*                     = 1, Erosion of suspended solids simulated using 
+*                     the Universal Soil Loss Equation.  Parameters input 
+*                     in Group K1.  Output will be last quality constituent
+*                     (i.e., constituent NQS+1).
+*      IROSAD      :  Option to add erosion constituent to constituent 
+*                     number IROSAD.  E.g., if IROSAD = 3, erosion will 
+*                     be added to constituent 3 (perhaps suspended solids).
+*                     No addition if IROSAD = 0.  N.R. if IROS = 0.
+*      DRYDAY      :  Number of dry days prior to start of storm.
+*      CBVOL       :  Average individual catchbasin storage volume, ft3 [m3].
+*      DRYBSN      :  Dry days required to recharge catchbasin concentrations
+*                     to initial values (CBFACT on group J3).  Must be > 0.
+*      RAINIT      :  For erosion, highest average 30-minute rainfall 
+*                     intensity during the year (continuous SWMM) or during
+*                     the storm (single event), in./hr [mm/hr].  
+*                     N.R. if IROS = 0.
+*
+*             The next three parameters are for modeling street sweeping.
+*      KLNBGN and KLNEND are only used if the simulation is greater 
+*      than one month.
+*
+*      REFFDD      :  Street sweeping efficiency (removal)
+*                     fraction) for "dust and dirt." 
+*      KLNBGN      :  Day of year on which street sweeping
+*                     begins (e.g. March 1 = 60).
+*      KLNEND      :  Day of year on which street sweeping
+*                     stops (e.g. Nov. 30 = 334)
+*============================================================================
+*  NQS JLAND IROS IROSAD DRYDRY CBVOL DRYBSN RAINIT REFFDD KLNBGN KLNEND
+J1  2    2    1     0     5.00   2.0  1.00   0.30   0.50     0      0
+*============================================================================
+*        Enter JLAND (from data group J1) Land Use data lines.  One line for
+*    each land use (MINIMUM = 1, MAXIMUM = 5) .  Land use 1 will be that
+*    of first group, land use 2 will be that of the second group etc.
+*
+*                Note:  Variables with asterisks can be modified 
+*                       using the Default/Ratio option.
+*============================================================================
+*	J2 Line    :
+*       LNAME(J)   :  Name of Land use.
+*       METHOD(J)  :  Buildup equation type for 'dust and dirt'(see text).
+*                     = -2, New default values,
+*                     = -1, New ratios,
+*                     =  0, Power-linear,
+*                     =  1, Exponential,
+*                     =  2, Michaelis - Menten.
+*      JACGUT(J)   :  Functional dependence of buildup parameters.
+*                     = 0, Function of subcatchment gutter length,
+*                     = 1, Function of subcatchment area,
+*                     = 2, Constant.
+*
+*      Following are up to three buildup parameters. (See Table 4-16).
+*
+*      DDLIM(J)*   :  Limiting buildup quantity.
+*      DDPOW(J)*   :  Power or exponent.
+*      DDFACT(J)*  :  Coefficient.
+*
+*      Following are three street sweeping parameters.
+*
+*      CLFREQ(J)*  :  Cleaning interval, days.
+*      AVSWP(J)*   :  Availability factor, fraction
+*      DSLCL(J)*   :  Days since last cleaning, DSLCL <= CLFREQ
+*============================================================================
+*    LNAME    METHOD JACGUT  DDLIM  DDPOW  DDFACT  CLFREQ AVSWP DSLCL
+J2 'SINGLE'    0       0    1.E04   1.0    10.0     30.0   0.80  15.0
+J2 'MULTPL'    0       1    5.E04   1.5    50.0      7.0   0.80   5.0
+*============================================================================
+*        Enter data for quality constituent(s) on data group J3.  Repeat for
+*   each constituent, total of NQS groups. (Maximum = 10).  Constituent 1
+*   will be that of the first line constituent 2 that of the second line, etc.
+*
+*        If IMUL > 0 (line JJ) and JLAND > 1, then read JLAND J3 lines for 
+*   each constituent.  I.e., read JLAND lines for constituent 1, followed by
+*   JLAND lines for constituent 2, etc.  In this case, each constituent
+*   can have different J3 parameters for each land use.  These different
+*   parameters will be used on each land use fraction for each subcatchment,
+*   as defined in data group L2.
+*
+*                Note:  Variables with asterisks can be modified 
+*                       using the Default/Ratio option.
+*============================================================================
+*	J3 Line    :
+*      PNAME(K)    :  Constituent name.
+*      PUNIT(K)    :  Constituent units.
+*      NDIM(K)     :  Type of units.
+*                     = 0, mg/l
+*                     = 1, "Other" per liter, e.g., MPN/l or ug/l
+*                     = 2, Other concentration units, e.g., pH, JTU
+*      KALC(K)     :  Type of buildup calculation.
+*                     = 0, Buildup is fraction of "dust and dirt"
+*                          for each land use.
+*                     = 1, Power-linear constituent buildup
+*                     = 2, Exponential constituent buildup
+*                     = 3, Michaelis-Menten constituent buildup
+*                     = 4, No buildup required (with KWASH = 1)
+*      KWASH(K)    :  Type of washoff calculation
+*                     = 0, Power-exponential
+*                     = 1, Rating curve, no upper limit
+*                     = 2, Rating curve, upper limit by buildup equation
+*      KACGUT(K)   :  Functional dependence of buildup
+*                     parameters.  N.R. for KALC = 0 or 4.
+*                     = 0, Function of subcatchment gutter length
+*                     = 1, Function of subcatchment area
+*                     = 2, Constant
+*      LINKUP(K)   :  Linkage to snowmelt. N.R. if ISNOW = 0 or KALC = 4.
+*                     = 0, No linkage to snow parameters
+*                     = 1, Constituent buildup during dry weather only when
+*                     snow is present on impervious surface of subcatchment.
+*
+*      Following are up to five buildup parameters 
+*                 (see text and Tables 4-17, 4-18).  
+*
+*      QFACT(1,K)* :  First buildup parameter, e.g., limit.
+*      QFACT(2,K)* :  Second buildup parameter, e.g., power or exponent.
+*      QFACT(3,K)* :  Third buildup parameter, e.g. coefficient.
+*      QFACT(4,K)* :  Fourth buildup parameter, N.R. if KALC > 0 
+*                     or JLAND < 4.
+*      QFACT(5,K)* :  Fifth buildup parameter, N.R., if KALC > 0
+*                     or JLAND < 5.
+*
+*      Following are two washoff or rating curve parameters.
+*
+*      WASHPO(K)*  :  Power (exponent) for runoff rate.
+*      RCOEF(K)*   :  Coefficient.
+*
+*      CBFACT(K)*  :  Initial catchbasin concentration.
+*                      (units according to NDIM).
+*      CONCRN(K)*  :  Concentration in precipitation.
+*                     (units according to NDIM).
+*      REFF(K)*    :  Street sweeping efficiency (removal fraction) 
+*                     for this constituent.
+*============================================================================
+*   PNAME    PUNIT  NDIM KALC KWASH KACGUT LINKUP QFACT1 QFACT2 QFACT3 QFACT4  QFACT5  WASHPO RCOEF CBFACT  CONCRN REFF 
+* Land use 1:
+J3 'TOT.SOL' 'MG/L'  0    2     0     0      0     900.0    2.0   0.0     0.0    0.0      2.0   1.5   100.0    2.0   0.7 
+* Land use 2:
+J3 'TOT.SOL' 'MG/L'  0    0     0     1      0      1000.   200.  0.0     0.0    0.0      2.0   1.5   150.0    2.0   0.7
+* Land use 1:
+J3 '  BOD5 ' 'MG/L'  0    1     0     0      0      60.0    1.5   0.3     0.0    0.0      2.0   1.2   20.0     0.1   0.5 
+* Land use 2:
+J3 '  BOD5 ' 'MG/L'  0    0     0     1      0       200.    70.  0.0     0.0    0.0      2.0   1.2   30.0     0.1   0.5 
+*============================================================================
+*      Enter data for fractional contributions from other constituents
+*      on data group J4.  Repeat until all desired fractions are entered.
+*============================================================================
+*	J4 Line    :
+*   KTO            :  Number (from order in Group J3) of constituent to
+*                     which fraction will be added.
+*   KFROM          :  Number of constituent from which fraction is computed.
+*   F1(KTO,KFROM)  :  Fraction of constituent KFROM to be added 
+*                     to constituent KTO.
+*                     [Note, these fractions will be applied for all
+*                     land use segments if multiple land use option
+*                     is used.]
+*============================================================================
+*    KTO KFROM    F1
+J4     2     1  0.02
+*============================================================================
+*   In data group J5, enter a constant groundwater concentration for every 
+*   water quality constituent.  Same units as NDIM in data group J3.
+*============================================================================
+*    TS   BOD5
+J5   5.0  0.1  
+*============================================================================
+*   In data group J6, enter a constant infiltration/inflow concentration for
+*   every water quality constituent.  Same units as NDIM in data group J3.
+*   Required only if I/I option used (lines F3, F4, H5).  If omitted, I/I
+*   is assumed to have zero concentrations.
+*============================================================================
+*    TS   BOD5
+J6   50.0  0.05  
+*============================================================================
+*               Enter Erosion Data on data group K1.
+*
+*           If IROS = 0 on data group J1, skip to group L1.
+*
+*   Note:   Repeat group K1 ONLY for each subcatchment that is subject
+*           to erosion computations.  The order of lines is arbitrary,
+*           but a match must be found of subcatchment number/name with a 
+*           value of NAMEW used in group H1.
+*
+*                Note:  Variables with asterisks can be modified 
+*                       using the Default/Ratio option.
+*============================================================================
+*	K1 Line    :
+*      N=NAMEW     :  Subcatchment number or name matched with H1 line.
+*      ERODAR*     :  Area of subcatchment subject to erosion, acres [ha].
+*      ERLEN*      :  Flow distance in feet [meters] from point of
+*                     origin of overland flow over erodible area to              
+*                     point at which runoff enters channel/pipe or inlet.
+*      SOILF*      :  Soil factor 'K'.
+*      CROPMF*     :  Cropping management factor 'C'.
+*      CONTPF*     :  Control practice factor 'P'.
+*============================================================================
+*   EROSION DATA
+*   NAMEW  ERODAR  ERLEN  SOILF  CROPMF  CONTPF
+K1    100   30.0   300.0   0.43   1.0     1.0
+K1    200    4.0   200.0   0.43   1.0     1.0
+K1    300   20.0   300.0   0.33   1.0     1.0
+*============================================================================
+*        Enter Subcatchment Surface Quality data on data group L1.
+*
+*             One line for each subcatchment is required.  The order
+*      is arbitrary, but a match must be found for each subcatchment
+*      number (NAMEW) used earlier in group H1.
+*
+*                Note:  Variables with asterisks can be modified 
+*                       using the Default/Ratio option.
+*============================================================================
+*	L1 Line    :
+*      N=NAMEW     :  Subcatchment number or name.
+*      KL          :  Land use classification. 0 < KL < 5.  Numbers 
+*                     correspond to input sequence of Group J2.
+*                     Note: default value for KL = 1.  If L2 lines are 
+*                     being used, still must enter a "representative"
+*                     value for KL.  Fraction data on L2 line will
+*                     over-ride value of KL.  
+*      BASINS(N)*  :  Number of catchbasins in subcatchment.
+*      GQLEN(N)*   :  Total curb length within subcatchment hundreds 
+*                     of feet [km].  May not be required depending on
+*                     method used to calculate constituent loadings
+*                     (Groups J2 and J3).
+*
+*        The following initial constituent loading values may be input as an 
+*   alternative to computation of loadings via methods specified in groups 
+*   J2 and J3 (for initial conditions only).  For any non-zero values 
+*   read in, initial constituent loadings will be calculated simply by 
+*   multiplication of the value by the subcatchment area (or fractional area
+*   if IMUL > 0 on line JJ).  (I.e., if a loading value is entered on 
+*   line L1, it will be apportioned over land uses with non-zero fractions.)
+*   "Load" has units depending on value of NDIM (Group J3), 
+*   according to the following table:
+*
+*            NDIM           LOAD                    
+*               0           pounds [kg]
+*               1           106 x quantity, e.g. 106 MPN
+*               2           106 x quantity x ft3,                  
+*                               e.g. 106 pH-ft3.
+*
+*      PSHED(1,N)  :  Initial loading, first constituent,
+*                     load/acre [load/ha].
+*          .                  .
+*      PSHED(10,N) :  Initial loading, tenth constituent,
+*                     load/acre [load/ha].
+*############################################################################
+*  Note, line L1 below illustrates use of slash to fill in any needed
+*  remaining zeros automatically.  
+*############################################################################
+*    NAMEW  KL   BA     GQ  PSHED(1) PSHED(2)
+L1    100    1  12.0   20.0   /
+*============================================================================
+*      L2 line  :
+*
+*      If required, this line immediately follows each L1 line. 
+*      Enter land use fractions for subcatchment on previous L1 line.
+*      Not required if IMUL = 0 on line JJ (or line JJ omitted). 
+*
+*      If IMUL > 0, an L2 line must follow each L1 line, even if JLAND = 1.
+*      The fractions on line L2 must total to exactly 1.0 (tolerance = 0.001). 
+*
+*      These fractions (PLAND) are used to multiply the subcatchment area
+*      or curb length for all buildup calculations, depending on 
+*      parameters JACGUT (line J2) and/or KACGUT (line J3).  
+*      Similarly, if initial loads are input on line L1, the 
+*      quantity/area values will be multiplied by the fraction area
+*      for each land use.  Thus, the quantity/area values in line L1 cannot
+*      differentiate between different land uses.  
+*      Throughout the simulation, separate buildup and washoff parameters 
+*      will be used for each land use fraction, as input in the multiple 
+*      J3 lines.
+*      If catchbasin quality information is entered, the total catchbasin
+*      load for a subcatchment is the sum over the number of land uses of:
+*      CBFACT*BASINS*CBVOL*PLAND.
+*
+*      Enter JLAND fractions.  Value 1 corresponds to land use 1, etc.
+*
+*      PLAND(1,N)  : Fraction of subcatchment N consisting of land use 1.
+*      PLAND(2,N)  : Fraction of subcatchment N consisting of land use 2.
+*       Etc.          Read JLAND values of PLAND.  
+*
+*============================================================================
+*        Single    Multiple
+*        PLAND1    PLAND2
+L2        0.7       0.3
+*============================================================================
+*  Additional L1/L2 lines.  Must enter L1/L2 pairs for each subcatchment.
+L1    200    2  20.0   30.0   /
+L2        0.2       0.8
+L1    300    1   6.0   10.0   /
+L2        1.0       0.0
+*============================================================================
+*      Enter data for Channel/Inlet Print Control on data group M1.
+*============================================================================
+*	M1 Line    :
+*        NPRNT     :  Total number of channels/pipes/inlets for which 
+*                     non-zero flows (and concentrations) are
+*                     to be printed (maximum = NG).
+*        INTERV    :  Print Control.
+*                     = 0, Print statistical summary only.
+*                     = 1, Print every time step.
+*                     = K, Print every K time steps.
+*============================================================================
+*  NPRNT  INTERV
+M1     5     6
+*============================================================================
+*             IF NPRNT = 0 on line M1 SKIP groups M2 and M3.
+*
+*            Enter Print Period information on data group M2.
+*============================================================================
+*	M2 Line    :
+*      NDET        :  Number of detailed printout periods.
+*                     (Maximum of 10 periods.) 
+*
+*  Note:  If NDET = 1 and STARTP(1) = 0 and STOPPR(1) = 0 then the
+*            total simulation period will be printed as a default.
+*
+*      STARTP(1)   :  First starting printout date, year, month,
+*                     day, e.g., October 2, 1949 = 491002.
+*      STOPPR(1)   :  First stopping printout date.
+*           .                .
+*      STARTP(NDET):  Last starting date.
+*      STOPPR(NDET):  Last stopping date.
+*============================================================================
+*  NDET  STARTP(1) STOPPR(1)
+M2    1          0         0
+*============================================================================
+*        Enter channel/inlet printout locations on data group M3.
+*============================================================================
+*	M3 Line    :
+*      IPRNT(1)    :  First channel/inlet numbers or name for which flows
+*                     and concentrations are to be printed.
+*           .                       .
+*      IPRNT(NPRNT):  First channel/inlet numbers or name for which flows
+*                     and concentrations are to be printed.
+*  
+*   Note: INflows to channel/pipes are printed as the default option.  To
+*   print the OUTflow from a channel/pipe, give the ID as a negative 
+*   number.  A channel/pipe may be listed with both a positive and negative
+*   number.  The negative option is not available for alphanumeric labeling.
+*============================================================================
+*  IPRNT(1) ...              IPRNT(NRPNT)
+M3    1      2      3     20     30
+*============================================================================
+*        Enter channel/pipe depth output locations on data group M4.
+*        ****NOTE: M4 line is optional and may be omitted.****
+*============================================================================
+*	M4 Line    :
+*      MDEEP       :  Number of depth locations for printout (max = NG).
+*      KDEEP(1)    :  First conduit selected.
+*           .               .
+*      KDEEP(MDEEP):  Last conduit selected.
+*============================================================================
+*                     Select two conduits for depth printout
+*   # of conduits     ...conduits    
+*           MDEEP     KDEEP(1)..KDEEP(2)
+M4              2      1          2   
+*============================================================================
+*               End your input data set with a $ENDPROGRAM.
+$ENDPROGRAM
+

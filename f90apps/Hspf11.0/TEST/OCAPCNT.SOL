@@ -1,0 +1,5 @@
+CU *
+gn ..\..\hspfuci\bin\hspfbat.log
+CU
+ZX
+Q

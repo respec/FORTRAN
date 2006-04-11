@@ -1,0 +1,114 @@
+Lahey MAKE, Version 5.31
+Copyright OPUS Software.  All rights reserved.
+
+LF90 -c -i ..\src\;\lib3.0\src\hspf12 WASP.for
+Lahey Fortran 90 Compiler Release 3.00b  S/N: f9358012  
+Copyright (C) 1994-1996 Lahey Computer Systems.  All rights reserved.
+Copyright (C) 1985-1996 Intel Corp.  All rights reserved.
+Registered to:	Paul Duda                              
+		AQUA TERRA Consultants                 
+Compiling file WASP.for.
+Compiling program unit WASPREAD at line 1.
+Line 13, file WASP.INC
+     1   JUNSEG(MAXJUN,MAXWASP)
+         |
+FATAL -- Syntax error.
+
+Line 18, file WASP.for
+      JUNSEG(IJ,IW) = 0
+      |
+FATAL -- Subscript or substring range expression inappropriate for INTEGER 
+scalar (JUNSEG).
+
+Line 55, file WASP.for
+     1                 (JUNSEG(IJ,NWASP),IJ=1,NJUNSEG(NWASP))
+                        |
+FATAL --  scalar (JUNSEG) appears in array or procedure reference context.
+WARNING -- INTEGER scalar (JUNSEG) is never used.
+
+Line 57, file WASP.for
+     1                     (JUNSEG(IJ,NWASP),IJ=1,NJUNSEG(NWASP))
+                            |
+FATAL --  scalar (JUNSEG) appears in array or procedure reference context.
+
+Line 59, file WASP.for
+	      READ(N5,*) CC,IWASPSEG,ACONVEL(NWASP),NJUNSEG(NWASP),
+	                             |
+FATAL -- Input item must be a variable or I/O implied DO (see "READ
+Statement" in the Lahey Fortran 90 Language Reference).
+
+Compiling program unit WASPINIT at line 133.
+Line 13, file WASP.INC
+     1   JUNSEG(MAXJUN,MAXWASP)
+         |
+FATAL -- Syntax error.
+
+Line 146, file WASP.for
+	CALL GETJUN(NUMB,JUNSEG(IJ,IW),AJUNSEG(IJ,IW))
+	                 |
+WARNING -- INTEGER scalar (JUNSEG) is never used.
+FATAL --  scalar (JUNSEG) appears in array or procedure reference context.
+
+Line 147, file WASP.for
+	JUNSEG(IJ,IW) = NUMB
+	|
+FATAL -- Subscript or substring range expression inappropriate for INTEGER 
+scalar (JUNSEG).
+
+Compiling program unit WASPCOMP at line 189.
+Line 13, file WASP.INC
+     1   JUNSEG(MAXJUN,MAXWASP)
+         |
+FATAL -- Syntax error.
+
+Line 18, file WASP.INC
+	  CHARACTER*10 AJUNSEG,ACONSEG,ACONVEL
+	                               |
+WARNING -- CHARACTER scalar (ACONVEL) is never used.
+
+Compiling program unit WASPWRITE at line 221.
+Line 13, file WASP.INC
+     1   JUNSEG(MAXJUN,MAXWASP)
+         |
+FATAL -- Syntax error.
+
+Line 18, file WASP.INC
+	  CHARACTER*10 AJUNSEG,ACONSEG,ACONVEL
+	                               |
+WARNING -- CHARACTER scalar (ACONVEL) is never used.
+
+Compiling program unit GETJUN at line 234.
+Line 234, file WASP.for
+      SUBROUTINE GETJUN(NUMB,INAME,ANAME)
+                 |
+WARNING -- 2nd argument in previous reference of (GETJUN) (line 146 file 
+WASP.for) had different class, type, kind, rank, or intent than this explicit
+interface.
+
+Compiling program unit GETCON at line 263.
+Compiling program unit SEGMENTS at line 293.
+Line 13, file WASP.INC
+     1   JUNSEG(MAXJUN,MAXWASP)
+         |
+FATAL -- Syntax error.
+
+Line 18, file WASP.INC
+	  CHARACTER*10 AJUNSEG,ACONSEG,ACONVEL
+	                               |
+WARNING -- CHARACTER scalar (ACONVEL) is never used.
+
+Compiling program unit INTERFAC at line 345.
+Line 13, file WASP.INC
+     1   JUNSEG(MAXJUN,MAXWASP)
+         |
+FATAL -- Syntax error.
+
+Line 18, file WASP.INC
+	  CHARACTER*10 AJUNSEG,ACONSEG,ACONVEL
+	                               |
+WARNING -- CHARACTER scalar (ACONVEL) is never used.
+
+Encountered 12 errors, 7 warnings in file WASP.for.
+
+
+Lahey MAKE: Shell line exit status 4. Stop.

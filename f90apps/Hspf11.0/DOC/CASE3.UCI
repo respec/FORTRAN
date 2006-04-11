@@ -1,0 +1,748 @@
+RUN
+
+GLOBAL
+  Special Actions Case Study #3 - Basin Management
+  START       1992              END    1993
+  RUN INTERP OUTPUT LEVEL    3    4
+  RESUME     0 RUN     1                   UNIT SYSTEM     1
+END GLOBAL
+
+FILES
+<ftyp>  <fun>***<-----------------fname---------------------------------------->
+MESSU      25   case3.ech
+WDM        26   case.wdm
+            2   case3.out
+END FILES
+
+OPN SEQUENCE
+    INGRP              INDELT 24:00
+      PERLND       1
+      COPY         1
+      GENER        1
+      GENER        2
+      RCHRES       1
+      GENER        3
+      RCHRES       2
+      RCHRES       3
+      RCHRES       4
+    END INGRP
+END OPN SEQUENCE
+
+CATEGORY  
+   <> <-----name-----> ***
+   fw fish & wildlife
+   mu municipal
+END CATEGORY
+
+PERLND
+  ACTIVITY
+    <PLS >          Active Sections (1=Active, 0=Inactive)             ***
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC ***
+    1              1    1
+  END ACTIVITY
+
+  PRINT-INFO
+    <PLS >          Print-flags                                    *** PIVL  PYR
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC       ***
+    1              4    4                                                 1   12
+  END PRINT-INFO
+
+  GEN-INFO
+    <PLS ><-------Name------->        Unit-systems   Printer ***
+    # -  #                                t-series Engl Metr ***
+                                           in  out           ***
+    1      KESTREL FOREST                   1    1    2    0
+  END GEN-INFO
+
+  *** Section SNOW ***
+
+  ICE-FLAG
+    <PLS >  0= Ice formation not simulated, 1= Simulated ***
+    # -  #ICEFG                                          ***
+    1         0
+  END ICE-FLAG
+
+  SNOW-PARM1
+    <PLS >  Snow input info: Part 1                          ***
+    # -  #       LAT     MELEV     SHADE    SNOWCF    COVIND ***
+    1            42.     1800.       0.0      1.45       0.5
+  END SNOW-PARM1
+
+  SNOW-PARM2
+    <PLS >  Snow input info: Part 2                                    ***
+    # -  #     RDCSN     TSNOW    SNOEVP    CCFACT    MWATER    MGMELT ***
+    1           0.12       32.      0.05       0.5      0.08    0.0001
+  END SNOW-PARM2
+
+  SNOW-INIT1
+    <PLS >  Initial snow conditions: Part 1                            ***
+    # -  #  PACKSNOW   PACKICE PACKWATER    RDENPF      DULL    PAKTMP ***
+    1            1.4       0.2       0.1       0.2      375.      27.5
+  END SNOW-INIT1
+
+  SNOW-INIT2
+    <PLS >  Initial snow conditions: Part 2 ***
+    # -  #    COVINX    XLNMLT    SKYCLR    ***
+    1           0.50       0.0       1.0
+  END SNOW-INIT2
+
+  *** Section PWATER ***
+
+  PWAT-PARM1
+    <PLS >  PWATER variable monthly parameter value flags ***
+    # -  # CSNO RTOP UZFG  VCS  VUZ  VNN VIFW VIRC  VLE   ***
+    1         0    1    1    1    0    0    0    0    0
+  END PWAT-PARM1
+
+  PWAT-PARM2
+    <PLS > ***  PWATER input info: Part 2
+    # -  # ***FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+    1          0.000     4.000      0.06      200.   0.22000     0.000     0.985
+  END PWAT-PARM2
+
+  PWAT-PARM3
+    <PLS > ***  PWATER input info: Part 3
+    # -  # ***PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+    1            40.       35.       2.0       2.0       0.0       0.0       0.0
+  END PWAT-PARM3
+
+  PWAT-PARM4
+    <PLS >     PWATER input info: Part 4                               ***
+    # -  #     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP ***
+    1           0.00     1.000     0.350     3.000     0.750     0.400
+  END PWAT-PARM4
+
+  MON-INTERCEP
+    <PLS>   Only required if VCSFG=1 in PWAT-PARM1                     ***
+    # -  #  Interception storage capacity at start of each month       ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      .060 .060 .060 .100 .160 .160 .160 .160 .160 .100 .060 .060
+  END MON-INTERCEP
+
+  PWAT-STATE1
+    <PLS > *** Initial conditions at start of simulation
+    # -  # ***  CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+    1          0.000     0.000     0.500     0.000     4.000     0.500     0.000
+  END PWAT-STATE1
+END PERLND
+
+RCHRES
+  ACTIVITY
+    RCHRES  Active Sections (1=Active; 0=Inactive)           ***
+    # -  # HYFG ADFG CNFG HTFG SDFG GQFG OXFG NUFG PKFG PHFG ***
+    1    4    1
+  END ACTIVITY
+
+  PRINT-INFO
+    RCHRES  Print-flags                                                ***
+    # -  # HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK   PH PIVL  PYR ***
+    1    4    4                                                 1   12
+  END PRINT-INFO
+
+  GEN-INFO
+    RCHRES<-------Name------->Nexit   Unit Systems   Printer      ***
+    # -  #                               t-series  Engl Metr LKFG ***
+                                           in  out                ***
+    1     LAKE SHANDONAY          2         1    1    2    0    1
+    2     INAHARA RESERVOIR       2         1    1    2    0    1
+    3     UPPER IMHOFF RIVER      2         1    1    2    0    0
+    4     LOWER IMHOFF RIVER      1         1    1    2    0    0
+  END GEN-INFO
+
+  HYDR-PARM1
+    RCHRES  Flags for HYDR section                           ***
+    # -  #  VC A1 A2 A3  ODFVFG for each     ODGTFG for each *** FUNCT  for each
+            FG FG FG FG  possible   exit     possible   exit *** possible   exit
+                1  2  3    1  2  3  4  5       1  2  3  4  5 ***
+    1           1             4                1
+    2           1             4                1
+    3           1             4                1
+    4           1          4
+  END HYDR-PARM1
+
+  HYDR-PARM2
+    RCHRES ***
+    # -  #  DSN FTBN       LEN     DELTH     STCOR        KS ***
+    1              1      21.9                           0.0
+    2              2       1.7                           0.0
+    3              3       3.4                           0.0
+    4              4       5.6                           0.0
+  END HYDR-PARM2
+
+  HYDR-INIT
+          Initial conditions for HYDR section      ***
+  RCHRES         VOL  CAT Initial value  of COLIND *** initial  value  of OUTDGT
+    # -  #     ac-ft      for each possible   exit *** for  each  possible  exit
+                           EX1  EX2  EX3  EX4  EX5 ***   EX1  EX2  EX3  EX4  EX5
+    1        400000.    2       4.0
+    2         10000.   fw       4.0
+    3            16.   fw       4.0
+    4            16.   fw  4.0
+  END HYDR-INIT
+
+  HYDR-CINIT 
+*** RCHRES  Category Fractions for Precipitation
+*** # -  #   c  frac   c  frac   c  frac   c  frac   c  frac   c  frac   c  frac
+    1       fw   0.8  mu   0.2
+  END HYDR-CINIT
+
+  HYDR-CATEGORY 
+       Categories specified for Outflows, Precipitation and Evaporation ***
+    RCHRES Categories associated with:                                  ***
+    # -  # prec evap  fv1  fv2  fv3  fv4  fv5   gt                      ***
+    1        fw   fw        fw                   2
+    2        fw   fw        fw                   1
+    3        fw   fw        fw                   1
+    4        fw   fw
+  END HYDR-CATEGORY
+
+  HYDR-CDEMAND
+  Category Priorities and Initial Values for G(T) Demands  ***
+             c x  Priority  COTDGT   c x  Priority  COTDGT ***
+    RCHRES      (yyyy/mm/dd) (cfs)      (yyyy/mm/dd) (cfs) ***
+    # -  #  <><> <--> <> <> <---->  <><> <--> <> <> <----> ***
+    1       fw 1               50.  mu 1               20.
+    2       fw 1               10.
+    3       mu 1              200.
+  END HYDR-CDEMAND
+  *** Note: COTDGT of 200. cfs for Reach 3, Exit 1 is the maximum diversion
+  *** capacity.  No input time series is provided for this demand, so the
+  *** value will remain constant.  The result is that ALL municipal water
+  *** entering Reach 3 will be diverted, up to the capacity.  Any excess will
+  *** continue downstream.
+END RCHRES
+
+COPY
+  TIMESERIES
+    # -  #  NPT  NMN ***
+    1              1
+  END TIMESERIES
+END COPY
+
+GENER
+  OPCODE
+    #    # OPCD ***
+    1    3   24
+  END OPCODE
+
+  PARM
+    #    #         K ***
+    1    3        0.
+  END PARM
+END GENER
+
+EXT SOURCES
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member-> ***
+<Name>   # <Name> # tem strg<-factor->strg <Name>   #   #        <Name> # # ***
+WDM     39 PREC     ENGLZERO               PERLND   1     EXTNL  PREC
+WDM     39 PREC     ENGL                   RCHRES   1   4 EXTNL  PREC
+WDM    123 ATMP     ENGL              AVER PERLND   1     ATEMP  AIRTMP
+WDM     41 EVAP     ENGL        .7         PERLND   1     EXTNL  PETINP
+WDM     41 EVAP     ENGL        .7         RCHRES   1   4 EXTNL  POTEV
+WDM     42 WIND     ENGL                   PERLND   1     EXTNL  WINMOV
+WDM     46 SOLR     ENGL                   PERLND   1     EXTNL  SOLRAD
+WDM    126 DEWP     ENGL                   PERLND   1     EXTNL  DTMPG
+WDM    135 CLDC     ENGL                   PERLND   1     EXTNL  CLOUD
+WDM    137 FLOW     ENGL                   COPY     1     INPUT  MEAN   1
+END EXT SOURCES
+
+SCHEMATIC 
+<-Source->                <--Area-->       <-Target->  <ML->  ***
+<Name>   #                <-factor->       <Name>   #      #  ***
+PERLND   1                   150000.       RCHRES   1      3
+PERLND   1                    75000.       RCHRES   2      4
+PERLND   1                   100000.       RCHRES   3      4
+PERLND   1                    50000.       RCHRES   4      4
+
+RCHRES   1                                 RCHRES   3      1
+RCHRES   2                                 RCHRES   3      1
+RCHRES   3                                 RCHRES   4      2
+END SCHEMATIC 
+
+MASS-LINK 
+  MASS-LINK        1
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+RCHRES     ROFLOW                          RCHRES         INFLOW
+  END MASS-LINK    1
+
+  MASS-LINK        2
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+RCHRES     OFLOW         2                 RCHRES         INFLOW
+  END MASS-LINK    2
+
+  MASS-LINK        3
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+PERLND     PWATER PERO      0.06666667     RCHRES         EXTNL  CIVOL fw
+PERLND     PWATER PERO      0.01666667     RCHRES         EXTNL  CIVOL mu
+  END MASS-LINK    3
+
+  MASS-LINK        4
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+PERLND     PWATER PERO      0.08333333     RCHRES         EXTNL  CIVOL fw
+  END MASS-LINK    4
+END MASS-LINK  
+
+NETWORK
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   #        <Name> # #<-factor->strg <Name>   #   #        <Name> # #  ***
+GENER    1 OUTPUT TIMSER                   RCHRES   1     EXTNL  COTDGT 1mu
+GENER    2 OUTPUT TIMSER                   RCHRES   1     EXTNL  COTDGT 1fw
+GENER    3 OUTPUT TIMSER                   RCHRES   2     EXTNL  COTDGT 1fw
+END NETWORK
+
+SPEC-ACTIONS
+
+*** User-Defined Target Variable Names 
+***                  addr or                       addr or
+***                 <------>                      <------>
+*** kwd   varnam ct  vari  s1 s2 s3  frac oper     vari  s1 s2 s3  frac oper
+  <****>  <----><-> <----><-><-><-> <---> <-->    <----><-><-><-> <---> <-->
+  UVNAME  LMINQ   1 WORKSP 11         1.0 QUAN
+  UVNAME  LPROP   1 WORKSP 12         1.0 QUAN
+  UVNAME  LFWPRO  1 WORKSP 13         1.0 QUAN
+  UVNAME  LMUPRO  1 WORKSP 14         1.0 QUAN
+  UVNAME  LNEED   1 WORKSP 15         1.0 QUAN
+
+  UVNAME  RMAXST  1 WORKSP 21         1.0 QUAN
+  UVNAME  RMINQ   1 WORKSP 22         1.0 QUAN
+  UVNAME  RFWPRO  1 WORKSP 23         1.0 QUAN
+  UVNAME  RNEED   1 WORKSP 24         1.0 QUAN
+  UVNAME  RDRAW   1 WORKSP 25         1.0 QUAN
+  UVNAME  RAVAIL  1 WORKSP 26         1.0 QUAN
+  UVNAME  RFILFG  1 WORKSP 27         1.0 QUAN
+
+  UVNAME  FLOOD   1 WORKSP 31         1.0 QUAN
+  UVNAME  FTARHI  1 WORKSP 32         1.0 QUAN
+  UVNAME  FTARLO  1 WORKSP 33         1.0 QUAN
+  UVNAME  FTARG   1 WORKSP 34         1.0 QUAN
+  UVNAME  FAVAIL  1 WORKSP 35         1.0 QUAN
+  UVNAME  FNEED   1 WORKSP 36         1.0 QUAN
+  UVNAME  MAXREL  1 WORKSP 37         1.0 QUAN
+  UVNAME  TOTPRO  1 WORKSP 38         1.0 QUAN
+
+*** User-Defined Variable Quantity Lines
+***                          addr
+***                        <------>
+*** kwd  varnam optyp  opn  vari  s1 s2 s3 tp multiply  lc ls ac as agfn ***
+  <****> <----> <----> <-> <----><-><-><-><-><--------> <><-> <><-> <--> ***
+  UVQUAN lminq  GLOBAL     WORKSP 11
+  UVQUAN lprop  GLOBAL     WORKSP 12
+  UVQUAN lfwpro GLOBAL     WORKSP 13
+  UVQUAN lmupro GLOBAL     WORKSP 14
+  UVQUAN lneed  GLOBAL     WORKSP 15
+
+  UVQUAN rmaxst GLOBAL     WORKSP 21
+  UVQUAN rminq  GLOBAL     WORKSP 22
+  UVQUAN rfwpro GLOBAL     WORKSP 23
+  UVQUAN rneed  GLOBAL     WORKSP 24
+  UVQUAN rdraw  GLOBAL     WORKSP 25          .50416667
+                *** RDRAW is in units of ac-ft.  Convert rdraw to cfs.
+  UVQUAN ravail GLOBAL     WORKSP 26          .50416667
+                *** RAVAIL is in units of ac-ft. Convert ravail to cfs. 
+  UVQUAN rfilfg GLOBAL     WORKSP 27        2
+
+  UVQUAN flood  GLOBAL     WORKSP 31
+  UVQUAN ftarhi GLOBAL     WORKSP 32
+  UVQUAN ftarlo GLOBAL     WORKSP 33
+  UVQUAN ftarg  GLOBAL     WORKSP 34 
+  UVQUAN favail GLOBAL     WORKSP 35                          DY  2 AVER
+  UVQUAN fneed  GLOBAL     WORKSP 36
+  UVQUAN maxrel GLOBAL     WORKSP 37
+  UVQUAN totpro GLOBAL     WORKSP 38
+
+*** kwd  varnam optyp  opn  vari  s1 s2 s3 tp multiply  lc ls ac as agfn ***
+  <****> <----> <----> <-> <----><-><-><-><-><--------> <><-> <><-> <--> ***
+  UVQUAN month  COPY     1 MON              2
+  UVQUAN mudem  COPY     1 MEAN    1
+
+  UVQUAN lfwinf PERLND   1 PERO               6302.0833
+  UVQUAN natdin PERLND   1 PERO               6302.0833
+                *** PERO is in units of inches/day.  Using a tributary area of
+                *** 150,000 acres, convert to cfs.
+
+  UVQUAN lfwsto RCHRES   1 CVOL   fw        4 1.1574E-5
+                *** CVOL is in units of ft3.  Convert lfwsto to cfs.
+  UVQUAN lfwstv RCHRES   1 CVOL   fw        4 2.2957E-5
+                *** CVOL is in units of ft3.  Convert lfwstv to ac-ft.
+  UVQUAN lmusto RCHRES   1 CVOL   mu        4 1.1574E-5
+                *** CVOL is in units of ft3.  Convert lmusto to cfs.
+
+  UVQUAN rstor  RCHRES   2 VOL              4 2.2957E-5
+                *** VOL is in units of ft3.  Convert rstor to ac-ft.
+  UVQUAN rfwsto RCHRES   2 CVOL   fw        4 1.1574E-5
+                *** CVOL is in units of ft3.  Convert rfwsto to cfs.
+  UVQUAN rfwstv RCHRES   2 CVOL   fw        4 2.2957E-5
+                *** CVOL is in units of ft3.  Convert rfwstv to ac-ft.
+
+********************************************************************************
+*** Begin Operating Logic ******************************************************
+********************************************************************************
+
+*** ================ Constants and Seasonal Values =============================
+***                                        addr or              uvq or
+***                                       <------>              <---->
+*** opt foplop dcdts  yr mo dy hr mn d t   vnam  s1 s2 s3 ac quantity  tc  ts rp
+  <****><-><--><><-><--> <> <> <> <><><>  <----><-><-><-><-><--------> <> <-><->
+*** Set flood stage for Reach 3 (municipal area)
+  GENER   1         1992  1  1            FLOOD            =     500.0
+
+*** Set minimum flows for lake - varies seasonally
+*** Initial value
+  GENER   1         1992  1  1            LMINQ            =      50.0
+*** Summer
+  GENER   1         1992  4  1            LMINQ            =      70.0 YR   1 10
+*** Winter
+  GENER   1         1992 10  1            LMINQ            =      50.0 YR   1 10
+
+*** Set seasonal fish flow targets for high and low fish storage
+*** Initial values
+  GENER   1         1992  1  1            FTARHI           =     200.0
+  GENER   1         1992  1  1            FTARLO           =     100.0
+*** Summer
+  GENER   1         1992  2  1            FTARHI           =     250.0 YR   1 10
+  GENER   1         1992  2  1            FTARLO           =     150.0 YR   1 10
+*** Winter
+  GENER   1         1992  6  1            FTARHI           =     200.0 YR   1 10
+  GENER   1         1992  6  1            FTARLO           =     100.0 YR   1 10
+
+*** Maximum reservoir storage for winter flood control space
+    plus filling season flag ***
+*** Initial values
+  GENER   1         1992  1  1            RMAXST           =   10000.0
+  GENER   1         1992  1  1         2  RFILFG           =         0
+
+*** Springtime filling season is April and May - set flag at start
+  GENER   1         1994  4  1         2  RFILFG           =         1
+IF (month = 4 OR month = 5) THEN
+ *** During April and May, there is a daily increase in allowable storage of
+ *** 1/61st of total fill of 15,000 acre-feet.
+  GENER   1                               RMAXST          +=     245.9
+END IF
+
+*** Summer - turn off filling flag for reservoir and set high max storage
+  GENER   1         1994  6  1         2  RFILFG           =         0
+  GENER   1         1992  6  1            RMAXST           =   25000.0 YR   1 10
+
+*** Fall Drawdown
+IF (month = 10 OR month = 11) THEN
+ *** During October and November, there is a daily reduction in allowable
+ *** storage of 1/61st of total drawdown of 15,000 acre-feet.
+  GENER   1                               RMAXST          -=     245.9
+END IF
+
+*** Winter
+  GENER   1         1992 12  1            RMAXST           =   10000.0 YR   1 10
+
+*** ============== Daily operations ============================================
+*** Proposed releases are calculated based on municipal and fish demands.  These
+*** releases are adjusted as needed to meet minimum flow, maximum flow, and
+*** maximum storage requirements.
+*** ============================================================================
+***                                        addr or              uvq or
+***                                       <------>              <---->
+*** opt foplop dcdts  yr mo dy hr mn d t   vnam  s1 s2 s3 ac quantity  tc  ts rp
+  <****><-><--><><-><--> <> <> <> <><><>  <----><-><-><-><-><--------> <> <-><->
+*** ------------------- Municipal Release --------------------------------------
+*** Lake releases municipal demand based on input time series
+*** ----------------------------------------------------------------------------
+  GENER   1                               LMUPRO           =    mudem
+
+*** ------------------- Fish Releases ------------------------------------------
+*** Total needed fish releases are calculated based on seasonal target, total
+*** storage of category "fw", and the flow at the gage for Reach 4.  They are
+*** also limited by flood stage at Reach 3.
+*** Fish releases are allocated according to priority: 1) Lake fish water up
+*** to inflow; 2) Reservoir fish water; 3) Lake fish water above inflow
+*** ----------------------------------------------------------------------------
+*** Determine whether to use high or low fish flow target based of total
+*** storage of fish water
+  GENER   1                               FAVAIL           =    lfwstv
+  GENER   1                               FAVAIL          +=    rfwstv
+
+IF (favail >= 150000.) THEN
+ *** more than 150,000. acre-feet storage, so use high target
+  GENER   1                               FTARG            =    ftarhi
+ELSE
+ *** less than 150,000. acre-feet storage, so use low target
+  GENER   1                               FTARG            =    ftarlo
+END IF
+
+*** Determine fish release limit for downstream flood control
+  GENER   1                               MAXREL           =    flood
+  GENER   1                               MAXREL          -=    natdin
+  GENER   1                               MAXREL          -=    lmupro
+  GENER   1                               MAXREL         MAX       0.0
+
+*** Then calculate total needed for fish releases
+  GENER   1                               FNEED            =    ftarg
+  GENER   1                               FNEED           -=    natdin
+  GENER   1                               FNEED          MAX       0.0
+  GENER   1                               FNEED          MIN    maxrel
+
+*** Lake fish water proposed release - up to inflow
+IF (fneed <= 0.0) THEN
+ *** none needed
+  GENER   1                               LFWPRO           =       0.0
+ELSE
+ *** make further release from Lake fish water
+  GENER   1                               LFWPRO           =    fneed
+  GENER   1                               LFWPRO         MIN    lfwinf
+  GENER   1                               FNEED           -=    lfwpro
+END IF
+
+*** Reservoir fish water proposed release
+IF (rfilfg = 0) THEN
+ *** not in filling season - allowed to make fish releases
+ IF (fneed <= 0.0) THEN
+  *** none needed
+  GENER   1                               RFWPRO           =       0.0
+ ELSE
+  *** make further release from Reservoir fish water
+
+  *** compute available amount over minimum desired storage
+  GENER   1                               RAVAIL           =    rfwstv
+  GENER   1                               RAVAIL          -=    5000.0
+  GENER   1                               RAVAIL         MAX       0.0
+
+  *** now compute release
+  GENER   1                               RFWPRO           =    fneed
+  GENER   1                               RFWPRO         MIN    ravail
+  GENER   1                               FNEED           -=    rfwpro
+ END IF
+END IF
+
+*** Lake fish water proposed release - above inflow
+IF (fneed > 0.0) THEN
+ *** make further release from Lake fish water
+  GENER   1                               LFWPRO          +=    fneed
+  GENER   1                               LFWPRO         MIN    lfwsto
+END IF
+
+*** ---------- Adjust lake releases for minimum flow ---------------------------
+*** Make additional releases as needed to raise the total proposed release to
+*** meet minimum flow requirements.
+*** ----------------------------------------------------------------------------
+***                                        addr or              uvq or
+***                                       <------>              <---->
+*** opt foplop dcdts  yr mo dy hr mn d t   vnam  s1 s2 s3 ac quantity  tc  ts rp
+  <****><-><--><><-><--> <> <> <> <><><>  <----><-><-><-><-><--------> <> <-><->
+  GENER   1                               LPROP            =    lmupro
+  GENER   1                               LPROP           +=    lfwpro
+
+IF (lprop < lminq) THEN
+ *** need additional release
+  GENER   1                               LNEED            =    lminq
+  GENER   1                               LNEED           -=    lprop
+
+ *** try to satisfy from fish water first
+  GENER   1                               LFWPRO          +=    lneed
+  GENER   1                               LFWPRO         MIN    lfwsto
+
+ *** recalculate total proposed release from Lake
+  GENER   1                               LPROP            =    lmupro
+  GENER   1                               LPROP           +=    lfwpro
+
+ IF (lprop < lminq) THEN
+  *** still need more water
+  GENER   1                               LNEED            =    lminq
+  GENER   1                               LNEED           -=    lprop
+
+ *** try to satisfy from municipal water
+  GENER   1                               LMUPRO          +=    lneed
+  GENER   1                               LMUPRO         MIN    lmusto
+
+ *** recalculate total proposed release from Lake
+  GENER   1                               LPROP            =    lmupro
+  GENER   1                               LPROP           +=    lfwpro
+ END IF
+END IF
+
+*** ---------- Adjust reservoir releases for maximum storage -------------------
+*** If the reservoir storage is above the maximum storage, additional releases
+*** are made to draw the level down.
+*** ----------------------------------------------------------------------------
+***                                        addr or              uvq or
+***                                       <------>              <---->
+*** opt foplop dcdts  yr mo dy hr mn d t   vnam  s1 s2 s3 ac quantity  tc  ts rp
+  <****><-><--><><-><--> <> <> <> <><><>  <----><-><-><-><-><--------> <> <-><->
+IF (rstor > rmaxst) THEN
+ *** draw down reservoir
+
+ *** compute excess storage
+  GENER   1                               RDRAW            =    rstor
+  GENER   1                               RDRAW           -=    rmaxst
+
+ IF (rdraw > rfwpro) THEN
+  *** must release additional water
+  GENER   1                               RNEED            =    rdraw
+  GENER   1                               RNEED           -=    rfwpro
+  GENER   1                               RFWPRO          +=    rneed
+  GENER   1                               RFWPRO         MIN    rfwsto
+  *** check new total releases against maximum
+  GENER   1                               TOTPRO           =    lprop
+  GENER   1                               TOTPRO          +=    rfwpro
+  IF (totpro > maxrel) THEN
+   *** reduce drawdown
+  GENER   1                               RFWPRO           =    maxrel
+  GENER   1                               RFWPRO          -=    lprop
+  END IF
+ END IF
+END IF
+
+*** ---------- Adjust reservoir releases for minimum flow ----------------------
+*** Make additional releases as needed to raise the total proposed release to
+*** meet minimum flow requirements.
+*** ----------------------------------------------------------------------------
+***                                        addr or              uvq or
+***                                       <------>              <---->
+*** opt foplop dcdts  yr mo dy hr mn d t   vnam  s1 s2 s3 ac quantity  tc  ts rp
+  <****><-><--><><-><--> <> <> <> <><><>  <----><-><-><-><-><--------> <> <-><->
+IF (rstor >= 5000.0) THEN
+ *** reservoir storage is high enough to release high minimum
+  GENER   1                               RMINQ            =      10.0
+ELSE
+ *** release low minimum
+  GENER   1                               RMINQ            =       5.0
+END IF
+
+IF (rfwpro < rminq) THEN
+ *** need additional release
+  GENER   1                               RNEED            =    rminq
+  GENER   1                               RNEED           -=    rfwpro
+ *** make additional release up to total fish storage in reservoir
+  GENER   1                               RFWPRO          +=    rneed
+  GENER   1                               RFWPRO         MIN    rfwsto
+END IF
+
+********************************************************************************
+*** Pass final values for proposed releases to GENER operations.
+********************************************************************************
+
+***                                        addr or              uvq or
+***                                       <------>              <---->
+*** opt foplop dcdts  yr mo dy hr mn d t   vnam  s1 s2 s3 ac quantity  tc  ts rp
+  <****><-><--><><-><--> <> <> <> <><><>  <----><-><-><-><-><--------> <> <-><->
+  GENER   1                               K       1        =    lmupro
+  GENER   2                               K       1        =    lfwpro
+  GENER   3                               K       1        =    rfwpro
+
+END SPEC-ACTIONS
+
+FTABLES
+  FTABLE      1
+ ROWS COLS ***
+   25    4
+     DEPTH      AREA    VOLUME     DISCH ***
+      (FT)   (ACRES)   (AC-FT)     (CFS) ***
+       0.0    119950     0.000      0.00
+       1.0    120370    120160      0.00
+       1.5    120540    180380      0.00
+       2.0    120710    240700      0.00
+       2.5    120870    301090      0.00
+       3.0    121020    361570      0.00
+       3.4    121130    410000      0.00
+       3.7    121210    446350      0.00
+       4.0    121270    482720      0.00
+       4.3    121340    519110     17.00
+       4.7    121420    567660    109.00
+       5.0    121480    604100    211.00
+       5.3    121540    640550    336.00
+       5.7    121620    689180    375.00
+       6.0    121680    725680    450.00
+       6.3    121740    762190    600.00
+       6.7    121830    810900    800.00
+       7.0    121900    847470   1000.00
+       7.5    122020    908450   1300.00
+       8.0    122160    969490   1650.00
+       8.5    122530   1030630   2050.00
+       9.0    122900   1092020   2450.00
+       9.5    123040   1153510   2850.00
+      10.0    123140   1215050   3250.00
+      10.5    123230   1276640   3500.00
+  END FTABLE  1
+  FTABLE      2
+ ROWS COLS ***
+   25    4
+     DEPTH      AREA    VOLUME     DISCH ***
+      (FT)   (ACRES)   (AC-FT)     (CFS) ***
+       0.0       0.0       0.0      0.00
+       8.0       4.0      17.0      0.00
+      18.0      24.0     143.0      0.00
+      28.0      47.0     491.0      0.00
+      33.0      66.0     770.0      0.00 
+      38.0      86.0    1148.0      0.00
+      38.6      89.0    1201.0      0.00
+      43.0     109.0    1633.0      0.00
+      48.0     132.0    2230.0      0.00
+      53.0     157.0    2948.0      0.00
+      58.0     182.0    3791.0      0.00
+      63.0     212.0    4771.0      0.00
+      68.0     242.0    5901.0      0.00
+      73.0     274.0    7187.0      0.00
+      78.0     307.0    8636.0      0.00
+      83.0     352.0   10278.0      0.00
+      88.0     398.0   12147.0      0.00
+      93.0     451.0   14262.0      0.00
+      98.0     504.0   16643.0      0.00
+     103.0     559.0   19294.0      0.00
+     108.0     614.0   22220.0      0.00
+     113.0     674.0   25434.0      0.00
+     118.0     734.0   28949.0    117.00
+     123.0     818.0   32806.0    638.00
+     138.0    1069.0   46936.0   2345.00
+  END FTABLE  2
+  FTABLE      3
+ Rows Cols ***
+   18    4
+     DEPTH      AREA    VOLUME     DISCH ***
+      (FT)   (ACRES)   (AC-FT)     (CFS) ***
+       0.0     0.000     0.000      0.00
+       2.3     2.339     0.369      1.00
+       3.1     7.223     3.849     17.00
+       3.7    13.243     8.954     46.00
+       4.5    20.406    20.509    138.00
+       5.3    24.510    36.397    318.00
+       6.3    27.225    58.513    666.00
+       7.5    29.836    90.116   1302.00
+       8.3    31.797   113.364   1847.00
+       9.1    33.356   138.003   2486.00
+       9.9    34.756   163.636   3208.00
+      10.9    36.283   197.485   4258.00
+      11.9    37.368   233.321   5482.00
+      13.1    39.329   278.197   7136.00
+      14.3    42.080   325.800   8993.00
+      15.5    43.339   373.742  11009.00
+      16.9    45.015   432.516  13643.00
+      18.5    47.576   498.040  16671.00
+  END FTABLE  3
+  FTABLE      4
+ Rows Cols ***
+   18    4
+     DEPTH      AREA    VOLUME     DISCH ***
+      (FT)   (ACRES)   (AC-FT)     (CFS) ***
+       0.0     0.000     0.000      0.00
+       2.3     2.339     0.369      1.00
+       3.1     7.223     3.849     17.00
+       3.7    13.243     8.954     46.00
+       4.5    20.406    20.509    138.00
+       5.3    24.510    36.397    318.00
+       6.3    27.225    58.513    666.00
+       7.5    29.836    90.116   1302.00
+       8.3    31.797   113.364   1847.00
+       9.1    33.356   138.003   2486.00
+       9.9    34.756   163.636   3208.00
+      10.9    36.283   197.485   4258.00
+      11.9    37.368   233.321   5482.00
+      13.1    39.329   278.197   7136.00
+      14.3    42.080   325.800   8993.00
+      15.5    43.339   373.742  11009.00
+      16.9    45.015   432.516  13643.00
+      18.5    47.576   498.040  16671.00
+  END FTABLE  4
+END FTABLES
+
+END RUN

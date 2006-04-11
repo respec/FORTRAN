@@ -1,0 +1,621 @@
+*
+*       <<<<<<<<  SWMM 4.3 STORAGE/TREATMENT DATA FILE >>>>>>>>>
+*
+*  This file last updated 4/22/94 by WCH.
+*
+*       This is an input data file to the SWMM 4.21 Storage/Treatment 
+*       (STRT) Block for modeling water quantity and quality.  All lines 
+*       with an asterisk in column 1 are comment lines and are ignored
+*       by the program.
+*
+*       Input data are free format and may be up to 230 columns wide.  
+*       You must have a value for every data column even if the program
+*       will not actually use a given value.  Alternatively, a slash (/) 
+*       may be used to indicate that remaining input values on a line 
+*       should be filled with zeroes.  There must be at least one
+*       space or comma between every input value.  Alphanumeric data 
+*       should be enclosed in single quotes. 
+*
+*       Caution!  Data lines that are "wrapped around" (continued on
+*       two or more lines) should have a blank in column 1, unless a
+*       card identifier is needed.  
+*
+*       SWMM uses both U.S. customary units and metric units.  The
+*       examples use feet, cfs, acres, inches and inches/hour.  If metric
+*       is specified substitute meters, cms, hectares, millimeters and
+*       millimeters/hour.  In the Storage/Treatment Block, if metric 
+*       units are specified, internal calculations are also done in
+*       metric units.  
+*============================================================================
+*	The SW card sets up the interface files to be used or created. 
+*	There is one output file (#9) which will contain the time series
+*       of flows and pollutant loads for subsequent blocks.
+*============================================================================
+*  NBLOCK  JIN(1)  JOUT(1)
+SW    1      8       9  
+*============================================================================
+*   The MM card opens the scratch files to be used by different subroutines.
+*   A certain number (1 for STORAGE/TREATMENT) may be required for each block.
+*============================================================================
+*  NITCH  NSCRAT(1) NSCRAT(2) NSCRAT(3) NSCRAT(4) NSCRAT(5) NSCRAT(6) NSCRAT(7)
+MM   7       1         2          3        10         11        12       13
+*============================================================================
+*  NOTE: This file requires interface file TRANS1.DNT. This must either
+*  be supplied or else generated as explained in GRAPH.DOC file.  This
+*  example may be run without an interface file by setting NOTAPE = 1
+*  in data group B1.
+*============================================================================
+*     The @ command is used to permanently save an interface or 
+*     scratch file.  This line should be placed before the first SWMM
+*     block call.  The format of the @ command is as follows:
+*============================================================================
+*Column 1    Unit number of the       Name of the interface
+*            interface file saved     file (any valid DOS filename)
+*            or utilized
+*
+@             8                       'TRANS1.DNT'
+***           9                       'STRT1.INT'
+*============================================================================
+$STORAGE      Call the STORAGE/TREATMENT block with a '$' in first column.
+*============================================================================
+*   Note: the input data below are essentially the same as found in
+*   file SWDAT1.DAT and correspond to old Lancaster, PA, Stevens Avenue
+*   example from past SWMM releases.
+*============================================================================  
+*	Create title lines for the simulation.  There are two title lines 
+*       for the STRT Block.  Titles are enclosed in single quotes.
+*============================================================================
+*	A1 Line       :
+*          TITLE2     :  Two lines with heading to be printed on output.
+*============================================================================
+A1  'Example Storage/Treatment Model, Lancaster, PA'                                       
+A1  'Connect to old Stevens Avenue interface file from SWDAT1.DAT'
+*============================================================================
+*	The 'B1' line is for control purposes. 
+*============================================================================
+*	B1 Line       :
+*          NOTAPE     :  Input data source
+*                        = 0, Input is from an external input file,
+*                        = 1, Input is supplied in Group J1,
+*                        = 2, Input is from an external input file 
+*                             and Group J1.
+*          JNS        :  External element number from the external
+*                        block (e.g., JN, Group H1, in Transport Block)   
+*                        which routes flow to the S/T Block.  If
+*                        NOTAPE = 1, the value of JNS is placed on 
+*                        the output file.
+*          NDT        :  Total number of simulation time steps.
+*          DS         :  Size of time step, seconds.  Required
+*                        only if NOTAPE = 1.
+*          NU         :  Number of storage/treatment units (Maximum = 5).
+*          NP         :  Number of pollutants routed (Maximum = 3).
+*         ICOST       :  Cost calculations performed?
+*                        = 0, No
+*                        = 1, Yes
+*         METRIC      :  Metric input-output.
+*                        = 0, Use U.S. customary units
+*                        = 1, Use metric units. 
+*                             Metric input indicated in brackets [].
+*          SAREA      :  Service area, acres [ha].  Required if NOTAPE = 1.
+*============================================================================
+*  NOTAPE  JNS  NDT     DS    NU    NP   ICOST  METRIC  SAREA
+B1    2     50  50    60.0    1     1      0    0      165.0
+*============================================================================
+*       The C1 line defines the starting and ending date and time.                     
+*============================================================================
+*	C1 Line       :
+*          IDATE      :  Date at beginning of simulation
+*                       (6 digit number; year, month, day -- 
+*                        e.g. March 10, 1979 = 790310)
+*          TIME       :  Time at beginning of simulation
+*                        (24 hour clock, e.g., 5:30 p.m. = 17.5)             
+*          ISUM       :  Summary print control parameter
+*                        = 0, Print a summary at the end of 
+*                             the simulation only
+*                        = 1, Print an annual summary and a summary
+*                             at the end of the simulation
+*                        = 2, Print monthly and annual summaries and 
+*                             a summary at the end of the simulation
+*          IDET       :  Detailed print control parameter
+*                        = 0, No detailed print of simulation results.
+*                        > 0, Detailed print of results is provided
+*                        at every time step that is a multiple of
+*                        IDET (e.g., IDET = 2, gives a detailed report
+*                        at every other time step) during specified
+*                        periods (see below and group C2).
+*          NPR        :  Number of detailed print periods.  Up to
+*                        45 periods may be specified (See Group C2). 
+*                        Required only if IDET > 0.
+*============================================================================
+*   IDATE     TIME         ISUM      IDET       NPR
+C1  731128     0.00          0         10         1                              
+*============================================================================
+*       The C2 line lists the NPR detailed print periods.
+*              NPR (Group C1) periods must be specified.  Only date 
+*              to date periods may be used (e.g., 790720 to 790806).
+*              Required only if IDET > 0 (Group C1).
+*============================================================================
+*	C2 Line       :
+*          ISTART(1)  :  First detailed print period starting
+*                        date (e.g., July 20, 1979 = 790720).
+*          IEND(1)    :  First detailed print period ending
+*                        date (e.g., August 6, 1979 = 790806).
+*            .                       .
+*                        Repeat for second period, etc. up to 
+*                        NPR Group C1 periods - place all       
+*                        ISTART and IEND pairs on a single line.
+*            .                       . 
+*          ISTART(NPR):  Last detailed print period starting date.
+*          IEND(NPR)  :  Last detailed print period ending date.
+*                Note: Do not repeat line ID when reading in multiple
+*                C2 lines.
+*============================================================================
+*   ISTART(1) IEND(1)
+C2  731128    731128                                                            
+*============================================================================
+*    Use the D1 line for evaporation data.  Required only if there
+*         are detention units.  (IDENT(I) = 1 for some units, see Group F2).
+*============================================================================
+*	D1 Line       :
+*          E(1)       :  Evaporation rate, January in./day [mm/day].
+*           .                              .
+*          E(12)      :  Evaporation rate, December in./day [mm/day]
+*============================================================================
+*  EVAPORATION DATA
+D1  .1   .1  .15  .25   .3  .6  .6  .7  .6   .4   .1  .1                                        
+*============================================================================
+*       Data groups E1 - E6 define STRT pollutant characterization.
+*            Require groups E1 - E6 only if NP > 0 on GROUP B1.
+*============================================================================
+*	E1 Line       :
+*          IPOLL(1)   :  Pollutant 1 selector.  Required only if 
+*                        NOTAPE = 0 or 2 (Group B1).  The value 
+*                        selected depends on the order in which the
+*                        pollutants were placed on the external input file.
+*                        For example, if suspended solids was the third
+*                        pollutant listed on the file and it was desired
+*                        for use in the S/T block, then IPOLL(1) = 3.
+*         NDIMI(1)    :  Dimensions for pollutant 1.  Required
+*                        only if NOTAPE = 1 (Group B1).
+*                        = 0, Dimensions are mg/l
+*                        = 1, Dimensions are other/liter, e.g., MPN/liter
+*                        = 2, Other concentration dimensions are
+*                             used. (e.g., JTU, deg. C. pH)
+*         IPART(1)    :  Particle size/specific gravity or
+*                        settling velocity distribution parameter
+*                        = 0, Distribution not used to
+*                             characterize pollutant 1.
+*                        = 1, Distribution used to characterize pollutant 1.
+*         PNAME1(IN,1):  Pollutant 1 name.  Required only if
+*                        NOTAPE = 1  (Group B1).
+*         PUNIT1(IN,1):  Pollutant 1 dimension label.
+*                        Required only if NOTAPE = 1 (Group B1).
+*         IPOLL(2)    :  Pollutant 2 selector.  Required only if
+*                        NP >_ 2 and NOTAPE = 0 or 2 (Group B1).  See above.
+*         NDIMI(2)    :  Dimensions for pollutant 2.  Required only if 
+*                        NP >_ 2 and NOTAPE = 1 (Group B1).  See above.
+*         IPART(2)    :  Particle size/specific gravity or settling 
+*                        velocity distribution parameter.  Required only
+*                        if NP >_ 2 Group B1)  See above.
+*         PNAMEI(IN,2):  Pollutant 2 name.  Required only if
+*                        NP >_ 2 and NOTAPE = 1.  (Group B1)
+*         PUNITI(IN,2):  Pollutant 2 dimension label.  Required only if
+*                        NP >_ 2 and NOTAPE = 1. (Group B1)
+*         IPOLL(3)    :  Pollutant 3 selector.  Required only if
+*                        NP = 3 and NOTAPE = 0 or 2 (Group B1)  See above.
+*         NDIMI(3)    :  Dimensions for pollutant 3.  Required only if
+*                        NP = 3 and NOTAPE = 1 (Group B1).  See above.
+*         IPART(3)    :  Particle size/specific gravity or settling 
+*                        velocity distribution parameter.  Required only
+*                        if NP = 3. (Group B1).  See above.
+*         PNAMEI(IN,3):  Pollutant 3 name.  Required only if NP = 3 and
+*                        NOTAPE = 1 (Group B1).
+*         PUNITI(IN,3):  Pollutant 3 dimension label.  Required
+*                        only if NP = 3 and NOTAPE = 1 (Group B1).
+*============================================================================
+*  IPOLL NDIM IPART  PNAME    PUNIT IPOLL NDIM IPART PNAME  PUNIT IPOLL NDIM IPART PNAME  PUNIT   
+E1   1    0      0   'TSS '  'mg/l '    2     0    0   ' '    ' '    3    0      0    ' '   ' '  
+*============================================================================
+*     Note:   GROUPS E2 - E6 are REQUIRED only if IPART (IP) = 1 
+*                            on group E1 for any pollutants.
+*============================================================================
+*	E2 Line       :
+*          NVS        :  Classification parameter
+*                        = 0, Particle size/specific gravity distribution
+*                        is used to classify particles in waste stream.
+*                        = 1, Settling velocity distribution is used.
+*          NNR        :  Number of particle size ranges or settling 
+*                        velocities used to classify particles in waste 
+*                        stream (Max of 10).
+*============================================================================
+*     Use E3 data group to define particle size (if NVS = 0, group E2 or
+*            settling velocity (if NVS = 1, group E2) range data. 
+*============================================================================
+*	E3 Line       :
+*          RAN(1,1)   :  Lower bound of size or velocity
+*                        range 1, microns or ft/sec [cm/sec].
+*          RAN(1,2)   :  Upper bound of size or velocity
+*                        range 1, microns or ft/sec [cm/sec].
+*             .                         .
+*          RAN(NPR,1) :  Lower bound of size or velocity
+*                        range NPR, microns or ft/sec [cm/sec].
+*          RAN(NPR,2) :  Upper bound of size or velocity
+*                        range NNR, microns or ft/sec [cm/sec].
+*============================================================================
+*            Use E4 data group to specific gravity data. 
+*                   Required only if NVS = 0 (Group E2).
+*============================================================================
+*	E4 Line       :
+*          SPG(1)     :  Specific gravity for particles in size range 1.
+*          SPG(2)     :  Specific gravity for particles in size range 2.
+*             .                             .
+*          SPG(NNR)   :  Specific gravity for particles in size range NNR.
+*============================================================================
+*            Use E5 data group waste stream temperature data.
+*                   Required only if NVS = 0 (Group E2).
+*============================================================================
+*	E5 Line       :
+*          TEMP(1)    :  Waste stream temperature, January, deg F. [C].
+*             .                            .
+*          TEMP(12)   :  Waste stream temperature, December, deg F. [C].
+*============================================================================
+*     Use E6 data group to define the fraction of each pollutant associated
+*         with each particle size/specific gravity or settling velocity
+*         range (Group E3).  Repeat these lines for each pollutant for which 
+*         IPART(IP) = 1 (Group E1).  Required only if NVS = 0 (Group E2).
+*============================================================================
+*	E6 Line       :
+*          PSD(IP,1)  :  Fraction of pollutant IP in range 1.
+*          PSD(IP,2)  :  Fraction of pollutant IP in range 2.
+*                .                            .
+*          Repeat for each range up to NNR (Group E2) ranges.
+*============================================================================
+*       REPEAT GROUPS F1 - I1 FOR EACH UNIT I.  THERE WILL BE NU (GROUP B1) 
+*              SETS.  THE UNIT NUMBER IS DICTATED BY THE ORDER IN WHICH 
+*                     THE SETS OF GROUPS F1 - I1 ARE READ.
+*============================================================================
+*	F1 Line       :
+*         UNAME(I,ID) : Name of unit.
+*============================================================================
+*     UNAME(1,ID)
+F1    ' STORAGE'
+*============================================================================
+*     Use line F2 to define the general unit parameters and flow directions.
+*============================================================================
+*	F2 Line       :
+*          IDENT(1)   :  Detention modeling parameter
+*                        = 0, Unit is the non-detention type
+*                        = 1, Unit is the detention type
+*          QMAX(I)    :  Maximum inflow (above which bypass
+*                        occurs), cfs [cu.m/sec].
+*          QRF(I)     :  Residual flow as a fraction of the inflow. 
+*                        Required only if IDENT(I) = 0.  Residual flows
+*                        for detention units (IDENT(I) = 1) are determined       
+*                        in Groups H1, H3, and H6.
+*          IDIREC(I,1):  Unit number to which bypass is directed 
+*                        (must be greater than 1).
+*                        = 1 - 5, Downstream S/T unit
+*                        = 100, Next block
+*                        = 200, Ultimate disposal
+*          IDIREC(I,2):  Unit number to which treated outflow is directed
+*                        (must be greater than 1).  See above.
+*          IDIREC(I,3):  Unit number to which residuals stream is directed
+*                        (Must be greater than 1).  See above.   If 
+*                        IDRAW(I) = 0 (Group H1), set equal to any number > 1.
+*============================================================================
+*      IDENT   QMAX     RESIDUAL FLOW   IDIREC(1) IDIREC(2) IDIREC(3)
+F2       1      125.       0.0             100       100       200 
+*============================================================================
+*      Use data groups G1 - G4 to define Pollutant Removal.
+*               Required only if NP > 0 on group B1.
+*      REPEAT GROUPS G1 - G3 FOR EACH POLLUTANT FOR WHICH IPART(IP) = 0.
+*============================================================================
+*	G1 Line       :
+*          RMX(I,IP)  :  Maximum removal fraction (<= 1.0).
+*============================================================================
+*      RMX
+G1     1.0                                                                       
+*============================================================================
+*     Define the removal equation variable group (Equation 7-1) on line G2.
+*============================================================================
+*	G2 Line       :
+*        INPUT(I,IP,1):  Program variable for equation variable X1.
+*                        = 0, Not used.
+*                        For values = 1 - 7, see Table 7-3 in text.
+*        INPUT(I,IP,2):  Program variable for equation variable X2. 
+*                        See above.
+*             .                           .
+*                        Repeat for each program variable Xi.
+*============================================================================
+*    REMOVAL EQUATION VARIABLES
+G2     0  0  1  0  0  0  0  0  0  0  0                                                  
+*============================================================================
+*     Define Equation 7-1 coefficients on line G3.  The coefficients
+*       must be consistent with the units used (see METRIC Group B1).
+*============================================================================
+*	G3 Line       :
+*          A(I,IP,1)  :  Value of coefficient a1.
+*          A(I,IP,2)  :  Value of coefficient a2.
+*             .                      .
+*          Repeat for each coefficient aj.
+*============================================================================
+*    EQUATION 7-1 
+G3    0 0 -0.003028 0 0 0 0 0 0 0 0 0.45 -0.45 0.0 0.0 1.0
+*============================================================================
+*     Define the Critical Particle Size or Settling Velocity on line G4.
+*     Required only if IPART(IP) = 1 (Group E1) for any pollutant and
+*          unit I is a non-detention unit, IDENT(I) = 0 (Group F2).
+*============================================================================
+*	G4 Line       :
+*          PSC(I)     :  Critical particle size, microns, (if NVS = 0, 
+*                        Group E2) or settling velocity, ft/sec [cm/sec],
+*                        (if NVS = 1, Group E2).
+*============================================================================
+*     PSC(I)
+*G4    10.0
+*============================================================================
+*             Data Groups H1 - H8: Detention Unit Data
+*             Required only if IDENT(I) = 1 (Group F2)
+*============================================================================
+*       Define the general detention unit parameters on line H1.
+*============================================================================
+*	H1 Line       :
+*          IROUTE(I)  :  Pollutant routing parameter
+*                        = 0, Plug flow mode is used.
+*                        = 1, Complete mixing mode is used.
+*                            (Note:  Particle size or settling velocity 
+*                             distribution is not routed through
+*                             completely-mixed units.)
+*                        [Note: user may encounter limit of 200 plugs 
+*                        (8/31/93) in use at one time.  Options are to
+*                        increase S/T time step to reduce required number
+*                        of plugs or to recompile Subroutine UNIT with
+*                        larger limit.]
+*          IOUT(I)    :  Treated outflow routing parameter
+*                        = 0, The depth-treated outflow relationship is 
+*                        described by as many as 16 data pairs in Group H3.
+*                        = 1, The depth-treated outflow relationship is
+*                        described by a power equation in Group H4.
+*                        = 2, The depth-treated outflow relationship is
+*                        controlled by the pumps described in Group H5.
+*          IDRAW(I)   :  Residuals stream draw-off scheme
+*                        <_ -1, A residual stream is drawn off starting at 
+*                        every -IDRAW(I) time step (if possible).
+*                        = 0, Residuals are never drawn off.
+*                        >_ 1, A residuals stream (if available) is drawn off
+*                        only after IDRAW(I) time steps of no inflow or
+*                        treated outflow.
+*          IRES(I)    :  Residual stream routing parameter
+*                        Required only if IDRAW(I) not = 0
+*                        = 0, The depth-residual flow relationship is
+*                        described by as many as 16 data pairs in Group H3.
+*                        = 1, The depth-residual flow relationship is 
+*                        described by a power equation in Group H6.
+*============================================================================
+*     PLUG FLOW ROUTING IS BEING USED
+*     IROUTE    IOUT     IDRAW      IRES
+H1       0         1         1         0                                        
+*============================================================================
+*      Detention unit (plug flow only) parameters, required when pollutants 
+*  are characterized by a particle size/specific gravity or settling 
+*  velocity distribution.  Thus, the H2 line is required only if 
+*  IPART(IP) = 1, for any pollutant (Group E1) and IROUTE(I) = 0 (Group E2).
+*============================================================================
+*	H2 Line       :
+*          ALEN(I)    :  Travel length for plug flow, ft [m].
+*          AMAN(I)    :  Manning's roughness coefficent for 
+*                        detention unit surfaces.
+*============================================================================
+*    ALEN(I)   AMAN(I)
+*H2    0.0      0.0
+*============================================================================
+*       Data for Sets of Depth, Surface Area, Volume, 
+*                Treated Outflow and Residual Flow
+*
+*   Each line contains a column for a unit depth and the corresponding
+*   values of area, volume, treated outflow, and residual flow.  The
+*   columns for treated outflow and residual flow may be left blank depending
+*   on the values of IOUT(I) and IRES(I) in Group H1.  If no values for 
+*   volume are entered, the program estimates volume from the depth-surface
+*   area relationship.  Order the data from the bottom of the unit 
+*   SDEPTH(I,1) = 0.0) to the maximum depth (including freeboard). 
+*                 There may be as many as 16 lines. 
+*============================================================================
+*	H3 Line       :
+*        SDEPTH(I,MM) :  A unit depth, ft [m].
+*        SAREA(I,MM)  :  Surface area corresponding to the above
+*                        depth, sq. ft [sq. m].
+*        SSTORE(I,MM) :  Volume corresponding to the above depth
+*                        cu. ft [cu. m].
+*        SQQOU(I,MM)  :  Treated outflow at the above depth
+*                        cfs [cu.m/sec].  
+*        SQQRS(I,MM)  :  Residuals stream flow at the above depth cfs[cu.m/sec].
+*                        Occurs only when IDRAW(I) (Group H1) permits.
+*============================================================================
+*     DEPTH     AREA  VOLUME  TREATED OUTFLOW RESIDUAL FLOW
+H3     0.0     1000.    0            0          5.                              
+H3     8.0     1000.    0            0          5.                              
+H3     8.5     1000.    0            0          5.                              
+H3     9.0     1000.    0            0          5.                              
+H3     9.5     1000.    0            0          5.                              
+H3    10.0     1000.    0            0          5.                              
+*============================================================================
+*   Depth vs. Treated Outflow Power Equation (Equation 7-3) on line H4.
+*
+*   Outflow = C1*(Depth - D0)**C2
+*
+*   Required only if IOUT(I) = 1 (Group H1).  Coefficients must be
+*         consistent with the units used. (See METRIC, Group B1.)
+*============================================================================
+*	H4 Line       :
+*          C1         : Depth-treated outflow equation coefficient, C1.
+*          D0         : Depth below which no treated outflow occurs, D0.
+*          C2         : Depth-treated outflow equation coefficient, C2.  
+*============================================================================
+*       C1        D0        C2
+H4   66.66        8.       1.5                                                  
+*============================================================================
+*     Use the H5 data group to define any treated outflow pumping.
+*             Required only if IOUT(I) = 2 (Group H1).
+*============================================================================
+*	H5 Line       :
+*          DSTART(I,1):  Depth at which pumping rate QPUMP(I,1)
+*                        begins, ft [m].
+*          DSTART(I,2):  Depth at which pumping rate QPUMP(I,2)
+*                        begins, ft [m].  Must be >_ DSTART(I,1).
+*          QPUMP(I,1) :  Pumping rate when depth >_ DSTART(I,1)
+*                        cfs [cu.m/sec].
+*          QPUMP(I,2) :  Pumping rate when depth >_ DSTART(I,2)
+*                        cfs [cu.m/sec].
+*          DSTOP(I)   :  Depth below which all pumping stops,
+*                        ft [m].  Must be <_ DSTART(I,1).            
+*============================================================================
+*   DSTART(I,1) DSTART(I,2) QPUMP(I,1) QPUMP(I,2) DSTOP(I) 
+*H5        0.0         0.0         0.0        0.0      0.0
+*============================================================================
+*     Define the Depth vs. Residual Flow Power Equation (Equation 7-4)
+*     on line H6.  Required only if IRES(I) = 1 (Group H1).  Coefficients
+*     must be consistent with the units used (see METRIC, Group B1).
+*============================================================================
+*	H6 Line       :
+*          C3         :  Depth-residual flow equation coefficient.
+*          D1         :  Depth below which no residual flow occurs.
+*          C4         :  Depth-residual flow equation coefficient.
+*============================================================================
+*    C3   D1   C4
+*H6 0.0  0.0  0.0
+*============================================================================
+*   Use data group H7 to define Sludge Generation in Unit I.
+*       Required only if I is a plug-flow detention unit (IROUTE(I) = 0, 
+*                Group H1) and NP > 0 (Group B1).
+*============================================================================
+*	H7 Line       :
+*          NPSL(I)    :  Pollutant responsible for sludge generation.  Required 
+*                        only if a sludge depth warning message is desired.
+*                        = 0, Not used.
+*                        = 1, 2, or 3, Pollutant used to generate sludge
+*                        volume (must correspond to the position in Group E1.
+*          SLDEN(I)   :  Concentration of pollutant NPSL(I) in sludge. 
+*                        Required only if NPSL(I) >_ 1.  The dimensions
+*                        used must be consistent with those indicated
+*                        by NDIM(I) (Group E1).
+*          SLDMAX(I)  :  Maximum sludge depth, ft [m].  A warning 
+*                        message is printed if this depth is exceeded
+*                        by the accumulated sludge.  Required only if
+*                        NPSL(I) >_ 1.
+*============================================================================
+*     NPSL   SLDEN  SLDMAX
+H7      2    20000.    1.                                                  
+*============================================================================
+*     Use line H8 to define the initial conditions in detention unit I.
+*============================================================================
+*	H8 Line       :
+*          WARN(I)    :  Total volume of water in unit at the
+*                        start of the simulation, cu.ft [cu.m]
+*
+*   Note: The following concentrations must be given with dimensions
+*         consistent with those entered in Group E1 (NDIM(IP)) if
+*         NOTAPE = 1 (Group B1) or on the external input file if NOTAPE = 2.
+*
+*          PCO(I,1)   :  Concentration of pollutant 1 in the unit at 
+*                        the start of the simulation.  Used only if NP >= 1
+*                        (Group B1) and WARN(I) > 0.0.
+*          PCO(I,2)   :  Concentration of pollutant 2 in the unit volume
+*                        at the start of the start of the simulation. 
+*                        Used only if NP >= 2 (Group B1) and WARN(I) > 0.0.
+*          PCO(I,3)   :  Concentration of pollutant 3 in the unit volume
+*                        at the start of the start of the simulation. 
+*                        Used only if NP = 3 (Group B1) and WARN(I) > 0.0.
+*============================================================================
+*    WARN      PCO(1)  PCO(2)   PCO(3)
+H8   4000.       25.    0.0       0.0                                         
+*============================================================================
+*    Use line I1 to enter Cost Data for Equations 7-5 to 7-8
+*        (Capital Costs) and Equations 7-9 to 7-12 (Operation and 
+*         Maintenance Costs).  The coefficients must be consistent with
+*         the units used (see METRIC, Group B1).  Required only if 
+*                        ICOST = 1 on GROUP B1.
+*============================================================================
+*	I1 Line       :
+*          KPC(I,1)   :  Type of cost variable used in calculating 
+*                        initial capital cost.
+*                        = 0, Not used.
+*                        = 1, Maximum allowable inflow, QMAX(I),
+*                          cfs [cu.m/sec] is used.
+*                        = 2, Maximum inflow observed during simulation,
+*                          QMAXS(I), cfs [cu.m/sec], is used.
+*                        = 3, Maximum allowable storage, VMAX(I)
+*                          cu.ft [cu.m] is used.  (Not applicable
+*                          if IDENT(I) = 0, Group F2).
+*                        = 4, Maximum storage observed during simulation, 
+*                          VMAXS(I), cu.ft. [cu.m] is used (Not applicable
+*                          if IDENT(I) = 0  (Group F2).
+*          CC(I,1)    :  Initial capital cost equation coefficient, a.
+*          CC(I,2)    :  Initial capital cost equation coefficient, b.
+*          KPC(I,2)   :  Type of cost variable used in calculating
+*                        operation and maintenance costs.  See list for 
+*                        initial capital cost (above).
+*          CC(I,3)    :  Operation and maintenance cost equation
+*                        coefficient, d.                   
+*          CC(I,4)    :  Operation and maintenance cost equation
+*                        coefficient, f.
+*          CC(I,5)    :  Operation and maintenance costs equation
+*                        coefficient, h.
+*==============================================================
+*    KPC(I,1) CC(I,1) CC(I,2) KPC(I,2) CC(I,3) CC(I,4) CC(I,5)
+*I1      0.0     0.0     0.0      0.0     0.0     0.0     0.0
+*============================================================================
+*                 Input Flow and Pollutant Time Series
+*
+*             REQUIRED ONLY IF NOTAPE = 1 OR 2 (GROUP B1)
+*
+*   All flows and concentrations are instantaneous values at the
+*       indicated time.  A constant time interval is not required; 
+*       linear interpolation is used to obtain intermediate values of
+*       flow and concentrations.  Hence, the difference between two time
+*       entries, TCAR, should not be less than the time step, DS, 
+*       unless a step function input is desired.
+*
+*   The concentration units must be identical to those in Group E1 
+*      (NDIM(IP)) if NOTAPE = 1, Group B1, or on the external input
+*       file if NOTAPE = 2.
+*============================================================================
+*	J1 Line       :
+*          TCAR       :  Time of day, decimal hours, e.g., 6:30 p.m. = 18.5.
+*                        If the first TCAR value is <= initial time, 
+*                        the program will read succeeding J1 data groups
+*                        until TCAR >= initial time.  If simulation goes
+*                        beyond one day, i.e., times > 24.0, then continue 
+*                        with times greater than 24.  I.e., TCAR should not
+*                        be reset at beginning of day.
+*          QCAR       :  Flow entering S/T plant (at unit 1), cfs [m3/sec].
+*          PCAR(1)    :  Concentration of pollutant 1 entering S/T plant
+*                        (at unit 1).  Used only if NP >= 1 (Group B1)
+*                        and QCAR > 0.0
+*          PCAR(2)    :  Concentration of pollutant 2 entering S/T plant
+*                        (at unit 1).  Used only if NP >= 2 (Group B1)
+*                        and QCAR > 0.0
+*          PCAR(3)    :  Concentration of pollutant 3 entering S/T plant
+*                        (at unit 1).  Used only if NP = 3 (Group B1)
+*                        and QCAR > 0.0
+*============================================================================
+*   TCAR  = TIME IN HOURS
+*   QCAR  = INSTANTANEOUS FLOW IN CFS AT TCAR
+*   PCAR1 = INSTANTANEOUS SUSPENDED SOLIDS CONCENTRATION AT TCAR
+*   TCAR    QCAR     PCAR(1)
+J1   0.0    65.8      300.                                                            
+J1   1.0    65.8      300.                                                            
+*J1   2.0    77.1      220.                                                            
+*J1   3.0     6.6      225.                                                            
+*J1   4.0     0.1        5.                                                            
+*J1   5.0     7.2      110.                                                            
+*J1   6.0     0.8      140.                                                            
+*J1   7.0    15.2      200.                                                            
+*J1   8.0     2.8      300.                                                            
+*J1   9.0     0.2      300.                                                            
+*J1  10.0     1.0      5.0
+*J1  50.0     1.0      5.0
+*============================================================================
+*               End your input data set with a $ENDPROGRAM.
+$ENDPROGRAM
+

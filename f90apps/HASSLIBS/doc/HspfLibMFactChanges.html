@@ -1,0 +1,1099 @@
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<style>
+/* Default heading font (outside of tables) */
+body { font-family: sans-serif; font-size: 11pt; }
+
+td { vertical-align: top; padding-left: 4px; padding-right: 4px; }
+
+/* File Difference Report styles - Color */
+table.fc { border-top: 1px solid Black; border-left: 1px solid Black; width: 100%; font-family: monospace; font-size: 10pt; }
+
+tr.secBegin td { border-left: none; border-top: none; border-right: 1px solid Black; }
+tr.secMiddle td { border-left: none; border-top: none; border-right: 1px solid Black; }
+tr.secEnd td { border-left: none; border-top: none; border-bottom: 1px solid Black; border-right: 1px solid Black; }
+tr.secAll td { border-left: none; border-top: none; border-bottom: 1px solid Black; border-right: 1px solid Black; }
+tr.secSubEnd td { border-left: none; border-top: none; border-bottom: 1px solid Gray; border-right: 1px solid Black; }
+tr.secSubAll td { border-left: none; border-top: none; border-bottom: 1px solid Gray; border-right: 1px solid Black; }
+tr.secGap td { font-size: 4px; border-left: none; border-top: none; border-bottom: 1px solid Black; border-right: 1px solid Black; }
+
+td.LineNum { text-align: right; }
+td.LineRange { font-family: sans-serif; }
+td.SubLineRange { font-family: sans-serif; border-bottom: none; }
+
+td.AlignLeft { text-align: left; }
+td.AlignRight { text-align: right; }
+td.AlignCenter { text-align: center; }
+td.Caption { text-align: left; background-color: #E7E7E7; padding-top: 8px; }
+
+td.Normal { }
+td.HasSimilar { background-color: #F0F0FF; }
+td.HasMismatch { background-color: #FFF0F0; }
+td.HasOrphan { background-color: #FFF0F0; }
+td.Added { background-color: #FFF0F0; }
+td.Deleted { background-color: #FFF0F0; text-decoration: line-through; }
+td.UAdded { background-color: #F0F0FF; }
+td.UDeleted { background-color: #F0F0FF; text-decoration: line-through; }
+
+.ttSigDiff { color: #FF0000; }
+.ttInsigDiff { color: #0000FF; }
+.ttAdded { color: #FF0000; }
+.ttDeleted { text-decoration: line-through; }
+
+/* Directory Comparison Report styles - Color */
+table.dc { border-top: 1px solid Black; border-left: 1px solid Black; width: 100%; font-family: sans-serif; font-size: 10pt; }
+
+table.dc tr.secBegin td { border-bottom: 1px solid Silver; }
+table.dc tr.secMiddle td { border-bottom: 1px solid Silver; }
+
+.ttNewer { color: #FF0000; }
+.ttOlder { color: #808080; }
+.ttOrphan { color: #0000FF; }
+.ttGhosted { color: #008080; }
+</style>
+</head><body>
+FILE COMPARISON<br />
+Produced: 12/15/2004 1:55:45 PM<br />
+&nbsp; &nbsp;
+<br />
+Mode:&nbsp; Just Differences &nbsp;
+<br />
+Left base folder: \\Blue\c\HSPFDLL\HASSLIBS &nbsp;
+<br />
+Right base folder: D:\f90apps\HASSLIBS &nbsp;
+<br />
+&nbsp; &nbsp;
+<br />
+File: src\Hspsta.for &nbsp;
+<br />
+<table class="fc" cellspacing="0" cellpadding="0">
+<tr class="secSubAll">
+<td class="LineRange">L395</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INTEGER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INFIL,RECORD,OFFSET,I,I0,I1,NVLIB,VARADD(<span class="ttSigDiff">4</span>),</td>
+</tr>
+<tr class="secAll">
+<td class="LineRange">R395</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INTEGER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INFIL,RECORD,OFFSET,I,I0,I1,NVLIB,VARADD(<span class="ttSigDiff">5</span>),</td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secSubAll">
+<td class="LineRange">L397</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp; $&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BINADD,BINU,ERRFLG,ARCFIL,ILEN,VARSUB,MXSUB(<span class="ttSigDiff">4</span>)</td>
+</tr>
+<tr class="secAll">
+<td class="LineRange">R397</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp; $&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BINADD,BINU,ERRFLG,ARCFIL,ILEN,VARSUB,MXSUB(<span class="ttSigDiff">5</span>)</td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secSubAll">
+<td class="LineRange">L399</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CHARACTER*6&nbsp;&nbsp; VARNAM,VARLIB(<span class="ttSigDiff">4</span>),OPNAME,OPLIB(3)</td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">R399</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CHARACTER*4</span>&nbsp;&nbsp; <span class="ttSigDiff">CTYP</span></td>
+</tr>
+<tr class="secEnd">
+<td class="LineRange">&nbsp;</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CHARACTER*6&nbsp;&nbsp; VARNAM,VARLIB(<span class="ttSigDiff">5</span>),OPNAME,OPLIB(3)</td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secAll">
+<td class="LineRange">R402</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CHARACTER*80</span>&nbsp; <span class="ttSigDiff">UREC</span></td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secBegin">
+<td class="LineRange">L410</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA NVLIB,I0,I1/<span class="ttSigDiff">4</span>,0,1/</td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA VARLIB/'LZS&nbsp;&nbsp; ','LZSN&nbsp; ','LZETP ','LZETPM'/</td>
+</tr>
+<tr class="secSubEnd">
+<td class="LineRange">&nbsp;</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA MXSUB / 0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12&nbsp;&nbsp;&nbsp;&nbsp; /</td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">R412</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA NVLIB,I0,I1/<span class="ttSigDiff">5</span>,0,1/</td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA VARLIB/'LZS&nbsp;&nbsp; ','LZSN&nbsp; ','LZETP ','LZETPM'<span class="ttSigDiff">,'INFILT'</span>/</td>
+</tr>
+<tr class="secEnd">
+<td class="LineRange">&nbsp;</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA MXSUB / 0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">,</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">0</span> /</td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secSubAll">
+<td class="LineRange">L414</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA VARADD/864,514,881,626/</td>
+</tr>
+<tr class="secAll">
+<td class="LineRange">R416</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DATA VARADD/864,514,881,626<span class="ttSigDiff">,515</span>/</td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secBegin">
+<td class="LineRange">R420</td>
+<td class="HasOrphan"> <span class="ttSigDiff">1005</span> <span class="ttSigDiff">FORMAT</span> <span class="ttSigDiff">(A80)</span></td>
+</tr>
+<tr class="secEnd">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">1007</span> <span class="ttSigDiff">FORMAT</span> <span class="ttSigDiff">(A4)</span></td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secSubAll">
+<td class="LineRange">L544</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; READ (<span class="ttSigDiff">I</span><span class="ttSigDiff">NFIL</span>,1010,ERR=120,END=120) OPNAME,OPTNO,VARNAM,</td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">R548</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">READ</span> <span class="ttSigDiff">(INFIL,1005,ERR=120,END=120)</span> <span class="ttSigDiff">UREC</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'</span>&nbsp; <span class="ttSigDiff">read</span> <span class="ttSigDiff">UREC:'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">UREC</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">READ</span> <span class="ttSigDiff">(UREC,1007,ERR=120,END=120)</span> <span class="ttSigDiff">CTYP</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'</span>&nbsp; <span class="ttSigDiff">read</span> <span class="ttSigDiff">CTYP:'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">CTYP</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(CTYP.EQ.'MULT')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">change</span> <span class="ttSigDiff">multiplication</span> <span class="ttSigDiff">factor</span> <span class="ttSigDiff">desired</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'</span>&nbsp; <span class="ttSigDiff">found</span> <span class="ttSigDiff">MULT'</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CALL</span> <span class="ttSigDiff">MULT_UPDATE</span> <span class="ttSigDiff">(ARCFIL,UREC,FOPKEY,LOPKEY,OSUPM,</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">iyear,imon,iday)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">ELSE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">change</span> <span class="ttSigDiff">parameter</span> <span class="ttSigDiff">value</span> <span class="ttSigDiff">desired</span></td>
+</tr>
+<tr class="secEnd">
+<td class="LineRange">&nbsp;</td>
+<td class="HasMismatch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; READ (<span class="ttSigDiff">UREC</span>,1010,ERR=120,END=120) OPNAME,OPTNO,VARNAM,</td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secAll">
+<td class="LineRange">R604</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secAll">
+<td class="LineRange">R615</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(BINU</span> <span class="ttSigDiff">.GT.</span> <span class="ttSigDiff">0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secAll">
+<td class="LineRange">R619</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secBegin">
+<td class="LineRange">R653</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">SUBROUTINE</span>&nbsp;&nbsp; <span class="ttSigDiff">MULT_UPDATE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">I</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">(ARCFIL,UREC,FOPKEY,LOPKEY,OSUPM,</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">I</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IYEAR,IMON,IDAY)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">PURPOSE</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">Read</span> <span class="ttSigDiff">multiplication</span> <span class="ttSigDiff">factor</span> <span class="ttSigDiff">update,</span> <span class="ttSigDiff">alter</span> <span class="ttSigDiff">time</span> <span class="ttSigDiff">series</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">instructions</span> <span class="ttSigDiff">as</span> <span class="ttSigDiff">needed.</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">DUMMY</span> <span class="ttSigDiff">ARGUMENTS</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">INTEGER</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">ARCFIL,FOPKEY,LOPKEY,OSUPM(11,LOPKEY),</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IYEAR,IMON,IDAY</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CHARACTER*80</span>&nbsp; <span class="ttSigDiff">UREC</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">ARGUMENT</span> <span class="ttSigDiff">DEFINITIONS</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">ARCFIL</span> <span class="ttSigDiff">-</span> <span class="ttSigDiff">unit</span> <span class="ttSigDiff">number</span> <span class="ttSigDiff">of</span> <span class="ttSigDiff">archive</span> <span class="ttSigDiff">file</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">UREC</span>&nbsp;&nbsp; <span class="ttSigDiff">-</span> <span class="ttSigDiff">mult</span> <span class="ttSigDiff">factor</span> <span class="ttSigDiff">change</span> <span class="ttSigDiff">record</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">FOPKEY</span> <span class="ttSigDiff">-</span> <span class="ttSigDiff">pointer</span> <span class="ttSigDiff">to</span> <span class="ttSigDiff">first</span> <span class="ttSigDiff">operation</span> <span class="ttSigDiff">in</span> <span class="ttSigDiff">osuper</span> <span class="ttSigDiff">file</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">LOPKEY</span> <span class="ttSigDiff">-</span> <span class="ttSigDiff">pointer</span> <span class="ttSigDiff">to</span> <span class="ttSigDiff">last</span> <span class="ttSigDiff">operation</span> <span class="ttSigDiff">in</span> <span class="ttSigDiff">osuper</span> <span class="ttSigDiff">file</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">OSUPM</span>&nbsp; <span class="ttSigDiff">-</span> <span class="ttSigDiff">osuper</span> <span class="ttSigDiff">file</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IYEAR</span>&nbsp; <span class="ttSigDiff">-</span> <span class="ttSigDiff">year</span> <span class="ttSigDiff">of</span> <span class="ttSigDiff">mfactr</span> <span class="ttSigDiff">update</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMON</span>&nbsp;&nbsp; <span class="ttSigDiff">-</span> <span class="ttSigDiff">month</span> <span class="ttSigDiff">of</span> <span class="ttSigDiff">mfactr</span> <span class="ttSigDiff">update</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IDAY</span>&nbsp;&nbsp; <span class="ttSigDiff">-</span> <span class="ttSigDiff">day</span> <span class="ttSigDiff">of</span> <span class="ttSigDiff">mfactr</span> <span class="ttSigDiff">update</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">LOCAL</span> <span class="ttSigDiff">VARIABLES</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">INTEGER</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">SNUM,SMEMSB(2),TNUM,TMEMSB(2),SKEY,EKEY,KEY,</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">I220,REC(220),I,IMATCH,OMCODE,J,SID,TID</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">REAL</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">MULT,OLDAORIG</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CHARACTER*1</span>&nbsp;&nbsp; <span class="ttSigDiff">FUNC</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CHARACTER*6</span>&nbsp;&nbsp; <span class="ttSigDiff">SVOL,SGRPN,SMEMN,TVOL,TGRPN,TMEMN,OPLIB(11),</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">SVOLX,SGRPNX,SMEMNX,TVOLX,TGRPNX,TMEMNX</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">EQUIVALENCES</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">EQUIVALENCE</span> <span class="ttSigDiff">(REC(135),A),(REC(210),AORIG)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">REAL</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">A,AORIG</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">EXTERNALS</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">EXTERNAL</span>&nbsp;&nbsp; <span class="ttSigDiff">GETTSI</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">DATA</span> <span class="ttSigDiff">INITIALIZATIONS</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">DATA</span> <span class="ttSigDiff">OPLIB/'PERLND','IMPLND','RCHRES',</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">'COPY</span>&nbsp; <span class="ttSigDiff">','PLTGEN','DISPLY','DURANL','GENER</span> <span class="ttSigDiff">',</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">'MUTSIN','BMPRAC','REPORT'/</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">INPUT</span> <span class="ttSigDiff">FORMATS</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">1000</span> <span class="ttSigDiff">FORMAT</span> <span class="ttSigDiff">(5X,A6,I4,2A6,2I2,F10.0,A1,1X,A6,I4,2A6,2I2)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">2000</span> <span class="ttSigDiff">FORMAT</span> <span class="ttSigDiff">(A4,A2)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">2010</span> <span class="ttSigDiff">FORMAT</span> <span class="ttSigDiff">(I5,2I3,2(1X,A6,I4,1X,A6,1X,A6,2I2),1X,A1,3E12.4)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">END</span> <span class="ttSigDiff">SPECIFICATIONS</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">+</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">I220</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">220</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">READ</span> <span class="ttSigDiff">(UREC,1000,ERR=120,END=120)</span> <span class="ttSigDiff">SVOL,SNUM,SGRPN,SMEMN,SMEMSB,</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">MULT,FUNC,TVOL,TNUM,TGRPN,TMEMN,TMEMSB</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'</span>&nbsp; <span class="ttSigDiff">process</span> <span class="ttSigDiff">mfactr</span> <span class="ttSigDiff">update:',</span> <span class="ttSigDiff">TRIM(UREC)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">store</span> <span class="ttSigDiff">original</span> <span class="ttSigDiff">source</span> <span class="ttSigDiff">and</span> <span class="ttSigDiff">target</span> <span class="ttSigDiff">id</span> <span class="ttSigDiff">from</span> <span class="ttSigDiff">input</span> <span class="ttSigDiff">record</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">SID</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">SNUM</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">TID</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">TNUM</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">look</span> <span class="ttSigDiff">for</span> <span class="ttSigDiff">time</span> <span class="ttSigDiff">series</span> <span class="ttSigDiff">instructions</span> <span class="ttSigDiff">matching</span> <span class="ttSigDiff">this</span> <span class="ttSigDiff">source/target</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">DO</span> <span class="ttSigDiff">100</span> <span class="ttSigDiff">I=</span> <span class="ttSigDiff">FOPKEY,</span> <span class="ttSigDiff">LOPKEY</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">SKEY</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">OSUPM(3,I)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">EKEY</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">OSUPM(4,I)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">KEY</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">SKEY</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">10</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'CHECK</span> <span class="ttSigDiff">REC',KEY</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CALL</span> <span class="ttSigDiff">GETTSI</span> <span class="ttSigDiff">(I220,KEY,</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">O</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">REC)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(SVOLX,2000)</span>&nbsp; <span class="ttSigDiff">REC(201),REC(202)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(SGRPNX,2000)</span> <span class="ttSigDiff">REC(204),REC(205)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(SMEMNX,2000)</span> <span class="ttSigDiff">REC(206),REC(207)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(TVOLX,2000)</span>&nbsp; <span class="ttSigDiff">REC(211),REC(212)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(TGRPNX,2000)</span> <span class="ttSigDiff">REC(214),REC(215)</span></td>
+</tr>
+<tr class="secEnd">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(TMEMNX,2000)</span> <span class="ttSigDiff">REC(216),REC(217)</span></td>
+</tr>
+<tr class="secGap"><td colspan="2">&nbsp;</td></tr>
+<tr class="secBegin">
+<td class="LineRange">R733</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SVOLX.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">'</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">TVOLX.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">skip</span> <span class="ttSigDiff">the</span> <span class="ttSigDiff">blanks,</span> <span class="ttSigDiff">they</span> <span class="ttSigDiff">have</span> <span class="ttSigDiff">been</span> <span class="ttSigDiff">set</span> <span class="ttSigDiff">to</span> <span class="ttSigDiff">blanks</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">because</span> <span class="ttSigDiff">they</span> <span class="ttSigDiff">are</span> <span class="ttSigDiff">not</span> <span class="ttSigDiff">the</span> <span class="ttSigDiff">timeseries</span> <span class="ttSigDiff">instructions</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">we</span> <span class="ttSigDiff">want</span> <span class="ttSigDiff">to</span> <span class="ttSigDiff">modify</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">the</span> <span class="ttSigDiff">snum</span> <span class="ttSigDiff">and</span> <span class="ttSigDiff">tnum</span> <span class="ttSigDiff">that</span> <span class="ttSigDiff">we</span> <span class="ttSigDiff">are</span> <span class="ttSigDiff">looking</span> <span class="ttSigDiff">for</span> <span class="ttSigDiff">are</span> <span class="ttSigDiff">the</span> <span class="ttSigDiff">true</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">operation</span> <span class="ttSigDiff">numbers</span> <span class="ttSigDiff">such</span> <span class="ttSigDiff">as</span> <span class="ttSigDiff">101</span> <span class="ttSigDiff">for</span> <span class="ttSigDiff">PERLND</span> <span class="ttSigDiff">101.</span>&nbsp; <span class="ttSigDiff">if</span> <span class="ttSigDiff">svol</span> <span class="ttSigDiff">or</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">tvol</span> <span class="ttSigDiff">are</span> <span class="ttSigDiff">hspf</span> <span class="ttSigDiff">operation</span> <span class="ttSigDiff">names,</span> <span class="ttSigDiff">then</span> <span class="ttSigDiff">look</span> <span class="ttSigDiff">thru</span> <span class="ttSigDiff">osupm</span> <span class="ttSigDiff">for</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">that</span> <span class="ttSigDiff">operation</span> <span class="ttSigDiff">type</span> <span class="ttSigDiff">and</span> <span class="ttSigDiff">number.</span>&nbsp; <span class="ttSigDiff">the</span> <span class="ttSigDiff">index</span> <span class="ttSigDiff">of</span> <span class="ttSigDiff">osupm</span> <span class="ttSigDiff">is</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">the</span> <span class="ttSigDiff">number</span> <span class="ttSigDiff">that</span> <span class="ttSigDiff">is</span> <span class="ttSigDiff">used</span> <span class="ttSigDiff">in</span> <span class="ttSigDiff">the</span> <span class="ttSigDiff">time</span> <span class="ttSigDiff">series</span> <span class="ttSigDiff">instruction.</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">OMCODE</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">DO</span> <span class="ttSigDiff">20</span> <span class="ttSigDiff">J=</span> <span class="ttSigDiff">1,11</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SVOL</span> <span class="ttSigDiff">.EQ.</span> <span class="ttSigDiff">OPLIB(J))</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">it</span> <span class="ttSigDiff">is</span> <span class="ttSigDiff">an</span> <span class="ttSigDiff">operation</span> <span class="ttSigDiff">name</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">OMCODE=</span> <span class="ttSigDiff">J</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">20</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(OMCODE.GT.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">DO</span> <span class="ttSigDiff">30</span> <span class="ttSigDiff">J=</span> <span class="ttSigDiff">FOPKEY,</span> <span class="ttSigDiff">LOPKEY</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(</span> <span class="ttSigDiff">(OSUPM(1,J)</span> <span class="ttSigDiff">.EQ.</span> <span class="ttSigDiff">OMCODE)</span> <span class="ttSigDiff">.AND.</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">(OSUPM(2,J)</span> <span class="ttSigDiff">.EQ.</span> <span class="ttSigDiff">SNUM)</span> <span class="ttSigDiff">)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">this</span> <span class="ttSigDiff">is</span> <span class="ttSigDiff">the</span> <span class="ttSigDiff">jth</span> <span class="ttSigDiff">operation,</span> <span class="ttSigDiff">use</span> <span class="ttSigDiff">to</span> <span class="ttSigDiff">match</span> <span class="ttSigDiff">tsins</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">SNUM</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">J</span> <span class="ttSigDiff">-</span> <span class="ttSigDiff">FOPKEY</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">1</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">30</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">OMCODE</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">DO</span> <span class="ttSigDiff">40</span> <span class="ttSigDiff">J=</span> <span class="ttSigDiff">1,11</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(TVOL</span> <span class="ttSigDiff">.EQ.</span> <span class="ttSigDiff">OPLIB(J))</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">it</span> <span class="ttSigDiff">is</span> <span class="ttSigDiff">an</span> <span class="ttSigDiff">operation</span> <span class="ttSigDiff">name</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">OMCODE=</span> <span class="ttSigDiff">J</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">40</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(OMCODE.GT.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">DO</span> <span class="ttSigDiff">50</span> <span class="ttSigDiff">J=</span> <span class="ttSigDiff">FOPKEY,</span> <span class="ttSigDiff">LOPKEY</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(</span> <span class="ttSigDiff">(OSUPM(1,J)</span> <span class="ttSigDiff">.EQ.</span> <span class="ttSigDiff">OMCODE)</span> <span class="ttSigDiff">.AND.</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">(OSUPM(2,J)</span> <span class="ttSigDiff">.EQ.</span> <span class="ttSigDiff">TNUM)</span> <span class="ttSigDiff">)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">this</span> <span class="ttSigDiff">is</span> <span class="ttSigDiff">the</span> <span class="ttSigDiff">jth</span> <span class="ttSigDiff">operation,</span> <span class="ttSigDiff">use</span> <span class="ttSigDiff">to</span> <span class="ttSigDiff">match</span> <span class="ttSigDiff">tsins</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">TNUM</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">J</span> <span class="ttSigDiff">-</span> <span class="ttSigDiff">FOPKEY</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">1</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">50</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">see</span> <span class="ttSigDiff">if</span> <span class="ttSigDiff">this</span> <span class="ttSigDiff">one</span> <span class="ttSigDiff">matches</span> <span class="ttSigDiff">the</span> <span class="ttSigDiff">one</span> <span class="ttSigDiff">we're</span> <span class="ttSigDiff">looking</span> <span class="ttSigDiff">for</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'SVOL:</span> <span class="ttSigDiff">'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">SVOL</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">//</span> <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">SVOLX</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'SNUM:</span> <span class="ttSigDiff">'</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">SNUM</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">,</span> <span class="ttSigDiff">REC(203)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'SGRPN:'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">SGRPN</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">//</span> <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">SGRPNX</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'SMEMN:'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">SMEMN</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">//</span> <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">SMEMNX</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'SMSB1:'</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">SMEMSB(1)</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">,</span> <span class="ttSigDiff">REC(208)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'SMSB2:'</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">SMEMSB(2)</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">,</span> <span class="ttSigDiff">REC(209)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'TVOL:</span> <span class="ttSigDiff">'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">TVOL</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">//</span> <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">TVOLX</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'TNUM:</span> <span class="ttSigDiff">'</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">TNUM</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">,</span> <span class="ttSigDiff">REC(213)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'TGRPN:'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">TGRPN</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">//</span> <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">TGRPNX</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'TMEMN:'</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">TMEMN</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">//</span> <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">//</span> <span class="ttSigDiff">TMEMNX</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'TMSB1:'</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">TMEMSB(1)</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">,</span> <span class="ttSigDiff">REC(218)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'TMSB2:'</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">TMEMSB(2)</span> <span class="ttSigDiff">,</span>&nbsp; <span class="ttSigDiff">&quot;:&quot;</span> <span class="ttSigDiff">,</span> <span class="ttSigDiff">REC(219)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">1</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SVOL.NE.SVOLX</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">SVOL.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SNUM.NE.REC(203)</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">SNUM.NE.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SGRPN.NE.SGRPNX</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">SGRPN.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SMEMN.NE.SMEMNX</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">SMEMN.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SMEMSB(1).NE.REC(208)</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">SMEMSB(1).NE.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(SMEMSB(2).NE.REC(209)</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">SMEMSB(2).NE.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(TVOL.NE.TVOLX</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">TVOL.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(TNUM.NE.REC(213)</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">TNUM.NE.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(TGRPN.NE.TGRPNX</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">TGRPN.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(TMEMN.NE.TMEMNX</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">TMEMN.NE.'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(TMEMSB(1).NE.REC(218)</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">TMEMSB(1).NE.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(TMEMSB(2).NE.REC(219)</span> <span class="ttSigDiff">.AND.</span> <span class="ttSigDiff">TMEMSB(2).NE.0)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IMATCH</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">0</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(IMATCH.EQ.1)</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">it</span> <span class="ttSigDiff">matches,</span> <span class="ttSigDiff">so</span> <span class="ttSigDiff">update</span> <span class="ttSigDiff">accordingly</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'</span>&nbsp; <span class="ttSigDiff">before</span> <span class="ttSigDiff">updating</span> <span class="ttSigDiff">mfactr,</span> <span class="ttSigDiff">',</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">'a,</span> <span class="ttSigDiff">aorig,</span> <span class="ttSigDiff">mult,</span> <span class="ttSigDiff">func</span> <span class="ttSigDiff">',a,aorig,mult,func</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">OLDAORIG</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">AORIG</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(FUNC.EQ.'=')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">A</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">A/AORIG</span> <span class="ttSigDiff">*</span> <span class="ttSigDiff">MULT</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">AORIG</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">MULT</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">ELSEIF</span> <span class="ttSigDiff">(FUNC.EQ.'+')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">A</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">A</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">(A/AORIG</span> <span class="ttSigDiff">*</span> <span class="ttSigDiff">MULT)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">AORIG</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">AORIG</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">MULT</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">ELSEIF</span> <span class="ttSigDiff">(FUNC.EQ.'-')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">A</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">A</span> <span class="ttSigDiff">-</span> <span class="ttSigDiff">(A/AORIG</span> <span class="ttSigDiff">*</span> <span class="ttSigDiff">MULT)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">AORIG</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">AORIG</span> <span class="ttSigDiff">-</span> <span class="ttSigDiff">MULT</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">ELSEIF</span> <span class="ttSigDiff">(FUNC.EQ.'*')</span> <span class="ttSigDiff">THEN</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">A</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">A</span> <span class="ttSigDiff">*</span> <span class="ttSigDiff">MULT</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">AORIG</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">AORIG</span> <span class="ttSigDiff">*</span> <span class="ttSigDiff">MULT</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">ELSE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'</span>&nbsp; <span class="ttSigDiff">unknown</span> <span class="ttSigDiff">mfactr</span> <span class="ttSigDiff">function</span> <span class="ttSigDiff">&quot;',</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">FUNC,'&quot;</span> <span class="ttSigDiff">cant</span> <span class="ttSigDiff">update'</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">GOTO</span> <span class="ttSigDiff">110</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">CALL</span> <span class="ttSigDiff">PUTTSI</span> <span class="ttSigDiff">(I220,KEY,REC)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE</span> <span class="ttSigDiff">(ARCFIL,2010)</span> <span class="ttSigDiff">IYEAR,IMON,IDAY,</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">SVOL,SID,SGRPNX,SMEMNX,REC(208),REC(209),</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">TVOL,TID,TGRPNX,TMEMNX,REC(218),REC(219),</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">FUNC,MULT,OLDAORIG,AORIG</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'after</span> <span class="ttSigDiff">updating</span> <span class="ttSigDiff">mfactr,</span> <span class="ttSigDiff">',</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">'a,</span> <span class="ttSigDiff">aorig,</span> <span class="ttSigDiff">mult,</span> <span class="ttSigDiff">func</span> <span class="ttSigDiff">',a,aorig,mult,func</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span> <span class="ttSigDiff">IF</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">KEY</span> <span class="ttSigDiff">=</span> <span class="ttSigDiff">KEY</span> <span class="ttSigDiff">+</span> <span class="ttSigDiff">1</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">IF</span> <span class="ttSigDiff">(KEY.LE.EKEY)</span> <span class="ttSigDiff">GOTO</span> <span class="ttSigDiff">10</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">100</span>&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">GOTO</span> <span class="ttSigDiff">110</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">120</span>&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'***</span> <span class="ttSigDiff">error</span> <span class="ttSigDiff">reading</span> <span class="ttSigDiff">mfactr</span> <span class="ttSigDiff">update</span> <span class="ttSigDiff">record</span> <span class="ttSigDiff">***'</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">TRIM(UREC)</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">WRITE(99,*)</span> <span class="ttSigDiff">'xxxxxSSSSSSNNNNGGGGGGMMMMMM1122FFFFFFFFFF'</span> <span class="ttSigDiff">//</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">$</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">'OXTTTTTTNNNNGGGGGGMMMMMM1122'</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"> <span class="ttSigDiff">110</span>&nbsp; <span class="ttSigDiff">CONTINUE</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan"><span class="ttSigDiff">C</span></td>
+</tr>
+<tr class="secMiddle">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">RETURN</span></td>
+</tr>
+<tr class="secEnd">
+<td class="LineRange">&nbsp;</td>
+<td class="HasOrphan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="ttSigDiff">END</span></td>
+</tr>
+</table>
+</body></html>

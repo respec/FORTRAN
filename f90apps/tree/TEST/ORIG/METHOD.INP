@@ -1,0 +1,20 @@
+FldFrqCalc
+This method performs a flood frequency calculation.
+
+RegRegEqn
+This method performs the reg reg equation.
+
+RegParmGet
+This method gets the reg paramaters.
+
+NDHiLow
+I don't know what this method does.
+
+NwisGet
+This method gets data from NWIS.
+
+HSPF
+This is HSPF.
+
+PRMS
+This is PRMS.

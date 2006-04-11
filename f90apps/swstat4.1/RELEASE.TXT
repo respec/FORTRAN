@@ -1,0 +1,191 @@
+
+ Version    Date    Description
+ -------  --------  ---------------------------------------------------------
+   4.1    02/02/25  Made corrections in the N-day computations and in the
+                    specification for minimum and maximum values for
+                    plots with probablility axis.  Corrected problems in
+                    Frequency option where data set did not contain season
+                    attributes or a recognized value for TSTYPE.  In the
+                    Frequency option, added the 3-year recurrence to the
+                    printed table and added attributes L07050, L07100, and
+                    L04003 for optional WDM output.  In Frequency option,
+                    corrected problem where negative Parameter Values were
+                    sometimes reported for low flows.  Miscellaneous
+                    spelling corrections.
+
+                    N-day option was incorrectly retrieving seasons of
+                    data when the start date of the input data set was
+                    not on a month boundary.  For instance, if the start
+                    date in a data set was the 6th of March, and the
+                    season was the December 1 - March 31, the program
+                    was incorrectly retrieving the season December 6 -
+                    April 5.
+
+                    Although version 4.0 claimed the N-day option ranked
+                    low flows with the smallest being 1 and the largest
+                    being last and ranked high flows with the highest
+                    being 1 and the lowest being the last, the reverse
+                    was true.  The output now correctly reports rank for
+                    high flows in descending order, with the largest flow
+                    ranked 1 and the smallest flow ranked last.  Low
+                    flows are now correctly ranked in ascending order
+                    with the smallest flow ranked 1 and the largest flow
+                    ranked last.
+
+                    The program will automatically force user-specified
+                    limits for probablility axis to be symetrical about
+                    0, with the maximum value equal to the maximum of
+                    the absolute values of minimum and maximum and the
+                    minimum the negative of the maximum.
+
+                    For the frequency option, program will ask user to
+                    define the season being analyzed if the attributes
+                    SEASBG and SEASND are missing and will, optionally,
+                    write the values to the data set.  If the attribute
+                    TSTYPE contains the string PEAK, the program will
+                    assume the annual series being identified is a
+                    1-day High flow.  If the value of TSTYPE is not
+                    PEAK and does not contain H or L in the first position
+                    followed by 3 digits identifying the duration, the
+                    user will be asked to specify the information.
+                    
+   4.0    00/12/01  In version 3.2, 2 new attributes were introduced.
+                    They are used by the n-day option.  SEADBG (443)
+                    is the starting day of a season and SEADND (444)
+                    is the ending day of a season.  They are used in
+                    combination with SEASBG AND SEASND.  The index
+                    numbers used for these attributes conflicted with
+                    attributes DATCRE and DATMOD which were added for
+                    another applicatin to document the dates a data set
+                    was created and last modified, respectively.  The
+                    index numbers for SEADBG and SEADND are now 446
+                    and 447.  If you have wdm files that were created
+                    using version 3.2 of swstat, you will need to run
+                    the wdmrx program to correct these attributes before
+                    you use any other applications to analyze the data
+                    sets (wdmrx is included in the annie distribution,
+                    see http://water.usgs.gov/software/annie.html)
+
+                    Modified Trend option.  The code had been using
+                    the attributes J407BY and J407EY, if they were
+                    present, as the begin and end dates for the analysis.
+
+                    N-day option has been ranking both high and low
+                    flow values in ascending order.  Output now reports
+                    rank for high flows in descending order, with the
+                    largest flow ranked 1 and the smallest flow ranked
+                    last.  Low flows continue to be ranked in ascending
+                    order with the smallest flow ranked 1 and the largest
+                    flow ranked last.
+
+                    Corrected problem in hydrograph option that caused
+                    leap years to be incorrectly identified.  Also
+                    corrected problem with the fill pattern for the
+                    graphics.
+
+                    Duplicate code has been replaced with calls to
+                    library routines.  Some code has been rearranged
+                    and some routines were moved to libanne.
+
+
+   3.2    98/03/25  Corrected Compare option to correctly compute the
+                    total mean absolute error (percent) and root mean
+                    square error (percent).  Enhanced N-day option to
+                    include option to compute durations of 31 or less
+                    for months.  Also enhanced N-day option to compute
+                    durations for seasons that begin and (or) end on
+                    days other than the first and last days of the month.
+                    Corrected log files distributed with the PC version
+                    for the tests that included graphics.  Modified
+                    test4.log file and added test10.log for the
+                    enhancements under the N-day option.  Incorporated
+                    corrections and changes made in the lib library;
+                    there is 1 noteworthy change:  in some instances,
+                    the common time period determined by the software
+                    may have been shorter than the actual time period;
+                    this has been corrected.
+
+                    NOTE that the N-day printed output has been
+                         modified.  The previous release computed and
+                         printed the low flows for all selected data
+                         sets and then the high flows for all selected
+                         data sets.  With this release, the program now
+                         computes and prints the low and high flows
+                         by station.
+
+   3.1    96/09/25  The Hydrograph duration statistics option was found
+                    to have some errors related to handling February 29.
+                    In some cases these caused the program to crash, in
+                    other cases it caused the program to produce some
+                    incorrect values for February 28  (February 29 was
+                    being used instead of February 28.)  The number of
+                    values tagged as missing was also being incorrectly
+                    reported in some cases.  In correcting the program,
+                    several other features of this option have been
+                    modified, including: (1) better default limits for
+                    y-axis in plotting, (2) added period of record
+                    being analyzed to output table and plot, (3) changed
+                    order of input fields in the Modify form fill in and
+                    added data transformation field, and (4) changed the
+                    Analyze form fill in for specifying dates.
+
+                    NOTE that in ALL cases, February 29 is not included
+                         in the analysis.
+
+                    NOTE that the date printed in the output table and
+                         included on the plot will be exactly the start
+                         and end dates you specify for the period of
+                         record.  If either of these dates falls outside
+                         the begin and end months for the season you have
+                         specified, the date printed will be the specified
+                         date, not the start and end of the season.
+
+   3.0    95/08/29  Moved durhyd program into swstat.
+
+          96/03/26  The N-day option did not always report the correct year
+                    for seasons shorter than a year.  In particular, the
+                    reported year was in error (the next year) and a value
+                    for the last requested year was not reported if a season
+                    was a single month.  This has been corrected.
+
+                    NOTE that in ALL cases, the year reported is the
+                         year that corresponds to the ending month of
+                         the season.  For example, the climatic year
+                         beginning April 1994 and ending March 1995
+                         will be reported as year 1995 and the water
+                         year beginning October 1994 and ending in
+                         September 1995 will be reported as year 1995.
+
+                    NOTE also that when stored in a wdm file, annual
+                         time series are always listed as beginning in
+                         January and ending in December.  However, the
+                         attributes SEASBG and SEASND will be stored in
+                         the data set recording the actual season that
+                         the time series was computed for.  As noted
+                         above, the year is the year the ending month
+                         of the season occured in.
+
+   2.2    94/11/01  Corrections made in the Basic and Frequency options.
+
+                    The Basic option was not listing the correct minimum
+                    value in the data set if the minimum was the first value
+                    in the data set.  There was also an error in the way
+                    the variance was being computed, which may have caused
+                    an error in the standard deviation (generally very small).
+
+                    In some cases in the Frequency analysis, the n-day, t-year
+                    statistics values were being computed as 10e-31 when they
+                    should have been zero.  This has been corrected.
+
+   2.1    94/06/28  Corrections made in the N-day option.
+
+                    The seasons the user entered were not being used for the
+                    high- and/or low- flow computations.  The program was
+                    always using the full climate year for low flows and the
+                    water year for high flows.  Both low and high flows were
+                    always being calculated.   The program now recognizes
+                    the seasons requested by the user and also that the
+                    user may not want both high and low flows.  The user
+                    may now enter different durations for the low and the
+                    high flows.  (KMFlynn)
+

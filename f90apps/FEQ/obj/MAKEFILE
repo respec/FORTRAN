@@ -1,0 +1,36 @@
+SRCLOC    = ..\src
+BINLOC    = ..\bin
+LIBLOC    = \lf90\lib
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(SRCLOC)
+
+DLL       = $(BINLOC)\feqlib.dll
+LDMAP     = $(BINLOC)\feqlib.map
+
+OBX       = feqent.obj
+OBJ       = block.obj invmjd.obj lktab.obj mjd.obj xlkt.obj xstype.obj filtab.obj
+
+$(DLL): $(OBJ) $(OBX)
+          $(FC) $(OBX) $(OBJ) -MAP $(LDMAP) -OUT $(DLL) \
+               -win -dll -ml msvb -mapn 32 -mapw 132 \
+               @..\src\feqent.xp$$ \
+          -LIBP $(LIBLOC)
+          !if -e $(SRCLOC)\*.dll
+            copy $(SRCLOC)\*.dll ..\bin
+            erase $(SRCLOC)\*.dll
+          !endif
+          #erase $(SRCLOC)\*.xp*
+          erase $(SRCLOC)\*.im*
+          erase $(SRCLOC)\*.obj
+          copy $(DLL) \winnt\system32
+
+$(OBJ): $(SRCLOC)\$(*).for
+     (cd ..\obj; $(FC) $(SRCLOC)\$(*).for $(FFLAGS) -win -dll)
+     copy ..\src\$(@)
+     erase ..\src\$(@)
+
+$(OBX): $(SRCLOC)\$(*).f90
+     (cd ..\obj; $(FC) $(SRCLOC)\$(*).f90 $(FFLAGS) -win -dll)
+     copy ..\src\$(@)
+     erase ..\src\$(@)

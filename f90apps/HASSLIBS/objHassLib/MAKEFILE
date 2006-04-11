@@ -1,0 +1,23 @@
+HLOC      = ..\..\hasslibs
+SRCLOC    = ..\src
+BINLOC    = ..\bin
+
+FC        = lf90
+FFLAGS    = -c -o0 -i $(SRCLOC) -nfix -dll
+
+DLL       = $(BINLOC)\hass_lib.dll
+LDMAP     = $(BINLOC)\hass_lib.map
+LBLOC     = \lib3.0\lf90libs,\LF90\LIB
+LIBS      = util.lib
+
+OBJ       = hass_lib.obj
+RES       = ..\res\hass_lib.res
+
+$(DLL): $(OBJ) $(RES)
+          $(FC) $(OBJ) $(RES) -MAP $(LDMAP) -OUT $(DLL) \
+               -LIB $(LIBS) -LIBP $(LBLOC) \
+               -win -dll -ml msvb -mapn 32 -mapw 132 \
+               @..\src\hass_lib.xp$$ \
+
+$(OBJ): $(SRCLOC)\$(*).for
+ $(FC) $(SRCLOC)\$(*).for $(FFLAGS) -win -dll -o $(*).obj
