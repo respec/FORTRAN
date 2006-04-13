@@ -1168,7 +1168,7 @@ $HEADER
    x - x   degrees       (m)                          (mm)  (mm/d.C)       (C)
 $TNAME  SNOW-PARM1
 $FIELD  FIELD1
-_WIDTH  10
+_WIDTH   8
 _COLUMN  1
 _PROTECT PROTECTED
 _TYPE CHARACTER
