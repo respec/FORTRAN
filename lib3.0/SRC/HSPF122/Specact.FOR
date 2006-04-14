@@ -288,6 +288,7 @@ C     + + + PURPOSE + + +
 C     Read and process Special Actions lines.
 C
 C     + + + HISTORY + + +
+C     4/14/2005 jlk - added initialization for I0
 C     12/17/2004 jlk&pbd - added call to new subroutine to handle
 C         MFACT change action
 C
@@ -360,6 +361,9 @@ C     + + + EXTERNALS + + +
       EXTERNAL    ZIPI,GETUCI,PSPUVQ,PSPCON,PSPDIS,PSPUVN,PSPACT,OMSG
       EXTERNAL    CKNBLV,PSPIPS,PSPHDR,HDMES3,PSPUML
 C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I0/0/
+
 C     + + + END SPECIFICATIONS + + +
 C
 C     start with no actions stored
