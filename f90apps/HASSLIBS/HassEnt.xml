@@ -4,6 +4,11 @@
    <property name="FC"          value="lf90"/>
    <property name="FOpts"       value="-c -o0"/>
 
+   <target name="test" depends="dll">
+      <echo message=" test${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <ant antfile="runTest.xml" dir="..\..\test\hspf\standard"/>
+   </target>
+
    <target name="dll" depends="compile,libs">
       <echo message=" dll${line.separator}" file="${SummaryListFile}" append="yes"/>
       <echo message="basedir:'${basedir}'${line.separator}" file="${SummaryListFile}" append="yes"/>
@@ -14,7 +19,7 @@
       <copy file="${SummaryListFile}" 
             tofile="history\${DSTAMP}${TSTAMP}${ant.project.name}.lis">
       </copy>
-      <copy file="bin\hass_ent.dll" tofile="c:\windows\system32\hass_ent.dll"/>
+      <!-- copy file="bin\hass_ent.dll" tofile="c:\windows\system32\hass_ent.dll"/ -->
    </target>
 
    <target name="compile" depends="init">

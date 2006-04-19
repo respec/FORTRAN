@@ -286,8 +286,8 @@
           IF (RETCOD .LT. -10) THEN
             RETCOD = ABS(RETCOD) - 16384
           END IF
-          !WRITE(*,*) 'HASS_ENT:F90_WDBOPN: "'//LNAME,'" retc:',RETCOD
-          !WRITE(99,*) 'HASS_ENT:F90_WDBOPN: "'//LNAME,'" retc:',RETCOD
+          WRITE(*,*) 'HASS_ENT:F90_WDBOPN: "'//LNAME,'" retc:',RETCOD
+          WRITE(99,*) 'HASS_ENT:F90_WDBOPN: "'//LNAME,'" retc:',RETCOD
           WDMSFL= 0
         END IF
       END FUNCTION F90_WDBOPN
