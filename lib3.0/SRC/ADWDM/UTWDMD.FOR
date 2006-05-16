@@ -238,6 +238,9 @@ C     + + + PURPOSE + + +
 C     Remove a WDM file from the open WDM buffer and adjust
 C     buffer accordingly.
 C
+C     + + + HISTORY + + +
+C     2005/06/30 JLK allow message file to be closed
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   WDMSFL,RETCOD
 C
@@ -251,81 +254,56 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cfbuff.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,J
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   WDFLNU
+      INTEGER   I, J
 C
 C     + + + END SPECIFICATIONS + + +
 C
       RETCOD= 0
-C      WRITE(*,*) 'WDFLCL want:',WDMSFL,' open:',
-C     #              (WDMOPN(I),I=1,WDMCNT)
 C
-      IF (WDMCNT.GT.1) THEN
-C       see if file already open
-        I= 1
- 10     CONTINUE
-          I= I+ 1
-          IF (WDMOPN(I).EQ.WDMSFL) THEN
-C           its open
-C           check pointers in wdm file
-            CALL WDMCHK(WDMSFL,RETCOD)
-            IF (I.LT.WDMCNT) THEN
-C             move later wdm unit numbers
-              DO 20 J= I+1,WDMCNT
-                WDMOPN(J-1)= WDMOPN(J)
-                MAXREC(J-1)= MAXREC(J)
- 20           CONTINUE
+C     WRITE(99,*) 'WDFLCL close:',WDMSFL,' open:',
+C    #              (WDMOPN(I),I=1,WDMCNT)
+C
+C     loop to thru open files
+      I = 1
+      DO WHILE (I .LT. WDMCNT)
+        IF (WDMOPN(I) .NE. WDMSFL) THEN
+C         try next one
+          I = I+ 1
+        ELSE
+C         this file is open
+
+C         check pointers in wdm file
+C         TODO: how slow is this?
+C         CALL WDMCHK(WDMSFL,RETCOD)
+
+C         close the file
+          CLOSE (UNIT=WDMSFL)
+
+C         mark records in buffer as not usable
+          DO 20 J= 1, CONREC
+            IF (WDMFUN(J) .EQ. WDMSFL) THEN
+C             unusable
+              WDMFUN(J)= 0
             END IF
-C           be sure io is complete
-            CALL FLUSH(WDMSFL)
-C           close the file
-            CLOSE (UNIT=WDMSFL)
-C           reset the count
-            WDMCNT= WDMCNT- 1
-C           mark records in buffer as not usable
-            CALL WDFLNU(WDMSFL)
+ 20       CONTINUE
+
+          IF (I .LT. WDMCNT) THEN
+C           move later wdm unit numbers
+            DO 30 J= I+1, WDMCNT
+              WDMOPN(J-1)= WDMOPN(J)
+              MAXREC(J-1)= MAXREC(J)
+ 30         CONTINUE
+          ELSE
+C           just reset last values
+            WDMOPN(I)= 0
+            MAXREC(I)= 0
           END IF
-        IF (I.LT.WDMCNT) GO TO 10
-      ELSE
-C       cant close message file
-        RETCOD= -87
-      END IF
-C
-      RETURN
-      END
-C
-C
-C
-      SUBROUTINE   WDFLNU
-     I                   (WDMSFL)
-C
-C     + + + PURPOSE + + +
-C     mark records in buffer as not usable
-C
-C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   WDMSFL
-C
-C     + + + ARGUMENT DEFINITIONS + + +
-C     WDMSFL - Fortran unit number of WDM file
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cfbuff.inc'
-C
-C     + + + LOCAL VARIABLES + + +
-      INTEGER   I
-C
-C     + + + END SPECIFICATIONS + + +
-C
-C     mark records in buffer as not usable
-      DO 30 I= 1,CONREC
-        IF (WDMFUN(I).EQ.WDMSFL) THEN
-C         unusable
-          WDMFUN(I)= 0
-          RECNO(I) = 0
+
+C         reset the count
+          WDMCNT= WDMCNT- 1
+          I     = WDMCNT
         END IF
- 30   CONTINUE      
+      END DO
 C
       RETURN
       END
