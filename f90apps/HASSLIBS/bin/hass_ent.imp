@@ -1,7 +1,12 @@
+    F90_MSG
     F90_W99OPN
     F90_W99CLO
     F90_WDMOPN
     F90_WDMCLO
+    F90_WDBOPN
+    F90_WDBOPNR
+    F90_WDFLCL
+    F90_INQNAM
     F90_DATLST_XX
     F90_DECCHX_XX
     F90_CMPTIM
@@ -17,9 +22,6 @@
     F90_DTMCMN
     F90_DECPRC
     F90_WDBFIN
-    F90_WDBOPN
-    F90_WDBOPNR
-    F90_WDFLCL
     F90_WDDSNX
     F90_WDCKDT
     F90_WMSGTX_XX
@@ -94,7 +96,6 @@
     F90_WID2UD
     F90_WDDSCL
     F90_GETUCI_XX
-    F90_INQNAM
     CloseFile
     Read_MODFLOW_Unformatted
     Read_MODFLOW_3D_Unformatted
