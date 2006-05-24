@@ -256,16 +256,21 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I, J
 C
+C     + + + EXTERNALS + +
+      EXTERNAL   WDFLNU
+C
 C     + + + END SPECIFICATIONS + + +
 C
       RETCOD= 0
 C
-C     WRITE(99,*) 'WDFLCL close:',WDMSFL,' open:',
-C    #              (WDMOPN(I),I=1,WDMCNT)
+C     WRITE(99,*,ERR=10) 'WDFLCL:entry',WDMSFL,
+C    #            ' count',WDMCNT,
+C    #            ' open:',(WDMOPN(I),I=1,WDMCNT)
+C10   CONTINUE
 C
 C     loop to thru open files
       I = 1
-      DO WHILE (I .LT. WDMCNT)
+      DO WHILE (I .LE. WDMCNT)
         IF (WDMOPN(I) .NE. WDMSFL) THEN
 C         try next one
           I = I+ 1
@@ -278,32 +283,66 @@ C         CALL WDMCHK(WDMSFL,RETCOD)
 
 C         close the file
           CLOSE (UNIT=WDMSFL)
-
+C
 C         mark records in buffer as not usable
-          DO 20 J= 1, CONREC
-            IF (WDMFUN(J) .EQ. WDMSFL) THEN
-C             unusable
-              WDMFUN(J)= 0
-            END IF
- 20       CONTINUE
-
+          CALL WDFLNU(WDMSFL)
+C
           IF (I .LT. WDMCNT) THEN
 C           move later wdm unit numbers
             DO 30 J= I+1, WDMCNT
               WDMOPN(J-1)= WDMOPN(J)
               MAXREC(J-1)= MAXREC(J)
  30         CONTINUE
+C           reset the count
           ELSE
 C           just reset last values
             WDMOPN(I)= 0
             MAXREC(I)= 0
           END IF
-
-C         reset the count
           WDMCNT= WDMCNT- 1
-          I     = WDMCNT
+C         force exit from loop
+          I= WDMCNT+ 1
         END IF
       END DO
+C
+C     WRITE(99,*,ERR=40) 'WDFLCL:exit:',WDMSFL,
+C    #            ' count',WDMCNT,
+C    #            ' open:',(WDMOPN(I),I=1,WDMCNT)
+C40   CONTINUE
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   WDFLNU
+     I                   (WDMSFL)
+C
+C     + + + PURPOSE + + +
+C     mark records in buffer as not usable
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   WDMSFL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     WDMSFL - Fortran unit number of WDM file
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cfbuff.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     mark records in buffer as not usable
+      DO 30 I= 1,CONREC
+        IF (WDMFUN(I).EQ.WDMSFL) THEN
+C         unusable
+          WDMFUN(I)= 0
+          RECNO(I) = 0
+        END IF
+ 30   CONTINUE      
 C
       RETURN
       END
