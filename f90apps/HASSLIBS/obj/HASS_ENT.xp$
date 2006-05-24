@@ -1,7 +1,12 @@
+-export    F90_MSG
 -export    F90_W99OPN
 -export    F90_W99CLO
 -export    F90_WDMOPN
 -export    F90_WDMCLO
+-export    F90_WDBOPN
+-export    F90_WDBOPNR
+-export    F90_WDFLCL
+-export    F90_INQNAM
 -export    F90_DATLST_XX
 -export    F90_DECCHX_XX
 -export    F90_CMPTIM
@@ -17,9 +22,6 @@
 -export    F90_DTMCMN
 -export    F90_DECPRC
 -export    F90_WDBFIN
--export    F90_WDBOPN
--export    F90_WDBOPNR
--export    F90_WDFLCL
 -export    F90_WDDSNX
 -export    F90_WDCKDT
 -export    F90_WMSGTX_XX
@@ -94,4 +96,3 @@
 -export    F90_WID2UD
 -export    F90_WDDSCL
 -export    F90_GETUCI_XX
--export    F90_INQNAM
