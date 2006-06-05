@@ -490,15 +490,6 @@ C           special case, dont open files
      O               RETCOD)
           ! simulation complete
 
-          I = 7   !debug
-          WRITE(S,*) 'M_SIMSCN:back from HSPF with',RETCOD
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV > 0) THEN
-            WRITE(*,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
-
           M= "before WDM closing in M_SIMSCN"
           CALL M_FILSTA (M)
 
@@ -523,6 +514,15 @@ C           special case, dont open files
  30         CONTINUE
           END IF
           CLOSE (UNIT=UCI%FUN)   ! close users input file
+
+          I = 7   !debug
+          WRITE(S,*) 'M_SIMSCN:back from HSPF with',RETCOD
+          L = LEN_TRIM(S)
+          CALL UPDATESTATUSX(I,L,S)
+          IF (DBGLEV > 0) THEN
+            WRITE(*,*) S
+            IF (DBGPAU) READ(*,*)
+          END IF
 
           M= "at end of File Closing in M_SIMSCN"
           CALL M_FILSTA (M)
