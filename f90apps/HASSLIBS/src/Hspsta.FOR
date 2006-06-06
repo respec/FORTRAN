@@ -724,9 +724,11 @@ C
      1                I,WDMSFL(I),RETCOD,C,IMXRC,TRIM(WDNAME(I))
           IF (RETCOD .NE. 0) THEN
             WRITE(99,*) '  HSPSTA:EXT_UPDATE:error opening WDM'
-C           force buffer clear
-            CLOSE(99)
-            OPEN(99,"ERROR.FIL",ACCESS="APPEND")
+C           be sure io ON 99 is complete
+            CALL FLUSH(99)
+CC           force buffer clear
+C            CLOSE(99)
+C            OPEN(99,"ERROR.FIL",ACCESS="APPEND")
           END IF
 C
           WRITE(MSG,2010) 'HSPSTA:EXT_UPDATE:openwdm ',WDMSFL(I),
