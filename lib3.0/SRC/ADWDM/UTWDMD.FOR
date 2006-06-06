@@ -30,7 +30,6 @@ C     + + + SAVES + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   IND,RIND,PIND,NIND,XIND,I,CWDM,DONFG
-      INTEGER   IOS
       CHARACTER*255 STR
       CHARACTER*255 WDNAME
       LOGICAL       OPEN           
