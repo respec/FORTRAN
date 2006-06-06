@@ -30,7 +30,7 @@ C     + + + SAVES + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   IND,RIND,PIND,NIND,XIND,I,CWDM,DONFG
-      INTEGER   OPNCNT,IOS
+      INTEGER   IOS
       CHARACTER*255 STR
       CHARACTER*255 WDNAME
       LOGICAL       OPEN           
@@ -84,29 +84,14 @@ C
 C           record not found, allocate space for it
             RIND= FREPOS
             IF (RREC.GT.0) THEN
-C
-C             ========== begin timing kludge =============
               INQUIRE(UNIT=WDMSFL,NAME=WDNAME,OPENED=OPEN)
               IF (OPEN) THEN
+C               read existing record from file
+                READ (WDMSFL,REC=RREC) (WIBUFF(I,RIND),I=1,512)
               ELSE
-                OPNCNT = 1
                 WRITE(STR,*) 'UTWDMD:NotOpen:',WDMSFL,RREC,TRIM(WDNAME)
                 CALL LOG_MSG(STR)
- 35             CONTINUE                 
-                  OPEN(UNIT=WDMSFL,FILE=WDNAME,ACCESS='DIRECT',
-     1                 RECL=2048,STATUS='OLD',IOSTAT=IOS,ERR=36)
-                  GOTO 37
- 36               CONTINUE
-                    OPNCNT= OPNCNT + 1     
-                    WRITE(STR,*) 'UTWDMD:try:',WDMSFL,OPNCNT,IOS
-                    CALL LOG_MSG(STR)
-                  IF (OPNCNT .LT. 5) GOTO 35
- 37               CONTINUE                  
               END IF
-C             ========== end timing kluge ===============
-C
-C             read existing record from file
-              READ (WDMSFL,REC=RREC) (WIBUFF(I,RIND),I=1,512)
             ELSE
 C             return an empty buffer
               DO 40 I= 1,512
