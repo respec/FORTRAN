@@ -30,6 +30,10 @@ C     + + + SAVES + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   IND,RIND,PIND,NIND,XIND,I,CWDM,DONFG
+      INTEGER   OPNCNT,IOS
+      CHARACTER*255 STR
+      CHARACTER*255 WDNAME
+      LOGICAL       OPEN           
 C
 C     + + + INTRINSICS + + +
       INTRINSIC IABS
@@ -39,7 +43,9 @@ C     + + + DATA INITIALIZATIONS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-C     write(*,*) 'ADWDM:UTWDMD:WDRCGO',wdmsfl,rrec
+C     WRITE(STR,*) 'ADWDM:UTWDMD:WDRCGO',wdmsfl,rrec
+C     CALL LOG_MSG(STR)
+C
       RIND = 0
       CWDM = 0
       DONFG= 0
@@ -51,8 +57,11 @@ C         we know about this wdm file
           DONFG= 1
         END IF
       IF (CWDM.LT.WDMCNT .AND. DONFG.EQ.0) GO TO 10
-C     write(*,*) 'ADWDM:UTWDMD:WDRCGO2',cwdm,donfg,wdmcnt
-C     write(*,*) 'ADWDM:UTWDMD:WDRCGO3',maxrec(cwdm),wdmopn(cwdm)
+C
+C     write(STR,*) 'ADWDM:UTWDMD:WDRCGO2',cwdm,donfg,wdmcnt
+C     CALL LOG_MSG(STR)
+C     write(STR,*) 'ADWDM:UTWDMD:WDRCGO3',maxrec(cwdm),wdmopn(cwdm)
+C     CALL LOG_MSG(STR)
 C
       IF (DONFG.EQ.1) THEN
 C       working with a valid file
@@ -75,6 +84,27 @@ C
 C           record not found, allocate space for it
             RIND= FREPOS
             IF (RREC.GT.0) THEN
+C
+C             ========== begin timing kludge =============
+              INQUIRE(UNIT=WDMSFL,NAME=WDNAME,OPENED=OPEN)
+              IF (OPEN) THEN
+              ELSE
+                OPNCNT = 1
+                WRITE(STR,*) 'UTWDMD:NotOpen:',WDMSFL,RREC,TRIM(WDNAME)
+                CALL LOG_MSG(STR)
+ 35             CONTINUE                 
+                  OPEN(UNIT=WDMSFL,FILE=WDNAME,ACCESS='DIRECT',
+     1                 RECL=2048,STATUS='OLD',IOSTAT=IOS,ERR=36)
+                  GOTO 37
+ 36               CONTINUE
+                    OPNCNT= OPNCNT + 1     
+                    WRITE(STR,*) 'UTWDMD:try:',WDMSFL,OPNCNT,IOS
+                    CALL LOG_MSG(STR)
+                  IF (OPNCNT .LT. 5) GOTO 35
+ 37               CONTINUE                  
+              END IF
+C             ========== end timing kluge ===============
+C
 C             read existing record from file
               READ (WDMSFL,REC=RREC) (WIBUFF(I,RIND),I=1,512)
             ELSE
