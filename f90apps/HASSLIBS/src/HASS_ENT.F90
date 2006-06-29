@@ -1,7 +1,6 @@
-      !local  
       SUBROUTINE LOG_MSG(MSG)
+        CHARACTER(LEN=256),SAVE:: ERROR_FILE_NAME
         CHARACTER(LEN=*) :: MSG
-
         CHARACTER(LEN=1) :: C
         CHARACTER(LEN=10):: TIME, DATE, ZONE
         CHARACTER(LEN=15):: TIMEX
@@ -9,8 +8,10 @@
         INTEGER          :: I
         LOGICAL          :: L, O
         LOGICAL,SAVE     :: W = .FALSE.
-       
-        INQUIRE(FILE='ERROR.FIL',EXIST=L,OPENED=O,IOSTAT=I,ERR=98)
+        
+        DATA ERROR_FILE_NAME /'C:\TEMP\ERROR.FIL'/
+
+        INQUIRE(FILE=ERROR_FILE_NAME,EXIST=L,OPENED=O,IOSTAT=I,ERR=98)
 
         !WRITE(*,*) O,L,I,TRIM(MSG)
 
@@ -25,9 +26,9 @@
         IF (TRIM(MSG) .EQ. 'OPEN' .OR. TRIM(MSG) .EQ. 'WRITE') THEN 
           IF (.NOT. O) THEN
             IF (L) THEN 
-              OPEN(99,FILE='ERROR.FIL',POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='OLD')
+              OPEN(99,FILE=ERROR_FILE_NAME,POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='OLD')
             ELSE
-              OPEN(99,FILE='ERROR.FIL',POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='NEW')
+              OPEN(99,FILE=ERROR_FILE_NAME,POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='NEW')
             END IF
             WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL OPENED'
           ELSE
@@ -205,7 +206,14 @@
 
         LNAME = WDNAME
         
-        WDMSFL= INQUIRE_NAME(LNAME,0)
+        IF (RWFLG .EQ. 1) THEN
+          !read only, assign special number
+          WDMSFL = INQUIRE_NAME(LNAME,100)
+          WRITE(MSG,*) 'HASS_ENT:F90_WDBOPN:READONLY'
+          CALL LOG_MSG(MSG)
+        ELSE
+          WDMSFL= INQUIRE_NAME(LNAME,0)
+        END IF
         
         CALL GET_WDM_FUN(WDMSFL)
  
@@ -275,7 +283,7 @@
         WRITE(MSG,*)  'HASS_ENT:GET_WDM_FUN:entry:WDMSFL:',WDMSFL
         CALL LOG_MSG(MSG)
 
-        IF (WDMSFL .GT. 100) THEN
+        IF (WDMSFL .GE. 100) THEN
           NXTWDM = WDMSFL
         ELSE
           NXTWDM = 101
