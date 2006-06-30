@@ -10,7 +10,8 @@
         LOGICAL          :: OPEN_FLAG
         LOGICAL,SAVE     :: WRITE_FLAG = .FALSE.
         
-        DATA ERROR_FILE_NAME /'C:\TEMP\ERROR.FIL'/
+        !DATA ERROR_FILE_NAME /'C:\TEMP\ERROR.FIL'/
+        DATA ERROR_FILE_NAME /'ERROR.FIL'/
 
         INQUIRE(FILE=ERROR_FILE_NAME, &
                 EXIST=EXIST_FLAG, &
@@ -44,7 +45,9 @@
           IF (OPEN_FLAG) THEN
             WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL CLOSING'
             CLOSE(99)
+            OPEN_FLAG = .FALSE.
           END IF
+          WRITE_FLAG = .FALSE.
         ELSE IF (OPEN_FLAG .AND. WRITE_FLAG) THEN
           WRITE(99,*) TIMEX // TRIM(MSG)
           CALL FLUSH(99)
@@ -133,22 +136,16 @@
       END FUNCTION INQUIRE_NAME
 
       !general
-      SUBROUTINE F90_W99OPN()
-        dll_export F90_W99OPN
- 
-        CALL LOG_MSG('WRITE')
+      !SUBROUTINE F90_W99OPN()
+      !  dll_export F90_W99OPN
+      !  CALL LOG_MSG('WRITE')
+      !END SUBROUTINE F90_W99OPN
 
-      END SUBROUTINE F90_W99OPN
-
-      SUBROUTINE F90_W99CLO()
-        dll_export F90_W99CLO
-
-        CALL LOG_MSG('HASS_ENT:F90_W99CLO')
-        CLOSE(102,ERR=99)
-99      CONTINUE
-        CALL LOG_MSG('CLOSE')
-
-      END SUBROUTINE F90_W99CLO
+      !SUBROUTINE F90_W99CLO()
+      !  dll_export F90_W99CLO
+      !  CALL LOG_MSG('HASS_ENT:F90_W99CLO')
+      !  CALL LOG_MSG('CLOSE')
+      !END SUBROUTINE F90_W99CLO
 
       FUNCTION F90_WDMOPN(UNIT,NAME)
         dll_export F90_WDMOPN
@@ -896,6 +893,7 @@
         INTEGER          :: WDMSFL
         CHARACTER(LEN=*) :: UCIPTH
 
+        CHARACTER*256    :: MSG
         INTEGER      MXLOC,NLOC,MKSTAT(200),LCID(200),DOSTUS
         REAL         LAT(200),LNG(200)
         CHARACTER*40 LCNAME(200)
@@ -905,7 +903,10 @@
         LUCIPTH= UCIPTH
         MXLOC  = 200
         DOSTUS = 0
-        WRITE(99,*) 'F90_tsdsvl_xx:ucipth: ',UCIPTH
+
+        WRITE(MSG,*) 'F90_tsdsvl_xx:ucipth: ',UCIPTH
+        CALL LOG_MSG(MSG)
+
         CALL TSDSVL (WDMSFL,MXLOC,DOSTUS,LUCIPTH, &
                      NLOC,LAT,LNG,MKSTAT,LCID,LCNAME,CLOCID)
 
@@ -919,13 +920,17 @@
         INTEGER     DSN,TU,TS,SDATE(6),EDATE(6),GRPSIZ
         INTEGER     ISENNM(8),IRCHNM(8),ICONNM(8)
 
+        CHARACTER*256    :: MSG
         INTEGER     L
         CHARACTER*8 LSENNM,LRCHNM,LCONNM
 
         CALL TSDSPC (DSN, &
                      LSENNM,LRCHNM,LCONNM, &
                      TU,TS,SDATE,EDATE,GRPSIZ)
-        WRITE(99,*) 'F90_TSDSPC_XX:',DSN,LSENNM,LRCHNM,LCONNM,TU,TS
+
+        WRITE(MSG,*) 'F90_TSDSPC_XX:',DSN,LSENNM,LRCHNM,LCONNM,TU,TS
+        CALL LOG_MSG(MSG)
+
         DO L = 1,8
           ISENNM(L) = ICHAR(LSENNM(L:L))
           IRCHNM(L) = ICHAR(LRCHNM(L:L))
