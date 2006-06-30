@@ -5,18 +5,22 @@
         CHARACTER(LEN=10):: TIME, DATE, ZONE
         CHARACTER(LEN=15):: TIMEX
         INTEGER          :: DT(8)
-        INTEGER          :: I
-        LOGICAL          :: L, O
-        LOGICAL,SAVE     :: W = .FALSE.
+        INTEGER          :: IO_STATUS
+        LOGICAL          :: EXIST_FLAG
+        LOGICAL          :: OPEN_FLAG
+        LOGICAL,SAVE     :: WRITE_FLAG = .FALSE.
         
         DATA ERROR_FILE_NAME /'C:\TEMP\ERROR.FIL'/
 
-        INQUIRE(FILE=ERROR_FILE_NAME,EXIST=L,OPENED=O,IOSTAT=I,ERR=98)
+        INQUIRE(FILE=ERROR_FILE_NAME, &
+                EXIST=EXIST_FLAG, &
+                OPENED=OPEN_FLAG, &
+                IOSTAT=IO_STATUS,ERR=98)
 
-        !WRITE(*,*) O,L,I,TRIM(MSG)
+        !WRITE(*,*) OPEN_FLAG,EXIST_FLAG,IO_STATUS,TRIM(MSG)
 
         IF (TRIM(MSG) .EQ. 'WRITE') THEN
-          W= .TRUE.
+          WRITE_FLAG = .TRUE.
         END IF
 
         TIMEX = ""
@@ -24,22 +28,24 @@
         TIMEX = TIME(1:2) // ":" // TIME(3:4) // ":" // TIME(5:10) // " : "
         
         IF (TRIM(MSG) .EQ. 'OPEN' .OR. TRIM(MSG) .EQ. 'WRITE') THEN 
-          IF (.NOT. O) THEN
-            IF (L) THEN 
-              OPEN(99,FILE=ERROR_FILE_NAME,POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='OLD')
+          IF (.NOT. OPEN_FLAG) THEN
+            IF (EXIST_FLAG) THEN 
+              OPEN(UNIT=99,FILE=ERROR_FILE_NAME,POSITION='APPEND',ACTION='DENYNONE', &
+                   ERR=98,IOSTAT=IO_STATUS,STATUS='OLD')
             ELSE
-              OPEN(99,FILE=ERROR_FILE_NAME,POSITION='APPEND',ACTION='DENYNONE',ERR=98,IOSTAT=I,STATUS='NEW')
+              OPEN(UNIT=99,FILE=ERROR_FILE_NAME,POSITION='APPEND',ACTION='DENYNONE', &
+                   ERR=98,IOSTAT=IO_STATUS,STATUS='NEW')
             END IF
             WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL OPENED'
           ELSE
             WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL ALREADY OPEN'
           END IF
         ELSE IF (TRIM(MSG) .EQ. 'CLOSE') THEN
-          IF (O) THEN
+          IF (OPEN_FLAG) THEN
             WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL CLOSING'
             CLOSE(99)
           END IF
-        ELSE IF (O .AND. W) THEN
+        ELSE IF (OPEN_FLAG .AND. WRITE_FLAG) THEN
           WRITE(99,*) TIMEX // TRIM(MSG)
           CALL FLUSH(99)
         END IF
@@ -47,10 +53,10 @@
         RETURN
 
  98     CONTINUE
-        WRITE (*,*) 'Error ',MOD(I,16384),' opening ERROR.FIL',L
-        INQUIRE(99,ERR=99,IOSTAT=I,OPENED=L)
+        WRITE (*,*) 'Error ',MOD(IO_STATUS,16384),' opening ERROR.FIL',OPEN_FLAG
+        INQUIRE(99,ERR=99,IOSTAT=IO_STATUS,OPENED=OPEN_FLAG)
  99     CONTINUE
-        WRITE (*,*) 'Status',MOD(I,16384),L
+        WRITE (*,*) 'Status',MOD(IO_STATUS,16384),OPEN_FLAG
         READ(*,*) C
         WRITE (*,*) C
 
@@ -70,51 +76,57 @@
         CHARACTER*64       :: NAME
         INTEGER            :: FUN_DEF
 
-        !CHARACTER*256      :: MSG
-        INTEGER            :: FUN_TRY
-        INTEGER            :: FUN_OPN
+        CHARACTER*256      :: MSG
+        INTEGER            :: FUN_TRY 
+        INTEGER,SAVE       :: FUN_BASE = 101
+        INTEGER            :: FUN_OPN  
         LOGICAL            :: OPEN
 
-        IF (FUN_DEF .EQ. 0) THEN 
-          !try unit numbers starting here
-          FUN_TRY = 101
-        ELSE
-          !try beginning based on input arg
+        FUN_OPN  = 0
+
+        IF (FUN_DEF .LE. 0) THEN !try unit numbers starting here
+          FUN_TRY = FUN_BASE
+        ELSE                     !try beginning based on input arg
           FUN_TRY = FUN_DEF
         END IF
 
-        !WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:BEG:',FUN_DEF,FUN_TRY,' ' // TRIM(NAME)
-        !CALL LOG_MSG(MSG)
+        WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:BEG:',FUN_DEF,FUN_TRY,FUN_OPN,FUN_BASE,' ' // TRIM(NAME)
+        CALL LOG_MSG(MSG)
 
         INQUIRE (FILE=NAME,NUMBER=FUN_OPN,OPENED=OPEN)
-        !WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:INX:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
-        !CALL LOG_MSG(MSG)
 
-        IF (OPEN .EQV. .FALSE.) THEN
-           !not open, don't use legacy information from file unit table
-           FUN_OPN = 0
+        WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:INX:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
+        CALL LOG_MSG(MSG)
+
+        IF (OPEN .EQV. .FALSE.) THEN !unit not open
+           IF (FUN_DEF .GE. 0) THEN  !don't use old information from file unit table
+             FUN_OPN = 0
+           ELSE                      !use old unit number (vb6 code)
+             WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:OLD:USE:',FUN_OPN
+           END IF
         END IF
 
-        DO WHILE (FUN_OPN .EQ. 0)
-           !assign first available unit number to the file
-           INQUIRE (UNIT=FUN_TRY,OPENED=OPEN)
-           !WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:INF:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
-           !CALL LOG_MSG(MSG)
-           IF (OPEN) THEN
-             !open, try the next one
-             !WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:INQ:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
-             !CALL LOG_MSG(MSG)
+        DO WHILE (FUN_OPN .EQ. 0) !assign first available unit number to the file
+           WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:INF:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
+           CALL LOG_MSG(MSG)
+
+           IF (OPEN) THEN  !open, try the next one
+             WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:INQ:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
+             CALL LOG_MSG(MSG)
              FUN_TRY = FUN_TRY+ 1
-           ELSE
-             !this will be it
-             !WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:DON:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
-             !CALL LOG_MSG(MSG)
+           ELSE            !this will be it
+             WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:DON:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
+             CALL LOG_MSG(MSG)
              FUN_OPN = FUN_TRY 
+             IF (FUN_DEF .LT. 0) THEN !don't reuse unit number (vb6 code)
+               FUN_BASE= FUN_BASE+ 1
+               WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:FBS:',FUN_DEF,FUN_OPN,FUN_BASE
+             END IF
            END IF
         END DO
 
-        !WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:ASN:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
-        !CALL LOG_MSG(MSG)
+        WRITE(MSG,*) 'HASS_ENT:INQUIRE_NAME:ASN:',FUN_DEF,FUN_TRY,FUN_OPN,OPEN
+        CALL LOG_MSG(MSG)
 
         INQUIRE_NAME = FUN_OPN
 
