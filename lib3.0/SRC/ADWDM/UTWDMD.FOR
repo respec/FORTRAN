@@ -925,6 +925,7 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   RIND,I,OPT,DIRREC
+C     LOGICAL   OPN
 C
 C     + + + FUNCTIONS + + +
       INTEGER   WDRCGO, WDDRRC
@@ -937,7 +938,9 @@ C     + + + EXTERNALS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-C     write(*,*) 'ADWDM:UTWDMD:WDDSCK',wdmsfl,dsn
+C     INQUIRE(UNIT=99,OPENED=OPN)
+C     IF (OPN) WRITE(99,*) 'ADWDM:UTWDMD:WDDSCK',wdmsfl,dsn
+C
       RETCOD= 0
       IF (DSN.LT.1 .OR. DSN.GT.32000) THEN
 C       dataset number out of range
@@ -947,7 +950,8 @@ C       dataset number out of range
 C       get directory record number
         OPT   = 0
         DIRREC= WDDRRC(WDMSFL,DSN,OPT)
-C       write(*,*) 'ADWDM:UTWDMD:WDDSCK:dirrec',dirrec
+C
+C       IF (OPN) WRITE(99,*) 'ADWDM:UTWDMD:WDDSCK:dirrec',dirrec
 C
         IF (DIRREC.GT.0) THEN
 C         directory exists, get it
@@ -961,7 +965,9 @@ C         get record dsn begins on
 C         no directory, dsn cant exist
           DREC= 0
         END IF
-C       write(*,*) 'ADWDM:UTWDMD:WDDSCK:drec',drec
+C       IF (OPN) THEN
+C         WRITE(99,*) 'ADWDM:UTWDMD:WDDSCK:',WDMSFL,DSN,DIRREC,DREC
+C       END IF
 C
         IF (DREC.EQ.0) THEN
 C         data set does not exist
