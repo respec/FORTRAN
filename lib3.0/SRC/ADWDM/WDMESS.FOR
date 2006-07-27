@@ -22,7 +22,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cfbuff.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,RREC,RIND,DSTYPE
+      INTEGER   I,RREC,OREC,RIND,DSTYPE    
 C
 C     + + + FUNCTIONS + + +
       INTEGER   WDRCGO, WDRCDL
@@ -32,22 +32,33 @@ C     + + + EXTERNALS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+C     WRITE(99,*) "WDMESS:WDDSDL:ENTRY:",WDMSFL,DSN,RETCOD
+C
       CALL WDDSCK (WDMSFL,DSN,
      O             RREC,RETCOD)
+C     WRITE(99,*) "WDMESS:WDDSDL:AFCHK:",WDMSFL,DSN,RETCOD,RREC
       IF (RETCOD.EQ.0) THEN
 C       what dsn type?
         RIND= WDRCGO (WDMSFL,RREC)
         I= 6
         DSTYPE= WIBUFF(I,RIND)
+C       WRITE(99,*) "WDMESS:WDDSDL:DSTYP:",RIND,DSTYPE
 C       fix pointers to other data sets
         I= 2
         CALL WDFCUP (WDMSFL,DSTYPE,DSN,I)
+C       WRITE(99,*) "WDMESS:WDDSDL:PTRFX"
+C       CALL FLUSH(99)
 C       delete directory entry
         I= 0
         CALL WDFDUP (WDMSFL,DSN,I)
+C       WRITE(99,*) "WDMESS:WDDSDL:DIRDL"
+C       CALL FLUSH(99)
 C       delete actual data set records
  100    CONTINUE
-          RREC= WDRCDL (WDMSFL,RREC)
+          OREC= RREC
+          RREC= WDRCDL(WDMSFL,OREC)
+C         WRITE(99,*) "WDMESS:WDDSDL:RECDL:",OREC,RREC
+C         CALL FLUSH(99)
         IF (RREC.GT.0) GO TO 100
       END IF
 C
