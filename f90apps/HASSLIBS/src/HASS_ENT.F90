@@ -257,7 +257,14 @@
         CHARACTER*64                :: LNAME
 
         LNAME = WDNAME
-        WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
+        !WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
+
+        IF (RWFLG .EQ. 1) THEN
+          !special case for hspfmsg.wdm (or any other readonly file)
+          WDMSFL = 100
+        ELSE
+          WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
+        END IF
         !CALL GET_WDM_FUN(WDMSFL)
 
         WRITE(MSG,*) 'HASS_ENT:F90_WDBOPNR:entr:WDMSFL,RWFLG:',WDMSFL,RWFLG,' ',TRIM(LNAME)
