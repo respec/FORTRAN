@@ -190,7 +190,8 @@
         CALL LOG_MSG(MSG)
 
         F90_WDMCLO=0
-
+        !mark as unusable
+        CALL WDFLNU(UNIT)
         RETURN
 
  99     CONTINUE
