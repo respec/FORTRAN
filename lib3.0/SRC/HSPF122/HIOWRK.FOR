@@ -36,6 +36,8 @@ C     $       2F5.1,/,2X,2A4,2I5,2(2X,2A4),16I5)
 C
 C     + + + END SPECIFICATIONS + + +
 C
+C     check for key out of range? report error?
+C
 C     keep track of max record in WORKSPA
       IF (MXKY .EQ. -1) THEN
 C       first call
