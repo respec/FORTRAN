@@ -6,4 +6,4 @@ C     + + + PARAMETERS + + +
       INCLUDE 'pmxosv.inc'
 C
       COMMON/SCRTCH/ ASVEC,        WRKSPA
-      INTEGER        ASVEC(MAXOSV),WRKSPA(50,30000)
+      INTEGER        ASVEC(MAXOSV),WRKSPA(50,100000)

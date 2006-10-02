@@ -293,10 +293,8 @@ C         this file is open
 
 C         check pointers in wdm file
 C         TODO: how slow is this?
-          CALL WDMCHK(WDMSFL,RETCOD)
-C
-C         be sure all io is done
-          FLUSH (UNIT=WDMSFL)
+C         CALL WDMCHK(WDMSFL,RETCOD)
+
 C         close the file
           CLOSE (UNIT=WDMSFL)
 C
