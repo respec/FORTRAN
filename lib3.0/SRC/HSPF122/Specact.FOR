@@ -39,7 +39,7 @@ C     special action file in memory
 C
 C     + + + PARAMETERS + + +
       INTEGER      MXSPBF,MXVACC
-      PARAMETER   (MXSPBF=70000)
+      PARAMETER   (MXSPBF=200000)
       PARAMETER   (MXVACC=50)
 C
 C     + + + LOCAL VARIABLES + + +
