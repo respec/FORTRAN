@@ -14,7 +14,7 @@ LBLOC     = \lib3.0\lf90libs
 
 ! tom order   hspf13 hspdss hec wdm aide adwdm util
 
-LIBS      = hspf121.lib  \
+LIBS      = hspf122.lib  \
             hspdss.lib  \
             hec.lib  \
             wdm.lib   \
