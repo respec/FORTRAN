@@ -422,3 +422,83 @@ C     + + + END SPECIFICATIONS + + +
 C
       RETURN
       END
+C
+C
+C
+      SUBROUTINE LOG_MSG
+     I                  (MSG)
+C
+C     + + + DUMMY ARGUMENTS + + +
+      CHARACTER(LEN=*) MSG
+C
+C     + + + LOCAL VARIABLES + + +
+      CHARACTER*256 ERROR_FILE_NAME
+      CHARACTER*1   C
+      CHARACTER*10  TIME, DATE, ZONE
+      CHARACTER*15  TIMEX
+      INTEGER       DT(8)
+      INTEGER       IO_STATUS
+      LOGICAL       EXIST_FLAG
+      LOGICAL       OPEN_FLAG
+      LOGICAL       WRITE_FLAG 
+        
+      DATA ERROR_FILE_NAME /'C:\TEMP\ERROR.FIL'/
+C     DATA ERROR_FILE_NAME /'ERROR.FIL'/
+      DATA WRITE_FLAG/.FALSE./
+
+      INQUIRE(FILE=ERROR_FILE_NAME, 
+     1        EXIST=EXIST_FLAG, 
+     1        OPENED=OPEN_FLAG, 
+     1        IOSTAT=IO_STATUS,ERR=98)
+
+C     WRITE(*,*) OPEN_FLAG,EXIST_FLAG,IO_STATUS,TRIM(MSG)
+
+      IF (TRIM(MSG) .EQ. 'WRITE') THEN
+        WRITE_FLAG = .TRUE.
+      END IF
+
+      TIMEX = ""
+      CALL DATE_AND_TIME(DATE,TIME,ZONE,DT)
+      TIMEX = TIME(1:2) // ":" // 
+     1        TIME(3:4) // ":" // 
+     1        TIME(5:10) // " : "
+        
+      IF (TRIM(MSG) .EQ. 'OPEN' .OR. TRIM(MSG) .EQ. 'WRITE') THEN 
+        IF (.NOT. OPEN_FLAG) THEN
+          IF (EXIST_FLAG) THEN 
+            OPEN(UNIT=99,FILE=ERROR_FILE_NAME,
+     1           POSITION='APPEND',ACTION='DENYNONE', 
+     1           ERR=98,IOSTAT=IO_STATUS,STATUS='OLD')
+          ELSE
+              OPEN(UNIT=99,FILE=ERROR_FILE_NAME,
+     1             POSITION='APPEND',ACTION='DENYNONE', 
+     1             ERR=98,IOSTAT=IO_STATUS,STATUS='NEW')
+          END IF
+          WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL OPENED'
+        ELSE
+          WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL ALREADY OPEN'
+        END IF
+      ELSE IF (TRIM(MSG) .EQ. 'CLOSE') THEN
+        IF (OPEN_FLAG) THEN
+          WRITE(99,*) TIMEX // 'LOG_MSG:ERROR.FIL CLOSING'
+          CLOSE(99)
+          OPEN_FLAG = .FALSE.
+        END IF
+        WRITE_FLAG = .FALSE.
+      ELSE IF (OPEN_FLAG .AND. WRITE_FLAG) THEN
+        WRITE(99,*) TIMEX // TRIM(MSG)
+        CALL FLUSH(99)
+      END IF
+
+      RETURN
+
+ 98   CONTINUE
+        WRITE (*,*) 'Error ',MOD(IO_STATUS,16384),
+     1              ' opening ERROR.FIL',OPEN_FLAG
+        INQUIRE(99,ERR=99,IOSTAT=IO_STATUS,OPENED=OPEN_FLAG)
+ 99   CONTINUE
+        WRITE (*,*) 'Status',MOD(IO_STATUS,16384),OPEN_FLAG
+        READ(*,*) C
+        WRITE (*,*) C
+
+      END SUBROUTINE
