@@ -785,6 +785,10 @@ C     + + + OUTPUT FORMATS + + +
  2260 FORMAT (' ',44X,'SORPMN',14X,'UORPMN',14X,'LORPMN',14X,'AORPMN',
      $        14X,'TORPMN')
 C
+C     + + + HISTORY + + +
+C     03/27/2007  jlk fixed applications so that data is always 
+C                 written if header has been written
+C
 C     + + + END SPECIFICATIONS + + +
 C
       I0= 0
@@ -1081,14 +1085,16 @@ C       print application amount
           WRITE (PRINTU,2147)
           WRITE (PRINTU,2148) PIFLX
         END IF
-        IF (BINU .GT. 0 .AND. ABS(BFLAG(11)) .LE. LEV) THEN
-          DO 150 I = 1, 3
-            ACNT = ACNT + 1
-            APRINT(ACNT) = PIFLX(I)
-            CHEAD(ACNT) = CIFLX(I)
-            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
- 150      CONTINUE
-        END IF
+      END IF
+C     need to always write out binary form data (if requested)
+C     to match headers
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(11)) .LE. LEV) THEN
+        DO 150 I = 1, 3
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLX(I)
+          CHEAD(ACNT) = CIFLX(I)
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+ 150    CONTINUE
       END IF
 C
       PLIPHO= 0.0
