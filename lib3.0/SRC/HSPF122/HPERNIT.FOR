@@ -1671,6 +1671,10 @@ C     + + + OUTPUT FORMATS + + +
  2680 FORMAT (  45X,'SAMVOL',14X,'UAMVOL',14X,'LAMVOL',14X,'AAMVOL',
      $          14X,'TAMVOL')
 C
+C     + + + HISTORY + + +
+C     03/27/2007  PBD enhanced binary output headers, fixed applications so 
+C                 that data is always written if header has been written
+C
 C     + + + END SPECIFICATIONS + + +
 C
       I0= 0
@@ -1697,31 +1701,31 @@ C     names in local strings for use in building binary headers
       CDEFCT(3)   = 'LOWER LNDFC'
       CDEFCT(4)   = 'ACTIVE GW ANDFC'
       CDEFCT(5)   = 'TOTAL TNDFC'
-      CCFL10(1,1) = 'NO3-N - SURFACE LAYER - DRY'
-      CCFL10(1,2) = 'NO3-N - UPPER LAYER - DRY'
-      CCFL10(2,1) = 'NH4-N - SURFACE LAYER - DRY'
-      CCFL10(2,2) = 'NH4-N - UPPER LAYER - DRY'
-      CCFL10(3,1) = 'ORGN - SURFACE LAYER - DRY'
-      CCFL10(3,2) = 'ORGN - UPPER LAYER - DRY'
-      CCFL11(1,1) = 'NO3-N - SURFACE LAYER - WET'
-      CCFL11(1,2) = 'NO3-N - UPPER LAYER - WET'
-      CCFL11(2,1) = 'NH4-N - SURFACE LAYER - WET'
-      CCFL11(2,2) = 'NH4-N - UPPER LAYER - WET'
-      CCFL11(3,1) = 'ORGN - SURFACE LAYER - WET'
-      CCFL11(3,2) = 'ORGN - UPPER LAYER - WET'
-      CADTOT(1,1) = 'NO3-N - SURFACE LAYER - TOTAL'
-      CADTOT(1,2) = 'NO3-N - UPPER LAYER - TOTAL'
-      CADTOT(2,1) = 'NH4-N - SURFACE LAYER - TOTAL'
-      CADTOT(2,2) = 'NH4-N - UPPER LAYER - TOTAL'
-      CADTOT(3,1) = 'ORGN - SURFACE LAYER - TOTAL'
-      CADTOT(3,2) = 'ORGN - UPPER LAYER - TOTAL'
+      CCFL10(1,1) = 'NO3-N - SURFACE LAYER - DRY AD'
+      CCFL10(1,2) = 'NO3-N - UPPER LAYER - DRY AD'
+      CCFL10(2,1) = 'NH4-N - SURFACE LAYER - DRY AD'
+      CCFL10(2,2) = 'NH4-N - UPPER LAYER - DRY AD'
+      CCFL10(3,1) = 'ORGN - SURFACE LAYER - DRY AD'
+      CCFL10(3,2) = 'ORGN - UPPER LAYER - DRY AD'
+      CCFL11(1,1) = 'NO3-N - SURFACE LAYER - WET AD'
+      CCFL11(1,2) = 'NO3-N - UPPER LAYER - WET AD'
+      CCFL11(2,1) = 'NH4-N - SURFACE LAYER - WET AD'
+      CCFL11(2,2) = 'NH4-N - UPPER LAYER - WET AD'
+      CCFL11(3,1) = 'ORGN - SURFACE LAYER - WET AD'
+      CCFL11(3,2) = 'ORGN - UPPER LAYER - WET AD'
+      CADTOT(1,1) = 'NO3-N - SURFACE LAYER - TOTAL AD'
+      CADTOT(1,2) = 'NO3-N - UPPER LAYER - TOTAL AD'
+      CADTOT(2,1) = 'NH4-N - SURFACE LAYER - TOTAL AD'
+      CADTOT(2,2) = 'NH4-N - UPPER LAYER - TOTAL AD'
+      CADTOT(3,1) = 'ORGN - SURFACE LAYER - TOTAL AD'
+      CADTOT(3,2) = 'ORGN - UPPER LAYER - TOTAL AD'
       CLIFX1(1)   = 'SURFACE'
       CLIFX1(2)   = 'UPPER'
       CLIFX1(3)   = 'INTERFLOW'
       CLIFX1(4)   = 'LOWER'
       CLIFX1(5)   = 'ACTIVE GW'
       CLATINS(1)  = 'NH4-N'
-      CLATINS(2)  = 'NO3(+NO2)-N'
+      CLATINS(2)  = 'NO3+NO2-N'
       CLATINS(3)  = 'LABILE ORGN'
       CLATINS(4)  = 'REFRAC ORGN'
       CLATINS(5)  = 'TOTALS'
@@ -1835,7 +1839,7 @@ C       above-ground layer
 C         compile values for binary printout
           ACNT = ACNT + 1
           APRINT(ACNT) = PSTATA(1)
-          CHEAD(ACNT) = 'ABOVE-GROUND PLANT'
+          CHEAD(ACNT) = 'ABOVE-GROUND PLANT STORAGE'
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         END IF
 C
@@ -1848,7 +1852,7 @@ C       litter layer
         IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
           ACNT = ACNT + 1
           APRINT(ACNT) = PSTATA(1)
-          CHEAD(ACNT) = 'LITTER'
+          CHEAD(ACNT) = 'LITTER STORAGE'
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         END IF
       END IF
@@ -1866,39 +1870,39 @@ C
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(3)
-        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(2)
-        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(4)
-        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(6)
-        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(1)
-        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(8)
-        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(7)
-        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(5)
-        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - SURFACE LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = TOTAL
-        CHEAD(ACNT) = 'TOTAL N - SURFACE LAYER'
+        CHEAD(ACNT) = 'TOTAL N - SURFACE LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 
@@ -1915,39 +1919,39 @@ C
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(3)
-        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(2)
-        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(4)
-        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(6)
-        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(1)
-        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(8)
-        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(7)
-        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(5)
-        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - UPPER PRINCIPAL'
+        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = TOTAL
-        CHEAD(ACNT) = 'TOTAL N - UPPER PRINCIPAL'
+        CHEAD(ACNT) = 'TOTAL N - UPPER PRINCIPAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 C
@@ -1962,23 +1966,23 @@ C
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTATI(1)
-        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - UPPER TRANSITORY'
+        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - UPPER TRANSITORY STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTATI(2)
-        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - UPPER TRANSITORY'
+        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - UPPER TRANSITORY STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTATI(3)
-        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - UPPER TRANSITORY'
+        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - UPPER TRANSITORY STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTATI(4)
-        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - UPPER TRANSITORY'
+        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - UPPER TRANSITORY STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = TOTAL
-        CHEAD(ACNT) = 'TOTAL N - UPPER TRANSITORY'
+        CHEAD(ACNT) = 'TOTAL N - UPPER TRANSITORY STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 C
@@ -1995,39 +1999,39 @@ C
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(3)
-        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(2)
-        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(4)
-        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(6)
-        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(1)
-        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(8)
-        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(7)
-        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(5)
-        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - LOWER LAYER'
+        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = TOTAL
-        CHEAD(ACNT) = 'TOTAL N - LOWER LAYER'
+        CHEAD(ACNT) = 'TOTAL N - LOWER LAYER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 C
@@ -2044,39 +2048,39 @@ C
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(3)
-        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(2)
-        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(4)
-        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(6)
-        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(1)
-        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(8)
-        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(7)
-        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(5)
-        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = TOTAL
-        CHEAD(ACNT) = 'TOTAL N - ACTIVE GROUNDWATER'
+        CHEAD(ACNT) = 'TOTAL N - ACTIVE GROUNDWATER STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 C
@@ -2093,49 +2097,49 @@ C
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(3)
-        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(3)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(2)
-        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(2)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(4)
-        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(4)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(6)
-        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(6)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(1)
-        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(1)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(8)
-        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(8)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(7)
-        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(7)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSTAT(5)
-        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - TOTALS'
+        CHEAD(ACNT) = TRIM(CSTAT(5)) // ' - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = TOTAL
-        CHEAD(ACNT) = 'TOTAL N - TOTALS'
+        CHEAD(ACNT) = 'TOTAL N - TOTAL STORAGE'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 C
       IF (NUPTFG .EQ. 1) THEN
+        CALL TRNVEC (I5,NDFCT,MFACTA,MFACTB,
+     O               PDEFCT)
 C       print out deficits from yield-based plant uptake algorithm
         IF (PRINTU .GT. 0 .AND. PFLAG(10) .LE. LEV) THEN
           WRITE (PRINTU,2130)
           WRITE (PRINTU,2140)
-          CALL TRNVEC (I5,NDFCT,MFACTA,MFACTB,
-     O                 PDEFCT)
           WRITE (PRINTU,2150)  PDEFCT
         END IF
 C
@@ -2266,7 +2270,6 @@ C       print fluxes
             CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
  70       CONTINUE
         END IF
-C
       END IF
 C
 C     input application flux
@@ -2279,24 +2282,24 @@ C         print application amount
           WRITE (PRINTU,2230)
           WRITE (PRINTU,2240)  PIFLX(2), PIFLX(1), PIFLX(3), PIFLX(4)
         END IF
-        IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
-          ACNT = ACNT + 1
-          APRINT(ACNT) = PIFLX(2)
-          CHEAD(ACNT) = 'NITRATE'
-          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
-          ACNT = ACNT + 1
-          APRINT(ACNT) = PIFLX(1)
-          CHEAD(ACNT) = 'AMMONIA'
-          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
-          ACNT = ACNT + 1
-          APRINT(ACNT) = PIFLX(3)
-          CHEAD(ACNT) = 'ORGANIC N'
-          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
-          ACNT = ACNT + 1
-          APRINT(ACNT) = PIFLX(4)
-          CHEAD(ACNT) = 'TOTAL NITROGEN'
-          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
-        END IF
+      END IF
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PIFLX(2)
+        CHEAD(ACNT) = 'NITRATE APPLICATION'
+        CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PIFLX(1)
+        CHEAD(ACNT) = 'AMMONIA APPLICATION'
+        CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PIFLX(3)
+        CHEAD(ACNT) = 'ORGANIC N APPLICATION'
+        CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PIFLX(4)
+        CHEAD(ACNT) = 'TOTAL NITROGEN APPLICATION'
+        CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 C
 C     lateral inflows
@@ -2357,7 +2360,7 @@ C         print application amount
             DO 110 J = 1, 5
               ACNT = ACNT + 1
               APRINT(ACNT) = PLIFX1(I,1)
-              CHEAD(ACNT) = TRIM(CLATINS(I)) // ' - '
+C             CHEAD(ACNT) = TRIM(CLATINS(I)) // ' - ' (jlk 3/2007 - not used)
               CHEAD(ACNT) = TRIM(CLATINS(I)) // CLIFX1(I)
               CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
  110        CONTINUE
@@ -2412,13 +2415,13 @@ C     solution nitrate
         DO 160 I = 1, 5
           ACNT = ACNT + 1
           APRINT(ACNT) = PCFLX4(I)
-          CHEAD(ACNT) = 'NO3(+NO2)-N' // CCFLX2(I)
+          CHEAD(ACNT) = 'NO3+NO2-N' // CCFLX2(I)
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
  160    CONTINUE
         DO 165 I = 1, 3
           ACNT = ACNT + 1
           APRINT(ACNT) = PCFLX5(I)
-          CHEAD(ACNT) = 'NO3(+NO2)-N' // CCFLX3(I)
+          CHEAD(ACNT) = 'NO3+NO2-N' // CCFLX3(I)
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
  165    CONTINUE
       END IF
@@ -2495,35 +2498,35 @@ C     print sediment and total fluxes
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PCFLX1(2)
-        CHEAD(ACNT) = 'NH4-N ADS - SDAMA'
+        CHEAD(ACNT) = 'NH4-N ADS - SEDIMENT ASSOC OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PCFLX1(1)
-        CHEAD(ACNT) = 'ORGANIC N - SDLORN'
+        CHEAD(ACNT) = 'LABILE ORGN - SEDIMENT ASSOC OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PCFLX1(3)
-        CHEAD(ACNT) = 'ORGANIC N - SDRORN'
+        CHEAD(ACNT) = 'REFRAC ORGN - SEDIMENT ASSOC OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PSOSD
-        CHEAD(ACNT) = 'TOTAL - SOSEDN'
+        CHEAD(ACNT) = 'TOTAL N - SEDIMENT ASSOC OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PPONH4
-        CHEAD(ACNT) = 'NH4-N - PONH4'
+        CHEAD(ACNT) = 'NH4-N - TOTAL OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PPONO3
-        CHEAD(ACNT) = 'NO3-N - PONO3'
+        CHEAD(ACNT) = 'NO3-N - TOTAL OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PPOORN
-        CHEAD(ACNT) = 'ORGN - POORN'
+        CHEAD(ACNT) = 'ORGN - TOTAL OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PPONIT
-        CHEAD(ACNT) = 'NITROGEN - ALL FORMS'
+        CHEAD(ACNT) = 'NITROGEN - TOTAL OUTFLOW'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
       END IF
 C
@@ -3388,8 +3391,13 @@ C
 C     + + + DATA INITIALIZATIONS + + +
       DATA       NH4ID/'AMMO','NIUM','    ','    ','    '/
 C
+C     + + + HISTORY + + +
+C     03/27/2007  PBD prevent divide by zero error if storages 
+C                 are practically zero
+C
 C     + + + END SPECIFICATIONS + + +
 C
+C     write(messu,*) 'into HPERNIT:NITRXN'
       I4    = 4
       SCLU  = 310
 C     assign values to local variables where necessary
@@ -3473,6 +3481,7 @@ C       no above-ground plant uptake
         AGUTF= 0.0
       END IF
 C
+C     write(messu,*) '  in HPERNIT:NITRXN at CRXNFG'
       IF (CRXNFG .EQ. 1) THEN
 C       chemical (adsorption/desorption) fluxes are
 C       recalculated this interval
@@ -3515,6 +3524,7 @@ C
 C
       END IF
 C
+C     write(messu,*) '  in HPERNIT:NITRXN at BRXNFG'
       IF (BRXNFG .EQ. 1) THEN
 C       biochemical transformation fluxes are recalculated
 C       this interval
@@ -3748,8 +3758,12 @@ C     indicating negative storages were projected (when < 1.0)
       FRAC= 1.0
 C
 C     calculate temporary particulate labile organic nitrogen in storage
+      IF (ABS(PLON) < 1.E-20) THEN
+        PLON = 0.0
+      END IF
       TPLON= PLON- AMMIF+ IMMAM+ IMMNI+ PRETL- RFON
 C
+C     write(messu,*) '  in HPERNIT:NITRXN at TPLON'
       IF (TPLON .LT. 0.0) THEN
 C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
@@ -3778,8 +3792,12 @@ C
       END IF
 C
 C     calculate temporary adsorbed ammonium in storage
+      IF (ABS(AMAD) < 1.E-20) THEN
+        AMAD = 0.0
+      END IF
       TAMAD= AMAD- DESAM+ ADSAM
 C
+C     write(messu,*) '  in HPERNIT:NITRXN at TAMAD'
       IF (TAMAD .LT. 0.0) THEN
 C
 C       negative storage value is unrealistic
@@ -3811,13 +3829,19 @@ C
       END IF
 C
 C     calculate temporary nitrate in storage
+      IF (ABS(NO3) < 1.E-20) THEN
+        NO3 = 0.0
+      END IF
       TNO3= NO3+ NITRF- (IMMNI+DENI+UTNI+UTNIA)
 C
+C     write(messu,*) '  in HPERNIT:NITRXN at TNO3'
       IF (TNO3 .LT. 0.0) THEN
 C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
 C       needed to make the storage zero
+C       write(messu,*) '  in HPERNIT:NITRXN:NO3,TNO3 ',NO3,TNO3
         TFRAC= NO3/(NO3-TNO3)
+C       write(messu,*) '  in HPERNIT:NITRXN:TFRAC ',TFRAC
 C
 C       keep the smaller fraction; the smaller fraction
 C       of the fluxes will make all the storages either zero
@@ -3846,8 +3870,12 @@ C
       END IF
 C
 C     calculate temporary solution ammonium in storage
+      IF (ABS(AMSU) < 1.E-20) THEN
+        AMSU = 0.0
+      END IF
       TAMSU= AMSU+ DESAM+ AMMIF- (ADSAM+IMMAM+UTAM+UTAMA+NITRF+AMVO)
 C
+C     write(messu,*) '  in HPERNIT:NITRXN at NUPTFG'
       IF (NUPTFG .EQ. 1) THEN
 C       set a threshold value for solution ammonium in storage
         AMSULO= 0.001
@@ -3903,8 +3931,12 @@ C
       END IF
 C
 C     calculate temporary below-ground plant n in storage
+      IF (ABS(PLTN) < 1.E-20) THEN
+        PLTN = 0.0
+      END IF
       TPLTN= PLTN+ UTNI+ UTAM- PRETL- PRETR
 C
+C     write(messu,*) '  in HPERNIT:NITRXN at TPLTN'
       IF (TPLTN .LT. 0.0) THEN
 C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
@@ -4042,6 +4074,7 @@ C     reassign fluxes to "permanent" array
       NITRXF(14)= UTAMA
       NITRXF(15)= UTNIA
       NITRXF(16)= NFIX
+C     write(messu,*) 'outof HPERNIT:NITRXN'
 C
       RETURN
       END
