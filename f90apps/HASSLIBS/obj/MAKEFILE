@@ -1,15 +1,13 @@
 HLOC      = ..\..\hasslibs
 SRCLOC    = ..\src
 BINLOC    = ..\bin
-HLIBLOC   = \hspfdll\lib3.0\src\hspf
-ALIBLOC   = \hspfdll\lib3.0\src\adwdm
 
 FC        = lf90
 FFLAGS    = -c -o0 -i $(SRCLOC)
 
 DLL       = $(BINLOC)\hass_ent.dll
 LDMAP     = $(BINLOC)\hass_ent.map
-LBLOC     = \lib3.0\lf90libs
+LBLOC     = ..\..\lib3.0\lf90libs
 LIBS      = hspf122.lib \
             hspdss.lib \
             hec.lib \
