@@ -15,8 +15,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 13,0,18,0
- PRODUCTVERSION 13,0,18,0
+ FILEVERSION 13,0,19,0
+ PRODUCTVERSION 13,0,19,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x4L
@@ -29,13 +29,13 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Aqua Terra Consultants\0"
             VALUE "FileDescription", "HassEnt\0"
-            VALUE "FileVersion", "13, 0, 18, 0\0"
+            VALUE "FileVersion", "13, 0, 19, 0\0"
             VALUE "InternalName", "HassEnt\0"
-            VALUE "LegalCopyright", "Copyright © 1994-2006\0"
+            VALUE "LegalCopyright", "Copyright © 1994-2007\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "HASS_ENT.DLL\0"
             VALUE "ProductName", "Hass Entry DLL\0"
-            VALUE "ProductVersion", "13, 0, 18, 0\0"
+            VALUE "ProductVersion", "13, 0, 19, 0\0"
         END
     END
     BLOCK "VarFileInfo"
