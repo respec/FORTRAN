@@ -1769,6 +1769,9 @@ C
 C     + + + OUTPUT FORMATS + + +
  2070 FORMAT (5A4)
 C
+C     + + + HISTORY + + +
+C     4/2007   BRB corrected mass balance errors caused by error in scour calculations
+C
 C     + + + END SPECIFICATIONS + + +
 C
       I20  = 20
@@ -1779,7 +1782,8 @@ C
         IF ((ABS(BSED)) .LE. 0.0) THEN
 C         bed was scoured "clean"
           BQAL = -1.0E30
-          DSQAL= RBQALS
+Cbrb      changed sign of DSQAL; it should be negative for scour; fixed 4/2007 
+          DSQAL= -1.0*RBQALS
         ELSE
 C         there is still bed material left
           BQAL = RBQALS/(BSED - DEPSCR)
