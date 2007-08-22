@@ -364,6 +364,8 @@ C
 C
       DO 10 I= 1,NCONS
         WRITE (CONNAME,2035) (CONID(J,I),J=1,5)
+        CONNAME = ADJUSTL(CONNAME)
+C
 C       convert variables to external units
         FACTA= 1.0/CCONV(I)
 C       rchres-wide variables
