@@ -918,7 +918,7 @@ PHCF2   5  2   -75     2 2  10      0 18165 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of TIC and CO2 thru indiv exits  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  216  TYPE TEXT
 $TEXT
-PHCF3   7  2   -75     2 2  10      0 18210 ENG lb/iv      0 1.602E4   0 3.531E4
+PHCF3   7  1     7     1 2  10      0 18210 ENG lb/iv      0 1.602E4   0 3.531E4
   Inorganic carbon reaction fluxes          MET kg/iv      0 4.537E2   0   1000.
 #GROUP  221  TYPE TEXT
 $TEXT
