@@ -1210,10 +1210,11 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     IDELT,N,EXDAT(6),NC,DUM1,DUM2,DUM3,DUM4,EMONFG,EPYRFG,
      $            TRNCOD,PDELT,PLTNOW,I,NBLNK,ERRFLG,SCLU,SGRP,
-     $            NULSDT(5),NULEDT(5)
+     $            NULSDT(5),NULEDT(5),LLEN,I0
       REAL        VALNOW
       DOUBLE PRECISION JTIME,DYFRAC
       CHARACTER*6 OPTYP
+      LOGICAL     LOPEN
 C
 C     + + + EXTERNALS + + +
       EXTERNAL    EXDATE,PLTAGG,SPECL,ADDTIM,TRANS,UPQUAN,OMSTI,OMSG,
@@ -1222,6 +1223,7 @@ C
 C     + + + DATA INITIALIZATIONS + + +
       DATA        OPTYP/'PLTGEN'/
       DATA        NULSDT,NULEDT/1859,1,1,0,0,1859,1,3,0,0/
+      DATA        I0/0/
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A4,1X,'HSPF FILE FOR DRIVING SEPARATE PLOT PROGRAM',/,
@@ -1426,6 +1428,20 @@ C         write initial value
 C
 C         set number of curves
           NC= 1
+        ELSE IF (TYPEFG .EQ. 4) THEN
+C         header for modified dtsf format, set number of curves
+          NC= NMN
+          INQUIRE (PLOTFL,OPENED=LOPEN)
+          IF (LOPEN .EQV. .TRUE.) THEN
+C           close file before opening
+            CLOSE (PLOTFL)
+          END IF
+C         determine record length and write it on 1st record
+          LLEN= 4*NC + 28
+          OPEN (PLOTFL,STATUS="REPLACE",ACCESS="DIRECT",RECL=LLEN)
+          WRITE (PLOTFL,REC=1) LLEN,(I0,I=1,LLEN/4-1)
+C         set record number
+          CURREC= 2
         END IF
 C
 C       reset val
@@ -1527,13 +1543,19 @@ C           write a line this interval
             IF (TYPEFG .EQ. 1) THEN
 C             formatted pltgen file
               WRITE (PLOTFL,2090) CODE,(EXDAT(N),N=1,5),(VAL(N),N=1,NC)
-            ELSE IF (TYPEFG .EQ. 2) THEN
+            ELSE IF (TYPEFG .EQ. 2 .OR. TYPEFG .EQ. 4) THEN
 C             dtsf format
               EXDAT(6)= 0
               CALL TIMCVT
      M                    (EXDAT)
-              WRITE (PLOTFL)  JTIME,DYFRAC,(EXDAT(N),N=1,3),
-     $                       (VAL(N), N= 1, NC)
+              IF (TYPEFG .EQ. 2) THEN
+                WRITE (PLOTFL)  JTIME,DYFRAC,(EXDAT(N),N=1,3),
+     $                         (VAL(N), N= 1, NC)
+              ELSE
+                WRITE (PLOTFL,REC=CURREC) JTIME,DYFRAC,(EXDAT(N),N=1,3),
+     $                                   (VAL(N), N= 1, NC)
+                CURREC= CURREC + 1
+              END IF
             ELSE IF (TYPEFG .EQ. 3) THEN
 C             ptsf format
               WRITE (PLOTFL)  JTIME,VAL(1)
