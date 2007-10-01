@@ -147,14 +147,16 @@ _WIDTH   5
 _COLUMN 41
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  1 : 3
+_RANGE  1 : 4
 _DEFAULT  1
 _HELP
 TYPEFG specifies the type of output file created.  1 means a formatted
 text file containing up to 10 timeseries (PLTGEN/MUTSIN format).
 2 means an unformatted file containing up to 99 mean-valued timeseries
 (FEQ DTSF format).  3 means an unformatted file containing exactly one
-point-valued timeseries (FEQ PTSF format).
+point-valued timeseries (FEQ PTSF format).  4 means the same as Type 2 
+with record 1 containing the length of all records in the file 
+(revised FEQ DTSF format).
 _PNAME  TYPEFG
 $HELP
 General plot information.
