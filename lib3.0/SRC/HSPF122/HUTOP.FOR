@@ -1213,8 +1213,9 @@ C     + + + LOCAL VARIABLES + + +
      $            NULSDT(5),NULEDT(5),LLEN,I0
       REAL        VALNOW
       DOUBLE PRECISION JTIME,DYFRAC
-      CHARACTER*6 OPTYP
-      LOGICAL     LOPEN
+      CHARACTER*6  OPTYP
+      CHARACTER*64 LFILE
+      LOGICAL      LOPEN
 C
 C     + + + EXTERNALS + + +
       EXTERNAL    EXDATE,PLTAGG,SPECL,ADDTIM,TRANS,UPQUAN,OMSTI,OMSG,
@@ -1431,15 +1432,21 @@ C         set number of curves
         ELSE IF (TYPEFG .EQ. 4) THEN
 C         header for modified dtsf format, set number of curves
           NC= NMN
-          INQUIRE (PLOTFL,OPENED=LOPEN)
+          INQUIRE (PLOTFL,OPENED=LOPEN,NAME=LFILE)
+         write(99,*) "PLTGEN: unit # ",PLOTFL," is named ",LFILE
           IF (LOPEN .EQV. .TRUE.) THEN
 C           close file before opening
             CLOSE (PLOTFL)
           END IF
 C         determine record length and write it on 1st record
           LLEN= 4*NC + 28
-          OPEN (PLOTFL,STATUS="REPLACE",ACCESS="DIRECT",RECL=LLEN)
+         write(99,*) "PLTGEN: About to open ",LFILE,
+     $               " with length ",LLEN
+          OPEN (PLOTFL,FILE=LFILE,STATUS="REPLACE",
+     $          ACCESS="DIRECT",RECL=LLEN)
           WRITE (PLOTFL,REC=1) LLEN,(I0,I=1,LLEN/4-1)
+         write(99,*) "PLTGEN: wrote LLEN and Dummy 0s, like this:"
+         write(99,*) "PLTGEN: ",LLEN,(I0,I=1,4)
 C         set record number
           CURREC= 2
         END IF
@@ -1554,6 +1561,7 @@ C             dtsf format
               ELSE
                 WRITE (PLOTFL,REC=CURREC) JTIME,DYFRAC,(EXDAT(N),N=1,3),
      $                                   (VAL(N), N= 1, NC)
+            write(99,*) "PLTGEN: just wrote Rec # ",CURREC
                 CURREC= CURREC + 1
               END IF
             ELSE IF (TYPEFG .EQ. 3) THEN
