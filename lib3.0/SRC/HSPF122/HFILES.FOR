@@ -323,7 +323,7 @@ C         this is an unformatted file
           ACC = 'SEQUENTIAL'
           FRM = 'UNFORMATTED'
           RCL = 0
-          STAT= 'UNKNOWN'
+          STAT= 'REPLACE'
           CALL FILOPN
      I                (ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
      O                 RET)
