@@ -1444,9 +1444,9 @@ C         determine record length and write it on 1st record
      $               " with length ",LLEN
           OPEN (PLOTFL,FILE=LFILE,STATUS="REPLACE",
      $          ACCESS="DIRECT",RECL=LLEN)
-          WRITE (PLOTFL,REC=1) LLEN,(I0,I=1,LLEN/4-1)
+          WRITE (PLOTFL,REC=1) LLEN,(I,I=1,LLEN/4-1)
          write(99,*) "PLTGEN: wrote LLEN and Dummy 0s, like this:"
-         write(99,*) "PLTGEN: ",LLEN,(I0,I=1,4)
+         write(99,*) "PLTGEN: ",LLEN,(I,I=1,4)
 C         set record number
           CURREC= 2
         END IF
@@ -1561,7 +1561,8 @@ C             dtsf format
               ELSE
                 WRITE (PLOTFL,REC=CURREC) JTIME,DYFRAC,(EXDAT(N),N=1,3),
      $                                   (VAL(N), N= 1, NC)
-            write(99,*) "PLTGEN: just wrote Rec # ",CURREC
+            write(99,*) "PLTGEN: REC=",CURREC," JTIME,DYFRAC,EXDAT,VALS"
+            write(99,*) JTIME,DYFRAC,(EXDAT(N),N=1,3),(VAL(N),N=1,NC)
                 CURREC= CURREC + 1
               END IF
             ELSE IF (TYPEFG .EQ. 3) THEN
