@@ -3391,10 +3391,6 @@ C
 C     + + + DATA INITIALIZATIONS + + +
       DATA       NH4ID/'AMMO','NIUM','    ','    ','    '/
 C
-C     + + + HISTORY + + +
-C     03/27/2007  PBD prevent divide by zero error if storages 
-C                 are practically zero
-C
 C     + + + END SPECIFICATIONS + + +
 C
 C     write(messu,*) 'into HPERNIT:NITRXN'
@@ -3758,9 +3754,6 @@ C     indicating negative storages were projected (when < 1.0)
       FRAC= 1.0
 C
 C     calculate temporary particulate labile organic nitrogen in storage
-      IF (ABS(PLON) < 1.E-20) THEN
-        PLON = 0.0
-      END IF
       TPLON= PLON- AMMIF+ IMMAM+ IMMNI+ PRETL- RFON
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TPLON'
@@ -3792,9 +3785,6 @@ C
       END IF
 C
 C     calculate temporary adsorbed ammonium in storage
-      IF (ABS(AMAD) < 1.E-20) THEN
-        AMAD = 0.0
-      END IF
       TAMAD= AMAD- DESAM+ ADSAM
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TAMAD'
@@ -3829,9 +3819,6 @@ C
       END IF
 C
 C     calculate temporary nitrate in storage
-      IF (ABS(NO3) < 1.E-20) THEN
-        NO3 = 0.0
-      END IF
       TNO3= NO3+ NITRF- (IMMNI+DENI+UTNI+UTNIA)
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TNO3'
@@ -3840,6 +3827,8 @@ C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
 C       needed to make the storage zero
 C       write(messu,*) '  in HPERNIT:NITRXN:NO3,TNO3 ',NO3,TNO3
+C       the following can sometimes cause divide by zero errors, 
+C       need to decide most appropriate fix  -  pbd  10/07
         TFRAC= NO3/(NO3-TNO3)
 C       write(messu,*) '  in HPERNIT:NITRXN:TFRAC ',TFRAC
 C
@@ -3870,9 +3859,6 @@ C
       END IF
 C
 C     calculate temporary solution ammonium in storage
-      IF (ABS(AMSU) < 1.E-20) THEN
-        AMSU = 0.0
-      END IF
       TAMSU= AMSU+ DESAM+ AMMIF- (ADSAM+IMMAM+UTAM+UTAMA+NITRF+AMVO)
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at NUPTFG'
@@ -3931,9 +3917,6 @@ C
       END IF
 C
 C     calculate temporary below-ground plant n in storage
-      IF (ABS(PLTN) < 1.E-20) THEN
-        PLTN = 0.0
-      END IF
       TPLTN= PLTN+ UTNI+ UTAM- PRETL- PRETR
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TPLTN'
