@@ -865,7 +865,7 @@ C         error - bad total number of curves
           CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M               ECOUNT)
         END IF
-      ELSE IF (TYPEFG .EQ. 2) THEN
+      ELSE IF (TYPEFG .EQ. 2 .OR. TYPEFG .EQ. 4) THEN
 C       dtsf format
         IF (NPT .GT. 0) THEN
 C         error - dtsf is mean-valued only
@@ -954,9 +954,11 @@ C         check for default
         END IF
  50   CONTINUE
 C
-      IF (TYPEFG .EQ. 2) THEN
+      IF (TYPEFG .EQ. 2 .OR. TYPEFG .EQ. 4) THEN
 C       write header for feq dtsf format
-        CALL HEDTSF (PLOTFL,NDELT,NDAMON,GLABL,NMN,CUVDAT,SDATIM,EDATIM)
+        CALL HEDTSF (PLOTFL,NDELT,NDAMON,GLABL,NMN,CUVDAT,
+     I               SDATIM,EDATIM,TYPEFG,
+     O               CURREC)
       END IF
 C
 C     write the osv to disc and record the keys in opntab
@@ -979,14 +981,15 @@ C
 C
       SUBROUTINE   HEDTSF
      I                    (PLOTFL,NDELT,NDAMON,GLABL,NMN,CUVDAT,
-     I                     SDATIM,EDATIM)
+     I                     SDATIM,EDATIM,TYPEFG,
+     O                     CURREC)
 C
 C     + + + PURPOSE + + +
-C     Write header for FEQ DTSF file (TYPEFG=2).
+C     Write header for FEQ DTSF file (TYPEFG=2 or 4).
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER PLOTFL,NDELT,NDAMON(12),GLABL(15),NMN,CUVDAT(9,NMN),
-     $        SDATIM(5),EDATIM(5)
+     $        SDATIM(5),EDATIM(5),TYPEFG,CURREC
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     PLOTFL - fortran unit number of pltgen output file
@@ -997,12 +1000,16 @@ C     NMN    - number of (mean-valued) time series
 C     CUVDAT - character label for each time series
 C     SDATIM - starting date/time
 C     EDATIM - ending date/time
+C     TYPEFG - orginal (TYPEFG=2) or revised (TYPEFG=4)
+C     CURREC - current record number on DTSF file (TYPEFG=4)
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I,N,I0,I1,I5,I12,LEN,LLEN,IREC(106),YR,MO,DY,HR,MI,SC,
      $        NHEAD,CTIME,NULSDT(5),NULEDT(5),NULLDT(5),DUM1,DUM2,DUM3,
      $        DUM4,DUM5,DUM6,DUM7,DUM8,NSTEP,XDAT(6)
       DOUBLE PRECISION SJTIME,EJTIME,DYFRAC,NJTIME
+      CHARACTER*64 LFILE
+      LOGICAL      LOPEN
 C
 C     + + + EXTERNALS + + +
       EXTERNAL ZIPI,SYDATM,EXDATE,TIMCVT
@@ -1018,6 +1025,25 @@ C     initialize record
       CALL ZIPI (LEN,I0,
      O           IREC)
 C
+      IF (TYPEFG.EQ.4) THEN
+C       revised format, use direct acess file
+        INQUIRE (PLOTFL,OPENED=LOPEN,NAME=LFILE)
+       write(99,*) "PLTGEN: unit # ",PLOTFL," is named ",LFILE
+        IF (LOPEN .EQV. .TRUE.) THEN
+C         close file before opening
+          CLOSE (PLOTFL)
+        END IF
+C       determine record length and write it on 1st record
+        LLEN= 4*LEN
+       write(99,*) "PLTGEN: About to open ",LFILE,
+     $             " with length ",LLEN
+        OPEN (PLOTFL,FILE=LFILE,STATUS="REPLACE",
+     $        ACCESS="DIRECT",RECL=LLEN)
+        WRITE (PLOTFL,REC=1) LLEN,(IREC(I),I=2,LEN)
+       write(99,*) "PLTGEN: wrote LLEN and Dummy 0s, like this:"
+       write(99,*) "PLTGEN: ",LLEN,(IREC(I),I=1,4)
+      END IF
+C
 C     write first record
       CALL SYDATM
      O            (YR,MO,DY,HR,MI,SC)
@@ -1030,7 +1056,12 @@ C       assume file created before 2000
       END IF
       CTIME= HR*100+ MI
       NHEAD= NMN+ 3
-      WRITE (PLOTFL) YR,MO,DY,CTIME,NHEAD,NMN,I1,(IREC(I),I=8,LEN)
+      IF (TYPEFG.EQ.2) THEN
+        WRITE (PLOTFL) YR,MO,DY,CTIME,NHEAD,NMN,I1,(IREC(I),I=8,LEN)
+      ELSE
+        WRITE (PLOTFL,REC=2) YR,MO,DY,CTIME,NHEAD,NMN,I1,
+     $                      (IREC(I),I=8,LEN)
+      END IF
 C
 C     write second record
       CALL EXDATE (SDATIM,
@@ -1038,8 +1069,13 @@ C     write second record
       XDAT(6)= 0
       CALL TIMCVT
      M            (XDAT)
-      WRITE (PLOTFL) (XDAT(I),I=1,3),(EDATIM(I),I= 1,3),
-     $               (IREC(I),I=7,LEN)
+      IF (TYPEFG.EQ.2) THEN
+        WRITE (PLOTFL) (XDAT(I),I=1,3),(EDATIM(I),I= 1,3),
+     $                 (IREC(I),I=7,LEN)
+      ELSE
+        WRITE (PLOTFL,REC=3) (XDAT(I),I=1,3),(EDATIM(I),I= 1,3),
+     $                       (IREC(I),I=7,LEN)
+      END IF
 C
 C     write tsf label record
       IF (LEN .LT. 10) THEN
@@ -1049,12 +1085,21 @@ C       only write part of label
 C       write whole label
         LLEN= 10
       END IF
-      WRITE (PLOTFL) (GLABL(I),I=1,LLEN),(IREC(I),I=11,LEN)
+      IF (TYPEFG.EQ.2) THEN
+        WRITE (PLOTFL) (GLABL(I),I=1,LLEN),(IREC(I),I=11,LEN)
+      ELSE
+        WRITE (PLOTFL,REC=4) (GLABL(I),I=1,LLEN),(IREC(I),I=11,LEN)
+      END IF
 C
 C     write dataset header records
       LLEN= 4
       DO 10 N= 1, NMN
-        WRITE (PLOTFL) (CUVDAT(I,N),I=1,LLEN),(IREC(I),I=5,LEN)
+        IF (TYPEFG.EQ.2) THEN
+          WRITE (PLOTFL) (CUVDAT(I,N),I=1,LLEN),(IREC(I),I=5,LEN)
+        ELSE
+          WRITE (PLOTFL,REC=4+N) (CUVDAT(I,N),I=1,LLEN),
+     $                           (IREC(I),I=5,LEN)
+        END IF
  10   CONTINUE
 C
 C     write null event
@@ -1064,8 +1109,14 @@ C     write header line for null event
      O             EJTIME,DYFRAC)
       CALL MJDATE (NULSDT,
      O             SJTIME,DYFRAC)
-      WRITE (PLOTFL) -SJTIME,DYFRAC,(NULSDT(I),I=1,3),EJTIME,
-     $               (IREC(I),I=10,LEN)
+      IF (TYPEFG .EQ. 2) THEN
+        WRITE (PLOTFL) -SJTIME,DYFRAC,(NULSDT(I),I=1,3),EJTIME,
+     $                 (IREC(I),I=10,LEN)
+      ELSE
+        CURREC = NMN + 5
+        WRITE (PLOTFL,REC=CURREC) -SJTIME,DYFRAC,(NULSDT(I),I=1,3),
+     $                            EJTIME,(IREC(I),I=10,LEN)
+      END IF
 C
 C     write two days of zero flows for null event
       NSTEP= 2880/NDELT
@@ -1086,7 +1137,12 @@ C     convert to internal format
         XDAT(6)= 0
         CALL TIMCVT
      M              (XDAT)
-        WRITE (PLOTFL) NJTIME,DYFRAC,(XDAT(I),I=1,3),(IREC(I),I=8,LEN)
+        IF (TYPEFG .EQ. 2) THEN
+          WRITE (PLOTFL) NJTIME,DYFRAC,(XDAT(I),I=1,3),(IREC(I),I=8,LEN)
+        ELSE
+          WRITE (PLOTFL,REC=CURREC+N) NJTIME,DYFRAC,(XDAT(I),I=1,3),
+     $                                (IREC(I),I=8,LEN)
+        END IF
  20   CONTINUE
 C
 C     write header line for main event
@@ -1101,8 +1157,15 @@ C     write header line for main event
       XDAT(6)= 0
       CALL TIMCVT
      M            (XDAT)
-      WRITE (PLOTFL) -SJTIME,DYFRAC,(XDAT(I),I=1,3),EJTIME,
-     $               (IREC(I), I= 10,LEN)
+      IF (TYPEFG .EQ. 2) THEN
+        WRITE (PLOTFL) -SJTIME,DYFRAC,(XDAT(I),I=1,3),EJTIME,
+     $                 (IREC(I), I= 10,LEN)
+      ELSE
+        CURREC = CURREC + NSTEP + 1
+        WRITE (PLOTFL,REC=CURREC) -SJTIME,DYFRAC,(XDAT(I),I=1,3),EJTIME,
+     $                            (IREC(I), I= 10,LEN)
+        CURREC = CURREC + 1
+      END IF
 C
       RETURN
       END
