@@ -1210,12 +1210,10 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     IDELT,N,EXDAT(6),NC,DUM1,DUM2,DUM3,DUM4,EMONFG,EPYRFG,
      $            TRNCOD,PDELT,PLTNOW,I,NBLNK,ERRFLG,SCLU,SGRP,
-     $            NULSDT(5),NULEDT(5),LLEN,I0
+     $            NULSDT(5),NULEDT(5)
       REAL        VALNOW
       DOUBLE PRECISION JTIME,DYFRAC
       CHARACTER*6  OPTYP
-      CHARACTER*64 LFILE
-      LOGICAL      LOPEN
 C
 C     + + + EXTERNALS + + +
       EXTERNAL    EXDATE,PLTAGG,SPECL,ADDTIM,TRANS,UPQUAN,OMSTI,OMSG,
@@ -1224,7 +1222,6 @@ C
 C     + + + DATA INITIALIZATIONS + + +
       DATA        OPTYP/'PLTGEN'/
       DATA        NULSDT,NULEDT/1859,1,1,0,0,1859,1,3,0,0/
-      DATA        I0/0/
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A4,1X,'HSPF FILE FOR DRIVING SEPARATE PLOT PROGRAM',/,
@@ -1399,7 +1396,7 @@ C           to turn on plotfile
 C           write initial values
             WRITE (PLOTFL,2090) CODE,(EXDAT(N),N=1,5),(VAL(N),N=1,NC)
           END IF
-        ELSE IF (TYPEFG .EQ. 2) THEN
+        ELSE IF (TYPEFG .EQ. 2 .OR. TYPEFG .EQ. 4) THEN
 C         header for feq dtsf format written by ppltgn
 C
 C         set number of curves
@@ -1429,26 +1426,6 @@ C         write initial value
 C
 C         set number of curves
           NC= 1
-        ELSE IF (TYPEFG .EQ. 4) THEN
-C         header for modified dtsf format, set number of curves
-          NC= NMN
-          INQUIRE (PLOTFL,OPENED=LOPEN,NAME=LFILE)
-         write(99,*) "PLTGEN: unit # ",PLOTFL," is named ",LFILE
-          IF (LOPEN .EQV. .TRUE.) THEN
-C           close file before opening
-            CLOSE (PLOTFL)
-          END IF
-C         determine record length and write it on 1st record
-          LLEN= 4*NC + 28
-         write(99,*) "PLTGEN: About to open ",LFILE,
-     $               " with length ",LLEN
-          OPEN (PLOTFL,FILE=LFILE,STATUS="REPLACE",
-     $          ACCESS="DIRECT",RECL=LLEN)
-          WRITE (PLOTFL,REC=1) LLEN,(I,I=1,LLEN/4-1)
-         write(99,*) "PLTGEN: wrote LLEN and Dummy 0s, like this:"
-         write(99,*) "PLTGEN: ",LLEN,(I,I=1,4)
-C         set record number
-          CURREC= 2
         END IF
 C
 C       reset val
@@ -1607,13 +1584,17 @@ C
 C
       IF (LSTCAL .EQ. 1) THEN
 C       last interval of run
-        IF (TYPEFG .EQ. 2) THEN
+        IF (TYPEFG .EQ. 2 .OR. TYPEFG .EQ. 4) THEN
 C         feq dtsf file - write last record of all zeroes
           VALNOW= 0.0
           N= NC+ 7
           CALL ZIPR (N,VALNOW,
      O               VAL)
-          WRITE (PLOTFL) (VAL(N),N=1,NC+7)
+          IF (TYPEFG .EQ. 2) THEN
+            WRITE (PLOTFL) (VAL(N),N=1,NC+7)
+          ELSE
+            WRITE (PLOTFL,REC=CURREC) (VAL(N),N=1,NC+7)
+          END IF
         ELSE IF (TYPEFG .EQ. 3) THEN
 C         feq ptsf file - write last record of all zeroes
           VALNOW= 0.0
