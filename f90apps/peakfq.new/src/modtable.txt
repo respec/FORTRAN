@@ -1,0 +1,8 @@
+# This file contains Lahey LF90 module information
+# Created on Wed Jun 06 11:26:11 2007
+# Each line contains the module name, followed by the DOS file
+# name used to store module information and library object
+# data files, followed by the name of the sourcefile for the module.
+# Lines beginning with # are comments.
+compspecs compspe0 compspecs.f90
+emathresh emathre0 emathresh.f90

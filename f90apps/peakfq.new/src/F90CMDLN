@@ -1,0 +1,1 @@
+peakfq.obj j407xe.obj j407wc.obj pkkeyb.obj pkwdm.obj pkutil.obj -EXE ..\bin\peakfql.exe -bind -nwin -vm -LIBP I:\libanne4.0\lib -LIB ann.lib waide.lib awstat.lib graph.lib stats.lib aide.lib wdm.lib adwdm.lib util.lib T:\int5.0\lib\shortl90 T:\int5.0\lib\intpcl90 

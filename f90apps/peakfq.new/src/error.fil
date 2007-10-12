@@ -1,0 +1,25 @@
+
+ Successful open of old WDM file ..\test\test_2.wdm                                              
+
+ Attributes from WDM file \lib3.0\message.wdm                                             
+
+ Exporting to file test_2.exp                                                      
+ Completed export of headers and comments
+
+ Beginning export of DSN/CLU     5 type is TABL
+Table template missing (CLU=   20 GRP=    1 for table index    1
+ Completed export of DSN/CLU     5
+ Beginning export of DSN/CLU     4 type is TABL
+Table template missing (CLU=   20 GRP=    1 for table index    1
+ Completed export of DSN/CLU     4
+ Beginning export of DSN/CLU     3 type is TABL
+Table template missing (CLU=   20 GRP=    1 for table index    1
+ Completed export of DSN/CLU     3
+ Beginning export of DSN/CLU     2 type is TABL
+Table template missing (CLU=   20 GRP=    1 for table index    1
+ Completed export of DSN/CLU     2
+ Beginning export of DSN/CLU     1 type is TABL
+Table template missing (CLU=   20 GRP=    1 for table index    1
+ Completed export of DSN/CLU     1
+
+ Export of specified DSN/CLUs complete.

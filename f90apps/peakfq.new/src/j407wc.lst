@@ -1,0 +1,3235 @@
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 1
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFAGB    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+       1 C
+       2 C
+       3 C
+       4       SUBROUTINE   WCFAGB
+       5      #                    (PKQ,PKLOG,WRCPP,SYSPP,NPK,IRC)
+       6 C
+       7 C     + + + PURPOSE + + +
+       8 C     WRC FLOOD FREQ ANALYSIS BULL 17 GUIDELINES EXECUTIVE RTNE.
+       9 C
+      10 C     FLOOD FREQUENCY CALCULATIONS  AS DESCRIBED IN U.S. WATER RESOURCES
+      11 C     COUNCIL HYDROLOGY COMMITTEE BULLETIN 17 (1976), GUIDELINES FOR DETER-
+      12 C     MINING FLOOD FLOW FREQUENCY, AND REVISED AS BULL 17-A (6/77).
+      13 C                                             AND BULL. 17-B, 1981.
+      14 C
+      15 C     ALTHOUGH THESE CALCULATIONS ARE BELIEVED TO CONFORM TO THE WRC GUIDE-
+      16 C     LINES, THE USER  IS RESPONSIBLE FOR ALL INTERPRETATIONS AND APPLI-
+      17 C     CATIONS OF THE RESULTS.
+      18 C
+      19 C     SEE FORMAT NO 1 FOR CURRENT VERSION NUMBER AND DATE.
+      20 C     WCFAGB VERSION 2.0 5/1/77 BY W.KIRBY, U.S.GEOLOGICAL SURVEY,
+      21 C      NATIONAL CTR STOP 430, RESTON, VA 22092.  (703) 860-6947.
+      22 C     VERSION 2.0 INCORPORATES REVISIONS TO WRC BULL 17 THROUGH 4/4/77.
+      23 C                AND PUBLISHED IN BULL 17-A (6/77).
+      24 C     REV 5/79 VER 2.2 - MINOR CHANGES IN -DLO,-FCA,--CSA,-CM0 FOR HAND-
+      25 C                 LING NONSTANDARD CONDITIONS.  NO CHANGE IN STANDARD
+      26 C                 WRC CALCULATIONS.
+      27 C     REV 7/20/79 VER 2.2 - INCREASED PRECISION IN COMPUTING SUMS AND
+      28 C            SUMH IN -ASP, -DHH, -DLO.
+      29 C
+      30 C     REV 10/18/79 VER 2.3 - FIX ROUND-OFF IN --CWS.  USE STUTX FOR EXPEC-
+      31 C           TED PROB IN --FCX.
+      32 C
+      33 C     REV 1/81 VER 2.4 BULL 17-B. -- NEW WEIGHTED SKEW USING STD ERRORS
+      34 C           OF GENERALIZED AND STATION SKEWS.  (WCFCWS, FCA)
+      35 C      -- THREE-POINT FIT PEARSON TYPE III M, S, G AFTER COND PROB ADJ
+      36 C      -- COMPUTE WEIGHTED SKEW AFTER COND PROB ADJ, NOT BEFORE.
+      37 C      -- AUTOMATIC HIGH OUTLIER TEST AND REVISED LOW OUTLIER TEST,
+      38 C           USING GRUBBS-BECK NORMAL OUTLIER TEST.  (WCFDHH, DLO, OUTKGB.)
+      39 C
+      40 C     REV 4/28/81 WK - WCFDHH,DLO - USE NUMBER OF PEAKS ABOVE FLOOD BASE
+      41 C         IN OUTLIER TESTS.  (NOT NSYS/HISTPD)
+      42 C          WCFDHH - PRINT HI-OUT TEST CRIT  IF SUPERSEDED BY MIN HIST PK.
+      43 C
+      44 C     REV 11/5/81 WK - WCFFCA CHECK *ABS-VALUE* OF WRCSKW IN TABLE RANGE
+      45 C
+      46 C     REV 12/83 - K.FLYNN - REVISIONS FOR PRIME - WCFCM0
+      47 C
+      48 C     REV 9/88 - AML - for conforming to OSW coding conventions
+      49 C
+      50 C     USER INTERFACE TO WRC CALCULATIONS --
+      51 C     ASSIGN APPROPRIATE VALUES TO GENSKU...HISTPD. IN COMMON WCFCM1.
+      52 C     PLACE FLOWS  IN PKQ VECTOR, HISTORIC EVENTS FIRST..
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 2
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+      53 C     CALL WCFAGB (PKQ ... IRC).   (WCFAGB CALLS ALL OTHER  ROUTINES USED.)
+      54 C     UPON RETURN, IF IRC .LT. 3, THE RESULTS WILL BE IN COMMONS WCFCM1
+      55 C     AND WCFCM2 AND IN VECTORS IN ARG LIST.  OTHERWISE, IF IRC .EQ. 3,
+      56 C     THE CALCULATIONS  COULD NOT BE COMPLETED FOR REASONS EXPLAINED IN
+      57 C     NUMBERED MESSAGES.  THE CONTENTS OF THE COMMONS AND VECTORS OTHER
+      58 C     THAN PKQ WILL BE MEANINGLESS.   THE PKQ VECTOR IS NOT ALTERED BY
+      59 C     WCFAGB AND THE PKLOG ELEMENTS ARE IN THE SAME ORDER AS THE PKQS.
+      60 C     A SAMPLE MAIN PROGRAM, WCFZSD, IS INCLUDED IN THIS DISTRIBUTION.
+      61 C
+      62 C     + + + DUMMY ARGUMENTS + + +
+      63       INTEGER   NPK, IRC
+      64       REAL      PKQ(NPK), PKLOG(NPK), WRCPP(NPK), SYSPP(NPK)
+      65 C
+      66 C     + + + ARGUMENT DEFINITION + + +
+      67 C     PKQ    - peak flow input vector--first historic, then systematic
+      68 C     PKLOG  - peak flow LOG10 work-output vector
+      69 C     WRCPP  - WRC prob plot positions systematic and historic PKS.
+      70 C     SYSPP  - prob plot positions systematic record peaks
+      71 C     NPK    - number of observed peaks--first historic, then systematic
+      72 C     IRC    - return code--0, 1, 2, or 3:
+      73 C              0 - no error
+      74 C              3 - error, calculation aborted
+      75 C
+      76 C     + + + PARAMETERS + + +
+      77       INCLUDE 'pmxint.inc'
+      78 C
+      79 C     + + + COMMON BLOCKS + + +
+      80       INCLUDE 'cwcf0.inc'
+      81       INCLUDE 'cwcf1.inc'
+      82       INCLUDE 'cwcf2.inc'
+      83 C
+      84 C     + + + LOCAL VARIABLES + + +
+      85       INTEGER   NSYS1, ISYS
+      86 C
+      87 C     + + + EXTERNALS + + +
+      88       EXTERNAL  WCFASP, WCFDHH, WCFCSA, WCFDLO, WCFAPI, WCFFCA,
+      89      #          WCFFCX, WCFEPP
+      90 C
+      91 C     + + + END SPECIFICATIONS + + +
+      92 C
+      93       IRC=0
+      94       IF(MSL.GE.3)WRITE(MSG,001)
+      95     1 FORMAT(4X,'WCF001J-FLOOD FREQUENCY, BULLETIN  17-B.',
+      96      $          ' VER 2.6P (12/19/83)',
+      97      $     /,5X,'      -PRELIMINARY MACHINE COMPUTATIONS.  USER IS RE-',
+      98      $     /,5X,'      -SPONSIBLE FOR ASSESSMENT AND INTERPRETATION.  ')
+      99 C
+     100       write(*,*) 'WCFAGB: B4 WCFAPI'
+     101       CALL WCFAPI (PKQ,PKLOG,WRCPP,SYSPP,NPK,IRC)
+     102       IF(IRC.GE.3)GOTO95
+     103       ISYS=NHIST+1
+     104       NSYS1=NPK-NHIST
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 3
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     105 C
+     106       write(*,*) 'WCFAGB: B4 WCFASP'
+     107       CALL WCFASP (PKLOG(ISYS),SYSPP(ISYS),NSYS1,IRC)
+     108       IF(IRC.GE.3)GOTO95
+     109 C
+     110       IF(WRCASK.GT.EPS2)GOTO50
+     111       IF(WRCASK.GE.EPS1)GOTO30
+     112 C
+     113       write(*,*) 'WCFAGB: B4 WCFDLO'
+     114       CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+     115 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA (4H17B1, IRC)
+     116       write(*,*) 'WCFAGB: B4 WCFCSA'
+     117       IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA ('17B1', IRC)
+     118       IF(IRC.GE.3)GOTO95
+     119       write(*,*) 'WCFAGB: B4 WCFDHH'
+     120       CALL WCFDHH (PKLOG,NPK, IRC)
+     121 Ckmf  IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B2,IRC)
+     122       write(*,*) 'WCFAGB: B4 WCFCSA-2'
+     123       IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B2',IRC)
+     124       IF(IRC.GE.3)GOTO95
+     125       GOTO70
+     126 C
+     127       write(*,*) 'WCFAGB: B4 WCFDLO-30'
+               |
+WARNING -- No execution path reaches this statement.
+
+     128    30 CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+     129       IF(IRC.GE.3)GOTO95
+     130       write(*,*) 'WCFAGB: B4 WCFDHH-30'
+     131       CALL WCFDHH (PKLOG,NPK,IRC)
+     132       IF(IRC.GE.3)GOTO95
+     133 Ckmf  IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA (4H17B3,IRC)
+     134       write(*,*) 'WCFAGB: B4 WCFCSA-30'
+     135       IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA ('17B3',IRC)
+     136       IF(IRC.GE.3)GOTO95
+     137       GOTO70
+     138 C
+     139       write(*,*) 'WCFAGB: B4 WCFDHH-50'
+               |
+WARNING -- No execution path reaches this statement.
+
+     140    50 CALL WCFDHH (PKLOG,NPK,IRC)
+     141 Ckmf  IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B4,IRC)
+     142       write(*,*) 'WCFAGB: B4 WCFCSA-50'
+     143       IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B4',IRC)
+     144       IF(IRC.GE.3)GOTO95
+     145       write(*,*) 'WCFAGB: B4 WCFDLO-50'
+     146       CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+     147 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B5,IRC)
+     148       write(*,*) 'WCFAGB: B4 WCFCSA-50'
+     149       IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B5',IRC)
+     150       IF(IRC.GE.3)GOTO95
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 4
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     151 C
+     152    70 CONTINUE
+     153 C
+     154 C     IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, 4H17B ,NSYS+NHIST)
+     155 C     CALL WCFFCA (WRCFC,4H17B ,IRC)
+     156       write(*,*) 'WCFAGB: B4 WCFEPP'
+     157       IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, '17B ', NSYS+NHIST)
+     158       write(*,*) 'WCFAGB: B4 WCFFCA'
+     159       CALL WCFFCA (WRCFC, '17B ', IRC )
+     160       IF(IRC.GE.3)GOTO95
+     161 C
+     162       write(*,*) 'WCFAGB: B4 WCFFCX'
+     163       CALL WCFFCX (IRC)
+     164       write(*,*) 'WCFAGB: After WCFFCX, IRC =',IRC
+     165       IF(IRC.GE.3)GOTO95
+     166 C
+     167       IF(MSL.GE.3 .OR. (IRC.GE.2.AND.MSL.GE.2) ) WRITE(MSG,2)IRC
+     168 002   FORMAT(43H    WCF002J-CALCS COMPLETED.  RETURN CODE = ,I3)
+     169       RETURN
+     170 C
+     171    95 IF(MSL.GT.0)WRITE(MSG,003)IRC
+     172 003   FORMAT(43H ***WCF003E-CALCS ABORTED.    RETURN CODE = ,I3)
+     173       RETURN
+     174       END
+Bytes of stack required for this program unit: 24.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s
+CLIML (REAL)          array          256        (I2)2s   (I2)4s
+CLIMU (REAL)          array          384        (I2)3s   (I2)5s
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+EPFC (REAL)           array          128        (I2)2s   (I2)4s
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s     111u
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s     110u
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 5
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+IRC (INTEGER)         scalar                        5s      63s      93=     101r     101r     101r     102u     107r     107r
+                                                  107r     108u     114r     114r     114r     117u     117r     117r     117r
+                                                  118u     120r     120r     120r     123u     123r     123r     123r     124u
+                                                  128r     128r     128r     129u     131r     131r     131r     132u     135r
+                                                  135r     135r     136u     140r     140r     140r     143u     143r     143r
+                                                  143r     144u     146r     146r     146r     149u     149r     149r     149r
+                                                  150u     159r     159r     159r     160u     163r     163r     163r     164o
+                                                  165u     167u     167o     171o
+ISYS (INTEGER)        scalar                       85s     103=     107u     107u     114u     128u     146u
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s      94o     167o     171o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s      94u     167u     167u     171u
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u   (I2)4u   (I2)4u   (I2)4u   (I2)5u
+                                                (I2)5u
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s     123u     135u     143u
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s     103u     104u     157u
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s     123u     135u     143u
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s     117u     135u     149u
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s     157u
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s
+NPK (INTEGER)         scalar                        5s      63s      64u      64u      64u      64u     101r     101r     101r
+                                                  104u     120r     120r     120r     131r     131r     131r     140r     140r
+                                                  140r
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     157u
+NSYS1 (INTEGER)       scalar                       85s     104=     107r     107r     107r     114r     114r     114r     128r
+                                                  128r     128r     146r     146r     146r
+PKLOG (REAL)          array                         5s      64s     101r     101r     101r     107r     107r     107r     114r
+                                                  114r     114r     120r     120r     120r     128r     128r     128r     131r
+                                                  131r     131r     140r     140r     140r     146r     146r     146r
+PKQ (REAL)            array                         5s      64s     101r     101r     101r
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 6
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSPP (REAL)          array                         5s      64s     101r     101r     101r     107r     107r     107r
+SYSRFC (REAL)         array          512        (I2)3s   (I2)5s
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+WCFAGB                SUBROUTINE                    4s
+WCFAPI                SUBROUTINE                   88u     101u
+WCFASP                SUBROUTINE                   88u     107u
+WCFCSA                SUBROUTINE                   88u     117u     123u     135u     143u     149u
+WCFDHH                SUBROUTINE                   88u     120u     131u     140u
+WCFDLO                SUBROUTINE                   88u     114u     128u     146u
+WCFEPP                SUBROUTINE                   89u     157u
+WCFFCA                SUBROUTINE                   88u     159u
+WCFFCX                SUBROUTINE                   89u     163u
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s     110u     111u
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s
+WRCFC (REAL)          array          0          (I2)2s   (I2)4s     159r     159r     159r
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s
+WRCPP (REAL)          array                         5s      64s     101r     101r     101r     157r     157r     157r
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+1            94f      95s
+2           167f     168s
+3           171f     172s
+30          111g     128s
+50          110g     140s
+70          125g     137g     152s
+95          102g     108g     118g     124g     129g     132g     136g     144g     150g     160g     165g     171s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 7
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFAPI    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     175 C
+     176 C
+     177 C
+     178       SUBROUTINE   WCFAPI
+     179      #                    (PKQ,PKLOG,WRCPP,SYSPP,NPK,IER)
+     180 C
+     181 C      + + + PURPOSE + + +
+     182 C     ANALYZE PARAMETERS AND INITIALIZE
+     183 C     (WRC Bulletin-17 Flood Frequency Analysis)
+     184 C
+     185 C     + + + DUMMY ARGUMENTS + + +
+     186       INTEGER   NPK, IER
+     187       REAL      PKQ(NPK), PKLOG(NPK), WRCPP(NPK), SYSPP(NPK)
+     188 C
+     189 C     + + + ARGUMENT DEFINITIONS + + +
+     190 C     PKQ    - peak flow input vector--historic first, then systematic
+     191 C     PKLOG  - peak flow LOG10 work-output vector
+     192 C     WRCPP  - WRC prob plot positions observed PKS
+     193 C     SYSPP  - prob plot positions systematic record PKS
+     194 C     NPK    - number of observed peaks
+     195 C     IER    - error return code 0, 1, 2, or 3:
+     196 C              0 - no error
+     197 C              3 - error, calculation aborted
+     198 C
+     199 C     + + + PARAMETERS + + +
+     200       INCLUDE 'pmxint.inc'
+     201 C
+     202 C      + + + COMMON BLOCKS + + +
+     203       INCLUDE 'cwcf0.inc'
+     204       INCLUDE 'cwcf1.inc'
+     205       INCLUDE 'cwcf2.inc'
+     206 Cprh  replace FC with explicit variable names in cwcf2.inc
+     207 Cprh      REAL  FC(31,5)
+     208 Cprh      COMMON/ WCFCM2 /FC
+     209 C
+     210 C     + + + LOCAL VARIABLES + + +
+     211       INTEGER   J, I
+     212       REAL      BIGQ, T, FINIT(30)
+     213 C
+     214 C     + + + INTRINSICS + + +
+     215       INTRINSIC  SIGN, ALOG10, MAX0, FLOAT, INT
+     216 C
+     217 C     + + + EQUIVALENCE + + +
+     218       EQUIVALENCE (FINIT(1),WRCBAS)
+     219 C
+     220 C     + + + END SPECIFICATIONS + + +
+     221 C
+     222 Cmeb  BIGQ = 10.**BIGLOG        meb02/92
+     223       BIGQ = 10.**INT(BIGLOG)
+     224 Cprh      DO10J=1,5
+     225 Cprh      DO10I=1,31
+     226 Cprh   10 FC(I,J)=SIGN(BIGLOG,FLOAT(I)-15.5)
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 8
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     227 Cprh  init common variables in WCFCM2 (include file cwcf2.inc)
+     228       DO 10 I=1,MXINT
+     229         WRCFC(I) = SIGN(BIGLOG,FLOAT(I)-15.5)
+     230         EPFC(I)  = SIGN(BIGLOG,FLOAT(I)-15.5)
+     231         CLIML(I) = SIGN(BIGLOG,FLOAT(I)-15.5)
+     232         CLIMU(I) = SIGN(BIGLOG,FLOAT(I)-15.5)
+     233         SYSRFC(I)= SIGN(BIGLOG,FLOAT(I)-15.5)
+     234  10   CONTINUE
+     235       DO20I=1,30
+     236    20 FINIT(I)=BIGQ
+     237 C
+     238       IF(MSL.GE.4) WRITE(MSG,101) GENSKU,IGSOPT,RMSEGS,GAGEB,
+     239      $        QLWOUT,QHIOUT,NHIST,HISTPD
+     240   101 FORMAT(4X,'WCF101L-INPUT PARAMS- GENSKU OPT STD-ERR GAGEB  ',
+     241      $  'QLWOUT  QHIOUT  NHIST HISTPD'/
+     242      $  26X,F6.3,1X,I2,1X,F6.3,1X,F6.1,1X,F7.1,1X,F9.1,1X,I4,1X,F7.1)
+     243 C
+     244       IF(NPK.GT.NHIST.AND.NHIST.GE.0)GOTO30
+     245       IER=3
+     246       IF(MSL.GT.0)WRITE(MSG,102)NPK,NHIST
+     247 102   FORMAT(44H ***WCF102E-INVALID PEAK COUNTS. NPK,NHIST = ,2I10)
+     248       RETURN
+     249    30 CONTINUE
+     250 C
+     251       IF(MSL.LT.4)GOTO40
+     252       IF(NOTRAN.NE.1)WRITE(MSG,103)NPK,PKQ
+     253       IF(NOTRAN.EQ.1)WRITE(MSG,104)NPK,PKLOG
+     254 103   FORMAT(50H    WCF103L-INPUT PEAKS,HISTORIC FIRST. TOTAL NO = ,I6/
+     255      $         (14X,5F12.1))
+     256 104   FORMAT(50H    WCF104L-INPUT LOG PEAKS,HIST FIRST. TOTAL NO = ,I6/
+     257      $         (9X,10F7.3))
+     258    40 CONTINUE
+     259 C
+     260       IF(GENSKU.GE.GSMIN.AND.GENSKU.LE.GSMAX)GOTO50
+     261       IER=MAX0(IER,1)
+     262       IF(MSL.GE.2)WRITE(MSG,107)GENSKU,GSMIN,GSMAX
+     263 107   FORMAT(49H   *WCF107I-ACCEPTED GEN SKEW OUTSIDE MAP LIMITS.,3F8.3)
+     264    50 CONTINUE
+     265 C
+     266       IF(NOPPOS.EQ.1)GOTO70
+     267       WRCPP(1)=BIGQ
+     268       IF(NOSYS.EQ.1)GOTO70
+     269       J=NHIST+1
+     270       DO60I=1,J
+     271    60 SYSPP(I)=-1.
+     272       SYSPP(J)=BIGQ
+     273    70 CONTINUE
+     274 C
+     275       NMISS=0
+     276       IF(NOTRAN.EQ.1)GOTO110
+     277       DO90I=1,NPK
+     278       T=PKQ(I)
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 9
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     279       IF(T.LE.0.)GOTO80
+     280       PKLOG(I)=ALOG10(T)
+     281       GOTO90
+     282    80 IF(T.LT.0.)GOTO85
+     283       PKLOG(I)=-(BIGLOG+.001)
+     284       GOTO90
+     285    85 NMISS=NMISS+1
+     286       IF(I.LE.NHIST)IER=13
+     287       IF(T.GT.-BIGLOG-1.)T=-777777.
+     288       PKLOG(I)=T
+     289       IF(NOPPOS.EQ.1)GOTO90
+     290       J=NPK+1-NMISS
+     291       WRCPP(J)=T
+     292       IF(NOSYS.NE.1)SYSPP(I)=T
+     293    90 CONTINUE
+     294 C
+     295 C     wording of following 2 messages changed by AML 8/93 after
+     296 C     exchange of edoc's between Raymond Slade and Bill Kirby 
+     297       IF(NMISS.EQ.0)GOTO100
+     298       IER=MAX0(IER,2)
+     299       IF(MSL.GT.0)WRITE(MSG,109)NMISS
+     300 109   FORMAT(  '  **WCF109W-PEAKS WITH MINUS-FLAGGED DISCHARGES ',
+     301      $           'WERE BYPASSED.  ',I6)
+     302       IF(IER.LE.3)GOTO100
+     303       IER=3
+     304       IF(MSL.GT.0)WRITE(MSG,111)
+     305 111   FORMAT(  ' ***WCF111E-HISTORIC PEAK HAD MINUS-FLAGGED ',         
+     306      $         ' DISCHARGE')    
+     307   100 CONTINUE
+     308   110 CONTINUE
+     309 C
+     310       NSYS=NPK-NHIST-NMISS
+     311       IF(NMISS.GT.0 .AND. MSL.GT.0)WRITE(MSG,113)NSYS
+     312 Ckmf  revised format because of problem with Lahey compiler
+     313 C 113 FORMAT(56H  **WCF113W-NUMBER OF SYSTEMATIC PEAKS HAS BEEN REDUCED
+     314 C    $       ,10HTO NSYS =  ,I4)
+     315   113 FORMAT( '  **WCF113W-NUMBER OF SYSTEMATIC PEAKS HAS BEEN ',
+     316      $        'REDUCED TO NSYS = ',I4)
+     317       IF(NSYS.GT.0)GOTO130
+     318       IER=3
+     319       IF(MSL.GT.0)WRITE(MSG,117)NSYS,NPK,NHIST,NMISS
+     320 117   FORMAT(42H ***WCF117E-NO DATA IN SYSTEMATIC RECORD. ,
+     321      $        25H NSYS,NPK,NHIST,NMISS=    / 30X,4I10)
+     322       GOTO140
+     323   130 IF(NSYS.GE.10)GOTO140
+     324       IER=MAX0(IER,2)
+     325       IF(MSL.GT.0)WRITE(MSG,118)NSYS
+     326 118   FORMAT( '  **WCF118W-SYSTEMATIC RECORD SHORTER THAN 17B SPEC.',I6)
+     327   140 CONTINUE
+     328       RETURN
+     329       END
+Bytes of stack required for this program unit: 192.
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 10
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s     223r     229r     230r     231r     232r     233r     283u
+                                                  287u
+BIGQ (REAL)           scalar                      212s     223=     236u     267u     272u
+CLIML (REAL)          array          256        (I2)2s   (I2)4s     231=
+CLIMU (REAL)          array          384        (I2)3s   (I2)5s     232=
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+EPFC (REAL)           array          128        (I2)2s   (I2)4s     230=
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s
+FINIT (REAL)          array          32           212s     218u     236=
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s     238o
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s     238o     260u     260u     262o
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s     260u     262o
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s     260u     262o
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s     239o
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+I (INTEGER)           scalar                      211s     229u     229r     230u     230r     231u     231r     232u     232r
+                                                  233u     233r     236u     271u     278u     280u     283u     286u     288u
+                                                  292u
+IER (INTEGER)         scalar                      179s     186s     245=     261r     261r     261=     286=     298r     298r
+                                                  298=     302u     303=     318=     324r     324r     324=
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s     238o
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+J (INTEGER)           scalar                      211s     269=     270u     272u     290=     291u
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s     238o     246o     252o     253o     262o     299o     304o
+                                                  311o     319o     325o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s     238u     246u     251u     262u     299u     304u     311u
+                                                  319u     325u
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u   (I2)4u   (I2)4u   (I2)4u   (I2)5u
+                                                (I2)5u     228u
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s     239o     244u     244u     246o     269u     286u     310u
+                                                  319o
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 11
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s     275=     285u     285=     290u     297u     299o     310u
+                                                  311u     319o
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s     266u     289u
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s     268u     292u
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s     252u     253u     276u
+NPK (INTEGER)         scalar                      179s     186s     187u     187u     187u     187u     244u     246o     252o
+                                                  253o     277u     290u     310u     319o
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     310=     311o     317u     319o     323u     325o
+PKLOG (REAL)          array                       179s     187s     253o     280=     283=     288=
+PKQ (REAL)            array                       179s     187s     252o     278u
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s     239o
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s     239o
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s     238o
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSPP (REAL)          array                       179s     187s     271=     272=     292=
+SYSRFC (REAL)         array          512        (I2)3s   (I2)5s     233=
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+T (REAL)              scalar                      212s     278=     279u     280r     282u     287u     287=     288u     291u
+                                                  292u
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+WCFAPI                SUBROUTINE                  178s
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s     218u
+WRCFC (REAL)          array          0          (I2)2s   (I2)4s     229=
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s
+WRCPP (REAL)          array                       179s     187s     267=     291=
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 12
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+10          228d     234s
+100         297g     302g     307s
+101         238f     240s
+102         246f     247s
+103         252f     254s
+104         253f     256s
+107         262f     263s
+109         299f     300s
+110         276g     308s
+111         304f     305s
+113         311f     315s
+117         319f     320s
+118         325f     326s
+130         317g     323s
+140         322g     323g     327s
+20          235d     236s
+30          244g     249s
+40          251g     258s
+50          260g     264s
+60          270d     271s
+70          266g     268g     273s
+80          279g     282s
+85          282g     285s
+90          277d     281g     284g     289g     293s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 13
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFASP    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     330 C
+     331 C
+     332 C
+     333       SUBROUTINE   WCFASP
+     334      #                    (SYSLOG,SYSPP,NSYS1,IER)
+     335 C
+     336 C     + + + PURPOSE + + +
+     337 C     ANALYZE SYSTEMATIC PEAKS
+     338 C     (WRC Bulletin-17 Flood Frequency Analysis)
+     339 C     REV 7/20/79 WK TO MAKE ADDENDS TO SUMS DOUBLE PRECISION
+     340 C
+     341 C     + + + DUMMY ARGUMENTS + + +
+     342       INTEGER NSYS1,IER
+     343       REAL SYSLOG(NSYS1),SYSPP(NSYS1)
+     344 C
+     345 C     + + + ARGUMENT DEFINITIONS + + +
+     346 C     SYSLOG - systematic peak logarithms
+     347 C     SYSPP  - prob plot positions systematic record PKS
+     348 C     NSYS1  - number of systematic peaks
+     349 C     IER    - error return code
+     350 C
+     351 C     + + + PARAMETERS + + +
+     352       INCLUDE 'pmxint.inc'
+     353 C
+     354 C     + + + COMMON BLOCKS + + +
+     355       INCLUDE 'cwcf0.inc'
+     356       INCLUDE 'cwcf1.inc'
+     357       INCLUDE 'cwcf2.inc'
+     358 C
+     359 C     + + + LOCAL VARIABLES + + +
+     360       INTEGER   NAGB, I
+     361       REAL      T, SYSTAT(8), WSTATS(8)
+     362       DOUBLE PRECISION Z
+     363 C
+     364 C     + + + EQUIVALENCE + + +
+     365       EQUIVALENCE (WSTATS(1),WRCBAS),(SYSTAT(1),SYSBAS)
+     366 C
+     367 C     + + + INTRINSICS + + +
+     368       INTRINSIC  ALOG10
+     369 C
+     370 C     + + + EXTERNALS + + +
+     371       EXTERNAL   WCFCSA, WCFEPP, WCFFCA
+     372 C
+     373 C     + + + END SPECIFICATIONS + + +
+     374 C
+     375       NLWOUT=0
+     376       NHIOUT=0
+     377       NHISTN=0
+     378       HISTPN=NSYS
+     379       SYSMAX=-BIGLOG
+     380       SYSMIN=+BIGLOG
+     381       NAGB=0
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 14
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     382       DO10I=1,3
+     383       SUMH(I)=0D0
+     384    10 SUMS(I)=0D0
+     385 C
+     386       WRCBAS=-BIGLOG
+     387       IF(GAGEB.GT.0.)WRCBAS=ALOG10(GAGEB)
+     388       SYSBAS=WRCBAS
+     389       DO30I=1,NSYS1
+     390       T=SYSLOG(I)
+     391       IF(T.LE.WRCBAS)GOTO30
+     392       NAGB=NAGB+1
+     393       IF(T.LT.SYSMIN)SYSMIN=T
+     394       IF(T.GT.SYSMAX)SYSMAX=T
+     395       Z = T
+     396       SUMS(1)=SUMS(1)+Z
+     397       SUMS(2)=SUMS(2)+Z**2
+     398       SUMS(3)=SUMS(3)+Z**3
+     399    30 CONTINUE
+     400       NBGB=NSYS-NAGB
+     401 C
+     402       IF(MSL.LT.2)GOTO40
+     403       T=10.**WRCBAS
+     404       IF(NBGB.GT.0)WRITE(MSG,133)NBGB,T
+     405       IF(NBGB.LE.0)WRITE(MSG,134)T
+     406 133   FORMAT(56H    WCF133I-SYSTEMATIC PEAKS BELOW GAGE BASE WERE NOTED.
+     407      $       ,I10,1X,F8.1)
+     408 134   FORMAT(53H    WCF134I-NO SYSTEMATIC PEAKS WERE BELOW GAGE BASE.,
+     409      $       14X,F8.1)
+     410    40 CONTINUE
+     411 C
+     412 Ckmf  CALL WCFCSA (4HSYS , IER )
+     413       CALL WCFCSA ( 'SYS ', IER )
+     414       IF(IER.GE.3)  RETURN
+     415 C
+     416       IF(NOSYS.EQ.1) RETURN
+     417 Ckmf  IF(NOPPOS.NE.1) CALL WCFEPP (SYSPP, 4HSYS ,NSYS)
+     418 Ckmf  CALL WCFFCA (SYSRFC,4HSYS , IER)
+     419       IF(NOPPOS.NE.1) CALL WCFEPP (SYSPP, 'SYS ', NSYS)
+     420       CALL WCFFCA (SYSRFC, 'SYS ', IER )
+     421 C     STATISTICS ARE REPORTED BY WCFFCA IF REQUIRED.
+     422       DO 50 I=1,8
+     423    50 SYSTAT(I)=WSTATS(I)
+     424       RETURN
+     425       END
+Bytes of stack required for this program unit: 40.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s     379u     380u     380u     386u
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 15
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+CLIML (REAL)          array          256        (I2)2s   (I2)4s
+CLIMU (REAL)          array          384        (I2)3s   (I2)5s
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+EPFC (REAL)           array          128        (I2)2s   (I2)4s
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s     387u     387r
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s     378=
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+I (INTEGER)           scalar                      360s     383u     384u     390u     423u     423u
+IER (INTEGER)         scalar                      334s     342s     413r     413r     413r     414u     420r     420r     420r
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s     404o     405o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s     402u
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u   (I2)4u   (I2)4u   (I2)4u   (I2)5u
+                                                (I2)5u
+NAGB (INTEGER)        scalar                      360s     381=     392u     392=     400u
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s     400=     404u     404o     405u
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s     376=
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s     377=
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s     375=
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s     419u
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s     416u
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     378u     400u     419r     419r     419r
+NSYS1 (INTEGER)       scalar                      334s     342s     343u     343u     389u
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 16
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s     383=
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s     384=     396u     396=     397u     397=     398u     398=
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s     365u     388=
+SYSLOG (REAL)         array                       334s     343s     390u
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s     379=     394u     394=
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s     380=     393u     393=
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSPP (REAL)          array                       334s     343s     419r     419r     419r
+SYSRFC (REAL)         array          512        (I2)3s   (I2)5s     420r     420r     420r
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSTAT (REAL)         array          112          361s     365u     423=
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+T (REAL)              scalar                      361s     390=     391u     393u     393u     394u     394u     395u     403=
+                                                  404o     405o
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+WCFASP                SUBROUTINE                  333s
+WCFCSA                SUBROUTINE                  371u     413u
+WCFEPP                SUBROUTINE                  371u     419u
+WCFFCA                SUBROUTINE                  371u     420u
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s     365u     386=     387=     388u     391u     403u
+WRCFC (REAL)          array          0          (I2)2s   (I2)4s
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s
+WSTATS (REAL)         array          32           361s     365u     423u
+Z (REAL(kind 8))      scalar                      362s     395=     396u     397u     398u
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+10          382d     384s
+133         404f     406s
+134         405f     408s
+30          389d     391g     399s
+40          402g     410s
+50          422d     423s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 17
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 18
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFCSA    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     426 C
+     427 C
+     428 C
+     429       SUBROUTINE   WCFCSA
+     430      #                    (LABEL,IER)
+     431 C
+     432 C     + + + PURPOSE + + +
+     433 C     CALCULATE STATISTICS OF ABOVE-BASE PEAKS
+     434 C     (WRC Bulletin-17 Flood Frequency Analysis)
+     435 C     INCLUDING WRC HISTORIC ADJ, WHEN HIST INFO EXISTS.
+     436 C     NOTE -- THESE FORMULAS ARE OK EVEN IF NHIOUT.GT.0 AND HISTPN.EQ.NSYS.
+     437 C      (I.E., EVEN IF WCFDHH HAS DETECTED HIGH OUTLIERS BUT NO HISTORIC
+     438 C      INFO HAS BEEN GIVEN.)  IN THIS CASE, HISTWT = 1.
+     439 C
+     440 C     REV 5/79 WK TO SIMPLIFY FN CALC AND TO TRAP NEGATIVE VARIANCES.
+     441 C
+     442 C     + + + HISTORY + + +
+     443 C     kmf - nov 9, 2000 - changed label from Hollerith to character
+     444 C
+     445 C     + + + DUMMY ARGUMENTS + + +
+     446 Ckmf  INTEGER   LABEL, IER
+     447       INTEGER   IER
+     448       CHARACTER*4 LABEL
+     449 C
+     450 C     + + + ARGUMENTS DEFINITIONS + + +
+     451 C     LABEL  - input identification label printed in error message,
+     452 C              indicates point from which routine was called (used
+     453 C              only in error messages)
+     454 C     IER    - error return code
+     455 C
+     456 C     + + + PARAMETERS + + +
+     457       INCLUDE 'pmxint.inc'
+     458 C
+     459 C     + + + COMMON BLOCKS + + +
+     460       INCLUDE 'cwcf0.inc'
+     461       INCLUDE 'cwcf1.inc'
+     462       INCLUDE 'cwcf2.inc'
+     463 C
+     464 C     + + + LOCAL VARIABLES + + +
+     465       INTEGER   I
+     466       REAL      FN, Z, V
+     467       DOUBLE PRECISION S(3),DBLAAV
+     468 C
+     469 C     + + + INTRINSICS + + +
+     470       INTRINSIC  FLOAT, SQRT
+     471 C
+     472 C     + + + END SPECIFICATIONS + + +
+     473 C
+     474       FN =NSYS-NHIOUT-NBGB-NLWOUT
+     475       IF (FN.LT.3.)GOTO97
+     476       Z=NHISTN+NHIOUT
+     477        write(*,*) 'WCFCSA: NHISTN,NHIOUT,NSYS',NHISTN,NHIOUT,NSYS
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 19
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     478       HISTWT=(HISTPN-Z)/FLOAT(NSYS-NHIOUT)
+     479       FN = Z + HISTWT*FN
+     480       DO50I=1,3
+     481    50 S(I)=SUMS(I)*HISTWT + SUMH(I)
+     482 C
+     483        write(*,*) 'WCFCSA: FN,HISTPN',FN,HISTPN
+     484       WRCPAB=FN/HISTPN
+     485       DBLAAV=S(1)/FN
+     486       WRCAAV=DBLAAV
+     487       V=(S(2)-S(1)**2/FN)/(FN-1.)
+     488        write(*,*)'WCFCSA: V',V
+     489 cprh      IF(V.GE.0.) GO TO 60
+     490       IF(V.GT.0.) GO TO 60
+     491       IER=3
+     492       IF(MSL.GT.0) WRITE(MSG, 143) LABEL, V
+     493 143   FORMAT(38H ***WCF143E-NEGATIVE VARIANCE OF LOGS   ,1A4,F10.5)
+     494       RETURN
+     495    60 CONTINUE
+     496       WRCASD=SQRT(V)
+     497        write(*,*)'WCFCSA: 60, WRCASD,DBLAAV,S',WRCASD,DBLAAV,S
+     498       WRCASK=(S(3)-3.*DBLAAV*S(2) + 2.*DBLAAV**2*S(1))*FN
+     499      $         / ((FN-1.)*(FN-2.)*WRCASD**3)
+     500        write(*,*)'WCFCSA: WRCASK',WRCASK
+     501       RETURN
+     502 C
+     503    97 IER=3
+     504       IF(MSL.GT.0)WRITE(MSG,141) LABEL,
+     505      $                      FN,NSYS,NBGB,NLWOUT,NHIOUT,NHISTN,HISTPN
+     506 141   FORMAT(48H ***WCF141E-SAMPLE SIZE TOO SMALL TO CALC STATS.  ,1A6,
+     507      $         F8.1/11X,  37HNSYS,NBGB,NLWOUT,NHIOUT,NHISTN,HISTPN  /
+     508      $         8X,5I6, F10.1)
+     509       RETURN
+     510       END
+Bytes of stack required for this program unit: 32.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s
+CLIML (REAL)          array          256        (I2)2s   (I2)4s
+CLIMU (REAL)          array          384        (I2)3s   (I2)5s
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+DBLAAV (REAL(kind 8))
+                      scalar                      467s     485=     486u     497o     498u     498u
+EPFC (REAL)           array          128        (I2)2s   (I2)4s
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 20
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+FN (REAL)             scalar                      466s     474=     475u     479u     479=     483o     484u     485u     487u
+                                                  487u     498u     499u     499u     505o
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s     478u     483o     484u     505o
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s     478=     479u     481u
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+I (INTEGER)           scalar                      465s     481u     481u     481u
+IER (INTEGER)         scalar                      430s     447s     491=     503=
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+LABEL (CHARACTER)     scalar                      430s     448s     492o     492o     504o     504o
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s     492o     504o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s     492u     504u
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u   (I2)4u   (I2)4u   (I2)4u   (I2)5u
+                                                (I2)5u
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s     474u     505o
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s     474u     476u     477o     478u     505o
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s     476u     477o     505o
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s     474u     505o
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     474u     477o     478u     505o
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s
+S (REAL(kind 8))      array                       467s     481=     485u     487u     487u     497o     498u     498u     498u
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s     481u
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s     481u
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 21
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSRFC (REAL)         array          512        (I2)3s   (I2)5s
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+V (REAL)              scalar                      466s     487=     488o     490u     492o     496r
+WCFCSA                SUBROUTINE                  429s
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s     486=
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s     496=     497o     499u
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s     498=     500o
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s
+WRCFC (REAL)          array          0          (I2)2s   (I2)4s
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s     484=
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s
+Z (REAL)              scalar                      466s     476=     478u     479u
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+141         504f     506s
+143         492f     493s
+50          480d     481s
+60          490g     495s
+97          475g     503s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 22
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFCWS    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     511 C
+     512 C
+     513 C
+     514       SUBROUTINE   WCFCWS
+     515      #                    (IRC)
+     516 C
+     517 C     + + + PURPOSE + + +
+     518 C     CALCULATE WRC WEIGHTED SKEW
+     519 C     (WRC Bulletin-17 Flood Frequency Analysis)
+     520 C     REV 10/79 WK - REDEFINE 'ROUND' TO HANDLE NEGATIVE X.
+     521 C     REV 1/81 WK - BULL 17-B WEIGHTED SKEW CALC BASED ON MEAN SQUARE ERROR
+     522 C
+     523 C     + + + DUMMY ARGUMENTS + + +
+     524       INTEGER   IRC
+     525 C
+     526 C     + + + ARGUMENTS DEFINITIONS + + +
+     527 C     IRC    - return code, 0, 1, 2, or 3:
+     528 C              0 - no error
+     529 C              3 - error, calculation aborted
+     530 C
+     531 C     + + + PARAMETERS + + +
+     532       INCLUDE 'pmxint.inc'
+     533 C
+     534 C     + + + COMMON BLOCKS + + +
+     535       INCLUDE 'cwcf0.inc'
+     536       INCLUDE 'cwcf1.inc'
+     537       INCLUDE 'cwcf2.inc'
+     538 C
+     539 C     + + + LOCAL VARIABLES + + +
+     540       REAL   ERL, AG, A, S, VSTA, VGS, T, HOLD, X
+     541 C
+     542 C     + + + FUNCTIONS + + +
+     543       REAL   ROUND
+     544 C
+     545 C     + + + INTRINSICS + + +
+     546       INTRINSIC  ALOG10, SIGN, MAX0, AINT, ABS
+     547 C
+     548 C     + + + END SPECIFICATIONS + + +
+     549 C
+     550       ROUND(X) =  SIGN( AINT(.5+ABS(X)/WSKLAT)*WSKLAT, X )
+     551 C
+     552       ERL = NSYS
+     553       ERL = ERL + HRECWS*(HISTPN-ERL)
+     554 C
+     555 C  MSE OF STATION SKEW
+     556       AG = ABS(WRCSKW)
+     557       A = -0.33 + 0.08*AG
+     558       IF(AG.GT.0.90) A = -0.52 + 0.30*AG
+     559       S = 0.94 - 0.26*AG
+     560       IF(AG.GT.1.50) S = 0.55
+     561       VSTA = 10.**(A - S*(ALOG10(ERL)-1.))
+     562 C
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 23
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     563 C  MSE OF GEN SKEW
+     564       VGS = RMSEGS**2
+     565       IF(RMSEGS.LE.0.) VGS = RMSDGS**2
+     566 C
+     567 C  WEIGHT
+     568       GSKWGT = VSTA/(VSTA+VGS)
+     569 C
+     570       T = WRCSKW
+     571       WRCSKW = WRCSKW + GSKWGT*(GENSKU-WRCSKW)
+     572       IF(WSKLAT.GT.0.) WRCSKW = ROUND(WRCSKW)
+     573       IF(IGSOPT.EQ.0)RETURN
+     574 C
+     575       IRC=MAX0(IRC,1)
+     576       HOLD = WRCSKW
+     577       IF(IGSOPT.GT.0)GOTO10
+     578       GSKWGT=0.
+     579       WRCSKW = T
+     580       GOTO20
+     581    10 GSKWGT=1.
+     582       WRCSKW=GENSKU
+     583    20 CONTINUE
+     584       IF(WSKLAT.GT.0.) WRCSKW = ROUND(WRCSKW)
+     585 C
+     586       IF(MSL.GE.2) WRITE(MSG,151) HOLD, WRCSKW, IGSOPT
+     587 151   FORMAT( '   *WCF151I-17B WEIGHTED SKEW REPLACED BY USER OPTION.',
+     588      $          2F10.3,I4)
+     589       RETURN
+     590       END
+Bytes of stack required for this program unit: 80.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+A (REAL)              scalar                      540s     557=     558=     561u
+AG (REAL)             scalar                      540s     556=     557u     558u     558u     559u     560u
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s
+CLIML (REAL)          array          256        (I2)2s   (I2)4s
+CLIMU (REAL)          array          384        (I2)3s   (I2)5s
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+EPFC (REAL)           array          128        (I2)2s   (I2)4s
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s
+ERL (REAL)            scalar                      540s     552=     553u     553u     553=     561r
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s     571u     582u
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s     568=     571u     578=     581=
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 24
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s     553u
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s
+HOLD (REAL)           scalar                      540s     576=     586o
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s     553u
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s     573u     577u     586o
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+IRC (INTEGER)         scalar                      515s     524s     575r     575r     575=
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s     586o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s     586u
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u   (I2)4u   (I2)4u   (I2)4u   (I2)5u
+                                                (I2)5u
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     552u
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s     565u
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s     564u     565u
+ROUND                 FUNCTION                    572u     584u
+ROUND (REAL)          scalar                      543s
+S (REAL)              scalar                      540s     559=     560=     561u
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSRFC (REAL)         array          512        (I2)3s   (I2)5s
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 25
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+T (REAL)              scalar                      540s     570=     579u
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+VGS (REAL)            scalar                      540s     564=     565=     568u
+VSTA (REAL)           scalar                      540s     561=     568u     568u
+WCFCWS                SUBROUTINE                  514s
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s
+WRCFC (REAL)          array          0          (I2)2s   (I2)4s
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s     556r     570u     571u     571u     571=     572r     572r
+                                                  572u     572=     576u     579=     582=     584r     584r     584u     584=
+                                                  586o
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s     550u     550u     572u     584u
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+10          577g     581s
+151         586f     587s
+20          580g     583s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 26
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFDHH    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     591 C
+     592 C
+     593 C
+     594       SUBROUTINE   WCFDHH
+     595      #                    (PKLOG,NDIM,IER)
+     596 C
+     597 C     + + + PURPOSE + + +
+     598 C     DETECT HISTORIC PEAKS AND HIGH OUTLIERS
+     599 C     (WRC Bulletin-17 Flood Frequency Analysis)
+     600 C     REV 7/20/79 WK TO MAKE ADDENDS TO SUMS DOUBLE PRECISION
+     601 C     REV 1/81 WK - BULL 17-B REVISED OUTLIER TEST
+     602 C     REV 4/28/81 WK - TO USE NUMBER OF PEAKS ABOVE FLOOD BASE IN HI-OUT
+     603 C       TEST.  ALSO PRINT HI-OUT TEST BEFORE SUPERSEDING WITH MIN HIST PEAK
+     604 C
+     605 C     + + + DUMMY ARGUMENTS + + +
+     606       INTEGER   NDIM, IER
+     607       REAL      PKLOG(NDIM)
+     608 C
+     609 C     + + + ARGUMENT DEFINITIONS + + +
+     610 C     PKLOG  - peak flow LOG10 work-input vector
+     611 C     NDIM   - size of PKLOG array
+     612 C     IER    - error return code
+     613 C
+     614 C     + + + PARAMETERS + + +
+     615       INCLUDE 'pmxint.inc'
+     616 C
+     617 C     + + + COMMON BLOCKS + + +
+     618       INCLUDE 'cwcf0.inc'
+     619       INCLUDE 'cwcf1.inc'
+     620 C
+     621 C     + + + LOCAL VARIABLES + + +
+     622       INTEGER   I,ISYS,J
+     623       REAL      HPMIN,T,U
+     624       DOUBLE PRECISION Z
+     625 C
+     626 C     + + + FUNCTIONS + + +
+     627       REAL   OUTKGB
+     628 C
+     629 C     + + + INTRINSICS + + +
+     630       INTRINSIC  MAX0, ALOG10, AMIN1, FLOAT
+     631 C
+     632 C     + + + EXTERNALS + + +
+     633       EXTERNAL OUTKGB
+     634 C
+     635 C     + + + END SPECIFICATIONS + + +
+     636 C
+     637 C  PRELIM CHECK NO. 153 IS NO LONGER NEEDED WITH NEW BULL 17-B
+     638 C    HIGH OUTLIER TEST.  SEE MSG 164 AND 167 FOR BAD HISTORIC INFO.
+     639 C
+     640 C
+     641 C  NOTE HIST PKS
+     642       HPMIN = BIGLOG
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 27
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     643       IF(NHIST.LE.0)GOTO40
+     644       NHISTN=NHIST
+     645       DO 30 I=1,NHISTN
+     646       T=PKLOG(I)
+     647       IF(T.LT.HPMIN) HPMIN = T
+     648       Z = T
+     649       SUMH(1)=SUMH(1)+Z
+     650       SUMH(2)=SUMH(2)+Z**2
+     651    30 SUMH(3)=SUMH(3)+Z**3
+     652    40 CONTINUE
+     653 C
+     654 C  SET HIGH-OUTLIER BASE
+     655       WRCHOT = WRCAAV + WRCASD*OUTKGB(SIGHOT, NSYS-NBGB-NLWOUT )
+     656       IF(QHIOUT.LE.0.)GOTO60
+     657       IF(MSL.LT.2) GO TO 44
+     658       T = 10.**WRCHOT
+     659       WRITE(MSG,161) QHIOUT, T
+     660 161   FORMAT('   *WCF161I-USER HIGH OUTLIER CRITERION REPLACES 17B. ',
+     661      $   F10.1,1X,F10.1 )
+     662    44 IER = MAX0(1, IER)
+     663       T=ALOG10(QHIOUT)
+     664       IF(T.LE.HPMIN) GO TO 50
+     665       IER=MAX0(IER,2)
+     666       U = 10.**HPMIN
+     667       IF(MSL.GT.0)WRITE(MSG,157)QHIOUT,U
+     668 157   FORMAT(45H  **WCF157W-USER HIGH-OUTLIER CRIT LOWERED TO,
+     669      $       13H MIN HIST PK.,  2(1X,F9.1))
+     670       T = HPMIN
+     671    50 WRCHHB=T
+     672       GO TO 66
+     673    60 CONTINUE
+     674       WRCHHB = WRCHOT
+     675       IF(WRCHHB.LE.HPMIN) GO TO 66
+     676       IF(MSL.LT.2) GO TO 65
+     677       T = 10.**WRCHOT
+     678       WRITE(MSG,156) T
+     679 156   FORMAT(4X,'WCF156I-17B HI-OUTLIER TEST SUPERSEDED BY MIN HIST PK',
+     680      $     1X,F9.1)
+     681    65 WRCHHB = HPMIN
+     682    66 CONTINUE
+     683       IF(WRCHHB.GT.WRCBAS)GOTO70
+     684       IER=3
+     685       IF(MSL.LE.0)RETURN
+     686       U=10.**WRCHHB
+     687       T=10.**WRCBAS
+     688       WRITE(MSG,159)U,T
+     689 159   FORMAT(39H ***WCF159E-HIGH-OUT/HIST-PK BASE BELOW ,
+     690      $        19H LOW-OUT/GAGE BASE.,  2(1X,F9.1))
+     691       RETURN
+     692    70 CONTINUE
+     693 C
+     694 C  DETECT HIGH OUTLIERS
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 28
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     695       IF(WRCHHB.GT.SYSMAX)GOTO100
+     696       ISYS=NHISTN+1
+     697       DO90I=ISYS,NDIM
+     698       T=PKLOG(I)
+     699       IF(T.LT.WRCHHB)GOTO90
+     700       NHIOUT=NHIOUT+1
+     701       Z = T
+     702       DO 85 J=1,3
+     703       SUMS(J)=SUMS(J)-Z
+     704       SUMH(J)=SUMH(J)+Z
+     705    85 Z = Z*T
+     706    90 CONTINUE
+     707       IF(NHIOUT.GT.0)GOTO100
+     708       IER=3
+     709       WRITE(MSG,197) SYSMAX, WRCHHB
+     710   197 FORMAT(/' ***WCF004*-INTERNAL PROGRAM LOGIC ERROR DHH-197 -- ',
+     711      $     2F10.5)
+     712   100 CONTINUE
+     713 C
+     714 C  REPORT NO HIGH-HIST
+     715       IF(NHIOUT+NHISTN.GT.0)GOTO110
+     716       IF(MSL.LT.2) GO TO 16301
+     717       U = 10.**WRCHHB
+     718       WRITE(MSG,163) U
+     719 16301 CONTINUE
+     720   163 FORMAT('    WCF163I-NO HIGH OUTLIERS OR HISTORIC PEAKS ',
+     721      $       'EXCEEDED HHBASE.  ',F10.1)
+     722       IF(HISTPD.LE.0.) RETURN
+     723       IER=MAX0(IER,2)
+     724       IF(MSL.LE.0) RETURN
+     725       WRITE(MSG,164) HISTPD
+     726 164   FORMAT('  **WCF164W-HISTORIC PERIOD IGNORED.  ',F6.1 )
+     727       RETURN
+     728 C
+     729 C  REPORT HIGH-OUT-HIST COUNTS
+     730   110 CONTINUE
+     731       IF(HISTPD.LE.0) GO TO 210
+     732       HISTPN = HISTPD
+     733       T=10.**WRCHHB
+     734       IF(MSL.GE.2)WRITE(MSG,165)NHIOUT,NHISTN,T
+     735 165   FORMAT(44H    WCF165I-HIGH OUTLIERS AND HISTORIC PEAKS,
+     736      $       14H ABOVE HHBASE., 2(1X,I2),1X,F10.1)
+     737       IF(HISTPN.GT.FLOAT(NHISTN+NSYS))GOTO120
+     738       IER=3
+     739       IF(MSL.GT.0) WRITE(MSG,167) HISTPN, NSYS, NHISTN
+     740 167   FORMAT(54H ***WCF167E-HIST PERIOD NO LONGER THAN SYS + HIST PKS.,
+     741      $        F9.1,2I5)
+     742       RETURN
+     743   120 T=AMIN1(300., 5.*FLOAT(NSYS))
+     744       IF(HISTPN.LE.T)GOTO130
+     745       IER=MAX0(IER,1)
+     746       IF(MSL.GE.2)WRITE(MSG,169)HISTPN,T
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 29
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     747 169   FORMAT(48H   *WCF169I-ACCEPTED HISTORIC PERIOD GTR THAN T.,2F9.1)
+     748   130 I=NHISTN+NHIOUT
+     749       IF(10*I.LE.NSYS .OR. I.LE.1) GO TO 140
+     750       IER=MAX0(IER,2)
+     751       IF(MSL.GT.0)WRITE(MSG,171)I,NSYS
+     752 171   FORMAT(42H  **WCF171W-NUMBER HI-OUT/HIST PKS EXCEEDS,
+     753      $       18H 10PCT OF SYS PKS. ,  2I7)
+     754   140 CONTINUE
+     755       RETURN
+     756   210 CONTINUE
+     757       IF(NHISTN.LE.0) GO TO 215
+     758       IER = 3
+     759       WRITE(MSG,1601) NHIST, NHISTN, HISTPD
+     760 1601  FORMAT(/' ***WCF004*-INTERNAL PROGRAM LOGIC ERROR DHH-1601. ',2I6,
+     761      $         F7.1/)
+     762   215 CONTINUE
+     763       IF(MSL.LT.2) RETURN
+     764       T = 10.**WRCHHB
+     765       WRITE(MSG,162) NHIOUT, T
+     766 162   FORMAT('    WCF162I-SYSTEMATIC PEAKS EXCEEDED HIGH-',
+     767      $    'OUTLIER CRITERION. ',I3,1X,F9.1)
+     768       RETURN
+     769       END
+Bytes of stack required for this program unit: 72.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s     642u
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s     722u     725o     731u     732u     759o
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s     732=     737u     739o     744u     746o
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s
+HPMIN (REAL)          scalar                      623s     642=     647u     647=     664u     666u     670u     675u     681u
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+I (INTEGER)           scalar                      622s     646u     698u     748=     749u     749u     751o
+IER (INTEGER)         scalar                      595s     606s     662r     662r     662=     665r     665r     665=     684=
+                                                  708=     723r     723r     723=     738=     745r     745r     745=     750r
+                                             Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 30
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+                                                  750r     750=     758=
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+ISYS (INTEGER)        scalar                      622s     696=     697u
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+J (INTEGER)           scalar                      622s     703u     703u     704u     704u
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s     659o     667o     678o     688o     709o     718o     725o
+                                                  734o     739o     746o     751o     759o     765o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s     657u     667u     676u     685u     716u     724u     734u
+                                                  739u     746u     751u     763u
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s     655u
+NDIM (INTEGER)        scalar                      595s     606s     607u     697u
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s     700u     700=     707u     715u     734o     748u     765o
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s     643u     644u     759o
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s     644=     645u     696u     715u     734o     737u     739o
+                                                  748u     757u     759o
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s     655u
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     655u     737u     739o     743r     749u     751o
+OUTKGB                FUNCTION                    627s     633u     655u
+PKLOG (REAL)          array                       595s     607s     646u     698u
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s     656u     659o     663r     667o
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s     655r     655r     655r
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s     649u     649=     650u     650=     651u     651=     704u
+                                                  704=
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s     703u     703=
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s     695u     709o
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+T (REAL)              scalar                      623s     646=     647u     647u     648u     658=     659o     663=     664u
+                                                  670=     671u     677=     678o     687=     688o     698=     699u     701u
+                                                  705u     733=     734o     743=     744u     746o     764=     765o
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 31
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+U (REAL)              scalar                      623s     666=     667o     686=     688o     717=     718o
+WCFDHH                SUBROUTINE                  594s
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s     655u
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s     655u
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s     683u     687u
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s     671=     674=     675u     681=     683u     686u     695u
+                                                  699u     709o     717u     733u     764u
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s     655=     658u     674u     677u
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s
+Z (REAL(kind 8))      scalar                      624s     648=     649u     650u     651u     701=     703u     704u     705u
+                                                  705=
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+100         695g     707g     712s
+110         715g     730s
+120         737g     743s
+130         744g     748s
+140         749g     754s
+156         678f     679s
+157         667f     668s
+159         688f     689s
+1601        759f     760s
+161         659f     660s
+162         765f     766s
+163         718f     720s
+16301       716g     719s
+164         725f     726s
+165         734f     735s
+167         739f     740s
+169         746f     747s
+171         751f     752s
+197         709f     710s
+210         731g     756s
+215         757g     762s
+30          645d     651s
+40          643g     652s
+44          657g     662s
+50          664g     671s
+60          656g     673s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 32
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+65          676g     681s
+66          672g     675g     682s
+70          683g     692s
+85          702d     705s
+90          697d     699g     706s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 33
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFDLO    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     770 C
+     771 C
+     772 C
+     773       SUBROUTINE   WCFDLO
+     774      #                    (SYSLOG,NSYS1,IER)
+     775 C
+     776 C     + + + PURPOSE + + +
+     777 C     DETECT LOW OUTLIERS
+     778 C     REV 5/79 WK - MOVED WRC CHECK FOR TOO MANY BELOW BASE FROM FCA
+     779 C     REV 7/20/79 WK TO MAKE ADDENDS TO SUMS DOUBLE PRECISION
+     780 C     REV 1/81 WK - BULL 17-B REVISED OUTLIER TEST
+     781 C     REV 4/28/81 WK - TO USE NUMBER OF PEAKS ABOVE GAGE BASE IN LOW-OUT
+     782 C         TEST.  USES HIST WT .
+     783 C
+     784 C     + + + DUMMY ARGUMENTS + + +
+     785       INTEGER   NSYS1,IER
+     786       REAL      SYSLOG(NSYS1)
+     787 C
+     788 C     + + + ARGUMENT DEFINITIONS + + +
+     789 C     SYSLOG - systematic peak logarithms (input)
+     790 C     NSYS1  - number of systematic peak logarithms
+     791 C     IER    - error return code
+     792 C
+     793 C     + + + PARAMETERS + + +
+     794       INCLUDE 'pmxint.inc'
+     795 C
+     796 C     + + + COMMON BLOCKS + + +
+     797       INCLUDE 'cwcf0.inc'
+     798       INCLUDE 'cwcf1.inc'
+     799 C
+     800 C     + + + LOCAL VARIABLES + + +
+     801       INTEGER   NBB,I,NBBMAX
+     802       REAL      ERL,T,TEST
+     803       DOUBLE PRECISION Z
+     804 C
+     805 C     + + + FUNCTIONS + + +
+     806       REAL   OUTKGB
+     807 C
+     808 C     + + + INTRINSICS + + +
+     809       INTRINSIC  ALOG10, MAX0, FLOAT, INT
+     810 C
+     811 C     + + + EXTERNALS + + +
+     812       EXTERNAL  OUTKGB
+     813 C
+     814 C     + + + END SPECIFICATIONS + + +
+     815 C
+     816       ERL = NSYS-NBGB
+     817       T = HISTPN - HISTWT*NBGB
+     818       ERL = ERL + HRECWO*(T-ERL)
+     819       T = OUTKGB(SIGLOT, INT(ERL+.5))
+     820       WRCLOW=WRCAAV-WRCASD*T
+     821       TEST=WRCLOW
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 34
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     822       IF(QLWOUT.LE.0.)GOTO10
+     823       TEST=ALOG10(QLWOUT)
+     824       IER=MAX0(IER,1)
+     825       IF(MSL.LT.2)GOTO10
+     826       T=10.**WRCLOW
+     827       WRITE(MSG,191)QLWOUT,T
+     828 191   FORMAT(  '   *WCF191I-USER LOW-OUTLIER CRITERION SUPERSEDES 17B.',
+     829      $       4X,F8.1,1X,F8.1)
+     830    10 CONTINUE
+     831 C
+     832       IF(TEST.LT.WRCHHB)GOTO20
+     833       IER=3
+     834       IF(MSL.LE.0)     RETURN
+     835       WRCHHB=10.**WRCHHB
+     836       TEST=10.**TEST
+     837       WRITE(MSG,193)TEST,WRCHHB
+     838 193   FORMAT(52H ***WCF193E-LOW-OUTLIER CRITERION EXCEEDS HIGH-HIST.,
+     839      $           2F11.1)
+     840       RETURN
+     841 C
+     842    20 NLWOUT=0
+     843       IF(TEST.GE.SYSMIN)GOTO30
+     844       IF(MSL.LT.2)  GO TO 25
+     845       TEST=10.**TEST
+     846       WRITE(MSG,195)TEST
+     847 195   FORMAT(48H    WCF195I-NO LOW OUTLIERS WERE DETECTED BELOW ,
+     848      $       10HCRITERION.,9X,F8.1)
+     849    25 IF(NBGB.GT.0) GO TO 65
+     850       RETURN
+     851 C
+     852    30 WRCBAS=TEST
+     853       DO 40 I=1,NSYS1
+     854       T=SYSLOG(I)
+     855       IF(T.GT.WRCBAS.OR.T.LE.SYSBAS)GOTO40
+     856       Z = T
+     857       SUMS(1)=SUMS(1)-Z
+     858       SUMS(2)=SUMS(2)-Z**2
+     859       SUMS(3)=SUMS(3)-Z**3
+     860       NLWOUT=NLWOUT+1
+     861    40 CONTINUE
+     862       IF(NLWOUT.GT.0)GOTO50
+     863       IER=3
+     864       IF(MSL.GT.0)WRITE(MSG,197)SYSMIN,WRCBAS,SYSBAS
+     865 197   FORMAT(/' ***WCF004*-INTERNAL PROGRAM LOGIC ERROR DLO-197. ',
+     866      $       3F10.5/)
+     867       RETURN
+     868 C
+     869    50 IF(MSL.LT.2)  GO TO 60
+     870       T=10.**WRCBAS
+     871       WRITE(MSG,198)NLWOUT,T
+     872 198   FORMAT(46H    WCF198I-LOW OUTLIERS BELOW FLOOD BASE WERE,
+     873      $          9H DROPPED.,  I8,4X,F8.1)
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 35
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     874    60 CONTINUE
+     875 C
+     876 C  CHECK FOR TOO MANY BELOW-BASE PEAKS
+     877    65 CONTINUE
+     878       NBB = NBGB+NLWOUT
+     879       NBBMAX = 0.25*FLOAT(NSYS)
+     880       IF(NBB.LE.NBBMAX) GO TO 70
+     881       IER=MAX0(IER,2)
+     882       IF(MSL.LE.0) GO TO 70
+     883       T = 10.**WRCBAS
+     884       WRITE(MSG,199)NBB,T,NBBMAX
+     885 199   FORMAT(  '  **WCF199W-NUMBER OF PEAKS BELOW FLOOD BASE',
+     886      $         ' EXCEEDS 17B SPEC.', 1X,I3,1X,F8.1,1X,I3)
+     887    70 CONTINUE
+     888       RETURN
+     889       END
+Bytes of stack required for this program unit: 40.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s
+ERL (REAL)            scalar                      802s     816=     818u     818u     818=     819u
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s     817u
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s     817u
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s     818u
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+I (INTEGER)           scalar                      801s     854u
+IER (INTEGER)         scalar                      774s     785s     824r     824r     824=     833=     863=     881r     881r
+                                                  881=
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s     827o     837o     846o     864o     871o     884o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s     825u     834u     844u     864u     869u     882u
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 36
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u
+NBB (INTEGER)         scalar                      801s     878=     880u     884o
+NBBMAX (INTEGER)      scalar                      801s     879=     880u     884o
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s     816u     817u     849u     878u
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s     842=     860u     860=     862u     871o     878u
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     816u     879r
+NSYS1 (INTEGER)       scalar                      774s     785s     786u     853u
+OUTKGB                FUNCTION                    806s     812u     819u
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s     822u     823r     827o
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s     819r     819r     819r
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s     857u     857=     858u     858=     859u     859=
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s     855u     864o
+SYSLOG (REAL)         array                       774s     786s     854u
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s     843u     864o
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+T (REAL)              scalar                      802s     817=     818u     819=     820u     826=     827o     854=     855u
+                                                  855u     856u     870=     871o     883=     884o
+TEST (REAL)           scalar                      802s     821=     823=     832u     836u     836=     837o     843u     845u
+                                                  845=     846o     852u
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+WCFDLO                SUBROUTINE                  773s
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s     820u
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s     820u
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s     852=     855u     864o     870u     883u
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s     832u     835u     835=     837o
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 37
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s     820=     821u     826u
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s
+Z (REAL(kind 8))      scalar                      803s     856=     857u     858u     859u
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+10          822g     825g     830s
+191         827f     828s
+193         837f     838s
+195         846f     847s
+197         864f     865s
+198         871f     872s
+199         884f     885s
+20          832g     842s
+25          844g     849s
+30          843g     852s
+40          853d     855g     861s
+50          862g     869s
+60          869g     874s
+65          849g     877s
+70          880g     882g     887s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 38
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFEPP    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     890 C
+     891 C
+     892 C
+     893       SUBROUTINE   WCFEPP
+     894      #                    (PPV, LABEL, NDIM)
+     895 C
+     896 C     + + + PURPOSE + + +
+     897 C     EMPIRICAL PROBABILITY PLOTTING POSITIONS,  INCL WRC HIST ADJ AS APPRO
+     898 C
+     899 C     + + + HISTORY + + +
+     900 C     kmf - nov 9, 2000 - changed label from Hollerith to character
+     901 C
+     902 C     + + + DUMMY ARGUMENTS + + +
+     903 C     INTEGER   LABEL,NDIM
+     904       INTEGER   NDIM
+     905       REAL      PPV(NDIM)
+     906       CHARACTER*4 LABEL
+     907 C
+     908 C     + + + ARGUMENT DEFINITIONS + + +
+     909 C     PPV    - output vector for empirical plotting probabilities
+     910 C     LABEL  - identification label for printing message
+     911 C     NDIM   - dimension of PPV
+     912 C
+     913 C     + + + PARAMETERS + + +
+     914       INCLUDE 'pmxint.inc'
+     915 C
+     916 C     + + + COMMON BLOCKS + + +
+     917       INCLUDE 'cwcf0.inc'
+     918       INCLUDE 'cwcf1.inc'
+     919 C
+     920 C     + + + LOCAL VARIABLES + + +
+     921       INTEGER    NPK,NZ,I
+     922       REAL       FAC,A
+     923 C
+     924 C     + + + INTRINSICS + + +
+     925       INTRINSIC FLOAT,MIN0
+     926 C
+     927 C     + + + END SPECIFICATIONS + + +
+     928 C
+     929       NPK=NSYS+NHISTN
+     930       NZ=NHIOUT+NHISTN
+     931       FAC=1./(HISTPN+1.-2.*WEIBA)
+     932       IF(NZ.LE.0)NZ=NPK
+     933       DO20I=1,NZ
+     934    20 PPV(I)=(FLOAT(I)-WEIBA)*FAC
+     935       IF(NZ.GE.NPK) GO TO 70
+     936       A=(HISTWT-1.)*(FLOAT(NZ)+.5)+WEIBA
+     937       NZ=NZ+1
+     938       DO40I=NZ,NPK
+     939    40 PPV(I) = (FLOAT(I)*HISTWT - A)*FAC
+     940    70 IF(MSL.LT.3)GOTO90
+     941       NZ=MIN0(10,NPK)
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 39
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     942       WRITE(MSG,203)LABEL,(PPV(I),I=1,NZ)
+     943   203 FORMAT(48H    WCF203J-PLOTTING POSITIONS OF TOP TEN PEAKS. ,
+     944      $         A6/(9X,10F7.4))
+     945    90 CONTINUE
+     946       RETURN
+     947       END
+Bytes of stack required for this program unit: 32.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+A (REAL)              scalar                      922s     936=     939u
+BIGLOG (REAL)         scalar         316        (I1)4s  (I1)12s
+CLSIZE (REAL)         scalar         40         (I1)3s  (I1)11s
+CPAMP1 (REAL)         scalar         344        (I1)6s  (I1)14s
+CPAMP2 (REAL)         scalar         348        (I1)6s  (I1)14s
+CPAMP3 (REAL)         scalar         352        (I1)6s  (I1)14s
+EPS1 (REAL)           scalar         320        (I1)5s  (I1)13s
+EPS2 (REAL)           scalar         324        (I1)5s  (I1)13s
+FAC (REAL)            scalar                      922s     931=     934u     939u
+GAGEB (REAL)          scalar         12         (I3)2s  (I3)10s
+GENSKU (REAL)         scalar         0          (I3)2s  (I3)10s
+GSKWGT (REAL)         scalar         108        (I3)6s  (I3)10s
+GSMAX (REAL)          scalar         32         (I1)3s  (I1)11s
+GSMIN (REAL)          scalar         28         (I1)3s  (I1)11s
+HISTPD (REAL)         scalar         28         (I3)3s  (I3)10s
+HISTPN (REAL)         scalar         100        (I3)6s  (I3)10s     931u
+HISTWT (REAL)         scalar         104        (I3)6s  (I3)10s     936u     939u
+HRECWO (REAL)         scalar         328        (I1)5s  (I1)13s
+HRECWS (REAL)         scalar         336        (I1)5s  (I1)13s
+HRECWX (REAL)         scalar         332        (I1)5s  (I1)13s
+I (INTEGER)           scalar                      921s     934u     934r     939u     939r     942=     942u     942u
+IGSOPT (INTEGER)      scalar         4          (I3)2s   (I3)9s
+INDX1 (INTEGER)       scalar         44         (I1)4s   (I1)9s
+INDX2 (INTEGER)       scalar         48         (I1)4s   (I1)9s
+INDXPT (INTEGER)      array          56         (I1)4s   (I1)9s
+IWXMOD (INTEGER)      scalar         372        (I1)7s  (I1)10s
+LABEL (CHARACTER)     scalar                      894s     906s     942o     942o
+MSG (INTEGER)         scalar         0          (I1)2s   (I1)8s     942o
+MSL (INTEGER)         scalar         4          (I1)2s   (I1)8s     940u
+MXINT (INTEGER)       scalar                    (I4)1s   (I4)2s   (I1)9u  (I1)12u  (I3)12u
+NBGB (INTEGER)        scalar         84         (I3)5s   (I3)9s
+NDIM (INTEGER)        scalar                      894s     904s     905u
+NHIOUT (INTEGER)      scalar         92         (I3)5s   (I3)9s     930u
+NHIST (INTEGER)       scalar         24         (I3)2s   (I3)9s
+NHISTN (INTEGER)      scalar         96         (I3)5s   (I3)9s     929u     930u
+NINDX (INTEGER)       scalar         52         (I1)4s   (I1)9s
+NLWOUT (INTEGER)      scalar         88         (I3)5s   (I3)9s
+NMISS (INTEGER)       scalar         76         (I3)5s   (I3)9s
+NOCLIM (INTEGER)      scalar         24         (I1)2s   (I1)8s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 40
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+NOEPFC (INTEGER)      scalar         20         (I1)2s   (I1)8s
+NOPPOS (INTEGER)      scalar         8          (I1)2s   (I1)8s
+NOSYS (INTEGER)       scalar         16         (I1)2s   (I1)8s
+NOTRAN (INTEGER)      scalar         12         (I1)2s   (I1)8s
+NPK (INTEGER)         scalar                      921s     929=     932u     935u     938u     941r     941r
+NSYS (INTEGER)        scalar         80         (I3)5s   (I3)9s     929u
+NZ (INTEGER)          scalar                      921s     930=     932u     932=     933u     935u     936r     937u     937=
+                                                  938u     941=     942o
+PPV (REAL)            array                       894s     905s     934=     939=     942o
+QHIOUT (REAL)         scalar         20         (I3)2s  (I3)11s
+QLWOUT (REAL)         scalar         16         (I3)2s  (I3)11s
+RMSDGS (REAL)         scalar         340        (I1)6s  (I1)14s
+RMSEGS (REAL)         scalar         8          (I3)2s  (I3)10s
+SIGHOT (REAL)         scalar         360        (I1)7s  (I1)15s
+SIGLOT (REAL)         scalar         356        (I1)7s  (I1)15s
+SUMH (REAL(kind 8))   array          176        (I3)8s  (I3)15s
+SUMS (REAL(kind 8))   array          152        (I3)8s  (I3)15s
+SYSAAV (REAL)         scalar         132        (I3)7s  (I3)11s
+SYSASD (REAL)         scalar         136        (I3)7s  (I3)11s
+SYSASK (REAL)         scalar         140        (I3)7s  (I3)11s
+SYSBAS (REAL)         scalar         112        (I3)6s  (I3)11s
+SYSMAX (REAL)         scalar         148        (I3)8s  (I3)11s
+SYSMIN (REAL)         scalar         144        (I3)8s  (I3)12s
+SYSPAB (REAL)         scalar         116        (I3)6s  (I3)12s
+SYSSKW (REAL)         scalar         128        (I3)7s  (I3)12s
+SYSUAV (REAL)         scalar         120        (I3)6s  (I3)12s
+SYSUSD (REAL)         scalar         124        (I3)7s  (I3)12s
+TXPROB (REAL)         array          184        (I1)4s  (I1)12s
+WCFEPP                SUBROUTINE                  893s
+WCXAUX (REAL)         array          364        (I1)7s  (I1)15s
+WEIBA (REAL)          scalar         36         (I1)3s  (I1)11s     931u     934u     936u
+WORK (REAL)           array          200        (I3)8s  (I3)12s
+WRCAAV (REAL)         scalar         52         (I3)4s  (I3)13s
+WRCASD (REAL)         scalar         56         (I3)4s  (I3)13s
+WRCASK (REAL)         scalar         60         (I3)4s  (I3)13s
+WRCBAS (REAL)         scalar         32         (I3)3s  (I3)13s
+WRCHHB (REAL)         scalar         64         (I3)4s  (I3)13s
+WRCHOT (REAL)         scalar         68         (I3)4s  (I3)13s
+WRCLOW (REAL)         scalar         72         (I3)5s  (I3)13s
+WRCPAB (REAL)         scalar         36         (I3)3s  (I3)14s
+WRCSKW (REAL)         scalar         48         (I3)4s  (I3)14s
+WRCUAV (REAL)         scalar         40         (I3)3s  (I3)14s
+WRCUSD (REAL)         scalar         44         (I3)4s  (I3)14s
+WSKLAT (REAL)         scalar         312        (I1)4s  (I1)12s
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+20          933d     934s
+203         942f     943s
+40          938d     939s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 41
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+70          935g     940s
+90          940g     945s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 42
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFFCA    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+      948C
+      949C
+      950C
+      951      SUBROUTINE   WCFFCA
+      952     #                    (FCQ,LABEL,IER)
+      953C
+      954C     + + + PURPOSE + + +
+      955C     FREQUENCY CURVE PEARSON TYPE III ORDINATES,
+      956C     INCL COND PROB ADJST (WRC APPX 4) IF REQUIRED.
+      957C     (WRC Bulletin-17 Flood Frequency Analysis)
+      958C     ALSO INCLUDES WEIGHTED-SKEW CALC IF LABEL.EQ.'WRC'.  (1/81- B-17-B.)
+      959C
+      960C     REV 5/79 WK - MOVED WRC CHECK FOR TOO MANY BELOW BASE TO DLO
+      961C            AFTER COND PROB ADJ.
+      962C     REV 1/81 WK - BULL 17-B -- THREE-POINT FIT PEARSON TYPE III
+      963C      -- COMPUTE WEIGHTED SKEW AFTER COND PROB ADJ (NOT BEFORE) WHEN
+      964C            LABEL.EQ.'WRC'.  (BUT NOT IN SYST-REC CALCS.)
+      965C
+      966C     REV 11/5/81 WK - WCFFCA CHECK *ABS-VALUE* OF WRCSKW IN TABLE RANGE
+      967C
+      968C     + + + HISTORY + + +
+      969C     kmf - Nov 9, 2000, converted LABEL and LCWRC Hollerith
+      970C                        to character
+      971C
+      972C     + + + DUMMY ARGUMENTS + + +
+      973Ckmf  INTEGER LABEL,IER
+      974      INTEGER   IER
+      975      REAL FCQ(*)
+      976      CHARACTER*4  LABEL
+      977C
+      978C     + + + ARGUMENT DEFINITIONS + + +
+      979C     FCQ    - output vector of frequency curve ordinates
+      980C     LABEL  - identifier printed in error message and used to
+      981C              identify systematic-records vs WRC calculations
+      982C     IER    - error return code
+      983C
+      984C     + + + PARAMETERS + + +
+      985      INCLUDE 'pmxint.inc'
+      986C
+      987C     + + + COMMON BLOCKS + + +
+      988      INCLUDE 'cwcf0.inc'
+      989      INCLUDE 'cwcf1.inc'
+      990C
+      991C     + + + LOCAL VARIABLES + + +
+      992Ckmf  INTEGER   I, LCWRC
+      993      INTEGER   I
+      994      REAL      PBB, TAB(3), T
+      995      CHARACTER*4 LCWRC
+      996C
+      997C     + + + FUNCTIONS + + +
+      998      REAL   HARTRG, HARTK
+      999C
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 43
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1000C     + + + INTRINSICS + + +
+     1001      INTRINSIC ABS,AMAX1
+     1002C
+     1003C     + + + EXTERNAL + + +
+     1004      EXTERNAL HARTIV, HARTRG, HARTK, WCFCWS
+     1005C
+     1006Ckmf  DATA  LCWRC / 4H17B /
+     1007      DATA  LCWRC / '17B ' /
+     1008C
+     1009C     + + + END SPECIFICATIONS + + +
+     1010C
+     1011      IF(ABS(WRCASK).LE.9.) GO TO 20
+     1012      IER=3
+     1013      IF(MSL.GT.0) WRITE(MSG,215) LABEL, WRCASK
+     1014215   FORMAT(' ***WCF215E-SKEW OUT OF TABLE RANGE.  ',1A4,3F9.3)
+     1015      RETURN
+     1016   20 CALL HARTIV(WRCASK, MXINT, TXPROB,
+     1017     O            WORK)
+     1018c       write(99,2000) wrcask
+     1019c 2000  format('WCFFCA: After 20 HARTIV, WRCASK ',F8.5,' WORK:')
+     1020c       write(99,2010) work
+     1021c 2010  format(8(1X,F8.5))
+     1022C
+     1023C  CONDITIONAL PROB ADJUSTMT.
+     1024      PBB = 1. - WRCPAB
+     1025      IF(WRCPAB.GT.0.9999)GOTO40
+     1026Cprh  use CPAMP1,CPAMP2,CPAMP3 as declared in include file cwcf0.inc
+     1027Cprh  instead of CPAMP(3) array originally declared in local common here
+     1028Cprh      IF(WRCPAB.LE.CPAMP(1)) GO TO 30
+     1029Cprh      DO 25 I=1,3
+     1030Cprh   25 TAB(I) = WRCAAV + WRCASD*HARTK(1.-CPAMP(I)/WRCPAB, WORK)
+     1031      IF(WRCPAB.LE.CPAMP1) GO TO 30
+     1032c       write(99,2015) WRCPAB,CPAMP1,CPAMP2,CPAMP3
+     1033 2015  format('WCFFCA: Before TAB calcs, WRCPAB, CPAMP1-3',4(1x,f8.5))
+     1034      TAB(1) = WRCAAV + WRCASD*HARTK(1.-CPAMP1/WRCPAB, WRCASK)
+     1035      TAB(2) = WRCAAV + WRCASD*HARTK(1.-CPAMP2/WRCPAB, WRCASK)
+     1036      TAB(3) = WRCAAV + WRCASD*HARTK(1.-CPAMP3/WRCPAB, WRCASK)
+     1037c       write(99,2020) TAB(1),TAB(2),TAB(3)
+     1038 2020  format('WCFFCA: TAB 1-3 ',3(1X,F8.5))
+     1039      WRCSKW = HARTRG((TAB(3)-TAB(2))/(TAB(2)-TAB(1)))
+     1040      IF(WRCSKW.LE.9.) GO TO 27
+     1041      IER = 3
+     1042      IF(MSL.GT.0) WRITE(MSG,215)LABEL,WRCASK,WRCSKW
+     1043      RETURN
+     1044   27 CALL HARTIV(WRCSKW, MXINT, TXPROB,
+     1045     O            WORK)
+     1046c       write(99,2030) wrcskw
+     1047c 2030  format('WCFFCA: After 27 HARTIV, WRCSKW ',F8.5,' WORK:')
+     1048c       write(99,2010) work
+     1049Cprh  see note above regarding replacing CPAMP(3) array
+     1050Cprh      WRCUSD = (TAB(3)-TAB(2))/(HARTK(1.-CPAMP(3),WORK)
+     1051Cprh     $         -HARTK(1.-CPAMP(2),WORK))
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 44
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1052Cprh      WRCUAV = TAB(1) - WRCUSD*HARTK(1.-CPAMP(1),WORK)
+     1053      WRCUSD = (TAB(3)-TAB(2))/(HARTK(1.-CPAMP3,WRCSKW)
+     1054     $         -HARTK(1.-CPAMP2,WRCSKW))
+     1055      WRCUAV = TAB(1) - WRCUSD*HARTK(1.-CPAMP1,WRCSKW)
+     1056c       write(99,2040) wrcusd,wrcuav
+     1057 2040  format('WCFFCA: WRCUSD ',F8.5,' WRCUAV ',F8.5)
+     1058      GO TO 45
+     1059C
+     1060   30 CONTINUE
+     1061      IER=3
+     1062      IF(MSL.LE.0) RETURN
+     1063      WRITE(MSG,213)LABEL,PBB
+     1064213   FORMAT(46H ***WCF213E-COND PROB ADJUST FAILED--EXCESSIVE,
+     1065     $    1X,1A4, 18H PROB BELOW BASE. ,F8.4)
+     1066      RETURN
+     1067C
+     1068   40 CONTINUE
+     1069      WRCUAV=WRCAAV
+     1070      WRCUSD=WRCASD
+     1071      WRCSKW = WRCASK
+     1072C
+     1073C  WEIGHTED SKEW
+     1074  45  CONTINUE
+     1075      IF(LABEL.NE.LCWRC) GO TO 50
+     1076      T = WRCSKW
+     1077      CALL WCFCWS(IER)
+     1078      IF(ABS(WRCSKW-T).LE.0.) GO TO 50
+     1079      IF(ABS(WRCSKW).LE.9) GO TO 48
+     1080      IER = 3
+     1081      IF(MSL.GT.0) WRITE(MSG,215) LABEL,WRCASK,WRCSKW,GENSKU
+     1082      RETURN
+     1083   48 CALL HARTIV(WRCSKW, MXINT, TXPROB,
+     1084     O            WORK)
+     1085c       write(99,2050) wrcskw
+     1086c 2050  format('WCFFCA: After 48 HARTIV, WRCSKW ',F8.5,' WORK:')
+     1087c       write(99,2010) work
+     1088C
+     1089   50 IF(MSL.GE.4)WRITE(MSG,217)LABEL,WRCPAB,WRCUAV,WRCUSD,WRCSKW,
+     1090     $                                       WRCAAV,WRCASD,WRCASK
+     1091217   FORMAT('    WCF217L-FREQUENCY CURVE PARAMS --',
+     1092     $          1X,1A4,4F8.4/(50X,3F8.4))
+     1093Cprh  change to parameter MXINT, added CONTINUE to loop
+     1094Cprh      DO 55 I=1,31
+     1095      DO 55 I=1,MXINT
+     1096        WORK(I) = AMAX1(WRCBAS, WRCUAV+WORK(I)*WRCUSD)
+     1097   55 CONTINUE
+     1098      DO 60 I=INDX1,INDX2
+     1099Cprh      IF(TXPROB(I).GT.WRCPAB) GO TO 60
+     1100        IF(TXPROB(I).LE.WRCPAB) THEN
+     1101          FCQ(I) = WORK(I)
+     1102C         *** removed so don't get break in plot, ie don't substitute
+     1103C         *** the flood base under this condition        
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 45
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1104C         IF(ABS(TXPROB(I)-WRCPAB) .LE. 0.) FCQ(I) = WRCBAS
+     1105C         ***
+     1106        END IF
+     1107   60 CONTINUE
+     1108C
+     1109Cprh  replace RETURN with IF...END IF block
+     1110Cprh      IF(MSL.LT.3)  RETURN
+     1111      IF(MSL.GE.3) THEN
+     1112Cprh    added continue to 70 loop
+     1113        DO 70 I=1,3
+     1114          TAB(I) = 10.**WORK(INDXPT(I))
+     1115   70   CONTINUE
+     1116        WRITE(MSG,219)LABEL,TAB
+     1117219     FORMAT(33H    WCF219J-FREQ CURVE ORDINATES ,1A4,4X,
+     1118     $          38H  2-YR (.50) 10-YR (.10) 100-YR (.01)   /39X,3F12.1)
+     1119      END IF
+     1120
+     1121      RETURN
+     1122      END
+Bytes of stack required for this program unit: 80.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316         (I1)4s   (I1)12s
+CLSIZE (REAL)         scalar         40          (I1)3s   (I1)11s
+CPAMP1 (REAL)         scalar         344         (I1)6s   (I1)14s     1031u     1034u     1055u
+CPAMP2 (REAL)         scalar         348         (I1)6s   (I1)14s     1035u     1054u
+CPAMP3 (REAL)         scalar         352         (I1)6s   (I1)14s     1036u     1053u
+EPS1 (REAL)           scalar         320         (I1)5s   (I1)13s
+EPS2 (REAL)           scalar         324         (I1)5s   (I1)13s
+FCQ (REAL)            array                        952s      975s     1101=
+GAGEB (REAL)          scalar         12          (I3)2s   (I3)10s
+GENSKU (REAL)         scalar         0           (I3)2s   (I3)10s     1081o
+GSKWGT (REAL)         scalar         108         (I3)6s   (I3)10s
+GSMAX (REAL)          scalar         32          (I1)3s   (I1)11s
+GSMIN (REAL)          scalar         28          (I1)3s   (I1)11s
+HARTIV                SUBROUTINE                  1004u     1016u     1044u     1083u
+HARTK                 FUNCTION                     998s     1004u     1034u     1035u     1036u     1053u     1054u     1055u
+HARTRG                FUNCTION                     998s     1004u     1039u
+HISTPD (REAL)         scalar         28          (I3)3s   (I3)10s
+HISTPN (REAL)         scalar         100         (I3)6s   (I3)10s
+HISTWT (REAL)         scalar         104         (I3)6s   (I3)10s
+HRECWO (REAL)         scalar         328         (I1)5s   (I1)13s
+HRECWS (REAL)         scalar         336         (I1)5s   (I1)13s
+HRECWX (REAL)         scalar         332         (I1)5s   (I1)13s
+I (INTEGER)           scalar                       993s     1096u     1096u     1100u     1101u     1101u     1114u     1114u
+IER (INTEGER)         scalar                       952s      974s     1012=     1041=     1061=     1077r     1077r     1077r
+                                                  1080=
+IGSOPT (INTEGER)      scalar         4           (I3)2s    (I3)9s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 46
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+INDX1 (INTEGER)       scalar         44          (I1)4s    (I1)9s     1098u
+INDX2 (INTEGER)       scalar         48          (I1)4s    (I1)9s     1098u
+INDXPT (INTEGER)      array          56          (I1)4s    (I1)9s     1114u
+IWXMOD (INTEGER)      scalar         372         (I1)7s   (I1)10s
+LABEL (CHARACTER)     scalar                       952s      976s     1013o     1013o     1042o     1042o     1063o     1063o
+                                                  1075u     1081o     1081o     1089o     1089o     1116o     1116o     1075i
+LCWRC (CHARACTER)     scalar                       995s     1007/     1075u     1075i
+MSG (INTEGER)         scalar         0           (I1)2s    (I1)8s     1013o     1042o     1063o     1081o     1089o     1116o
+MSL (INTEGER)         scalar         4           (I1)2s    (I1)8s     1013u     1042u     1062u     1081u     1089u     1111u
+MXINT (INTEGER)       scalar                     (I4)1s    (I4)2s    (I1)9u   (I1)12u   (I3)12u     1016u     1044u     1083u
+                                                  1095u
+NBGB (INTEGER)        scalar         84          (I3)5s    (I3)9s
+NHIOUT (INTEGER)      scalar         92          (I3)5s    (I3)9s
+NHIST (INTEGER)       scalar         24          (I3)2s    (I3)9s
+NHISTN (INTEGER)      scalar         96          (I3)5s    (I3)9s
+NINDX (INTEGER)       scalar         52          (I1)4s    (I1)9s
+NLWOUT (INTEGER)      scalar         88          (I3)5s    (I3)9s
+NMISS (INTEGER)       scalar         76          (I3)5s    (I3)9s
+NOCLIM (INTEGER)      scalar         24          (I1)2s    (I1)8s
+NOEPFC (INTEGER)      scalar         20          (I1)2s    (I1)8s
+NOPPOS (INTEGER)      scalar         8           (I1)2s    (I1)8s
+NOSYS (INTEGER)       scalar         16          (I1)2s    (I1)8s
+NOTRAN (INTEGER)      scalar         12          (I1)2s    (I1)8s
+NSYS (INTEGER)        scalar         80          (I3)5s    (I3)9s
+PBB (REAL)            scalar                       994s     1024=     1063o
+QHIOUT (REAL)         scalar         20          (I3)2s   (I3)11s
+QLWOUT (REAL)         scalar         16          (I3)2s   (I3)11s
+RMSDGS (REAL)         scalar         340         (I1)6s   (I1)14s
+RMSEGS (REAL)         scalar         8           (I3)2s   (I3)10s
+SIGHOT (REAL)         scalar         360         (I1)7s   (I1)15s
+SIGLOT (REAL)         scalar         356         (I1)7s   (I1)15s
+SUMH (REAL(kind 8))   array          176         (I3)8s   (I3)15s
+SUMS (REAL(kind 8))   array          152         (I3)8s   (I3)15s
+SYSAAV (REAL)         scalar         132         (I3)7s   (I3)11s
+SYSASD (REAL)         scalar         136         (I3)7s   (I3)11s
+SYSASK (REAL)         scalar         140         (I3)7s   (I3)11s
+SYSBAS (REAL)         scalar         112         (I3)6s   (I3)11s
+SYSMAX (REAL)         scalar         148         (I3)8s   (I3)11s
+SYSMIN (REAL)         scalar         144         (I3)8s   (I3)12s
+SYSPAB (REAL)         scalar         116         (I3)6s   (I3)12s
+SYSSKW (REAL)         scalar         128         (I3)7s   (I3)12s
+SYSUAV (REAL)         scalar         120         (I3)6s   (I3)12s
+SYSUSD (REAL)         scalar         124         (I3)7s   (I3)12s
+T (REAL)              scalar                       994s     1076=     1078u
+TAB (REAL)            array                        994s     1034=     1035=     1036=     1039u     1039u     1039u     1039u
+                                                  1053u     1053u     1055u     1114=     1116o
+TXPROB (REAL)         array          184         (I1)4s   (I1)12s     1016r     1016r     1016r     1044r     1044r     1044r
+                                                  1083r     1083r     1083r     1100u
+WCFCWS                SUBROUTINE                  1004u     1077u
+WCFFCA                SUBROUTINE                   951s
+WCXAUX (REAL)         array          364         (I1)7s   (I1)15s
+WEIBA (REAL)          scalar         36          (I1)3s   (I1)11s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 47
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+WORK (REAL)           array          200         (I3)8s   (I3)12s     1017r     1016r     1016r     1045r     1044r     1044r
+                                                  1084r     1083r     1083r     1096u     1096=     1101u     1114u
+WRCAAV (REAL)         scalar         52          (I3)4s   (I3)13s     1034u     1035u     1036u     1069u     1090o
+WRCASD (REAL)         scalar         56          (I3)4s   (I3)13s     1034u     1035u     1036u     1070u     1090o
+WRCASK (REAL)         scalar         60          (I3)4s   (I3)13s     1011r     1013o     1016r     1016r     1016r     1034r
+                                                  1034r     1034r     1035r     1035r     1035r     1036r     1036r     1036r
+                                                  1042o     1071u     1081o     1090o
+WRCBAS (REAL)         scalar         32          (I3)3s   (I3)13s     1096r     1096r
+WRCHHB (REAL)         scalar         64          (I3)4s   (I3)13s
+WRCHOT (REAL)         scalar         68          (I3)4s   (I3)13s
+WRCLOW (REAL)         scalar         72          (I3)5s   (I3)13s
+WRCPAB (REAL)         scalar         36          (I3)3s   (I3)14s     1024u     1025u     1031u     1034u     1035u     1036u
+                                                  1089o     1100u
+WRCSKW (REAL)         scalar         48          (I3)4s   (I3)14s     1039=     1040u     1042o     1044r     1044r     1044r
+                                                  1053r     1053r     1053r     1054r     1054r     1054r     1055r     1055r
+                                                  1055r     1071=     1076u     1078u     1079r     1081o     1083r     1083r
+                                                  1083r     1089o
+WRCUAV (REAL)         scalar         40          (I3)3s   (I3)14s     1055=     1069=     1089o     1096u
+WRCUSD (REAL)         scalar         44          (I3)4s   (I3)14s     1053=     1055u     1070=     1089o     1096u
+WSKLAT (REAL)         scalar         312         (I1)4s   (I1)12s
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+20          1011g     1016s
+2015        1033s
+2020        1038s
+2040        1057s
+213         1063f     1064s
+215         1013f     1014s     1042f     1081f
+217         1089f     1091s
+219         1116f     1117s
+27          1040g     1044s
+30          1031g     1060s
+40          1025g     1068s
+45          1058g     1074s
+48          1079g     1083s
+50          1075g     1078g     1089s
+55          1095d     1097s
+60          1098d     1107s
+70          1113d     1115s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 48
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+SUBROUTINE WCFFCX    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1123C
+     1124C
+     1125C
+     1126      SUBROUTINE   WCFFCX
+     1127     #                   ( IER )
+     1128C
+     1129C     + + + PURPOSE + + +
+     1130C     FREQ CURVE EXTENSIONS -- CONFIDENCE LIMS AND EXPECTED PROBS
+     1131C     (WRC Bulletin-17 Flood Frequency Analysis)
+     1132C     REV 10/79 WK - TO USE STUTX FOR T-QUANTILES IN EXPECTED PROB.
+     1133C
+     1134C     + + + DUMMY ARGUMENTS + + +
+     1135      INTEGER IER
+     1136C
+     1137C     + + + ARGUMENT DEFINITIONS + + +
+     1138C     IER    - error return code
+     1139C
+     1140C     + + + PARAMETERS + + +
+     1141      INCLUDE 'pmxint.inc'
+     1142C
+     1143C     + + + COMMON BLOCKS + + +
+     1144      INCLUDE 'cwcf0.inc'
+     1145      INCLUDE 'cwcf1.inc'
+     1146      INCLUDE 'cwcf2.inc'
+     1147C
+     1148C     + + + LOCAL VARIABLES + + +
+     1149      INTEGER I,IIK,N233,NDF
+     1150      REAL A,ABT,C,EP,ERL,EXPFAC,RAD,SDA,SIGMA,T,TAB(3),TAB2(3),Z,ZC2
+     1151C
+     1152C     + + + FUNCTIONS + + +
+     1153      REAL HARTK, GAUSCF, GAUSAB, STUTX
+     1154C
+     1155C     + + + INTRINSICS + + +
+     1156      INTRINSIC MAX0,SQRT,ABS
+     1157C
+     1158C     + + + EXTERNALS + + +
+     1159      EXTERNAL  HARTK, GAUSCF, GAUSAB, STUTX
+     1160C
+     1161C     + + + END SPECIFICATIONS + + +
+     1162C
+     1163      ERL = NSYS
+     1164      ERL = ERL + HRECWX*(HISTPN-ERL)
+     1165C
+     1166C  EXPECTED PROBABILITY ADJUSTMENT, APPROX FOR SMALL SKEW
+     1167      IF(NOEPFC.EQ.1)GOTO70
+     1168      EXPFAC = SQRT(1. + 1./ERL)
+     1169      NDF = ERL - 1.
+     1170      N233 = 0
+     1171      DO60IIK=1,NINDX
+     1172      I=INDXPT(IIK)
+     1173c      write(*,*) 'WCFFCX: 60 Loop-I,TXPROB,WRCPAB',I,TXPROB(I),WRCPAB
+     1174      IF(TXPROB(I).GT.WRCPAB) GO TO  60
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 49
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1175      T = STUTX(1.-TXPROB(I), NDF)
+     1176      IF(ABS(T).LE.1E4) GO TO 30
+     1177      IER=3
+     1178      IF(MSL.GT.0) WRITE(*,237) NDF,TXPROB(I), T
+     1179      IF(MSL.GT.0) WRITE(MSG,237) NDF,TXPROB(I), T
+     1180237   FORMAT(/' ***WCF004*-INTERNAL PROGRAM LOGIC ERROR-STUTX. ',
+     1181     $        I6,2F10.5)
+     1182      RETURN
+     1183c      write(*,*) 'WCFFCX: B4 GAUSCF-30'
+     1184   30 EP=GAUSCF(T*EXPFAC)
+     1185c      write(*,*) 'WCFFCX: B4 HARTK, I,EP,WRCSKW',I,EP,WRCSKW
+     1186c       write(99,*) 'WCFFCX: B4 HARTK, I,EP,WRCSKW',I,EP,WRCSKW,' WORK:'
+     1187c       write(99,2010) work
+     1188c 2010  format(8(1X,F8.5))
+     1189      Z = HARTK(EP, WRCSKW)* wrcusd + wrcuav
+     1190c       write(*,*) 'WCFFCX: after HARTK, Z(',I,') is ',Z
+     1191      IF( Z.LT. BIGLOG) GO TO 50
+     1192      Z = BIGLOG
+     1193      N233 = N233 + 1
+     1194      IF(N233.GT.1) GO TO 50
+     1195      IER = MAX0(2, IER)
+     1196      EP=1.-EP
+     1197      IF(MSL.GT.0) WRITE(*,233) EP, TXPROB(I)
+     1198      IF(MSL.GT.0) WRITE(MSG,233) EP, TXPROB(I)
+     1199233   FORMAT(51H  **WCF233W-EXPECTED PROB OUT OF RANGE AT TAB PROB.,
+     1200     $        2F10.5)
+     1201   50 IF(Z.LT.-BIGLOG) Z=-BIGLOG
+     1202      EPFC(I)  =  Z
+     1203   60 CONTINUE
+     1204      IF(MSL.LT.3)GOTO70
+     1205      DO65I=1,3
+     1206   65 TAB(I)=10.**EPFC(INDXPT(I))
+     1207      WRITE(*,238)TAB
+     1208      WRITE(MSG,238)TAB
+     1209238   FORMAT( '    WCF238J-FREQ CURVE 17B-EXPECT-PROB.',3F12.1)
+     1210   70 CONTINUE
+     1211C
+     1212c      write(*,*) 'WCFFCX: after 70, NOCLIM=',NOCLIM
+     1213C  95 PCT CONFIDENCE LIMITS APPROX FOR SMALL SKEW
+     1214      IF(NOCLIM.EQ.1)GOTO90
+     1215      ZC2=GAUSAB(CLSIZE)**2
+     1216      A=1.-ZC2/(2.*(ERL-1.))
+     1217      C=1.-A
+     1218      ABT = A*ZC2/ERL
+     1219      SDA=WRCUSD/A
+     1220      SIGMA=WRCUSD
+     1221      IF(ABS(SIGMA).LE.0.)SIGMA=1.
+     1222Cprh      DO80IIK=1,NINDX
+     1223      DO 80 I = INDX1,INDX2
+     1224Cprh      I=INDXPT(IIK)
+     1225c      write(*,*) 'WCFFCX: 80 Loop-I,TXPROB,WRCPAB',I,TXPROB(I),WRCPAB
+     1226        IF(TXPROB(I).GT.WRCPAB) GO TO  80
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 50
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1227        Z = (WRCFC(I)-WRCUAV)/SIGMA
+     1228        RAD = SQRT(C*Z**2+ABT)
+     1229        CLIML(I) = WRCUAV + SDA*(Z-RAD)
+     1230        CLIMU(I) = WRCUAV + SDA*(Z+RAD)
+     1231c      write(*,*) 'WCFFCX: 80 Loop-CLIML,CLIMU',CLIML(I),CLIMU(I)
+     1232   80 CONTINUE
+     1233      IF(MSL.LT.3)GOTO90
+     1234      DO85I=1,3
+     1235      TAB(I)= 10.**CLIML(INDXPT(I))
+     1236   85 TAB2(I)=10.**CLIMU(INDXPT(I))
+     1237      Z=100.*CLSIZE
+     1238      WRITE(*,239) Z, TAB2, TAB
+     1239      WRITE(MSG,239) Z, TAB2, TAB
+     1240239   FORMAT( '    WCF239J-FREQ CURVE CONF LIMS B17B', F5.1,F9.1,2F12.1,
+     1241     $      /,39X, 3F12.1 )
+     1242   90 CONTINUE
+     1243      RETURN
+     1244      END
+Bytes of stack required for this program unit: 136.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+A (REAL)              scalar                      1150s     1216=     1217u     1218u     1219u
+ABT (REAL)            scalar                      1150s     1218=     1228u
+BIGLOG (REAL)         scalar         316         (I1)4s   (I1)12s     1191u     1192u     1201u     1201u
+C (REAL)              scalar                      1150s     1217=     1228u
+CLIML (REAL)          array          256         (I2)2s    (I2)4s     1229=     1235u
+CLIMU (REAL)          array          384         (I2)3s    (I2)5s     1230=     1236u
+CLSIZE (REAL)         scalar         40          (I1)3s   (I1)11s     1215r     1215r     1215r     1237u
+CPAMP1 (REAL)         scalar         344         (I1)6s   (I1)14s
+CPAMP2 (REAL)         scalar         348         (I1)6s   (I1)14s
+CPAMP3 (REAL)         scalar         352         (I1)6s   (I1)14s
+EP (REAL)             scalar                      1150s     1184=     1189r     1189r     1189r     1196u     1196=     1197o
+                                                  1198o
+EPFC (REAL)           array          128         (I2)2s    (I2)4s     1202=     1206u
+EPS1 (REAL)           scalar         320         (I1)5s   (I1)13s
+EPS2 (REAL)           scalar         324         (I1)5s   (I1)13s
+ERL (REAL)            scalar                      1150s     1163=     1164u     1164u     1164=     1168u     1169u     1216u
+                                                  1218u
+EXPFAC (REAL)         scalar                      1150s     1168=     1184u
+GAGEB (REAL)          scalar         12          (I3)2s   (I3)10s
+GAUSAB                FUNCTION                    1153s     1159u     1215u
+GAUSCF                FUNCTION                    1153s     1159u     1184u
+GENSKU (REAL)         scalar         0           (I3)2s   (I3)10s
+GSKWGT (REAL)         scalar         108         (I3)6s   (I3)10s
+GSMAX (REAL)          scalar         32          (I1)3s   (I1)11s
+GSMIN (REAL)          scalar         28          (I1)3s   (I1)11s
+HARTK                 FUNCTION                    1153s     1159u     1189u
+HISTPD (REAL)         scalar         28          (I3)3s   (I3)10s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 51
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+HISTPN (REAL)         scalar         100         (I3)6s   (I3)10s     1164u
+HISTWT (REAL)         scalar         104         (I3)6s   (I3)10s
+HRECWO (REAL)         scalar         328         (I1)5s   (I1)13s
+HRECWS (REAL)         scalar         336         (I1)5s   (I1)13s
+HRECWX (REAL)         scalar         332         (I1)5s   (I1)13s     1164u
+I (INTEGER)           scalar                      1149s     1172=     1174u     1175u     1178u     1179u     1197u     1198u
+                                                  1202u     1206u     1206u     1226u     1227u     1229u     1230u     1235u
+                                                  1235u     1236u     1236u
+IER (INTEGER)         scalar                      1127s     1135s     1177=     1195r     1195r     1195=
+IGSOPT (INTEGER)      scalar         4           (I3)2s    (I3)9s
+IIK (INTEGER)         scalar                      1149s     1172u
+INDX1 (INTEGER)       scalar         44          (I1)4s    (I1)9s     1223u
+INDX2 (INTEGER)       scalar         48          (I1)4s    (I1)9s     1223u
+INDXPT (INTEGER)      array          56          (I1)4s    (I1)9s     1172u     1206u     1235u     1236u
+IWXMOD (INTEGER)      scalar         372         (I1)7s   (I1)10s
+MSG (INTEGER)         scalar         0           (I1)2s    (I1)8s     1179o     1198o     1208o     1239o
+MSL (INTEGER)         scalar         4           (I1)2s    (I1)8s     1178u     1179u     1197u     1198u     1204u     1233u
+MXINT (INTEGER)       scalar                     (I4)1s    (I4)2s    (I1)9u   (I1)12u   (I3)12u    (I2)4u    (I2)4u    (I2)4u
+                                                 (I2)5u    (I2)5u
+N233 (INTEGER)        scalar                      1149s     1170=     1193u     1193=     1194u
+NBGB (INTEGER)        scalar         84          (I3)5s    (I3)9s
+NDF (INTEGER)         scalar                      1149s     1169=     1175r     1175r     1175r     1178o     1179o
+NHIOUT (INTEGER)      scalar         92          (I3)5s    (I3)9s
+NHIST (INTEGER)       scalar         24          (I3)2s    (I3)9s
+NHISTN (INTEGER)      scalar         96          (I3)5s    (I3)9s
+NINDX (INTEGER)       scalar         52          (I1)4s    (I1)9s     1171u
+NLWOUT (INTEGER)      scalar         88          (I3)5s    (I3)9s
+NMISS (INTEGER)       scalar         76          (I3)5s    (I3)9s
+NOCLIM (INTEGER)      scalar         24          (I1)2s    (I1)8s     1214u
+NOEPFC (INTEGER)      scalar         20          (I1)2s    (I1)8s     1167u
+NOPPOS (INTEGER)      scalar         8           (I1)2s    (I1)8s
+NOSYS (INTEGER)       scalar         16          (I1)2s    (I1)8s
+NOTRAN (INTEGER)      scalar         12          (I1)2s    (I1)8s
+NSYS (INTEGER)        scalar         80          (I3)5s    (I3)9s     1163u
+QHIOUT (REAL)         scalar         20          (I3)2s   (I3)11s
+QLWOUT (REAL)         scalar         16          (I3)2s   (I3)11s
+RAD (REAL)            scalar                      1150s     1228=     1229u     1230u
+RMSDGS (REAL)         scalar         340         (I1)6s   (I1)14s
+RMSEGS (REAL)         scalar         8           (I3)2s   (I3)10s
+SDA (REAL)            scalar                      1150s     1219=     1229u     1230u
+SIGHOT (REAL)         scalar         360         (I1)7s   (I1)15s
+SIGLOT (REAL)         scalar         356         (I1)7s   (I1)15s
+SIGMA (REAL)          scalar                      1150s     1220=     1221r     1221=     1227u
+STUTX                 FUNCTION                    1153s     1159u     1175u
+SUMH (REAL(kind 8))   array          176         (I3)8s   (I3)15s
+SUMS (REAL(kind 8))   array          152         (I3)8s   (I3)15s
+SYSAAV (REAL)         scalar         132         (I3)7s   (I3)11s
+SYSASD (REAL)         scalar         136         (I3)7s   (I3)11s
+SYSASK (REAL)         scalar         140         (I3)7s   (I3)11s
+SYSBAS (REAL)         scalar         112         (I3)6s   (I3)11s
+SYSMAX (REAL)         scalar         148         (I3)8s   (I3)11s
+SYSMIN (REAL)         scalar         144         (I3)8s   (I3)12s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 52
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+SYSPAB (REAL)         scalar         116         (I3)6s   (I3)12s
+SYSRFC (REAL)         array          512         (I2)3s    (I2)5s
+SYSSKW (REAL)         scalar         128         (I3)7s   (I3)12s
+SYSUAV (REAL)         scalar         120         (I3)6s   (I3)12s
+SYSUSD (REAL)         scalar         124         (I3)7s   (I3)12s
+T (REAL)              scalar                      1150s     1175=     1176r     1178o     1179o     1184u
+TAB (REAL)            array                       1150s     1206=     1207o     1208o     1235=     1238o     1239o
+TAB2 (REAL)           array                       1150s     1236=     1238o     1239o
+TXPROB (REAL)         array          184         (I1)4s   (I1)12s     1174u     1175u     1178o     1179o     1197o     1198o
+                                                  1226u
+WCFFCX                SUBROUTINE                  1126s
+WCXAUX (REAL)         array          364         (I1)7s   (I1)15s
+WEIBA (REAL)          scalar         36          (I1)3s   (I1)11s
+WORK (REAL)           array          200         (I3)8s   (I3)12s
+WRCAAV (REAL)         scalar         52          (I3)4s   (I3)13s
+WRCASD (REAL)         scalar         56          (I3)4s   (I3)13s
+WRCASK (REAL)         scalar         60          (I3)4s   (I3)13s
+WRCBAS (REAL)         scalar         32          (I3)3s   (I3)13s
+WRCFC (REAL)          array          0           (I2)2s    (I2)4s     1227u
+WRCHHB (REAL)         scalar         64          (I3)4s   (I3)13s
+WRCHOT (REAL)         scalar         68          (I3)4s   (I3)13s
+WRCLOW (REAL)         scalar         72          (I3)5s   (I3)13s
+WRCPAB (REAL)         scalar         36          (I3)3s   (I3)14s     1174u     1226u
+WRCSKW (REAL)         scalar         48          (I3)4s   (I3)14s     1189r     1189r     1189r
+WRCUAV (REAL)         scalar         40          (I3)3s   (I3)14s     1189u     1227u     1229u     1230u
+WRCUSD (REAL)         scalar         44          (I3)4s   (I3)14s     1189u     1219u     1220u
+WSKLAT (REAL)         scalar         312         (I1)4s   (I1)12s
+Z (REAL)              scalar                      1150s     1189=     1191u     1192=     1201u     1201=     1202u     1227=
+                                                  1228u     1229u     1230u     1237=     1238o     1239o
+ZC2 (REAL)            scalar                      1150s     1215=     1216u     1218u
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+233         1197f     1198f     1199s
+237         1178f     1179f     1180s
+238         1207f     1208f     1209s
+239         1238f     1239f     1240s
+30          1176g     1184s
+50          1191g     1194g     1201s
+60          1171d     1174g     1203s
+65          1205d     1206s
+70          1167g     1204g     1210s
+80          1223d     1226g     1232s
+85          1234d     1236s
+90          1214g     1233g     1242s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 53
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+PROGRAM _LF_BLOCK_DATA    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 54
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+PROGRAM _LF_BLOCK_DATA    Compiling Options: -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1245C
+     1246C
+     1247C
+     1248      BLOCKDATA
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+BIGLOG (REAL)         scalar         316         (I1)4s   (I1)12s     1273/
+CLSIZE (REAL)         scalar         40          (I1)3s   (I1)11s     1273/
+CPAMP1 (REAL)         scalar         344         (I1)6s   (I1)14s     1294/
+CPAMP2 (REAL)         scalar         348         (I1)6s   (I1)14s     1294/
+CPAMP3 (REAL)         scalar         352         (I1)6s   (I1)14s     1294/
+EPS1 (REAL)           scalar         320         (I1)5s   (I1)13s     1294/
+EPS2 (REAL)           scalar         324         (I1)5s   (I1)13s     1294/
+GSMAX (REAL)          scalar         32          (I1)3s   (I1)11s     1273/
+GSMIN (REAL)          scalar         28          (I1)3s   (I1)11s     1273/
+HRECWO (REAL)         scalar         328         (I1)5s   (I1)13s     1294/
+HRECWS (REAL)         scalar         336         (I1)5s   (I1)13s     1294/
+HRECWX (REAL)         scalar         332         (I1)5s   (I1)13s     1294/
+INDX1 (INTEGER)       scalar         44          (I1)4s    (I1)9s     1273/
+INDX2 (INTEGER)       scalar         48          (I1)4s    (I1)9s     1273/
+INDXPT (INTEGER)      array          56          (I1)4s    (I1)9s     1279/
+IWXMOD (INTEGER)      scalar         372         (I1)7s   (I1)10s     1298/
+MSG (INTEGER)         scalar         0           (I1)2s    (I1)8s     1268/
+MSL (INTEGER)         scalar         4           (I1)2s    (I1)8s     1268/
+MXINT (INTEGER)       scalar                     (I4)1s    (I4)2s    (I1)9u   (I1)12u
+NINDX (INTEGER)       scalar         52          (I1)4s    (I1)9s     1279/
+NOCLIM (INTEGER)      scalar         24          (I1)2s    (I1)8s     1268/
+NOEPFC (INTEGER)      scalar         20          (I1)2s    (I1)8s     1268/
+NOPPOS (INTEGER)      scalar         8           (I1)2s    (I1)8s     1268/
+NOSYS (INTEGER)       scalar         16          (I1)2s    (I1)8s     1268/
+NOTRAN (INTEGER)      scalar         12          (I1)2s    (I1)8s     1268/
+RMSDGS (REAL)         scalar         340         (I1)6s   (I1)14s     1294/
+SIGHOT (REAL)         scalar         360         (I1)7s   (I1)15s     1296/
+SIGLOT (REAL)         scalar         356         (I1)7s   (I1)15s     1296/
+TXPROB (REAL)         array          184         (I1)4s   (I1)12s     1288/
+WCXAUX (REAL)         array          364         (I1)7s   (I1)15s     1298/
+WEIBA (REAL)          scalar         36          (I1)3s   (I1)11s     1273/
+WSKLAT (REAL)         scalar         312         (I1)4s   (I1)12s     1273/
+_LF_BLOCK_DATA        Procedure                   1248s
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 55
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+FUNCTION WCFGSM    Compiling Options:  -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1249C
+     1250C     + + + PURPOSE + + +
+     1251C     INITIALIZE COMMON WCFCM0
+     1252C     REV 7/77 WK TO  ENLARGE WCFCM0 FOR USE BY J407-X.
+     1253C     REV 5/79 WK - SET IWXMOD TO 2 IF ANY WRC PARAMETERS ARE CHANGED.
+     1254C     REV 11/03 PRH, AQUA TERRA Consultants, for batch version of PEAKFQ
+     1255C
+     1256C     + + + PARAMETERS + + +
+     1257      INCLUDE 'pmxint.inc'
+     1258C
+     1259C     + + + COMMON BLOCKS + + +
+     1260C     WCFBDI is set here, but not used anywhere else
+     1261Cprh      COMMON/ WCFBDI  /WCFBDI
+     1262Cprh      INTEGER WCFBDI(1)
+     1263C
+     1264      INCLUDE 'cwcf0.inc'
+     1265C
+     1266C     + + + DATA INITIALIZATIONS + + +
+     1267Cprh      DATA    WCFBDI   /0/
+     1268      DATA MSG, MSL, NOPPOS, NOTRAN, NOSYS, NOEPFC, NOCLIM
+     1269     $   /   6,   2,     0,     0,      0,      0,       0            /
+     1270C
+     1271Cmeb: BIGLOG changed from 38 to 37 on Data General AViiON
+     1272Caml: and further changed to 29 for 5/94 compiler
+     1273      DATA  GSMIN, GSMAX, WEIBA, CLSIZE, INDX1, INDX2, WSKLAT, BIGLOG
+     1274     $   /-.4001, .8001,     0.,    .95,    5,    29,      0.,    29.  /
+     1275C
+     1276c      DATA NINDX/14/, INDXPT/16,21,26,5,6,10,11,12,   17,20,23,25,27,28,
+     1277c     *                        17*0 /
+     1278Cprh: expanded index array to include 1.5 yr (.6667) and 2.33 yr (.4292) floods
+     1279      DATA NINDX/15/, INDXPT/17,22,27,5,6,10,11,12,14,18,21,24,26,28,29,
+     1280     *                        17*0 /
+     1281
+     1282c      DATA  TXPROB /
+     1283c     $ 0.9999, 0.9995, 0.9990, 0.9980, 0.9950, 0.9900, 0.9800, 0.9750,
+     1284c     $ 0.9600, 0.9500, 0.9000, 0.8000, 0.7000, 0.6000, 0.5704, 0.5000, 
+     1285c     $ 0.4296, 0.4000, 0.3000, 0.2000, 0.1000, 0.0500, 0.0400, 0.0250,
+     1286c     $ 0.0200, 0.0100, 0.0050, 0.0020, 0.0010, 0.0005, 0.0001/
+     1287Cprh: added 1.5 yr (.6667) flood to probability array
+     1288      DATA  TXPROB /
+     1289     $ 0.9999, 0.9995, 0.9990, 0.9980, 0.9950, 0.9900, 0.9800, 0.9750,
+     1290     $ 0.9600, 0.9500, 0.9000, 0.8000, 0.7000, 0.6667, 0.6000, 0.5704, 
+     1291     $ 0.5000, 0.4292, 0.4000, 0.3000, 0.2000, 0.1000, 0.0500, 0.0400,
+     1292     $ 0.0250, 0.0200, 0.0100, 0.0050, 0.0020, 0.0010, 0.0005, 0.0001/
+     1293C
+     1294      DATA EPS1,EPS2, HRECWO,HRECWX,HRECWS, RMSDGS, CPAMP1,CPAMP2,CPAMP3
+     1295     $  /  -0.4,+0.4,  1.0,   0.0,   1.0,  0.55,    0.50,  0.10,   0.01/
+     1296      DATA SIGLOT, SIGHOT / 0.10, 0.10/
+     1297C
+     1298      DATA      WCXAUX  / 2*0. /, IWXMOD / 0 /
+     1299C
+     1300C     + + + END SPECIFICATIONS + + +
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 56
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1301C
+     1302      END
+     1303C
+     1304C
+     1305C
+     1306      REAL   FUNCTION   WCFGSM
+     1307     #                         ( FLATA, FLONGA )
+     1308C
+     1309C     + + + PURPOSE + + +
+     1310C     WRC BULL. 17-A GENERALIZED SKEW MAP.C
+     1311C     FOR LATITUDE AND LONGITUDE IN DEGREES AND FRACTIONS OF A DEGREE.
+     1312C     (E.G., 45 DEG, 30 MIN  =  45.5 DEG.)
+     1313C     POINTS OUTSIDE U.S. ARE ASSIGNED LARGE NEGATIVE VALUE.
+     1314C
+     1315C     DATA STATEMENT USES 2 CARDS PER MERIDIAN OF LONGITUDE, STARTING AT
+     1316C     67 DEG AND ENDING AT 125 DEG WEST LONGITUDE.  SKEW VALUES ARE  READ
+     1317C     FROM SOUTH (25 DEG) TO NORTH (50 DEG)  ALONG EACH MERIDIAN.
+     1318C     SKEW VALUES TABULATED ARE IN UNITS OF 0.01 SKEW UNIT.  POINTS
+     1319C     OUTSIDE CONTINENTAL U.S. ARE SET TO -222.
+     1320C     ALASKA AND HAWAII ARE NOT TABULATED BY LAT-LONG BUT ARE HANDLED
+     1321C     CORRECTLY BY PROGRAMMED TESTS.   ALSO PUERTO RICO.
+     1322C
+     1323C     REV 8/6/79 WK TO IMPROVE THE REPRESENTATION OF THE GEN SKEW RIDGE
+     1324C             AT GEN SKEW VALUE OF 0.2 RUNNING THROUGH EAST CALIFORNIA
+     1325C             AND WEST OREGON AND WASHINGTON.
+     1326C
+     1327C     REV 8/9/79 WK REVISED VARIOUS MAP SKEWS.
+     1328C
+     1329C     REV 11/5/81 WK -- ADD PUERTO RICO GEN SKEW = 0.0  (12/17/86-WK)
+     1330C
+     1331C     REV 4/86 WK TO CIRCUMVENT PRIME F77 REV19.4.4 COMPILER BUG(S)
+     1332C       RELATING TO STATEMENT FUNCTIONS.
+     1333C
+     1334C
+     1335C     + + + DUMMY ARGUMENTS + + +
+     1336      REAL  FLATA, FLONGA
+     1337C
+     1338C     + + + ARGUMENT DEFINITIONS + + +
+     1339C     FLATA  - Latitude North, degrees and fraction
+     1340C     FLONGA - Longitude West, degrees and fraction
+     1341C
+     1342C     + + + LOCAL VARIABLES + + +
+     1343      INTEGER*2 ISK(26,59)
+     1344      INTEGER  I, J, LAT, LONG
+     1345      REAL     FLAT, FLONG, GSK, S, WX, WY
+     1346      REAL     FLATMN, FLATMX, FLONMN, FLONMX
+     1347      LOGICAL LLCELL, LLC
+     1348C
+     1349C     + + + SAVE VARIABLES + + +
+     1350      INTEGER*2 ISK1A(26,5),ISK1B(26,4),ISK2A(26,5),ISK2B(26,4),
+     1351     1          ISK3A(26,5),ISK3B(26,4),ISK4A(26,5),ISK4B(26,4),
+     1352     2          ISK5A(26,5),ISK5B(26,4),ISK6A(26,5),ISK6B(26,4),
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 57
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1353     3          ISK7A(26,5)
+     1354      SAVE      ISK1A,ISK1B,ISK2A,ISK2B,
+     1355     1          ISK3A,ISK3B,ISK4A,ISK4B,
+     1356     2          ISK5A,ISK5B,ISK6A,ISK6B,
+     1357     3          ISK7A
+     1358C
+     1359C     + + + EQUIVALENCES + + +
+     1360      EQUIVALENCE (ISK1A(1,1),ISK(1, 1)),(ISK1B(1,1),ISK(1, 6)),
+     1361     1            (ISK2A(1,1),ISK(1,10)),(ISK2B(1,1),ISK(1,15)),
+     1362     2            (ISK3A(1,1),ISK(1,19)),(ISK3B(1,1),ISK(1,24)),
+     1363     3            (ISK4A(1,1),ISK(1,28)),(ISK4B(1,1),ISK(1,33)),
+     1364     4            (ISK5A(1,1),ISK(1,37)),(ISK5B(1,1),ISK(1,42)),
+     1365     5            (ISK6A(1,1),ISK(1,46)),(ISK6B(1,1),ISK(1,51)),
+     1366     6            (ISK7A(1,1),ISK(1,55))
+     1367C
+     1368C     + + + DATA INITIALIZATIONS + + +
+     1369      DATA ISK1A /
+     1370     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1371     $ -222,-222,-222,-222,-222,-222,  55,  38,  12,  -8, -15,-222,-222,
+     1372     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1373     $ -222,-222,-222,-222,-222,-222,  50,  33,  10,  -8, -15,-222,-222,
+     1374     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1375     $ -222,-222,-222,  70,  70,  70,  47,  34,  10,  -8, -20,-222,-222,
+     1376     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1377     $ -222,-222,-222,  70,  70,  60,  44,  31,   5, -10, -20,-222,-222,
+     1378     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1379     $ -222,-222,-222,  70,  70,  57,  40,  28,   0, -10,-222,-222,-222/
+     1380      DATA ISK1B /
+     1381     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1382     $ -222,-222,  70,  70,  70,  48,  35,  18,  -2,-222,-222,-222,-222,
+     1383     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1384     $ -222,-222,  70,  70,  60,  42,  30,   8,  -8,-222,-222,-222,-222,
+     1385     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1386     $ -222,  70,  70,  70,  48,  36,  20,   0, -12,-222,-222,-222,-222,
+     1387     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,  45,  70,  70,
+     1388     $   70,  70,  70,  56,  40,  28,  10,  -5, -16,-222,-222,-222,-222/
+     1389      DATA ISK2A /
+     1390     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,  20,  40,  70,  70,
+     1391     $   70,  70,  65,  44,  32,  18,   0, -10,-222,-222,-222,-222,-222,
+     1392     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,  17,  38,  60,  70,
+     1393     $   70,  70,  50,  33,  25,   5,  -8, -17,-222,-222,-222,-222,-222,
+     1394     $ -222,-222,-222,-222,-222,-222,-222,-222,  -3,  12,  32,  54,  68,
+     1395     $   65,  52,  38,  28,  10,  -5, -15,-222,-222,-222,-222,-222,-222,
+     1396     $ -222,-222,-222,-222,-222,-222,-222, -10, -10,   2,  30,  50,  60,
+     1397     $   55,  42,  30,  12,  -2, -13, -24,-222,-222,-222,-222,-222,-222,
+     1398     $  -10, -10, -10, -10, -10, -10, -10, -10, -10,  -7,  25,  45,  51,
+     1399     $   40,  28,  12,  -1, -12, -24, -34,-222,-222,-222,-222,-222,-222/
+     1400      DATA ISK2B /
+     1401     $   -3,  -7, -10, -10, -10, -10, -10, -10, -10, -10,  15,  40,  40,
+     1402     $   30,  15,   0, -10, -22, -33,-222,-222,-222,-222,-222,-222,-222,
+     1403     $    0,  -2,  -5,  -6, -10, -10, -10, -10, -10, -10,  10,  32,  29,
+     1404     $   18,   0, -10, -20, -30, -40, -40,-222,-222,-222,-222,-222,-222,
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 58
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1405     $ -222,   0,   0,   0,  -4,  -7, -10, -10, -10, -10,   5,  18,  15,
+     1406     $    0, -10, -20, -30, -40, -40, -40, -40, -33,-222,-222,-222,-222,
+     1407     $ -222,-222,-222,-222,   5,   0,  -3,  -8,  -8,  -3,   5,   8,   0,
+     1408     $   -9, -19, -30, -40, -40, -40, -40, -40, -25, -10,-222,-222,-222/
+     1409      DATA ISK3A /
+     1410     $ -222,-222,-222,-222,  17,  13,   8,   3,   2,   2,   5,   2,  -7,
+     1411     $  -15, -28, -40, -40, -40, -40, -40, -33, -20, -10,-222,-222,-222,
+     1412     $ -222,-222,-222,-222,  20,  20,  20,  17,  12,   7,   5,  -2, -14,
+     1413     $  -24, -37, -40, -40, -40, -40, -40, -28, -10, -10,-222,-222,-222,
+     1414     $ -222,-222,-222,-222,-222,  20,  20,  20,  16,   8,   0, -12, -19,
+     1415     $  -32, -40, -40, -40, -40, -40, -38, -23, -10, -10, -10,-222,-222,
+     1416     $ -222,-222,-222,-222,-222,  20,  20,  20,  11,   3,  -8, -17, -27,
+     1417     $  -38, -40, -40, -40, -40, -40, -35, -22, -10, -10, -10, -10, -10,
+     1418     $ -222,-222,-222,-222,  20,  20,  19,  12,   3,  -5, -14, -24, -30,
+     1419     $  -38, -40, -40, -40, -40, -40, -36, -23, -10, -10, -10, -10, -10/
+     1420      DATA ISK3B /
+     1421     $ -222,-222,-222,-222,  18,  13,  12,   2,  -6, -15, -23, -30, -32,
+     1422     $  -38, -40, -40, -40, -40, -40, -38, -27, -14, -10, -10, -10, -10,
+     1423     $ -222,-222,-222,-222,   9,   4,   2,  -9, -19, -24, -30, -30, -30,
+     1424     $  -35, -39, -40, -40, -40, -40, -40, -30, -20, -10, -10, -10, -10,
+     1425     $ -222,-222,-222,-222,   0,  -7, -13, -20, -25, -30, -30, -30, -30,
+     1426     $  -34, -38, -40, -40, -40, -40, -40, -36, -26, -13, -10, -10, -10,
+     1427     $ -222,-222,-222,-222, -10, -15, -21, -27, -30, -30, -30, -30, -30,
+     1428     $  -31, -35, -38, -40, -40, -40, -40, -40, -32, -22, -15, -10, -10/
+     1429      DATA ISK4A /
+     1430     $ -222,-222,-222,-222, -18, -24, -29, -30, -30, -30, -30, -30, -30,
+     1431     $  -30, -31, -34, -37, -40, -40, -40, -40, -39, -27, -22, -17, -10,
+     1432     $ -222,-222,-222, -23, -26, -30, -30, -30, -29, -29, -28, -28, -28,
+     1433     $  -28, -29, -30, -32, -38, -40, -40, -40, -40, -33, -28, -20, -15,
+     1434     $ -222,-222,-222, -29, -30, -29, -29, -28, -27, -26, -25, -25, -24,
+     1435     $  -24, -24, -25, -25, -30, -38, -40, -40, -40, -40, -34, -28, -20,
+     1436     $  -30, -30, -30, -29, -28, -28, -26, -25, -24, -23, -23, -22, -22,
+     1437     $  -20, -19, -17, -15, -14, -22, -40, -40, -40, -40, -40, -32, -27,
+     1438     $  -30, -29, -28, -28, -27, -25, -24, -23, -22, -21, -20, -19, -18,
+     1439     $  -15, -13,  -9,  -2,  30,   2, -25, -40, -40, -40, -40, -37, -32/
+     1440      DATA ISK4B /
+     1441     $ -222, -27, -27, -26, -24, -23, -22, -21, -20, -19, -18, -16, -14,
+     1442     $  -13,  -9,  -5,  35,  60,  45,  -5, -30, -40, -40, -40, -40, -35,
+     1443     $ -222, -25, -24, -23, -22, -21, -20, -18, -17, -16, -15, -13, -13,
+     1444     $  -10,  -7,  -2,  60,  60,  60,  10, -20, -40, -40, -40, -40, -40,
+     1445     $ -222,-222,-222, -21, -20, -18, -16, -15, -14, -14, -12, -11, -10,
+     1446     $  -10,  -6,  -1,  60,  60,  60,  23, -11, -33, -40, -40, -40, -40,
+     1447     $ -222,-222,-222,-222, -13, -13, -12, -12, -11, -11, -10, -10, -10,
+     1448     $  -10,  -7,  -2,  50,  60,  60,  32,  -6, -27, -40, -40, -40, -40/
+     1449      DATA ISK5A /
+     1450     $ -222,-222,-222,-222,   0,  -4,  -5,  -7,  -8,  -9, -10, -10, -10,
+     1451     $  -10,  -8,  -4,  20,  60,  60,  30,  -5, -24, -40, -40, -40, -40,
+     1452     $ -222,-222,-222,-222,  -9,  -5,   0,   0,  -4,  -6,  -8, -10, -10,
+     1453     $  -10, -10,  -8,  -2,  40,  50,  12,  -3, -18, -40, -40, -40, -40,
+     1454     $ -222,-222,-222,-222, -15, -13,  -8,   0,   0,  -3,  -5,  -8, -10,
+     1455     $  -10, -12, -13,  -8,  -1,   8,   0,  -1, -10, -38, -40, -40, -40,
+     1456     $ -222,-222,-222,-222,-222, -20, -18, -12,  -5,   0,  -3,  -6,  -8,
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 59
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1457     $  -10, -23, -30, -25,  -8,   0,   0,   0,  -7, -27, -40, -40, -40,
+     1458     $ -222,-222,-222,-222,-222,-222, -20, -20, -14,  -5,   0,  -5,  -8,
+     1459     $  -12, -30, -30, -30, -15,  -4,   0,  10,   0, -17, -38, -40, -40/
+     1460      DATA ISK5B /
+     1461     $ -222,-222,-222,-222,-222,-222, -20, -20, -20, -12,   0,  -4,  -7,
+     1462     $  -14, -30, -30, -30, -30,  -8,   3,  12,  11,  -5, -26, -40, -40,
+     1463     $ -222,-222,-222,-222,-222,-222, -20, -20, -20, -17,  -7,   0,  -7,
+     1464     $  -12, -26, -30, -30, -30, -20,  -2,  15,  17,   8, -14, -30, -40,
+     1465     $ -222,-222,-222,-222,-222,-222, -20, -20, -20, -17,  -10,   0, -4,
+     1466     $   -9, -22, -30, -30, -30, -30, -13,  12,  21,  17,   2, -18, -35,
+     1467     $ -222,-222,-222,-222,-222,-222, -13, -20, -20, -17, -11,  -4,  -3,
+     1468     $   -8, -18, -27, -30, -30, -30, -30,  -5,  19,  24,  20,   0, -25/
+     1469      DATA ISK6A /
+     1470     $ -222,-222,-222,-222,-222,-222,   8,  -5, -11, -13, -10,  -4,   0,
+     1471     $   -4, -13, -20, -28, -30, -30, -30, -25,   5,  28,  38,  28, -10,
+     1472     $ -222,-222,-222,-222,-222,-222,  18,   9,  -3,  -8,  -7,  -3,   0,
+     1473     $    0,  -8, -14, -23, -28, -30, -30, -30, -20,  18,  60,  60,  20,
+     1474     $ -222,-222,-222,-222,-222,-222,   0,  20,   8,  -1,  -3,   0,   0,
+     1475     $    0,   0,  -9, -17, -23, -29, -30, -30, -30, -20,  30,  60,  60,
+     1476     $ -222,-222,-222,-222,-222,-222,-222,   3,  20,   8,   0,   0,   0,
+     1477     $    0,   0,  -2, -10, -17, -23, -30, -30, -30, -30, -20,  30,  60,
+     1478     $ -222,-222,-222,-222,-222,-222,-222, -28,   5,  20,  10,   0,   0,
+     1479     $    0,   0,   0,  -3, -11, -16, -23, -28, -30, -30, -30, -10,  45/
+     1480      DATA ISK6B /
+     1481     $ -222,-222,-222,-222,-222,-222,-222, -30, -22,  10,  20,   8,   0,
+     1482     $    0,   0,   0,   0,  -3,  -8, -15, -20, -28, -30, -30, -30, -10,
+     1483     $ -222,-222,-222,-222,-222,-222,-222, -30, -30, -17,   7,  20,  10,
+     1484     $    2,   0,   0,   0,   0,   0,  -6, -12, -17, -25, -30, -30, -30,
+     1485     $ -222,-222,-222,-222,-222,-222,-222,-222, -30, -30, -15,   5,  20,
+     1486     $   12,   4,   0,   0,   0,   0,   0,  -2,  -5, -12, -18, -22, -30,
+     1487     $ -222,-222,-222,-222,-222,-222,-222,-222,-222, -30, -30, -17,   2,
+     1488     $   20,  20,   8,   1,   0,   0,   0,   0,   0,   0,  -3,  -7, -10/
+     1489      DATA ISK7A /
+     1490     $ -222,-222,-222,-222,-222,-222,-222,-222,-222, -30, -30, -30, -23,
+     1491     $   -6,  10,  20,  17,   8,   0,   0,   0,   0,   0,   0,   0,   0,
+     1492     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222, -30, -30, -30,
+     1493     $  -30, -15,   0,  15,  20,  15,  10,   1,   0,   0,   0,   0,   0,
+     1494     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222, -30, -30,
+     1495     $  -30, -30, -30, -18, -10,  15,  20,  20,  15,   3,   0,   0,   0,
+     1496     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1497     $  -30, -30, -30, -30, -30, -30, -18,  -5,  15,  20,  20,   5,   0,
+     1498     $ -222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,-222,
+     1499     $ -222,-222, -30, -30, -30, -30, -30, -30, -30, -20,   0,   0,  20/
+     1500C
+     1501C     + + + END SPECIFICATIONS + + +
+     1502C
+     1503      LLCELL(FLATMN,FLATMX,FLONMN,FLONMX) = FLONG.GE.FLONMN
+     1504     $  .AND. FLONG.LT.FLONMX .AND. FLAT.GE.FLATMN .AND. FLAT.LT.FLATMX
+     1505C
+     1506Caml  exponent changed from 37 to 29 for 5/94 compiler
+     1507      WCFGSM = -1E29
+     1508      FLAT = FLATA
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 60
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+     1509      FLONG = FLONGA
+     1510C
+     1511      LLC = LLCELL(25., 50.01,  67.,  125.01 )
+     1512      IF(LLC) GO TO 100
+     1513C
+     1514C  CHECK ALASKA, HAWAII, PUERTO RICO
+     1515C
+     1516      LLC = LLCELL(54., 61.,129., 140.)
+     1517      IF(LLC) WCFGSM = 0.33
+     1518C
+     1519      LLC = LLCELL(58., 72.,140., 170.)
+     1520      IF(LLC) WCFGSM = 0.70
+     1521C
+     1522      LLC = LLCELL(50., 58.,150., 360.)
+     1523      IF(LLC) WCFGSM = 0.70
+     1524C
+     1525      LLC = LLCELL(18., 30.,154., 162.)
+     1526      IF(LLC) WCFGSM = -0.05
+     1527C
+     1528      LLC = LLCELL(17., 19., 63.,  68.)
+     1529      IF(LLC) WCFGSM = 0.0
+     1530C
+     1531      RETURN
+     1532C
+     1533C  CONTINENTAL U.S. SKEW MAP
+     1534  100 CONTINUE
+     1535      LAT = FLAT
+     1536      LONG = FLONG
+     1537      WY = FLAT - LAT
+     1538      WX = FLONG - LONG
+     1539      GSK = 0.
+     1540      DO 150 I =1, 2
+     1541      WY = 1. - WY
+     1542      DO 150 J = 1, 2
+     1543      WX = 1. - WX
+     1544      S = ISK( LAT-24+I-1, LONG-66+J-1 )
+     1545      IF(S.GT.-220.) GO TO 150
+     1546      IF(WX.LT.0.05) WX = 0.
+     1547      IF( WY.LT.0.05) WY = 0.
+     1548Caml  37 changed to 29 fro 5/94 compiler
+     1549      S = -1E29
+     1550  150 GSK = GSK + 0.01*S*WX*WY
+     1551      IF(GSK.GT.-1E29) WCFGSM = GSK
+     1552      RETURN
+     1553      END
+Bytes of stack required for this program unit: 32.
+
+
+--------------------------------------------------  Symbol Cross Reference  ---------------------------------------------------
+Name (Type)           Class          Offset     Context  (d-DO, =-Assignment, /-Initialization, i-Input, o-Output, p-Pointer,
+                                                         r-Argument, s-Specification, u-Usage)
+-------------------------------------------------------------------------------------------------------------------------------
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 61
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+FLAT (REAL)           scalar                      1345s     1504u     1504u     1508=     1535u     1537u
+FLATA (REAL)          scalar                      1307s     1336s     1508u
+FLONG (REAL)          scalar                      1345s     1503u     1504u     1509=     1536u     1538u
+FLONGA (REAL)         scalar                      1307s     1336s     1509u
+GSK (REAL)            scalar                      1345s     1539=     1550u     1550=     1551u     1551u
+I (INTEGER)           scalar                      1344s     1544u
+ISK (INTEGER(kind 2))
+                      array          0            1343s     1360u     1360u     1361u     1361u     1362u     1362u     1363u
+                                                  1363u     1364u     1364u     1365u     1365u     1366u     1544u
+ISK1A (INTEGER(kind 2))
+                      array          0            1350s     1354s     1360u     1369/
+ISK1B (INTEGER(kind 2))
+                      array          260          1350s     1354s     1360u     1380/
+ISK2A (INTEGER(kind 2))
+                      array          468          1350s     1354s     1361u     1389/
+ISK2B (INTEGER(kind 2))
+                      array          728          1350s     1354s     1361u     1400/
+ISK3A (INTEGER(kind 2))
+                      array          936          1351s     1355s     1362u     1409/
+ISK3B (INTEGER(kind 2))
+                      array          1196         1351s     1355s     1362u     1420/
+ISK4A (INTEGER(kind 2))
+                      array          1404         1351s     1355s     1363u     1429/
+ISK4B (INTEGER(kind 2))
+                      array          1664         1351s     1355s     1363u     1440/
+ISK5A (INTEGER(kind 2))
+                      array          1872         1352s     1356s     1364u     1449/
+ISK5B (INTEGER(kind 2))
+                      array          2132         1352s     1356s     1364u     1460/
+ISK6A (INTEGER(kind 2))
+                      array          2340         1352s     1356s     1365u     1469/
+ISK6B (INTEGER(kind 2))
+                      array          2600         1352s     1356s     1365u     1480/
+ISK7A (INTEGER(kind 2))
+                      array          2808         1353s     1357s     1366u     1489/
+J (INTEGER)           scalar                      1344s     1544u
+LAT (INTEGER)         scalar                      1344s     1535=     1537u     1544u
+LLC (LOGICAL)         scalar                      1347s     1511=     1512u     1516=     1517u     1519=     1520u     1522=
+                                                  1523u     1525=     1526u     1528=     1529u
+LLCELL                FUNCTION                    1511u     1516u     1519u     1522u     1525u     1528u
+LLCELL (LOGICAL)      scalar                      1347s
+LONG (INTEGER)        scalar                      1344s     1536=     1538u     1544u
+S (REAL)              scalar                      1345s     1544=     1545u     1549=     1550u
+WCFGSM (REAL)         scalar                      1306s     1507=     1517=     1520=     1523=     1526=     1529=     1551=
+WCFGSM                FUNCTION                    1306s
+WX (REAL)             scalar                      1345s     1538=     1543u     1543=     1546u     1546=     1550u
+WY (REAL)             scalar                      1345s     1537=     1541u     1541=     1547u     1547=     1550u
+Lahey Fortran 90 Compiler Release 4.50i                                                    Wed Oct 10 14:17:42 2007  Page: 62
+Copyright (C) 1994-1998 Lahey Computer Systems.  All rights reserved.
+
+                 Compiling Options:    -chk    -ndal   -ndbl   -nf90   -fix    -ng     -nhed   -nin    -inln   
+                                       -lst    -pca    -stchk  -nsyn   -trap   -nvax   -w      -nwo    -xref   
+------------------------------------------------  Source Listing  -------------------------------------------------------------
+
+
+--------------------------------------------------  Label Cross Reference  ----------------------------------------------------
+Label  Context  (d-DO, =-ASSIGN, f-FORMAT, g-GOTO, i-IF statement, s-Specification, r-Argument)
+-------------------------------------------------------------------------------------------------------------------------------
+100         1512g     1534s
+150         1540d     1542d     1545g     1550s

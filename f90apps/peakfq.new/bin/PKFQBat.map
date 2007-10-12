@@ -1,0 +1,3380 @@
+386|LINK: 9.1fix1 -- Copyright (C) 1986-98 Phar Lap Software, Inc.
+
+
+Linking for 32-bit protected mode
+
+
+Command line switches:
+
+-LIBPATH C:\LF9045\Lib
+@C:\DOCUME~1\PaulH\LOCALS~1\Temp\LFT2.
+"C:\LF9045\BIN\lfinitw.obj"
+"C:\LF9045\BIN\ptest.obj"
+"..\obj\agplot.obj"
+"..\obj\agpltx.obj"
+"..\obj\emadata.obj"
+"..\obj\emafit028.obj"
+"..\obj\j407wc.obj"
+"..\obj\j407xe.obj"
+"..\obj\peakfq.obj"
+"..\obj\pkplot.obj"
+"..\obj\pkwdm.obj"
+"..\obj\stgaus.obj"
+"..\obj\stutil.obj"
+"..\obj\utj407.obj"
+"..\obj\utstat.obj"
+"..\obj\wdpeak.obj"
+"..\..\ema\imslfake.obj"
+"..\..\ema\probfun_025.obj"
+"lib4graph\gksint.obj"
+"lib4graph\graxis.obj"
+"lib4graph\grcaxe.obj"
+"lib4graph\grccrv.obj"
+"lib4graph\grclay.obj"
+"lib4graph\grcmeg.obj"
+"lib4graph\grcomn.obj"
+"lib4graph\grcvar.obj"
+"lib4graph\grdata.obj"
+"lib4graph\grdump.obj"
+"lib4graph\grgks.obj"
+"lib4graph\grmark.obj"
+"lib4graph\grsypc.obj"
+"lib4graph\grtext.obj"
+"lib4graph\grutil.obj"
+-lib \mylib3.0\lf90libs\aide \mylib3.0\lf90libs\wdm \mylib3.0\lf90libs\adwdm \mylib3.0\lf90libs\util \int\lib\shortl90 \int\lib\intmwl90 \int\lib\winspool
+-lib import1.lib import2.lib import3.lib
+-lib lf90w.lib
+-lib lf90wio.lib
+-stack 20000h
+-subsystem console
+-start mainCRTStartup
+-exeformat portexe
+-stub lfdummy.exe
+-offset 10000h
+-order class CODE
+-order class DATA
+-order class CONST
+-order class BSS
+-order class STACK
+-order class RSRC
+-empty class BSS
+-exe "..\bin\PKFQBat.exe"
+-twocase
+
+
+Input module(s):
+
+Stub "lfdummy" from file "C:\LF9045\BIN\lfdummy.exe"  [Sat Mar 21 19:55:36 1998].
+"lfinitw" from file "C:\LF9045\BIN\lfinitw.obj"  [Wed Apr 08 10:58:38 1998].
+"pentest" from file "C:\LF9045\BIN\ptest.obj"  [Sat Apr 25 13:18:30 1998].
+"agplot" from file "..\obj\agplot.obj"  [Wed Oct 10 14:17:45 2007].
+"agpltx" from file "..\obj\agpltx.obj"  [Wed Oct 10 14:17:45 2007].
+"emadata" from file "..\obj\emadata.obj"  [Wed Oct 10 14:17:44 2007].
+"emafit" from file "..\obj\emafit028.obj"  [Wed Oct 10 14:17:44 2007].
+"j407wc" from file "..\obj\j407wc.obj"  [Wed Oct 10 14:17:43 2007].
+"j407xe" from file "..\obj\j407xe.obj"  [Wed Oct 10 14:17:43 2007].
+"peakfq" from file "..\obj\peakfq.obj"  [Wed Oct 10 14:17:42 2007].
+"pkplot" from file "..\obj\pkplot.obj"  [Wed Oct 10 14:17:44 2007].
+"pkwdm" from file "..\obj\pkwdm.obj"  [Wed Oct 10 14:17:44 2007].
+"stgaus" from file "..\obj\stgaus.obj"  [Wed Oct 10 14:17:43 2007].
+"stutil" from file "..\obj\stutil.obj"  [Wed Oct 10 14:17:44 2007].
+"utj407" from file "..\obj\utj407.obj"  [Wed Oct 10 14:17:43 2007].
+"utstat" from file "..\obj\utstat.obj"  [Wed Oct 10 14:17:44 2007].
+"wdpeak" from file "..\obj\wdpeak.obj"  [Wed Oct 10 14:17:44 2007].
+"imslfake" from file "..\..\ema\imslfake.obj"  [Fri Dec 12 18:23:46 2003].
+"probfun_025" from file "..\..\ema\probfun_025.obj"  [Fri Dec 12 18:24:38 2003].
+"gksint" from file "lib4graph\gksint.obj"  [Thu Oct 05 16:05:27 2006].
+"graxis" from file "lib4graph\graxis.obj"  [Fri Jan 09 18:18:54 2004].
+"grcaxe" from file "lib4graph\grcaxe.obj"  [Fri Jan 09 18:18:56 2004].
+"grccrv" from file "lib4graph\grccrv.obj"  [Fri Jan 09 18:18:56 2004].
+"grclay" from file "lib4graph\grclay.obj"  [Fri Jan 09 18:18:56 2004].
+"grcmeg" from file "lib4graph\grcmeg.obj"  [Fri Jan 09 18:18:56 2004].
+"grcomn" from file "lib4graph\grcomn.obj"  [Fri Jan 09 18:18:56 2004].
+"grcvar" from file "lib4graph\grcvar.obj"  [Fri Jan 09 18:18:56 2004].
+"grdata" from file "lib4graph\grdata.obj"  [Fri Jan 09 18:18:58 2004].
+"grdump" from file "lib4graph\grdump.obj"  [Fri Jan 09 18:18:58 2004].
+"grgks" from file "lib4graph\grgks.obj"  [Thu Oct 05 16:13:27 2006].
+"grmark" from file "lib4graph\grmark.obj"  [Fri Jan 09 18:19:00 2004].
+"grsypc" from file "lib4graph\grsypc.obj"  [Fri Jan 09 18:19:00 2004].
+"grtext" from file "lib4graph\grtext.obj"  [Fri Jan 09 18:19:00 2004].
+"grutil" from file "lib4graph\grutil.obj"  [Fri Jan 09 18:19:00 2004].
+"aninit" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtchar" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtfile" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtnumb" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"prtaid" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtscn1" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"utuprm" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"z0util" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zutil" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zutilx" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"qtstgt" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"utmisc" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"z1util" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"z4util" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"ztscn1" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zutily" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zclbak" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zsyslf90" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch1" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch2" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch3" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch4" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch5" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch6" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch7" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch8" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbch9" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl1" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl2" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl3" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl4" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl5" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl6" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl7" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl8" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbfl9" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex1" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex2" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex3" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex4" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex5" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex6" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex7" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex8" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"zcbex9" from file "\mylib3.0\lf90libs\aide.lib"  [Wed Jul 08 12:39:18 1998].
+"wdatrb" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"wdbtch" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"wdtble" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"wdatru" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"wdtms1" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"wdtms2" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"wdatm2" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"tsbufr" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"wdmid" from file "\mylib3.0\lf90libs\wdm.lib"  [Tue Nov 16 11:23:14 2004].
+"usyslf90" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"wdatm1" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"msimpt" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"utwdmf" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"prtfil" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"adutil" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"utwdt1" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"wdmess" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"utwdmd" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"wdoppc90" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"ztwdmf" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"wdmchk" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"utnumb" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"uscnlf90" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utsclf90" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"ckfspc" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utchar" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utgnrl" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"datsys90" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utscxx" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utdate" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"utcopy90" from file "\mylib3.0\lf90libs\util.lib"  [Thu Aug 07 14:04:18 2003].
+"GCHJUS" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GCHOUA" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GCHROT" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GCHSET" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GCHSIZ" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GCLEAR" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GCOLN" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GFILL" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GHCOPT" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GHCOPY" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GHCSEL" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GINXY" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GLINEA" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GLITYP" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GMOVEA" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GPAGE" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GPOLYA" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"GUNIT" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"INFOER" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"INFOGR" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"INFOSC" from file "\int\lib\shortl90.lib"  [Wed Nov 27 11:17:26 1996].
+"garea" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gchjus" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gchoua" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gchset" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gclear" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gcoln" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gfill" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"ghcopt" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"ghcopy" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"ghcsel" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"ginxy" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"glinea" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"glityp" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gmovea" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gpause" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gpolya" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infoer" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infogr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infosc" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"osdelf" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"osrenf" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"scopen" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"atcoln" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"attrib" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"clscrn" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"cursor" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"digtsr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"disply" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gchlen" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gindev" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"ginlim" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"gtrnga" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"inctrl" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infogh" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infomd" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infoos" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infovn" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"inkeyi" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"inkpad" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"lenact" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"locchr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"locstr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"lowerc" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"osdate" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"osvar" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"OSWIN" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"outsxy" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"plottr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"print2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"printr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"scbell" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"scmode" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"scmopt" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"screen" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"strint" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxargs" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxbox" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcgm" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcnum" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdxf" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxe2i" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxerror" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxgdrv" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxgin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxhdrv" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxhpgl" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxhpgl2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxi2e" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xximag" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxline" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxlpic" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxopt" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpalg" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpost" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxprncmd" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxrast" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxrset" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxsav" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxtdrv" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxtmpprn" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxuser" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwing" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwmf" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwscs" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"bfclos" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"bfopen" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"bfreac" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"bfread" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"curxy" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"frtype" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"grinit" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"idbgc" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"inchr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"ineven" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"inflsh" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infoat" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"infoem" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"intstr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"justif" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"mouse" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"mwind" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"mwinh" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"MWINM" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"mwint" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"osdirc" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"osexit" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"outerr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"wnactn" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"wnclos" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"wnopen" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"wnouce" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xx2col" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxatt" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxbmp1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxbmp2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcgm1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcgm4" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcgm5" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcgm6" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxchk" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxclin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxclip" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcol" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcoln" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcurm" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdefh" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdith" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdump" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdxf1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdxf3" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdxf4" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxdxf7" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxexch" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxfact" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxginc" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxgink" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxgmswin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxhpg1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxhpgl2a" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxhpgl2c" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxichar" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxlpi0" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxlpi1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxmdrv" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpcod" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpcx1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpline" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxplygon" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpos1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpos2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpos3" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxprou" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras3" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras4" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras5" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras6" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras7" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras8" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxras9" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxres1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxresn" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxrgbhsv" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxrts" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxstep" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxtmswin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxvras" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwin1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwmf1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxxinr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxyinr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"bfseek" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"bfwric" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"clarea" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"clline" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"frame0" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"mwing" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"outcen" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"pgarea" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"pgplot" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"wnclr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"wncuxy" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"wnousx" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxbitimg" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcdef7" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcdef8" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcmpr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcmprp2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcpyw" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcspace" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcts" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcur" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcwin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxhpgl2b" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxlin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxmmswin" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxmpos" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpcx2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxtmswi1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxvra2" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxvra4" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxvra3" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwntlen" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxxini" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"filstr" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"hsplit" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"outvxy" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"pgscal" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxfate" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxfram" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxfrme" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxmmswi1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxpts" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxscrl" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxvra1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxwnousx" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"outver" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxch2x" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxch2y" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxfgcol" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxlins" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxlog1" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxrecs" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxtras" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"xxcolg" from file "\int\lib\intmwl90.lib"  [Fri Sep 26 11:22:06 2003].
+"ClosePrinter" from file "\int\lib\winspool.lib"  [Sat Sep 28 17:50:58 1996].
+"DocumentPropertiesA" from file "\int\lib\winspool.lib"  [Sat Sep 28 17:50:58 1996].
+"OpenPrinterA" from file "\int\lib\winspool.lib"  [Sat Sep 28 17:50:58 1996].
+"AddFontResourceA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"Arc" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"BitBlt" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CloseEnhMetaFile" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CloseMetaFile" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CopyMetaFileA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateCompatibleBitmap" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateCompatibleDC" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateDCA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateEnhMetaFileA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateFontA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateICA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateMetaFileA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreatePalette" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreatePatternBrush" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreatePen" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateRectRgn" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateSolidBrush" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"DeleteDC" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"DeleteEnhMetaFile" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"DeleteMetaFile" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"DeleteObject" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"Ellipse" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"EndDoc" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"EndPage" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"Escape" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"ExtCreatePen" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetDIBits" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetDeviceCaps" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetMetaFileBitsEx" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetNearestColor" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetObjectA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetPixel" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetStockObject" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetTextExtentPointA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"GetTextMetricsA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"LineTo" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"MoveToEx" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"Pie" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"PlayEnhMetaFile" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"PlayMetaFile" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"Polygon" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"Polyline" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"RealizePalette" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"Rectangle" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SelectClipRgn" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SelectObject" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SelectPalette" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetBkColor" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetBkMode" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetEnhMetaFileBits" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetMapMode" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetMetaFileBitsEx" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetPaletteEntries" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetPixel" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetROP2" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetTextAlign" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetTextColor" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetViewportExtEx" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetViewportOrgEx" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetWindowExtEx" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"SetWindowOrgEx" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"StartDocA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"StartPage" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"StretchDIBits" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"TextOutA" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"UnrealizeObject" from file "C:\LF9045\Lib\import1.lib"  [Wed Jul 24 12:09:26 1996].
+"AdjustWindowRect" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"CharNextA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"ClientToScreen" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"CloseClipboard" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateWindowExA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"DefWindowProcA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"DispatchMessageA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"DrawTextA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"EmptyClipboard" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetClassInfoA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetClientRect" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetCursorPos" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetDC" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetDesktopWindow" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetKeyState" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetKeyboardType" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetMessageA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetMessageTime" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetSystemMetrics" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"GetWindowRect" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"KillTimer" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"LoadCursorA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"LoadIconA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"MessageBeep" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"MessageBoxA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"OpenClipboard" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"PeekMessageA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"PostQuitMessage" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"RegisterClassA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"ReleaseCapture" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"ReleaseDC" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"ScreenToClient" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SendMessageA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetCapture" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetClipboardData" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetCursor" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetCursorPos" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetRect" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetTimer" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetWindowPos" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"SetWindowTextA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"ShowWindow" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"TranslateMessage" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"ValidateRgn" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"wsprintfA" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"CloseHandle" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"CopyFileA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateDirectoryA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateProcessA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"DeleteFileA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"ExitProcess" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"FileTimeToDosDateTime" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"FileTimeToLocalFileTime" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"FindClose" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"FindFirstFileA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"FindNextFileA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"FreeLibrary" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetCommandLineA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetCurrentDirectoryA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetDiskFreeSpaceA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetDriveTypeA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetEnvironmentVariableA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetLastError" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetLocalTime" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetModuleFileNameA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetModuleHandleA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetProcAddress" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetProfileStringA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetSystemDirectoryA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetSystemTime" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetTickCount" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetVersion" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetVersionExA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetVolumeInformationA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GlobalAlloc" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GlobalFree" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GlobalLock" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GlobalReAlloc" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GlobalUnlock" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"LoadLibraryA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"LocalAlloc" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"LocalFree" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"MoveFileA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"OpenFile" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"RemoveDirectoryA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"SetCurrentDirectoryA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"SetErrorMode" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"WaitForSingleObject" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"WinExec" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_hread" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_hwrite" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_lclose" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_lcreat" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_llseek" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_lopen" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_lread" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"_lwrite" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"lstrcpyA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"lstrlenA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"fatan2" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fatanf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fcos" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fcosf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fexp" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fexpf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flog" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flog10" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flog10f" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flogf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsin" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsinf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsqrt" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsqrtf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"ftanf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_dd_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_di_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_dr_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_id_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_ii_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_ir_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_ri_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_rr_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"DATETIME" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"LEN_TRIM" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"PRESENT" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"TRIM" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"INDEX" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"LFINITWC" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"BC_DEFS" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"LFSYSTEM" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"LFFLUSH" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"LFIOSTAT" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"atan2" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"atanf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"exp" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"expf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_cos" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_cosf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_sin" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_sinf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_tanf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"log" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"log10" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"log10f" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"logf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"nsqrt" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"nsqrtf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"powf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"ERRNO" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"CSTRING" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"winstack" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_tbl1" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_tbl2" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"ALLOCATE" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"BACKSP" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"CLOSE" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"ENDFILE" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"EREPORT" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FCHEQS" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FCHCMP" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FMTCK" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FMTIN" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"fmtin2" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FMTOT" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"fmtot2" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"INQUIRE" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"IOMISC" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"MINIMUM" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"OPEN" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"PAUSE" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"REWIND" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"UNFIO" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"chkstack" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"LF_LOW" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"LFCTYPE" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FHEAP" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"LFGETENV" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"initfpu" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"LFGETCL" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"LFINITWD" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"errpub" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"invalop" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"undfl" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FLG2RT" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"ADIRECT" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"AFMTIO" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"AUNFIO" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FCB" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FMTIO" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"location" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"MEMORY" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"COREIO" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"mw_asm0" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"lfsold" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"LFEXIT" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"FMTNOMOD" from file "C:\LF9045\Lib\lf90wio.lib"  [Wed May 12 10:14:26 1999].
+"EMATHRESH" from file ".\emathre0.lib"  [Wed Jun 06 11:26:11 2007].
+"COMPSPECS" from file ".\compspe0.lib"  [Wed Jan 07 17:12:04 2004].
+"ehutlf90" from file "\mylib3.0\lf90libs\adwdm.lib"  [Thu Aug 14 15:55:32 2003].
+"DestroyWindow" from file "C:\LF9045\Lib\import2.lib"  [Wed Jul 24 12:09:26 1996].
+"AllocConsole" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"CreateFileA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"FreeConsole" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetFileSize" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetFileType" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetProcessHeap" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetStartupInfoA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetStdHandle" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"GetTimeZoneInformation" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"HeapAlloc" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"ReadConsoleA" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"ReadFile" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"SetEndOfFile" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"SetFilePointer" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+"WriteFile" from file "C:\LF9045\Lib\import3.lib"  [Wed Jul 24 12:09:26 1996].
+
+
+Segment map
+
+     Name         Group         Class     Type   Offset     Size
+------------  ------------  ------------  ----  --------  --------
+REAL STUB                                       00010000  0000036C
+PE HEADER                                       0001036C  000000F8
+OBJECT TABLE                                    00010464  000000F0
+_TEXT         CGROUP        CODE          PUB   00011000  00160EE0
+.jdata                      CODE          PUB   00171EE0  00000456
+_DATA         DGROUP        DATA          PUB   00172338  000A8EEB
+_lc_WCFCM0    DGROUP        DATA          COM   0021B230  00000178
+_lc__FLG2RT   DGROUP        DATA          COM   0021B3B0  00000040
+_lc_LKABND    DGROUP        DATA          COM   0021B3F0  00004418
+_lc_TERI      DGROUP        DATA          COM   0021F810  00000010
+_lc_ZCNTL2    DGROUP        DATA          COM   0021F820  0003B000
+_lc_CSCREN    DGROUP        DATA          COM   0025A820  00003400
+_lc_CQRSPC    DGROUP        DATA          COM   0025DC20  00000400
+_lc_CQRSPI    DGROUP        DATA          COM   0025E020  00000400
+_lc_CSCREC    DGROUP        DATA          COM   0025E420  00004000
+_lc_CSCRED    DGROUP        DATA          COM   00262420  00001100
+_lc_ZCNTL3    DGROUP        DATA          COM   00263520  00000048
+_lc_ZCNTL1    DGROUP        DATA          COM   00263570  00003200
+_lc_COLOR     DGROUP        DATA          COM   00266770  00000040
+_lc_CUSRPM    DGROUP        DATA          COM   002667B0  00000200
+_lc_CZOPTN    DGROUP        DATA          COM   002669B0  00002500
+_lc_CZHIDE    DGROUP        DATA          COM   00268EB0  00000F00
+_lc_CCLBAK    DGROUP        DATA          COM   00269DB0  0000000C
+_lc_DCONST    DGROUP        DATA          COM   00269DC0  00000018
+_lc_CCLBAC    DGROUP        DATA          COM   00269DE0  00000050
+_lc_RCONST    DGROUP        DATA          COM   00269E30  00000010
+_lc_ICONST    DGROUP        DATA          COM   00269E40  00000008
+_lc_CZGLVL    DGROUP        DATA          COM   00269E50  00004F00
+_lc_CZGLVC    DGROUP        DATA          COM   0026ED50  00001100
+_lc_CFBUFF    DGROUP        DATA          COM   0026FE50  00005100
+_lc_CDRLOC    DGROUP        DATA          COM   00274F50  00000018
+_lc_CWTSDS    DGROUP        DATA          COM   00274F70  00000044
+_lc_CTSBUF    DGROUP        DATA          COM   00274FC0  000E5C00
+_lc_CWDMID    DGROUP        DATA          COM   0035ABC0  0000002C
+_lc_CWDMIC    DGROUP        DATA          COM   0035ABF0  00000014
+_lc_INTR63    DGROUP        DATA          COM   0035AC10  0000000C
+_lc_INTR02    DGROUP        DATA          COM   0035AC20  00000800
+_lc_INTR08    DGROUP        DATA          COM   0035B420  0000008C
+_lc_INTR28    DGROUP        DATA          COM   0035B4B0  000000B4
+_lc_INTR21    DGROUP        DATA          COM   0035B570  000000FF
+_lc_INTR45    DGROUP        DATA          COM   0035B670  00000048
+_lc_INTR46    DGROUP        DATA          COM   0035B6C0  000000A0
+_lc_INTR40    DGROUP        DATA          COM   0035B760  0000003A
+_lc_INTR41    DGROUP        DATA          COM   0035B7A0  00000018
+_lc_INTR49    DGROUP        DATA          COM   0035B7C0  000000C8
+_lc_INTR85    DGROUP        DATA          COM   0035B890  00004300
+_lc_INTR27    DGROUP        DATA          COM   0035FB90  00000500
+_lc_INTR10    DGROUP        DATA          COM   00360090  0000001C
+_lc_INTR32    DGROUP        DATA          COM   003600B0  0000006C
+_lc_INTR04    DGROUP        DATA          COM   00360120  00000200
+_lc_INTR24    DGROUP        DATA          COM   00360320  00000200
+_lc_INTR25    DGROUP        DATA          COM   00360520  00000028
+_lc_INTR90    DGROUP        DATA          COM   00360550  00008000
+_lc_INTR26    DGROUP        DATA          COM   00368550  00000010
+_lc_INTR16    DGROUP        DATA          COM   00368560  00000034
+_lc_INTR69    DGROUP        DATA          COM   003685A0  00000080
+_lc_INTR11    DGROUP        DATA          COM   00368620  00000005
+_lc_INTR87    DGROUP        DATA          COM   00368630  00000400
+_lc_INTR23    DGROUP        DATA          COM   00368A30  00000038
+_lc_INTR38    DGROUP        DATA          COM   00368A70  00000034
+_lc_INTR12    DGROUP        DATA          COM   00368AB0  00000058
+_lc_INTR31    DGROUP        DATA          COM   00368B10  0000004C
+_lc_INTR14    DGROUP        DATA          COM   00368B60  00000018
+_lc_INTR29    DGROUP        DATA          COM   00368B80  0000000C
+_lc_INTR35    DGROUP        DATA          COM   00368B90  00000014
+_lc_INTR36    DGROUP        DATA          COM   00368BB0  00000003
+_lc_INTR70    DGROUP        DATA          COM   00368BC0  0000007F
+_lc_INTR66    DGROUP        DATA          COM   00368C40  00000200
+_lc_INTR39    DGROUP        DATA          COM   00368E40  00000300
+_lc_INTR22    DGROUP        DATA          COM   00369140  00000018
+_lc_INTR15    DGROUP        DATA          COM   00369160  00000018
+_lc_INTR13    DGROUP        DATA          COM   00369180  00000060
+_lc_INTR03    DGROUP        DATA          COM   003691E0  000000C8
+_lc_INTR82    DGROUP        DATA          COM   003692B0  00007F00
+_lc_INTR30    DGROUP        DATA          COM   003711B0  00000020
+_lc_INTR07    DGROUP        DATA          COM   003711D0  00000200
+_lc_INTR44    DGROUP        DATA          COM   003713D0  00000A00
+_lc_INTR83    DGROUP        DATA          COM   00371DD0  00000020
+_lc_INTR18    DGROUP        DATA          COM   00371DF0  00003E00
+_lc_INTR17    DGROUP        DATA          COM   00375BF0  00011E00
+_lc_INTR51    DGROUP        DATA          COM   003879F0  00003A00
+_lc_INTR48    DGROUP        DATA          COM   0038B3F0  00000048
+_lc_INTR52    DGROUP        DATA          COM   0038B440  00000B00
+_lc_INTR88    DGROUP        DATA          COM   0038BF40  00007F00
+_lc_INTR42    DGROUP        DATA          COM   00393E40  00000200
+_lc_INTR43    DGROUP        DATA          COM   00394040  0000002C
+_lc_INTR91    DGROUP        DATA          COM   00394070  00010600
+_lc_INTR09    DGROUP        DATA          COM   003A4670  0000B000
+CONST2        DGROUP        DATA          PUB   003AF670  00000000
+_data                       DATA          PUB   003AF670  00000C20
+CONST         DGROUP        CONST         PUB   003B0290  00000580
+_BSS          DGROUP        BSS           PUB   003B0810  004AF1D6
+c_common      DGROUP        BSS           PUB   0085F9F0  00103F50
+??stack                     STACK         STK   00963940  00004000
+.idata                      IMPORTS       PUB   00968000  000011E4
+.edata                      EXPORTS       PUB   0096A000  00000E00
+.reloc                      RELOCS        PUB   0096B000  00028000
+
+
+Portable .EXE (PE) Sections
+
+  Name    Address     Size    File Off  File Sz    Flags
+--------  --------  --------  --------  --------  --------
+CODE      00011000  0039F810  00000600  0039FA00  E0000020  
+.bss      003B1000  005B6940  00000000  005B6A00  C0000080  
+.idata    00968000  000011E4  003A0000  00001200  C0000040  
+.edata    0096A000  00000E00  003A1200  00000E00  C0000040  
+.reloc    0096B000  00028000  003A2000  00028000  42000040  
+$$DOSX    00993000  00000200  003CA000  00000200  42000040  
+
+
+Public symbols
+
+     Name       Value      Module        Segment      Size
+------------  --------  ------------  ------------  --------
+$$lfdummy     00000001                              
+ADCOMA        0010FCF0  utchar        _TEXT         
+ADDTXT        0008E0F0  grtext        _TEXT         
+ADJUSTLT      0006A680  imslfake      _TEXT         
+ALIGNP        00033000  j407xe        _TEXT         
+ALNGAM        00069680  imslfake      _TEXT         
+ALNORM        00069EF0  imslfake      _TEXT         
+ANCLOS        00092800  aninit        _TEXT         
+ANGLEN        0008D6A0  grsypc        _TEXT         
+ANGLN         000901C0  grtext        _TEXT         
+ANGTX         0008EFA0  grtext        _TEXT         
+ANGTXA        0008D4E0  grsypc        _TEXT         
+ANINIT        00091DD0  aninit        _TEXT         
+ANINIX        00091E50  aninit        _TEXT         
+ANINIZ        00091EC0  aninit        _TEXT         
+ANPRGT        0009B0A0  utuprm        _TEXT         
+ANPRRD        0009B160  utuprm        _TEXT         
+ARAXIS        0007B750  graxis        _TEXT         
+ARRINP        000BD920  utmisc        _TEXT         
+AUXAXE        0008F0C0  grtext        _TEXT         
+AWVRSN        000F66C0  utwdmd        _TEXT         
+AXAXIS        0007C4B0  graxis        _TEXT         
+AddFontReso-  00171EE0  AddFontReso-  .jdata        IMPORT
+AdjustWindo-  00172210  AdjustWindo-  .jdata        IMPORT
+AllocConsole  00172072  AllocConsole  .jdata        IMPORT
+Arc           00171EE6  Arc           .jdata        IMPORT
+B17CI         00025D00  emafit        _TEXT         
+B17CIP        00025C40  emafit        _TEXT         
+BCFPCH        00038960  j407xe        _TEXT         
+BETAIN        00069B80  imslfake      _TEXT         
+BLDFNM        00093050  aninit        _TEXT         
+BitBlt        00171EEC  BitBlt        .jdata        IMPORT
+C1IN          00104420  utsclf90      _TEXT         
+C1INT         00104530  utsclf90      _TEXT         
+CARVAR        00105500  utchar        _TEXT         
+CHDECE        00105740  utchar        _TEXT         
+CHINTE        001057C0  utchar        _TEXT         
+CHKANQ        00093DF0  qtchar        _TEXT         
+CHKANS        00093990  qtchar        _TEXT         
+CHKDPR        001024B0  utnumb        _TEXT         
+CHKINT        00102250  utnumb        _TEXT         
+CHKREA        001022D0  utnumb        _TEXT         
+CHKSTR        001059A0  utchar        _TEXT         
+CHOOSE        0006D010  probfun_025   _TEXT         
+CHRCHR        00105B20  utchar        _TEXT         
+CHRDEC        00105BD0  utchar        _TEXT         
+CHRDEL        001066C0  utchar        _TEXT         
+CHRDIG        001067F0  utchar        _TEXT         
+CHRDPR        00106150  utchar        _TEXT         
+CHRINS        001068A0  utchar        _TEXT         
+CHRINT        00106AD0  utchar        _TEXT         
+CI_EMA_M3     0001FD50  emafit        _TEXT         
+CKCI          000731B0  gksint        _TEXT         
+CKDATE        00110B00  utdate        _TEXT         
+CKFAI         000729C0  gksint        _TEXT         
+CKFASI        00072B20  gksint        _TEXT         
+CKFONT        00072BC0  gksint        _TEXT         
+CKFSPC        00104AC0  ckfspc        _TEXT         
+CKMT          00072D00  gksint        _TEXT         
+CKNAME        00095E70  qtfile        _TEXT         
+CKNBLK        00106B10  utchar        _TEXT         
+CKNBLV        0010FA00  utchar        _TEXT         
+CKPLI         00072F20  gksint        _TEXT         
+CKPMI         00072FE0  gksint        _TEXT         
+CKPREC        00072C60  gksint        _TEXT         
+CKTALH        00072A80  gksint        _TEXT         
+CKTNR         000730A0  gksint        _TEXT         
+CKTXI         00072E60  gksint        _TEXT         
+CKWKID        00072DA0  gksint        _TEXT         
+CLNSFT        000912D0  grutil        _TEXT         
+CMPTIM        00110C10  utdate        _TEXT         
+CMPTM2        00110F10  utdate        _TEXT         
+CNVTDG        00110230  utgnrl        _TEXT         
+COLGET        001109B0  utscxx        _TEXT         
+COLINI        000999D0  qtscn1        _TEXT         
+COLSET        00110910  utscxx        _TEXT         
+COMSKU        00049B10  peakfq        _TEXT         
+COPYC         00106BD0  utchar        _TEXT         
+COPYD         00112F90  utcopy90      _TEXT         
+COPYI         00112FD0  utcopy90      _TEXT         
+COPYR         00113010  utcopy90      _TEXT         
+CRINTE        00106C80  utchar        _TEXT         
+CRINTX        00106EE0  utchar        _TEXT         
+CTRSTR        00106F20  utchar        _TEXT         
+CVARAR        00107270  utchar        _TEXT         
+CVRDEC        0004A1E0  peakfq        _TEXT         
+CVRINT        0004A2A0  peakfq        _TEXT         
+CharNextA     00172216  CharNextA     .jdata        IMPORT
+ClientToScr-  0017221C  ClientToScr-  .jdata        IMPORT
+CloseClipbo-  00172222  CloseClipbo-  .jdata        IMPORT
+CloseEnhMet-  00171EF2  CloseEnhMet-  .jdata        IMPORT
+CloseHandle   00172078  CloseHandle   .jdata        IMPORT
+CloseMetaFi-  00171EF8  CloseMetaFi-  .jdata        IMPORT
+ClosePrinter  00172324  ClosePrinter  .jdata        IMPORT
+CopyFileA     0017207E  CopyFileA     .jdata        IMPORT
+CopyMetaFil-  00171EFE  CopyMetaFil-  .jdata        IMPORT
+CreateCompa-  00171F04  CreateCompa-  .jdata        IMPORT
+CreateCompa-  00171F0A  CreateCompa-  .jdata        IMPORT
+CreateDCA     00171F10  CreateDCA     .jdata        IMPORT
+CreateDirec-  00172084  CreateDirec-  .jdata        IMPORT
+CreateEnhMe-  00171F16  CreateEnhMe-  .jdata        IMPORT
+CreateFileA   0017208A  CreateFileA   .jdata        IMPORT
+CreateFontA   00171F1C  CreateFontA   .jdata        IMPORT
+CreateICA     00171F22  CreateICA     .jdata        IMPORT
+CreateMetaF-  00171F28  CreateMetaF-  .jdata        IMPORT
+CreatePalet-  00171F2E  CreatePalet-  .jdata        IMPORT
+CreatePatte-  00171F34  CreatePatte-  .jdata        IMPORT
+CreatePen     00171F3A  CreatePen     .jdata        IMPORT
+CreateProce-  00172090  CreateProce-  .jdata        IMPORT
+CreateRectR-  00171F40  CreateRectR-  .jdata        IMPORT
+CreateSolid-  00171F46  CreateSolid-  .jdata        IMPORT
+CreateWindo-  00172228  CreateWindo-  .jdata        IMPORT
+D1MACH        0005E1A0  imslfake      _TEXT         
+D9LGMC        0005E240  imslfake      _TEXT         
+DATCHK        001110C0  utdate        _TEXT         
+DATCHR        001074B0  utchar        _TEXT         
+DATCMN        00112E50  utdate        _TEXT         
+DATLST        00107720  utchar        _TEXT         
+DATNXT        00111280  utdate        _TEXT         
+DAXPY         00058540  imslfake      _TEXT         
+DAYMON        001115E0  utdate        _TEXT         
+DBOXP         0005B390  imslfake      _TEXT         
+DCHIDF        0005A400  imslfake      _TEXT         
+DCHIIN        0005A450  imslfake      _TEXT         
+DCOPY         0006A5B0  imslfake      _TEXT         
+DCOT          00061310  imslfake      _TEXT         
+DCSEVL        0005E4B0  imslfake      _TEXT         
+DDGAM         0006E800  probfun_025   _TEXT         
+DECCHR        00107D20  utchar        _TEXT         
+DECCHX        0010D030  utchar        _TEXT         
+DECPRC        00102DD0  utnumb        _TEXT         
+DEXPECT       0006F130  probfun_025   _TEXT         
+DFAC          0005FC20  imslfake      _TEXT         
+DGAMDF        0005A180  imslfake      _TEXT         
+DGAMLM        0005E6F0  imslfake      _TEXT         
+DGAMLN        00061EE0  imslfake      _TEXT         
+DGAMMA        0005BDF0  imslfake      _TEXT         
+DIFF          00062590  imslfake      _TEXT         
+DIGCHR        0010DA40  utchar        _TEXT         
+DIST_P3       0001F940  emafit        _TEXT         
+DLIMIT        001116E0  utdate        _TEXT         
+DLINRG        000587C0  imslfake      _TEXT         
+DLNGAM        00058680  imslfake      _TEXT         
+DMMULT        000582F0  imslfake      _TEXT         
+DMRRRR        00057540  imslfake      _TEXT         
+DMSUM         00058030  imslfake      _TEXT         
+DMXTYF        000578E0  imslfake      _TEXT         
+DMXYTF        00057C90  imslfake      _TEXT         
+DNORDF        00059D50  imslfake      _TEXT         
+DNORIN        00059EE0  imslfake      _TEXT         
+DNPLTW        00089AC0  grgks         _TEXT         
+DOPLOT        0001A930  agplot        _TEXT         
+DOSTATION     00046C10  peakfq        _TEXT         
+DP3           00024040  emafit        _TEXT         
+DPDM          0006DB20  probfun_025   _TEXT         
+DPLOTP        0005B3D0  imslfake      _TEXT         
+DPORDER       0006A940  imslfake      _TEXT         
+DPRCHR        00109F40  utchar        _TEXT         
+DPSI          00060C10  imslfake      _TEXT         
+DQAG          00025A20  emafit        _TEXT         
+DQAGI         00065F30  imslfake      _TEXT         
+DQAGIE        00066170  imslfake      _TEXT         
+DQDAGS        00062410  imslfake      _TEXT         
+DQELG         000676F0  imslfake      _TEXT         
+DQK15I        00067F60  imslfake      _TEXT         
+DQPSRT        00068670  imslfake      _TEXT         
+DRNGAM        0005A520  imslfake      _TEXT         
+DRNORMS       0005A5F0  imslfake      _TEXT         
+DSET          00059C10  imslfake      _TEXT         
+DSINF1        00051A80  stutil        _TEXT         
+DSINF2        00051C90  stutil        _TEXT         
+DSINFO        00051510  stutil        _TEXT         
+DSVRGN        0005ADB0  imslfake      _TEXT         
+DSVRGP        0006AFA0  imslfake      _TEXT         
+DTMCMN        00112B80  utdate        _TEXT         
+DTSTRG        00090CB0  grutil        _TEXT         
+DWDIGS        0010CF70  utchar        _TEXT         
+DYAXIS        00078C70  graxis        _TEXT         
+DZEROIN       00068CC0  imslfake      _TEXT         
+D_EST         00022770  emafit        _TEXT         
+D_G1_INV      0006E660  probfun_025   _TEXT         
+DefWindowPr-  0017222E  DefWindowPr-  .jdata        IMPORT
+DeleteDC      00171F4C  DeleteDC      .jdata        IMPORT
+DeleteEnhMe-  00171F52  DeleteEnhMe-  .jdata        IMPORT
+DeleteFileA   00172096  DeleteFileA   .jdata        IMPORT
+DeleteMetaF-  00171F58  DeleteMetaF-  .jdata        IMPORT
+DeleteObject  00171F5E  DeleteObject  .jdata        IMPORT
+DestroyWind-  00172234  DestroyWind-  .jdata        IMPORT
+DispatchMes-  0017223A  DispatchMes-  .jdata        IMPORT
+DocumentPro-  0017232A  DocumentPro-  .jdata        IMPORT
+DrawTextA     00172240  DrawTextA     .jdata        IMPORT
+EHIN          00170E70  ehutlf90      _TEXT         
+EHOUT         00170FA0  ehutlf90      _TEXT         
+EHSCNM        00170FD0  ehutlf90      _TEXT         
+EMADATA       0001B930  emadata       _TEXT         
+EMAFIT        0001CD70  emafit        _TEXT         
+EMAFITB       0001D0E0  emafit        _TEXT         
+ERFCC         00059DB0  imslfake      _TEXT         
+EXPMOMDERIV   0006E6E0  probfun_025   _TEXT         
+Ellipse       00171F64  Ellipse       .jdata        IMPORT
+EmptyClipbo-  00172246  EmptyClipbo-  .jdata        IMPORT
+EndDoc        00171F6A  EndDoc        .jdata        IMPORT
+EndPage       00171F70  EndPage       .jdata        IMPORT
+Escape        00171F76  Escape        .jdata        IMPORT
+ExitProcess   0017209C  ExitProcess   .jdata        IMPORT
+ExtCreatePen  00171F7C  ExtCreatePen  .jdata        IMPORT
+FACCUR        000657A0  imslfake      _TEXT         
+FCNGAM        0006D520  probfun_025   _TEXT         
+FDUMP         0005EA00  imslfake      _TEXT         
+FJAC          00020900  emafit        _TEXT         
+FLDHID        000A6B70  z0util        _TEXT         
+FLSETC        000B9DD0  qtstgt        _TEXT         
+FLSETD        000B9C90  qtstgt        _TEXT         
+FLSETI        000B9A50  qtstgt        _TEXT         
+FLSETR        000B9B50  qtstgt        _TEXT         
+FPLOT4        0003BB98  j407xe        _TEXT         
+FP_G1_CDF     0006B610  probfun_025   _TEXT         
+FP_G1_ICDF    0006B790  probfun_025   _TEXT         
+FP_G1_MOM_T-  0006B980  probfun_025   _TEXT         
+FP_G1_MOM_T-  0006BD90  probfun_025   _TEXT         
+FP_G1_MOM_T-  0006C1B0  probfun_025   _TEXT         
+FP_G1_PDF     0006B3F0  probfun_025   _TEXT         
+FP_G2_CDF     0006B650  probfun_025   _TEXT         
+FP_G2_ICDF    0006B810  probfun_025   _TEXT         
+FP_G2_MOM_T-  0006BA90  probfun_025   _TEXT         
+FP_G2_MOM_T-  0006BEB0  probfun_025   _TEXT         
+FP_G2_MOM_T-  0006C3B0  probfun_025   _TEXT         
+FP_G2_PDF     0006B530  probfun_025   _TEXT         
+FP_G3_CDF     0006B730  probfun_025   _TEXT         
+FP_G3_ICDF    0006B930  probfun_025   _TEXT         
+FP_G3_MOM_T-  0006BC20  probfun_025   _TEXT         
+FP_G3_MOM_T-  0006C040  probfun_025   _TEXT         
+FP_G3_MOM_T-  0006C580  probfun_025   _TEXT         
+FP_G3_MOM_T-  0006C720  probfun_025   _TEXT         
+FP_G3_PDF     0006B5A0  probfun_025   _TEXT         
+FP_N2_CDF     0006B300  probfun_025   _TEXT         
+FP_N2_ICDF    0006B3A0  probfun_025   _TEXT         
+FP_N2_PDF     0006B260  probfun_025   _TEXT         
+FP_TNC2_ICDF  00070800  probfun_025   _TEXT         
+FP_TNC_CDF    00070480  probfun_025   _TEXT         
+FP_TNC_ICDF   000706D0  probfun_025   _TEXT         
+FP_Z_CDF      0006B1D0  probfun_025   _TEXT         
+FP_Z_ICDF     0006B230  probfun_025   _TEXT         
+FP_Z_PDF      0006B170  probfun_025   _TEXT         
+FRQPLG        0004A350  pkplot        _TEXT         
+FRQPLT        000399C0  j407xe        _TEXT         
+FSPARS        000EBC60  msimpt        _TEXT         
+FTEST01       000259A0  emafit        _TEXT         
+FTNCINV       00070BB0  probfun_025   _TEXT         
+FileTimeToD-  001720A2  FileTimeToD-  .jdata        IMPORT
+FileTimeToL-  001720A8  FileTimeToL-  .jdata        IMPORT
+FindClose     001720AE  FindClose     .jdata        IMPORT
+FindFirstFi-  001720B4  FindFirstFi-  .jdata        IMPORT
+FindNextFil-  001720BA  FindNextFil-  .jdata        IMPORT
+FreeConsole   001720C0  FreeConsole   .jdata        IMPORT
+FreeLibrary   001720C6  FreeLibrary   .jdata        IMPORT
+GACWK         00071770  gksint        _TEXT         
+GAMCDF        0005A660  imslfake      _TEXT         
+GAMMLN        00060AD0  imslfake      _TEXT         
+GAMMP         000602E0  imslfake      _TEXT         
+GAMPPF        0005B3F0  imslfake      _TEXT         
+GAMRAN        0005EDF0  imslfake      _TEXT         
+GAUSAB        00050FD0  stgaus        _TEXT         
+GAUSCF        00051190  stgaus        _TEXT         
+GAUSDY        00051120  stgaus        _TEXT         
+GAUSEX        00050E90  stgaus        _TEXT         
+GAUSSJ        000589A0  imslfake      _TEXT         
+GBOPEN        00089830  grgks         _TEXT         
+GBTEST        0001DCB0  emafit        _TEXT         
+GCF           000604A0  imslfake      _TEXT         
+GCHJUS        00113050  GCHJUS        _TEXT         
+GCHOUA        00113080  GCHOUA        _TEXT         
+GCHROT        001130C0  GCHROT        _TEXT         
+GCHSET        001130E0  GCHSET        _TEXT         
+GCHSIZ        00113110  GCHSIZ        _TEXT         
+GCLEAR        00113140  GCLEAR        _TEXT         
+GCLKS         00073410  gksint        _TEXT         
+GCLRWK        000726E0  gksint        _TEXT         
+GCLWK         00072680  gksint        _TEXT         
+GCOLN         00113160  GCOLN         _TEXT         
+GDAWK         000726D0  gksint        _TEXT         
+GDEVIC        00113213  GHCOPY        _TEXT         
+GDGROT        0008D430  grmark        _TEXT         
+GESC          000734B0  gksint        _TEXT         
+GETFUN        00095B20  qtfile        _TEXT         
+GETKEY        00103E60  utsclf90      _TEXT         
+GETMON        00072110  gksint        _TEXT         
+GETPTH        000929B0  aninit        _TEXT         
+GETTB         00055820  wdpeak        _TEXT         
+GETTS         00056ED0  wdpeak        _TEXT         
+GETTXT        00093140  qtchar        _TEXT         
+GFA           00076090  gksint        _TEXT         
+GFILL         00113180  GFILL         _TEXT         
+GGALEN        0007DF30  grcaxe        _TEXT         
+GGATXB        0007DE90  grcaxe        _TEXT         
+GGATYL        0007DE10  grcaxe        _TEXT         
+GGATYR        0007DE50  grcaxe        _TEXT         
+GGBLNK        0007EDF0  grclay        _TEXT         
+GGBVFG        0007ED70  grclay        _TEXT         
+GGCOLR        0007E640  grccrv        _TEXT         
+GGCTXT        0007EE80  grclay        _TEXT         
+GGCTYP        0007E0B0  grccrv        _TEXT         
+GGDATX        00081DB0  grcomn        _TEXT         
+GGDTYP        0007E170  grccrv        _TEXT         
+GGDVCD        0007EAF0  grclay        _TEXT         
+GGDVTY        0007EAB0  grclay        _TEXT         
+GGEDAT        0007E350  grccrv        _TEXT         
+GGERFL        0007EA70  grclay        _TEXT         
+GGETVL        0007FC10  grcmeg        _TEXT         
+GGFTXT        0007EF60  grclay        _TEXT         
+GGLBAA        0007DC00  grcaxe        _TEXT         
+GGLBCL        0007F030  grclay        _TEXT         
+GGLBCV        0007DFD0  grccrv        _TEXT         
+GGLBVR        000827B0  grcvar        _TEXT         
+GGLBXB        0007DCA0  grcaxe        _TEXT         
+GGLBYL        0007DAC0  grcaxe        _TEXT         
+GGLBYR        0007DB60  grcaxe        _TEXT         
+GGLEDG        0007ED10  grclay        _TEXT         
+GGLNTY        0007E500  grccrv        _TEXT         
+GGLSIZ        0007ECD0  grclay        _TEXT         
+GGMTFL        0007EBD0  grclay        _TEXT         
+GGNCRV        000825C0  grcvar        _TEXT         
+GGNTXT        0007EF00  grclay        _TEXT         
+GGORIG        0007EC80  grclay        _TEXT         
+GGPAGE        0007EC20  grclay        _TEXT         
+GGPATN        0007E5A0  grccrv        _TEXT         
+GGSCAA        0007D9E0  grcaxe        _TEXT         
+GGSCXB        0007DA40  grcaxe        _TEXT         
+GGSCYL        0007D920  grcaxe        _TEXT         
+GGSCYR        0007D980  grcaxe        _TEXT         
+GGSDAT        0007E3D0  grccrv        _TEXT         
+GGSSZB        0007EA00  grccrv        _TEXT         
+GGSYMB        0007E460  grccrv        _TEXT         
+GGTCAA        0007DD90  grcaxe        _TEXT         
+GGTCXB        0007DDD0  grcaxe        _TEXT         
+GGTCYL        0007DD10  grcaxe        _TEXT         
+GGTCYR        0007DD50  grcaxe        _TEXT         
+GGTGLA        000F0810  adutil        _TEXT         
+GGTGLV        000F0260  adutil        _TEXT         
+GGTITL        0007EB60  grclay        _TEXT         
+GGTMSU        0007E270  grccrv        _TEXT         
+GGTRAN        00082950  grcvar        _TEXT         
+GGVMNX        00082690  grcvar        _TEXT         
+GGVWCH        00082890  grcvar        _TEXT         
+GGWCTM        0007E6E0  grccrv        _TEXT         
+GGWCXS        0007E8F0  grccrv        _TEXT         
+GGWCXY        0007E7B0  grccrv        _TEXT         
+GGXLOC        0007EFD0  grclay        _TEXT         
+GGXYLN        0007DEE0  grcaxe        _TEXT         
+GHCOPT        001131B0  GHCOPT        _TEXT         
+GHCOPY        001131E0  GHCOPY        _TEXT         
+GHCSEL        00113230  GHCSEL        _TEXT         
+GINLC         00076B50  gksint        _TEXT         
+GINXY         00113260  GINXY         _TEXT         
+GKSINT        00070C10  gksint        _TEXT         
+GLINEA        00113290  GLINEA        _TEXT         
+GLITYP        001132C0  GLITYP        _TEXT         
+GLVINI        0009BDD0  utuprm        _TEXT         
+GMARK1        0008C1C0  grmark        _TEXT         
+GMARKN        0008C260  grmark        _TEXT         
+GMARKS        0008C2F0  grmark        _TEXT         
+GMKSTR        0008C3A0  grmark        _TEXT         
+GMOVEA        001132E0  GMOVEA        _TEXT         
+GOPKS         00070C20  gksint        _TEXT         
+GOPWK         00071680  gksint        _TEXT         
+GPAGE         00113310  GPAGE         _TEXT         
+GPALEN        0007DF10  grcaxe        _TEXT         
+GPATXB        0007DE70  grcaxe        _TEXT         
+GPATYL        0007DDF0  grcaxe        _TEXT         
+GPATYR        0007DE30  grcaxe        _TEXT         
+GPBLNK        0007EDB0  grclay        _TEXT         
+GPBVFG        0007ED30  grclay        _TEXT         
+GPCLOS        00089A30  grgks         _TEXT         
+GPCOLR        0007E5F0  grccrv        _TEXT         
+GPCTXT        0007EE30  grclay        _TEXT         
+GPCTYP        0007E050  grccrv        _TEXT         
+GPCURV        00081680  grcomn        _TEXT         
+GPDATA        00080F00  grcomn        _TEXT         
+GPDATR        00080DC0  grcomn        _TEXT         
+GPDATX        00081E90  grcomn        _TEXT         
+GPDEVC        00081D80  grcomn        _TEXT         
+GPDTYP        0007E110  grccrv        _TEXT         
+GPDVCD        0007EAD0  grclay        _TEXT         
+GPDVTY        0007EA90  grclay        _TEXT         
+GPEDAT        0007E310  grccrv        _TEXT         
+GPERFL        0007EA50  grclay        _TEXT         
+GPFTXT        0007EF30  grclay        _TEXT         
+GPGTEF        00081D60  grcomn        _TEXT         
+GPINIT        000807E0  grcomn        _TEXT         
+GPL           000727D0  gksint        _TEXT         
+GPLABL        00081060  grcomn        _TEXT         
+GPLBAA        0007DBB0  grcaxe        _TEXT         
+GPLBCL        0007F010  grclay        _TEXT         
+GPLBCV        0007DF50  grccrv        _TEXT         
+GPLBVR        00082730  grcvar        _TEXT         
+GPLBXB        0007DC50  grcaxe        _TEXT         
+GPLBYL        0007DA70  grcaxe        _TEXT         
+GPLBYR        0007DB10  grcaxe        _TEXT         
+GPLEDG        0007ECF0  grclay        _TEXT         
+GPLNTY        0007E4B0  grccrv        _TEXT         
+GPLSIZ        0007ECB0  grclay        _TEXT         
+GPM           000743C0  gksint        _TEXT         
+GPMTFL        0007EBB0  grclay        _TEXT         
+GPNCRV        00081F70  grcvar        _TEXT         
+GPNTXT        0007EED0  grclay        _TEXT         
+GPOLYA        00113340  GPOLYA        _TEXT         
+GPOPEN        0001AAD0  agplot        _TEXT         
+GPORIG        0007EC50  grclay        _TEXT         
+GPPAGE        0007EBF0  grclay        _TEXT         
+GPPATN        0007E550  grccrv        _TEXT         
+GPREC         00076570  gksint        _TEXT         
+GPSCAA        0007D9B0  grcaxe        _TEXT         
+GPSCLE        00081970  grcomn        _TEXT         
+GPSCXB        0007DA10  grcaxe        _TEXT         
+GPSCYL        0007D8F0  grcaxe        _TEXT         
+GPSCYR        0007D950  grcaxe        _TEXT         
+GPSDAT        0007E390  grccrv        _TEXT         
+GPSIZE        00081470  grcomn        _TEXT         
+GPSSZB        0007E9B0  grccrv        _TEXT         
+GPSYMB        0007E410  grccrv        _TEXT         
+GPTCAA        0007DD70  grcaxe        _TEXT         
+GPTCXB        0007DDB0  grcaxe        _TEXT         
+GPTCYL        0007DCF0  grcaxe        _TEXT         
+GPTCYR        0007DD30  grcaxe        _TEXT         
+GPTEXT        000815B0  grcomn        _TEXT         
+GPTIME        00081270  grcomn        _TEXT         
+GPTITL        0007EB10  grclay        _TEXT         
+GPTMSU        0007E1D0  grccrv        _TEXT         
+GPTRAN        000828F0  grcvar        _TEXT         
+GPUTMK        0008C5A0  grmark        _TEXT         
+GPUTVL        0007F050  grcmeg        _TEXT         
+GPVAR         00081AF0  grcomn        _TEXT         
+GPVMNX        000825F0  grcvar        _TEXT         
+GPVWCH        00082830  grcvar        _TEXT         
+GPWCTM        0007E690  grccrv        _TEXT         
+GPWCXS        0007E830  grccrv        _TEXT         
+GPWCXY        0007E730  grccrv        _TEXT         
+GPXLEN        00081500  grcomn        _TEXT         
+GPXLOC        0007EF90  grclay        _TEXT         
+GPXYLN        0007DEB0  grcaxe        _TEXT         
+GPZIPB        00080D70  grcomn        _TEXT         
+GQACWK        00076B20  gksint        _TEXT         
+GQCF          00076830  gksint        _TEXT         
+GQCHB         000733B0  gksint        _TEXT         
+GQCHH         00076770  gksint        _TEXT         
+GQCHSP        000767B0  gksint        _TEXT         
+GQCHXP        000767F0  gksint        _TEXT         
+GQDSP         00073250  gksint        _TEXT         
+GQFACI        00077030  gksint        _TEXT         
+GQFAIS        00077110  gksint        _TEXT         
+GQLI          00076B80  gksint        _TEXT         
+GQLN          00076E20  gksint        _TEXT         
+GQLWSC        00076E40  gksint        _TEXT         
+GQMKSC        00076600  gksint        _TEXT         
+GQOPS         00076720  gksint        _TEXT         
+GQPLCI        00076F50  gksint        _TEXT         
+GQPMCI        00076E70  gksint        _TEXT         
+GQTXFP        00076640  gksint        _TEXT         
+GQTXX         00076880  gksint        _TEXT         
+GQWKS         00076690  gksint        _TEXT         
+GRDUMP        000894A0  grdump        _TEXT         
+GRQLC         00076BE0  gksint        _TEXT         
+GRVRSN        0008BF20  grgks         _TEXT         
+GSASF         00076580  gksint        _TEXT         
+GSCHH         00074BB0  gksint        _TEXT         
+GSCHSP        00075A60  gksint        _TEXT         
+GSCHUP        00074BE0  gksint        _TEXT         
+GSCHXP        000759E0  gksint        _TEXT         
+GSCLIP        00074FE0  gksint        _TEXT         
+GSCR          00074980  gksint        _TEXT         
+GSELNT        00073ED0  gksint        _TEXT         
+GSER          00060840  imslfake      _TEXT         
+GSETUP        0008A100  grgks         _TEXT         
+GSFACI        00075D50  gksint        _TEXT         
+GSFAI         00075FA0  gksint        _TEXT         
+GSFAIS        00075BF0  gksint        _TEXT         
+GSFAR         00075E00  gksint        _TEXT         
+GSFASI        00075CC0  gksint        _TEXT         
+GSFASX        0008D8B0  grsypc        _TEXT         
+GSLN          000754E0  gksint        _TEXT         
+GSLWSC        00075610  gksint        _TEXT         
+GSMK          00075730  gksint        _TEXT         
+GSMKSC        000757D0  gksint        _TEXT         
+GSPLCI        00075690  gksint        _TEXT         
+GSPLI         000747D0  gksint        _TEXT         
+GSPLR         00074690  gksint        _TEXT         
+GSPMCI        00075850  gksint        _TEXT         
+GSPMI         00074AC0  gksint        _TEXT         
+GSPMR         000749B0  gksint        _TEXT         
+GSTFNT        00071F00  gksint        _TEXT         
+GSTGLV        000EFA70  adutil        _TEXT         
+GSTUPW        0008A190  grgks         _TEXT         
+GSTXAL        00074DB0  gksint        _TEXT         
+GSTXCI        00075B50  gksint        _TEXT         
+GSTXFP        000758F0  gksint        _TEXT         
+GSTXI         00074E70  gksint        _TEXT         
+GSTXP         00074D30  gksint        _TEXT         
+GSTXR         00075070  gksint        _TEXT         
+GSVP          000736F0  gksint        _TEXT         
+GSWKVP        00073C00  gksint        _TEXT         
+GSWKWN        00073930  gksint        _TEXT         
+GSWN          000734C0  gksint        _TEXT         
+GT1ST         000C8A30  zsyslf90      _TEXT         
+GTINFO        000522B0  stutil        _TEXT         
+GTNXT         000C8A50  zsyslf90      _TEXT         
+GTX           00075360  gksint        _TEXT         
+GUNIT         00113370  GUNIT         _TEXT         
+GetClassInf-  0017224C  GetClassInf-  .jdata        IMPORT
+GetClientRe-  00172252  GetClientRe-  .jdata        IMPORT
+GetCommandL-  001720CC  GetCommandL-  .jdata        IMPORT
+GetCurrentD-  001720D2  GetCurrentD-  .jdata        IMPORT
+GetCursorPos  00172258  GetCursorPos  .jdata        IMPORT
+GetDC         0017225E  GetDC         .jdata        IMPORT
+GetDIBits     00171F82  GetDIBits     .jdata        IMPORT
+GetDesktopW-  00172264  GetDesktopW-  .jdata        IMPORT
+GetDeviceCa-  00171F88  GetDeviceCa-  .jdata        IMPORT
+GetDiskFree-  001720D8  GetDiskFree-  .jdata        IMPORT
+GetDriveTyp-  001720DE  GetDriveTyp-  .jdata        IMPORT
+GetEnvironm-  001720E4  GetEnvironm-  .jdata        IMPORT
+GetFileSize   001720EA  GetFileSize   .jdata        IMPORT
+GetFileType   001720F0  GetFileType   .jdata        IMPORT
+GetKeyState   0017226A  GetKeyState   .jdata        IMPORT
+GetKeyboard-  00172270  GetKeyboard-  .jdata        IMPORT
+GetLastError  001720F6  GetLastError  .jdata        IMPORT
+GetLocalTime  001720FC  GetLocalTime  .jdata        IMPORT
+GetMessageA   00172276  GetMessageA   .jdata        IMPORT
+GetMessageT-  0017227C  GetMessageT-  .jdata        IMPORT
+GetMetaFile-  00171F8E  GetMetaFile-  .jdata        IMPORT
+GetModuleFi-  00172102  GetModuleFi-  .jdata        IMPORT
+GetModuleHa-  00172108  GetModuleHa-  .jdata        IMPORT
+GetNearestC-  00171F94  GetNearestC-  .jdata        IMPORT
+GetObjectA    00171F9A  GetObjectA    .jdata        IMPORT
+GetPixel      00171FA0  GetPixel      .jdata        IMPORT
+GetProcAddr-  0017210E  GetProcAddr-  .jdata        IMPORT
+GetProcessH-  00172114  GetProcessH-  .jdata        IMPORT
+GetProfileS-  0017211A  GetProfileS-  .jdata        IMPORT
+GetStartupI-  00172120  GetStartupI-  .jdata        IMPORT
+GetStdHandle  00172126  GetStdHandle  .jdata        IMPORT
+GetStockObj-  00171FA6  GetStockObj-  .jdata        IMPORT
+GetSystemDi-  0017212C  GetSystemDi-  .jdata        IMPORT
+GetSystemMe-  00172282  GetSystemMe-  .jdata        IMPORT
+GetSystemTi-  00172132  GetSystemTi-  .jdata        IMPORT
+GetTextExte-  00171FAC  GetTextExte-  .jdata        IMPORT
+GetTextMetr-  00171FB2  GetTextMetr-  .jdata        IMPORT
+GetTickCount  00172138  GetTickCount  .jdata        IMPORT
+GetTimeZone-  0017213E  GetTimeZone-  .jdata        IMPORT
+GetVersion    00172144  GetVersion    .jdata        IMPORT
+GetVersionE-  0017214A  GetVersionE-  .jdata        IMPORT
+GetVolumeIn-  00172150  GetVolumeIn-  .jdata        IMPORT
+GetWindowRe-  00172288  GetWindowRe-  .jdata        IMPORT
+GlobalAlloc   00172156  GlobalAlloc   .jdata        IMPORT
+GlobalFree    0017215C  GlobalFree    .jdata        IMPORT
+GlobalLock    00172162  GlobalLock    .jdata        IMPORT
+GlobalReAll-  00172168  GlobalReAll-  .jdata        IMPORT
+GlobalUnlock  0017216E  GlobalUnlock  .jdata        IMPORT
+HARTAK        00054D30  utstat        _TEXT         
+HARTAP        00054FB0  utstat        _TEXT         
+HARTIV        000525E0  utj407        _TEXT         
+HARTK         000532B0  utj407        _TEXT         
+HARTK1        00052760  utj407        _TEXT         
+HARTK2        00053370  utj407        _TEXT         
+HARTP         00055450  utstat        _TEXT         
+HARTP1        000549E0  utstat        _TEXT         
+HARTP2        000554B0  utstat        _TEXT         
+HARTRG        00052970  utj407        _TEXT         
+HLPSET        0009ADD0  qtscn1        _TEXT         
+HVXLIN        0007D730  graxis        _TEXT         
+HVYLIN        0007D830  graxis        _TEXT         
+HeapAlloc     00172174  HeapAlloc     .jdata        IMPORT
+I1MACH        0005EA20  imslfake      _TEXT         
+IACTUALLENG-  0011CA20  lenact        _TEXT         
+IBITEX        0003E440  j407xe        _TEXT         
+IBITOX        0003E250  j407xe        _TEXT         
+ICHOUR        00090AC0  grutil        _TEXT         
+ICLEARAREA    00153E50  clarea        _TEXT         
+ICLEARLINE    00153F60  clline        _TEXT         
+ICLEARSCREEN  0011A3E0  clscrn        _TEXT         
+ICURSOR       0011A460  cursor        _TEXT         
+ICURSORSIZE   0011A482  cursor        _TEXT         
+ICURSORXY     00137A30  curxy         _TEXT         
+IDEBUG        00138390  idbgc         _TEXT         
+IDEBUGLEVEL   0012370E  xxerror       _TEXT         
+IDIGITISER    0011A5F0  digtsr        _TEXT         
+IDISPLAY      0011A6E0  disply        _TEXT         
+IDOUBLETOST-  0013890E  intstr        _TEXT         
+IFILECLOSE    00137600  bfclos        _TEXT         
+IFILEOPEN     00137620  bfopen        _TEXT         
+IFILEREAD     00137850  bfread        _TEXT         
+IFILEREAD1    00137876  bfread        _TEXT         
+IFILEREAD2    0013789F  bfread        _TEXT         
+IFILEREAD3    001378C8  bfread        _TEXT         
+IFILEREAD4    001378F1  bfread        _TEXT         
+IFILEREAD5    0013791A  bfread        _TEXT         
+IFILEREAD6    00137943  bfread        _TEXT         
+IFILEREAD7    0013796C  bfread        _TEXT         
+IFILEREAD8    00137992  bfread        _TEXT         
+IFILEREADCH-  00137760  bfreac        _TEXT         
+IFILEREADCH-  0013778B  bfreac        _TEXT         
+IFILEREADCH-  001377B6  bfreac        _TEXT         
+IFILESEEK     00153CE0  bfseek        _TEXT         
+IFILEWRITEC-  00153D60  bfwric        _TEXT         
+IFILEWRITEC-  00153D8B  bfwric        _TEXT         
+IFILEWRITEC-  00153DB6  bfwric        _TEXT         
+IFILLSTRING   0015DB40  filstr        _TEXT         
+IFRAME        00153FE0  frame0        _TEXT         
+IFRAMETITLE   00154028  frame0        _TEXT         
+IFRAMETITLE-  001540A4  frame0        _TEXT         
+IFRAMETYPE    00137B00  frtype        _TEXT         
+IGRAREA       00113410  garea         _TEXT         
+IGRAREACLEAR  00115C00  gclear        _TEXT         
+IGRCHARDIRE-  00113CA9  gchjus        _TEXT         
+IGRCHARFONT   00113E33  gchjus        _TEXT         
+IGRCHARJUST-  00113840  gchjus        _TEXT         
+IGRCHARLENG-  0011AB50  gchlen        _TEXT         
+IGRCHAROUT    00113EB0  gchoua        _TEXT         
+IGRCHAROUTR-  001157EF  gchoua        _TEXT         
+IGRCHARROTA-  00113AFC  gchjus        _TEXT         
+IGRCHARSET    00115850  gchset        _TEXT         
+IGRCHARSIZE   001138F5  gchjus        _TEXT         
+IGRCHARSLANT  00113D1B  gchjus        _TEXT         
+IGRCHARSPAC-  00113A20  gchjus        _TEXT         
+IGRCHARUNDE-  00113D98  gchjus        _TEXT         
+IGRCOLOURMO-  00116020  gcoln         _TEXT         
+IGRCOLOURN    00115E10  gcoln         _TEXT         
+IGRENDPAGE    00116E7C  gpause        _TEXT         
+IGRFILLPATT-  00116080  gfill         _TEXT         
+IGRHARDCOPY   00116500  ghcopy        _TEXT         
+IGRHARDCOPY-  00116180  ghcopt        _TEXT         
+IGRHARDCOPY-  00116960  ghcsel        _TEXT         
+IGRINIT       00137BD0  grinit        _TEXT         
+IGRINPUTDEV-  0011AC50  gindev        _TEXT         
+IGRINPUTLIM-  0011AD90  ginlim        _TEXT         
+IGRINPUTXY    00116A50  ginxy         _TEXT         
+IGRLINETO     00116B40  glinea        _TEXT         
+IGRLINETOREL  00116BB4  glinea        _TEXT         
+IGRLINETYPE   00116C00  glityp        _TEXT         
+IGRMOVETO     00116CCB  gmovea        _TEXT         
+IGRMOVETOREL  00116C80  gmovea        _TEXT         
+IGRPAUSE      00116D20  gpause        _TEXT         
+IGRPOLYGONS-  00116EB0  gpolya        _TEXT         
+IGRTRIANGLE   0011B220  gtrnga        _TEXT         
+IGRTRIANGLE-  0011C00D  gtrnga        _TEXT         
+IGRUNITS      001136EB  garea         _TEXT         
+IHORIZLINE    0015DBE9  hsplit        _TEXT         
+IJUSTIFYSTR-  00138CF0  justif        _TEXT         
+ILOCATECHAR   0011CB10  locchr        _TEXT         
+ILOCATESTRI-  0011CC10  locstr        _TEXT         
+ILOWERCASE    0011CD10  lowerc        _TEXT         
+IMOUSE        00138F50  mouse         _TEXT         
+INCHARACTER   00138450  inchr         _TEXT         
+INCONTROLKEY  0011C0B0  inctrl        _TEXT         
+INDSFN        000D1380  wdatru        _TEXT         
+INEVENTSELE-  00138530  ineven        _TEXT         
+INFLUSH       00138610  inflsh        _TEXT         
+INFOATTRIBU-  00138660  infoat        _TEXT         
+INFOER        001133B0  INFOER        _TEXT         
+INFOERROR     00117DF0  infoer        _TEXT         
+INFOERRORME-  00138820  infoem        _TEXT         
+INFOGR        001133D0  INFOGR        _TEXT         
+INFOGRHARDC-  0011C180  infogh        _TEXT         
+INFOGRSCREEN  00117E50  infogr        _TEXT         
+INFOOPSYSTEM  0011C390  infoos        _TEXT         
+INFOSC        001133F0  INFOSC        _TEXT         
+INFOSCREEN    00117FF0  infosc        _TEXT         
+INFOSCREENM-  0011C2F0  infomd        _TEXT         
+INFOVERSION   0011C860  infovn        _TEXT         
+INITDS        0005C750  imslfake      _TEXT         
+INITM         0009AEA0  qtscn1        _TEXT         
+INITMD        0009AF10  qtscn1        _TEXT         
+INKEYEVENT    0011C9AD  inkeyi        _TEXT         
+INKEYEVENTI-  0011C8C0  inkeyi        _TEXT         
+INKEYPAD      0011C9D0  inkpad        _TEXT         
+INPUT         00033210  j407xe        _TEXT         
+INPUT1        0004CB40  pkwdm         _TEXT         
+INPUT2        000336C0  j407xe        _TEXT         
+INPUT3        000373B0  j407xe        _TEXT         
+INTCHR        0010DB20  utchar        _TEXT         
+INTEGERTOST-  00138890  intstr        _TEXT         
+IOESET        00095CA0  qtfile        _TEXT         
+IOSDATE       0011CE40  osdate        _TEXT         
+IOSDELETEFI-  00118060  osdelf        _TEXT         
+IOSDIRCHANGE  0013DBB0  osdirc        _TEXT         
+IOSDIRDELETE  0013DBFF  osdirc        _TEXT         
+IOSDIRMAKE    0013DBD6  osdirc        _TEXT         
+IOSDIRNAME    0013DD19  osdirc        _TEXT         
+IOSEXITPROG-  0013DE40  osexit        _TEXT         
+IOSRENAMEFI-  00118400  osrenf        _TEXT         
+IOSVARIABLE   0011CE70  osvar         _TEXT         
+IOUTCENTRE    00157C00  outcen        _TEXT         
+IOUTERROR     0013E070  outerr        _TEXT         
+IOUTMESSAGE   0013E0E2  outerr        _TEXT         
+IOUTSTRING    0011DA3F  outsxy        _TEXT         
+IOUTSTRINGXY  0011D830  outsxy        _TEXT         
+IOUTVERTICAL  00161570  outver        _TEXT         
+IOUTVERTICA-  0015DED0  outvxy        _TEXT         
+IPGAREA       00157CC0  pgarea        _TEXT         
+IPGNEWPLOT    00157FD0  pgplot        _TEXT         
+IPGNEWPLOT1   00158015  pgplot        _TEXT         
+IPGNEWPLOT2   0015805A  pgplot        _TEXT         
+IPGSCALING    0015DF80  pgscal        _TEXT         
+IPGUNITS      00157D50  pgarea        _TEXT         
+IPGUNITSPOL-  00157ED0  pgarea        _TEXT         
+IPGUNITSZ     00157E7D  pgarea        _TEXT         
+IPLOTTER      0011DA70  plottr        _TEXT         
+IPRINTER      0011DB40  printr        _TEXT         
+IPRINTER2     0011DAD0  print2        _TEXT         
+IREALTOSTRI-  001388CF  intstr        _TEXT         
+ISCREENBELL   0011E080  scbell        _TEXT         
+ISCREENCLOSE  00119F92  scopen        _TEXT         
+ISCREENMODE   0011E760  screen        _TEXT         
+ISCREENMODEN  0011E160  scmode        _TEXT         
+ISCREENMODE-  0011E6A0  scmopt        _TEXT         
+ISCREENOPEN   001185B0  scopen        _TEXT         
+ISET          00059B70  imslfake      _TEXT         
+ISPLITFRAMEH  0015DBB0  hsplit        _TEXT         
+ISTRINGTOIN-  0011EE90  strint        _TEXT         
+ITEXTATTRIB-  0011A2C0  attrib        _TEXT         
+ITEXTCOLOUR   0011A260  atcoln        _TEXT         
+ITEXTCOLOURN  0011A170  atcoln        _TEXT         
+ITEXTINPUTD-  0011ACE3  gindev        _TEXT         
+ITEXTINPUTL-  0011B0A2  ginlim        _TEXT         
+IUPPERCASE    0011CDF2  lowerc        _TEXT         
+IWINACTION    0013E110  wnactn        _TEXT         
+IWINCLEAR     00159010  wnclr         _TEXT         
+IWINCLOSE     0013E270  wnclos        _TEXT         
+IWINCURSORH-  00159186  wncuxy        _TEXT         
+IWINCURSORXY  001590B0  wncuxy        _TEXT         
+IWINOPEN      0013E3F0  wnopen        _TEXT         
+IWINOPENTIT-  0013E939  wnopen        _TEXT         
+IWINOUTCENT-  0013E990  wnouce        _TEXT         
+IWINOUTSTRI-  001591B0  wnousx        _TEXT         
+IYESNO        00049F70  peakfq        _TEXT         
+InvertBW      00853CE8  mwint         _BSS          
+J407P4        0003A580  j407xe        _TEXT         
+J407SC        0003CB30  j407xe        _TEXT         
+J407XE        0002CC60  j407xe        _TEXT         
+J4SAVE        0005EAC0  imslfake      _TEXT         
+JACQ2         00020760  emafit        _TEXT         
+JACS2         00021370  emafit        _TEXT         
+JDMODY        001118F0  utdate        _TEXT         
+JFLUSH        00049890  peakfq        _TEXT         
+KF            00025E50  emafit        _TEXT         
+KillTimer     0017228E  KillTimer     .jdata        IMPORT
+LABXAX        0008FE30  grtext        _TEXT         
+LABYAX        0008FA70  grtext        _TEXT         
+LEGNDC        0008D8F0  grtext        _TEXT         
+LENSTR        0010E190  utchar        _TEXT         
+LF90WndProc   0016E212  LFINITWD      _TEXT         
+LFTSTR        0010E250  utchar        _TEXT         
+LGAXIS        0007AFA0  graxis        _TEXT         
+LINWID        000727C0  gksint        _TEXT         
+LNGAMMA       00069A30  imslfake      _TEXT         
+LOGCYC        00091A30  grutil        _TEXT         
+LXAXIS        0007BD90  graxis        _TEXT         
+LineTo        00171FB8  LineTo        .jdata        IMPORT
+LoadCursorA   00172294  LoadCursorA   .jdata        IMPORT
+LoadIconA     0017229A  LoadIconA     .jdata        IMPORT
+LoadLibraryA  0017217A  LoadLibraryA  .jdata        IMPORT
+LocalAlloc    00172180  LocalAlloc    .jdata        IMPORT
+LocalFree     00172186  LocalFree     .jdata        IMPORT
+M2MN          0006E560  probfun_025   _TEXT         
+M2MN_VAR      00022E20  emafit        _TEXT         
+M2P           0006E200  probfun_025   _TEXT         
+MACWIN        000BD6B0  utmisc        _TEXT         
+MATCHL        0008E2D0  grtext        _TEXT         
+MCADJ         00021550  emafit        _TEXT         
+MGAMINV       0005FD10  imslfake      _TEXT         
+MIAXIS        00077710  graxis        _TEXT         
+MN2M          0006E5E0  probfun_025   _TEXT         
+MN2M_VAR      00022A80  emafit        _TEXT         
+MN2P          0006E3F0  probfun_025   _TEXT         
+MOAXIS        00079F70  graxis        _TEXT         
+MOMSADJ       0001FA80  emafit        _TEXT         
+MOMS_P3       0001F080  emafit        _TEXT         
+MOVEI         0003DB30  j407xe        _TEXT         
+MP3           00023050  emafit        _TEXT         
+MRKTBL        0008BF60  grmark        _TEXT         
+MSEG          0001FC30  emafit        _TEXT         
+MaxHeight     00853CE0  mwint         _BSS          
+MaxWidth      00853CDC  mwint         _BSS          
+MessageBeep   001722A0  MessageBeep   .jdata        IMPORT
+MessageBoxA   001722A6  MessageBoxA   .jdata        IMPORT
+MinHeight     00853CD8  mwint         _BSS          
+MinWidth      00853CD4  mwint         _BSS          
+MoveFileA     0017218C  MoveFileA     .jdata        IMPORT
+MoveToEx      00171FBE  MoveToEx      .jdata        IMPORT
+NDAYS         0005B150  imslfake      _TEXT         
+NDAYS0        0005B190  imslfake      _TEXT         
+NORMP         0006A130  imslfake      _TEXT         
+NORPPF        00059F30  imslfake      _TEXT         
+NORRAN        0005F340  imslfake      _TEXT         
+NPROB         0006A350  imslfake      _TEXT         
+NTHRESH@EMA-  0085F8E0  EMATHRESH     _BSS          
+NUMINI        00102690  utnumb        _TEXT         
+NUMPTS        00111A30  utdate        _TEXT         
+OMIT          0003C9A0  j407xe        _TEXT         
+OPNINP        000440A0  peakfq        _TEXT         
+OPNOUT        00044870  peakfq        _TEXT         
+OPTNAX        0001AB70  agpltx        _TEXT         
+OSDIRL        00104540  utsclf90      _TEXT         
+OUTKGB        00052A90  utj407        _TEXT         
+OUTPT1        0004FFA0  pkwdm         _TEXT         
+OUTPUT        000387E0  j407xe        _TEXT         
+OpenClipboa-  001722AC  OpenClipboa-  .jdata        IMPORT
+OpenFile      00172192  OpenFile      .jdata        IMPORT
+OpenPrinterA  00172330  OpenPrinterA  .jdata        IMPORT
+P2M           0006E160  probfun_025   _TEXT         
+P2MN          0006E2E0  probfun_025   _TEXT         
+P3EST_EMA     0001E340  emafit        _TEXT         
+PAGE          0005B3B0  imslfake      _TEXT         
+PARROW        000869E0  grdata        _TEXT         
+PARSESTASPE-  00045530  peakfq        _TEXT         
+PBAXIS        0007CF00  graxis        _TEXT         
+PCGRGT        0008D890  grsypc        _TEXT         
+PCGRST        0008D8A0  grsypc        _TEXT         
+PDNPLT        0001A9F0  agplot        _TEXT         
+PINAXT        00011DE0  agplot        _TEXT         
+PINCTM        00013BD0  agplot        _TEXT         
+PINCXY        000152E0  agplot        _TEXT         
+PINDEV        00011AE0  agplot        _TEXT         
+PINEXA        00018F30  agplot        _TEXT         
+PINSCL        00016550  agplot        _TEXT         
+PINSIZ        000196B0  agplot        _TEXT         
+PINSPC        00013B30  agplot        _TEXT         
+PINTTL        000130F0  agplot        _TEXT         
+PKFQH3        00037710  j407xe        _TEXT         
+PKFRD4        00034E60  j407xe        _TEXT         
+PLOT1         0003A5CB  j407xe        _TEXT         
+PLOT2         0003A723  j407xe        _TEXT         
+PLOT22        0003B780  j407xe        _TEXT         
+PLOT3         0003BA6A  j407xe        _TEXT         
+PLOT3N        0003BA06  j407xe        _TEXT         
+PLOT3Z        0003BAC8  j407xe        _TEXT         
+PLOT4         0003BB50  j407xe        _TEXT         
+PLSCLI        0001B1F0  agpltx        _TEXT         
+PLTAPE        0003CA2F  j407xe        _TEXT         
+PLTFRQ        00039350  j407xe        _TEXT         
+PLTITI        0001AC30  agpltx        _TEXT         
+PLTITL        0008E9B0  grtext        _TEXT         
+PLTITO        0001AF50  agpltx        _TEXT         
+PLTONE        000829B0  grdata        _TEXT         
+PMXCNT        000977B0  prtaid        _TEXT         
+PMXCNW        00097810  prtaid        _TEXT         
+PMXTFC        000EEB20  prtfil        _TEXT         
+PMXTFI        000EEA00  prtfil        _TEXT         
+PMXTFR        000EEA90  prtfil        _TEXT         
+PMXTFT        000EEE40  prtfil        _TEXT         
+PMXTXA        00097F90  prtaid        _TEXT         
+PMXTXD        00097DB0  prtaid        _TEXT         
+PMXTXF        000EEBB0  prtfil        _TEXT         
+PMXTXI        00097A10  prtaid        _TEXT         
+PMXTXM        000980C0  prtaid        _TEXT         
+PMXTXR        00097BE0  prtaid        _TEXT         
+PMXTXT        00097700  prtaid        _TEXT         
+PMXUPD        00098350  prtaid        _TEXT         
+POLY          00076540  gksint        _TEXT         
+POWER         00070420  probfun_025   _TEXT         
+PP3           00024270  emafit        _TEXT         
+PRMETA        0008D880  grsypc        _TEXT         
+PRMSFI        000EA600  msimpt        _TEXT         
+PRMSIT        000EB980  msimpt        _TEXT         
+PRMSMI        000E8290  msimpt        _TEXT         
+PRMSPA        000E0770  msimpt        _TEXT         
+PRMSTI        000E79A0  msimpt        _TEXT         
+PRNTXA        00097EF0  prtaid        _TEXT         
+PRNTXD        00097D20  prtaid        _TEXT         
+PRNTXI        00097980  prtaid        _TEXT         
+PRNTXR        00097B50  prtaid        _TEXT         
+PRNTXT        000976A0  prtaid        _TEXT         
+PROPLT        000110C0  agplot        _TEXT         
+PRTANS        000940C0  qtchar        _TEXT         
+PRTFIT        00031E90  j407xe        _TEXT         
+PRTIN2        00030960  j407xe        _TEXT         
+PRTIN3        00031090  j407xe        _TEXT         
+PRTINP        00030070  j407xe        _TEXT         
+PRTLIN        0010E540  utchar        _TEXT         
+PRTLNO        0010E9E0  utchar        _TEXT         
+PRTPHD        0002DF40  j407xe        _TEXT         
+PRTSTR        0010F440  utchar        _TEXT         
+PRTXLC        00097750  prtaid        _TEXT         
+PRWMSI        000DFE10  msimpt        _TEXT         
+PSETUP        0001A130  agplot        _TEXT         
+PSTUPW        0001A180  agplot        _TEXT         
+PeekMessageA  001722B2  PeekMessageA  .jdata        IMPORT
+Pie           00171FC4  Pie           .jdata        IMPORT
+PlayEnhMeta-  00171FCA  PlayEnhMeta-  .jdata        IMPORT
+PlayMetaFile  00171FD0  PlayMetaFile  .jdata        IMPORT
+Polygon       00171FD6  Polygon       .jdata        IMPORT
+Polyline      00171FDC  Polyline      .jdata        IMPORT
+PostQuitMes-  001722B8  PostQuitMes-  .jdata        IMPORT
+Q1EDIT        000A5360  z0util        _TEXT         
+Q1EDSC        000A5390  z0util        _TEXT         
+Q1INIT        000A51F0  z0util        _TEXT         
+Q2EDIT        000C2540  z1util        _TEXT         
+Q2GCOB        000B8470  qtstgt        _TEXT         
+Q2GCOX        000B84C0  qtstgt        _TEXT         
+Q2GCTB        000B8BE0  qtstgt        _TEXT         
+Q2GCTF        000B8B70  qtstgt        _TEXT         
+Q2GCTX        000B8C50  qtstgt        _TEXT         
+Q2GDBR        000B6CD0  qtstgt        _TEXT         
+Q2GETD        000B6C40  qtstgt        _TEXT         
+Q2GETF        000BA5F0  qtstgt        _TEXT         
+Q2GETI        000B54D0  qtstgt        _TEXT         
+Q2GETR        000B6080  qtstgt        _TEXT         
+Q2GFBR        000BA680  qtstgt        _TEXT         
+Q2GIBR        000B5560  qtstgt        _TEXT         
+Q2GRBR        000B6110  qtstgt        _TEXT         
+Q2GTCO        000B8430  qtstgt        _TEXT         
+Q2GTCT        000B8B10  qtstgt        _TEXT         
+Q2GTDB        000B6C80  qtstgt        _TEXT         
+Q2GTFB        000BA630  qtstgt        _TEXT         
+Q2GTIB        000B5510  qtstgt        _TEXT         
+Q2GTRB        000B60C0  qtstgt        _TEXT         
+Q2INIT        000C23D0  z1util        _TEXT         
+Q2SCOB        000B73E0  qtstgt        _TEXT         
+Q2SCOX        000B7430  qtstgt        _TEXT         
+Q2SCTB        000B7CD0  qtstgt        _TEXT         
+Q2SCTF        000B7C60  qtstgt        _TEXT         
+Q2SCTX        000B7D40  qtstgt        _TEXT         
+Q2SDBR        000B6870  qtstgt        _TEXT         
+Q2SETD        000B67E0  qtstgt        _TEXT         
+Q2SETI        000B5070  qtstgt        _TEXT         
+Q2SETR        000B5C20  qtstgt        _TEXT         
+Q2SFNB        000B9F70  qtstgt        _TEXT         
+Q2SFNX        000B9FD0  qtstgt        _TEXT         
+Q2SIBR        000B5100  qtstgt        _TEXT         
+Q2SRBR        000B5CB0  qtstgt        _TEXT         
+Q2STCO        000B73A0  qtstgt        _TEXT         
+Q2STCT        000B7C00  qtstgt        _TEXT         
+Q2STDB        000B6820  qtstgt        _TEXT         
+Q2STFN        000B9F20  qtstgt        _TEXT         
+Q2STIB        000B50B0  qtstgt        _TEXT         
+Q2STRB        000B5C60  qtstgt        _TEXT         
+QCHR          001104E0  utscxx        _TEXT         
+QFCLOS        00095860  qtfile        _TEXT         
+QFDPRS        00096550  qtfile        _TEXT         
+QFOPEN        000942A0  qtfile        _TEXT         
+QFOPFN        00094370  qtfile        _TEXT         
+QFSTAT        00095930  qtfile        _TEXT         
+QGETCO        000B83B0  qtstgt        _TEXT         
+QGETCT        000B89F0  qtstgt        _TEXT         
+QGETD         000B6BC0  qtstgt        _TEXT         
+QGETDB        000B6C00  qtstgt        _TEXT         
+QGETF         000BA570  qtstgt        _TEXT         
+QGETFB        000BA5B0  qtstgt        _TEXT         
+QGETI         000B5450  qtstgt        _TEXT         
+QGETIB        000B5490  qtstgt        _TEXT         
+QGETOP        000B99C0  qtstgt        _TEXT         
+QGETR         000B6000  qtstgt        _TEXT         
+QGETRB        000B6040  qtstgt        _TEXT         
+QGTBFB        000BB3E0  qtstgt        _TEXT         
+QGTBUF        000BB390  qtstgt        _TEXT         
+QGTCOB        000B83F0  qtstgt        _TEXT         
+QGTCTB        000B8AB0  qtstgt        _TEXT         
+QGTCTF        000B8A40  qtstgt        _TEXT         
+QP3           00024440  emafit        _TEXT         
+QRESCD        00098CB0  qtscn1        _TEXT         
+QRESCN        00098AF0  qtscn1        _TEXT         
+QRESCR        00098DD0  qtscn1        _TEXT         
+QRESCX        00098BF0  qtscn1        _TEXT         
+QRESCZ        00098EA0  qtscn1        _TEXT         
+QRESP         00093510  qtchar        _TEXT         
+QRESPD        000972C0  qtnumb        _TEXT         
+QRESPI        000969E0  qtnumb        _TEXT         
+QRESPM        00098990  qtscn1        _TEXT         
+QRESPO        000975F0  qtnumb        _TEXT         
+QRESPR        00096E50  qtnumb        _TEXT         
+QRESPS        00093660  qtchar        _TEXT         
+QRESPX        00098A50  qtscn1        _TEXT         
+QRSPIN        00093420  qtchar        _TEXT         
+QRSPUD        00097180  qtnumb        _TEXT         
+QRSPUI        000968A0  qtnumb        _TEXT         
+QRSPUR        00096D10  qtnumb        _TEXT         
+QSCSET        00099A70  qtscn1        _TEXT         
+QSCSTC        00099FE0  qtscn1        _TEXT         
+QSCSTD        00099E80  qtscn1        _TEXT         
+QSCSTI        00099BC0  qtscn1        _TEXT         
+QSCSTR        00099D20  qtscn1        _TEXT         
+QSCSTV        0009A0C0  qtscn1        _TEXT         
+QSETCB        000C8990  zclbak        _TEXT         
+QSETCO        000B7320  qtstgt        _TEXT         
+QSETCT        000B7AE0  qtstgt        _TEXT         
+QSETD         000B6760  qtstgt        _TEXT         
+QSETDB        000B67A0  qtstgt        _TEXT         
+QSETFN        000B9E90  qtstgt        _TEXT         
+QSETI         000B4FF0  qtstgt        _TEXT         
+QSETIB        000B5030  qtstgt        _TEXT         
+QSETOP        000B8FF0  qtstgt        _TEXT         
+QSETR         000B5BA0  qtstgt        _TEXT         
+QSETRB        000B5BE0  qtstgt        _TEXT         
+QSTBFB        000BA8C0  qtstgt        _TEXT         
+QSTBUF        000BA870  qtstgt        _TEXT         
+QSTCOB        000B7360  qtstgt        _TEXT         
+QSTCTB        000B7BA0  qtstgt        _TEXT         
+QSTCTF        000B7B30  qtstgt        _TEXT         
+QSTFNB        000B9ED0  qtstgt        _TEXT         
+QTSTR         000931F0  qtchar        _TEXT         
+QUESET        0009AD80  qtscn1        _TEXT         
+QUPCAS        0010F8C0  utchar        _TEXT         
+RECSET        00095D90  qtfile        _TEXT         
+REGSKEW       00020590  emafit        _TEXT         
+RHTBDR        0007CC30  graxis        _TEXT         
+RHTSTR        0010FAC0  utchar        _TEXT         
+RNDLOW        00091D00  grutil        _TEXT         
+RNSET         0005A640  imslfake      _TEXT         
+RP3           00024690  emafit        _TEXT         
+RSET          00059CB0  imslfake      _TEXT         
+RUNEMA        0003E540  j407xe        _TEXT         
+RWDIGS        0010CEB0  utchar        _TEXT         
+ReadConsoleA  00172198  ReadConsoleA  .jdata        IMPORT
+ReadFile      0017219E  ReadFile      .jdata        IMPORT
+RealizePale-  00171FE2  RealizePale-  .jdata        IMPORT
+Rectangle     00171FE8  Rectangle     .jdata        IMPORT
+RegisterCla-  001722BE  RegisterCla-  .jdata        IMPORT
+ReleaseCapt-  001722C4  ReleaseCapt-  .jdata        IMPORT
+ReleaseDC     001722CA  ReleaseDC     .jdata        IMPORT
+RemoveDirec-  001721A4  RemoveDirec-  .jdata        IMPORT
+SCALEM        0001B6C0  agpltx        _TEXT         
+SCALIT        000902F0  grutil        _TEXT         
+SCCLAL        001036C0  uscnlf90      _TEXT         
+SCCLR         001037E0  uscnlf90      _TEXT         
+SCCUHM        00110560  utscxx        _TEXT         
+SCCUMV        00103870  uscnlf90      _TEXT         
+SCCURM        00103A40  uscnlf90      _TEXT         
+SCPRBF        001105F0  utscxx        _TEXT         
+SCPRBN        00104030  utsclf90      _TEXT         
+SCPRST        001105A0  utscxx        _TEXT         
+SDMAX         00053A40  utstat        _TEXT         
+SDMIN         00053B70  utstat        _TEXT         
+SETASP        00076B10  gksint        _TEXT         
+SHIFTD        00102E60  utnumb        _TEXT         
+SHIFTI        001030D0  utnumb        _TEXT         
+SHIFTR        00103340  utnumb        _TEXT         
+SIGN1         0006D580  probfun_025   _TEXT         
+SIMAX         00053800  utstat        _TEXT         
+SIMIN         00053920  utstat        _TEXT         
+SIZAXE        00090770  grutil        _TEXT         
+SORTI         0003DC20  j407xe        _TEXT         
+SORTM         0003DE50  j407xe        _TEXT         
+SP_G1_CDF_H-  0006D270  probfun_025   _TEXT         
+SP_G1_CDF_L-  0006D5C0  probfun_025   _TEXT         
+SP_G3_CDF_L-  0006D890  probfun_025   _TEXT         
+SP_Z          0006C8E0  probfun_025   _TEXT         
+SRMAX         000535A0  utstat        _TEXT         
+SRMIN         000536D0  utstat        _TEXT         
+STASPECS@CO-  0085F914  COMPSPECS     _BSS          
+STRFND        0010EDD0  utchar        _TEXT         
+STRLNX        0010EFE0  utchar        _TEXT         
+STRRETREM     00049B90  peakfq        _TEXT         
+STRSIZ        00072770  gksint        _TEXT         
+STUTP         00054570  utstat        _TEXT         
+STUTX         00052D40  utj407        _TEXT         
+STVRSN        000552D0  utstat        _TEXT         
+SYDATM        00110410  datsys90      _TEXT         
+SYPF          000209A0  emafit        _TEXT         
+ScreenToCli-  001722D0  ScreenToCli-  .jdata        IMPORT
+SelectClipR-  00171FEE  SelectClipR-  .jdata        IMPORT
+SelectObject  00171FF4  SelectObject  .jdata        IMPORT
+SelectPalet-  00171FFA  SelectPalet-  .jdata        IMPORT
+SendMessageA  001722D6  SendMessageA  .jdata        IMPORT
+SetBkColor    00172000  SetBkColor    .jdata        IMPORT
+SetBkMode     00172006  SetBkMode     .jdata        IMPORT
+SetCapture    001722DC  SetCapture    .jdata        IMPORT
+SetClipboar-  001722E2  SetClipboar-  .jdata        IMPORT
+SetCurrentD-  001721AA  SetCurrentD-  .jdata        IMPORT
+SetCursor     001722E8  SetCursor     .jdata        IMPORT
+SetCursorPos  001722EE  SetCursorPos  .jdata        IMPORT
+SetEndOfFile  001721B0  SetEndOfFile  .jdata        IMPORT
+SetEnhMetaF-  0017200C  SetEnhMetaF-  .jdata        IMPORT
+SetErrorMode  001721B6  SetErrorMode  .jdata        IMPORT
+SetFilePoin-  001721BC  SetFilePoin-  .jdata        IMPORT
+SetMapMode    00172012  SetMapMode    .jdata        IMPORT
+SetMetaFile-  00172018  SetMetaFile-  .jdata        IMPORT
+SetPaletteE-  0017201E  SetPaletteE-  .jdata        IMPORT
+SetPixel      00172024  SetPixel      .jdata        IMPORT
+SetROP2       0017202A  SetROP2       .jdata        IMPORT
+SetRect       001722F4  SetRect       .jdata        IMPORT
+SetTextAlign  00172030  SetTextAlign  .jdata        IMPORT
+SetTextColor  00172036  SetTextColor  .jdata        IMPORT
+SetTimer      001722FA  SetTimer      .jdata        IMPORT
+SetViewport-  0017203C  SetViewport-  .jdata        IMPORT
+SetViewport-  00172042  SetViewport-  .jdata        IMPORT
+SetWindowEx-  00172048  SetWindowEx-  .jdata        IMPORT
+SetWindowOr-  0017204E  SetWindowOr-  .jdata        IMPORT
+SetWindowPos  00172300  SetWindowPos  .jdata        IMPORT
+SetWindowTe-  00172306  SetWindowTe-  .jdata        IMPORT
+ShowWindow    0017230C  ShowWindow    .jdata        IMPORT
+StartDocA     00172054  StartDocA     .jdata        IMPORT
+StartPage     0017205A  StartPage     .jdata        IMPORT
+StretchDIBi-  00172060  StretchDIBi-  .jdata        IMPORT
+TESTROUTINES  000246B0  emafit        _TEXT         
+TESTSUB001    00025E90  emafit        _TEXT         
+THRESH@EMAT-  0085F8E4  EMATHRESH     _BSS          
+TIMADD        00111C30  utdate        _TEXT         
+TIMBAK        00112020  utdate        _TEXT         
+TIMCHK        00112220  utdate        _TEXT         
+TIMCNV        00112410  utdate        _TEXT         
+TIMCVT        00112480  utdate        _TEXT         
+TIMDFX        00112A10  utdate        _TEXT         
+TIMDIF        00112500  utdate        _TEXT         
+TMAXIS        00077130  graxis        _TEXT         
+TMCRVM        00085460  grdata        _TEXT         
+TMCRVP        000835E0  grdata        _TEXT         
+TMTICS        0007AE30  graxis        _TEXT         
+TNC           000691A0  imslfake      _TEXT         
+TRMINL        000BDB70  utmisc        _TEXT         
+TRNSDA        00090A50  grutil        _TEXT         
+TSBCLR        000DCCB0  tsbufr        _TEXT         
+TSBGET        000DB2D0  tsbufr        _TEXT         
+TSBINI        000DD400  tsbufr        _TEXT         
+TSBTIM        000DB230  tsbufr        _TEXT         
+TSBWDS        000DB280  tsbufr        _TEXT         
+TXMULT        000EF050  prtfil        _TEXT         
+TextMode      00214FE4  mwint         _DATA         
+TextOutA      00172066  TextOutA      .jdata        IMPORT
+TimerEnabled  00853D08  mwint         _BSS          
+TranslateMe-  00172312  TranslateMe-  .jdata        IMPORT
+UMACH         0005B370  imslfake      _TEXT         
+UNIRAN        0005F680  imslfake      _TEXT         
+UPCASE        0004A040  peakfq        _TEXT         
+UPDATEFG@CO-  0085F910  COMPSPECS     _BSS          
+UPDATESPECF-  00049570  peakfq        _TEXT         
+UTVRSN        001035B0  utnumb        _TEXT         
+UnrealizeOb-  0017206C  UnrealizeOb-  .jdata        IMPORT
+VARB          000223E0  emafit        _TEXT         
+VARC          000225B0  emafit        _TEXT         
+VAR_EMA       00020180  emafit        _TEXT         
+VAR_MOM       00021700  emafit        _TEXT         
+VRTBAR        00086E30  grdata        _TEXT         
+ValidateRgn   00172318  ValidateRgn   .jdata        IMPORT
+WADADI        000DE6D0  wdatm1        _TEXT         
+WADDSI        000DF2A0  wdatm1        _TEXT         
+WADGDF        000DAE00  wdatm2        _TEXT         
+WADGDS        000DAF80  wdatm2        _TEXT         
+WADGHL        000DB130  wdatm2        _TEXT         
+WADGRA        000DAA10  wdatm2        _TEXT         
+WADGTL        000DEF40  wdatm1        _TEXT         
+WADGTN        000DA9B0  wdatm2        _TEXT         
+WADGVA        000DABF0  wdatm2        _TEXT         
+WADNSA        000DE490  wdatm1        _TEXT         
+WADQCK        000DE2A0  wdatm1        _TEXT         
+WATTCL        000F1EE0  utwdt1        _TEXT         
+WATTSP        000F2010  utwdt1        _TEXT         
+WATTUS        000F20A0  utwdt1        _TEXT         
+WATWDC        000F2160  utwdt1        _TEXT         
+WATWDS        000F21B0  utwdt1        _TEXT         
+WBCWCL        000F12E0  utwdt1        _TEXT         
+WBCWSP        000F1150  utwdt1        _TEXT         
+WBCWSQ        000F1700  utwdt1        _TEXT         
+WCFAGB        00026260  j407wc        _TEXT         
+WCFAPI        00026EB0  j407wc        _TEXT         
+WCFASP        00028050  j407wc        _TEXT         
+WCFCSA        00028520  j407wc        _TEXT         
+WCFCWS        00028E00  j407wc        _TEXT         
+WCFDHH        00029300  j407wc        _TEXT         
+WCFDLO        0002A210  j407wc        _TEXT         
+WCFEPP        0002AA20  j407wc        _TEXT         
+WCFFCA        0002AD40  j407wc        _TEXT         
+WCFFCX        0002B8E0  j407wc        _TEXT         
+WCFGSM        0002C790  j407wc        _TEXT         
+WCH2UD        000DDCA0  wdmid         _TEXT         
+WDAINF        000DA620  wdtms2        _TEXT         
+WDATCL        000F1400  utwdt1        _TEXT         
+WDATCP        000DA0E0  wdtms2        _TEXT         
+WDATFX        00101CC0  wdmchk        _TEXT         
+WDATIM        000DA430  wdtms2        _TEXT         
+WDATSP        000F1370  utwdt1        _TEXT         
+WDBASE        000DCA90  tsbufr        _TEXT         
+WDBCRL        000CBA10  wdbtch        _TEXT         
+WDBFIN        000F5EF0  utwdmd        _TEXT         
+WDBOPN        000F69B0  wdoppc90      _TEXT         
+WDBSAC        000C9030  wdatrb        _TEXT         
+WDBSAD        000C9B90  wdatrb        _TEXT         
+WDBSAI        000C9460  wdatrb        _TEXT         
+WDBSAR        000C9830  wdatrb        _TEXT         
+WDBSGC        000CBAB0  wdbtch        _TEXT         
+WDBSGI        000CBDE0  wdbtch        _TEXT         
+WDBSGL        000D1D30  wdatru        _TEXT         
+WDBSGR        000CBFE0  wdbtch        _TEXT         
+WDBSGX        000CA9F0  wdatrb        _TEXT         
+WDCKDT        000F5D20  utwdmd        _TEXT         
+WDCRDT        000DFAE0  wdatm1        _TEXT         
+WDCREA        000F60E0  utwdmd        _TEXT         
+WDDPAR        000CA210  wdatrb        _TEXT         
+WDDRRC        000F58B0  utwdmd        _TEXT         
+WDDSCK        000F5DC0  utwdmd        _TEXT         
+WDDSCL        000CC560  wdbtch        _TEXT         
+WDDSDL        000F25F0  wdmess        _TEXT         
+WDDSNP        000F6700  utwdmd        _TEXT         
+WDDSNX        000F6680  utwdmd        _TEXT         
+WDDSRN        000CC1E0  wdbtch        _TEXT         
+WDDTFG        000F2980  wdmess        _TEXT         
+WDFCUP        000F2CB0  wdmess        _TEXT         
+WDFDUP        000F2A30  wdmess        _TEXT         
+WDFLCK        000F47C0  utwdmd        _TEXT         
+WDFLCL        000F4C10  utwdmd        _TEXT         
+WDFNCK        000CB2D0  wdatrb        _TEXT         
+WDFNDS        000CAB00  wdatrb        _TEXT         
+WDGCVL        000F6540  utwdmd        _TEXT         
+WDGDRT        000F6660  utwdmd        _TEXT         
+WDGIVL        000F6410  utwdmd        _TEXT         
+WDGRVL        000F64A0  utwdmd        _TEXT         
+WDGTAT        000F3B60  wdmess        _TEXT         
+WDGTTM        000512B0  stutil        _TEXT         
+WDIINI        000DD610  wdmid         _TEXT         
+WDLBAD        000CC940  wdbtch        _TEXT         
+WDLBAX        000F36C0  wdmess        _TEXT         
+WDLBCV        000F1DE0  utwdt1        _TEXT         
+WDLBSP        000F1E50  utwdt1        _TEXT         
+WDLICV        000F1CD0  utwdt1        _TEXT         
+WDLISP        000F1D50  utwdt1        _TEXT         
+WDMCHK        00100BF0  wdmchk        _TEXT         
+WDMODT        000DFB40  wdatm1        _TEXT         
+WDNXDV        000ED550  utwdmf        _TEXT         
+WDNXPS        000ED450  utwdmf        _TEXT         
+WDPKGT        00057320  wdpeak        _TEXT         
+WDPRPS        000ED5F0  utwdmf        _TEXT         
+WDPTCL        000F1020  utwdt1        _TEXT         
+WDPTSP        000F1050  utwdt1        _TEXT         
+WDRCAD        000F5560  utwdmd        _TEXT         
+WDRCDL        000F3240  wdmess        _TEXT         
+WDRCGN        000F4FF0  utwdmd        _TEXT         
+WDRCGO        000F3F00  utwdmd        _TEXT         
+WDRCGX        000F54E0  utwdmd        _TEXT         
+WDRCUP        000F4E50  utwdmd        _TEXT         
+WDSAFI        000CA310  wdatrb        _TEXT         
+WDSAFL        000CA1C0  wdatrb        _TEXT         
+WDSAGY        000C8DD0  wdatrb        _TEXT         
+WDSASP        000F26F0  wdmess        _TEXT         
+WDSASV        000F62C0  utwdmd        _TEXT         
+WDSCHA        000F5B30  utwdmd        _TEXT         
+WDSCHK        000F5AD0  utwdmd        _TEXT         
+WDSETD        000DFB90  wdatm1        _TEXT         
+WDSKBK        000D4110  wdtms1        _TEXT         
+WDSYSD        001102D0  datsys90      _TEXT         
+WDTBCG        000D11A0  wdtble        _TEXT         
+WDTBDL        000D06E0  wdtble        _TEXT         
+WDTBFN        000CD480  wdtble        _TEXT         
+WDTBFX        000CD310  wdtble        _TEXT         
+WDTBSP        000CD890  wdtble        _TEXT         
+WDTBSU        000CE500  wdtble        _TEXT         
+WDTBTM        000CC9D0  wdtble        _TEXT         
+WDTGET        000D1F70  wdtms1        _TEXT         
+WDTPFX        000D5970  wdtms1        _TEXT         
+WDTPUT        000D72F0  wdtms1        _TEXT         
+WDVRSN        000CB9D0  wdatrb        _TEXT         
+WHLP2Z        00023EE0  emafit        _TEXT         
+WHZ2LP        00023FB0  emafit        _TEXT         
+WID2UA        000DDAB0  wdmid         _TEXT         
+WID2UD        000DDA60  wdmid         _TEXT         
+WIDADD        000DD630  wdmid         _TEXT         
+WILFRS        00054020  utstat        _TEXT         
+WILFRT        00053CA0  utstat        _TEXT         
+WILFRV        00053E10  utstat        _TEXT         
+WMSADI        000ECE50  utwdmf        _TEXT         
+WMSANG        000ECC20  utwdmf        _TEXT         
+WMSBCS        000F1920  utwdt1        _TEXT         
+WMSBCV        000F18B0  utwdt1        _TEXT         
+WMSBCX        000EE320  utwdmf        _TEXT         
+WMSBTR        000EDEB0  utwdmf        _TEXT         
+WMSCON        000FF160  ztwdmf        _TEXT         
+WMSDLM        00100330  ztwdmf        _TEXT         
+WMSFBC        000EE440  utwdmf        _TEXT         
+WMSGFD        001005C0  ztwdmf        _TEXT         
+WMSGPN        00100700  ztwdmf        _TEXT         
+WMSGTE        000EDA90  utwdmf        _TEXT         
+WMSGTF        000FDE50  ztwdmf        _TEXT         
+WMSGTH        00100B60  ztwdmf        _TEXT         
+WMSGTM        000FBD70  ztwdmf        _TEXT         
+WMSGTO        000EE150  utwdmf        _TEXT         
+WMSGTP        000F6C50  ztwdmf        _TEXT         
+WMSGTT        000FB850  ztwdmf        _TEXT         
+WMSGTV        001008D0  ztwdmf        _TEXT         
+WMSGTW        000FEBE0  ztwdmf        _TEXT         
+WMSGTX        000FE570  ztwdmf        _TEXT         
+WMSIDP        000EE7E0  utwdmf        _TEXT         
+WMSMNS        000F1A30  utwdt1        _TEXT         
+WMSMNV        000F19B0  utwdt1        _TEXT         
+WMSP2S        000F1C10  utwdt1        _TEXT         
+WMSP2V        000F1B80  utwdt1        _TEXT         
+WMSPIS        000F1B40  utwdt1        _TEXT         
+WMSPIV        000F1AF0  utwdt1        _TEXT         
+WMSPOS        000F23F0  utwdt1        _TEXT         
+WMSPOV        000F2340  utwdt1        _TEXT         
+WMSPTE        000ED680  utwdmf        _TEXT         
+WMSQCK        000ECA90  utwdmf        _TEXT         
+WMSSKB        000EE950  utwdmf        _TEXT         
+WMSSPS        000FEC30  ztwdmf        _TEXT         
+WOPWDC        000F24E0  utwdt1        _TEXT         
+WOPWDS        000F2560  utwdt1        _TEXT         
+WRITESPECIO   000474F0  peakfq        _TEXT         
+WRITESPECSTA  000488D0  peakfq        _TEXT         
+WSTGCL        000F21F0  utwdt1        _TEXT         
+WSTGSP        000F2280  utwdt1        _TEXT         
+WTBCLN        000D1020  wdtble        _TEXT         
+WTBCOD        000CEA20  wdtble        _TEXT         
+WTBDCD        000CF1B0  wdtble        _TEXT         
+WTBDCL        000F15D0  utwdt1        _TEXT         
+WTBDSP        000F1670  utwdt1        _TEXT         
+WTBGET        000D0060  wdtble        _TEXT         
+WTBICL        000F14B0  utwdt1        _TEXT         
+WTBISP        000F14F0  utwdt1        _TEXT         
+WTBPUT        000CF970  wdtble        _TEXT         
+WTBSPA        000CE1D0  wdtble        _TEXT         
+WTBYFX        000D2C30  wdtms1        _TEXT         
+WTDATE        000DA160  wdtms2        _TEXT         
+WTDDEL        000D9300  wdtms2        _TEXT         
+WTDSCU        000D84B0  wdtms2        _TEXT         
+WTDSPM        000D2990  wdtms1        _TEXT         
+WTDSPX        000D3030  wdtms1        _TEXT         
+WTEGRP        000D9C10  wdtms2        _TEXT         
+WTFNDG        000D2680  wdtms1        _TEXT         
+WTFNDT        000D7420  wdtms2        _TEXT         
+WTGPCK        000D5EA0  wdtms1        _TEXT         
+WTGTNV        000D5700  wdtms1        _TEXT         
+WTGTVL        000D41C0  wdtms1        _TEXT         
+WTNWBK        000D7230  wdtms1        _TEXT         
+WTPMCK        000D2480  wdtms1        _TEXT         
+WTPTVL        000D6280  wdtms1        _TEXT         
+WTSCSC        000D2430  wdtms1        _TEXT         
+WTSGRP        000D9E80  wdtms2        _TEXT         
+WTSKVL        000D3230  wdtms1        _TEXT         
+WTSKVX        000D3370  wdtms1        _TEXT         
+WUA2ID        000DD870  wdmid         _TEXT         
+WUD2ID        000DD800  wdmid         _TEXT         
+WaitForSing-  001721C2  WaitForSing-  .jdata        IMPORT
+Win32s        00853CFC  mwint         _BSS          
+WinExec       001721C8  WinExec       .jdata        IMPORT
+WinHeight     00853CB8  mwint         _BSS          
+WinMainCRTS-  0001104A  lfinitw       _TEXT         
+WinNT         00853D00  mwint         _BSS          
+WinPlat       002112C4  OSWIN         _DATA         
+WinVer        00853D04  mwint         _BSS          
+WinWidth      00853CB4  mwint         _BSS          
+WinX          00853CBC  mwint         _BSS          
+WinY          00853CC0  mwint         _BSS          
+Window        00853CAC  mwint         _BSS          
+WndProc       0013B4DC  mwint         _TEXT         
+WriteFile     001721CE  WriteFile     .jdata        IMPORT
+XCLRSC        000DE200  usyslf90      _TEXT         
+XDTOXN        00074340  gksint        _TEXT         
+XERABT        0005EB60  imslfake      _TEXT         
+XERCTL        0005EBA0  imslfake      _TEXT         
+XERPRT        0005EBC0  imslfake      _TEXT         
+XERROR        0005C8F0  imslfake      _TEXT         
+XERRWV        0005C990  imslfake      _TEXT         
+XERSAV        0005D8A0  imslfake      _TEXT         
+XGETUA        0005E080  imslfake      _TEXT         
+XGTARG        000DDE00  usyslf90      _TEXT         
+XGTCHR        000DE180  usyslf90      _TEXT         
+XGTRCL        000DE250  usyslf90      _TEXT         
+XNTOXD        00074240  gksint        _TEXT         
+XOSVAR        000DDD90  usyslf90      _TEXT         
+XPLFRM        000DE260  usyslf90      _TEXT         
+XVTOXW        00074200  gksint        _TEXT         
+XWTOXV        000741C0  gksint        _TEXT         
+XX2COL        0013EA80  xx2col        _TEXT         
+XXARGS        0011F140  xxargs        _TEXT         
+XXATT         0013EC00  xxatt         _TEXT         
+XXBITIMG      00159F00  xxbitimg      _TEXT         
+XXBMP1        0013F070  xxbmp1        _TEXT         
+XXBMP2        001405D0  xxbmp2        _TEXT         
+XXBOX         0011F4F0  xxbox         _TEXT         
+XXCDEF7       0015A030  xxcdef7       _TEXT         
+XXCDEF8       0015A070  xxcdef8       _TEXT         
+XXCGM         0011F590  xxcgm         _TEXT         
+XXCGM1        00140970  xxcgm1        _TEXT         
+XXCGM2        00140A16  xxcgm1        _TEXT         
+XXCGM3        00140A5F  xxcgm1        _TEXT         
+XXCGM4        00140B20  xxcgm4        _TEXT         
+XXCGM5        00140BF0  xxcgm5        _TEXT         
+XXCGM6        00140D60  xxcgm6        _TEXT         
+XXCH2X        00161730  xxch2x        _TEXT         
+XXCH2Y        00161810  xxch2y        _TEXT         
+XXCHK         00140E60  xxchk         _TEXT         
+XXCLIN        00140EC0  xxclin        _TEXT         
+XXCLIP        00141180  xxclip        _TEXT         
+XXCLOS        0011D11E  OSWIN         _TEXT         
+XXCLSC        00160AB5  xxscrl        _TEXT         
+XXCMND        0011D4A0  OSWIN         _TEXT         
+XXCMPR        0015A0B0  xxcmpr        _TEXT         
+XXCMPRP2      0015A680  xxcmprp2      _TEXT         
+XXCNUM        00121920  xxcnum        _TEXT         
+XXCOL         00141940  xxcol         _TEXT         
+XXCOLG        00161C10  xxcolg        _TEXT         
+XXCOLN        00141B30  xxcoln        _TEXT         
+XXCON         00115F51  gcoln         _TEXT         
+XXCOPYF       0011D47C  OSWIN         _TEXT         
+XXCPYW        0015AA50  xxcpyw        _TEXT         
+XXCSPACE      0015AC30  xxcspace      _TEXT         
+XXCTRL        0011C115  inctrl        _TEXT         
+XXCTS         0015AD30  xxcts         _TEXT         
+XXCUR         0015AEA0  xxcur         _TEXT         
+XXCURM        00141B90  xxcurm        _TEXT         
+XXCURS        0011A572  cursor        _TEXT         
+XXCWIN        0015AEE0  xxcwin        _TEXT         
+XXDATE        0011D241  OSWIN         _TEXT         
+XXDEBUG       0011D72B  OSWIN         _TEXT         
+XXDEFH        00141C50  xxdefh        _TEXT         
+XXDELF        0011D43B  OSWIN         _TEXT         
+XXDIRC        0011D341  OSWIN         _TEXT         
+XXDIRD        0011D360  OSWIN         _TEXT         
+XXDIRM        0011D37F  OSWIN         _TEXT         
+XXDIRN        0011D3A0  OSWIN         _TEXT         
+XXDISK        0011D3C2  OSWIN         _TEXT         
+XXDITH        00141CE0  xxdith        _TEXT         
+XXDRIVETYPE   0011D719  OSWIN         _TEXT         
+XXDSPACE      0011D303  OSWIN         _TEXT         
+XXDUMP        00142B70  xxdump        _TEXT         
+XXDXF         00121A70  xxdxf         _TEXT         
+XXDXF1        00143850  xxdxf1        _TEXT         
+XXDXF2        001438AF  xxdxf1        _TEXT         
+XXDXF3        00143930  xxdxf3        _TEXT         
+XXDXF4        001439B0  xxdxf4        _TEXT         
+XXDXF5        001439EF  xxdxf4        _TEXT         
+XXDXF6        00143A8F  xxdxf4        _TEXT         
+XXDXF7        00143B50  xxdxf7        _TEXT         
+XXDXF8        00143BDA  xxdxf7        _TEXT         
+XXDXF9        00143D34  xxdxf7        _TEXT         
+XXE2I         00123180  xxe2i         _TEXT         
+XXERROR       001231E0  xxerror       _TEXT         
+XXEXCH        00143F90  xxexch        _TEXT         
+XXEXEC        0011D0A3  OSWIN         _TEXT         
+XXEXIT        0011D332  OSWIN         _TEXT         
+XXFACT        00143FC0  xxfact        _TEXT         
+XXFATD        0015E251  xxfate        _TEXT         
+XXFATE        0015E180  xxfate        _TEXT         
+XXFBC         0013EE17  xxatt         _TEXT         
+XXFGCOL       00161920  xxfgcol       _TEXT         
+XXFIND        0011D631  OSWIN         _TEXT         
+XXFINDCLOSE   0011D6E8  OSWIN         _TEXT         
+XXFRAM        0015E2B0  xxfram        _TEXT         
+XXFRMD        0015FB9B  xxfrme        _TEXT         
+XXFRME        0015FA30  xxfrme        _TEXT         
+XXGDRV        00123750  xxgdrv        _TEXT         
+XXGENV        0011D08B  OSWIN         _TEXT         
+XXGETCL       0011D6F4  OSWIN         _TEXT         
+XXGETEXE      0011D707  OSWIN         _TEXT         
+XXGIN         00123780  xxgin         _TEXT         
+XXGINC        00144060  xxginc        _TEXT         
+XXGINK        00144190  xxgink        _TEXT         
+XXGMSWIN      001445B0  xxgmswin      _TEXT         
+XXGSCR        0011EE2B  screen        _TEXT         
+XXHCIF        00116A2B  ghcsel        _TEXT         
+XXHDRV        00123DB0  xxhdrv        _TEXT         
+XXHPG1        00146950  xxhpg1        _TEXT         
+XXHPG2        00146AB5  xxhpg1        _TEXT         
+XXHPG3        00146B6F  xxhpg1        _TEXT         
+XXHPG4        00146BC5  xxhpg1        _TEXT         
+XXHPG5        00146D28  xxhpg1        _TEXT         
+XXHPG6        00146DF0  xxhpg1        _TEXT         
+XXHPG7        0014702F  xxhpg1        _TEXT         
+XXHPG8        0014720C  xxhpg1        _TEXT         
+XXHPG9        001476DC  xxhpg1        _TEXT         
+XXHPGL        00123DE0  xxhpgl        _TEXT         
+XXHPGL2       00126AB0  xxhpgl2       _TEXT         
+XXHPGL2A      001478B0  xxhpgl2a      _TEXT         
+XXHPGL2B      0015AF60  xxhpgl2b      _TEXT         
+XXHPGL2C      00147C40  xxhpgl2c      _TEXT         
+XXHPGL2D      00147D95  xxhpgl2c      _TEXT         
+XXI2E         00129AF0  xxi2e         _TEXT         
+XXICHAR       00147F30  xxichar       _TEXT         
+XXIMAG        00129B60  xximag        _TEXT         
+XXLIN         0015B090  xxlin         _TEXT         
+XXLINE        0012A280  xxline        _TEXT         
+XXLINH        0015DC17  hsplit        _TEXT         
+XXLINI        0012A42B  xxline        _TEXT         
+XXLINS        00161A70  xxlins        _TEXT         
+XXLOG1        00161AE0  xxlog1        _TEXT         
+XXLPI0        00147F60  xxlpi0        _TEXT         
+XXLPI1        001484F0  xxlpi1        _TEXT         
+XXLPI2        00148570  xxlpi1        _TEXT         
+XXLPI3        001485D2  xxlpi1        _TEXT         
+XXLPIC        0012A480  xxlpic        _TEXT         
+XXMDRV        00148790  xxmdrv        _TEXT         
+XXMMSWI1      0015FCA0  xxmmswi1      _TEXT         
+XXMMSWIN      0015B1F0  xxmmswin      _TEXT         
+XXMOUS        00141C32  xxcurm        _TEXT         
+XXMPOS        0015B970  xxmpos        _TEXT         
+XXMWINARC     00154C0F  mwing         _TEXT         
+XXMWINBELL    0013BFC6  mwint         _TEXT         
+XXMWINBLIT    00155759  mwing         _TEXT         
+XXMWINCLEAR   00154E79  mwing         _TEXT         
+XXMWINCLEAR-  0013D0D4  mwint         _TEXT         
+XXMWINCLIP    00155A45  mwing         _TEXT         
+XXMWINCLOSE   00155626  mwing         _TEXT         
+XXMWINCOLOUR  0015495E  mwing         _TEXT         
+XXMWINCURRT-  0011D2F4  OSWIN         _TEXT         
+XXMWINCURSOR  0013D2CF  mwint         _TEXT         
+XXMWINDESTR-  0013CD20  mwint         _TEXT         
+XXMWINDRAWI-  0013CDA7  mwint         _TEXT         
+XXMWINDRAWS-  001556FB  mwing         _TEXT         
+XXMWINDUMPB-  00139215  mwind         _TEXT         
+XXMWINDUMPE-  0013954C  mwind         _TEXT         
+XXMWINDUMPS-  001390D0  mwind         _TEXT         
+XXMWINELLIP-  00154A19  mwing         _TEXT         
+XXMWININTER-  0013D784  mwint         _TEXT         
+XXMWINITALIC  0013D288  mwint         _TEXT         
+XXMWINKEYBD-  0013CCE8  mwint         _TEXT         
+XXMWINLINE    00154810  mwing         _TEXT         
+XXMWINLINET-  00155DCB  mwing         _TEXT         
+XXMWINLINEW-  00155E51  mwing         _TEXT         
+XXMWINLOADS-  001560DC  mwing         _TEXT         
+XXMWINLOADS-  00156851  mwing         _TEXT         
+XXMWINMESSA-  0011CFE0  OSWIN         _TEXT         
+XXMWINMOUSE   0013BFCE  mwint         _TEXT         
+XXMWINNEXTE-  0013D6D1  mwint         _TEXT         
+XXMWINOPEN    0013C102  mwint         _TEXT         
+XXMWINOPEND-  0013C03F  mwint         _TEXT         
+XXMWINOUTLI-  00155F1F  mwing         _TEXT         
+XXMWINPALET-  00155CC3  mwing         _TEXT         
+XXMWINPEEKE-  0013D626  mwint         _TEXT         
+XXMWINPLAYM-  00157A37  mwing         _TEXT         
+XXMWINPLOTM-  00155C6B  mwing         _TEXT         
+XXMWINPOINT   00155C4B  mwing         _TEXT         
+XXMWINPOLPO-  00154D74  mwing         _TEXT         
+XXMWINPOLYG-  00154D98  mwing         _TEXT         
+XXMWINPOLYL-  00155EC5  mwing         _TEXT         
+XXMWINPOPUP   0013D4E4  mwint         _TEXT         
+XXMWINRECTA-  00154B71  mwing         _TEXT         
+XXMWINRVID    0013D218  mwint         _TEXT         
+XXMWINSCROL-  0013CFB0  mwint         _TEXT         
+XXMWINSIZE    0013DA54  mwint         _TEXT         
+XXMWINTEXTC-  0013D297  mwint         _TEXT         
+XXMWINTEXTS-  00155A87  mwing         _TEXT         
+XXMWINTITLE   0013C974  mwint         _TEXT         
+XXMWINUNDER   0013D279  mwint         _TEXT         
+XXMWINVARIA-  0011D01B  OSWIN         _TEXT         
+XXMWINVER     0011CFF7  OSWIN         _TEXT         
+XXMWMFARC     0013ABCB  MWINM         _TEXT         
+XXMWMFCLIP    0013B0A1  MWINM         _TEXT         
+XXMWMFCLOSE   0013AED2  MWINM         _TEXT         
+XXMWMFCOLOUR  0013AA4B  MWINM         _TEXT         
+XXMWMFDRAWS-  0013B043  MWINM         _TEXT         
+XXMWMFELLIP-  0013AA74  MWINM         _TEXT         
+XXMWMFLINE    0013A9CC  MWINM         _TEXT         
+XXMWMFLINET-  0013B23F  MWINM         _TEXT         
+XXMWMFLINEW-  0013B2C0  MWINM         _TEXT         
+XXMWMFOPEN    0013AD2E  MWINM         _TEXT         
+XXMWMFOUTLI-  0013B364  MWINM         _TEXT         
+XXMWMFPOINT   0013B21F  MWINM         _TEXT         
+XXMWMFPOLPO-  0013AC8F  MWINM         _TEXT         
+XXMWMFPOLYG-  0013ACB3  MWINM         _TEXT         
+XXMWMFPOLYL-  0013B2CF  MWINM         _TEXT         
+XXMWMFRECTA-  0013AB3E  MWINM         _TEXT         
+XXMWMFTEXTS-  0013B0E9  MWINM         _TEXT         
+XXMWPRARC     00139FE9  mwinh         _TEXT         
+XXMWPRCLIP    0013A42C  mwinh         _TEXT         
+XXMWPRCLOSE   0013A338  mwinh         _TEXT         
+XXMWPRCOLOUR  00139E4D  mwinh         _TEXT         
+XXMWPRDRAWS-  0013A3C0  mwinh         _TEXT         
+XXMWPRDUMP    0013A3AA  mwinh         _TEXT         
+XXMWPRELLIP-  00139E76  mwinh         _TEXT         
+XXMWPRINFO    0013956E  mwind         _TEXT         
+XXMWPRLINE    00139DC0  mwinh         _TEXT         
+XXMWPRLINET-  0013A719  mwinh         _TEXT         
+XXMWPRLINEW-  0013A79A  mwinh         _TEXT         
+XXMWPROPEN    0013A183  mwinh         _TEXT         
+XXMWPROUTLI-  0013A84C  mwinh         _TEXT         
+XXMWPRPOINT   0013A654  mwinh         _TEXT         
+XXMWPRPOLPO-  0013A0BB  mwinh         _TEXT         
+XXMWPRPOLYG-  0013A0DF  mwinh         _TEXT         
+XXMWPRPOLYL-  0013A7A9  mwinh         _TEXT         
+XXMWPRRECTA-  00139F4E  mwinh         _TEXT         
+XXMWPRTEXTS-  0013A490  mwinh         _TEXT         
+XXOPEN        0011D0B7  OSWIN         _TEXT         
+XXOPT         0012BFE0  xxopt         _TEXT         
+XXPALG        0012C0A0  xxpalg        _TEXT         
+XXPALG16      0012C24B  xxpalg        _TEXT         
+XXPALG32      0012C2EE  xxpalg        _TEXT         
+XXPALI        0012C698  xxpalg        _TEXT         
+XXPALRGB      0012C140  xxpalg        _TEXT         
+XXPALS        0012C391  xxpalg        _TEXT         
+XXPCOD        001487B0  xxpcod        _TEXT         
+XXPCX1        0014ADD0  xxpcx1        _TEXT         
+XXPCX2        0015BA20  xxpcx2        _TEXT         
+XXPLINE       0014B730  xxpline       _TEXT         
+XXPLOG        0015E161  pgscal        _TEXT         
+XXPLYGON      0014BB70  xxplygon      _TEXT         
+XXPOS1        0014CF60  xxpos1        _TEXT         
+XXPOS2        0014D0C0  xxpos2        _TEXT         
+XXPOS3        0014D1D0  xxpos3        _TEXT         
+XXPOS4        0014D310  xxpos3        _TEXT         
+XXPOS5        0014D457  xxpos3        _TEXT         
+XXPOS6        0014D54B  xxpos3        _TEXT         
+XXPOS7        0014D6C7  xxpos3        _TEXT         
+XXPOS8        0014D80A  xxpos3        _TEXT         
+XXPOS9        0014DCAD  xxpos3        _TEXT         
+XXPOST        0012D500  xxpost        _TEXT         
+XXPRBU        0014DF94  xxprou        _TEXT         
+XXPRCL        0014E314  xxprou        _TEXT         
+XXPRFH        0014E341  xxprou        _TEXT         
+XXPRNCMD      0012FC30  xxprncmd      _TEXT         
+XXPROP        0014E05D  xxprou        _TEXT         
+XXPROU        0014DF20  xxprou        _TEXT         
+XXPSTW        0015AB3E  xxcpyw        _TEXT         
+XXPTS         0015FDC0  xxpts         _TEXT         
+XXRAS1        0014E3D0  xxras1        _TEXT         
+XXRAS2        0014E4A0  xxras2        _TEXT         
+XXRAS3        0014E590  xxras3        _TEXT         
+XXRAS4        0014E8E0  xxras4        _TEXT         
+XXRAS5        0014E9E0  xxras5        _TEXT         
+XXRAS6        0014EAA0  xxras6        _TEXT         
+XXRAS7        0014EB90  xxras7        _TEXT         
+XXRAS8        0014EC70  xxras8        _TEXT         
+XXRAS9        0014EF70  xxras9        _TEXT         
+XXRAST        0012FDD0  xxrast        _TEXT         
+XXREAD        0011D12D  OSWIN         _TEXT         
+XXREADC       0011D166  OSWIN         _TEXT         
+XXRECS        00161B10  xxrecs        _TEXT         
+XXRENF        0011D45A  OSWIN         _TEXT         
+XXRES1        0014F280  xxres1        _TEXT         
+XXRESN        0014F430  xxresn        _TEXT         
+XXRGBHSV      0014F5C0  xxrgbhsv      _TEXT         
+XXRGBTO8      0012D28D  xxpalg        _TEXT         
+XXRSET        00130840  xxrset        _TEXT         
+XXRTS         0014F840  xxrts         _TEXT         
+XXSAV         001310E0  xxsav         _TEXT         
+XXSCRL        00160460  xxscrl        _TEXT         
+XXSEEK        0011D211  OSWIN         _TEXT         
+XXSIZG        00113965  gchjus        _TEXT         
+XXSTA         0013EF2C  xxatt         _TEXT         
+XXSTEP        0014FBA0  xxstep        _TEXT         
+XXSYSDIR      0011D416  OSWIN         _TEXT         
+XXTDRV        00131300  xxtdrv        _TEXT         
+XXTIME        0011D296  OSWIN         _TEXT         
+XXTINK        001443F1  xxgink        _TEXT         
+XXTMPPRN      00131320  xxtmpprn      _TEXT         
+XXTMSWI1      0015C060  xxtmswi1      _TEXT         
+XXTMSWIN      0014FE60  xxtmswin      _TEXT         
+XXTRAS        00161B60  xxtras        _TEXT         
+XXUSER        00131690  xxuser        _TEXT         
+XXVRA1        00160B10  xxvra1        _TEXT         
+XXVRA2        0015C220  xxvra2        _TEXT         
+XXVRA3        0015D000  xxvra3        _TEXT         
+XXVRA4        0015C7D0  xxvra4        _TEXT         
+XXVRAS        00151540  xxvras        _TEXT         
+XXWAIT        0013DB4F  mwint         _TEXT         
+XXWIN         001316C0  xxwin         _TEXT         
+XXWIN1        001539C0  xxwin1        _TEXT         
+XXWING        00134200  xxwing        _TEXT         
+XXWINGETPIX-  00155E65  mwing         _TEXT         
+XXWMF         001343F0  xxwmf         _TEXT         
+XXWMF1        00153A70  xxwmf1        _TEXT         
+XXWNOUSX      00160F90  xxwnousx      _TEXT         
+XXWNTLEN      0015D980  xxwntlen      _TEXT         
+XXWRIT        0011D19F  OSWIN         _TEXT         
+XXWRITC       0011D1D8  OSWIN         _TEXT         
+XXWSCS        00136CB0  xxwscs        _TEXT         
+XXXINI        0015DAB0  xxxini        _TEXT         
+XXXINR        00153B20  xxxinr        _TEXT         
+XXYINR        00153C00  xxyinr        _TEXT         
+XYCURV        00087920  grdata        _TEXT         
+YDTOYN        00074380  gksint        _TEXT         
+YNTOYD        00074300  gksint        _TEXT         
+YRAXIS        0007AA60  graxis        _TEXT         
+YVTOYW        000742C0  gksint        _TEXT         
+YWTOYV        00074280  gksint        _TEXT         
+Z4POS         000C4590  z4util        _TEXT         
+ZANSET        000B4E90  zutilx        _TEXT         
+ZARCMP        0009F070  z0util        _TEXT         
+ZB2ON         000B1310  zutilx        _TEXT         
+ZBEEP         001109E0  utscxx        _TEXT         
+ZBLDWR        000AC400  zutil         _TEXT         
+ZCBCH1        000C8A70  zcbch1        _TEXT         
+ZCBCH2        000C8A90  zcbch2        _TEXT         
+ZCBCH3        000C8AB0  zcbch3        _TEXT         
+ZCBCH4        000C8AD0  zcbch4        _TEXT         
+ZCBCH5        000C8AF0  zcbch5        _TEXT         
+ZCBCH6        000C8B10  zcbch6        _TEXT         
+ZCBCH7        000C8B30  zcbch7        _TEXT         
+ZCBCH8        000C8B50  zcbch8        _TEXT         
+ZCBCH9        000C8B70  zcbch9        _TEXT         
+ZCBCHR        000C8330  zclbak        _TEXT         
+ZCBEX1        000C8CB0  zcbex1        _TEXT         
+ZCBEX2        000C8CD0  zcbex2        _TEXT         
+ZCBEX3        000C8CF0  zcbex3        _TEXT         
+ZCBEX4        000C8D10  zcbex4        _TEXT         
+ZCBEX5        000C8D30  zcbex5        _TEXT         
+ZCBEX6        000C8D50  zcbex6        _TEXT         
+ZCBEX7        000C8D70  zcbex7        _TEXT         
+ZCBEX8        000C8D90  zcbex8        _TEXT         
+ZCBEX9        000C8DB0  zcbex9        _TEXT         
+ZCBEXT        000C8730  zclbak        _TEXT         
+ZCBFL1        000C8B90  zcbfl1        _TEXT         
+ZCBFL2        000C8BB0  zcbfl2        _TEXT         
+ZCBFL3        000C8BD0  zcbfl3        _TEXT         
+ZCBFL4        000C8BF0  zcbfl4        _TEXT         
+ZCBFL5        000C8C10  zcbfl5        _TEXT         
+ZCBFL6        000C8C30  zcbfl6        _TEXT         
+ZCBFL7        000C8C50  zcbfl7        _TEXT         
+ZCBFL8        000C8C70  zcbfl8        _TEXT         
+ZCBFL9        000C8C90  zcbfl9        _TEXT         
+ZCBFLD        000C8530  zclbak        _TEXT         
+ZCBGST        000C8940  zclbak        _TEXT         
+ZCBSST        000C88F0  zclbak        _TEXT         
+ZCHKST        000F09C0  adutil        _TEXT         
+ZCHRCH        000B0ED0  zutil         _TEXT         
+ZCKINT        000B1590  zutilx        _TEXT         
+ZCKREA        000B4CE0  zutilx        _TEXT         
+ZCMDEX        000A7F10  zutil         _TEXT         
+ZCMDIS        000A9930  zutil         _TEXT         
+ZCMDON        000B4C80  zutilx        _TEXT         
+ZCMMSE        000C7D70  zutily        _TEXT         
+ZCNTER        000F0B20  adutil        _TEXT         
+ZCOLOR        000B14F0  zutilx        _TEXT         
+ZCURMV        000B0740  zutil         _TEXT         
+ZDELET        000B17F0  zutilx        _TEXT         
+ZDRWDW        000B18D0  zutilx        _TEXT         
+ZDRWSC        000B22E0  zutilx        _TEXT         
+ZEDIT1        000BDBA0  z1util        _TEXT         
+ZEDT0M        0009C120  z0util        _TEXT         
+ZEMIFE        000A6C30  zutil         _TEXT         
+ZEMSTP        000B26C0  zutilx        _TEXT         
+ZFILVF        000A53C0  z0util        _TEXT         
+ZFILVL        000C5EC0  ztscn1        _TEXT         
+ZFLOUT        000C4D50  ztscn1        _TEXT         
+ZFMTWR        00110A30  utscxx        _TEXT         
+ZGTKEY        000BB800  utmisc        _TEXT         
+ZGTKYD        000A7680  zutil         _TEXT         
+ZGTRET        000B2980  zutilx        _TEXT         
+ZHIDCK        000A5120  z0util        _TEXT         
+ZHIDFD        000A4B60  z0util        _TEXT         
+ZIPC          0010F120  utchar        _TEXT         
+ZIPD          00102C50  utnumb        _TEXT         
+ZIPI          00102CD0  utnumb        _TEXT         
+ZIPR          00102D50  utnumb        _TEXT         
+ZLIMIT        000ACC70  zutil         _TEXT         
+ZLJUST        0010F1C0  utchar        _TEXT         
+ZLNSTR        000B29A0  zutilx        _TEXT         
+ZLNTXT        0010F590  utchar        _TEXT         
+ZLOCAR        000C1110  z1util        _TEXT         
+ZLOCFD        0009FE10  z0util        _TEXT         
+ZMNSST        000B2B20  zutilx        _TEXT         
+ZMNWLD        00094F40  qtfile        _TEXT         
+ZMVMSE        000C7930  zutily        _TEXT         
+ZOPFLD        000A1060  z0util        _TEXT         
+ZOPOFF        000A4320  z0util        _TEXT         
+ZOPON         000A4710  z0util        _TEXT         
+ZPRTMN        000AC320  zutil         _TEXT         
+ZQUIET        000B0D40  zutil         _TEXT         
+ZRFRSH        000C7560  zutily        _TEXT         
+ZSCDEF        000C45F0  ztscn1        _TEXT         
+ZSCINI        000EF850  adutil        _TEXT         
+ZSLMNN        000C2570  z4util        _TEXT         
+ZSTADD        000B2B40  zutilx        _TEXT         
+ZSTADQ        000B2B80  zutilx        _TEXT         
+ZSTCMA        000EF7F0  adutil        _TEXT         
+ZSTORE        000B2DA0  zutilx        _TEXT         
+ZSTRPR        000B01D0  zutil         _TEXT         
+ZSTWRT        000B3370  zutilx        _TEXT         
+ZTRIM         0010F6E0  utchar        _TEXT         
+ZTUTOR        000C6D10  zutily        _TEXT         
+ZTXINI        000B0CA0  zutil         _TEXT         
+ZUNCNT        000B3790  zutilx        _TEXT         
+ZVALPS        000B1040  zutil         _TEXT         
+ZVERIF        000AA610  zutil         _TEXT         
+ZWINDO        000B0E50  zutil         _TEXT         
+ZWNSET        000B4BC0  zutilx        _TEXT         
+ZWNSOP        000B4F40  zutilx        _TEXT         
+ZWRHLP        000AB960  zutil         _TEXT         
+ZWRMN1        000C21C0  z1util        _TEXT         
+ZWRSCR        00110AB0  utscxx        _TEXT         
+ZWRTB2        000AB430  zutil         _TEXT         
+ZWRTB3        000AB550  zutil         _TEXT         
+ZWRTCM        000B3B60  zutilx        _TEXT         
+ZWRTMN        000B41E0  zutilx        _TEXT         
+ZWRVDR        000C89C0  zsyslf90      _TEXT         
+ZWTREA        000B4880  zutilx        _TEXT         
+ZXPAD         000A8840  zutil         _TEXT         
+_DLLEntryPo-  0016DE2C  LF_LOW        _TEXT         
+_LF_BLOCK_D-  0002C770  j407wc        _TEXT         
+__initenv     00219860  LFINITWC      _DATA         
+_acmdln       0085F8D0  LFINITWD      _BSS          
+_aenvptr      00219868  LFINITWC      _DATA         
+_amsg_exit    0016DE27  LF_LOW        _TEXT         EXPORT
+_atexit       00011064  lfinitw       _TEXT         
+_environ      0021985C  LFINITWC      _DATA         
+_ftol         0016E074  initfpu       _TEXT         
+_hread        001721D4  _hread        .jdata        IMPORT
+_hwrite       001721DA  _hwrite       .jdata        IMPORT
+_lc_CCLBAC    00269DE0  z0util        _lc_CCLBAC    00000050
+_lc_CCLBAK    00269DB0  z0util        _lc_CCLBAK    00000010
+_lc_CDRLOC    00274F50  wdatrb        _lc_CDRLOC    
+_lc_CFBUFF    0026FE50  wdatrb        _lc_CFBUFF    000050D0
+_lc_CGRAPM    0085F9F0                c_common      00000010
+_lc_COLOR     00266770  qtscn1        _lc_COLOR     
+_lc_CPKDSN    0085FA00                c_common      000004C0
+_lc_CPLTB     0085FEC0                c_common      0003AA40
+_lc_CPLTC     0089A900                c_common      00000620
+_lc_CPLTV     0089AF20                c_common      00000670
+_lc_CQRSPC    0025DC20  qtchar        _lc_CQRSPC    000003A0
+_lc_CQRSPI    0025E020  qtchar        _lc_CQRSPI    00000320
+_lc_CSCREC    0025E420  qtchar        _lc_CSCREC    00003FD0
+_lc_CSCRED    00262420  qtchar        _lc_CSCRED    000010E0
+_lc_CSCREN    0025A820  qtchar        _lc_CSCREN    00003300
+_lc_CTSBUF    00274FC0  tsbufr        _lc_CTSBUF    
+_lc_CUSRPM    002667B0  utuprm        _lc_CUSRPM    
+_lc_CWDMIC    0035ABF0  wdmid         _lc_CWDMIC    
+_lc_CWDMID    0035ABC0  wdmid         _lc_CWDMID    
+_lc_CWTSDS    00274F70  wdtms1        _lc_CWTSDS    
+_lc_CZGLVC    0026ED50  zutil         _lc_CZGLVC    
+_lc_CZGLVL    00269E50  zutil         _lc_CZGLVL    
+_lc_CZHIDE    00268EB0  z0util        _lc_CZHIDE    00000E20
+_lc_CZOPTN    002669B0  z0util        _lc_CZOPTN    00002490
+_lc_DCONST    00269DC0  z0util        _lc_DCONST    
+_lc_FJAC01    0089B590                c_common      00000030
+_lc_GRACOM    0089B5C0                c_common      00002EF0
+_lc_HEADNS    0089E4B0                c_common      000002D0
+_lc_ICONST    00269E40  z0util        _lc_ICONST    
+_lc_INTR02    0035AC20  garea         _lc_INTR02    
+_lc_INTR03    003691E0  infoos        _lc_INTR03    
+_lc_INTR04    00360120  ginxy         _lc_INTR04    
+_lc_INTR07    003711D0  xxhpgl        _lc_INTR07    
+_lc_INTR08    0035B420  gchjus        _lc_INTR08    
+_lc_INTR09    003A4670  xxtmswin      _lc_INTR09    
+_lc_INTR10    00360090  gclear        _lc_INTR10    
+_lc_INTR11    00368620  scopen        _lc_INTR11    
+_lc_INTR12    00368AB0  scopen        _lc_INTR12    
+_lc_INTR13    00369180  infogh        _lc_INTR13    
+_lc_INTR14    00368B60  scopen        _lc_INTR14    
+_lc_INTR15    00369160  disply        _lc_INTR15    
+_lc_INTR16    00368560  scopen        _lc_INTR16    
+_lc_INTR17    00375BF0  xxrset        _lc_INTR17    
+_lc_INTR18    00371DF0  xxrset        _lc_INTR18    
+_lc_INTR21    0035B570  gchoua        _lc_INTR21    
+_lc_INTR22    00369140  scopen        _lc_INTR22    
+_lc_INTR23    00368A30  scopen        _lc_INTR23    
+_lc_INTR24    00360320  ginxy         _lc_INTR24    
+_lc_INTR25    00360520  gpolya        _lc_INTR25    
+_lc_INTR26    00368550  infoer        _lc_INTR26    
+_lc_INTR27    0035FB90  gchset        _lc_INTR27    
+_lc_INTR28    0035B4B0  gchjus        _lc_INTR28    
+_lc_INTR29    00368B80  scopen        _lc_INTR29    
+_lc_INTR30    003711B0  xxdxf         _lc_INTR30    
+_lc_INTR31    00368B10  scopen        _lc_INTR31    
+_lc_INTR32    003600B0  ghcopt        _lc_INTR32    
+_lc_INTR35    00368B90  scopen        _lc_INTR35    
+_lc_INTR36    00368BB0  scopen        _lc_INTR36    
+_lc_INTR38    00368A70  scopen        _lc_INTR38    
+_lc_INTR39    00368E40  scopen        _lc_INTR39    
+_lc_INTR40    0035B760  gchoua        _lc_INTR40    
+_lc_INTR41    0035B7A0  gchoua        _lc_INTR41    
+_lc_INTR42    00393E40  xxdump        _lc_INTR42    
+_lc_INTR43    00394040  xxdump        _lc_INTR43    
+_lc_INTR44    003713D0  xxhpgl2       _lc_INTR44    
+_lc_INTR45    0035B670  gchoua        _lc_INTR45    
+_lc_INTR46    0035B6C0  gchoua        _lc_INTR46    
+_lc_INTR48    0038B3F0  grinit        _lc_INTR48    
+_lc_INTR49    0035B7C0  gchoua        _lc_INTR49    
+_lc_INTR51    003879F0  grinit        _lc_INTR51    
+_lc_INTR52    0038B440  grinit        _lc_INTR52    
+_lc_INTR63    0035AC10  garea         _lc_INTR63    
+_lc_INTR66    00368C40  scopen        _lc_INTR66    
+_lc_INTR69    003685A0  scopen        _lc_INTR69    
+_lc_INTR70    00368BC0  scopen        _lc_INTR70    
+_lc_INTR82    003692B0  outsxy        _lc_INTR82    
+_lc_INTR83    00371DD0  xximag        _lc_INTR83    
+_lc_INTR85    0035B890  gchoua        _lc_INTR85    
+_lc_INTR87    00368630  scopen        _lc_INTR87    
+_lc_INTR88    0038BF40  xxbmp1        _lc_INTR88    
+_lc_INTR90    00360550  gpolya        _lc_INTR90    
+_lc_INTR91    00394070  xxplygon      _lc_INTR91    
+_lc_J407CM    0089E780                c_common      00000FA0
+_lc_J407CX    0089F720                c_common      000003F0
+_lc_JOBOPT    0089FB10                c_common      00000160
+_lc_JOBTTL    0089FC70                c_common      00000030
+_lc_LKABND    0021B3F0  gksint        _lc_LKABND    00004420
+_lc_LKACHR    0089FCA0                c_common      00000040
+_lc_LKAGLB    0089FCE0                c_common      00000180
+_lc_LUNITS    0089FE60                c_common      00000020
+_lc_PRPCOM    0089FE80                c_common      00000010
+_lc_RCONST    00269E30  z0util        _lc_RCONST    
+_lc_REG001    0089FE90                c_common      00000010
+_lc_STAID     0089FEA0                c_common      00000060
+_lc_TAC002    0089FF00                c_common      00000020
+_lc_TACG01    0089FF20                c_common      00000020
+_lc_TACG02    0089FF40                c_common      000C3500
+_lc_TACG03    00963440                c_common      000000D0
+_lc_TACGAM0-  00963510                c_common      00000010
+_lc_TERI      0021F810  aninit        _lc_TERI      
+_lc_WCFCM0    0021B230  j407wc        _lc_WCFCM0    00000180
+_lc_WCFCM1    00963520                c_common      00000150
+_lc_WCFCM2    00963670                c_common      00000280
+_lc_ZAP111    009638F0                c_common      00000020
+_lc_ZCNTL1    00263570  qtchar        _lc_ZCNTL1    00003180
+_lc_ZCNTL2    0021F820  qtchar        _lc_ZCNTL2    0003AF70
+_lc_ZCNTL3    00263520  qtchar        _lc_ZCNTL3    00000050
+_lc_ZNCT02    00963910                c_common      00000020
+_lc_ZZZ889    00963930                c_common      00000010
+_lc__FLG2RT   0021B3B0  peakfq        _lc__FLG2RT   
+_lclose       001721E0  _lclose       .jdata        IMPORT
+_lcreat       001721E6  _lcreat       .jdata        IMPORT
+_lf_7_close   0016BBCA  MINIMUM       _TEXT         EXPORT
+_lf_7_open    001708F4  COREIO        _TEXT         
+_lf_7_read    001709BB  COREIO        _TEXT         
+_lf_7_write   00170A59  COREIO        _TEXT         
+_lf_EOL_FF    00166AAD  FMTIN         _TEXT         EXPORT
+_lf_Message-  0016DD4A  LF_LOW        _TEXT         EXPORT
+_lf_WinMain   0016E11C  LFINITWD      _TEXT         
+_lf___close   0017094F  COREIO        _TEXT         
+_lf__back1_-  0016B2BB  IOMISC        _TEXT         EXPORT
+_lf__drst     0016B3AE  IOMISC        _TEXT         EXPORT
+_lf__gpvc     0016B229  IOMISC        _TEXT         EXPORT
+_lf__lseek    0017096A  COREIO        _TEXT         
+_lf__lsize    001709A4  COREIO        _TEXT         
+_lf__prompt   0021A457  IOMISC        _DATA         
+_lf__unlink   00170A98  COREIO        _TEXT         
+_lf_a_fmt_o-  001686ED  FMTOT         _TEXT         
+_lf_absolut-  00164997  EREPORT       _TEXT         
+_lf_afremem   001639D2  ALLOCATE      _TEXT         EXPORT
+_lf_agetmem   001638D4  ALLOCATE      _TEXT         EXPORT
+_lf_alloc_b-  0016BD79  MINIMUM       _TEXT         EXPORT
+_lf_allocat-  001624B4  PRESENT       _TEXT         
+_lf_alocerr   00163A90  ALLOCATE      _TEXT         EXPORT
+_lf_alocfcb   0016ED07  FCB           _TEXT         EXPORT
+_lf_altreta   0016E3FF  errpub        _TEXT         
+_lf_app_name  0085E894  LF_LOW        _BSS          
+_lf_argc      0085DCB4  LFINITWC      _BSS          
+_lf_argv      0085DCB8  LFINITWC      _BSS          
+_lf_ascii_t-  00167380  fmtin2        _TEXT         
+_lf_ascii_t-  00166ACF  FMTIN         _TEXT         EXPORT
+_lf_assign_-  0016E4E8  errpub        _TEXT         
+_lf_atan2     00162DD0  atan2         _TEXT         
+_lf_atanf     00162E10  atanf         _TEXT         
+_lf_atexit_-  0016DDE3  LF_LOW        _TEXT         EXPORT
+_lf_backsp    00163BE4  BACKSP        _TEXT         EXPORT
+_lf_bad_pen-  0021986C  LFINITWC      _DATA         
+_lf_bottom_-  00011000  lfinitw       _TEXT         
+_lf_buffer_-  0085E734  LF_LOW        _BSS          
+_lf_calloc    00170149  MEMORY        _TEXT         
+_lf_char_fr-  00166B83  FMTIN         _TEXT         
+_lf_check_f-  0016EE69  FCB           _TEXT         EXPORT
+_lf_check_p-  0016F9CA  FMTIO         _TEXT         EXPORT
+_lf_check_s-  0016DC00  chkstack      _TEXT         
+_lf_chopfil   00170AB3  COREIO        _TEXT         
+_lf_class_n-  0085E8B2  LF_LOW        _BSS          
+_lf_clear_i-  0016E3B8  errpub        _TEXT         
+_lf_clenflag  0017008A  FMTIO         _TEXT         EXPORT
+_lf_close     00163EEC  CLOSE         _TEXT         EXPORT
+_lf_cmp_name  0016B072  IOMISC        _TEXT         EXPORT
+_lf_codeend   0021ABEC  LFINITWD      _DATA         
+_lf_codesta-  0021ABE8  LFINITWD      _DATA         
+_lf_command-  0085E8D0  LF_LOW        _BSS          
+_lf_command-  0021A958  LF_LOW        _DATA         
+_lf_conflsh   0016BA69  MINIMUM       _TEXT         EXPORT
+_lf_console-  0021A94A  LF_LOW        _DATA         
+_lf_console-  0021A949  LF_LOW        _DATA         
+_lf_contact-  00219870  LFINITWC      _DATA         
+_lf_cos       001630D0  f_cos         _TEXT         
+_lf_cosf      00163100  f_cosf        _TEXT         
+_lf_create_-  00170AEC  COREIO        _TEXT         
+_lf_crrnt_c-  0021AE53  FMTIO         _DATA         
+_lf_ctype_    0021A9DB  LFCTYPE       _DATA         
+_lf_curfcb    0021A4E8  MINIMUM       _DATA         
+_lf_date_an-  0016204C  DATETIME      _TEXT         
+_lf_date_an-  001621E0  DATETIME      _TEXT         
+_lf_date_an-  001620D5  DATETIME      _TEXT         
+_lf_date_an-  001622FA  DATETIME      _TEXT         
+_lf_date_an-  00162398  DATETIME      _TEXT         
+_lf_dcode     00166B19  FMTIN         _TEXT         EXPORT
+_lf_default-  0085E730  LF_LOW        _BSS          
+_lf_delfcb    0016BA04  MINIMUM       _TEXT         EXPORT
+_lf_delimitr  001682B4  fmtin2        _TEXT         
+_lf_determi-  0016EF69  FMTIO         _TEXT         EXPORT
+_lf_display   0016D4E1  PAUSE         _TEXT         EXPORT
+_lf_display-  0016DE15  LF_LOW        _TEXT         EXPORT
+_lf_doinc0a   0016E45B  errpub        _TEXT         
+_lf_dpowuw    0016A3D8  fmtot2        _TEXT         
+_lf_ebp_of_-  0021A4D8  MINIMUM       _DATA         
+_lf_eip_of_-  0021A4D4  MINIMUM       _DATA         
+_lf_emit_er-  001642E0  EREPORT       _TEXT         EXPORT
+_lf_emit_me-  0016DC5C  LF_LOW        _TEXT         EXPORT
+_lf_emit_me-  0016DCAB  LF_LOW        _TEXT         EXPORT
+_lf_end_inp-  0016FA1B  FMTIO         _TEXT         EXPORT
+_lf_end_out-  0016FB74  FMTIO         _TEXT         EXPORT
+_lf_endfile   00163FEC  ENDFILE       _TEXT         EXPORT
+_lf_ensure_-  00170B65  COREIO        _TEXT         
+_lf_ensure_-  0016B7C4  IOMISC        _TEXT         EXPORT
+_lf_env_poi-  0021A954  LF_LOW        _DATA         
+_lf_err_fcb   0021A4E0  MINIMUM       _DATA         
+_lf_err_pos-  0021A4DC  MINIMUM       _DATA         
+_lf_errno     00219A84  ERRNO         _DATA         
+_lf_error_e-  00219CB8  EREPORT       _DATA         
+_lf_error_e-  00219CC0  EREPORT       _DATA         
+_lf_error_e-  00219CBC  EREPORT       _DATA         
+_lf_error_i-  0016E54A  errpub        _TEXT         
+_lf_excepti-  001649A5  EREPORT       _TEXT         EXPORT
+_lf_exit      00170E40  LFEXIT        _TEXT         
+_lf_exit_fu-  0021A95C  LF_LOW        _DATA         
+_lf_exitdos   0016DD89  LF_LOW        _TEXT         EXPORT
+_lf_exp       00162E20  exp           _TEXT         
+_lf_expf      00162F80  expf          _TEXT         
+_lf_f90_con-  0085E770  LF_LOW        _BSS          
+_lf_fcalloc   0016DF3F  FHEAP         _TEXT         
+_lf_fcb_list  0021A4E4  MINIMUM       _DATA         
+_lf_fchcmp    00165404  FCHCMP        _TEXT         EXPORT
+_lf_fcheqs    0016537C  FCHEQS        _TEXT         EXPORT
+_lf_feeble_-  00162363  DATETIME      _TEXT         
+_lf_ffree     0016DECB  FHEAP         _TEXT         
+_lf_file_of-  00219CCC  EREPORT       _DATA         
+_lf_findtem-  00170BA3  COREIO        _TEXT         
+_lf_finish_-  0016DCF3  LF_LOW        _TEXT         EXPORT
+_lf_flush     001627DC  LFFLUSH       _TEXT         
+_lf_flush_u-  0016B906  IOMISC        _TEXT         EXPORT
+_lf_fmalloc   0016DEA4  FHEAP         _TEXT         
+_lf_fmalloc-  00164A8D  EREPORT       _TEXT         EXPORT
+_lf_fmt_ini-  0016EFBF  FMTIO         _TEXT         EXPORT
+_lf_fmt_lis-  0016F02A  FMTIO         _TEXT         EXPORT
+_lf_fmtck     00165484  FMTCK         _TEXT         EXPORT
+_lf_fmtflag   0021AE40  FMTIO         _DATA         
+_lf_fmtmod    00170E68  FMTNOMOD      _TEXT         
+_lf_fndname   0016ECC8  FCB           _TEXT         EXPORT
+_lf_fndunit   0016B9C8  MINIMUM       _TEXT         EXPORT
+_lf_fpu_con-  0021A944  LF_LOW        _DATA         
+_lf_frealloc  0016DEEC  FHEAP         _TEXT         
+_lf_free      00170290  MEMORY        _TEXT         
+_lf_get_byte  0016BE63  MINIMUM       _TEXT         EXPORT
+_lf_get_cur-  0016EE15  FCB           _TEXT         EXPORT
+_lf_get_env   0016DF73  LFGETENV      _TEXT         
+_lf_get_env-  0016DFC2  LFGETENV      _TEXT         
+_lf_get_fmt-  0016FF9E  FMTIO         _TEXT         EXPORT
+_lf_get_n_d   0016E6B8  ADIRECT       _TEXT         EXPORT
+_lf_get_n_f-  0016E8EC  AFMTIO        _TEXT         EXPORT
+_lf_getcl     0016E0B8  LFGETCL       _TEXT         
+_lf_getenv    0016DF4C  LFGETENV      _TEXT         
+_lf_hInstan-  0021984C  LFINITWC      _DATA         
+_lf_hPrevIn-  00219850  LFINITWC      _DATA         
+_lf_heap_ha-  0085E880  LF_LOW        _BSS          
+_lf_inchr     00168030  fmtin2        _TEXT         
+_lf_incmx16   00166D68  fmtin2        _TEXT         
+_lf_incmx8    00166D40  fmtin2        _TEXT         
+_lf_index     001624F8  INDEX         _TEXT         
+_lf_indnf     00166717  FMTIN         _TEXT         EXPORT
+_lf_indnfa    001667A8  FMTIN         _TEXT         EXPORT
+_lf_indnu     0016D77F  UNFIO         _TEXT         EXPORT
+_lf_inint1    00167F08  fmtin2        _TEXT         
+_lf_inint2    00167F2C  fmtin2        _TEXT         
+_lf_inint4    00167EC0  fmtin2        _TEXT         
+_lf_inint8    00167EE4  fmtin2        _TEXT         
+_lf_init_co-  0016E2F6  LFINITWD      _TEXT         
+_lf_init_de-  0016698A  FMTIN         _TEXT         EXPORT
+_lf_init_fpu  0016E050  initfpu       _TEXT         
+_lf_init_in-  0016EE84  FMTIO         _TEXT         EXPORT
+_lf_init_win  0016E26A  LFINITWD      _TEXT         
+_lf_initial-  00162688  LFINITWC      _TEXT         
+_lf_initial-  001706D5  MEMORY        _TEXT         
+_lf_inlog1    00167F74  fmtin2        _TEXT         
+_lf_inlog4    00167F50  fmtin2        _TEXT         
+_lf_input_f-  0021A0EC  fmtin2        _DATA         
+_lf_input_r-  0021A0F6  fmtin2        _DATA         
+_lf_inquire   0016A41C  INQUIRE       _TEXT         EXPORT
+_lf_inrel4    00167E9C  fmtin2        _TEXT         
+_lf_inrel8    00168314  fmtin2        _TEXT         
+_lf_instance  0085E87C  LF_LOW        _BSS          
+_lf_intel_n-  00219874  LFINITWC      _DATA         
+_lf_intrin_-  00164AD7  EREPORT       _TEXT         EXPORT
+_lf_intrin_-  0016E391  errpub        _TEXT         
+_lf_intzf     001664F8  FMTIN         _TEXT         EXPORT
+_lf_intzfa    00166681  FMTIN         _TEXT         EXPORT
+_lf_intzu     0016D688  UNFIO         _TEXT         EXPORT
+_lf_inunlen   0016EC14  AUNFIO        _TEXT         EXPORT
+_lf_invalop   0016E560  invalop       _TEXT         
+_lf_io_emit-  00164967  EREPORT       _TEXT         EXPORT
+_lf_ioerr     0016E370  errpub        _TEXT         
+_lf_iostat    0021A4D0  MINIMUM       _DATA         
+_lf_iostat_-  001627F4  LFIOSTAT      _TEXT         
+_lf_iostat_-  001648A0  EREPORT       _TEXT         EXPORT
+_lf_isdigit   00166D0C  FMTIN         _TEXT         
+_lf_itemsize  001700BB  FMTIO         _TEXT         EXPORT
+_lf_len_tri-  00162474  LEN_TRIM      _TEXT         
+_lf_line_of-  00219CC8  EREPORT       _DATA         
+_lf_link_th-  0085E76C  LF_LOW        _BSS          
+_lf_linked_-  0021A960  LF_LOW        _DATA         
+_lf_log       001631C0  log           _TEXT         
+_lf_log10     00163290  log10         _TEXT         
+_lf_log10f    00163360  log10f        _TEXT         
+_lf_logf      00163410  logf          _TEXT         
+_lf_lpCmdLi-  00219854  LFINITWC      _DATA         
+_lf_lsl_ds    0016DE0C  LF_LOW        _TEXT         EXPORT
+_lf_main      0003FE60  peakfq        _TEXT         
+_lf_main_er-  00170E3D  lfsold        _TEXT         
+_lf_main_wi-  0085E890  LF_LOW        _BSS          
+_lf_maketem-  00170BE0  COREIO        _TEXT         
+_lf_malloc    00170130  MEMORY        _TEXT         
+_lf_margin_-  00168650  FMTOT         _TEXT         EXPORT
+_lf_max_pri-  0021A1F4  fmtot2        _DATA         
+_lf_memchr    00163778  CSTRING       _TEXT         
+_lf_memcmp    001636C6  CSTRING       _TEXT         
+_lf_memcmpr   0016B19F  IOMISC        _TEXT         EXPORT
+_lf_memcopy   0016B209  IOMISC        _TEXT         EXPORT
+_lf_memicmp   001636FA  CSTRING       _TEXT         
+_lf_memmem    00163796  CSTRING       _TEXT         
+_lf_message-  00219CC4  EREPORT       _DATA         
+_lf_nCmdShow  00219858  LFINITWC      _DATA         
+_lf_nchin     0016D86A  UNFIO         _TEXT         EXPORT
+_lf_nchot     0016DB86  UNFIO         _TEXT         EXPORT
+_lf_ncode     00168551  FMTOT         _TEXT         EXPORT
+_lf_negdima   0016E489  errpub        _TEXT         
+_lf_newmodu-  00165302  EREPORT       _TEXT         
+_lf_next_bu-  0016BECE  MINIMUM       _TEXT         EXPORT
+_lf_next_wr-  0016BF93  MINIMUM       _TEXT         EXPORT
+_lf_nl_flag   0021AE52  FMTIO         _DATA         
+_lf_no_head-  0085E768  LF_LOW        _BSS          
+_lf_ntznumf   001700B0  FMTIO         _TEXT         EXPORT
+_lf_null_pr-  00170E3F  lfsold        _TEXT         
+_lf_nullify-  00163B68  ALLOCATE      _TEXT         
+_lf_ontzf     00168338  FMTOT         _TEXT         EXPORT
+_lf_ontzfa    001684F2  FMTOT         _TEXT         EXPORT
+_lf_ontzu     0016D8E8  UNFIO         _TEXT         EXPORT
+_lf_open      0016BFE8  OPEN          _TEXT         EXPORT
+_lf_otchr     00168D60  fmtot2        _TEXT         
+_lf_otcmx16   00168AE0  fmtot2        _TEXT         
+_lf_otcmx8    00168A80  fmtot2        _TEXT         
+_lf_otdnf     001685BE  FMTOT         _TEXT         EXPORT
+_lf_otdnu     0016DA23  UNFIO         _TEXT         EXPORT
+_lf_otint1    001688B0  fmtot2        _TEXT         
+_lf_otint2    001688FC  fmtot2        _TEXT         
+_lf_otint4    00168948  fmtot2        _TEXT         
+_lf_otint8    00168994  fmtot2        _TEXT         
+_lf_otlog1    00168C68  fmtot2        _TEXT         
+_lf_otlog4    00168C8C  fmtot2        _TEXT         
+_lf_otrel4    001687F8  fmtot2        _TEXT         
+_lf_otrel8    00168854  fmtot2        _TEXT         
+_lf_otunlen   0016EB70  AUNFIO        _TEXT         EXPORT
+_lf_output_-  0021AE3C  FMTIO         _DATA         
+_lf_output_-  00169F34  fmtot2        _TEXT         
+_lf_output_-  0021A1DC  fmtot2        _DATA         
+_lf_pause1    0016D41C  PAUSE         _TEXT         EXPORT
+_lf_pause_a-  0085E750  LF_LOW        _BSS          
+_lf_penttest  00011068  pentest       _TEXT         
+_lf_pfill     0021A1F8  fmtot2        _DATA         
+_lf_pow       00162810  pow           _TEXT         
+_lf_powf      0016363C  powf          _TEXT         
+_lf_present-  001624A0  PRESENT       _TEXT         
+_lf_ptr_asgn  00163A96  ALLOCATE      _TEXT         EXPORT
+_lf_ptr_asg-  0016E519  errpub        _TEXT         
+_lf_put_byte  0016BEFA  MINIMUM       _TEXT         EXPORT
+_lf_put_fmt-  0016FD47  FMTIO         _TEXT         EXPORT
+_lf_put_n_d   0016E7B4  ADIRECT       _TEXT         EXPORT
+_lf_put_n_f-  0016EAAF  AFMTIO        _TEXT         EXPORT
+_lf_put_n_u   0016EC60  AUNFIO        _TEXT         EXPORT
+_lf_q_fmt_i-  001667F1  FMTIN         _TEXT         
+_lf_read_bu-  0016B689  IOMISC        _TEXT         EXPORT
+_lf_realloc   001701A5  MEMORY        _TEXT         
+_lf_realloc-  0016EDAB  FCB           _TEXT         EXPORT
+_lf_recover-  001668EF  FMTIN         _TEXT         
+_lf_refbnda   0016E3D1  errpub        _TEXT         
+_lf_release-  0016EE1B  FCB           _TEXT         EXPORT
+_lf_rep_cnt   0085E624  FMTIN         _BSS          
+_lf_repeat_-  0021A108  fmtin2        _DATA         
+_lf_repeat_-  0021A05C  FMTIN         _DATA         
+_lf_rewind    0016D548  REWIND        _TEXT         EXPORT
+_lf_rt_io_e-  001649C3  EREPORT       _TEXT         EXPORT
+_lf_rtp_fla-  0021A93A  LF_LOW        _DATA         
+_lf_scan_di-  0016699F  FMTIN         _TEXT         EXPORT
+_lf_set_dev-  00170D3E  COREIO        _TEXT         EXPORT
+_lf_set_io_-  0016B976  IOMISC        _TEXT         EXPORT
+_lf_set_ios-  0016B952  IOMISC        _TEXT         EXPORT
+_lf_set_loc-  00170120  location      _TEXT         
+_lf_set_name  0016BDB4  MINIMUM       _TEXT         EXPORT
+_lf_set_rea-  0016AEC8  IOMISC        _TEXT         EXPORT
+_lf_set_rec-  0016B356  IOMISC        _TEXT         EXPORT
+_lf_set_sta-  0016DE1A  LF_LOW        _TEXT         EXPORT
+_lf_set_unb-  00170D83  COREIO        _TEXT         EXPORT
+_lf_set_wri-  0016AF29  IOMISC        _TEXT         EXPORT
+_lf_setup_f-  0016E614  FLG2RT        _TEXT         
+_lf_shape_e-  0016E4B7  errpub        _TEXT         
+_lf_show_pr-  0016D520  PAUSE         _TEXT         
+_lf_sin       00163130  f_sin         _TEXT         
+_lf_sinf      00163160  f_sinf        _TEXT         
+_lf_skip_sp-  00166A76  FMTIN         _TEXT         
+_lf_sold_ND-  00170E3E  lfsold        _TEXT         
+_lf_sold_ea-  00170E30  lfsold        _TEXT         
+_lf_spindri-  0016D3D2  OPEN          _TEXT         
+_lf_spindri-  0016D2C0  OPEN          _TEXT         
+_lf_spindri-  0016D404  OPEN          _TEXT         
+_lf_sqrt      001634C0  nsqrt         _TEXT         
+_lf_sqrtf     00163590  nsqrtf        _TEXT         
+_lf_stack_e-  00164A96  EREPORT       _TEXT         EXPORT
+_lf_stack_t-  00963940  winstack      ??stack       
+_lf_stackbo-  0085F8D8  LFINITWD      _BSS          
+_lf_stackma-  0021A950  LF_LOW        _DATA         
+_lf_stacktop  0085F8D4  LFINITWD      _BSS          
+_lf_status    0021A946  LF_LOW        _DATA         
+_lf_stderr_-  0085E88C  LF_LOW        _BSS          
+_lf_stdin_h-  0085E884  LF_LOW        _BSS          
+_lf_stdout_-  0085E888  LF_LOW        _BSS          
+_lf_stop      0016BACE  MINIMUM       _TEXT         EXPORT
+_lf_stop1     0016BADE  MINIMUM       _TEXT         EXPORT
+_lf_strcat    0016B0B2  IOMISC        _TEXT         EXPORT
+_lf_strchr    001636AB  CSTRING       _TEXT         
+_lf_strcmpr   0016B0E8  IOMISC        _TEXT         EXPORT
+_lf_strcopy   0016B1CB  IOMISC        _TEXT         EXPORT
+_lf_strcpy    0016365C  CSTRING       _TEXT         
+_lf_strncpy   00163678  CSTRING       _TEXT         
+_lf_strpbrk   00163867  CSTRING       _TEXT         
+_lf_strstr    00163824  CSTRING       _TEXT         
+_lf_subbnda   0016E42D  errpub        _TEXT         
+_lf_system    00162698  LFSYSTEM      _TEXT         
+_lf_tag_fcb   0016BA41  MINIMUM       _TEXT         EXPORT
+_lf_tanf      00163190  f_tanf        _TEXT         
+_lf_toupper   00166D1E  FMTIN         _TEXT         
+_lf_trace     0085E74C  LF_LOW        _BSS          
+_lf_trace_b-  00164E6A  EREPORT       _TEXT         
+_lf_trap_d    0085E73C  LF_LOW        _BSS          
+_lf_trap_i    0085E738  LF_LOW        _BSS          
+_lf_trap_ma-  0021A94C  LF_LOW        _DATA         
+_lf_trap_o    0085E740  LF_LOW        _BSS          
+_lf_trap_p    0085E748  LF_LOW        _BSS          
+_lf_trap_u    0085E744  LF_LOW        _BSS          
+_lf_trim      001624C8  TRIM          _TEXT         
+_lf_truncate  0016AFC0  IOMISC        _TEXT         EXPORT
+_lf_undfl     0016E5C0  undfl         _TEXT         
+_lf_unit_ch-  0016B04B  IOMISC        _TEXT         EXPORT
+_lf_unused12  0085E754  LF_LOW        _BSS          
+_lf_unused13  0085E758  LF_LOW        _BSS          
+_lf_unused14  0085E75C  LF_LOW        _BSS          
+_lf_unused15  0085E760  LF_LOW        _BSS          
+_lf_unused16  0085E764  LF_LOW        _BSS          
+_lf_vect_le-  00164AB3  EREPORT       _TEXT         EXPORT
+_lf_win32s_-  0021A948  LF_LOW        _DATA         
+_lf_winver    0085E878  LF_LOW        _BSS          
+_lf_write_b-  0016BCB6  MINIMUM       _TEXT         EXPORT
+_lfacos_err-  001649E1  EREPORT       _TEXT         EXPORT
+_lfasin_err-  001649EA  EREPORT       _TEXT         EXPORT
+_lfatan2      00161C90  fatan2        _TEXT         
+_lfatanf      00161CA8  fatanf        _TEXT         
+_lfc_div_c_-  00164A69  EREPORT       _TEXT         EXPORT
+_lfcabs_err-  00164A2A  EREPORT       _TEXT         EXPORT
+_lfccos_err-  00164A33  EREPORT       _TEXT         EXPORT
+_lfcexp_err-  00164A3C  EREPORT       _TEXT         EXPORT
+_lfcheck_de-  0016D16A  OPEN          _TEXT         
+_lfclog_err-  00164A45  EREPORT       _TEXT         EXPORT
+_lfcos        00161CB8  fcos          _TEXT         
+_lfcosf       00161CC8  fcosf         _TEXT         
+_lfcosh_err-  001649F3  EREPORT       _TEXT         EXPORT
+_lfcsin_err-  00164A4E  EREPORT       _TEXT         EXPORT
+_lfcsqrt_er-  00164A57  EREPORT       _TEXT         EXPORT
+_lfdz_div_e-  00164A84  EREPORT       _TEXT         EXPORT
+_lfexp        00161CD8  fexp          _TEXT         
+_lfexp_error  001649FC  EREPORT       _TEXT         EXPORT
+_lfexpf       00161D0C  fexpf         _TEXT         
+_lffltused    0085DCBD  BC_DEFS       _BSS          
+_lflog        00161D24  flog          _TEXT         
+_lflog10      00161D58  flog10        _TEXT         
+_lflog10_er-  00164A06  EREPORT       _TEXT         EXPORT
+_lflog10f     00161D8C  flog10f       _TEXT         
+_lflog_error  00164A0F  EREPORT       _TEXT         EXPORT
+_lflogf       00161DC0  flogf         _TEXT         
+_lfno_exp_e-  00164A05  EREPORT       _TEXT         EXPORT
+_lfpow_dd_v-  00161E8C  pow_dd_v      _TEXT         
+_lfpow_di_v-  00161EA4  pow_di_v      _TEXT         
+_lfpow_dr_v-  00161F14  pow_dr_v      _TEXT         
+_lfpow_id_v-  00161F30  pow_id_v      _TEXT         
+_lfpow_ii_v-  00161F4C  pow_ii_v      _TEXT         
+_lfpow_ir_v-  00161FB0  pow_ir_v      _TEXT         
+_lfpow_ri_v-  00161FCC  pow_ri_v      _TEXT         
+_lfpow_rr_v-  0016203C  pow_rr_v      _TEXT         
+_lfpower_er-  00164A60  EREPORT       _TEXT         EXPORT
+_lfrc_div_e-  00164A7B  EREPORT       _TEXT         EXPORT
+_lfrep_char-  0021A100  fmtin2        _DATA         
+_lfsin        00161DF4  fsin          _TEXT         
+_lfsinf       00161E04  fsinf         _TEXT         
+_lfsinh_err-  00164A18  EREPORT       _TEXT         EXPORT
+_lfsqrt       00161E14  fsqrt         _TEXT         
+_lfsqrt_err-  00164A21  EREPORT       _TEXT         EXPORT
+_lfsqrtf      00161E48  fsqrtf        _TEXT         
+_lfsure_the-  001706E0  COREIO        _TEXT         
+_lftanf       00161E7C  ftanf         _TEXT         
+_lftrunc_     00170DD0  mw_asm0       _TEXT         
+_lftruncu_    00170DD0  mw_asm0       _TEXT         
+_lfz_div_z_-  00164A72  EREPORT       _TEXT         EXPORT
+_llseek       001721EC  _llseek       .jdata        IMPORT
+_lopen        001721F2  _lopen        .jdata        IMPORT
+_lread        001721F8  _lread        .jdata        IMPORT
+_lwrite       001721FE  _lwrite       .jdata        IMPORT
+_mwINIT       0085DCBC  BC_DEFS       _BSS          
+_osver        0021ABD8  LFINITWD      _DATA         
+_pgmptr       00219864  LFINITWC      _DATA         
+_winmajor     0021ABE0  LFINITWD      _DATA         
+_winminor     0021ABDC  LFINITWD      _DATA         
+_winver       0021ABE4  LFINITWD      _DATA         
+achFileName   0085D6C6  mwing         _BSS          
+borderh       00853CCC  mwint         _BSS          
+borderv       00853CD0  mwint         _BSS          
+do_test       0001108C  pentest       _TEXT         
+extent        00853C6C  mwinh         _BSS          
+gBitmap       00853CEC  mwint         _BSS          
+gDC           00853CB0  mwint         _BSS          
+gFont         00853CF0  mwint         _BSS          
+gFontOld      00853CF4  mwint         _BSS          
+gLinetype     00214FFC  mwint         _DATA         
+gLinewidth    00215000  mwint         _DATA         
+gPal256       00214FF8  mwint         _DATA         
+gPen          00215008  mwint         _DATA         
+gPenOld       0021500C  mwint         _DATA         
+gPlotmode     00215004  mwint         _DATA         
+gPoints       008556CE  mwing         _BSS          
+gPrDC         00853C68  mwinh         _BSS          
+gRegion       00853CF8  mwint         _BSS          
+gStippleCha-  00214FF4  mwint         _DATA         
+gStippleExi-  00214FF0  mwint         _DATA         
+inv_b_hi      003AF670  pow_tbl1      _data         
+log10         0016E0A6  initfpu       _TEXT         
+lpPrintDriv-  00853AFC  mwind         _BSS          
+lpPrintPort   00853B1C  mwind         _BSS          
+lpPrintType   008539F8  mwind         _BSS          
+lstrcpyA      00172204  lstrcpyA      .jdata        IMPORT
+lstrlenA      0017220A  lstrlenA      .jdata        IMPORT
+main          0016E137  LFINITWD      _TEXT         
+mainCRTStar-  00011000  lfinitw       _TEXT         
+memcpy        00163893  CSTRING       _TEXT         
+memset        001638B6  CSTRING       _TEXT         
+ngColours     00853CE4  mwint         _BSS          
+prCollate     00853C34  mwind         _BSS          
+prColor       00853C2C  mwind         _BSS          
+prDither      00853C3C  mwind         _BSS          
+prDuplex      00853C2E  mwind         _BSS          
+prLength      00853C20  mwind         _BSS          
+prMedia       00853C38  mwind         _BSS          
+prQuality     00853C28  mwind         _BSS          
+prScale       00853C24  mwind         _BSS          
+prSize        00853C2A  mwind         _BSS          
+prSource      00853C26  mwind         _BSS          
+prTTOption    00853C32  mwind         _BSS          
+prWidth       00853C22  mwind         _BSS          
+prYRes        00853C30  mwind         _BSS          
+tFontFixed    00214FE0  mwint         _DATA         
+tFontHeight   00853CC8  mwint         _BSS          
+tFontNumCol   00214FE8  mwint         _DATA         
+tFontNumRow   00214FEC  mwint         _DATA         
+tFontWidth    00853CC4  mwint         _BSS          
+t_hi          003AFA80  pow_tbl2      _data         
+t_lo          003AFE88  pow_tbl2      _data         
+windows_ins-  0016DE0F  LF_LOW        _TEXT         EXPORT
+wsprintfA     0017231E  wsprintfA     .jdata        IMPORT
+xxdebugc      0011D792  OSWIN         _TEXT         
+xxdebugi      0011D7DA  OSWIN         _TEXT         
+xxdebugopen   0011D739  OSWIN         _TEXT         
+xxdibnumcol-  001567E7  mwing         _TEXT         
+xxencget      001579E0  mwing         _TEXT         
+xxencput      0015797C  mwing         _TEXT         
+xxmwincheck-  0013DAB4  mwint         _TEXT         
+xxmwincreat-  0015602D  mwing         _TEXT         
+xxmwindefin-  00154F4D  mwing         _TEXT         
+xxmwinevent-  0013BDF7  mwint         _TEXT         
+xxmwinfont    0013C987  mwint         _TEXT         
+xxmwinkeybd-  0013BF49  mwint         _TEXT         
+xxmwinpalet-  00155D34  mwing         _TEXT         
+xxmwinremov-  0015562C  mwing         _TEXT         
+xxmwinstipp-  00154863  mwing         _TEXT         
+xxmwmfcreat-  0013B469  MWINM         _TEXT         
+xxmwprcreat-  0013A95F  mwinh         _TEXT         
+xxmwprgetdc   00139797  mwind         _TEXT         
+xxmwprinter-  00139D22  mwind         _TEXT         
+xxmwprstart-  0013A2E2  mwinh         _TEXT         
+xxpalettesi-  0015682F  mwing         _TEXT         
+xxreaddib     00156613  mwing         _TEXT         
+xxwinplat     0011D062  OSWIN         _TEXT         
+
+
+Public symbols imported from DLLs
+
+   AddFontResourceA=gdi32.dll.AddFontResourceA
+   AdjustWindowRect=user32.dll.AdjustWindowRect
+   AllocConsole=kernel32.dll.AllocConsole
+   Arc=gdi32.dll.Arc
+   BitBlt=gdi32.dll.BitBlt
+   CharNextA=user32.dll.CharNextA
+   ClientToScreen=user32.dll.ClientToScreen
+   CloseClipboard=user32.dll.CloseClipboard
+   CloseEnhMetaFile=gdi32.dll.CloseEnhMetaFile
+   CloseHandle=kernel32.dll.CloseHandle
+   CloseMetaFile=gdi32.dll.CloseMetaFile
+   ClosePrinter=winspool.drv.ClosePrinter
+   CopyFileA=kernel32.dll.CopyFileA
+   CopyMetaFileA=gdi32.dll.CopyMetaFileA
+   CreateCompatibleBitmap=gdi32.dll.CreateCompatibleBitmap
+   CreateCompatibleDC=gdi32.dll.CreateCompatibleDC
+   CreateDCA=gdi32.dll.CreateDCA
+   CreateDirectoryA=kernel32.dll.CreateDirectoryA
+   CreateEnhMetaFileA=gdi32.dll.CreateEnhMetaFileA
+   CreateFileA=kernel32.dll.CreateFileA
+   CreateFontA=gdi32.dll.CreateFontA
+   CreateICA=gdi32.dll.CreateICA
+   CreateMetaFileA=gdi32.dll.CreateMetaFileA
+   CreatePalette=gdi32.dll.CreatePalette
+   CreatePatternBrush=gdi32.dll.CreatePatternBrush
+   CreatePen=gdi32.dll.CreatePen
+   CreateProcessA=kernel32.dll.CreateProcessA
+   CreateRectRgn=gdi32.dll.CreateRectRgn
+   CreateSolidBrush=gdi32.dll.CreateSolidBrush
+   CreateWindowExA=user32.dll.CreateWindowExA
+   DefWindowProcA=user32.dll.DefWindowProcA
+   DeleteDC=gdi32.dll.DeleteDC
+   DeleteEnhMetaFile=gdi32.dll.DeleteEnhMetaFile
+   DeleteFileA=kernel32.dll.DeleteFileA
+   DeleteMetaFile=gdi32.dll.DeleteMetaFile
+   DeleteObject=gdi32.dll.DeleteObject
+   DestroyWindow=user32.dll.DestroyWindow
+   DispatchMessageA=user32.dll.DispatchMessageA
+   DocumentPropertiesA=winspool.drv.DocumentPropertiesA
+   DrawTextA=user32.dll.DrawTextA
+   Ellipse=gdi32.dll.Ellipse
+   EmptyClipboard=user32.dll.EmptyClipboard
+   EndDoc=gdi32.dll.EndDoc
+   EndPage=gdi32.dll.EndPage
+   Escape=gdi32.dll.Escape
+   ExitProcess=kernel32.dll.ExitProcess
+   ExtCreatePen=gdi32.dll.ExtCreatePen
+   FileTimeToDosDateTime=kernel32.dll.FileTimeToDosDateTime
+   FileTimeToLocalFileTime=kernel32.dll.FileTimeToLocalFileTime
+   FindClose=kernel32.dll.FindClose
+   FindFirstFileA=kernel32.dll.FindFirstFileA
+   FindNextFileA=kernel32.dll.FindNextFileA
+   FreeConsole=kernel32.dll.FreeConsole
+   FreeLibrary=kernel32.dll.FreeLibrary
+   GetClassInfoA=user32.dll.GetClassInfoA
+   GetClientRect=user32.dll.GetClientRect
+   GetCommandLineA=kernel32.dll.GetCommandLineA
+   GetCurrentDirectoryA=kernel32.dll.GetCurrentDirectoryA
+   GetCursorPos=user32.dll.GetCursorPos
+   GetDC=user32.dll.GetDC
+   GetDIBits=gdi32.dll.GetDIBits
+   GetDesktopWindow=user32.dll.GetDesktopWindow
+   GetDeviceCaps=gdi32.dll.GetDeviceCaps
+   GetDiskFreeSpaceA=kernel32.dll.GetDiskFreeSpaceA
+   GetDriveTypeA=kernel32.dll.GetDriveTypeA
+   GetEnvironmentVariableA=kernel32.dll.GetEnvironmentVariableA
+   GetFileSize=kernel32.dll.GetFileSize
+   GetFileType=kernel32.dll.GetFileType
+   GetKeyState=user32.dll.GetKeyState
+   GetKeyboardType=user32.dll.GetKeyboardType
+   GetLastError=kernel32.dll.GetLastError
+   GetLocalTime=kernel32.dll.GetLocalTime
+   GetMessageA=user32.dll.GetMessageA
+   GetMessageTime=user32.dll.GetMessageTime
+   GetMetaFileBitsEx=gdi32.dll.GetMetaFileBitsEx
+   GetModuleFileNameA=kernel32.dll.GetModuleFileNameA
+   GetModuleHandleA=kernel32.dll.GetModuleHandleA
+   GetNearestColor=gdi32.dll.GetNearestColor
+   GetObjectA=gdi32.dll.GetObjectA
+   GetPixel=gdi32.dll.GetPixel
+   GetProcAddress=kernel32.dll.GetProcAddress
+   GetProcessHeap=kernel32.dll.GetProcessHeap
+   GetProfileStringA=kernel32.dll.GetProfileStringA
+   GetStartupInfoA=kernel32.dll.GetStartupInfoA
+   GetStdHandle=kernel32.dll.GetStdHandle
+   GetStockObject=gdi32.dll.GetStockObject
+   GetSystemDirectoryA=kernel32.dll.GetSystemDirectoryA
+   GetSystemMetrics=user32.dll.GetSystemMetrics
+   GetSystemTime=kernel32.dll.GetSystemTime
+   GetTextExtentPointA=gdi32.dll.GetTextExtentPointA
+   GetTextMetricsA=gdi32.dll.GetTextMetricsA
+   GetTickCount=kernel32.dll.GetTickCount
+   GetTimeZoneInformation=kernel32.dll.GetTimeZoneInformation
+   GetVersion=kernel32.dll.GetVersion
+   GetVersionExA=kernel32.dll.GetVersionExA
+   GetVolumeInformationA=kernel32.dll.GetVolumeInformationA
+   GetWindowRect=user32.dll.GetWindowRect
+   GlobalAlloc=kernel32.dll.GlobalAlloc
+   GlobalFree=kernel32.dll.GlobalFree
+   GlobalLock=kernel32.dll.GlobalLock
+   GlobalReAlloc=kernel32.dll.GlobalReAlloc
+   GlobalUnlock=kernel32.dll.GlobalUnlock
+   HeapAlloc=kernel32.dll.HeapAlloc
+   KillTimer=user32.dll.KillTimer
+   LineTo=gdi32.dll.LineTo
+   LoadCursorA=user32.dll.LoadCursorA
+   LoadIconA=user32.dll.LoadIconA
+   LoadLibraryA=kernel32.dll.LoadLibraryA
+   LocalAlloc=kernel32.dll.LocalAlloc
+   LocalFree=kernel32.dll.LocalFree
+   MessageBeep=user32.dll.MessageBeep
+   MessageBoxA=user32.dll.MessageBoxA
+   MoveFileA=kernel32.dll.MoveFileA
+   MoveToEx=gdi32.dll.MoveToEx
+   OpenClipboard=user32.dll.OpenClipboard
+   OpenFile=kernel32.dll.OpenFile
+   OpenPrinterA=winspool.drv.OpenPrinterA
+   PeekMessageA=user32.dll.PeekMessageA
+   Pie=gdi32.dll.Pie
+   PlayEnhMetaFile=gdi32.dll.PlayEnhMetaFile
+   PlayMetaFile=gdi32.dll.PlayMetaFile
+   Polygon=gdi32.dll.Polygon
+   Polyline=gdi32.dll.Polyline
+   PostQuitMessage=user32.dll.PostQuitMessage
+   ReadConsoleA=kernel32.dll.ReadConsoleA
+   ReadFile=kernel32.dll.ReadFile
+   RealizePalette=gdi32.dll.RealizePalette
+   Rectangle=gdi32.dll.Rectangle
+   RegisterClassA=user32.dll.RegisterClassA
+   ReleaseCapture=user32.dll.ReleaseCapture
+   ReleaseDC=user32.dll.ReleaseDC
+   RemoveDirectoryA=kernel32.dll.RemoveDirectoryA
+   ScreenToClient=user32.dll.ScreenToClient
+   SelectClipRgn=gdi32.dll.SelectClipRgn
+   SelectObject=gdi32.dll.SelectObject
+   SelectPalette=gdi32.dll.SelectPalette
+   SendMessageA=user32.dll.SendMessageA
+   SetBkColor=gdi32.dll.SetBkColor
+   SetBkMode=gdi32.dll.SetBkMode
+   SetCapture=user32.dll.SetCapture
+   SetClipboardData=user32.dll.SetClipboardData
+   SetCurrentDirectoryA=kernel32.dll.SetCurrentDirectoryA
+   SetCursor=user32.dll.SetCursor
+   SetCursorPos=user32.dll.SetCursorPos
+   SetEndOfFile=kernel32.dll.SetEndOfFile
+   SetEnhMetaFileBits=gdi32.dll.SetEnhMetaFileBits
+   SetErrorMode=kernel32.dll.SetErrorMode
+   SetFilePointer=kernel32.dll.SetFilePointer
+   SetMapMode=gdi32.dll.SetMapMode
+   SetMetaFileBitsEx=gdi32.dll.SetMetaFileBitsEx
+   SetPaletteEntries=gdi32.dll.SetPaletteEntries
+   SetPixel=gdi32.dll.SetPixel
+   SetROP2=gdi32.dll.SetROP2
+   SetRect=user32.dll.SetRect
+   SetTextAlign=gdi32.dll.SetTextAlign
+   SetTextColor=gdi32.dll.SetTextColor
+   SetTimer=user32.dll.SetTimer
+   SetViewportExtEx=gdi32.dll.SetViewportExtEx
+   SetViewportOrgEx=gdi32.dll.SetViewportOrgEx
+   SetWindowExtEx=gdi32.dll.SetWindowExtEx
+   SetWindowOrgEx=gdi32.dll.SetWindowOrgEx
+   SetWindowPos=user32.dll.SetWindowPos
+   SetWindowTextA=user32.dll.SetWindowTextA
+   ShowWindow=user32.dll.ShowWindow
+   StartDocA=gdi32.dll.StartDocA
+   StartPage=gdi32.dll.StartPage
+   StretchDIBits=gdi32.dll.StretchDIBits
+   TextOutA=gdi32.dll.TextOutA
+   TranslateMessage=user32.dll.TranslateMessage
+   UnrealizeObject=gdi32.dll.UnrealizeObject
+   ValidateRgn=user32.dll.ValidateRgn
+   WaitForSingleObject=kernel32.dll.WaitForSingleObject
+   WinExec=kernel32.dll.WinExec
+   WriteFile=kernel32.dll.WriteFile
+   _hread=kernel32.dll._hread
+   _hwrite=kernel32.dll._hwrite
+   _lclose=kernel32.dll._lclose
+   _lcreat=kernel32.dll._lcreat
+   _llseek=kernel32.dll._llseek
+   _lopen=kernel32.dll._lopen
+   _lread=kernel32.dll._lread
+   _lwrite=kernel32.dll._lwrite
+   lstrcpyA=kernel32.dll.lstrcpyA
+   lstrlenA=kernel32.dll.lstrlenA
+   wsprintfA=user32.dll.wsprintfA
