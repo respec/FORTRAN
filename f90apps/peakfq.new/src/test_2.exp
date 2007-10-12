@@ -1,0 +1,226 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+END COMMENT 
+DSN            5    TYPE  TABL   NDN   1   NUP   1   NSA 100   NSP 120   NDP  10
+  LABEL   
+    DATCRE  20020524110426                                                      
+    DATMOD  20020524110426                                                      
+    TCODE          6                                                            
+    TSSTEP         1                                                            
+    ISTAID   3339500                                                            
+    STFIPS        18                                                            
+    DSCODE        18                                                            
+    TSFILL  -99999.0                                                            
+    LATDEG  40.04889                                                            
+    LNGDEG  86.89889                                                            
+    CONTDA     509.0                                                            
+    STAID   03339500                                                            
+    TSTYPE  PEAK                                                                
+    STANAM  SUGAR CREEK AT CRAWFORDSVILLE, IND.                                 
+    J407NH         1                                                            
+    P1.25   6047.434                                                            
+    P2.      9760.92                                                            
+    P5.     14901.92                                                            
+    P10.    18199.74                                                            
+    P25.    22178.61                                                            
+    P50.    24993.42                                                            
+    P100.   27679.77                                                            
+    P200.   30258.13                                                            
+    P500.   33522.89                                                            
+    P1.5    7693.921                                                            
+    P02.33  10725.65                                                            
+    WRCMN   3.972452                                                            
+    WRCSD   0.234649                                                            
+    WRCSKW -0.436945                                                            
+    MEANPK   3.95796                                                            
+    SDPK    0.272278                                                            
+    SKWPK  -1.198575                                                            
+    J407BY      1913                                                            
+    J407EY      1986                                                            
+    J407SO         0                                                            
+    J407GS      -0.4                                                            
+    J407SE      0.55                                                            
+    J407HO      -1.0                                                            
+    YRSHPK      -1.0                                                            
+    J407LO       0.0                                                            
+    J407BQ       0.0                                                            
+  END LABEL   
+END DSN 
+DSN            4    TYPE  TABL   NDN   1   NUP   1   NSA 100   NSP 120   NDP  10
+  LABEL   
+    DATCRE  20020524110426                                                      
+    DATMOD  20020524110426                                                      
+    TCODE          6                                                            
+    TSSTEP         1                                                            
+    ISTAID  11274500                                                            
+    STFIPS         6                                                            
+    DSCODE         6                                                            
+    TSFILL  -99999.0                                                            
+    LATDEG     37.32                                                            
+    LNGDEG    121.13                                                            
+    CONTDA     134.0                                                            
+    STAID   11274500                                                            
+    TSTYPE  PEAK                                                                
+    STANAM  ORESTIMBA CREEK NEAR NEWMAN CALIF                                   
+    P1.25   264.5403                                                            
+    P2.     1126.043                                                            
+    P5.       3826.7                                                            
+    P10.    6665.182                                                            
+    P25.    11338.05                                                            
+    P50.    15480.93                                                            
+    P100.   20071.81                                                            
+    P200.   25043.94                                                            
+    P500.   32093.16                                                            
+    P1.5    552.2649                                                            
+    P02.33  1486.387                                                            
+    WRCMN   2.982682                                                            
+    WRCSD   0.700149                                                            
+    WRCSKW-0.5934153                                                            
+    MEANPK  2.944217                                                            
+    SDPK    0.772775                                                            
+    SKWPK  -1.038039                                                            
+    J407BY      1932                                                            
+    J407EY      1986                                                            
+    J407SO         0                                                            
+    J407GS -0.191772                                                            
+    J407SE      0.55                                                            
+    J407HO      -1.0                                                            
+    YRSHPK      -1.0                                                            
+    J407LO       0.0                                                            
+    J407BQ       0.0                                                            
+  END LABEL   
+END DSN 
+DSN            3    TYPE  TABL   NDN   1   NUP   1   NSA 100   NSP 120   NDP  10
+  LABEL   
+    DATCRE  20020524110426                                                      
+    DATMOD  20020524110426                                                      
+    TCODE          6                                                            
+    TSSTEP         1                                                            
+    ISTAID   1614000                                                            
+    STFIPS        54                                                            
+    DSCODE        54                                                            
+    TSFILL  -99999.0                                                            
+    LATDEG     39.51                                                            
+    LNGDEG     78.04                                                            
+    CONTDA     243.0                                                            
+    STAID   01614000                                                            
+    TSTYPE  PEAK                                                                
+    STANAM  BACK CREEK NEAR JONES SPRINGS,W.VA.                                 
+    P1.25   3527.442                                                            
+    P2.     5280.776                                                            
+    P5.     8448.044                                                            
+    P10.    11102.51                                                            
+    P25.    15182.41                                                            
+    P50.    18810.35                                                            
+    P100.   22997.34                                                            
+    P200.   27833.22                                                            
+    P500.   35391.75                                                            
+    P1.5    4260.891                                                            
+    P02.33  5800.859                                                            
+    WRCMN   3.743004                                                            
+    WRCSD   0.228211                                                            
+    WRCSKW  0.536221                                                            
+    MEANPK  3.725136                                                            
+    SDPK    0.274724                                                            
+    SKWPK -0.7647659                                                            
+    J407BY      1929                                                            
+    J407EY      1975                                                            
+    J407SO         0                                                            
+    J407GS  0.445008                                                            
+    J407SE      0.55                                                            
+    J407HO      -1.0                                                            
+    YRSHPK      -1.0                                                            
+    J407LO       0.0                                                            
+    J407BQ       0.0                                                            
+  END LABEL   
+END DSN 
+DSN            2    TYPE  TABL   NDN   1   NUP   1   NSA 100   NSP 120   NDP  10
+  LABEL   
+    DATCRE  20020524110426                                                      
+    DATMOD  20020524110426                                                      
+    TCODE          6                                                            
+    TSSTEP         1                                                            
+    ISTAID   6600500                                                            
+    STFIPS        19                                                            
+    DSCODE        19                                                            
+    TSFILL  -99999.0                                                            
+    LATDEG     42.58                                                            
+    LNGDEG     96.31                                                            
+    CONTDA     882.0                                                            
+    STAID   06600500                                                            
+    TSTYPE  PEAK                                                                
+    STANAM  FLOYD RIVER AT JAMES, IOWA                                          
+    P1.25   1290.492                                                            
+    P2.     3767.302                                                            
+    P5.     10990.56                                                            
+    P10.    19229.33                                                            
+    P25.    34909.98                                                            
+    P50.    51310.76                                                            
+    P100.   72547.49                                                            
+    P200.   99598.95                                                            
+    P500.   146221.1                                                            
+    P1.5    2177.188                                                            
+    P02.33  4727.433                                                            
+    WRCMN   3.575214                                                            
+    WRCSD   0.552663                                                            
+    WRCSKW-.00219117                                                            
+    MEANPK  3.575214                                                            
+    SDPK    0.552663                                                            
+    SKWPK   0.249705                                                            
+    J407BY      1948                                                            
+    J407EY      1968                                                            
+    J407SO         0                                                            
+    J407GS      -0.3                                                            
+    J407SE      0.55                                                            
+    J407HO      -1.0                                                            
+    YRSHPK      -1.0                                                            
+    J407LO       0.0                                                            
+    J407BQ       0.0                                                            
+  END LABEL   
+END DSN 
+DSN            1    TYPE  TABL   NDN   1   NUP   1   NSA 100   NSP 120   NDP  10
+  LABEL   
+    DATCRE  20020524110426                                                      
+    DATMOD  20020524110426                                                      
+    TCODE          6                                                            
+    TSSTEP         1                                                            
+    ISTAID   1373500                                                            
+    STFIPS        36                                                            
+    DSCODE        36                                                            
+    TSFILL  -99999.0                                                            
+    LATDEG     41.51                                                            
+    LNGDEG     73.95                                                            
+    CONTDA     190.0                                                            
+    STAID   01373500                                                            
+    TSTYPE  PEAK                                                                
+    STANAM  FISHKILL CR AT BEACON NY                                            
+    P1.25   1438.193                                                            
+    P2.     2193.822                                                            
+    P5.     3657.282                                                            
+    P10.     4959.23                                                            
+    P25.    7066.728                                                            
+    P50.    9031.319                                                            
+    P100.   11388.76                                                            
+    P200.   14216.21                                                            
+    P500.   18829.65                                                            
+    P1.5    1748.595                                                            
+    P02.33  2426.261                                                            
+    WRCMN    3.36835                                                            
+    WRCSD   0.245614                                                            
+    WRCSKW  0.667803                                                            
+    MEANPK   3.36835                                                            
+    SDPK    0.245614                                                            
+    SKWPK   0.729989                                                            
+    J407BY      1930                                                            
+    J407EY      1978                                                            
+    J407SO         0                                                            
+    J407GS       0.6                                                            
+    J407SE      0.55                                                            
+    J407HO      -1.0                                                            
+    YRSHPK      -1.0                                                            
+    J407LO       0.0                                                            
+    J407BQ       0.0                                                            
+  END LABEL   
+END DSN 

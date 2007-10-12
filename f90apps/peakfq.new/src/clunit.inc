@@ -1,0 +1,3 @@
+C     PEAKFQ logical unit numbers
+      COMMON/ LUNITS / MSG1  ,  INCRD, IPUNCH, INFIL2, INFORM, SPCFUN
+      INTEGER          MSG1  ,  INCRD, IPUNCH, INFIL2, INFORM, SPCFUN
