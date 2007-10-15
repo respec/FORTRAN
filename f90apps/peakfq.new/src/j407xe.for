@@ -294,7 +294,7 @@ C           summary screen output if pause=1
             CALL OUTPUT (STAID,SYSUAV,SYSUSD,SYSSKW,
      $                   WRCUAV,WRCUSD,WRCSKW,WRCFC ,
      $                   INT(HISTPN+.5), NSYS,
-     $                   IBCPUN, IPUNCH,  IA1,IA3, PAUSE )
+     $                   IBCPUN, IPUNCH,  IA1,IA3, PAUSE, JSEQNO)
           ELSE IF (INFORM .EQ. 1  .AND.  PAUSE .EQ. 1) THEN
 C           no output statistics, but summary screen for wdm input
 Cprh            CALL OUTPT2 ( STAID, WRCUAV, WRCUSD, WRCSKW, WRCFC, IA1 )
@@ -2204,7 +2204,7 @@ C
       SUBROUTINE   OUTPUT
      #                  (STAID,SYSUAV,SYSUSD,SYSSKW,
      $      WRCUAV,WRCUSD,WRCSKW,WRCFC ,  NHSTPN, NSYS,
-     $      IBCPUN, LBCPU, IA1,IA3, PAUSE )
+     $      IBCPUN, LBCPU, IA1,IA3, PAUSE, JSEQNO)
 C
 C     + + + PURPOSE + + +
 C     WRITES OUTPUT OF J407 RESULTS TO FILE SELECTED BY IBCPUN -
@@ -2212,12 +2212,14 @@ C
 C     + + + HISTORY + + +
 C     kmf 96/12/17 - changed ibcpu to ibcpun to be consistent,
 C                    simplified check for wdm and/or basin char
+C     prh 10/2007  - added JSEQNO to indicate when to output 
+C                    column headers on tabular output file
 C
 C     + + + DUMMY ARGUMENTS + + +
       CHARACTER*90 STAID
       REAL      WRCFC(*),SYSUSD, SYSSKW, WRCUAV, WRCUSD, WRCSKW,
      &                SYSUAV
-      INTEGER   NHSTPN, NSYS, IBCPUN, LBCPU, IA1, IA3, PAUSE
+      INTEGER   NHSTPN, NSYS, IBCPUN, LBCPU, IA1, IA3, PAUSE, JSEQNO
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     IBCPUN - indicator flag for writing calculated statistics
@@ -2240,7 +2242,8 @@ C       save statistics in wdm file
       IF (IBCPUN .EQ. 2  .OR.  IBCPUN .EQ. 3) THEN
 C       save statistics in watstore basin characteristics format
         CALL BCFPCH (STAID,SYSUAV,SYSUSD,SYSSKW,
-     $               WRCUAV,WRCUSD,WRCSKW,WRCFC,NHSTPN, NSYS, LBCPU)
+     I               WRCUAV,WRCUSD,WRCSKW,WRCFC,
+     I               NHSTPN, NSYS, LBCPU,JSEQNO)
       END IF
 C
       RETURN
@@ -2250,70 +2253,103 @@ C
 C
       SUBROUTINE   BCFPCH
      #                 (  STAID,SYSAV,SYSSD,SYSG, WRCAV, WRCSD,
-     $                    GWRC, WRCFC, NHSTYR, NSYSYR,  IPCH)
+     $                    GWRC, WRCFC, NHSTYR, NSYSYR, IPCH, JSEQNO)
 C
 C     + + + PURPOSE + + +
 C     PUNCHES J407 RESULTS IN BASIN-CHARACTERISTICS INPUT FORMAT
 C     ON LOGICAL UNIT IPCH
 C
+C     + + + HISTORY + + +
+C     prh 10/2007 - updated to output in tabular format,
+C                   suitable for import to spreadsheet/stats program
+C
 C     + + + DUMMY ARGUMENTS + + +
       CHARACTER*90  STAID
       REAL         WRCFC(*), SYSAV, SYSSD, SYSG, WRCAV, WRCSD,
      &             GWRC
-      INTEGER   NHSTYR, NSYSYR, IPCH
+      INTEGER   NHSTYR, NSYSYR, IPCH, JSEQNO
 C
 C     + + + LOCAL VARIABLES + + +
-      CHARACTER*7 CHAR(9)
-      INTEGER JPUN(9)
-      INTEGER VAR (9)
-      INTEGER   I, IX
+      CHARACTER*7 LCHAR(11)
+      INTEGER JPUN(11)
+Cprh      INTEGER VAR (9)
+      INTEGER   I, IX, STAIND
       REAL      X, POWER
+      CHARACTER*6 VARNAM(18)
+C
+C      + + + SAVES + + +
+       SAVE STAIND
 C
 C      + + + INTRINSICS + + +
-       INTRINSIC  INT
+       INTRINSIC  INT, CHAR
 C
 C     + + + DATA INITIALIZATIONS + + +
 Cprh      DATA    JPUN   /12,16,20,21,23,25,26,27,28/
 Cprh  updated for inclusion of 1.5 and 2.33 intervals, 11/03
-      DATA    JPUN   /12,17,21,22,24,26,27,28,29/
-      DATA    VAR    /75,76,77,78,79,80,81,82,178/
+      DATA    JPUN   /12,14,17,18,21,22,24,26,27,28,29/
+Cprh      DATA    VAR    /75,76,77,78,79,80,81,82,178/
+      DATA    VARNAM /'STAID ',' P1.25','  p1.5','   P2.',' p2.33',
+     $                '   P5.','  P10.','  P25.','  P50.',' P100.',
+     $                ' P200.',' P500.','WRCSKW',' WRCMN',' WRCSD',
+     $                ' YRSPK','YRSHPK','STANAM'/
+C     init IREC to large to trigger output of headers
+      DATA    STAIND /9999/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(A6,9X,A,16(1X,A6,A),A6)
+ 2010 FORMAT(2A,11(A7,A),3(F7.3,A),2(I7,A),A)
 C
 C     + + + END SPECIFICATIONS + + +
 C
-C  ROUND AND CONVERT USING FORMATS AND CHAR ARRAY
-      DO 70 I=1,9
-      X=10.**WRCFC(JPUN(I))
-      IF(X.LT.99.95 .OR. X.GE.9995000.) GO TO 50
-      POWER=1.
-   40 IX=(X/POWER)+.5
-      IF(IX.LE.1000) GO TO 60
-      POWER=10.*POWER
-      GO TO 40
-   50 WRITE(CHAR(I) ,   51)X
-   51 FORMAT(1F7.1)
-      GO TO 70
-   60 IX=IX*INT(POWER)
-      WRITE(CHAR(I) ,   61)IX
-   61 FORMAT(1I7)
+C     only output headers when Station index (JSEQNO)
+C     is smaller than previous, or initial, value of STAIND
+      IF (JSEQNO .LT. STAIND) THEN
+Cprh    headers for attributes to be output
+        WRITE (IPCH,2000) (VARNAM(I),CHAR(9),I=1,17),VARNAM(18)
+      END IF
+C     remember last station index
+      STAIND = JSEQNO
+C
+C  ROUND AND CONVERT USING FORMATS AND LCHAR ARRAY
+      DO 70 I=1,11
+        X=10.**WRCFC(JPUN(I))
+        IF(X.LT.99.95 .OR. X.GE.9995000.) GO TO 50
+        POWER=1.
+   40   IX=(X/POWER)+.5
+        IF(IX.LE.1000) GO TO 60
+        POWER=10.*POWER
+        GO TO 40
+   50   WRITE(LCHAR(I) ,   51)X
+   51   FORMAT(1F7.1)
+        GO TO 70
+   60   IX=IX*INT(POWER)
+        WRITE(LCHAR(I) ,   61)IX
+   61   FORMAT(1I7)
    70 CONTINUE
 C
-Ckmf  add staion name record ("2" card) Oct 02, 2000
-Ckmf  station name is defined as being 21-78, space for 21-62
-      WRITE (IPCH,100) STAID(1:15), STAID(21:62)
-  100 FORMAT('1',  A15, 4X, A )
-C PUNCH 3 CARDS
-      WRITE(IPCH,101)STAID(1:15),(VAR(I),CHAR(I),I=1,6)
-  101 FORMAT('2',  A15,6(I3,1A7))
-      WRITE(IPCH, 102)  STAID(1:15),(VAR(I),CHAR(I),I=7,8),SYSAV,SYSSD,
-     $       SYSG, VAR(9), CHAR(9)
-  102 FORMAT('2',  A15,2(I3,1A7),' 83',F7.3,' 84',F7.3,' 85',F7.3,
-     $          I3, 1A7)
-      IX = 2
-      IF(NHSTYR.GT.NSYSYR) IX = 1
-      WRITE(IPCH,   103)STAID(1:15),GWRC,WRCAV,WRCSD ,
-     $       NSYSYR, NHSTYR, (' ',I=1,IX)
-  103 FORMAT('2',  A15,'179',F7.3, '180',F7.3,'181',F7.3 ,
-     $        '196',I7, '197',I7, 2A1,T57, 10X)
+C     output tab-separated values
+      WRITE(IPCH,2010) STAID(1:15),CHAR(9),(LCHAR(I),CHAR(9),I=1,11),
+     $                 GWRC,CHAR(9),WRCAV,CHAR(9),WRCSD,CHAR(9),
+     $                 NSYSYR,CHAR(9),NHSTYR,CHAR(9),STAID(21:62)
+C
+cC
+cCkmf  add staion name record ("2" card) Oct 02, 2000
+cCkmf  station name is defined as being 21-78, space for 21-62
+c      WRITE (IPCH,100) STAID(1:15), STAID(21:62)
+c  100 FORMAT('1',  A15, 4X, A )
+cC PUNCH 3 CARDS
+c      WRITE(IPCH,101)STAID(1:15),(VAR(I),LCHAR(I),I=1,6)
+c  101 FORMAT('2',  A15,6(I3,1A7))
+c      WRITE(IPCH, 102)  STAID(1:15),(VAR(I),LCHAR(I),I=7,8),SYSAV,SYSSD,
+c     $       SYSG, VAR(9), LCHAR(9)
+c  102 FORMAT('2',  A15,2(I3,1A7),' 83',F7.3,' 84',F7.3,' 85',F7.3,
+c     $          I3, 1A7)
+c      IX = 2
+c      IF(NHSTYR.GT.NSYSYR) IX = 1
+c      WRITE(IPCH,   103)STAID(1:15),GWRC,WRCAV,WRCSD ,
+c     $       NSYSYR, NHSTYR, (' ',I=1,IX)
+c  103 FORMAT('2',  A15,'179',F7.3, '180',F7.3,'181',F7.3 ,
+c     $        '196',I7, '197',I7, 2A1,T57, 10X)
       RETURN
       END
 C
