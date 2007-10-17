@@ -578,36 +578,53 @@ c     $                  GRFMT //"' unknown - NO GRAPHIC PLOTS"
           IBCPUN = 1
         ELSE IF (ISTR(1:3).EQ.'WAT') THEN 
           IBCPUN = 2
+        ELSE IF (ISTR(1:3).EQ.'TAB') THEN 
+          IBCPUN = 4
         ELSE IF (ISTR(1:3).EQ.'BOT') THEN  
-          IBCPUN = 3
-        ELSE 
-          IBCPUN = 0
-        END IF
-c      write(*,*) "Processing ADDITIONAL:  IBCPUN ",IBCPUN
-        IF (IBCPUN.GE.2) THEN !open output Watstore basin characteristics file
+C         determine which format for text file output
           KWD = STRRETREM(ISTR)
-c      write(*,*) "Processing ADDITIONAL:  KWD,ISTR : "
+          IF (ISTR(1:3).EQ.'WAT') THEN
+            IBCPUN = 3
+          ELSE IF (ISTR(1:3).EQ.'TAB') THEN
+            IBCPUN = 5
+          ELSE !no format specified, assume tab-separated
+            WRITE(99,*) "OPNOUT: No text file format specified ",
+     $                  "on ADDITIONAL BOTH specification record"
+            WRITE(99,*) "Assuming output format is Tab-separated"
+            IBCPUN = 5
+          END IF
+        ELSE 
+C         assume default format (tab-separated)
+          IBCPUN = 4
+        END IF
+c      write(99,*) "Processing ADDITIONAL:  IBCPUN ",IBCPUN
+        IF (IBCPUN.GE.2) THEN !open output file
+          KWD = STRRETREM(ISTR)
+c      write(99,*) "Processing ADDITIONAL:  KWD,ISTR : "
 c     $            // TRIM(KWD) // ", " // TRIM(ISTR)
+          IF (ZLNTXT(ISTR).EQ.0) THEN !try using contents of KWD as file name
+            ISTR = KWD
+          END IF
           IF (ZLNTXT(ISTR).GT.0) THEN !file name should be remaining text
             IPUNCH = 15
             OPEN (IPUNCH,FILE=ISTR,ERR=30)
 C           successful open of output basin characteristics file
-            !LOG IT
-c            WRITE(*,*) "OPENOUT:Opened Watstore BCD File: '" 
+c            WRITE(99,*) "OPENOUT:Opened Additional Output File: '" 
 c     $                   // TRIM(ISTR) // "'"
             GO TO 40
 
  30         CONTINUE !get here on error opening output file
               !LOG IT
-c              WRITE(*,*) "OPENOUT:FAILED to Open Watstore BCD File:'"
-c     $                   // TRIM(ISTR) // "'"
+              WRITE(99,*) "OPENOUT:FAILED to Open Additional Output ",
+     $                    "File:'" // TRIM(ISTR) // "'"
 C             dummy default (following old code, prh 8/03)
               IPUNCH = 7
 
  40         CONTINUE
           ELSE !no file name
-c            WRITE(*,*) "OPENOUT: No Watstrore File Name specified!!!"
-            IBCPUN = IBCPUN - 2
+            WRITE(99,*) "OPNOUT: No File Name specified for ",
+     $                  "Additional output"
+            IBCPUN = MOD(IBCPUN,2)
           END IF
         END IF
 
@@ -1007,7 +1024,11 @@ C     additional output
       ELSE IF (IBCPUN.EQ.2) THEN
         WRITE(92,*) 'O Additional WAT '//TRIM(FNAME)
       ELSE IF (IBCPUN.EQ.3) THEN
-        WRITE(92,*) 'O Additional Both '//TRIM(FNAME)
+        WRITE(92,*) 'O Additional Both WAT '//TRIM(FNAME)
+      ELSE IF (IBCPUN.EQ.4) THEN
+        WRITE(92,*) 'O Additional TAB '//TRIM(FNAME)
+      ELSE IF (IBCPUN.EQ.5) THEN
+        WRITE(92,*) 'O Additional Both TAB '//TRIM(FNAME)
       END IF
       IF (IDEBUG.EQ.1) THEN
         WRITE(92,*) 'O Debug Yes'

@@ -31,6 +31,8 @@ C              0 - none
 C              1 - WDM attributes
 C              2 - Watstore BCD file
 C              3 - Both WDM and BCD
+C              4 - Tab-separated file
+C              5 - Both WDM and tab-separated
 C     MAXPKS - max number of peaks that can be stored in data arrays
 C     STAID  - character string station id number and name
 C               1-15 - 15-digit station id number or
@@ -415,7 +417,7 @@ Cprh     &                       L3,IBUF)
               END IF
             END IF
 
-            IF (IBCPUN.EQ.1 .OR. IBCPUN.EQ.3) THEN
+            IF (IBCPUN.EQ.1 .OR. IBCPUN.EQ.3 .OR. IBCPUN.EQ.5) THEN
 C             set input specification attributes
               SAIND = 278  ! J407BY
               CALL WDBSAI (WDMSFL,DSN,MESSFL,SAIND,L1,BYR,RETCOD)
