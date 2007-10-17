@@ -393,7 +393,7 @@ C     INTEGER   JDATE(3)
 C     INTEGER   JTIME, ERRCOD, OLEN
       CHARACTER*3  CPRTOP(2), CDEBUG(2)
       CHARACTER*18 CPLTOP(4)
-      CHARACTER*14 CBCPUN(4)
+      CHARACTER*14 CBCPUN(6)
       CHARACTER*5  CIPPOS(2)
       CHARACTER*20 CNFORM(3)
       CHARACTER*80 FNAME
@@ -416,7 +416,8 @@ C      + + + DATA INITIALIZATIONS + + +
       DATA BLANK / ' ' /, L15,L48,L70,L80,L10/15,48,70,80,10/
       DATA CPLTOP/'None','Graphics device','Line printer',
      $            'Graphics & Printer'/
-      DATA CBCPUN/'None','WDM','WATSTORE','Both'/
+      DATA CBCPUN/'None','WDM','WATSTORE','Both (WAT)',
+     $                    'TAB-SEPARATED','Both (TAB)'/
       DATA CPRTOP/'No','Yes'/             
       DATA CDEBUG/'No','Yes'/
       DATA CIPPOS/'Short','Long'/
@@ -1274,6 +1275,8 @@ C              0 - none
 C              1 - WDM attributes
 C              2 - Watstore BCD file
 C              3 - Both WDM and BCD
+C              4 - Tab-separated file
+C              5 - Both WDM and Tab-separated
 C     ISTART -
 C     STAID  -
 C     PKSABG -
@@ -2227,23 +2230,27 @@ C              0 - don't save
 C              1 - save as attributes in wdm file
 C              2 - save in WATSTORE basin characteristics format
 C              3 - save in wdm file (1) and WATSTORE (2)
+C              4 - Tab-separated file
+C              5 - Both WDM and Tab-separated
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   OUTPT1, BCFPCH
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (IBCPUN .EQ. 1  .OR.  IBCPUN .EQ. 3) THEN
+      IF (IBCPUN .EQ. 1  .OR.  IBCPUN .EQ. 3 .OR. IBCPUN .EQ. 5) THEN
 C       save statistics in wdm file
         CALL OUTPT1 (STAID,SYSUAV,SYSUSD,SYSSKW,
      $               WRCUAV,WRCUSD,WRCSKW,WRCFC,NHSTPN, NSYS,
      $               IA1,IA3, PAUSE )
       END IF
-      IF (IBCPUN .EQ. 2  .OR.  IBCPUN .EQ. 3) THEN
-C       save statistics in watstore basin characteristics format
+Cprh      IF (IBCPUN .EQ. 2  .OR.  IBCPUN .EQ. 3) THEN
+      IF (IBCPUN .GT. 1) THEN
+C       save statistics in watstore basin characteristics (2 or 3) or
+c       in tab-separated (4 or 5) format
         CALL BCFPCH (STAID,SYSUAV,SYSUSD,SYSSKW,
      I               WRCUAV,WRCUSD,WRCSKW,WRCFC,
-     I               NHSTPN, NSYS, LBCPU,JSEQNO)
+     I               NHSTPN,NSYS,LBCPU,IBCPUN,JSEQNO)
       END IF
 C
       RETURN
@@ -2253,26 +2260,27 @@ C
 C
       SUBROUTINE   BCFPCH
      #                 (  STAID,SYSAV,SYSSD,SYSG, WRCAV, WRCSD,
-     $                    GWRC, WRCFC, NHSTYR, NSYSYR, IPCH, JSEQNO)
+     $                    GWRC, WRCFC, NHSTYR, NSYSYR, IPCH, 
+     $                    IBCPUN, JSEQNO)
 C
 C     + + + PURPOSE + + +
 C     PUNCHES J407 RESULTS IN BASIN-CHARACTERISTICS INPUT FORMAT
 C     ON LOGICAL UNIT IPCH
 C
 C     + + + HISTORY + + +
-C     prh 10/2007 - updated to output in tabular format,
+C     prh 10/2007 - updated to output in tabular format (IBCPUN=4 OR 5),
 C                   suitable for import to spreadsheet/stats program
 C
 C     + + + DUMMY ARGUMENTS + + +
       CHARACTER*90  STAID
       REAL         WRCFC(*), SYSAV, SYSSD, SYSG, WRCAV, WRCSD,
      &             GWRC
-      INTEGER   NHSTYR, NSYSYR, IPCH, JSEQNO
+      INTEGER   NHSTYR, NSYSYR, IPCH, IBCPUN, JSEQNO
 C
 C     + + + LOCAL VARIABLES + + +
       CHARACTER*7 LCHAR(11)
       INTEGER JPUN(11)
-Cprh      INTEGER VAR (9)
+      INTEGER VAR (9)
       INTEGER   I, IX, STAIND
       REAL      X, POWER
       CHARACTER*6 VARNAM(18)
@@ -2287,7 +2295,7 @@ C     + + + DATA INITIALIZATIONS + + +
 Cprh      DATA    JPUN   /12,16,20,21,23,25,26,27,28/
 Cprh  updated for inclusion of 1.5 and 2.33 intervals, 11/03
       DATA    JPUN   /12,14,17,18,21,22,24,26,27,28,29/
-Cprh      DATA    VAR    /75,76,77,78,79,80,81,82,178/
+      DATA    VAR    /75,76,77,78,79,80,81,82,178/
       DATA    VARNAM /'STAID ',' P1.25','  p1.5','   P2.',' p2.33',
      $                '   P5.','  P10.','  P25.','  P50.',' P100.',
      $                ' P200.',' P500.','WRCSKW',' WRCMN',' WRCSD',
@@ -2300,15 +2308,6 @@ C     + + + OUTPUT FORMATS + + +
  2010 FORMAT(2A,11(A7,A),3(F7.3,A),2(I7,A),A)
 C
 C     + + + END SPECIFICATIONS + + +
-C
-C     only output headers when Station index (JSEQNO)
-C     is smaller than previous, or initial, value of STAIND
-      IF (JSEQNO .LT. STAIND) THEN
-Cprh    headers for attributes to be output
-        WRITE (IPCH,2000) (VARNAM(I),CHAR(9),I=1,17),VARNAM(18)
-      END IF
-C     remember last station index
-      STAIND = JSEQNO
 C
 C  ROUND AND CONVERT USING FORMATS AND LCHAR ARRAY
       DO 70 I=1,11
@@ -2327,29 +2326,43 @@ C  ROUND AND CONVERT USING FORMATS AND LCHAR ARRAY
    61   FORMAT(1I7)
    70 CONTINUE
 C
-C     output tab-separated values
-      WRITE(IPCH,2010) STAID(1:15),CHAR(9),(LCHAR(I),CHAR(9),I=1,11),
-     $                 GWRC,CHAR(9),WRCAV,CHAR(9),WRCSD,CHAR(9),
-     $                 NSYSYR,CHAR(9),NHSTYR,CHAR(9),STAID(21:62)
 C
-cC
-cCkmf  add staion name record ("2" card) Oct 02, 2000
-cCkmf  station name is defined as being 21-78, space for 21-62
-c      WRITE (IPCH,100) STAID(1:15), STAID(21:62)
-c  100 FORMAT('1',  A15, 4X, A )
-cC PUNCH 3 CARDS
-c      WRITE(IPCH,101)STAID(1:15),(VAR(I),LCHAR(I),I=1,6)
-c  101 FORMAT('2',  A15,6(I3,1A7))
-c      WRITE(IPCH, 102)  STAID(1:15),(VAR(I),LCHAR(I),I=7,8),SYSAV,SYSSD,
-c     $       SYSG, VAR(9), LCHAR(9)
-c  102 FORMAT('2',  A15,2(I3,1A7),' 83',F7.3,' 84',F7.3,' 85',F7.3,
-c     $          I3, 1A7)
-c      IX = 2
-c      IF(NHSTYR.GT.NSYSYR) IX = 1
-c      WRITE(IPCH,   103)STAID(1:15),GWRC,WRCAV,WRCSD ,
-c     $       NSYSYR, NHSTYR, (' ',I=1,IX)
-c  103 FORMAT('2',  A15,'179',F7.3, '180',F7.3,'181',F7.3 ,
-c     $        '196',I7, '197',I7, 2A1,T57, 10X)
+      IF (IBCPUN .LT. 4) THEN
+C       Watstore Basin Characteristic format
+Ckmf    add staion name record ("2" card) Oct 02, 2000
+Ckmf    station name is defined as being 21-78, space for 21-62
+        WRITE (IPCH,100) STAID(1:15), STAID(21:62)
+  100   FORMAT('1',  A15, 4X, A )
+C       PUNCH 3 CARDS
+        WRITE(IPCH,101)STAID(1:15),(VAR(I),LCHAR(I),I=1,6)
+  101   FORMAT('2',  A15,6(I3,1A7))
+        WRITE(IPCH, 102)  STAID(1:15),(VAR(I),LCHAR(I),I=7,8),
+     $                    SYSAV,SYSSD, SYSG, VAR(9), LCHAR(9)
+  102   FORMAT('2',  A15,2(I3,1A7),' 83',F7.3,' 84',F7.3,' 85',F7.3,
+     $         I3, 1A7)
+        IX = 2
+        IF(NHSTYR.GT.NSYSYR) IX = 1
+        WRITE(IPCH,   103)STAID(1:15),GWRC,WRCAV,WRCSD ,
+     $         NSYSYR, NHSTYR, (' ',I=1,IX)
+  103   FORMAT('2',  A15,'179',F7.3, '180',F7.3,'181',F7.3 ,
+     $         '196',I7, '197',I7, 2A1,T57, 10X)
+      ELSE
+C       Tab-separated format
+C       only output headers when Station index (JSEQNO)
+C       is smaller than previous, or initial, value of STAIND
+        IF (JSEQNO .LT. STAIND) THEN
+Cprh      headers for attributes to be output
+          WRITE (IPCH,2000) (VARNAM(I),CHAR(9),I=1,17),VARNAM(18)
+        END IF
+C       remember last station index
+        STAIND = JSEQNO
+C
+C       output tab-separated values
+        WRITE(IPCH,2010) STAID(1:15),CHAR(9),(LCHAR(I),CHAR(9),I=1,11),
+     $                   GWRC,CHAR(9),WRCAV,CHAR(9),WRCSD,CHAR(9),
+     $                   NSYSYR,CHAR(9),NHSTYR,CHAR(9),STAID(21:62)
+      END IF
+C
       RETURN
       END
 C
