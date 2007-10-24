@@ -2296,7 +2296,7 @@ Cprh      DATA    JPUN   /12,16,20,21,23,25,26,27,28/
 Cprh  updated for inclusion of 1.5 and 2.33 intervals, 11/03
       DATA    JPUN   /12,14,17,18,21,22,24,26,27,28,29/
       DATA    VAR    /75,76,77,78,79,80,81,82,178/
-      DATA    VARNAM /'STAID ',' P1.25','  p1.5','   P2.',' p2.33',
+      DATA    VARNAM /'STAID ',' P1.25','  P1.5','   P2.',' P2.33',
      $                '   P5.','  P10.','  P25.','  P50.',' P100.',
      $                ' P200.',' P500.','WRCSKW',' WRCMN',' WRCSD',
      $                ' YRSPK','YRSHPK','STANAM'/
