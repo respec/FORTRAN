@@ -31,6 +31,8 @@ c       modified            13 aug 2007  final low-outlier default procedure
 c                                          implemented
 c       modified            17 aug 2007  final, final LO default procedure
 c                                          implemented
+c       modified            25 sep 2007  final 'argh!' w/update to mseg procedure
+c                                          to correct for censored data
 c                                       
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -168,6 +170,16 @@ c            tl(n)      r*8  vector of lower bounds on (log) flood threshold
 c            tu(n)      r*8  vector of upper bounds on (log) flood threshold
 c            reg_skew   r*8  regional skew
 c            reg_mse    r*8  mean square error of regional skew
+c                            this variable encodes four distinct cases:
+c                            1) reg_mse = 0 ("GENERALIZED SKEW, NO ERROR")
+c                                use fixed g = reg_skew w/ mse = 0.0
+c                            2) -98 < reg_mse < 0 ("GENERALIZED SKEW, MSE > 0")
+c                                use fixed g = reg_skew w/ mse = -reg_mse
+c                            3) 0 < reg_mse < 1.d10 ("WEIGHTED SKEW")
+c                                use g = weighted average of at-site and 
+c                                regional skew (b17b recommendation)
+c                            4) 1.d10 < reg_mse ("STATION SKEW")
+c                                use g = at-site skew
 c            pq         r*8  quantile to be estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
 c            neps       i*4  number of confidence interval coverages 
@@ -220,11 +232,12 @@ c
       parameter (skewmin=0.06324555)
       
       double precision
-     1  mseg
+     1  mseg_all
      
       common /tacg01/gbcrit,gbthresh,nlow
       common /tacg02/ql(nx),qu(nx),tl(nx),tu(nx)
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
+      common /jfe001/as_mse
 
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -258,7 +271,13 @@ c   loop up to 10 times to see if any new LOs uncovered
       
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c   2.  begin by fitting the p3 distn to the at-site and regional data
+c   2.  organize data for computing ci and set up the tl and tu vectors
+c
+      call compress2(n,tl,tu,nt,nobs,tl2,tu2)
+      
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c   3.  begin by fitting the p3 distn to the at-site and regional data
 c       
 c       n.b.  two calls are necessary:
 c            a.  compute the at-site moments without employing regional skew
@@ -267,29 +286,11 @@ c                   skew (set as_mse=1.0; reg_mse=-99.)
 c            b.  final computation using regional skew information
 c
       call p3est_ema(n,ql,qu,1.d0,reg_skew,-99.d0,cmoms(1,2))
-        as_mse   = mseg(n,cmoms(3,2))
+        as_mse   = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))
       call p3est_ema(n,ql,qu,as_mse,reg_skew,reg_mse,cmoms(1,1))
         yp       = qP3(pq,cmoms)
         call m2p(cmoms,parms)
 
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c   3.  organize data for computing ci and set up the tl and tu vectors
-c
-        k = 0
-      do 10 i=1,n
-        if(i.eq.1 .or. tl(i).ne.tl2(max(1,k)) .or. 
-     1                 tu(i).ne.tu2(max(1,k))) then
-          k=k+1
-          tl2(k) = tl(i)
-          tu2(k) = tu(i)
-          nobs(k) = 1
-        else
-          nobs(k) = nobs(k) + 1
-        endif
-10    continue
-        nt = k
-      
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   4.  compute quantiles and confidence intervals
@@ -385,7 +386,7 @@ c            tu(n)      r*8  vector of upper bounds on (log) flood threshold
 c
 c    n.b. routine also returns info on low outliers through common block
 c
-c          common /tacg01/gbcrit,gbthresh,nlow,nGBiter
+c          common /tacg01/gbcrit,gbthresh,nlow
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -396,16 +397,18 @@ c
       implicit none
       
       integer
-     1  n,ns,i,nlow,nGBiter
+     1  n,ns,i,nlow,
+     2  nt
      
       double precision
      1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),
      2  ql(*),qu(*),tl(*),tu(*),gbcrit,gbthresh,gbthrsh0,
      3  as_mse,reg_skew,reg_mse,
-     4  x(10000),xm,xsum,xss,s,t,cmoms(3),gbtmin
+     4  x(10000),xm,xsum,xss,s,t,cmoms(3),gbtmin,
+     5  nobs(10000),tl2(10000),tu2(10000)
      
       double precision
-     1  mseg
+     1  mseg_all
 
       common /tacg01/gbcrit,gbthresh,nlow
       
@@ -435,7 +438,8 @@ c  compute low outlier threshold
         gbthresh = -99.d0
       else
           call p3est_ema(n,ql_in,qu_in,1.d0,reg_skew,-99.d0,cmoms)
-            as_mse   = mseg(n,cmoms(3))                 ! N.B. n, not ns
+            call compress2(n,tl_in,tu_in,nt,nobs,tl2,tu2)
+            as_mse   = mseg_all(nt,nobs,tl2,tu2,cmoms)
           call p3est_ema(n,ql_in,qu_in,as_mse,reg_skew,reg_mse,cmoms)
           xm      = cmoms(1)
           s       = sqrt(cmoms(2))
@@ -569,6 +573,8 @@ c            if(rmse .lt. 0.d0) rmse = 1.0d30
           else if (rmse .gt. 0.d0) then                  ! "WEIGHTED"
             moms(3,i) = (rskew*asmse+moms(3,i)*rmse)/(rmse+asmse)
           else if (rmse .lt. -98.d0) then                ! "STATION SKEW
+c            moms(3,i) = moms(3,i)
+          else if (rmse .ge. 1.d10) then                 ! "STATION SKEW
 c            moms(3,i) = moms(3,i)
           endif
           
@@ -776,7 +782,7 @@ c
       implicit none
       
       integer
-     1  n,i,adj
+     1  n,i
      
       double precision
      1  ql(*),m(3),xmax,parms(3),
@@ -798,6 +804,87 @@ c        skxmax  = 2.d0/sqrt(m(2))/(m(1)-xmax)       ! 2:  parms(1) < xmax
         momsadj = max(sk0,sk141,skxmax)
       return
       end
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|double precision function mseg_all
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     computes the mse of station skew for the bulletin 17b analysis (see p. 13)
+c
+c     n.b.  b17b recommends using h -- the entire period length --
+c           for the record length with historical information.
+c
+c     timothy a. cohn, 2007
+c
+c     *** do not modify without author''s consent ***
+c
+c           author.......tim cohn
+c           date.........18 sep 2007
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            nthresh      i*4  number of distinct censoring thresholds 
+c                                ( (a,b) pairs)
+c            nobs(*)      r*8  vector of number of observations corresponding 
+c                                to threshold pair (tl(i),tu(i))
+c            tl(*)        r*8  vector of lower bounds (a)
+c            tu(*)        r*8  vector of upper bounds (b)
+c            mc(3)        r*8  vector of estimated lp3 moments
+c
+c       output variables:
+c       ------------------------------------------------------------------------
+c            mseg_all     r*8  mse of at-site (station) skew
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+       double precision function mseg_all(nthresh,nobs,tl,tu,mc)
+
+      implicit none
+      
+      double precision
+     1    nobs(*),tl(*),tu(*),mc(3),mc2(3),tl2(100),tu2(100),
+     2    s_mn(3,3),s_mc(3,3),mn(3),
+     3    skewmin,tneg,tpos,w
+
+      parameter (skewmin=0.06324555)
+
+      integer 
+     1    nthresh,i
+     
+c   begin by pseudo-orthogalizing the parameters
+        mc2(1) = 0.d0
+        mc2(2) = mc(2)
+        mc2(3) = mc(3)
+      do 10 i=1,nthresh
+        tl2(i) = tl(i) - mc(1)
+        tu2(i) = tu(i) - mc(1)
+10    continue
+      
+      if(abs(mc2(3)) .gt. skewmin) then !  straight computation
+        call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
+        call m2mn(mc2,mn)
+        call mn2m_var(mn,s_mn,mc2,s_mc)
+        mseg_all = s_mc(3,3)
+      else  !  use weighted sum for skew = skewmin, -skewmin
+        mc2(3) = -skewmin
+        call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
+        call m2mn(mc2,mn)
+        call mn2m_var(mn,s_mn,mc2,s_mc)
+        tneg = s_mc(3,3)
+        mc2(3) = skewmin
+        call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
+        call m2mn(mc2,mn)
+        call mn2m_var(mn,s_mn,mc2,s_mc)
+        tpos = s_mc(3,3)
+        w    = (mc(3)-skewmin)/(2.d0*skewmin)
+        mseg_all = w*tneg + (1.d0-w)*tpos
+      endif
+
+      
+      return
+      end
+
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c****|double precision function mseg
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -970,8 +1057,16 @@ c            tu_in(*)     r*8  vector of upper bounds (b)
 c            mc_in(3)     r*8  vector of estimated lp3 moments
 c            pq           r*8  quantile to be estimated
 c            g_r_mse      r*8  mse of g_r (b17) ; 
-c                                negative values => ignore regional
-c                              skewness
+c                            this variable encodes four distinct cases:
+c                            1) g_r_mse = 0 ("GENERALIZED SKEW, NO ERROR")
+c                                use fixed g = reg_skew w/ mse = 0.0
+c                            2) -98 < g_r_mse < 0 ("GENERALIZED SKEW, MSE > 0")
+c                                use fixed g = reg_skew w/ mse = -reg_mse
+c                            3) 0 < g_r_mse < 1.d10 ("WEIGHTED SKEW")
+c                                use g = weighted average of at-site and 
+c                                regional skew (b17b recommendation)
+c                            4) 1.d10 < g_r_mse ("STATION SKEW")
+c                                use g = at-site skew
 c
 c            n.b.:  g_r, the regional skewness, 
 c                          is set = sign(2,parms(3))/sqrt(parms(2))
@@ -1063,7 +1158,7 @@ c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine regskew(nthresh,nobs,tl,tu,mc,g_r_mse,s_mc)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c     *** do not modify without author's consent ***
+c     *** do not modify without authors consent ***
 c
 c           author.......tim cohn
 c           date.........10 feb 2007
@@ -1080,11 +1175,12 @@ c            tu(*)      r*8  vector of upper bounds (b) of censoring
 c            mc         r*8  vector of parameters (first 3 central 
 c                              moments of lp3 distribution
 c            g_r_mse    r*8  scalar mse of regional skewness estimator 
-c                            N.B.  the mse codes for three distinct cases
+c                            N.B.  the mse codes for four distinct cases
 c                              1) mse>0 => weighted skew
 c                              2) mse=0 => generalized skew (no uncertainty)
 c                              3) -98< mse <0 => generalized skew (mse = -mse) 
 c                              4) mse < -98 => station skew 
+c                                   (using g_r_mse = 1.d10 is equivalent)
 c
 c       output variables:
 c       ---------------------------------------------------------------
@@ -1098,13 +1194,13 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       implicit none
       
       integer
-     1  nthresh,n
+     1  nthresh
       
       double precision
      1  nobs(*),tl(*),tu(*),mc(3),g_r_mse,s_mc(3,3),
      2  s_mn(3,3),mn(3),w
      
-      double precision mseg
+      double precision mseg_all
      
       call var_mom(nthresh,nobs,tl,tu,mc,s_mn)
       
@@ -1112,13 +1208,13 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       
       call mn2m_var(mn,s_mn,mc,s_mc)
       
-        n = nobs(nthresh+1)
-        
         if(g_r_mse .gt. 0.d0) then   ! "WEIGHTED"
-          w =  g_r_mse/(mseg(n,mc(3)) + g_r_mse)
+           w = g_r_mse/(mseg_all(nthresh,nobs,tl,tu,mc) + g_r_mse)
         else if(g_r_mse .ge. -98.d0 .and. g_r_mse .le. 0.d0) then ! "G-w/skew"
           w =  0.d0
         else if(g_r_mse .lt. -98.d0) then ! "STATION"
+          w =  1.d0
+        else if(g_r_mse .ge. 1.d10) then  ! "STATION"
           w =  1.d0
         endif
       
@@ -1135,7 +1231,7 @@ c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine jacq2(q,mc,jac)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c     *** do not modify without author's consent ***
+c     *** do not modify without authors consent ***
 c
 c           author.......tim cohn
 c           date.........10 feb 2007
@@ -1220,6 +1316,7 @@ c            tu(*)      r*8  vector of upper bounds (b) of censoring
 c            mc         r*8  vector of parameters (first 3 central 
 c                              moments of lp3 distribution
 c            g_r_mse    r*8  scalar mse of regional skewness estimator 
+c                              (see comments above)
 c            q          r*8  quantile to be estimated (in range (0-1)
 c
 c       output variables:
@@ -2054,11 +2151,11 @@ c
       implicit none
       
       double precision 
-     1  m,x,qP3
+     1  m,qP3
       
-cprh      real rand
+      real rand
       
-cprh      rP3 = qP3(dble(rand()),m)
+      rP3 = qP3(dble(rand()),m)
       return
       end
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
@@ -2177,6 +2274,73 @@ c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
         ftest01 = arg*dp3(x,m)
       return
       end
+      
+c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|subroutine compress2
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c    
+c    compresses the threshold data to reduce redundant computation
+c       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    development history
+c
+c    timothy a. cohn        20 sep 2007
+c       modified            31 dec 2003
+c                                       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            n          i*4  number of observations (censored, uncensored, or 
+c                              other)
+c            tl(n)      r*8  vector of lower bounds on (log) floods
+c            tu(n)      r*8  vector of upper bounds on (log) floods
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       output variables:
+c       ------------------------------------------------------------------------
+c
+c            nt         i*4  number of distinct censoring thresholds 
+c            nobs(nt)   r*8  number of observations corresponding to 
+c                              threshold
+c            tl2(nt)    r*8  lower bounds on (log) flood threshold
+c            tu2(nt)    r*8  upper bounds on (log) flood threshold
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      subroutine compress2(n,tl,tu,nt,n2,tl2,tu2)
+      
+      integer 
+     1  n,nt
+      
+      double precision
+     1  tl(*),tu(*),n2(*),tl2(*),tu2(*)
+     
+      nt = 0
+      
+      do 10 i=1,n
+        do 20 j=1,nt
+          if(tl(i) .eq. tl2(j) .and. tu(i) .eq. tu2(j)) then
+            n2(j) = n2(j)+1.d0
+            goto 10
+          endif
+20      continue
+          nt       = nt+1
+          n2(nt)   = 1.d0
+          tl2(nt)  = tl(i)
+          tu2(nt)  = tu(i)
+10    continue
+        n2(nt+1) = 0
+      do 30 i=1,nt
+        n2(nt+1) = n2(nt+1)+n2(i)
+30    continue
+
+      return
+      end
+      
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine dqag
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
