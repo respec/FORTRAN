@@ -456,13 +456,13 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
 Cprh 202 FORMAT( 21X, 'OFFICE OF SURFACE WATER, RESTON, VA' )
-  202 FORMAT( 2X,'Ver. 5.1',
+  202 FORMAT( 2X,'Ver. 5.2',
      $       12X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
 Cprh 203 FORMAT( 21X, 'ANNUAL PEAK FLOW FREQUENCY ANALYSIS' )
-  203 FORMAT( 2X,'02/01/2007',
+  203 FORMAT( 2X,'11/01/2007',
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
-  213 FORMAT( 2X,'05/06/2005',
+  213 FORMAT( 2X,'11/01/2007',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
 Cprh 204 FORMAT( 21X, 'Following Bulletin 17-B Guidelines' )
 Cprh 205 FORMAT( 21X, '          Program peakfq    ' )
@@ -2327,16 +2327,17 @@ C  ROUND AND CONVERT USING FORMATS AND LCHAR ARRAY
    70 CONTINUE
 C
 C
-      IF (IBCPUN .LT. 4) THEN
+      IF (IBCPUN .LE. 3) THEN
 C       Watstore Basin Characteristic format
 Ckmf    add staion name record ("2" card) Oct 02, 2000
 Ckmf    station name is defined as being 21-78, space for 21-62
         WRITE (IPCH,100) STAID(1:15), STAID(21:62)
   100   FORMAT('1',  A15, 4X, A )
 C       PUNCH 3 CARDS
-        WRITE(IPCH,101)STAID(1:15),(VAR(I),LCHAR(I),I=1,6)
+        WRITE(IPCH,101)STAID(1:15),VAR(1),LCHAR(1),VAR(2),LCHAR(3),
+     $                 (VAR(I-2),LCHAR(I),I=5,8)
   101   FORMAT('2',  A15,6(I3,1A7))
-        WRITE(IPCH, 102)  STAID(1:15),(VAR(I),LCHAR(I),I=7,8),
+        WRITE(IPCH, 102)  STAID(1:15),(VAR(I-2),LCHAR(I),I=9,10),
      $                    SYSAV,SYSSD, SYSG, VAR(9), LCHAR(9)
   102   FORMAT('2',  A15,2(I3,1A7),' 83',F7.3,' 84',F7.3,' 85',F7.3,
      $         I3, 1A7)
@@ -3483,14 +3484,14 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,NOBS,WYMIN,WYMAX,LPKIND
       DOUBLE PRECISION WRCMOM(3,2),PR(MXINT),       !SKWWGT,
-     $                 REGSKEW,REGMSE,WRCYP(MXINT),
+     $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH
       INTEGER, ALLOCATABLE :: THBY(:),THEY(:)
       REAL, ALLOCATABLE :: THLO(:),THUP(:)
       DOUBLE PRECISION, ALLOCATABLE :: QL(:),QU(:),TL(:),TU(:)
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA GBTHRSH /0.0/
+      DATA MISSNG /1.0D-99/
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   EMADATA, EMAFIT
@@ -3530,8 +3531,8 @@ C
 
       NOBS = WYMAX - WYMIN + 1
       ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS))
-      write(*,*) 'RUNEMA: NPKS,NSYS,NHIST,NOBS ',
-     $                    NPKS,NSYS,NHIST,NOBS
+      write(*,*) 'RUNEMA: NPKS,NSYS,NHIST,NOBS,GAGEB',
+     $                    NPKS,NSYS,NHIST,NOBS,GAGEB
       write(*,*) 'RUNEMA: PKS',(PKS(I),I=1,NPKS)
 
       LPKIND = NPKS - (NSYS+NHIST) + 1
@@ -3541,45 +3542,66 @@ c      CALL EMADATA(NSYS+NHIST,PKS(LPKIND),IPKSEQ(LPKIND),WYMIN,WYMAX,
      M             NOBS,
      O             QL,QU,TL,TU)
 C
-C            if(ifany('WEIGHTED',skew_option)) then
-C              reg_mseV  = gen_skew_sd**2
-C            else if(ifany('GENERALIZ',skew_option)) then
-C              reg_mseV  = - gen_skew_sd**2   ! this includes uncty in reg_skew
-Cc              reg_mseV  = 0.d0                ! this does not include uncty
-C            else if(ifany('STATION',skew_option)) then
-C              reg_mseV  = -99.d0
-C            endif
       REGSKEW= GENSKU
       IF (IGSOPT.EQ.1) THEN
 C       Generalized skew, set to very small
-        REGMSE = - RMSEGS**2
+        REGMSE = 0.0
       ELSE IF (IGSOPT.EQ.-1) THEN
 C       Station skew, ignore regional skew
-        REGMSE = -99.0
+        REGMSE = 1.0D10
       ELSE
-C       set to root mean square?
+C       Weighted, set to root mean square
         REGMSE = RMSEGS**2
       END IF
-      write(*,*) 'calling EMAFIT: NOBS,REGSKEW,REGMSE',
-     $                            NOBS,REGSKEW,REGMSE
+      GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
+
+      write(99,*) 'calling EMAFIT'
+      write(99,*) 'NOBS:',NOBS
+      write(99,*) 'REGSKEW:',REGSKEW
+      write(99,*) 'REGMSE:',REGMSE
+      write(99,*) 'GBTHRSH',GBTHRSH
+      write(99,*) 'QLow        QUpr        TLow        TUpr'
+ 2000 format(1X,2F12.1,2D12.5)
+      do 15 i = 1,NOBS
+        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
+ 15   continue
 C
       CALL EMAFIT(NOBS,QL,QU,TL,TU,REGSKEW,REGMSE,GBTHRSH,
      O            WRCMOM,PR,WRCYP,CILOW,CIHIGH)
       
+      write(99,*) 'After EMAFIT'
+      write(99,*) 'NOBS:',NOBS
+      write(99,*) 'REGSKEW:',REGSKEW
+      write(99,*) 'REGMSE:',REGMSE
+      write(99,*) 'GBTHRSH',GBTHRSH
+      write(99,*) 'QLow        QUpr        TLow        TUpr'
+      DO 70 I = 1,NOBS
+        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
+ 70   CONTINUE
+      write(99,*) 'WRCMOM-1',(WRCMOM(i,1),i=1,3)
+      write(99,*) 'WRCMOM-2',(WRCMOM(i,2),i=1,3)
+ 2100 format(1X,F6.3,3F10.3)
+      do 18 i = 1,MXINT
+        write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i)
+ 18   continue
+
 C     store EMA moments in WRC variables
 c      WRCUAV = LOG10(EXP(WRCMOM(1)))
 c      WRCUSD = LOG10(EXP(SQRT(WRCMOM(2))))
 c      WRCSKW = WRCMOM(3)
-      WRCUAV = WRCMOM(1,2)
-      WRCUSD = SQRT(WRCMOM(2,2))
-      WRCSKW = WRCMOM(3,2)
+      WRCUAV = WRCMOM(1,1)
+      WRCUSD = SQRT(WRCMOM(2,1))
+      WRCSKW = WRCMOM(3,1)
 C
       write(*,*)
       write(*,*) 'RESULTS'
       write(*,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
-      DO 20 I = 1,NINDX
+      DO 20 I = 1,MXINT
         write(*,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
      $                          10**CILOW(I),10**CIHIGH(I)
+          WRCFC(I) = WRCYP(I)
+          CLIML(I) = CILOW(I)
+          CLIMU(I) = CIHIGH(I)
  20   CONTINUE
 
       DEALLOCATE (QL, QU, TL, TU)

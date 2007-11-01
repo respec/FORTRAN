@@ -97,55 +97,55 @@ C
      $     /,5X,'      -PRELIMINARY MACHINE COMPUTATIONS.  USER IS RE-',
      $     /,5X,'      -SPONSIBLE FOR ASSESSMENT AND INTERPRETATION.  ')
 C
-      write(*,*) 'WCFAGB: B4 WCFAPI'
+c      write(*,*) 'WCFAGB: B4 WCFAPI'
       CALL WCFAPI (PKQ,PKLOG,WRCPP,SYSPP,NPK,IRC)
       IF(IRC.GE.3)GOTO95
       ISYS=NHIST+1
       NSYS1=NPK-NHIST
 C
-      write(*,*) 'WCFAGB: B4 WCFASP'
+c      write(*,*) 'WCFAGB: B4 WCFASP'
       CALL WCFASP (PKLOG(ISYS),SYSPP(ISYS),NSYS1,IRC)
       IF(IRC.GE.3)GOTO95
 C
       IF(WRCASK.GT.EPS2)GOTO50
       IF(WRCASK.GE.EPS1)GOTO30
 C
-      write(*,*) 'WCFAGB: B4 WCFDLO'
+c      write(*,*) 'WCFAGB: B4 WCFDLO'
       CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA (4H17B1, IRC)
-      write(*,*) 'WCFAGB: B4 WCFCSA'
+c      write(*,*) 'WCFAGB: B4 WCFCSA'
       IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA ('17B1', IRC)
       IF(IRC.GE.3)GOTO95
-      write(*,*) 'WCFAGB: B4 WCFDHH'
+c      write(*,*) 'WCFAGB: B4 WCFDHH'
       CALL WCFDHH (PKLOG,NPK, IRC)
 Ckmf  IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B2,IRC)
-      write(*,*) 'WCFAGB: B4 WCFCSA-2'
+c      write(*,*) 'WCFAGB: B4 WCFCSA-2'
       IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B2',IRC)
       IF(IRC.GE.3)GOTO95
       GOTO70
 C
-      write(*,*) 'WCFAGB: B4 WCFDLO-30'
+c      write(*,*) 'WCFAGB: B4 WCFDLO-30'
    30 CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
       IF(IRC.GE.3)GOTO95
-      write(*,*) 'WCFAGB: B4 WCFDHH-30'
+c      write(*,*) 'WCFAGB: B4 WCFDHH-30'
       CALL WCFDHH (PKLOG,NPK,IRC)
       IF(IRC.GE.3)GOTO95
 Ckmf  IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA (4H17B3,IRC)
-      write(*,*) 'WCFAGB: B4 WCFCSA-30'
+c      write(*,*) 'WCFAGB: B4 WCFCSA-30'
       IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA ('17B3',IRC)
       IF(IRC.GE.3)GOTO95
       GOTO70
 C
-      write(*,*) 'WCFAGB: B4 WCFDHH-50'
+c      write(*,*) 'WCFAGB: B4 WCFDHH-50'
    50 CALL WCFDHH (PKLOG,NPK,IRC)
 Ckmf  IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B4,IRC)
-      write(*,*) 'WCFAGB: B4 WCFCSA-50'
+c      write(*,*) 'WCFAGB: B4 WCFCSA-50'
       IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B4',IRC)
       IF(IRC.GE.3)GOTO95
-      write(*,*) 'WCFAGB: B4 WCFDLO-50'
+c      write(*,*) 'WCFAGB: B4 WCFDLO-50'
       CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B5,IRC)
-      write(*,*) 'WCFAGB: B4 WCFCSA-50'
+c      write(*,*) 'WCFAGB: B4 WCFCSA-50'
       IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B5',IRC)
       IF(IRC.GE.3)GOTO95
 C
@@ -153,15 +153,15 @@ C
 C
 C     IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, 4H17B ,NSYS+NHIST)
 C     CALL WCFFCA (WRCFC,4H17B ,IRC)
-      write(*,*) 'WCFAGB: B4 WCFEPP'
+c      write(*,*) 'WCFAGB: B4 WCFEPP'
       IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, '17B ', NSYS+NHIST)
-      write(*,*) 'WCFAGB: B4 WCFFCA'
+c      write(*,*) 'WCFAGB: B4 WCFFCA'
       CALL WCFFCA (WRCFC, '17B ', IRC )
       IF(IRC.GE.3)GOTO95
 C
-      write(*,*) 'WCFAGB: B4 WCFFCX'
+c      write(*,*) 'WCFAGB: B4 WCFFCX'
       CALL WCFFCX (IRC)
-      write(*,*) 'WCFAGB: After WCFFCX, IRC =',IRC
+c      write(*,*) 'WCFAGB: After WCFFCX, IRC =',IRC
       IF(IRC.GE.3)GOTO95
 C
       IF(MSL.GE.3 .OR. (IRC.GE.2.AND.MSL.GE.2) ) WRITE(MSG,2)IRC
@@ -474,18 +474,18 @@ C
       FN =NSYS-NHIOUT-NBGB-NLWOUT
       IF (FN.LT.3.)GOTO97
       Z=NHISTN+NHIOUT
-       write(*,*) 'WCFCSA: NHISTN,NHIOUT,NSYS',NHISTN,NHIOUT,NSYS
+c       write(*,*) 'WCFCSA: NHISTN,NHIOUT,NSYS',NHISTN,NHIOUT,NSYS
       HISTWT=(HISTPN-Z)/FLOAT(NSYS-NHIOUT)
       FN = Z + HISTWT*FN
       DO50I=1,3
    50 S(I)=SUMS(I)*HISTWT + SUMH(I)
 C
-       write(*,*) 'WCFCSA: FN,HISTPN',FN,HISTPN
+c       write(*,*) 'WCFCSA: FN,HISTPN',FN,HISTPN
       WRCPAB=FN/HISTPN
       DBLAAV=S(1)/FN
       WRCAAV=DBLAAV
       V=(S(2)-S(1)**2/FN)/(FN-1.)
-       write(*,*)'WCFCSA: V',V
+c       write(*,*)'WCFCSA: V',V
 cprh      IF(V.GE.0.) GO TO 60
       IF(V.GT.0.) GO TO 60
       IER=3
@@ -494,10 +494,10 @@ cprh      IF(V.GE.0.) GO TO 60
       RETURN
    60 CONTINUE
       WRCASD=SQRT(V)
-       write(*,*)'WCFCSA: 60, WRCASD,DBLAAV,S',WRCASD,DBLAAV,S
+c       write(*,*)'WCFCSA: 60, WRCASD,DBLAAV,S',WRCASD,DBLAAV,S
       WRCASK=(S(3)-3.*DBLAAV*S(2) + 2.*DBLAAV**2*S(1))*FN
      $         / ((FN-1.)*(FN-2.)*WRCASD**3)
-       write(*,*)'WCFCSA: WRCASK',WRCASK
+c       write(*,*)'WCFCSA: WRCASK',WRCASK
       RETURN
 C
    97 IER=3

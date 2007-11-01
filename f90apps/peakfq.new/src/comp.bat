@@ -10,8 +10,9 @@ rem lf90 utdate.for -c -o ..\obj\utdate.obj     >>comp.out
 rem lf90 utcpgn.for -c -o ..\obj\utcpgn.obj     >>comp.out
 rem lf90 datsys90.for -c -o ..\obj\datsys90.obj >>comp.out
 rem lf90 emafit.for -c -trace -o ..\obj\emafit.obj     >>comp.out
-lf90 emafit.f -c -trace -o ..\obj\emafit028.obj >>comp.out
+lf90 emafit.f -c -o ..\obj\emafit.obj >>comp.out
 lf90 emadata.for -c -o ..\obj\emadata.obj       >>comp.out
+lf90 probfun.f -c -o ..\obj\probfun.obj       >>comp.out
 rem lf90 pkkeyb.for -c -o ..\obj\pkkeyb.obj >>comp.out
 rem lf90 pkutil.for -c -o ..\obj\pkutil.obj >>comp.out
 lf90 pkwdm.for  -c -trace -o ..\obj\pkwdm.obj -O0  >>comp.out

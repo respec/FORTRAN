@@ -574,7 +574,9 @@ c     $                  GRFMT //"' unknown - NO GRAPHIC PLOTS"
           END IF
         END IF
       ELSE IF (KWD.EQ.'ADDITIONAL') THEN
-        IF (ISTR(1:3).EQ.'WDM') THEN 
+        IF (ISTR(1:3).EQ.'NON') THEN
+          IBCPUN = 0
+        ELSEIF (ISTR(1:3).EQ.'WDM') THEN 
           IBCPUN = 1
         ELSE IF (ISTR(1:3).EQ.'WAT') THEN 
           IBCPUN = 2
