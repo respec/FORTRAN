@@ -80,7 +80,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER, ALLOCATABLE :: OWY(:)
      
       DATA MISSING, QMIN 
-     $      /-10.0, 1.0D-10/
+     $      /-10.0, 1.0D-99/
 
 C     + + + END SPECIFICATIONS + + +
 C

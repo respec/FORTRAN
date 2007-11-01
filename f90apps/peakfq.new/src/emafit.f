@@ -119,7 +119,9 @@ c
      1  i,n,                                                ! input variables
      2  neps,nq
      
-      parameter (nq=15)
+Cprh      parameter (nq=15)
+C     use full set of probabilities found in PeakFQ
+      parameter (nq=32)
 
       double precision
      1  ql(*),qu(*),tl(*),tu(*),reg_skew,reg_mse,         ! input variables
@@ -128,11 +130,17 @@ c
 
       data neps/1/,eps/0.95d0/
       
-      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
-     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
+Cprh      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
+Cprh     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
+      data  pqd /
+     $ 0.9999, 0.9995, 0.9990, 0.9980, 0.9950, 0.9900, 0.9800, 0.9750,
+     $ 0.9600, 0.9500, 0.9000, 0.8000, 0.7000, 0.6667, 0.6000, 0.5704, 
+     $ 0.5000, 0.4292, 0.4000, 0.3000, 0.2000, 0.1000, 0.0500, 0.0400,
+     $ 0.0250, 0.0200, 0.0100, 0.0050, 0.0020, 0.0010, 0.0005, 0.0001/
      
       do 10 i=1,nq
-          pq(i) = pqd(i)
+Cprh          pq(i) = pqd(i)
+          pq(i) = 1.0 - pqd(i)
         call emafitb(n,ql,qu,tl,tu,reg_skew,reg_mse,neps,eps,
      1                  gbthrsh0,pq(i),
      1                  cmoms,yp(i),ci_low(i),ci_high(i))
@@ -2153,9 +2161,9 @@ c
       double precision 
      1  m,qP3
       
-      real rand
+c      real rand
       
-      rP3 = qP3(dble(rand()),m)
+c      rP3 = qP3(dble(rand()),m)
       return
       end
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
