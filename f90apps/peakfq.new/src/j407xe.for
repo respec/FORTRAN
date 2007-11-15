@@ -2338,7 +2338,7 @@ C       PUNCH 3 CARDS
      $                 (VAR(I-2),LCHAR(I),I=5,8)
   101   FORMAT('2',  A15,6(I3,1A7))
         WRITE(IPCH, 102)  STAID(1:15),(VAR(I-2),LCHAR(I),I=9,10),
-     $                    SYSAV,SYSSD, SYSG, VAR(9), LCHAR(9)
+     $                    SYSAV,SYSSD, SYSG, VAR(9), LCHAR(11)
   102   FORMAT('2',  A15,2(I3,1A7),' 83',F7.3,' 84',F7.3,' 85',F7.3,
      $         I3, 1A7)
         IX = 2
@@ -3493,6 +3493,9 @@ C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MISSNG /1.0D-99/
 C
+C     + + + FUNCTIONS + + +
+      DOUBLE PRECISION QP3
+C
 C     + + + EXTERNALS + + +
       EXTERNAL   EMADATA, EMAFIT
 C
@@ -3599,6 +3602,7 @@ C
       DO 20 I = 1,MXINT
         write(*,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
      $                          10**CILOW(I),10**CIHIGH(I)
+          SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
           WRCFC(I) = WRCYP(I)
           CLIML(I) = CILOW(I)
           CLIMU(I) = CIHIGH(I)
