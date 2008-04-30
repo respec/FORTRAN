@@ -6453,9 +6453,9 @@ C       start with instructions at or after beginning of run
         SPUMPT= SPUMPT+ 1
       END DO
 C
-      WRITE(99,*)    ' PSPUMK:NSPUM,SPUMPT',NSPUM,SPUMPT
-      WRITE(99,2000) ' PSPUMK:SPUMDX:',(SPUMDX(I),I=1,NSPUM)
-      WRITE(99,2000) ' PSPUMK:SPUMPO:',(SPUMPO(I),I=1,NSPUM)
+C      WRITE(99,*)    ' PSPUMK:NSPUM,SPUMPT',NSPUM,SPUMPT
+C      WRITE(99,2000) ' PSPUMK:SPUMDX:',(SPUMDX(I),I=1,NSPUM)
+C      WRITE(99,2000) ' PSPUMK:SPUMPO:',(SPUMPO(I),I=1,NSPUM)
 C
       RETURN
       END
@@ -6516,8 +6516,8 @@ C
       I5    = 5
       MUPFG = 0
 C
-      WRITE(99,2020) 'SPECLM:entry:SPUMPT,SPUMPO,DATIM:',
-     1                       SPUMPT,SPUMPO(SPUMPT),DATIM
+C      WRITE(99,2020) 'SPECLM:entry:SPUMPT,SPUMPO,DATIM:',
+C     1                       SPUMPT,SPUMPO(SPUMPT),DATIM
 C
       IF (SPUMPT.GT.0) THEN
 C       have some of these types of special actions
@@ -6525,13 +6525,13 @@ C
  10     CONTINUE
           CHKNXT = 0
           SPUMPX = SPUMPO(SPUMPT)
-          WRITE(99,2020) 'SPECLM:next ',SPUMPT,SPUMPX,
-     1               (SPUMIN(J,SPUMPX),J=21,25)
+C          WRITE(99,2020) 'SPECLM:next ',SPUMPT,SPUMPX,
+C     1               (SPUMIN(J,SPUMPX),J=21,25)
 C         see if the next one applies to this date
           CALL COPYI(I5,SPUMIN(21,SPUMPX),TMPDAT)
           TMPDAT(6) = 0
           CALL TIMDIF (DATIM,TMPDAT,I2,I1,NVALS)
-          WRITE(99,*) ' SPECLM:NVALS:',NVALS
+C          WRITE(99,*) ' SPECLM:NVALS:',NVALS
           IF (NVALS .EQ. 0) THEN
 C           this change is to occur now
 C
@@ -6559,7 +6559,7 @@ C
      I                  TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      I                  MULT,FUNC,DATIM,SPOUTM)
 C
-            WRITE(99,*) 'SPECLM:afterUpdate:',SPUMPT,SPUMPX,NSPUM
+C            WRITE(99,*) 'SPECLM:afterUpdate:',SPUMPT,SPUMPX,NSPUM
 C
             IF (SPUMPT.LT.NSPUM) THEN
 C             there are more to come
@@ -6729,7 +6729,7 @@ C       no appropriate targets
       END IF
 C      
       IF (SOPIN .EQ. 0) THEN
-        WRITE(99,*) "  FAIL-NO MATCH"
+C        WRITE(99,*) "  FAIL-NO MATCH"
       ELSE
 C       look for time series instructions matching this source/target
 C       DO 100 I= FOPKEY, LOPKEY
@@ -6749,9 +6749,9 @@ C
           KEY  = SKEY
  10       CONTINUE
             IF (KEY .EQ. 0) THEN
-              WRITE(99,*) 'UPDMFT:KEY:0:SKIP',I
+C              WRITE(99,*) 'UPDMFT:KEY:0:SKIP',I
             ELSE
-              WRITE(99,*) ' UPDMFT:GETTSI:KEY',KEY
+C              WRITE(99,*) ' UPDMFT:GETTSI:KEY',KEY
               CALL GETTSI (I220,KEY,
      O                     REC)
 C 
@@ -6857,8 +6857,8 @@ C
 C
                 IF (IMATCH.EQ.1) THEN
 C                 it matches, so update accordingly
-                  WRITE(99,2030) '  SPECACT:UPDMFT:b4 upd mfact, ' //
-     $               'a, aratio, mult, func ',a,aratio,mult,func
+C                  WRITE(99,2030) '  SPECACT:UPDMFT:b4 upd mfact, ' //
+C     $               'a, aratio, mult, func ',a,aratio,mult,func
                   OLDA = A
                   IF (FUNC.EQ.'=') THEN
                     A = ARATIO * MULT
@@ -6869,8 +6869,8 @@ C                 it matches, so update accordingly
                   ELSEIF (FUNC.EQ.'*') THEN
                     A = A * MULT
                   ELSE
-                    WRITE(99,*) '  unknown mfactr function "',
-     $                               FUNC,'" cant update'
+C                    WRITE(99,*) '  unknown mfactr function "',
+C     $                               FUNC,'" cant update'
                     IF (MESSU.GT.0) THEN
                       WRITE(MESSU,*) 'Unknown MFACTR function"',
      $                                 FUNC,'" cant update'
@@ -6900,7 +6900,7 @@ C                   write to archive file
 C
                   WRITE(SMSG,2030) '  SPECACT:UPDMFT:af upd mfact,' //
      $               ' a, aratio, mult, func ',a,aratio,mult,func,key
-                  WRITE(99,*) SMSG
+C                  WRITE(99,*) SMSG
                   CALL HDMES3(6,SMSG)
                 END IF
 C
@@ -6960,7 +6960,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       I2    = 2
 C
-      WRITE(99,*) ' SPECLX:entry', SPUMPT
+C      WRITE(99,*) ' SPECLX:entry', SPUMPT
 C
       INSPAC = -1
 C
