@@ -444,7 +444,7 @@ C
 C
 C     close all open WDM files
       DO 10 I= 1, 5
-        WRITE(99,2020) 'HSPSTA:EXT_UPD:closing',I,WDMSFL(I)
+C        WRITE(99,2020) 'HSPSTA:EXT_UPD:closing',I,WDMSFL(I)
         IF (WDMSFL(I) .NE. 0) THEN
           INQUIRE (WDMSFL(I),OPENED=WDOPFG(I),NAME=WDNAME(I))
           IF (WDOPFG(I)) THEN
@@ -457,8 +457,8 @@ C             special case for message file
               CALL WDFLCL (WDMSFL(I),
      O                     RETCOD)
             END IF
-            WRITE(99,2030)  'HSPSTA:EXT_UPD:closed ',
-     $                   I,WDMSFL(I),WDMXRC(I),RETCOD,TRIM(WDNAME(I))
+C            WRITE(99,2030)  'HSPSTA:EXT_UPD:closed ',
+C     $                   I,WDMSFL(I),WDMXRC(I),RETCOD,TRIM(WDNAME(I))
             WRITE(MSG,2010) 'HSPSTA:EXT_UPDATE:closed ',
      $                   WDMSFL(I),RETCOD,TRIM(WDNAME(I))
             ILEN = LEN_TRIM(MSG)
@@ -469,14 +469,14 @@ C
               OPEN(UNIT=WDMSFL(I),FILE=WDNAME(I),ACCESS='DIRECT',
      $             RECL=2048,STATUS='OLD')
               READ(UNIT=WDMSFL(I),REC=1) IBUFF
-              WRITE(99,*) ' HSPSTA:EXT_UPD:BUFFER STATE:',
-     $               IBUFF(1),IBUFF(29),IBUFF(31)
+C              WRITE(99,*) ' HSPSTA:EXT_UPD:BUFFER STATE:',
+C     $               IBUFF(1),IBUFF(29),IBUFF(31)
               CLOSE(UNIT=WDMSFL(I))
             END IF
 C
           ELSE
-            WRITE(99,2040) 'HSPSTA:EXT_UPD:not open',
-     $                   I,WDMSFL(I),TRIM(WDNAME(I))
+C            WRITE(99,2040) 'HSPSTA:EXT_UPD:not open',
+C     $                   I,WDMSFL(I),TRIM(WDNAME(I))
           END IF
         END IF
  10   CONTINUE
@@ -536,7 +536,7 @@ C     pause until receive filename from driver
       CALL M_GETSTRING (DMSG)
 C     READ (*,*) DMSG
 C
-      Write(99,2050) 'HSPSTA:EXT_UPDATE:Msg from Driver:', trim(dmsg)
+C      Write(99,2050) 'HSPSTA:EXT_UPDATE:Msg from Driver:', trim(dmsg)
 C
       READ (DMSG,1000,ERR=40) FILNAM
       GO TO 50
@@ -550,7 +550,7 @@ C
       Write(MSG,2050) 'HSPSTA:EXT_UPDATE:readfile:',trim(filnam)    
       ILEN = LEN_TRIM(MSG)
       CALL UPDATESTATUSX(7,ILEN,MSG)
-      Write(99,2050) 'HSPSTA:EXT_UPDATE:readfile:',trim(filnam)
+C      Write(99,2050) 'HSPSTA:EXT_UPDATE:readfile:',trim(filnam)
 C
       IF (ERRFLG .EQ. 0) THEN
 C       process change file
@@ -562,8 +562,8 @@ C       process change file
           ERRFLG= 1
 C
  70     CONTINUE
-        Write(99,2060) 'HSPSTA:EXT_UPDATE:file opened',
-     $                  INFIL,TRIM(FILNAM)
+C        Write(99,2060) 'HSPSTA:EXT_UPDATE:file opened',
+C     $                  INFIL,TRIM(FILNAM)
         !Write(*,*) '(EXT_UPDATE:File Opened)'
 
         ARCFIL= 116
@@ -641,9 +641,9 @@ C                 keep old value - add archiving function in final
                   CALL GTOSVR (RECORD,OFFSET,
      O                         OLDVAL)
 C
-                  IF (FUNC .NE. ' ') THEN
-                    WRITE(99,*) '  adjust value:',FUNC,OLDVAL,NEWVAL
-                  END IF
+C                  IF (FUNC .NE. ' ') THEN
+C                    WRITE(99,*) '  adjust value:',FUNC,OLDVAL,NEWVAL
+C                  END IF
 C
                   IF (FUNC.EQ.'+') THEN
                     NEWVAL = OLDVAL + NEWVAL
@@ -720,8 +720,8 @@ C                 hopeless
           IF (RETCOD .NE. 0 .AND. C .LT. 100000) GO TO 130
           WDMXRC(I) = IMXRC
 C
-          WRITE(99,2070) ' HSPSTA:EXT_UPDATE:opnWdmFile',
-     1                I,WDMSFL(I),RETCOD,C,IMXRC,TRIM(WDNAME(I))
+C          WRITE(99,2070) ' HSPSTA:EXT_UPDATE:opnWdmFile',
+C     1                I,WDMSFL(I),RETCOD,C,IMXRC,TRIM(WDNAME(I))
           IF (RETCOD .NE. 0) THEN
             WRITE(99,*) '  HSPSTA:EXT_UPDATE:error opening WDM'
 C           be sure io ON 99 is complete
@@ -790,7 +790,7 @@ C
       READ (UREC,1000,ERR=120,END=120) SVOL,SNUM,SGRPN,SMEMN,SMEMSB,
      $                       MULT,FUNC,TVOL,TNUM,TGRPN,TMEMN,TMEMSB
 C
-      WRITE(99,2000)  ' HSPSTA:MULT_UPDATE:urec:', TRIM(UREC)
+C      WRITE(99,2000)  ' HSPSTA:MULT_UPDATE:urec:', TRIM(UREC)
       WRITE(MSG,2000) ' HSPSTA:MULT_UPDATE:urec:', TRIM(UREC)
       ILEN = LEN_TRIM(MSG)
       CALL UPDATESTATUSX(7,ILEN,MSG)
