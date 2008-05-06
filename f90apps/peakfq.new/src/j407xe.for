@@ -200,7 +200,9 @@ C
 
         IF (EMAOPT.EQ.1) THEN
        write(*,*)
+       write(99,*)
        write(*,*)'Running EMA for station ',STAID
+       write(99,*)'Running EMA for station ',STAID
        write(*,*)
        write(*,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
      $                            NPKS,NSYS,GENSKU,RMSEGS
@@ -3518,8 +3520,8 @@ C
       ALLOCATE (THBY(NTHRESH), THEY(NTHRESH))
       ALLOCATE (THLO(NTHRESH), THUP(NTHRESH))
 C
-      write(*,*) 'RUNEMA: NTHRESH',NTHRESH
-      write(*,*) 'RUNEMA: THRBYR, THREYR, THRLWR, THRUPR'
+      write(99,*) 'RUNEMA: NTHRESH =',NTHRESH
+      write(99,*) 'RUNEMA: THRBYR,   THREYR,   THRLWR,       THRUPR'
       WYMIN = 9999
       WYMAX = -9999
       DO 5 I = 1,NTHRESH
@@ -3527,7 +3529,7 @@ C
         THEY(I) = THRESH(I)%THREYR
         THLO(I) = THRESH(I)%THRLWR
         THUP(I) = THRESH(I)%THRUPR
-        write(*,*) THBY(I),THEY(I),THLO(I),THUP(I)
+        write(99,*) THBY(I),THEY(I),THLO(I),THUP(I)
         IF (THBY(I).LT.WYMIN) WYMIN = THBY(I)
         IF (THEY(I).GT.WYMAX) WYMAX = THEY(I)
  5    CONTINUE
@@ -3563,8 +3565,9 @@ C       Weighted, set to root mean square
       write(99,*) 'REGSKEW:',REGSKEW
       write(99,*) 'REGMSE:',REGMSE
       write(99,*) 'GBTHRSH',GBTHRSH
-      write(99,*) 'QLow        QUpr        TLow        TUpr'
- 2000 format(1X,2F12.1,2D12.5)
+      write(99,*) '        QLow        QUpr',
+     $            '         TLow        TUpr'
+ 2000 format(1X,2F12.1,2D14.4)
       do 15 i = 1,NOBS
         write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
  15   continue
@@ -3572,18 +3575,21 @@ C
       CALL EMAFIT(NOBS,QL,QU,TL,TU,REGSKEW,REGMSE,GBTHRSH,
      O            WRCMOM,PR,WRCYP,CILOW,CIHIGH)
       
-      write(99,*) 'After EMAFIT'
-      write(99,*) 'NOBS:',NOBS
-      write(99,*) 'REGSKEW:',REGSKEW
-      write(99,*) 'REGMSE:',REGMSE
-      write(99,*) 'GBTHRSH',GBTHRSH
-      write(99,*) 'QLow        QUpr        TLow        TUpr'
-      DO 70 I = 1,NOBS
-        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
- 70   CONTINUE
-      write(99,*) 'WRCMOM-1',(WRCMOM(i,1),i=1,3)
-      write(99,*) 'WRCMOM-2',(WRCMOM(i,2),i=1,3)
- 2100 format(1X,F6.3,3F10.3)
+c      write(99,*) 'After EMAFIT'
+c      write(99,*) 'NOBS:',NOBS
+c      write(99,*) 'REGSKEW:',REGSKEW
+c      write(99,*) 'REGMSE:',REGMSE
+c      write(99,*) 'GBTHRSH',GBTHRSH
+c      write(99,*) 'QLow        QUpr        TLow        TUpr'
+c      DO 70 I = 1,NOBS
+c        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
+c 70   CONTINUE
+ 2010 format(1X,A8,3D16.8)
+      write(99,2010) 'WRCMOM-1',(WRCMOM(i,1),i=1,3)
+      write(99,2010) 'WRCMOM-2',(WRCMOM(i,2),i=1,3)
+      write(99,*)
+      write(99,*) '  Prob       EMA Est.        CL Low       CL High'
+ 2100 format(1X,F6.4,3F14.3)
       do 18 i = 1,MXINT
         write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i)
  18   continue
