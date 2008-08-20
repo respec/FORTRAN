@@ -374,7 +374,7 @@ C         do zero event counter
           END IF
 C
 C         compute error matrix
-          K = 0
+          K = 1
           X = YX(B)
           IF (X.LE.0.0) X = CLASS(J)
           IF (X.LE.0.0) THEN
@@ -383,9 +383,16 @@ C         compute error matrix
             X = 100.0*DIF/X
           END IF
  147      CONTINUE
+          IF (X .LE. ERRINT(K)) THEN
+            EMATRX(J,K) = EMATRX(J, K) + 1
+          ELSE IF (K .LT. 7) THEN
             K = K + 1
-          IF(K .LT. 7 .AND. X .GT. ERRINT(K)) GO TO 147
-          EMATRX(J,K) = EMATRX(J,K) + 1
+            GO TO 147
+          ELSE
+C           reached last error range
+            K = 8
+            EMATRX(J,K) = EMATRX(J,K) + 1
+          END IF
         ELSE
 C         bad/missing value on simulated or(and) observed
           NBVAL = NBVAL + 1
