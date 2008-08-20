@@ -195,7 +195,7 @@ C             compute error matrix
                   K = K + 1
                   GO TO 147
                 ELSE
-  C               reached last error range
+C                 reached last error range
                   K = 8
                   EMATRX(J, K) = EMATRX(J, K) + 1
                 END IF
