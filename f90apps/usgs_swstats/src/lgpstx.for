@@ -96,7 +96,7 @@ C
         DO 345 I=1,NQS
           LPROB = 1.D0 - DBLE(SE(I))
           LKF = KF(LSKEW,LPROB)
-          C(I)=XBAR+LKF*STD
+          C(I)= XBAR+ (LKF* STD)
 C         Dec 01 - correct for problem at lower tail for negative values
           IF (LOGARH .EQ. 2  .AND.  C(I) .LT. 0.0) C(I) = 0.0
  345    CONTINUE
@@ -106,7 +106,7 @@ C         Dec 01 - correct for problem at lower tail for negative values
         IF (NZI.GT.0) THEN
           IF (DBG) WRITE(98,*) "LGPSTX:conditional prob adj"
 C         zero events, conditional probability adjustment
-          CALL PA193X (C,NTOT,NZI,NTOP,NQS,SE,
+          CALL PA193X (C,NTOT,NZI,NTOP,NQS,SE,XBAR,STD,LSKEW,
      O                 CCPA)
           IF (DBG) WRITE(98,*) "LGPSTX:done PA193X"
           DO 350 I=1,NQS
@@ -279,7 +279,7 @@ C
 C
 C
       SUBROUTINE   PA193X
-     I                  (XIN,N,N0,N1,NQS,PROB,
+     I                  (XIN,N,N0,N1,NQS,PROB,XBAR,STD,LSKEW,
      O                   XOUT)
 C
 C     + + + PURPOSE + + +
@@ -328,7 +328,8 @@ C    WKIRBY, SWB  11/85.
 C
 C
 C     + + + DUMMY ARGUMENTS + + +
-      REAL   XIN(NQS), XOUT(NQS), PROB(NQS)
+      REAL   XIN(NQS), XOUT(NQS), PROB(NQS), XBAR, STD
+      DOUBLE PRECISION LSKEW
       INTEGER   N, N0, N1
 C
 C     + + + ARGUMENT DEFINITION + + +
@@ -339,14 +340,16 @@ C     N1     -
 C     XOUT   -
 C
 C     + + + LOCAL VARAIBLES + + +
-      REAL      PPRIME,LPROB(50)
+      DOUBLE PRECISION XK, PPRIME
+      REAL      LPROB(50)
       INTEGER   I
 C
 C     + + + FUNCTIONS + + +
       REAL   HARTKX
+      DOUBLE PRECISION KF
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   HARTKX
+      EXTERNAL   HARTKX, KF
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -355,7 +358,9 @@ C
   5   CONTINUE
       DO 10 I = 1,NQS
         PPRIME = (N*LPROB(I)-N0)/(N-N0-N1)
-        XOUT(I) = HARTKX(NQS, PPRIME, XIN, LPROB)
+        XK = KF(LSKEW,PPRIME)
+        XOUT(I)= XBAR+ (XK*STD)
+C       XOUT(I) = HARTKX(NQS, PPRIME, XIN, LPROB)
   10  CONTINUE
 C
       RETURN
@@ -390,7 +395,8 @@ C     + + + DATA INITIALIZATIONS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (P.GT.PROB(NQS) .OR. P.LT.PROB(1)) THEN
+      IF (NQS .GT. 1 .AND. 
+     1    (P.GT.PROB(NQS) .OR. P.LT.PROB(1))) THEN
 C       RETURN + OR - 1E29 IF OUT OF RANGE OF PROB
         HARTK=HUGE
         IF (P.LT.PROB(1))HARTK=-HUGE
