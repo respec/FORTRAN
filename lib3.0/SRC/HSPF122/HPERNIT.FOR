@@ -3391,6 +3391,10 @@ C
 C     + + + DATA INITIALIZATIONS + + +
       DATA       NH4ID/'AMMO','NIUM','    ','    ','    '/
 C
+C     + + + HISTORY + + +
+C     10/16/2008  PBD prevent divide by zero error if storages 
+C                 are practically zero
+C
 C     + + + END SPECIFICATIONS + + +
 C
 C     write(messu,*) 'into HPERNIT:NITRXN'
@@ -3761,7 +3765,14 @@ C     write(messu,*) '  in HPERNIT:NITRXN at TPLON'
 C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
 C       needed to make the storage zero
-        FRAC= PLON/(PLON-TPLON)
+        IF (ABS(PLON-TPLON) .GT. 1E-20) THEN
+          TFRAC= PLON/(PLON-TPLON)
+
+C         keep the smaller fraction; the smaller fraction
+C         of the fluxes will make all the storages either zero
+C         or positive
+          IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+        END IF
 C
 C       write a warning that the organic nitrogen value will
 C       be fixed up so that it does not go negative
@@ -3793,12 +3804,14 @@ C
 C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
 C       needed to make the storage zero
-        TFRAC= AMAD/(AMAD-TAMAD)
+        IF (ABS(AMAD-TAMAD) .GT. 1E-20) THEN
+          TFRAC= AMAD/(AMAD-TAMAD)
 C
-C       keep the smaller fraction; the smaller fraction
-C       of the fluxes will make all the storages either zero
-C       or positive
-        IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+C         keep the smaller fraction; the smaller fraction
+C         of the fluxes will make all the storages either zero
+C         or positive
+          IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+        END IF
 C
 C       write a warning that the adsorbed value of ammonium will
 C       be fixed up so that it does not go negative
@@ -3827,15 +3840,15 @@ C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
 C       needed to make the storage zero
 C       write(messu,*) '  in HPERNIT:NITRXN:NO3,TNO3 ',NO3,TNO3
-C       the following can sometimes cause divide by zero errors, 
-C       need to decide most appropriate fix  -  pbd  10/07
-        TFRAC= NO3/(NO3-TNO3)
-C       write(messu,*) '  in HPERNIT:NITRXN:TFRAC ',TFRAC
-C
-C       keep the smaller fraction; the smaller fraction
-C       of the fluxes will make all the storages either zero
-C       or positive
-        IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+        IF (ABS(NO3-TNO3) .GT. 1E-20) THEN
+          TFRAC= NO3/(NO3-TNO3)
+C         write(messu,*) '  in HPERNIT:NITRXN:TFRAC ',TFRAC
+C  
+C         keep the smaller fraction; the smaller fraction
+C         of the fluxes will make all the storages either zero
+C         or positive
+          IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+        END IF
 C
 C       write a warning that the value of nitrate in storage will
 C       be fixed up so that it does not go negative
@@ -3888,12 +3901,14 @@ C
 C       negative storage value is unrealistic
 C       write a warning that the solution value of ammonium will
 C       be fixed up so that it does not go negative
-        TFRAC= AMSU/(AMSU-TAMSU)
+        IF (ABS(AMSU-TAMSU) .GT. 1E-20) THEN
+          TFRAC= AMSU/(AMSU-TAMSU)
 C
-C       keep the smaller fraction; the smaller fraction
-C       of the fluxes will make all the storages either zero
-C       or positive
-        IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+C         keep the smaller fraction; the smaller fraction
+C         of the fluxes will make all the storages either zero
+C         or positive
+          IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+        END IF
 C
         CALL OMSTD (DATIM)
         CALL OMSTI (LSNO)
@@ -3924,12 +3939,14 @@ C     write(messu,*) '  in HPERNIT:NITRXN at TPLTN'
 C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
 C       needed to make the storage zero
-        TFRAC= PLTN/(PLTN-TPLTN)
+        IF (ABS(PLTN-TPLTN) .GT. 1E-20) THEN
+          TFRAC= PLTN/(PLTN-TPLTN)
 C
-C       keep the smaller fraction; the smaller fraction
-C       of the fluxes will make all the storages either zero
-C       or positive
-        IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+C         keep the smaller fraction; the smaller fraction
+C         of the fluxes will make all the storages either zero
+C         or positive
+          IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+        END IF
       END IF
 C
       IF (FRAC .GE. 1.0) THEN
