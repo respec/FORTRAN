@@ -3758,6 +3758,10 @@ C     indicating negative storages were projected (when < 1.0)
       FRAC= 1.0
 C
 C     calculate temporary particulate labile organic nitrogen in storage
+      IF (ABS(PLON) < 1.E-20) THEN
+C       set to zero if practically zero
+        PLON = 0.0
+      END IF
       TPLON= PLON- AMMIF+ IMMAM+ IMMNI+ PRETL- RFON
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TPLON'
@@ -3766,12 +3770,7 @@ C       negative storage value is unrealistic
 C       calculate that fraction of the flux that is
 C       needed to make the storage zero
         IF (ABS(PLON-TPLON) .GT. 1E-20) THEN
-          TFRAC= PLON/(PLON-TPLON)
-
-C         keep the smaller fraction; the smaller fraction
-C         of the fluxes will make all the storages either zero
-C         or positive
-          IF (TFRAC.LT.FRAC)  FRAC= TFRAC
+          FRAC= PLON/(PLON-TPLON)
         END IF
 C
 C       write a warning that the organic nitrogen value will
@@ -3796,6 +3795,10 @@ C
       END IF
 C
 C     calculate temporary adsorbed ammonium in storage
+      IF (ABS(AMAD) < 1.E-20) THEN
+C       set to zero if practically zero
+        AMAD = 0.0
+      END IF
       TAMAD= AMAD- DESAM+ ADSAM
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TAMAD'
@@ -3832,6 +3835,10 @@ C
       END IF
 C
 C     calculate temporary nitrate in storage
+      IF (ABS(NO3) < 1.E-20) THEN
+C       set to zero if practically zero
+        NO3 = 0.0
+      END IF
       TNO3= NO3+ NITRF- (IMMNI+DENI+UTNI+UTNIA)
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TNO3'
@@ -3872,6 +3879,10 @@ C
       END IF
 C
 C     calculate temporary solution ammonium in storage
+      IF (ABS(AMSU) < 1.E-20) THEN
+C       set to zero if practically zero
+        AMSU = 0.0
+      END IF
       TAMSU= AMSU+ DESAM+ AMMIF- (ADSAM+IMMAM+UTAM+UTAMA+NITRF+AMVO)
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at NUPTFG'
@@ -3932,6 +3943,10 @@ C
       END IF
 C
 C     calculate temporary below-ground plant n in storage
+      IF (ABS(PLTN) < 1.E-20) THEN
+C       set to zero if practically zero
+        PLTN = 0.0
+      END IF
       TPLTN= PLTN+ UTNI+ UTAM- PRETL- PRETR
 C
 C     write(messu,*) '  in HPERNIT:NITRXN at TPLTN'
