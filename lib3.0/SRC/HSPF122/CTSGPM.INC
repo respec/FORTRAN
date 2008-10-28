@@ -1,7 +1,7 @@
 C
 C     parameter for size of in memory timeseries instruction file
       INTEGER   MAXTSF
-      PARAMETER(MAXTSF=40000)
+      PARAMETER(MAXTSF=80000)
 C
 C     in memory common block for timeseries instruction file
       COMMON/CTSGPM/TSGPM
