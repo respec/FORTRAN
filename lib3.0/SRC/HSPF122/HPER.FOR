@@ -488,13 +488,13 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PGEN2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     IDELT
+      INTEGER     IDELT, ILEV
       CHARACTER*6 OPTYP
 C
 C     + + + EXTERNALS + + +
       EXTERNAL    PPTOT, ADDTIM, SPECL, ATEMP, SNOW, PWATER, SEDMNT,
      $            PSTEMP, PWTGAS, PQUAL, MSTLAY, PEST, NITR, PHOS,
-     $            TRACER, PBAROT, PPRINT, UPQUAN
+     $            TRACER, PBAROT, PPRINT, UPQUAN, PQRST
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA       OPTYP /'PERLND'/
@@ -527,6 +527,12 @@ C       force calculation of intermittently computed values
 C         first interval of run
           HRFG = 1
           DAYFG= 1
+        END IF
+C
+        IF (PQALFG .EQ. 1) THEN
+C         reset fluxes for pqual -- needs to happen before specacts -- jlk
+          ILEV= 1
+          CALL PQRST(ILEV)
         END IF
 C
         IF (SPAFP .GT. 0 .AND. SPAFP .LE. SPAKND) THEN
