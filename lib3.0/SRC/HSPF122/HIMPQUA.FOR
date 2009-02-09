@@ -384,10 +384,10 @@ CTHJ          PREC= PAD(PRECFP+IVL1)
 C
           IF (SLIQOX(QOFP) .GE. 1) THEN
 C           lateral inflow of qualof
-            SLIQO(QOFP)= PAD(SLIQOX(QOFP)+IVL1)
-          ELSE
+            SLIQO(QOFP)= SLIQO(QOFP)+ PAD(SLIQOX(QOFP)+IVL1)
+C          ELSE
 C           no lateral inflow
-            SLIQO(QOFP)= 0.0
+C            SLIQO(QOFP)= 0.0
           END IF
 C
 C         initialize atmospheric deposition
