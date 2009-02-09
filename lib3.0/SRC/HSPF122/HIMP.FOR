@@ -423,12 +423,12 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION IGEN2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     IDELT
+      INTEGER     IDELT, ILEV
       CHARACTER*6 OPTYP
 C
 C     + + + EXTERNALS + + +
       EXTERNAL    IPTOT,ADDTIM,SPECL,ATEMP,SNOW,IWATER,SOLIDS,IWTGAS,
-     $            IQUAL,IBAROT,IPRINT,UPQUAN
+     $            IQUAL,IBAROT,IPRINT,UPQUAN, IQRST
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA        OPTYP/'IMPLND'/
@@ -461,6 +461,12 @@ C         first interval of run
           STFG = 0
           HRFG = 1
           DAYFG= 1
+        END IF
+C
+        IF (IQALFG .EQ. 1) THEN
+C         reset fluxes for iqual -- needs to happen before specacts -- jlk
+          ILEV= 1
+          CALL IQRST(ILEV)      
         END IF
 C
         IF (SPAFP .GT. 0 .AND. SPAFP .LE. SPAKND) THEN
