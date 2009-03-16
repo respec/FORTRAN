@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}">
+	<Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util/; ../../src/adwdm" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Source Files">
+		<File RelativePath="..\..\SRC\AIDE\ANINIT.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\PRTAID.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\QTCHAR.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\QTFILE.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\QTNUMB.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\QTNUMS.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\QTSCN1.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\QTSTGT.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\UTMISC.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\UTUPRM.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\Z0UTIL.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\Z1UTIL.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\Z4UTIL.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH1.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH2.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH3.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH4.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH5.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH6.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH7.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH8.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBCH9.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX1.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX2.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX3.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX4.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX5.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX6.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX7.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX8.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBEX9.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL1.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL2.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL3.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL4.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL5.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL6.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL7.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL8.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCBFL9.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZCLBAK.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZSYSLF90.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZTSCN1.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZUTIL.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZUTILX.FOR"/>
+		<File RelativePath="..\..\SRC\AIDE\ZUTILY.FOR"/></Filter></Files>
+	<Globals/></VisualStudioProject>
