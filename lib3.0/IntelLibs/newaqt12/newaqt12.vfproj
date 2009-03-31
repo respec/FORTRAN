@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{F7E377B9-8CBA-4479-AF84-51325B55F0EE}">
+	<Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="..\..\src\aide; ..\..\src\graph;..\..\src\waide" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Source Files">
+		<File RelativePath="..\..\SRC\Newaqt12\AGMAP.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\DAMAP.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\DSPECI.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\DURANI.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\DURBAT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\EXSUTL.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\FTABAT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\FTABCR.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\GRMAP.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\HGET.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\HSPSTA.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\MAPSEG.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\MPSBAT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\PRWPLT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\SCNUTL.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\SGDATE.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\SGLABL.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\SGLIST.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\SGTABL.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\STSPEC.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\STSPUT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\STURBN.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\TSFREQ.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\tsplot.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UCDOIT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\ucgetm.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UCIBAT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UCIMOD.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UCIREA.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UCIREPT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UCIWRT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\ucputm.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UCSUPR.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UTCLAS.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UTDIR.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UTMAP.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UTPLOT.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\UTWIN.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\WATINP.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\WDMAP.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\WSGSIM.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\WSGSYS.FOR"/>
+		<File RelativePath="..\..\SRC\Newaqt12\WSGUTL.FOR"/></Filter></Files>
+	<Globals/></VisualStudioProject>
