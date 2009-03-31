@@ -834,7 +834,7 @@ C         simulate benthic algae
      I                NMINC,
      M                PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,BENAL(1),
      O                LIMBAL(1),BACO2,BALCLA(1),DOBALG,BODBAL,
-     O                TAMBAL,NO3BAL,PO4BAL,BGRO,BDTH,ORNBAL,
+     O                TAMBAL,NO3BAL,PO4BAL,BGRO(1),BDTH(1),ORNBAL,
      O                ORPBAL,ORCBAL)
 C
 C         compute associated fluxes

@@ -143,14 +143,16 @@ C     process table-type flow-flag
       TBSB= 1
       NVAL= 1
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
-     M             VOLFFG)
+     M             IVAL)
+      VOLFFG= IVAL(1)
 C
 C     process table-type flow-frac
       TBNO= 4
       TBSB= 1
       NVAL= 1
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
-     M             VOLFRC)
+     M             RVAL)
+      VOLFRC= RVAL(1)
 C
 C     check if monthly values needed
       IF (VOLFFG .GE. 1) THEN
@@ -204,14 +206,16 @@ C     process table-type heat-flag
       TBSB= 1
       NVAL= 1
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
-     M             HTFFG)
+     M             IVAL)
+      HTFFG= IVAL(1)
 C
 C     process table-type heat-frac
       TBNO= 8
       TBSB= 1
       NVAL= 1
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
-     M             HTFRC)
+     M             RVAL)
+      HTFRC= RVAL(1)
 C
 C     check if monthly values needed
       IF (HTFFG .GE. 1) THEN

@@ -2355,7 +2355,7 @@ C     + + + PURPOSE + + +
 C     Adjust gw elevation based on updated storages, etc.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    DATIM,LSNO,MESSU,MSGFL
+      INTEGER    DATIM(5),LSNO,MESSU,MSGFL
       REAL       PCW,PGW,UPGW,ULGWS,LLGWS,UZLIM,LZLIM,SELV,UELV,LELV,
      $           IFWSC,UZSN,UZCA,LZSN,TGWS0,UELFAC,LELFAC,SURS,IFWS,
      $           UZS,LZS,AGWS,TGWS,GWEL

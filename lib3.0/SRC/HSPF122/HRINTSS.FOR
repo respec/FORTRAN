@@ -1303,8 +1303,8 @@ C     Put one or more values into the buffer/extension and write
 C     to the tss as necessary
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   N,OFF(20),VO
-      REAL      VAL(20)
+      INTEGER   N,OFF(*),VO
+      REAL      VAL(*)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     N      - ???

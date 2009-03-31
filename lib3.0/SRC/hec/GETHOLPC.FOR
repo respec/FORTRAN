@@ -6,9 +6,9 @@ C     May cross work boundaries
 C
 C     ***** THIS IS A MACHINE DEPENDENT ROUTINE ******
 C
-C     INTEGER ISTR(*)                                                   HMlg
+      INTEGER ISTR(*)                                                   HMlg
 C     For Lahey INT*4 code, we must use an INT*2 word!!
-      INTEGER*2 ISTR(*)                                                 L
+C     INTEGER*2 ISTR(*)                                                 L
 C     CHARACTER CVAR*10                                                 HMlg
 C     INTEGER IVAR                                                      HMlg
 C     'CHEAT' BY EQUIVALENCING A INTEGER AND CHARACTER

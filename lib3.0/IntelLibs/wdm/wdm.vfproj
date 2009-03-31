@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}">
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{5199D704-EEFC-4723-9F87-09E26C9B1551}">
 	<Platforms>
 		<Platform Name="Win32"/>
 		<Platform Name="x64"/></Platforms>
 	<Configurations>
 		<Configuration Name="Debug|Win32" ConfigurationType="typeStaticLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util/; ../../src/adwdm" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
 				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
@@ -25,7 +25,7 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util/" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util/; ../../src/adwdm;../../src/wdm" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
 				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
@@ -45,20 +45,20 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
 	<Files>
-		<Filter Name="Source Files">
-		<File RelativePath="..\..\SRC\ADWDM\ADUTIL.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\EHUTLF90.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\MSEXPT.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\MSIMPT.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\MSOPEN.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\PRTFIL.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\USYSLF90.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\UTWDMD.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\UTWDMF.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\utwdt1.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\WDATM1.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\WDMCHK.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\WDMESS.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\WDOPVX.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\ZTWDMF.FOR"/></Filter></Files>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath="..\..\SRC\WDM\TSBUFR.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDATM2.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDATRB.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDATRU.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDBTCH.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDDLG.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDEXPT.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDIMPT.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDMID.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDSPTM.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDTBL2.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDTBLE.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDTMS1.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDTMS2.FOR"/>
+		<File RelativePath="..\..\SRC\WDM\WDTMS3.FOR"/></Filter></Files>
 	<Globals/></VisualStudioProject>

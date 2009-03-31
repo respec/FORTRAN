@@ -24,7 +24,7 @@ C     + + + EQUIVALENCES + + +
 C
       COMMON/CIOSTC/CRCOD,STNAM,OPNAM,        VARNAM,
      $              SUB
-      CHARACTER*1   CRCOD(2)
+      CHARACTER*2   CRCOD
       CHARACTER*6               OPNAM(MAXSTA),VARNAM(MAXSTA),
      $              SUB(3,MAXSTA)
       CHARACTER*15        STNAM

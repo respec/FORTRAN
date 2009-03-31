@@ -66,8 +66,8 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-C     this is a Lahey extension
-      CALL GETCL (TNAME)
+C     this is a Intel extension
+      CALL GETARG (1,TNAME)
       WRITE(99,*) 'XGTARG1:',FNAME
       WRITE(99,*) '      2:',TNAME
 C

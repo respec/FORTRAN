@@ -492,7 +492,7 @@ C     Create the current time label based on date and print
 C     interval code.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER     DATIM,PCODE,TIMLAB(3)
+      INTEGER     DATIM(5),PCODE,TIMLAB(3)
 C
 C     + + + LOCAL VARIABLES
       INTEGER      CURDAT(5)

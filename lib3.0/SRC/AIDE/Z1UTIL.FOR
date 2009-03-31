@@ -256,8 +256,8 @@ Chnb                      CALL ZLJUST (TMPSTR)
                   IF (FTYP(TFLD).EQ.FTF) THEN
 C                   file type field, check file validity
                     IOPEN= 0
-                    CALL ZFILVF (STRING,TFLD,IOPEN,
-     M                           ZERR)
+                    CALL ZFILVF (TFLD,IOPEN,
+     M                           STRING,ZERR)
                   ELSE
 C                   numeric or character field, verify validity
                     CALL ZVERIF(FTYP(TFLD),RTMIN,RTMAX,
@@ -414,8 +414,8 @@ C                   not a null value, verify its a good one
                     IF (FTYPI.EQ.FTF) THEN
 C                     file type field, check file validity
                       IOPEN= 0
-                      CALL ZFILVF (STRING,I,IOPEN,
-     M                             ZERR)
+                      CALL ZFILVF (I,IOPEN,
+     M                             STRING,ZERR)
                     ELSE
 C                     numeric or character field, verify validity
                       CALL ZVERIF(FTYPI,RTMIN,RTMAX,
@@ -467,8 +467,8 @@ C                   open file for each data row
                     STRING= ZMNTXT(ROWNDX)(SCOL(I):K)
                     IOPEN = 1
                     ZERR  = 0
-                    CALL ZFILVF (STRING,I,IOPEN,
-     O                           ZERR)
+                    CALL ZFILVF (I,IOPEN,
+     O                           STRING,ZERR)
                     IF (ZERR.NE.0) THEN
 C                     couldn't open file
                       ZRET= 0

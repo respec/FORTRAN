@@ -1529,7 +1529,7 @@ C     + + + LOCAL VARIABLES + + +
      $            PCFL16(3),PCFL17(5),PCFL18(5),PCFL19(5),PCFL20(5),
      $            PCFL21(5),PCFL22(5),PCFL23(5),PCFL24(1),PCFL25(3),
      $            PCFL26(3),PCFL27(5),PCFL28(5),PLIFX1(5,5),PLIFX2(4),
-     $            PLITOT(5),APRINT(231)
+     $            PLITOT(5),APRINT(231), RVAL(1)
       CHARACTER*32  UNITID,CSTAT(8),CDEFCT(5),CCFL10(3,2),CCFL11(3,2),
      $              CADTOT(3,2),CLIFX1(5),CLATINS(5),CCFLX2(5),
      $              CCFLX3(3),CCFL25(3),CCFL26(3),CCFL27(5),CCFL28(5),
@@ -1830,7 +1830,8 @@ C
 C       above-ground and litter compartments simulated
 C
 C       above-ground layer
-        CALL TRNVEC (I1,AGPLTN,MFACTA,MFACTB,
+        RVAL(1) = AGPLTN
+        CALL TRNVEC (I1,RVAL,MFACTA,MFACTB,
      O               PSTATA)
         IF (PRINTU .GT. 0 .AND. PFLAG(10) .LE. LEV) THEN
           WRITE (PRINTU,2050)  PSTATA
@@ -1844,7 +1845,8 @@ C         compile values for binary printout
         END IF
 C
 C       litter layer
-        CALL TRNVEC (I1,LITTRN,MFACTA,MFACTB,
+        RVAL(1)= LITTRN
+        CALL TRNVEC (I1,RVAL,MFACTA,MFACTB,
      O               PSTATA)
         IF (PRINTU .GT. 0 .AND. PFLAG(10) .LE. LEV) THEN
           WRITE (PRINTU,2060)  PSTATA

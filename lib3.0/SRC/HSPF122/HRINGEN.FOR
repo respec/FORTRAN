@@ -280,7 +280,7 @@ C       read dates and times, as user supplied them
  10     CONTINUE
 C         error - cannot read start and end dates
           ITMP(1)= 55
-          CALL OMSTC (ITMP,UCIBF1)
+          CALL OMSTC (ITMP(1),UCIBF1)
           SGRP= 123
           CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M               ECOUNT)
@@ -346,7 +346,7 @@ C       Special Action output
  40     CONTINUE
 C         error - cannot read output levels
           ITMP(1)= 35
-          CALL OMSTC (ITMP,UCIBF1)
+          CALL OMSTC (ITMP(1),UCIBF1)
           SGRP= 124
           CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M               ECOUNT)
@@ -407,7 +407,7 @@ C       ascertain functions to be performed in this run
  60     CONTINUE
 C         error - cannot read flags
           ITMP(1)= 60
-          CALL OMSTC (ITMP,UCIBF1)
+          CALL OMSTC (ITMP(1),UCIBF1)
           SGRP= 125
           CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M               ECOUNT)

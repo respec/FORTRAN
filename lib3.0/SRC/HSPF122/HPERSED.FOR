@@ -103,7 +103,8 @@ C
 C     initial detached storage - table-type sed-stor
       I2= 46
       CALL RTABLE (I2,I1,I1,UUNITS,
-     M             DETS)
+     M             RVAL)
+      DETS= RVAL(1)
 C
 C     initialize sediment transport capacity
       IF (SDOPFG .EQ. 1) THEN
