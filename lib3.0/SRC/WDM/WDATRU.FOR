@@ -183,8 +183,8 @@ C               -81 - data set does not exist
 C              -107 - attribute not present on this data set
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   INDX, LEN, RETC, LATDMS, LNGDMS
-      REAL      LATDEG, LNGDEG
+      INTEGER   INDX, LEN, RETC, LATDMS, LNGDMS, IVAL(1)
+      REAL      LATDEG, LNGDEG, RVAL(1)
 C
 C     + + + FUNCTIONS + + +
       INTEGER   CNVTDG
@@ -198,11 +198,13 @@ C
 C
 C     look for latitude in decimal degree
       INDX = 8
-      CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, LATDEG, RETC )
+      CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, RVAL, RETC )
+      LATDEG= RVAL(1)
       IF (RETC .EQ. 0) THEN
 C       found latitude, get longitude in decimal degree
         INDX = 9
-        CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, LNGDEG, RETC )
+        CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, RVAL, RETC )
+        LNGDEG= RVAL(1)
       END IF
       IF (RETC .EQ. 0) THEN
 C       successfully retrieved lat & long in decimal degrees
@@ -212,11 +214,13 @@ C       successfully retrieved lat & long in decimal degrees
       ELSE
 C       problem retrieving lat/lng in decimal degrees, try dddmmss
         INDX = 54
-        CALL WDBSGI ( WDMSFL, DSN, INDX, LEN, LATDMS, RETC )
+        CALL WDBSGI ( WDMSFL, DSN, INDX, LEN, IVAL, RETC )
+        LATDMS= IVAL(1)
         IF (RETC .EQ. 0) THEN
 C         found latitude, get longitude in dddmmss
           INDX = 55
-          CALL WDBSGI ( WDMSFL, DSN, INDX, LEN, LNGDMS, RETC )
+          CALL WDBSGI ( WDMSFL, DSN, INDX, LEN, IVAL, RETC )
+          LNGDMS= IVAL(1)
         END IF
         IF (RETC .EQ. 0) THEN
 C         successfully retrieved lat & long in dddmmss, convert
@@ -226,11 +230,13 @@ C         successfully retrieved lat & long in dddmmss, convert
         ELSE
 C         last chance, look for center lat & long, decimal degrees
           INDX = 96
-          CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, LATDEG, RETC )
+          CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, RVAL, RETC )
+          LATDEG= RVAL(1)
           IF (RETC .EQ. 0) THEN
 C           found center lat, get long in decimal degrees
             INDX = 97
-            CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, LNGDEG, RETC )
+            CALL WDBSGR ( WDMSFL, DSN, INDX, LEN, RVAL, RETC )
+            LNGDEG= RVAL(1)
           END IF
           IF (RETC .EQ. 0) THEN
 C           successfully retrieved center lat & long

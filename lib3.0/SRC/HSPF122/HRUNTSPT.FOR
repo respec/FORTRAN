@@ -268,7 +268,7 @@ C       this frame is already included in bcwnov
 C
         CWF = 0
 C
-        CALL PTVAL(TOTCOM,OFF,XVAR,VOTFRM)
+        CALL PTVAL(TOTCOM,OFF(1),XVAR,VOTFRM)
         VOLFRM = VOTFRM
 C
         VOTFRM = VOTFRM + TOTCOM
@@ -281,7 +281,7 @@ C
       N     = 1
       WORDI = BCWCAL(BCWBTI,BCWNOV)
 C
-      CALL PTVAL(N,OFF,WORDR,VOTSB)
+      CALL PTVAL(N,OFF(1),WORDR(1),VOTSB)
 C
       RETURN
       END
@@ -505,7 +505,7 @@ C
           OFF(1) = 0
           FORFLG = 1
           VOTSB  = VOTFRM
-          CALL PTVAL(N,OFF,WORDR,VOTSB)
+          CALL PTVAL(N,OFF(1),WORDR(1),VOTSB)
           BCW    = VOTSB + 1
           CALL UPDLAB(BCW,RECLT,FREC,TSSFL,YEAR)
 C
@@ -524,7 +524,7 @@ C         virtural origin of the next year
           WORDI  = BCW
           FORFLG = 1
 C
-          CALL PTVAL(N,OFF,WORDR,VOTSB)
+          CALL PTVAL(N,OFF(1),WORDR(1),VOTSB)
 C
 C         update the dataset label for the year just completed
 C
@@ -553,7 +553,7 @@ C
           N        = 1
           OFF(1)   = 0
 C
-          CALL PTVAL(N,OFF,WORDR,VONXYR)
+          CALL PTVAL(N,OFF(1),WORDR(1),VONXYR)
 C
 C         initiate new tsb -- get votfrm for use by newtsb
 C
@@ -719,7 +719,7 @@ C     have information on the location of the mean values in the
 C     frame.  the instruction contains only information on the
 C     values being transfered.
 C
-      CALL PTVAL(TOTCOM,OFF,XVAR,VOTFRM)
+      CALL PTVAL(TOTCOM,OFF(1),XVAR,VOTFRM)
 C
       VOTFRM = VOTFRM + TOTCOM
 C     set counters for potential compressed frames
@@ -1685,7 +1685,7 @@ C
         N      = 1
         WORDI  = BCWCAL(BCWBTI,BCWNOV)
 C
-        CALL PTVAL(N,OFF,WORDR,VOTSB)
+        CALL PTVAL(N,OFF(1),WORDR(1),VOTSB)
 C
         WORDI  = BCWNOV
         TZERO  = TZERO +(WORDI-1)*DELTAT
@@ -1863,7 +1863,7 @@ C
       OFF(1) = 0
       FORFLG = 0
 C
-      CALL PTVAL(TOTCOM,OFF,XVAR,VOTFRM)
+      CALL PTVAL(TOTCOM,OFF(1),XVAR,VOTFRM)
 C
       BCWNOV = BCWNOV + 1
       FRMTIM = FRMTIM + DELTAT

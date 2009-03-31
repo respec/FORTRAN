@@ -238,7 +238,8 @@ C             check number input against number desired
             ELSE
 C             just show total valid values entered
               LSGRP= 79
-              CALL PMXTXI (MESSFL,LSCLU,LSGRP,I1,I1,-I1,I1,CNT)
+              IVAL(1,1)= CNT
+              CALL PMXTXI (MESSFL,LSCLU,LSGRP,I1,I1,-I1,I1,IVAL)
             END IF
             CALL ZMNSST
             LSGRP= 83
@@ -493,7 +494,8 @@ C             check number input against number desired
             ELSE
 C             just show total valid values entered
               LSGRP= 79
-              CALL PMXTXI (MESSFL,LSCLU,LSGRP,I1,I1,-I1,I1,CNT)
+              IVAL(1)= CNT
+              CALL PMXTXI (MESSFL,LSCLU,LSGRP,I1,I1,-I1,I1,IVAL)
             END IF
             CALL ZMNSST
             LSGRP= 83
@@ -750,7 +752,8 @@ C             check number input against number desired
             ELSE
 C             just show total valid values entered
               LSGRP= 79
-              CALL PMXTXI (MESSFL,LSCLU,LSGRP,I1,I1,-I1,I1,CNT)
+              IVAL(1)= CNT
+              CALL PMXTXI (MESSFL,LSCLU,LSGRP,I1,I1,-I1,I1,IVAL)
             END IF
             CALL ZMNSST
             LSGRP= 83

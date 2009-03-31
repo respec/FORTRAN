@@ -1070,7 +1070,7 @@ C     fraction
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      ECNT(2),MSGFL,J,MESSU,
-     $             NEXITS,RCHNO,DATIM
+     $             NEXITS,RCHNO,DATIM(5)
       REAL         BSED,BNUT,DEPSCR,DSNUT,ISNUT,OSED(5),OSNUT(5),
      $             RBNUTS,ROSED,ROSNUT,RSED,RSNUTS,SNUT
       CHARACTER*20 NUTID
@@ -2660,7 +2660,7 @@ C       material balance
         CALL BALCHK
      I              (I3,RCHNO,DATIM,MESSU,PRINTU,MSGFL,
      I               PRTAMS,PRTAMT,TAMIN,TAMDIF,UNITID,I1,
-     M               NUWCNT)
+     M               NUWCNT(1))
       END IF
 C
       IF (NO2FG .EQ. 1) THEN
@@ -2749,7 +2749,7 @@ C         net nitrification is negative - count as outflow
         CALL BALCHK
      I              (I3,RCHNO,DATIM,MESSU,PRINTU,MSGFL,
      I               PRNO2S,PRNO2,NO2IN,NO2DIF,UNITID,I1,
-     M               NUWCNT)
+     M               NUWCNT(1))
 C
       END IF
 C
@@ -2853,7 +2853,7 @@ C     material balance
       CALL BALCHK
      I            (I3,RCHNO,DATIM,MESSU,PRINTU,MSGFL,
      I             PRNO3S,PRNO3,NO3IN,NO3DIF,UNITID,I1,
-     M             NUWCNT)
+     M             NUWCNT(1))
 C
 C
       IF (PO4FG .EQ. 1) THEN
@@ -3085,7 +3085,7 @@ C
         CALL BALCHK
      I              (I3,RCHNO,DATIM,MESSU,PRINTU,MSGFL,
      I               PRPO4S,PRPO4T,PO4IN,PO4DIF,UNITID,I1,
-     M               NUWCNT)
+     M               NUWCNT(1))
 C
       END IF
 C

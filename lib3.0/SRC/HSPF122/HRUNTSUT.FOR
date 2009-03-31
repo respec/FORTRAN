@@ -230,7 +230,7 @@ C     + + + COMMON BLOCKS- GETCOM + + +
       INCLUDE   'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   ENDROW,I,I4,STROW,SCLU,SGRP,DATIM,START
+      INTEGER   ENDROW,I,I4,STROW,SCLU,SGRP,DATIM(5),START
       REAL      Y
 C
 C     + + + EXTERNALS + + +

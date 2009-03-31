@@ -198,7 +198,7 @@ C             wildcard matching capability added in
               IF (STRFND(I64,FLN1,I1,WLDCHR) .NE. 0) THEN
 C               if (FLNAME .NE. 'ANNIE.LOG') then
 C               asterik in filename means a wildcard was entered
-                CALL ZMNWLD (FLN1,GOTNAM)
+                CALL ZMNWLD (FLNAME,GOTNAM)
 C               sooner or later, we need a regular file name, so loop back
                 REDO = 2
 C               but try to keep the menu from being cleared of all that hard work

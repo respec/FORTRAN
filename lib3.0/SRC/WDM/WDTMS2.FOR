@@ -1176,7 +1176,7 @@ C                -82 - data set is not a time-series data set
 C               -107 - one or more attributes not present in data set
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   GPFLG, DREC, RETC, LEN, ZERO, FLAG, INDX
+      INTEGER   GPFLG, DREC, RETC, LEN, ZERO, FLAG, INDX, IVAL(1)
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  ZIPI
@@ -1214,20 +1214,24 @@ C       get time step
         LEN = 1
         INDX= 33
         CALL WDBSGI ( WDMSFL, DSN, INDX, LEN,
-     $                TSTEP, RETC )
+     $                IVAL, RETC )
         IF (RETC .EQ. -107) THEN
 C         time step not present
           TSTEP = 0
           FLAG = 1
+        ELSE
+          TSTEP = IVAL(1)
         END IF
 C       get time units 
         INDX = 17
         CALL WDBSGI ( WDMSFL, DSN, INDX, LEN,
-     $                TCODE, RETC )
+     $                IVAL, RETC )
         IF (RETC .EQ. -107) THEN
 C         time code not present
           TCODE = 0
           FLAG = 1
+        ELSE
+          TCODE= IVAL(1)
         END IF
         IF (FLAG .EQ. 1  .AND.  RETCOD .NE. -6) THEN
 C         missing some attributes
