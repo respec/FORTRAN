@@ -378,7 +378,7 @@ C               add another data row
                 DROW= DROW+ 1
 C               build edit buffer values for screen
                 CALL TSDROW (DATA(1),DROW,NUMDSN,OLEN,TBUFF,
-     I                       WIDTH,NPOS,SGFD,DPLA,LORS,THRSH,DTFG)
+     I                       WIDTH,NPOS,SGFD,DPLA,LORS,THRSH,DTFG(1))
                 IF (TDSN.GT.0) THEN
 C                 store offset in data-set array for this data value
                   DPOS(DROW)= INUM
@@ -514,7 +514,7 @@ C           add another data row
             DROW= DROW+ 1
 C           build edit buffer values for screen
             CALL TSDROW (SUM(1),DROW,NUMDSN,ILEN,TBUFF,
-     I                   WIDTH,J+1,SGFD,DPLA,LORS,THRSH,DTFG)
+     I                   WIDTH,J+1,SGFD,DPLA,LORS,THRSH,DTFG(1))
 C           allow user to edit 1st column of values
             CALL TSGDAT (DROW,DPOS,
      O                   IRET)

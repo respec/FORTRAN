@@ -567,9 +567,9 @@ C             draw a line
             ELSE
 C             draw a single point
               IF (SYMBL(K) .GT. 0)THEN
-                CALL GMARK1(SYMBL(K),HGT,X,Y)
+                CALL GMARK1(SYMBL(K),HGT,X(1),Y(1))
               ELSE
-                CALL GMARK1(I1,HGT,X,Y)
+                CALL GMARK1(I1,HGT,X(1),Y(1))
               END IF
             END IF
           END IF
@@ -1380,9 +1380,9 @@ C         plot if good
             IF (ISYMSZ .NE. 0) THEN
               J = BUFPOS(1,KS) + M - BUFPOS(1,KY)
               Z = HGT*((YX(J)-SYMIN)/DENOM)
-              CALL GMARK1(SYMBL(K),Z,SX,SY)
+              CALL GMARK1(SYMBL(K),Z,SX(1),SY(1))
             ELSE
-              CALL GMARK1(SYMBL(K),HGT,SX,SY)
+              CALL GMARK1(SYMBL(K),HGT,SX(1),SY(1))
             END IF
           END IF
 C

@@ -659,7 +659,8 @@ C     transformation, and table titles.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MESSFL,SCLU,DSNCNT,SIGDIG(DSNCNT),
-     $            DECIML(DSNCNT),BAD(DSNCNT),DSNBUF(DSNCNT)
+     $            DECIML(DSNCNT),DSNBUF(DSNCNT)
+      REAL        BAD(DSNCNT)
       CHARACTER*1 TITLE(48,DSNCNT)
 C
 C     + + + ARGUMENT DEFINITIONS + + +

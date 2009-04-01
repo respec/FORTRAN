@@ -773,14 +773,14 @@ C             should 'or' condition be used
 C         list information about search
           CALL PRWFLS (MESSFL,SCLU,TYPE,SACNT,SANAM,SATYP,SABEG,
      I                 SAVAL,SALEN,SAIMIN,SAIMAX,SARMIN,SARMAX,
-     I                 SACOND,SAOR,DSNMIN,DSNMAX,TYPSTR,
+     I                 SACOND,SAOR,DSNMIN(1),DSNMAX(1),TYPSTR,
      O                 RETCOD)
 C
           IF (RETCOD .EQ. 0) THEN
 C           do search
             CALL PRWFDS (WDMSFL,TYPE,SACNT,SAIND,SATYP,SABEG,SAVAL,
      I                   SALEN,SAIMIN,SAIMAX,SARMIN,SARMAX,SACOND,SAOR,
-     I                   MESSFL,SCLU,MAXDSN,DSNMIN,DSNMAX,
+     I                   MESSFL,SCLU,MAXDSN,DSNMIN(1),DSNMAX(1),
      M                   DSN,DSNCNT,
      O                   DSBFUL)
           END IF

@@ -290,8 +290,8 @@ C       english/metric units flag
         CALL QGETIB(INUM,IBAS,EMFG)
 C       put global block parameters to in memory uci file
         RNINFO = UCINFO(1)
-        CALL PUTGLO (START,ENDAT,OUTLVL,SPOUT,
-     I               RESFG,RUNFG,EMFG,RNINFO)
+        CALL PUTGLO (START,ENDAT,OUTLVL(1),SPOUT(1),
+     I               RESFG(1),RUNFG(1),EMFG(1),RNINFO)
       END IF
 C
       RETURN
