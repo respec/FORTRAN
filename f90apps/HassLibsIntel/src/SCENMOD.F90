@@ -1,5 +1,7 @@
       MODULE SCENMOD
 
+        USE KERNEL32
+        
         PUBLIC M_SIMSCN, M_ACTSCN, M_COPSCN, M_REPUCI
         PUBLIC M_DELSCN, M_UCISAV, M_GLOBLK, M_DELUCI
         PUBLIC M_GTNXKW, M_XTABLE, M_XBLOCK, M_PUTUCI, M_XTINFO
@@ -16,19 +18,21 @@
           INTEGER      FUN
         END TYPE FILTYP
 
-        TYPE (FILTYP),SAVE    :: MSG,UCI,WDM(4),ECH
-        INTEGER,      SAVE    :: FILES(15)
-        INTEGER,      SAVE    :: I0    = 0
-        INTEGER,      SAVE    :: I1    = 1
-        INTEGER,      SAVE    :: UNIT_FLG
-        INTEGER,      SAVE    :: ECOUNT
-        INTEGER,      SAVE    :: DBGLEV = 0
-        INTEGER,      SAVE    :: HPIN = 0
-        INTEGER,      SAVE    :: HPOUT = 0
-        INTEGER,      SAVE    :: MOD_INTEG_FLAG = 0
-        REAL,         SAVE    :: MOD_INTEG_TIMESTEP = 0  !days
-        CHARACTER*256,SAVE    :: MOD_INTEG_FILENAME = ""
-        LOGICAL,      SAVE    :: DBGPAU = .FALSE.
+        TYPE (FILTYP),  SAVE    :: MSG,UCI,WDM(4),ECH
+        TYPE(T_OVERLAPPED),SAVE :: IOVL  
+        INTEGER,        SAVE    :: FILES(15)
+        INTEGER,        SAVE    :: I0    = 0
+        INTEGER(DWORD), SAVE    :: I0DW = 0
+        INTEGER,        SAVE    :: I1    = 1
+        INTEGER,        SAVE    :: UNIT_FLG
+        INTEGER,        SAVE    :: ECOUNT
+        INTEGER,        SAVE    :: DBGLEV = 0
+        INTEGER(HANDLE),SAVE    :: HPIN = 0
+        INTEGER(HANDLE),SAVE    :: HPOUT = 0
+        INTEGER,        SAVE    :: MOD_INTEG_FLAG = 0
+        REAL,           SAVE    :: MOD_INTEG_TIMESTEP = 0  !days
+        CHARACTER*256,  SAVE    :: MOD_INTEG_FILENAME = ""
+        LOGICAL,        SAVE    :: DBGPAU = .FALSE.
 
       CONTAINS
 
@@ -65,16 +69,19 @@
 
         INTEGER FUNCTION UPDATESTATUS(I,J)
 
-          INTEGER    WriteFile, PeekNamedPipe, ReadFile
-          !DEC$ ATTRIBUTES DLLIMPORT ::WriteFile, PeekNamedPipe, ReadFile
+          !INTEGER    WriteFile, PeekNamedPipe, ReadFile
 
           INTEGER,       INTENT(IN) :: I
           INTEGER*1  J(*)
 
-          INTEGER    K, L, lr, la, lm
+          INTEGER(LPDWORD)  L, lr, lm, lx, K
+          INTEGER(DWORD)    la 
 
           CHARACTER*255 T,O,X
-          INTEGER*2  P, S(257)
+          INTEGER(DWORD) P
+          
+          INTEGER(LPCVOID) SPTR
+          
           INTEGER*1  M(200)
 
           UPDATESTATUS = 0 !assume ok
@@ -102,7 +109,7 @@
                     ELSE IF (I .EQ. 99) THEN
                       X = "(MSG99"
                     END IF
-                    O = X(1:LEN_TRIM(X))//" "//T(1:P)//")"
+                    O = X(1:LEN_TRIM(X))//" "//T(1:P)//")"//CHAR(0)
                   END IF
                   P = LEN_TRIM(O)
                   IF (DBGLEV>0) THEN
@@ -110,13 +117,10 @@
                     IF (DBGPAU) READ(*,*)
                   END IF
                   IF (I.NE.0) THEN
-                    DO K = 1,P
-                      S(K) = ICHAR(O(K:K))
-                    END DO
                     P = P+ 1
-                    S(P) = 0
-                    P = P* 2
-                    L=WriteFile(Carg(HPOUT),S,Carg(P),K,Carg(0))
+                    SPTR = LOC(O)
+                    !L=WriteFile(Carg(HPOUT),S,Carg(P),K,Carg(0))
+                    L=WriteFile(HPOUT,SPTR,P,K,IOVL)
                     IF (DBGLEV>0) THEN
                       WRITE(*,*) "Write:",HPOUT,P,L,K
                       IF (DBGPAU) READ(*,*)
@@ -130,9 +134,12 @@
             END IF
           ELSE !just looking for Pause or Cancel
             IF (HPIN .GT. 0) THEN ! check for user messages
-              L = PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
+              !L = PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
+              L = PeekNamedPipe(HPIN,NULL,NULL,lr,lx,lm)
               IF (L .NE. 0 .AND. LA .GT. 0) THEN ! a message
-                L = ReadFile(CARG(HPIN), M, CARG(la), lr, Carg(0))
+                !L = ReadFile(CARG(HPIN), M, CARG(la), lr, Carg(0))
+                SPTR= LOC(M)
+                L = ReadFile(HPIN, SPTR, la, lr, IOVL)
                 IF (DBGLEV>0) THEN
                   WRITE(*,*) "A message!",HPIN,L,LA,LR,M(1)
                   IF (DBGPAU) READ(*,*)
@@ -140,7 +147,8 @@
                 IF (M(1) .EQ. ICHAR('P')) THEN ! pause
                   LA = 0
                   DO WHILE (LA.EQ.0)
-                    L=PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
+                    !L=PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
+                    L=PeekNamedPipe(HPIN,NULL,NULL,lr,lx,lm)
                   END DO
                 END IF
                 IF (M(1) .EQ. ICHAR('C')) THEN ! cancel
@@ -194,8 +202,8 @@
 
           ! avoid some lahey math errors
           LFLAG = .TRUE.
-          CALL INVALOP (LFLAG)
-          CALL UNDFL (LFLAG)
+          !CALL INVALOP (LFLAG)
+          !CALL UNDFL (LFLAG)
           ! CALL OVEFL (LFLAG)    dangerous to avoid these
           ! CALL DVCHK (LFLAG)
 
@@ -1202,27 +1210,26 @@
 
         SUBROUTINE M_GETSTRING (S)
 
-          INTEGER    PeekNamedPipe, ReadFile
-          !DEC$ ATTRIBUTES DLLIMPORT :: PeekNamedPipe, ReadFile, Sleep
+          !INTEGER    PeekNamedPipe, ReadFile
 
           CHARACTER(LEN=*),INTENT(OUT)  :: S
-          INTEGER    L, lr, la, lm, I
-          INTEGER*1  M(200)
+          INTEGER(LPDWORD)  L, lr, la, lm, I
+          INTEGER(LPVOID) SPTR
+          INTEGER(DWORD)  LX
 
           S = ''
           DO WHILE (LEN_TRIM(S) .EQ. 0)
-            L = PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
+            !L = PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
+            L = PeekNamedPipe(HPIN,NULL,NULL,lr,la,lm)
             IF (L .NE. 0 .AND. LA .GT. 0) THEN ! a message
-              L = ReadFile(CARG(HPIN), M, CARG(la), lr, Carg(0))
-              !WRITE(*,*) 'm_getstring',LR,HPIN
+              !L = ReadFile(CARG(HPIN), M, CARG(la), lr, Carg(0))
+              SPTR = LOC(S)
+              L = ReadFile(HPIN, SPTR, lX, LR, IOVL)
+                !WRITE(*,*) 'm_getstring',LR,HPIN
               !WRITE(99,*) 'm_getstring',LR,HPIN
-              DO I = 1,LR-1
-                S(I:I) = CHAR(M(I))
-              END DO
               !WRITE(*,*) 'm_getstring',trim(s)
             ELSE
-              l = 10
-              call sleep(val(l))
+              call sleep(10)
             END IF
           END DO
           S = ADJUSTL(S)

@@ -323,14 +323,14 @@ C     + + + ARGUMENT DEFINTIONS + + +
 C     HUNSEC - hundredths of a second to delay
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     TIM, OTIM
+      REAL    TIM, OTIM
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      CALL TIMER(TIM)
-      OTIM = TIM + HUNSEC
+      CALL  CPU_TIME(TIM)
+      OTIM = TIM + HUNSEC/100
       DO WHILE (OTIM > TIM)
-        CALL TIMER(TIM)
+        CALL  CPU_TIME(TIM)
       END DO
 C
       RETURN
