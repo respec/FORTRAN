@@ -103,8 +103,8 @@ C     init map
       CMSID(1) = ' '
       CALL MAPINI (NMAPS,MAPDEV,MAPBRD,INTACT,MAPDUM,MAPDUM,
      I             SFCOLR,UFCOLR,SBCOLR,UBCOLR,BACKCL,
-     I             LSIZE,RLAT2,RLNG2,LSIZE,CURMAP,
-     I             BASNAM,MAPDUM,BASEY,BASEX,LSIZE,MAPDUM,
+     I             LSIZE,RLAT2,RLNG2,LSIZE(1),CURMAP,
+     I             BASNAM,MAPDUM,BASEY,BASEX,LSIZE(1),MAPDUM,
      I             CMSID)
 C     init subsets of wdm file
       CALL CLADD(I0,ID)

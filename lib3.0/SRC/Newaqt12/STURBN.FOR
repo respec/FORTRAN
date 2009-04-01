@@ -2538,7 +2538,7 @@ C         found a precip data set
           ITMP = ITMP + 1
           PCPDSN(ITMP) = LDSN
           CALL TSDSPC (LDSN,
-     O                 LSEN,PCPNAM(ITMP),LCON,
+     O                 LSEN,PCPNAM(ITMP),LCON(1),
      O                 TU,TS,SDATE,EDATE,GRPSIZ)
         END IF
       IF (ITMP.LT.5 .AND. LDSN.NE.0) GO TO 10
@@ -2557,7 +2557,7 @@ C         found an evap data set
           ITMP = ITMP + 1
           EVPDSN(ITMP) = LDSN
           CALL TSDSPC (LDSN,
-     O                 LSEN,EVPNAM(ITMP),LCON,
+     O                 LSEN,EVPNAM(ITMP),LCON(1),
      O                 TU,TS,SDATE,EDATE,GRPSIZ)
         END IF
       IF (ITMP.LT.5 .AND. LDSN.NE.0) GO TO 20
