@@ -1,0 +1,55 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          348    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRCHNUT
+  END LABEL
+  DATA   CLU   348
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ RCHRES: &I
+
+ In subroutine ADVNUT, the value of denom was zero.  Under this condition
+ isnut and rsnuts should also be zero, but they have the values &R
+ AND &R        , respectively.  This condition occurred for constituent
+ &CCCCCCCCCCCCCCCCCCC, sediment size fraction &I    (1-sand,2-silt,3-clay).
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ RCHRES: &I
+
+ In subroutine ADVNUT, the value of bsed was zero.  Under this condition
+ dsnut and rbnuts should also be zero, but they have the values &R
+ AND &R        , respectively.  This condition occurred for constituent
+ &CCCCCCCCCCCCCCCCCCC, sediment size fraction &I    (1-sand,2-silt,3-clay).
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+ The combination of TAMFG and ADNHFG and/or the combination of PO4FG and
+ ADPOFG is not compatible; if the adsorbed nutrient is being simulated,
+ the total species must also be simulated.
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+ Adsorption of one or more nutrients to inorganic sediment is being
+ simulated (ADNHFG or PO4FG is on), but sediment is not being
+ simulated (section SEDTRN is not active).
+  END DATA
+END CLU
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

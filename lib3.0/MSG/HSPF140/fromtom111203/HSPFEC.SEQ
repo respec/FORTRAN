@@ -1,0 +1,103 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          202    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HSPFEC
+  END LABEL
+  DATA   CLU   202
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The following entry located in the schematic block is invalid.
+
+ Check spelling of operation keywords and the presence of these operations
+ in the opn sequence block.
+
+ Another possible cause of the error is that only PERLND to RCHRES and
+ IMPLND to RCHRES connections are valid in this version of HSPF.
+
+        Source                Target
+     &CCCCC, &I            &CCCCC, &I
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+ TSS VOLNO: &I
+
+ TSS file is not available, but active reference to a TSS dataset
+ has been encountered in EXT SOURCES or EXT TARGETS block.
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Invalid external source specification -- must be 'TSS', 'WDMx' (where x is
+ either blank or '1'-'4'), 'DSS', or 'SEQ'.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ WDM file &I    not available, but active reference to a dataset
+ in that file has been encountered in EXT SOURCES or EXT TARGETS
+ block.
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Sequential output datasets are not supported in this release of HSPF.
+
+ Use HSPF PLTGEN or ANNIE instead.
+#GROUP    6  TYPE TEXT
+$TEXT
+   20    1    1    5
+  An error occurred reading a multiplication factor in a time series block.
+  The input string was:
+
+     &CCCCCCCCC
+#GROUP   10  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in MASS LINK block.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in MASS LINK block, but no category
+  tags were defined in the CATEGORY block.
+#GROUP   21  TYPE TEXT
+$TEXT
+   20    1    1    5
+  An error occurred reading the following line in the EXT SOURCES block:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   22  TYPE TEXT
+$TEXT
+   20    1    1    5
+  An error occurred reading the following line in the NETWORK block:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   23  TYPE TEXT
+$TEXT
+   20    1    1    5
+  An error occurred reading the following line in the EXT TARGETS block:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   24  TYPE TEXT
+$TEXT
+   20    1    1    5
+  An error occurred reading the following line in the SCHEMATIC block:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   25  TYPE TEXT
+$TEXT
+   20    1    1    5
+  An error occurred reading the following line in MASS-LINK Table number &I   :
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  END DATA
+END CLU

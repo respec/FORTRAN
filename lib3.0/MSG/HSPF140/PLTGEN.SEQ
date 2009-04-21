@@ -1,0 +1,350 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          125    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 473
+  LABEL
+    GRPNAM  PLTGEN
+  END LABEL
+  DATA   CLU   125
+#GROUP    1  TYPE TEXT
+$TEXT
+  6  1 1PLOTINFO          101    101    301    301
+ 15  1 1GEN-LABELS        102    102    302    302
+  4  1 2SCALING           103    103    303    303
+  8 99 1CURV-DATA         104    104    304    304
+  0  0 0END PLTGEN        000    000    000    000
+#GROUP   50  TYPE PRM1
+$SCREEN
+  Select PLTGEN table(s) to modify.
+
+  @ PLOTINFO
+  @ GEN-LABELS
+  @ SCALING
+  @ CURV-DATA
+$FIELD @ P
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the PLTGEN PLOTINFO table.
+$FIELD @ G
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the PLTGEN GEN-LABELS table.
+$FIELD @ S
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the PLTGEN SCALING table.
+$FIELD @ C
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the PLTGEN CURV-DATA table.
+#GROUP  101  TYPE PRM2
+$HEADER 
+  Plot-opn
+    x -  x FILE  NPT  NMN LABL  PYR PIVL TYPE
+$TNAME  PLOTINFO        
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+PLTGEN to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  30 : 99
+_DEFAULT  30
+_HELP
+PLOTFL  is the Fortran unit number  of the plot file (output    
+of this operation).
+_PNAME  PLOTFL  
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 20
+_DEFAULT  0
+_HELP
+NPT   is  the  number  of point-valued  time  series  to  be    
+plotted.
+_PNAME  NPT     
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 99
+_DEFAULT  0
+_HELP
+NMN  is the number of mean-valued time series to be plotted.    
+_PNAME  NMN     
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  -1 : 1
+_DEFAULT  0
+_HELP
+LABLFG  indicates how the plot will be labeled:  -1 means no    
+labels,  0  means one  set of  X and  Y axes  and associated
+labels will be drawn for entire plot, and 1 means separate X
+and Y axes and labels will be  drawn for each "frame" of the
+plot (eg. each water year).
+_PNAME  LABLFG  
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1 : 12
+_DEFAULT  9
+_HELP
+PYREND  is  the calendar month which terminates a plot frame    
+(eg.  a water year).
+_PNAME  PYREND  
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  -2 : 1440
+_DEFAULT  1
+_HELP
+PIVL  is  the number of  basic time intervals  (DELT minutes    
+each)  to be  aggregated to get to the interval  of the data
+written to the PLOTFL. A PIVL of -1 causes a monthly file to
+be written. A PIVL of -2 causes an annual file to be written.
+_PNAME  PIVL    
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 4
+_DEFAULT  1
+_HELP
+TYPEFG specifies the type of output file created.  1 means a formatted
+text file containing up to 10 timeseries (PLTGEN/MUTSIN format).
+2 means an unformatted file containing up to 99 mean-valued timeseries
+(FEQ DTSF format).  3 means an unformatted file containing exactly one
+point-valued timeseries (FEQ PTSF format).  4 means the same as Type 2 
+with record 1 containing the length of all records in the file 
+(revised FEQ DTSF format).
+_PNAME  TYPEFG
+$HELP
+General plot information.
+#GROUP  301  TYPE TEXT
+$TEXT
+(1X,7I10)
+    PLOTFL       NPT       NMN    LABLFG    PYREND      PIVL    TYPEFG
+#GROUP  102  TYPE PRM2
+$HEADER 
+Plot-opn
+   x - x  General title                                   Y-axis label
+$TNAME  GEN-LABELS      
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+PLTGEN to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  40
+_COLUMN  9
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+TITLE  is the general plot title.  It is also used in the FEQ DTSF header.
+_PNAME  TITLE   
+$FIELD  FIELD4
+_WIDTH  20
+_COLUMN 59
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+YLABL  is the label to be placed on the Y-axis.                 
+_PNAME  YLABL   
+$HELP
+General plot labels.
+#GROUP  302  TYPE TEXT
+$TEXT
+(1X,10A4,20X,5A4)
+General plot title:                                         Y-axis label:
+#GROUP  103  TYPE PRM2
+$HEADER 
+  Plot-opn      YMIN      YMAX     IVLIN    THRESH
+    x -  x                        ivl/in
+$TNAME  SCALING         
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+PLTGEN to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_HELP
+YMIN  is the minimum ordinate (Y axis) value.                   
+_PNAME  YMIN    
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  -999.
+_HELP
+YMAX  is the maximum ordinate value.                            
+_PNAME  YMAX    
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0. : -999.
+_DEFAULT  -999.
+_HELP
+IVLIN  is the horizontal (time)  scale;  that is,  number of    
+intervals (in plot file) per inch on graph.
+_PNAME  IVLIN   
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  -1.0E30
+_HELP
+THRESH is the write threshhold value.   If the value for any    
+curve is greater than the threshhold, a record is written to
+the plotfile.
+_PNAME  THRESH  
+$HELP
+Scaling information for plots.
+#GROUP  303  TYPE TEXT
+$TEXT
+(1X,4(1PE10.3))
+      YMIN      YMAX     IVLIN    THRESH
+                      (ivl/in)
+#GROUP  104  TYPE PRM2
+$HEADER 
+  Plot-opn    Curve label      Line Intg  Col Tran
+    x -  x                     type  eqv code code
+$TNAME  CURV-DATA       
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+PLTGEN to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  16
+_COLUMN 15
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+LABEL  is the label (descriptor) for this particular curve.  It is also
+used in the FEQ DTSF header.
+_PNAME  LABEL   
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  -999 : -999
+_DEFAULT  0
+_HELP
+LINTYP  describes  the type  of line  to be  drawn for  this    
+curve.  It also determines the frequency of plotted symbols:
+A zero value  means points are connected  by straight lines;
+no symbols are drawn at  individual data points.  A positive
+value means  points are  connected by  straight lines;   the
+magnitude determines the frequency of plotted symbols (eg. 4
+means plot  a symbol  at every 4th  point obtained  from the
+plot file).  A negative value  means no connecting lines are
+drawn.    Only  symbols  are plotted;   the  absolute  value
+determines the frequency (as above).
+_PNAME  LINTYP  
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 13
+_DEFAULT  0
+_HELP
+INTEQ   is the  "integer equivalent"  of the  symbols to  be    
+plotted for this curve (ie.  indicates which symbol to use).
+It is only meaningful if LINTYP is not zero.
+_PNAME  INTEQ   
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 10
+_DEFAULT  0
+_HELP
+COLCOD   is the  color code  for this  curve.   The  meaning    
+depends on how the stand-alone plot program is set up; eg. 1
+might mean red pen, 2 blue pen, etc.
+_PNAME  COLCOD  
+$FIELD  FIELD7
+_WIDTH   4
+_COLUMN 47
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID SUM ,AVER,MAX ,MIN ,LAST
+_DEFAULT SUM 
+_HELP
+TRAN  is  the "transformation code"  used to  aggregate data    
+from the basic interval (internal  time step)  to the PLOTFL
+Interval. Valid values are:  SUM, AVER, MAX, MIN, and LAST.
+_PNAME  TRAN    
+$HELP
+Data for each curve on the plot.   Repeats for each curve
+on the plot.
+#GROUP  304  TYPE TEXT
+$TEXT
+(1X,4A4,4X,3I10,6X,A4)
+Curve label:            LINTYP     INTEQ    COLCOD      TRAN
+  END DATA
+END CLU

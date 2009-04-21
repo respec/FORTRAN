@@ -1,0 +1,25 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          344    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRCHHTR
+  END LABEL
+  DATA   CLU   344
+#GROUP    1  TYPE TEXT
+$TEXT
+    0.0019    0.0019    0.0019    0.0019    0.0019    0.0019    0.0021    0.0022
+    0.0023    0.0024    0.0026    0.0026    0.0027    0.0027    0.0028    0.0028
+    0.0027    0.0026    0.0024    0.0023    0.0022    0.0021    0.0021    0.0020
+#GROUP   11  TYPE TEXT
+$TEXT
+   50    1    1    5
+  An error occurred reading the topographic data file for the SHADE algorithm.
+#GROUP   12  TYPE TEXT
+$TEXT
+   50    1    1    5
+  An error occurred reading the vegetation data file for the SHADE algorithm.
+  END DATA
+END CLU

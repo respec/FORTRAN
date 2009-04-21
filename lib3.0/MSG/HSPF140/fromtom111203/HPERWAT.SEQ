@@ -1,0 +1,230 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          303    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HPERWAT
+  END LABEL
+  DATA   CLU   303
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ Pervious land segment: &I
+
+ Error in table look-up procedure used to compute inflow to the upper zone
+ (subroutine uzinf).  The non-analytic function linking UZRA to INTGRL is
+ stored in arrays with dimension 10.  Intermediate values are found by
+ interpolation.  In trying to interpolate, HSPF has attempted to use a value
+ beyond those tabulated.
+
+       UZR1      UZR2     UZRAA
+ &R        &R        &R
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ Pervious land segment: &I
+
+ Error in table look-up procedure used to compute inflow to the upper zone
+ (subroutine uzinf).  The non-analytic function linking UZRA to INTGRL is
+ stored in arrays with dimension 10.  Intermediate values are found by
+ interpolation.  In trying to interpolate, HSPF has attempted to use a value
+ beyond those tabulated.
+
+      INTG1     INTG2     INTGB
+ &R        &R        &R
+#GROUP    3  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Pervious land segment: &I
+
+ Error - Iteration in subroutine PROUTE did not converge in 100+ cycles.
+
+      SURSE       SURO     SURSNW      FSURO     DFSURO      DSURO
+ &R         &R         &R         &R         &R         &R
+#GROUP    4  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Pervious land segment: &I
+
+ Initial groundwater elevation GWEL is computed to be above the surface
+ elevation SELV (MELEV expressed in inches).  To fix the problem, reduce
+ the initial value of AGWS in Table PWAT-STATE1 to its maximum:
+
+          AGWSMX= ULGWS+ (UELFAC*UZSN- UZS)+ (IFWSC- IFWS)- BGWS
+
+where:
+ AGWSMX= maximum allowed active groundwater storage in inches.
+ ULGWS=  groundwater storage equivalent to UELV in inches.
+ UELFAC= multiplier for UZSN to give upper zone capacity.
+ UZSN=   upper zone nominal storage in inches.
+ UZS=    upper zone storage.
+ IFWSC=  interflow storage capacity in inches.
+ IFWS=   interflow storage.
+ BGWS=   groundwater storage equivalent to BELV in inches.
+
+       GWEL       SELV      MELEV       AGWS     AGWSMX      ULGWS
+ &R         &R         &R         &R         &R         &R        
+     UELFAC       UZSN        UZS      IFWSC       IFWS       BGWS
+ &R         &R         &R         &R         &R         &R        
+#GROUP    5  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Pervious land segment: &I
+
+ Lower influence elevation LELV is computed to be below the base elevation
+ BELV.  LELV is computed in inches as:
+
+      LELV= SELV- LELFAC*LZSN/PCW
+
+ where:
+ SELV=   surface elevation (MELEV) in inches.
+ LELFAC= multiplier for LZSN to give lower zone capacity.
+ LZSN=   lower zone nominal storage in inches.
+ PCW=    soil porosity for cohesion water.
+
+ This value must be greater than the input value for BELV (converted to
+ inches).
+       BELV       LELV       SELV     LELFAC       LZSN        PCW
+ &R         &R         &R         &R         &R         &R        
+#GROUP    6  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Pervious land segment: &I
+
+ Upper influence elevation UELV is computed to be below the lower influence
+ elevation LELV for month number &I   .  UELV is computed in inches as:
+
+      UELV= SELV- (UELFAC*UZSN+ IFWSC)/UPGW
+
+ where:
+ SELV=   surface elevation (MELEV) in inches.
+ UELFAC= multiplier for UZSN to give upper zone capacity.
+ UZSN=   upper zone nominal storage in inches
+ IFWSC=  interflow storage capacity in inches.
+ UPGW=   soil porosity for gravity water in the upper zones.
+
+ This value must be greater than LELV, which is computed as:
+
+      LELV= SELV- LELFAC*LZSN/PCW
+
+ where:
+ SELV=   surface elevation (MELEV) in inches.
+ LELFAC= multiplier for LZSN to give lower zone capacity.
+ LZSN=   lower zone nominal storage in inches
+ PCW=    soil porosity for cohesion water.
+
+       UELV       SELV     UELFAC       UZSN      IFWSC
+ &R         &R         &R         &R         &R        
+       UPGW       LELV     LELFAC       LZSN        PCW
+ &R         &R         &R         &R         &R        
+#GROUP    7  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Pervious land segment: &I
+
+ Upper influence elevation UELV is computed to be below the lower influence
+ elevation LELV.  UELV is computed in inches as:
+
+      UELV= SELV- (UELFAC*UZSN+ IFWSC)/UPGW
+
+ where:
+ SELV=   surface elevation (MELEV) in inches.
+ UELFAC= multiplier for UZSN to give upper zone capacity.
+ UZSN=   upper zone nominal storage in inches
+ IFWSC=  interflow storage capacity in inches.
+ UPGW=   soil porosity for gravity water in the upper zones.
+
+ This value must be greater than LELV, which is computed as:
+
+      LELV= SELV- LELFAC*LZSN/PCW
+
+ where:
+ SELV=   surface elevation (MELEV) in inches.
+ LELFAC= multiplier for LZSN to give lower zone capacity.
+ LZSN=   lower zone nominal storage in inches
+ PCW=    soil porosity for cohesion water.
+
+       UELV       SELV     UELFAC       UZSN      IFWSC
+ &R         &R         &R         &R         &R        
+       UPGW       LELV     LELFAC       LZSN        PCW
+ &R         &R         &R         &R         &R        
+
+#GROUP   10  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The FTABLE &I    was referred to in the PERLND block of the
+ user's control input but not found in the FTABLEs block.  Is the
+ number in error, or is it in the wrong columns, in either place?
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The layout of an FTABLE for PWATER must satisfy all of the following
+ conditions:
+   1. NSROWS >=1
+   2. NSCOLS= 2
+   3. (NSROWS*NSCOLS)<=100
+
+ One or more of these conditions is not true for the following FTABLE:
+     STABNO    NSROWS    NSCOLS
+      &I        &I        &I
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+ If the following FTABLE were to contain the stated no. of rows, it would
+ continue beyond the record where its delimiter (END) was found.
+
+     STABNO    NSROWS    KEYND
+      &I        &I       &I
+#GROUP   13  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The value in all fields of the first row of an FTABLE for PWATER must be
+ zero.  This is not the case for the following FTABLE:
+     FTABNO
+      &I   
+#GROUP   14  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are 1 or more negative values in the following FTABLE:
+     STABNO   ROW NO.
+      &I        &I
+#GROUP   15  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The depth field of an FTABLE for PWATER may not contain values
+ which decrease as the row no. increases.  However, this condition
+ is violated in row &I    of FTABLE &I   .
+#GROUP   16  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The outflow fraction field of an FTABLE for PWATER may not contain
+ values greater than unity.  However, this condition is violated in
+ row &I    of FTABLE &I   .
+#GROUP   17  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The irrigation application fractions IRRTGT must sum to one.  The
+ supplied values were:
+
+   INTERCEP   SURFACE     UPPER     LOWER ACTIVE GW     TOTAL
+ &R        &R        &R        &R        &R        &R        
+#GROUP   21  TYPE TEXT
+$TEXT
+    1    1    1    5
+&D
+
+ Pervious land segment: &I
+
+Program bug - negative UZS or IFWS in ADJGWE.  Contact
+AQUA TERRA Consultants at www.aquaterra.com
+
+        UZS      IFWS
+ &R        &R        
+  END DATA
+END CLU

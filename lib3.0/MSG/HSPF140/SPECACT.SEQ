@@ -1,0 +1,1113 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          203    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 200
+  LABEL
+    GRPNAM  SPECACT
+  END LABEL
+  DATA   CLU   203
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+ In this configuration of HSPF, Special Actions input requires
+ specifications of the variable name and any necessary subscripts.
+
+ A memory location was input.
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+ In this configuration of HSPF, Special Actions input requires
+ specifications of a memory location.
+
+ A variable name was input.
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The variable name '&CCCCC' is invalid for Special Actions.
+ It may be mispelled, placed in the wrong field, or it may
+ not be currently available in the "Special Actions by Variable
+ Name" library.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The number of nonzero subscripts specified for the Special
+ Action variable '&CCCCC' is not correct.
+
+ The correct number of dimensions is &I   .
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+ At least one of the specified subscripts for the Special
+ Action variable '&CCCCC' exceeds the corresponding
+ dimension of the variable array.
+#GROUP    6  TYPE TEXT
+$TEXT
+   10    1    1    5
+ User specified a bad time code (TCODE) in the SPEC-ACTIONS block.
+ 
+ The supplied value of '&C' was interpreted as: &I
+
+ Valid values are 'MI','HR','DY','MO','YR' or '  ' (defaults to minutes).
+#GROUP    7  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading special action value from string: '&CCCCCCCCC'
+#GROUP    8  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading special action numerical address from string:
+
+ &CCCCCCCCCCCCCC
+#GROUP    9  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Special action instruction has a bad action code (ACTCOD).
+ 
+ The value supplied was: &CCC
+ Valid values are:  =  +=  -=  *=  /=  ^= MIN MAX ABS INT LOG LN MOD
+#GROUP   10  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading the following special action instruction:
+ 
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+ 
+ It has been ignored.
+#GROUP   11  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Operation type '&CCCCC' does not allow special actions.
+ 
+ Valid operation types are  'PERLND','IMPLND','RCHRES','COPY  ','PLTGEN',
+ 'GENER ' and 'BMPRAC'.
+#GROUP   12  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The time code for deferral of a special action on failure of logical
+ conditions must be MI (minute), HR (hour), or DY (day).  The value
+ supplied for &CCCCC was &C.
+#GROUP   13  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Special action instruction has a bad type code (TYPCOD).
+ 
+ The value supplied was: &I
+Minimum allowed is    : &I           Maximum allowed is    : &I
+#GROUP   14  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Special action instruction has a bad action code (ACTCOD).
+ 
+ The value supplied was: &I
+ Minimum allowed is    : &I           Maximum allowed is    : &I
+#GROUP   15  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Special action instruction has a bad number of times to repeat (NUMINC).
+ 
+ The value supplied was: &I
+
+ It must be > than 0.
+#GROUP   16  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Special action instruction has a bad timestep (TSTEP).
+ 
+ The value supplied was: &I
+
+ It must be > than 0.
+#GROUP   17  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Distribution   &I    does not exist or is out of range.
+ 
+ It must be defined before it is referenced.
+#GROUP   18  TYPE TEXT
+$TEXT
+   10    1    1    5
+ User defined variable '&CCCCC' is not compatable with operation type '&CCCCC'.
+#GROUP   19  TYPE TEXT
+$TEXT
+   10    1    1    5
+ An undated special action cannot be repeated.  Repeat value was &I   .
+#GROUP   20  TYPE TEXT
+$TEXT
+   10    1    1    5
+ An undated special action cannot be distributed.  User specified
+ distribution &I   .
+#GROUP   21  TYPE TEXT
+$TEXT
+   10    1    1    5
+ An undated special action is incompatible with movement between two memory
+ locations.  &CCCCC has an action code of &I   .
+#GROUP   22  TYPE TEXT
+$TEXT
+   10    1    1    5
+ An undated conditional special action cannot be deferred on failure of
+ the conditions.
+#GROUP   23  TYPE TEXT
+$TEXT
+   10    1    1    5
+ A distribution is not compatible with movement between two memory locations.
+#GROUP   24  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Deferral of a conditional special action is not compatible with movement
+ between two memory locations.
+#GROUP   25  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Overflow in logic operation stack while evaluating special action
+ condition &I   .  Logic chain is too complex.
+#GROUP   26  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Underflow in logic operation stack while evaluating special action
+ condition &I   .  Too many "right parentheses" specified in logic chain.
+#GROUP   27  TYPE TEXT
+$TEXT
+   10    1    1    5
+ PROGRAM BUG - Logic operation stack for special action conditions
+ not cleared.
+#GROUP   28  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The IF - END IF logical blocks for the special actions are improperly
+ formed.  The number of IFS does not match the number of END IFS.
+#GROUP   29  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The workspace variable &CCCCC at address &I     was not found.
+#GROUP   30  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Distribution index number &I    is out of range.
+
+ It must be between &I    and &I   .
+#GROUP   31  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Distribution index number &I    is already in use.
+#GROUP   32  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Distribution deferral code '&CCCC' is unknown.
+
+ Valid codes are ' SKIP', 'SHIFT' and 'ACCUM'.
+#GROUP   33  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Distribution timestep &I    is not valid.  It must be a positive number.
+#GROUP   34  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Distribution count value of &I    is out of range.
+
+ It must be between &I    and &I   .
+#GROUP   35  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading the following special action distribution instruction:
+ 
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+ 
+ It has been ignored.
+#GROUP   40  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Too many user-defined variable names have been defined.
+
+ The maximum number allowed is &I   .
+#GROUP   41  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Too many variables are referenced by user-defined variable names.
+
+ The maximum number allowed is &I   .
+#GROUP   42  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Operation-type mismatch at &CCCCC found in operation-type &I    in
+ user-defined variable &CCCCC in operation-type &I   .
+#GROUP   43  TYPE TEXT
+$TEXT
+   10    1    1    5
+ For user-defined variable &CCCCC, an error occurred reading the count
+ of variables referenced.  The input was "&CC".
+#GROUP   44  TYPE TEXT
+$TEXT
+   10    1    1    5
+ For user-defined variable &CCCCC, an error occurred reading the fraction
+ for base variable &CCCCC.  The input was:
+
+ &CCCCCCCCCCCCCCCCCCCC
+#GROUP   51  TYPE TEXT
+$TEXT
+    PERLND         1        94        95        98        99         1       909
+    IMPLND         1        94        95        98        99       844       162
+    RCHRES         1        93        94        97        98      1006       679
+    COPY           1        24        25        28       150      1687         8
+    PLTGEN         1        11        12        15        16         0         0
+    DISPLY         0         0         0         0         0         0         0
+    DURANL         0         0         0         0         0         0         0
+    GENER          1        23        24        27        28      1696        10
+    MUTSIN         0         0         0         0         0         0         0
+    BMPRAC         1        63        64        67        68      1708        69
+    REPORT         0         0         0         0         0         0         0
+#GROUP   52  TYPE TEXT
+$TEXT
+      1779                   1
+#GROUP   53  TYPE TEXT
+$TEXT
+YR                    84 MON                   85 DAY                   86 
+HR                    87 MIN                   88 SPOUT                 98 
+SURLI                320 UZLI                 321 IFWLI                322 
+LZLI                 323 AGWLI                324 PETINP               345 
+IRRINP               352 CSNOFG               358 PWPM1   13           358 
+RTOPFG               359 UZFG                 360 VCSFG                361 
+VUZFG                362 VNNFG                363 VIFWFG               364 
+VIRCFG               365 VLEFG                366 IFFCFG               367 
+HWTFG                368 IRRGFG               369 IFRDFG               370 
+NSROWS               371 NSCOLS               372 NCRP                 373 
+CRPDAT   4   3       374 NSKED                386 IRPM1    5           386 
+SZONFG               387 VCRDFG               388 VAWDFG               389 
+IROPFG               390 IRDATE   5  20       391 IRDURA  20           491 
+IRCHNO               511 IROSVK               512 FOREST               513 
+PWPM2    7           513 LZSN                 514 INFILT               515 
+LSUR                 516 SLSUR                517 KVARY                518 
+KGW                  519 PETMAX               520 PWPM3    7           520 
+PETMIN               521 INFEXP               522 INFILD               523 
+DEEPFR               524 BASETP               525 AGWETP               526 
+FZG                  527 PWPM5    2           527 FZGL                 528 
+BELV                 529 PWPM6    5           529 GWDATM               530 
+PCW                  531 PGW                  532 UPGW                 533 
+SRRC                 534 PWPM7    6           534 SREXP                535 
+IFWSC                536 DELTA                537 UELFAC               538 
+LELFAC               539 SELV                 540 UELV                 541 
+LELV                 542 ULGWS                543 LLGWS                544 
+BGWS                 545 CEPSCM  12           546 UZSNM   12           558 
+NSURM   12           570 INTFWM  12           582 UZRA    10           594 
+INTGRL  10           604 IRCM    12           614 LZETPM  12           626 
+SURTAB 100           638 SOILD    4           738 SLME                 742 
+SLSM                 743 ULSM                 744 LLSM                 745 
+ALSM                 746 WILTPT   4           747 FDCAP    4           751 
+AWC      4           755 CRPSTG   4   3       759 CRPAWD   4   3       771 
+CRPRDP   2   3       783 IRAFAC               789 IREFF                790 
+ARZI                 791 WILTP                792 FLDCAP               793 
+CRDEP                794 IRAWD                795 CAPRIS               796 
+CRDEPM  12           797 IRAWDM  12           809 IRRATE  20           821 
+IRRSRC   3   3       841 IRRTGT   5           850 SMSFG                855 
+FSMSFG               856 CEPS                 860 PWST1    9           860 
+SURS                 861 UZS                  862 IFWS                 863 
+LZS                  864 AGWS                 865 GWVS                 866 
+TGWS                 867 GWEL                 868 INFFAC               869 
+PWST3    2           869 PETADJ               870 PERS                 871 
+CEPSC                876 PWST5    6           876 UZSN                 877 
+NSUR                 878 INTFW                879 IRC                  880 
+LZETP                881 SURSS                882 SRC                  883 
+DEC                  884 IFWK1                885 IFWK2                886 
+LZFRAC               887 RLZRAT               888 RPARM                889 
+RZWSC                890 IRST1    2           890 RZWS                 891 
+SUPY                 906 SURO                 907 IFWO                 908 
+AGWO                 909 PERO                 910 IGWI                 911 
+PET                  936 CEPE                 937 SURET                938 
+UZET                 939 LZET                 940 AGWET                941 
+BASET                942 TAET                 943 IFWI                 976 
+UZI                  977 INFIL                978 PERC                 979 
+LZI                  980 AGWI                 981 CEPO                1016 
+SURI                1017 IRRDEM              1018 IRSHRT              1019 
+IRDRAW   3          1028 IRRAPP   6          1043 SLSED               1105 
+CRVFG               1111 SEDPM1   3          1111 VSIVFG              1112 
+SDOPFG              1113 SMPF                1114 KRER                1115 
+JRER                1116 AFFIX               1117 KSER                1118 
+JSER                1119 KGER                1120 JGER                1121 
+COVERM  12          1122 NVSIM   12          1134 DRYDFG              1146 
+DETS                1147 STCAP               1148 COVER               1149 
+WSSD                1153 SCRSD               1154 SOSED               1163 
+DET                 1164 NVSI                1165 SLTVFG              1179 
+PTPM1    4          1179 ULTVFG              1180 LGTVFG              1181 
+TSOPFG              1182 ASLTM   12          1183 BSLTM   12          1195 
+ULTP1M  12          1207 ULTP2M  12          1219 LGTP1M  12          1231 
+LGTP2M  12          1243 AIRTC               1255 PTST1    4          1255 
+SLTMP               1256 ULTMP               1257 LGTMP               1258 
+AIRTCS              1259 ASLT                1260 PTST2    6          1260 
+BSLT                1261 ULTP1               1262 ULTP2               1263 
+LGTP1               1264 LGTP2               1265 SLITMP              1270 
+ILITMP              1271 ALITMP              1272 SLIDOX              1273 
+ILIDOX              1274 ALIDOX              1275 SLICO2              1276 
+ILICO2              1277 ALICO2              1278 IDVFG               1288 
+PGPM1    4          1288 ICVFG               1289 GDVFG               1290 
+GCVFG               1291 ELEVGC              1292 IDOXPM  12          1293 
+ICO2PM  12          1305 ADOXPM  12          1317 ACO2PM  12          1329 
+LIFAC    4          1341 SOTMP               1345 PGST1    3          1345 
+IOTMP               1346 AOTMP               1347 SODOX               1348 
+PGST2    6          1348 SOCO2               1349 IODOX               1350 
+IOCO2               1351 AODOX               1352 AOCO2               1353 
+IDOXP               1354 ICO2P               1355 ADOXP               1356 
+ACO2P               1357 SOHT                1367 IOHT                1368 
+AOHT                1369 POHT                1382 SODOXM              1383 
+SOCO2M              1384 IODOXM              1385 IOCO2M              1386 
+AODOXM              1387 AOCO2M              1388 PODOXM              1413 
+POCO2M              1414 SLIQO   10          1427 SLIQSP  10          1477 
+ILIQC   10          1487 ALIQC   10          1497 PQADFG  20          1572 
+VPFWFG  10          1612 VPFSFG  10          1622 VQOFG   10          1652 
+VIQCFG  10          1682 VAQCFG  10          1712 PQAFXM  12  10      1762 
+PQACNM  12  10      1882 POTFWM  12  10      2002 POTFSM  12  10      2122 
+ACQOPM  12  10      2242 REMQOM  12  10      2362 WSFAC   10          2482 
+IOQCM   12  10      2492 AOQCM   12  10      2612 SQO     10          2732 
+POTFW   10          2742 POTFS   10          2752 ACQOP   10          2762 
+REMQOP  10          2772 IOQC    10          2782 AOQC    10          2792 
+SOQSP   10          2802 IOQCE   10          2812 AOQCE   10          2822 
+WASHQS  10          2872 SCRQS   10          2922 SOQS    10          2972 
+SOQO    10          2982 SOQOC   10          3032 SOQUAL  10          3042 
+SOQC    10          3052 IOQUAL  10          3062 AOQUAL  10          3112 
+POQUAL  10          3162 POQC    10          3172 PQADDR  10          3182 
+PQADWT  10          3232 PQADEP  10          3282 ISQO    10          3292 
+CFINMA              3452 SLMPF               3453 MSTPM    3          3453 
+ULPF                3454 LLPF                3455 MST      5          3456 
+FRAC     8          3461 LIPSS    5   3      3482 LISDPS   2   3      3557 
+ITMXPS   3          3627 ADOPFG   3          3630 PEADFG  18          3633 
+PEAFXM  12   3   3  3651 PEACNM  12   3   3  3759 GPSPM    8   3      3867 
+SPSPM    8   3      3891 UPSPM    8   3      3915 LPSPM    8   3      3939 
+APSPM    8   3      3963 SCVFG    3          3995 UCVFG    3          3998 
+LCVFG    3          4001 ACVFG    3          4004 SPS      3   3      4007 
+UPS      3   3      4016 IPS      3          4025 LPS      3   3      4028 
+APS      3   3      4037 TPS      3   3      4046 TPST     5   3      4055 
+TOTPST   3          4070 SXJCT    3          4085 UXJCT    3          4088 
+LXJCT    3          4091 AXJCT    3          4094 SXST     3          4097 
+UXST     3          4100 LXST     3          4103 AXST     3          4106 
+SDPS     2   3      4175 TSPSS    5   3      4205 SSPSS    3   3      4280 
+DEGPS    5   3      4325 SOSDPS   3          4400 SOPEST   3          4403 
+POPST    3          4406 TOPST    3          4409 PEADDR   3   3      4412 
+PEADWT   3   3      4457 PEADEP   3   3      4502 NITIF    4   5      4595 
+INO3                4595 INH3                4596 IORN                4597 
+INITR               4598 LIAMS    5          4619 LINO3    5          4624 
+LISLN    5          4629 LISRN    5          4634 VNUTFG              4769 
+NITFG   10          4769 FORAFG              4770 ITMAXA              4771 
+BNUMN               4772 CNUMN               4773 NUPTFG              4774 
+FIXNFG              4775 AMVOFG              4776 ALPNFG              4777 
+VNPRFG              4778 NIADFG  12          4779 CRPDAY  13   3      4791 
+CRPFRC  13   3      4830 NUPTGT              4869 NYLDPM   2          4869 
+NMXRAT              4870 NIAFXM  12   3   2  4871 NIACNM  12   3   2  4943 
+SKPLNM  12          5015 UKPLNM  12          5027 LKPLNM  12          5039 
+AKPLNM  12          5051 SKRBNM  12          5063 UKRBNM  12          5075 
+LKRBNM  12          5087 AKRBNM  12          5099 KRANM   12          5111 
+SKRLNM  12          5123 UKRLNM  12          5135 BNPRFM  12          5147 
+LNPRFM  12          5159 SKUNIM  12          5171 UKUNIM  12          5183 
+LKUNIM  12          5195 AKUNIM  12          5207 SKUAMM  12          5219 
+UKUAMM  12          5231 LKUAMM  12          5243 AKUAMM  12          5255 
+SKINIM  12          5267 UKINIM  12          5279 LKINIM  12          5291 
+AKINIM  12          5303 SKIAMM  12          5315 UKIAMM  12          5327 
+LKIAMM  12          5339 AKIAMM  12          5351 NUPTFM  12          5363 
+SNUPTM  12          5375 UNUPTM  12          5387 LNUPTM  12          5399 
+ANUPTM  12          5411 GNPM    11          5423 NO3UTF              5423 
+NH4UTF              5424 THPLN               5425 THKDSA              5426 
+THKADA              5427 THKIMN              5428 THKAM               5429 
+THKDNI              5430 THKNI               5431 THKIMA              5432 
+CMAXAM              5433 SNPM    11          5434 SKDSAM              5434 
+SKADAM              5435 SKIMNI              5436 SKAM                5437 
+SKDNI               5438 SKNI                5439 SKIMAM              5440 
+SXFIXA              5441 SXMAXA              5442 SKF1AM              5443 
+SN1IAM              5444 UNPM    11          5445 UKDSAM              5445 
+UKADAM              5446 UKIMNI              5447 UKAM                5448 
+UKDNI               5449 UKNI                5450 UKIMAM              5451 
+UXFIXA              5452 UXMAXA              5453 UKF1AM              5454 
+UN1IAM              5455 LNPM    11          5456 LKDSAM              5456 
+LKADAM              5457 LKIMNI              5458 LKAM                5459 
+LKDNI               5460 LKNI                5461 LKIMAM              5462 
+LXFIXA              5463 LXMAXA              5464 LKF1AM              5465 
+LN1IAM              5466 ANPM    11          5467 AKDSAM              5467 
+AKADAM              5468 AKIMNI              5469 AKAM                5470 
+AKDNI               5471 AKNI                5472 AKIMAM              5473 
+AXFIXA              5474 AXMAXA              5475 AKF1AM              5476 
+AN1IAM              5477 SORNPM   4          5478 SKLON               5478 
+SKRON               5479 SKONLR              5480 STHNLR              5481 
+UORNPM   4          5482 UKLON               5482 UKRON               5483 
+UKONLR              5484 UTHNLR              5485 LORNPM   4          5486 
+LKLON               5486 LKRON               5487 LKONLR              5488 
+LTHNLR              5489 AORNPM   4          5490 AKLON               5490 
+AKRON               5491 AKONLR              5492 ATHNLR              5493 
+SCSATN   4          5494 SCSUNI              5494 SCSUAM              5495 
+SCSINI              5496 SCSIAM              5497 UCSATN   4          5498 
+UCSUNI              5498 UCSUAM              5499 UCSINI              5500 
+UCSIAM              5501 LCSATN   4          5502 LCSUNI              5502 
+LCSUAM              5503 LCSINI              5504 LCSIAM              5505 
+ACSATN   4          5506 ACSUNI              5506 ACSUAM              5507 
+ACSINI              5508 ACSIAM              5509 SANUFM  12          5510 
+UANUFM  12          5522 LANUFM  12          5534 AANUFM  12          5546 
+SKVOL               5558 AMVOPM   6          5558 UKVOL               5559 
+LKVOL               5560 AKVOL               5561 THVOL               5562 
+TRFVOL              5563 BIVLN               5564 CIVLN               5565 
+AGPLTN              5575 LITTRN              5576 SN       8          5577 
+SORGN               5577 SPLON               5577 SAMAD               5578 
+SAMSU               5579 SNO3                5580 SPLTN               5581 
+SSLON               5582 SPRON               5583 SSRON               5584 
+UN       8          5585 UORGN               5585 UPLON               5585 
+UAMAD               5586 UAMSU               5587 UNO3                5588 
+UPLTN               5589 USLON               5590 UPRON               5591 
+USRON               5592 IN       4          5593 IAMSU               5593 
+INO3                5594 ISLON               5595 ISRON               5596 
+LN       8          5597 LORGN               5597 LPLON               5597 
+LAMAD               5598 LAMSU               5599 LNO3                5600 
+LPLTN               5601 LSLON               5602 LPRON               5603 
+LSRON               5604 AN       8          5605 AORGN               5605 
+APLON               5605 AAMAD               5606 AAMSU               5607 
+ANO3                5608 APLTN               5609 ASLON               5610 
+APRON               5611 ASRON               5612 TN       8          5613 
+TORGN               5613 TPLON               5613 TAMAD               5614 
+TAMSU               5615 TNO3                5616 TPLTN               5617 
+TSLON               5618 TPRON               5619 TSRON               5620 
+TNIT     5          5621 TOTNIT              5626 SNDFC               5631 
+NDFCT    5          5631 UNDFC               5632 LNDFC               5633 
+ANDFC               5634 TNDFC               5635 SKPLN               5693 
+KPLN     4          5693 UKPLN               5694 LKPLN               5695 
+AKPLN               5696 KRETBN   5          5697 SKPRBN              5697 
+UKPRBN              5698 LKPRBN              5699 AKPRBN              5700 
+BGNPRF              5701 KRETAN   4          5702 AGKPRN              5702 
+SKPRLN              5703 UKPRLN              5704 LINPRF              5705 
+SKSATN   4          5706 SKSUNI              5706 SKSUAM              5707 
+SKSINI              5708 SKSIAM              5709 UKSATN   4          5710 
+UKSUNI              5710 UKSUAM              5711 UKSINI              5712 
+UKSIAM              5713 LKSATN   4          5714 LKSUNI              5714 
+LKSUAM              5715 LKSINI              5716 LKSIAM              5717 
+AKSATN   4          5718 AKSUNI              5718 AKSUAM              5719 
+AKSINI              5720 AKSIAM              5721 SNUPTG              5722 
+NUPTG    4          5722 UNUPTG              5723 LNUPTG              5724 
+ANUPTG              5725 SPNUTG              5730 UPNUTG              5731 
+LPNUTG              5732 APNUTG              5733 ANUTF    4          5734 
+SANUTF              5734 UANUTF              5735 LANUTF              5736 
+AANUTF              5737 SNRXF   16          5738 UNRXF   16          5754 
+LNRXF   16          5770 ANRXF   16          5786 SEDN     3          5802 
+TSAMS    5          5817 SSAMS    3          5842 TSNO3    5          5857 
+SSNO3    3          5882 DENIF    5          5897 AMNIT    5          5922 
+AMIMB    5          5947 ORNMN    5          5972 NIADDR   3   2      5997 
+NIADWT   3   2      6027 NIADEP   3   2      6082 NFIXFX   5          6082 
+TSSLN    5          6088 SSSLN    3          6113 TSSRN    5          6128 
+SSSRN    3          6153 NIIMB    5          6168 AMVOL    5          6193 
+REFRON   5          6218 NIUPA    5          6243 AMUPA    5          6268 
+NIUPB    5          6293 AMUPB    5          6318 RETAGN              6343 
+RTLLN    3          6348 RTRLN    3          6363 RTLBN    5          6378 
+RTRBN    5          6403 SOSEDN              6428 PONO3               6429 
+PONH4               6430 POORN               6431 PONITR              6432 
+IPO4                6569 IORP                6570 IPHOS               6571 
+LIP4S    5          6587 LISEDP   2          6612 VPUTFG              6637 
+PHOFG    6          6637 FORPFG              6638 ITMAXP              6639 
+BNUMP               6640 CNUMP               6641 PUPTFG              6642 
+PHADFG   8          6643 PUPTGT              6651 PYLDPM   2          6651 
+PMXRAT              6652 PHAFXM  12   2   2  6653 PHACNM  12   2   2  6701 
+SKPLPM  12          6749 UKPLPM  12          6761 LKPLPM  12          6773 
+AKPLPM  12          6785 PUPTFM  12          6797 SPUPTM  12          6809 
+UPUPTM  12          6821 LPUPTM  12          6833 APUPTM  12          6845 
+GPPM     6          6857 THPLP               6857 THKDSP              6858 
+THKADP              6859 THKIMP              6860 THKMP               6861 
+CMAXP               6862 SPPM     8          6863 SKDSP               6863 
+SKADP               6864 SKIMP               6865 SKMP                6866 
+SXFIXP              6867 SXMAXP              6868 SKF1P               6869 
+SN1IP               6870 UPPM     8          6871 UKDSP               6871 
+UKADP               6872 UKIMP               6873 UKMP                6874 
+UXFIXP              6875 UXMAXP              6876 UKF1P               6877 
+UN1IP               6878 LPPM     8          6879 LKDSP               6879 
+LKADP               6880 LKIMP               6881 LKMP                6882 
+LXFIXP              6883 LXMAXP              6884 LKF1P               6885 
+LN1IP               6886 APPM     8          6887 AKDSP               6887 
+AKADP               6888 AKIMP               6889 AKMP                6890 
+AXFIXP              6891 AXMAXP              6892 AKF1P               6893 
+AN1IP               6894 BIVLP               6895 CIVLP               6896 
+SP       4          6905 SORGP               6905 SP4AD               6906 
+SP4SU               6907 SPLTP               6908 UP       4          6909 
+UORGP               6909 UP4AD               6910 UP4SU               6911 
+UPLTP               6912 IP                  6913 IP4SU               6913 
+LP       4          6914 LORGP               6914 LP4AD               6915 
+LP4SU               6916 LPLTP               6917 AP       4          6918 
+AORGP               6918 AP4AD               6919 AP4SU               6920 
+APLTP               6921 TP       4          6922 TORGP               6922 
+TP4AD               6923 TP4SU               6924 TPLTP               6925 
+TPHO     5          6926 TOTPHO              6931 SPDFC               6936 
+PDFCT    5          6936 UPDFC               6937 LPDFC               6938 
+APDFC               6939 TPDFC               6940 SKPLP               6973 
+KPLP     4          6973 UKPLP               6974 LKPLP               6975 
+AKPLP               6976 SPUPTG              6977 PUPTG    4          6977 
+UPUPTG              6978 LPUPTG              6979 APUPTG              6980 
+SPPUTG              6985 UPPUTG              6986 LPPUTG              6987 
+APPUTG              6988 SPRXF    5          6989 UPRXF    5          6994 
+LPRXF    5          6999 APRXF    5          7004 SEDP     2          7009 
+TSP4S    5          7019 SSP4S    3          7044 P4IMB    5          7059 
+ORPMN    5          7084 SOSEDP              7109 POPHOS              7110 
+PHADDR   2   2      7111 PHADWT   2   2      7131 PHADEP   2   2      7151 
+LITRS    5          7189 TRADFG   4          7223 TRAFXM  12   2      7232 
+TRACNM  12   2      7256 STRSU               7281 TRST1    5          7281 
+UTRSU               7282 ITRSU               7283 LTRSU               7284 
+ATRSU               7285 TRSU                7286 TSTRS    5          7297 
+SSTRS    5          7322 POTRS               7337 TRADDR   2          7338 
+TRADWT   2          7348 TRADEP   2          7358 @@@@@@                 1 
+GATMP                113 LAPSE   24           117 ELDAT                141 
+AIRTMP               142 AIRTS                143 PREC                 145 
+DTMPG                150 WINMOV               151 SOLRAD               152 
+ICEFG                157 SNOPFG               158 VKMFG                159 
+SVP     40           160 LAT                  200 SNPM1    7           200 
+MELEV                201 SHADE                202 SNOWCF               203 
+COVIND               204 KMELT                205 TBASE                206 
+RDCSN                207 SNPM2    6           207 TSNOW                208 
+SNOEVP               209 CCFACT               210 MWATER               211 
+MGMELT               212 KMELTM  12           213 DRYFG                225 
+SNOFFG               227 RAINFG               228 PACKF                233 
+SNST1    7           233 PACKW                234 PACKI                235 
+PDEPTH               236 COVINX               237 NEGHTS               238 
+XLNMLT               239 RDENPF               240 SNST2    5           240 
+SKYCLR               241 SNOCOV               242 DULL                 243 
+ALBEDO               244 PAKTMP               245 SNST3    3           245 
+DEWTMP               246 SNOTMP               247 PACK                 248 
+RDNSN                253 MNEGHS               254 PACKWC               255 
+NEGHT                256 GMELTR               257 COMPCT               258 
+SNOWEP               259 MOSTHT               260 VAP                  261 
+SNOWF                278 PRAIN                279 SNOWE                280 
+WYIELD               281 MELT                 282 RAINF                313 
+YR                    84 MON                   85 DAY                   86 
+HR                    87 MIN                   88 SPOUT                 98 
+SURLI                320 PETINP               325 CSNOFG               328 
+IWPM1    5           328 RTOPFG               329 VRSFG                330 
+VNNFG                331 RTLIFG               332 LSUR                 333 
+IWPM2    2           333 SLSUR                334 PETMAX               335 
+IWPM3    2           335 PETMIN               336 RETSCM  12           337 
+NSURM   12           349 SMSFG                361 FSMSFG               362 
+RETS                 364 IWST1    2           364 SURS                 365 
+IWST2                366 PETADJ               366 IMPS                 367 
+RETSC                372 NSUR                 373 SRC                  374 
+DEC                  375 SUPY                 380 SURO                 381 
+PET                  382 IMPEV                383 RETO                 410 
+SURI                 411 SLSLD                417 VASDFG               423 
+SLDPM1   3           423 VRSDFG               424 SDOPFG               425 
+ACCSDM  12           426 REMSDM  12           438 KEIM                 450 
+JEIM                 451 DRYDFG               452 SLDS                 453 
+ACCSDP               455 REMSDP               456 SOSLD                457 
+SLITMP               463 SLIDOX               464 SLICO2               465 
+WTFVFG               469 ELEVGC               470 AWTFM   12           471 
+BWTFM   12           483 LIFAC    2           495 AIRTC                497 
+SOTMP                498 IGST1    3           498 SODOX                499 
+SOCO2                500 AWTF                 504 BWTF                 505 
+SOHT                 506 SODOXM               507 SOCO2M               508 
+SLIQO   10           524 SLIQSP  10           574 IQADFG  20           627 
+VPFWFG  10           667 VQOFG   10           697 IQAFXM  12  10       747 
+IQACNM  12  10       867 POTFWM  12  10       987 ACQOPM  12  10      1107 
+REMQOM  12  10      1227 WSFAC   10          1347 SQO     10          1357 
+POTFW   10          1367 ACQOP   10          1377 REMQOP  10          1387 
+SOQSP   10          1397 SOQS    10          1427 SOQO    10          1477 
+SOQOC   10          1527 SOQUAL  10          1537 SOQC    10          1547 
+IQADDR  10          1557 IQADWT  10          1607 IQADEP  10          1657 
+#GROUP   54  TYPE TEXT
+$TEXT
+YR                    83 MON                   84 DAY                   85 
+HR                    86 MIN                   87 SPOUT                 97 
+IVOL                 112 CIVOL  100           117 PREC                 617 
+POTEV    5           618 COLIND   5           827 OUTDGT   5           832 
+COTDGT   5 100       837 COREL    5 100      1337 VCONFG              2348 
+HYPM1   19          2348 AUX1FG              2349 AUX2FG              2350 
+AUX3FG              2351 ODFVFG   5          2352 ODGTFG   5          2357 
+FUNCT    5          2362 VZERPT              2367 NROWS               2368 
+NCOLS               2369 NODFV               2370 NODGT               2371 
+IREXIT              2372 CPREC               2373 CATEG    8          2373 
+CEVAP               2374 CFVOL    5          2375 NCOGT               2380 
+CPRECC  20          2381 CEVAPC  20          2401 CEVAPP  20          2421 
+CFVOLC  20   5      2441 CFVOLP  20   5      2541 COGTC   20          2641 
+COGTE   20          2661 CPRECF  20          2681 CFVOLF  20   5      2701 
+CEVAPF  20          2801 COGTP   20          2821 KS                  2841 
+COKS                2842 FACTA1              2843 CONVFM  12          2844 
+DELTH               2856 DB50                2857 AKAPPA              2858 
+GAM                 2859 GRAV                2860 RCHTAB 500          2861 
+LEN                 3361 STCOR               3362 SLOPE               3363 
+IRMINV  -1          3365 ROWPT               3367 VOL     -1          3377 
+VOLS    -1          3379 PREVOL  -4          3381 RIRWDL  -1          3389 
+CVOL  -100          3391 CDFVOL   5 100      3591 DEP                 4091 
+HYST     5          4091 STAGE               4092 AVDEP               4093 
+TWID                4094 HRAD                4095 SAREA               4096 
+AVVEL               4097 AVSECT              4098 USTAR               4099 
+TAU                 4100 RO                  4101 ROS                 4102 
+CRO    100          4103 CONVF               4203 O        5          4916 
+OS       5          4921 CO       5 100      4926 PRSUPY              5931 
+VOLEV               5932 ROVOL               5933 CROVOL 100          5946 
+OVOL     5          6549 COVOL    5 100      6574 RIRDEM              9579 
+RIRSHT              9580 CRRAT               9591 SROVOL              9592 
+AROVOL   2          9592 EROVOL              9593 SOVOL    5          9594 
+AOVOL    5   2      9594 EOVOL    5          9599 ICON    10          9604 
+COADFG  20          9695 CCONCD   2  10      9785 CCONV   10          9805 
+COAFXM  12  10      9815 COACNM  12  10      9935 CON    -10         10065 
+RCON   -10         10085 ROCON   10         10195 OCON     5  10     10255 
+COADDR  10         10555 COADWT  10         10605 COADEP  10         10655 
+IHEAT              10695 SOLRAD             10700 CLOUD              10701 
+DEWTMP             10702 GATMP              10703 WIND               10704 
+DSOLAR             10705 BEDFLG             10714 TGFLG              10715 
+TSTOP              10716 SHADFG             10717 ELEV               10718 
+HTPM     6         10718 ELDAT              10719 CFSAEX             10720 
+KATRAD             10721 KCOND              10722 KEVAP              10723 
+LAPSE   24         10724 CFPRES             10748 MUDDEP             10749 
+KMUD               10750 KGRND              10751 TGRNDM  12         10752 
+DELH   100         10764 TGRND              10866 DELTT  100         10867 
+TMUD               10967 TMUDDT             10968 RHEAT   -1         10969 
+TW                 10979 HTST2    2         10979 AIRTMP             10980 
+SHDFAC             10983 HTEXCH             10985 ROHEAT             10986 
+OHEAT    5         10997 QTOTAL             11027 QSOLAR             11028 
+QLONGW             11029 QEVAP              11030 QCON               11031 
+QPREC              11032 QBED               11033 ISED     4         11069 
+SANDFG             11096 SDPM     6   3     11097 BEDWID             11115 
+SDGPM    3         11115 BEDWRN             11116 POR                11117 
+DB50E              11118 DB50M              11119 WSANDE             11120 
+RSSED   -3         11133 RSED    10         11163 SSED     4         11173 
+TSED     3         11177 BEDDEP             11180 DEPSCR   4         11199 
+ROSED    4         11219 OSED     5   4     11247 IDQAL    7         11367 
+ISQAL    4   7     11402 TIQAL    7         11542 PHVAL              11549 
+ROC                11550 BIO      7         11551 TEMPFG             11652 
+PHFLAG             11653 ROXFG              11654 CLDFG              11655 
+SDFG               11656 PHYTFG             11657 LAT                11658 
+GQADFG  14         11659 GQPM2    7   7     11673 DAUGFG   7         11722 
+GDAUFG   6         11729 QALFG    7   7     11735 QALGFG   7         11784 
+GQALFG   7         11791 CONV     7         11855 CINV     7         11862 
+GQAFXM  12   7     11869 GQACNM  12   7     11953 TEMPM   12         12037 
+PHVALM  12         12049 HYDPM    4   7     12061 ROCM    12         12089 
+ROXPM    2   7     12101 SDCNCM  12         12115 PHYM    12         12127 
+CLDM    12         12139 ALPH    18         12151 GAMM    18         12169 
+DEL     18         12187 LIT     18   4     12205 PHOTPM  20   7     12277 
+FACT1              12417 KCLD    18         12418 CFGAS    7         12436 
+BIOM    12   7     12443 BIOPM    2   7     12527 GENPM    2   7     12541   
+C        7   7   6 12555 ADPM     6   3   7 12849 ADDCPM   4   7     12975 
+LITFG              13003 LSET               13004 TWAT               13020 
+PHY                13021 SDCNC              13022 CLD                13023 
+DQAL     7         13024 SQAL     6   7     13031 RDQAL    7         13073 
+RSQAL   12   7     13080 RRQAL    7         13164 GQST    -7   5     13171 
+PDQAL    7         13388 DDQAL    7   7     13423 RODQAL   7         13668 
+DSQAL    4   7     13703 ROSQAL   4   7     13843 TROQAL   7         13983 
+SQDEC    7   7     13990 ADQAL    7   7     14235 ODQAL    5   7     14480 
+OSQAL    5   3   7 14655 TOSQAL   5   7     15180 TOQAL    5   7     15215 
+GQADDR   7         15250 GQADWT   7         15285 GQADEP   7         15320 
+BENRFG             15782 SCRVEL             15783 SCRPM    2         15783 
+SCRMUL             15784 SCRFAC             15787 DEPCOR             15788 
+AVDEPE             15789 AVVELE             15790 IDOX               15791 
+IBOD               15792 REAMFG             15805 OXPM1              15805 
+KBOD20             15806 OXPM2    4         15806 TCBOD              15807 
+KODSET             15808 SUPSAT             15809 CFOREA             15810 
+REAKT              15811 BENOD              15812 OXPM3    6         15812 
+TCBEN              15813 EXPOD              15814 BRBOD    2         15815 
+EXPREL             15817 TCGINV             15818 OXPM4    4         15818 
+REAK               15819 EXPRED             15820 EXPREV             15821 
+DOX                15823 OXST     2         15823 BOD                15824 
+RDOX               15825 RBOD               15826 SATDO              15835 
+RODOX              15839 ROBOD              15840 KOREA              15851 
+BODOX              15852 ODOX     5         15853 OBOD     5         15858 
+READOX             15913 BODDOX             15914 BENDOX             15915 
+NITDOX             15916 PHYDOX             15917 ZOODOX             15918 
+BALDOX             15919 TOTDOX             15920 DECBOD             15953 
+BNRBOD             15954 SNKBOD             15955 DENBOD             15956 
+PHYBOD             15957 ZOOBOD             15958 BALBOD             15959 
+TOTBOD             15960 INO3               16009 ITAM               16010 
+INO2               16011 IPO4               16012 ISNH4    4         16029 
+ISPO4    4         16033 TNUIF    4         16069 NUADFG   6         16105 
+TAMFG              16111 NUPM1    7         16111 NO2FG              16112 
+PO4FG              16113 AMVFG              16114 DENFG              16115 
+ADNHFG             16116 ADPOFG             16117 NUAFXM  12   3     16118 
+NUACNM  12   3     16154 CVBN               16190 CVBO               16191 
+CVBP               16192 CVBPC              16193 CVBPN              16194 
+BPCNTC             16195 CVOC               16196 CVON               16197 
+CVOP               16198 BRTAM    2         16199 NUPM2    5         16199 
+BRPO4    2         16201 ANAER              16203 BNH4     3         16204 
+NUPM3    6         16204 BPO4     3         16207 KTAM20             16210 
+NUPM4    6         16210 KNO220             16211 TCNIT              16212 
+KNO320             16213 TCDEN              16214 DENOXT             16215 
+EXPNVG             16216 NUPM5    2         16216 EXPNVL             16217 
+ADNHPM   3         16218 NUADPM   6         16218 ADPOPM   3         16221 
+NO3                16229 DNUST    6         16229 TAM                16230 
+NO2                16231 PO4                16232 NH4                16233 
+NH3                16234 SNH4     3         16235 SPO4     3         16238 
+RNO3               16241 DNUST2   6         16241 RTAM               16242 
+RNO2               16243 RPO4               16244 RNH4               16245 
+RNH3               16246 RSNH4   12         16247 RSPO4   12         16259 
+RRNO3              16271 RRTAM              16272 RRNO2              16273 
+RRPO4              16274 RONO3              16337 ROTAM              16338 
+RONO2              16339 ROPO4              16340 ROSNH4   4         16357 
+ROSPO4   4         16361 TNUCF1   4         16397 DSNH4    4         16401 
+DSPO4    4         16405 NITNO3             16441 DENNO3             16442 
+BODNO3             16443 PHYNO3             16444 ZOONO3             16445 
+BALNO3             16446 TOTNO3             16447 NITTAM             16476 
+VOLNH3             16477 BNRTAM             16478 BODTAM             16479 
+PHYTAM             16480 ZOOTAM             16481 BALTAM             16482 
+TOTTAM             16483 NITNO2             16516 BNRPO4             16521 
+BODPO4             16522 PHYPO4             16523 ZOOPO4             16524 
+BALPO4             16525 TOTPO4             16526 ADNH4    4         16551 
+ADPO4    4         16555 ONO3     5         16591 OTAM     5         16596 
+ONO2     5         16601 OPO4     5         16606 OSNH4    5   4     16691 
+OSPO4    5   4     16711 TNUCF2   5   4     16891 DECCO2             16911 
+NUADDR   3         16912 NUADWT   3         16927 NUADEP   3         16942 
+IPHYTO             17088 IZOO               17089 IORN               17090 
+IORP               17091 IORC               17092 ITORN              17123 
+ITORP              17124 ITORC              17125 ITOTN              17126 
+ITOTP              17127 PLADFG   6         17159 PHYFG              17165 
+PKFG     9         17165 ZOOFG              17166 BALFG              17167 
+SDLTFG             17168 AMRFG              17169 DECFG              17170 
+NSFG               17171 ZFOOD              17172 BNPFG              17173 
+BFIXFG   4         17175 BINVFG             17179 PLAFXM  12   3     17180 
+PLACNM  12   3     17216 CVBC               17252 CVBCL              17253 
+CVNRBO             17254 CVPB               17255 RATCLP             17256 
+PKPM1    7         17256 NONREF             17257 LITSED             17258 
+ALNPR              17259 EXTB               17260 MALGR              17261 
+PARADF             17262 CMMLT              17263 PKPM2    7         17263 
+CMMN               17264 CMMNP              17265 CMMP               17266 
+TALGRH             17267 TALGRL             17268 TALGRM             17269 
+ALR20              17270 PKPM3    6         17270 ALDH               17271 
+ALDL               17272 OXALD              17273 NALDH              17274 
+PALDH              17275 NMINGR             17276 PKPM12   5         17276 
+PMINGR             17277 CMINGR             17278 LMINGR             17279 
+NMINC              17280 SEED               17281 PKPM4    6         17281 
+MXSTAY             17282 OREF               17283 CLALDH             17284 
+PHYSET             17285 REFSET             17286 MZOEAT             17287 
+PKPM5    5         17287 ZFIL20             17288 ZRES20             17289 
+ZD                 17290 OXZD               17291 TCZFIL             17292 
+PKPM6    4         17292 TCZRES             17293 ZEXDEL             17294 
+ZOMASS             17295 MBAL               17296 PKPM7    7         17296 
+CFBALR             17297 CFBALG             17298 MINBAL             17299 
+CAMPR              17300 FRAVL              17301 NMAXFX             17302 
+MBALGR   4         17303 TCBALG   4         17307 CMMNB    4         17311 
+CMMPB    4         17315 CMMD1    4         17319 CMMD2    4         17323 
+CSLIT    4         17327 BALR20   4         17331 TCBALR   4         17335 
+CSLOF1   4         17339 CSLOF2   4         17343 GRORES   4         17347 
+CREMVL             17351 PKPM8    4         17351 CMMBI              17352 
+BINV               17353 TCGRAZ             17354 BINVM   12         17356 
+CTRBQ1             17368 PKPM9    4         17368 CTRBQ2             17369 
+CKTRB1             17370 CKTRB2             17371 FRRIF              17372 
+PKPM10   5         17372 CMMV               17373 RIFCQ1             17374 
+RIFCQ2             17375 RIFCQ3             17376 RIFVEL   4         17377 
+PKPM11   8         17377 RIFDEP   4         17381 JDAT               17389 
+BALDEP             17390 BALVEL             17391 PHYTO              17392 
+PKST1    3         17392 PHYCLA             17393 LIMPHY             17394 
+BENAL    4         17395 PKST2    4   3     17395 BALCLA   4         17399 
+LIMBAL   4         17403 TBENAL   2         17407 ORN                17409 
+PKST3    7         17409 ORP                17410 ORC                17411 
+TORN               17412 TORP               17413 TORC               17414 
+POTBOD             17415 ZOO                17416 TN                 17417 
+PKST4    2         17417 TP                 17418 ROPHYT             17441 
+ROZOO              17442 ROORN              17443 ROORP              17444 
+ROORC              17445 ROTORN             17466 ROTORP             17467 
+ROTORC             17468 ROTOTN             17469 ROTOTP             17470 
+OPHYT    5         17491 OZOO     5         17496 OORN     5         17501 
+OORP     5         17506 OORC     5         17511 OTORN    5         17616 
+OTORP    5         17621 OTORC    5         17626 OTOTN    5         17631 
+OTOTP    5         17636 PLADDR   3         17741 PLADWT   3         17756 
+PLADEP   3         17771 SNKPHY             17774 ZOOPHY             17775 
+DTHPHY             17776 GROPHY             17777 TOTPHY             17778 
+GROZOO             17799 DTHZOO             17800 TOTZOO             17801 
+FLXBAL   3   4     17814 GROTBA             17874 DTHTBA             17875 
+TOTTBA             17876 SNKORN             17889 PHYORN             17890 
+ZOOORN             17891 BALORN             17892 TOTORN             17893 
+SNKORP             17914 PHYORP             17915 ZOOORP             17916 
+BALORP             17917 TOTORP             17918 SNKORC             17939 
+PHYORC             17940 ZOOORC             17941 BALORC             17942 
+TOTORC             17943 PYCO2              17964 ZOCO2              17965 
+BACO2              17966 ITIC               18074 ICO2               18075 
+PHCNT              18088 PHPM1    2         18088 ALKCON             18089 
+CFCINV             18090 PHPM2    3         18090 BRCO2    2         18091 
+TIC                18095 PHST     3         18095 CO2                18096 
+PH                 18097 SATCO2             18101 ROTIC              18103 
+ROCO2              18104 OTIC     5         18115 OCO2     5         18120 
+BODCO2             18175 PHYCO2             18176 ZOOCO2             18177 
+BALCO2             18178 BENCO2             18179 INVCO2             18180 
+TOTCO2             18181 ACFLAG  14         18217 ACPARM   7         18231 
+NUMCON             18239 NUMGQL             18240 ACCONC   7         18277 
+ACSTOR   7   5     18291 ACINFL   7   5     18333 ACFLX1   7   5     18382 
+ACFLX2   5   7   5 18424 ACFLXC  10   5     18634 ACFLXG   7   5     18694 
+ACFLX3   7   5     18736 ACPH               18771 ACCONV   7         18773 
+TOPFL              18780 VEGFL              18781 NSSP               18782 
+TSA    250  12     18783 DISL   250  10     21783 DISR   250  10     24283 
+WIDL   250  10     26783 WIDR   250  10     29283 HABSL  250  10     31783 
+HABSR  250  10     34283 HDEML  250  10     36783 HDEMR  250  10     39283 
+LATDEG             41783 LONDEG             41784 LONSTD             41785 
+DENL   250  10     41786 DENR   250  10     44286 NVPL   250         46786 
+NVPR   250         47036 JDAY               47286 LATRAD             47287 
+SO     250         47288 TSAL   250         47538 TSAR   250         47788 
+SKOP   250         48038 VSAL   250         48288 VSAR   250         48538 
+DLT1               48788 DEC                48789 HFDLT              48790 
+DF                 48791 @@@@@@                 1 @@@@@@                 1 
+YR                    18 MON                   19 DAY                   20 
+HR                    21 MIN                   22 POINT   20           110 
+MEAN    20           130 SPOUT                 28 @@@@@@                 1 
+YR                    17 MON                   18 DAY                   19 
+HR                    20 MIN                   21 OPCODE                30 
+NTERMS                31 K        7            32 SUM                   39 
+SPOUT                 27 @@@@@@                 1 @@@@@@                 1 
+YR                    54 MON                   55 DAY                   56 
+HR                    57 MIN                   58 SPOUT                 67 
+IVOL                  69 CIVOL  100            76 VOLFRM  12           777 
+VOLFRC               789 ROVOL                790 CROVOL 100           796 
+RMVOL               1396 CRMVOL 100          1402 ICON    10          2002 
+CONFRM  12  10      2082 CONFRC  10          2272 ROCON   10          2282 
+RMCON   10          2342 IHEAT               2402 HTFRM   12          2410 
+HTFRC               2422 ROHEAT              2423 RMHEAT              2429 
+ISED     3          2435 SEDFRM  12   3      2459 SEDFRC   3          2495 
+ROSED    3          2498 RMSED    3          2516 IDQAL    3          2534 
+ISQAL    3   3      2555 GQDFRM  12   3      2630 GQSFRM  12   3   3  2666 
+GQDFRC   3          2795 GQSFRC   3   3      2798 RODQAL   3          2807 
+ROSQAL   3   3      2825 RMDQAL   3          2879 RMSQAL   3   3      2897 
+IOX      2          2951 OXFRM   12   2      2967 OXFRC    2          2991 
+ROOX     2          2993 RMOX     2          3005 IDNUT    4          3017 
+ISNUT    3   2      3045 DNUFRM  12   4      3097 SNUFRM  12   3   2  3145 
+DNUFRC   4          3217 SNUFRC   3   2      3221 RODNUT   4          3227 
+ROSNUT   3   2      3251 RMDNUT   4          3287 RMSNUT   3   2      3311 
+IPLK     5          3347 PLKFRM  12   5      3387 PLKFRC   5          3447 
+ROPLK    5          3452 RMPLK    5          3482 IPH      2          3512 
+PHFRM   12   2      3528 PHFRC    2          3552 ROPH     2          3554 
+RMPH     2          3566 IACID    7          3578 ACIFRM  12   7      3634 
+ACIFRC   7          3718 ROACID   7          3725 RMACID   7          3767 
+#GROUP   55  TYPE TEXT
+$TEXT
+    1    1   40
+    2    0    0
+    3    0    0
+    4    0    0
+    5    0    0
+    6    0    0
+    7    0    0
+    8    0    0
+    9    0    0
+#GROUP   56  TYPE TEXT
+$TEXT
+SPLON           IORN            SAMAD           INH3           
+SAMSU           INH3            SNO3            INO3           
+SPRON           IORN            SSLON           IORN           
+SSRON           IORN            UPLON           IORN            
+UAMAD           INH3            UAMSU           INH3            
+UNO3            INO3            UPRON           IORN            
+USLON           IORN            USRON           IORN            
+LPLON           IORN            LAMAD           INH3           
+LAMSU           INH3            LNO3            INO3           
+LPRON           IORN            LSLON           IORN           
+LSRON           IORN            APLON           IORN            
+AAMAD           INH3            AAMSU           INH3            
+ANO3            INO3            APRON           IORN            
+ASLON           IORN            ASRON           IORN            
+SORGP           IORP            SP4AD           IPO4            
+SP4SU           IPO4            UORGP           IORP            
+UP4AD           IPO4            UP4SU           IPO4            
+LORGP           IORP            LP4AD           IPO4            
+LP4SU           IPO4            AORGP           IORP            
+AP4AD           IPO4            AP4SU           IPO4            
+#GROUP   60  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading the following user-defined variable quantity:
+ 
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+ 
+ It has been ignored.
+#GROUP   61  TYPE TEXT
+$TEXT
+   10    1    1    5
+ User-defined variable quantity name &CCCCC cannot be duplicated.  Names
+ must be unique.
+#GROUP   62  TYPE TEXT
+$TEXT
+   10    1    1    5
+ User-defined variable quantity &CCCCC refers to invalid operation-type
+ &CCCCC.
+
+ Valid values are:
+ PERLND IMPLND RCHRES COPY PLTGEN DISPLY DURANL GENER MUTSIN
+#GROUP   63  TYPE TEXT
+$TEXT
+   10    1    1    5
+ User-defined variable quantity &CCCCC refers to base variable in inactive
+ operation &CCCCC &I   .
+#GROUP   64  TYPE TEXT
+$TEXT
+   10    1    1    5
+ User-defined variable quantity &CCCCC has a bad type code (TYPCOD).
+ 
+ The value supplied was: &I
+Minimum allowed is    : &I           Maximum allowed is    : &I
+#GROUP   65  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The time code for lag or aggregation of a user-defined variable quantity
+ must be MI (minute), HR (hour), or DY (day).  The value supplied for
+ &CCCCC was &C.
+#GROUP   66  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The time step for lag or aggregation of a user-defined variable quantity
+ must be non-negative.  The value supplied for &CCCCC was &I   .
+#GROUP   67  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Invalid aggregation code &CCC for user-defined quantity &CCCCC.  Valid values
+ are: SUM, AVER, MAX, MIN.  Exception: Integer variables may not be AVERaged.
+#GROUP   70  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The IF statement before line &I    in the SPEC-ACTIONS block is too
+ deeply nested.  The maximum nesting level is &I   .
+#GROUP   71  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The ELSE statement before line &I    in the SPEC-ACTIONS block does not
+ match an IF statement.
+#GROUP   72  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The END IF statement before line &I    in the SPEC-ACTIONS block does not
+ match an IF statement.
+#GROUP   73  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The ELSE or ELSE IF statement before line &I    in the SPEC-ACTIONS block
+ follows an ELSE at the same nesting level of IF statements.
+#GROUP   74  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The IF or ELSE statement before line &I    in the SPEC-ACTIONS block
+ creates too many logic blocks.  The maximum number of blocks is &I   .
+#GROUP   75  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The IF or ELSE IF statement before line &I    in the SPEC-ACTIONS block
+ creates too many logic chains.  The maximum number of chains is &I   .
+#GROUP   76  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The IF or ELSE IF statement before line &I    in the SPEC-ACTIONS block
+ creates too many logic chain references, which means that the logic is
+ more complicated than the program can handle in the current configuration.
+ The maximum number of chain references is &I   .
+#GROUP   77  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Too many user-defined variable quantities have been defined.
+
+ The maximum number allowed is &I   .
+#GROUP   80  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The left parenthesis in column &I    does not appear in a proper
+ position.  Left parentheses may only appear at the beginning of a
+ logic chain or immediately after a logic operator (AND or OR).
+#GROUP   81  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The right parenthesis in column &I    does not appear in a proper
+ position.  Right parentheses may only appear after the second
+ operand (quantity) of a comparison operator ( '=', '>', etc.) or
+ another right parenthesis.
+#GROUP   82  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The right parenthesis in column &I    does not match a preceding
+ left parenthesis.
+#GROUP   83  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The right parenthesis in column &I    is not the same type
+ (round: "()"; square: "[]", or curly: "{}" ) as the corresponding
+ left parenthesis.
+#GROUP   84  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The quantity '&CCCCCCCCC' in column &I    does not appear
+ in a proper position.  Quantities may only appear: 1) at
+ the beginning of a logic chain, 2) immediately after a left
+ parenthesis, 3) immediately after a logic operator (AND or OR),
+ or 4) immediately after a comparison operator ( '=', '>', etc.)
+#GROUP   85  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The comparison operator '&C' in column &I    does not appear
+ in a proper position.  A comparison operator may only appear
+ immediately after a quantity which acts as its left operand.
+#GROUP   86  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The comparison operator '&CCCCCCCCC' in column &I    is not valid.
+ Valid options are:  =  !=  >  >=  <  <=
+#GROUP   87  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The logical operator '&CC' in column &I    does not appear
+ in a proper position.  A logical operator may only appear:
+ 1) immediately after a quantity-comparison operator-quantity
+ sequence; or 2) immediately after a right parenthesis.
+#GROUP   88  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The delimiter 'THEN' in column &I    does not appear in a
+ proper position.  This delimiter may only appear:
+ 1) immediately after a quantity-comparison operator-quantity
+ sequence; or 2) immediately after a right parenthesis.
+#GROUP   89  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The number of right parentheses in the current conditional line
+ does not match the number of left parentheses.
+#GROUP   90  TYPE TEXT
+$TEXT
+   10    1    1   10
+ Internal pipe overflow while processing special actions.  The lag plus
+ aggregation period in intervals summed over all user-defined quantities
+ must be less than or equal to &I         intervals.
+#GROUP   91  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The address of base variable for user-defined variable quantity &CCCCC is
+ beyond the end of the active sections in source operation.
+ Address is &I   .  Max is &I   .
+#GROUP  100  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied in message WDM file.  This is a program bug.
+#GROUP  101  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied in message WDM file.  This is a program bug.
+#GROUP  102  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in a UVQUAN line.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP  103  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in a UVQUAN line, but no category
+  tags were defined in the CATEGORY block.
+#GROUP  104  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in a UVNAME line.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP  105  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in a UVNAME line, but no category
+  tags were defined in the CATEGORY block.
+#GROUP  106  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in a Special Action line.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP  107  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in a Special Action line, but no
+  category tags were defined in the CATEGORY block.
+#GROUP  108  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading the following mfact update special action:
+ 
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+ 
+ It has been ignored.
+#GROUP  109  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Too many mfact update special actions have been requested.
+
+ The maximum number allowed is &I   .
+  END DATA
+END CLU

@@ -1,0 +1,51 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          300    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HPER
+  END LABEL
+  DATA   CLU   300
+#GROUP    1  TYPE TEXT
+$TEXT
+   50    1    1    5
+ PERLND operation &I    has no active sections.
+#GROUP    2  TYPE TEXT
+$TEXT
+   50    1    1    5
+ The printout level (PFLAG) for one or more sections of PERLND
+ operation &I    is 2; that is, some printout should occur more
+ frequently than daily.  In this case, the value of pivl (specified
+ by the user or by default) must imply a minimum printout interval
+ of one day or an integer fraction thereof.  However, this condition
+ has been violated since the value of pdelt is &I    minutes.
+ The remedy is to adjust pivl so that pdelt (delt*pivl) meets the
+ above requirement.
+#GROUP    3  TYPE TEXT
+$TEXT
+   50    1    1    5
+ The binary out level (BFLAG) for one or more sections of PERLND
+ operation &I    is 2; that is, some output should occur more
+ frequently than daily.  In this case, the value of bivl (specified
+ by the user or by default) must imply a minimum output interval
+ of one day or an integer fraction thereof.  However, this condition
+ has been violated since the value of bdelt is &I    minutes.
+ The remedy is to adjust bivl so that bdelt (delt*bivl) meets the
+ above requirement.
+#GROUP    4  TYPE TEXT
+$TEXT
+   50    1    1    5
+The binary output interval (BIVL) for one or more PERLND operations
+does not equal the print output interval (PIVL), and both the
+binary and print output options are on.  When using both binary
+and print output options, BIVL must equal PIVL.  The remedy is to
+change one or the other.  BIVL = &I   ,  and PIVL = &I   .
+  END DATA
+END CLU
+
+                                                                                
+
+                                                                                
+                                                                                

@@ -1,0 +1,231 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          128    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 473
+  LABEL
+    GRPNAM  GENER
+  END LABEL
+  DATA   CLU   128
+#GROUP    1  TYPE TEXT
+$TEXT
+  1  1 1OPCODE            101    101    301    301
+  1  1 1NTERMS            102    102    302    302
+  7  1 2COEFFS            103    103    303    303
+  1  1 2PARM              104    104    304    304
+  0  0 0END GENER         000    000    000    000
+#GROUP   50  TYPE PRM1
+$SCREEN
+  Select GENER table(s) to modify.
+ 
+  @ OPCODE
+  @ NTERMS
+  @ COEFFS
+  @ PARM
+$FIELD @ O
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the GENER OPCODE table.
+$FIELD @ N
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the GENER NTERMS table.
+$FIELD @ C
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the GENER COEFFS table.
+$FIELD @ P
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the GENER PARM table.
+#GROUP  101  TYPE PRM2
+$HEADER
+    GENER   OP-
+    x -  x CODE
+$TNAME  OPCODE
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+GENER operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 26
+_DEFAULT  -999
+_HELP
+OPCODE  is the  GENER operation code.  For  further details,
+see Section 4.2(15) of Part E.
+_PNAME  OPCODE
+$HELP
+Operation code for time series generation.
+#GROUP  301  TYPE TEXT
+$TEXT
+(1X,I10)
+    OPCODE
+#GROUP  102  TYPE PRM2
+$HEADER
+    GENER NTERMS
+    x -  x
+$TNAME  NTERMS
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+GENER operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 7
+_DEFAULT  2
+_HELP
+NTERMS  is  the total  no.  of  terms in  the power  series.
+This table is only relevant if POCODE=8.
+_PNAME  NTERMS
+$HELP
+Number of terms in power series.
+#GROUP  302  TYPE TEXT
+$TEXT
+(1X,I10)
+    NTERMS
+#GROUP  103  TYPE PRM2
+$HEADER
+  GENER         K1        K2        K3        K4        K5        K6        K7
+   x - x
+$TNAME  COEFFS
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+GENER operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN  9
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_HELP
+K(1)    -  K(NTERMS)   are the  coefficients  in  the  power
+function.  This table is only relevant if OPCODE=8.
+_PNAME  K1
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 19
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_PNAME  K2
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 29
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_PNAME  K3
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 39
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_PNAME  K4
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 49
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_PNAME  K5
+$FIELD  FIELD8
+_WIDTH  10
+_COLUMN 59
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_PNAME  K6
+$FIELD  FIELD9
+_WIDTH  10
+_COLUMN 69
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  0.
+_PNAME  K7
+$HELP
+Coefficients in generating power function.
+#GROUP  303  TYPE TEXT
+$TEXT
+(1X,10(1PE10.3))
+         K1        K2        K3        K4        K5        K6        K7
+#GROUP  104  TYPE PRM2
+$HEADER
+    GENER          K
+    x -  x
+$TNAME  PARM
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+GENER operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999. : -999.
+_DEFAULT  1.
+_HELP
+K  is  the constant  required in  the operation.   (OPCODE =
+9,10,11)
+_PNAME  CONSTK
+$HELP
+Constant for GENER operation.
+#GROUP  304  TYPE TEXT
+$TEXT
+(1X,(1PE10.3))
+         K
+  END DATA
+END CLU

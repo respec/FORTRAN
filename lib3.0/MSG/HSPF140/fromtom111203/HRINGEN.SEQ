@@ -1,0 +1,568 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          211    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 200
+  LABEL
+    GRPNAM  HRINGEN
+  END LABEL
+  DATA   CLU   211
+#GROUP    1  TYPE TEXT
+$TEXT
+   20   11    0    5
+ EXGRP was specified, but the external scratch pad is not implemented
+ in this release of HSPF.  This may result in problems when the
+ network block is interpreted.
+#GROUP    2  TYPE TEXT
+$TEXT
+   20   11    0    5
+ When an operation is in a user-specified INGRP, HSPF expects the hrmin
+ field in the opn sequence block to be blank.  However, the value
+ given below was found, and ignored:
+      Hours      Mins
+      &I        &I
+#GROUP    3  TYPE TEXT
+$TEXT
+   20   11    0    5
+ END INGRP was specified but, since ingroup contains no operations,
+ entire ingroup is ignored.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20   11    0    5
+ END EXGRP was explicitly or implicitly specified but, since exgroup
+ contains no operations, entire exgroup is ignored.
+#GROUP    5  TYPE TEXT
+$TEXT
+EXGRP   INGRP
+#GROUP   10  TYPE TEXT
+$TEXT
+ GENERATED INGRP
+#GROUP   11  TYPE TEXT
+$TEXT
+ GENERATED END INGROUP
+#GROUP   12  TYPE TEXT
+$TEXT
+ GENERATED END EXGROUP
+#GROUP   21  TYPE TEXT
+$TEXT
+   20    1    1    5
+ 'END EXGRP' was found but a corresponding valid exgrp heading did not
+ precede it.  Delimiter ignored.
+#GROUP   22  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCCCCCCCC' is invalid.  Is it misspelled or placed in
+ the wrong fields?
+#GROUP   23  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The text '&CCCCCCCCCCCCCCCCCCC' is not recognized as a heading,
+ operation-type or delimiter, and thus will be ignored.  Is it
+ misspelled or placed in the wrong fields?
+#GROUP   24  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There is no valid opn sequence block in the user's control input for
+ this run.  This is illegal since resume mode is not implemented in
+ this release of HSPF.
+#GROUP   25  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The operation-id '&CCCCC, &I   ' appears more than once in the opn
+ sequence block.
+$HELP
+ Every operation must have a unique id, otherwise the linkages specified
+ in the ext sources, network and ext targets blocks would be ambiguous.
+#GROUP   26  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are more operations in the opn sequence block than can fit into
+ table OPNTAB.  Thus, this operation will not be entered in the table.
+#GROUP   27  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are more ingroups (explicitly or implicitly specified) in the
+ opn sequence block than can fit into table GRPTAB.  Thus, this group
+ will not be entered into the table.
+#GROUP   28  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are more exgroups (explicitly or implicitly specified) in the
+ opn sequence block than can fit into table EXGTAB.  Thus, this exgroup
+ will not be entered into the table.
+#GROUP   29  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Ingrp was specified before the end of the previous ingroup, ingroup
+ no. &I   , was found.
+#GROUP   30  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The following time step was read from the user's control input, but is
+ not valid.
+      Hours      Mins
+      &I        &I
+$HELP
+ HSPF supports a specified set of time series intervals, ranging from
+ one minute to 24 hours.  See documentation for details.
+#GROUP   31  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The following exgroup and ingroup time intervals are not compatible:
+      XDELT     NDELT
+      (min)     (min)
+      &I        &I
+$HELP
+ To be compatible, xdelt must be a multiple of ndelt, or vice versa.
+#GROUP   32  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Exgrp was specified before the end of the previous exgroup, exgroup
+ no. &I   , was found.
+#GROUP   33  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Exgrp was explicitly or implicitly specified before the end of the
+ previous ingroup, ingroup no. &I   , was found.
+#GROUP   34  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The run span (duration) is not a multiple of the exgroup time interval.
+        Run   Exgroup
+       Span  Interval
+      (Min)     (Min)
+      &I        &I
+#GROUP   35  TYPE TEXT
+$TEXT
+   20    1    1    5
+ END INGRP found, but since no corresponding valid ingrp heading
+ preceded it, instruction is ignored.
+#GROUP   36  TYPE TEXT
+$TEXT
+   20    1    1    5
+ END EXGRP found before end of current ingroup.
+#GROUP   37  TYPE TEXT
+$TEXT
+ GENERATED END EXGROUP
+#GROUP   38  TYPE TEXT
+$TEXT
+ GENERATED EXGROUP
+#GROUP   40  TYPE TEXT
+$TEXT
+FTABLE
+#GROUP   41  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A ftable id has been found but a delimiter was expected:
+  Heading Found            Delimiter Expected For
+  &CCCCC  , &I             &CCCCC  , &I
+#GROUP   42  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The ftable id '&CCCCC  , &I   ' has been found, but has occurred
+ before.
+$HELP
+ Subroutine TABBLK expects each ftable id (and its corresponding delimiter)
+ to occur only once in the range of text it is searching.
+#GROUP   43  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are more ftables than can fit into the
+ ftable index (TABINX).  Thus, this ftable cannot be entered
+ into the index.
+#GROUP   44  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCC  , &I   ' has been found but is not valid.
+ (Has it been misspelled or placed in the wrong columns?)
+#GROUP   45  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCC  , &I   ' has been found but was not expected
+ since there is no previous ftable heading.
+#GROUP   46  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCC  , &I   ' was found but does not match the
+ currently open ftable id, '&CCCCC  , &I   '.  (Is it misspelled
+ or placed in the wrong columns?)
+#GROUP   47  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The end of the block of text was reached before a delimiter for the
+ last ftable, '&CCCCC  , &I   ', was found.  Was the delimiter
+ misspelled or placed in the wrong columns?
+$HELP
+ Subroutine TABBLK does not expect the block of text which it is searching
+ to end with a partial ftable.
+#GROUP   50  TYPE TEXT
+$TEXT
+MASS-LINK
+#GROUP   51  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A mass link table heading has been found but a delimiter was expected:
+  Heading Found              Delimiter Expected For
+  &CCCCCCCCCCC, &I           &CCCCCCCCCCC, &I
+#GROUP   52  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The mass link table id '&CCCCCCCCCCC, &I   ' has been found, but has
+ occurred before.
+$HELP
+ Subroutine MSLKBK expects each mass link table id (and its corresponding
+ delimiter) to occur only once in the range of text it is searching.
+#GROUP   53  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are more mass link tables than can fit into the mass link table
+ index.  Thus, this mass link table cannot be entered into the index.
+#GROUP   54  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCCCCCCCC, &I   ' has been found but is not valid.
+ (Has it been misspelled or placed in the wrong columns?)
+$HELP
+ A delimiter has the form END <TABLE ID> where <TABLE ID> must be a
+ valid table id.
+#GROUP   55  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCCCCCCCC, &I   ' has been found but was not expected
+ since there is no previous mass link table heading.
+#GROUP   56  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCCCCCCCC, &I   ' was found but does not match the
+ currently open mass link table id, '&CCCCCCCCCCC, &I   '.  (Is it
+ misspelled or placed in the wrong columns?)
+#GROUP   57  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The end of the block of text was reached before a delimiter for the
+ last mass link table, '&CCCCCCCCCCC, &I   ', was found.  Was the delimiter
+ misspelled or placed in the wrong columns?
+$HELP
+ Subroutine MSLKBK does not expect the block of text which it is searching
+ to end with a partial table.
+#GROUP   58  TYPE TEXT
+$TEXT
+
+ ====================================================================================================================================
+ PROCESSING MASS LINK BLOCK
+
+#GROUP   59  TYPE TEXT
+$TEXT
+
+ FINISHED PROCESSING MASS LINK BLOCK
+ ====================================================================================================================================
+#GROUP   61  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Category ID &I    is out of range.
+
+ It must be between 1 and &I   .
+#GROUP   62  TYPE TEXT
+$TEXT
+   20    1    1    2
+ Category ID &I is already in use.
+
+ Each ID may only be used once.
+#GROUP   63  TYPE TEXT
+$TEXT
+   20    1    1    2
+ Error reading category entry.
+
+ Text of entry is '&CCCCCCCCCCCCCCCCCCCCC'.
+
+ Look for a character in the category id field (columns 1-5).
+#GROUP   64  TYPE TEXT
+$TEXT
+
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+#GROUP   65  TYPE TEXT
+$TEXT
+
+ ====================================================================================================================================
+ PROCESSING CATEGORY BLOCK
+
+#GROUP   66  TYPE TEXT
+$TEXT
+
+    ID            NAME
+#GROUP   67  TYPE TEXT
+$TEXT
+
+ NO CATEGORY DATA IN CATEGORY BLOCK
+#GROUP   68  TYPE TEXT
+$TEXT
+
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+#GROUP   70  TYPE TEXT
+$TEXT
+MONTH-DATA
+#GROUP   71  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A month-data table heading has been found but a delimiter was expected:
+  Heading Found              Delimiter Expected For
+  &CCCCCCCCCCC, &I           &CCCCCCCCCCC, &I
+#GROUP   72  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The month-data table id '&CCCCCCCCCCC, &I   ' has been found, but has
+ occurred before.
+$HELP
+ Subroutine MDATBK expects each month-data table id (and its corresponding
+ delimiter) to occur only once in the range of text it is searching.
+#GROUP   73  TYPE TEXT
+$TEXT
+   20    1    1    5
+ There are more month-data tables than can fit into the month-data table
+ index.  Thus, this month-data table cannot be entered into the index.
+#GROUP   74  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCCCCCCCC, &I   ' has been found but is not valid.
+ (Has it been misspelled or placed in the wrong columns?)
+$HELP
+ A delimiter has the form END <TABLE ID> where <TABLE ID> must be a
+ valid table id.
+#GROUP   75  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCCCCCCCC, &I   ' has been found but was not expected
+ since there is no previous month-data table heading.
+#GROUP   76  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The delimiter '&CCCCCCCCCCC, &I   ' was found but does not match the
+ currently open month-data table id, '&CCCCCCCCCCC, &I   '.  (Is it
+ misspelled or placed in the wrong columns?)
+#GROUP   77  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The end of the block of text was reached before a delimiter for the
+ last month-data table, '&CCCCCCCCCCC, &I   ', was found.  Was the delimiter
+ misspelled or placed in the wrong columns?
+$HELP
+ Subroutine MDATBK does not expect the block of text which it is searching
+ to end with a partial table.
+#GROUP   80  TYPE TEXT
+$TEXT
+PER-AVERPER-CUM INST-VALINST-CUM
+#GROUP   81  TYPE TEXT
+$TEXT
+   20    1    1    5
+An invalid DSS file index number was listed in the PATHNAMES block for:
+DSN   PATH
+&I    &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+The file number, given as &I   , must be between 1 and &I    for this
+version of HSPF
+#GROUP   82  TYPE TEXT
+$TEXT
+   20    1    1    5
+In the PATHNAMES block, the data type for dataset number &I    , given as
+&CCCCCCC, is invalid.
+Valid types are &CCCCCCC, &CCCCCCC, and &CCCCCCC.  Type &CCCCCCC is not valid
+for HSPF.
+#GROUP   83  TYPE TEXT
+$TEXT
+   20    1    1    5
+In the PATHNAMES block, the pathname for dataset number &I    is invalid:
+  &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+A valid pathname for HSPF must be 64 or fewer characters, must begin and
+end with a slash ('/'), must contain exactly seven slashes dividing it into
+six parts (A-F), and must contain no null or control characters:
+                        /A/B/C/D/E/F/
+Any or all of the six parts may be empty, and in particular the D part is
+ignored by HSPF, and can be omitted to help fit the standard DSS 80-character
+pathname into 64 characters.
+#GROUP   84  TYPE TEXT
+$TEXT
+   20    1    1    5
+The following data record is referenced by more than one dataset number:
+FILE    PATH
+&I     &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+Referenced by dataset numbers &I    and &I   .
+#GROUP   85  TYPE TEXT
+$TEXT
+   20    1    1    5
+Dataset number &I    appears more than once in the PATHNAMES block
+#GROUP   86  TYPE TEXT
+$TEXT
+   20    1    1    5
+Too many DSS pathnames appear in the PATHNAMES block.  The maximum is &I   .
+#GROUP  108  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The global block must be present in a run data set but was not found.
+ (Was the heading misspelled or placed in the wrong columns?)
+ HSPF will attempt to interpret the remainder of the data set.
+$HELP
+ This block must be present, even if one is operating in "resume' mode.
+#GROUP  109  TYPE TEXT
+$TEXT
+
+
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+#GROUP  110  TYPE TEXT
+$TEXT
+
+ GENERAL RUN INFORMATION:  &
+#GROUP  111  TYPE TEXT
+$TEXT
+
+ &
+#GROUP  112  TYPE TEXT
+$TEXT
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  &/&/& &:&    &/&/& &:&
+
+#GROUP  113  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A pair of date/time fields (e.g. start & end of run or dates
+ for successive special actions) are not in correct chronological order.
+ (The following are the values supplied, in internal format):
+      FIRST                                SECOND
+  Year  Mon  Day   Hr  Min      Year  Mon  Day   Hr  Min
+ &I   &I   &I   &I   &I        &I   &I   &I   &I   &I
+#GROUP  114  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The run interpreter output level was given the value of &I    , which
+ is invalid.  It will arbitrarily be reset to 1, to permit interpretation
+ of the data set to continue.
+$HELP
+ The valid range for OUTLEV is specified in the documentation of the
+ user's control input.
+#GROUP  115  TYPE TEXT
+$TEXT
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  &
+#GROUP  116  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Resume mode has been specified but is not available in this release
+ of HSPF.  System has therefore reset it OFF.
+$HELP
+ Resume mode allows a user to reuse information generated by the run
+ interpreter in a previous run, thus saving space and computer time
+ in subsequent runs.
+#GROUP  117  TYPE TEXT
+$TEXT
+
+ SYSTEM HAS BEEN ASKED TO INTERPRET THE RUN INSTRUCTIONS BUT NOT TO EXECUTE THEM.  RUNFG=     0
+#GROUP  118  TYPE TEXT
+$TEXT
+
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG=     1
+#GROUP  119  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The global block did not contain 6 non-comment lines.
+$HELP
+ Subroutine GLOBLK checks the no. of lines encountered.  According to
+ official format, this should be 6.
+#GROUP  120  TYPE TEXT
+$TEXT
+
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+#GROUP  121  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The runtime Special Action output level was given the value of &I    , which
+ is invalid.  It will arbitrarily be reset to 1, to permit interpretation
+ of the data set to continue.
+$HELP
+ The valid range for SPOUT is 0 to 5.
+#GROUP  122  TYPE TEXT
+$TEXT
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  &
+#GROUP  123  TYPE TEXT
+$TEXT
+    1    1    1    5
+ An error ocurred reading the starting and ending dates in the GLOBAL block.
+ The input was:
+
+       &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+                     yyyy mm dd hh mm         yyyy mm dd hh mm
+#GROUP  124  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An error ocurred reading the Run Interpreter and Special Action output levels
+ in the GLOBAL block.  The input was:
+
+       &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+                                   rr   ss
+#GROUP  125  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An error ocurred reading the RESUME, RUN, and UNIT flags in the GLOBAL block.
+ The input was:
+
+       &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+                    r         r                                   u
+#GROUP  126  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An error ocurred reading INDELT in the OPN-SEQUENCE block.  The input was:
+
+                       &CCCCCCCCCCC
+                              hh mm
+
+ The run time step will be set arbitrarily to daily (24:00) to allow further
+ error checking.
+#GROUP  127  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An error ocurred reading an FTABLE number in a heading.  The input was:
+
+ &CCCCCCCCCCCCCC
+             nnn
+#GROUP  128  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An error ocurred reading an FTABLE number in a delimiter.  The input was:
+
+ &CCCCCCCCCCCCCC
+             nnn
+#GROUP  129  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An error ocurred reading the integer values in a line in the PATHNAMES
+ block: DSSDSN and/or DSSFL.  The input was:
+
+    &CCCCC
+    dddd f
+#GROUP  130  TYPE TEXT
+$TEXT
+
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+
+#GROUP  131  TYPE TEXT
+$TEXT
+
+ FOUND EXGRP
+#GROUP  132  TYPE TEXT
+$TEXT
+
+ FOUND INGRP
+#GROUP  133  TYPE TEXT
+$TEXT
+
+ FOUND &
+#GROUP  134  TYPE TEXT
+$TEXT
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  UNITFG=     1
+#GROUP  135  TYPE TEXT
+$TEXT
+ THE UNIT SYSTEM OF THE RUN WILL BE METRIC.  UNITFG=     2
+  END DATA
+END CLU
