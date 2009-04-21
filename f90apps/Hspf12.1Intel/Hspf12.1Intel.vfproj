@@ -47,7 +47,7 @@
 	<Files>
 		<Filter Name="Libraries">
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\adwdm.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\hspf.lib"/>
+		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\hspf122.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\HspNoDSS.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\util.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\wdm.lib"/></Filter>
