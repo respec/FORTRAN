@@ -1,0 +1,64 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          309    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HPERPES
+  END LABEL
+  DATA   CLU   309
+#GROUP    1  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ Pervious land segment: &I
+
+ A negative value is projected for adsorbed pesticide.  To avoid the problem,
+ fluxes will arbitrarily be reduced.  Relevant data are:
+
+            PESTICIDE      FRAC      PSAD     TPSAD     ADSPS     DESPS   LAYER
+ &CCCCCCCCCCCCCCCCCCC&R        &R        &R        &R        &R            &CCC
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced, to avoid the negative
+      concentration.
+ PSAD is the mass of adsorbed pesticide before reaction (LB/ACRE or KG/HA)
+ TPSAD is the projected (negative) mass of adsorbed pesticide after reaction
+      (LB/ACRE or KG/HA)
+ ADSPS is the projected adsorption (LB/ACRE or KG/HA) per interval
+ DESPS is the projected desorption (LB/ACRE or KG/HA) per interval
+#GROUP    2  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ Pervious land segment: &I
+
+ A negative value is projected for pesticide in solution.  To avoid the problem,
+ fluxes will arbitrarily be reduced.  Relevant data are:
+
+            PESTICIDE      FRAC      PSSU     TPSSU     ADSPS     DESPS  LAYER
+ &CCCCCCCCCCCCCCCCCCC&R        &R        &R        &R        &R           &CCC
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced, to avoid the negative
+      concentration.
+ PSSU is the mass of pesticide in solution before reaction (LB/ACRE or
+      KG/HA)
+ TPSSU is the projected (negative) mass of pesticide in solution after
+      reaction (LB/ACRE or KG/HA)
+ ADSPS is the projected adsorption (LB/ACRE or KG/HA) per interval
+ DESPS is the projected desorption (LB/ACRE or KG/HA) per interval
+  END DATA
+END CLU
+
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

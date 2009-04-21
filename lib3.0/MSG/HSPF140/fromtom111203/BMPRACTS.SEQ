@@ -1,0 +1,286 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          150    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  BMPRACTS
+  END LABEL
+  DATA   CLU   150
+#GROUP    1  TYPE TEXT
+$TEXT
+INFLOW  10
+RECEIV  30
+ROFLOW  50
+REMOVE  70
+#GROUP    2  TYPE TEXT
+$TEXT
+IVOL
+CIVOL
+ICON
+IHEAT
+ISED
+IDQAL
+ISQAL
+IOX 
+IDNUT
+ISNUT
+IPLK
+IPH
+IACID
+#GROUP    3  TYPE TEXT
+$TEXT
+IVOL
+CIVOL
+ICON
+IHEAT
+ISED
+IDQAL
+ISQAL
+IOX 
+IDNUT
+ISNUT
+IPLK
+IPH
+IACID      
+#GROUP    4  TYPE TEXT
+$TEXT
+ROVOL
+CROVOL
+ROCON
+ROHEAT
+ROSED
+RODQAL
+ROSQAL
+ROOX 
+RODNUT
+ROSNUT
+ROPLK
+ROPH
+ROACID
+#GROUP    5  TYPE TEXT
+$TEXT
+RMVOL
+CRMVOL
+RMCON
+RMHEAT
+RMSED
+RMDQAL
+RMSQAL
+RMOX 
+RMDNUT
+RMSNUT
+RMPLK
+RMPH
+RMACID
+#GROUP   11  TYPE TEXT
+$TEXT
+IVOL    1  1     1     1 2   0 2    0    74 ENG acft/iv    0       1   0 1.23E-3
+  Inflow of water                           MET Mm3/iv     0  810.71   0       1
+#GROUP   12  TYPE TEXT
+$TEXT
+CIVOL 100  1    -9     1 2   0 2    0   576 ENG acft/iv    0       1   0 1.23E-3
+  Inflow of water by category               MET Mm3/iv     0  810.71   0       1
+#GROUP   13  TYPE TEXT
+$TEXT                         
+ICON   10  1    -7     1 2   0 2    0  2052 ENG qty/iv     0       1   0       1
+  Inflow of conservative constits.          MET qty/iv     0       1   0       1
+#GROUP   14  TYPE TEXT
+$TEXT
+IHEAT   1  1     1     1 2   0 2    0  2407 ENG BTU/iv     0       1   0  0.2520
+  Inflow of heat                            MET kcl/iv     0   3.969   0       1
+#GROUP   15  TYPE TEXT
+$TEXT
+ISED    3  1     3     1 2   0 2    0  2450 ENG tn/iv      0       1   0  0.9070
+  Inflows of sediment                       MET tne/iv     0  1.1025   0       1
+#GROUP   16  TYPE TEXT
+$TEXT
+IDQAL   3  1    -8     1 2   0 2    0  2549 ENG qty/iv     0       1   0       1
+  Inflow of dissolved qual                  MET qty/iv     0       1   0       1
+#GROUP   17  TYPE TEXT
+$TEXT
+ISQAL   3  3     3    -8 2   0 2    0  2600 ENG qty/iv     0       1   0       1
+  Inflows of sed-assoc qual                 MET qty/iv     0       1   0       1
+#GROUP   18  TYPE TEXT
+$TEXT
+IOX     2  1     2     1 2   0 2    0  2961 ENG lb/iv      0       1   0  0.4536
+  Inflows of DO and BOD                     MET kg/iv      0   2.205   0       1
+#GROUP   19  TYPE TEXT
+$TEXT
+IDNUT   4  1     4     1 2   0 2    0  3037 ENG lb/iv      0       1   0  0.4536
+  Inflows of dissolved nutrients            MET kg/iv      0   2.205   0       1
+#GROUP   20  TYPE TEXT
+$TEXT
+ISNUT   3  2     3     2 2   0 2    0  3075 ENG lb/iv      0       1   0  0.4536
+  Inflows of adsorbed NH4 and PO4           MET kg/iv      0   2.205   0       1
+#GROUP   21  TYPE TEXT
+$TEXT
+IPLK    5  1     5     1 2   0 2    0  3372 ENG lb/iv      0       1   0  0.4536
+  Inflows of plankton related constituents  MET kg/iv      0   2.205   0       1
+#GROUP   22  TYPE TEXT
+$TEXT
+IPH     2  1     2     1 2   0 2    0  3522 ENG lb/iv      0       1   0  0.4536
+  Inflows of TIC and CO2                    MET kg/iv      0   2.205   0       1
+#GROUP   23  TYPE TEXT
+$TEXT
+IACID   7  1   -10     1 2   0 2    0  3613 ENG lb/iv      0       1   0  0.4536
+  Inflows of acid chemicals                 MET kg/iv      0   2.205   0       1
+#GROUP   31  TYPE TEXT
+$TEXT
+IVOL    1  1     1     1 2   0      0    75 ENG acft/iv    0       1   0 1.23E-3
+  Inflow of water                           MET Mm3/iv     0  810.71   0       1
+#GROUP   32  TYPE TEXT
+$TEXT
+CIVOL 100  1    -9     1 2   0      0   676 ENG acft/iv    0       1   0 1.23E-3
+  Inflow of water by category               MET Mm3/iv     0  810.71   0       1
+#GROUP   33  TYPE TEXT
+$TEXT                         
+ICON   10  1    -7     1 2   0      0  2062 ENG qty/iv     0       1   0       1
+  Inflow of conservative constits.          MET qty/iv     0       1   0       1
+#GROUP   34  TYPE TEXT
+$TEXT
+IHEAT   1  1     1     1 2   0      0  2408 ENG BTU/iv     0       1   0  0.2520
+  Inflow of heat                            MET kcl/iv     0   3.969   0       1
+#GROUP   35  TYPE TEXT
+$TEXT
+ISED    3  1     3     1 2   0      0  2453 ENG tn/iv      0       1   0  0.9070
+  Inflows of sediment                       MET tne/iv     0  1.1025   0       1
+#GROUP   36  TYPE TEXT
+$TEXT
+IDQAL   3  1    -8     1 2   0      0  2552 ENG qty/iv     0       1   0       1
+  Inflow of dissolved qual                  MET qty/iv     0       1   0       1
+#GROUP   37  TYPE TEXT
+$TEXT
+ISQAL   3  3     3    -8 2   0      0  2609 ENG qty/iv     0       1   0       1
+  Inflows of sed-assoc qual                 MET qty/iv     0       1   0       1
+#GROUP   38  TYPE TEXT
+$TEXT
+IOX     2  1     2     1 2   0      0  2693 ENG lb/iv      0       1   0  0.4536
+  Inflows of DO and BOD                     MET kg/iv      0   2.205   0       1
+#GROUP   39  TYPE TEXT
+$TEXT
+IDNUT   4  1     4     1 2   0      0  3041 ENG lb/iv      0       1   0  0.4536
+  Inflows of dissolved nutrients            MET kg/iv      0   2.205   0       1
+#GROUP   40  TYPE TEXT
+$TEXT
+ISNUT   3  2     3     2 2   0      0  3081 ENG lb/iv      0       1   0  0.4536
+  Inflows of adsorbed NH4 and PO4           MET kg/iv      0   2.205   0       1
+#GROUP   41  TYPE TEXT
+$TEXT
+IPLK    5  1     5     1 2   0      0  3377 ENG lb/iv      0       1   0  0.4536
+  Inflows of plankton related constituents  MET kg/iv      0   2.205   0       1
+#GROUP   42  TYPE TEXT
+$TEXT
+IPH     2  1     2     1 2   0      0  3524 ENG lb/iv      0       1   0  0.4536
+  Inflows of TIC and CO2                    MET kg/iv      0   2.205   0       1
+#GROUP   43  TYPE TEXT
+$TEXT
+IACID   7  1   -10     1 2   0      0  3620 ENG lb/iv      0       1   0  0.4536
+  Inflows of acid chemicals                 MET kg/iv      0   2.205   0       1
+#GROUP   51  TYPE TEXT
+$TEXT
+ROVOL   1  1     1     1 2   0      0   795 ENG acft/iv    0       1   0 1.23E-3
+ Outflow of water                           MET Mm3/iv     0  810.71   0       1
+#GROUP   52  TYPE TEXT
+$TEXT
+CROVOL100  1    -9     1 2   0      0  1296 ENG acft/iv    0       1   0 1.23E-3
+ Outflow of water by category               MET Mm3/iv     0  810.71   0       1
+#GROUP   53  TYPE TEXT
+$TEXT                         
+ROCON  10  1    -7     1 2   0      0  2332 ENG qty/iv     0       1   0       1
+ Outflow of conservative constits.          MET qty/iv     0       1   0       1
+#GROUP   54  TYPE TEXT
+$TEXT
+ROHEAT  1  1     1     1 2   0      0  2428 ENG BTU/iv     0       1   0  0.2520
+ Outflow of heat                            MET kcl/iv     0   3.969   0       1
+#GROUP   55  TYPE TEXT
+$TEXT
+ROSED   3  1     3     1 2   0      0  2513 ENG tn/iv      0       1   0  0.9070
+ Outflows of sediments                      MET tne/iv     0  1.1025   0       1
+#GROUP   56  TYPE TEXT
+$TEXT
+RODQAL  3  1    -8     1 2   0      0  2822 ENG qty/iv     0       1   0       1
+ Outflow of dissolved qual                  MET qty/iv     0       1   0       1
+#GROUP   57  TYPE TEXT
+$TEXT
+ROSQAL  3  3     3    -8 2   0      0  2870 ENG qty/iv     0       1   0       1
+ Outflows of sed-assoc qual                 MET qty/iv     0       1   0       1
+#GROUP   58  TYPE TEXT
+$TEXT
+ROOX    2  1     2     1 2   0      0  3003 ENG lb/iv      0       1   0  0.4536
+ Outflows of DO and BOD                     MET kg/iv      0 4.537E2   0   1000.
+#GROUP   59  TYPE TEXT
+$TEXT
+RODNUT  4  1     4     1 2   0      0  3247 ENG lb/iv      0       1   0  0.4536
+ Outflows of dissolved nutrients            MET kg/iv      0 4.537E2   0   1000.
+#GROUP   60  TYPE TEXT
+$TEXT     
+ROSNUT  3  2     3     2 2   0      0  3281 ENG lb/iv      0       1   0  0.4536
+ Outflows of adsorbed NH4 and PO4           MET kg/iv      0 4.537E2   0   1000.
+#GROUP   61  TYPE TEXT
+$TEXT
+ROPLK   5  1     5     1 2   0      0  3477 ENG lb/iv      0       1   0  0.4536
+ Outflows of plankton related constituents  MET kg/iv      0 4.537E2   0   1000.
+#GROUP   62  TYPE TEXT
+$TEXT
+ROPH    2  1     2     1 2   0      0  3564 ENG lb/iv      0       1   0  0.4536
+ Outflows of TIC and CO2                    MET kg/iv      0 4.537E2   0   1000.
+#GROUP   63  TYPE TEXT
+$TEXT
+ROACID  7  1   -10     1 2   0      0  3760 ENG lb/iv      0       1   0  0.4536
+ Outflows of acid chemicals                 MET kg/iv      0  0.4537   0      1.
+#GROUP   71  TYPE TEXT
+$TEXT
+RMVOL   1  1     1     1 2   0      0  1401 ENG acft/iv    0       1   0 1.23E-3
+ Removal of water                           MET Mm3/iv     0  810.71   0       1
+#GROUP   72  TYPE TEXT
+$TEXT
+CRMVOL100  1    -9     1 2   0      0  1902 ENG acft/iv    0       1   0 1.23E-3
+ Removal of water by category               MET Mm3/iv     0  810.71   0       1
+#GROUP   73  TYPE TEXT
+$TEXT                         
+RMCON  10  1    -7     1 2   0      0  2392 ENG qty/iv     0       1   0       1
+ Removal of conservative constits.          MET qty/iv     0       1   0       1
+#GROUP   74  TYPE TEXT
+$TEXT
+RMHEAT  1  1     1     1 2   0      0  2434 ENG BTU/iv     0       1   0  0.2520
+ Removal of heat                            MET kcl/iv     0   3.969   0       1
+#GROUP   75  TYPE TEXT
+$TEXT
+RMSED   3  1     3     1 2   0      0  2531 ENG tn/iv      0       1   0  0.9070
+ Removals of sediments                      MET tne/iv     0  1.1025   0       1
+#GROUP   76  TYPE TEXT
+$TEXT
+RMDQAL  3  1    -8     1 2   0      0  2894 ENG qty/iv     0       1   0       1
+ Removal of dissolved qual                  MET qty/iv     0       1   0       1
+#GROUP   77  TYPE TEXT
+$TEXT     
+RMSQAL  3  3     3    -8 2   0      0  2942 ENG qty/iv     0       1   0       1
+ Removals of sed-assoc qual                 MET qty/iv     0       1   0       1
+#GROUP   78  TYPE TEXT
+$TEXT
+RMOX    2  1     2     1 2   0      0  3015 ENG lb/iv      0       1   0  0.4536
+ Removals of DO and BOD                     MET kg/iv      0   2.205   0       1
+#GROUP   79  TYPE TEXT
+$TEXT
+RMDNUT  4  1     4     1 2   0      0  3307 ENG lb/iv      0       1   0  0.4536
+ Removals of dissolved nutrients            MET kg/iv      0   2.205   0       1
+#GROUP   80  TYPE TEXT
+$TEXT
+RMSNUT  3  2     3     2 2   0      0  3341 ENG lb/iv      0       1   0  0.4536
+ Removals of adsorbed NH4 and PO4           MET kg/iv      0   2.205   0       1
+#GROUP   81  TYPE TEXT
+$TEXT
+RMPLK   5  1     5     1 2   0      0  3507 ENG lb/iv      0       1   0  0.4536
+ Removals of plankton related constituents  MET kg/iv      0   2.205   0       1
+#GROUP   82  TYPE TEXT
+$TEXT
+RMPH    2  1     2     1 2   0      0  3576 ENG lb/iv      0       1   0  0.4536
+ Removals of TIC and CO2                    MET kg/iv      0   2.205   0       1
+#GROUP   83  TYPE TEXT
+$TEXT
+RMACID  7  1   -10     1 2   0      0  3802 ENG lb/iv      0       1   0  0.4536
+ Removals of acid chemicals                 MET kg/iv      0   2.205   0       1
+  END DATA
+END CLU

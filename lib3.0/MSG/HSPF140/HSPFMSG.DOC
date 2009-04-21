@@ -1,0 +1,71 @@
+Cluster Numbers for HSPF Message File
+
+                    SCLU
+
+HRUNTSPT SEQ         231
+HPRBUT   SEQ         200
+HRINOPUT SEQ         204
+HIMPQUA  SEQ         233
+HRINTS   SEQ         205
+HSPFITAB SEQ         202
+HRCH     SEQ         211
+HDATUT   SEQ         207
+HRINGEUT SEQ         203
+HTSINSI  SEQ         209
+HRINGEN  SEQ         206
+HSPF     SEQ         208
+HSPFEC   SEQ         210
+HPERSNO  SEQ         217
+HPERPHO  SEQ         216
+HPERNIT  SEQ         214
+HPERPES  SEQ         215
+HRCHNUT  SEQ         222
+HPERWAT  SEQ         218
+HRCHACI  SEQ         219
+HRCHGQU  SEQ         220
+HRCHHYD  SEQ         221
+HRCHPHC  SEQ         224
+HRCHSED  SEQ         225
+HWDMUT   SEQ         228
+HUTOP    SEQ         226
+HUTOPINP SEQ         227
+HRUNUT   SEQ         229
+SPECACT  SEQ         201
+HRINSEQ  SEQ         230
+HRINWDM  SEQ         232
+HRUNTSGW SEQ         238
+HIMP     SEQ         223
+HPERAGUT SEQ         213
+HRUNTSGQ SEQ         235
+HPERQUA  SEQ         234
+HPER     SEQ         212
+HRUNTSGP SEQ         236
+HRUNTSGT SEQ         237
+HRUNTSPW SEQ         239
+HRUNTSUT SEQ         240
+HRINTSS  SEQ         241
+HTSSUT   SEQ         242
+HRCHBLK  SEQ         243
+HRCHHTR  SEQ         244
+
+
+
+PERLND   SEQ         122
+IMPLND   SEQ         123
+RCHRES   SEQ         124
+COPY     SEQ         125
+PLTGEN   SEQ         126
+DISPLY   SEQ         127
+DURANL   SEQ         128
+GENER    SEQ         129
+MUTSIN   SEQ         130
+
+PERLNDTS SEQ         141
+IMPLNDTS SEQ         142
+RCHRESTS SEQ         143
+COPYTS   SEQ         144
+PLTGENTS SEQ         145
+DISPLYTS SEQ         146
+DURANLTS SEQ         147
+GENERTS  SEQ         148
+MUTSINTS SEQ         149
