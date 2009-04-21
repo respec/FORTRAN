@@ -1,0 +1,57 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI">HIOUCI</a>
+<p>Called By
+   <a href="../HSPF/INTERP">INTERP</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   CLOUCI
+C
+C     + + + PURPOSE + + +
+C     close in memory uci file - free up space - dummy for f77
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

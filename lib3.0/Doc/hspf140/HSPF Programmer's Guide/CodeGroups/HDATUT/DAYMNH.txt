@@ -1,0 +1,81 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+   <a href="ADDTIM">ADDTIM</a>
+   <a href="ENDATE">ENDATE</a>
+   <a href="STDATE">STDATE</a>
+   <a href="YRMINS">YRMINS</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C     1.2.10
+C
+      INTEGER FUNCTION   DAYMNH
+     I                           (YR,MON,NDAMON)
+C
+C     + + + PURPOSE + + +
+C     Find the no. of days in a given year and month, allowing for the
+C     case of a leap year.  NDAMON(*) contains the no. of days in each
+C     month of the calendar year.  The value for February is not used.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    MON,NDAMON(12),YR
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     YR     - ???
+C     MON    - calendar month
+C     NDAMON - no. of days in each month of calendar year
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    I4,I100,I400
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  MOD
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I4   = 4
+      I100 = 100
+      I400 = 400
+C
+      IF (MON .NE. 2) THEN
+C       no problem
+        DAYMNH= NDAMON(MON)
+      ELSE
+C       check whether this is a leap year
+        IF (MOD(YR,I100) .EQ. 0) THEN
+C         on a century boundary
+          IF (MOD(YR,I400) .EQ. 0) THEN
+C           on a 400 year boundary
+            DAYMNH= 29
+          ELSE
+            DAYMNH= 28
+          END IF
+        ELSE
+          IF (MOD(YR,I4) .EQ. 0) THEN
+C           leap year
+            DAYMNH= 29
+          ELSE
+            DAYMNH= 28
+          END IF
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

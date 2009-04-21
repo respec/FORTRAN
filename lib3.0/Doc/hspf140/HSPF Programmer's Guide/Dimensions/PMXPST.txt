@@ -1,0 +1,14 @@
+<p>Referenced by 
+   <a href="../CommonBlocks/CMDUM">CMDUM</a>,
+   <a href="../CommonBlocks/CWORK">CWORK</a>,
+   <a href="../CommonBlocks/CMOSV">CMOSV</a>
+<p>Code
+<pre>
+C     maximums related to pest supplemental file
+C
+C     + + + PARAMETERS + + +
+      INTEGER      MAXNUM,    MAXVEC
+      PARAMETER   (MAXNUM=20, MAXVEC=200)
+C
+</pre>
+

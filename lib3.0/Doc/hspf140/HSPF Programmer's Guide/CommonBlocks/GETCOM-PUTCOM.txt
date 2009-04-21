@@ -1,0 +1,17 @@
+<table width="100%" border="1">
+<caption>Version GETCOM-PUTCOM of Common Block SCRTCH used by TSGET and TSPUT</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Base Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>0<td>TSIN<td>X<td>data related to a timeseries instruction (stored in Include File <a href="CTSIN">CTSIN</a>)
+<tr><td>200<td>TSEX<td>X<td>extended data related to a timeseries instruction (stored in Include File <a href="CTSEX">CTSEX</a>)
+<tr><td>325<td>TSER<td>X<td>data related to handling of errors related to timeseries processing (stored in Include File <a href="CTSER">CTSER</a>)
+<tr><td>364<td>TSSBUF<td>X<td>data related to buffering of INPUT/OUTPUT to the TSS.
+(stored in Include File <a href="CTSBU">CTSBU</a>)
+<tr><td>375<td>TBUFF<td>X<td>Time series data label and buffer (stored in Include File <a href="CTSBX">CTSBX</a>)
+</tbody></table>
+
+

@@ -1,0 +1,20 @@
+<p>Referenced by 
+   <a href="../CommonBlocks/CMDUM">CMDUM</a>,
+   <a href="../CommonBlocks/CWORK">CWORK</a>,
+   <a href="../CommonBlocks/CMOSV">CMOSV</a>
+<p>Code
+<pre>
+C
+C     + + + PARAMETERS + + +
+C
+      INTEGER MAXOSV
+      PARAMETER (MAXOSV=50000)
+</pre>
+
+
+
+
+
+
+
+

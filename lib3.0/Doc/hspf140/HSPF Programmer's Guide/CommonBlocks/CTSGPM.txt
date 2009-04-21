@@ -1,0 +1,24 @@
+This common block contains the an in memory copy of the tsget/tsput instruction file (<a href="../Files/TSGETFL">TSGPFL</a>)
+
+<p>Referenced by 
+   <a href="../CodeGroups/HIOTSIN/GETTSI">GETTSI</a>, 
+   <a href="../CodeGroups/HIOTSIN/PUTTSI">PUTTSI</a>
+<p>Code
+<pre>
+C
+C     parameter for size of in memory timeseries instruction file
+      INTEGER   MAXTSF
+      PARAMETER(MAXTSF=40000)
+C
+C     in memory common block for timeseries instruction file
+      COMMON/CTSGPM/TSGPM
+      INTEGER       TSGPM(200,MAXTSF)
+C
+</pre>
+
+
+
+
+
+
+

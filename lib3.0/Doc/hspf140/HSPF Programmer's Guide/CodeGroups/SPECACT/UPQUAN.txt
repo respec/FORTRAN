@@ -1,0 +1,79 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   UPQUAN
+     I                    (SPIVL,SPOPNO)
+C
+C     + + + PURPOSE + + +
+C     Update all pipes for user-defined variable quantities based
+C     on variables in an operation.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER SPIVL,SPOPNO
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     SPOPNO - index of target operation
+C     SPIVL  - interval of run
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE     'cmdum.inc'
+      INCLUDE     'cmpad.inc'
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   UVQ,PTR
+C
+C     + + + FUNCTIONS + + +
+      INTEGER   DADDR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC SNGL,MOD
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  DADDR
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      DO 10 UVQ= 1, NVQD
+        IF (UVQOPX(UVQ) .EQ. SPOPNO) THEN
+C         condition depends on this operation
+C
+C         compute pointer for current interval
+          PTR= MOD (SPIVL- 1,UVQLEN(UVQ))+ UVQPOS(UVQ)
+C
+C         update pipe
+          IF (UVQTYP(UVQ) .EQ. 2) THEN
+C           integer
+            IVQPIP(PTR)= IPAD(UVQADD(UVQ))
+          ELSE IF (UVQTYP(UVQ) .EQ. 3) THEN
+C           real
+            UVQPIP(PTR)= PAD(UVQADD(UVQ))
+          ELSE IF (UVQTYP(UVQ) .EQ. 4) THEN
+C           double precision
+            UVQPIP(PTR)= SNGL (DPPAD(DADDR (UVQADD(UVQ))))
+          END IF
+C
+        END IF
+ 10   CONTINUE
+C
+      RETURN
+      END
+</pre>
+

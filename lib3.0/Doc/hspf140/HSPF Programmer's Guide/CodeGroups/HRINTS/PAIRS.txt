@@ -1,0 +1,390 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTS">HRINTS</a>
+<p>Called By
+   <a href="NETBLK">NETBLK</a>,
+   <a href="SCHBLK">SCHBLK</a>,
+   <a href="TARBLK">TARBLK</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3">CRIN3</a>,
+   <a href="../../CommonBlocks/CRIN3C">CRIN3C</a>
+<p>Calls
+   CHKSTR,
+   <a href="../HIOWRK/WORKIO">WORKIO</a>,
+   <a href="../HPRBUT/OMSG">OMSG</a>,
+   ZIPI,
+   <a href="../HPRBUT/OMSTC">OMSTC</a>,
+   <a href="../HPRBUT/OMSTI">OMSTI</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PAIRS
+     I                  (TRAN,
+     M                   MFACTR,WKEY)
+C
+C     + + + PURPOSE + + +
+C     Check pairs of entries in source and target tables and write
+C     paired entries to workfl
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     WKEY
+      REAL        MFACTR
+      CHARACTER*4 TRAN
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     TRAN   - ???
+C     MFACTR - ???
+C     WKEY   - ???
+C
+C     + + + COMMON BLOCKS- INTERP3 + + +
+      INCLUDE     'crin3.inc'
+      INCLUDE     'crin3c.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     CASE,DIFF,IDUM1(8),IDUM2(10),ERRFG,I0,I8,J,
+     $            MESSU,N,NUMBR,SKIND,SPTRN,STKIND,STTRAN,MSGFL,
+     $            TKIND,RWFG,LEN,REC(50),MXKY,I6,I4,SCLU,SGRP
+      REAL        A,B,SADD,SMULT,TADD,TMULT
+      CHARACTER*6 CHSTR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR,CHSTR1)
+      CHARACTER*1  CHSTR1(6)
+      EQUIVALENCE (REC(1),RREC(1))
+      REAL         RREC(50)
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC   MOD,ABS
+C
+C     + + + FUNCTIONS + + +
+      INTEGER     CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    CHKSTR,WORKIO,OMSG,ZIPI,OMSTC,OMSTI
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (A4,A2)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2070 FORMAT (A4,A2)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0  = 0
+      I4  = 4
+      I6  = 6
+      I8  = 8
+      SCLU= 215
+C
+      CALL ZIPI(I8,I0,IDUM1)
+      J= 10
+      CALL ZIPI(J,I0,IDUM2)
+C
+      MESSU = FILE(1)
+      MSGFL = FILE(15)
+C
+      DIFF  = SNTS- TNTS
+      IF (DIFF .GT. 0) THEN
+        NUMBR= TNTS
+      ELSE
+        NUMBR= SNTS
+      END IF
+C
+      IF (SNTS.EQ.0 .OR. TNTS.EQ.0) THEN
+        NUMBR= 0
+      END IF
+C
+      IF (NUMBR .GT. 0) THEN
+C       there are 1 or more pairs to process
+        ERRFG= 0
+C
+C       check time step relationship for aggregation to wdm dataset;
+C       set wdm target time step to inpad time step of source if
+C       aggregation not being performed
+        IF (TVOLC(1:3) .EQ. EXTKWL(3)(1:3)) THEN
+C         target is wdm dataset
+          IF (TDELT .GT. SDELT .AND.
+     $       (TGAPCD .EQ. 1 .OR. TGAPCD .EQ. 3)) THEN
+C           wdm dataset timestep > opn timestep and aggregation is on
+            IF (MOD(TDELT,SDELT) .NE. 0) THEN
+C             error - wdm time step not even multiple of opn timestep
+              SGRP = 150
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            END IF
+            IF (TGAPCD .EQ. 3) THEN
+              TGAPCD= 1
+            END IF
+          ELSE
+C           aggregation not being performed
+            IF (TGAPCD .EQ. 2 .OR. TGAPCD .EQ. 3) THEN
+C             vbtime is 1, check time step
+              IF (SDELT .NE. TDELT) THEN
+C               error, time step of dataset and run dont match
+                SGRP = 150
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+              END IF
+            END IF
+            TGAPCD= 0
+            TDELT = SDELT
+          END IF
+        END IF
+C
+C       now check for compatibility of time intervals
+        IF (SDELT .EQ. TDELT) THEN
+          CASE= 1
+        ELSE
+          IF ( MOD(SDELT,TDELT) .NE. 0) THEN
+            IF ( MOD(TDELT,SDELT) .NE. 0) THEN
+C             error - source and target time intervals not
+C             compatible
+              CALL OMSTC (I6,SVOLC1)
+              CALL OMSTI (SVOLNO)
+              CALL OMSTC (I6,TVOLC1)
+              CALL OMSTI (TVOLNO)
+              SGRP = 116
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ERRFG= 1
+            END IF
+          END IF
+C
+          IF (SDELT .GT. TDELT) THEN
+            CASE= 2
+          ELSE
+            CASE= 3
+          END IF
+        END IF
+C
+        IF (ERRFG .EQ. 0) THEN
+C         process the entries
+          DO 100 N= 1,NUMBR
+C           check the next source/target pair
+            SKIND= STABL(6,N)
+            TKIND= TTABL(6,N)
+C
+            IF (SKIND .EQ. 1) THEN
+C             source timeseries is point
+              IF (TKIND .EQ. 1 .OR. TKIND .EQ. 3) THEN
+C               point to point (since target is point or undefined)
+                STKIND= 1
+              ELSE
+C               point to mean
+                STKIND= 3
+              END IF
+            ELSE IF (SKIND .EQ. 2) THEN
+C             source timeseries is mean
+              IF (TKIND .EQ. 1) THEN
+C               mean to point - error
+                ERRFG = 1
+                STKIND= 0
+                CALL OMSTC (I6,SVOLC1)
+                CALL OMSTI (SVOLNO)
+                CHSTR= SGRPN
+                CALL OMSTC (I6,CHSTR1)
+                WRITE (CHSTR,2070) (STABL(J,N),J=1,2)
+                CALL OMSTC (I6,CHSTR1)
+                CALL OMSTI (STABL(3,N))
+                CALL OMSTI (STABL(4,N))
+                CALL OMSTC (I6,TVOLC1)
+                CALL OMSTI (TVOLNO)
+                CHSTR= TGRPN
+                CALL OMSTC (I6,CHSTR1)
+                WRITE (CHSTR,2070) (TTABL(J,N),J=1,2)
+                CALL OMSTC (I6,CHSTR1)
+                CALL OMSTI (TTABL(3,N))
+                CALL OMSTI (TTABL(4,N))
+                SGRP = 117
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+C
+              ELSE
+C               mean to mean  (target is either mean or undefined)
+                STKIND= 2
+              END IF
+            ELSE IF (SKIND .EQ. 3) THEN
+C             skind is undefined so base stkind on tkind
+C             this is for sequential input
+              IF (TKIND .EQ. 1) THEN
+                STKIND= 1
+              ELSE IF (TKIND .EQ. 2) THEN
+                STKIND= 2
+              END IF
+            END IF
+C
+            IF (ERRFG .NE. 1) THEN
+C             ok - continue
+              IF (TRAN .EQ. '    ') THEN
+C               use default source/target transformation functional
+                SPTRN= TTABL(7,N)
+                IF (SPTRN .GT. 0 .AND. SDELT .EQ. 1440) THEN
+C                 a special disaggregation functional is to be used
+                  STTRAN= SPTRN
+                ELSE
+C                 default functional to be used
+                  STTRAN= TRNTAB(9,STKIND,CASE)
+C                 change default intp or last to aver if wdm or dss
+C                 source, or dss target
+                  IF ( (SVOLC(1:3) .EQ. EXTKWL(3)(1:3)) .OR.
+     #                 (SVOLC(1:4) .EQ. EXTKWL(4)) .OR.
+     #                 (TVOLC(1:4) .EQ. EXTKWL(4)) ) THEN
+                    IF (STTRAN .EQ. 7 .OR. STTRAN .EQ. 8) THEN
+                      STTRAN= 3
+                    END IF
+                  END IF
+                END IF
+              ELSE
+C               check supplied transformation functional
+                CHSTR(1:4)= TRAN
+                STTRAN    = CHKSTR(I4,I8,CHSTR1,TRNKW1)
+                IF (STTRAN .EQ. 0) THEN
+C                 invalid functional keyword
+                  ERRFG= 1
+                ELSE
+C                 valid keyword so far, but must check wdm source
+C                 and other sources separately
+                  ERRFG = 0
+C                 sources other than wdm - regular functionals are used;
+C                 this is ok since disagg to a wdm target is not allowed,
+C                 and intp is not implemented for wdm put;
+C                 sdelt <= tdelt for wdm put
+                  IF (TRNTAB(STTRAN,STKIND,CASE) .EQ. 0) THEN
+C                   transformation not allowed
+                    ERRFG =1
+                  END IF
+C                 check wdm and dss source, and dss target separately
+                  IF ( (SVOLC(1:3) .EQ. EXTKWL(3)(1:3)) .OR.
+     #                 (SVOLC(1:4) .EQ. EXTKWL(4)) .OR.
+     #                 (TVOLC(1:4) .EQ. EXTKWL(4)) ) THEN
+                    IF ( (STTRAN .EQ. 7) .OR. (STTRAN .EQ. 8) ) THEN
+C                     intp/last not valid
+                      ERRFG= 1
+                    ELSE IF ((STTRAN .EQ. 1) .OR. (STTRAN .EQ. 3)) THEN
+C                     same/aver is valid
+                      ERRFG= 0
+                    END IF
+                  END IF
+                END IF
+C
+                IF (ERRFG .EQ. 1) THEN
+C                 error - invalid source/target transformation
+C                 functional
+                  CALL OMSTC (I6,SVOLC1)
+                  CALL OMSTI (SVOLNO)
+                  CHSTR= SGRPN
+                  CALL OMSTC (I6,CHSTR1)
+                  WRITE (CHSTR,2070) (STABL(J,N),J=1,2)
+                  CALL OMSTC (I6,CHSTR1)
+                  CALL OMSTI (STABL(3,N))
+                  CALL OMSTI (STABL(4,N))
+                  CHSTR(1:4)= TRAN
+                  CALL OMSTC (I4,CHSTR1)
+                  CALL OMSTI (STKIND)
+                  CALL OMSTI (CASE)
+                  CALL OMSTC (I6,TVOLC1)
+                  CALL OMSTI (TVOLNO)
+                  CHSTR= TGRPN
+                  CALL OMSTC (I6,CHSTR1)
+                  WRITE (CHSTR,2070) (TTABL(J,N),J=1,2)
+                  CALL OMSTC (I6,CHSTR1)
+                  CALL OMSTI (TTABL(3,N))
+                  CALL OMSTI (TTABL(4,N))
+                  SGRP = 118
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                END IF
+              END IF
+C
+              IF (ERRFG .EQ. 0) THEN
+C               derive composite pair of constants for linear transform
+                SMULT= STABLR(9,N)
+                SADD = STABLR(8,N)
+                TMULT= TTABLR(9,N)
+                TADD = TTABLR(8,N)
+cC
+cC               mfactr is user-supplied factor, check for default value
+c                IF ((ABS(MFACTR)) .LE. 0.0) THEN
+c                  MFACTR= 1.0
+c                END IF
+C
+                A= (TMULT/SMULT)*MFACTR
+                IF (ABS(A-1.0) .LT. .001) THEN
+                  A= 1.0
+                END IF
+C
+                B= (TADD- MFACTR* SADD)*TMULT
+                IF (ABS(B-0.0) .LT. .0001) THEN
+                  B= 0.0
+                END IF
+C
+C               put this pair in workfl
+                WKEY  = WKEY+ 1
+C               make up rec
+                READ(SVOLC,1000) (REC(J),J=1,2)
+                REC(3)= SNUM
+                REC(4)= SDELT
+                READ(SGRPN,1000) (REC(J),J=5,6)
+                DO 70 J= 1,5
+                  REC(J+6) = STABL(J,N)
+                  REC(J+32)= TTABL(J,N)
+ 70             CONTINUE
+                REC(12)= SAMDCD
+                REC(13)= SGAPCD
+                REC(14)= SFRC
+                DO 80 J= 1,8
+                 REC(J+14)=IDUM1(J)
+ 80             CONTINUE
+C               addition for enhanced timser output
+                REC(19) = SDELT
+                REC(20) = STTRAN
+                RREC(21)= MFACTR
+C               end addition
+                REC(23) = STKIND
+                REC(24) = STTRAN
+                RREC(25)= A
+                RREC(26)= B
+                READ(TVOLC,1000) (REC(J),J=27,28)
+                REC(29) = TNUM
+                REC(30) = TDELT
+                READ(TGRPN,1000) (REC(J),J=31,32)
+                REC(38) = TAMDCD
+                REC(39) = TGAPCD
+                REC(40) = TFRC
+                DO 90 J= 1,10
+                  REC(J+40)= IDUM2(1)
+ 90             CONTINUE
+C
+                RWFG= 1
+                LEN = 50
+                MXKY= 0
+                CALL WORKIO (RWFG,LEN,WKEY,
+     M                       REC,MXKY)
+              END IF
+            END IF
+ 100      CONTINUE
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,277 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+   <a href="PSPECL">PSPECL</a>
+<p>Common Blocks 
+ 
+<p>Calls
+   ASRTI,
+   GETOSV,
+   OPNNO,
+   OMSG,
+   PUTOSV
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PSPKEY
+     I                    (MESSU,MSGFL,SCLU,SPOS,MXSPBF,SPBDAT,SPBF,
+     I                     LLNPSP,SPOUT,
+     O                     SPBPOS)
+C
+C     + + + PURPOSE + + +
+C     Sort Special Actions for each operation and set OSV keys.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER MESSU,MSGFL,SCLU,SPOS,MXSPBF,SPBDAT(MXSPBF),LLNPSP,
+     $        SPBF(LLNPSP,MXSPBF),SPOUT,SPBPOS(MXSPBF)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - unit number to write messages on
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
+C     SPOS   - position in special actions instr buffer
+C     MXSPBF - max size of special actions buffer
+C     SPBDAT - special action instruction date
+C     SPBF   - special action instruction buffer
+C     LLNPSP - local length of special action in buffer
+C     SPOUT  - runtime Special Action output level
+C     SPBPOS - special action sorted position
+C
+C     + + + COMMON BLOCKS- SPEC + + +
+      INCLUDE     'cspec.inc'
+C     special action file in memory
+      INCLUDE     'pspins.inc'
+      INCLUDE     'cspins.inc'
+C     osv in scratch pad
+      INCLUDE     'cmosv.inc'
+      INCLUDE     'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      SPAKEY,SORTOP,TOPTYP,SPAKST,OSVKEY,OSVSIZ,XPOS,IPOS,
+     $             TOPFST,TOPLST,FIT,ADDR,I,J,LOGBLK,I0,I1,CONDCK,SGRP,
+     $             SKEY,DATED,UNDAT,PKEY,SPNUND
+      CHARACTER*6  OPTYP
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      OPNNO
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     ASRTI,GETOSV,OPNNO,OMSG,PUTOSV
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I0,I1/0,1/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A4,A2)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     no special actions saved
+      SPAKEY= 0
+C
+      IF (SPOUT .GE. 10) THEN
+C       echo header
+        WRITE (MESSU,*)
+        WRITE (MESSU,*) '------ sorting special actions -------'
+      END IF
+C     sort special action instructions in place by date
+      SORTOP= 0
+      CALL ASRTI (SORTOP,SPOS,SPBDAT,
+     O            SPBPOS)
+C
+C     process special actions through each operation in the run
+      SPWSIV= 0
+      DO 100 OPNO= 1,NOPNS
+        SPNUND= 0
+        TOPTYP= OPNTAB(4,OPNO)
+        IF (SPOUT .GE. 10) THEN
+C         echo operaton info
+          WRITE (MESSU,*)
+          WRITE (MESSU,*) '*** OPNO  :',OPNO,TOPTYP,LOSPFL(TOPTYP)
+        END IF
+        IF (LOSPFL(TOPTYP) .GT. 0) THEN
+C         this operation is capable of handling special actions
+C         assume no special actions in this operation
+          SPAKST= 0
+C         how big is osv for this operation
+          OSVKEY= OPNTAB(7,OPNO)
+          OSVSIZ= (1 + OPNTAB(8,OPNO) - OSVKEY)*500
+          IF (SPOUT .GE. 10) THEN
+C           echo osv info
+            WRITE (MESSU,*) '    OSVKEY:',OSVKEY,OSVSIZ
+          END IF
+C         read in the first osv-chunk for this operation
+          CALL GETOSV (OSVKEY,OSVKEY,MAXOSV,
+     O                 OSV)
+C         loop thru instructions
+          DO 30 XPOS= 1, SPOS
+C           see if current operation fits in the given range
+            IPOS= SPBPOS(XPOS)
+            WRITE (OPTYP,2000) SPBF(15,IPOS),SPBF(16,IPOS)
+            TOPFST  = SPBF(17,IPOS)
+            TOPLST  = SPBF(18,IPOS)
+            FIT= <a href="../HRINGEUT/OPNNO">OPNNO</a> (OPTYP,TOPFST,TOPLST,MAXOPN,OPNTAB,OPNO,OPNO)
+            IF (SPOUT .GE. 10) THEN
+C             echo info
+              WRITE (MESSU,*) '       FIT:',FIT,TOPFST,TOPLST,XPOS,
+     $                                   IPOS
+            END IF
+            IF (FIT .GT. 0) THEN
+C             the entry does apply to this opn
+              ADDR= SPBF(7,IPOS)
+              IF (ADDR .LE. OSVSIZ) THEN
+C               special action within active osv space for opn
+C               write instruction to runtime buffer
+                SPAKEY= SPAKEY+ 1
+                IF (SPAKST .EQ. 0) THEN
+C                 first instruction for this opn, set flag pointer
+                  SPAKST= SPAKEY
+                  IF (SPOUT .GE. 10) THEN
+C                   echo first key
+                    WRITE (MESSU,*) '  first at:',SPAKEY
+                  END IF
+                END IF
+                IF (SPOUT .GE. 10) THEN
+C                 echo instruction
+                  WRITE (MESSU,*) '  instr at:',SPAKEY,
+     $                          (SPBF(J,IPOS),J=1,5)
+                END IF
+                DO 10 J= 1,14
+                  SPINS(J,SPAKEY)= SPBF(J,IPOS)
+ 10             CONTINUE
+                DO 20 J= 15, LENSPI
+                  I= J+ 4
+                  SPINS(J,SPAKEY)= SPBF(I,IPOS)
+ 20             CONTINUE
+C
+C               set initial sort pointer to use if no undated
+                SPPTR(SPAKEY)= SPAKEY
+C
+                IF (SPINS(1,SPAKEY) .EQ. 0) THEN
+C                 this action undated
+                  SPNUND= SPNUND+ 1
+                END IF
+C
+C               check condition if present
+                LOGBLK= SPINS(18,SPPTR(SPAKEY))
+                IF (LOGBLK .GT. 0) THEN
+C                 check condition for proper formation
+                  CALL SPBKCK (LOGBLK,I1,OPNO,I0,MESSU,
+     O                         CONDCK)
+                  IF (CONDCK .EQ. -1) THEN
+C                   error - stack overflow
+                    SGRP= 25
+                    CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                         ECOUNT)
+                  ELSE IF (CONDCK .EQ. -2) THEN
+C                   error - stack underflow
+                    SGRP= 26
+                    CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                         ECOUNT)
+                  ELSE IF (CONDCK .EQ. -3) THEN
+C                   error - program bug - stack not cleared
+                    SGRP= 27
+                    CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                         ECOUNT)
+                  END IF
+                END IF
+              ELSE
+C               not part of active osv
+                IF (SPOUT .GE. 10) THEN
+C                 echo no instruction message
+                  WRITE (MESSU,*) '  NO instr:',ADDR,OSVSIZ
+                END IF
+              END IF
+            END IF
+ 30       CONTINUE
+C
+          IF (SPNUND .GT. 0) THEN
+C           separate into dated and undated pools and rewrite pointers
+            DATED= 0
+            UNDAT= 0
+            IF (SPOUT .GE. 10) THEN
+              WRITE (MESSU,*) 'opno,spakst,spakey,spnund',OPNO,SPAKST,
+     $                         SPAKEY,SPNUND
+            END IF
+            DO 40 SKEY= SPAKST, SPAKEY
+              IF (SPINS(1,SKEY) .EQ. 0) THEN
+C               place in undated pool
+                UNDAT= UNDAT+ 1
+                PKEY= SPAKEY- SPNUND+ UNDAT
+              ELSE
+C               place in dated pool
+                DATED= DATED+ 1
+                PKEY= SPAKST- 1+ DATED
+              END IF
+              SPPTR(PKEY)= SKEY
+ 40         CONTINUE
+            I= UNDAT+ DATED- (SPAKEY- SPAKST+ 1)
+            IF (SPOUT .GE. 10) THEN
+              WRITE (MESSU,*) '  should be zero:',I
+              DO 45 PKEY= SPAKST,SPAKEY
+                WRITE (MESSU,*) '  pkey,spptr(pkey)',PKEY,SPPTR(PKEY)
+ 45           CONTINUE
+            END IF
+          END IF
+C
+          IF (SPAKST .GT. 0) THEN
+C           space key to this instruction
+C      WRITE(99,*)'KEYS',TOPTYP,LOSPST(TOPTYP),LOSPKY(TOPTYP),
+C     $            LOSPLV(TOPTYP),LOSPNU(TOPTYP)
+            IPOS= LOSPST(TOPTYP)
+            OSV(IPOS)= SPAKST
+C           final key
+            IPOS= LOSPKY(TOPTYP)
+            OSV(IPOS)= SPAKEY
+C           special action output level
+            IPOS= LOSPLV(TOPTYP)
+            OSV(IPOS)= SPOUT
+C           number of undated actions
+            IPOS= LOSPNU(TOPTYP)
+            OSV(IPOS)= SPNUND
+            IF (SPOUT .GE. 10) THEN
+C             echo keys
+              WRITE (MESSU,*) '  into OSV:',SPAKST,SPAKEY
+            END IF
+          ELSE
+C           no instructions written, update osv to indicate that
+            IPOS= LOSPST(TOPTYP)
+            OSV(IPOS)= 0
+            IPOS= LOSPKY(TOPTYP)
+            OSV(IPOS)= 0
+            IPOS= LOSPLV(TOPTYP)
+            OSV(IPOS)= 0
+            IPOS= LOSPNU(TOPTYP)
+            OSV(IPOS)= 0
+            IF (SPOUT .GE. 10) THEN
+C             echo no actions message
+              WRITE (MESSU,*) ' ** no actions for this operation'
+            END IF
+          END IF
+C
+C         write osv-chunk back to disc
+          CALL PUTOSV (OSVKEY,OSVKEY,MAXOSV,OSV)
+        ELSE
+C         special actions not allowed for this operation type
+          IF (SPOUT .GE. 10) THEN
+C           echo not allowed message
+            WRITE (MESSU,*) '    no spec actions op type',TOPTYP
+          END IF
+        END IF
+C       end operation loop
+ 100  CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+

@@ -1,0 +1,44 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI">HIOUCI</a>
+<p>Called By
+   <a href="../HEXTUTIL/UCIGEN">UCIGEN</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PUTOLV
+     I                   (OUTLEV)
+C
+C     + + + PURPOSE + + +
+C     Save output level
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      OUTLEV
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     OUTLEV - output level
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      UOUTLV= OUTLEV
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

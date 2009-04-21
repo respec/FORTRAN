@@ -1,0 +1,173 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS">HRINTSS</a>
+<p>Called By
+   
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4">CRIN4</a> 
+<p>Calls
+   OMSTI,
+   OMSG,
+   WBUFF,
+   MEXT
+<p>Code
+<pre>
+C
+C     3.5.8.02
+C
+      SUBROUTINE PVAL
+     I                (N,OFF,VAL,VO)
+C
+C     + + + PURPOSE + + +
+C     Put one or more values into the buffer/extension and write
+C     to the tss as necessary
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   N,OFF(20),VO
+      REAL      VAL(20)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     N      - ???
+C     OFF    - ???
+C     VAL    - ???
+C     VO     - ???
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE   'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   SCLU,SGRP,I,J,NVO
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   OMSTI,OMSG,WBUFF,MEXT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     check buffer state
+C
+      SCLU = 216
+      IF (BMTFLG .NE.  1) GO TO 10
+C       program bug
+C       invalid buffer state
+        SGRP = 139
+        CALL OMSTI (FILE)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+ 10   CONTINUE
+C
+C     compute virtual origin for buffer operations
+C
+      NVO=VO -VOBUFF
+      IF (NVO .GE. 0) GO TO 20
+C       program bug
+C       buffer underflow
+        SGRP = 140
+        CALL OMSTI (FILE)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+ 20   CONTINUE
+      IF (OFF(1) .LE. 0) GO TO 40
+        IF (NVO+OFF(N) .LE. BLEN) GO TO 30
+C         program bug
+C         buffer/extension overflow
+          SGRP = 141
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 30     CONTINUE
+        GO TO 60
+ 40   CONTINUE
+        IF (NVO+N .LE. BLEN) GO TO 50
+C         program bug
+C         buffer/extension overflow
+          SGRP = 141
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 50     CONTINUE
+ 60   CONTINUE
+C
+C     put values into the buffer/extension
+C
+      IF (OFF(1) .NE. 0) GO TO 80
+        DO 70 I=1,N
+          J = NVO +I
+          TBUFF(J) = VAL(I)
+ 70     CONTINUE
+        GO TO 100
+ 80   CONTINUE
+        DO 90 I=1,N
+          J = NVO +OFF(I)
+          TBUFF(J) = VAL(I)
+ 90     CONTINUE
+ 100  CONTINUE
+C
+C     update buffer overflow detector and set extf as needed
+C
+      IF (J .LE. BADR) GO TO 110
+        BADR=J
+ 110  CONTINUE
+      IF (BADR .LE. RECLT) GO TO 120
+        EXTF= 1
+ 120  CONTINUE
+C
+      IF (FORFLG .NE. 1) GO TO 150
+C       write buffer/extension
+        BMTFLG= 1
+        CALL WBUFF (TRCNO,RECLT,TSSFL,TBUFF)
+        VOBUFF=VOBUFF +RECLT
+C
+C       move extension into buffer
+C
+        CALL MEXT (RECLT,BLEN,BADR,TBUFF)
+C
+C       write buffer again
+C
+        IF (BADR .LE. 0) GO TO 140
+          TRCNO=TRCNO +1
+          IF (TRCNO .LE. LREC) GO TO 130
+C           error
+C           dataset overflow
+            SGRP = 142
+            CALL OMSTI (FILE)
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+ 130      CONTINUE
+          CALL WBUFF(TRCNO,RECLT,TSSFL,TBUFF)
+ 140    CONTINUE
+        GO TO 190
+ 150  CONTINUE
+C       write buffer and move extension if buffer is full and
+C       tsb is complete
+C
+        IF (EXTF .NE.  1) GO TO 180
+          IF (CWF.NE.  1) GO TO 170
+            EXTF= 0
+            CALL WBUFF (TRCNO,RECLT,TSSFL,TBUFF)
+            CALL MEXT  (RECLT,BLEN,  BADR,TBUFF)
+            TRCNO=TRCNO +1
+            IF (TRCNO .LE. LREC) GO TO 160
+C             error
+C             dataset overflow
+              SGRP = 142
+              CALL OMSTI (FILE)
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+ 160        CONTINUE
+            VOBUFF=VOBUFF +RECLT
+ 170      CONTINUE
+ 180    CONTINUE
+ 190  CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+

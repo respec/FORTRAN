@@ -1,0 +1,50 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOOSV">HIOOSV</a>
+<p>Called By
+
+<p>Includes 
+   <a href="../../Dimensions/POSVM">POSVM</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/COSVM">COSVM</a>
+<p>Calls <i>none</i>    
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   GTOSVI
+     I                    (RECORD,OFFSET,
+     O                     IVAL)
+C
+C     + + + PURPOSE + + +
+C     Retrieve a single integer value directly from the OSV file
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   RECORD,OFFSET,IVAL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     RECORD - index of OSV block
+C     OFFSET - address within OSV block
+C     IVAL   - value being fetched
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'posvm.inc'
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cosvm.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IVAL= OSVM(OFFSET,RECORD)
+C
+      RETURN
+      END
+</pre>
+
+
+

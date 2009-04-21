@@ -1,0 +1,52 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HPRBUT">HPRBUT</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CHMSG">CHMSG</a>
+<p>Includes 
+   <a href="../../Dimensions/PHMSG">PHMSG</a>
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   OMSTD
+     I                  (DATE)
+C
+C     + + + PURPOSE + + +
+C     save a date to output with a hspf message
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   DATE(5)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DATE   - date to save
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'phmsg.inc'
+      INCLUDE 'chmsg.inc'
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   EXDATE
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     save date in external format
+      CALL EXDATE (DATE,
+     O             DATIM)
+C
+      RETURN
+      END
+</pre>
+
+
+
+

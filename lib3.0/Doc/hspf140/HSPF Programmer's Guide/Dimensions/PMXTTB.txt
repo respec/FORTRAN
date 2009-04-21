@@ -1,0 +1,15 @@
+<p>Referenced by 
+  <a href="../CommonBlocks/CRIN3">CRIN3</a>,
+  <a href="../CommonBlocks/CRIN4">CRIN4</a>,
+  <a href="../CodeGroups/HRINTS/OPNTS">OPNTS</a>
+<p>Code
+<pre>
+C     size of time series tables
+C
+C     + + + PARAMETERS + + +
+      INTEGER        MAXTTB
+      PARAMETER     (MAXTTB=100)
+</pre>
+
+
+

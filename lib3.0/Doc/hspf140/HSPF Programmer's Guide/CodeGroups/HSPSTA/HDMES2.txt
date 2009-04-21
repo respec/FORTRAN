@@ -1,0 +1,56 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="../HIOUCI/GETKNM">GETKNM</a>
+   <a href="UPDWIN">UPDWIN</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   HDMES2
+     I                   (IOPT,KTYP,OCCUR)
+C
+C     + + + PURPOSE + + +
+C     write keyword to window
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   IOPT,KTYP,OCCUR
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IOPT    - position to output
+C     KTYP    - type of keyword
+C     OCCUR   - number of occurances
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      ILEN
+      CHARACTER*12 KNAME
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     GETKNM, UPDWIN
+C
+C     + + +  END SPECIFICATIONS + + +
+C
+      CALL <a href="../HIOUCI/GETKNM">GETKNM</a>(KTYP,OCCUR,
+     O            KNAME)
+C
+      ILEN = 12
+      CALL <a href="UPDWIN">UPDWIN</a>(IOPT,ILEN,KNAME)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+

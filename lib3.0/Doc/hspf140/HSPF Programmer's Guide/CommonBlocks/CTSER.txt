@@ -1,0 +1,46 @@
+<table width="100%" border="1">
+<caption>CTSER portion of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Relative Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>MSGFL<td>I4<td>Unit number for the HSPFMSG.WDM file
+<tr><td>2<td>MESSU<td>I4<td>Unit number for the file used for messages from this portion of the code
+<tr><td>3<td>KNT<td>I4<td>Count of messages reported by this portion of the code
+<tr><td>4<td>DUMERR(36)<td>I4<td>Dummy place holder.  Additional message counters could be stored here.
+</tbody></table>
+
+<p>The offset to be used to calculate the absolute address from the relative address given in the table is 325 words.
+
+<p>This Include File is used in version <a href="GETCOM-PUTCOM">GETCOM-PUTCOM</a> of SCRTCH.  It always follows <a href="CTSEX">CTSEX</a> and proceeds <a href="CTSBU">CTSBU</a>. 
+
+<p>Referenced by 
+   <a href="../CodeGroups/HRUNTSGP/TSGET">TSGET</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSPUT">TSPUT</a>,
+   <a href="../CodeGroups/HRUNTSGQ/SEQINP">SEQINP</a>,
+   <a href="../CodeGroups/HRUNTSGT/GETTSS">GETTSS</a>,
+   <a href="../CodeGroups/HRUNTSGW/GETWDM">GETWDM</a>,
+   <a href="../CodeGroups/HRUNTSPT/PUTTSS">PUTTSS</a>,
+   <a href="../CodeGroups/HRUNTSPW/PUTWDM">PUTWDM</a>
+<p>Variable Usage
+
+<p>Code
+<pre>
+C    FROM CTSER.COM
+C    ERROR SECTION OF TSS OSV:
+C     FROM CTSERR
+      COMMON/SCRTCH/ MSGFL,MESSU,KNT,DUMERR
+      INTEGER        MSGFL,MESSU,KNT,DUMERR(36)
+C    END BYTE 1456
+</pre>
+
+
+
+
+
+
+
+
+

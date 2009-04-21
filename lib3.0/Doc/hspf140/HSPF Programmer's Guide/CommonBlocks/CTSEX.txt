@@ -1,0 +1,71 @@
+<table width="100%" border="1">
+<caption>CTSER portion of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Relative Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>TSGETF/TSPUTF<td>I4<td>Unit number for the instruction file
+<tr><td>2<td>SEQFL<td>I4<td>Unit number of the sequential file
+<tr><td>3<td>XOLD(20)<td>R4<td>Previous values of time frame from TSS
+<tr><td>23<td>XNEW(20)<td>R4<td>Current value of time frame from TSS   
+<tr><td>43<td>XVAR(20)<td>R4<td>Current value of time frame being assembled for writing to the INPAD   
+<tr><td>63<td>XZERO(20)<td>R4<td>First time frame from a linear variation compressed TSB   
+<tr><td>83<td>XLAST(20)<td>R4<td>Last time frame from a linear variation compressed TSB   
+<tr><td>103<td>TXOLD<td>I4<td>Time for values stored in XOLD   
+<tr><td>104<td>TXNEW<td>I4<td>Time for values stored in XNEW   
+<tr><td>105<td>TXVAR<td>I4<td>Time for values stored in XVAR   
+<tr><td>106<td>RRATIO<td>R4<td>Ratio of time steps for agg/disagg   
+<tr><td>107<td>RATIO<td>I4<td>Integer form of RRATIO   
+<tr><td>108<td>SUITFG<td>I4<td>Suitability flag. ON if there are no undefined values placed on the INPAD. Undefined values in the initial position of rows containing mean value data do not turn off SUITFG.  
+<tr><td>109<td>TESTFG<td>I4<td>Test flag for debugging printout   
+<tr><td>110<td>UFLAG<td>I4<td>ON if frame is undefined   
+<tr><td>111<td>ZFLAG<td>I4<td>ON if frame is zero  
+<tr><td>112<td>UNDEF<td>R4<td>Value of the undefined value   
+<tr><td>113<td>DUMEXT(13)<td>I4<td>Dummy 
+</tbody></table>
+
+<p>The offset to be used to calculate the absolute address from the relative address given in the table is 200 words.
+
+<p>This Include File is used in version <a href="GETCOM-PUTCOM">GETCOM-PUTCOM</a> of SCRTCH.  It always follows <a href="CTSIN">CTSIN</a> and proceeds <a href="CTSER">CTSER</a>. 
+
+<p>Referenced by 
+   <a href="../CodeGroups/HRUNTSGP/TSGET">TSGET</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSPUT">TSPUT</a>,
+   <a href="../CodeGroups/HRUNTSGQ/SEQINP">SEQINP</a>,
+   <a href="../CodeGroups/HRUNTSGT/GETTSS">GETTSS</a>,
+   <a href="../CodeGroups/HRUNTSGW/GETWDM">GETWDM</a>,
+   <a href="../CodeGroups/HRUNTSPT/PUTTSS">PUTTSS</a>,
+   <a href="../CodeGroups/HRUNTSPW/PUTWDM">PUTWDM</a>
+<p>Variable Usage
+
+<p>Code
+<pre>
+C    FROM CTSEX.COM
+C    EXTRA SECTION OF TSS OSV:
+C     FROM CTSEXT
+      COMMON/SCRTCH/ DUMFIL,SEQFL,XOLD,    XNEW,    XVAR,
+     1 XZERO,    XLAST,    TXOLD,TXNEW,TXVAR,RRATIO,RATIO,SUITFG,
+     2 TESTFG,UFLAG,ZFLAG,UNDEF,DUMEXT
+      INTEGER        DUMFIL,SEQFL,
+     1                     TXOLD,TXNEW,TXVAR,       RATIO,SUITFG,
+     2 TESTFG,UFLAG,ZFLAG,      DUMEXT(13)
+      REAL                        XOLD(20),XNEW(20),XVAR(20),
+     1 XZERO(20),XLAST(20),                  RRATIO,
+     2                          UNDEF
+C
+C    END BYTE 1300
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+

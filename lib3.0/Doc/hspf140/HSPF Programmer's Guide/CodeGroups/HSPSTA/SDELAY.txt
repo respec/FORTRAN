@@ -1,0 +1,47 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+   <a href="../HSPF/HSPF">HSPF</a>
+<p>Common Blocks <i>none</i>
+<p>Calls 
+   TIMER
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE SDELAY
+     I                 (HUNSEC)
+C
+C     + + + PURPOSE + + +
+C     delay specified amount of time
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     HUNSEC
+C
+C     + + + ARGUMENT DEFINTIONS + + +
+C     HUNSEC - hundredths of a second to delay
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     TIM, OTIM
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      CALL TIMER(TIM)
+      OTIM = TIM + HUNSEC
+      DO WHILE (OTIM > TIM)
+        CALL TIMER(TIM)
+      END DO
+C
+      RETURN
+      END
+</pre>
+
+
+
+

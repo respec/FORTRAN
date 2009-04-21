@@ -1,0 +1,77 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HEXTUTIL">HEXTUTIL</a>
+<p>Called By
+   
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="../HIOUCI/UCIINP">UCIINP</a>,
+   WMSGTT,
+   <a href="../HIOUCI/KEYUCI">KEYUCI</a>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   UCIGET
+     I                   (UCIFL,HMSGFL,OUTPFL,
+     M                    ECOUNT)
+C
+C     + + + PURPOSE + + +
+C     read uci from file, find major keywords
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   UCIFL,HMSGFL,OUTPFL,ECOUNT
+C
+C     + + + ARGUMENT DEFINTIONS + + +
+C     UCIFL  - users control input unit number
+C     HMSGFL - hspf message file unit number
+C     OUTPFL - status/error message unit number
+C     ECOUNT - count of errors found
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      SCLU,SGRP,INITFG,CLEN,CONT,KCNT,
+     #             KWDDIM(1),KWDTYP(1),I0,I1
+      CHARACTER*1  CHSTR1(20),KWDLIB(12)
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR1,CHSTR)
+      CHARACTER*20 CHSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     UCIINP,WMSGTT,KEYUCI
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (12A1,2I4)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0= 0
+      I1= 1
+C
+      CALL UCIINP (UCIFL,HMSGFL,OUTPFL)
+C     get major keywords (RUN)
+      SCLU  = 201
+      SGRP  = 21
+      INITFG= 1
+      CLEN  = 20
+      CALL WMSGTT (HMSGFL,SCLU,SGRP,INITFG,
+     M             CLEN,
+     O             CHSTR1,CONT)
+      READ (CHSTR,1000) KWDLIB,KWDDIM,KWDTYP
+C     look for major keywords
+      CLEN  = 4
+      CALL <a href="../HIOUCI/KEYUCI">KEYUCI</a> (I1,CLEN,I0,I0,I1,KWDLIB,KWDDIM,KWDTYP,
+     M             ECOUNT,
+     O             KCNT)
+C
+      RETURN
+      END
+</pre>
+
+
+

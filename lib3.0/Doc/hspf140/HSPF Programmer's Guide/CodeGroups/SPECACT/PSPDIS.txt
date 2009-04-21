@@ -1,0 +1,227 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+   CKTCOD,
+   OMSTI,
+   OMSTC,
+   OMSG,
+   CVARAR
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PSPDIS
+     I                    (UCIBUF,MESSU,MSGFL,SCLU,MXSPDS,OUTLEV,SPOUT,
+     M                     DCNT,SPDCNT,SPDTST,SPDTCD,SPDDFG,SPDFRC,
+     M                     ECOUNT)
+C
+C     + + + PURPOSE + + +
+C     read and process special action distribution from ucifl
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      MESSU,MSGFL,SCLU,MXSPDS,OUTLEV,SPOUT,DCNT,
+     $             SPDCNT(MXSPDS),SPDTST(MXSPDS),SPDTCD(MXSPDS),
+     $             SPDDFG(MXSPDS),ECOUNT
+      REAL         SPDFRC(10,MXSPDS)
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     UCIBUF - buffer containing current record from uci file
+C     MESSU  - unit number to write messages on
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
+C     MXSPDS - maximum number of distributions
+C     OUTLEV - output level
+C     SPOUT  - runtime Special Action output level
+C     DCNT   - number of distributions processed so far
+C     SPDCNT - count of fractions for this distribution
+C     SPDTST - timestep between fractions for this distribution
+C     SPDTCD - time code for this distribution
+C     SPDDFG - deferral code for this distribution 1 - skip
+C                                                  2 - shift
+C                                                  3 - accum
+C     SPDFRC - fraction of action at each timestep of distribution
+C     ECOUNT - error count
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      I,I1,IND,CNT,TSTEP,TCODE,DEFFG,IMAX,ERRFLG,SGRP
+      REAL         FRACT(10)
+      CHARACTER*2  CTCODE
+      CHARACTER*5  CDEFFG
+      CHARACTER*1  CUBUF1(80)
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CDEFFG,CDEFF1)
+      CHARACTER*1  CDEFF1(5)
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     CKTCOD,OMSTI,OMSTC,OMSG,CVARAR
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I1/1/
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (8X,I3,1X,I3,1X,A2,1X,I3,1X,A5,2X,10F5.2)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' DISTRIBUTIONS',/,
+     $          '   INDEX TSTEP CTCODE TCODE CDEFFG DEFFG  CNT',
+     $          ' FRACTIONS')
+ 2010 FORMAT (3X,I5,I6,5X,A2,I6,2X,A5,I6,I5,1X,10F8.5)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      TCODE = 0
+      DEFFG = 0
+      ERRFLG= 0
+C
+      READ(UCIBUF,1000,ERR=20) IND,CNT,CTCODE,TSTEP,CDEFFG,FRACT
+      IF (SPOUT .GE. 10) THEN
+C       echo initial read
+        WRITE (MESSU,*) '  DISTRB:',IND,CNT,CTCODE,TSTEP,CDEFFG,
+     $                    (FRACT(I),I=1,CNT)
+      END IF
+C
+      IF ( (IND .LT. I1) .OR. (IND .GT. MXSPDS) ) THEN
+C       error - distribution index number out of range
+        CALL OMSTI (IND)
+        CALL OMSTI (I1)
+        CALL OMSTI (MXSPDS)
+        SGRP= 30
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+        ERRFLG= 1
+      ELSE
+C       index in range
+        IF (SPDCNT(IND) .NE. 0) THEN
+C         error - this distribution index already in use
+          CALL OMSTI (IND)
+          SGRP= 31
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+          IND= 0
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo index
+          WRITE (MESSU,*) '  index',IND
+        END IF
+C
+C       check time code
+        CALL CKTCOD (CTCODE,MESSU,MSGFL,SCLU,
+     M               ECOUNT,ERRFLG,
+     O               TCODE)
+        IF (SPOUT .GE. 10) THEN
+C         echo tcode
+          WRITE (MESSU,*) '  tcode',TCODE
+        END IF
+C
+C       check deferral code
+        IF (CDEFFG .EQ. ' SKIP' .OR. CDEFFG .EQ. '     ') THEN
+C         this is the default
+          DEFFG= 1
+        ELSE IF (CDEFFG .EQ. 'SHIFT') THEN
+          DEFFG= 2
+        ELSE IF (CDEFFG .EQ. 'ACCUM') THEN
+          DEFFG= 3
+        ELSE
+C         unknown deferral flag
+          I= 5
+          CALL OMSTC(I,CDEFF1)
+          SGRP= 32
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo deferral code
+          WRITE (MESSU,*) '  deferral code',DEFFG
+        END IF
+C
+        IF (TSTEP .LT. I1) THEN
+C         bad timestep
+          CALL OMSTI (TSTEP)
+          SGRP= 33
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+          TSTEP= 1
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo time step
+          WRITE (MESSU,*) '  time step',TSTEP
+        END IF
+C
+        IMAX= 10
+        IF ( (CNT .LT. I1) .OR. (CNT .GT. IMAX) ) THEN
+C         bad fraction count
+          CALL OMSTI (CNT)
+          CALL OMSTI (I1)
+          CALL OMSTI (IMAX)
+          SGRP= 34
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ERRFLG= 1
+          CNT= 0
+        END IF
+        IF (SPOUT .GE. 10) THEN
+C         echo count
+          WRITE (MESSU,*) '  count',CNT
+        END IF
+C
+        IF (ERRFLG .EQ. 0) THEN
+C         fill in info for this distribution
+          SPDCNT(IND)= CNT
+          SPDTST(IND)= TSTEP
+          SPDTCD(IND)= TCODE
+          SPDDFG(IND)= DEFFG
+          DO 10 I= 1,10
+            IF (I .LE. CNT) THEN
+              SPDFRC(I,IND)= FRACT(I)
+            ELSE
+              SPDFRC(I,IND)= 0.0
+            END IF
+ 10       CONTINUE
+        END IF
+      END IF
+C
+      GO TO 30
+ 20   CONTINUE
+C       read error
+        I= 80
+        CALL CVARAR (I,UCIBUF,I,
+     O               CUBUF1)
+        CALL OMSTC (I,CUBUF1)
+        SGRP= 35
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+        ERRFLG= 1
+ 30   CONTINUE
+C
+      IF (OUTLEV .GT. 2) THEN
+C       echo distribution
+        DCNT= DCNT+ 1
+        IF (DCNT .EQ. 1) THEN
+C         distribution echo header
+          WRITE (MESSU,2000)
+        END IF
+C       output all parms of distribution
+        WRITE (MESSU,2010) IND,SPDTST(IND),CTCODE,SPDTCD(IND),CDEFFG,
+     $                   SPDDFG(IND),SPDCNT(IND),(SPDFRC(I,IND),I=1,CNT)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+

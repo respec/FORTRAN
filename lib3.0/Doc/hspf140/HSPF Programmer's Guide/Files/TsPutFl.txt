@@ -1,0 +1,27 @@
+<b>TSPUT INSTRUCTION FILE</b>
+
+<p>Function
+
+<p>This virtual file (stored in Common Block <a href="../CommonBlocks/CTSGPM">CTSGPM</a>)contains instructions which will ensure that module TSPUT correctly routes any output time series produced by an operation, to the specified target locations.  This is done at the conclusion of each INSPAN. Access to this virtual file is through subroutines 
+<a href="../CodeGroups/HIOTSIN/GETTSI">GETTSI</a> and
+<a href="../CodeGroups/HIOTSIN/PUTTSI">PUTTSI</a> in code group 
+<a href="../CodeGroups/HIOTSIN">HIOTSIN</a>.
+
+<p>Method of Operation 
+
+<p>The method of operation is very similar to that applicable to file TSGETF.  See the discussion of the <a href="TsGetFl">TsGetFl</a>. 
+
+<p>Structure 
+
+<p>The structure is identical to that for <a href="TsGetFl">TSGETF</a>.
+  
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,109 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTSS">HRINTSS</a>
+<p>Called By
+   <a href="GINIT">GINIT</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN4">CRIN4</a> 
+<p>Calls
+   GWORD,
+   OMSTI,
+   OMSG,
+   BCWSPL
+<p>Code
+<pre>
+C
+C     3.5.8.2.2.1
+C
+      SUBROUTINE FITSB
+     I                 (VOYR,SINT)
+C
+C     + + + PURPOSE + + +
+C     Find the tsb which contains the interval given by
+C     sint.  the virtual origin of the year is given by voyr
+C     Note that stime < tlast for the tsb found by this
+C     subroutine because sint > stime.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   VOYR,SINT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     VOYR   - ???
+C     SINT   - ???
+C
+C     + + + COMMON BLOCKS- INTERP4 + + +
+      INCLUDE     'crin4.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     ADRBCW,SCLU,SGRP,WORDI,DADR
+      REAL        WORDR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (WORDR,WORDI)
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    GWORD,OMSTI,OMSG,BCWSPL
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 216
+      TLAST=0
+C
+C     compute address of first bcw in the year
+      ADRBCW=VOYR +2
+C
+C     dountil(sint <=tlast or bcwnov <= 1)
+ 5    CONTINUE
+        CALL GWORD(ADRBCW,      WORDR)
+        CALL BCWSPL(WORDI,   BCWBTI,BCWNOV)
+C
+        IF (BCW .GE. 0) GO TO 10
+C         program bug
+C         end of year encountered when such encounter should
+C         be impossible
+          SGRP = 132
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 10     CONTINUE
+        IF (BCW .NE. 0) GO TO   20
+C         program bug
+C         end of data encountered when such encounter should
+C         be impossible
+          SGRP = 133
+          CALL OMSTI (FILE)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+ 20     CONTINUE
+C
+        TZERO=TLAST
+        TLAST=TZERO +(BCWNOV-1)*DELTAT
+C
+C       point to next bcw
+        IF (BCWBTI .NE. 1) GO TO 30
+          DADR=TOTCOM*BCWNOV
+          GO TO  60
+ 30     CONTINUE
+          IF (BCWBTI .NE. 2 .AND. BCWBTI .NE. 3) GO TO 40
+            DADR=TOTCOM
+            GO TO  50
+ 40       CONTINUE
+            DADR=2*TOTCOM
+ 50       CONTINUE
+ 60     CONTINUE
+C
+        VOTSB =ADRBCW-1
+        ADRBCW=ADRBCW +DADR +1
+      IF(SINT .GT. TLAST .AND. BCWNOV .GT. 1) GO TO 5
+C
+      RETURN
+      END
+</pre>
+
+
+
+

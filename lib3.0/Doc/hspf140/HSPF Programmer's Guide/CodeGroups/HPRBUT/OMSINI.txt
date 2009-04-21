@@ -1,0 +1,48 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HPRBUT">HPRBUT</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CHMSG">CHMSG</a>
+<p>Includes 
+   <a href="../../Dimensions/PHMSG">PHMSG</a>
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   OMSINI
+C
+C     + + + PURPOSE + + +
+C     reset assoc parms to don't write
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'phmsg.inc'
+      INCLUDE 'chmsg.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      ICNT= 0
+      RCNT= 0
+      CCNT= 0
+      DO 10 I= 1,5
+        DATIM(I)= 0
+ 10   CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+

@@ -1,0 +1,36 @@
+<b>Note: Links and other auxiliary information are not complete!</b>
+
+<ul>
+<li><a href="CodeGroups/HSPF">HSPF</a>
+<li><a href="CodeGroups/HOSUPER">HOSUPER</a>
+<li><a href="CodeGroups/HSPFEC">HSPFEC</a>
+<li><a href="CodeGroups/HRUNTSGP">HRUNTSGP</a>
+<li><a href="CodeGroups/HEXTUTIL">HEXTUTIL</a>
+<li><a href="CodeGroups/HRINGEN">HRINGEN</a>
+<li><a href="CodeGroups/HRINTS">HRINTS</a>
+<li><a href="CodeGroups/HTSINSI">HTSINSI</a>
+<li><a href="CodeGroups/HTSINSZ">HTSINSZ</a>
+<li><a href="CodeGroups/HRINGEUT">HRINGEUT</a>
+<li><a href="CodeGroups/SPECACT">SPECACT</a>
+<li><a href="CodeGroups/HSPSTA">HSPSTA</a>
+<li><a href="CodeGroups/HRINSEQ">HRINSEQ</a>
+<li><a href="CodeGroups/HRINTSS">HRINTSS</a>
+<li><a href="CodeGroups/HRINWDM">HRINWDM</a>
+<li><a href="CodeGroups/HTSSUT">HTSSUT</a>
+<li><a href="CodeGroups/HRUNTSGQ">HRUNTSGQ</a>
+<li><a href="CodeGroups/HRUNTSGT">HRUNTSGT</a>
+<li><a href="CodeGroups/HRUNTSGW">HRUNTSGW</a>
+<li><a href="CodeGroups/HRUNTSPT">HRUNTSPT</a>
+<li><a href="CodeGroups/HRUNTSPW">HRUNTSPW</a>
+<li><a href="CodeGroups/HRUNTSUT">HRUNTSUT</a>
+<li><a href="CodeGroups/HWDMUT">HWDMUT</a>
+<li><a href="CodeGroups/HPESTUT">HPESTUT</a>
+<li><a href="CodeGroups/HDATUT">HDATUT</a>
+<li><a href="CodeGroups/HPRBUT">HPRBUT</a>
+<li><a href="CodeGroups/HIOOSUP">HIOOSUP</a>
+<li><a href="CodeGroups/HIOOSV">HIOOSV</a>
+<li><a href="CodeGroups/HIOTSIN">HIOTSIN</a>
+<li><a href="CodeGroups/HIOWRK">HIOWRK</a>
+<li><a href="CodeGroups/HIOUCI">HIOUCI</a>
+</ul>
+

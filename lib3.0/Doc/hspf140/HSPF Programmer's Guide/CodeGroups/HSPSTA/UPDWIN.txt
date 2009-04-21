@@ -1,0 +1,88 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPSTA">HSPSTA</a>
+<p>Called By
+   <a href="HSPSTA">HSPSTA</a>,
+   <a href="HDMEST">HDMEST</a>,
+   <a href="HDMES2">HDMES2</a>,
+   <a href="HDMES3">HDMES3</a>,
+   <a href="HDMESN">HDMESN</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE UPDWIN(IOPT,ILEN,ATXT)
+C
+C     + + + PURPOSE + + +
+C     write status (nowait) to ms window
+C
+      USE SCENMOD, ONLY: UPDATESTATUS
+C     INTEGER    UPDATESTATUS
+C     DLL_IMPORT UPDATESTATUS
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      IOPT, ILEN
+      CHARACTER*1  ATXT(ILEN)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IOPT    - position to output
+C     ILEN    - length of text to output
+C     ATXT    - text to output
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      OLEN, JLEN
+      INTEGER      I
+      INTEGER*1    JTXT(132)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     text to local string
+      IF (IOPT .EQ. 5) THEN
+        OLEN= 1
+      ELSE
+        IF (IOPT.EQ.1) THEN
+          OLEN = 72
+        ELSE IF (IOPT.EQ.2 .OR. IOPT.EQ.4) THEN
+          OLEN = 12
+        ELSE IF (IOPT.EQ.3) THEN
+          OLEN = 6
+        ELSE IF (IOPT.EQ.10) THEN
+          OLEN = 48
+        ELSE IF (IOPT.EQ.6) THEN
+          OLEN = 80
+        ELSE
+          OLEN = 6
+        END IF
+        JLEN = ILEN
+        IF (JLEN .GT. OLEN) THEN
+          JLEN = OLEN
+        END IF
+      END IF
+      !WRITE(*,*)'HSPSTA:UPDWIN:stat:',IOPT,OLEN,ILEN,JLEN
+C     text to I*1 array
+      JTXT= 32
+      I   = 1
+      DO WHILE (I.LE.ILEN)
+        JTXT(I)= ICHAR(ATXT(I))
+        I      = I+ 1
+      END DO
+      JTXT(I)= 0
+      !IF (IOPT .EQ. 5) WRITE(*,*) 'HSPSTA:slider',JTXT(1),JTXT(2)
+      I= UPDATESTATUS(IOPT,JTXT)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+

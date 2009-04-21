@@ -1,0 +1,43 @@
+<p>Changes to a multiplication factor will be made on the TSGET side of a timeseries connection based on an instruction from an external driver like HIMDRIVER or an internal HSPF SPECIAL ACTION.
+<p>Changes to the HSPF code will be needed in the following areas:
+<ol>
+<li>Enhance each <a href="../../CommonBlocks/CTSIN">TSGET/TSPUT</a> instruction to store additional information about source and target timeseries.  This information (found in the <a href="../../Files/WORKFL">WORKFL</a>) includes:
+   <ol type='a'>
+   <li>SVOL(2) - source volume name (WDM1, PERLND, etc.)
+   <li>SNUM - source volume number
+   <li>SGRPN(2) - source group name
+   <li>SMEMN(2) - source member name
+   <li>SMEMSB(2) - source member subscripts
+   <li>AORIG - original multiplication factor
+   <li>TVOL(2) - target volume name (RCHRES, WDM1, etc.)
+   <li>TNUM - target volume number
+   <li>TGRPN(2) - target group name
+   <li>TMEMN(2) - target member name
+   <li>TMEMSB(2) - target member subscripts
+   </ol>
+<p>These changes will add 19 words to each instruction.
+<p>The variable AORIG above is added to store the original MFACT from the UCI in WORKFL so that updates can refer to original, not internal, units.  This is particularly important for MASS-LINKS.  The other additional information above will be included so that the code can look through the timeseries instructions and identify which instruction(s) the user wishes to update.<p>
+
+<p>Implement by changes to 
+<a href="../../CodeGroups/HTSINSI/SOURCE">SOURCE</a>, 
+<a href="../../CodeGroups/HTSINSI/TARGET">TARGET</a> and 
+<a href="../../CodeGroups/HTSINSI/TSINS">TSINS</a> in 
+<a href="../../CodeGroups/HTSINSI">HTSINSI</a>.  
+<p>Record length of TSGET/TSPUT instruction would increase from 200 to 219 bytes in 
+<a href="../../CommonBlocks/CTSIN">CTSIN</a> and 
+<a href="../../CommonBlocks/CTSGPM">CTSGPM</a>.  
+<a href="../../CodeGroups/HIOTSIN/GETTSI">GETTSI</a> and 
+<a href="../../CodeGroups/HIOOSV/PUTOSV">PUTTSI</a> would change to read the longer instruction.  The dimension of INSTR would change to 219.<p> 
+<li>Change <a href="../../CodeGroups/HSPSTA/EXT_UPDATE">EXT_UPDATE</a> to interpret a new TIMSER-MFACT change instruction.  Parse instruction to determine which operation is referenced as the TARGET.  Using TSGET keys from the OPNTAB for the operation, loop through the instructions.  Where the change instruction source and target match the information stored in the new section of the TSGET instruction, update the MFACT.  After the MFACT is updated, the new MFACT will be stored in the AORIG variable for reference in subsequent MFACT change instructions.  Note that abbreviated references are allowed - PERLND 1 to RCHRES 102 implies all timeseries with that source and target.<p>
+<li>Change Special Action code to allow for a similar operation. (add details)<p>
+</ol>
+<p>Other thoughts:
+<ol>
+<li>When can we remove TSS?  How does this choice get made?  Who needs to be involved?<p>
+<li>Do we need the 20 components stuff found in each instruction?  Removing this would make the code and instructions a good bit simpler.<p>
+<li>The run interpreter seems to be stored in CRINTP, not SCRTCH.  Documentation may need further updating.<p>
+</ol>
+
+
+
+

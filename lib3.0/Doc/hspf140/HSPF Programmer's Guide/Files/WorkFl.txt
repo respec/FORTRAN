@@ -1,0 +1,136 @@
+<b>WORKING FILE</b>
+
+<p>Function
+
+<p>The virtual working file is used by the Run Interpreter to temporarily store information about time series linkages.  This virtual file uses the scratch pad locations used later by timeseries data.  
+
+<p>The WORKFL is strictly temporary; the Run Interpreter uses it at the start  of the run, after which it is not used at all.  Subroutine group <a href="../CodeGroups/HSPFEC/TIMSER">TIMSER</a> in the Run Interpreter uses it to store two kinds of data:  
+      
+<ol>     
+<li>Data on time series linkages. Each record contains information on a single linkage; the source, transformation information and the target.  These data are later used to assign values to time series flag_pointers for each operation in the run, and to generate primitive TSGET and TSPUT instructions.<p>  
+
+<li>Subroutine <a href="../CodeGroups/HTSINSI/TSINS">TSINS</a> writes the primitive TSGET/TSPUT instructions to WORKFL, which are later used by subroutine 
+<a href="../CodeGroups/HTSINSZ/TINSTR">TINSTR</a> to generate the final TSGET/TSPUT instructions.  
+</ol>
+
+<p>Method of Operation
+
+<p>Subroutines <a href="../CodeGroups/HSPFEC/EXTTS">EXTTS</a> and 
+<a href="../CodeGroups/HRINTS/OPNTS">OPNTS</a> read the time series linkage information supplied by the user in the EXT SOURCES, NETWORK and EXT TARGETS  blocks, and expand any entries which imply the transfer of more than one time series into several elemental transfer instructions.
+
+<p>Subroutine <a href="../CodeGroups/HRINTS/PAIRS">PAIRS</a> writes these elemental instructions to WORKFL.  The entries are analyzed and sorted by subroutines 
+<a href="../CodeGroups/HTSINSI/CHAIN">CHAIN</a>, 
+<a href="../CodeGroups/HTSINSI/SAME">SAME</a>, 
+<a href="../CodeGroups/HTSINSI/ALLOC">ALLOC</a>, 
+<a href="../CodeGroups/HTSINSI/TARGET">TARGET</a>, 
+<a href="../CodeGroups/HTSINSI/SOURCE">SOURCE</a> and 
+<a href="../CodeGroups/HTSINSI/CHANGE">CHANGE</a>.  The latter four subroutines, together with 
+<a href="../CodeGroups/HTSINSI/TSINS">TSINS</a>, finally use all this information to generate the  primitive TSGET/TSPUT  instructions and add them to the existing entries in WORKFL.  The primitive instructions are expanded in subroutine group 
+<a href="../CodeGroups/HTSINSZ/TINSTR">TINSTR</a> to full TSGET/TSPUT instructions, which are finally written to 
+<a href="TSGETFL">TSGETF</a> and 
+<a href="TSPUTFL">TSPUTF</a>. 
+          
+<p>The above procedure is applied separately to each EXGROUP in the run. The file is reused for each EXGROUP.  Entries for each group  start at record 1.  This saves file space and can be done because no entry in the NETWORK Block may link time series belonging  to  operations in different EXGROUPS.  
+
+<p>Structure  
+
+<pre>
+1 WORKFL                  Contains data for one EXGROUP  
+ 
+ 2 Time series linkage data  
+ 
+  3 Data from EXT SOURCES Block  
+ 
+   4 REC(50)         I4   Record containing one time series linkage. Repeats   
+                          for each linkage   
+    5 SINF(22)       I4   Source information   
+     6 SVOL(2)       I4_C Volume ("TSS", "SEQ", or OPN_type)   
+     6 SNUM          I4   For TSS, dataset number  
+                          For SEQ, _ve value of unit number  
+                          For OPN, internal operation number   
+     6 SDELT         I4   Time interval (minutes)  
+     6 SGRPN(2)      I4_C For TSS and SEQ, not used  
+                          For OPN, group name  
+     6 SMEMN(2)      I4_C Member name  
+     6 SMEMSB(2)     I4   For OPN and TSS _ Member subscripts  
+                          For SEQ _ format class code / format address   
+     6 SOFFST        I4   For TSS, offset of time series (component) in time   
+                          frame  
+                          For Seq, not used  
+                          For OPN, location of flag_pointer in OSV   
+     6 SAMDCD        I4   Access mode code _ not used here   
+     6 SGAPCD        I4   For SEQ, gap_filling code  
+                          For OPN and TSS, not used  
+     6 SFRC          I4   For TSS, location of first record for this 
+                          dataset  
+                          For SEQ and OPN, not used  
+     6 SCHAIN        I4   Key to next entry, chained in sorce OPN SEQUENCE 
+                          order  
+     6 STNXT         I4   Key to next appearance of this source, with entries  
+                          considered in target OPN SEQUENCE order  
+     6 SSNXT         I4   Key to next appearance of this source, with entries  
+                          considered in source OPN SEQUENCE order  
+     6 SROW          I4   INPAD row number for this source 
+     6 dummy(4)      I4   Not used (19,20,21 used to store original STTRAN,  
+                          SDELT, MFACT, JLK 8/83&5/84) 
+
+    5 Transfer_info  
+     6 STKIND        I4   1 for point to point, 2 for mean to mean, 3 for  
+                          point to mean  
+     6 STTRAN        I4   Code for transformation functions (eg. 1 for SAME) 
+     6 A             R4   _| Constants in equation:  
+     6 B             R4   _| Target value = A * (source value) + B 
+
+ 
+    5 TINF(22)       I4   Target information. Same structure as source   
+                          information, except:   
+       TAMDCD        I4   For TSS, access mode code: 1 ADD, 2 INST, 3 REPL   
+                          For SEQ and OPN, not used  
+       TCHAIN        I4   Key to next entry, chained in target OPN SEQUENCE  
+                          order  
+       TTNXT         I4   Key to next appearance of this target, with entries  
+                          considered in target OPN SEQUENCE order  
+       TSNXT         I4   Key to next appearance of this target, with entries  
+                          considered in source OPN SEQUENCE order  
+       dummy(6)      I4   Dummy  
+ 
+  3 Data from NETWORK Block  
+    same as structure above  
+ 
+  3 Data from EXT TARGETS Block  
+    same as structure above  
+ 
+ 2 Primitive TSGET/TSPUT instructions  
+ 
+  3 Ingroup_data          Repeats for each INGROUP in this EXGROUP   
+ 
+   4 Operation_data       Repeats for each operation in the INGROUP  
+ 
+    5 Instruction         Repeats for each instruction for this operation  
+     6 VOLCOD        I4   Volume code, of source for TSGET, target for TSPUT:  
+                          1 for SEQ, 2 for EXPAD, 3 for INPAD, 4 for TSS, 5
+                          for WDM file
+     6 FILE          I4   For TSS, dataset number  
+                          For SEQ, file number   
+                          For INPAD, row number (of source for TSGET, of   
+                          target for TSPUT)  
+     6 DELTAT        I4   Time interval (minutes) of source for TSGET and  
+                          target for TSPUT   
+     6 ROW           I4   INPAD row number, of target for TSGET, source  
+                          for TSPUT  
+     6 OFFSET        I4   Offset of component time series (TSS dataset only)   
+     6 STKIND        I4   Code for source/target kind relationship   
+     6 STTRAN        I4   Code for source/target transform   
+     6 INMODE        I4   0 means replace existing values, 1 means add to  
+                          existing values in INPAD   
+ 
+     6 A             R4   _| Constants in equation:  
+     6 B             R4   _| Target = A * (source) + B   
+ 
+     6 FORMT(2)      I4   For SEQ files, format class code/format address  
+     6 AMDCD         I4   Access mode code (target TSS dataset only)   
+     6 GAPCD         I4   Gap_filling code (SEQ files only)  
+     6 FRC           I4   Location of the first record for a TSS dataset   
+</pre>
+
+

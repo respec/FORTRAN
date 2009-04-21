@@ -1,0 +1,66 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOOSUP">HIOOSUP</a>
+<p>Called By
+
+<p>Common Blocks 
+   <a href="../../CommonBlocks/COSUPM">COSUPM</a>
+<p>Calls <i>none</i>   
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PUTOSU
+     I                   (KEY,OSUBF1,OSUBF2,OSUBF3,OSUBF4,OSUBF5,OSUBF6,
+     I                    OSUBF7,OSUBF8,OSUBF9,OSUB10,OSUB11)
+C
+C     + + + PURPOSE + + +
+C     Write an OSUP line
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      KEY,OSUBF1,OSUBF2,OSUBF3,OSUBF4,OSUBF5,OSUBF6,
+     1             OSUBF7,OSUBF8,OSUBF9,OSUB10,OSUB11
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     KEY    - record number
+C     OSUBF1 - ???
+C     OSUBF2 - ???
+C     OSUBF3 - ???
+C     OSUBF4 - ???
+C     OSUBF5 - ???
+C     OSUBF6 - ???
+C     OSUBF7 - ???
+C     OSUBF8 - ???
+C     OSUBF9 - ???
+C     OSUB10 - ???
+C     OSUB11 - ???
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE    'cosupm.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      OSUPM(1,KEY) = OSUBF1
+      OSUPM(2,KEY) = OSUBF2
+      OSUPM(3,KEY) = OSUBF3
+      OSUPM(4,KEY) = OSUBF4
+      OSUPM(5,KEY) = OSUBF5
+      OSUPM(6,KEY) = OSUBF6
+      OSUPM(7,KEY) = OSUBF7
+      OSUPM(8,KEY) = OSUBF8
+      OSUPM(9,KEY) = OSUBF9
+      OSUPM(10,KEY) = OSUB10
+      OSUPM(11,KEY) = OSUB11
+C
+      RETURN
+      END
+</pre>
+
+
+
+

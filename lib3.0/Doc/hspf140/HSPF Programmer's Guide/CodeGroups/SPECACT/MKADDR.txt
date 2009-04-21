@@ -1,0 +1,316 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   MKADDR
+     I                    (LOCDIR,INPBUF,MESSU,MSGFL,SCLU,BGRP,
+     M                     TOPTYP,ERRFLG,
+     O                     VNAME,NSUB,ADDR)
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      LOCDIR,MESSU,MSGFL,SCLU,BGRP,TOPTYP,ERRFLG,NSUB(3),
+     $             ADDR
+      CHARACTER*6  VNAME
+      CHARACTER*15 INPBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     LOCDIR - specs method(s) available for spec. actions input
+C              0 - variable name required;
+C              1 - either variable name or address required;
+C              2 - address required
+C     INPBUF - buffer containing variable name portion of current record
+C     MESSU  - unit number to write messages on
+C     MSGFL  - unit number of file containg HSPF message text
+C     SCLU   - cluster in file containing error text
+C     TOPTYP - operation type, 0 means look to find it
+C     ERRFLG - flag indicating whether an error has occurred processing line
+C     VNAME  - variable name
+C     NSUB   - subscripts associated with variable name
+C     ADDR   - address of location specified
+C
+C     + + + COMMON BLOCK- SPEC + + +
+      INCLUDE     'cspec.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      I,SUBCN1,SUBCN2,SUBFG,IND,VKWDNO,LOPTYP,I0,
+     $             SGRP,I6,SIZE,SRANGE
+      CHARACTER*3  CSUB(3)
+      CHARACTER*6  BLANK,CWRKSP
+      CHARACTER*15 CHSTR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR,CHSTR1)
+      CHARACTER*1  CHSTR1(15)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER       CHKSTR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    ABS
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     OMSG,OMSTI,OMSTC,CHKSTR,TAGVAL
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (A6,3A3)
+ 1010 FORMAT (I3)
+ 1020 FORMAT (I8)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     initialize
+      I6= 6
+      I0= 0
+      BLANK= '      '
+      CWRKSP= 'WORKSP'
+C
+C     read variable name
+      READ (INPBUF,1000) VNAME,CSUB
+C
+      IF (VNAME(1:3) .NE. BLANK(1:3)) THEN
+C       read subscripts
+        DO 50 I= 1, 3
+          READ (CSUB(I),1010,ERR=30) NSUB(I)
+C           number read okay
+          GO TO 40
+ 30       CONTINUE
+C         not a valid number - try reading as a character tag
+          CALL TAGVAL (CSUB(I)(2:3),I0,MESSU,MSGFL,SCLU,BGRP,
+     M                 ECOUNT,
+     O                 NSUB(I))
+          IF (NSUB(I) .EQ. -999) THEN
+C           an invalid tag was specified as subscript
+            ERRFLG= 1
+          END IF
+ 40       CONTINUE
+ 50     CONTINUE
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       continue processing
+        IF (VNAME .EQ. CWRKSP) THEN
+C         variable is in workspace
+          SUBFG= 0
+          DO 55 I= 1, 3
+            IF (NSUB(I) .LT. 0) THEN
+C             error - negative subscript
+              SUBFG= 1
+            END IF
+ 55       CONTINUE
+          IF (SUBFG .EQ. 1) THEN
+C           error - at least one of the specified
+C           subscripts exceeds the corresponding
+C           dimension of the variable array
+            CHSTR(1:6)= VNAME
+            CALL OMSTC (I6,CHSTR1)
+            SGRP= 5
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ADDR  = -999
+            ERRFLG= 1
+          ELSE IF (NSUB(1) .EQ. 0) THEN
+C           error - number of nonzero subscripts specified
+C           does not correspond to number of dimensions of
+C           variable
+            CHSTR(1:6)= VNAME
+            CALL OMSTC (I6,CHSTR1)
+            I= 3
+            CALL OMSTI (I)
+            SGRP= 4
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ADDR  = -999
+            ERRFLG= 1
+          ELSE
+C           compute address from as many subscripts as are found
+            ADDR= -NSUB(1)
+            IF (NSUB(2) .GT. 1) THEN
+C             second subscript
+              ADDR= ADDR- 1000*NSUB(2)
+            END IF
+            IF (NSUB(3) .GT. 1) THEN
+C             third subscript
+              ADDR= ADDR- 1000000*NSUB(3)
+            END IF
+          END IF
+        ELSE IF (VNAME(1:3) .EQ. BLANK(1:3)) THEN
+C         assume user has supplied address
+          IF (LOCDIR .EQ. 0) THEN
+C           error - attempting to read an address when the
+C           variable name is required
+            SGRP= 1
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ADDR  = -999
+            ERRFLG= 1
+          ELSE
+C           read address directly from the ucifl (old format)
+            READ (INPBUF,1020,ERR=60) ADDR
+              GO TO 70
+ 60         CONTINUE
+C             read format error
+              I= 15
+              CHSTR= INPBUF
+              CALL OMSTC (I,CHSTR1)
+              SGRP= 8
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ADDR  = -999
+              ERRFLG= 1
+ 70         CONTINUE
+          END IF
+        ELSE IF (LOCDIR .EQ. 2) THEN
+C         error - attempting to read a variable name when
+C         the address is required
+          SGRP= 2
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          ADDR= -999
+C         fill in name and subs with dummy walues
+          VNAME= BLANK
+          NSUB(1) = 0
+          NSUB(2) = 0
+          NSUB(3) = 0
+          ERRFLG  = 1
+        ELSE
+C         search variable name library for the input name
+          LOPTYP= 0
+ 80       CONTINUE
+            IF (TOPTYP .EQ. 0) THEN
+C             try the next type
+              LOPTYP= LOPTYP+ 1
+            ELSE
+C             try the specified type
+              LOPTYP= TOPTYP
+            END IF
+            IND= LONAM(LOPTYP)
+            IF (IND .GT. 0) THEN
+C             the library exists- check it
+              CHSTR= VNAME
+              IND= (IND-1)*6+ 1
+              VKWDNO= CHKSTR (I6,LONUM(LOPTYP),CHSTR1,VNAML1(IND))
+            ELSE
+C             no library, cant determine name
+              VKWDNO= 0
+            END IF
+          IF (TOPTYP.EQ.0 .AND. VKWDNO.EQ.0 .AND. LOPTYP.LT.10) GO TO 80
+C
+          IF (TOPTYP.EQ.0 .AND. VKWDNO.NE.0) THEN
+C           found the name, save the operation type
+            TOPTYP= LOPTYP
+          END IF
+C
+          IF (VKWDNO .EQ. 0) THEN
+C           error - variable name not found in vnamlb
+            CHSTR(1:6)= VNAME
+            CALL OMSTC (I6,CHSTR1)
+            SGRP= 3
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+            ADDR  = -999
+            ERRFLG= 1
+          ELSE
+C           variable name found - correct index and check subscripts
+C           if the first subscript is negative, the variable is
+C           double precision.  If it is -1, then it takes no subscripts
+            VKWDNO= VKWDNO+ LONAM(TOPTYP)- 1
+            SUBFG = 0
+            SUBCN1= 0
+            SUBCN2= 0
+            DO 90 I=1,3
+              IF ( (VDIM(I,VKWDNO) .NE. 0) .AND.
+     $             (VDIM(I,VKWDNO) .NE. -1) .AND.
+     $             (NSUB(I) .EQ. 0) ) THEN
+C               default to one
+                NSUB(I)= 1
+              END IF
+              IF (NSUB(I) .GE. 1) THEN
+C               count this nonzero subscript
+                SUBCN1= SUBCN1 + 1
+              END IF
+              IF ( (VDIM(I,VKWDNO) .NE. 0) .AND.
+     $             (VDIM(I,VKWDNO) .NE. -1) ) THEN
+C               count this nonzero possible subscript
+                SUBCN2= SUBCN2 + 1
+              END IF
+              IF (VDIM(I,VKWDNO) .EQ. -1) THEN
+C               double precision - no subscripts
+                SRANGE= 0
+              ELSE
+C               subscript needed
+                SRANGE= ABS(VDIM(I,VKWDNO))
+              END IF
+              IF (NSUB(I) .GT. SRANGE) THEN
+C               this subscript is out of range
+                SUBFG= 1
+              END IF
+ 90         CONTINUE
+            IF (SUBCN1 .NE. SUBCN2) THEN
+C             error - number of nonzero subscripts specified
+C             does not correspond to number of dimensions of
+C             variable
+              CHSTR(1:6)= VNAME
+              CALL OMSTC (I6,CHSTR1)
+              CALL OMSTI (SUBCN2)
+              SGRP= 4
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ADDR  = -999
+              ERRFLG= 1
+            ELSE IF (SUBFG .GT. 0) THEN
+C             error - at least one of the specified
+C             subscripts exceeds the corresponding
+C             dimension of the variable array
+              CHSTR(1:6)= VNAME
+              CALL OMSTC (I6,CHSTR1)
+              SGRP= 5
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              ADDR  = -999
+              ERRFLG= 1
+            ELSE
+C             looks good, set base address
+              ADDR= VLOC(VKWDNO)
+              IF (VDIM(1,VKWDNO) .LT. 0) THEN
+C               negative first subscript means double precision
+                SIZE= 2
+              ELSE
+C               integer or real
+                SIZE= 1
+              END IF
+              IF (SUBCN2 .EQ. 1) THEN
+C               one dimensional array
+                ADDR= ADDR+ SIZE * (NSUB(1)- 1)
+              ELSE IF (SUBCN2 .EQ. 2) THEN
+C               two dimensional array
+                ADDR= ADDR+ SIZE * (NSUB(1)- 1 +
+     $                ABS(VDIM(1,VKWDNO))*(NSUB(2)- 1))
+              ELSE IF (SUBCN2 .EQ. 3) THEN
+C               three dimensional array
+                ADDR= ADDR+ SIZE * (NSUB(1)- 1 +
+     $                ABS(VDIM(1,VKWDNO))*((NSUB(2)- 1) +
+     $                ABS(VDIM(2,VKWDNO))*(NSUB(3)- 1)))
+              END IF
+            END IF
+          END IF
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+

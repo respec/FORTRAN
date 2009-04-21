@@ -1,0 +1,309 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINGEN">HRINGEN</a>
+<p>Called By
+   <a href="../HSPF/INTERP">INTERP</a>
+<p>Common Blocks <i>none</i> 
+<p>Calls
+   VALNO,
+   <a href="../HIOUCI/DUMPER">DUMPER</a>,
+   OMSG,
+   OMSTI,
+   OMSTC,
+   WMSGTT,
+   <a href="../HIOUCI/GETUCI">GETUCI</a>,
+   GETEND,
+   HDMES2
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   TABBLK
+     I                    (KEYST,KEYND,OUTLEV,MESSU,
+     I                     MSGFL,MAXFTB,
+     M                     ECOUNT,
+     O                     TABINX,NFTABS)
+C
+C     + + + PURPOSE + + +
+C     Locate all the tables in the ftables block and place
+C     them in the ftables index
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    ECOUNT,MSGFL,KEYND,KEYST,MESSU,NFTABS,OUTLEV,
+     $           MAXFTB,TABINX(MAXFTB,3)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     KEYST  - starting record number
+C     KEYND  - ending record number
+C     OUTLEV - run interpreter output level
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     MAXFTB - maximum number of ftables
+C     ECOUNT - count(s) of specific errors
+C     TABINX - ???
+C     NFTABS - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      I,I0,J,KEY,ITYP,I1,
+     $             MTABS,N,NUMBR,OPENFG,OPENNO,
+     $             TABNO,SGRP,SCLU,I6,
+     $             INITFG,CONT,CLEN,IOPT
+      CHARACTER*4  CEND
+      CHARACTER*6  KWDLIB
+      CHARACTER*15 CHSTR
+      CHARACTER*80 UCIBF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR,CHSTR1)
+      CHARACTER*1  CHSTR1(15)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      VALNO
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     VALNO,DUMPER,OMSG,OMSTI,OMSTC,WMSGTT
+      EXTERNAL     GETUCI,GETEND,HDMES2
+C
+C     + + + INPUT FORMATS + + +
+ 1010 FORMAT (A6)
+ 1025 FORMAT (12X,I3)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' ',132('='),/,' ','PROCESSING FTABLES BLOCK')
+ 2010 FORMAT (/,' FOUND ',A6,2X,I3)
+ 2060 FORMAT (  ' FOUND ',A6,2X,I3)
+ 2100 FORMAT (/,' ',A6,'   INDEX')
+ 2110 FORMAT (/,'      TABNO     TABID    TABKST    TABKND',/)
+ 2120 FORMAT (  ' ',4I10)
+ 2130 FORMAT (/,' ',A6,'   INDEX IS EMPTY')
+ 2140 FORMAT (/,' ','FINISHED PROCESSING FTABLES BLOCK',
+     $        /,' ',132('='))
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I0   = 0
+      I1   = 1
+      I6   = 6
+C
+      MTABS= MAXFTB
+      SCLU = 211
+C     end delimeter
+      CALL GETEND(CEND)
+C
+      IF (KEYST .GT. 0) THEN
+C       block has been supplied, read keyword
+        SGRP  = 40
+        CLEN  = 8
+        INITFG= 1
+        CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M               CLEN,
+     O               CHSTR1,CONT)
+        READ(CHSTR,1010) KWDLIB
+C
+        IOPT = 2
+        ITYP = 4
+        CALL HDMES2(IOPT,ITYP,I1)
+        IF (OUTLEV .GT. 0) THEN
+C         write processing message
+          WRITE (MESSU,2000)
+          IF (OUTLEV .GT. 2) THEN
+C           dump user's control input
+            CALL <a href="../HIOUCI/DUMPER">DUMPER</a> (KEYST,KEYND,MESSU)
+          END IF
+        END IF
+C
+C       initialize
+        TABNO = 0
+        OPENFG= 0
+C
+C       zero contents of tabinx
+        DO 20 I= 1,MTABS
+          DO 10 J= 1,3
+            TABINX(I,J)= 0
+ 10       CONTINUE
+ 20     CONTINUE
+C
+        KEY= KEYST
+C       locate the start and end of each ftable in the ftables block
+C       whiledo key <> keynd
+ 30     CONTINUE
+          CALL <a href="../HIOUCI/GETUCI">GETUCI</a> (I0,
+     M                 KEY,
+     O                 UCIBF)
+          IF (KEY .NE. KEYND) THEN
+C           process record
+C
+C           check whether this is the start of a new ftable
+            IF (UCIBF(3:8) .EQ. KWDLIB) THEN
+C             ftable heading
+              READ (UCIBF,1025,ERR=40)  NUMBR
+                GO TO 50
+ 40           CONTINUE
+C               error - cannot read ftable number
+                CHSTR(1:15)= UCIBF(1:15)
+                I= 15
+                CALL OMSTC (I,CHSTR1)
+                SGRP= 127
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+                NUMBR= -999
+ 50           CONTINUE
+              IF (OUTLEV .GT. 3) THEN
+C               echo ftable heading
+                WRITE (MESSU,2010) UCIBF(3:8),NUMBR
+              END IF
+              IF (OPENFG .GT. 0) THEN
+C               error - expecting a delimiter, not an ftable heading
+                CHSTR(1:6)= UCIBF(3:8)
+                CALL OMSTC (I6,CHSTR1)
+                CALL OMSTI (NUMBR)
+                CHSTR(1:6)= KWDLIB
+                CALL OMSTC (I6,CHSTR1)
+                CALL OMSTI (TABINX(OPENFG,1))
+                SGRP = 41
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+              END IF
+C
+C             check that ftable no. is unique
+              IF (TABNO .GT. 0) THEN
+                IF (VALNO(TABNO,TABINX,NUMBR) .GT. 0) THEN
+C                 error - duplicate ftable id
+                  CHSTR(1:6)= UCIBF(3:8)
+                  CALL OMSTC (I6,CHSTR1)
+                  CALL OMSTI (NUMBR)
+                  SGRP = 42
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                END IF
+              END IF
+C
+              TABNO = TABNO+ 1
+              OPENFG= TABNO
+              IF (TABNO .GT. MTABS) THEN
+C               error - too many ftables for table index
+                SGRP = 43
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+              ELSE
+C               record this table
+                TABINX(TABNO,1)= NUMBR
+                TABINX(TABNO,2)= KEY
+              END IF
+            ELSE
+C             not an ftable heading
+              IF (UCIBF(3:6) .EQ. CEND) THEN
+C               found a delimiter
+                READ (UCIBF,1025,ERR=60)  NUMBR
+                  GO TO 70
+ 60             CONTINUE
+C                 error - cannot read ftable number
+                  CHSTR(1:15)= UCIBF(1:15)
+                  I= 15
+                  CALL OMSTC (I,CHSTR1)
+                  SGRP= 128
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                  NUMBR= -999
+ 70             CONTINUE
+                IF (OUTLEV .GT. 4) THEN
+C                 echo delimiter
+                  WRITE (MESSU,2060)  KWDLIB,NUMBR
+                END IF
+                IF (UCIBF(7:10) .NE. KWDLIB(1:4)) THEN
+C                 error - unrecognized delimiter
+                  CHSTR(1:6)= UCIBF(7:12)
+                  CALL OMSTC (I6,CHSTR1)
+                  CALL OMSTI (NUMBR)
+                  SGRP = 44
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                ELSE
+                  IF (OPENFG .EQ. 0) THEN
+C                   error - not expecting a delimiter because
+C                   there is no previous ftable heading
+                    CHSTR(1:6)= UCIBF(7:12)
+                    CALL OMSTC (I6,CHSTR1)
+                    CALL OMSTI (NUMBR)
+                    SGRP = 45
+                    CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                         ECOUNT)
+                  ELSE
+                    OPENNO= TABINX(OPENFG,1)
+                    IF (OPENNO .NE. NUMBR) THEN
+C                     error - delimiter doesn't match heading
+                      CHSTR(1:6)= UCIBF(7:12)
+                      CALL OMSTC (I6,CHSTR1)
+                      CALL OMSTI (NUMBR)
+                      CHSTR(1:6)= KWDLIB
+                      CALL OMSTC (I6,CHSTR1)
+                      CALL OMSTI (OPENNO)
+                      SGRP = 46
+                      CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                           ECOUNT)
+                    ELSE
+C                     ok - record the delimiter
+                      TABINX(OPENFG,3)= KEY
+                    END IF
+                  END IF
+                END IF
+C               ftable, whichever it was, will be marked "closed"
+                OPENFG= 0
+              ELSE
+C               not an ftable heading or delimiter - keep going
+C
+              END IF
+            END IF
+          END IF
+        IF (KEY .NE. KEYND) GO TO 30
+C       end whiledo
+C
+        NFTABS= TABNO
+        IF (OPENFG .GT. 0) THEN
+C         error - end of block encountered before end of last ftable
+          CHSTR(1:6)= KWDLIB
+          CALL OMSTC (I6,CHSTR1)
+          CALL OMSTI (TABINX(OPENFG,1))
+          SGRP = 47
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
+C
+        IF (OUTLEV .GT. 3) THEN
+          IF (NFTABS .GT. 0) THEN
+C           write out contents of table index
+C           heading
+            WRITE (MESSU,2100) KWDLIB
+            WRITE (MESSU,2110)
+            DO 230 N= 1,NFTABS
+              WRITE (MESSU,2120)  N, TABINX(N,1), (TABINX(N,J)-1,J=2,3)
+ 230        CONTINUE
+          ELSE
+            WRITE (MESSU,2130) KWDLIB
+          END IF
+        END IF
+C
+        IF (OUTLEV.GT.0) THEN
+C         finished message
+          WRITE (MESSU,2140)
+        END IF
+      ELSE
+C       block was not supplied
+        NFTABS= 0
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+

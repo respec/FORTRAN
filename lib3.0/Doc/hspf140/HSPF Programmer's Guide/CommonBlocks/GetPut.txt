@@ -1,0 +1,43 @@
+Version GETCOM/PUTCOM of Common Block SCRTCH used by modules TSGET and TSPUT
+
+1 GETCOM/PUTCOM
+
+ 2 INSTR(200)        I4   See Version INTERP4 for documentation
+
+ 2 EXTRA                  Items needed in TSGET but not included
+                          elsewhere.
+  3 TSGETF/TSPUTF    I4   Unit number for the instruction file
+  3 SEQFL            I4   Unit number of the sequential file
+  3 XOLD(20)         R4   Previous values of time frame from TSS
+  3 XNEW(20)         R4   Current value of time frame from TSS   
+  3 XVAR(20)         R4   Current value of time frame being  
+                          assembled for writing to the INPAD   
+  3 XZERO(20)        R4   First time frame from a linear   
+                          variation compressed TSB   
+  3 XLAST(20)        R4   Last time frame from a linear  
+                          variation compressed TSB   
+  3 TXOLD            I4   Time for values stored in XOLD   
+  3 TXNEW            I4   Time for values stored in XNEW   
+  3 TXVAR            I4   Time for values stored in XVAR   
+  3 RRATIO           R4   Ratio of time steps for agg/disagg   
+  3 RATIO            I4   Integer form of RRATIO   
+  3 SUITFG           I4   Suitability flag. ON if there are  
+                          no undefined values placed on the  
+                          INPAD. Undefined values in the   
+                          initial position of rows containing  
+                          mean value data do not turn off  
+                          SUITFG.  
+  3 TESTFG           I4   Test flag for debugging printout   
+  3 UFLAG            I4   ON if frame is undefined   
+  3 ZFLAG            I4   ON if frame is zero  
+  3 UNDEF            R4   Value of the undefined value   
+ 
+ 2 ERRCOM                 Data used for error handling   
+  3 MSGFL            I4   Unit number for reading error message from
+                          message.wdm
+  3 MESSU            I4   Unit number for writing messages to the user   
+  3 KNT              I4   Error count
+ 
+ 2 TSSBUF (without TBUFF) See Version INTERP4 for documentation.  
+ 
+ 2 TBUFF(545)        R4   See Version INTERP3 for documentation. 

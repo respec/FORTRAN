@@ -1,0 +1,63 @@
+<table width="100%" border="1">
+<caption>Version CMPAD of Common Block SCRTCH</caption>
+<colgroup align='center'>
+<colgroup align='left'>
+<colgroup align='center'>
+<colgroup align='left'>
+<thead><th>Address<th>Name<th>Type<th>Definition</thead>
+<tbody>
+<tr><td>1<td>PAD(256000)<td>R4<td>Name for entire Common block (real)</tr>
+<tr><td>1<td>IPAD(256000)<td>I4<td>Name for entire Common block (integer)</tr>
+<tr><td>1<td>DPPAD(128000)<td>R8<td>Name for entire Common block (double precision)</tr>
+<tr><td>1<td>ASVEC(*)<td>I4<td>Marker for beginning of SCRTCH for all versions</tr>
+<tr>&nbsp;<td></tr>
+</table>
+
+<p>Variables in this Common Block allow access to all of SCRTCH.
+<p>Referenced by 
+   <a href="../CodeGroups/HOSUPER/OSUPER">OSUPER</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSGET">TSGET</a>,
+   <a href="../CodeGroups/HRUNTSGP/TSPUT">TSPUT</a>,
+   <a href="../CodeGroups/HTSINSI/ALLOC">ALLOC</a>,
+   <a href="../CodeGroups/HRUNTSGQ/SEQINP">SEQINP</a>,
+   <a href="../CodeGroups/HRUNTSGT/GETTSS">GETTSS</a>,
+   <a href="../CodeGroups/HRUNTSGW/GETWDM">GETWDM</a>,
+   <a href="../CodeGroups/HRUNTSPT/PUTTSS">PUTTSS</a>,
+   <a href="../CodeGroups/HRUNTSPW/PUTWDM">PUTWDM</a>,
+   <a href="../CodeGroups/HRINTS/NETBLK">NETBLK</a>,
+   <a href="../CodeGroups/HRINTS/SCHBLK">SCHBLK</a>,
+   <a href="../CodeGroups/HRINTS/SRCBLK">SRCBLK</a>
+<p>Code
+<pre>
+C     from CMPAD.INC
+C     scratch pad is the entire common block
+      INTEGER   SCRSIZ,SCRSZ2
+      PARAMETER (SCRSIZ=518000)
+      PARAMETER (SCRSZ2=259000)
+C
+      INTEGER IPAD(SCRSIZ)
+      REAL    PAD(SCRSIZ)
+      DOUBLE PRECISION DPPAD(SCRSZ2)
+C
+      EQUIVALENCE (ASVEC(1),IPAD(1)),(ASVEC(1),PAD(1)),
+     1            (ASVEC(1),DPPAD(1))
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

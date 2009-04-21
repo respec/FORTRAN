@@ -1,0 +1,259 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTS">HRINTS</a>
+<p>Called By
+   <a href="OPNTS">OPNTS</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="../HPRBUT/OMSG">OMSG</a>,
+   <a href="../HPRBUT/OMSTI">OMSTI</a>,
+   <a href="../HPRBUT/OMSTC">OMSTC</a>,
+   <a href="IVALUE">IVALUE</a>,
+   WMSGTT
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   MEMTS
+     I                  (MESSU,MSGFL,SCLU,SGRP,MEMSB,OPTYP,OPTNO,GRPN,
+     I                   EUNITS,UUNITS,MAXOSV,OSV,RWFG,MAXTTB,
+     M                   NTS,ECOUNT,
+     O                   TABL,TABLR)
+C
+C     + + + PURPOSE + + +
+C     Process a single member (n)
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     ECOUNT,EUNITS,MAXTTB,MAXOSV,
+     $            MSGFL,SCLU,MEMSB(2),MESSU,SGRP,NTS,OPTNO,
+     $            OSV(MAXOSV),RWFG,TABL(10,MAXTTB),UUNITS
+      REAL        TABLR(10,MAXTTB)
+      CHARACTER*6 GRPN,OPTYP
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of message file
+C     SCLU   - current cluster in message file
+C     SGRP   - current group in message file
+C     MEMSB  - ???
+C     OPTYP  - operation type
+C     OPTNO  - ???
+C     GRPN   - ???
+C     EUNITS - ???
+C     UUNITS - system of units   1-english, 2-metric
+C     OSV    - ???
+C     RWFG   - read write flag, 1-write, 2-read
+C     NTS    - ???
+C     ECOUNT - count(s) of specific errors
+C     TABL   - ???
+C     TABLR  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      ERRFG,J,MAXSB1,MAXSB2,MDIM1,MIO,MKIND,MSECT,
+     #             OSVBAS,OSVOFF,PROCFG,SPTRN,SUB1,SUB1HI,SUB1LO,SUB2,
+     #             SUB2HI,SUB2LO,K1,OFONFG,PROARR(3,2,2),L,K,CONT,
+     #             INITFG,CLEN,CLU,GRP,I6
+      REAL         ADD,LTVAL(2,2,2),MULT
+      CHARACTER*1  INBUF1(80)
+      CHARACTER*6  CHSTR,MEMN
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (INBUF1,INBUFF)
+      CHARACTER*80 INBUFF
+      EQUIVALENCE (CHSTR,CHSTR1)
+      CHARACTER*1  CHSTR1(6)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      IVALUE
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     OMSG,OMSTI,OMSTC,IVALUE,WMSGTT
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA         PROARR/0,1,0,3,0,1,0,0,0,1,1,2/
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (A6,I3,3X,2I6,4I2,I5,I6,13X,2(F4.0,F8.0))
+ 1005 FORMAT (56X,2(F4.0,F8.0))
+ 1010 FORMAT (A4,A2)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I6= 6
+C
+C     get info about this member from message file
+      INITFG= 1
+      CLEN= 80
+      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M             CLEN,
+     O             INBUF1,CONT)
+      READ (INBUFF,1000) MEMN,MDIM1,MAXSB1,MAXSB2,MKIND,SPTRN,MSECT,
+     #                   MIO,OSVBAS,OSVOFF,((LTVAL(K,L,1),K=1,2),L=1,2)
+      INITFG= 0
+      CLEN= 80
+      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M             CLEN,
+     O             INBUF1,CONT)
+      READ (INBUFF,1005) ((LTVAL(K,L,2),K=1,2),L=1,2)
+C
+C     section off(1) or on(2)
+C
+      IF (MSECT .GT. 0) THEN
+C       timseries associated with module section,
+C       section may not be active - check active sections vector
+        OFONFG= OSV(MSECT)+ 1
+      ELSE
+C       section always on
+        OFONFG= 2
+      END IF
+C
+      K1= MIO+ 1
+      PROCFG= PROARR(K1,OFONFG,RWFG)
+C
+      IF (PROCFG .EQ. 0) THEN
+C       dont process, not active
+      ELSE IF (PROCFG .EQ. 1) THEN
+C       check subscripts to make sure this member is used
+        ERRFG= 0
+C       some data which have come from message file may be pointers to
+C       osv locations containing the actual information - process these
+C       max values for subscripts
+        MAXSB1= IVALUE (MAXSB1,MAXOSV,OSV)
+        MAXSB2= IVALUE (MAXSB2,MAXOSV,OSV)
+C
+        IF ( (MAXSB1 .LE. 0) .OR. (MAXSB2 .LE. 0) ) THEN
+C         dont process, maximum subscript is zero - treat like procfg=0
+        ELSE
+C         process the member, assume no problem with subscripts
+C
+          IF ( (MEMSB(2) .LT. 0) .OR. (MEMSB(2) .GT. MAXSB2) ) THEN
+C           error - subscript out of range
+            ERRFG= 1
+            CHSTR= OPTYP
+            CALL OMSTC (I6,CHSTR1)
+            CALL OMSTI (OPTNO)
+            CHSTR= GRPN
+            CALL OMSTC (I6,CHSTR1)
+            CHSTR= MEMN
+            CALL OMSTC (I6,CHSTR1)
+            CALL OMSTI (MEMSB(2))
+            CLU= 215
+            GRP= 115
+            CALL OMSG (MESSU,MSGFL,CLU,GRP,
+     M                 ECOUNT)
+            MEMSB(2)= 1
+          END IF
+C
+          IF (MEMSB(2) .EQ. 0) THEN
+C           whole possible range
+            SUB2LO= 1
+            SUB2HI= MAXSB2
+          ELSE
+C           just specified value
+            SUB2LO= MEMSB(2)
+            SUB2HI= MEMSB(2)
+          END IF
+C
+C         look at first subscript
+          IF ( (MEMSB(1) .LT. 0) .OR. (MEMSB(1) .GT. MAXSB1) ) THEN
+C           error - subscript out of range
+            ERRFG= 1
+            CHSTR= OPTYP
+            CALL OMSTC (I6,CHSTR1)
+            CALL OMSTI (OPTNO)
+            CHSTR= GRPN
+            CALL OMSTC (I6,CHSTR1)
+            CHSTR= MEMN
+            CALL OMSTC (I6,CHSTR1)
+            CALL OMSTI (MEMSB(1))
+            CLU= 215
+            GRP= 115
+            CALL OMSG (MESSU,MSGFL,CLU,GRP,
+     M                 ECOUNT)
+            MEMSB(1)= 1
+          ELSE IF (MEMSB(1) .EQ. 0) THEN
+C           whole possible range
+            SUB1LO= 1
+            SUB1HI= MAXSB1
+          ELSE
+C           just specified value
+            SUB1LO= MEMSB(1)
+            SUB1HI= MEMSB(1)
+          END IF
+C
+          IF (ERRFG .EQ. 0) THEN
+C           unit system conversion constants
+            IF ( (EUNITS .EQ. 1) .OR. (EUNITS .EQ. 2) ) THEN
+              ADD= LTVAL(1,EUNITS,UUNITS)
+              MULT= LTVAL(2,EUNITS,UUNITS)
+            ELSE
+              ADD= 0.
+              MULT= 1.
+            END IF
+C           built output table
+            DO 130 SUB2= SUB2LO,SUB2HI
+              DO 120 SUB1= SUB1LO,SUB1HI
+C               enter this time series in the results table
+                NTS= NTS+ 1
+C               member name
+                READ (MEMN,1010) (TABL(J,NTS),J=1,2)
+C               subscripts
+                TABL(3,NTS)= SUB1
+                TABL(4,NTS)= SUB2
+C
+C               osv offset
+                TABL(5,NTS)= OSVBAS+ OSVOFF+ (SUB2- 1)*MDIM1+ SUB1- 1
+                TABL(6,NTS)= MKIND
+                TABL(7,NTS)= SPTRN
+                TABLR(8,NTS)= ADD
+                TABLR(9,NTS)= MULT
+ 120          CONTINUE
+ 130        CONTINUE
+          END IF
+        END IF
+      ELSE IF (PROCFG .EQ. 2) THEN
+C       trying to output an input only timeseries
+        ERRFG= 1
+        CHSTR= OPTYP
+        CALL OMSTC (I6,CHSTR1)
+        CALL OMSTI (OPTNO)
+        CHSTR= GRPN
+        CALL OMSTC (I6,CHSTR1)
+        CHSTR= MEMN
+        CALL OMSTC (I6,CHSTR1)
+        CLU= 215
+        GRP= 96
+        CALL OMSG (MESSU,MSGFL,CLU,GRP,
+     M             ECOUNT)
+      ELSE IF (PROCFG .EQ. 3) THEN
+C       trying to input an output only timeseries
+        ERRFG= 1
+        CHSTR= OPTYP
+        CALL OMSTC (I6,CHSTR1)
+        CALL OMSTI (OPTNO)
+        CHSTR= GRPN
+        CALL OMSTC (I6,CHSTR1)
+        CHSTR= MEMN
+        CALL OMSTC (I6,CHSTR1)
+        CLU= 215
+        GRP= 97
+        CALL OMSG (MESSU,MSGFL,CLU,GRP,
+     M             ECOUNT)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

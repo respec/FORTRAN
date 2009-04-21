@@ -1,0 +1,76 @@
+Purpose - Linear transformation of input variable using multiplication factor(a) and shift value(b)
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSUT">HRUNTSUT</a>
+<p>Called By
+   <a href="../HRUNTSGQ/SEQINP">SEQINP</a>,
+   <a href="../HRUNTSGT/GETTSS">GETTSS</a>,
+   <a href="../HRUNTSGW/GETWDM">GETWDM</a>,
+   <a href="../HRUNTSPT/PUTTSS">PUTTSS</a>,
+   <a href="../HRUNTSPW/PUTWDM">PUTWDM</a>
+<p>Common Blocks <i>none</i>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C     4.1.04
+C
+      SUBROUTINE LTRAN
+     I                (N,A,B,XVAR)
+C
+C     + + + PURPOSE + + +
+C     Linear transformation of xvar using a and b
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   N
+      REAL      A(N),B(N),XVAR(N)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     N      - ???
+C     A      - multiplying factor for the linear transform A*X + B
+C     B      - shift value for the linear transform
+C     XVAR   - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+      REAL      FAC
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  ABS
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      DO 30 I=1,N
+        FAC=A(I)
+C       if (fac .ne. 1.0) go to 10
+        IF ((ABS(FAC-1.0)).GT.1.0E-5) GO TO 10
+          XVAR(I)= XVAR(I) +B(I)
+          GO TO 20
+   10   CONTINUE
+          XVAR(I)=FAC*XVAR(I) +B(I)
+   20   CONTINUE
+   30 CONTINUE
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
