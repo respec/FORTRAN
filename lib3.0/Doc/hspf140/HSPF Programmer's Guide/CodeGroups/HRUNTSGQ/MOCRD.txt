@@ -1,0 +1,175 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRUNTSGQ">HRUNTSGQ</a>
+<p>Called By
+
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C     4.1.2.1.4
+C
+      SUBROUTINE MOCRD
+     I                 (ENDMIN,MAXCNT,MIN,TLOC)
+C
+C     + + + PURPOSE + + +
+C     Read a card with hydrocomp monthly format and calculate the
+C     minute at start and end of card.  return the card values in
+C     array crdval and number of values, maxcnt.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     ENDMIN,MAXCNT,MIN
+      REAL        TLOC(12)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     ENDMIN - ???
+C     MAXCNT - ???
+C     MIN    - ???
+C     TLOC   - ???
+C
+C     + + + COMMON BLOCKS- SCRTCH, VERSION GETCOM + + +
+      INCLUDE     'ctsin.inc'
+      INCLUDE     'ctsex.inc'
+      INCLUDE     'ctser.inc'
+      INCLUDE     'ctsbu.inc'
+      INCLUDE     'ctsbx.inc'
+      INCLUDE     'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     CRDDAT(3),CRDNUM,CRDYR,DATLEN,DY,EFLAG,I,LPYRF1,
+     $            MAXCRD,SCLU,NUMVAL
+      REAL        CRDVAL(366)
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CRDVAL(1),TBUFF(1))
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  SEQRD,CHKSEQ,TDIF,LPYEAR,MOVAL
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (80A1)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (/,' ENTERING MOCRD')
+ 2020 FORMAT (3X,'MIN=',I12,3X,'ENDMIN=',I12,3X,
+     $         'MAXCNT=',I6,3X,'MONTH CRD VALS',3(E16.7,3X),
+     $         (/,3X,6(E16.7,3X)))
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (TESTFG .GE.1) WRITE(MESSU,2000)
+C
+C     Fmtcls= 4
+C
+      SCLU = 232
+      DATLEN=1
+      MAXCRD=1
+      NUMVAL= 12
+C
+C     Crdnum set to 1 because crdnum not read
+      CRDNUM=1
+C     Format in instruction file
+C
+C     Place the new card values in a temporary location, tloc
+      EFLAG=0
+ 10   CONTINUE
+        IF (ENDF.EQ.1) GO TO 500
+C
+C       read current line
+        CALL SEQRD (PVAR,FILE,DATLEN,NUMVAL,SCLU,MESSU,MSGFL,
+     M              KNT,ENDF,
+     O              CRDDAT,CRDNUM,TLOC)
+        IF (ENDF.EQ.1) GO TO 500
+C
+C       check current line for validity
+        CALL CHKSEQ (CRDSEQ,CRDNO,CRDNUM,OLDOFF,DATLEN,
+     I               MAXCRD,BEGYR,FILE,MSGFL,MESSU,YEAR,
+     M               KNT,EFLAG,CRDDAT)
+        IF(EFLAG.EQ.1) GO TO 10
+C
+C     Year is year at beginning of inpad
+C     Crdyr is year on card
+      CRDYR= CRDDAT(1)
+C
+C     Whiledo crdyr< year then
+ 50   CONTINUE
+      IF (CRDYR .GE. YEAR) GO TO 100
+        EFLAG=0
+ 60     CONTINUE
+          IF (ENDF.EQ.1) GO TO 500
+C
+C         read current line
+          CALL SEQRD (PVAR,FILE,DATLEN,NUMVAL,SCLU,MESSU,MSGFL,
+     M                KNT,ENDF,
+     O                CRDDAT,CRDNUM,TLOC)
+          IF (ENDF.EQ.1) GO TO 500
+C
+C         check current line for validity
+          CALL CHKSEQ (CRDSEQ,CRDNO,CRDNUM,OLDOFF,DATLEN,
+     I                 MAXCRD,BEGYR,FILE,MSGFL,MESSU,YEAR,
+     M                 KNT,EFLAG,CRDDAT)
+          IF(EFLAG.EQ.1) GO TO 60
+        CRDYR=CRDDAT(1)
+        GO TO 50
+C     Enddo
+ 100  CONTINUE
+C
+C     Calculate first minute on card, min, relative to year of
+C     Start of run
+C
+        MO= 1
+        DY= 2
+        CALL TDIF (BEGYR,CRDSEQ(1),MO,DY,MIN)
+C
+C       calculate endmin on card
+C       set leap year flag for year on card
+        CALL LPYEAR (CRDYR,      LPYRF1)
+C
+        IF (LPYRF1.NE. 1) GO TO 180
+C         525600 = 365*1440
+          ENDMIN = MIN+ 525600
+C
+C         maximum number of values allowed in crdval
+C         each month is expanded to daily values
+          MAXCNT= 366
+C
+C         place daily values in crdval
+          CALL MOVAL (LPYRF1,TLOC)
+          GO TO 200
+C
+ 180    CONTINUE
+C         524160 = 364*1440
+          ENDMIN = MIN+ 524160
+C
+          MAXCNT = 365
+C
+C         place daily values in crdval
+          CALL MOVAL (LPYRF1,TLOC)
+C
+ 200    CONTINUE
+        GO TO 520
+C
+ 500  CONTINUE
+C     End of file
+C     Set min,endmin, and crdyr to larger than ever used
+      MIN   = 60000000
+      ENDMIN= 60000000
+      CRDYR = 3000
+      ENDF  = 1
+C
+ 520  CONTINUE
+C
+      IF (TESTFG .GE. 2) WRITE (MESSU,2020) MIN,ENDMIN,MAXCNT,
+     $        (TLOC(I),I= 1,12)
+C
+      RETURN
+      END
+</pre>
+

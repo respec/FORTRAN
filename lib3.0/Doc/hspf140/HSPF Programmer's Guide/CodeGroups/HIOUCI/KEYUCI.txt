@@ -1,0 +1,232 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI">HIOUCI</a>
+<p>Called By
+   <a href="../HSPF/HSPF">HSPF</a>,
+   <a href="../HSPF/OPNBLK">OPNBLK</a>,
+   <a href="../HEXTUTIL/UCIGET">UCIGET</a>,
+   <a href="../HEXTUTIL/UCIGEN">UCIGEN</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM">CUCIM</a>
+<p>Calls  
+   OMSG,
+   OMSTC,
+   OMSTI,
+   GETSE,
+   GETEND,
+   ZIPC, 
+   <a href="GETUCI">GETUCI</a>,
+   CHKSTR,
+   PUTKWD,
+   CHRCHR
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   KEYUCI
+     I                   (NKWD,LKWD,PKWD,IKWD,IRPT,
+     I                    KWDLIB,KWDDIM,KWDTYP,
+     M                    ECNT,
+     O                    KCNT)
+C
+C     + + + PURPOSE + + +
+C     Look for keywords in a UCI file, save results with uci
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     NKWD,LKWD,PKWD,IKWD,IRPT,KWDDIM(NKWD),KWDTYP(NKWD),
+     $            ECNT,KCNT,RETCOD
+      CHARACTER*1 KWDLIB(*)
+C
+C     + + + ARGUEMENT DEFINITIONS + + +
+C     NKWD   - number of keywords to look for
+C     LKWD   - length of keywords
+C     PKWD   - offset to position of keyword on input
+C     IKWD   - type of base keyword
+C     IRPT   - which start at which copy of keyword
+C     KWDLIB - keyword values
+C     KWDDIM - max number of keyword occurences allowed
+C     KWDTYP - type of each keyword
+C     ECNT   - errors found count
+C     KCNT   - keyword found count
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      NREC,LPOS,RPOS,SCLU,SGRP,LOUT,LMOV,I,EREC,
+     #             OPNREC,OPNKWD,KWDNO,ENDFLG,I4,I1,I0
+      CHARACTER*80 UCIBUF
+      CHARACTER*1  TXT1(20),COUT(12),CKEY(12),BLNK(1),CEND1(4)
+C
+C     + + + EQUIVALENCE + + +
+      EQUIVALENCE (CEND1,CEND)
+      CHARACTER*4  CEND
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     OMSG,OMSTC,OMSTI
+      EXTERNAL     GETSE,GETEND,ZIPC,GETUCI,CHKSTR,PUTKWD,CHRCHR
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA BLNK/' '/
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT (80A1)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2010 FORMAT (' FOUND ',A)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     end keyword
+      CALL GETEND(CEND)
+C     no keywords found yet
+      KCNT= 0
+C
+      I0= 0
+      I1= 1
+      I4= 4
+C
+      IF (IKWD .EQ. 0) THEN
+C       start looking at first record
+        NREC= 1
+        EREC= 0
+      ELSE
+C       start looking where base is
+        CALL GETSE(IKWD,IRPT,
+     O             NREC,EREC)
+      END IF
+C
+      LOUT  = 12
+      CALL ZIPC (LOUT,BLNK,COUT)
+      CALL ZIPC (LOUT,BLNK,CKEY)
+      IF (LKWD .LT. LOUT) THEN
+C       just update whats needed
+        LMOV = LKWD
+      ELSE
+C       truncate
+        LMOV = LOUT
+      END IF
+C
+C     cluster for problem messages
+      SCLU  = 210
+C     no keyword open
+      OPNKWD= 0
+C     where to look for keyword in uci
+      LPOS  = PKWD + 1
+      RPOS  = PKWD + LKWD
+C
+ 10   CONTINUE
+C       get next non comment or blank record
+        CALL <a href="GETUCI">GETUCI</a> (I0,
+     M               NREC,
+     O               UCIBUF)
+        READ (UCIBUF(LPOS:RPOS),1000) (TXT1(I),I=1,LKWD)
+C       see if this a wanted keyword
+        KWDNO= CHKSTR(LKWD,NKWD,TXT1,KWDLIB)
+C
+        IF (KWDNO .GT. 0) THEN
+C         recognized, save the name
+          I = (KWDNO-1)* LKWD + 1
+          CALL CHRCHR(LMOV,KWDLIB(I),CKEY)
+          IF (UMESSU .GT. 0) THEN
+            IF (IKWD.LT.100 .OR. UOUTLV.GT.4) THEN
+C             echo it
+              WRITE (UMESSU,2010) UCIBUF(LPOS:RPOS)
+            END IF
+          END IF
+          IF (OPNKWD .GT. 0) THEN
+C           error - two data set headings found without an end between
+            CALL OMSTC(LOUT,CKEY)
+            I = (OPNKWD-1)* LKWD + 1
+            CALL CHRCHR(LMOV,KWDLIB(I),COUT)
+            CALL OMSTC(LOUT,COUT)
+            SGRP= 2
+            CALL OMSG (UMESSU,UMSGFL,SCLU,SGRP,
+     M                 ECNT)
+          END IF
+C         ok - remember the key to this line
+          OPNKWD= KWDNO
+          OPNREC= NREC
+        ELSE
+C         unrecognized, check for end
+          ENDFLG = CHKSTR(I4,I1,TXT1,CEND1)
+          IF (ENDFLG .EQ. 1) THEN
+C           found an end delimiter
+            READ(UCIBUF(LPOS+I4:RPOS+I4),1000) (TXT1(I),I=1,LKWD)
+            KWDNO= CHKSTR(LKWD,NKWD,TXT1,KWDLIB)
+            IF (KWDNO .GT. 0) THEN
+C             recognized
+              IF (UMESSU .GT. 0) THEN
+                IF (IKWD.LT.100 .OR. UOUTLV.GT.4) THEN
+C                 echo it
+                  WRITE (UMESSU,2010) UCIBUF(LPOS:RPOS+4)
+                END IF
+              END IF
+C             check if delimiter matches the heading
+              IF (OPNKWD .EQ. 0) THEN
+C               there was no preceding keyword
+                I = (KWDNO-1)* LKWD + 1
+                CALL CHRCHR(LMOV,KWDLIB(I),COUT)
+                CALL OMSTC(LOUT,COUT)
+                SGRP= 5
+                CALL OMSG (UMESSU,UMSGFL,SCLU,SGRP,
+     M                     ECNT)
+              ELSE IF (KWDNO .NE. OPNKWD) THEN
+C               end doesn't match heading
+                I = (KWDNO-1)* LKWD + 1
+                CALL CHRCHR(LMOV,KWDLIB(I),COUT)
+                CALL OMSTC(LOUT,COUT)
+                CALL OMSTC(LOUT,CKEY)
+                SGRP= 6
+                CALL OMSG (UMESSU,UMSGFL,SCLU,SGRP,
+     M                     ECNT)
+              ELSE
+C               complete
+                CALL PUTKWD (KWDDIM(KWDNO),KWDTYP(KWDNO),
+     I                       CKEY,OPNREC,NREC,
+     O                       RETCOD)
+                IF (RETCOD .NE. 0) THEN
+C                 too many occurances
+                  I = (KWDNO-1)* LKWD + 1
+                  CALL CHRCHR(LMOV,KWDLIB(I),COUT)
+                  CALL OMSTC(LOUT,COUT)
+                  CALL OMSTI(KWDDIM(KWDNO))
+                  SGRP= 3
+                  CALL OMSG (UMESSU,UMSGFL,SCLU,SGRP,
+     M                       ECNT)
+                END IF
+                OPNKWD= 0
+                KCNT  = KCNT+ 1
+              END IF
+            END IF
+          ELSE
+C           line is neither a data set heading or delimiter
+          END IF
+        END IF
+      IF (NREC .NE. EREC) GO TO 10
+C
+      IF (OPNKWD .GT. 0) THEN
+C       end of block was encountered before the end keyword was found
+        CALL OMSTC(LOUT,CKEY)
+        SGRP= 7
+        CALL OMSG (UMESSU,UMSGFL,SCLU,SGRP,
+     M             ECNT)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+

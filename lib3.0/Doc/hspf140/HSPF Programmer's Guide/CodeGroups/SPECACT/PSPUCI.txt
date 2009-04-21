@@ -1,0 +1,279 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+   <a href="PSPECL">PSPECL</a>
+<p>Common Blocks 
+ 
+<p>Calls
+   ZIPI,
+   GETUCI,
+   PSPUVQ,
+   PSPCON,
+   PSPDIS,
+   PSPUVN,
+   PSPACT,
+   OMSG,
+   CKNBLV,
+   PSPIPS,
+   PSPHDR,
+   HDMES3
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   PSPUCI
+     I                    (MESSU,MSGFL,SCLU,KEYST,KEYND,LOCDIR,SDATIM,
+     I                     EDATIM,NDAMON,MXSPBF,MXVACC,VACFST,VACCNT,
+     I                     VRFADD,VACADD,LLNPSP,SPOUT,
+     M                     RUNWID,CONDFG,
+     O                     SPOS,SPBF,SPBFR,SPBDAT)
+C
+C     + + + PURPOSE + + +
+C     Read and process Special Actions lines.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    MESSU,MSGFL,SCLU,KEYST,KEYND,LOCDIR,SDATIM(5),
+     $           EDATIM(5),NDAMON(12),MXSPBF,MXVACC,VACFST(10),
+     $           VACCNT(10),VRFADD(MXVACC),VACADD(MXVACC),LLNPSP,SPOUT,
+     $           RUNWID,CONDFG,SPOS,SPBF(LLNPSP,MXSPBF),SPBDAT(MXSPBF)
+      REAL       SPBFR(LLNPSP,MXSPBF)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - unit number to write messages on
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
+C     KEYST  - starting record number
+C     KEYND  - ending record number
+C     LOCDIR - specs method(s) available for spec. actions input
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     NDAMON - no. of days in each month of calendar year
+C     MXSPBF - max size of special actions buffer
+C     MXVACC - maximum number of variable accumulator references
+C     VACFST - first variable accumulator reference for each operation type
+C     VACCNT - number of variable accumulator references for each operation type
+C     VRFADD - variable accumulator reference addresses
+C     VACADD - variable accumulator addresses
+C     LLNPSP - local length of special action in buffer
+C     SPOUT  - runtime Special Action output level
+C     RUNWID - maximum run span width allowed by user-defined variable
+C              quantities - 0 if no restrictions
+C     CONDFG - flag indicating whether conditinal special actions are
+C              used - 1 if yes, 2 if no
+C     SPOS   - position in special actions instr buffer
+C     SPBF   - special action instruction buffer (integer version)
+C     SPBFR  - special action instruction buffer (real version)
+C     SPBDAT - special action instruction date
+C
+C     + + + COMMON BLOCKS- SPEC + + +
+      INCLUDE     'cspec.inc'
+C     special action distributions
+      INCLUDE     'pspdst.inc'
+      INCLUDE     'cspdst.inc'
+C     special action file in memory
+      INCLUDE     'pspins.inc'
+      INCLUDE     'cspins.inc'
+C     user defined variable names
+      INCLUDE     'pspuvr.inc'
+      INCLUDE     'cspuvr.inc'
+C     special action conditions
+      INCLUDE     'pspcnd.inc'
+      INCLUDE     'cspcnd.inc'
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
+C
+C     + + + PARAMETERS + + +
+      INTEGER      MXBKLV
+      PARAMETER   (MXBKLV=25)
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      CURBLK,CURLVL,PREBLK(MXBKLV),ELSEFG(MXBKLV),I0,DELT,
+     $             KEY,I,STWORD,SGRP,FIRSTH,NUMHDR,ALLHDR,ALLFTR,LREPT,
+     $             IOPT,DCNT
+      CHARACTER*80 UCIBUF
+C
+C     + + + FUNCTIONS + + +
+      INTEGER     CKNBLV
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    ZIPI,GETUCI,PSPUVQ,PSPCON,PSPDIS,PSPUVN,PSPACT,OMSG
+      EXTERNAL    CKNBLV,PSPIPS,PSPHDR,HDMES3
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     start with no actions stored
+      SPOS= 0
+      FIRSTH= 0
+      NUMHDR= 0
+      ALLHDR= 0
+      ALLFTR= 0
+      LREPT= 1
+C
+C     no conditions stored
+      NCOND= 0
+      NCHAIN= 0
+      NBLOCK= 0
+      CALL ZIPI (MXSPCH,I0,CHNUVQ)
+C
+C     initialize logical blocks
+      CURBLK= 0
+      CURLVL= 0
+      CALL ZIPI (MXBKLV,I0,PREBLK)
+      CALL ZIPI (MXBKLV,I0,ELSEFG)
+C
+C     no distributions stored
+      DCNT= 0
+      CALL ZIPI (MXSPDS,I0,SPDCNT)
+C
+C     no user defined special actions
+      SPUCNT= 0
+C     info about first referenced variable starts at first position
+      SPUPOS(1)= 1
+C
+C     no user defined variable quantities
+      NVQD= 0
+      CALL ZIPI (MXSPVQ,I0,
+     O           UVQOPX)
+C
+C     set run time step
+      DELT= GRPTAB(3,1)
+C
+C     where to start
+      KEY= KEYST
+C     output header position
+      IOPT = 4
+C
+C     begin whiledo to read lines
+ 10   CONTINUE
+C
+C       read a uci entry
+        CALL GETUCI (I0,
+     M               KEY,
+     O               UCIBUF)
+        IF (KEY .NE. KEYND) THEN
+C         this is not the last line in block
+          IF (SPOUT .GE. 10) THEN
+C           echo key
+            WRITE (MESSU,*)
+              WRITE (MESSU,*) 'read UCI:',KEY
+          END IF
+C
+C         find first word in case line is a free-form conditional line
+          I= 80
+          STWORD= CKNBLV (I,UCIBUF)
+          IF (STWORD .LT. 1) THEN
+C           set dummy stword on blank line
+            STWORD= 1
+          END IF
+C
+          IF (UCIBUF(STWORD:STWORD+2) .EQ. '@@@') THEN
+C           special action echo file header for next action line
+            CALL PSPHDR (UCIBUF,
+     M                   FIRSTH,NUMHDR,ALLHDR)
+C
+          ELSE IF (UCIBUF(3:8) .EQ. 'UVQUAN') THEN
+C           user defined variable quantity name
+            CALL HDMES3 (IOPT,'UVQUAN')
+            CALL PSPUVQ (UCIBUF,MESSU,OUTLEV,MSGFL,SCLU,LOCDIR,
+     I                   DELT,MAXOPN,OPNTAB,NOPNS,SPOUT,OPTYL1,
+     M                   ECOUNT,RUNWID)
+C
+          ELSE IF ( (UCIBUF(STWORD:STWORD+2) .EQ. 'IF ') .OR.
+     $              (UCIBUF(STWORD:STWORD+3) .EQ. 'ELSE') .OR.
+     $              (UCIBUF(STWORD:STWORD+5) .EQ. 'END IF') ) THEN
+C           conditional
+            CALL HDMES3 (IOPT,'CONDITIONAL')
+            CALL PSPCON (OUTLEV,MESSU,MSGFL,SCLU,MXBKLV,STWORD,LREPT,
+     I                   LLNPSP,MXSPBF,SPOS,
+     M                   SPBF,ECOUNT,UCIBUF,KEY,CURBLK,CURLVL,PREBLK,
+     M                   ELSEFG,ALLFTR,RUNWID)
+            CONDFG= 1
+C
+          ELSE IF (UCIBUF(3:8) .EQ. 'DISTRB') THEN
+C           distribute action definition
+            CALL HDMES3 (IOPT,'DISTRB')
+            CALL PSPDIS (UCIBUF,MESSU,MSGFL,SCLU,MXSPDS,OUTLEV,SPOUT,
+     M                   DCNT,SPDCNT,SPDTST,SPDTCD,SPDDFG,SPDFRC,
+     M                   ECOUNT)
+C
+          ELSE IF (UCIBUF(3:8) .EQ. 'UVNAME') THEN
+C           user defined action name
+            CALL HDMES3 (IOPT,'UVNAME')
+            CALL PSPUVN (MESSU,MSGFL,SCLU,OUTLEV,LOCDIR,SPOUT,
+     M                   ECOUNT,UCIBUF,KEY)
+C
+          ELSE
+C           old style action
+            CALL HDMES3 (IOPT,'CLASSIC')
+            CALL PSPACT (UCIBUF,MESSU,MSGFL,SCLU,LOCDIR,SDATIM,
+     I                   EDATIM,NDAMON,MXSPBF,MXSPDS,SPDCNT,DELT,
+     I                   CURBLK,VACFST,VACCNT,MXVACC,VRFADD,VACADD,
+     I                   SPOUT,LENPSP,
+     M                   FIRSTH,NUMHDR,LREPT,SPOS,SPBF,SPBFR,SPBDAT,
+     M                   RUNWID)
+C
+          END IF
+C
+        END IF
+      IF (KEY .NE. KEYND) GO TO 10
+C
+      IF (SPOUT .GE. 10) THEN
+C       echo number of special actions
+        WRITE (MESSU,*) 'finished processing special action entries',
+     $                   SPOS
+      END IF
+C
+C     check to make sure logic blocks were correctly closed
+      IF ( (CURLVL .NE. 0) .OR. (CURBLK .NE. 0) ) THEN
+C       error - ifs and endifs don't match up
+        SGRP= 28
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
+      IF (NVQD .GE. 1) THEN
+C       handle pipes for user-defined variable quantities
+        CALL PSPIPS (MESSU,MSGFL,SCLU,SPOUT,
+     M               RUNWID)
+      END IF
+C
+C      write (99,*) 'numhdr,mxsphf',NUMHDR,' of',MXSPHF
+C      write (99,*) 'spos  ,mxspin',SPOS,  ' of',MXSPIN
+C      write (99,*) 'nvqd  ,mxspvq',NVQD,  ' of',MXSPVQ
+C      write (99,*) 'ncond ,mxspcn',NCOND, ' of',MXSPCN
+C      write (99,*) 'nblock,mxspbk',NBLOCK,' of',MXSPBK
+C      write (99,*) 'nchain,mxspch',NCHAIN,' of',MXSPCH
+C      IF (NBLOCK .GE. 1) THEN
+C        I= BLKPOS(NBLOCK)+ BLKCNT(NBLOCK)- 1
+C      ELSE
+C        I= 0
+C      END IF
+C      write (99,*) 'nchref,mxspcr',I,     ' of',MXSPCR
+C      write (99,*) 'spucnt,mxspuv',SPUCNT,' of',MXSPUV
+C      IF (SPUCNT .GE. 1) THEN
+C        I= SPUPOS(SPUCNT+1)
+C      ELSE
+C        I= 0
+C      END IF
+C      write (99,*) 'spuptr,mxspux',I,     ' of',MXSPUX
+C      I= 0
+C      DO 991 KEY= 1, NBLOCK
+C        IF (BLKLVL(KEY) .GT. I) THEN
+C          I= BLKLVL(KEY)
+C        END IF
+C 991  CONTINUE
+C      write (99,*) 'deeplv,mxbklv',I,     ' of',MXBKLV
+C
+      RETURN
+      END
+</pre>
+
+
+

@@ -1,0 +1,60 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HRINTS">HRINTS</a>
+<p>Called By
+   <a href="MEMTS">MEMTS</a>
+<p>Common Blocks <i>none</i>  
+<p>Calls <i>none</i> 
+<p>Code
+<pre>
+C
+C
+C
+      INTEGER   FUNCTION IVALUE
+     I                          (IVAL,MAXOSV,OSV)
+C
+C     + + + PURPOSE + + +
+C     Look at a supplied integer value.  if it's positive, return the
+C     value, if negative return the value in the osv with a virtual
+C     origin equal to its absolute value.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    IVAL,MAXOSV,OSV(MAXOSV)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IVAL   - value supplied
+C     MAXOSV - maximum size of osv
+C     OSV    - operation status vector
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   ADDR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC IABS
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (IVAL .GE. 0) THEN
+C       positive, return the value
+        IVALUE= IVAL
+      ELSE
+C       negative, return value from osv at position value
+        ADDR  = IABS(IVAL)
+        IVALUE= OSV(ADDR)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

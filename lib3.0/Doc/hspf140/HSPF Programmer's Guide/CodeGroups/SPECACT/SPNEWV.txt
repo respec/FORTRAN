@@ -1,0 +1,366 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPNEWV
+     I                    (MESSU,SPOUT,ACTCOD,TYPCOD,ICURVL,RCURVL,
+     I                     RCURV2,DCURVL,IVAL,RVAL,CACTVA,CACTV2,
+     O                     INEWVL,RNEWVL,RNEWV2,DNEWVL)
+C
+C     + + + PURPOSE + + +
+C     Compute new value for Special Action target and echo
+C     to message file if needed.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER          MESSU,SPOUT,ACTCOD,TYPCOD,ICURVL,IVAL,INEWVL
+      REAL             RCURVL,RCURV2,RVAL,RNEWVL,RNEWV2
+      DOUBLE PRECISION DCURVL,DNEWVL
+      CHARACTER*20     CACTVA,CACTV2
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     SPOUT  - runtime Special Action output level
+C     ACTCOD - action code
+C     TYPCOD - type code: 2=integer, 3=real, 4=double precision
+C     ICURVL - integer current value
+C     RCURVL - real current value
+C     RCURV2 - second real current value
+C     DCURVL - double precision current value
+C     IVAL   - integer action value
+C     RVAL   - real action value
+C     CACTVL - variable name and subscripts
+C     CACTV2 - second variable name and subscripts
+C     INEWVL - integer new value
+C     RNEWVL - real new value
+C     RNEWV2 - second real new value
+C     DNEWVL - double precision new value
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER          RLEN,SDIG,DECP
+      REAL             RTOT,UNDEF
+      CHARACTER*3      CACTCD(13)
+      CHARACTER*4      CMVTP(3)
+      CHARACTER*13     CVAL1,CVAL2,CVAL3
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CVAL1,CVAL11),(CVAL2,CVAL21),(CVAL3,CVAL31)
+      CHARACTER*1  CVAL11(13),CVAL21(13),CVAL31(13)
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC    FLOAT,INT,MIN,MAX,DBLE,MOD,ABS,LOG,LOG10
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     DECCHX
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA RLEN,SDIG,DECP/13,5,-5/
+      DATA CMVTP/'MOVT','MOV1','MOV2'/
+      DATA UNDEF/-1.0E+30/
+      DATA CACTCD/' = ',' + ',' - ',' * ',' / ','MIN','MAX',
+     $            'ABS','INT',' ^ ','LN ','LOG','MOD'/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (3X,I10)
+ 2010 FORMAT (1PE13.5)
+ 2020 FORMAT (3X,A20,' ORIG:',A13,'          RESET TO = ',A13)
+ 2030 FORMAT (3X,A20,' ORIG:',A13,' ',A3,' ',A13,' = ',A13)
+ 2040 FORMAT (3X,A20,' ORIG:',A13,'    ',A4,'  RESET TO = ',A13)
+ 2050 FORMAT (3X,A20,'      ',A13,'     ',A13,'   ',A13)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (SPOUT .GE. 2) THEN
+C       write current value
+        IF (TYPCOD .EQ. 2) THEN
+C         integer type
+          WRITE (CVAL1,2000) ICURVL
+        ELSE IF (TYPCOD .EQ. 3) THEN
+C         real
+          CALL DECCHX (RCURVL,RLEN,SDIG,DECP,
+     O                 CVAL11)
+        ELSE IF (TYPCOD .EQ. 4) THEN
+C         double prec
+          WRITE (CVAL1,2010) DCURVL
+        END IF
+      END IF
+C
+      IF (ACTCOD .EQ. 1) THEN
+C       reset
+        IF (TYPCOD .EQ. 2) THEN
+C         integer type
+          INEWVL= IVAL
+          IF (SPOUT .GE. 2) THEN
+C           prepare echo buffer
+            WRITE (CVAL3,2000) IVAL
+          END IF
+        ELSE
+          IF (TYPCOD .EQ. 3) THEN
+C           real type
+            RNEWVL= RVAL
+          ELSE
+C           dp type
+            DNEWVL= DBLE (RVAL)
+          END IF
+          IF (SPOUT .GE. 2) THEN
+C           prepare echo buffer
+            CALL DECCHX (RVAL,RLEN,SDIG,DECP,
+     O                   CVAL31)
+          END IF
+        END IF
+C       details about this action
+        IF (SPOUT .GE. 2) THEN
+C         echo action
+          WRITE (MESSU,2020) CACTVA,CVAL1,CVAL3
+        END IF
+      ELSE IF (ACTCOD .LE. 13) THEN
+C       arithmetic operator
+        IF (TYPCOD .EQ. 2) THEN
+C         integer type
+C
+C         save increment for output
+          IF (SPOUT .GE. 2) THEN
+C           prepare echo buffer
+            WRITE (CVAL2,2000) IVAL
+          END IF
+          INEWVL= ICURVL
+          IF (IVAL .NE. -999) THEN
+C           value is defined
+            IF (ACTCOD .EQ. 2) THEN
+C             add
+              INEWVL= ICURVL+ IVAL
+            ELSE IF (ACTCOD .EQ. 3) THEN
+C             subtract
+              INEWVL= ICURVL- IVAL
+            ELSE IF (ACTCOD .EQ. 4) THEN
+C             multiply
+              INEWVL= ICURVL*IVAL
+            ELSE IF (ACTCOD .EQ. 5) THEN
+C             divide
+              INEWVL= ICURVL/IVAL
+            ELSE IF (ACTCOD .EQ. 6) THEN
+C             minimum
+              INEWVL= MIN (ICURVL,IVAL)
+            ELSE IF (ACTCOD .EQ. 7) THEN
+C             maximum
+              INEWVL= MAX (ICURVL,IVAL)
+            ELSE IF (ACTCOD .EQ. 8) THEN
+C             absolute value
+              INEWVL= ABS (IVAL)
+            ELSE IF (ACTCOD .EQ. 9) THEN
+C             integer truncation
+              INEWVL= IVAL
+            ELSE IF (ACTCOD .EQ. 10) THEN
+C             exponentiation
+              INEWVL= INT (FLOAT (ICURVL)**FLOAT (IVAL))
+            ELSE IF (ACTCOD .EQ. 11) THEN
+C             natural logarithm
+              IF (IVAL .GE. 1) THEN
+C               valid log
+                INEWVL= INT (LOG (FLOAT (IVAL)))
+              ELSE
+C               undefined
+                INEWVL= -999
+              END IF
+            ELSE IF (ACTCOD .EQ. 12) THEN
+C             logarithm base ten
+              IF (IVAL .GE. 1) THEN
+C               valid log
+                INEWVL= INT (LOG10 (FLOAT (IVAL)))
+              ELSE
+C               undefined
+                INEWVL= -999
+              END IF
+            ELSE IF (ACTCOD .EQ. 13) THEN
+C             modulus
+              INEWVL= MOD (ICURVL,IVAL)
+            END IF
+          END IF
+          IF (SPOUT .GE. 2) THEN
+C           prepare echo buffer
+            WRITE (CVAL3,2000) INEWVL
+          END IF
+        ELSE
+C         save increment for output
+          IF (SPOUT .GE. 2) THEN
+C           prepare echo buffer
+            CALL DECCHX (RVAL,RLEN,SDIG,DECP,
+     O                   CVAL21)
+          END IF
+          IF (TYPCOD .EQ. 3) THEN
+C           real type
+            RNEWVL= RCURVL
+            IF (RVAL .GT. UNDEF) THEN
+C             value is defined
+              IF (ACTCOD .EQ. 2) THEN
+C               add
+                RNEWVL= RCURVL+ RVAL
+              ELSE IF (ACTCOD .EQ. 3) THEN
+C               subtract
+                RNEWVL= RCURVL- RVAL
+              ELSE IF (ACTCOD .EQ. 4) THEN
+C               multiply
+                RNEWVL= RCURVL*RVAL
+              ELSE IF (ACTCOD .EQ. 5) THEN
+C               divide
+                RNEWVL= RCURVL/RVAL
+              ELSE IF (ACTCOD .EQ. 6) THEN
+C               minimum
+                RNEWVL= MIN (RCURVL,RVAL)
+              ELSE IF (ACTCOD .EQ. 7) THEN
+C               maximum
+                RNEWVL= MAX (RCURVL,RVAL)
+              ELSE IF (ACTCOD .EQ. 8) THEN
+C               absolute value
+                RNEWVL= ABS (RVAL)
+              ELSE IF (ACTCOD .EQ. 9) THEN
+C               integer truncation
+                RNEWVL= INT (RVAL)
+              ELSE IF (ACTCOD .EQ. 10) THEN
+C               exponentiation
+                RNEWVL= RCURVL**RVAL
+              ELSE IF (ACTCOD .EQ. 11) THEN
+C               natural logarithm
+                IF (RVAL .GT. 0.0) THEN
+C                 valid log
+                  RNEWVL= LOG (RVAL)
+                ELSE
+C                 undefined
+                  RNEWVL= UNDEF
+                END IF
+              ELSE IF (ACTCOD .EQ. 12) THEN
+C               logarithm base ten
+                IF (RVAL .GT. 0.0) THEN
+C                 valid log
+                  RNEWVL= LOG10 (RVAL)
+                ELSE
+C                 undefined
+                  RNEWVL= UNDEF
+                END IF
+              ELSE IF (ACTCOD .EQ. 13) THEN
+C               modulus
+                RNEWVL= MOD (RCURVL,RVAL)
+              END IF
+            END IF
+            IF (SPOUT .GE. 2) THEN
+C             prepare echo buffer
+              CALL DECCHX (RNEWVL,RLEN,SDIG,DECP,
+     O                     CVAL31)
+            END IF
+          ELSE
+C           dp type
+            DNEWVL= DCURVL
+            IF (RVAL .GT. UNDEF) THEN
+C             value is defined
+              IF (ACTCOD .EQ. 2) THEN
+C               add
+                DNEWVL= DCURVL + RVAL
+              ELSE IF (ACTCOD .EQ. 3) THEN
+C               subtract
+                DNEWVL= DCURVL - RVAL
+              ELSE IF (ACTCOD .EQ. 4) THEN
+C               multiply
+                DNEWVL= DCURVL * RVAL
+              ELSE IF (ACTCOD .EQ. 5) THEN
+C               divide
+                DNEWVL= DCURVL / RVAL
+              ELSE IF (ACTCOD .EQ. 6) THEN
+C               minimum
+                DNEWVL= MIN (DCURVL,DBLE (RVAL))
+              ELSE IF (ACTCOD .EQ. 7) THEN
+C               maximum
+                DNEWVL= MAX (DCURVL,DBLE (RVAL))
+              ELSE IF (ACTCOD .EQ. 8) THEN
+C               absolute value
+                DNEWVL= DBLE (ABS (RVAL))
+              ELSE IF (ACTCOD .EQ. 9) THEN
+C               integer truncation
+                DNEWVL= DBLE (INT (RVAL))
+              ELSE IF (ACTCOD .EQ. 10) THEN
+C               exponentiation
+                DNEWVL= DCURVL**DBLE (RVAL)
+              ELSE IF (ACTCOD .EQ. 11) THEN
+C               natural logarithm
+                IF (RVAL .GT. 0.0) THEN
+C                 valid log
+                  DNEWVL= DBLE (LOG (RVAL))
+                ELSE
+C                 undefined
+                  DNEWVL= UNDEF
+                END IF
+              ELSE IF (ACTCOD .EQ. 12) THEN
+C               logarithm base ten
+                IF (RVAL .GT. 0.0) THEN
+C                 valid log
+                  DNEWVL= DBLE (LOG10 (RVAL))
+                ELSE
+C                 undefined
+                  DNEWVL= UNDEF
+                END IF
+              ELSE IF (ACTCOD .EQ. 13) THEN
+C               modulus
+                DNEWVL= MOD (DCURVL,DBLE (RVAL))
+              END IF
+            END IF
+            IF (SPOUT .GE. 2) THEN
+C             prepare echo buffer
+              WRITE (CVAL3,2010) DNEWVL
+            END IF
+          END IF
+        END IF
+C       details about this action
+        IF (SPOUT .GE. 2) THEN
+C         echo action
+          WRITE (MESSU,2030) CACTVA,CVAL1,CACTCD(ACTCOD),CVAL2,
+     $                       CVAL3
+        END IF
+      ELSE
+C       mix two locations up
+        RTOT= RCURVL+ RCURV2
+        IF (ACTCOD .EQ. 14) THEN
+C         act on total
+          RNEWVL= RVAL* RTOT
+        ELSE IF (ACTCOD .EQ. 15) THEN
+C         act on amount in first loc
+          RNEWVL= RVAL* RCURVL
+        ELSE IF (ACTCOD .EQ. 16) THEN
+C         act on amount in second loc
+          RNEWVL= RVAL* RCURV2
+        END IF
+        RNEWV2= RTOT- RNEWVL
+C
+        IF (SPOUT .GE. 2) THEN
+C         write details for first loc
+          CALL DECCHX (RCURVL,RLEN,SDIG,DECP,
+     O                 CVAL11)
+          CALL DECCHX (RNEWVL,RLEN,SDIG,DECP,
+     O                 CVAL21)
+          WRITE (MESSU,2040) CACTVA,CVAL1,CMVTP(ACTCOD-13),CVAL2
+C         write details for second loc
+          CALL DECCHX (RCURV2,RLEN,SDIG,DECP,
+     O                 CVAL11)
+          CALL DECCHX (RVAL,RLEN,SDIG,DECP,
+     O                 CVAL21)
+          CALL DECCHX (RNEWV2,RLEN,SDIG,DECP,
+     O                 CVAL31)
+          WRITE (MESSU,2050) CACTV2,CVAL1,CVAL2,CVAL3
+        END IF
+      END IF
+C
+      RETURN
+      END
+</pre>
+

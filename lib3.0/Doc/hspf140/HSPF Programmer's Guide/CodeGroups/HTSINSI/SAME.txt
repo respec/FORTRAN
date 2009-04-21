@@ -1,0 +1,222 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI">HTSINSI</a>
+<p>Called By
+   <a href="../HSPFEC/TIMSER">TIMSER</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="../HIOWRK/WORKIO">WORKIO</a>
+   OMSG,
+   OMSTI,
+   OMSTC
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SAME
+     I                 (EXTSFG,SEQCOL,RESCOL,CHK1,CHK2,WKST1,
+     I                  WKND1,WKST2,WKND2,MESSU,MSGFL,
+     I                  ECOUNT)
+C
+C     + + + PURPOSE + + +
+C     Consider records wkst1 thru wknd1 and wkst2 thru wknd2 in
+C     workfl.  chain all occurrences of the same value in fields chk1
+C     and chk2 (for external sources also check fields 27 and 28 -
+C     stkind/sttran).  consider entries in order indicated by value
+C     in field seqcol, put result in column rescol.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   CHK1,CHK2,EXTSFG,RESCOL,SEQCOL,WKND1,WKND2,WKST1,
+     $          WKST2,MESSU,MSGFL,
+     $          ECOUNT
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     EXTSFG - ???
+C     SEQCOL - ???
+C     RESCOL - ???
+C     CHK1   - ???
+C     CHK2   - ???
+C     WKST1  - ???
+C     WKND1  - ???
+C     WKST2  - ???
+C     WKND2  - ???
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - ftn unit no. for hspf messages
+C     ECOUNT - count(s) of specific errors
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     CHKKEY,DUMKEY,FINDFG,NXTKY1,NXTKY2,REC1(50),MXKY,
+     $            REC2(50),WKEY,WLST,RWFG,LEN,IX,I4,SCLU,SGRP
+      CHARACTER*4 CTSS,CSEQ,CTMP1,CTMP2
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC   IABS
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    WORKIO,OMSG,OMSTI,OMSTC
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA  CTSS,CSEQ/'TSS ','SEQ '/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A4)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU= 207
+      LEN = 50
+      I4= 4
+C
+      IF (WKST1 .GT. 0) THEN
+C       first range is not null
+        WKEY= WKST1
+C
+        IF (WKST2 .GT. 0) THEN
+C         2nd range not null
+          WLST= WKND2
+        ELSE
+C         2nd range null
+          WLST= WKND1
+        END IF
+      ELSE IF (WKST2 .EQ. 0) THEN
+C       both null
+        WKEY= 0
+        WLST= 0
+      ELSE
+C       neither null
+        WKEY= WKST2
+        WLST= WKND2
+      END IF
+C
+C     whiledo wkey not= wlst
+ 70   IF (WKEY .EQ. WLST) GO TO 200
+        RWFG= 0
+        MXKY= 0
+        CALL WORKIO (RWFG,LEN,WKEY,
+     M               REC1,MXKY)
+C       find key of next record to be considered
+        IF (WKEY .NE. WKND1) GO TO 80
+          NXTKY1= WKST2
+          GO TO 90
+ 80     CONTINUE
+          NXTKY1= REC1(SEQCOL)
+ 90     CONTINUE
+C
+C       initialize search "state" variables
+        FINDFG= 0
+        DUMKEY= WKEY
+        NXTKY2= NXTKY1
+C
+C       search for record with matching value
+C       whiledo findfg= 0 and dumkey not= wlst
+ 100    IF (FINDFG .NE. 0 .OR. DUMKEY .EQ. WLST) GO TO 170
+C         get key of next record, the one to be checked
+          CHKKEY= NXTKY2
+          RWFG  = 0
+          MXKY  = 0
+          CALL WORKIO (RWFG,LEN,CHKKEY,
+     M                 REC2,MXKY)
+          IF (REC2(CHK1) .NE. REC1(CHK1) .OR. REC2(CHK2) .NE.
+     $       REC1(CHK2)) GO TO 140
+C           same time series
+            IF (EXTSFG .NE. 1) GO TO 120
+              WRITE(CTMP1,2000) REC1(1)
+              WRITE(CTMP2,2000) REC2(1)
+              IF (CTMP1 .EQ. CSEQ .AND. CTMP2 .EQ. CSEQ) THEN
+C               whoops - can't have one seq source going to 2 targets
+                IX= IABS(REC1(CHK1))
+                CALL OMSTC (I4,CSEQ)
+                CALL OMSTI (IX)
+                SGRP = 2
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+              END IF
+C
+C             stkind/sttran/svol must also match
+              IF (REC2(23) .NE. REC1(23) .OR. REC2(24) .NE. REC1(24)
+     $            .OR. REC2(1) .NE. REC1(1)) GO TO 110
+C               yes
+                FINDFG= 1
+ 110          CONTINUE
+              GO TO 130
+C
+ 120        CONTINUE
+C
+              IF (EXTSFG .NE. -1) GOTO 128
+                WRITE(CTMP1,2000) REC1(27)
+                WRITE(CTMP2,2000) REC2(27)
+                IF (CTMP1.EQ.CTSS .AND. CTMP2.EQ.CTSS) THEN
+C                 whoops- can't have multiple sources for one tss target
+                  CALL OMSTC (I4,CTSS)
+                  CALL OMSTI (REC1(CHK1))
+                  SGRP = 3
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                END IF
+ 128          CONTINUE
+C
+              FINDFG= 1
+C
+ 130        CONTINUE
+C
+ 140      CONTINUE
+C
+C         get the key of the next record to be checked
+          IF (CHKKEY .NE. WKND1) GO TO 150
+            NXTKY2= WKST2
+            GO TO 160
+ 150      CONTINUE
+            NXTKY2= REC2(SEQCOL)
+ 160      CONTINUE
+          DUMKEY= CHKKEY
+          GO TO 100
+C
+ 170    CONTINUE
+C
+        IF (FINDFG .NE. 1) GO TO 180
+C         match was found
+          REC1(RESCOL)= CHKKEY
+          GO TO 190
+ 180    CONTINUE
+          REC1(RESCOL)= 0
+ 190    CONTINUE
+C
+        RWFG=1
+        MXKY= 0
+        CALL WORKIO (RWFG,LEN,WKEY,
+     M               REC1,MXKY)
+        WKEY= NXTKY1
+        GO TO 70
+C
+ 200  CONTINUE
+C
+      IF (WLST .EQ. 0) GO TO 210
+C       last entry needs to be processed
+        RWFG=0
+        MXKY= 0
+        CALL WORKIO (RWFG,LEN,WLST,
+     M               REC1,MXKY)
+        REC1(RESCOL)= 0
+        RWFG        = 1
+        MXKY        = 0
+        CALL WORKIO (RWFG,LEN,WLST,
+     M               REC1,MXKY)
+C
+ 210  CONTINUE
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

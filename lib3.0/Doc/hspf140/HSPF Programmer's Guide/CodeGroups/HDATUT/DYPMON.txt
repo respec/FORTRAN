@@ -1,0 +1,72 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HDATUT">HDATUT</a>
+<p>Called By
+   <a href="FIRINT">FIRINT</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   <a href="LPYEAR">LPYEAR</a>
+<p>Code
+<pre>
+C
+C     1.2.21
+C
+      INTEGER FUNCTION   DYPMON
+     I                          (YEAR,MON)
+C
+C     + + + PURPOSE + + +
+C     Return days per month
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    YEAR,MON
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     YEAR   - ???
+C     MON    - calendar month
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    ND(12),FLAG
+C
+C
+C     + + + EXTERNAL + + +
+      EXTERNAL   LPYEAR
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      ND(1)  = 31
+      ND(2)  = 28
+      ND(3)  = 31
+      ND(4)  = 30
+      ND(5)  = 31
+      ND(6)  = 30
+      ND(7)  = 31
+      ND(8)  = 31
+      ND(9)  = 30
+      ND(10) = 31
+      ND(11) = 30
+      ND(12) = 31
+C
+      CALL <a href="LPYEAR">LPYEAR</a>
+     I            (YEAR,
+     O             FLAG)
+      IF (FLAG .EQ. 1) THEN
+        ND(2) = 29
+      END IF
+C
+      DYPMON = ND(MON)
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+

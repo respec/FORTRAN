@@ -1,0 +1,4 @@
+Pattern = "ctsgpm"
+CTSGPM.INC(7):	      COMMON/CTSGPM/TSGPM
+HIOTSIN.FOR(20):	      INCLUDE 'ctsgpm.inc'
+HIOTSIN.FOR(50):	      INCLUDE 'ctsgpm.inc'

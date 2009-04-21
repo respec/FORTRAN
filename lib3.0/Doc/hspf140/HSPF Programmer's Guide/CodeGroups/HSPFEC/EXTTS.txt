@@ -1,0 +1,215 @@
+Purpose - check and expand a reference to a group of time series or a single time series to be obtained from an external source/target (trflag=1 if external target is being processed)
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HSPFEC">HSPFEC</a>
+<p>Called By
+   <a href="../HRINTS/SRCBLK">SRCBLK</a>,
+   <a href="../HRINTS/TARBLK">TARBLK</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CRIN3">CRIN3</a>,
+   <a href="../../CommonBlocks/CRIN3C">CRIN3C</a>
+<p>Calls
+   CHKSTR,
+   <a href="../HRINTSS/TSSDS">TSSDS</a>,
+   <a href="../HRINSEQ/SEQDS">SEQDS</a>,
+   <a href="../HRINWDM/WDMDS">WDMDS</a>,
+   OMSG,
+   OMSTI,
+   DSSDS
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   EXTTS
+     I                  (MEMN,MEMSB,SYST,AMDST,GAPST,SDATIM,EDATIM,
+     I                   VOL,VOLNO,UKEYST,UKEYND,TRFLAG,MXTSTB,IHMFG,
+     O                   NUM,DELT,UNT,GRPN,NTS,AMDCD,FRC,GAPCD,
+     O                   TABL,TABLR)
+C
+C     + + + PURPOSE + + +
+C     check and expand a reference to a group of time series or a
+C     single time series to be obtained from an external source/target
+C     trflag=1 if external target is being processed
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MEMSB(2),SDATIM(5),
+     #            EDATIM(5),VOLNO,UKEYST,UKEYND,TRFLAG,NUM,DELT,
+     #            UNT,NTS,AMDCD,FRC,GAPCD,MXTSTB,IHMFG,TABL(10,MXTSTB)
+      REAL        TABLR(10,MXTSTB)
+      CHARACTER*6 VOL,MEMN,GRPN
+      CHARACTER*4 SYST,AMDST,GAPST
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MEMN   - ???
+C     MEMSB  - ???
+C     SYST   - ???
+C     AMDST  - ???
+C     GAPST  - ???
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     VOL    - volume name - SEQ,TSS,WDMn,DSS
+C     VOLNO  - volume number
+C     UKEYST - ???
+C     UKEYND - ???
+C     TRFLAG - ???
+C     MXTSTB - ???
+C     IHMFG  - IHM flag (normal-0,IHM control-1)
+C     NUM    - ???
+C     DELT   - simulation time interval in minutes
+C     UNT    - ???
+C     GRPN   - ???
+C     NTS    - ???
+C     AMDCD  - ???
+C     FRC    - ???
+C     GAPCD  - ???
+C     TABL   - ???
+C     TABLR  - ???
+C
+C     + + + COMMON BLOCKS- INTERP3 + + +
+      INCLUDE   'crin3.inc'
+      INCLUDE   'crin3c.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     MESSU,TSSFL,WDMSFL(4),I4,N,SCLU,SGRP,MSGFL
+      CHARACTER*4 CHSTR
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (CHSTR,CHSTR1)
+      CHARACTER*1  CHSTR1(4)
+C
+C     + + + FUNCTIONS + + +
+      INTEGER     CHKSTR
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL    CHKSTR,TSSDS,OMSG,SEQDS,WDMDS,OMSTI,DSSDS
+C
+C     + + + OUTPUT FORMATS + + +
+ 2010 FORMAT(' BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE')
+ 2020 FORMAT(' END CHECKING/EXPANDING TIME SERIES REFERENCE')
+C
+C     + + + HISTORY + + +
+C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      I4    = 4
+C
+      MESSU = FILE(1)
+      TSSFL = FILE(10)
+      DO 5 N= 1, 4
+        WDMSFL(N)= FILE(10+N)
+ 5    CONTINUE
+      MSGFL = FILE(15)
+      SCLU  = 202
+C
+      IF (OUTLEV .GT. 5) THEN
+        WRITE(MESSU,2010)
+      END IF
+C
+      GRPN= '      '
+C
+C     set access mode, frc and gap code to zero to represent null
+C     values. tssds, seqds, wdmds, and dssds do not always set
+C     meaningful values
+      AMDCD= 0
+      GAPCD= 0
+      FRC  = 0
+C
+C     search for source/target volume name
+      CHSTR(1:3)= VOL(1:3)
+      CHSTR1(4)= ' '
+      N    = CHKSTR(I4,I4,CHSTR1,EXTKW1)
+C
+      IF (N .EQ. 1) THEN
+C       tss
+        IF (TSSFL .NE. 0) THEN
+C         tssfl available - process entries normally
+          CALL TSSDS (MSGFL,MESSU,TSSFL,MEMN,MEMSB(1),
+     I                AMDST,SDATIM,EDATIM,VOLNO,
+     I                TRFLAG,MXTSTB,
+     O                NUM,DELT,UNT,NTS,AMDCD,FRC,
+     O                TABL,TABLR)
+        ELSE
+C         error - tss file not available, but active reference to tss
+C         dataset encountered in user control input
+          SGRP= 2
+          CALL OMSTI(VOLNO)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
+      ELSE IF (N .EQ. 2) THEN
+C       seq
+        IF (TRFLAG .EQ. 0) THEN
+C         sequential input - process it
+          CALL SEQDS (MSGFL,MESSU,MEMN,MEMSB(1),SYST,
+     I                GAPST,VOLNO,
+     I                UKEYST,UKEYND,MXTSTB,
+     O                NUM,DELT,UNT,NTS,GAPCD,
+     O                TABL,TABLR)
+        ELSE
+C         sequential output not allowed
+          SGRP= 5
+          CALL OMSTI(VOLNO)
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
+      ELSE IF (N .EQ. 3) THEN
+C       wdm
+        IF (WDMSFL(MEMSB(2)) .NE. 0) THEN
+C         wdmsfl is available - process entries
+          CALL WDMDS (MSGFL,MESSU,WDMSFL(MEMSB(2)),VOLNO,MEMN,MEMSB,
+     I                GAPST,GAPKW1,SYST,SYSKW1,AMDKW1,AMDST,SDATIM,
+     I                EDATIM,TRFLAG,OUTLEV,MXTSTB,IHMFG,
+     M                ECOUNT,
+     O                NUM,DELT,UNT,NTS,GAPCD,AMDCD,TABL,TABLR)
+        ELSE
+C         wdmsfl not available, but active references to wdms
+C         datsets encountered in user control input
+          SGRP= 4
+          CALL OMSTI(VOLNO)
+          CALL OMSTI(MEMSB(2))
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
+      ELSE IF (N .EQ. 4) THEN
+C       dss
+        CALL DSSDS (MSGFL,MESSU,VOLNO,GAPST,GAPKW1,SYST,SYSKW1,AMDKW1,
+     I              AMDST,SDATIM,EDATIM,TRFLAG,OUTLEV,MAXTTB,
+     M              ECOUNT,
+     O              NUM,DELT,UNT,NTS,GAPCD,AMDCD,TABL,TABLR)
+      ELSE
+C       unknown keyword
+        SGRP= 3
+        CALL OMSTI(VOLNO)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
+      IF (OUTLEV .GT. 5) THEN
+        WRITE(MESSU,2020)
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

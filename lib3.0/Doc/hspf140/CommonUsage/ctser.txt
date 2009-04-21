@@ -1,0 +1,61 @@
+D:\lib3.0\SRC\HSPF121\CTSER.INC   (1 KB,  4/22/1996 11:55:38 AM)
+1	C    FROM CTSER.COM
+3	C     FROM CTSERR
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGP.FOR   (8 KB,  6/27/2000 4:14:14 PM)
+31	      INCLUDE   'ctser.inc'
+194	      INCLUDE   'ctser.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGQ.FOR   (50 KB,  7/20/2000 11:56:36 AM)
+203	      INCLUDE     'ctser.inc'
+390	      INCLUDE     'ctser.inc'
+519	      INCLUDE     'ctser.inc'
+643	      INCLUDE   'ctser.inc'
+805	      INCLUDE     'ctser.inc'
+939	      INCLUDE     'ctser.inc'
+1094	      INCLUDE     'ctser.inc'
+1192	      INCLUDE     'ctser.inc'
+1387	      INCLUDE     'ctser.inc'
+1563	      INCLUDE     'ctser.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGT.FOR   (20 KB,  7/11/2000 8:34:10 PM)
+23	      INCLUDE     'ctser.inc'
+192	      INCLUDE   'ctser.inc'
+449	      INCLUDE     'ctser.inc'
+639	      INCLUDE   'ctser.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSGW.FOR   (7 KB,  9/11/2002 10:42:06 AM)
+23	      INCLUDE   'ctser.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSPT.FOR   (48 KB,  6/27/2000 4:28:44 PM)
+22	      INCLUDE     'ctser.inc'
+97	      INCLUDE   'ctser.inc'
+241	      INCLUDE     'ctser.inc'
+307	      INCLUDE   'ctser.inc'
+474	      INCLUDE     'ctser.inc'
+617	      INCLUDE   'ctser.inc'
+692	      INCLUDE   'ctser.inc'
+763	      INCLUDE   'ctser.inc'
+819	      INCLUDE   'ctser.inc'
+984	      INCLUDE   'ctser.inc'
+1280	      INCLUDE   'ctser.inc'
+1403	      INCLUDE     'ctser.inc'
+1481	      INCLUDE   'ctser.inc'
+1548	      INCLUDE   'ctser.inc'
+1632	      INCLUDE     'ctser.inc'
+1760	      INCLUDE   'ctser.inc'
+1849	      INCLUDE   'ctser.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSPW.FOR   (7 KB,  9/11/2002 10:41:42 AM)
+68	      INCLUDE   'ctser.inc'
+
+D:\lib3.0\SRC\HSPF121\HRUNTSUT.FOR   (11 KB,  7/11/2000 8:32:40 PM)
+22	      INCLUDE   'ctser.inc'
+106	      INCLUDE   'ctser.inc'
+217	      INCLUDE   'ctser.inc'
+
+D:\lib3.0\SRC\HSPF121\HTSSUT.FOR   (11 KB,  6/27/2000 4:33:58 PM)
+127	      INCLUDE   'ctser.inc'
+204	      INCLUDE   'ctser.inc'
+278	      INCLUDE   'ctser.inc'
+

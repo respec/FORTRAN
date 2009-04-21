@@ -1,0 +1,108 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HIOUCI">HIOUCI</a>
+<p>Called By
+   <a href="../HSPF/INTERP">INTERP</a>,
+   <a href="../HSPF/OPNBLK">OPNBLK</a>,
+   <a href="../HSPFEC/TIMSER">TIMSER</a>,
+   <a href="../HRINGEN/GLOBLK">GLOBLK</a>,
+   <a href="../HRINGEN/MSLKBK">MSLKBK</a>,
+   <a href="../HRINGEN/SEQBLK">SEQBLK</a>,
+   <a href="../HRINGEN/CATBLK">CATBLK</a>
+<p>Common Blocks 
+   <a href="../../CommonBlocks/CUCIM">CUCIM</a>
+<p>Calls <i>none</i>
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   GETSE
+     I                 (ITYPE,IRPT,
+     O                  SREC,EREC)
+C
+C     + + + PURPOSE + + +
+C     find start and end position in a uci for a type of key
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   ITYPE,IRPT,SREC,EREC
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     ITYPE  - type of key - 1:RUN, 2:GLOBAL, 100:OPN, etc.
+C     IRPT   - which occurance of key
+C     SREC   - starting record
+C     EREC   - ending record
+C
+C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cucim.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I,ICNT,PTR,FOUND
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SREC= 0
+      EREC= 0
+      FOUND= 0
+      PTR= 0
+C
+      IF (NUKWD .GT. 0) THEN
+C       keys to check
+        ICNT= 0
+        I   = 0
+ 10     CONTINUE
+          I = I+ 1
+          IF (UKWDTY(I) .EQ. ITYPE) THEN
+C           this is the correct type
+C
+            IF (ITYPE .EQ. 100) THEN
+C             operation-type keyword
+              ICNT= ICNT+ 1
+              IF (IRPT .EQ. ICNT) THEN
+C               found correct repetition
+                FOUND= 1
+C               set pointer
+                PTR= UKWDFP(I)
+              END IF
+            ELSE
+C             other keyword type
+              FOUND= 1
+              IF (IRPT .LE. UKWDCT(I)) THEN
+C               keyword occurs in file enough times
+C
+C               set pointer to first occurrence
+                PTR= UKWDFP(I)
+C
+                IF (IRPT .GT. 1) THEN
+C                 count through repeat occurrences as necessary
+C                 to get pointer to desired occurrence
+                  DO 20 ICNT = 1, IRPT- 1
+                    PTR= UKWPTN(PTR)
+ 20               CONTINUE
+                END IF
+              END IF
+            END IF
+C
+            IF (PTR .GT. 0) THEN
+C             get start and records using pointer
+              SREC= UKWSRC(PTR)
+              EREC= UKWERC(PTR)
+            END IF
+          END IF
+        IF (I.LT.NUKWD .AND. FOUND.EQ.0) GO TO 10
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+

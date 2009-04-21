@@ -1,0 +1,82 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSINSI">HTSINSI</a>
+<p>Called By
+   <a href="SOURCE">SOURCE</a>,
+   <a href="TARGET">TARGET</a>
+<p>Common Blocks <i>none</i>
+<p>Calls
+   OMSTI,
+   OMSG
+<p>Code
+<pre>
+C
+C
+C
+      INTEGER FUNCTION   ROW
+     I                       (MROW,MESSU,MSGFL,
+     M                        AVFG,ECOUNT,MAXROW)
+C
+C     + + + PURPOSE + + +
+C     Find the number of the first available row in the inpad
+C     (or expad).  return this value and mark the row "unavailable".
+C     if applicable, update the flag which indicates the maximum
+C     number of rows occupied at one time.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   MROW,
+     $          AVFG(MROW),ECOUNT,
+     $          MSGFL,MESSU,MAXROW
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MROW   - ???
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     AVFG   - flag indicating whether or not each IMPAD row is available
+C     ECOUNT - count(s) of specific errors
+C     MAXROW - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   SCLU,SGRP
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  OMSTI,OMSG
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      ROW = 0
+      SCLU= 207
+C     dountil row= mrow or avfg(row)= 1
+ 10   CONTINUE
+        ROW= ROW+ 1
+      IF (ROW .NE. MROW .AND. AVFG(ROW) .NE. 1) GO TO 10
+C
+      IF (ROW .EQ. MROW .AND. AVFG(ROW) .EQ. 0) THEN
+C       error - no rows are available
+        CALL OMSTI (MROW)
+        SGRP = 1
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+C
+      END IF
+C
+C     mark row unavailable
+      AVFG(ROW)= 0
+      IF (ROW .GT. MAXROW) THEN
+        MAXROW= ROW
+      END IF
+C
+      RETURN
+      END
+</pre>
+
+
+
+
+
+
+

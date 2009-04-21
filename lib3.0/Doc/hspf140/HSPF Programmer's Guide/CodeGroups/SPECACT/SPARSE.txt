@@ -1,0 +1,462 @@
+Purpose - 
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../SPECACT">SPECACT</a>
+<p>Called By
+    
+<p>Common Blocks 
+ 
+<p>Calls
+ 
+<p>Code
+<pre>
+C
+C
+C
+      SUBROUTINE   SPARSE
+     I                    (STLINE,OUTLEV,MESSU,MSGFL,SCLU,
+     M                     ECOUNT,UCIBUF,KEY,
+     O                     NEWCHN,NUMLIN)
+C
+C     + + + PURPOSE + + +
+C     Parse free-form special action line(s) into a logic chain.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      STLINE,OUTLEV,MESSU,MSGFL,SCLU,ECOUNT,KEY,NEWCHN,
+     $             NUMLIN
+      CHARACTER*80 UCIBUF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STLINE - position of beginning of line after any keywords
+C     OUTLEV - run interpreter output level
+C     MESSU  - unit number to write messages on
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
+C     ECOUNT - error count
+C     UCIBUF - buffer containing current record from uci file
+C     KEY    - current record number in uci file
+C     NEWCHN - pointer to beginning of new condition chain
+C     NUMLIN - number of UCI lines in chain specification
+C
+C     + + + PARAMETERS + + +
+      INTEGER MXITEM
+      PARAMETER (MXITEM = 200)
+C
+C     + + + COMMON BLOCKS + + +
+C     special action conditions
+      INCLUDE     'pspcnd.inc'
+      INCLUDE     'cspcnd.inc'
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER      NITEM,PARLEV(MXITEM),ITMTYP(MXITEM),POS,CURLEV,
+     $             DONEFG,ERRFLG,PRECON,I,J,SGRP,I0,I3,BUFLEN,PREPOS,
+     $             RLEN,SDIG,DECP,RPARS,LPARS,ECHPOS,MAX
+      CHARACTER*1  SPACE
+      CHARACTER*4  CLOGOP(3)
+      CHARACTER*10 CITEM
+      CHARACTER*80 ECHBUF
+C
+C     + + + FUNCTIONS + + +
+      INTEGER      LENSTR,CKNBLV
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     ZIPI,LENSTR,ZIPC,SPITEM,OMSTI,OMSG,OMSTC,MKQUAN,
+     $             DECCHX,GETUCI,CKNBLV
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA I0,I3/0,3/
+      DATA RLEN,SDIG,DECP/10,5,-5/
+      DATA SPACE/' '/
+      DATA CLOGOP/'AND ','OR  ','THEN'/
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A6)
+ 2010 FORMAT (A2)
+ 2020 FORMAT (A4)
+ 2030 FORMAT (I3)
+ 2040 FORMAT ('(')
+ 2050 FORMAT (')')
+ 2060 FORMAT (A80)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     initialize variables
+      NUMLIN= 1
+      PRECON= NCOND
+      NITEM= 0
+      CALL ZIPI (MXITEM,NITEM,PARLEV)
+      CALL ZIPI (MXITEM,NITEM,ITMTYP)
+      POS= STLINE
+      CURLEV= 0
+      DONEFG= 0
+      I= 80
+      BUFLEN= LENSTR (I,UCIBUF)
+      RPARS= 0
+      LPARS= 0
+      CALL ZIPC (I,SPACE,ECHBUF)
+C
+C     begin do-until loop on items
+ 10   CONTINUE
+C
+        IF (POS .LE. BUFLEN) THEN
+C         more to do on this line
+C
+C         get next item
+          NITEM= NITEM+ 1
+          PREPOS= POS
+          CALL SPITEM (UCIBUF,BUFLEN,
+     M                 POS,
+     O                 CITEM,ITMTYP(NITEM))
+C         process item by code
+          GO TO (100,100,100,110,110,110,120,130,140,140,150)
+     $           ITMTYP(NITEM)
+C
+C           error - program bug
+            WRITE(*,*) 'ERROR PARSING LINE',KEY,' AT POS',PREPOS
+          GO TO 200
+C
+C         left parenthesis
+ 100      CONTINUE
+            IF (NITEM .GT. 1) THEN
+C             make sure previous item was a logic operator or a
+C             left parenthesis
+              IF ( (ITMTYP(NITEM-1) .NE. 9) .AND.
+     $             (ITMTYP(NITEM-1) .NE. 10) ) THEN
+C               previous item was not a logic operator
+                IF ( (ITMTYP(NITEM-1) .LT. 1) .OR.
+     $               (ITMTYP(NITEM-1) .GT. 3) ) THEN
+C                 error - left parenthesis in improper position
+                  CALL OMSTI (PREPOS)
+                  SGRP= 80
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                  DONEFG= -1
+                END IF
+              END IF
+            END IF
+            IF (DONEFG .EQ. 0) THEN
+C             proper position
+              CURLEV= CURLEV+ 1
+              PARLEV(NITEM)= CURLEV
+              LPARS= LPARS+ 1
+            END IF
+          GO TO 200
+C
+C         right parenthesis
+ 110      CONTINUE
+            IF (NITEM .LT. 3) THEN
+C             too early
+              DONEFG= -1
+            ELSE IF ( (ITMTYP(NITEM-1) .NE. 7) .OR.
+     $                (ITMTYP(NITEM-2) .NE. 8) ) THEN
+C             right paren doesn't follow a compop-quantity sequence
+              IF ( (ITMTYP(NITEM-1) .LT. 4) .OR.
+     $             (ITMTYP(NITEM-1) .GT. 6) ) THEN
+C               right paren doesn't follow another right paren
+                DONEFG= -1
+              END IF
+            END IF
+            IF (DONEFG .EQ. -1) THEN
+C             error - right parenthesis in improper position
+              CALL OMSTI (PREPOS)
+              SGRP= 81
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            ELSE
+C             proper position
+              IF (CURLEV .LT. 1) THEN
+C               error - too many right parentheses
+                CALL OMSTI (PREPOS)
+                SGRP= 82
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+                DONEFG= -1
+              ELSE
+C               calculate number of logic stack pops
+                I= NITEM- 1
+ 115            CONTINUE
+                  IF ( (ITMTYP(I) .EQ. 9) .OR.
+     $                 (ITMTYP(I) .EQ. 10) ) THEN
+C                   intervening logical operator
+                    IF (PARLEV(I) .LE. CURLEV) THEN
+C                     this operator to be popped from this parenthesis
+                      CNDPOP(NCOND)= CNDPOP(NCOND)+ 1
+                    END IF
+                  ELSE IF ( (ITMTYP(I) .GE. 1) .AND.
+     $                      (ITMTYP(I) .LE. 3) ) THEN
+C                   found a left parenthesis
+                    IF (PARLEV(I) .EQ. CURLEV) THEN
+C                     found matching left parenthesis
+                      IF (ITMTYP(I) .EQ. (ITMTYP(NITEM)-3)) THEN
+C                       type of parenthesis matches
+                        PARLEV(NITEM)= CURLEV
+                        I= -1
+                      ELSE
+C                       error - right parenthesis doesn't match left
+                        CALL OMSTI (PREPOS)
+                        SGRP= 83
+                        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                             ECOUNT)
+                        DONEFG= -1
+                      END IF
+                    END IF
+                  END IF
+                  I= I- 1
+                IF ( (I .GT. 0) .AND. (DONEFG .EQ. 0) ) GO TO 115
+C
+                IF (DONEFG .GE. 0) THEN
+C                 proper right parenthesis
+                  RPARS= RPARS+ 1
+                  CURLEV= CURLEV- 1
+                END IF
+C
+              END IF
+            END IF
+          GO TO 200
+C
+C         quantity
+ 120      CONTINUE
+            IF (NITEM .EQ. 1) THEN
+C             left operand at beginning of line
+              I= 1
+              NCOND= NCOND+ 1
+              CNDPOP(NCOND)= 0
+            ELSE IF ( (ITMTYP(NITEM-1) .GE. 1) .AND.
+     $                (ITMTYP(NITEM-1) .LE. 3) ) THEN
+C             left operand after left parenthesis
+              I= 1
+              NCOND= NCOND+ 1
+              CNDPOP(NCOND)= 0
+            ELSE IF ( (ITMTYP(NITEM-1) .EQ. 9) .OR.
+     $                (ITMTYP(NITEM-1) .EQ. 10) ) THEN
+C             left operand after logical operator
+              I= 1
+              NCOND= NCOND+ 1
+              CNDPOP(NCOND)= 0
+            ELSE IF (ITMTYP(NITEM-1) .EQ. 8) THEN
+C             right operand after comparison operator
+              I= 2
+            ELSE
+C             error - quantity not in proper position
+              CALL OMSTI (PREPOS)
+              I= 10
+              CALL OMSTC (I,CITEM(1:10))
+              SGRP= 84
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              DONEFG= -1
+            END IF
+            IF (DONEFG .EQ. 0) THEN
+C             get quantity
+              ERRFLG= 0
+              MAX= MXSPVQ*6
+              CALL MKQUAN (MESSU,MSGFL,SCLU,MAX,UVQNM1,NVQD,I3,
+     M                     CITEM,ERRFLG,ECOUNT,J,CNDVAL(I,NCOND),
+     M                     CNDUVQ(I,NCOND))
+              IF (ERRFLG .NE. 0) THEN
+C               error occurred reading a quantity
+                DONEFG= -1
+              END IF
+              IF ( (DONEFG .EQ. 0) .AND. (OUTLEV .GT. 2) ) THEN
+C               prepare echo buffer
+                IF (I .EQ. 1) THEN
+C                 first quantity
+                  ECHPOS= 11
+                ELSE
+C                 second quantity
+                  ECHPOS= 25
+                END IF
+                IF (CNDUVQ(I,NCOND) .GT. 0) THEN
+C                 variable quantity
+                  WRITE (ECHBUF(ECHPOS:ECHPOS+9),2000) CITEM(1:6)
+                ELSE
+C                 constant quantity
+                  CALL DECCHX (CNDVAL(I,NCOND),RLEN,SDIG,DECP,
+     O                         ECHBUF(ECHPOS:ECHPOS+9)) 
+                END IF
+              END IF
+            END IF
+          GO TO 200
+C
+C         comparison operator
+ 130      CONTINUE
+            IF (NITEM .EQ. 1) THEN
+C             too early 
+              DONEFG= -1
+            ELSE IF (ITMTYP(NITEM-1) .NE. 7) THEN
+C             previous item is not a quantity
+              DONEFG= -1
+            ELSE IF (NITEM .GT. 2) THEN
+C             check before previous item - must be a logical operator or
+C             a left parenthesis
+              IF ( (ITMTYP(NITEM-2) .NE. 9) .AND.
+     $             (ITMTYP(NITEM-2) .NE. 10) .AND.
+     $             (ITMTYP(NITEM-2) .GE. 4) ) THEN
+C               previous quantity is not a left operand
+                DONEFG= -1
+              END IF
+            END IF
+            IF (DONEFG .NE. 0) THEN
+C             error - comparison operator not in proper position
+              CALL OMSTI (PREPOS)
+              I= 2
+              CALL OMSTC (I,CITEM(1:2))
+              SGRP= 85
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            ELSE
+C             process comparison operator
+              IF (CITEM(1:3) .EQ. '!= ') THEN
+C               not equal
+                CNDCOD(NCOND)= 2
+              ELSE IF (CITEM(1:3) .EQ. '>= ') THEN
+C               greater or equal
+                CNDCOD(NCOND)= 4
+              ELSE IF (CITEM(1:3) .EQ. '<= ') THEN
+C               less or equal
+                CNDCOD(NCOND)= 6
+              ELSE IF (CITEM(1:2) .EQ. '= ') THEN
+C               equal
+                CNDCOD(NCOND)= 1
+              ELSE IF (CITEM(1:2) .EQ. '> ') THEN
+C               greater
+                CNDCOD(NCOND)= 3
+              ELSE IF (CITEM(1:2) .EQ. '< ') THEN
+C               less
+                CNDCOD(NCOND)= 5
+              ELSE
+C               error - unrecognized comparison code
+                CALL OMSTI (PREPOS)
+                I= 10
+                CALL OMSTC (I,CITEM(1:10))
+                SGRP= 86
+                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                     ECOUNT)
+                DONEFG= -1
+              END IF
+              IF ( (DONEFG .EQ. 0) .AND. (OUTLEV .GT. 2) ) THEN
+C               prepare echo buffer
+                WRITE (ECHBUF(22:23),2010) CITEM(1:2)
+              END IF
+            END IF
+          GO TO 200
+C
+C         logical operator
+ 140      CONTINUE
+            IF (NITEM .LT. 4) THEN
+C             too early
+              DONEFG= -1
+            ELSE IF ( ( (ITMTYP(NITEM-1) .NE. 7) .OR.
+     $                  (ITMTYP(NITEM-2) .NE. 8) ) .AND.
+     $                ( (ITMTYP(NITEM-1) .LT. 4) .OR.
+     $                  (ITMTYP(NITEM-1) .GT. 6) ) ) THEN
+C             does not follow either a right parenthesis or a
+C             compop-quantity sequence
+              DONEFG= -1
+            END IF
+            IF (DONEFG .NE. 0) THEN
+C             error - logical operator not in proper position
+              CALL OMSTI (PREPOS)
+              I= 3
+              CALL OMSTC (I,CITEM(1:3))
+              SGRP= 87
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            ELSE
+C             process logic operator
+              CNDLOG(NCOND)= ITMTYP(NITEM)- 8
+              CNDLNK(NCOND)= NCOND+ 1
+              PARLEV(NITEM)= CURLEV
+              IF (OUTLEV .GT. 2) THEN
+C               write output buffer
+                WRITE (ECHBUF(41:44),2020) CLOGOP(CNDLOG(NCOND))
+                WRITE (ECHBUF(6:8),2030) LPARS
+                WRITE (ECHBUF(9:9),2040)
+                WRITE (ECHBUF(37:39),2030) RPARS
+                WRITE (ECHBUF(36:36),2050)
+                WRITE (MESSU,2060) ECHBUF
+                LPARS= 0
+                RPARS= 0
+                ECHBUF= ' '
+              END IF
+            END IF
+          GO TO 200
+C
+C         delimiter found
+ 150      CONTINUE
+            IF (NITEM .LT. 4) THEN
+C             too early
+              DONEFG= -1
+            ELSE IF ( ( (ITMTYP(NITEM-1) .NE. 7) .OR.
+     $                  (ITMTYP(NITEM-2) .NE. 8) ) .AND.
+     $                ( (ITMTYP(NITEM-1) .LT. 4) .OR.
+     $                  (ITMTYP(NITEM-1) .GT. 6) ) ) THEN
+C             does not follow either a right parenthesis or a
+C             compop-quantity sequence
+              DONEFG= -1
+            END IF
+            IF (DONEFG .NE. 0) THEN
+C             error - THEN not in proper position
+              CALL OMSTI (PREPOS)
+              SGRP= 88
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            ELSE IF (CURLEV .NE. 0) THEN
+C             error - not enough right parentheses
+              SGRP= 89
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+              DONEFG= -1
+            END IF
+            IF (DONEFG .EQ. 0) THEN
+C             done - last link pointer is null
+              DONEFG= 1
+              CNDLNK(NCOND)= 0
+              IF (OUTLEV .GT. 2) THEN
+C               write output buffer
+                WRITE (ECHBUF(41:44),2020) CLOGOP(3)
+                WRITE (ECHBUF(6:8),2030) LPARS
+                WRITE (ECHBUF(9:9),2040)
+                WRITE (ECHBUF(37:39),2030) RPARS
+                WRITE (ECHBUF(36:36),2050)
+                WRITE (MESSU,2060) ECHBUF
+                LPARS= 0
+                RPARS= 0
+                ECHBUF= ' '
+              END IF
+            END IF
+C
+C         end computed goto
+ 200      CONTINUE
+        ELSE
+C         end of line - need to read new line
+          CALL GETUCI (I0,
+     M                 KEY,
+     O                 UCIBUF)
+          I= 80
+          BUFLEN= LENSTR (I,UCIBUF)
+          POS= CKNBLV (I,UCIBUF)
+          NUMLIN= NUMLIN+ 1
+        END IF
+C     end of do-until loop on items
+      IF (DONEFG .EQ. 0) GO TO 10
+C
+      IF (DONEFG .LT. 0) THEN
+C       an error ocurred - omit new chain
+        NCOND= PRECON
+        NEWCHN= 0
+      ELSE
+C       chain is valid
+        NEWCHN= PRECON+ 1
+      END IF
+C
+      RETURN
+      END
+</pre>
+

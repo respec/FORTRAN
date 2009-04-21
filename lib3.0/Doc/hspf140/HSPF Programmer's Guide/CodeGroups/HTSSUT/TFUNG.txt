@@ -1,0 +1,94 @@
+Purpose -   
+<p>Flow of Execution
+<ul>
+<li><a href="#L1"></a>
+</ul>
+<p>Code Group 
+   <a href="../HTSSUT">HTSSUT</a>
+<p>Called By
+
+<p>Common Blocks 
+    
+<p>Calls
+
+<p>Code
+<pre>
+C
+C     4.1.02
+C
+      SUBROUTINE TFUNG
+     I                (TTIME,SDT)
+C
+C     + + + PURPOSE + + +
+C     Functional operations for the tss when the source time
+C     interval > target time interval
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   SDT,TTIME
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     TTIME - target time in minutes
+C     SDT   - source time interval
+C
+C     + + + COMMON BLOCKS- GETCOM + + +
+      INCLUDE   'ctsin.inc'
+      INCLUDE   'ctsex.inc'
+      INCLUDE   'ctser.inc'
+      INCLUDE   'ctsbu.inc'
+      INCLUDE   'ctsbx.inc'
+      INCLUDE   'cmpad.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,I4
+      REAL      P
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  ABS,FLOAT
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     rratio = sdt/target time interval
+C
+C     set flags to on here-then they are set to off in the
+C     loop if non-zero/defined values are found
+      ZFLAG= 1
+      UFLAG= 1
+      P = FLOAT (TTIME- TXOLD)/FLOAT (SDT)
+C
+      DO 70 I=1,NCOMPS
+        I4=STKIND(I)
+        GO TO (10,20,50), I4
+C
+   10     CONTINUE
+C           point to point - interpolate
+            XVAR(I)=XOLD(I) + P*(XNEW(I)-XOLD(I))
+            GO TO 60
+C
+   20     CONTINUE
+C           mean to mean- two cases-same=1,divide=2
+            IF (STTRAN(I) .NE. 1) GO TO 30
+              XVAR(I)=XNEW(I)
+              GO TO 40
+   30       CONTINUE
+              XVAR(I)=XNEW(I)/RRATIO
+   40       CONTINUE
+            GO TO 60
+C
+   50     CONTINUE
+C           point to mean - interpolate to the average value
+            P=P -.5/RRATIO
+            IF (P .LT. 0.0) P=0.0
+            XVAR(I)=XOLD(I) +P*(XNEW(I)-XOLD(I))
+            GO TO 60
+C
+   60   CONTINUE
+C       if (xvar(i) .ne. 0) zflag= 0
+        IF ((ABS(XVAR(I))).GT.0.0) ZFLAG= 0
+        IF (XVAR(I) .GT. -1.E15) UFLAG= 0
+   70 CONTINUE
+      RETURN
+      END
+</pre>
+
+
+
