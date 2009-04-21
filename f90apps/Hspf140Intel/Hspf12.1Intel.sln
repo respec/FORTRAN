@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "Hspf12.1Intel", "Hspf12.1Intel.vfproj", "{1CC482A8-0D4E-47D7-AFD3-649641767DCD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD} = {6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}
+	EndProjectSection
+EndProject
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "adwdm", "..\..\lib3.0\IntelLibs\adwdm\adwdm.vfproj", "{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Debug|Win32.ActiveCfg = Debug|x64
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Debug|Win32.Build.0 = Debug|x64
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Debug|x64.ActiveCfg = Debug|x64
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Debug|x64.Build.0 = Debug|x64
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Release|Win32.ActiveCfg = Release|Win32
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Release|Win32.Build.0 = Release|Win32
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Release|x64.ActiveCfg = Release|x64
+		{1CC482A8-0D4E-47D7-AFD3-649641767DCD}.Release|x64.Build.0 = Release|x64
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Debug|Win32.Build.0 = Debug|Win32
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Debug|x64.ActiveCfg = Debug|x64
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Debug|x64.Build.0 = Debug|x64
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Release|Win32.ActiveCfg = Release|Win32
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Release|Win32.Build.0 = Release|Win32
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Release|x64.ActiveCfg = Release|x64
+		{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
