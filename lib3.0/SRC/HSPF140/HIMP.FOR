@@ -9,6 +9,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the implnd module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   OUTLEV,MESSUG,MESSFL,MAXOPN,MAXOSV,
      $          RESMFG,NDELT,SDATIM(5),NDAMON(12),OPNO,
@@ -41,8 +47,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC MAX
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  PIGEN,PATEMP,PSNOW,PIWATR,PSOLID,PIWTGS,PIQUAL,IMPRST,
-     $          PUTOSV
+      EXTERNAL  PIGEN,PATEMP,PSNOW,PIWATR,PSOLID,PIWTGS,PIQUAL,IMPRST
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),

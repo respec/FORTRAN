@@ -8,6 +8,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the report module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C

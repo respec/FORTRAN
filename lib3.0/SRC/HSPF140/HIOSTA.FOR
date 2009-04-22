@@ -7,6 +7,12 @@ C
 C     + + + PURPOSE + + +
 C     Read file containing status of state variables.
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MESSU,MSGFL,STFIL,SDATIM(5)
 C
@@ -47,7 +53,7 @@ C     + + + FUNCTIONS + + +
       INTEGER        CHKSTR,OPNNO,ZLNTXT,DADDR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL       WMSGTT,GETOSV,PUTOSV,CHKSTR,OPNNO,ZLNTXT,DADDR,
+      EXTERNAL       WMSGTT,CHKSTR,OPNNO,ZLNTXT,DADDR,
      $               SPNXDT,OMSTC,OMSG
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -398,6 +404,12 @@ C
 C     + + + PURPOSE + + +
 C     Write file containing status of state variables.
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   STFIL,CURIVL,DELT,NOPNS,LSTCAL,MESSU,MSGFL,ECOUNT
 C
@@ -428,7 +440,7 @@ C     + + + FUNCTIONS + + +
       INTEGER       DADDR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL      COPYI,SPNXDT,SPCKDT,EXDATE,GETOSV,DADDR,GTQUAN,
+      EXTERNAL      COPYI,SPNXDT,SPCKDT,EXDATE,DADDR,GTQUAN,
      $              DECCHX,OMSTC,OMSTI,OMSG
 C
 C     + + + DATA INITIALIZATIONS + + +

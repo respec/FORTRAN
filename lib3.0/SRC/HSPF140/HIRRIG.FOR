@@ -7,8 +7,14 @@ C
 C     + + + PURPOSE + + +
 C     Initialize irrigation common block and OSV addresses.
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER MSGFL,NOPNS,OPNTAB(20,NOPNS)
+      INTEGER   MSGFL,NOPNS,OPNTAB(20,NOPNS)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MSGFL  - unit number of message wdm file
@@ -36,7 +42,7 @@ C     + + + FUNCTIONS + + +
       INTEGER  OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL WMSGTT,OPNNO,GETOSV,PUTOSV
+      EXTERNAL WMSGTT,OPNNO 
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I1,MOSV/1,500/
@@ -405,6 +411,12 @@ C     + + + PURPOSE + + +
 C     Retrieve storage and irrigation withdrawal commitments from
 C     RCHRES OSV.
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER IROSVK
       REAL    RCHDEM,RSHORT
@@ -426,9 +438,6 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER MOSV,KEY,CHUNK,PREV,OFFSET
       DOUBLE PRECISION RCHVOL,RCHMIN
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL GETOSV
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MOSV/500/
@@ -520,6 +529,12 @@ C
 C     + + + PURPOSE + + +
 C     Set new value of water committed for withdrawals in RCHRES OSV.
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER IROSVK
       REAL    RCHDEM,RSHORT
@@ -539,9 +554,6 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER MOSV,KEY,CHUNK,PREV,OFFSET
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL PUTOSV
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MOSV/500/

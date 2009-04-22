@@ -849,6 +849,12 @@ C     + + + PURPOSE + + +
 C     Process a reference to time series pertaining to operation opno,
 C     which were specified in, or implied by, a user's instruction
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ECOUNT,EUNITS,MAXOPN,MAXOSV,MXTTB,
      $            MSGFL,MEMSB(2),
@@ -907,7 +913,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    CHKSTR,OMSG,OMSTI,OMSTC,GETOSV,MEMTS,WMSGTT
+      EXTERNAL    CHKSTR,OMSG,OMSTI,OMSTC,MEMTS,WMSGTT
 C
 C     + + + INITIALIZATIONS + + +
       DATA GCUR/0/

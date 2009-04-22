@@ -8,6 +8,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the perlnd module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),OSVKEY,EMFG,MAXOSV
 C
@@ -32,7 +38,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  PPGEN,PATEMP,PSNOW,PPWATR,PSEDMT,PPSTMP,PPWTGS,PPQUAL,
-     $          PMSTLA,PPEST,PNITR,PPHOS,PTRACR,PERRST,PUTOSV
+     $          PMSTLA,PPEST,PNITR,PPHOS,PTRACR,PERRST
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),
