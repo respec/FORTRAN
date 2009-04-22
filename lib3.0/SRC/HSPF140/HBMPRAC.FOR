@@ -8,6 +8,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the BMPRAC module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C
@@ -34,7 +40,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    DAYMNH,ITABLE,RTABLE,MDATBL,BMPRST,PUTOSV
+      EXTERNAL    DAYMNH,ITABLE,RTABLE,MDATBL,BMPRST
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),

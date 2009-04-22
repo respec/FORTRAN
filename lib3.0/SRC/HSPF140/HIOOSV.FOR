@@ -1,6 +1,50 @@
 C
 C
 C
+      MODULE HIOOSV
+C
+C     + + + PURPOSE + + +
+C     read from and write to osv in memory array
+C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - initial implementation of OSV module version
+C
+C     + + + PARAMETERS + + +    
+      INCLUDE 'posvm.inc'
+C
+C     + + + MODULE VARIABLES
+      INTEGER, ALLOCATABLE, DIMENSION (:,:) :: OSVM
+      LOGICAL                               :: INIT_NEEDED = .TRUE.
+C
+      CONTAINS
+C
+C
+C      
+      SUBROUTINE   INITIALIZE 
+     M                       (SIZE)
+C
+C     + + + PURPOSE + + +
+C     allocate osv array   
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   SIZE
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     SIZE  - size of osv array (in 500 word blocks)
+C
+C     + + + END SPECIFICATIONS + + +
+C     
+      IF (INIT_NEEDED) THEN
+        ALLOCATE (OSVM(500,SIZE))
+        INIT_NEEDED = .FALSE.
+      ELSE
+        SIZE = UBOUND(OSVM,2)
+      END IF
+C      
+      END SUBROUTINE
+C
+C
+C
       SUBROUTINE   GETOSV
      I                    (KEYST,KEYND,MAXOSV,
      O                     OSV)
@@ -16,12 +60,6 @@ C     KEYST  - starting record number
 C     KEYND  - ending record number
 C     MAXOSV - maximum size of osv
 C
-C     + + + PARAMETERS + + +
-      INCLUDE 'posvm.inc'
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cosvm.inc'
-C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   KEY,START,ILEN
 C
@@ -30,6 +68,8 @@ C     + + + EXTERNAL + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      IF (INIT_NEEDED) CALL INITIALIZE(POSVSZ)
+C      
 C     start at first position
       START= 1
 C     how much to read
@@ -45,7 +85,7 @@ C       next position in memory
  10   CONTINUE
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -63,13 +103,6 @@ C     KEYST  - starting record number
 C     KEYND  - ending record number
 C     MAXOSV - maximum size of osv
 C
-C     + + + PARAMETERS + + +
-      INCLUDE 'posvm.inc'
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cosvm.inc'
-C
-C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   KEY,ILEN,START
 C
@@ -77,6 +110,8 @@ C     + + + EXTERNAL + + +
       EXTERNAL  COPYI
 C
 C     + + + END SPECIFICATIONS + + +
+C
+      IF (INIT_NEEDED) CALL INITIALIZE(POSVSZ)
 C
 C     start at first position
       START= 1
@@ -93,7 +128,7 @@ C       next position in memory
  10   CONTINUE
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -112,18 +147,12 @@ C     RECORD - index of OSV block
 C     OFFSET - address within OSV block
 C     IVAL   - value being fetched
 C
-C     + + + PARAMETERS + + +
-      INCLUDE 'posvm.inc'
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cosvm.inc'
-C
 C     + + + END SPECIFICATIONS + + +
 C
       IVAL= OSVM(OFFSET,RECORD)
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -141,18 +170,12 @@ C     RECORD - index of OSV block
 C     OFFSET - address within OSV block
 C     IVAL   - value being replaced
 C
-C     + + + PARAMETERS + + +
-      INCLUDE 'posvm.inc'
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cosvm.inc'
-C
 C     + + + END SPECIFICATIONS + + +
 C
       OSVM(OFFSET,RECORD)= IVAL
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -172,12 +195,6 @@ C     RECORD - index of OSV block
 C     OFFSET - address within OSV block
 C     RVAL   - value being fetched
 C
-C     + + + PARAMETERS + + +
-      INCLUDE 'posvm.inc'
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cosvm.inc'
-C
 C     + + + LOCAL VARIABLES + + +
       REAL    R
 C
@@ -191,7 +208,7 @@ C
       RVAL= R
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -210,12 +227,6 @@ C     RECORD - index of OSV block
 C     OFFSET - address within OSV block
 C     RVAL   - value being replaced
 C
-C     + + + PARAMETERS + + +
-      INCLUDE 'posvm.inc'
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'cosvm.inc'
-C
 C     + + + LOCAL VARIABLES + + +
       REAL    R
 C
@@ -229,4 +240,6 @@ C
       OSVM(OFFSET,RECORD)= I
 C
       RETURN
-      END
+      END SUBROUTINE
+C      
+      END MODULE HIOOSV

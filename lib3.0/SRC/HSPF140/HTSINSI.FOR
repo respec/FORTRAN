@@ -356,6 +356,12 @@ C     + + + PURPOSE + + +
 C     Assign values to the flag-pointers for the time series in each
 C     operation in this exgrp
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   GRPND,GRPST
 C
@@ -374,7 +380,7 @@ C     + + + LOCAL VARIABLES + + +
      $          WKND,WKST1,WKST2,WKST3,WKST4,I1,I2,I3,I4,I
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OSVPRO,GETOSV,PUTOSV
+      EXTERNAL  OSVPRO 
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT(//,' ',132('+'),

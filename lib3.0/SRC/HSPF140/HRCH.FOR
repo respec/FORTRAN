@@ -8,6 +8,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the rchres module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDAMON(12),NDELT,OSVKEY,SDATIM(5),EMFG,MAXOSV
 C
@@ -32,7 +38,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   PRGEN,PHYDR,PADCAL,PCONS,PHTRCH,PSED,PGQUAL,PRQUAL
-      EXTERNAL   PACID,RCHRST,PUTOSV
+      EXTERNAL   PACID,RCHRST
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),

@@ -552,6 +552,12 @@ C
 C     + + + PURPOSE + + +
 C     Sort Special Actions for each operation and set OSV keys.
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER MESSU,MSGFL,SCLU,SPOS,MXSPBF,SPBDAT(MXSPBF),LLNPSP,
      $        SPBF(LLNPSP,MXSPBF),SPOUT,SPBPOS(MXSPBF)
@@ -587,7 +593,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     ASRTI,GETOSV,OPNNO,OMSG,PUTOSV
+      EXTERNAL     ASRTI,OPNNO,OMSG
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I0,I1/0,1/
@@ -805,6 +811,12 @@ C     + + + PURPOSE + + +
 C     Determine lengths of pipes for user-defined variable quantities
 C     and initialize from starting OSV value of base variable
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER MESSU,MSGFL,SCLU,SPOUT,RUNWID
 C
@@ -842,7 +854,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC   MAX,SNGL
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    OMSTI,OMSG,OMSTC,GETOSV,DADDR
+      EXTERNAL    OMSTI,OMSG,OMSTC,DADDR
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I6/6/

@@ -18,9 +18,13 @@ C     12/20/2004 - jlk&pbd - added variable to keep track of current time
 C       for mfact special action, added code to change inspan width
 C       based on mfact special action
 C     2005  PBD enhanced external control capability to allow external width > width
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER      FILES(15),RETCOD
+      INTEGER   FILES(15),RETCOD
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     FILES  - array of file unit numbers
@@ -66,8 +70,8 @@ C     + + + FUNCTIONS + + +
       INTEGER      CKUSER
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     HSPSTA,TSGET,GETOSV,PERLND,IMPLND,RCHRES,COPY
-      EXTERNAL     HDISPL,DURANL,GENER,MUTSIN,PUTOSV,TSPUT,PLTGEN
+      EXTERNAL     HSPSTA,TSGET,PERLND,IMPLND,RCHRES,COPY
+      EXTERNAL     HDISPL,DURANL,GENER,MUTSIN,TSPUT,PLTGEN
       EXTERNAL     COPYI,CKUSER,GSTVFL,PSTVFL
       EXTERNAL     TIMADD,SPECLM,EXDATE 
 C

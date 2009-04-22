@@ -8,6 +8,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the copy module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C
@@ -31,7 +37,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   ITABLE,PUTOSV,DAYMNH
+      EXTERNAL   ITABLE,DAYMNH
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),/,' ','PROCESSING COPY OPERATION NO. ',I4)
@@ -112,6 +118,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the disply module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C
@@ -150,7 +162,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC   MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     ITABLE,HSCKFL,OMSG,OMSTC,OMSTI,RTABLE,CHKSTR,PUTOSV,
+      EXTERNAL     ITABLE,HSCKFL,OMSG,OMSTC,OMSTI,RTABLE,CHKSTR,
      $             SETVEC,WMSGTT,DAYMNH
 C
 C     + + + INPUT FORMATS + + +
@@ -482,6 +494,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the gener module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C
@@ -505,7 +523,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  ITABLE,RTABLE,PUTOSV,DAYMNH
+      EXTERNAL  ITABLE,RTABLE,DAYMNH
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),
@@ -610,6 +628,12 @@ C
 C     + + + PURPOSE + + +
 C     process the input for the mutsin module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C
@@ -633,7 +657,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DAYMNH,ITABLE,PUTOSV,HSCKFL,OMSG,OMSTI
+      EXTERNAL  DAYMNH,ITABLE,HSCKFL,OMSG,OMSTI
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),
@@ -735,6 +759,12 @@ C
 C     + + + PURPOSE + + +
 C     process the input for the pltgen module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),EDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C
@@ -766,7 +796,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH,CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DAYMNH,ITABLE,HSCKFL,RTABLE,CHKSTR,PUTOSV
+      EXTERNAL  DAYMNH,ITABLE,HSCKFL,RTABLE,CHKSTR
       EXTERNAL  OMSG,OMSTI,OMSTC,WMSGTT
 C
 C     + + + INPUT FORMATS + + +

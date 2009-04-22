@@ -8,6 +8,12 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for the duranl module
 C
+C     + + + HISTORY + + +
+C     2009/04/22 JLK - use OSV module version
+C
+C     + + + MODULES + + +
+      USE       HIOOSV 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),EDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
 C
@@ -30,7 +36,7 @@ C     + + + LOCAL VARIABLES + + +
      #          SCLU,SGRP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  ITABLE,HSCKFL,STDATE,ENDATE,RTABLE,PUTOSV,OMSG,OMSTR
+      EXTERNAL  ITABLE,HSCKFL,STDATE,ENDATE,RTABLE,OMSG,OMSTR
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT(/,' ',132('+'),
