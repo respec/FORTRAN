@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{CDBB0451-40D1-4666-B628-3C7AB8F57861}">
+	<Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Include Files">
+		<File RelativePath="..\..\SRC\HSPF140\CBMPR.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CCOPY.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CDISP.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CDURA.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CFILBK.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CGENE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CHCAT.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CHMSG.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CIFLTB.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CILAT.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CILGE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CILIG.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CILIQ.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CILIW.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CILSL.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CILSN.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CIOSTA.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CIRRIG.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CMDUM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CMOSV.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CMPAD.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CMUTS.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\COSUPM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\COSVM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPEST.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLAT.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLMS.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLNI.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLPE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLPG.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLPH.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLPQ.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLPS.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLPW.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLSE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLSN.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLST.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLTG.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPLTR.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CPTHNM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CREPT.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHAC.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHAD.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHCO.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHGE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHGQ.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHHD.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHHT.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHNU.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHOX.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHPH.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHPL.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHRQ.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHSE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRHSH.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRIN1.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRIN2.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRIN2C.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRIN3.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRIN3C.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CRIN4.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CSPCND.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CSPDST.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CSPEC.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\Cspins.inc"/>
+		<File RelativePath="..\..\SRC\HSPF140\CSPUVR.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CSPVQD.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSBU.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSBX.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSDD.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSDE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSDI.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSDR.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSER.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSEX.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSGPM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSIN.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSLA.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSLB.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSLR.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CTSLX.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CUCIM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\CWORK.INC"/></Filter>
+		<Filter Name="Parm Files">
+		<File RelativePath="..\..\SRC\HSPF140\PHCAT.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PHMSG.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXEXI.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXFLD.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXFTB.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXMDT.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXOPN.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXOSV.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXPST.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXROW.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXSTA.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXTAB.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXTTB.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PMXVNM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\POSVM.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PSPCND.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PSPDST.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PSPINS.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PSPUVR.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\PSPVQD.INC"/></Filter>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath="..\..\SRC\HSPF140\HBMPRAC.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HDATUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HEXTUTIL.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HFILES.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HGENUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIMP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\himpgas.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIMPQUA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIMPSLD.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIMPWAT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\Hioosup.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIOOSV.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIOSTA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIOTSIN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIOUCI.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIOWRK.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HIRRIG.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HOSUPER.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPER.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERAGUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERAIR.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERGAS.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERMST.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERNIT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERPES.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERPHO.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERQUA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERSED.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERSNO.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERTMP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERTRA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPERWAT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPESTUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HPRBUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCH.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHACI.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHCON.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHGQU.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHHTR.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHHYD.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHNUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHOXR.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHPHC.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHPLK.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHRQ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHSED.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHSHD.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRCHUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HREPORT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINGEN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINGEUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINOPN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINOPUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINSEQ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINTS.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINTSS.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINWDM.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGQ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGW.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSPT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSPW.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HSPF.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HSPFEC.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HSPFITAB.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HTSINSI.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HTSINSZ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HTSSUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HUTDURA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HUTOP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HUTOPINP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HWDMUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\Specact.FOR"/></Filter></Files>
+	<Globals/></VisualStudioProject>
