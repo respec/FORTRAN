@@ -13,15 +13,15 @@ C     + + + PARAMETERS + + +
       INCLUDE 'posvm.inc'
 C
 C     + + + MODULE VARIABLES
-      INTEGER, ALLOCATABLE, DIMENSION (:,:) :: OSVM
-      LOGICAL                               :: INIT_NEEDED = .TRUE.
+      INTEGER, TARGET, ALLOCATABLE, DIMENSION (:,:) :: OSVM
+      LOGICAL, PRIVATE                        :: INIT_NEEDED = .TRUE.
 C
       CONTAINS
 C
 C
 C      
-      SUBROUTINE   INITIALIZE 
-     M                       (SIZE)
+      SUBROUTINE   INITOSV 
+     M                    (SIZE)
 C
 C     + + + PURPOSE + + +
 C     allocate osv array   
@@ -68,7 +68,7 @@ C     + + + EXTERNAL + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (INIT_NEEDED) CALL INITIALIZE(POSVSZ)
+      IF (INIT_NEEDED) CALL INITOSV(POSVSZ)
 C      
 C     start at first position
       START= 1
@@ -111,7 +111,7 @@ C     + + + EXTERNAL + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (INIT_NEEDED) CALL INITIALIZE(POSVSZ)
+      IF (INIT_NEEDED) CALL INITOSV(POSVSZ)
 C
 C     start at first position
       START= 1
