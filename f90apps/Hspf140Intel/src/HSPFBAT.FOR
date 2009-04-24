@@ -14,6 +14,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER      FILES(15),I,I0,I1,USRFL,MESSU,
      $             RETCOD,RCL,SCLU,SGRP,IOPT,LEN,ICOMMA,ISPACE
 C      INTEGER      SDATM(8),EDATM(8),IDATM(8),DSEC
+      REAL         TIMES, TIMEE
       LOGICAL      LFLAG
       CHARACTER*64 FILNAM,VERSN,HMSNAM,FNAME,CLINE
       CHARACTER*12 ACC,STAT
@@ -40,6 +41,7 @@ C     version info and unix what info
       INCLUDE 'versn.inc'
 C
 C     when start?
+      CALL CPU_TIME(TIMES)
 C     CALL TSTUF('    ',-1.0)
 C      uncomment these lines to determine f90 run times
 C      CALL DATE_AND_TIME(VALUES=SDATM)
@@ -55,6 +57,8 @@ C     CALL INVALOP (LFLAG)
 C     CALL UNDFL (LFLAG)
 C
       OPEN (UNIT=99,FILE='error.fil')
+C
+      CALL POINTERPLAYGROUND      
 C
 C     initialize wdm file common block
       CALL WDBFIN
@@ -180,7 +184,12 @@ C       close any dss files
         CALL DSSCLO
       END IF
 C
+C     pointer end stuff
+      CALL POINTERPLAYGROUND2
+C      
 C     when end?
+      CALL CPU_TIME(TIMEE)
+      WRITE(99,*) TIMEE-TIMES, TIMES, TIMEE
 C     CALL TSTUF('Done',1.0)
 C      uncomment these lines for run times on f90
 C      CALL DATE_AND_TIME(VALUES=EDATM)
@@ -197,3 +206,94 @@ C      WRITE(*,2900) 'total tim:',DSEC/60,':',MOD(DSEC,60)
 C
       STOP
       END
+C
+C
+C
+      SUBROUTINE POINTERPLAYGROUND2
+C
+      USE HIOOSV
+C
+      TYPE PERLND_OSV_GENERAL
+         SEQUENCE
+         INTEGER       :: OPT(10)
+         REAL          :: VAL(5)
+         INTEGER       :: FLAG, DUM(484)
+      END TYPE PERLND_OSV_GENERAL
+      
+      TYPE PERLND_OSV
+         SEQUENCE
+         TYPE(PERLND_OSV_GENERAL) :: PGEN
+         REAL                     :: PARM(10)   
+      END TYPE PERLND_OSV
+      
+      INTEGER            :: IOPBASE, IREC 
+      TYPE (PERLND_OSV)  :: POSV
+      POINTER (P,POSV)
+C
+      DO IOPBASE = 1,2
+        IREC = 1 + ((IOPBASE-1)*2)
+        P = LOC(OSVM(1,IREC))
+        WRITE (99,*) IOPBASE,
+     1               POSV%PGEN%OPT(1), POSV%PGEN%VAL(1), POSV%PGEN%FLAG, 
+     1               POSV%PARM(1),
+     1               OSVM(1,IREC),OSVM(16,IREC)
+      END DO
+      END            
+C
+C
+C
+      SUBROUTINE POINTERPLAYGROUND
+C
+      USE HIOOSV
+C
+      INTEGER FINDOFFSET
+C
+      CHARACTER*8 VAR_NAME
+C
+      VAR_NAME= "PRECFP"
+      WRITE(99,*) VAR_NAME, FINDOFFSET(VAR_NAME)
+      VAR_NAME= "GATFP"
+      WRITE(99,*) VAR_NAME, FINDOFFSET(VAR_NAME)
+      VAR_NAME= "AIRTFP"
+      WRITE(99,*) VAR_NAME, FINDOFFSET(VAR_NAME)
+C
+      CALL INITOSV(5)
+      CALL PTOSVI(1,1,1)
+      CALL PTOSVR(1,11,1.0)
+      CALL PTOSVI(1,16,-1)
+      CALL PTOSVR(2,1,10.0)
+      
+      CALL PTOSVI(3,1,2)  
+      CALL PTOSVR(3,11,2.0)
+      CALL PTOSVI(3,16,-2)
+      CALL PTOSVR(4,1,20.0)
+C
+      END SUBROUTINE
+C
+C
+C
+      INTEGER FUNCTION FINDOFFSET(VARIABLENAME) 
+C
+      CHARACTER(LEN=*) :: VARIABLENAME      
+C
+      INCLUDE 'CPLAT.INC'
+C 
+      INTEGER :: ADDR
+      INTEGER, SAVE :: BASE_ADDR = 0
+C
+      IF (BASE_ADDR .EQ. 0) THEN      
+        BASE_ADDR = LOC(ASVEC)
+      END IF
+C                 
+      SELECT CASE (VARIABLENAME)
+        CASE ("GATFP")
+          ADDR = LOC(GATFP)
+        CASE ("PRECFP")
+          ADDR = LOC(PRECFP)
+        CASE ("AIRTFP")
+          ADDR = LOC(AIRTFP)
+      END SELECT
+      FINDOFFSET= 1+ (ADDR - BASE_ADDR)/4
+C      
+      END FUNCTION
+      
