@@ -14,6 +14,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER      FILES(15),I,I0,I1,USRFL,MESSU,
      $             RETCOD,RCL,SCLU,SGRP,IOPT,LEN,ICOMMA,ISPACE
 C      INTEGER      SDATM(8),EDATM(8),IDATM(8),DSEC
+      REAL         TIMES, TIMEE
       LOGICAL      LFLAG
       CHARACTER*64 FILNAM,VERSN,HMSNAM,FNAME,CLINE
       CHARACTER*12 ACC,STAT
@@ -40,6 +41,7 @@ C     version info and unix what info
       INCLUDE 'versn.inc'
 C
 C     when start?
+      CALL CPU_TIME(TIMES)
 C     CALL TSTUF('    ',-1.0)
 C      uncomment these lines to determine f90 run times
 C      CALL DATE_AND_TIME(VALUES=SDATM)
@@ -181,6 +183,8 @@ C       close any dss files
       END IF
 C
 C     when end?
+      CALL CPU_TIME(TIMEE)
+      WRITE(99,*) TIMEE-TIMES, TIMES, TIMEE
 C     CALL TSTUF('Done',1.0)
 C      uncomment these lines for run times on f90
 C      CALL DATE_AND_TIME(VALUES=EDATM)
