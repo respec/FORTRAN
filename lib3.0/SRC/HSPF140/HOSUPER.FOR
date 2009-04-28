@@ -23,6 +23,7 @@ C
 C     + + + MODULES + + +
       USE       HIOOSV 
       USE       HMCOPY, ONLY : COPY
+      USE       HMPLTGEN, ONLY : PLTGEN
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   FILES(15),RETCOD
@@ -72,7 +73,7 @@ C     + + + FUNCTIONS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     HSPSTA,TSGET,PERLND,IMPLND,RCHRES 
-      EXTERNAL     HDISPL,DURANL,GENER,MUTSIN,TSPUT,PLTGEN
+      EXTERNAL     HDISPL,DURANL,GENER,MUTSIN,TSPUT 
       EXTERNAL     COPYI,CKUSER,GSTVFL,PSTVFL
       EXTERNAL     TIMADD,SPECLM,EXDATE 
 C
@@ -372,7 +373,7 @@ C                     details first time thru
                     END IF
                   END IF
 C
-                  IF (OMCODE .NE. 4) THEN
+                  IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5) THEN
 C                   read the osv from disc
                     CALL GETOSV (OSVKST,OSVKND,MAXOSV,
      O                           OSV)
@@ -405,7 +406,7 @@ C                   case 4
 C
 C                   case 5
  150                  CONTINUE
-                        CALL PLTGEN (STIVL,IW,LSTCAL)
+                        CALL PLTGEN (STIVL,IW,LSTCAL,OSVKST)
                       GO TO 300
 C
 C                   case 6
