@@ -52,7 +52,7 @@
 		<File RelativePath="..\..\SRC\ADWDM\MSIMPT.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\MSOPEN.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\PRTFIL.FOR"/>
-		<File RelativePath="..\..\SRC\ADWDM\USYSLF90.FOR"/>
+		<File RelativePath="..\..\SRC\ADWDM\USYSIN95.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\UTWDMD.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\UTWDMF.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\utwdt1.FOR"/>

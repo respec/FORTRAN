@@ -10,6 +10,8 @@ C     + + + HISTORY + + +
 C     2009/04/27 JLK - initial implementation of module version of COPY
 C
 C     + + + MODULE VARIABLES + + +
+      IMPLICIT NONE
+C
       TYPE HTCOPY
         SEQUENCE
         INTEGER   COPYNO,NPT,NMN,MESSU
@@ -50,11 +52,8 @@ C     EMFG   - english/metric units flag (english-1,metric-2)
 C     MXOSV  - maximum size of osv
 C     OSVKEY - last osv file record written
 C
-C     + + + COMMON BLOCKS- SCRTCH, VERSION COPY1 + + +
-C     INCLUDE   'ccopy.inc'
+C     + + + COMMON BLOCKS  + + +
       INCLUDE   'crin2.inc'
-C      INCLUDE   'cmpad.inc'
-C      INCLUDE   'cmosv.inc'
 C
 C     + + + MODULE VARIABLES + + +
       TYPE (HTCOPY)  :: HCOPY     
@@ -80,7 +79,6 @@ C     + + + END SPECIFICATIONS + + +
 C
       I1   = 1
       I2   = 2
-      MESSU= FILE(1)
 C
       OSVREC= 1
       OSVKST= OSVKEY+ 1
@@ -103,10 +101,6 @@ C     flag pointer addresses
       ADDR     = LOC(HCOPY%IPTFP)
       WRITE(99,*) 'address of IPTFP',1+ ((ADDR - BASEADDR)/4)
 C
-      IF (OUTLEV.GT.0) THEN
-        WRITE (MESSU,2000) OPTNO
-      END IF
-C
       IF (RESMFG.EQ.1) THEN
 C       read the general part of the osv from osvfl
 C       - not implemented in this release of hspf
@@ -115,10 +109,14 @@ C       initialize the entire osv for this operation
         DO 10 I= 1, OSVREC*500
           OSV(I)= -999
  10     CONTINUE
+        HCOPY%MESSU = FILE(1)
+C
+        IF (OUTLEV.GT.0) THEN
+          WRITE (HCOPY%MESSU,2000) OPTNO
+        END IF
 C
 C       place information into osv
         HCOPY%COPYNO= OPTNO
-        HCOPY%MESSU = FILE(1)
         HCOPY%DELT  =  NDELT
         DO 20 I= 1, 12
           HCOPY%NDAY(I)= NDAMON(I)
@@ -145,7 +143,7 @@ C     get no. of time series to be copied -- table-type timeseries
      M             NUMBR)
 C
       IF (OUTLEV.GT.0) THEN
-        WRITE (MESSU,2010)  OPTNO
+        WRITE (HCOPY%MESSU,2010)  OPTNO
       END IF
 C
       RETURN
@@ -174,8 +172,7 @@ C     STIVL  - in inpad row
 C     WIDTH  - of inpad row
 C     OSVKST - starting block in osv
 C
-C     + + + COMMON BLOCKS- SCRTCH, VERSION COPY2 + + +
-C     INCLUDE   'ccopy.inc'
+C     + + + COMMON BLOCKS + + +
       INCLUDE   'cmpad.inc'
       INCLUDE   'cmosv.inc'
 C
@@ -199,11 +196,12 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
 C     point to where the osv for this operation is in memory
-      P = LOC(OSVM(1,OSVKST))
+      P      = LOC(OSVM(1,OSVKST))
+      PDATIM = LOC(HCOPY%YR)    
 C      
       IVL   = STIVL- 1
       IVL1  = STIVL
-      IDELT = DELT
+      IDELT = HCOPY%DELT
       PIVLNO= 0
       I1    = 1
       I12   = 12
@@ -219,7 +217,7 @@ C       transfer from input row to temporary array
           END IF
  20     CONTINUE
 C       transfer from temporary array to output row
-        DO 30 N= 1,NPT
+        DO 30 N= 1,HCOPY%NPT
           IF ( (HCOPY%OPTFP(N) .GT. 0) .AND. 
      1         (HCOPY%IPTFP(N) .GT. 0) ) THEN
             IF (HCOPY%OPTFP(N) .NE. HCOPY%IPTFP(N)) THEN
@@ -231,15 +229,15 @@ C       transfer from temporary array to output row
 C
 C     time loop
       DO 130 IVL= STIVL,WIDTH+ STIVL- 1
-        IVL1 = IVL1+ 1
-        SPIVL= SPIVL+ 1
+        IVL1       = IVL1+ 1
+        HCOPY%SPIVL= HCOPY%SPIVL+ 1
 C
 C       increment date/time
         CALL ADDTIM (IDELT,HCOPY%NDAY,I1,I12,
      M               DATIM,PIVLNO,
      O               HCOPY%NDAYS,DUM1,DUM2,DUM3,DUM4,DUM5,DUM6)
 C
-        IF (SPAFP .GT. 0 .AND. SPAFP .LE. SPAKND) THEN
+        IF (HCOPY%SPAFP .GT. 0 .AND. HCOPY%SPAFP .LE. HCOPY%SPAKND) THEN
 C         special actions are being taken and there is at least one left
           CALL SPECL (OPTYP,HCOPY%COPYNO,
      I                HCOPY%SPAKND,HCOPY%SPOPNO,
@@ -266,9 +264,9 @@ C         copy mean-valued time series to osv
  50       CONTINUE
         END IF
 C
-        IF (NPT.GT.0) THEN
+        IF (HCOPY%NPT.GT.0) THEN
 C         copy point-valued time series from osv to output
-          DO 60 N= 1,NPT
+          DO 60 N= 1,HCOPY%NPT
             IF ( (HCOPY%OPTFP(N) .GT. 0) .AND. 
      1           (HCOPY%IPTFP(N) .GT. 0) ) THEN
               IF (HCOPY%OPTFP(N) .NE. HCOPY%IPTFP(N)) THEN
