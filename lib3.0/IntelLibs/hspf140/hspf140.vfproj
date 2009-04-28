@@ -168,6 +168,7 @@
 		<File RelativePath="..\..\SRC\HSPF140\HIOUCI.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HIOWRK.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HIRRIG.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HMCOPY.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HOSUPER.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HPER.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HPERAGUT.FOR"/>
