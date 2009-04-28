@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="usgs_swstats" default="dll">
+<project name="tt_met" default="dll">
    <property name="SummaryListFile"    value="${ant.project.name}.lis"/>
    <property name="FC"          value="lf90"/>
    <property name="FOpts"       value="-c -o0"/>
@@ -23,9 +23,9 @@
       <apply executable="${FC}" dest="obj" dir="src" output="${SummaryListFile}" append="yes">
          <srcfile/>
          <arg line="${FOpts} -win -dll -mod ..\obj"/>
-         <mapper type="glob" from="*.for" to="*.obj"/>
+         <mapper type="glob" from="*.f" to="*.obj"/>
          <fileset dir="src" casesensitive="false"> 
-            <include name="*.for"/>          
+            <include name="*.f"/> 
          </fileset>
       </apply>
 

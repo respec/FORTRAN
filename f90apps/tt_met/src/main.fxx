@@ -1,0 +1,83 @@
+      include 'modparm.f'
+      program main
+
+!!    ~ ~ ~ PURPOSE ~ ~ ~
+!!    Main program to test subroutine
+!!        - J. Butcher, 4/22/09
+
+!!    ~ ~ ~ INCOMING VARIABLES ~ ~ ~
+!!    name        |units         |definition
+!!    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+!!    IDmet       |              |BASINS met station ID
+!!    istyr       |year          |start year for generation
+!!    istdy       | jday         |start Julian day for generation
+!!    nbyr        |years         |number of years to generate
+!!    numdata     |              |total number of data points
+!!    sub_elev(1) |m             |elevation of BASINS weather site
+!!    sub_lat(1)  |m             |latitude of BASINS weather site
+!!    Precip(:)   |in            |vector daily observed precipitation for period of interest - convert to SI in clicon.for
+!!    Tmax(:)     |F             |vector of daily observed TMAX for period of interest - convert to SI in clicon.for
+!!    Tmin(:)     |F             |vector of daily observed TMIN for period of interest - convert to SI in clicon.for
+!!    CO2         |ppmv          |CO2 concentration (base 330)
+!!    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+
+!!    ~ ~ ~ OUTGOING VARIABLES ~ ~ ~
+!!    name        |units         |definition
+!!    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+!!    PEVTPM(:)   | in/d         |vector of daily predicted Penman-Monteith PEVT
+!!    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+!!
+      use parm
+!!     input parms independent of parm.mod common block   
+      integer idmet,istyrZ,istdyZ,nbyrZ,numdata,ij
+      real sub_elevZ,sub_latZ,CO2Z,sump
+      real precipZ(1000),TmaxZ(1000),TminZ(1000), pevtpmZ(1000)
+      data numdata /365/
+
+!!     test data for subroutine call
+      sump=0.
+      nbyrZ=1
+      istyrZ=1990
+      istdyZ=1
+      sub_elevZ = 190.
+      sub_latZ = 35.7
+      co2Z = 330.
+!!      numdata=365
+!! test weather generator parameters - now read from file, except for IDWgn
+        IDmet = 554
+!!      Wlat = 44.4
+!!      welev = 10.
+!!      do ij=1,12
+!!         solarav(ij,1)= 15.
+!!         dewpt(ij,1)= 3.
+!!         wndav(ij,1) = 5.
+!!         pr_w(1,ij,1)=.05
+!!         pr_w(2,ij,1)=.10
+!!         tmpmn(ij,1)=3.
+!!         tmpmx(ij,1)=12.
+!!         pcpd(ij)=4.
+!!      end do
+
+!! test observed parameters
+      do ij=1,numdata    
+         precipZ(ij)=0.
+         if(mod(float(ij),3.).eq.0)precipZ(ij)=.5
+         tmaxZ(ij)=90.
+         tminZ(ij)=50.
+      end do
+!!     end test data
+
+!!     test call to the main subroutine
+      call pmpevt(idmet,istyrZ,istdyZ,nbyrZ,sub_elevZ,sub_latZ,       &
+    &  CO2Z,numdata,PrecipZ,TmaxZ,TminZ,PevtPMZ)
+    
+!!     output
+      write(*,*)(pevtpmZ(ij),ij=1,numdata)
+      do ij=1,numdata
+        sump=sump+pevtpmZ(ij)
+      end do
+      write(*,*)sump
+      write (*,1001)
+ 1001 format (/," Execution successfully completed ")
+      stop
+      end
