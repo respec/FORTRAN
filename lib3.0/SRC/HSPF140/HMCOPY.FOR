@@ -56,7 +56,7 @@ C     + + + COMMON BLOCKS  + + +
       INCLUDE   'crin2.inc'
 C
 C     + + + MODULE VARIABLES + + +
-      TYPE (HTCOPY)  :: HCOPY     
+      TYPE(HTCOPY)  HCOPY     
       POINTER   (P,HCOPY)
       POINTER   (PNUMBR,NUMBR),(PDATIM,DATIM),(POSV,OSV)
       INTEGER    NUMBR(2),DATIM(5),OSV(500)
@@ -177,7 +177,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE   'cmosv.inc'
 C
 C     + + + MODULE VARIABLES + + +
-      TYPE (HTCOPY)  :: HCOPY     
+      TYPE(HTCOPY)  HCOPY     
       POINTER    (P,HCOPY)
       POINTER    (PNUMBR,NUMBR),(PDATIM,DATIM) 
       INTEGER     NUMBR(2),DATIM(5)   
