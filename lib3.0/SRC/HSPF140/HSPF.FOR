@@ -345,6 +345,9 @@ C
 C     + + + PURPOSE + + +
 C     Process each <operation - type> block in the run data set
 C
+C     + + + MODULES + + +
+      USE   HMCOPY, ONLY : PCOPY
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     SDATIM(5),EDATIM(5),NDAMON(12),EMFG,SCLU,
      $            LKWOPR,NKWOPR,RUNWID,RETCOD
@@ -361,6 +364,7 @@ C     NKWOPR - number of operation name keywords
 C     KWDOPR - operation name keywords
 C     RUNWID - maximum run span width allowed - 0 if no restrictions
 C     RETCOD - return code -1 for user interupt
+C
 C
 C     + + + PARAMETERS + + +
       INCLUDE    'pmxosv.inc'
@@ -386,7 +390,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    OPNNO, CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   DUMPER,PPERLN,PIMPLN,PRCHRE,PCOPY,PPLTGN,PIRGTF,PIRSTF
+      EXTERNAL   DUMPER,PPERLN,PIMPLN,PRCHRE,PPLTGN,PIRGTF,PIRSTF
       EXTERNAL   OPNNO,CHKSTR,PDISPL,PDURAN,PGENER,PMUTSN,WMSGTT,PPIRRG
       EXTERNAL   PBMPRC,PREPRT
       EXTERNAL   GETKNM,GETSE,PMXTFC,KEYUCI,ZIPI,HDMES2,HDMES3,HDMESN
