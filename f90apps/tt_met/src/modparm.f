@@ -412,7 +412,7 @@
       real, dimension (:), allocatable :: rvar_orig
 ! Input Uncertainty, added by Ann van Griensven
       integer ::  iseed, nauto, imocheck,idlast
-	real*8 ::  psamp
+	double precision ::  psamp
 	integer, dimension (:), allocatable :: isamp, itelmon
       integer, dimension (:,:), allocatable :: ipinue
       real, dimension (:,:), allocatable :: stprain, stptemp, stprad
