@@ -22,6 +22,7 @@ C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
       USE       HIOOSV 
+      USE       HMCOPY, ONLY : COPY
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   FILES(15),RETCOD
@@ -70,7 +71,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      CKUSER
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     HSPSTA,TSGET,PERLND,IMPLND,RCHRES,COPY
+      EXTERNAL     HSPSTA,TSGET,PERLND,IMPLND,RCHRES 
       EXTERNAL     HDISPL,DURANL,GENER,MUTSIN,TSPUT,PLTGEN
       EXTERNAL     COPYI,CKUSER,GSTVFL,PSTVFL
       EXTERNAL     TIMADD,SPECLM,EXDATE 
@@ -87,9 +88,9 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
 C     initialize variables
-      MESSU= FILES(1)
-      MSGFL= FILES(15)
-      STFIL= FILES(9)
+      MESSU = FILES(1)
+      MSGFL = FILES(15)
+      STFIL = FILES(9)
       FSTCAL= 1
       STECNT= 0
 C
@@ -371,9 +372,11 @@ C                     details first time thru
                     END IF
                   END IF
 C
-C                 read the osv from disc
-                  CALL GETOSV (OSVKST,OSVKND,MAXOSV,
-     O                         OSV)
+                  IF (OMCODE .NE. 4) THEN
+C                   read the osv from disc
+                    CALL GETOSV (OSVKST,OSVKND,MAXOSV,
+     O                           OSV)
+                  END IF
 C
 C                 call the appropriate operating module
 C                 casentry omcode
@@ -397,7 +400,7 @@ C                   case 3
 C
 C                   case 4
  140                  CONTINUE
-                        CALL COPY (STIVL,IW)
+                        CALL COPY (STIVL,IW,OSVKST)
                       GO TO 300
 C
 C                   case 5
@@ -437,8 +440,10 @@ C                   case 11
  300              CONTINUE
 C                 endcase
 C
-C                 write the osv to disc
-                  CALL PUTOSV (OSVKST,OSVKND,MAXOSV,OSV)
+                  IF (OMCODE .NE. 4) THEN
+C                   write the osv to disc
+                    CALL PUTOSV (OSVKST,OSVKND,MAXOSV,OSV)
+                  END IF
 C
                   IF (RUNWID .EQ. 0) THEN
 C                   put all time series
