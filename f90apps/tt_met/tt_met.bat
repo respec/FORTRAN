@@ -1,2 +1,2 @@
-rem ant -f usgs_swstats.xml %1 -d >usgs_swstats_debug.lis
-ant -f usgs_swstats.xml %1
+rem ant -f tt_met.xml %1 -d >tt_met_debug.lis
+ant -f tt_met.xml %1
