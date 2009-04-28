@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<project name="usgs_swstats" default="dll">
+   <property name="SummaryListFile"    value="${ant.project.name}.lis"/>
+   <property name="FC"          value="lf90"/>
+   <property name="FOpts"       value="-c -o0"/>
+
+   <target name="dll" depends="compile">
+      <echo message=" dll${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <echo message="basedir:'${basedir}'${line.separator}" file="${SummaryListFile}" append="yes"/>
+
+      <exec executable="${FC}" dir="obj"    output="${SummaryListFile}" append="yes">
+         <arg value="@${ant.project.name}.rsp"/>
+      </exec>
+      <copy file="${SummaryListFile}" 
+            tofile="history\${DSTAMP}${TSTAMP}${ant.project.name}.lis">
+      </copy>
+      <copy file="bin\${ant.project.name}.dll" tofile="c:\windows\system32\${ant.project.name}.dll"/>
+   </target>
+
+   <target name="compile" depends="init">
+      <echo message=" compile${line.separator}" file="${SummaryListFile}" append="yes"/>
+
+      <apply executable="${FC}" dest="obj" dir="src" output="${SummaryListFile}" append="yes">
+         <srcfile/>
+         <arg line="${FOpts} -win -dll -mod ..\obj"/>
+         <mapper type="glob" from="*.for" to="*.obj"/>
+         <fileset dir="src" casesensitive="false"> 
+            <include name="*.for"/>          
+         </fileset>
+      </apply>
+
+      <fileset dir="src" id="objNew"> 
+         <include name="*.obj"/>
+         <include name="*.lib"/>
+         <include name="*.mod"/>
+         <include name="*.txt"/>
+         <include name="*.xp$"/>
+         <include name="*.im$"/>
+      </fileset>
+
+      <copy todir="obj"><fileset refid="objNew"/></copy>
+
+      <delete><fileset refid="objNew"/></delete>
+
+   </target>
+
+   <target name="init">
+      <tstamp/>
+      <echo message="${ant.project.name}${line.separator} init${line.separator}" 
+            file="${SummaryListFile}"/>
+   </target> 
+
+   <target name="clean" depends="init">
+      <echo message=" clean${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <delete>
+	   <fileset dir="obj" casesensitive="no">
+            <include name="*.obj"/>
+            <include name="*.lib"/>
+            <include name="*.mod"/>
+            <include name="*.*$"/>
+         </fileset>
+      </delete>
+      <delete>
+	   <fileset dir="bin" casesensitive="no">
+            <include name="{ant.project.name}.*"/>
+         </fileset>
+      </delete>
+   </target>
+</project>
