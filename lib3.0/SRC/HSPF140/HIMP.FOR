@@ -191,6 +191,9 @@ C
 C     + + + PURPOSE + + +
 C     Process the general input for the implnd module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MESSFL,MESSUG,NDAMON(12),NDELT,OPNO,
      1          SDATIM(5),OUTLEV,ECOUNT
@@ -217,7 +220,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DAYMNH,ITABLE,HSCKFL,OMSTI,OMSG,HSCKFLX
+      EXTERNAL  DAYMNH,ITABLE,HSCKFL,HSCKFLX
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   MIN0,MOD

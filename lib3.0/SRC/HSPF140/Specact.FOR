@@ -292,6 +292,9 @@ C     4/14/2005 jlk - added initialization for I0
 C     12/17/2004 jlk&pbd - added call to new subroutine to handle
 C         MFACT change action
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    MESSU,MSGFL,SCLU,KEYST,KEYND,LOCDIR,SDATIM(5),
      $           EDATIM(5),NDAMON(12),MXSPBF,MXVACC,VACFST(10),
@@ -358,7 +361,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     CKNBLV
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    ZIPI,GETUCI,PSPUVQ,PSPCON,PSPDIS,PSPUVN,PSPACT,OMSG
+      EXTERNAL    ZIPI,GETUCI,PSPUVQ,PSPCON,PSPDIS,PSPUVN,PSPACT
       EXTERNAL    CKNBLV,PSPIPS,PSPHDR,HDMES3,PSPUML
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -556,7 +559,8 @@ C     + + + HISTORY + + +
 C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
-      USE       HIOOSV 
+      USE HIOOSV 
+      USE HMMSG, ONLY : OMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER MESSU,MSGFL,SCLU,SPOS,MXSPBF,SPBDAT(MXSPBF),LLNPSP,
@@ -593,7 +597,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     ASRTI,OPNNO,OMSG
+      EXTERNAL     ASRTI,OPNNO
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I0,I1/0,1/
@@ -815,7 +819,8 @@ C     + + + HISTORY + + +
 C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
-      USE       HIOOSV 
+      USE HIOOSV 
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER MESSU,MSGFL,SCLU,SPOUT,RUNWID
@@ -854,7 +859,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC   MAX,SNGL
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    OMSTI,OMSG,OMSTC,DADDR
+      EXTERNAL    DADDR
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I6/6/
@@ -1125,6 +1130,9 @@ C
 C     + + + PURPOSE + + +
 C     read and process user-defined variable quantity from ucifl
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,OUTLEV,MSGFL,SCLU,LOCDIR,DELT,MAXOPN,
      $             OPNTAB(20,MAXOPN),NOPNS,SPOUT,ECOUNT,RUNWID
@@ -1176,7 +1184,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC    MAX
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSTC,OMSG,OMSTI,OPNNO,CHKSTR,CKTCOD,MKADDR
+      EXTERNAL     OPNNO,CHKSTR,CKTCOD,MKADDR
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I1,I2,I4,I6,I60,I80/1,2,4,6,60,80/
@@ -1485,6 +1493,9 @@ C
 C     + + + PURPOSE + + +
 C     Read and process special action condition from ucifl.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      OUTLEV,MESSU,MSGFL,SCLU,MXBKLV,STWORD,LREPT,LLNPSP,
      $             MXSPBF,SPOS,SPBF(LLNPSP,MXSPBF),ECOUNT,KEY,CURBLK,
@@ -1530,7 +1541,7 @@ C     + + + LOCAL VARIABLES + + +
      $         NUMLIN,KEYST
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL OMSTI,OMSG,SPARSE,PSPFTR
+      EXTERNAL SPARSE,PSPFTR
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,'  IF: NESTING LEVEL',I3)
@@ -1847,6 +1858,9 @@ C
 C     + + + PURPOSE + + +
 C     read and process special action distribution from ucifl
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,MSGFL,SCLU,MXSPDS,OUTLEV,SPOUT,DCNT,
      $             SPDCNT(MXSPDS),SPDTST(MXSPDS),SPDTCD(MXSPDS),
@@ -1884,7 +1898,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  CDEFF1(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     CKTCOD,OMSTI,OMSTC,OMSG,CVARAR
+      EXTERNAL     CKTCOD,CVARAR
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I1/1/
@@ -2051,6 +2065,9 @@ C
 C     + + + PURPOSE + + +
 C     read and process a user defined special action
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,MSGFL,SCLU,OUTLEV,LOCDIR,SPOUT,ECOUNT,KEY
       CHARACTER*80 UCIBUF
@@ -2089,7 +2106,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC    MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     MKADDR,GETUCI,GETIND,OMSTI,OMSG,OMSTC,CHRINS
+      EXTERNAL     MKADDR,GETUCI,GETIND,CHRINS
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I0,I3,I6,I80/0,3,6,80/
@@ -2305,6 +2322,9 @@ C
 C     + + + PURPOSE + + +
 C     read and process an old style special action from ucifl
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,MSGFL,SCLU,LOCDIR,SDATIM(5),EDATIM(5),
      $             NDAMON(12),MXSPBF,MXSPDS,SPDCNT(MXSPDS),DELT,CURBLK,
@@ -2384,7 +2404,7 @@ C     + + + FUNCTIONS + + +
       INTEGER       CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL      OMSTC,OMSG,TOPTNO,MKQUAN,CKRWID,CKTCOD,OMSTI,CHKSTR,
+      EXTERNAL      TOPTNO,MKQUAN,CKRWID,CKTCOD,CHKSTR,
      $              MKADDR,COPYI,STDATE,DIFTIM,EXDATE,DECCHX,SPNXDT,
      $              LFTSTR,QUPCAS
 C
@@ -3147,8 +3167,11 @@ C
      O                     TCODE)
 C
 C     + + + PURPOSE + + +
-C     ckeck a character time code and return its integer value,
+C     check a character time code and return its integer value,
 C     report error if problem
+C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MESSU,MSGFL,SCLU,ECOUNT,ERRFLG,TCODE
@@ -3166,7 +3189,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*1 CTCOD1(2)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    OMSTI,OMSTC,OMSG,CVARAR
+      EXTERNAL    CVARAR
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -3212,6 +3235,9 @@ C
      M                     TOPTYP,ERRFLG,
      O                     VNAME,NSUB,ADDR)
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      LOCDIR,MESSU,MSGFL,SCLU,BGRP,TOPTYP,ERRFLG,NSUB(3),
      $             ADDR
@@ -3254,7 +3280,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC    ABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSG,OMSTI,OMSTC,CHKSTR,TAGVAL
+      EXTERNAL     CHKSTR,TAGVAL
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (A6,3A3)
@@ -5243,6 +5269,9 @@ C     + + + PURPOSE + + +
 C     Determine if a quantity is constant or a variable and return
 C     the value or a pointer as applicable.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,MSGFL,SCLU,MXSPV1,NVQD,TYPCOD,ERRFLG,ECOUNT,
      $             IVAL,UVQIDX
@@ -5279,7 +5308,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     CHKSTR,OMSTC,OMSG,LFTSTR
+      EXTERNAL     CHKSTR,LFTSTR
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I6,I10/6,10/
@@ -5683,6 +5712,9 @@ C
 C     + + + PURPOSE + + +
 C     Parse free-form special action line(s) into a logic chain.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      STLINE,OUTLEV,MESSU,MSGFL,SCLU,ECOUNT,KEY,NEWCHN,
      $             NUMLIN
@@ -5725,7 +5757,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      LENSTR,CKNBLV
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     ZIPI,LENSTR,ZIPC,SPITEM,OMSTI,OMSG,OMSTC,MKQUAN,
+      EXTERNAL     ZIPI,LENSTR,ZIPC,SPITEM,MKQUAN,
      $             DECCHX,GETUCI,CKNBLV
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -6315,6 +6347,9 @@ C
 C     + + + HISTORY + + +
 C     2004/12/20 - jlk&pbd - initial implementation
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,OUTLEV,MSGFL,SCLU,ECOUNT,SPOUT
       CHARACTER*80 UCIBUF
@@ -6333,15 +6368,12 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE     'cspins.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      ERRFLG,SGRP,I80
+      INTEGER      ERRFLG,SGRP,I80,I
       CHARACTER*80 EBUFF
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE     (EBUFF,EBUF1)
       CHARACTER*1     EBUF1(80)
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL     OMSG,OMSTI,OMSTC
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (5X,A4,A2,I4,2(A4,A2),2I2,F10.0,A1,1X,A4,A2,I4,2(A4,A2),

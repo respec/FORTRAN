@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for section sedtrn of rchres application module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION SED1 + + +
       INCLUDE    'crhse.inc'
       INCLUDE    'crin2.inc'
@@ -16,7 +19,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL       FACT,RHOMN,RVAL(4),RWTSED,TOTL,VOLSED
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   RTABLE,ITABLE,OMSG,OMSTR,ZIPI
+      EXTERNAL   RTABLE,ITABLE,ZIPI
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
@@ -239,6 +242,9 @@ C
 C     + + + PURPOSE + + +
 C     Simulate behavior of inorganic sediment
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI,OMSTD
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION SED2 + + +
       INCLUDE    'crhse.inc'
       INCLUDE    'cmpad.inc'
@@ -250,7 +256,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   COHESV,SANDLD,OMSTR,OMSTI,OMSTD,OMSG,HREQTS
+      EXTERNAL   COHESV,SANDLD,HREQTS
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
@@ -1020,6 +1026,9 @@ C     + + + PURPOSE + + +
 C     Simulate behavior of sand/gravel
 C     variables are r4 unless otherwise stated
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MESSU,NEXITS,RCHNO,SANDFG,SDWCT2(2),MSGFL,DATIM(5)
       REAL        AVVELE,BDSAND,DB50E,DB50M,DEPSCR,EOVOL(5),
@@ -1068,7 +1077,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL              GSI,PROSND,PSAND,PSCOUR,SANDS,SCOUR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTI,OMSTD,OMSG,OMSTR,COLBY,TOFFAL
+      EXTERNAL   COLBY,TOFFAL
 C
 C     + + + END SPECIFICATIONS + + +
 C

@@ -8,6 +8,9 @@ C     + + + PURPOSE + + +
 C     Read a sequential input file containing multiple timeseries for
 C     use by HSPF-format of file is same as a HSPF PLOTFL
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI, OMSTC, OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   STIVL,WIDTH
 C
@@ -25,7 +28,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*1 EBUFF(80)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  ADDTIM,EXDATE,OMSG,OMSTI,OMSTC
+      EXTERNAL  ADDTIM,EXDATE 
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (1X)

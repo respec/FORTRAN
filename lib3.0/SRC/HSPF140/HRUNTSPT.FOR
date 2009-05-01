@@ -9,6 +9,9 @@ C     current buffer must be valid and available for reuse
 C     this subroutine is closely related to gword.
 C     any bugs detected here may be present there.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ADDR,WORD
 C
@@ -32,7 +35,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (WORDI,WORDR)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTD,OMSTI,FDATIM,OMSG,RBUFF
+      EXTERNAL   FDATIM,RBUFF
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -84,6 +87,9 @@ C
 C     + + + PURPOSE + + +
 C     Initialize the buffer/extension from the tss
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   VTSB,VTFRM
 C
@@ -103,7 +109,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,LWORD,RECBCW,RECFRM,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  RBUFF,OMSTD,OMSTI,FDATIM,OMSG
+      EXTERNAL  RBUFF,FDATIM
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -294,6 +300,9 @@ C
 C     + + + PURPOSE + + +
 C     Put xvar into the tss with all its ramifications.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   COMP,NTS
 C
@@ -313,7 +322,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   BTI,DUMR4,SCLU,SGRP,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTD,OMSTI,FDATIM,OMSG,REPLC,XVEXP,FINIS,XVPUT,SQUISH
+      EXTERNAL  FDATIM,REPLC,XVEXP,FINIS,XVPUT,SQUISH
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -803,6 +812,9 @@ C     + + + PURPOSE + + +
 C     Put one or more values into the buffer/extension and write
 C     to the tss as necessary
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   N,OFF(20),VO
       REAL      VAL(20)
@@ -825,7 +837,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,J,NVO,I,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTD,OMSTI,FDATIM,OMSG,WBUFF,MEXT
+      EXTERNAL  FDATIM,WBUFF,MEXT
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1267,6 +1279,9 @@ C
 C     + + + PURPOSE + + +
 C     Store values for replace access mode.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NTS,OFF(20)
 C
@@ -1286,7 +1301,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   BCWADR,SCLU,SGRP,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTD,OMSTI,FDATIM,OMSG,RPUT,RGET,GTWORD,RINIT
+      EXTERNAL  FDATIM,RPUT,RGET,GTWORD,RINIT
 C
 C     + + + INTRINSICS + + +
       INTRINSIC IABS
@@ -1390,6 +1405,9 @@ C     Get a word from the dataset at vo.  word should be in current
 C      buffer or in the tss record after the tss record in the buffer.
 C     Used for replace access.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     VO,WORD
 C
@@ -1413,7 +1431,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (WORDI,WORDR)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTD,OMSTI,FDATIM,OMSG,WBUFF,RBUFF
+      EXTERNAL  FDATIM,WBUFF,RBUFF
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1475,6 +1493,9 @@ C
 C     + + + PURPOSE + + +
 C     Initialize a tsb for replace processing.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + COMMON BLOCKS- PUTCOM + + +
       INCLUDE   'ctsin.inc'
       INCLUDE   'ctsex.inc'
@@ -1487,7 +1508,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,WORDI,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  BCWSPL,OMSTD,OMSTI,FDATIM,OMSG,RPUT
+      EXTERNAL  BCWSPL,FDATIM,RPUT
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1532,6 +1553,9 @@ C     virtual origin in vo.  write and read records as needed, but
 C     no backtracking allowed.  advancement must be one record at a
 C     time.  offsets must be in ascending order in off.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   N,OFF(20),VO
       REAL      VAL(20)
@@ -1554,7 +1578,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   ADR,SCLU,SGRP,I,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTD,OMSTI,FDATIM,OMSG,WBUFF,RBUFF
+      EXTERNAL  FDATIM,WBUFF,RBUFF
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1754,6 +1778,9 @@ C
 C     + + + PURPOSE + + +
 C     Write final buffer/extension
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + COMMON BLOCKS- PUTCOM + + +
       INCLUDE   'ctsin.inc'
       INCLUDE   'ctsex.inc'
@@ -1766,7 +1793,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    WBUFF,MEXT,OMSTD,OMSTI,FDATIM,OMSG
+      EXTERNAL    WBUFF,MEXT,FDATIM
 C
 C     + + + END SPECIFICATIONS + + +
 C

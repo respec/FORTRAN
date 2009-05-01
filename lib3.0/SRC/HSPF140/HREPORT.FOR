@@ -13,6 +13,7 @@ C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
       USE       HIOOSV 
+      USE HMMSG, ONLY : OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
@@ -45,7 +46,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      CHKSTR,REPPTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     WMSGTT,ITABLE,HSCKFL,CHKSTR,OMSTC,OMSG
+      EXTERNAL     WMSGTT,ITABLE,HSCKFL,CHKSTR
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (7(A4,1X))
@@ -1215,6 +1216,9 @@ C
 C     + + + PURPOSE + + +
 C     Returns index based on text, loop status, and allowable range
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     REPTNO,MESSU,MSGFL,SCLU,LEVCT(3),LOOPFG,MIN,MAX,
      $            RPECNT(3),MAXLP(3),ERRFLG,INDEX
@@ -1223,9 +1227,6 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     SGRP
       CHARACTER*2 STARS
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL    OMSTI,OMSTC,OMSG
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA STARS/'**'/

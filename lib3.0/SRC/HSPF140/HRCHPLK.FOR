@@ -7,6 +7,9 @@ C     + + + PURPOSE + + +
 C     Process input for the plank section of the rchres application
 C     module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK1 + + +
       INCLUDE    'crhpl.inc'
       INCLUDE    'crin2.inc'
@@ -18,7 +21,7 @@ C     + + + LOCAL VARIABLES + + +
       PARAMETER  (HRPYR = 8760.0)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   RTABLE,ITABLE,OMSG,ZIPI,OMSTI
+      EXTERNAL   RTABLE,ITABLE,ZIPI
       EXTERNAL   ZIPR,MDATBL,PKSUMS
 C
 C     + + + OUTPUT FORMATS + + +

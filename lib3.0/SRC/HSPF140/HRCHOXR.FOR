@@ -187,6 +187,9 @@ C
 C     + + + PURPOSE + + +
 C     Simulate primary do, bod balances
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD,OMSTR
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
       INCLUDE    'crhox.inc'
       INCLUDE    'cmpad.inc'

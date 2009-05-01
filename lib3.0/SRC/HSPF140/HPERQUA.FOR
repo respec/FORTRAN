@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for section pqual
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTC,OMSG,OMSTI
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PQUAL1 + + +
       INCLUDE    'cplpq.inc'
       INCLUDE    'crin2.inc'
@@ -21,8 +24,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  CHSTR1(12)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   ITABLE,RTABLE,OMSG,OMSTC
-      EXTERNAL   ZIPR,MDATBL
+      EXTERNAL   ITABLE,RTABLE,ZIPR,MDATBL
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING INPUT FOR SECTION PQUAL')

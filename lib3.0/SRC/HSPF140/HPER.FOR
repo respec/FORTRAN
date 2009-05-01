@@ -243,6 +243,9 @@ C
 C     + + + PURPOSE + + +
 C     Process the general input for the PERLND module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12)
 C
@@ -264,7 +267,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DAYMNH,ITABLE,HSCKFL,OMSTI,OMSG,HSCKFLX
+      EXTERNAL  DAYMNH,ITABLE,HSCKFL,HSCKFLX
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   MIN0,MOD

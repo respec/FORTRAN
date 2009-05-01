@@ -7,6 +7,9 @@ C
 C     + + + PURPOSE + + +
 C     Read (and echo) pest supplemental file
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU, MSGFL, SUPFIL, OUTLEV, ECOUNT
 C
@@ -24,7 +27,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   I, J, SGRP, SCLU, IECNT
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  PMXTFT, OMSTC, OMSTI, OMSG
+      EXTERNAL  PMXTFT 
 C
 C     + + + OUTPUT FORMATS + + +
 2000  FORMAT ('   Begin processing supplemental ID',I5,
@@ -168,6 +171,9 @@ C
 C     + + + PURPOSE + + +
 C     Update information in uci with values from PEST supplemental file
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU, MSGFL, NVALS, IPOS, OUTLEV, ECOUNT, VALSET
       REAL         RVAL(NVALS)
@@ -189,9 +195,6 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU, SGRP, T1, T2, I, IVEC, ERR, IIND
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTI, OMSG
 C
 C     + + + OUTPUT FORMATS + + +
 2000  FORMAT ('     Supplemental values from ID ',I5,

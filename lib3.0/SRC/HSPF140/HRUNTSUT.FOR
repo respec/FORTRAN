@@ -212,6 +212,9 @@ C     row may be added to the elements of the target row.
 C     Note: statements with numbers from 800-999 are machine
 C     dependent and may have to be altered.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   SROW,TROW,STIVL,WIDTH
 C
@@ -234,7 +237,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      Y
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSG,OMSTI,OMSTD,FDATIM
+      EXTERNAL  FDATIM
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS

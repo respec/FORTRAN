@@ -7,6 +7,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input to section gqual of the rchres module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   OSVREC
 C
@@ -35,7 +38,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  IABS,MAX
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSTI,RTABLE,ITABLE,OMSG,ADDTIM,ZIPI
+      EXTERNAL     RTABLE,ITABLE,ADDTIM,ZIPI
       EXTERNAL     ZIPR,MDATBL,WMSGTT
 C
 C     + + + INPUT FORMATS + + +
@@ -1723,6 +1726,9 @@ C     Simulate the advective processes, including deposition and
 C     scour for the quality constituent attached to one sediment size
 C     fraction
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTD,OMSTI,OMSTC,OMSG,OMSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECNT(2),MSGFL,J,MESSU,NEXITS,RCHNO,DATIM(5)
       REAL       BSED,BQAL,DEPSCR,DSQAL,GQID(5),ISQAL,OSED(5),OSQAL(5),
@@ -1762,9 +1768,6 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTD,OMSTI,OMSTC,OMSG,OMSTR
 C
 C     + + + OUTPUT FORMATS + + +
  2070 FORMAT (5A4)

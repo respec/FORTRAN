@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for snow section of module perlnd or implnd
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG 
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION SNOW1 + + +
       INCLUDE    'cplsn.inc'
       INCLUDE    'crin2.inc'
@@ -16,7 +19,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      RVAL(6)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  ITABLE,OMSG,RTABLE,NOPACK,ALBED
+      EXTERNAL  ITABLE,RTABLE,NOPACK,ALBED
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
@@ -234,6 +237,9 @@ C     + + + PURPOSE + + +
 C     Simulate the accumulation and melting of snow and ice,
 C     and retention and release of liquid water.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       CHARACTER*6 OPTYP
 C
@@ -255,7 +261,7 @@ C
 C     + + + EXTERNALS + + +
       EXTERNAL  HREQTS,METEOR,EFFPRC,COMPAC,SNOWEV,HEXCHR,COOLER,
      $          WARMUP,MELTER,LIQUID,ICING,GMELT,DEGDAY,
-     $          NOPACK,OMSG,OMSTR,OMSTD,OMSTI
+     $          NOPACK
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA TSSUB/1,1/
@@ -1519,6 +1525,9 @@ C     + + + PURPOSE + + +
 C     Calculate the saturation vapor pressure (millibars)
 C     for the given temperature (deg F).
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   LSNO,MESSU,ECNT1,MSGFL,DATIM(5)
       REAL      SVP(40),TMP,VAP
@@ -1539,9 +1548,6 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + INTRINSICS + + +
       INTRINSIC REAL,IFIX
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTR,OMSG,OMSTD,OMSTI
 C
 C     + + + END SPECIFICATIONS + + +
 C

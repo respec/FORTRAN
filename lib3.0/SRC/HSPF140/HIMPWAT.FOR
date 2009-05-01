@@ -370,6 +370,9 @@ C     + + + PURPOSE + + +
 C     Determine how much of the moisture supply (MSUPY) runs off
 C     in one simulation period.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    DAY,DAYFG,FSMSFG,MESSU,MON,NDAYS,NXTMON,RTOPFG,VNNFG,
      $           MSGFL,LSNO
@@ -412,7 +415,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  ABS,SQRT
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   DAYVAL,OMSTI,OMSTR,OMSG
+      EXTERNAL   DAYVAL 
 C
 C     + + + END SPECIFICATIONS + + +
 C

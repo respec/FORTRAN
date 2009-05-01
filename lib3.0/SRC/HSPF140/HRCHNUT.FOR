@@ -6,13 +6,16 @@ C
 C     + + + PURPOSE + + +
 C     Process input for the nutrx section of rchres application module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI 
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERISON NUTRX1 + + +
       INCLUDE    'crhnu.inc'
       INCLUDE    'crin2.inc'
       INCLUDE    'cmpad.inc'
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   RTABLE,ITABLE,OMSG,OMSTI,ZIPI
+      EXTERNAL   RTABLE,ITABLE,ZIPI
       EXTERNAL   ZIPR,MDATBL
 C
 C     + + + LOCAL VARIABLES + + +
@@ -1068,6 +1071,9 @@ C     Simulate the advective processes, including deposition and
 C     scour for the inorganic nutrient adsorbed to one sediment size
 C     fraction
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTC,OMSTR,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      ECNT(2),MSGFL,J,MESSU,
      $             NEXITS,RCHNO,DATIM(5)
@@ -1128,9 +1134,6 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL     OMSG,OMSTI,OMSTC,OMSTR,OMSTD
 C
 C     + + + END SPECIFICATIONS + + +
 C

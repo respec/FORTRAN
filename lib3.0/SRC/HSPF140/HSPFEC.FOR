@@ -428,6 +428,9 @@ C
 C     + + + PURPOSE + + +
 C     Get an entry from time series blocks data structure.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     TSBKCD,KEYND,MESSU,MSGFL,SCLU,BGRP,KEY,ECOUNT,SVOLNO,
      $            SMEMSB(2),TVOLNO,TOPFST,TOPLST,TMEMSB(2),GTCOD
@@ -483,7 +486,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   CHRDIG
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  GETUCI,CHRDIG,TAGVAL,RDMFAC,OMSG,OMSTC
+      EXTERNAL  GETUCI,CHRDIG,TAGVAL,RDMFAC
 C
 C     + + + INPUT FORMATS + + +
  1010 FORMAT (A6,I4,1X,A6,A2,1X,2A4,A10,A4,1X,A6,2(1X,I3),
@@ -662,6 +665,9 @@ C     Expand an entry in the schematic block by using either default
 C     time series connections from the message file or
 C     user-defined connections from a mass link block
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MAXOPN,MAXMLK,MAXCNX,MSGFL,MESSU,OPNTAB(20,MAXOPN),
      #            OPST,OPND,SVOLNO,TVOLNO,ECOUNT,
@@ -718,7 +724,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OPNNO,OMSG,OMSTI,OMSTC,HRIMSI,GETUCI,TAGVAL,RDMFAC
+      EXTERNAL  OPNNO,HRIMSI,GETUCI,TAGVAL,RDMFAC
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (11X,A6,1X,A6,2A2,A10,20X,A6,1X,A6,2A2)
@@ -866,6 +872,9 @@ C     check and expand a reference to a group of time series or a
 C     single time series to be obtained from an external source/target
 C     trflag=1 if external target is being processed
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MEMSB(2),SDATIM(5),
      #            EDATIM(5),VOLNO,UKEYST,UKEYND,TRFLAG,NUM,DELT,
@@ -916,7 +925,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    CHKSTR,TSSDS,OMSG,SEQDS,WDMDS,OMSTI,DSSDS
+      EXTERNAL    CHKSTR,TSSDS,SEQDS,WDMDS,DSSDS
 C
 C     + + + OUTPUT FORMATS + + +
  2010 FORMAT(' BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE')
@@ -1038,6 +1047,9 @@ C     + + + PURPOSE + + +
 C     Look at a supplied character value.  If it is blank, return
 C     default, else return supplied real value.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,MSGFL,SCLU,ECOUNT
       REAL         MFACTR
@@ -1068,7 +1080,7 @@ C     + + + FUNCTIONS + + +
       INTEGER  LENSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL LENSTR,OMSTC,OMSG,GETVEC
+      EXTERNAL LENSTR,GETVEC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I0,I1,I10/0,1,10/

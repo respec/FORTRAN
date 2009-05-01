@@ -12,6 +12,9 @@ C     + + + HISTORY + + +
 C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTR,OMSG
+C
+C     + + + MODULES + + +
       USE       HIOOSV 
 C
 C     + + + DUMMY ARGUMENTS + + +
@@ -36,7 +39,7 @@ C     + + + LOCAL VARIABLES + + +
      #          SCLU,SGRP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  ITABLE,HSCKFL,STDATE,ENDATE,RTABLE,OMSG,OMSTR
+      EXTERNAL  ITABLE,HSCKFL,STDATE,ENDATE,RTABLE
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT(/,' ',132('+'),

@@ -8,6 +8,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for pwater section of module perlnd
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER SDATIM(5),NDAMON(12),OSVREC
 C
@@ -730,6 +733,9 @@ C     + + + PURPOSE + + +
 C     Process an FTABLE referred to in the input to the PWATER section
 C     of the PERLND module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    STABNO,NSCOLS,NSROWS
       REAL       DELT60,SURTAB(100)
@@ -754,7 +760,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    VALNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   VALNO,OMSG,OMSTI,DUMPER,GETUCI
+      EXTERNAL   VALNO,DUMPER,GETUCI
 C
 C     + + + INPUT FORMATS + + +
  1010 FORMAT (2I5)
@@ -2354,6 +2360,9 @@ C
 C     + + + PURPOSE + + +
 C     Adjust gw elevation based on updated storages, etc.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTD,OMSTI,OMSG,OMSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    DATIM(5),LSNO,MESSU,MSGFL
       REAL       PCW,PGW,UPGW,ULGWS,LLGWS,UZLIM,LZLIM,SELV,UELV,LELV,
@@ -3780,6 +3789,9 @@ C     + + + PURPOSE + + +
 C     Determine how much potential surface detention (PSUR) runs
 C     off in one simulation interval.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    RTOPFG,MESSU,MSGFL,LSNO,ECNT2
       REAL       DEC,DELT60,PSUR,SRC,SURO,SURS
@@ -3804,9 +3816,6 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG,OMSTI,OMSTR
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4100,6 +4109,9 @@ C     Compute the inflow to the upper zone during this time interval.
 C     Do this using a table look-up to handle the non-analytic integral
 C     given in supporting documentation.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECNT1,MSGFL,LSNO,MESSU,DATIM(5)
       REAL       INTGRL(10),PDRO,UZI,UZRA(10),UZS,UZSN
@@ -4120,9 +4132,6 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,SCLU,SGRP
       REAL       INTGA,INTGB,INTG1,INTG2,UZRAA,UZRAB,UZR1,UZR2
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTR,OMSG,OMSTI,OMSTD
 C
 C     + + + END SPECIFICATIONS + + +
 C

@@ -691,6 +691,9 @@ C     (or expad).  return this value and mark the row "unavailable".
 C     if applicable, update the flag which indicates the maximum
 C     number of rows occupied at one time.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MROW,
      $          AVFG(MROW),ECOUNT,
@@ -706,9 +709,6 @@ C     MAXROW - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTI,OMSG
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -751,6 +751,9 @@ C     and chk2 (for external sources also check fields 27 and 28 -
 C     stkind/sttran).  consider entries in order indicated by value
 C     in field seqcol, put result in column rescol.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSTC,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   CHK1,CHK2,EXTSFG,RESCOL,SEQCOL,WKND1,WKND2,WKST1,
      $          WKST2,MESSU,MSGFL,
@@ -779,7 +782,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC   IABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    WORKIO,OMSG,OMSTI,OMSTC
+      EXTERNAL    WORKIO
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA  CTSS,CSEQ/'TSS ','SEQ '/
@@ -1120,7 +1123,7 @@ C     + + + LOCAL VARIABLES + + +
      $          TDELT,TFRC,TGAPCD,TGRPN(2),TINF(22),TMEMN(2),TMEMSB(2),
      $          TNUM,TOFFST,TROW,TSNXT,TTNXT,TVOL(2),WKEY,KWDNO,
      $          I,I0,I1,I2A,I2B,I2,I3,I4,RWFG,LEN,MXKY
-      REAL      A,B,AORIG
+      REAL      A,B,AORIG,FRAC
       CHARACTER*4 CHSTR
 C
 C     + + + EQUIVALENCES + + +

@@ -25,7 +25,7 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnDeclarations="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
 				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
@@ -53,7 +53,6 @@
 		<File RelativePath="..\..\SRC\HSPF140\CFILBK.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CGENE.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CHCAT.INC"/>
-		<File RelativePath="..\..\SRC\HSPF140\CHMSG.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CIFLTB.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CILAT.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CILGE.INC"/>

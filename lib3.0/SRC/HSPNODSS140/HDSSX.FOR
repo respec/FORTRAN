@@ -88,8 +88,8 @@ C
      O                    D12,D13,D14,D15,D16,D17,D18,D19)
 C
 C     + + + MODULES + + +
-      USE HMMSG, ONLY : OMSTI, OMSG
-C      
+      USE HMMSG, ONLY : OMSG,OMSTI
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER MSGFL,MESSU,VOLNO,ECOUNT,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,
      #        D11,D12,D13,D14,D15,D16,D17,D18,D19

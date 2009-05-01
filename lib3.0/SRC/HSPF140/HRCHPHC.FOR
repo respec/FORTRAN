@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for section phcarb of rchres application module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PHCARB1 + + +
       INCLUDE    'crhph.inc'
       INCLUDE    'crin2.inc'
@@ -15,7 +18,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER    I1,IX,IY,J,SCLU,SGRP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   RTABLE,ITABLE,OMSTI,OMSG
+      EXTERNAL   RTABLE,ITABLE
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING INPUT FOR SECTION PHCARB')
@@ -90,6 +93,9 @@ C     + + + PURPOSE + + +
 C     Simulate ph, carbon dioxide, total inorganic carbon,
 C     and alkalinity
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD,OMSTR
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PHCARB2 + + +
       INCLUDE    'crhph.inc'
       INCLUDE    'cmpad.inc'
@@ -103,7 +109,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   ADVECT,BENTH,PHCALC,OMSG,OMSTR,OMSTI,OMSTD,HREQTS
+      EXTERNAL   ADVECT,BENTH,PHCALC,HREQTS
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA TSSUB/1,1/

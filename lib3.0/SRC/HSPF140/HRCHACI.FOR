@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process the input for section acidph
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI
+C
 C     + + + COMMON BLOCKS + + +
       INCLUDE    'crhac.inc'
       INCLUDE    'crin2.inc'
@@ -15,7 +18,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER    I,J,I1,IX,IY,NCNTMP,NGQTMP,SCLU,SGRP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   ITABLE, RTABLE, ACINIT, OMSG, OMSTI, ZIPI
+      EXTERNAL   ITABLE, RTABLE, ACINIT, ZIPI
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ALOG10
@@ -202,6 +205,9 @@ C
 C     + + + PURPOSE + + +
 C     Simulate acid-base chemistry of mine drainage-affected reaches
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       FSTCAL
 C
@@ -228,7 +234,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  DLOG10
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG,OMSTI,OMSTD,HREQTS
+      EXTERNAL   HREQTS
       EXTERNAL   ADVECT,ACDATA,ACCAL1,ACCAL2,ACCAL3
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1240,7 +1246,7 @@ C     NEWAC  - new calculated acidity                   mol/L
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    IVALFE,IVALAL,IVALMN
-      DOUBLE PRECISION RSTDPOT,RPARTPS,RFACTA,RFACTB,RFACTC,RKSP2,               
+      DOUBLE PRECISION RSTDPOT,RPARTPS,RFACTA,RFACTB,RFACTC,RKSP2,RKSP1,               
      $    RFACTD,RION,RHPOW,RKPOW,RGAMMA,RACTH,RACTOH,RFE,RAL,
      $	  RMN,RAC,RIH,RIPH,RCAL,RCFE,RCMN,RK,RCAC,TMPMC,
      $    TMPAL,TMPFE,TMPMN,TMPALR,TMPFER,TMPMNR

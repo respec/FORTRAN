@@ -1604,6 +1604,9 @@ C
 C     + + + PURPOSE + + +
 C     Perform reactions on pesticide
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI,OMSTD,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ADOPFG,CRV1FG,DAYFG,MSGFL,ITMXPS,
      $            LSNO,MESSU,PSECNT(1),PSWCNT(5),DATIM(5)
@@ -1647,7 +1650,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  CHSTR1(4)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    FIRORD,SV,OMSTC,OMSTR,OMSG,NONSV,DEGRAS,OMSTI,OMSTD
+      EXTERNAL    FIRORD,SV,NONSV,DEGRAS
 C
 C     + + + OUTPUT FORMATS + + +
  2030 FORMAT (A4)

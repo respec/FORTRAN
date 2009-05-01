@@ -7,6 +7,9 @@ C
 C     + + + PURPOSE + + +
 C     Process shade input data.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       REAL        RVAL(7)                       
 C

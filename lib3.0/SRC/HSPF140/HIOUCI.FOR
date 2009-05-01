@@ -536,6 +536,9 @@ C
 C     + + + PURPOSE + + +
 C     Look for keywords in a UCI file, save results with uci
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     NKWD,LKWD,PKWD,IKWD,IRPT,KWDDIM(NKWD),KWDTYP(NKWD),
      $            ECNT,KCNT,RETCOD
@@ -570,7 +573,6 @@ C     + + + FUNCTIONS + + +
       INTEGER      CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSG,OMSTC,OMSTI
       EXTERNAL     GETSE,GETEND,ZIPC,GETUCI,CHKSTR,PUTKWD,CHRCHR
 C
 C     + + + DATA INITIALIZATIONS + + +
