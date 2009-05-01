@@ -441,7 +441,7 @@ C                   case 11
  300              CONTINUE
 C                 endcase
 C
-                  IF (OMCODE .NE. 4) THEN
+                  IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5) THEN
 C                   write the osv to disc
                     CALL PUTOSV (OSVKST,OSVKND,MAXOSV,OSV)
                   END IF
