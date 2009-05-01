@@ -72,6 +72,9 @@ C     Adjust existing tsb to be ready for writing from puttss.
 C     the tss record containing the bcw for the tsb is assumed
 C     to be in tbuff as left by fitsb.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   DELT,STIME,SINT
 C
@@ -87,7 +90,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  RPUNC,AIUNC,AICOMP,OMSG,OMSTI
+      EXTERNAL  RPUNC,AIUNC,AICOMP 
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -131,6 +134,9 @@ C     + + + PURPOSE + + +
 C     Adjust existing compressed tsb for add access
 C     Needs 22 real words of workspace in common
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     DELT,STIME,SINT
 C
@@ -153,7 +159,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    BCWCAL
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   BCWCAL,WBUFF,PVAL,OMSG,OMSTI
+      EXTERNAL   BCWCAL,WBUFF,PVAL 
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -271,6 +277,9 @@ C     + + + PURPOSE + + +
 C     Adjust existing uncompressed tsb for add access mode
 C     Needs 21 real words of workspace in common
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     DELT,STIME,SINT
 C
@@ -293,7 +302,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    BCWCAL
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   BCWCAL,WBUFF,GWORD,PVAL,OMSG,OMSTI
+      EXTERNAL   BCWCAL,WBUFF,GWORD,PVAL 
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -409,6 +418,9 @@ C     + + + PURPOSE + + +
 C     Read tss descriptor from first record of the tss, check validity
 C     and return selected descriptor values
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,MESSU,RECLT,
      $           TDDS,TDFREC,TDSIZE,TOTDS,TSSFL
@@ -426,9 +438,6 @@ C     TDSIZE - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    TSSTYP,SCLU,SGRP,REC(11)
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -460,6 +469,9 @@ C
 C     + + + PURPOSE + + +
 C     Check validity of the tss dataset and input the label if valid.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MESSU,MSGFL,TSSFL,DSN
 C
@@ -480,7 +492,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (RFREC,DSFRLO), (RDSEC,DS(1))
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   RBUFF,OMSG,OMSTI
+      EXTERNAL   RBUFF
 C
 C     + + + OUTPUT FORMATS + + +
  2010 FORMAT(1X,'BEGIN CHECKING DATASET VALIDITY')
@@ -570,6 +582,9 @@ C     sint.  the virtual origin of the year is given by voyr
 C     Note that stime < tlast for the tsb found by this
 C     subroutine because sint > stime.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   VOYR,SINT
 C
@@ -588,7 +603,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (WORDR,WORDI)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    GWORD,OMSTI,OMSG,BCWSPL
+      EXTERNAL    GWORD,BCWSPL
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -815,6 +830,9 @@ C     current buffer must be valid and available for reuse
 C     This subroutine is closely related to gtword.
 C      any bugs detected here may be present there.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   ADDR
       REAL      WORD
@@ -830,7 +848,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,RECNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG,RBUFF,OMSTI
+      EXTERNAL  RBUFF
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -878,6 +896,9 @@ C     + + + PURPOSE + + +
 C     Set up initial bcw's for a new year. keys is not updated until
 C     the end of the calendar year or the end of the run
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     YR,PYR,DELT
 C
@@ -898,7 +919,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (WORDR,WORDI),(VAL(1),SPLIT(1))
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  WBUFF,GWORD,OMSTI,OMSG,PVAL
+      EXTERNAL  WBUFF,GWORD,PVAL
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -966,6 +987,9 @@ C     so that they are consistent with the instruction file
 C     We assume that the entire dataset label, entire instruction and
 C     workspace are in common
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   START(5),ENDR(5),DELT,STIME,FMIN
 C
@@ -986,8 +1010,8 @@ C     + + + INTRINSICS + + +
       INTRINSIC  IABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  FIRINT,YROFF,OMSG,FLFRM,FITSB,ADJTSB,NEWYR
-      EXTERNAL  ADJLAB,FNDGAP,OMSTI
+      EXTERNAL  FIRINT,YROFF,FLFRM,FITSB,ADJTSB,NEWYR
+      EXTERNAL  ADJLAB,FNDGAP
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT(1X,'BEGIN COMPUTING CONTROL VALUES FOR TSPUT')
@@ -1205,6 +1229,9 @@ C
 C     + + + PURPOSE + + +
 C     Process a member
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MESSU,MSGFL,MNUM,VOMEM,SUB,NSUB,
      $            MKIND(20),SVOLNO,MAXTTB,
@@ -1231,9 +1258,6 @@ C     TABLR  - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,K,OFFS,I
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG,OMSTI
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT(A4,A2)
@@ -1302,6 +1326,9 @@ C     + + + PURPOSE + + +
 C     Put one or more values into the buffer/extension and write
 C     to the tss as necessary
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   N,OFF(*),VO
       REAL      VAL(*)
@@ -1319,7 +1346,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,I,J,NVO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTI,OMSG,WBUFF,MEXT
+      EXTERNAL   WBUFF,MEXT
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1450,6 +1477,9 @@ C
 C     + + + PURPOSE + + +
 C     Compute control words for replace access mode
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   DELT,STIME,SINT
 C
@@ -1463,9 +1493,6 @@ C     + + + COMMON BLOCKS- VERSION INTERP4 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   SCLU,SGRP,N,REM
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL  OMSG,OMSTI
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1521,6 +1548,9 @@ C     + + + PURPOSE + + +
 C     Check and if necessary expand a users reference to a tss
 C      dataset
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MSGFL,MESSU,TSSFL,MEMSB,MXTSTB,
      $            SDATIM(5),EDATIM(5),VOLNO,TRFLAG,
@@ -1567,7 +1597,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    DSCHK,CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   DSCHK,CHKSTR,OMSG,OMSTC,OMSTI,PROMEM
+      EXTERNAL   DSCHK,CHKSTR,PROMEM
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A4,A2)

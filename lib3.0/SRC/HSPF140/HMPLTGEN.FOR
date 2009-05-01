@@ -45,6 +45,7 @@ C     2009/04/28 JLK - initial implementation of module version
 C
 C     + + + MODULES + + +
       USE       HIOOSV 
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),EDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
@@ -83,8 +84,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH,CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DAYMNH,ITABLE,HSCKFL,RTABLE,CHKSTR
-      EXTERNAL  OMSG,OMSTI,OMSTC,WMSGTT
+      EXTERNAL  DAYMNH,ITABLE,HSCKFL,RTABLE,CHKSTR,WMSGTT
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (6(A4,1X))
@@ -508,6 +508,7 @@ C     2009/04/28 JLK - initial implementation of module version
 C
 C     + + + MODULES + + +
       USE       HIOOSV 
+      USE HMMSG, ONLY : OMSTI,OMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   STIVL,WIDTH,LSTCAL,OSVKST
@@ -541,7 +542,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*6  OPTYP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    EXDATE,PLTAGG,SPECL,ADDTIM,TRANS,UPQUAN,OMSTI,OMSG,
+      EXTERNAL    EXDATE,PLTAGG,SPECL,ADDTIM,TRANS,UPQUAN,
      $            MJDATE,ZIPR,TIMCVT
 C
 C     + + + DATA INITIALIZATIONS + + +

@@ -8,6 +8,9 @@ C
 C     + + + PURPOSE + + +
 C     Initialize arrays needed for wdmsfl routines
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,MESSU,
      $           WDMSFL
@@ -22,7 +25,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER    SCLU,SGRP,RETCOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   WDFLCK,OMSG,OMSTI
+      EXTERNAL   WDFLCK 
 C
 C     + + + END SPECIFICATIONS + + +
 C

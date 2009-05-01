@@ -8,6 +8,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for section iqual
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC,OMSTI
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MESSFL,ECOUNT,OUTLEV
 C
@@ -30,7 +33,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CSTR,CSTR1)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     ITABLE,RTABLE,OMSG,OMSTC,ZIPR,MDATBL
+      EXTERNAL     ITABLE,RTABLE,ZIPR,MDATBL
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING INPUT FOR SECTION IQUAL')

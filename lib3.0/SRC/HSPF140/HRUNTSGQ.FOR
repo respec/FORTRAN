@@ -17,6 +17,9 @@ C     is adjusted so that it contains the calendar
 C     year and not just the last two digits of the
 C     calendar year.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   OLDDAT(3),OLDNUM,NEWNUM,OLDOFF,DATLEN,MAXCRD,
      $          BEGYR,FILE,MSGFL,MESSU,YEAR,
@@ -49,7 +52,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DYPMON,TDIF,OMSG,OMSTI,OMSTD
+      EXTERNAL  DYPMON,TDIF
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -187,6 +190,9 @@ C     Read a card with a hydrocomp daily format and calculate the
 C     minute at start and end of card.  return the card values in
 C     array crdval and the number of values maxcnt
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ENDMIN,MAXCNT,MIN
       REAL        TLOC(12)
@@ -214,7 +220,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CRDVAL(1),TBUFF(1))
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  SEQRD,CHKSEQ,TDIF,LPYEAR,OMSTD,OMSTI,OMSG,FDATIM
+      EXTERNAL  SEQRD,CHKSEQ,TDIF,LPYEAR,FDATIM
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ENTERING DACRD')
@@ -630,6 +636,9 @@ C
 C     + + + PURPOSE + + +
 C     Get values from a sequential file and fill a row of the inpad
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   DELT,WIDTH
 C
@@ -650,7 +659,7 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  FIVCRD,FIFCRD,HRCRD,DACRD,SMOCRD,MOCRD,SEQINP
-      EXTERNAL  OMSTD,OMSG,OMSTI,FDATIM
+      EXTERNAL  FDATIM
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ENTERING GETSEQ')
@@ -1175,6 +1184,9 @@ C     + + + PURPOSE + + +
 C     Read a sequential file using proper format,
 C     and fill an inpad row
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     DELT,INPEND,INPTIM
       EXTERNAL    SUBNAM
@@ -1202,7 +1214,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CRDVAL(1),TBUFF(1))
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTD,OMSG,OMSTI,INMOD,LPYEAR,LTRAN,FDATIM
+      EXTERNAL  INMOD,LPYEAR,LTRAN,FDATIM
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ENTERING SEQINP')
@@ -1689,6 +1701,9 @@ C     then the number of spaces is reduced by 2 and the year width is
 C     set to 4.  If a valid year can be read from the new field, then
 C     the year is updated.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER FILE,DATLEN,NUMVAL,SCLU,MESSU,MSGFL,KNT,ENDF,
      $        CRDDAT(DATLEN),CRDNUM
@@ -1709,7 +1724,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   STRFND,CHRINT
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTI,OMSTC,OMSG,STRFND,CHRINT,CHRDEL,COPYC
+      EXTERNAL  STRFND,CHRINT,CHRDEL,COPYC
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (80A1)

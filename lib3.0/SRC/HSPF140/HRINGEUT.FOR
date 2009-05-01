@@ -63,6 +63,9 @@ C     + + + PURPOSE + + +
 C     Check that the supplied target operation-type numbers, in an
 C     entry in the ext sources or network block, are valid
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,MESSU,TOPFST,TOPLST
 C
@@ -75,9 +78,6 @@ C     ECOUNT - count(s) of specific errors
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    SGRP,SCLU
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG,OMSTI
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -161,6 +161,9 @@ C     + + + PURPOSE + + +
 C     Look at a supplied character value.  If it's an integer, return the
 C     value, if character return the index in the table of tags.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     NEGFG,MESSU,MSGFL,SCLU,BGRP,ECOUNT,VAL
       CHARACTER*2 CTAGIN
@@ -191,7 +194,7 @@ C     + + + FUNCTIONS + + +
       INTEGER CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL CHKSTR,OMSTC,OMSG
+      EXTERNAL CHKSTR 
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (I2)

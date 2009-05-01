@@ -40,6 +40,9 @@ C
 C     + + + PURPOSE + + +
 C     Perform a material balance check and report the result.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTD,OMSTI,OMSTC,OMSTR,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      OPTYP,DATIM(5),MESSU,PRINTU,OPNO,MSGFL,HDRFG,WCOUNT
       REAL         MATDIF,MATIN,STOR,STORS
@@ -71,9 +74,6 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + INTRINSICS + + +
       INTRINSIC    ABS
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL     OMSTR,OMSG,OMSTI,OMSTD,OMSTC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA COPTYP/'PERLND','IMPLND','RCHRES'/
@@ -285,6 +285,9 @@ C
 C     + + + PURPOSE + + +
 C     Fetches value of a required timeseries, or generates an error
 C     message and returns -999.0 if the flag pointer is not set.
+C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSTC,OMSG,OMSTD
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     FLAGPT,IVL1,REQFG,MESSU,MSGFL,DATIM(5),OPTNO,

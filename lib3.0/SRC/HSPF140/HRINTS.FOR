@@ -268,6 +268,9 @@ C     12/6/2004 - jlk&pbd - changed I200 to I220 for new
 C       TSGET/TSPUT file length, updated to use enhanced 
 C       primitive instruction
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   SKY,EKY,GETF,VOPAD,WIDTH,START(5),
      $          ENDR(5),STIME,FMIN,DELT,INKEY
@@ -310,8 +313,8 @@ C     + + + INTRINSICS + + +
       INTRINSIC  ABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    OMSG,RBUFF,GINIT,PINIT,TIMHTW,TIMBAK,TINOUT,WMSGTT,
-     #            OMSTI,GETTSI,PUTTSI,GETUCI
+      EXTERNAL    RBUFF,GINIT,PINIT,TIMHTW,TIMBAK,TINOUT,WMSGTT,
+     #            GETTSI,PUTTSI,GETUCI
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA        INITPV/-999.,-999.,0.0,0.0,-1.0E30,1.0E30,-999.,0.0/
@@ -670,6 +673,9 @@ C     Expand and check any entries for a given exgrp, in the network
 C     block.  chain entries by source and target opn sequence
 C     order.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    KEYND,KEYST,OPND,OPST,WKEY
 C
@@ -699,7 +705,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   GTTMRC,OPNNO,OPNTS,TOPTNO,PAIRS,OMSG,OMSTI,OMSTC
+      EXTERNAL   GTTMRC,OPNNO,OPNTS,TOPTNO,PAIRS
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING ANY ENTRIES IN NETWORK BLOCK')
@@ -854,6 +860,7 @@ C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
       USE       HIOOSV 
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ECOUNT,EUNITS,MAXOPN,MAXOSV,MXTTB,
@@ -913,7 +920,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    CHKSTR,OMSG,OMSTI,OMSTC,MEMTS,WMSGTT
+      EXTERNAL    CHKSTR,MEMTS,WMSGTT
 C
 C     + + + INITIALIZATIONS + + +
       DATA GCUR/0/
@@ -1076,6 +1083,9 @@ C
 C     + + + PURPOSE + + +
 C     Process a single member (n)
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ECOUNT,EUNITS,MAXTTB,MAXOSV,
      $            MSGFL,SCLU,MEMSB(2),MESSU,SGRP,NTS,OPTNO,
@@ -1120,7 +1130,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      IVALUE
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSG,OMSTI,OMSTC,IVALUE,WMSGTT
+      EXTERNAL     IVALUE,WMSGTT
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA         PROARR/0,1,0,3,0,1,0,0,0,1,1,2/
@@ -1345,6 +1355,9 @@ C     + + + PURPOSE + + +
 C     Check pairs of entries in source and target tables and write
 C     paired entries to workfl
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     WKEY
       REAL        AREA,MFACTR
@@ -1380,7 +1393,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    CHKSTR,WORKIO,OMSG,ZIPI,OMSTC,OMSTI
+      EXTERNAL    CHKSTR,WORKIO,ZIPI
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (A4,A2)
@@ -1710,6 +1723,9 @@ C
 C     + + + HISTORY + + +
 C     12/7/2004  jlk&pbd added area
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   KEYND,KEYST,OPND,OPST,WKEY,MAXMLK,MSLINX(MAXMLK,3),
      #          NMLTBS
@@ -1752,8 +1768,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    OPNNO,PSCHEM,OPNTS,TOPTNO,OMSG,OMSTI,OMSTC
-      EXTERNAL    PAIRS,GTTMRC
+      EXTERNAL    OPNNO,PSCHEM,OPNTS,TOPTNO,PAIRS,GTTMRC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING ANY ENTRIES IN SCHEMATICS BLOCK')

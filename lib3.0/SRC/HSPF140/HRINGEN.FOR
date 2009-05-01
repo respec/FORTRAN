@@ -11,6 +11,9 @@ C     + + + PURPOSE + + +
 C     User has explicitly or implicitly specified end exgroup - check
 C     whether this is legal and make entry in exgtab
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,SCLU,EXFG,
      $           EXGTAB(5,10),GRPNO,INFG,MESSU,
@@ -32,9 +35,6 @@ C     EXFG   - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    SGRP
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -77,6 +77,9 @@ C     + + + PURPOSE + + +
 C     User has specified end ingroup - check whether this is legal and
 C     make appropriate closing entries
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,EXFG,EXGTAB(5,10),GRPNO,GRPTAB(5,10),
      #           ICOUNT,INFG,MESSU,NDELT,OPNO,OUTLEV,WCOUNT(10),XCOUNT,
@@ -105,7 +108,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER    SGRP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG,ENDEXG,PMXTFT
+      EXTERNAL   ENDEXG,PMXTFT
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -159,6 +162,9 @@ C
 C     + + + PURPOSE + + +
 C     process the global block
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MSGFL,MESSU,UPDFIL,ECOUNT,
      $             SEDAT(10),SDATIM(5),EDATIM(5),
@@ -200,7 +206,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  UCIBF1(80)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSG,OMSTI,OMSTC,STDATE,ENDATE,DIFTIM,GETUCI,COPYI
+      EXTERNAL  STDATE,ENDATE,DIFTIM,GETUCI,COPYI
       EXTERNAL  PMXTFT,PMXTFI,PMXTFC,ZIPI,GETSE,HDMES2,LENSTR
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -520,6 +526,9 @@ C     + + + PURPOSE + + +
 C     Locate all the tables in the mass links block and place
 C     them in the mass links index
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      ECOUNT,MSGFL,MESSU,NMLTBS,OUTLEV,
      $             MAXMLK,MSLINX(MAXMLK,3)
@@ -552,7 +561,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     VALNO,CRINTE
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    VALNO,CRINTE,DUMPER,OMSTC,OMSTI,OMSG,WMSGTT
+      EXTERNAL    VALNO,CRINTE,DUMPER,WMSGTT
       EXTERNAL    GETUCI,GETSE,GETEND,HDMES2,PMXTFT
 C
 C     + + + OUTPUT FORMATS + + +
@@ -778,6 +787,9 @@ C     + + + PURPOSE + + +
 C     Locate all the tables in the month-data block and place
 C     them in the month-data index
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      ECOUNT,MSGFL,KEYND,KEYST,MESSU,NMDATS,OUTLEV,
      $             MAXMDT,MDTINX(MAXMDT,3)
@@ -813,7 +825,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     VALNO,CRINTE
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    VALNO,CRINTE,DUMPER,OMSTC,OMSTI,OMSG,WMSGTT
+      EXTERNAL    VALNO,CRINTE,DUMPER,WMSGTT
       EXTERNAL    GETUCI,GETEND,HDMES2
 C
 C     + + + OUTPUT FORMATS + + +
@@ -1033,6 +1045,9 @@ C     + + + PURPOSE + + +
 C     New exgroup - check whether this is legal, check xdelt and
 C     remember the details of this exgroup
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG 
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,SCLU,EXFG,GRPNO,
      $           HRMIN(2),INFG,IVLLIB(20),MESSU,NIVLS,RUNMIN,
@@ -1064,7 +1079,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   VALNO,OMSG,OMSTI
+      EXTERNAL   VALNO 
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1131,6 +1146,9 @@ C     + + + PURPOSE + + +
 C     New ingroup - check whether this is legal, check ndelt and
 C     remember the details of this ingroup
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,SCLU,EXFG,GRPNO,
      $           HRMIN(2),ICOUNT,INFG,IVLLIB(20),MESSU,NDELT,NIVLS,
@@ -1165,7 +1183,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   VALNO,OMSG,OMSTI,NEWEXG,PMXTFT
+      EXTERNAL   VALNO,NEWEXG,PMXTFT
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1239,6 +1257,9 @@ C     User has specified a new operation.  check that values given are
 C     legal, that the operation-id is unique and generate exgroup or
 C     ingroup info, if required
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ECOUNT,MSGFL,SCLU,EXFG,MAXOPN,
      $            EXGTAB(5,10),GRPNO,GRPTAB(5,10),HRMIN(2),ICOUNT,INFG,
@@ -1289,7 +1310,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OPNNO,NEWING,OMSG,OMSTC,OMSTI,PMXTFT
+      EXTERNAL   OPNNO,NEWING,PMXTFT
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (A4,A2)
@@ -1418,6 +1439,9 @@ C
 C     + + + PURPOSE + + +
 C     Read and process the opn sequence block
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ECOUNT,MSGFL,
      $            EXGTAB(5,10),GRPTAB(5,10),MAXOPN,LKWOPR,NKWOPR,
@@ -1466,8 +1490,8 @@ C     + + + FUNCTIONS + + +
       INTEGER    CHKSTR,CRINTE
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   DUMPER,NEWEXG,NEWING,NEWOPN,OMSG,ENDEXG,CRINTE
-      EXTERNAL   ENDING,OMSTC,WMSGTT,GETUCI,GETSE,GETEND,CHKSTR
+      EXTERNAL   DUMPER,NEWEXG,NEWING,NEWOPN,ENDEXG,CRINTE
+      EXTERNAL   ENDING,WMSGTT,GETUCI,GETSE,GETEND,CHKSTR
       EXTERNAL   PMXTFT,PMXTFC,HDMES2
 C
 C     + + + INPUT FORMATS + + +
@@ -1790,6 +1814,9 @@ C     + + + PURPOSE + + +
 C     Locate all the tables in the ftables block and place
 C     them in the ftables index
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,KEYND,KEYST,MESSU,NFTABS,OUTLEV,
      $           MAXFTB,TABINX(MAXFTB,3)
@@ -1823,7 +1850,7 @@ C     + + + FUNCTIONS + + +
       INTEGER      VALNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     VALNO,DUMPER,OMSG,OMSTI,OMSTC,WMSGTT
+      EXTERNAL     VALNO,DUMPER,WMSGTT
       EXTERNAL     GETUCI,GETEND,HDMES2
 C
 C     + + + INPUT FORMATS + + +
@@ -2066,6 +2093,9 @@ C
 C     + + + PURPOSE + + +
 C     process the category block
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MESSU,OUTLEV,MSGFL,ECOUNT
 C
@@ -2098,7 +2128,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC    ICHAR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSTC,OMSG,GETUCI,GETSE,PMXTFT,HDMES2,CHKSTR
+      EXTERNAL     GETUCI,GETSE,PMXTFT,HDMES2,CHKSTR
 C
 C     + + + INPUT FORMATS + + +
  1020 FORMAT (3X,A2,1X,A16)
@@ -2236,6 +2266,9 @@ C     + + + PURPOSE + + +
 C     Read and store pathnames and their associated dsns, files, and types
 C     Check pathnames for validity, but not for presence in file.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER  KEYST,KEYND,OUTLEV,MESSU,MSGFL,ECOUNT
 C
@@ -2267,7 +2300,7 @@ C     + + + FUNCTIONS + + +
 C     
 C     + + + EXTERNALS + + +
       EXTERNAL ZCHKPN,LENSTR,ZIPC,ZIPI,DUMPER,GETUCI
-      EXTERNAL WMSGTT,OMSTI,OMSTC,OMSG,CHKSTR,HDMES2
+      EXTERNAL WMSGTT,CHKSTR,HDMES2
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I0,I4,I8,I64/0,4,8,64/

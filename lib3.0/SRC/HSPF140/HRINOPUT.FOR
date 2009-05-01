@@ -12,6 +12,9 @@ C     Find the record in ucifl which contains information
 C     pertaining to a specified optno, given the starting
 C     and ending keys to the table.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC,OMSTI
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ECOUNT,MSGFL,KEYND,
      $            KEYST,MESSU,OPTNO,TABSUB
@@ -32,7 +35,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*80 UCIBF
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSG,OMSTC,OMSTI,GETUCI
+      EXTERNAL   GETUCI
 C
 C     + + + INPUT FORMATS + + +
  1010 FORMAT (2I5)

@@ -9,14 +9,29 @@ C
 C     + + + HISTORY + + +
 C     2009/04/22 JLK - initial implementation of OSV module version
 C
-C     + + + PARAMETERS + + +    
-      INCLUDE 'posvm.inc'
-C
 C     + + + MODULE VARIABLES
       INTEGER, TARGET, ALLOCATABLE, DIMENSION (:,:) :: OSVM
       LOGICAL, PRIVATE                        :: INIT_NEEDED = .TRUE.
 C
       CONTAINS
+C
+C
+C      
+      SUBROUTINE   INITOSVQ
+C
+C     + + + PURPOSE + + +
+C     allocate osv array using defaults  
+C
+C     + + + PARAMETERS + + +    
+      INCLUDE 'posvm.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C     
+      IF (INIT_NEEDED) THEN
+        CALL INITOSV(POSVSZ)
+      END IF
+C      
+      END SUBROUTINE
 C
 C
 C      
@@ -64,11 +79,11 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   KEY,START,ILEN
 C
 C     + + + EXTERNAL + + +
-      EXTERNAL  COPYI
+      EXTERNAL  COPYI 
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (INIT_NEEDED) CALL INITOSV(POSVSZ)
+      CALL INITOSVQ
 C      
 C     start at first position
       START= 1
@@ -107,11 +122,11 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   KEY,ILEN,START
 C
 C     + + + EXTERNAL + + +
-      EXTERNAL  COPYI
+      EXTERNAL  COPYI 
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (INIT_NEEDED) CALL INITOSV(POSVSZ)
+      CALL INITOSVQ
 C
 C     start at first position
       START= 1
@@ -149,6 +164,7 @@ C     IVAL   - value being fetched
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      CALL INITOSVQ
       IVAL= OSVM(OFFSET,RECORD)
 C
       RETURN
@@ -172,6 +188,7 @@ C     IVAL   - value being replaced
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      CALL INITOSVQ
       OSVM(OFFSET,RECORD)= IVAL
 C
       RETURN
@@ -204,6 +221,7 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      CALL INITOSVQ
       I= OSVM(OFFSET,RECORD)
       RVAL= R
 C
@@ -236,6 +254,7 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      CALL INITOSVQ
       R= RVAL
       OSVM(OFFSET,RECORD)= I
 C

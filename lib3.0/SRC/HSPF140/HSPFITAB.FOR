@@ -8,6 +8,9 @@ C
 C     + + + PURPOSE + + +
 C     Process information normally in table containing integer values
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTC
+C      
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NVALS
       INTEGER   TABNO,TABSUB,UUNITS,IVAL(NVALS)
@@ -51,7 +54,7 @@ C     + + + FUNCTIONS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     TABREC,CHRINT,LENSTR,WMSGTT,WMSGTX,ZIPI
-      EXTERNAL     OMSTC,OMSTI,OMSG,GETUCI,PMXTFT,PMXTFC,HDMES3
+      EXTERNAL     GETUCI,PMXTFT,PMXTFC,HDMES3
 C
 C     + + + INTRINSICS + + +
       INTRINSIC    MOD
@@ -393,6 +396,9 @@ C
 C     + + + PURPOSE + + +
 C     Process information normally in table containing real values
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     NVALS,TABNO,TABSUB,UUNITS
       REAL        RVAL(NVALS)
@@ -450,10 +456,8 @@ C     + + + INTRINSICS + + +
       INTRINSIC      MOD,ABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL       TABREC,CHRDEC,LENSTR,WMSGTT,WMSGTX,ZIPR,OMSTC
-      EXTERNAL       HDMES3
-      EXTERNAL       OMSTI,OMSTR,OMSG,GETUCI,RHTSTR,COPYC,PMXTFT,PMXTFC
-      EXTERNAL       GETVEC
+      EXTERNAL       TABREC,CHRDEC,LENSTR,WMSGTT,WMSGTX,ZIPR,HDMES3
+      EXTERNAL       GETUCI,RHTSTR,COPYC,PMXTFT,PMXTFC,GETVEC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA   CNVTYP/0/
@@ -924,6 +928,9 @@ C
 C     + + + PURPOSE + + +
 C     Process an MONTH-DATA table referred to in an input module.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    MDATNO,RETCOD
       REAL       MTHVAL(12)
@@ -949,7 +956,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    VALNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   VALNO,OMSG,OMSTI,OMSTC,DUMPER,GETUCI,OMSTR
+      EXTERNAL   VALNO,DUMPER,GETUCI
 C
 C     + + + INPUT FORMATS + + +
  1020 FORMAT (12F6.0)

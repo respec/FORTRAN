@@ -52,6 +52,9 @@ C     + + + PURPOSE + + +
 C     Get a row of data from the pad, transform the data, and
 C     put values in wdm file
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI, OMSG
+C      
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   DELT,WIDTH,WDMSFL,FSTCAL,LSTCAL
 C
@@ -77,7 +80,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      INITVL(8),CURVAL
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    AGGWDS,LTRAN,WDTPUT,OMSTI,OMSG,TIMADD
+      EXTERNAL    AGGWDS,LTRAN,WDTPUT,TIMADD
 C
 C     + + + OUTPUT FORMATS + + +
  3000 FORMAT (/,' ENTERING PUTWDM')

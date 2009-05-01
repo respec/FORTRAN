@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for section phos
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI 
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PHOS1 + + +
       INCLUDE    'cplph.inc'
       INCLUDE    'crin2.inc'
@@ -22,7 +25,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     SOLDAT,ITABLE,PLNTPM,FIRSTP,SVALP,STORGE,CYLDPM
-      EXTERNAL     ZIPR,MDATBL,OMSTI,OMSTR,OMSG,RTABLE
+      EXTERNAL     ZIPR,MDATBL,RTABLE
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA TOLER/1.0E-5/
@@ -1371,6 +1374,9 @@ C
 C     + + + PURPOSE + + +
 C     Perform reactions on phosphorus forms
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI,OMSTD,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     BRXPFG,CRXPFG,MSGFL,DATIM(5),FORPFG,ITMAXP,
      $            LSNO,MESSU,PECNT(1),PWCNT(6),PUPTFG
@@ -1425,7 +1431,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  CHSTR1(4)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    FIRORD,SV,OMSG,OMSTI,OMSTD,OMSTC,OMSTR
+      EXTERNAL    FIRORD,SV 
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA       PO4ID/'PHOS','PHAT','E   ','    ','    '/

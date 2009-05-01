@@ -314,6 +314,9 @@ C     + + + PURPOSE + + +
 C     Check that a supplied ending date/time is valid and convert it to
 C     internal form
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,EDATIM(5),MSGFL,
      $           MESSU,NDAMON(12)
@@ -332,7 +335,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   DAYMNH,OMSG,OMSTI,HDATIN
+      EXTERNAL   DAYMNH,HDATIN
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -755,6 +758,9 @@ C     + + + PURPOSE + + +
 C     Check that a supplied starting date/time is valid and convert it
 C     to internal form.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ECOUNT,MSGFL,MESSU,
      $           NDAMON(12),SDATIM(5)
@@ -773,7 +779,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   DAYMNH,OMSG,OMSTI,HDATIN
+      EXTERNAL   DAYMNH,HDATIN
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -934,6 +940,9 @@ C
 C     + + + PURPOSE + + +
 C     Convert hspf internal time to wdms time
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    MESSU,MSGFL,DATIM(6)
 C
@@ -944,9 +953,6 @@ C     MSGFL  - fortran unit number of error message file
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    DUMCNT,SCLU,SGRP
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTI,OMSG
 C
 C     + + + END SPECIFICATIONS + + +
 C

@@ -10,6 +10,9 @@ C
 C     + + + PURPOSE + + +
 C     Process a reference to a time series in a sequential file
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MSGFL,MESSU,MEMSB,MXTSTB,
      #            VOLNO,UKEYST,UKEYND,
@@ -55,7 +58,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTI,OMSG,OMSTC,HSCKFL,GETUCI,CHKSTR
+      EXTERNAL   HSCKFL,GETUCI,CHKSTR
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (I4)

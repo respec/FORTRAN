@@ -172,6 +172,9 @@ C
 C     + + + PURPOSE + + +
 C     Estimate soil temperatures in a pervious land segment
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTD,OMSTI,OMSTC,OMSTR,OMSG
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PSTEMP2 + + +
       INCLUDE 'cplst.inc'
       INCLUDE 'cmpad.inc'
@@ -186,7 +189,7 @@ C     + + + FUNCTIONS + + +
       REAL      DAYVAL
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DAYVAL,HREQTS,OMSTD,OMSTI,OMSTC,OMSTR,OMSG
+      EXTERNAL  DAYVAL,HREQTS
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA FIXTMP/-100,100/

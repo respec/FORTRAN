@@ -11,6 +11,9 @@ C     frame in an tsb encountered, except when at end of inpad.
 C     Note: statements numbered 800-999 are installation dependent
 C     And may need to be modified
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     INPEND
 C
@@ -33,7 +36,7 @@ C     + + + EQUIVALENCES + + +
       EQUIVALENCE (WORDI,WORDR,YRI)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  GTSSRC,LPYEAR,BCWSPL,OMSTD,FDATIM,OMSG,OMSTI
+      EXTERNAL  GTSSRC,LPYEAR,BCWSPL,FDATIM 
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   IABS
@@ -180,6 +183,9 @@ C     There will be a time field for each of xold,xnew, xzero, and
 C     xlast.  this field contains the minute of the
 C     calendar year.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   INPEND
 C
@@ -199,7 +205,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      OFFST,WID
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  GTSSRC,OMSTD,FDATIM,OMSG,OMSTI,BCWUPD
+      EXTERNAL  GTSSRC,FDATIM,BCWUPD
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   ABS
@@ -627,6 +633,9 @@ C
 C     Note: statements numbered 800-999 are installation dependent
 C     And may need to be altered
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   ADDR
 C
@@ -645,7 +654,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   RECNO,SCLU,SGRP,DATIM(5)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTD,FDATIM,OMSG,OMSTI,RBUFF
+      EXTERNAL  FDATIM,RBUFF
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ENTERING GTSSRC')

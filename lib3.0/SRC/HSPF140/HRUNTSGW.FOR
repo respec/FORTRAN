@@ -8,6 +8,9 @@ C     + + + PURPOSE + + +
 C     get values from wdms file, transform them and fill a row on
 C     the inpad
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   DELT,WIDTH,WDMSFL,FSTCAL
 C
@@ -32,7 +35,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      CURVAL(1)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  WDTGET,TIMADD,SETVEC,OMSTR,OMSTI,OMSG,LTRAN
+      EXTERNAL  WDTGET,TIMADD,SETVEC,LTRAN
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   INT

@@ -1,6 +1,81 @@
 C
 C
 C
+      MODULE HMMSG
+C
+C     + + + PURPOSE + + +
+C     module containing utility modules for reporting HSPF messages
+C
+C     + + + HISTORY + + +
+C     2009/04/30 JLK - initial implementation of module version  
+C
+      IMPLICIT NONE
+C
+C     + + + MODULE VARIABLES
+      INTEGER                  :: ICNT,RCNT,DATIM(5),CCNT
+      INTEGER                  :: MXMSI,MXMSR,MXMSC
+      INTEGER, ALLOCATABLE     :: IMSVL(:)
+      REAL, ALLOCATABLE        :: RMSVL(:)
+      CHARACTER*1, ALLOCATABLE :: CMSVL(:)
+      LOGICAL, PRIVATE         :: INIT_NEEDED = .TRUE.
+C
+      CONTAINS
+C
+C
+C
+      SUBROUTINE   INITMSGQ 
+C      
+C     + + + PURPOSE + + +
+C     quick init of module arrays with devault parms
+C  
+C     + + + PARAMETERS + + +    
+      INCLUDE 'phmsg.inc'
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (INIT_NEEDED) THEN
+        CALL INITMSG(MXMSI,MXMSR,MXMSC)
+      END IF
+C      
+      RETURN
+      END SUBROUTINE      
+C
+C
+C      
+      SUBROUTINE   INITMSG
+     M                    (AMXMSI,AMXMSR,AMXMSC)
+C
+C     + + + PURPOSE + + +
+C     allocate message arrays
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   AMXMSI, AMXMSR, AMXMSC
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     AMXMSI - size of integer value array
+C     AMXMSR - size of real value array
+C     AMXMSC - size of character value array
+C
+C     + + + END SPECIFICATIONS + + +
+C     
+      IF (INIT_NEEDED) THEN
+        ALLOCATE (IMSVL(AMXMSI))
+        ALLOCATE (RMSVL(AMXMSR))
+        ALLOCATE (CMSVL(AMXMSC))
+        MXMSI = AMXMSI
+        MXMSR = AMXMSR
+        MXMSC = AMXMSC
+        INIT_NEEDED = .FALSE.
+      ELSE
+        AMXMSI = UBOUND(IMSVL,1)
+        AMXMSR = UBOUND(RMSVL,1)
+        AMXMSC = UBOUND(CMSVL,1)
+      END IF
+C      
+      END SUBROUTINE
+C
+C
+C
       SUBROUTINE   OMSG
      I                 (MESSU,MESSFL,SCLU,SGRP,
      M                  COUNT)
@@ -18,10 +93,6 @@ C     SCLU   - cluster on message file containing message text
 C     SGRP   - group on message file containing message text
 C     COUNT  - count of messages written
 C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'phmsg.inc'
-      INCLUDE 'chmsg.inc'
-C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      MAXCNT,MAXACT,MAXCLU,MAXGRP,
      #             ILEN,RLEN,SDIG,DECP,I0,JLEN,
@@ -35,7 +106,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  TBUF1(80)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     WMSGTT,OMSINI,DECCHX,INTCHR,HDMES3
+      EXTERNAL     WMSGTT,DECCHX,INTCHR,HDMES3
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (7I5)
@@ -194,7 +265,7 @@ C     reset storages
       CALL OMSINI
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -202,10 +273,6 @@ C
 C
 C     + + + PURPOSE + + +
 C     reset assoc parms to don't write
-C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'phmsg.inc'
-      INCLUDE 'chmsg.inc'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I
@@ -220,8 +287,7 @@ C
  10   CONTINUE
 C
       RETURN
-      END
-C
+      END SUBROUTINE
 C
 C
 C
@@ -237,10 +303,6 @@ C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     IVAL   - value to save
 C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'phmsg.inc'
-      INCLUDE 'chmsg.inc'
-C
 C     + + + END SPECIFICATIONS + + +
 C
 C     increment counter of values saved
@@ -251,7 +313,7 @@ C       save value
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -267,10 +329,6 @@ C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     RVAL   - value to save
 C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'phmsg.inc'
-      INCLUDE 'chmsg.inc'
-C
 C     + + + END SPECIFICATIONS + + +
 C
 C     increment counter of values saved
@@ -281,7 +339,7 @@ C       save value
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -299,10 +357,6 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     CLEN   - length of character string
 C     CVAL   - character string
 C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'phmsg.inc'
-      INCLUDE 'chmsg.inc'
-C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I
 C
@@ -318,7 +372,7 @@ C         save value
  10   CONTINUE
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -334,10 +388,6 @@ C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DATE   - date to save
 C
-C     + + + COMMON BLOCKS + + +
-      INCLUDE 'phmsg.inc'
-      INCLUDE 'chmsg.inc'
-C
 C     + + + EXTERNALS + + +
       EXTERNAL   EXDATE
 C
@@ -348,4 +398,6 @@ C     save date in external format
      O             DATIM)
 C
       RETURN
-      END
+      END SUBROUTINE
+C    
+      END MODULE HMMSG

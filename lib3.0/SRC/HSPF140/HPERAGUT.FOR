@@ -124,6 +124,9 @@ C
 C     + + + PURPOSE + + +
 C     Process a table containing first-order reaction parameters
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSTC,OMSG
+C      
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     BNUM,CNUM,LSNO,MESSU,NVALS,
      $            TNUM,TSUB,UUNITS,MSGFL,WCOUNT
@@ -154,7 +157,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  CHSTR1(4)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   RTABLE,OMSG,OMSTI,OMSTC
+      EXTERNAL   RTABLE 
 C
 C     + + + INTRINSICS + + +
       INTRINSIC FLOAT
@@ -860,6 +863,9 @@ C     + + + PURPOSE + + +
 C     Iterate until a sufficiently close approximation for the adsorbed
 C     and solution values on the freundlich isotherm is reached
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTD,OMSTI,OMSTC,OMSTR,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     ECNT,MSGFL,ITMAX,LSNO,MESSU,DATIM(5)
       REAL        C,FIXCAP,KF,MOISTM,NI,SOILM,TCM,X,XFIX
@@ -895,9 +901,6 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  CHSTR1(4)
       EQUIVALENCE (CHSTR4,CHSTR2)
       CHARACTER*1  CHSTR2(20)
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTD,OMSTI,OMSTC,OMSTR,OMSG
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
@@ -984,6 +987,9 @@ C     Calculate the fraction of the surface layer that is eroding -
 C     units are tons/acre-ivl for the amount eroded, sosed, and
 C     tons/acre for the amount of surface layer soil, slme
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTD,OMSTI,OMSTR,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    DATIM(5),LSNO,MESSU,MSGFL,WCNT1,WCNT2
       REAL       FSD,SLME,SOSED
@@ -1001,9 +1007,6 @@ C     FSD    - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    SCLU,SGRP
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTI,OMSTD,OMSTR,OMSG
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -2067,6 +2070,9 @@ C
 C     + + + PURPOSE + + +
 C     Read dates for cropping seasons
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER MESSU,MSGFL,UUNITS,ECOUNT,NCRP,CRPDAT(4,3)
 C
@@ -2083,7 +2089,7 @@ C     + + + LOCAL VARIABLES + + +
      $          PFG,HFG
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL ITABLE,CKCRDT,OMSTI,OMSG
+      EXTERNAL ITABLE,CKCRDT 
 C
 C     + + + END SPECIFICATIONS + + +
 C

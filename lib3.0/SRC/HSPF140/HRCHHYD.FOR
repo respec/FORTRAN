@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process the input to the hydr section of the rchres module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTC,OMSTI,OMSTR
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION HYDR1 + + +
       INCLUDE    'crhhd.inc'
       INCLUDE    'cmpad.inc'
@@ -33,8 +36,8 @@ C     + + + INTRINSICS + + +
       INTRINSIC  ABS,IFIX,FLOAT
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   ZIPI,ITABLE,OMSG,RTABLE,FTABLE,FTBWDM,DAYVAL,TAGVAL
-      EXTERNAL   OMSTC,ZIPD,ZIPR,OMSTI,OMSTR,CATSRT,DISCH,FNDROW,AUXIL
+      EXTERNAL   ZIPI,ITABLE,RTABLE,FTABLE,FTBWDM,DAYVAL,TAGVAL
+      EXTERNAL   ZIPD,ZIPR,CATSRT,DISCH,FNDROW,AUXIL
       EXTERNAL   SHEAR
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1262,6 +1265,9 @@ C     + + + PURPOSE + + +
 C     Process an FTABLE referred to in the input to the HYDR section
 C     of the RCHRES module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI,OMSTC
+C      
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    FTABNO,NCOLS,NROWS,VZERPT,RETCOD
       REAL       AFACT,RCHTAB(500),VFACT
@@ -1293,7 +1299,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    VALNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   VALNO,OMSG,OMSTI,OMSTC,DUMPER,GETUCI,GETVEC
+      EXTERNAL   VALNO,DUMPER,GETUCI,GETVEC
 C
 C     + + + INPUT FORMATS + + +
  1010 FORMAT (2I5)
@@ -1519,6 +1525,9 @@ C     + + + PURPOSE + + +
 C     Process a wdms ftable referred to in the input to the hydr section
 C     of the rchres module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      FTABNO,FTBDSN,NCOLS,NROWS,VZERPT,UUNITS,RETCOD
       REAL         AFACT,RCHTAB(500),VFACT
@@ -1549,7 +1558,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*16 TABNAM,MTBNAM
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSG,OMSTI,CHKWDM,WDTBFX,WDTBSP,WTBGET
+      EXTERNAL     CHKWDM,WDTBFX,WDTBSP,WTBGET
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA         TABNAM/'FTABLE          '/
@@ -1844,6 +1853,9 @@ C     + + + PURPOSE + + +
 C     Simulate the hydraulic behavior of a reach or mixed reservoir
 C     double precision variables - VOL,VOLS,VOLT.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTD,OMSTI,OMSTR
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION HYDR2 + + +
       INCLUDE    'crhhd.inc'
       INCLUDE    'cmpad.inc'
@@ -1859,8 +1871,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC        ABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL         CATSRT,CATFRC,ROUTE,NOROUT,OMSTD,OMSTI,OMSTR
-      EXTERNAL         OMSG,AUXIL,SHEAR
+      EXTERNAL         CATSRT,CATFRC,ROUTE,NOROUT,AUXIL,SHEAR
 C
 C     + + + HISTORY + + +
 C     2005  BRB added potential et to output summaries
@@ -2819,6 +2830,9 @@ C     If finding VOL requires extrapolation of the RCHTAB, we keep in
 C     the last interval of the table, with ROWPT pointing to
 C     Nrows-1.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          NROWS,NCOLS,RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
      $                 ROWPT,HYWCNT(2)
@@ -2841,9 +2855,6 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    MOVE,ROWAD1,ROWAD2,SGRP
       REAL       V1,V2,VOLSP
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTD,OMSG,OMSTI,OMSTR
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -3403,6 +3414,9 @@ C     Solve the simultaneous equations used in case 1.  This might
 C     involve searching thru RCHTAB to find the appropriate
 C     segment of the O vs VOL curve.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTD,OMSTI,OMSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          NROWS,NCOLS,NEXITS,ODFVFG(NEXITS),ODGTFG(NEXITS),
      $                 FUNCT(NEXITS),NCATS,MAXEX,RCHNO,MESSU,MSGFL,SCLU,
@@ -3457,7 +3471,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC        ABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL         DEMAND,OMSG,OMSTI,OMSTR,OMSTD
+      EXTERNAL         DEMAND
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -3618,6 +3632,9 @@ C     + + + PURPOSE + + +
 C     Compute depth, stage, surface area, average depth, topwidth,
 C     and hydraulic radius.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTD,OMSG,OMSTR,OMSTI
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          MSGFL,HYECNT(5),MESSU,NCOLS,RCHNO,ROWADD,
      $                 DATIM(5),SCLU,AUX1FG
@@ -3656,9 +3673,6 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  ABS
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   OMSTD,OMSG,OMSTR,OMSTI
 C
 C     + + + END SPECIFICATIONS + + +
 C

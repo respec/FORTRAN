@@ -12,6 +12,9 @@ C     + + + PURPOSE + + +
 C     check attributes for a reference to a time series dataset
 C     in a wdm file
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MSGFL,MESSU,WDMSFL,VOLNO,MEMSB(2),
      $            SDATIM(5),EDATIM(5),TRFLAG,IHMFG,
@@ -66,7 +69,7 @@ C
 C     + + + FUNCTIONS + + +
       INTEGER     CHKSTR
 C     + + + EXTERNALS + + +
-      EXTERNAL    TIMHTW,WDBSGC,OMSG,OMSTI,OMSTC,WDBSGI,WTFNDT,TIMADD
+      EXTERNAL    TIMHTW,WDBSGC,WDBSGI,WTFNDT,TIMADD
       EXTERNAL    CHKSTR,CKDATE,WDBSGR
 C
 C     + + + INTRINSICS + + +
@@ -446,6 +449,9 @@ C
 C     + + + PURPOSE + + +
 C     process a reference to a time series dataset in a wdm file
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MSGFL,MESSU,WDMSFL,VOLNO,MEMSB(2),
      $            SDATIM(5),EDATIM(5),TRFLAG,OUTLEV,MAXTTB,IHMFG,
@@ -488,7 +494,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   I,KIND,QLFG,LREC,RETCOD,SCLU,SGRP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   WDDSCK,PROWDS,OMSG,OMSTI
+      EXTERNAL   WDDSCK,PROWDS 
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT(A4,A2)

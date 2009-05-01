@@ -376,6 +376,9 @@ C
 C     + + + PURPOSE + + +
 C     Initialize the xvar values when source < target time interval
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTD
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NCOMPS,MSGFL,FILE,FRMTIM,
      $          KNT,MESSU,STTRAN(20),TESTFG,TYREND,YEAR
@@ -399,7 +402,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      MAX,MIN
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  OMSTI,OMSG,OMSTD,FDATIM
+      EXTERNAL  FDATIM
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ENTERING XVINIT')

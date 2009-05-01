@@ -1,0 +1,4 @@
+OBJS      = hdssx.obj
+
+# For OTG, compile the following code groups without checks (FTN77no)
+# hdssx.for

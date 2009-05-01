@@ -11,6 +11,10 @@ C     Copies Data Set from User's Control Input to memory, finds start
 C     and end of the Data Set and hands control to appropriate part
 C     of HSPF software for execution of user's instructions.
 C
+C     + + + MODULES + + +
+      USE HIOOSV, ONLY : INITOSVQ
+      USE HMMSG, ONLY : INITMSGQ
+C      
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   FILES(15),RETCOD
 C
@@ -46,6 +50,11 @@ C     WRITE(*,*) 'HSPF:HSPF:entry'
       I0= 0
 C     no errors yet
       ECOUNT= 0
+C      
+C     initialize osv
+      CALL INITOSVQ
+C     initialize error/warning message module
+      CALL INITMSGQ      
 C
       MESSU= FILES(1)
       MSGFL= FILES(15)

@@ -9,6 +9,9 @@ C
 C     + + + PURPOSE + + +
 C     Process HSPF Files Block.
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSINI
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       USRFL,FILES(15),RETCOD
 C
@@ -36,7 +39,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   CHRDIG
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  FILOPN,RDFLBK,WDBOPN,OMSINI,ZSET,ATTACH,ATTEND,ZOPEN,
+      EXTERNAL  FILOPN,RDFLBK,WDBOPN,ZSET,ATTACH,ATTEND,ZOPEN,
      #          ZIPI,XGTRCL,XPLFRM,CHRDIG
 C
 C     + + + DATA INITIALIZATIONS + + +

@@ -11,7 +11,8 @@ C     + + + HISTORY + + +
 C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
-      USE       HIOOSV 
+      USE HIOOSV 
+      USE HMMSG, ONLY : OMSG,OMSTC,OMSTI
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MESSU,MSGFL,STFIL,SDATIM(5)
@@ -53,8 +54,7 @@ C     + + + FUNCTIONS + + +
       INTEGER        CHKSTR,OPNNO,ZLNTXT,DADDR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL       WMSGTT,CHKSTR,OPNNO,ZLNTXT,DADDR,
-     $               SPNXDT,OMSTC,OMSG
+      EXTERNAL       WMSGTT,CHKSTR,OPNNO,ZLNTXT,DADDR,SPNXDT
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I0,I1,I6,I60/0,1,6,60/
@@ -408,7 +408,8 @@ C     + + + HISTORY + + +
 C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
-      USE       HIOOSV 
+      USE HIOOSV 
+      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   STFIL,CURIVL,DELT,NOPNS,LSTCAL,MESSU,MSGFL,ECOUNT
@@ -440,8 +441,7 @@ C     + + + FUNCTIONS + + +
       INTEGER       DADDR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL      COPYI,SPNXDT,SPCKDT,EXDATE,DADDR,GTQUAN,
-     $              DECCHX,OMSTC,OMSTI,OMSG
+      EXTERNAL      COPYI,SPNXDT,SPCKDT,EXDATE,DADDR,GTQUAN,DECCHX 
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I1,I2,I5/1,2,5/

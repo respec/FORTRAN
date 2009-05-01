@@ -188,6 +188,9 @@ C
 C     + + + PURPOSE + + +
 C     Process the general input for the rchres module
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    LAST,NDAMON(12),NDELT,SDATIM(5)
 C
@@ -213,7 +216,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  MIN0,MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   DAYMNH,ITABLE,OMSTI,OMSG,HSCKFL,HSCKFLX
+      EXTERNAL   DAYMNH,ITABLE,HSCKFL,HSCKFLX
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING GENERAL INPUT')

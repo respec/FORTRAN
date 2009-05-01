@@ -6,6 +6,9 @@ C
 C     + + + PURPOSE + + +
 C     Process input for section nitr
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI 
+C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION NITR1 + + +
       INCLUDE    'cplni.inc'
       INCLUDE    'crin2.inc'
@@ -23,7 +26,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     SOLDAT,ITABLE,PLNTPM,FIRSTP,SVALP,STORGE,CYLDPM
-      EXTERNAL     ZIPR,MDATBL,OMSTI,OMSTR,OMSG,RTABLE
+      EXTERNAL     ZIPR,MDATBL,RTABLE
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA TOLER/1.0E-5/
@@ -3313,6 +3316,9 @@ C
 C     + + + PURPOSE + + +
 C     Perform reactions on nitrogen forms
 C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTR,OMSTI,OMSTD,OMSTC
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     LSNO,MSGFL,DATIM(5),MESSU,ITMAXA,BRXNFG,CRXNFG,FORAFG,
      $            NUPTFG,FIXNFG,ALPNFG,AMVOFG,NWCNT(6),NECNT(1)
@@ -3388,7 +3394,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1  CHSTR1(4)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    FIRORD,SV,OMSTR,OMSTC,OMSTD,OMSTI,OMSG
+      EXTERNAL    FIRORD,SV 
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA       NH4ID/'AMMO','NIUM','    ','    ','    '/
