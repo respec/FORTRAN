@@ -38,39 +38,6 @@ $TEXT
    20    1    1    5
  The total number of timeseries to be input is incorrect.  The value is
  &I   , but it must be between 0 and 20.
-#GROUP   31  TYPE TEXT
-$TEXT
-   20    1    1    5
- The maximum total number of curves (point plus mean) that may be output
- to a flat-format PLTGEN file (TYPEFG = 1) is 20.  The user has asked
- for &I   .
-#GROUP   32  TYPE TEXT
-$TEXT
-SUM  AVER MAX  MIN  LAST
-#GROUP   33  TYPE TEXT
-$TEXT
-   20    1    1    5
- An invalid transformation (aggregation) functional was specified in the
- user's control input.  The valid values are SUM, AVER, MAX, MIN and LAST.
- The value supplied was '&CCC'.  Was it mis-spelled or placed in the
- wrong columns?
-#GROUP   34  TYPE TEXT
-$TEXT
-   20    1    1    5
- A Diffuse Time Series File produced by PLTGEN (TYPEFG = 2) may contain
- only mean-valued timeseries.  The user has specified &I    point-valued
- timeseries.
-#GROUP   35  TYPE TEXT
-$TEXT
-   20    1    1    5
- A Point Time Series File produced by PLTGEN (TYPEFG = 3) may contain
- only point-valued timeseries.  The user has specified &I    mean-valued
- timeseries.
-#GROUP   36  TYPE TEXT
-$TEXT
-   20    1    1    5
- A Point Time Series File produced by PLTGEN (TYPEFG = 3) may contain
- only one point-valued timeseries.  The user has specified &I   .
   END DATA
 END CLU
                                                                                 

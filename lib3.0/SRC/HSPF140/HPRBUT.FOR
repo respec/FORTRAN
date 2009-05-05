@@ -249,26 +249,19 @@ C
       END SUBROUTINE
 C
 C
-C     
-      SUBROUTINE   OMSGMSG
-     I                    (MESSU,ASCLU,ASGRP,
-     I                     AMAXCNT,AMAXGRP,AMAXACT,
-     I                     AILEN,ARLEN,ASDIG,ADECP,
-     I                     AMSGLEN,AMSG,
-     M                     COUNT)
+C
+      SUBROUTINE   OMSGPRM
+     I                    (AMAXCNT,AMAXGRP,AMAXACT,
+     I                     AILEN,ARLEN,ASDIG,ADECP)
 C
 C     + + +  PURPOSE + + +
-C     output an error or warning message using argument information
+C     set parms related to error or warning message
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER      MESSU,ASCLU,ASGRP,AMAXCNT,AMAXGRP,AMAXACT,
-     1             AILEN,ARLEN,ASDIG,ADECP,AMSGLEN,COUNT
-      CHARACTER*80 AMSG(*)
+      INTEGER      AMAXCNT,AMAXGRP,AMAXACT,
+     1             AILEN,ARLEN,ASDIG,ADECP
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     MESSU  - unit number to write message to
-C     ASCLU  - error message cluster - legacy so output matches
-C     ASGRP  - error message group - legacy so output matches
 C     AMAXCNT- max error count 
 C     AMAXGRP- max error count message flag
 C              1 - error during run
@@ -279,6 +272,38 @@ C     AILEN  - number of integer numbers to include
 C     ARLEN  - number of floating numbers to include
 C     ASDIG  - number of significant digits for floating numbers
 C     ADECP  - number of decimal places for floating numbers
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      MAXCNT= AMAXCNT
+      MAXGRP= AMAXGRP
+      MAXACT= AMAXACT
+      ILEN  = AILEN
+      RLEN  = ARLEN
+      SDIG  = ASDIG
+      DECP  = ADECP
+C
+      RETURN
+      END SUBROUTINE
+C
+C
+C     
+      SUBROUTINE   OMSGMSG
+     I                    (MESSU,ASCLU,ASGRP,
+     I                     AMSGLEN,AMSG,
+     M                     COUNT)
+C
+C     + + +  PURPOSE + + +
+C     output an error or warning message using argument information
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER      MESSU,ASCLU,ASGRP,AMSGLEN,COUNT
+      CHARACTER*80 AMSG(*)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - unit number to write message to
+C     ASCLU  - error message cluster - legacy so output matches
+C     ASGRP  - error message group - legacy so output matches
 C     AMSGLEN- number of lines in message
 C     AMSG   - message text 
 C     COUNT  - count of messages written
@@ -290,13 +315,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       SCLU  = ASCLU
       SGRP  = ASGRP
-      MAXCNT= AMAXCNT
-      MAXGRP= AMAXGRP
-      MAXACT= AMAXACT
-      ILEN  = AILEN
-      RLEN  = ARLEN
-      SDIG  = ASDIG
-      DECP  = ADECP
+      RECCNT= AMSGLEN
       DO 10 I = 1, AMSGLEN
         MESSAGE(I) = AMSG(I)
  10   CONTINUE       
@@ -344,7 +363,7 @@ C
       SCLU = ASCLU
       SGRP = ASGRP
 C      
-      IF (COUNT .LT. 50) THEN
+      IF (COUNT .LE. 50) THEN
 C       how many will we accept and what do we do when max is reached
         INITFG= 1
         OLEN  = 80
@@ -369,21 +388,20 @@ C         default
 C         default
           DECP= 2
         END IF
+        RECCNT= 0
+ 20     CONTINUE
+          RECCNT= RECCNT + 1
+          OLEN  = 80
+          CALL WMSGTT (MESSFL,SCLU,SGRP,INITFG,
+     M                 OLEN,
+     O                 TBUF1,CONT)
+          MESSAGE(RECCNT) = TBUFF
+        IF (CONT .EQ. 1) GO TO 20   
       ELSE
 C       assume we dont want this again
         MAXCNT= 1
       END IF
 C
-      RECCNT= 0
- 20   CONTINUE
-        RECCNT= RECCNT + 1
-        OLEN  = 80
-        CALL WMSGTT (MESSFL,SCLU,SGRP,INITFG,
-     M               OLEN,
-     O               TBUF1,CONT)
-        MESSAGE(RECCNT) = TBUFF
-      IF (CONT .EQ. 1) GO TO 20
-C     
       CALL OMSGX (MESSU,COUNT)
 C            
       RETURN
@@ -407,6 +425,13 @@ C
       DO 10 I= 1,5
         DATIM(I)= 0
  10   CONTINUE
+      MAXCNT= 20
+      MAXGRP= 1
+      MAXACT= 1
+      ILEN  = 5
+      RLEN  = 10
+      SDIG  = 5
+      DECP  = 2
 C
       RETURN
       END SUBROUTINE
