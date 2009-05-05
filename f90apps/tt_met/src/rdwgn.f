@@ -10,7 +10,15 @@
       integer idfilno, jk
       real filno,vars(172)
 
-      Open(103,file='statwgn.txt', STATUS='OLD')
+      Open(103,file='statwgn.txt', STATUS='OLD', err=150)
+      goto 200
+ 150  write(*,'(A)')' error opening statwgn.txt in rdwgn'
+      pause
+      stop
+ 200  continue
+      if(idwgn.lt.2) then
+         write(*,'(A,1x,I4)')' error in rdwgn, idwgn =',idwgn
+      endif
       Do jk=1, IDwgn
          read(103,'(1x)')
       end do
@@ -37,7 +45,7 @@
          wndav(jk,1)=vars(jk+160)
       end do
 
-      close(103)      
+      close (103)      
       
       Return
       end

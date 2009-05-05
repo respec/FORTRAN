@@ -72,6 +72,9 @@ C      input parms independent of parm.mod common block
       real precipZ(numdata),TmaxZ(numdata),TminZ(numdata)
       real PevtPMZ(numdata)
 
+      write(*,*) idmet,istyrZ,istdyz,nbyrZ,numdata,ij,idwgnz
+      write(*,*) precipz(1),tmaxz(1),tminz(1)
+
 C      note nbyr is used in allocate_parms, which sets array dimensions for other variables      
       nbyr=nbyrZ
       call allocate_parms

@@ -5,6 +5,10 @@
 !!    of three methods. If Penman-Monteith is being used, potential plant
 !!    transpiration is also calculated.
 
+!!    corrected error in wind representation: wind was assumed at 1.7 m, but u10
+!!    was used.  Need for correction confirmed by email from Mike White at 
+!!    ARS 4/29/09 - JB
+!!
 !!    ~ ~ ~ INCOMING VARIABLES ~ ~ ~
 !!    name       |units          |definition
 !!    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
@@ -154,15 +158,15 @@
 !!         ralb1 = hru_ra(j) * (1.0 - albday) 
 !! 
          !! calculate net long-wave radiation
-          !! net emissivity  equation 2.2.20 in SWAT manual
+          !! net emissivity  equation 1.2.20 in SWAT manual
           rbo = 0.
           rbo = -(0.34 - 0.139 * Sqrt(ed))
 
-          !! cloud cover factor equation 2.2.19
+          !! cloud cover factor equation 1.2.19
           rto = 0.
           rto = 0.9 * (hru_ra(j) / hru_rmx(j)) + 0.1
 
-          !! net long-wave radiation equation 2.2.21
+          !! net long-wave radiation equation 1.2.21
           rout = 0.
           rout = rbo * rto * 4.9e-9 * (tk**4)
 
@@ -181,19 +185,32 @@
         !! potential ET: reference crop alfalfa at 40 cm height
            rv = 0.
            rc = 0.
-           rv = 114. / u10(j)
+!!          corrected the following to adjust u10 to 1.7 m
+!!         rv = 114. / u10(j)            
+           rv = 114. / (u10(j)*(170./1000.)**0.2)
            rc = 49. / (1.4 - 0.4 * co2(hru_sub(j)) / 330.)
            pet_day = (dlt * rn_pet + gma * rho * vpd / rv) /            &
      &                               (xl * (dlt + gma * (1. + rc / rv)))
            pet_day = Max(0., pet_day)
            
 !! debug, output intermediate calculations
-!!       write(*,*)ijday,i_mo
-!!       write(*,*)pb,xl,ea,ed,vpd
-!!       write(*,*)ralb,rbo,rto,rout,tmpav(j)
-!!       write(*,*)hru_ra(j),hru_rmx(j),dlt,rn_pet
-!!       write(*,*)rho,rv,rc,pet_day
-!!       pause
+!!         write(*,*)ijday,i_mo
+!!         write(*,*)tmpav(j)
+!!         write(*,*)rn_pet/0.041868     !Langleys
+!!         write(*,*)ea
+!!         write(*,*)ed
+!!         write(*,*)rhd(j),vpd,ralb,rout
+!!         write(*,*)dlt
+!!         write(*,*)gma
+!!         write(*,*)u10(j)*(170./1000.)**0.2
+!!         write(*,*)pet_day
+!!         write(*,*)xl,rho,rv,rc
+!!         write(*,*)dlt*rn_pet,gma*rho*vpd/rv,xl*(dlt+gma*(1+rc/rv))
+!!!       write(*,*)pb,xl,ea,ed,vpd
+!!!       write(*,*)ralb,rbo,rto,rout,tmpav(j)
+!!!       write(*,*)hru_ra(j),hru_rmx(j),dlt,rn_pet
+!!!       write(*,*)rho,rv,rc,pet_day
+!!         pause
  
       return
       end
