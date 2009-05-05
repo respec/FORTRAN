@@ -44,8 +44,8 @@ C     2009/04/22 JLK - use OSV module version
 C     2009/04/28 JLK - initial implementation of module version 
 C
 C     + + + MODULES + + +
-      USE       HIOOSV 
-      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+      USE HIOOSV 
+      USE HMMSG, ONLY : OMSTI,OMSTC,OMSGMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),EDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
@@ -72,9 +72,10 @@ C     + + + MODULE VARIABLES + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      OSVKST,OSVKND,OSVREC,I,I1,I2,I4,I6,N,
-     #             TRNCOD,PLVX,SCLU,SGRP,INITFG,CONT,CLEN
+     #             TRNCOD,PLVX,SCLU,SGRP,INITFG,CONT,CLEN,EMSGCT,
+     #             MAXCNT,MAXGRP,MAXACT,ILEN,RLEN,SDIG,DECP
       CHARACTER*4  KWDLIB(6),BLANK
-      CHARACTER*80 CHSTR
+      CHARACTER*80 CHSTR,ERRMSG(4)
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CHSTR,CHSTR1),(KWDLIB,KWDLB1)
@@ -84,7 +85,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH,CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  DAYMNH,ITABLE,HSCKFL,RTABLE,CHKSTR,WMSGTT
+      EXTERNAL  DAYMNH,ITABLE,HSCKFL,RTABLE,CHKSTR 
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (6(A4,1X))
@@ -192,47 +193,71 @@ C
 C       original format
         IF ( (HPLTGEN%NCURV .LT. 1) .OR. (HPLTGEN%NCURV .GT. 20) ) THEN
 C         error - bad total number of curves
+          ERRMSG(1)= " The maximum total number of curves " //
+     1               "(point plus mean) that may be output"
+          ERRMSG(2)= " to a flat-format PLTGEN file (TYPEFG = 1) " //
+     1               "is 20.  The user has asked"
+          ERRMSG(3)= " for &I   ."
+          EMSGCT= 3
+          SGRP  = 31
           CALL OMSTI (HPLTGEN%NCURV)
-          SGRP= 31
-          CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                 EMSGCT,ERRMSG,
+     M                 ECOUNT)
         END IF
       ELSE IF (HPLTGEN%TYPEFG .EQ. 2 .OR. HPLTGEN%TYPEFG .EQ. 4) THEN
 C       dtsf format
         IF (HPLTGEN%NPT .GT. 0) THEN
 C         error - dtsf is mean-valued only
+          ERRMSG(1)= " A Diffuse Time Series File produced by " //
+     1               "PLTGEN (TYPEFG = 2) may contain "
+          ERRMSG(2)= " only mean-valued timeseries.  The user has " //
+     1               "specified &I    point-valued"
+          ERRMSG(3)= " timeseries."
+          EMSGCT= 3
+          SGRP  = 34
           CALL OMSTI (HPLTGEN%NPT)
-          SGRP= 34
-          CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                 EMSGCT,ERRMSG,
+     M                 ECOUNT)
         END IF
       ELSE IF (HPLTGEN%TYPEFG .EQ. 3) THEN
 C       ptsf format
         IF (HPLTGEN%NMN .GT. 0) THEN
 C         error - ptsf is point valued only
+          ERRMSG(1)= " A Point Time Series File produced by PLTGEN " //
+     1               "(TYPEFG = 3) may contain "
+          ERRMSG(2)= " only point-valued timeseries.  The user has " //
+     1               "specified &I    mean-valued"
+          ERRMSG(3)= " timeseries."
+          EMSGCT= 3
+          SGRP  = 35
           CALL OMSTI (HPLTGEN%NMN)
-          SGRP= 35
-          CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                 EMSGCT,ERRMSG,
+     M                 ECOUNT)
         END IF
         IF (HPLTGEN%NPT .GT. 1) THEN
-C         error - ptsf is single valued only
+          ERRMSG(1)= " A Point Time Series File produced by PLTGEN " //
+     1               "(TYPEFG = 3) may contain "
+          ERRMSG(2)= " only one point-valued timeseries.  " //
+     1               "The user has specified &I   ."
+          EMSGCT= 2
+          SGRP  = 36
           CALL OMSTI (HPLTGEN%NPT)
-          SGRP= 36
-          CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                 EMSGCT,ERRMSG,
+     M                 ECOUNT)
         END IF
       END IF
 C
-C     read transformation keyword library
-      SGRP  = 32
-      INITFG= 1
-      CLEN  = 80
-      CALL WMSGTT (HPLTGEN%MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             CHSTR1,CONT)
-C
-      READ (CHSTR,1000) KWDLIB
+C     keyword library
+      KWDLIB(1)= "SUM "
+      KWDLIB(2)= "AVER"
+      KWDLIB(3)= "MAX "
+      KWDLIB(4)= "MIN "
+      KWDLIB(5)= "LAST"
+      KWDLIB(6)= "    "   
 C
       IF (HPLTGEN%LABLFG .NE.(-1)) THEN
 C       plot label is required
@@ -273,9 +298,18 @@ C         invalid keyword
           WRITE (CHSTR,2070) HPLTGEN%CUVDAT(8,N)
           I4= 4
           CALL OMSTC (I4,CHSTR1)
-          SGRP= 33
-          CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          ERRMSG(1)= " An invalid transformation (aggregation) " //
+     1               "functional was specified in the"
+          ERRMSG(2)= " user's control input.  The valid values are " //
+     1               "SUM, AVER, MAX, MIN and LAST."
+          ERRMSG(3)= " The value supplied was '&CCC'.  Was it " //
+     1               "mis-spelled or placed in the"
+          ERRMSG(4)= " wrong columns?"
+          EMSGCT= 4
+          SGRP  = 33
+          CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                 EMSGCT,ERRMSG,
+     M                 ECOUNT)
         ELSE
 C         check for default
           IF (TRNCOD.EQ.6) THEN
