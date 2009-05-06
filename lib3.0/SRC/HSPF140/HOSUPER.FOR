@@ -24,6 +24,7 @@ C     + + + MODULES + + +
       USE       HIOOSV 
       USE       HMCOPY, ONLY : COPY
       USE       HMPLTGEN, ONLY : PLTGEN
+      USE       HMDISPLY, ONLY : HDISPL
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   FILES(15),RETCOD
@@ -73,7 +74,7 @@ C     + + + FUNCTIONS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     HSPSTA,TSGET,PERLND,IMPLND,RCHRES 
-      EXTERNAL     HDISPL,DURANL,GENER,MUTSIN,TSPUT 
+      EXTERNAL     DURANL,GENER,MUTSIN,TSPUT 
       EXTERNAL     COPYI,CKUSER,GSTVFL,PSTVFL
       EXTERNAL     TIMADD,SPECLM,EXDATE 
 C
@@ -373,7 +374,8 @@ C                     details first time thru
                     END IF
                   END IF
 C
-                  IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5) THEN
+                  IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5 .AND. 
+     $                OMCODE .NE. 6) THEN
 C                   read the osv from disc
                     CALL GETOSV (OSVKST,OSVKND,MAXOSV,
      O                           OSV)
@@ -411,7 +413,7 @@ C                   case 5
 C
 C                   case 6
  160                  CONTINUE
-                        CALL HDISPL (STIVL,IW,LSTCAL)
+                        CALL HDISPL (STIVL,IW,LSTCAL,OSVKST)
                       GO TO 300
 C
 C                   case 7
@@ -441,7 +443,8 @@ C                   case 11
  300              CONTINUE
 C                 endcase
 C
-                  IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5) THEN
+                  IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5 .AND. 
+     $                OMCODE .NE. 6) THEN
 C                   write the osv to disc
                     CALL PUTOSV (OSVKST,OSVKND,MAXOSV,OSV)
                   END IF
