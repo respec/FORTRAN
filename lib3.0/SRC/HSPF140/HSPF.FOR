@@ -557,17 +557,17 @@ C               rchres module
 C
               ELSE IF (OMCODE .EQ. 4) THEN
 C               copy module
-                CALL PCOPY (NDELT,SDATIM,NDAMON,EMFG,MAXOSV,
+                CALL PCOPY (NDELT,SDATIM,NDAMON,EMFG, 
      M                      OSVKEY)
 C
               ELSE IF (OMCODE .EQ. 5) THEN
 C               pltgen module
-                 CALL PPLTGN (NDELT,SDATIM,EDATIM,NDAMON,EMFG,MAXOSV,
+                 CALL PPLTGN (NDELT,SDATIM,EDATIM,NDAMON,EMFG, 
      M                        OSVKEY)
 C
               ELSE IF (OMCODE .EQ. 6) THEN
 C               disply module
-                CALL PDISPL (NDELT,SDATIM,NDAMON,EMFG,MAXOSV,
+                CALL PDISPL (NDELT,SDATIM,NDAMON,EMFG, 
      M                       OSVKEY)
 C
               ELSE IF (OMCODE .EQ. 7) THEN

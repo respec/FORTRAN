@@ -30,7 +30,7 @@ C
 C
 C
       SUBROUTINE   PDISPL
-     I                    (NDELT,SDATIM,NDAMON,EMFG,MAXOSV,
+     I                    (NDELT,SDATIM,NDAMON,EMFG,
      M                     OSVKEY)
 C
 C     + + + PURPOSE + + +
@@ -45,14 +45,13 @@ C     + + + MODULES + + +
       USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
+      INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,OSVKEY
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NDELT  - simulation time interval in minutes
 C     SDATIM - starting date/time
 C     NDAMON - no. of days in each month of calendar year
 C     EMFG   - english/metric units flag (english-1,metric-2)
-C     MAXOSV - maximum size of osv
 C     OSVKEY - last osv file record written
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION DISPLY1 + + +
@@ -86,7 +85,7 @@ C     + + + FUNCTION + + +
       INTEGER      DAYMNH,CHKSTR
 C
 C     + + + INTRINSICS + + +
-      INTRINSIC   MOD
+      INTRINSIC    MOD
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     ITABLE,HSCKFL,RTABLE,CHKSTR,SETVEC,WMSGTT,DAYMNH
@@ -117,7 +116,7 @@ C     flag pointer addresses
       ADDR     = LOC(HDISPLY%IFP)
       WRITE(99,*) 'address of IFP',1+ ((ADDR - BASEADDR)/4),BASEADDR/4
 C
-C     write the osv to disc and record the keys in opntab
+C     record the osv keys in opntab
       OSVKST= OSVKEY+ 1
       OSVREC= 5
       OSVKND= OSVKEY+ OSVREC

@@ -33,7 +33,7 @@ C
 C
 C
       SUBROUTINE   PPLTGN
-     I                    (NDELT,SDATIM,EDATIM,NDAMON,EMFG,MAXOSV,
+     I                    (NDELT,SDATIM,EDATIM,NDAMON,EMFG,
      M                     OSVKEY)
 C
 C     + + + PURPOSE + + +
@@ -48,7 +48,7 @@ C     + + + MODULES + + +
       USE HMMSG, ONLY : OMSTI,OMSTC,OMSGMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   NDELT,SDATIM(5),EDATIM(5),NDAMON(12),EMFG,MAXOSV,OSVKEY
+      INTEGER   NDELT,SDATIM(5),EDATIM(5),NDAMON(12),EMFG,OSVKEY
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NDELT  - simulation time interval in minutes
@@ -56,7 +56,6 @@ C     SDATIM - starting date/time
 C     EDATIM - ending date/time
 C     NDAMON - no. of days in each month of calendar year
 C     EMFG   - english/metric units flag (english-1,metric-2)
-C     MAXOSV - maximum size of osv
 C     OSVKEY - last osv file record written
 C
 C     + + + COMMON BLOCKS + + +
@@ -67,7 +66,7 @@ C     + + + MODULE VARIABLES + + +
       POINTER   (P,HPLTGEN)
       POINTER   (PDATIM,DATIM),(POSV,OSV),(PCODE,CODE),(PPLTINF,PLTINF),
      $          (PGLABL,GLABL),(PSCALE,SCALE)
-      INTEGER       PLTINF(7),CODE(1),GLABL(15),DATIM(5),OSV(500)
+      INTEGER       PLTINF(7),CODE(1),GLABL(15),DATIM(5),OSV(1500)
       REAL          SCALE(4)
 C
 C     + + + LOCAL VARIABLES + + +
@@ -127,8 +126,8 @@ C       read the osv from osvfl
 C       - not implemented in this release of hspf
       ELSE
 C       initialize the entire osv area used
-        DO 10 I= 1,OSVREC
-          OSV= -999
+        DO 10 I= 1, OSVREC*500
+          OSV(I)= -999
  10     CONTINUE
       END IF
 C

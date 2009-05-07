@@ -28,7 +28,7 @@ C
 C
 C
       SUBROUTINE   PCOPY
-     I                   (NDELT,SDATIM,NDAMON,EMFG,MXOSV,
+     I                   (NDELT,SDATIM,NDAMON,EMFG, 
      M                    OSVKEY)
 C
 C     + + + PURPOSE + + +
@@ -42,14 +42,13 @@ C     + + + MODULES + + +
       USE       HIOOSV 
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,MXOSV,OSVKEY
+      INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG, OSVKEY
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NDELT  - simulation time interval in minutes
 C     SDATIM - starting date/time
 C     NDAMON - no. of days in each month of calendar year
 C     EMFG   - english/metric units flag (english-1,metric-2)
-C     MXOSV  - maximum size of osv
 C     OSVKEY - last osv file record written
 C
 C     + + + COMMON BLOCKS  + + +
