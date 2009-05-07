@@ -859,7 +859,7 @@ C     + + + HISTORY + + +
 C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
-      USE       HIOOSV 
+      USE HIOOSV 
       USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +

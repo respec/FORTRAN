@@ -15,7 +15,7 @@ C
       TYPE HTDISPLY
         SEQUENCE
         INTEGER   TITLE(7),TRAN(1),PIVL,DIGIT1,FILE1,PYRFG,DIGIT2,
-     $            FILE2,PYREND,UUNITS,PSHFG,PDELT,NIVL,
+     $            FILE2,PYREND,DUMA(13),UUNITS,PSHFG,PDELT,NIVL,
      $            DISPNO,NDAY(12),TRNCOD,MSGFL,MESSU,FMT1(16),
      $            FMT2(30),FMT3(30),FMT4(30),FMT5(30),MONTHS(2,12),
      $            IVLDAY,HRSPAN(2),DASPAN(2),MNSPAN(2)
@@ -41,7 +41,7 @@ C     2009/04/22 JLK - use OSV module version
 C     2009/05/01 PBD - initial implementation of module version of DISPLY
 C
 C     + + + MODULES + + +
-      USE       HIOOSV 
+      USE HIOOSV 
       USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
@@ -63,8 +63,8 @@ C     + + + MODULE VARIABLES + + +
       POINTER   (P,HDISPLY)
       POINTER   (PDATIM,DATIM),(POSV,OSV),
      $          (PINFO1,INFO1),(PINFO2,INFO2)
-      INTEGER       INFO1(15),DATIM(5),OSV(500)
-      REAL          INFO2(4)
+      INTEGER      INFO1(15),DATIM(5),OSV(2500)
+      REAL         INFO2(4)
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I,J,K,I1,I2,I4,I6,I15,I1440,MONTHT(2,12),
@@ -74,6 +74,7 @@ C     + + + LOCAL VARIABLES + + +
      $             OSVKST,OSVREC,SUBB,FMT11(16),SCLU,SGRP,
      $             INITFG,CONT,CLEN
       INTEGER      BLNK1,ZEROC
+      INTEGER      BASEADDR,ADDR
       CHARACTER*4  KWDLIB(6)
       CHARACTER*80 CHSTR
 C
@@ -111,9 +112,14 @@ C     + + + END SPECIFICATIONS + + +
 C
       SCLU = 371
 C
+C     flag pointer addresses
+      BASEADDR = LOC(HDISPLY%TITLE)
+      ADDR     = LOC(HDISPLY%IFP)
+      WRITE(99,*) 'address of IFP',1+ ((ADDR - BASEADDR)/4),BASEADDR/4
+C
 C     write the osv to disc and record the keys in opntab
       OSVKST= OSVKEY+ 1
-      OSVREC= 3
+      OSVREC= 5
       OSVKND= OSVKEY+ OSVREC
 C
 C     point the osv to its memory location 
@@ -133,8 +139,8 @@ C       read the osv from osvfl - not implemented in this release
 C        of hspf
       ELSE
 C       initialize the entire osv area
-        DO 10 I= 1,OSVREC
-          OSV= -999
+        DO 10 I= 1, OSVREC*500
+          OSV(I)= -999
  10     CONTINUE
       END IF
 C
