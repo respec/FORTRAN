@@ -541,7 +541,7 @@ C     2009/04/28 JLK - initial implementation of module version
 C
 C     + + + MODULES + + +
       USE       HIOOSV 
-      USE HMMSG, ONLY : OMSTI,OMSG
+      USE HMMSG, ONLY : OMSTI,OMSTC,OMSGMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   STIVL,WIDTH,LSTCAL,OSVKST
@@ -569,10 +569,11 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     IDELT,N,EXDAT(6),NC,DUM1,DUM2,DUM3,DUM4,EMONFG,EPYRFG,
      $            TRNCOD,PDELT,PLTNOW,I,NBLNK,ERRFLG,SCLU,SGRP,
-     $            NULSDT(5),NULEDT(5)
+     $            NULSDT(5),NULEDT(5),EMSGCT
       REAL        VALNOW
       DOUBLE PRECISION JTIME,DYFRAC
       CHARACTER*6  OPTYP
+      CHARACTER*80 ERRMSG(12)
 C
 C     + + + EXTERNALS + + +
       EXTERNAL    EXDATE,PLTAGG,SPECL,ADDTIM,TRANS,UPQUAN,
@@ -659,32 +660,79 @@ C       check for missing input time series
         DO 10 N= 1, HPLTGEN%NPT
           IF (HPLTGEN%PTFP(N) .LT. 1) THEN
 C           error - missing an input point time series
+            ERRMSG(1)= " PLTGEN: &I    " 
+            ERRMSG(2)= " "
+            ERRMSG(3)= " The PLOTINFO table for this PLTGEN " //
+     1                 "specifies that &I    point-valued timeseries "
+            ERRMSG(4)= " should be supplied.  However, POINT &I    " //
+     1                 "was not supplied in the EXT SOURCES, "
+            ERRMSG(5)= " NETWORK, or SCHEMATIC blocks.  Is the " //
+     1                 "source time series specified in one of "
+            ERRMSG(6)= " these blocks?  Has it been commented out? "
+            ERRMSG(7)= " "
+            ERRMSG(8)= " If the intended source of this time series " //
+     1                 "is an operation - is that operation "
+            ERRMSG(9)= " commented out in the OPN SEQUENCE block? "
+            ERRMSG(10)= " "
+            ERRMSG(11)= " If the intended source is a PERLND, " //
+     1                  "IMPLND, or RCHRES - is the appropriate "
+            ERRMSG(12)= " module section turned on in the " //
+     1                  "ACTIVITY table? "
+            EMSGCT= 12
+            SGRP  = 11
             CALL OMSTI (HPLTGEN%PLTNO)
             CALL OMSTI (HPLTGEN%NPT)
             CALL OMSTI (N)
-            SGRP= 11
-            CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M                 ERRFLG)
+            CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                   EMSGCT,ERRMSG,
+     M                   ERRFLG)
           END IF
  10     CONTINUE
         DO 20 N= 1, HPLTGEN%NMN
           IF (HPLTGEN%MNFP(N) .LT. 1) THEN
 C           error - missing an input mean time series
+            ERRMSG(1)= " PLTGEN: &I   "
+            ERRMSG(2)= " "
+            ERRMSG(3)= " The PLOTINFO table for this PLTGEN " //
+     1                 "specifies that &I    mean-valued timeseries "
+            ERRMSG(4)= " should be supplied.  However, MEAN &I    " //
+     1                 "was not supplied in the EXT SOURCES, "
+            ERRMSG(5)= " NETWORK, or SCHEMATIC blocks.  Is the " //
+     1                 "source time series specified in one of "
+            ERRMSG(6)= " these blocks?  Has it been commented out? "
+            ERRMSG(7)= " "
+            ERRMSG(8)= " If the intended source of this time series " //
+     1                 " is an operation - is that operation "
+            ERRMSG(9)= " commented out in the OPN SEQUENCE block? "
+            ERRMSG(10)= " "
+            ERRMSG(11)= " If the intended source is a PERLND, " //
+     1                  "IMPLND, or RCHRES - is the appropriate "
+            ERRMSG(12)= " module section turned on in the " //
+     1                  "ACTIVITY table? "
+            EMSGCT= 12
+            SGRP  = 12
             CALL OMSTI (HPLTGEN%PLTNO)
             CALL OMSTI (HPLTGEN%NMN)
-            CALL OMSTI (N)
-            SGRP= 12
-            CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M                 ERRFLG)
+            CALL OMSTI (N)      
+            CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                   EMSGCT,ERRMSG,
+     M                   ERRFLG)
           END IF
  20     CONTINUE
         IF (ERRFLG .GT. 0) THEN
 C         error - at least one missing time series: stop run
           I= 0
+          ERRMSG(1)= " PLTGEN: &I   "
+          ERRMSG(2)= " "
+          ERRMSG(3)= " One or more input time series for this " //
+     1               "PLTGEN are missing.  Refer to previous "
+          ERRMSG(4)= " error messages for more help. "
+          EMSGCT= 4
+          SGRP  = 13
           CALL OMSTI (HPLTGEN%PLTNO)
-          SGRP= 13
-          CALL OMSG (HPLTGEN%MESSU,HPLTGEN%MSGFL,SCLU,SGRP,
-     M               I)
+          CALL OMSGMSG(HPLTGEN%MESSU,SCLU,SGRP,
+     I                 EMSGCT,ERRMSG,
+     M                 I)
         END IF
 C
 C       write file header

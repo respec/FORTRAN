@@ -42,7 +42,7 @@ C     2009/05/01 PBD - initial implementation of module version of DISPLY
 C
 C     + + + MODULES + + +
       USE HIOOSV 
-      USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
+      USE HMMSG, ONLY : OMSTI,OMSTC,OMSGMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG,OSVKEY
@@ -71,11 +71,11 @@ C     + + + LOCAL VARIABLES + + +
      $             FORS(3),FORF(2),FORA(2),FORE,FORT(3),
      $             NB4,ND4,OSVKND,
      $             OSVKST,OSVREC,SUBB,FMT11(16),SCLU,SGRP,
-     $             INITFG,CONT,CLEN
+     $             INITFG,CONT,CLEN,EMSGCT
       INTEGER      BLNK1,ZEROC
       INTEGER      BASEADDR,ADDR
       CHARACTER*4  KWDLIB(6)
-      CHARACTER*80 CHSTR
+      CHARACTER*80 CHSTR,ERRMSG(4)
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CHSTR,CHSTR1),(KWDLIB,KWDLB1)
@@ -211,9 +211,18 @@ C
 C       invalid keyword
         WRITE (CHSTR(1:4),2070) HDISPLY%TRAN(1)
         CALL OMSTC (I4,CHSTR1)
+        ERRMSG(1)= " An invalid transformation (aggregation) " //
+     1             "functional was specified in the "
+        ERRMSG(2)= " user's control input.  The valid values " //
+     1             "are SUM, AVER, MAX, MIN and LAST. "
+        ERRMSG(3)= " The value supplied is '&CCC'.  Was it " //
+     1             "mis-spelled or placed in the "
+        ERRMSG(4)= " wrong columns?"
+        EMSGCT= 4
         SGRP= 2
-        CALL OMSG (HDISPLY%MESSU,HDISPLY%MSGFL,SCLU,SGRP,
-     M             ECOUNT)
+        CALL OMSGMSG(HDISPLY%MESSU,SCLU,SGRP,
+     I               EMSGCT,ERRMSG,
+     M               ECOUNT)
       ELSE
 C       check for default
         IF (HDISPLY%TRNCOD .EQ. 6) THEN
@@ -294,10 +303,18 @@ C       short-span summary is to be printed
 C         error - data interval, as implied by pivl, must be an
 C         integer fraction of a day
           CALL OMSTI (OPTNO)
-          CALL OMSTI (HDISPLY%PDELT)
+          CALL OMSTI (HDISPLY%PDELT)        
+          ERRMSG(1)= " The interval of the data in a short-span " //
+     1               "display (pdelt= delt*pivl mins)"
+          ERRMSG(2)= " must divide exactly into a day (1440 mins).  " //
+     1               "For disply operation &I   ,"
+          ERRMSG(3)= " this is not the case since the value of "//
+     1               "pdelt is &I   ."
+          EMSGCT= 3
           SGRP= 4
-          CALL OMSG (HDISPLY%MESSU,HDISPLY%MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(HDISPLY%MESSU,SCLU,SGRP,
+     I                 EMSGCT,ERRMSG,
+     M                 ECOUNT)
         END IF
 C
 C       determine the particulars of this display
