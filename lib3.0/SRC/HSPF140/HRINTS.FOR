@@ -1,6 +1,25 @@
 C
 C
 C
+      MODULE HMRINTS
+C
+C     + + + PURPOSE + + +
+C     module containing timeseries portion of run interpreter 
+C
+C     + + + HISTORY + + +
+C     2009/05/08 JLK - initial implementation
+C
+C     + + + MODULE VARIABLES + + +
+      USE HMTIMSERDEF
+      IMPLICIT NONE
+C
+C     need one for each operating module type
+      TYPE (HMODULE_TIMSER_DEFINITION) :: TIMSERDEFS(20)
+C   
+      CONTAINS   
+C
+C
+C
       SUBROUTINE   HRITSI
      I                   (MSGFL)
 C
@@ -109,7 +128,7 @@ C     transformation code table
       IF (CONT .EQ. 1) GO TO 20
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -176,7 +195,7 @@ C     set key for tsgetf/tsputf
       GPKEY= 2
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -251,7 +270,7 @@ C
       IF (CONT.EQ.1 .AND. NUMCON.LT.MAXCNX) GO TO 10
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -660,7 +679,7 @@ C
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -705,7 +724,7 @@ C     + + + FUNCTIONS + + +
       INTEGER    OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   GTTMRC,OPNNO,OPNTS,TOPTNO,PAIRS
+      EXTERNAL   GTTMRC,OPNNO,TOPTNO
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING ANY ENTRIES IN NETWORK BLOCK')
@@ -841,7 +860,7 @@ C       done processing message
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -859,6 +878,7 @@ C     + + + HISTORY + + +
 C     2009/04/22 JLK - use OSV module version
 C
 C     + + + MODULES + + +
+      USE HMTIMSERDEF
       USE HIOOSV 
       USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
@@ -911,6 +931,9 @@ C     + + + LOCAL VARIABLES + + +
      $             CLU,SGRP,CONT,INITFG,CLEN
       CHARACTER*80 INBUFF
       CHARACTER*6  CHSTR,OPTYP
+      LOGICAL      INLINE_TIMSERDEF
+      TYPE (HMODULE_TIMSER_DEFINITION) TIMSERDEF
+      TYPE (HMODULE_TIMSER_MEMBER) TIMSERMEMDEF
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (INBUFF,INBUF1),(CHSTR,CHSTR1)
@@ -920,7 +943,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     CHKSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    CHKSTR,MEMTS,WMSGTT
+      EXTERNAL    CHKSTR,WMSGTT
 C
 C     + + + INITIALIZATIONS + + +
       DATA GCUR/0/
@@ -979,20 +1002,32 @@ C       valid value was supplied in argument list
       END IF
 C
       IF (OMCODE .NE. GCUR) THEN
-C       need new group keys, get ready to read msgfl
-        SCLU  = 140+ OMCODE
-        SGRP  = 1
-        INITFG= 1
-        GMAX  = 0
- 20     CONTINUE
-          CLEN  = 80
-          CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M                 CLEN,
-     O                 INBUF1,CONT)
-          INITFG= 0
-          GMAX  = GMAX+ 1
-          READ (INBUFF,1000) GKYWDS(GMAX),GGRP(GMAX)
-        IF (CONT.EQ.1 .AND. GMAX.LT.50) GO TO 20
+C       need new group keys
+        INLINE_TIMSERDEF = GETMODTSDEF(OMCODE)
+        TIMSERDEF= TIMSERDEFS(OMCODE)
+        IF (INLINE_TIMSERDEF) THEN
+C         new design - inline timser definition
+          SCLU     = TIMSERDEF%CLUSTER
+          DO 10 GMAX = 1 , UBOUND(TIMSERDEF%GROUP,1)
+             GKYWDS(GMAX) = TIMSERDEF%GROUP(GMAX)%NAME
+             GGRP(GMAX)   = TIMSERDEF%GROUP(GMAX)%OFFSET
+ 10       CONTINUE          
+        ELSE
+C         legacy, get ready to read msgfl               
+          SCLU  = 140+ OMCODE
+          SGRP  = 1
+          INITFG= 1
+          GMAX  = 0
+ 20       CONTINUE
+            CLEN  = 80
+            CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M                   CLEN,
+     O                   INBUF1,CONT)
+            INITFG= 0
+            GMAX  = GMAX+ 1
+            READ (INBUFF,1000) GKYWDS(GMAX),GGRP(GMAX)
+          IF (CONT.EQ.1 .AND. GMAX.LT.50) GO TO 20
+        END IF
         GCUR= OMCODE
         MCUR= 0
       END IF
@@ -1016,27 +1051,39 @@ C       error - group name is invalid
 C       group valid, check the member name/subscript reference
         IF (MCUR .NE. GRPNO) THEN
 C         need to know whats valid and how many there are
-          SGRP  = GRPNO+ 1
-          INITFG= 1
-          MMAX  = 0
- 30       CONTINUE
-            CLEN  = 80
-            CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M                   CLEN,
-     O                   INBUF1,CONT)
-            INITFG= 0
-            MMAX  = MMAX+ 1
-            READ (INBUFF,1000) MKYWDS(MMAX)
-          IF (CONT.EQ.1 .AND. MMAX.LT.50) GO TO 30
-          MCUR= GRPNO
+          IF (INLINE_TIMSERDEF) THEN
+            DO 25 MMAX = 1, UBOUND(TIMSERDEF%GROUP(GRPNO)%MEMBER,1)
+              MKYWDS(MMAX) = TIMSERDEF%GROUP(GRPNO)%MEMBER(MMAX)%NAME
+ 25         CONTINUE       
+            MMAX = MMAX- 1     
+          ELSE
+            SGRP  = GRPNO+ 1
+            INITFG= 1
+            MMAX  = 0
+ 30         CONTINUE
+              CLEN  = 80
+              CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M                     CLEN,
+     O                     INBUF1,CONT)
+              INITFG= 0
+              MMAX  = MMAX+ 1
+              READ (INBUFF,1000) MKYWDS(MMAX)
+            IF (CONT.EQ.1 .AND. MMAX.LT.50) GO TO 30
+            MCUR= GRPNO
+          END IF
         END IF
 C
         IF (MEMN .EQ.'      ') THEN
 C         all members are implied
+          INLINE_TIMSERDEF = TIMSERDEF%INITIALIZED
           DO 70 N= 1,MMAX
             SGRP= N+ GGRP(GRPNO)
+            IF (INLINE_TIMSERDEF) THEN
+              TIMSERMEMDEF = TIMSERDEF%GROUP(GRPNO)%MEMBER(N)
+            END IF
             CALL MEMTS (MESSU,MSGFL,SCLU,SGRP,MEMSB,OPTYP,OPTNO,GRPN,
      I                  EUNITS,UUNITS,MAXOSV,OSV,RWFG,MXTTB,
+     I                  INLINE_TIMSERDEF,TIMSERMEMDEF,
      M                  NTS,ECOUNT,
      O                  TABL,TABLR)
  70       CONTINUE
@@ -1061,8 +1108,12 @@ C           error - invalid member name
           ELSE
 C           ok - process this member
             SGRP= N+ GGRP(GRPNO)
+            IF (INLINE_TIMSERDEF) THEN
+              TIMSERMEMDEF = TIMSERDEF%GROUP(GRPNO)%MEMBER(N)
+            END IF
             CALL MEMTS (MESSU,MSGFL,SCLU,SGRP,MEMSB,OPTYP,OPTNO,GRPN,
      I                  EUNITS,UUNITS,MAXOSV,OSV,RWFG,MXTTB,
+     I                  INLINE_TIMSERDEF,TIMSERMEMDEF,
      M                  NTS,ECOUNT,
      O                  TABL,TABLR)
           END IF
@@ -1070,13 +1121,14 @@ C           ok - process this member
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
       SUBROUTINE   MEMTS
      I                  (MESSU,MSGFL,SCLU,SGRP,MEMSB,OPTYP,OPTNO,GRPN,
      I                   EUNITS,UUNITS,MAXOSV,OSV,RWFG,MAXTTB,
+     I                   INLINE,TIMSERMEMBERDEF,
      M                   NTS,ECOUNT,
      O                   TABL,TABLR)
 C
@@ -1084,6 +1136,7 @@ C     + + + PURPOSE + + +
 C     Process a single member (n)
 C
 C     + + + MODULES + + +
+      USE HMTIMSERDEF
       USE HMMSG, ONLY : OMSTI,OMSG,OMSTC
 C
 C     + + + DUMMY ARGUMENTS + + +
@@ -1092,6 +1145,8 @@ C     + + + DUMMY ARGUMENTS + + +
      $            OSV(MAXOSV),RWFG,TABL(10,MAXTTB),UUNITS
       REAL        TABLR(10,MAXTTB)
       CHARACTER*6 GRPN,OPTYP
+      LOGICAL     INLINE
+      TYPE (HMODULE_TIMSER_MEMBER) TIMSERMEMBERDEF
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MESSU  - ftn unit no. to be used for printout of messages
@@ -1144,20 +1199,36 @@ C     + + + END SPECIFICATIONS + + +
 C
       I6= 6
 C
-C     get info about this member from message file
-      INITFG= 1
-      CLEN= 80
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             INBUF1,CONT)
-      READ (INBUFF,1000) MEMN,MDIM1,MAXSB1,MAXSB2,MKIND,SPTRN,MSECT,
-     #                   MIO,OSVBAS,OSVOFF,((LTVAL(K,L,1),K=1,2),L=1,2)
-      INITFG= 0
-      CLEN= 80
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             INBUF1,CONT)
-      READ (INBUFF,1005) ((LTVAL(K,L,2),K=1,2),L=1,2)
+      IF (INLINE) THEN
+C       use inline information about this member   
+        MEMN  = TIMSERMEMBERDEF%NAME
+        MDIM1 = TIMSERMEMBERDEF%MDIM1  
+        MAXSB1= TIMSERMEMBERDEF%MAXSB1
+        MAXSB2= TIMSERMEMBERDEF%MAXSB2
+        MKIND = TIMSERMEMBERDEF%MKIND
+        SPTRN = TIMSERMEMBERDEF%SPTRN
+        MSECT = TIMSERMEMBERDEF%MSECT
+        MIO   = TIMSERMEMBERDEF%MIO
+        OSVBAS= TIMSERMEMBERDEF%OSVBAS
+        OSVOFF= TIMSERMEMBERDEF%OSVOFF
+        LTVAL = TIMSERMEMBERDEF%LTVAL
+      ELSE
+C       get info about this member from message file
+        INITFG= 1
+        CLEN= 80
+        CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M               CLEN,
+     O               INBUF1,CONT)
+        READ (INBUFF,1000) MEMN,MDIM1,MAXSB1,MAXSB2,MKIND,SPTRN,MSECT,
+     #                     MIO,OSVBAS,OSVOFF,
+     #                     ((LTVAL(K,L,1),K=1,2),L=1,2)
+        INITFG= 0
+        CLEN= 80
+        CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M               CLEN,
+     O               INBUF1,CONT)
+        READ (INBUFF,1005) ((LTVAL(K,L,2),K=1,2),L=1,2)
+      END IF
 C
 C     section off(1) or on(2)
 C
@@ -1305,45 +1376,7 @@ C       trying to input an output only timeseries
       END IF
 C
       RETURN
-      END
-C
-C
-C
-      INTEGER   FUNCTION IVALUE
-     I                          (IVAL,MAXOSV,OSV)
-C
-C     + + + PURPOSE + + +
-C     Look at a supplied integer value.  if it's positive, return the
-C     value, if negative return the value in the osv with a virtual
-C     origin equal to its absolute value.
-C
-C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    IVAL,MAXOSV,OSV(MAXOSV)
-C
-C     + + + ARGUMENT DEFINITIONS + + +
-C     IVAL   - value supplied
-C     MAXOSV - maximum size of osv
-C     OSV    - operation status vector
-C
-C     + + + LOCAL VARIABLES + + +
-      INTEGER   ADDR
-C
-C     + + + INTRINSICS + + +
-      INTRINSIC IABS
-C
-C     + + + END SPECIFICATIONS + + +
-C
-      IF (IVAL .GE. 0) THEN
-C       positive, return the value
-        IVALUE= IVAL
-      ELSE
-C       negative, return value from osv at position value
-        ADDR  = IABS(IVAL)
-        IVALUE= OSV(ADDR)
-      END IF
-C
-      RETURN
-      END
+      END SUBROUTINE 
 C
 C
 C
@@ -1707,7 +1740,7 @@ C
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -1768,7 +1801,7 @@ C     + + + FUNCTIONS + + +
       INTEGER     OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    OPNNO,PSCHEM,OPNTS,TOPTNO,PAIRS,GTTMRC
+      EXTERNAL    OPNNO,PSCHEM,TOPTNO,GTTMRC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING ANY ENTRIES IN SCHEMATICS BLOCK')
@@ -1918,7 +1951,7 @@ C       end processing message
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -1972,7 +2005,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  GTTMRC,TOPTNO,EXTTS,OPNTS,PAIRS,CHAIN,WKDMP1,OPNNO
+      EXTERNAL  GTTMRC,TOPTNO,EXTTS,CHAIN,WKDMP1,OPNNO
 C
 C     + + + OUTPUT FORMATS + + +
 2000  FORMAT (/,' PROCESSING ANY ENTRIES IN EXT SOURCES BLOCK')
@@ -2093,7 +2126,7 @@ C       done processing message
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
 C
 C
 C
@@ -2145,7 +2178,7 @@ C     + + + FUNCTIONS + + +
       INTEGER   OPNNO
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  GTTMRC,OPNNO,EXTTS,OPNTS,PAIRS,CHAIN,WKDMP1
+      EXTERNAL  GTTMRC,OPNNO,EXTTS,CHAIN,WKDMP1
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING ANY ENTRIES IN EXT TARGETS BLOCK')
@@ -2246,4 +2279,69 @@ C       done processing message
       END IF
 C
       RETURN
-      END
+      END SUBROUTINE
+C
+C
+C 
+      LOGICAL FUNCTION GETMODTSDEF
+     I                            (OMCODE)
+C
+      USE HMCOPY, ONLY : GETTSDEF_COPY
+C      
+      INTEGER OMCODE
+C
+      IF (.NOT. TIMSERDEFS(OMCODE)%INITIALIZED) THEN
+        IF (OMCODE .EQ. 4) THEN
+          CALL GETTSDEF_COPY(TIMSERDEFS(OMCODE))
+          GETMODTSDEF = .TRUE.
+        ELSE
+          GETMODTSDEF = .FALSE.
+        END IF      
+      END IF    
+C
+      RETURN
+      END FUNCTION
+C
+      END MODULE
+C
+C     + + + NOTE + + +
+C     2009/05/12 - JLK - Intel compiler wants this function outside of module      
+C
+C
+C
+      INTEGER   FUNCTION IVALUE
+     I                          (IVAL,MAXOSV,OSV)
+C
+C     + + + PURPOSE + + +
+C     Look at a supplied integer value.  if it's positive, return the
+C     value, if negative return the value in the osv with a virtual
+C     origin equal to its absolute value.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    IVAL,MAXOSV,OSV(MAXOSV)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     IVAL   - value supplied
+C     MAXOSV - maximum size of osv
+C     OSV    - operation status vector
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   ADDR
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC IABS
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (IVAL .GE. 0) THEN
+C       positive, return the value
+        IVALUE= IVAL
+      ELSE
+C       negative, return value from osv at position value
+        ADDR  = IABS(IVAL)
+        IVALUE= OSV(ADDR)
+      END IF
+C
+      RETURN
+      END FUNCTION
+            
