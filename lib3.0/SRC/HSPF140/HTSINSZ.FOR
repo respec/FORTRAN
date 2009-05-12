@@ -191,6 +191,9 @@ C
 C     + + + PURPOSE + + +
 C     Generate the tsget/tsput instructions
 C
+C     + + + MODULES + + +
+      USE HMRINTS, ONLY : FINSTR
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   START(5),ENDR(5),OPST,OPND,GPKEY
 C
@@ -208,7 +211,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   DELT,FMIN,GETF,I,IGRP,SKY,STIME,EKY,VOPAD,WIDTH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  CRTP,FINSTR
+      EXTERNAL  CRTP 
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT(' BEGIN GENERATION OF TSGET/TSPUT INSTRUCTIONS',
