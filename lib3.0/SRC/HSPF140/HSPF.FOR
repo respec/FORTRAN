@@ -11,6 +11,9 @@ C     Copies Data Set from User's Control Input to memory, finds start
 C     and end of the Data Set and hands control to appropriate part
 C     of HSPF software for execution of user's instructions.
 C
+C     + + + HISTORY + + +
+C     2009/05/12 PBD - use in line messages to echo file
+C
 C     + + + MODULES + + +
       USE HIOOSV, ONLY : INITOSVQ
       USE HMMSG, ONLY : INITMSGQ
@@ -62,24 +65,58 @@ C
       SCLU= 201
 C
 C     title block to output file
-      SGRP= 1
-      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+      WRITE (MESSU,*) 
+     1  "************************************************************"
+      WRITE (MESSU,*) 
+     1  "*                                                          *"
+      WRITE (MESSU,*) 
+     1  "*        Hydrological Simulation Program - FORTRAN         *"
+      WRITE (MESSU,*) 
+     1  "*                                                          *"
+      WRITE (MESSU,*)
+     1  "************************************************************"
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*) 
+     1  "  Developed for:                Modified and Maintained by"
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*) 
+     1  "    U.S. Environmental            Aqua Terra Consultants"
+      WRITE (MESSU,*) 
+     1  "      Protection Agency           (650)962-1864"
+      WRITE (MESSU,*) 
+     1  "    Office of Research            email: hspf@aquaterra.com"
+      WRITE (MESSU,*) "      and Development"
+      WRITE (MESSU,*) "    Center for Exposure"
+      WRITE (MESSU,*) "      Assessment Modeling"
+      WRITE (MESSU,*) "    Athens, Georgia"
+      WRITE (MESSU,*) "    (706)355-8400"                  
+      WRITE (MESSU,*) "    email: ceam@epamail.epa.gov"
+      WRITE (MESSU,*) "" 
+      WRITE (MESSU,*) "  In cooperation with:"
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*)
+     1  "    U.S. Geological Survey                Release 14.0b"
+      WRITE (MESSU,*) 
+     1  "    Water Resources Discipline            May 2009"
+      WRITE (MESSU,*) "    Office of Surface Water"
+      WRITE (MESSU,*) "    Reston, Virginia"     
+      WRITE (MESSU,*) "    email: h2osoft@usgs.gov"   
+      WRITE (MESSU,*) ""
 C
 C     start of job message
-      SGRP= 2
-      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*) "Start of Job"
 C
 C     first pre-process input for a data set message
-      SGRP= 3
-      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*) "PREPROCESSING USERS CONTROL INPUT."
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*) "SEARCHING FOR BOUNDARIES OF NEXT DATA SET " //
+     1                "IN USERS CONTROL INPUT."
+      WRITE (MESSU,*) ""
 C
 C     get major keywords (RUN)
-      SGRP= 21
-      INITFG= 1
-      CLEN= 20
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             CHSTR1,CONT)
+      CHSTR = "RUN            1   1"
       READ (CHSTR,1000) KWDLIB,KWDDIM,KWDTYP
 C
 C     look for a fresh set of keywords
@@ -111,8 +148,8 @@ C         run data set interpreted without error - run it
           CALL SDELAY (ITIM)
           CALL OSUPER (FILES,RETCOD)
 C         all done - end of job
-          SGRP= 4
-          CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+          WRITE (MESSU,*) ""
+          WRITE (MESSU,*) "End of Job"
           ITIM= 40
           CALL SDELAY (ITIM)
         END IF
@@ -189,6 +226,7 @@ C     + + + DATA INITIALIZATIONS + + +
 C
 C     + + + HISTORY + + +
 C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C     2009/05/12  PBD - use in line messages to echo file
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -210,8 +248,10 @@ C     put file unit numbers in common block
  10   CONTINUE
 C
 C     interp message to output file
-      SGRP= 5
-      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*) 
+     1  "INTERPRETING RUN DATA SET IN USERS CONTROL INPUT"
+      WRITE (MESSU,*) ""
 C
 C     warning info
       I= 10
@@ -300,13 +340,21 @@ C     look for formats block
      O            KEYST,KEYND)
       IF ( (KEYST .NE. 0) .AND. (OUTLEV .GT. 2) ) THEN
 C       formats block is present, processing message
-        SGRP= 10
-        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        WRITE (MESSU,*) ""
+        WRITE (MESSU,*) 
+     1  "==============================================" //
+     1  "==============================================" //
+     1  "========================================"
+        WRITE (MESSU,*) "PROCESSING FORMATS BLOCK"
 C       dump formats block
         CALL DUMPER (KEYST,KEYND,MESSU)
 C       end processing message
-        SGRP= 11
-        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        WRITE (MESSU,*) ""
+        WRITE (MESSU,*) "FINISHED PROCESSING FORMATS BLOCK"
+        WRITE (MESSU,*) 
+     1  "===============================================" //
+     1  "===============================================" //
+     1  "======================================"
       END IF
 C
 C     process blocks dealing with time series linkages -
@@ -319,20 +367,27 @@ C       write the operations supervisor instruction file
       END IF
 C
 C     interp complete message
-      SGRP= 12
-      CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+      WRITE (MESSU,*) ""
+      WRITE (MESSU,*) "INTERPRETATION OF RUN DATA SET COMPLETE"
+      WRITE (MESSU,*) ""
 C
       IF (RUNFG .EQ. 0) THEN
 C       user did not want to execute
-        SGRP= 14
-        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        WRITE (MESSU,*) ""
+        WRITE (MESSU,*) 
+     1  "EXECUTION WILL NOT BE ATTEMPTED BECAUSE RUN=0 WAS " //
+     1  "SPECIFIED IN GLOBAL BLOCK."
+        WRITE (MESSU,*) ""
         RETCOD= 1
       END IF
 C
       IF (ECOUNT .GT. 0) THEN
 C       errors found in uci
-        SGRP= 13
-        CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+        WRITE (MESSU,*) ""
+        WRITE (MESSU,*) 
+     1  "EXECUTION WILL NOT BE ATTEMPTED BECAUSE ONE OR MORE " //
+     1  "ERRORS HAVE BEEN DETECTED."
+        WRITE (MESSU,*) ""
         RETCOD= 2
       END IF
 C
@@ -358,6 +413,7 @@ C     + + + MODULES + + +
       USE   HMCOPY, ONLY : PCOPY
       USE   HMPLTGEN, ONLY : PPLTGN
       USE   HMDISPLY, ONLY : PDISPL
+      USE   HMEXTMOD, ONLY : PEXTMOD
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     SDATIM(5),EDATIM(5),NDAMON(12),EMFG,SCLU,
@@ -375,7 +431,6 @@ C     NKWOPR - number of operation name keywords
 C     KWDOPR - operation name keywords
 C     RUNWID - maximum run span width allowed - 0 if no restrictions
 C     RETCOD - return code -1 for user interupt
-C
 C
 C     + + + PARAMETERS + + +
       INCLUDE    'pmxosv.inc'
@@ -409,6 +464,9 @@ C
 C     + + + INPUT FORMATS + + +
  1020 FORMAT (3X,I3,2X,A12)
 C
+C     + + + HISTORY + + +
+C     2009/05/12  PBD - added new EXTMOD module
+C
 C     + + + END SPECIFICATIONS + + +
 C
       I0= 0
@@ -437,6 +495,7 @@ C       put blank operation number to screen
         KTYP= 100
         CALL GETSE (KTYP,OMCNT,
      O              KEYST,KEYND)
+        WRITE (MESSU,*) "returned keys ",OMCNT,keyst,keynd
 C
         IF (KEYST .EQ. 0) THEN
 C         we are done
@@ -594,6 +653,11 @@ C
 C               report module
                 CALL PREPRT (NDELT,SDATIM,NDAMON,EMFG,MAXOSV,
      M                       OSVKEY)
+C
+              ELSE IF (OMCODE .EQ. 12) THEN
+C               extmod module
+                CALL PEXTMOD (NDELT,SDATIM,NDAMON,EMFG,
+     M                        OSVKEY)
 C
               END IF
 C

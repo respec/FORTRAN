@@ -119,6 +119,7 @@ C     + + + LOCAL VARIABLES + + +
      #             KWDDIM(MAXBK),KWDTYP(MAXBK),J,NKWDS,
      #             I,I0,I1,LKWDS,KTYP
       CHARACTER*1  CHSTR1(80),KWDLIB(12,MAXBK)
+      CHARACTER*80 CKWDS(MAXBK)
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CHSTR1,CHSTR)
@@ -133,6 +134,7 @@ C     + + + INPUT FORMATS + + +
 C
 C     + + + HISTORY + + +
 C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C     2009/05/12  PBD - get operation names in code rather than from message file
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -149,12 +151,37 @@ C     run block keyword info
 C
       I     = 0
       NKWOPR= 0
+C
+      CKWDS(1)  = "GLOBAL         1   2"
+      CKWDS(2)  = "OPN SEQUENCE   1   3"
+      CKWDS(3)  = "FTABLES        1   4"
+      CKWDS(4)  = "EXT SOURCES    1   5"
+      CKWDS(5)  = "FORMATS        1   6"
+      CKWDS(6)  = "NETWORK        1   7"
+      CKWDS(7)  = "EXT TARGETS    1   8"
+      CKWDS(8)  = "SPEC-ACTIONS   1   9"
+      CKWDS(9)  = "SCHEMATIC      1  10"
+      CKWDS(10) = "MASS-LINK      1  11"
+      CKWDS(11) = "PERLND         1 100"
+      CKWDS(12) = "IMPLND         1 100"
+      CKWDS(13) = "RCHRES         1 100"
+      CKWDS(14) = "COPY           1 100"
+      CKWDS(15) = "PLTGEN         1 100"
+      CKWDS(16) = "DISPLY         1 100"
+      CKWDS(17) = "DURANL         1 100"
+      CKWDS(18) = "GENER          1 100"
+      CKWDS(19) = "MUTSIN         1 100"
+      CKWDS(20) = "BMPRAC         1 100"
+      CKWDS(21) = "REPORT         1 100"
+      CKWDS(22) = "EXTMOD         1 100"
+      CKWDS(23) = "FILES          1  12"
+      CKWDS(24) = "CATEGORY       1  13"
+      CKWDS(25) = "MONTH-DATA     1  14"
+      CKWDS(26) = "PATHNAMES      1  15"
+C
  20   CONTINUE
         I= I+ 1
-        CALL WMSGTT (HMSGFL,SCLU,SGRP,INITFG,
-     M               CLEN,
-     O               CHSTR1,CONT)
-        READ(CHSTR,1000) (KWDLIB(J,I),J=1,LKWDS),KWDDIM(I),KWDTYP(I)
+        READ(CKWDS(I),1000) (KWDLIB(J,I),J=1,LKWDS),KWDDIM(I),KWDTYP(I)
         IF (KWDTYP(I) .EQ. 100) THEN
 C         operation type keyword, save for use in opn seq block proc
           NKWOPR= NKWOPR+ 1
@@ -162,7 +189,7 @@ C         operation type keyword, save for use in opn seq block proc
         END IF
         INITFG= 0
         CLEN  = 80
-      IF (CONT .EQ. 1) GO TO 20
+      IF (I.LT.26) GO TO 20
       NKWDS= I
 C      WRITE(99,*) '   got keywords:',NKWDS
 C
