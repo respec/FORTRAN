@@ -47,7 +47,6 @@
 	<Files>
 		<Filter Name="Include Files">
 		<File RelativePath="..\..\SRC\HSPF140\CBMPR.INC"/>
-		<File RelativePath="..\..\SRC\HSPF140\CCOPY.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CDISP.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CDURA.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CFILBK.INC"/>
@@ -82,7 +81,6 @@
 		<File RelativePath="..\..\SRC\HSPF140\CPLSE.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CPLSN.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CPLST.INC"/>
-		<File RelativePath="..\..\SRC\HSPF140\CPLTG.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CPLTR.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CPTHNM.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CREPT.INC"/>
@@ -168,7 +166,9 @@
 		<File RelativePath="..\..\SRC\HSPF140\HIOWRK.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HIRRIG.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HMCOPY.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HMDISPLY.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HMPLTGEN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HMTIMSERDEF.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HOSUPER.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HPER.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HPERAGUT.FOR"/>
