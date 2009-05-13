@@ -49,7 +49,7 @@ C
 C
       TYPE (HMODULE_TIMSER_DEFINITION) MOD_DEFN   
 C      
-      INTEGER      BASEADDR, SBPTR, ADDR
+      INTEGER      BASEADDR, ITMP, SBPTR, ADDR
       TYPE(HTCOPY) HCOPY
 C      
       MOD_DEFN%NAME   = "COPY"
@@ -62,16 +62,20 @@ C
       MOD_DEFN%GROUP(1)%OFFSET= 10
       ALLOCATE (MOD_DEFN%GROUP(1)%MEMBER(2))
 C      
-      SBPTR= -(1+ ((LOC(HCOPY%NPT) - BASEADDR)/4))
-      ADDR = 1+ ((LOC(HCOPY%IPTFP) - BASEADDR)/4)
+      ITMP = LOC(HCOPY%NPT)
+      SBPTR= -(1+ ((ITMP - BASEADDR)/4))
+      ITMP = LOC(HCOPY%IPTFP)
+      ADDR = 1+ ((ITMP - BASEADDR)/4)
       CALL TIMSER_MEMBER_SET("POINT",
      I                       20,SBPTR,1,1,0,0,2,0,ADDR,
      I                       "Point-valued input time series",
      M                       MOD_DEFN%GROUP(1)%MEMBER(1))
       CALL TIMSER_MEMBER_LTVAL_INIT(MOD_DEFN%GROUP(1)%MEMBER(1)%LTVAL)
 C      
-      SBPTR= -(1+ ((LOC(HCOPY%NMN) - BASEADDR)/4))
-      ADDR = 1+ ((LOC(HCOPY%IMNFP) - BASEADDR)/4)
+      ITMP = LOC(HCOPY%NMN)
+      SBPTR= -(1+ ((ITMP - BASEADDR)/4))
+      ITMP = LOC(HCOPY%IMNFP)
+      ADDR = 1+ ((ITMP - BASEADDR)/4)
       CALL TIMSER_MEMBER_SET("MEAN",
      I                       20,SBPTR,1,2,0,0,2,0,ADDR,
      I                       "Mean-valued input time series",
@@ -82,16 +86,20 @@ C
       MOD_DEFN%GROUP(2)%OFFSET= 20
       ALLOCATE (MOD_DEFN%GROUP(2)%MEMBER(2))
 C      
-      SBPTR= -(1+ ((LOC(HCOPY%NPT) - BASEADDR)/4))
-      ADDR = 1+ ((LOC(HCOPY%OMNFP) - BASEADDR)/4)
+      ITMP = LOC(HCOPY%NPT)
+      SBPTR= -(1+ ((ITMP - BASEADDR)/4))
+      ITMP = LOC(HCOPY%OMNFP)
+      ADDR = 1+ ((ITMP - BASEADDR)/4)
       CALL TIMSER_MEMBER_SET("POINT",
      I                       20,SBPTR,1,1,0,0,0,0,ADDR,
      I                       "Point-valued output time series",
      M                       MOD_DEFN%GROUP(2)%MEMBER(1))
       CALL TIMSER_MEMBER_LTVAL_INIT(MOD_DEFN%GROUP(2)%MEMBER(1)%LTVAL)
 C      
-      SBPTR= -(1+ ((LOC(HCOPY%NMN) - BASEADDR)/4))
-      ADDR = 1+ ((LOC(HCOPY%OPTFP) - BASEADDR)/4)
+      ITMP = LOC(HCOPY%NMN)
+      SBPTR= -(1+ ((ITMP - BASEADDR)/4))
+      ITMP = LOC(HCOPY%OPTFP)
+      ADDR = 1+ ((ITMP - BASEADDR)/4)
       CALL TIMSER_MEMBER_SET("MEAN",
      I                       20,SBPTR,1,2,0,0,0,0,ADDR,
      I                       "Mean-valued output time series",
