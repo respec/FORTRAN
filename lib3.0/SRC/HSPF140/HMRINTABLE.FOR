@@ -14,7 +14,7 @@ C     + + + MODULE VARIABLES + + +
       IMPLICIT NONE
 C
 C     need one for each operating module type
-      TYPE (HMODULE_TABLE_DEFINITION) :: TABLEDEFS(20)
+      TYPE (HMODULE_TABLE_DEFINITION), SAVE :: TABLEDEFS(20)
 C   
       CONTAINS   
 C

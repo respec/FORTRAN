@@ -14,7 +14,7 @@ C     + + + MODULE VARIABLES + + +
       IMPLICIT NONE
 C
 C     need one for each operating module type
-      TYPE (HMODULE_TIMSER_DEFINITION) :: TIMSERDEFS(20)
+      TYPE (HMODULE_TIMSER_DEFINITION), SAVE :: TIMSERDEFS(20)
 C   
       CONTAINS   
 C
