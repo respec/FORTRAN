@@ -9,7 +9,7 @@ C     + + + PURPOSE + + +
 C     Process information normally in table containing integer values
 C
 C     + + + MODULES + + +
-      USE HMMSG, ONLY : OMSG,OMSTI,OMSTC
+      USE HMTABLEDEF
 C      
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NVALS
@@ -30,47 +30,39 @@ C     + + + COMMON BLOCKS- INTERP2 + + +
       INCLUDE     'crin2c.inc'
 C
 C     + + + SAVE VARIABLES + + +
-      INTEGER   TABCOD,TABGRP(4,MAXTTP),WRNCNT
-      SAVE      TABCOD,TABGRP,WRNCNT
+      INTEGER      TABCOD,TABGRP(4,MAXTTP) 
+      SAVE         TABCOD,TABGRP 
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      MESSU,MSGFL,ERRFG,HEADCT,NONBLK,
-     $             I,J,I0,KEY,KEYND,KEYST,TCLU,SCLU,SGRP,CPOS,LVALS,
+      INTEGER      MESSU,MSGFL,HEADCT,
+     $             I,J,I0,TCLU,SCLU,SGRP,LVALS,
      $             INITFG,CONT,IPOS,IFLD,LDEF,LMIN,LMAX,LLEN,LCOL,CLEN,
      $             NFLDS,LFLDS,SCOL(MXFLD),FLEN(MXFLD),APOS(MXFLD),
      $             IMIN(MXFLD),IMAX(MXFLD),IDEF(MXFLD),NMHDRW,RETCOD,
-     $             OMCODE,NUMREC,OLEN,SFLD,CNUM,CLNX(1),IOPT
+     $             OMCODE,NUMREC,OLEN,SFLD 
       REAL         RMIN(MXFLD),RMAX(MXFLD),RDEF(MXFLD)
-      CHARACTER*1  INBUF1(80),WRFMT(120),HDRBUF(78,10),HEADG(120,4),
-     $             FTYP(MXFLD),OBUF1(80)
-      CHARACTER*4  C4BUF
+      CHARACTER*1  HDRBUF(78,10),FTYP(MXFLD),OBUF1(120)
+      TYPE (HMODULE_TABLE) TABLEDEF
 C
 C     + + + EQUIVALENCES + + +
-      EQUIVALENCE (INBUF1,INBUFF),(OBUF1,OBUFF)
-      CHARACTER*80 INBUFF,OBUFF
-C
-C     + + + FUNCTIONS + + +
-      INTEGER      TABREC,CHRINT,LENSTR
+      EQUIVALENCE (OBUF1,OBUFF) 
+      CHARACTER*120 OBUFF
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     TABREC,CHRINT,LENSTR,WMSGTT,WMSGTX,ZIPI
-      EXTERNAL     GETUCI,PMXTFT,PMXTFC,HDMES3
+      EXTERNAL     WMSGTT,WMSGTX
+      EXTERNAL     PMXTFT,PMXTFC,HDMES3
 C
 C     + + + INTRINSICS + + +
       INTRINSIC    MOD
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA   TABCOD/0/
-      DATA   WRNCNT/0/
 C
 C     + + + INPUT FORMATS + + +
- 1010 FORMAT (A4)
  1020 FORMAT (22X,4(4X,I3))
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT (A12,I4)
- 2010 FORMAT (' ')
- 2020 FORMAT (' ',120A1)
+ 2000 FORMAT (" Preprocessing ",A12,I4)
 C
 C     + + + HISTORY + + +
 C     7/2004 - pbd, check for valid integers, report error if not
@@ -81,28 +73,22 @@ C     file units needed
       MESSU= FILE(1)
       MSGFL= FILE(15)
 C
-      I0= 0
-      SCLU= 218
+      I0   = 0
+      SCLU = 218
 C
-      IF (OUTLEV .GT. 3) THEN
-C       processing message
-        WRITE (OBUFF,2000) TABNAM(TABNO),TABSUB
-        SGRP= 8
-        CNUM= 1
-        CLNX(1)= 16
-        CALL PMXTFC (MSGFL,MESSU,SCLU,SGRP,CNUM,CLNX,OBUF1)
+      IF (OUTLEV .GT. 7) THEN
+C       preprocessing message
+        WRITE (MESSU,2000) TABNAM(TABNO),TABSUB
       END IF
-      IOPT= 4
-      CALL HDMES3 (IOPT,TABNAM(TABNO))
 C
 C     get type of operation for this table
       OMCODE= OPNTAB(4,OPNO)
 C
-      TCLU= OMCODE+ 120
+      TCLU  = OMCODE+ 120
       IF (OMCODE .NE. TABCOD) THEN
 C       first read addresses for each table, english and metric
         TABCOD= OMCODE
-        SGRP= 1
+        SGRP  = 1
         INITFG= 1
         NUMREC= 0
  10     CONTINUE
@@ -140,28 +126,131 @@ C       adjust its width and starting columns for all fields
           SCOL(I)= SCOL(I)+ 2
  30     CONTINUE
       END IF
+C
+      ALLOCATE(TABLEDEF%FIELD(NFLDS))
+C      
+      DO 35 I = 1, NFLDS
+        TABLEDEF%FIELD(I)%SCOL = SCOL(I)
+        TABLEDEF%FIELD(I)%FLEN = FLEN(I)
+        TABLEDEF%FIELD(I)%FTYP = FTYP(I)
+        TABLEDEF%FIELD(I)%IMIN = IMIN(APOS(I))
+        TABLEDEF%FIELD(I)%IMAX = IMAX(APOS(I))
+        TABLEDEF%FIELD(I)%IDEF = IDEF(APOS(I))
+ 35   CONTINUE            
 C     new style, first data from second field
-      SFLD= 2
+      TABLEDEF%SFLD = 2
+      TABLEDEF%NFLDS= NFLDS
+C      
 C
 C     output heading and formats
-      SGRP= TABGRP(UUNITS+2,TABNO)
+      SGRP  = TABGRP(UUNITS+2,TABNO)
       INITFG= 1
-      CLEN= 60
+      CLEN  = 60
       CALL WMSGTT (MSGFL,TCLU,SGRP,INITFG,
      M             CLEN,
-     O             WRFMT,CONT)
+     O             OBUF1,CONT)
+      TABLEDEF%WRFMT= OBUFF
+C      
       HEADCT= 0
       INITFG= 0
 C
  40   CONTINUE
 C       output header
         HEADCT= HEADCT+ 1
-        CLEN= 120
+        CLEN  = 120
         CALL WMSGTT (MSGFL,TCLU,SGRP,INITFG,
      M               CLEN,
-     O               HEADG(1,HEADCT),CONT)
+     O               OBUFF,CONT)
+        TABLEDEF%HEADG(HEADCT) = OBUFF
       IF ( (CONT .EQ. 1) .AND. (HEADCT .LT. 4) ) GO TO 40
 C
+      DO 50 I = HEADCT+1, 4
+        TABLEDEF%HEADG(I) = ""
+ 50   CONTINUE       
+C
+      CALL ITABLEX (TABNO,TABSUB,NVALS,UUNITS,TABLEDEF,
+     M              IVAL)
+
+      RETURN
+      END SUBROUTINE
+C
+C
+C
+      SUBROUTINE ITABLEX
+     I                   (TABNO,TABSUB,NVALS,UUNITS,
+     I                    TABLEDEF,
+     M                    IVAL)    
+C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTC
+      USE HMTABLEDEF
+C      
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   NVALS
+      INTEGER   TABNO,TABSUB,UUNITS,IVAL(NVALS)
+      TYPE (HMODULE_TABLE) TABLEDEF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     TABNO  - table id number
+C     TABSUB - table subscript (occurance number)
+C     NVALS  - number of values in table
+C     UUNITS - system of units   1-english, 2-metric
+C     IVAL   - values from table
+C
+C     + + + COMMON BLOCKS- INTERP2 + + +
+      INCLUDE     'crin2.inc'
+      INCLUDE     'crin2c.inc'                  
+C
+C     + + + SAVE VARIABLES + + +
+      INTEGER      WRNCNT
+      SAVE         WRNCNT
+C
+C     + + + LOCAL VARIABLES + + + 
+      INTEGER      I,J,I0,KEY,KEYND,KEYST,ERRFG,NONBLK,CPOS,HEADCT,
+     $             IPOS,LVALS,LFLDS,LLEN,CLEN,IFLD,ILEN
+      INTEGER      LCOL,LMIN,LMAX,LDEF
+      INTEGER      MESSU,MSGFL,SCLU,SGRP,CNUM,CLNX(1),IOPT
+      CHARACTER*1  BUF1(80) 
+      CHARACTER*4  C4BUF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (BUF1,BUFF) 
+      CHARACTER*80 BUFF 
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     TABREC,CHRINT,LENSTR,ZIPI,GETUCI      
+C      
+C     + + + FUNCTIONS + + +
+      INTEGER      TABREC,CHRINT,LENSTR
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA   WRNCNT/0/
+C
+C     + + + INPUT FORMATS + + +
+ 1010 FORMAT (A4)
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A12,I4)
+ 2010 FORMAT (' ',A)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     file units needed
+      MESSU= FILE(1)
+      MSGFL= FILE(15)
+      I0   = 0
+      SCLU = 218
+C
+      IF (OUTLEV .GT. 3) THEN
+C       processing message
+        WRITE (BUFF,2000) TABNAM(TABNO),TABSUB
+        SGRP= 8
+        CNUM= 1
+        CLNX(1)= 16
+        CALL PMXTFC (MSGFL,MESSU,SCLU,SGRP,CNUM,CLNX,BUF1)
+      END IF
+      IOPT= 4
+      CALL HDMES3 (IOPT,TABNAM(TABNO))
+C      
       IF (RESMFG .EQ. 0) THEN
 C       not in resume mode, set values to undefined
         I= -999
@@ -180,7 +269,7 @@ C
      $              ECOUNT)
       IF (KEY .EQ. 0) THEN
 C       no uci info info for this table
-        INBUFF= ' '
+        BUFF= ' '
         IF (OUTLEV .GT. 3) THEN
 C         indicate that fact
           SGRP= 4
@@ -211,19 +300,19 @@ C     loop back here for mult records
 C         read data supplied by user from uci file
           CALL GETUCI (I0,
      M                 KEY,
-     O                 INBUFF)
+     O                 BUFF)
         END IF
 C
 C       values from one record
         LVALS= 0
-        LFLDS= SFLD- 1
-        DO 60 I= SFLD,NFLDS
-          IF (FTYP(I) .EQ. 'I') THEN
+        LFLDS= TABLEDEF%SFLD- 1
+        DO 60 I= TABLEDEF%SFLD,TABLEDEF%NFLDS
+          IF (TABLEDEF%FIELD(I)%FTYP .EQ. 'I') THEN
 C           integer value
             LVALS= LVALS+ 1
-          ELSE IF (FTYP(I) .EQ. 'C') THEN
+          ELSE IF (TABLEDEF%FIELD(I)%FTYP .EQ. 'C') THEN
 C           character value
-            LLEN= FLEN(I)
+            LLEN= TABLEDEF%FIELD(I)%FLEN
             CLEN= LLEN/4
             IF (MOD (LLEN,4) .GT. 0) THEN
 C             extra characters
@@ -237,18 +326,18 @@ C           this field needed
           END IF
  60     CONTINUE
 C
-        DO 80 IFLD= SFLD,LFLDS
+        DO 80 IFLD= TABLEDEF%SFLD,LFLDS
 C         stuff for this field
-          LCOL= SCOL(IFLD)
-          LLEN= FLEN(IFLD)
-          LMIN= IMIN(APOS(IFLD))
-          LMAX= IMAX(APOS(IFLD))
-          LDEF= IDEF(APOS(IFLD))
+          LCOL= TABLEDEF%FIELD(IFLD)%SCOL
+          LLEN= TABLEDEF%FIELD(IFLD)%FLEN
+          LMIN= TABLEDEF%FIELD(IFLD)%IMIN
+          LMAX= TABLEDEF%FIELD(IFLD)%IMAX
+          LDEF= TABLEDEF%FIELD(IFLD)%IDEF
 C
-          IF (FTYP(IFLD) .EQ. 'I') THEN
+          IF (TABLEDEF%FIELD(IFLD)%FTYP .EQ. 'I') THEN
 C           integer field
             IPOS= IPOS+ 1
-            I= LENSTR (LLEN,INBUF1(LCOL))
+            I= LENSTR (LLEN,BUF1(LCOL))
             IF (I .LE. 0) THEN
 C             supply default value
               IVAL(IPOS)= LDEF
@@ -258,7 +347,7 @@ C             make sure string converts to valid integer
               IF (I.GE.3) THEN
                 NONBLK = 0
                 DO 85 J= 1,I-1
-                  IF (INBUF1(LCOL+J-1).NE.' ') THEN
+                  IF (BUF1(LCOL+J-1).NE.' ') THEN
                     NONBLK = J
                   ELSE IF (NONBLK.GT.0) THEN
                     ERRFG= 2
@@ -276,14 +365,14 @@ C               warning, cant have blank between 2 non-blank chars
                 CALL OMSTI (TABSUB)
                 CALL OMSTI (IFLD-1)
                 J= 5
-                CALL OMSTC (J,INBUF1(LCOL))
+                CALL OMSTC (J,BUF1(LCOL))
                 SGRP= 13
                 CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M                     WRNCNT)
               END IF
 C
 C             get integer value from user input
-              IVAL(IPOS)= CHRINT (I,INBUF1(LCOL))
+              IVAL(IPOS)= CHRINT (I,BUF1(LCOL))
 C
 C             check for range
               IF (LMIN .NE. -999) THEN
@@ -340,9 +429,9 @@ C             extra characters
 C             get the characters
               DO 70 J= 1, CLEN
 C               put character values into buffer
-                CPOS= LCOL+ 4*(J-1)
-                C4BUF= INBUFF(CPOS:CPOS+3)
-                IPOS= IPOS+ 1
+                CPOS = LCOL+ 4*(J-1)
+                C4BUF= BUFF(CPOS:CPOS+3)
+                IPOS = IPOS+ 1
                 READ (C4BUF,1010) IVAL(IPOS)
  70           CONTINUE
             END IF
@@ -371,11 +460,13 @@ C
       IF (OUTLEV .GT. 2) THEN
 C       report values that were read in, supplied by default, or re-used
         WRITE (MESSU,2010)
-        CLEN= 120
-        DO 90 I= 1, HEADCT
-          WRITE (MESSU,2020) (HEADG(J,I),J=1,LENSTR(CLEN,HEADG(1,I)))
+        DO 90 I= 1, 4
+          ILEN = LEN_TRIM(TABLEDEF%HEADG(I))
+          IF (ILEN .GT. 0) THEN
+            WRITE (MESSU,2010) TABLEDEF%HEADG(I)(1:ILEN)
+          END IF
  90     CONTINUE
-        WRITE (MESSU,WRFMT) IVAL
+        WRITE (MESSU,TABLEDEF%WRFMT) IVAL
       END IF
 C
       IF (OUTLEV .GT. 3) THEN
