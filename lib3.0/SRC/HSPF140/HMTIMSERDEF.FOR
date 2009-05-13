@@ -41,9 +41,38 @@ C
       CONTAINS
 C
 C
+C
+      SUBROUTINE TIMSER_MEMBER_SET
+     I                     (NAME,MDIM1,MAXSB1,MAXSB2,
+     I                      MKIND,SPTRN,MSECT,
+     I                      MIO,OSVBAS,OSVOFF,DEFINITION,
+     M                      MEMBER)
+C
+      CHARACTER*(*) NAME
+      INTEGER       MDIM1,MAXSB1,MAXSB2,MKIND,SPTRN,MSECT,
+     #              MIO,OSVBAS,OSVOFF
+      CHARACTER*(*) DEFINITION
+      TYPE (HMODULE_TIMSER_MEMBER) MEMBER
+C
+      MEMBER%NAME  = NAME
+      MEMBER%MDIM1 = MDIM1      
+      MEMBER%MAXSB1= MAXSB1
+      MEMBER%MAXSB2= MAXSB2
+      MEMBER%MKIND = MKIND
+      MEMBER%SPTRN = SPTRN
+      MEMBER%MSECT = MSECT
+      MEMBER%MIO   = MIO
+      MEMBER%OSVBAS= OSVBAS
+      MEMBER%OSVOFF= OSVOFF
+      MEMBER%DEFINITION= DEFINITION
+C
+      RETURN
+      END SUBROUTINE     
+C
+C
 C  
-      SUBROUTINE LTVAL_INIT
-     O                     (ALTVAL)
+      SUBROUTINE TIMSER_MEMBER_LTVAL_INIT
+     O                                  (ALTVAL)
 C
       REAL ALTVAL(2,2,2)
 C
