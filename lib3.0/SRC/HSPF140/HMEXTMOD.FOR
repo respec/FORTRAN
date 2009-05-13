@@ -10,6 +10,7 @@ C     + + + HISTORY + + +
 C     2009/05/07 PBD - initial implementation of module version of EXTMOD
 C
 C     + + + MODULE VARIABLES + + +
+      USE HMTABLEDEF
       IMPLICIT NONE
 C
       TYPE HTEXTMOD
@@ -24,6 +25,21 @@ C
       END TYPE HTEXTMOD
 C
       CONTAINS   
+C
+C
+C
+      SUBROUTINE GETTABLEDEF_EXTMOD
+     O                             (MOD_TABLE)
+C             
+      TYPE (HMODULE_TABLE_DEFINITION) MOD_TABLE
+C
+      ALLOCATE (MOD_TABLE%TABLE(2))
+      MOD_TABLE%TABLE(1)%NAME = "TIMESERIES"
+      MOD_TABLE%TABLE(1)%DIM = 1
+      MOD_TABLE%TABLE(2)%NAME = "END EXTMOD"
+      MOD_TABLE%TABLE(2)%DIM = 0
+C
+      END SUBROUTINE            
 C
 C
 C

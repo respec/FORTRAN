@@ -95,9 +95,11 @@ C     title block to output file
       WRITE (MESSU,*) "  In cooperation with:"
       WRITE (MESSU,*) ""
       WRITE (MESSU,*)
-     1  "    U.S. Geological Survey                Release 14.0b"
+     1  "    U.S. Geological Survey                Release 12.2"
+C    1  "    U.S. Geological Survey                Release 14.0b"
       WRITE (MESSU,*) 
-     1  "    Water Resources Discipline            May 2009"
+     1  "    Water Resources Discipline            July 2005"
+C    1  "    Water Resources Discipline            May 2009"
       WRITE (MESSU,*) "    Office of Surface Water"
       WRITE (MESSU,*) "    Reston, Virginia"     
       WRITE (MESSU,*) "    email: h2osoft@usgs.gov"   
@@ -410,6 +412,9 @@ C     + + + PURPOSE + + +
 C     Process each <operation - type> block in the run data set
 C
 C     + + + MODULES + + +
+      USE   HMTABLEDEF
+      USE   HMRINTABLE
+C
       USE   HMCOPY, ONLY : PCOPY
       USE   HMPLTGEN, ONLY : PPLTGN
       USE   HMDISPLY, ONLY : PDISPL
@@ -447,6 +452,8 @@ C     + + + LOCAL VARIABLES + + +
      $             TABBAS,TKEYST,TKEYND,TABXXX(MAXTTP),IOPT
       CHARACTER*12 OPTNAM,BLNK12
       CHARACTER*80 CHSTR
+      LOGICAL      INLINE_TABLEDEF
+      TYPE (HMODULE_TABLE_DEFINITION) TABLEDEF
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CHSTR,CHSTR1),(OPTNAM,OPTNM1)
@@ -495,7 +502,7 @@ C       put blank operation number to screen
         KTYP= 100
         CALL GETSE (KTYP,OMCNT,
      O              KEYST,KEYND)
-        WRITE (MESSU,*) "returned keys ",OMCNT,keyst,keynd
+C       WRITE (MESSU,*) "returned keys ",OMCNT,keyst,keynd
 C
         IF (KEYST .EQ. 0) THEN
 C         we are done
@@ -519,16 +526,27 @@ C         get keyword info about tables
           NTABT= 1
           TABBAS= OMCODE*1000
 C
- 20       CONTINUE
-            CLEN(1)= 80
-            CALL WMSGTT (MSGFL,LCLU,SGRP,INITFG,
-     M                   CLEN,
-     O                   CHSTR1,CONT)
-            READ (CHSTR,1020) TABDIM(NTABT),TABNAM(NTABT)
-            TABXXX(NTABT)= TABBAS+ NTABT
-            NTABT= NTABT+ 1
-            INITFG= 0
-          IF (CONT .EQ. 1) GO TO 20
+          INLINE_TABLEDEF = GETMODULETABLEDEF(OMCODE)
+          TABLEDEF= TABLEDEFS(OMCODE)
+          IF (INLINE_TABLEDEF) THEN
+C           new design - inline timser definition
+            DO 15 NTABT = 1, UBOUND(TABLEDEF%TABLE,1)
+              TABDIM(NTABT)= TABLEDEF%TABLE(NTABT)%DIM
+              TABNAM(NTABT)= TABLEDEF%TABLE(NTABT)%NAME
+              TABXXX(NTABT)= TABBAS+ NTABT
+ 15         CONTINUE              
+          ELSE
+ 20         CONTINUE
+              CLEN(1)= 80
+              CALL WMSGTT (MSGFL,LCLU,SGRP,INITFG,
+     M                     CLEN,
+     O                     CHSTR1,CONT)
+              READ (CHSTR,1020) TABDIM(NTABT),TABNAM(NTABT)
+              TABXXX(NTABT)= TABBAS+ NTABT
+              NTABT= NTABT+ 1
+              INITFG= 0
+            IF (CONT .EQ. 1) GO TO 20
+          END IF
 C
           IF (OUTLEV .GT. 0) THEN
 C           doing this type
