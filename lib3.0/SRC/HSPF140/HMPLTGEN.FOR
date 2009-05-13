@@ -923,7 +923,7 @@ C       assemble the values to be written to a single record
         END IF
 C
         IF (HPLTGEN%NMN .GT. 0) THEN
-          DO 130 N= 1,HPLTGEN% NMN
+          DO 130 N= 1,HPLTGEN%NMN
             NC= NC+ 1
             VALNOW= PAD(HPLTGEN%MNFP(N)+ HPLTGEN%IVL1)
             CALL TRANS (HPLTGEN%CUVDAT(9,NC),HPLTGEN%PIVLTM,VALNOW,
