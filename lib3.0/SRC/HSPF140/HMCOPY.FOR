@@ -35,8 +35,34 @@ C
       TYPE (HMODULE_TABLE_DEFINITION) MOD_TABLE
 C
       ALLOCATE (MOD_TABLE%TABLE(2))
-      MOD_TABLE%TABLE(1)%NAME = "TIMESERIES"
-      MOD_TABLE%TABLE(1)%DIM = 1
+C
+      CALL TABLE_SET("TIMESERIES",1,
+     I               101,101,301,301,
+     I               3,
+     I               "  Copy-opn",
+     I               "    x -  x  NPT  NMN","","",
+     I               "(1X,2I10)",
+     I               "       NPT       NMN","","","",
+     I               "Number of time series to be copied " //
+     $                  "using COPY Operation.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(1))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I                     "CHAR",
+     I                     "COPY operations to which these data apply.",
+     M                     MOD_TABLE%TABLE(1)%FIELD(1))
+      CALL TABLE_FIELD_SET(5,11,0,20,0,
+     I                     "INT",
+     I                     "NPT  is the number of point-valued time " //
+     $                        "series to be copied.",
+     M                     MOD_TABLE%TABLE(1)%FIELD(2))
+      CALL TABLE_FIELD_SET(5,16,0,20,0,
+     I                     "INT",
+     I                     "NMN  is the number of mean-valued time " //
+     $                        "series to be copied.",
+     M                     MOD_TABLE%TABLE(1)%FIELD(3))
+C
       MOD_TABLE%TABLE(2)%NAME = "END COPY"
       MOD_TABLE%TABLE(2)%DIM = 0
 C
