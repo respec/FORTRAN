@@ -1057,7 +1057,8 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I0,I1,I10,SGRP,VALSET
-      CHARACTER*10 CHSTR
+      REAL         LMFACTR(1)
+      CHARACTER*80 CHSTR
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CHSTR,CHSTR1)
@@ -1085,9 +1086,11 @@ C       default multiplication factor
         VALSET= 1
       ELSE IF (INDEX(CHSTR,'~') .GT. 0) THEN
 C       process pest supplemental value
+        LMFACTR(1)= MFACTR
         CALL GETVEC (MESSU, MSGFL, I1, I0, I1,
-     M               CHSTR, MFACTR, ECOUNT,
+     M               CHSTR, LMFACTR, ECOUNT,
      O               VALSET)          
+        MFACTR = LMFACTR(1)
       ELSE 
 C       no supplemental value
         VALSET = 0
