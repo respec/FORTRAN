@@ -49,16 +49,16 @@ C
      M               MOD_TABLE%TABLE(1))
 C
       CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
-     I                     "CHAR",
+     I                     "C",
      I                     "COPY operations to which these data apply.",
      M                     MOD_TABLE%TABLE(1)%FIELD(1))
       CALL TABLE_FIELD_SET(5,11,0,20,0,
-     I                     "INT",
+     I                     "I",
      I                     "NPT  is the number of point-valued time " //
      $                        "series to be copied.",
      M                     MOD_TABLE%TABLE(1)%FIELD(2))
       CALL TABLE_FIELD_SET(5,16,0,20,0,
-     I                     "INT",
+     I                     "I",
      I                     "NMN  is the number of mean-valued time " //
      $                        "series to be copied.",
      M                     MOD_TABLE%TABLE(1)%FIELD(3))
@@ -140,7 +140,7 @@ C
 C
 C
       SUBROUTINE   PCOPY
-     I                   (NDELT,SDATIM,NDAMON,EMFG, 
+     I                   (NDELT,SDATIM,NDAMON,EMFG,TABLEDEFS, 
      M                    OSVKEY)
 C
 C     + + + PURPOSE + + +
@@ -155,6 +155,7 @@ C     + + + MODULES + + +
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG, OSVKEY
+      TYPE (HMODULE_TABLE_DEFINITION) :: TABLEDEFS
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NDELT  - simulation time interval in minutes
@@ -174,12 +175,13 @@ C     + + + MODULE VARIABLES + + +
 C
 C     + + + LOCAL VARIABLES + + +   
       INTEGER    I,I1,I2,OSVKND,OSVKST,OSVREC,BASEADDR,ADDR
+      TYPE(HMODULE_TABLE) :: TABLEDEF
 C
 C     + + + FUNCTIONS + + +
       INTEGER    DAYMNH
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   ITABLE,DAYMNH
+      EXTERNAL   ITABLEX,DAYMNH
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ',132('+'),/,' ','PROCESSING COPY OPERATION NO. ',I4)
@@ -243,7 +245,8 @@ C       initialize current values
       END IF
 C
 C     get no. of time series to be copied -- table-type timeseries
-      CALL ITABLE (I1,I1,I2,I1,
+      TABLEDEF = TABLEDEFS%TABLE(1)
+      CALL ITABLEX(I1,I1,I2,I1,TABLEDEF,
      M             NUMBR)
 C
       IF (OUTLEV.GT.0) THEN

@@ -634,7 +634,7 @@ C               rchres module
 C
               ELSE IF (OMCODE .EQ. 4) THEN
 C               copy module
-                CALL PCOPY (NDELT,SDATIM,NDAMON,EMFG, 
+                CALL PCOPY (NDELT,SDATIM,NDAMON,EMFG,TABLEDEFS(OMCODE),
      M                      OSVKEY)
 C
               ELSE IF (OMCODE .EQ. 5) THEN
