@@ -147,7 +147,7 @@ C     output heading and formats
       CALL WMSGTT (MSGFL,TCLU,SGRP,INITFG,
      M             CLEN,
      O             OBUF1,CONT)
-      TABLEDEF%WRFMT= OBUFF
+      TABLEDEF%WRFMT= OBUFF(1:CLEN) 
 C      
       HEADCT= 0
       INITFG= 0
