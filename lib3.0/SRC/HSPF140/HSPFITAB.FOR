@@ -140,7 +140,6 @@ C     new style, first data from second field
       TABLEDEF%SFLD = 2
       TABLEDEF%NFLDS= NFLDS
 C      
-C
 C     output heading and formats
       SGRP  = TABGRP(UUNITS+2,TABNO)
       INITFG= 1
@@ -190,11 +189,12 @@ C     + + + DUMMY ARGUMENTS + + +
       TYPE (HMODULE_TABLE) TABLEDEF
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     TABNO  - table id number
-C     TABSUB - table subscript (occurance number)
-C     NVALS  - number of values in table
-C     UUNITS - system of units   1-english, 2-metric
-C     IVAL   - values from table
+C     TABNO   - table id number
+C     TABSUB  - table subscript (occurance number)
+C     NVALS   - number of values in table
+C     UUNITS  - system of units   1-english, 2-metric
+C     TABLEDEF- table definition
+C     IVAL    - values from table
 C
 C     + + + COMMON BLOCKS- INTERP2 + + +
       INCLUDE     'crin2.inc'
@@ -209,7 +209,7 @@ C     + + + LOCAL VARIABLES + + +
      $             IPOS,LVALS,LFLDS,LLEN,CLEN,IFLD,ILEN
       INTEGER      LCOL,LMIN,LMAX,LDEF
       INTEGER      MESSU,MSGFL,SCLU,SGRP,CNUM,CLNX(1),IOPT
-      CHARACTER*1  BUF1(80) 
+      CHARACTER*1  BUF1(80)
       CHARACTER*4  C4BUF
 C
 C     + + + EQUIVALENCES + + +
@@ -487,7 +487,7 @@ C     + + + PURPOSE + + +
 C     Process information normally in table containing real values
 C
 C     + + + MODULES + + +
-      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR,OMSTC
+      USE HMTABLEDEF
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     NVALS,TABNO,TABSUB,UUNITS
@@ -513,30 +513,30 @@ C     + + + PARAMETERS + + +
 C
 C     + + + SAVE VARIABLES + + +
       INTEGER CNVTYP,CNVCNT,CNVTAB(MXCNV),CNVFLD(MXCNV),TABCOD,
-     $        TABGRP(4,MAXTTP),WRNCNT
+     $        TABGRP(4,MAXTTP) 
       REAL    CNVADD(MXCNV),CNVMLT(MXCNV)
-C
       SAVE    CNVTYP,CNVCNT,CNVTAB,CNVFLD,CNVADD,CNVMLT,TABCOD,
-     $        TABGRP,WRNCNT
+     $        TABGRP 
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      MESSU,MSGFL,ERRFG,HEADCT,OLEN,I10,I0,NONBLK,
-     $             I,J,KEY,KEYND,KEYST,TCLU,SCLU,SGRP,CPOS,LVALS,
-     $             INITFG,CONT,IPOS,IFLD,LLEN,LCOL,CLEN,
-     $             NFLDS,LFLDS,SCOL(MXFLD),FLEN(MXFLD),APOS(MXFLD),
+      INTEGER      MESSU,MSGFL,HEADCT,
+     $             I,J,TCLU,SCLU,SGRP,OLEN,
+     $             INITFG,CONT,IPOS,CLEN,
+     $             NFLDS,SCOL(MXFLD),FLEN(MXFLD),APOS(MXFLD),
      $             IMIN(MXFLD),IMAX(MXFLD),IDEF(MXFLD),NMHDRW,RETCOD,
      $             OMCODE,NUMREC,DEFFG,EPOS,EWID,SFLD,CNUM,CLNX(1),IOPT,
      $             VALSET
-      REAL         RMIN(MXFLD),RMAX(MXFLD),RDEF(MXFLD),LDEF,LMIN,LMAX,
-     $             L999,RTMP,ADD(MXFLD),MULT(MXFLD)
-      CHARACTER*1  INBUF1(80),WRFMT(120),HDRBUF(78,10),HEADG(120,4),
-     $             FTYP(MXFLD),EBUF1(132),OBUF1(80)
+      REAL         RMIN(MXFLD),RMAX(MXFLD),RDEF(MXFLD),
+     $             RTMP,ADD(MXFLD),MULT(MXFLD)
+      CHARACTER*1  INBUF1(80),HDRBUF(78,10),
+     $             FTYP(MXFLD),EBUF1(132),OBUF1(120)
       CHARACTER*4  C4BUF
+      TYPE (HMODULE_TABLE) TABLEDEF
 C
 C     + + + EQUIVALENCES + + +
-      EQUIVALENCE   (INBUF1,INBUFF),(OBUFF,OBUF1),(EBUF1,EBUFF)
-      CHARACTER*80   INBUFF,OBUFF
-      CHARACTER*132  EBUFF
+      EQUIVALENCE   (INBUF1,INBUFF),(OBUFF,OBUF1)
+      CHARACTER*80   INBUFF
+      CHARACTER*120  OBUFF
 C
 C     + + + FUNCTIONS + + +
       INTEGER        TABREC,LENSTR
@@ -552,7 +552,6 @@ C
 C     + + + DATA INITIALIZATIONS + + +
       DATA   CNVTYP/0/
       DATA   TABCOD/0/
-      DATA   WRNCNT/0/
 C
 C     + + + INPUT FORMATS + + +
  1010 FORMAT (A4)
@@ -560,11 +559,7 @@ C     + + + INPUT FORMATS + + +
  1030 FORMAT (22X,4(4X,I3))
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT (A12,I4)
- 2010 FORMAT (' ')
- 2020 FORMAT (' ',120A1)
- 2030 FORMAT (1PG10.3)
- 2040 FORMAT (1X,132A1)
+ 2000 FORMAT (" Preprocessing ",A12,I4)
 C
 C     + + + HISTORY + + +
 C     7/2004 - pbd, add write of values as interpreted
@@ -576,20 +571,12 @@ C     file units needed
       MESSU= FILE(1)
       MSGFL= FILE(15)
 C
-      I0= 0
-      I10= 10
-      SCLU= 218
+      SCLU = 218
 C
-      IF (OUTLEV .GT. 3) THEN
-C       processing message
-        WRITE (OBUFF,2000) TABNAM(TABNO),TABSUB
-        SGRP= 8
-        CNUM= 1
-        CLNX(1)= 16
-        CALL PMXTFC (MSGFL,MESSU,SCLU,SGRP,CNUM,CLNX,OBUF1)
+      IF (OUTLEV .GT. 7) THEN
+C       preprocessing message
+        WRITE (MESSU,2000) TABNAM(TABNO),TABSUB
       END IF
-      IOPT = 4
-      CALL HDMES3 (IOPT,TABNAM(TABNO))
 C
 C     get type of operation for this table
       OMCODE= OPNTAB(4,OPNO)
@@ -598,7 +585,7 @@ C
       IF (OMCODE .NE. TABCOD) THEN
 C       first read addresses for each table, english and metric
         TABCOD= OMCODE
-        SGRP= 1
+        SGRP  = 1
         INITFG= 1
         NUMREC= 0
  10     CONTINUE
@@ -616,7 +603,7 @@ C
       IF ( (OMCODE .LE. 3) .AND. (OMCODE .NE. CNVTYP) ) THEN
 C       may need to change to internal units with PERLND,IMPLND,RCHRES
 C       get info about what needs changes
-        SGRP= 71
+        SGRP  = 71
         INITFG= 1
         CNVCNT= 0
         CNVTYP= OMCODE
@@ -634,10 +621,10 @@ C         loop back if more
       END IF
 C     default add and mult
       RTMP= 0.0
-      CALL ZIPR (NVALS,RTMP,
+      CALL ZIPR (NVALS+1,RTMP,
      O           ADD)
       RTMP= 1.0
-      CALL ZIPR (NVALS,RTMP,
+      CALL ZIPR (NVALS+1,RTMP,
      O           MULT)
 C     adjust as needed
       DO 30 I= 1, CNVCNT
@@ -651,14 +638,11 @@ C           all fields
      O                 MULT)
           ELSE
 C           single field
-            ADD(CNVFLD(I))= CNVADD(I)
+            ADD(CNVFLD(I)) = CNVADD(I)
             MULT(CNVFLD(I))= CNVMLT(I)
           END IF
         END IF
  30   CONTINUE
-C
-C     constant for no min, max, or default
-      L999= 999.0
 C
 C     read info for this type of table from message file
       SGRP= TABGRP(UUNITS,TABNO)
@@ -683,34 +667,153 @@ C       adjust its width and starting columns for all fields
           SCOL(I)= SCOL(I)+ 2
  50     CONTINUE
       END IF
+C
+      ALLOCATE(TABLEDEF%FIELD(NFLDS))
+C      
+      DO 35 I = 1, NFLDS
+        TABLEDEF%FIELD(I)%SCOL = SCOL(I)
+        TABLEDEF%FIELD(I)%FLEN = FLEN(I)
+        TABLEDEF%FIELD(I)%FTYP = FTYP(I)
+        TABLEDEF%FIELD(I)%RMIN = RMIN(APOS(I))
+        TABLEDEF%FIELD(I)%RMAX = RMAX(APOS(I))
+        TABLEDEF%FIELD(I)%RDEF = RDEF(APOS(I))
+        TABLEDEF%FIELD(I)%ADD  = ADD(I)
+        TABLEDEF%FIELD(I)%MULT = MULT(I)
+ 35   CONTINUE            
 C     new style, first data from second field
-      SFLD= 2
+      TABLEDEF%SFLD = 2
+      TABLEDEF%NFLDS= NFLDS
 C
 C     output heading and formats
-      SGRP= TABGRP(UUNITS+2,TABNO)
+      SGRP  = TABGRP(UUNITS+2,TABNO)
       INITFG= 1
-      CLEN= 60
+      CLEN  = 60
       CALL WMSGTT (MSGFL,TCLU,SGRP,INITFG,
      M             CLEN,
-     O             WRFMT,CONT)
+     O             OBUF1,CONT)
+      TABLEDEF%WRFMT= OBUFF
+C
       HEADCT= 0
       INITFG= 0
 C
  60   CONTINUE
 C       output header
         HEADCT= HEADCT+ 1
-        CLEN= 120
+        CLEN  = 120
         CALL WMSGTT (MSGFL,TCLU,SGRP,INITFG,
      M               CLEN,
-     O               HEADG(1,HEADCT),CONT)
+     O               OBUFF,CONT)
+        TABLEDEF%HEAD_OUT(HEADCT) = OBUFF
       IF ( (CONT .EQ. 1) .AND. (HEADCT .LT. 4) ) GO TO 60
+C
+      DO 70 I = HEADCT+1, 4
+        TABLEDEF%HEAD_OUT(I) = ""
+ 70   CONTINUE         
+C 
+      CALL RTABLEX (TABNO,TABSUB,NVALS,UUNITS,TABLEDEF,
+     M              RVAL)
+C
+      RETURN
+      END SUBROUTINE
+C
+C
+C
+      SUBROUTINE RTABLEX   
+     I                   (TABNO,TABSUB,NVALS,UUNITS,
+     I                    TABLEDEF,
+     M                    RVAL)    
+C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSG,OMSTI,OMSTR,OMSTC
+      USE HMTABLEDEF
+C      
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   NVALS
+      INTEGER   TABNO,TABSUB,UUNITS
+      REAL      RVAL(NVALS)
+      TYPE (HMODULE_TABLE) TABLEDEF
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     TABNO   - table id number
+C     TABSUB  - table subscript (occurance number)
+C     NVALS   - number of values in table
+C     UUNITS  - system of units   1-english, 2-metric
+C     TABLEDEF- table definition
+C     RVAL    - values from table
+C
+C     + + + PARAMETERS + + +
+      INCLUDE     'pmxfld.inc'
+C
+C     + + + COMMON BLOCKS- INTERP2 + + +
+      INCLUDE     'crin2.inc'
+      INCLUDE     'crin2c.inc'                  
+C
+C     + + + SAVE VARIABLES + + +
+      INTEGER      WRNCNT
+      SAVE         WRNCNT
+C
+C     + + + LOCAL VARIABLES + + + 
+      INTEGER      I,J,I0,I10,KEY,KEYND,KEYST,ERRFG,NONBLK,CPOS,HEADCT,
+     $             IPOS,LVALS,LFLDS,LLEN,CLEN,IFLD,ILEN,
+     $             MESSU,MSGFL,SCLU,SGRP,
+     $             DEFFG,EPOS,EWID,CNUM,CLNX(1),IOPT,VALSET
+      REAL         L999,LCOL,LMIN,LMAX,LDEF,RTMP,ADD,MULT
+      CHARACTER*1  BUF1(80),EBUF1(132)
+      CHARACTER*4  C4BUF
+C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (BUF1,BUFF),(EBUF1,EBUFF)
+      CHARACTER*132 EBUFF
+      CHARACTER*80  BUFF 
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     TABREC,CHRDEC,LENSTR,ZIPI,GETUCI      
+C      
+C     + + + FUNCTIONS + + +
+      INTEGER      TABREC,LENSTR
+      REAL         CHRDEC
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA   WRNCNT/0/
+C
+C     + + + INPUT FORMATS + + +
+ 1010 FORMAT (A4)
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A12,I4)
+ 2010 FORMAT (' ',A)
+ 2020 FORMAT (' ',120A1)
+ 2030 FORMAT (1PG10.3)
+ 2040 FORMAT (1X,132A1)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     file units needed
+      MESSU= FILE(1)
+      MSGFL= FILE(15)
+      I0   = 0
+      I10  = 10
+      SCLU = 218
+C
+C     constant for no min, max, or default
+      L999 = 999.0
+C
+      IF (OUTLEV .GT. 3) THEN
+C       processing message
+        WRITE (BUFF,2000) TABNAM(TABNO),TABSUB
+        SGRP= 8
+        CNUM= 1
+        CLNX(1)= 16
+        CALL PMXTFC (MSGFL,MESSU,SCLU,SGRP,CNUM,CLNX,BUF1)
+      END IF
+      IOPT= 4
+      CALL HDMES3 (IOPT,TABNAM(TABNO))          
 C
       IF (RESMFG .EQ. 0) THEN
 C       not in resume mode, set values to undefined
         RTMP= -999.0
         CALL ZIPR (NVALS,RTMP,
      O             RVAL)
-      END IF
+      END IF 
 C
 C     look for the record in ucifl which contains values to be processed
       J= KYST(TABNO)+ TABSUB- 1
@@ -723,7 +826,7 @@ C
      $              ECOUNT)
       IF (KEY .EQ. 0) THEN
 C       no uci info info for this table
-        INBUFF= ' '
+        BUFF= ' '
         IF (OUTLEV .GT. 3) THEN
 C         indicate that fact
           SGRP= 4
@@ -749,15 +852,17 @@ C
       IF (OUTLEV .GT. 2) THEN
 C       write header to echo file
         WRITE (MESSU,2010)
-        CLEN= 120
-        DO 70 I= 1, HEADCT
-          WRITE (MESSU,2020) (HEADG(J,I),J=1,LENSTR (CLEN,HEADG(1,I)))
+        DO 70 I= 1, 4
+          ILEN = LEN_TRIM(TABLEDEF%HEAD_OUT(I))
+          IF (ILEN .GT. 0) THEN
+            WRITE (MESSU,2010) TABLEDEF%HEAD_OUT(I)(1:ILEN)
+          END IF
  70     CONTINUE
       END IF
 C
 C     loop to check values and use defaults as needed
-      IPOS= 0
-      EPOS= 1
+      IPOS = 0
+      EPOS = 1
       EBUFF= ' '
 C
 C     loop back here for mult records
@@ -766,13 +871,13 @@ C     loop back here for mult records
 C         read data supplied by user from uci file
           CALL GETUCI (I0,
      M                 KEY,
-     O                 INBUFF)
+     O                 BUFF)
         END IF
 C   
         IF (FILE(7) .GT. 0) THEN
 C         pest supplemental file in use, see if this record needs updating
           CALL GETVEC (MESSU, MSGFL, NVALS, IPOS, OUTLEV,
-     M                 INBUFF, RVAL, ECOUNT,
+     M                 BUFF, RVAL, ECOUNT,
      O                 VALSET)          
         ELSE
 C         no pest supplemental file in use
@@ -781,14 +886,14 @@ C         no pest supplemental file in use
 C
 C       values from one record
         LVALS= 0
-        LFLDS= SFLD- 1
-        DO 90 I= SFLD,NFLDS
-          IF (FTYP(I) .EQ. 'R') THEN
+        LFLDS= TABLEDEF%SFLD- 1
+        DO 90 I= TABLEDEF%SFLD,TABLEDEF%NFLDS
+          IF (TABLEDEF%FIELD(I)%FTYP .EQ. 'R') THEN
 C           real value
             LVALS= LVALS+ 1
-          ELSE IF (FTYP(I) .EQ. 'C') THEN
+          ELSE IF (TABLEDEF%FIELD(I)%FTYP .EQ. 'C') THEN
 C           character value
-            LLEN= FLEN(I)
+            LLEN= TABLEDEF%FIELD(I)%FLEN
             CLEN= LLEN/4
             IF (MOD (LLEN,4) .GT. 0) THEN
 C             extra characters
@@ -802,20 +907,20 @@ C           this field needed
           END IF
  90     CONTINUE
 C
-        DO 110 IFLD= SFLD, LFLDS
+        DO 110 IFLD= TABLEDEF%SFLD, LFLDS
 C         stuff for this field
-          LCOL= SCOL(IFLD)
-          LLEN= FLEN(IFLD)
-          LMIN= RMIN(APOS(IFLD))
-          LMAX= RMAX(APOS(IFLD))
-          LDEF= RDEF(APOS(IFLD))
+          LCOL= TABLEDEF%FIELD(IFLD)%SCOL
+          LLEN= TABLEDEF%FIELD(IFLD)%FLEN
+          LMIN= TABLEDEF%FIELD(IFLD)%RMIN 
+          LMAX= TABLEDEF%FIELD(IFLD)%RMAX 
+          LDEF= TABLEDEF%FIELD(IFLD)%RDEF 
 C         field default flag
           DEFFG= 0
 C
-          IF (FTYP(IFLD) .EQ. 'R') THEN
+          IF (TABLEDEF%FIELD(IFLD)%FTYP .EQ. 'R') THEN
 C           real field
             IPOS= IPOS+ 1
-            I= LENSTR (LLEN,INBUF1(LCOL))
+            I   = LENSTR (LLEN,BUF1(LCOL))
             IF (I .LE. 0) THEN
               IF (VALSET .EQ. 0) THEN
 C               supply default value
@@ -828,7 +933,7 @@ C             make sure string converts to valid real number
               IF (I.GE.3) THEN
                 NONBLK = 0
                 DO 85 J= 1,I-1
-                  IF (INBUF1(LCOL+J-1).NE.' ') THEN
+                  IF (BUF1(LCOL+J-1).NE.' ') THEN
                     NONBLK = J
                   ELSE IF (NONBLK.GT.0) THEN
                     ERRFG= 2
@@ -846,7 +951,7 @@ C               warning, cant have blank between 2 non-blank chars
                 CALL OMSTI (TABSUB)
                 CALL OMSTI (IFLD-1)
                 J= 10
-                CALL OMSTC (J,INBUF1(LCOL))
+                CALL OMSTC (J,BUF1(LCOL))
                 SGRP= 14
                 CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M                     WRNCNT)
@@ -854,7 +959,7 @@ C               warning, cant have blank between 2 non-blank chars
 C
               IF (VALSET .EQ. 0) THEN
 C               get real value from user input
-                RVAL(IPOS)= CHRDEC (I,INBUF1(LCOL))
+                RVAL(IPOS)= CHRDEC (I,BUF1(LCOL))
               END IF
 C
 C             check for range
@@ -909,7 +1014,7 @@ C           handle echo buffer
             EWID= 10
             IF (DEFFG .EQ. 0 .AND. VALSET .EQ. 0) THEN
 C             copy user's input
-              CALL COPYC (LLEN,INBUF1(LCOL),
+              CALL COPYC (LLEN,BUF1(LCOL),
      O                    EBUF1(EPOS))
             ELSE
 C             write default or pest update value
@@ -935,7 +1040,7 @@ C             get the characters
               DO 100 J= 1, CLEN
 C               put character values into buffer
                 CPOS= LCOL+ 4*(J-1)
-                C4BUF= INBUFF(CPOS:CPOS+3)
+                C4BUF= BUFF(CPOS:CPOS+3)
                 IPOS= IPOS+ 1
                 READ (C4BUF,1010) RVAL(IPOS)
 C               copy into echo buffer
@@ -980,7 +1085,7 @@ C
 C       end of loop on fields
  110    CONTINUE
 C
-C     end of loop on multiple lines
+C       end of loop on multiple lines
       IF (IPOS .LT. NVALS) GO TO 80
 C
       IF (OUTLEV .GT. 2) THEN
@@ -988,15 +1093,21 @@ C       report values that were read in, supplied by default, or re-used
         WRITE (MESSU,2040) (EBUF1(I),I=1,EPOS- 1)
         IF (OUTLEV .GT. 4) THEN
 C         also report in interpreted form
-          WRITE (MESSU,WRFMT) RVAL
+          WRITE (MESSU,TABLEDEF%WRFMT) RVAL
         END IF
       END IF
 C
 C     adjust if needed
       DO 120 I= 1,NVALS
-        IF ( (ADD(I) .NE. 0.0) .OR. (MULT(I) .NE. 1.0) ) THEN
-C         convert field
-          RVAL(I)= (RVAL(I)+ADD(I))*MULT(I)
+        IF (I .LE. UBOUND(TABLEDEF%FIELD,1)) THEN
+          ADD = TABLEDEF%FIELD(I)%ADD
+          MULT= TABLEDEF%FIELD(I)%MULT
+          IF ( (ADD .NE. 0.0) .OR. (MULT .NE. 1.0) ) THEN
+C           convert field
+            RVAL(I)= (RVAL(I)+ ADD)* MULT
+          END IF
+        ELSE
+C         WRITE(MESSU,*) "PROBLEM WITH FIELD COUNT ", I, NVALS
         END IF
  120  CONTINUE
 C
