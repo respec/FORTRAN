@@ -35,9 +35,9 @@ C     + + + SAVE VARIABLES + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      MESSU,MSGFL,HEADCT,
-     $             I,J,I0,TCLU,SCLU,SGRP,LVALS,
-     $             INITFG,CONT,IPOS,IFLD,LDEF,LMIN,LMAX,LLEN,LCOL,CLEN,
-     $             NFLDS,LFLDS,SCOL(MXFLD),FLEN(MXFLD),APOS(MXFLD),
+     $             I,J,TCLU,SCLU,SGRP, 
+     $             INITFG,CONT,IPOS,CLEN, 
+     $             NFLDS,SCOL(MXFLD),FLEN(MXFLD),APOS(MXFLD),
      $             IMIN(MXFLD),IMAX(MXFLD),IDEF(MXFLD),NMHDRW,RETCOD,
      $             OMCODE,NUMREC,OLEN,SFLD 
       REAL         RMIN(MXFLD),RMAX(MXFLD),RDEF(MXFLD)
@@ -73,7 +73,6 @@ C     file units needed
       MESSU= FILE(1)
       MSGFL= FILE(15)
 C
-      I0   = 0
       SCLU = 218
 C
       IF (OUTLEV .GT. 7) THEN
@@ -161,16 +160,16 @@ C       output header
         CALL WMSGTT (MSGFL,TCLU,SGRP,INITFG,
      M               CLEN,
      O               OBUFF,CONT)
-        TABLEDEF%HEADG(HEADCT) = OBUFF
+        TABLEDEF%HEAD_OUT(HEADCT) = OBUFF
       IF ( (CONT .EQ. 1) .AND. (HEADCT .LT. 4) ) GO TO 40
 C
       DO 50 I = HEADCT+1, 4
-        TABLEDEF%HEADG(I) = ""
+        TABLEDEF%HEAD_OUT(I) = ""
  50   CONTINUE       
 C
       CALL ITABLEX (TABNO,TABSUB,NVALS,UUNITS,TABLEDEF,
      M              IVAL)
-
+C
       RETURN
       END SUBROUTINE
 C
@@ -461,9 +460,9 @@ C
 C       report values that were read in, supplied by default, or re-used
         WRITE (MESSU,2010)
         DO 90 I= 1, 4
-          ILEN = LEN_TRIM(TABLEDEF%HEADG(I))
+          ILEN = LEN_TRIM(TABLEDEF%HEAD_OUT(I))
           IF (ILEN .GT. 0) THEN
-            WRITE (MESSU,2010) TABLEDEF%HEADG(I)(1:ILEN)
+            WRITE (MESSU,2010) TABLEDEF%HEAD_OUT(I)(1:ILEN)
           END IF
  90     CONTINUE
         WRITE (MESSU,TABLEDEF%WRFMT) IVAL
