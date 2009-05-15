@@ -931,7 +931,6 @@ C     + + + LOCAL VARIABLES + + +
      $             CLU,SGRP,CONT,INITFG,CLEN
       CHARACTER*80 INBUFF
       CHARACTER*6  CHSTR,OPTYP
-      LOGICAL      INLINE_TIMSERDEF
       TYPE (HMODULE_TIMSER_DEFINITION) TIMSERDEF
       TYPE (HMODULE_TIMSER_MEMBER) TIMSERMEMDEF
 C
@@ -956,6 +955,8 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+C     WRITE (MESSU,*) 'ENTER OPNTS'
+C      
       I6= 6
 C
 C     initialize number of time series in result table
@@ -983,6 +984,9 @@ C       perlnd or implnd operation
         UUNITS= OSV(44)
       END IF
 C
+C     WRITE (MESSU,*) ' OPTNO,OMCODE,OSVKST,OSVKND,UUNITS,EUNITS',
+C    $                  OPTNO,OMCODE,OSVKST,OSVKND,UUNITS,EUNITS
+C
 C     determine the external unit system appropriate to this reference
       IF (EUNITS .EQ. 0) THEN
 C       use internal units of this opn as external units if the
@@ -1003,9 +1007,9 @@ C       valid value was supplied in argument list
 C
       IF (OMCODE .NE. GCUR) THEN
 C       need new group keys
-        INLINE_TIMSERDEF = GETMODTSDEF(OMCODE)
+        CALL GETMODTSDEF(OMCODE)
         TIMSERDEF= TIMSERDEFS(OMCODE)
-        IF (INLINE_TIMSERDEF) THEN
+        IF (TIMSERDEF%INITIALIZED) THEN
 C         new design - inline timser definition
           SCLU     = TIMSERDEF%CLUSTER
           DO 10 GMAX = 1 , UBOUND(TIMSERDEF%GROUP,1)
@@ -1051,7 +1055,7 @@ C       error - group name is invalid
 C       group valid, check the member name/subscript reference
         IF (MCUR .NE. GRPNO) THEN
 C         need to know whats valid and how many there are
-          IF (INLINE_TIMSERDEF) THEN
+          IF (TIMSERDEF%INITIALIZED) THEN
             DO 25 MMAX = 1, UBOUND(TIMSERDEF%GROUP(GRPNO)%MEMBER,1)
               MKYWDS(MMAX) = TIMSERDEF%GROUP(GRPNO)%MEMBER(MMAX)%NAME
  25         CONTINUE       
@@ -1075,15 +1079,14 @@ C         need to know whats valid and how many there are
 C
         IF (MEMN .EQ.'      ') THEN
 C         all members are implied
-          INLINE_TIMSERDEF = TIMSERDEF%INITIALIZED
           DO 70 N= 1,MMAX
             SGRP= N+ GGRP(GRPNO)
-            IF (INLINE_TIMSERDEF) THEN
+            IF (TIMSERDEF%INITIALIZED) THEN
               TIMSERMEMDEF = TIMSERDEF%GROUP(GRPNO)%MEMBER(N)
             END IF
             CALL MEMTS (MESSU,MSGFL,SCLU,SGRP,MEMSB,OPTYP,OPTNO,GRPN,
      I                  EUNITS,UUNITS,MAXOSV,OSV,RWFG,MXTTB,
-     I                  INLINE_TIMSERDEF,TIMSERMEMDEF,
+     I                  TIMSERDEF%INITIALIZED,TIMSERMEMDEF,
      M                  NTS,ECOUNT,
      O                  TABL,TABLR)
  70       CONTINUE
@@ -1108,18 +1111,20 @@ C           error - invalid member name
           ELSE
 C           ok - process this member
             SGRP= N+ GGRP(GRPNO)
-            IF (INLINE_TIMSERDEF) THEN
+            IF (TIMSERDEF%INITIALIZED) THEN
               TIMSERMEMDEF = TIMSERDEF%GROUP(GRPNO)%MEMBER(N)
             END IF
             CALL MEMTS (MESSU,MSGFL,SCLU,SGRP,MEMSB,OPTYP,OPTNO,GRPN,
      I                  EUNITS,UUNITS,MAXOSV,OSV,RWFG,MXTTB,
-     I                  INLINE_TIMSERDEF,TIMSERMEMDEF,
+     I                  TIMSERDEF%INITIALIZED,TIMSERMEMDEF,
      M                  NTS,ECOUNT,
      O                  TABL,TABLR)
           END IF
         END IF
       END IF
 C
+C     WRITE (MESSU,*) 'EXIT OPNTS'
+C      
       RETURN
       END SUBROUTINE
 C
@@ -1197,6 +1202,8 @@ C     + + + INPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+C     WRITE (MESSU,*) 'ENTER MEMTS'
+C      
       I6= 6
 C
       IF (INLINE) THEN
@@ -1375,6 +1382,8 @@ C       trying to input an output only timeseries
      M             ECOUNT)
       END IF
 C
+C     WRITE (MESSU,*) 'EXIT MEMTS'
+C      
       RETURN
       END SUBROUTINE 
 C
@@ -2283,8 +2292,8 @@ C
 C
 C
 C 
-      LOGICAL FUNCTION GETMODTSDEF
-     I                            (OMCODE)
+      SUBROUTINE GETMODTSDEF
+     I                      (OMCODE)
 C
       USE HMCOPY, ONLY : GETTSDEF_COPY
 C      
@@ -2293,14 +2302,11 @@ C
       IF (.NOT. TIMSERDEFS(OMCODE)%INITIALIZED) THEN
         IF (OMCODE .EQ. 4) THEN
           CALL GETTSDEF_COPY(TIMSERDEFS(OMCODE))
-          GETMODTSDEF = .TRUE.
-        ELSE
-          GETMODTSDEF = .FALSE.
         END IF      
       END IF    
 C
       RETURN
-      END FUNCTION
+      END SUBROUTINE
 C
       END MODULE
 C
