@@ -33,11 +33,107 @@ C
 C             
       TYPE (HMODULE_TABLE_DEFINITION) MOD_TABLE
 C
-      ALLOCATE (MOD_TABLE%TABLE(2))
-      MOD_TABLE%TABLE(1)%NAME = "TIMESERIES"
-      MOD_TABLE%TABLE(1)%DIM = 1
-      MOD_TABLE%TABLE(2)%NAME = "END EXTMOD"
-      MOD_TABLE%TABLE(2)%DIM = 0
+      ALLOCATE (MOD_TABLE%TABLE(8))
+C
+      CALL TABLE_SET("GEN-INFO",1,
+     I               101,101,301,301,
+     I               4,
+     I               "ExtMod-opn",
+     I               "    # -  #<SSM-Name----------------------> " // 
+     I               "<Instance-Name-----------------> File ","","",
+     I               "(1X,A32,1X,A32,I5)",
+     I               " <SSM-Name----------------------> " //
+     I               "<Instance-Name-----------------> File","","","",
+     I               "General Information about each EXTMOD operation.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(1))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I               "C",
+     I               "EXTMOD operations to which these data apply.",
+     M               MOD_TABLE%TABLE(1)%FIELD(1))
+      CALL TABLE_FIELD_SET(32,11,-999,-999,-999,
+     I               "C",
+     I               "Small-scale model name.",
+     M               MOD_TABLE%TABLE(1)%FIELD(2))
+      CALL TABLE_FIELD_SET(32,44,-999,-999,-999,
+     I               "C",
+     I               "Small-scale model instance name.",
+     M               MOD_TABLE%TABLE(1)%FIELD(3))
+      CALL TABLE_FIELD_SET(5,76,1,99,0,
+     I               "I",
+     I               "Unit number of input timeseries.",
+     M               MOD_TABLE%TABLE(1)%FIELD(4))
+C
+     CALL TABLE_SET("OUT-INFO",1,
+     I               102,102,302,302,
+     I               7,
+     I               "ExtMod-opn",
+     I               "    # -  # Engl Metr Engl Metr  Prt  Bin ",
+     I               "","",
+     I               "(6I5)",
+     I               " Engl Metr Engl Metr  Prt  Bin ","","","",
+     I               "Print and binary output units and output levels.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(2))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I               "C",
+     I               "EXTMOD operations to which these data apply.",
+     M               MOD_TABLE%TABLE(2)%FIELD(1))
+      CALL TABLE_FIELD_SET(5,11,1,99,0,
+     I               "I",
+     I               "Print output unit number English.",
+     M               MOD_TABLE%TABLE(2)%FIELD(2))
+      CALL TABLE_FIELD_SET(5,16,1,99,0,
+     I               "I",
+     I               "Print output unit number Metric.",
+     M               MOD_TABLE%TABLE(2)%FIELD(3))
+      CALL TABLE_FIELD_SET(5,21,1,99,0,
+     I               "I",
+     I               "Binary output unit number English.",
+     M               MOD_TABLE%TABLE(2)%FIELD(4))
+      CALL TABLE_FIELD_SET(5,26,1,99,0,
+     I               "I",
+     I               "Binary output unit number Metric.",
+     M               MOD_TABLE%TABLE(2)%FIELD(5))
+      CALL TABLE_FIELD_SET(5,31,1,10,3,
+     I               "I",
+     I               "Print output level.",
+     M               MOD_TABLE%TABLE(2)%FIELD(6))
+      CALL TABLE_FIELD_SET(5,36,1,10,3,
+     I               "I",
+     I               "Binary output level.",
+     M               MOD_TABLE%TABLE(2)%FIELD(7))
+C
+      CALL TABLE_SET("AREA-INFO",1,
+     I               103,103,303,303,
+     I               2,
+     I               "ExtMod-opn",
+     I               "    # -  #      Area ",
+     I               "","",
+     I               "(F10.3)",
+     I               "      Area ","","","",
+     I               "Area associated with this instance.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(3))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I               "C",
+     I               "EXTMOD operations to which these data apply.",
+     M               MOD_TABLE%TABLE(3)%FIELD(1))
+      CALL TABLE_FIELD_SET(10,11,0,-999,1,
+     I               "R",
+     I               "Area associated with this instance.",
+     M               MOD_TABLE%TABLE(3)%FIELD(2))
+C
+C     TIMESERIES
+C     INFLUX
+C     OUTFLUX
+C     STATE
+C
+      MOD_TABLE%TABLE(8)%NAME = "END EXTMOD"
+      MOD_TABLE%TABLE(8)%DIM = 0
 C
       END SUBROUTINE            
 C
@@ -82,7 +178,7 @@ C     + + + MODULE VARIABLES + + +
 C
 C     + + + LOCAL VARIABLES + + +   
       INTEGER    I,I0,I1,I2,OSVKND,OSVKST,OSVREC,BASEADDR,ADDR,
-     $           IVAL(11),J,TBNO,TBSB,NVAL
+     $           IVAL(17),J,TBNO,TBSB,NVAL
       REAL       RVAL(1)
 C
 C     + + + FUNCTIONS + + +
@@ -165,17 +261,17 @@ C       instance name, eg 'Site 5'
 C       unit number of SSM output time series file
       TBNO= 1
       TBSB= 1
-      NVAL= 11
+      NVAL= 17
       CALL ITABLE(TBNO,TBSB,NVAL,I1,
      M            IVAL)
 C
-      DO 110 J= 1,5
+      DO 110 J= 1,8
         SSMNAME(J)= IVAL(J)
  110  CONTINUE
-      DO 120 J= 1,5
-        INNAME(J)= IVAL(5+J)
+      DO 120 J= 1,8
+        INNAME(J)= IVAL(8+J)
  120  CONTINUE
-      UNIT(1)= IVAL(11)
+      UNIT(1)= IVAL(17)
 C
 C     process table - type out-info
 C       unit numbers for print and binary output reports, eng and metric
