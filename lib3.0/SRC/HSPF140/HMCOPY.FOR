@@ -114,7 +114,7 @@ C
 C      
       ITMP = LOC(HCOPY%NPT)
       SBPTR= -(1+ ((ITMP - BASEADDR)/4))
-      ITMP = LOC(HCOPY%OMNFP)
+      ITMP = LOC(HCOPY%OPTFP)
       ADDR = 1+ ((ITMP - BASEADDR)/4)
       CALL TIMSER_MEMBER_SET("POINT",
      I                       20,SBPTR,1,1,0,0,0,0,ADDR,
@@ -124,7 +124,7 @@ C
 C      
       ITMP = LOC(HCOPY%NMN)
       SBPTR= -(1+ ((ITMP - BASEADDR)/4))
-      ITMP = LOC(HCOPY%OPTFP)
+      ITMP = LOC(HCOPY%OMNFP)
       ADDR = 1+ ((ITMP - BASEADDR)/4)
       CALL TIMSER_MEMBER_SET("MEAN",
      I                       20,SBPTR,1,2,0,0,0,0,ADDR,
