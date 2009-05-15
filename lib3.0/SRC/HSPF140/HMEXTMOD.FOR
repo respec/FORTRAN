@@ -60,12 +60,12 @@ C
      I               "C",
      I               "Small-scale model instance name.",
      M               MOD_TABLE%TABLE(1)%FIELD(3))
-      CALL TABLE_FIELD_SET(5,76,1,99,0,
+      CALL TABLE_FIELD_SET( 5,76,   1,  99,   0,
      I               "I",
      I               "Unit number of input timeseries.",
      M               MOD_TABLE%TABLE(1)%FIELD(4))
 C
-     CALL TABLE_SET("OUT-INFO",1,
+      CALL TABLE_SET("OUT-INFO",1,
      I               102,102,302,302,
      I               7,
      I               "ExtMod-opn",
@@ -127,10 +127,124 @@ C
      I               "Area associated with this instance.",
      M               MOD_TABLE%TABLE(3)%FIELD(2))
 C
-C     TIMESERIES
-C     INFLUX
-C     OUTFLUX
-C     STATE
+      CALL TABLE_SET("TIMESERIES",1,
+     I               104,104,304,304,
+     I               4,
+     I               "ExtMod-opn",
+     I               "    x -  x  NIN NOUT NSTA","","",
+     I               "(1X,3I10)",
+     I               "       NIN      NOUT      NSTA","","","",
+     I               "Number of time series to be used " //
+     $                  "in the Extmod Operation.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(4))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I               "C",
+     I               "EXTMOD operations to which these data apply.",
+     M               MOD_TABLE%TABLE(4)%FIELD(1))
+      CALL TABLE_FIELD_SET(5,11,0,20,0,
+     I               "I",
+     I               "NIN is the number of influx time " //
+     $                 "series to be used.",
+     M               MOD_TABLE%TABLE(4)%FIELD(2))
+      CALL TABLE_FIELD_SET(5,16,0,20,0,
+     I               "I",
+     I               "NOUT is the number of outflux time " //
+     $                 "series to be used.",
+     M               MOD_TABLE%TABLE(4)%FIELD(3))
+      CALL TABLE_FIELD_SET(5,21,0,20,0,
+     I               "I",
+     I               "NSTA is the number of state var time " //
+     $                 "series to be used.",
+     M               MOD_TABLE%TABLE(4)%FIELD(4))
+C
+      CALL TABLE_SET("INFLUX",20,
+     I               105,105,305,305,
+     I               4,
+     I               "ExtMod-opn",
+     I               "    x -  x<--Group---> <---Name---> Units","","",
+     I               "(A12,1X,A12,A6)",
+     I               "<--Group---> <---Name---> Units","","","",
+     I           "Details of each input flux timeseries to be used " //
+     $                  "in the Extmod Operation.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(5))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I               "C",
+     I               "EXTMOD operations to which these data apply.",
+     M               MOD_TABLE%TABLE(5)%FIELD(1))
+      CALL TABLE_FIELD_SET(12,11,-999,-999,-999,
+     I               "C",
+     I               "Input flux group.",
+     M               MOD_TABLE%TABLE(5)%FIELD(2))
+      CALL TABLE_FIELD_SET(12,24,-999,-999,-999,
+     I               "C",
+     I               "Input flux name.",
+     M               MOD_TABLE%TABLE(5)%FIELD(3))
+      CALL TABLE_FIELD_SET(6,36,-999,-999,-999,
+     I               "C",
+     I               "Input flux units.",
+     M               MOD_TABLE%TABLE(5)%FIELD(4))
+C
+      CALL TABLE_SET("OUTFLUX",20,
+     I               106,106,306,306,
+     I               4,
+     I               "ExtMod-opn",
+     I               "    x -  x<--Group---> <---Name---> Units","","",
+     I               "(A12,1X,A12,A6)",
+     I               "<--Group---> <---Name---> Units","","","",
+     I           "Details of each output flux timeseries to be used " //
+     $                  "in the Extmod Operation.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(6))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I               "C",
+     I               "EXTMOD operations to which these data apply.",
+     M               MOD_TABLE%TABLE(6)%FIELD(1))
+      CALL TABLE_FIELD_SET(12,11,-999,-999,-999,
+     I               "C",
+     I               "Output flux group.",
+     M               MOD_TABLE%TABLE(6)%FIELD(2))
+      CALL TABLE_FIELD_SET(12,24,-999,-999,-999,
+     I               "C",
+     I               "Output flux name.",
+     M               MOD_TABLE%TABLE(6)%FIELD(3))
+      CALL TABLE_FIELD_SET(6,36,-999,-999,-999,
+     I               "C",
+     I               "Output flux units.",
+     M               MOD_TABLE%TABLE(6)%FIELD(4))
+C
+      CALL TABLE_SET("STATE",20,
+     I               107,107,307,307,
+     I               4,
+     I               "ExtMod-opn",
+     I               "    x -  x<--Group---> <---Name---> Units","","",
+     I               "(A12,1X,A12,A6)",
+     I               "<--Group---> <---Name---> Units","","","",
+     I           "Details of each state var timeseries to be used " //
+     $                  "in the Extmod Operation.",
+     I               "","","","","","","","","",
+     M               MOD_TABLE%TABLE(7))
+C
+      CALL TABLE_FIELD_SET(10,1,-999,-999,-999,
+     I               "C",
+     I               "EXTMOD operations to which these data apply.",
+     M               MOD_TABLE%TABLE(7)%FIELD(1))
+      CALL TABLE_FIELD_SET(12,11,-999,-999,-999,
+     I               "C",
+     I               "State variable group.",
+     M               MOD_TABLE%TABLE(7)%FIELD(2))
+      CALL TABLE_FIELD_SET(12,24,-999,-999,-999,
+     I               "C",
+     I               "State variable name.",
+     M               MOD_TABLE%TABLE(7)%FIELD(3))
+      CALL TABLE_FIELD_SET(6,36,-999,-999,-999,
+     I               "C",
+     I               "State variable units.",
+     M               MOD_TABLE%TABLE(7)%FIELD(4))
 C
       MOD_TABLE%TABLE(8)%NAME = "END EXTMOD"
       MOD_TABLE%TABLE(8)%DIM = 0
@@ -140,7 +254,7 @@ C
 C
 C
       SUBROUTINE   PEXTMOD
-     I                   (NDELT,SDATIM,NDAMON,EMFG, 
+     I                   (NDELT,SDATIM,NDAMON,EMFG,TABLEDEFS, 
      M                     OSVKEY)
 C
 C     + + + PURPOSE + + +
@@ -155,6 +269,7 @@ C     + + + MODULES + + +
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NDELT,SDATIM(5),NDAMON(12),EMFG, OSVKEY
+      TYPE (HMODULE_TABLE_DEFINITION) :: TABLEDEFS
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NDELT  - simulation time interval in minutes
@@ -180,6 +295,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER    I,I0,I1,I2,OSVKND,OSVKST,OSVREC,BASEADDR,ADDR,
      $           IVAL(17),J,TBNO,TBSB,NVAL
       REAL       RVAL(1)
+      TYPE(HMODULE_TABLE) :: TABLEDEF
 C
 C     + + + FUNCTIONS + + +
       INTEGER    DAYMNH
@@ -262,8 +378,9 @@ C       unit number of SSM output time series file
       TBNO= 1
       TBSB= 1
       NVAL= 17
-      CALL ITABLE(TBNO,TBSB,NVAL,I1,
-     M            IVAL)
+      TABLEDEF = TABLEDEFS%TABLE(1)
+      CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
+     M             IVAL)
 C
       DO 110 J= 1,8
         SSMNAME(J)= IVAL(J)
@@ -279,8 +396,9 @@ C       output levels for print and binary output reports
       TBNO= 1
       TBSB= 1
       NVAL= 6
-      CALL ITABLE(TBNO,TBSB,NVAL,I1,
-     M            IVAL)
+      TABLEDEF = TABLEDEFS%TABLE(2)
+      CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
+     M             IVAL)
 C
       DO 130 J= 1,4
         UNIT(1+J)= IVAL(10+J)
@@ -309,10 +427,16 @@ C       area associated with SSM instance
       TBNO= 1
       TBSB= 1
       NVAL= 1
-      CALL RTABLE(TBNO,TBSB,NVAL,I1,
-     M            RVAL)
+      TABLEDEF = TABLEDEFS%TABLE(3)
+      CALL RTABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
+     M             RVAL)
 C
       RAREA = RVAL(1)
+C
+C     process table - type timeseries
+C     process table - type influx
+C     process table - type outflux
+C     process table - type state
 C     
       IF (OUTLEV.GT.0) THEN
         WRITE (HEXTMOD%MESSU,2010)  OPTNO

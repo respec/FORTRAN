@@ -675,6 +675,7 @@ C
               ELSE IF (OMCODE .EQ. 12) THEN
 C               extmod module
                 CALL PEXTMOD (NDELT,SDATIM,NDAMON,EMFG,
+     I                        TABLEDEFS(OMCODE),
      M                        OSVKEY)
 C
               END IF
