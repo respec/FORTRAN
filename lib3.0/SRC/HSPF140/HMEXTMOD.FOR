@@ -8,21 +8,30 @@ C     module containing utility module EXTMOD
 C
 C     + + + HISTORY + + +
 C     2009/05/07 PBD - initial implementation of module version of EXTMOD
+C     2009/05/18 JLK - ongoing refinements
 C
 C     + + + MODULE VARIABLES + + +
       USE HMTABLEDEF
+      USE HMTIMSERDEF
       IMPLICIT NONE
 C
+      INTEGER    PMXINP,PMXOUT,PMXSTA
+      PARAMETER (PMXINP=20,PMXOUT=20,PMXSTA=20)
+C      
       TYPE HTEXTMOD
         SEQUENCE
         INTEGER   EXTMODNO,NPT,NMN,MESSU
         REAL      DELT
         INTEGER   NDAY(12),YR,MON,DAY,HR,MIN,
      $            NDAYS,SPAFP,SPAKND,SPIVL,SPOPNO,SPOUT,UUNITS,
-     $            SSMNAME(8),INNAME(8),UNIT(4),OLEV(2),AREA,
-     $            IPTFP(20),IMNFP(20),OPTFP(20),OMNFP(20)
-        REAL      PTVAL(20),MNVAL(20)
-        INTEGER   SPNUND
+     $            SSMNAME(8),INNAME(8),PUNIT(2),BUNIT(2),OLEV(2),AREA,
+     $            NINP,NOUT,NSTA,
+     $         INPGROUP(3,PMXINP),INPNAME(3,PMXINP),INPUNITS(2,PMXINP),
+     $         OUTGROUP(3,PMXOUT),OUTNAME(3,PMXOUT),OUTUNITS(2,PMXOUT),
+     $         STAGROUP(3,PMXSTA),STANAME(3,PMXSTA),STAUNITS(2,PMXSTA),
+     $         INPFP(PMXINP),OUTFP(PMXOUT),STAFP(PMXSTA)
+        REAL      INPVAL(PMXINP,5),OUTVAL(PMXOUT,5),STAVAL(PMXSTA,5)
+        INTEGER   SPNUND,EXTLST
       END TYPE HTEXTMOD
 C
       CONTAINS   
@@ -160,9 +169,9 @@ C
      I               105,105,305,305,
      I               4,
      I               "ExtMod-opn",
-     I               "    x -  x<--Group---> <---Name---> Units","","",
-     I               "(A12,1X,A12,A6)",
-     I               "<--Group---> <---Name---> Units","","","",
+     I           "    x -  x<--Group---> <---Name---> <Units->","","",
+     I               "(1X,3A4,1X,3A4,1X,2A4)",
+     I               "<--Group---> <---Name---> <Units->","","","",
      I           "Details of each input flux timeseries to be used " //
      $                  "in the Extmod Operation.",
      I               "","","","","","","","","",
@@ -180,7 +189,7 @@ C
      I               "C",
      I               "Input flux name.",
      M               MOD_TABLE%TABLE(5)%FIELD(3))
-      CALL TABLE_FIELD_SET(6,36,-999,-999,-999,
+      CALL TABLE_FIELD_SET(8,37,-999,-999,-999,
      I               "C",
      I               "Input flux units.",
      M               MOD_TABLE%TABLE(5)%FIELD(4))
@@ -190,8 +199,8 @@ C
      I               4,
      I               "ExtMod-opn",
      I               "    x -  x<--Group---> <---Name---> Units","","",
-     I               "(A12,1X,A12,A6)",
-     I               "<--Group---> <---Name---> Units","","","",
+     I               "(1X,3A4,1X,3A4,1X,2A4)",
+     I               "<--Group---> <---Name---> <Units->","","","",
      I           "Details of each output flux timeseries to be used " //
      $                  "in the Extmod Operation.",
      I               "","","","","","","","","",
@@ -209,7 +218,7 @@ C
      I               "C",
      I               "Output flux name.",
      M               MOD_TABLE%TABLE(6)%FIELD(3))
-      CALL TABLE_FIELD_SET(6,36,-999,-999,-999,
+      CALL TABLE_FIELD_SET(8,37,-999,-999,-999,
      I               "C",
      I               "Output flux units.",
      M               MOD_TABLE%TABLE(6)%FIELD(4))
@@ -219,8 +228,8 @@ C
      I               4,
      I               "ExtMod-opn",
      I               "    x -  x<--Group---> <---Name---> Units","","",
-     I               "(A12,1X,A12,A6)",
-     I               "<--Group---> <---Name---> Units","","","",
+     I               "(1X,3A4,1X,3A4,1X,2A4)",
+     I               "<--Group---> <---Name---> <Units->","","","",
      I           "Details of each state var timeseries to be used " //
      $                  "in the Extmod Operation.",
      I               "","","","","","","","","",
@@ -238,7 +247,7 @@ C
      I               "C",
      I               "State variable name.",
      M               MOD_TABLE%TABLE(7)%FIELD(3))
-      CALL TABLE_FIELD_SET(6,36,-999,-999,-999,
+      CALL TABLE_FIELD_SET(8,37,-999,-999,-999,
      I               "C",
      I               "State variable units.",
      M               MOD_TABLE%TABLE(7)%FIELD(4))
@@ -247,6 +256,69 @@ C
       MOD_TABLE%TABLE(8)%DIM = 0
 C
       END SUBROUTINE            
+C
+C
+C
+      SUBROUTINE GETTSDEF_EXTMOD
+     O                          (MOD_DEFN)
+C
+      TYPE (HMODULE_TIMSER_DEFINITION) MOD_DEFN   
+C      
+      INTEGER      BASEADDR, ITMP, SBPTR, ADDR
+      TYPE(HTEXTMOD) HEXTMOD
+C      
+      MOD_DEFN%NAME   = "EXTMOD"
+      MOD_DEFN%CLUSTER= 152
+      ALLOCATE (MOD_DEFN%GROUP(3))
+C
+      BASEADDR = LOC(HEXTMOD%EXTMODNO)
+C
+      MOD_DEFN%GROUP(1)%NAME  = "INPUT"
+      MOD_DEFN%GROUP(1)%OFFSET= 10
+      ALLOCATE (MOD_DEFN%GROUP(1)%MEMBER(1))
+C      
+      ITMP = LOC(HEXTMOD%NINP)
+      SBPTR= -(1+ ((ITMP - BASEADDR)/4))
+      ITMP = LOC(HEXTMOD%INPFP)
+      ADDR = 1+ ((ITMP - BASEADDR)/4)
+      CALL TIMSER_MEMBER_SET("TIMSER",
+     I                       PMXINP,SBPTR,1,2,0,0,2,0,ADDR,
+     I                       "input time series",
+     M                       MOD_DEFN%GROUP(1)%MEMBER(1))
+      CALL TIMSER_MEMBER_LTVAL_INIT(MOD_DEFN%GROUP(1)%MEMBER(1)%LTVAL)
+C      
+      MOD_DEFN%GROUP(2)%NAME  = "OUTPUT"
+      MOD_DEFN%GROUP(2)%OFFSET= 20
+      ALLOCATE (MOD_DEFN%GROUP(2)%MEMBER(1))
+C      
+      ITMP = LOC(HEXTMOD%NOUT)
+      SBPTR= -(1+ ((ITMP - BASEADDR)/4))
+      ITMP = LOC(HEXTMOD%OUTFP)
+      ADDR = 1+ ((ITMP - BASEADDR)/4)
+      CALL TIMSER_MEMBER_SET("TIMSER",
+     I                       PMXOUT,SBPTR,1,2,0,0,2,0,ADDR,
+     I                       "output time series",
+     M                       MOD_DEFN%GROUP(2)%MEMBER(1))
+      CALL TIMSER_MEMBER_LTVAL_INIT(MOD_DEFN%GROUP(2)%MEMBER(1)%LTVAL)
+C
+      MOD_DEFN%GROUP(3)%NAME = "STATE"
+      MOD_DEFN%GROUP(3)%OFFSET= 30
+      ALLOCATE (MOD_DEFN%GROUP(3)%MEMBER(1))
+C      
+      ITMP = LOC(HEXTMOD%NSTA)
+      SBPTR= -(1+ ((ITMP - BASEADDR)/4))
+      ITMP = LOC(HEXTMOD%STAFP)
+      ADDR = 1+ ((ITMP - BASEADDR)/4)
+      CALL TIMSER_MEMBER_SET("TIMSER",
+     I                       PMXSTA,SBPTR,1,1,0,0,0,0,ADDR,
+     I                       "state variable time series",
+     M                       MOD_DEFN%GROUP(3)%MEMBER(1))
+      CALL TIMSER_MEMBER_LTVAL_INIT(MOD_DEFN%GROUP(3)%MEMBER(1)%LTVAL)
+C      
+      MOD_DEFN%INITIALIZED = .TRUE.
+C      
+      RETURN
+      END SUBROUTINE
 C
 C
 C
@@ -282,7 +354,7 @@ C     + + + MODULE VARIABLES + + +
       TYPE(HTEXTMOD)  HEXTMOD     
       POINTER   (P,HEXTMOD)
       POINTER   (PDATIM,DATIM),(POSV,OSV)
-      INTEGER    DATIM(5),OSV(500)
+      INTEGER    DATIM(5),OSV(*)
 C
 C     + + + LOCAL VARIABLES + + +   
       INTEGER    I,I0,I1,I2,OSVKND,OSVKST,OSVREC,BASEADDR,ADDR,
@@ -304,29 +376,25 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      I0   = 0
-      I1   = 1
-      I2   = 2
+      I0= 0
+      I1= 1
+      I2= 2
 C
-      OSVREC= 1
-      OSVKST= OSVKEY+ 1
-      OSVKND= OSVKEY+ OSVREC
+      BASEADDR= LOC(HEXTMOD%EXTMODNO)
+      ADDR    = LOC(HEXTMOD%EXTLST)
+      I       = ((ADDR - BASEADDR)/4) -1
+      OSVREC  = 1+ (I/500)
+      OSVKST  = OSVKEY+ 1
+      OSVKND  = OSVKEY+ OSVREC
 C
 C     point the osv to its memory location
-      P = LOC(OSVM(1,OSVKST))
-      PDATIM = LOC(HEXTMOD%YR)    
-      POSV   = LOC(HEXTMOD)
+      P     = LOC(OSVM(1,OSVKST))
+      PDATIM= LOC(HEXTMOD%YR)    
+      POSV  = LOC(HEXTMOD)
 C     record the keys in opntab
       OPNTAB(7,OPNO)= OSVKST
       OPNTAB(8,OPNO)= OSVKND
       OSVKEY        = OSVKND
-C
-C     flag pointer addresses
-      BASEADDR = LOC(HEXTMOD%EXTMODNO)
-      ADDR     = LOC(HEXTMOD%SPAFP)
-      WRITE(99,*) 'address of SPAFP',1+ ((ADDR - BASEADDR)/4),BASEADDR/4
-      ADDR     = LOC(HEXTMOD%IPTFP)
-      WRITE(99,*) 'address of IPTFP',1+ ((ADDR - BASEADDR)/4)
 C
       IF (RESMFG.EQ.1) THEN
 C       read the general part of the osv from osvfl
@@ -343,7 +411,7 @@ C
         END IF
 C
         HEXTMOD%EXTMODNO= OPTNO
-        HEXTMOD%DELT  =  NDELT
+        HEXTMOD%DELT    =  NDELT
         DO 20 I= 1, 12
           HEXTMOD%NDAY(I)= NDAMON(I)
  20     CONTINUE
@@ -357,11 +425,16 @@ C       work ok
         HEXTMOD%SPOPNO= OPNO
         HEXTMOD%UUNITS= EMFG
 C
-C       initialize current values
-        DO 40 I= 1, 20
-          HEXTMOD%PTVAL(I)= -1.0E30
-          HEXTMOD%MNVAL(I)= -1.0E30
+C       initialize current values - todo - make this a flux reset
+        DO 40 I= 1, PMXINP
+          HEXTMOD%INPVAL(I,1)= -1.0E30
  40     CONTINUE
+        DO 50 I= 1, PMXOUT
+          HEXTMOD%OUTVAL(I,1)= -1.0E30
+ 50     CONTINUE
+        DO 60 I= 1, PMXSTA
+          HEXTMOD%STAVAL(I,1)= -1.0E30
+ 60     CONTINUE
       END IF
 C
 C     process table - type gen-info
@@ -371,7 +444,7 @@ C       unit number of SSM output time series file
       TBNO= 1
       TBSB= 1
       NVAL= 16
-      TABLEDEF = TABLEDEFS%TABLE(1)
+      TABLEDEF = TABLEDEFS%TABLE(TBNO)
       CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
      M             IVAL)
 C
@@ -388,48 +461,103 @@ C       output levels for print and binary output reports
       TBNO= 2
       TBSB= 1
       NVAL= 6
-      TABLEDEF = TABLEDEFS%TABLE(2)
+      TABLEDEF = TABLEDEFS%TABLE(TBNO)
       CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
      M             IVAL)
 C
-      DO 130 J= 1,4
-        HEXTMOD%UNIT(J)= IVAL(J)
- 130  CONTINUE
       DO 140 J= 1,2
+        HEXTMOD%PUNIT(J)= IVAL(J)
+        HEXTMOD%BUNIT(J)= IVAL(2+J)
         HEXTMOD%OLEV(J) = IVAL(4+J)
  140  CONTINUE
 C
 C     check output files - if not open, open them with standard name
       DO 150 J= 1,2
-        IF (HEXTMOD%UNIT(J) .GT. 0) THEN
+        IF (HEXTMOD%PUNIT(J) .GT. 0) THEN
           CALL HSCKFL
-     I                (HEXTMOD%UNIT(J))
+     I                (HEXTMOD%PUNIT(J))
+        END IF
+        IF (HEXTMOD%BUNIT(J) .GT. 0) THEN
+C         check binary output files 
+          CALL HSCKFLX
+     I                 (I0,HEXTMOD%PUNIT(J))
         END IF
  150  CONTINUE
-C     check binary output files 
-      DO 160 J= 3,4
-        IF (HEXTMOD%UNIT(J) .GT. 0) THEN
-          CALL HSCKFLX
-     I                 (I0,HEXTMOD%UNIT(J))
-        END IF
- 160  CONTINUE
 C
 C     process table - type area-info
 C       area associated with SSM instance
       TBNO= 3
       TBSB= 1
       NVAL= 1
-      TABLEDEF = TABLEDEFS%TABLE(3)
+      TABLEDEF = TABLEDEFS%TABLE(TBNO)
       CALL RTABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
      M             RVAL)
 C
       HEXTMOD%AREA = RVAL(1)
 C
 C     process table - type timeseries
+C       number of inputs, outputs and state vars
+      TBNO= 4
+      TBSB= 1
+      NVAL= 3
+      TABLEDEF = TABLEDEFS%TABLE(TBNO)
+      CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
+     M             IVAL)
+      HEXTMOD%NINP= IVAL(1)
+      HEXTMOD%NOUT= IVAL(2)
+      HEXTMOD%NSTA= IVAL(3)
+C
 C     process table - type influx
+C       details about inflows
+      TBNO= 5
+      NVAL= 8
+      TABLEDEF = TABLEDEFS%TABLE(TBNO)
+      DO 190 TBSB = 1, HEXTMOD%NINP
+        CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
+     M               IVAL)
+        DO 170 J= 1,3
+          HEXTMOD%INPGROUP(J,TBSB)= IVAL(J)
+          HEXTMOD%INPNAME(J,TBSB) = IVAL(J+3)
+ 170    CONTINUE
+        DO 180 J= 1,2
+          HEXTMOD%INPUNITS(J,TBSB)= IVAL(J+6)
+ 180    CONTINUE    
+ 190  CONTINUE
+C 
 C     process table - type outflux
+C       details about outflows
+      TBNO= 6
+      NVAL= 8
+      TABLEDEF = TABLEDEFS%TABLE(TBNO)
+      DO 220 TBSB = 1, HEXTMOD%NOUT
+        CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
+     M               IVAL)
+        DO 200 J= 1,3
+          HEXTMOD%OUTGROUP(J,TBSB)= IVAL(J)
+          HEXTMOD%OUTNAME(J,TBSB) = IVAL(J+3)
+ 200    CONTINUE
+        DO 210 J= 1,2
+          HEXTMOD%OUTUNITS(J,TBSB)= IVAL(J+6)
+ 210    CONTINUE    
+ 220  CONTINUE
+C
 C     process table - type state
-C     
+C       details about state variables
+      TBNO= 7
+      NVAL= 8
+      TABLEDEF = TABLEDEFS%TABLE(TBNO)
+      DO 250 TBSB = 1, HEXTMOD%NSTA
+        CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
+     M               IVAL)
+        DO 230 J= 1,3
+          HEXTMOD%STAGROUP(J,TBSB)= IVAL(J)
+          HEXTMOD%STANAME(J,TBSB) = IVAL(J+3)
+ 230    CONTINUE
+        DO 240 J= 1,2
+          HEXTMOD%STAUNITS(J,TBSB)= IVAL(J+6)
+ 240    CONTINUE    
+ 250  CONTINUE
+C
       IF (OUTLEV.GT.0) THEN
         WRITE (HEXTMOD%MESSU,2010)  OPTNO
       END IF
@@ -470,8 +598,9 @@ C     + + + MODULE VARIABLES + + +
       INTEGER     NUMBR(2),DATIM(5)   
 C       
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     IVL,IVL1,N,IDELT,PIVLNO,DUM1,DUM2,DUM3,DUM4,
-     #            DUM5,DUM6,I1,I12
+      INTEGER     IVL,IVL1,N,IDELT,PIVLNO,
+     #            NXTMON,HRFG,DAYFG,EDAYFG,EMONFG,EPYRFG,  
+     #            I1,I12
       CHARACTER*6 OPTYP
 C
 C     + + + EXTERNALS + + +
@@ -483,8 +612,8 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
 C     point to where the osv for this operation is in memory
-      P      = LOC(OSVM(1,OSVKST))
-      PDATIM = LOC(HEXTMOD%YR)    
+      P     = LOC(OSVM(1,OSVKST))
+      PDATIM= LOC(HEXTMOD%YR)    
 C      
       IVL   = STIVL- 1
       IVL1  = STIVL
@@ -493,25 +622,32 @@ C
       I1    = 1
       I12   = 12
 C
-      IF ( (STIVL .EQ. 1) .AND. (HEXTMOD%NPT.GT.0) ) THEN
-C       put initial values of point-valued time series into inpad
-C       transfer from input row to temporary array
-        DO 20 N= 1,HEXTMOD%NPT
-          IF (HEXTMOD%IPTFP(N) .GT. 0) THEN
-            IF (HEXTMOD%OPTFP(N) .NE. HEXTMOD%IPTFP(N)) THEN
-              HEXTMOD%PTVAL(N)= PAD(HEXTMOD%IPTFP(N)+IVL1)
+      IF (STIVL .EQ. 1) THEN
+C       TODO: is this section needed?      
+        IF (HEXTMOD%NINP .GT. 0) THEN
+C         put initial values of input time series into osv
+          DO 10 N= 1,HEXTMOD%NINP
+            IF (HEXTMOD%INPFP(N) .GT. 0) THEN
+              HEXTMOD%INPVAL(N,1)= PAD(HEXTMOD%INPFP(N)+IVL1)
             END IF
-          END IF
- 20     CONTINUE
-C       transfer from temporary array to output row
-        DO 30 N= 1,HEXTMOD%NPT
-          IF ( (HEXTMOD%OPTFP(N) .GT. 0) .AND. 
-     1         (HEXTMOD%IPTFP(N) .GT. 0) ) THEN
-            IF (HEXTMOD%OPTFP(N) .NE. HEXTMOD%IPTFP(N)) THEN
-              PAD(HEXTMOD%OPTFP(N)+IVL1)= HEXTMOD%PTVAL(N)
+ 10       CONTINUE
+        END IF
+        IF (HEXTMOD%NOUT .GT. 0) THEN
+C         put initial values of output time series into osv
+          DO 20 N= 1,HEXTMOD%NOUT
+            IF (HEXTMOD%OUTFP(N) .GT. 0) THEN
+              HEXTMOD%OUTVAL(N,1)= PAD(HEXTMOD%OUTFP(N)+IVL1)
             END IF
-          END IF
- 30     CONTINUE
+ 20       CONTINUE
+        END IF
+        IF (HEXTMOD%NSTA .GT. 0) THEN
+C         put initial values of state variable time series into osv
+          DO 30 N= 1,HEXTMOD%NSTA
+            IF (HEXTMOD%STAFP(N) .GT. 0) THEN
+              HEXTMOD%STAVAL(N,1)= PAD(HEXTMOD%STAFP(N)+IVL1)
+            END IF
+ 30       CONTINUE
+        END IF
       END IF
 C
 C     time loop
@@ -522,7 +658,8 @@ C
 C       increment date/time
         CALL ADDTIM (IDELT,HEXTMOD%NDAY,I1,I12,
      M               DATIM,PIVLNO,
-     O               HEXTMOD%NDAYS,DUM1,DUM2,DUM3,DUM4,DUM5,DUM6)
+     O               HEXTMOD%NDAYS,NXTMON,HRFG,DAYFG,EDAYFG,
+     O               EMONFG,EPYRFG)
 C
         IF (HEXTMOD%SPAFP .GT. 0 .AND. 
      $      HEXTMOD%SPAFP .LE. HEXTMOD%SPAKND) THEN
@@ -534,49 +671,39 @@ C         special actions are being taken and there is at least one left
      M                HEXTMOD%SPAFP)
         END IF
 C
-        IF (HEXTMOD%NPT.GT.0) THEN
-C         copy point-valued time series to osv
-          DO 40 N= 1,HEXTMOD%NPT
-            IF (HEXTMOD%IPTFP(N) .GT. 0) THEN
-              HEXTMOD%PTVAL(N)= PAD(HEXTMOD%IPTFP(N)+IVL1)
+        IF (HEXTMOD%NINP .GT. 0) THEN
+C         put values of input time series into osv
+          DO 40 N= 1,HEXTMOD%NINP
+            IF (HEXTMOD%INPFP(N) .GT. 0) THEN
+              HEXTMOD%INPVAL(N,1)= PAD(HEXTMOD%INPFP(N)+IVL1)
             END IF
  40       CONTINUE
         END IF
-C
-        IF (HEXTMOD%NMN.GT.0) THEN
-C         copy mean-valued time series to osv
-          DO 50 N= 1,HEXTMOD%NMN
-            IF (HEXTMOD%IMNFP(N) .GT. 0) THEN
-              HEXTMOD%MNVAL(N)= PAD(HEXTMOD%IMNFP(N)+IVL1)
+        IF (HEXTMOD%NOUT .GT. 0) THEN
+C         put values of output time series into osv
+          DO 50 N= 1,HEXTMOD%NOUT
+            IF (HEXTMOD%OUTFP(N) .GT. 0) THEN
+              HEXTMOD%OUTVAL(N,1)= PAD(HEXTMOD%OUTFP(N)+IVL1)
             END IF
  50       CONTINUE
         END IF
-C
-C       reports go here
-C
-        IF (HEXTMOD%NPT.GT.0) THEN
-C         copy point-valued time series from osv to output
-          DO 60 N= 1,HEXTMOD%NPT
-            IF ( (HEXTMOD%OPTFP(N) .GT. 0) .AND. 
-     1           (HEXTMOD%IPTFP(N) .GT. 0) ) THEN
-              IF (HEXTMOD%OPTFP(N) .NE. HEXTMOD%IPTFP(N)) THEN
-                PAD(HEXTMOD%OPTFP(N)+IVL1)= HEXTMOD%PTVAL(N)
-              END IF
+        IF (HEXTMOD%NSTA .GT. 0) THEN
+C         put values of state variable time series into osv
+          DO 60 N= 1,HEXTMOD%NSTA
+            IF (HEXTMOD%STAFP(N) .GT. 0) THEN
+              HEXTMOD%STAVAL(N,1)= PAD(HEXTMOD%STAFP(N)+IVL1)
             END IF
  60       CONTINUE
         END IF
 C
-        IF (HEXTMOD%NMN.GT.0) THEN
-C         copy mean-valued time series from osv to output
-          DO 70 N= 1,HEXTMOD%NMN
-            IF ( (HEXTMOD%OMNFP(N) .GT. 0) .AND. 
-     1           (HEXTMOD%IMNFP(N) .GT. 0) ) THEN
-              IF (HEXTMOD%OMNFP(N) .NE. HEXTMOD%IMNFP(N)) THEN
-                PAD(HEXTMOD%OMNFP(N)+IVL1)= HEXTMOD%MNVAL(N)
-              END IF
-            END IF
- 70       CONTINUE
+C       accumulators and reports go here
+        IF (EMONFG .EQ. 1) THEN
+          WRITE(HEXTMOD%PUNIT(1),*) 
+     1          'EXTMOD',HEXTMOD%EXTMODNO,'DONE ', DATIM(1), DATIM(2)
         END IF
+C
+C       what gets passed to the rest of HSPF???        
+C          just output or any input/state/output?
 C
 C       update pipes for user-defined variable quantities
         CALL UPQUAN (HEXTMOD%SPIVL,HEXTMOD%SPOPNO)
