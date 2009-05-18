@@ -1034,6 +1034,9 @@ C         legacy, get ready to read msgfl
         END IF
         GCUR= OMCODE
         MCUR= 0
+      ELSE
+C       be sure pointers correct
+        TIMSERDEF= TIMSERDEFS(OMCODE)   
       END IF
 C
 C     check the group name supplied by the user
@@ -2296,13 +2299,16 @@ C
      I                      (OMCODE)
 C
       USE HMCOPY, ONLY : GETTSDEF_COPY
+      USE HMEXTMOD, ONLY : GETTSDEF_EXTMOD
 C      
       INTEGER OMCODE
 C
       IF (.NOT. TIMSERDEFS(OMCODE)%INITIALIZED) THEN
         IF (OMCODE .EQ. 4) THEN
           CALL GETTSDEF_COPY(TIMSERDEFS(OMCODE))
-        END IF      
+        ELSEIF (OMCODE .EQ. 12) THEN
+          CALL GETTSDEF_EXTMOD(TIMSERDEFS(OMCODE))
+        END IF          
       END IF    
 C
       RETURN
