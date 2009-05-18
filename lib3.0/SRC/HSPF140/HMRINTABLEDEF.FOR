@@ -119,8 +119,52 @@ C
       FIELD%IDEF = IDEF
       FIELD%FTYP = FTYP
       FIELD%HELP = HELP
+      FIELD%ADD  = 0.0
+      FIELD%MULT = 1.0
 C
       RETURN
       END SUBROUTINE     
+C
+C
+C
+      SUBROUTINE TABLE_FIELD_SETR
+     I                          (FLEN,SCOL,RMIN,RMAX,RDEF,
+     I                           FTYP,
+     I                           HELP,
+     M                           FIELD)
+
+      INTEGER       FLEN,SCOL
+      REAL          RMIN,RMAX,RDEF
+      CHARACTER*(*) FTYP
+      CHARACTER*(*) HELP
+      TYPE (HMODULE_FIELD) FIELD
+C
+      FIELD%FLEN = FLEN
+      FIELD%SCOL = SCOL
+      FIELD%RMIN = RMIN
+      FIELD%RMAX = RMAX
+      FIELD%RDEF = RDEF
+      FIELD%FTYP = FTYP
+      FIELD%HELP = HELP
+      FIELD%ADD  = 0.0
+      FIELD%MULT = 1.0
+C
+      RETURN
+      END SUBROUTINE     
+C
+C
+C
+      SUBROUTINE TABLE_FIELD_SETCONV
+     I                              (ADD,MULT,
+     M                               FIELD)
+C
+      REAL          ADD,MULT
+      TYPE (HMODULE_FIELD) FIELD
+C
+      FIELD%ADD  = ADD
+      FIELD%MULT = MULT
+C
+      RETURN
+      END SUBROUTINE         
 C                             
       END MODULE

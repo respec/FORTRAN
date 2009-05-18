@@ -25,6 +25,7 @@ C     + + + MODULES + + +
       USE       HMCOPY, ONLY : COPY
       USE       HMPLTGEN, ONLY : PLTGEN
       USE       HMDISPLY, ONLY : HDISPL
+      USE       HMEXTMOD, ONLY : EXTMOD
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   FILES(15),RETCOD
@@ -375,7 +376,7 @@ C                     details first time thru
                   END IF
 C
                   IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5 .AND. 
-     $                OMCODE .NE. 6) THEN
+     $                OMCODE .NE. 6 .AND. OMCODE .NE. 12) THEN
 C                   read the osv from disc
                     CALL GETOSV (OSVKST,OSVKND,MAXOSV,
      O                           OSV)
@@ -384,7 +385,8 @@ C
 C                 call the appropriate operating module
 C                 casentry omcode
 C                  write(99,*)'omcode,opn,nopns',omcode,opn,nopns
-                  GO TO (110,120,130,140,150,160,170,180,190,200,210),
+                  GO TO (110,120,130,
+     $                   140,150,160,170,180,190,200,210,220),
      $                   OMCODE
 C                   case 1
  110                  CONTINUE
@@ -440,11 +442,16 @@ C                   case 11
  210                  CONTINUE
                         CALL REPORT (STIVL,IW,LSTCAL)
                       GO TO 300
- 300              CONTINUE
+C
+C                   case 12
+ 220                  CONTINUE
+                        CALL EXTMOD (STIVL,IW,LSTCAL)
+                      GO TO 300
+300              CONTINUE
 C                 endcase
 C
                   IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5 .AND. 
-     $                OMCODE .NE. 6) THEN
+     $                OMCODE .NE. 6 .AND. OMCODE .NE. 12) THEN
 C                   write the osv to disc
                     CALL PUTOSV (OSVKST,OSVKND,MAXOSV,OSV)
                   END IF

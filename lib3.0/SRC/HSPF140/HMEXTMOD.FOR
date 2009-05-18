@@ -19,6 +19,7 @@ C
         REAL      DELT
         INTEGER   NDAY(12),YR,MON,DAY,HR,MIN,
      $            NDAYS,SPAFP,SPAKND,SPIVL,SPOPNO,SPOUT,UUNITS,
+     $            SSMNAME(8),INNAME(8),UNIT(4),OLEV(2),AREA,
      $            IPTFP(20),IMNFP(20),OPTFP(20),OMNFP(20)
         REAL      PTVAL(20),MNVAL(20)
         INTEGER   SPNUND
@@ -41,7 +42,7 @@ C
      I               "ExtMod-opn",
      I               "    # -  #<SSM-Name----------------------> " // 
      I               "<Instance-Name-----------------> File ","","",
-     I               "(1X,A32,1X,A32,I5)",
+     I               "(1X,8A4,1X,8A4,I5)",
      I               " <SSM-Name----------------------> " //
      I               "<Instance-Name-----------------> File","","","",
      I               "General Information about each EXTMOD operation.",
@@ -60,10 +61,6 @@ C
      I               "C",
      I               "Small-scale model instance name.",
      M               MOD_TABLE%TABLE(1)%FIELD(3))
-      CALL TABLE_FIELD_SET( 5,76,   1,  99,   0,
-     I               "I",
-     I               "Unit number of input timeseries.",
-     M               MOD_TABLE%TABLE(1)%FIELD(4))
 C
       CALL TABLE_SET("OUT-INFO",1,
      I               102,102,302,302,
@@ -122,7 +119,7 @@ C
      I               "C",
      I               "EXTMOD operations to which these data apply.",
      M               MOD_TABLE%TABLE(3)%FIELD(1))
-      CALL TABLE_FIELD_SET(10,11,0,-999,1,
+      CALL TABLE_FIELD_SETR(10,11,0.0,-999.0,1.0,
      I               "R",
      I               "Area associated with this instance.",
      M               MOD_TABLE%TABLE(3)%FIELD(2))
@@ -284,12 +281,8 @@ C
 C     + + + MODULE VARIABLES + + +
       TYPE(HTEXTMOD)  HEXTMOD     
       POINTER   (P,HEXTMOD)
-      POINTER   (PSSMNAME,SSMNAME),(PINNAME,INNAME)
-      POINTER   (PUNIT,UNIT),(POLEV,OLEV),(PRAREA,RAREA)
       POINTER   (PDATIM,DATIM),(POSV,OSV)
-      INTEGER    SSMNAME(5),INNAME(5),UNIT(4),DATIM(5),OSV(500)
-      INTEGER    OLEV(2)
-      REAL       RAREA
+      INTEGER    DATIM(5),OSV(500)
 C
 C     + + + LOCAL VARIABLES + + +   
       INTEGER    I,I0,I1,I2,OSVKND,OSVKST,OSVREC,BASEADDR,ADDR,
@@ -377,23 +370,22 @@ C       instance name, eg 'Site 5'
 C       unit number of SSM output time series file
       TBNO= 1
       TBSB= 1
-      NVAL= 17
+      NVAL= 16
       TABLEDEF = TABLEDEFS%TABLE(1)
       CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
      M             IVAL)
 C
       DO 110 J= 1,8
-        SSMNAME(J)= IVAL(J)
+        HEXTMOD%SSMNAME(J)= IVAL(J)
  110  CONTINUE
       DO 120 J= 1,8
-        INNAME(J)= IVAL(8+J)
+        HEXTMOD%INNAME(J)= IVAL(8+J)
  120  CONTINUE
-      UNIT(1)= IVAL(17)
 C
 C     process table - type out-info
 C       unit numbers for print and binary output reports, eng and metric
 C       output levels for print and binary output reports
-      TBNO= 1
+      TBNO= 2
       TBSB= 1
       NVAL= 6
       TABLEDEF = TABLEDEFS%TABLE(2)
@@ -401,37 +393,37 @@ C       output levels for print and binary output reports
      M             IVAL)
 C
       DO 130 J= 1,4
-        UNIT(1+J)= IVAL(10+J)
+        HEXTMOD%UNIT(J)= IVAL(J)
  130  CONTINUE
       DO 140 J= 1,2
-        OLEV(J) = IVAL(4+J)
+        HEXTMOD%OLEV(J) = IVAL(4+J)
  140  CONTINUE
 C
 C     check output files - if not open, open them with standard name
-      DO 150 J= 2,3
-        IF (UNIT(J) .GT. 0) THEN
+      DO 150 J= 1,2
+        IF (HEXTMOD%UNIT(J) .GT. 0) THEN
           CALL HSCKFL
-     I                (UNIT(J))
+     I                (HEXTMOD%UNIT(J))
         END IF
  150  CONTINUE
 C     check binary output files 
-      DO 160 J= 4,5
-        IF (UNIT(J) .GT. 0) THEN
+      DO 160 J= 3,4
+        IF (HEXTMOD%UNIT(J) .GT. 0) THEN
           CALL HSCKFLX
-     I                 (I0,UNIT(J))
+     I                 (I0,HEXTMOD%UNIT(J))
         END IF
  160  CONTINUE
 C
 C     process table - type area-info
 C       area associated with SSM instance
-      TBNO= 1
+      TBNO= 3
       TBSB= 1
       NVAL= 1
       TABLEDEF = TABLEDEFS%TABLE(3)
       CALL RTABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
      M             RVAL)
 C
-      RAREA = RVAL(1)
+      HEXTMOD%AREA = RVAL(1)
 C
 C     process table - type timeseries
 C     process table - type influx
@@ -524,7 +516,7 @@ C       transfer from temporary array to output row
 C
 C     time loop
       DO 130 IVL= STIVL,WIDTH+ STIVL- 1
-        IVL1       = IVL1+ 1
+        IVL1         = IVL1+ 1
         HEXTMOD%SPIVL= HEXTMOD%SPIVL+ 1
 C
 C       increment date/time
@@ -559,6 +551,8 @@ C         copy mean-valued time series to osv
             END IF
  50       CONTINUE
         END IF
+C
+C       reports go here
 C
         IF (HEXTMOD%NPT.GT.0) THEN
 C         copy point-valued time series from osv to output

@@ -77,7 +77,7 @@ C
 C
       IF (OUTLEV .GT. 7) THEN
 C       preprocessing message
-        WRITE (MESSU,2000) TABNAM(TABNO),TABSUB
+C       WRITE (MESSU,2000) TABNAM(TABNO),TABSUB
       END IF
 C
 C     get type of operation for this table
@@ -575,7 +575,7 @@ C
 C
       IF (OUTLEV .GT. 7) THEN
 C       preprocessing message
-        WRITE (MESSU,2000) TABNAM(TABNO),TABSUB
+C       WRITE (MESSU,2000) TABNAM(TABNO),TABSUB
       END IF
 C
 C     get type of operation for this table
