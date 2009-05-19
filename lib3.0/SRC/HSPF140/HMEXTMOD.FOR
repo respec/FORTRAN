@@ -23,7 +23,7 @@ C
         INTEGER      EXTMODNO,MESSU
         REAL         DELT
         INTEGER      NDAY(12),YR,MON,DAY,HR,MIN,
-     $               NDAYS,SPAFP,SPAKND,SPIVL,SPOPNO,SPOUT,DUM(2),
+     $               NDAYS,SPAFP,SPAKND,SPIVL,SPOPNO,SPOUT,PFLAG,BFLAG,
      $               UUNITS,NXTMON,HRFG,DAYFG,EDAYFG,EMONFG,EPYRFG
         CHARACTER*32 SSMNAME,INNAME
         INTEGER      PUNIT(2),BUNIT(2),OLEV(2),PIVL(2),PYREND(2)
@@ -520,7 +520,8 @@ C     check output files - if not open, open them with standard name
         IF (HEXTMOD%BUNIT(J) .GT. 0) THEN
 C         check binary output files 
           CALL HSCKFLX
-     I                 (I0,HEXTMOD%PUNIT(J))
+     I                 (I0,HEXTMOD%BUNIT(J))
+          HEXTMOD%BFLAG = HEXTMOD%PIVL(2)
         END IF
  150  CONTINUE
 C
@@ -532,7 +533,6 @@ C       area associated with SSM instance
       TABLEDEF = TABLEDEFS%TABLE(TBNO)
       CALL RTABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
      M             RVAL)
-C
       HEXTMOD%AREA = RVAL(1)
 C
 C     process table - type timeseries
@@ -853,7 +853,7 @@ C           transform hour and minute fields in date/time to external format
      $                            HEXTMOD%INNAME, HEXTMOD%PIVL(1), EXDAT
             END IF
             CALL EXTPRT
-     I                 (UNITFG,I2,PRINTU,BINU,
+     I                 (UNITFG,I2,PRINTU,BINU,EXDAT,
      M                  HEXTMOD)
           END IF
 C
@@ -865,7 +865,7 @@ C             it's time to handle daily printout
      $                              HEXTMOD%INNAME,(DATIM(J),J=1,3)
               END IF
               CALL EXTPRT
-     I                   (UNITFG,I3,PRINTU,BINU,
+     I                   (UNITFG,I3,PRINTU,BINU,EXDAT,
      M                    HEXTMOD)
             END IF
 C
@@ -877,7 +877,7 @@ C               it's time to handle monthly printout
      $                                HEXTMOD%INNAME,(DATIM(J),J=1,2)
                 END IF
                 CALL EXTPRT
-     I                     (UNITFG,I4,PRINTU,BINU,
+     I                     (UNITFG,I4,PRINTU,BINU,EXDAT,
      M                      HEXTMOD)
               END IF
 C
@@ -888,7 +888,7 @@ C               it's time to handle yearly printout
      $                                HEXTMOD%INNAME,(DATIM(J),J=1,2)
                 END IF
                 CALL EXTPRT
-     I                     (UNITFG,I5,PRINTU,BINU,
+     I                     (UNITFG,I5,PRINTU,BINU,EXDAT,
      M                      HEXTMOD)
               END IF
             END IF
@@ -975,14 +975,14 @@ C
 C
 C    
       SUBROUTINE   EXTPRT
-     I                   (UNITFG,LEV,PRINTU,BINU,
+     I                   (UNITFG,LEV,PRINTU,BINU,EXDAT,
      M                    HEXTMOD)
 C
 C     + + + PURPOSE + + +
-C     Perform printout and continuity checks for module EXTMOD.
+C     Perform printout for module EXTMOD.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER        UNITFG,LEV,PRINTU,BINU
+      INTEGER        UNITFG,LEV,PRINTU,BINU,EXDAT(5)
       TYPE(HTEXTMOD) HEXTMOD     
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -992,11 +992,16 @@ C     PRINTU - fortran unit number on which to print output
 C     BINU   - fortran unit number on which to write binary output
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      GROUPCOUNT, I, J
+      INTEGER      GROUPCOUNT, I, J, K, ACNT, I0, I1,
+     $             BHEADLEN(PMXINP+PMXOUT+PMXSTA)
+      REAL         BVALUES(PMXINP+PMXOUT+PMXSTA)
       LOGICAL      GROUPHEADERPRINTED 
-      CHARACTER*12 GROUPS(PMXINP)    
+      CHARACTER*16 BHEAD(PMXINP+PMXOUT+PMXSTA)
 C
 C     + + + END SPECIFICATIONS + + +
+C
+      I0= 0
+      I1= 1
 C
       DO I = 1, HEXTMOD%UNIQUEGROUPCOUNT
         IF (PRINTU .GT. 0) THEN
@@ -1021,15 +1026,71 @@ C
      M                      GROUPHEADERPRINTED)
         END IF
         IF (BINU .GT. 0) THEN
-C         start of run?
-C         WRITE(BINU) 'EXTMOD  ',HEXTMOD%EXTMODNO,GROUPS(I)(1:8),
-C    1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
-          
+          ACNT = 0
+          CALL BUILDBIN(HEXTMOD%BFLAG,
+     I                  HEXTMOD%UNIQUEGROUPS(I),'STA',
+     I                  HEXTMOD%NSTA,HEXTMOD%STANAME, 
+     I                  HEXTMOD%STAGROUP,HEXTMOD%STAVAL(1,LEV),
+     M                  ACNT,BHEADLEN,BHEAD,BVALUES)
+          CALL BUILDBIN(HEXTMOD%BFLAG,
+     I                  HEXTMOD%UNIQUEGROUPS(I),'INP',
+     I                  HEXTMOD%NINP,HEXTMOD%INPNAME, 
+     I                  HEXTMOD%INPGROUP,HEXTMOD%INPVAL(1,LEV),
+     M                  ACNT,BHEADLEN,BHEAD,BVALUES)
+          CALL BUILDBIN(HEXTMOD%BFLAG,
+     I                  HEXTMOD%UNIQUEGROUPS(I),'OUT',
+     I                  HEXTMOD%NOUT,HEXTMOD%OUTNAME, 
+     I                  HEXTMOD%OUTGROUP,HEXTMOD%OUTVAL(1,LEV),
+     M                  ACNT,BHEADLEN,BHEAD,BVALUES)
+C
+          IF(HEXTMOD%BFLAG .GT. 0) THEN
+            WRITE (BINU) I0,'EXTMOD  ',HEXTMOD%EXTMODNO,
+     1                   HEXTMOD%UNIQUEGROUPS(I)(1:8),
+     1          (BHEADLEN(K),(BHEAD(K)(J:J),J=1,BHEADLEN(K)),K=1,ACNT)
+            HEXTMOD%BFLAG = -HEXTMOD%BFLAG
+          END IF
+          WRITE (BINU) I1,'EXTMOD  ',HEXTMOD%EXTMODNO, 
+     1                 HEXTMOD%UNIQUEGROUPS(I)(1:8),UNITFG,
+     1                 LEV,(EXDAT(K),K=1,5),(BVALUES(K),K=1,ACNT)
         END IF
       END DO    
 C
       RETURN
       END SUBROUTINE
+C
+C
+C
+      SUBROUTINE   BUILDBIN
+     I                     (BFLAG,GROUP,FTYPE,COUNT,NAMES,GROUPS,VALUES,
+     M                      ACNT,BHEADLEN,BHEAD,BVALUES)
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER       BFLAG,COUNT,ACNT,BHEADLEN(*)
+      REAL          VALUES(COUNT),BVALUES(*)
+      CHARACTER*16  BHEAD(*)
+      CHARACTER*12  GROUP,GROUPS(COUNT),NAMES(COUNT)
+      CHARACTER*3   FTYPE
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER       J
+      CHARACTER*16  HEADER      
+C
+      DO J = 1, COUNT
+        IF (GROUPS(J) .EQ. GROUP) THEN
+C         need this     
+          ACNT = ACNT + 1     
+          IF (BFLAG .GT. 0) THEN
+C           need headers
+            HEADER = FTYPE // ':' // NAMES(J)
+            BHEADLEN(ACNT) = LEN_TRIM(HEADER)
+            BHEAD(ACNT) = TRIM(HEADER)
+          END IF
+          BVALUES(ACNT) = VALUES(J)
+        END IF
+      END DO
+C
+      RETURN
+      END SUBROUTINE     
 C
 C
 C
