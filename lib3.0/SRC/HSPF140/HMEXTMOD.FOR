@@ -23,13 +23,14 @@ C
         INTEGER      EXTMODNO,MESSU
         REAL         DELT
         INTEGER      NDAY(12),YR,MON,DAY,HR,MIN,
-     $               NDAYS,SPAFP,SPAKND,SPIVL,SPOPNO,SPOUT,PFLAG,BFLAG,
+     $               NDAYS,SPAFP,SPAKND,SPIVL,SPOPNO,SPOUT,PFLAG,IDUM,
      $               UUNITS,NXTMON,HRFG,DAYFG,EDAYFG,EMONFG,EPYRFG
         CHARACTER*32 SSMNAME,INNAME
         INTEGER      PUNIT(2),BUNIT(2),OLEV(2),PIVL(2),PYREND(2)
         REAL         AREA
         INTEGER      PIVLNO,BIVLNO,NINP,NOUT,NSTA
         INTEGER      UNIQUEGROUPCOUNT
+        INTEGER      BFLAG(PMXINP+PMXOUT+PMXSTA)
         CHARACTER*12 UNIQUEGROUPS(PMXINP+PMXOUT+PMXSTA)
         CHARACTER*12 INPGROUP(PMXINP),INPNAME(PMXINP)
         CHARACTER*8  INPUNITS(PMXINP)
@@ -521,6 +522,7 @@ C     check output files - if not open, open them with standard name
 C         check binary output files 
           CALL HSCKFLX
      I                 (I0,HEXTMOD%BUNIT(J))
+C         this sets an entire array     
           HEXTMOD%BFLAG = HEXTMOD%PIVL(2)
         END IF
  150  CONTINUE
@@ -575,7 +577,7 @@ C       details about outflows
         WRITE(HEXTMOD%OUTNAME(TBSB),'(3A4)')  (IVAL(J),J=4,6)
         WRITE(HEXTMOD%OUTUNITS(TBSB),'(2A4)') (IVAL(J),J=7,8)
       END DO
-      CALL UNIQUEGROUPS(HEXTMOD%NSTA,HEXTMOD%STAGROUP,
+      CALL UNIQUEGROUPS(HEXTMOD%NSTA,HEXTMOD%OUTGROUP,
      M                  HEXTMOD%UNIQUEGROUPCOUNT,HEXTMOD%UNIQUEGROUPS)
 C
 C     process table - type state
@@ -590,7 +592,7 @@ C       details about state variables
         WRITE(HEXTMOD%STANAME(TBSB),'(3A4)')  (IVAL(J),J=4,6)
         WRITE(HEXTMOD%STAUNITS(TBSB),'(2A4)') (IVAL(J),J=7,8)
       END DO
-      CALL UNIQUEGROUPS(HEXTMOD%NOUT,HEXTMOD%OUTGROUP,
+      CALL UNIQUEGROUPS(HEXTMOD%NOUT,HEXTMOD%STAGROUP,
      M                  HEXTMOD%UNIQUEGROUPCOUNT,HEXTMOD%UNIQUEGROUPS)
 C
       CALL EXTRST(I1,HEXTMOD)
@@ -839,15 +841,16 @@ C         printout is required in this set of external units.
 C         unitfg= 1 for english, 2 for metric.  printu is the
 C         fortran logical unit no. to be used for printout.
 C
+          CALL EXDATE
+     I               (DATIM,
+     O                EXDAT)
+C     
           IF ((HEXTMOD%PIVLNO .EQ. HEXTMOD%PIVL(1) .AND. 
      #         HEXTMOD%OLEV(1) .EQ. 2) .OR.
      #        (HEXTMOD%BIVLNO .EQ. HEXTMOD%PIVL(2) .AND. 
      #         HEXTMOD%OLEV(2) .EQ. 2)) THEN
 C           it's time to handle any pivl level printout, and some is required
 C           transform hour and minute fields in date/time to external format
-            CALL EXDATE
-     I                 (DATIM,
-     O                  EXDAT)
             IF (PRINTU .GT. 0 .AND. HEXTMOD%OLEV(1) .EQ. 2) THEN
               WRITE (PRINTU,2000) HEXTMOD%EXTMODNO, HEXTMOD%SSMNAME,
      $                            HEXTMOD%INNAME, HEXTMOD%PIVL(1), EXDAT
@@ -997,6 +1000,10 @@ C     + + + LOCAL VARIABLES + + +
       REAL         BVALUES(PMXINP+PMXOUT+PMXSTA)
       LOGICAL      GROUPHEADERPRINTED 
       CHARACTER*16 BHEAD(PMXINP+PMXOUT+PMXSTA)
+      CHARACTER*8  SHEAD
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL     BINHED,BINREC
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1027,31 +1034,39 @@ C
         END IF
         IF (BINU .GT. 0) THEN
           ACNT = 0
-          CALL BUILDBIN(HEXTMOD%BFLAG,
+          CALL BUILDBIN(HEXTMOD%BFLAG(I),
      I                  HEXTMOD%UNIQUEGROUPS(I),'STA',
      I                  HEXTMOD%NSTA,HEXTMOD%STANAME, 
      I                  HEXTMOD%STAGROUP,HEXTMOD%STAVAL(1,LEV),
      M                  ACNT,BHEADLEN,BHEAD,BVALUES)
-          CALL BUILDBIN(HEXTMOD%BFLAG,
+          CALL BUILDBIN(HEXTMOD%BFLAG(I),
      I                  HEXTMOD%UNIQUEGROUPS(I),'INP',
      I                  HEXTMOD%NINP,HEXTMOD%INPNAME, 
      I                  HEXTMOD%INPGROUP,HEXTMOD%INPVAL(1,LEV),
      M                  ACNT,BHEADLEN,BHEAD,BVALUES)
-          CALL BUILDBIN(HEXTMOD%BFLAG,
+          CALL BUILDBIN(HEXTMOD%BFLAG(I),
      I                  HEXTMOD%UNIQUEGROUPS(I),'OUT',
      I                  HEXTMOD%NOUT,HEXTMOD%OUTNAME, 
      I                  HEXTMOD%OUTGROUP,HEXTMOD%OUTVAL(1,LEV),
      M                  ACNT,BHEADLEN,BHEAD,BVALUES)
 C
-          IF(HEXTMOD%BFLAG .GT. 0) THEN
-            WRITE (BINU) I0,'EXTMOD  ',HEXTMOD%EXTMODNO,
-     1                   HEXTMOD%UNIQUEGROUPS(I)(1:8),
-     1          (BHEADLEN(K),(BHEAD(K)(J:J),J=1,BHEADLEN(K)),K=1,ACNT)
-            HEXTMOD%BFLAG = -HEXTMOD%BFLAG
+          SHEAD = HEXTMOD%UNIQUEGROUPS(I)(1:8)
+          IF(HEXTMOD%BFLAG(I) .GT. 0) THEN
+C           WRITE (BINU) I0,'EXTMOD  ',HEXTMOD%EXTMODNO,
+C    1                   HEXTMOD%UNIQUEGROUPS(I)(1:8),
+C    1          (BHEADLEN(K),(BHEAD(K)(J:J),J=1,BHEADLEN(K)),K=1,ACNT)
+            CALL BINHED (BINU,'EXTMOD  ',HEXTMOD%EXTMODNO,
+     1                   SHEAD,
+     1                   ACNT,BHEADLEN,BHEAD)
+            HEXTMOD%BFLAG(I) = -HEXTMOD%BFLAG(I)
           END IF
-          WRITE (BINU) I1,'EXTMOD  ',HEXTMOD%EXTMODNO, 
-     1                 HEXTMOD%UNIQUEGROUPS(I)(1:8),UNITFG,
-     1                 LEV,(EXDAT(K),K=1,5),(BVALUES(K),K=1,ACNT)
+C         WRITE (BINU) I1,'EXTMOD  ',HEXTMOD%EXTMODNO, 
+C    1                 HEXTMOD%UNIQUEGROUPS(I)(1:8),UNITFG,
+C    1                 LEV,(EXDAT(K),K=1,5),(BVALUES(K),K=1,ACNT)
+          CALL BINREC (BINU,'EXTMOD  ',HEXTMOD%EXTMODNO,
+     1                 SHEAD,UNITFG,
+     1                 LEV,EXDAT,ACNT,BVALUES)
+
         END IF
       END DO    
 C
