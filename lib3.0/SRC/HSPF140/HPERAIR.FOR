@@ -181,7 +181,7 @@ C     + + + FUNCTIONS + + +
       REAL      CELSUS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  CELSUS,EXDATE
+      EXTERNAL  CELSUS,EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** ATEMP ***')
@@ -243,21 +243,27 @@ C       write binary output
         IF (BFLAG(1) .GT. 0) THEN
 C         at start of run, write the header
           IF (OPERFG .EQ. 1) THEN
-            WRITE (BINU) I0,'PERLND  ',LSNO,'ATEMP   ',
-     1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C           WRITE (BINU) I0,'PERLND  ',LSNO,'ATEMP   ',
+C    1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'PERLND  ',LSNO,'ATEMP   ',ACNT,CLEN,CHEAD)
           ELSE IF (UNITFG .EQ. 2) THEN
-            WRITE (BINU) I0,'IMPLND  ',LSNO,'ATEMP   ',
-     1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C           WRITE (BINU) I0,'IMPLND  ',LSNO,'ATEMP   ',
+C    1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'IMPLND  ',LSNO,'ATEMP   ',ACNT,CLEN,CHEAD)
           END IF
 C         set bflag to negative to not write headers anymore
           BFLAG(1) = -BFLAG(1)
         END IF
         IF (OPERFG .EQ. 1) THEN
-          WRITE (BINU) I1,'PERLND  ', LSNO,'ATEMP   ',UNITFG,
-     1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C         WRITE (BINU) I1,'PERLND  ', LSNO,'ATEMP   ',UNITFG,
+C    1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'PERLND  ',LSNO,'ATEMP   ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
         ELSE IF (UNITFG .EQ. 2) THEN
-          WRITE (BINU) I1,'IMPLND  ', LSNO,'ATEMP   ',UNITFG,
-     1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C         WRITE (BINU) I1,'IMPLND  ', LSNO,'ATEMP   ',UNITFG,
+C    1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'IMPLND  ',LSNO,'ATEMP   ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
         END IF
       END IF
 C

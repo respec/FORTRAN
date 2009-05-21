@@ -918,7 +918,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*256 CHEAD(23*NQUAL)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL ZIPR,EXDATE
+      EXTERNAL ZIPR,EXDATE,BINHED,BINREC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA UNDEF/-1.0E30/
@@ -1383,13 +1383,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(7) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'PERLND  ',LSNO,'PQUAL   ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C         WRITE (BINU) I0,'PERLND  ',LSNO,'PQUAL   ',
+C    1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'PERLND  ',LSNO,'PQUAL   ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(7) = -BFLAG(7)
         END IF
-        WRITE (BINU) I1,'PERLND  ', LSNO,'PQUAL   ',UNITFG,
-     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C       WRITE (BINU) I1,'PERLND  ', LSNO,'PQUAL   ',UNITFG,
+C    1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'PERLND  ',LSNO,'PQUAL   ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

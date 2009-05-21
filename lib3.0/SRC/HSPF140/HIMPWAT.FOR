@@ -639,7 +639,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*256 CHEAD(12)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   TRNVEC,BALCHK,EXDATE
+      EXTERNAL   TRNVEC,BALCHK,EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** IWATER ***')
@@ -839,13 +839,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(3) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'IMPLND  ',LSNO,'IWATER  ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C          WRITE (BINU) I0,'IMPLND  ',LSNO,'IWATER  ',
+C     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'IMPLND  ',LSNO,'IWATER  ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(3) = -BFLAG(3)
         END IF
-        WRITE (BINU) I1,'IMPLND  ',LSNO,'IWATER  ',UNITFG,
-     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C        WRITE (BINU) I1,'IMPLND  ',LSNO,'IWATER  ',UNITFG,
+C     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'IMPLND  ',LSNO,'IWATER  ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

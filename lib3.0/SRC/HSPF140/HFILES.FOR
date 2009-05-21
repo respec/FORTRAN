@@ -29,7 +29,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*6   CNOP,CMESSU,CTSS,CKEY,CDSS,CUNIT,CMUNIT,CMLEVL,
      $              PRGNAM
       CHARACTER*12  ACC,STAT,CPROG
-      CHARACTER*30  FRM
+      CHARACTER*30  FRM,BINFRM
       CHARACTER*64  FILNAM,DEFNAM
 C
 C     + + + INTRINSICS + + +
@@ -40,7 +40,7 @@ C     + + + FUNCTIONS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  FILOPN,RDFLBK,WDBOPN,ZSET,ATTACH,ATTEND,ZOPEN,
-     #          ZIPI,XGTRCL,XPLFRM,CHRDIG
+     #          ZIPI,XGTRCL,XPLFRM,CHRDIG,BINIT
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA CNOP/'NOP   '/,CMESSU/'MESSU '/,CTSS/'TSS   '/,
@@ -74,7 +74,7 @@ C       run interpreter output file (messu)
         I   = 0
  10     CONTINUE
           I= I+ 1
-          IF (FTYPE(I) .EQ. 'MESSU') THEN
+          IF (FTYPE(I) .EQ. CMESSU) THEN
             FILX= I
           END IF
         IF (FILX.EQ.0 .AND. I.LT.NUMFIL) GO TO 10
@@ -225,6 +225,9 @@ C
 C     initialize message output storage
       CALL OMSINI
 C
+C     set up binary file format
+      CALL BINIT (BINFRM)
+C
 C     binary output files
       IF (USRFL.GT.0) THEN
 C       neg unit number used to indicate dont want to open bin file
@@ -248,7 +251,7 @@ C
             IF (ISTAT .LE. 0) THEN
 C             try to open file
               ACC=  'SEQUENTIAL'
-              FRM=  'UNFORMATTED'
+              FRM=  BINFRM
               RCL = 0
               STAT= 'UNKNOWN'
               CALL FILOPN
