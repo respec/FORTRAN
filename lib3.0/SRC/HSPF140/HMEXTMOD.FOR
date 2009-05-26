@@ -500,7 +500,7 @@ C       unit numbers for print and binary output reports, eng and metric
 C       output levels for print and binary output reports
       TBNO= 2
       TBSB= 1
-      NVAL= 6
+      NVAL= 8
       TABLEDEF = TABLEDEFS%TABLE(TBNO)
       CALL ITABLEX(TBNO,TBSB,NVAL,I1,TABLEDEF,
      M             IVAL)
@@ -523,7 +523,7 @@ C         check binary output files
           CALL HSCKFLX
      I                 (I0,HEXTMOD%BUNIT(J))
 C         this sets an entire array     
-          HEXTMOD%BFLAG = HEXTMOD%PIVL(2)
+          HEXTMOD%BFLAG = HEXTMOD%OLEV(2)
         END IF
  150  CONTINUE
 C
@@ -1035,17 +1035,17 @@ C
         IF (BINU .GT. 0) THEN
           ACNT = 0
           CALL BUILDBIN(HEXTMOD%BFLAG(I),
-     I                  HEXTMOD%UNIQUEGROUPS(I),'STA',
+     I                  HEXTMOD%UNIQUEGROUPS(I),'S',
      I                  HEXTMOD%NSTA,HEXTMOD%STANAME, 
      I                  HEXTMOD%STAGROUP,HEXTMOD%STAVAL(1,LEV),
      M                  ACNT,BHEADLEN,BHEAD,BVALUES)
           CALL BUILDBIN(HEXTMOD%BFLAG(I),
-     I                  HEXTMOD%UNIQUEGROUPS(I),'INP',
+     I                  HEXTMOD%UNIQUEGROUPS(I),'I',
      I                  HEXTMOD%NINP,HEXTMOD%INPNAME, 
      I                  HEXTMOD%INPGROUP,HEXTMOD%INPVAL(1,LEV),
      M                  ACNT,BHEADLEN,BHEAD,BVALUES)
           CALL BUILDBIN(HEXTMOD%BFLAG(I),
-     I                  HEXTMOD%UNIQUEGROUPS(I),'OUT',
+     I                  HEXTMOD%UNIQUEGROUPS(I),'O',
      I                  HEXTMOD%NOUT,HEXTMOD%OUTNAME, 
      I                  HEXTMOD%OUTGROUP,HEXTMOD%OUTVAL(1,LEV),
      M                  ACNT,BHEADLEN,BHEAD,BVALUES)
@@ -1084,7 +1084,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          VALUES(COUNT),BVALUES(*)
       CHARACTER*16  BHEAD(*)
       CHARACTER*12  GROUP,GROUPS(COUNT),NAMES(COUNT)
-      CHARACTER*3   FTYPE
+      CHARACTER*1   FTYPE
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER       J

@@ -48,7 +48,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL     WMSGTT
 C
 C     + + + INPUT FORMATS + + +
- 1010 FORMAT (8(A4,6X))
+ 1010 FORMAT (8(A4,1X))
  1040 FORMAT (A6,4X,2I10)
  1050 FORMAT (11I5)
 C
@@ -57,39 +57,19 @@ C
       SCLU  = 215
 C
 C     external sources/targets keyword library
-      SGRP  = 12
-      INITFG= 1
-      CLEN  = 80
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             INBUF1,CONT)
+      INBUFF= 'TSS  SEQ  WDM  DSS  HBN  CDF'
       READ (INBUFF,1010) EXTKWL
 C
 C     access mode keyword library
-      SGRP  = 13
-      INITFG= 1
-      CLEN  = 80
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             INBUF1,CONT)
+      INBUFF= 'ADD INST REPL'
       READ (INBUFF,1010) AMDKWL
 C
 C     unit system keyword library
-      SGRP  = 14
-      INITFG= 1
-      CLEN  = 80
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             INBUF1,CONT)
+      INBUFF= 'ENGL METR'
       READ (INBUFF,1010) SYSKWL
 C
 C     gap code keyword library
-      SGRP  = 15
-      INITFG= 1
-      CLEN  = 80
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             INBUF1,CONT)
+      INBUFF= 'ZERO UNDF'
       READ (INBUFF,1010) GAPKWL
 C
 C     format class keyword library
@@ -107,12 +87,7 @@ C     format class keyword library
       IF (CONT .EQ. 1) GO TO 10
 C
 C     transformation keyword library
-      SGRP  = 17
-      INITFG= 1
-      CLEN  = 80
-      CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M             CLEN,
-     O             INBUF1,CONT)
+      INBUFF= 'SAME DIV  AVER SUM  MAX  MIN  INTP'
       READ (INBUFF,1010) TRNKWL
 C
 C     transformation code table
