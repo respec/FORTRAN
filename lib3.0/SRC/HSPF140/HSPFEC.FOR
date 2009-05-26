@@ -878,7 +878,7 @@ C     single time series to be obtained from an external source/target
 C     trflag=1 if external target is being processed
 C
 C     + + + MODULES + + +
-      USE HMMSG, ONLY : OMSTI,OMSG
+      USE HMMSG, ONLY : OMSTI,OMSTC,OMSGMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MEMSB(2),SDATIM(5),
@@ -919,8 +919,10 @@ C     + + + COMMON BLOCKS- INTERP3 + + +
       INCLUDE   'crin3c.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     MESSU,TSSFL,WDMSFL(4),I4,N,SCLU,SGRP,MSGFL
-      CHARACTER*4 CHSTR
+      INTEGER      MESSU,TSSFL,WDMSFL(4),I4,I6,N,KEYIND,SCLU,SGRP,MSGFL,
+     $             EMSGCT
+      CHARACTER*4  CHSTR
+      CHARACTER*80 EMSG(5)
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CHSTR,CHSTR1)
@@ -941,15 +943,16 @@ C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datase
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      I4    = 4
+      I4   = 4
+      I6   = 6
 C
-      MESSU = FILE(1)
-      TSSFL = FILE(10)
+      MESSU= FILE(1)
+      TSSFL= FILE(10)
       DO 5 N= 1, 4
         WDMSFL(N)= FILE(10+N)
  5    CONTINUE
-      MSGFL = FILE(15)
-      SCLU  = 202
+      MSGFL= FILE(15)
+      SCLU = 202
 C
       IF (OUTLEV .GT. 5) THEN
         WRITE(MESSU,2010)
@@ -966,10 +969,10 @@ C     meaningful values
 C
 C     search for source/target volume name
       CHSTR(1:3)= VOL(1:3)
-      CHSTR1(4)= ' '
-      N    = CHKSTR(I4,I4,CHSTR1,EXTKW1)
+      CHSTR1(4) = ' '
+      KEYIND    = CHKSTR(I4,I6,CHSTR1,EXTKW1)
 C
-      IF (N .EQ. 1) THEN
+      IF (KEYIND .EQ. 1) THEN
 C       tss
         IF (TSSFL .NE. 0) THEN
 C         tssfl available - process entries normally
@@ -982,11 +985,19 @@ C         tssfl available - process entries normally
 C         error - tss file not available, but active reference to tss
 C         dataset encountered in user control input
           SGRP= 2
+          EMSG(1)= ' VOL &CCC  VOLNO: &I'
+          EMSG(2)= ' '
+          EMSG(3)= ' TSS file is not available, but active ' //
+     $             'reference to a TSS dataset '  
+          EMSG(4)= ' has been encountered in EXT SOURCES or ' //
+     $             'EXT TARGETS block.'
+          EMSGCT = 4
+          CALL OMSTC(I4,CHSTR1)
           CALL OMSTI(VOLNO)
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(MESSU,SCLU,SGRP,EMSGCT,EMSG,
+     M                 ECOUNT)        
         END IF
-      ELSE IF (N .EQ. 2) THEN
+      ELSE IF (KEYIND .EQ. 2) THEN
 C       seq
         IF (TRFLAG .EQ. 0) THEN
 C         sequential input - process it
@@ -998,11 +1009,19 @@ C         sequential input - process it
         ELSE
 C         sequential output not allowed
           SGRP= 5
+          EMSG(1)= ' VOL &CCC  VOLNO: &I'
+          EMSG(2)= ' '
+          EMSG(3)= ' Sequential output datasets are not supported ' //
+     $             'in this release of HSPF.'
+          EMSG(4)= ' '
+          EMSG(5)= ' Use HSPF PLTGEN or HBN formats instead.' 
+          EMSGCT = 5
+          CALL OMSTC(I4,CHSTR1)
           CALL OMSTI(VOLNO)
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(MESSU,SCLU,SGRP,EMSGCT,EMSG,
+     M                 ECOUNT)
         END IF
-      ELSE IF (N .EQ. 3) THEN
+      ELSE IF (KEYIND .EQ. 3) THEN
 C       wdm
         IF (WDMSFL(MEMSB(2)) .NE. 0) THEN
 C         wdmsfl is available - process entries
@@ -1014,24 +1033,51 @@ C         wdmsfl is available - process entries
         ELSE
 C         wdmsfl not available, but active references to wdms
 C         datsets encountered in user control input
-          SGRP= 4
+          SGRP   = 4
+          EMSG(1)= ' VOLNO: &I'
+          EMSG(2)= ' '
+          EMSG(3)= ' WDM file &I    not available, but active ' //
+     $             'reference to a dataset'
+          EMSG(4)= ' in that file has been encountered in ' //
+     $             'EXT SOURCES or EXT TARGETS block.'
+          EMSGCT = 4
           CALL OMSTI(VOLNO)
           CALL OMSTI(MEMSB(2))
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          CALL OMSGMSG(MESSU,SCLU,SGRP,EMSGCT,EMSG,
+     M                 ECOUNT)
         END IF
-      ELSE IF (N .EQ. 4) THEN
+      ELSE IF (KEYIND .EQ. 4) THEN
 C       dss
         CALL DSSDS (MSGFL,MESSU,VOLNO,GAPST,GAPKW1,SYST,SYSKW1,AMDKW1,
      I              AMDST,SDATIM,EDATIM,TRFLAG,OUTLEV,MAXTTB,
      M              ECOUNT,
      O              NUM,DELT,UNT,NTS,GAPCD,AMDCD,TABL,TABLR)
+      ELSE IF (KEYIND .EQ. 5) THEN
+C       hbn
+C       CALL HBNDS
+        EMSG(1)= ' HBN IMPLEMENTATION NOT COMPLETE.'
+        EMSGCT = 1
+        CALL OMSGMSG(MESSU,SCLU,31, EMSGCT,EMSG,
+     M               ECOUNT)
+      ELSE IF (KEYIND .EQ. 6) THEN
+C       cdf
+C       CALL CDFDS
+        EMSG(1)= ' CDF IMPLEMENTATION NOT COMPLETE.'
+        EMSGCT = 1
+        CALL OMSGMSG(MESSU,SCLU,32,EMSGCT,EMSG,
+     M               ECOUNT)
       ELSE
 C       unknown keyword
-        SGRP= 3
+        SGRP   = 3
+        EMSG(1)= " VOL &CCC  VOLNO: &I "
+        EMSG(2)= " "
+        EMSG(3)= " Unknown external source specification -- "
+        EMSG(4)= "    must be 'TSS','WDMx','DSS','SEQ','HBN' or 'CDF'."
+        EMSGCT = 4
+        CALL OMSTC(I4,CHSTR1)
         CALL OMSTI(VOLNO)
-        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M             ECOUNT)
+        CALL OMSGMSG (MESSU,SCLU,SGRP,EMSGCT,EMSG, 
+     M                ECOUNT)
       END IF
 C
       IF (OUTLEV .GT. 5) THEN
