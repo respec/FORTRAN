@@ -40,8 +40,6 @@ C
 C     version info and unix what info
       INCLUDE 'versn.inc'
 C
-C     when start?
-      CALL CPU_TIME(TIMES)
 C     CALL TSTUF('    ',-1.0)
 C      uncomment these lines to determine f90 run times
 C      CALL DATE_AND_TIME(VALUES=SDATM)
@@ -66,6 +64,9 @@ C     get command line - this is a system-specific routine
       CLINE= 'hspfuci.inp'
       CALL XGTARG
      M            (CLINE)
+C
+C     when start?
+      CALL CPU_TIME(TIMES)
 C
 C     parse command line to get input filename - must be first argument
       I= 64
