@@ -46,7 +46,7 @@
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
 	<Files>
 		<Filter Name="Libraries">
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\HspNoDSS.lib"/>
+		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\HspNoDSS140.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\util.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\wdm.lib"/></Filter>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">

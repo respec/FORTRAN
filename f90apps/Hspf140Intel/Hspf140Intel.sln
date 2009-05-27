@@ -10,6 +10,8 @@ Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "Hspf140Intel", "Hspf140Inte
 EndProject
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "hspf140", "..\..\lib3.0\IntelLibs\hspf140\hspf140.vfproj", "{CDBB0451-40D1-4666-B628-3C7AB8F57861}"
 EndProject
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "HspNoDSS140", "..\..\lib3.0\IntelLibs\HspNoDSS140\HspNoDSS140.vfproj", "{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -42,6 +44,14 @@ Global
 		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Release|Win32.Build.0 = Release|Win32
 		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Release|x64.ActiveCfg = Release|x64
 		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Release|x64.Build.0 = Release|x64
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Debug|Win32.ActiveCfg = Debug|x64
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Debug|Win32.Build.0 = Debug|x64
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Debug|x64.ActiveCfg = Debug|x64
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Debug|x64.Build.0 = Debug|x64
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Release|Win32.ActiveCfg = Release|Win32
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Release|Win32.Build.0 = Release|Win32
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Release|x64.ActiveCfg = Release|x64
+		{A6D46402-B0DD-41DF-BEF1-7B043C54AC75}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
