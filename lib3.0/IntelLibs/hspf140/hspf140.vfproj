@@ -148,6 +148,7 @@
 		<File RelativePath="..\..\SRC\HSPF140\PSPUVR.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\PSPVQD.INC"/></Filter>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath="..\..\SRC\HSPF140\hbinux.for"/>
 		<File RelativePath="..\..\SRC\HSPF140\HBMPRAC.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HDATUT.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HEXTUTIL.FOR"/>
@@ -167,7 +168,10 @@
 		<File RelativePath="..\..\SRC\HSPF140\HIRRIG.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HMCOPY.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HMDISPLY.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HMEXTMOD.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HMPLTGEN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HMRINTABLE.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HMRINTABLEDEF.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HMTIMSERDEF.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HOSUPER.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HPER.FOR"/>
