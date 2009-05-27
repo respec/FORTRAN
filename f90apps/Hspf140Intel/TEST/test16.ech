@@ -1,0 +1,1903 @@
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+ 
+   Developed for:                Modified and Maintained by
+ 
+     U.S. Environmental            Aqua Terra Consultants
+       Protection Agency           (650)962-1864
+     Office of Research            email: hspf@aquaterra.com
+       and Development
+     Center for Exposure
+       Assessment Modeling
+     Athens, Georgia
+     (706)355-8400
+     email: ceam@epamail.epa.gov
+ 
+   In cooperation with:
+ 
+     U.S. Geological Survey                Release 12.2
+     Water Resources Discipline            July 2005
+     Office of Surface Water
+     Reston, Virginia
+     email: h2osoft@usgs.gov
+ 
+ 
+ Start of Job
+ 
+ PREPROCESSING USERS CONTROL INPUT.
+ 
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+ 
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND EXTMOD      
+ FOUND END EXTMOD      
+ FOUND DISPLY      
+ FOUND END DISPLY      
+ FOUND EXT SOURCES 
+ FOUND END EXT SOURCES 
+ FOUND NETWORK     
+ FOUND END NETWORK     
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    Version 14 test run:  Using EXTMOD Module
+
+   START       1976              END    1976
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1975/12/31 24:60    1976/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  10
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  2
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG =    1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  EMFG =     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     OPN SEQUENCE                                                                    
+         INGRP              INDELT 01:00                                             
+           EXTMOD      66                                                            
+           DISPLY       1                                                            
+           DISPLY       2                                                            
+           DISPLY       3                                                            
+           DISPLY       4                                                            
+           DISPLY       5                                                            
+           DISPLY       6                                                            
+           DISPLY       7                                                            
+           DISPLY       8                                                            
+           DISPLY       9                                                            
+           DISPLY      10                                                            
+           DISPLY      11                                                            
+           DISPLY      12                                                            
+           DISPLY      13                                                            
+           DISPLY      14                                                            
+           DISPLY      15                                                            
+           DISPLY      16                                                            
+           DISPLY      17                                                            
+           DISPLY      18                                                            
+           DISPLY      19                                                            
+         END INGRP                                                                   
+     END OPN SEQUENCE                                                                
+ 
+ FOUND INGRP
+ GENERATED EXGROUP
+
+ FOUND EXTMOD      66
+
+ FOUND DISPLY       1
+
+ FOUND DISPLY       2
+
+ FOUND DISPLY       3
+
+ FOUND DISPLY       4
+
+ FOUND DISPLY       5
+
+ FOUND DISPLY       6
+
+ FOUND DISPLY       7
+
+ FOUND DISPLY       8
+
+ FOUND DISPLY       9
+
+ FOUND DISPLY      10
+
+ FOUND DISPLY      11
+
+ FOUND DISPLY      12
+
+ FOUND DISPLY      13
+
+ FOUND DISPLY      14
+
+ FOUND DISPLY      15
+
+ FOUND DISPLY      16
+
+ FOUND DISPLY      17
+
+ FOUND DISPLY      18
+
+ FOUND DISPLY      19
+
+ FOUND END INGROUP
+ GENERATED END EXGROUP
+
+ CONTENTS OF TABLES GENERATED BY SUBROUTINE SEQBLK
+
+
+ EXGROUP TABLE
+
+    EXGROUP     FIRST      LAST      TIME
+        NO.   INGROUP   INGROUP  INTERVAL
+                                   (MINS)
+          1         1         1        60
+
+ INGROUP TABLE
+
+    INGROUP     FIRST      LAST      TIME
+        NO. OPERATION OPERATION  INTERVAL
+                                   (MINS)
+          1         1        20        60
+
+ OPERATION TABLE
+
+  OPERATION       OPN   OP-TYPE             EXGROUP   INGROUP
+        NO.      TYPE       NO.    OMCODE       NO.       NO.
+
+          1    EXTMOD        66        12         1         1
+          2    DISPLY         1         6         1         1
+          3    DISPLY         2         6         1         1
+          4    DISPLY         3         6         1         1
+          5    DISPLY         4         6         1         1
+          6    DISPLY         5         6         1         1
+          7    DISPLY         6         6         1         1
+          8    DISPLY         7         6         1         1
+          9    DISPLY         8         6         1         1
+         10    DISPLY         9         6         1         1
+         11    DISPLY        10         6         1         1
+         12    DISPLY        11         6         1         1
+         13    DISPLY        12         6         1         1
+         14    DISPLY        13         6         1         1
+         15    DISPLY        14         6         1         1
+         16    DISPLY        15         6         1         1
+         17    DISPLY        16         6         1         1
+         18    DISPLY        17         6         1         1
+         19    DISPLY        18         6         1         1
+         20    DISPLY        19         6         1         1
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING EXTMOD   BLOCK
+ 
+ USERS CONTROL INPUT IS:
+     EXTMOD                                                                          
+       GEN-INFO                                                                      
+         # -  #<SSM-Name----------------------> <Instance-Name----------------->***  
+        66     Abby's Empirical Algorithm       Joel's Bulldozer Testing Site        
+       END GEN-INFO                                                                  
+                                                                                     
+       OUT-INFO                                                                      
+                 Printer BinaryOut  OutLevel ***                                     
+         # -  #Engl Metr Engl Metr  Prt  Bin ***                                     
+        66       62    0   63    0    4    4                                         
+       END OUT-INFO                                                                  
+                                                                                     
+       AREA-INFO                                                                     
+         # -  #     acres ***                                                        
+        66            2.2                                                            
+       END AREA-INFO                                                                 
+                                                                                     
+       TIMESERIES                                                                    
+         # -  #  NIN NOUT NSTA ***                                                   
+        66         2    1    1                                                       
+       END TIMESERIES                                                                
+                                                                                     
+       INFLUX                                                                        
+         # -  #<--Group---> <---Name---> <Units-> ***                                
+        66     Met          Prec1        in                                          
+       END INFLUX                                                                    
+                                                                                     
+       INFLUX                                                                        
+         # -  #<--Group---> <---Name---> <Units-> ***                                
+        66     Met          Prec2        in                                          
+       END INFLUX                                                                    
+                                                                                     
+       OUTFLUX                                                                       
+         # -  #<--Group---> <---Name---> <Units-> ***                                
+        66     Sediment     Total        lbs/ac                                      
+       END OUTFLUX                                                                   
+                                                                                     
+       STATE                                                                         
+         # -  #<--Group---> <---Name---> <Units-> ***                                
+        66     Sediment     Clay         Tons                                        
+       END STATE                                                                     
+     END EXTMOD                                                                      
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING EXTMOD OPERATION NO.   66
+
+ PROCESSING: GEN-INFO       1
+ 
+  <SSM-Name----------------------> <Instance-Name-----------------> File
+ Abby's Empirical Algorithm       Joel's Bulldozer Testing Site   
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: OUT-INFO       1
+ 
+  Engl Metr Engl Metr  Prt  Bin   Pivl Bivl
+   62    0   63    0    4    4    1    1
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: AREA-INFO      1
+ 
+       Area
+        2.2
+     2.200
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: TIMESERIES     1
+ 
+        NIN      NOUT      NSTA
+          2         1         1
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: INFLUX         1
+ 
+ <--Group---> <---Name---> <Units->
+ Met          Prec1        in      
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: INFLUX         2
+ 
+ <--Group---> <---Name---> <Units->
+ Met          Prec2        in      
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: OUTFLUX        1
+ 
+ <--Group---> <---Name---> <Units->
+ Sediment     Total        lbs/ac  
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: STATE          1
+ 
+ <--Group---> <---Name---> <Units->
+ Sediment     Clay         Tons    
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING EXTMOD OPERATION NO.   66
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING EXTMOD   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING DISPLY   BLOCK
+ 
+ USERS CONTROL INPUT IS:
+     DISPLY                                                                          
+       DISPLY-INFO1                                                                  
+         # -  #<----------Title----------->***TRAN PIVL DIG1 FIL1  PYR DIG2 FIL2 YRND
+         1     PRECIP (IN), TRAER, IA         SUM     1    2   61    1    2   61   12
+         2     PRECIP (IN), IOWA FALLS, IA    SUM                    1    2   61   12
+         3     PRECIP (IN), SHEFFIELD, IA     SUM                    1    2   61   12
+         4     PAN EVAP (IN), FARM COOP WS    SUM                    1    3   61   12
+         5     WIND (MI/DAY), FARM COOP WS    SUM                    1        61   12
+         6     SOLAR RADIATION (LANG), FCWS   SUM                    1        61   12
+         7     AIR TEMP (DEG F), CDR RAPIDS   AVER                   1        61   12
+         8     AIR TEMP (DEG F), IOWA FALLS   AVER                   1        61   12
+         9     AIR TEMP (DEG F), MARSHALTWN   AVER                   1        61   12
+        10     DEWPOINT (DEG F), CDR RAPIDS   AVER                   1        61   12
+        11     DEWPOINT (DEG F), IOWA FALLS   AVER                   1        61   12
+        12     DEWPOINT (DEG F), MARSHALTWN   AVER                   1        61   12
+        13     SEDIMENT (LBS/ACRE), MARENGO   SUM                    1        61   12
+        14     WATER TEMP (DEG C),ESTIMATED   AVER                   1        61   12
+        15     FLOW (CFS), IR @ MARSHALTOWN   AVER                   1        61   12
+        16     FLOW (CFS), IR @ MARENGO       AVER                   1        61   12
+        17     FLOW (CFS), IR @ ROWAN         AVER                   1        61   12
+        18     COLIND FOR MEIER POND          AVER                   1        61   12
+        19     CLOUD CVR, WATERLOO (TENTHS)   AVER                   1        61   12
+       END DISPLY-INFO1                                                              
+     END DISPLY                                                                      
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    1  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PRECIP (IN), TRAER, IA              SUM          1         2        61              1         2        61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    1
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    2  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PRECIP (IN), IOWA FALLS, IA         SUM          0                   4              1         2        61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    2
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    3  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PRECIP (IN), SHEFFIELD, IA          SUM          0                   4              1         2        61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    3
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    4  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PAN EVAP (IN), FARM COOP WS         SUM          0                   4              1         3        61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    4
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    5  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ WIND (MI/DAY), FARM COOP WS         SUM          0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    5
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    6  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ SOLAR RADIATION (LANG), FCWS        SUM          0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    6
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    7  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ AIR TEMP (DEG F), CDR RAPIDS        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    7
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    8  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ AIR TEMP (DEG F), IOWA FALLS        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    8
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    9  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ AIR TEMP (DEG F), MARSHALTWN        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    9
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   10  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ DEWPOINT (DEG F), CDR RAPIDS        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   10
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   11  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ DEWPOINT (DEG F), IOWA FALLS        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   11
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   12  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ DEWPOINT (DEG F), MARSHALTWN        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   12
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   13  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ SEDIMENT (LBS/ACRE), MARENGO        SUM          0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   13
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   14  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ WATER TEMP (DEG C),ESTIMATED        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   14
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   15  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ FLOW (CFS), IR @ MARSHALTOWN        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   15
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   16  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ FLOW (CFS), IR @ MARENGO            AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   16
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   17  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ FLOW (CFS), IR @ ROWAN              AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   17
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   18  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ COLIND FOR MEIER POND               AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   18
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   19  TIME INTERVAL   60 MINS
+
+ PROCESSING: DISPLY-INFO1   1
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ CLOUD CVR, WATERLOO (TENTHS)        AVER         0                   4              1                  61        12
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ PROCESSING: DISPLY-INFO2   1
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+  1.000E+00 0.000E+00 0.000E+00 0.000E+00
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   19
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING DISPLY   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ SPEC-ACTIONS BLOCK NOT FOUND
+
+ FINISHED PROCESSING SPEC-ACTIONS BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+ 
+ USERS CONTROL INPUT IS:
+     EXT SOURCES                                                                     
+     <-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+     <Name>   # <Name>   tem strg<-factor->strg <Name>   #   #        <Name> # #  ***
+                                                                                     
+     WDM     39 PREC     ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 1       
+     WDM    131 PREC     ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 2       
+     WDM    127 SEDM     ENGLZERO          DIV  EXTMOD  66     FRMEXT OUTFLX 1       
+                                                                                     
+     WDM     39 PREC     ENGLZERO    ***   SAME DISPLY   1     INPUT  TIMSER         
+     WDM    131 PREC     ENGLZERO    ***   SAME DISPLY   2     INPUT  TIMSER         
+     WDM    127 SEDM     ENGLZERO    ***   DIV  DISPLY  13     INPUT  TIMSER         
+     WDM    132 PREC     ENGLZERO          SAME DISPLY   3     INPUT  TIMSER         
+     WDM     41 EVAP     ENGLZERO          DIV  DISPLY   4     INPUT  TIMSER         
+     WDM     42 WIND     ENGLZERO          DIV  DISPLY   5     INPUT  TIMSER         
+     WDM     46 SOLR     ENGLZERO          DIV  DISPLY   6     INPUT  TIMSER         
+     WDM    121 ATMP     ENGLZERO          SAME DISPLY   7     INPUT  TIMSER         
+     WDM    122 ATMP     ENGLZERO          SAME DISPLY   8     INPUT  TIMSER         
+     WDM    123 ATMP     ENGLZERO          SAME DISPLY   9     INPUT  TIMSER         
+     WDM    124 DEWP     ENGLZERO          SAME DISPLY  10     INPUT  TIMSER         
+     WDM    125 DEWP     ENGLZERO          SAME DISPLY  11     INPUT  TIMSER         
+     WDM    126 DEWP     ENGLZERO          SAME DISPLY  12     INPUT  TIMSER         
+     WDM    134 WTMP     METRZERO          AVER DISPLY  14     INPUT  TIMSER         
+     WDM    113 FLOW     ENGLZERO          SAME DISPLY  15     INPUT  TIMSER         
+     WDM    119 FLOW     ENGLZERO          SAME DISPLY  16     INPUT  TIMSER         
+     WDM    136 FLOW     ENGLZERO          SAME DISPLY  17     INPUT  TIMSER         
+     WDM    140 CLND     ENGLZERO          SAME DISPLY  18     INPUT  TIMSER         
+     WDM    135 CLDC     ENGLZERO          SAME DISPLY  19     INPUT  TIMSER         
+     END EXT SOURCES                                                                 
+ 
+ USERS CONTROL INPUT IS:
+     NETWORK                                                                         
+     <-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+     <Name>   #        <Name> # #<-factor->strg <Name>   #   #        <Name> # #  ***
+     EXTMOD  66 TOHSPF INPFLX 1            SAME DISPLY   1     INPUT  TIMSER         
+     EXTMOD  66 TOHSPF INPFLX 2            SAME DISPLY   2     INPUT  TIMSER         
+     EXTMOD  66 TOHSPF OUTFLX 1            SAME DISPLY  13     INPUT  TIMSER         
+     END NETWORK                                                                     
+
+ PROCESSING ENTRIES FOR EXGROUP NO.   1
+
+ PROCESSING ANY ENTRIES IN EXT SOURCES BLOCK
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING TIME SERIES REFERENCE
+ BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING A WDMS FILE REFERENCE
+ END CHECKING/EXPANDING TIME SERIES REFERENCE
+
+ RECORDS WRITTEN TO WRKSPA ARE:
+ RECORD    1
+ WDM1   39  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTINPFLX 1 1 789 0 0   0  2  0  0  0 0.100E+01 0.100E+01
+ RECORD    2
+ WDM1  131  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTINPFLX 2 1 790 0 0   0  3  0  0  0 0.100E+01 0.100E+01
+ RECORD    3
+ WDM1  1271440      SEDM  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTOUTFLX 1 1 809 0 0   0  4  0  0  0 0.100E+01 0.100E+01
+ RECORD    4
+ WDM1  132  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  4  60INPUT TIMSER 1 12470 0 0   0  5  0  0  0 0.100E+01 0.100E+01
+ RECORD    5
+ WDM1   411440      EVAP  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  5  60INPUT TIMSER 1 12470 0 0   0  6  0  0  0 0.100E+01 0.100E+01
+ RECORD    6
+ WDM1   421440      WIND  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  6  60INPUT TIMSER 1 12470 0 0   0  7  0  0  0 0.100E+01 0.100E+01
+ RECORD    7
+ WDM1   46 120      SOLR  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  7  60INPUT TIMSER 1 12470 0 0   0  8  0  0  0 0.100E+01 0.100E+01
+ RECORD    8
+ WDM1  121 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  8  60INPUT TIMSER 1 12470 0 0   0  9  0  0  0 0.100E+01 0.100E+01
+ RECORD    9
+ WDM1  122 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  9  60INPUT TIMSER 1 12470 0 0   0 10  0  0  0 0.100E+01 0.100E+01
+ RECORD   10
+ WDM1  123 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 10  60INPUT TIMSER 1 12470 0 0   0 11  0  0  0 0.100E+01 0.100E+01
+ RECORD   11
+ WDM1  1241440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 11  60INPUT TIMSER 1 12470 0 0   0 12  0  0  0 0.100E+01 0.100E+01
+ RECORD   12
+ WDM1  1251440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 12  60INPUT TIMSER 1 12470 0 0   0 13  0  0  0 0.100E+01 0.100E+01
+ RECORD   13
+ WDM1  1261440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 13  60INPUT TIMSER 1 12470 0 0   0 14  0  0  0 0.100E+01 0.100E+01
+ RECORD   14
+ WDM1  1341440      WTMP  31 1   0 0 0   0  0  0  0  0 3 3 0.100E+01 0.000E+00DISPLY 15  60INPUT TIMSER 1 12470 0 0   0 15  0  0  0 0.100E+01 0.100E+01
+ RECORD   15
+ WDM1  1131440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 16  60INPUT TIMSER 1 12470 0 0   0 16  0  0  0 0.100E+01 0.100E+01
+ RECORD   16
+ WDM1  1191440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 17  60INPUT TIMSER 1 12470 0 0   0 17  0  0  0 0.100E+01 0.100E+01
+ RECORD   17
+ WDM1  1361440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 18  60INPUT TIMSER 1 12470 0 0   0 18  0  0  0 0.100E+01 0.100E+01
+ RECORD   18
+ WDM1  1401440      CLND  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 19  60INPUT TIMSER 1 12470 0 0   0 19  0  0  0 0.100E+01 0.100E+01
+ RECORD   19
+ WDM1  1351440      CLDC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 20  60INPUT TIMSER 1 12470 0 0   0  0  0  0  0 0.100E+01 0.100E+01
+
+ FINISHED PROCESSING ANY ENTRIES IN EXT SOURCES BLOCK
+
+ PROCESSING ANY ENTRIES IN NETWORK BLOCK
+
+ FINISHED PROCESSING ANY ENTRIES IN NETWORK BLOCK
+
+ RECORDS WRITTEN TO WRKSPA ARE:
+ RECORD   20
+ EXTMOD  1  60TOHSPFINPFLX 1 1 849 0 0   0 21  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  2  60INPUT TIMSER 1 12470 0 0   0 21  0  0  0 0.100E+01 0.100E+01
+ RECORD   21
+ EXTMOD  1  60TOHSPFINPFLX 2 1 850 0 0   0 22  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  3  60INPUT TIMSER 1 12470 0 0   0 22  0  0  0 0.100E+01 0.100E+01
+ RECORD   22
+ EXTMOD  1  60TOHSPFOUTFLX 1 1 869 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 14  60INPUT TIMSER 1 12470 0 0   0  0  0  0  0 0.100E+01 0.100E+01
+
+ SITUATION AFTER OCCURRENCES OF IDENTICAL SOURCES AND TARGETS HAVE BEEN CHAINED:
+
+ RECORDS WRITTEN TO WRKSPA ARE:
+ RECORD    1
+ WDM1   39  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTINPFLX 1 1 789 0 0   0  2  0  0  0 0.100E+01 0.100E+01
+ RECORD    2
+ WDM1  131  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTINPFLX 2 1 790 0 0   0  3  0  0  0 0.100E+01 0.100E+01
+ RECORD    3
+ WDM1  1271440      SEDM  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTOUTFLX 1 1 809 0 0   0  4  0  0  0 0.100E+01 0.100E+01
+ RECORD    4
+ WDM1  132  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  4  60INPUT TIMSER 1 12470 0 0   0  5  0  0  0 0.100E+01 0.100E+01
+ RECORD    5
+ WDM1   411440      EVAP  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  5  60INPUT TIMSER 1 12470 0 0   0  6  0  0  0 0.100E+01 0.100E+01
+ RECORD    6
+ WDM1   421440      WIND  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  6  60INPUT TIMSER 1 12470 0 0   0  7  0  0  0 0.100E+01 0.100E+01
+ RECORD    7
+ WDM1   46 120      SOLR  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  7  60INPUT TIMSER 1 12470 0 0   0  8  0  0  0 0.100E+01 0.100E+01
+ RECORD    8
+ WDM1  121 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  8  60INPUT TIMSER 1 12470 0 0   0  9  0  0  0 0.100E+01 0.100E+01
+ RECORD    9
+ WDM1  122 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  9  60INPUT TIMSER 1 12470 0 0   0 10  0  0  0 0.100E+01 0.100E+01
+ RECORD   10
+ WDM1  123 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 10  60INPUT TIMSER 1 12470 0 0   0 11  0  0  0 0.100E+01 0.100E+01
+ RECORD   11
+ WDM1  1241440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 11  60INPUT TIMSER 1 12470 0 0   0 12  0  0  0 0.100E+01 0.100E+01
+ RECORD   12
+ WDM1  1251440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 12  60INPUT TIMSER 1 12470 0 0   0 13  0  0  0 0.100E+01 0.100E+01
+ RECORD   13
+ WDM1  1261440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 13  60INPUT TIMSER 1 12470 0 0   0 14  0  0  0 0.100E+01 0.100E+01
+ RECORD   14
+ WDM1  1341440      WTMP  31 1   0 0 0   0  0  0  0  0 3 3 0.100E+01 0.000E+00DISPLY 15  60INPUT TIMSER 1 12470 0 0   0 15  0  0  0 0.100E+01 0.100E+01
+ RECORD   15
+ WDM1  1131440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 16  60INPUT TIMSER 1 12470 0 0   0 16  0  0  0 0.100E+01 0.100E+01
+ RECORD   16
+ WDM1  1191440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 17  60INPUT TIMSER 1 12470 0 0   0 17  0  0  0 0.100E+01 0.100E+01
+ RECORD   17
+ WDM1  1361440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 18  60INPUT TIMSER 1 12470 0 0   0 18  0  0  0 0.100E+01 0.100E+01
+ RECORD   18
+ WDM1  1401440      CLND  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 19  60INPUT TIMSER 1 12470 0 0   0 19  0  0  0 0.100E+01 0.100E+01
+ RECORD   19
+ WDM1  1351440      CLDC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 20  60INPUT TIMSER 1 12470 0 0   0  0  0  0  0 0.100E+01 0.100E+01
+ RECORD   20
+ EXTMOD  1  60TOHSPFINPFLX 1 1 849 0 0   0 21  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  2  60INPUT TIMSER 1 12470 0 0   0 21  0  0  0 0.100E+01 0.100E+01
+ RECORD   21
+ EXTMOD  1  60TOHSPFINPFLX 2 1 850 0 0   0 22  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  3  60INPUT TIMSER 1 12470 0 0   0 22  0  0  0 0.100E+01 0.100E+01
+ RECORD   22
+ EXTMOD  1  60TOHSPFOUTFLX 1 1 869 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 14  60INPUT TIMSER 1 12470 0 0   0  0  0  0  0 0.100E+01 0.100E+01
+
+ ALLOCATING INPAD ROWS AND GENERATING PRIMITIVE TSGET/TSPUT INSTRUCTIONS
+
+ INGROUP NO.  1    OSVSZ= 2500    INPAD WIDTH=171832 INTERVALS    MAXROW=    3  RUNWID=    0
+
+ FINISHED ALLOCATING INPAD ROWS AND GENERATING TSGET/TSPUT INSTRUCTIONS
+
+ SITUATION AFTER ALLOCATION OF INPAD ROWS:
+
+ RECORDS WRITTEN TO WRKSPA ARE:
+ RECORD    1
+ WDM1   39  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTINPFLX 1 1 789 0 0   0  2  0  0  1 0.100E+01 0.100E+01
+ RECORD    2
+ WDM1  131  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTINPFLX 2 1 790 0 0   0  3  0  0  2 0.100E+01 0.100E+01
+ RECORD    3
+ WDM1  1271440      SEDM  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00EXTMOD  1  60FRMEXTOUTFLX 1 1 809 0 0   0  4  0  0  3 0.100E+01 0.100E+01
+ RECORD    4
+ WDM1  132  60      PREC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  4  60INPUT TIMSER 1 12470 0 0   0  5  0  0  1 0.100E+01 0.100E+01
+ RECORD    5
+ WDM1   411440      EVAP  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  5  60INPUT TIMSER 1 12470 0 0   0  6  0  0  1 0.100E+01 0.100E+01
+ RECORD    6
+ WDM1   421440      WIND  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  6  60INPUT TIMSER 1 12470 0 0   0  7  0  0  1 0.100E+01 0.100E+01
+ RECORD    7
+ WDM1   46 120      SOLR  31 1   0 0 0   0  0  0  0  0 2 2 0.100E+01 0.000E+00DISPLY  7  60INPUT TIMSER 1 12470 0 0   0  8  0  0  1 0.100E+01 0.100E+01
+ RECORD    8
+ WDM1  121 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  8  60INPUT TIMSER 1 12470 0 0   0  9  0  0  1 0.100E+01 0.100E+01
+ RECORD    9
+ WDM1  122 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY  9  60INPUT TIMSER 1 12470 0 0   0 10  0  0  1 0.100E+01 0.100E+01
+ RECORD   10
+ WDM1  123 120      ATMP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 10  60INPUT TIMSER 1 12470 0 0   0 11  0  0  1 0.100E+01 0.100E+01
+ RECORD   11
+ WDM1  1241440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 11  60INPUT TIMSER 1 12470 0 0   0 12  0  0  1 0.100E+01 0.100E+01
+ RECORD   12
+ WDM1  1251440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 12  60INPUT TIMSER 1 12470 0 0   0 13  0  0  1 0.100E+01 0.100E+01
+ RECORD   13
+ WDM1  1261440      DEWP  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 13  60INPUT TIMSER 1 12470 0 0   0 14  0  0  1 0.100E+01 0.100E+01
+ RECORD   14
+ WDM1  1341440      WTMP  31 1   0 0 0   0  0  0  0  0 3 3 0.100E+01 0.000E+00DISPLY 15  60INPUT TIMSER 1 12470 0 0   0 15  0  0  1 0.100E+01 0.100E+01
+ RECORD   15
+ WDM1  1131440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 16  60INPUT TIMSER 1 12470 0 0   0 16  0  0  1 0.100E+01 0.100E+01
+ RECORD   16
+ WDM1  1191440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 17  60INPUT TIMSER 1 12470 0 0   0 17  0  0  1 0.100E+01 0.100E+01
+ RECORD   17
+ WDM1  1361440      FLOW  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 18  60INPUT TIMSER 1 12470 0 0   0 18  0  0  1 0.100E+01 0.100E+01
+ RECORD   18
+ WDM1  1401440      CLND  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 19  60INPUT TIMSER 1 12470 0 0   0 19  0  0  1 0.100E+01 0.100E+01
+ RECORD   19
+ WDM1  1351440      CLDC  31 1   0 0 0   0  0  0  0  0 2 1 0.100E+01 0.000E+00DISPLY 20  60INPUT TIMSER 1 12470 0 0   0  0  0  0  1 0.100E+01 0.100E+01
+ RECORD   20
+ EXTMOD  1  60TOHSPFINPFLX 1 1 849 0 0   0 21  0  0  1 2 1 0.100E+01 0.000E+00DISPLY  2  60INPUT TIMSER 1 12470 0 0   0 21  0  0  1 0.100E+01 0.100E+01
+ RECORD   21
+ EXTMOD  1  60TOHSPFINPFLX 2 1 850 0 0   0 22  0  0  2 2 1 0.100E+01 0.000E+00DISPLY  3  60INPUT TIMSER 1 12470 0 0   0 22  0  0  2 0.100E+01 0.100E+01
+ RECORD   22
+ EXTMOD  1  60TOHSPFOUTFLX 1 1 869 0 0   0  0  0  0  3 2 1 0.100E+01 0.000E+00DISPLY 14  60INPUT TIMSER 1 12470 0 0   0  0  0  0  3 0.100E+01 0.100E+01
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   EXTMOD   66
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     39        60      SAME     1.000E+00    FRMEXT  INPFLX   1   1
+     WDM1    131        60      SAME     1.000E+00    FRMEXT  INPFLX   2   1
+     WDM1    127      1440      DIV      1.000E+00    FRMEXT  OUTFLX   1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     TOHSPF  INPFLX   1   1    1.000E+00  DISPLY    1 INPUT   TIMSER   1   1
+     TOHSPF  INPFLX   2   1    1.000E+00  DISPLY    2 INPUT   TIMSER   1   1
+     TOHSPF  OUTFLX   1   1    1.000E+00  DISPLY   13 INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    1
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     EXTMOD   66 TOHSPF  INPFLX   1   1  1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    2
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     EXTMOD   66 TOHSPF  INPFLX   2   1  1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    3
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    132        60      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    4
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     41      1440      DIV      1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    5
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     42      1440      DIV      1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    6
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     46       120      DIV      1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    7
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    121       120      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    8
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    122       120      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    9
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    123       120      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   10
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    124      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   11
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    125      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   12
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    126      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   13
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     EXTMOD   66 TOHSPF  OUTFLX   1   1  1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   14
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    134      1440      AVER     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   15
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    113      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   16
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    119      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   17
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    136      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   18
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    140      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   19
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    135      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+ DUMPING PRIMITIVE TSGET/TSPUT INSTRUCTIONS
+
+ OPNTAB for EXTMOD    66
+  OSVF   1 L   3 TSGF   3 L   5 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD    3
+   -1  39  60   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+ RECORD    4
+   -1 131  60   2   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+ RECORD    5
+   -1 1271440   3   0   2   2   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     1
+  OSVF   4 L   8 TSGF   6 L   6 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD    6
+    3   1  60   1 849   2   1   0 0.100E+01 0.000E+00   0   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     2
+  OSVF   9 L  13 TSGF   7 L   7 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD    7
+    3   2  60   2 850   2   1   0 0.100E+01 0.000E+00   0   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     3
+  OSVF  14 L  18 TSGF   8 L   8 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD    8
+   -1 132  60   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     4
+  OSVF  19 L  23 TSGF   9 L   9 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD    9
+   -1  411440   1   0   2   2   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     5
+  OSVF  24 L  28 TSGF  10 L  10 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   10
+   -1  421440   1   0   2   2   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     6
+  OSVF  29 L  33 TSGF  11 L  11 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   11
+   -1  46 120   1   0   2   2   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     7
+  OSVF  34 L  38 TSGF  12 L  12 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   12
+   -1 121 120   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     8
+  OSVF  39 L  43 TSGF  13 L  13 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   13
+   -1 122 120   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY     9
+  OSVF  44 L  48 TSGF  14 L  14 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   14
+   -1 123 120   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    10
+  OSVF  49 L  53 TSGF  15 L  15 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   15
+   -1 1241440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    11
+  OSVF  54 L  58 TSGF  16 L  16 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   16
+   -1 1251440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    12
+  OSVF  59 L  63 TSGF  17 L  17 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   17
+   -1 1261440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    13
+  OSVF  64 L  68 TSGF  18 L  18 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   18
+    3   3  60   3 869   2   1   0 0.100E+01 0.000E+00   0   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    14
+  OSVF  69 L  73 TSGF  19 L  19 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   19
+   -1 1341440   1   0   3   3   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    15
+  OSVF  74 L  78 TSGF  20 L  20 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   20
+   -1 1131440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    16
+  OSVF  79 L  83 TSGF  21 L  21 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   21
+   -1 1191440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    17
+  OSVF  84 L  88 TSGF  22 L  22 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   22
+   -1 1361440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    18
+  OSVF  89 L  93 TSGF  23 L  23 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   23
+   -1 1401440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+
+ OPNTAB for DISPLY    19
+  OSVF  94 L  98 TSGF  24 L  24 TSPF   0 L   0
+
+ TSGET INSTRUCTIONS
+ RECORD   24
+   -1 1351440   1   0   2   1   0 0.100E+01 0.000E+00  31   0   0   0       0 0.100E+01
+
+ TSPUT INSTRUCTIONS
+ BEGIN GENERATION OF TSGET/TSPUT INSTRUCTIONS FOR OPERATIONS   1 THROUGH  20
+ BEGIN COMPUTATION OF CRITICAL TIME VALUES
+ CRITICAL TIME VALUES:      1976         1         1         0         0    527040    527040
+ END COMPUTATION OF CRITICAL TIME VALUES
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=    3
+          0         1        -1        39        60         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1     39        PREC     31    1
+ TAR: EXTMOD    1 FRMEXT INPFLX    1    1
+ TSGET INSTRUCTION AT KEY=    4
+          0         1        -1       131        60         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR174333
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    131        PREC     31    1
+ TAR: EXTMOD    1 FRMEXT INPFLX    2    1
+ TSGET INSTRUCTION AT KEY=    5
+          0         1        -1       127      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR346166
+ OFFSET     0
+ STKIND     2
+ STTRAN     2
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    127        SEDM     31    1
+ TAR: EXTMOD    1 FRMEXT OUTFLX    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=    6
+          0         1         3      2500        60         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET   849
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: EXTMOD    1 TOHSPF INPFLX    1    1
+ TAR: DISPLY    2 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=    7
+          0         1         3    174333        60         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR174333
+ OFFSET   850
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: EXTMOD    1 TOHSPF INPFLX    2    1
+ TAR: DISPLY    3 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=    8
+          0         1        -1       132        60         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    132        PREC     31    1
+ TAR: DISPLY    4 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=    9
+          0         1        -1        41      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     2
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1     41        EVAP     31    1
+ TAR: DISPLY    5 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   10
+          0         1        -1        42      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     2
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1     42        WIND     31    1
+ TAR: DISPLY    6 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   11
+          0         1        -1        46       120         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     2
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1     46        SOLR     31    1
+ TAR: DISPLY    7 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   12
+          0         1        -1       121       120         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    121        ATMP     31    1
+ TAR: DISPLY    8 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   13
+          0         1        -1       122       120         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    122        ATMP     31    1
+ TAR: DISPLY    9 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   14
+          0         1        -1       123       120         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    123        ATMP     31    1
+ TAR: DISPLY   10 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   15
+          0         1        -1       124      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    124        DEWP     31    1
+ TAR: DISPLY   11 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   16
+          0         1        -1       125      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    125        DEWP     31    1
+ TAR: DISPLY   12 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   17
+          0         1        -1       126      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    126        DEWP     31    1
+ TAR: DISPLY   13 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   18
+          0         1         3    346166        60         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR346166
+ OFFSET   869
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: EXTMOD    1 TOHSPF OUTFLX    1    1
+ TAR: DISPLY   14 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   19
+          0         1        -1       134      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     3
+ STTRAN     3
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR   0.00000E+00
+ ARATIO 1.00000E+00
+ SRC: WDM1    134        WTMP     31    1
+ TAR: DISPLY   15 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   20
+          0         1        -1       113      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    113        FLOW     31    1
+ TAR: DISPLY   16 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   21
+          0         1        -1       119      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    119        FLOW     31    1
+ TAR: DISPLY   17 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   22
+          0         1        -1       136      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    136        FLOW     31    1
+ TAR: DISPLY   18 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   23
+          0         1        -1       140      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    140        CLND     31    1
+ TAR: DISPLY   19 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ BEGIN FINISHING TSGET/TSPUT INSTRUCTION
+ TSGET INSTRUCTION AT KEY=   24
+          0         1        -1       135      1440         0         0        31         0         0
+       1976    527040         0         0 0.000E+00         0         0         0         0         0
+          0         0      1976         0         0         1         0    527040         0         0
+          0         0         0
+ VOPADR  2500
+ OFFSET     0
+ STKIND     2
+ STTRAN     1
+ INMODE     0
+ A      1.00000E+00
+ B      0.00000E+00
+ PVAR  -9.99000E+02
+ ARATIO 1.00000E+00
+ SRC: WDM1    135        CLDC     31    1
+ TAR: DISPLY   20 INPUT  TIMSER    1    1
+ END FINISHING TSGET/TSPUT INSTRUCTION
+ END GENERATION OF TSGET/TSPUT INSTRUCTIONS FOR OPERATIONS   1 THROUGH  20
+
+ FINISHED PROCESSING ENTRIES FOR EXGROUP NO.   1                MAXIMUM WRKSPA RECORD =    22
+
+ FINISHED PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+ ====================================================================================================================================
+ 
+ INTERPRETATION OF RUN DATA SET COMPLETE
+ 
+
+ COMMENCING EXECUTION
+ 
+ End of Job

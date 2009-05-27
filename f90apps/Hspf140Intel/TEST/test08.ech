@@ -1,0 +1,2309 @@
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+ 
+   Developed for:                Modified and Maintained by
+ 
+     U.S. Environmental            Aqua Terra Consultants
+       Protection Agency           (650)962-1864
+     Office of Research            email: hspf@aquaterra.com
+       and Development
+     Center for Exposure
+       Assessment Modeling
+     Athens, Georgia
+     (706)355-8400
+     email: ceam@epamail.epa.gov
+ 
+   In cooperation with:
+ 
+     U.S. Geological Survey                Release 12.2
+     Water Resources Discipline            July 2005
+     Office of Surface Water
+     Reston, Virginia
+     email: h2osoft@usgs.gov
+ 
+ 
+ Start of Job
+ 
+ PREPROCESSING USERS CONTROL INPUT.
+ 
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+ 
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND SPEC-ACTIONS
+ FOUND END SPEC-ACTIONS
+ FOUND PERLND      
+ FOUND END PERLND      
+ FOUND DISPLY      
+ FOUND END DISPLY      
+ FOUND EXT SOURCES 
+ FOUND END EXT SOURCES 
+ FOUND NETWORK     
+ FOUND END NETWORK     
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    Version 11 test run: PERLND w/ NUTR
+
+   START       1976              END    1976
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1975/12/31 24:60    1976/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  3
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  2
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG =    1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  EMFG =     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     OPN SEQUENCE                                                                    
+         INGRP              INDELT 01:00                                             
+           PERLND       1                                                            
+           PERLND       2                                                            
+           PERLND       3                                                            
+           DISPLY       1                                                            
+           DISPLY       2                                                            
+           DISPLY       3                                                            
+         END INGRP                                                                   
+     END OPN SEQUENCE                                                                
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING PERLND   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO:   1     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         1         1         1         1         0         0         1         0         1         1         1
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     4    4    4    4    4    4    4    4    4    4    4    4         1          12
+ 
+            Binary Output level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     4    4    4    4    4    4    4    4    4    4    4    4         1           9
+ 
+ Perv Land-segment id      Unit systems       Print-file nos     BinaryOutfileNos
+                         IUNITS    OUNITS   English    Metric   English    Metric
+ BEANS                        1         1         1         0         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION SNOW
+ 
+      ICEFG
+          1
+ 
+     SNOPFG     VMKFG
+          0         0
+ 
+        LAT     MELEV     SHADE    SNOWCF    COVIND     KMELT     TBASE
+    degrees      (ft)                          (in)  (in/d.F)       (F)
+        43.     1225.       0.0      1.45       0.5      0.00      32.0
+ 
+      RDCSN     TSNOW    SNOEVP    CCFACT    MWATER    MGMELT
+              (deg F)                                (in/day)
+       0.12       32.      0.05       0.5      0.08    0.0001
+ 
+  Pack-snow  Pack-ice Pack-watr    RDENPF      DULL    PAKTMP
+       (in)      (in)      (in)                       (deg F)
+        1.4       0.2       0.1       0.2      375.      27.5
+ 
+     COVINX    XLNMLT    SKYCLR
+       (in)      (in)
+       0.50       0.0       1.0
+
+ FINISHED PROCESSING INPUT FOR SECTION SNOW
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+   CSNOFG  RTOPFG    UZFG   VCSFG   VUZFG   VNNFG  VIFWFG  VIRCFG   VLEFG  IFFCFG   HWTFG  IRRGFG  IFRDFG
+        1       0       0       1       1       1       0       0       1       1       0       0       0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000       8.0     0.030      250.     0.050       0.5      0.98
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+        40.       35.       2.0       2.0      0.10       0.0      0.08
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00      0.01       0.1       1.0      0.60      0.00
+ 
+        FZG      FZGL
+      (/in)
+       1.00     0.100
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.04      0.04      0.03      0.03      0.03      0.03      0.10      0.17      0.19      0.14      0.05      0.04
+ 
+ Values of Upper Zone Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+        0.4       0.4       0.4       0.4       1.6       1.1       1.1       1.3       1.3       1.3       1.1       0.9
+ 
+ Values of Manning's N at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.30      0.30      0.30      0.30      0.27      0.25      0.25      0.25      0.25      0.25      0.35      0.33
+ 
+ Values of Lower Zone ET at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.20      0.20      0.20      0.23      0.23      0.25      0.60      0.80      0.75      0.50      0.30      0.20
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+       0.05       0.0      0.15       0.0       4.0      0.05      0.05
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION SEDMNT
+ 
+      CRVFG    VSIVFG    SDOPFG
+          1         0         1
+ 
+       SMPF      KRER      JRER     AFFIX     COVER      NVSI
+                                   (/day)          (lb/ac.dy)
+        1.0       .80       2.2      .030       1.0       0.0
+ 
+ Washoff and scour parameters for sediment
+       KSER      JSER      KGER      JGER
+        5.0       2.2       1.0       1.0
+ 
+ Values for start of each calendar month for COVERM
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+        .17       .13       .09       .06       .01       .03       .43       .67       .77       .61       .26       .21
+ 
+ Detached sediment storage (tons/acre)
+       DETS
+        0.2
+
+ FINISHED PROCESSING INPUT FOR SECTION SEDMNT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PSTEMP
+ 
+        Flags for section PSTEMP
+     SLTVFG    ULTVFG    LGTVFG    TSOPFG
+          0         0         0         1
+ 
+       ASLT      BSLT     ULTP1     ULTP2     LGTP1     LGTP2
+    (deg F) (deg F/F)
+       14.5      .365      14.9      .308       40.
+ 
+   Initial temperatures
+      AIRTC     SLTMP     ULTMP     LGTMP
+    (deg F)   (deg F)   (deg F)   (deg F)
+       60.0      60.0      60.0      60.0
+
+ FINISHED PROCESSING INPUT FOR SECTION PSTEMP
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION MSTLAY
+ 
+      SLMPF      ULPF      LLPF
+        0.7       5.0       1.5
+
+ TOPSOIL MOISTURE STORAGES
+ 
+       Topsoil storages
+      SMSTM     UMSTM     IMSTM
+    (lb/ac)   (lb/ac)   (lb/ac)
+       0.00      0.00      0.00
+
+ FRACTIONAL FLUXES THROUGH TOPSOIL LAYERS
+ 
+        FSO       FSP       FII       FUP       FIO  (/ivl)
+       0.00      0.00      0.00      0.00      0.00
+
+ SUBSOIL MOISTURE STORAGES
+ 
+ Subsoil moisture
+      LMSTM     AMSTM
+    (lb/ac)   (lb/ac)
+       0.00      0.00
+
+ FRACTIONAL FLUXES THROUGH SUBSOIL
+ 
+        FLP      FLDP       FAO   (/ivl)
+       0.00      0.00      0.00
+
+ FINISHED PROCESSING INPUT FOR SECTION MSTLAY
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION NITR
+ 
+           Soil depth (in)                        Bulk density (lb/ft3)
+    Surface     Upper     Lower  Grnd-wat   Surface     Upper     Lower  Grnd-wat
+       0.25      5.71     41.30       60.      62.4      79.2      81.7      85.5
+ 
+       Nitrogen flags
+     VNUTFG    FORAFG    ITMAXA     BNUMN     CNUMN    NUPTFG    FIXNFG    AMVOFG    ALPNFG    VNPRFG
+          0         1        20         2         1         0         0         0         0         0
+ 
+               Atmospheric Deposition Flags
+       NITRATE            AMMONIA           ORGANIC N
+    SURF     UPPER     SURF     UPPER     SURF     UPPER
+   FLX CON  FLX CON   FLX CON  FLX CON   FLX CON  FLX CON
+     0   0    0   0     0   0    0   0     0   0    0   0
+ 
+ Nitrogen plant uptake rates (/day)
+      SKPLN     UKPLN     LKPLN     AKPLN
+        .05       .05       .03      0.00
+ 
+  Below-ground plant nitrogen return rates and refractory fraction
+     SKPRBN    UKPRBN    LKPRBN    AKPRBN    BGNPRF
+     (/day)    (/day)    (/day)    (/day)
+       0.00      0.00      0.00      0.00      0.00
+
+ PARAMETERS TO BE USED FOR FIRST-ORDER KINETIC REACTIONS
+ 
+         Upt-facts   <----------------------------- Temp-parms (theta) ----------------------------->
+     NO3UTF    NH4UTF     THPLN    THKDSA    THKADA    THKIMN     THKAM    THKDNI     THKNI    THKIMA
+         .8        .2      1.07      1.05      1.05      1.07      1.07      1.07      1.05      1.07
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0       .10        .0       3.0        .0
+
+ PARAMETERS FOR UPPER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0    .00030      .004       .55        .0
+
+ PARAMETERS FOR LOWER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0    .00030      .004       .45        .0
+
+ PARAMETERS FOR ACTIVE GROUNDWATER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0       0.0      .030       .20        .0
+
+ PARAMETERS TO BE USED FOR SINGLE-VALUED FREUNDLICH ADSORPTION/DESORPTION CALCULATIONS
+ 
+       CMAX
+      (ppm)
+       500.
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        1.      2.00
+
+ PARAMETERS FOR THE UPPER LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        .7      1.67
+
+ PARAMETERS FOR THE LOWER LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        .7      1.67
+
+ PARAMETERS FOR THE ACTIVE GROUNDWATER LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        5.      1.67
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+
+ SEGMENT-WIDE STORAGES IN SURFACE, UPPER, AND INTERFLOW LAYERS
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+        15.      0.05      0.03       0.3        .0      0.00
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+       500.       0.5       0.5       5.0        .0      0.00
+ 
+   Initial N in interflow, above-ground, and litter storage (lb/ac)
+      IAMSU      INO3     ISLON     ISRON    AGPLTN    LITTRN
+       0.00      0.00      0.00      0.00      0.00      0.00
+
+ SEGMENT-WIDE STORAGES IN LOWER AND ACTIVE GROUNDWATER LAYERS
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+      1500.       5.0       3.0       30.        .0      0.00
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+      1000.      6.00       4.0       2.0        .0      0.00
+
+ TOTAL STORAGE IN THE SEGMENT    (LB/AC) 
+
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN
+  3.015E+03 1.155E+01 7.530E+00 3.730E+01 0.000E+00 0.000E+00
+
+ GRAND TOTAL IS:  3.071E+03
+
+ FINISHED PROCESSING INPUT FOR SECTION NITR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PHOS
+ 
+     VPUTFG    FORPFG    ITMAXP     BNUMP     CNUMP    PUPTFG
+          0         1        20         2         1         0
+ 
+      Atmospheric Deposition Flags
+      PHOSPHATE          ORGANIC P
+    SURF     UPPER     SURF     UPPER
+   FLX CON  FLX CON   FLX CON  FLX CON
+     0   0    0   0     0   0    0   0
+ 
+  Phosphorus plant uptake parms (/day)
+      SKPLP     UKPLP     LKPLP     AKPLP
+        .01        .7        .8        .0
+
+ PARAMETERS TO BE USED FOR FIRST-ORDER KINETIC REACTIONS
+ 
+  Temperature corection parameters (theta)
+      THPLP    THKDSP    THKADP    THKIMP     THKMP
+       1.07      1.05      1.05      1.07      1.07
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+        .02        1.        .0       .02
+
+ PARAMETERS FOR UPPER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+       .002        1.        .0      .002
+
+ PARAMETERS FOR LOWER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+       .005        1.        .0      .002
+
+ PARAMETERS FOR ACTIVE GROUNDWATER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+         .0        .0        .0        .0
+
+ PARAMETERS TO BE USED FOR SINGLE-VALUED FREUNDLICH ADSORPTION/DESORPTION CALCULATIONS
+ 
+       CMAX
+      (ppm)
+       200.
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ PARAMETERS FOR THE UPPER LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ PARAMETERS FOR THE LOWER LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ PARAMETERS FOR THE ACTIVE GROUNDWATER LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ SEGMENT-WIDE STORAGES IN SURFACE, UPPER, AND INTERFLOW LAYERS
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         .2        5.        1.        1.
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         1.       25.        5.        5.
+ 
+ Phosphate in interflow
+      IP4SU
+    (lb/ac)
+       0.00
+
+ SEGMENT-WIDE STORAGES IN LOWER AND ACTIVE GROUNDWATER LAYERS
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         4.      250.       50.        .0
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         4.      250.       50.        .0
+
+ TOTAL STORAGE IN THE SEGMENT    (LB/AC) 
+
+       ORGP      P4AD      P4SU       PLTP                   
+  9.200E+00 5.300E+02 1.060E+02 6.000E+00
+
+ GRAND TOTAL IS:  6.512E+02
+
+ FINISHED PROCESSING INPUT FOR SECTION PHOS
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION TRACER
+ 
+ Atmospheric Deposition Flags
+    SURF     UPPER
+   FLX CON  FLX CON
+     0   0    0   0
+ 
+ Tracer Name:
+  CHEM6F             
+
+ SEGMENT-WIDE STORAGES
+ 
+ Initial storage of tracer material in topsoil
+      STRSU     UTRSU     ITRSU
+    (lb/ac)   (lb/ac)   (lb/ac)
+         5.      200.       50.
+ 
+  Initial storage of tracer material in subsoil layers (lb/ac)
+      LTRSU     ATRSU
+    (lb/ac)   (lb/ac)
+       100.      100.
+
+ TOTAL STORAGE IN THE SEGMENT:  4.550E+02
+
+ FINISHED PROCESSING INPUT FOR SECTION TRACER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.    1
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO:   2     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         1         1         1         1         0         0         1         0         1         1         1
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     4    4    4    4    4    4    4    4    4    4    4    4         1          12
+ 
+            Binary Output level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     4    4    4    4    4    4    4    4    4    4    4    4         1           9
+ 
+ Perv Land-segment id      Unit systems       Print-file nos     BinaryOutfileNos
+                         IUNITS    OUNITS   English    Metric   English    Metric
+ CORN                         1         1         1         0         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION SNOW
+ 
+      ICEFG
+          1
+ 
+     SNOPFG     VMKFG
+          0         0
+ 
+        LAT     MELEV     SHADE    SNOWCF    COVIND     KMELT     TBASE
+    degrees      (ft)                          (in)  (in/d.F)       (F)
+        43.     1225.       0.0      1.45       0.5      0.00      32.0
+ 
+      RDCSN     TSNOW    SNOEVP    CCFACT    MWATER    MGMELT
+              (deg F)                                (in/day)
+       0.12       32.      0.05       0.5      0.08    0.0001
+ 
+  Pack-snow  Pack-ice Pack-watr    RDENPF      DULL    PAKTMP
+       (in)      (in)      (in)                       (deg F)
+        1.4       0.2       0.1       0.2      375.      27.5
+ 
+     COVINX    XLNMLT    SKYCLR
+       (in)      (in)
+       0.50       0.0       1.0
+
+ FINISHED PROCESSING INPUT FOR SECTION SNOW
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+   CSNOFG  RTOPFG    UZFG   VCSFG   VUZFG   VNNFG  VIFWFG  VIRCFG   VLEFG  IFFCFG   HWTFG  IRRGFG  IFRDFG
+        1       0       0       1       1       1       0       0       1       1       0       0       0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.000       8.0     0.030      250.     0.050       0.5      0.98
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+        40.       35.       2.0       2.0      0.10       0.0      0.08
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00      0.01       0.1       1.0      0.60      0.00
+ 
+        FZG      FZGL
+      (/in)
+       1.00     0.100
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.12      0.12      0.12      0.12      0.05      0.08      0.14      0.19      0.20      0.15      0.13      0.13
+ 
+ Values of Upper Zone Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+        0.4       0.4       0.4       0.4       1.4       1.0       1.0       1.2       1.2       1.2       1.0       0.9
+ 
+ Values of Manning's N at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.30      0.30      0.30      0.30      0.27      0.25      0.25      0.25      0.25      0.25      0.35      0.33
+ 
+ Values of Lower Zone ET at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.20      0.20      0.20      0.23      0.23      0.25      0.60      0.80      0.75      0.50      0.30      0.20
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+       0.10       0.0      0.10       0.0       4.0      0.05      0.05
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION SEDMNT
+ 
+      CRVFG    VSIVFG    SDOPFG
+          1         0         1
+ 
+       SMPF      KRER      JRER     AFFIX     COVER      NVSI
+                                   (/day)          (lb/ac.dy)
+        1.0       .80       2.2      .030       1.0       0.0
+ 
+ Washoff and scour parameters for sediment
+       KSER      JSER      KGER      JGER
+        4.0       2.0       1.0       1.0
+ 
+ Values for start of each calendar month for COVERM
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+        .25       .22       .20       .18       .03       .08       .40       .70       .62       .51       .38       .29
+ 
+ Detached sediment storage (tons/acre)
+       DETS
+        0.2
+
+ FINISHED PROCESSING INPUT FOR SECTION SEDMNT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PSTEMP
+ 
+        Flags for section PSTEMP
+     SLTVFG    ULTVFG    LGTVFG    TSOPFG
+          0         0         0         1
+ 
+       ASLT      BSLT     ULTP1     ULTP2     LGTP1     LGTP2
+    (deg F) (deg F/F)
+       14.5      .365      14.9      .308       40.
+ 
+   Initial temperatures
+      AIRTC     SLTMP     ULTMP     LGTMP
+    (deg F)   (deg F)   (deg F)   (deg F)
+       60.0      60.0      60.0      60.0
+
+ FINISHED PROCESSING INPUT FOR SECTION PSTEMP
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION MSTLAY
+ 
+      SLMPF      ULPF      LLPF
+        0.7       5.0       1.5
+
+ TOPSOIL MOISTURE STORAGES
+ 
+       Topsoil storages
+      SMSTM     UMSTM     IMSTM
+    (lb/ac)   (lb/ac)   (lb/ac)
+       0.00      0.00      0.00
+
+ FRACTIONAL FLUXES THROUGH TOPSOIL LAYERS
+ 
+        FSO       FSP       FII       FUP       FIO  (/ivl)
+       0.00      0.00      0.00      0.00      0.00
+
+ SUBSOIL MOISTURE STORAGES
+ 
+ Subsoil moisture
+      LMSTM     AMSTM
+    (lb/ac)   (lb/ac)
+       0.00      0.00
+
+ FRACTIONAL FLUXES THROUGH SUBSOIL
+ 
+        FLP      FLDP       FAO   (/ivl)
+       0.00      0.00      0.00
+
+ FINISHED PROCESSING INPUT FOR SECTION MSTLAY
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION NITR
+ 
+           Soil depth (in)                        Bulk density (lb/ft3)
+    Surface     Upper     Lower  Grnd-wat   Surface     Upper     Lower  Grnd-wat
+       0.25      5.71     41.30       60.      62.4      79.2      81.7      85.5
+ 
+       Nitrogen flags
+     VNUTFG    FORAFG    ITMAXA     BNUMN     CNUMN    NUPTFG    FIXNFG    AMVOFG    ALPNFG    VNPRFG
+          0         1        20         2         1         0         0         0         0         0
+ 
+               Atmospheric Deposition Flags
+       NITRATE            AMMONIA           ORGANIC N
+    SURF     UPPER     SURF     UPPER     SURF     UPPER
+   FLX CON  FLX CON   FLX CON  FLX CON   FLX CON  FLX CON
+     0   0    0   0     0   0    0   0     0   0    0   0
+ 
+ Nitrogen plant uptake rates (/day)
+      SKPLN     UKPLN     LKPLN     AKPLN
+        .10       .10       .05      0.00
+ 
+  Below-ground plant nitrogen return rates and refractory fraction
+     SKPRBN    UKPRBN    LKPRBN    AKPRBN    BGNPRF
+     (/day)    (/day)    (/day)    (/day)
+       0.00      0.00      0.00      0.00      0.00
+
+ PARAMETERS TO BE USED FOR FIRST-ORDER KINETIC REACTIONS
+ 
+         Upt-facts   <----------------------------- Temp-parms (theta) ----------------------------->
+     NO3UTF    NH4UTF     THPLN    THKDSA    THKADA    THKIMN     THKAM    THKDNI     THKNI    THKIMA
+         .8        .2      1.07      1.05      1.05      1.07      1.07      1.07      1.05      1.07
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0       .10        .0       3.0        .0
+
+ PARAMETERS FOR UPPER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0    .00030      .004       .55        .0
+
+ PARAMETERS FOR LOWER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0    .00030      .004       .45        .0
+
+ PARAMETERS FOR ACTIVE GROUNDWATER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0       0.0      .030       .20        .0
+
+ PARAMETERS TO BE USED FOR SINGLE-VALUED FREUNDLICH ADSORPTION/DESORPTION CALCULATIONS
+ 
+       CMAX
+      (ppm)
+       500.
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        1.      2.00
+
+ PARAMETERS FOR THE UPPER LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        .7      1.67
+
+ PARAMETERS FOR THE LOWER LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        .7      1.67
+
+ PARAMETERS FOR THE ACTIVE GROUNDWATER LAYER
+ 
+       XFIX        K1        N1
+      (ppm) (complex)
+         .0        5.      1.67
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+
+ SEGMENT-WIDE STORAGES IN SURFACE, UPPER, AND INTERFLOW LAYERS
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+        15.      0.05      0.03       0.3        .0      0.00
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+       500.       0.5       0.5       5.0        .0      0.00
+ 
+   Initial N in interflow, above-ground, and litter storage (lb/ac)
+      IAMSU      INO3     ISLON     ISRON    AGPLTN    LITTRN
+       0.00      0.00      0.00      0.00      0.00      0.00
+
+ SEGMENT-WIDE STORAGES IN LOWER AND ACTIVE GROUNDWATER LAYERS
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+      1500.       5.0       3.0       30.        .0      0.00
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+      1000.      6.00       4.0       2.0        .0      0.00
+
+ TOTAL STORAGE IN THE SEGMENT    (LB/AC) 
+
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN
+  3.015E+03 1.155E+01 7.530E+00 3.730E+01 0.000E+00 0.000E+00
+
+ GRAND TOTAL IS:  3.071E+03
+
+ FINISHED PROCESSING INPUT FOR SECTION NITR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PHOS
+ 
+     VPUTFG    FORPFG    ITMAXP     BNUMP     CNUMP    PUPTFG
+          0         1        20         2         1         0
+ 
+      Atmospheric Deposition Flags
+      PHOSPHATE          ORGANIC P
+    SURF     UPPER     SURF     UPPER
+   FLX CON  FLX CON   FLX CON  FLX CON
+     0   0    0   0     0   0    0   0
+ 
+  Phosphorus plant uptake parms (/day)
+      SKPLP     UKPLP     LKPLP     AKPLP
+        .01        .7        .8        .0
+
+ PARAMETERS TO BE USED FOR FIRST-ORDER KINETIC REACTIONS
+ 
+  Temperature corection parameters (theta)
+      THPLP    THKDSP    THKADP    THKIMP     THKMP
+       1.07      1.05      1.05      1.07      1.07
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+        .02        1.        .0       .02
+
+ PARAMETERS FOR UPPER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+       .002        1.        .0      .002
+
+ PARAMETERS FOR LOWER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+       .005        1.        .0      .002
+
+ PARAMETERS FOR ACTIVE GROUNDWATER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+         .0        .0        .0        .0
+
+ PARAMETERS TO BE USED FOR SINGLE-VALUED FREUNDLICH ADSORPTION/DESORPTION CALCULATIONS
+ 
+       CMAX
+      (ppm)
+       200.
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ PARAMETERS FOR THE UPPER LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ PARAMETERS FOR THE LOWER LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ PARAMETERS FOR THE ACTIVE GROUNDWATER LAYER
+ 
+  Parameters for Freundlich method
+       XFIX        K1        N1
+      (ppm) (complex)
+        30.        5.       1.5
+
+ SEGMENT-WIDE STORAGES IN SURFACE, UPPER, AND INTERFLOW LAYERS
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         .2        5.        1.        1.
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         1.       25.        5.        5.
+ 
+ Phosphate in interflow
+      IP4SU
+    (lb/ac)
+       0.00
+
+ SEGMENT-WIDE STORAGES IN LOWER AND ACTIVE GROUNDWATER LAYERS
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         4.      250.       50.        .0
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         4.      250.       50.        .0
+
+ TOTAL STORAGE IN THE SEGMENT    (LB/AC) 
+
+       ORGP      P4AD      P4SU       PLTP                   
+  9.200E+00 5.300E+02 1.060E+02 6.000E+00
+
+ GRAND TOTAL IS:  6.512E+02
+
+ FINISHED PROCESSING INPUT FOR SECTION PHOS
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION TRACER
+ 
+ Atmospheric Deposition Flags
+    SURF     UPPER
+   FLX CON  FLX CON
+     0   0    0   0
+ 
+ Tracer Name:
+  CHEM6F             
+
+ SEGMENT-WIDE STORAGES
+ 
+ Initial storage of tracer material in topsoil
+      STRSU     UTRSU     ITRSU
+    (lb/ac)   (lb/ac)   (lb/ac)
+         5.      200.       50.
+ 
+  Initial storage of tracer material in subsoil layers (lb/ac)
+      LTRSU     ATRSU
+    (lb/ac)   (lb/ac)
+       100.      100.
+
+ TOTAL STORAGE IN THE SEGMENT:  4.550E+02
+
+ FINISHED PROCESSING INPUT FOR SECTION TRACER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.    2
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING PERVIOUS LAND-SEGMENT NO:   3     TIME STEP(DELT):   60  MINS
+
+ PROCESSING GENERAL INPUT
+ 
+     AIRTFG    SNOWFG    PWATFG     SEDFG     PSTFG     PWGFG    PQALFG    MSTLFG    PESTFG    NITRFG    PHOSFG    TRACFG
+          0         1         1         1         1         0         0         1         0         1         1         1
+ 
+                 Printout level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     4    4    4    4    4    4    4    4    4    4    4    4         1          12
+ 
+            Binary Output level flags                         Print-ivl Print-yrend
+ ATEMP SNOW PWAT SED PSTMP PWTG RQAL MSTL PEST NITR PHOS TRAC      PIVL      PYREND
+     4    4    4    4    4    4    4    4    4    4    4    4         1           9
+ 
+ Perv Land-segment id      Unit systems       Print-file nos     BinaryOutfileNos
+                         IUNITS    OUNITS   English    Metric   English    Metric
+ OTHER                        1         1         1         0         0         0
+
+ FINISHED PROCESSING GENERAL INPUT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION SNOW
+ 
+      ICEFG
+          1
+ 
+     SNOPFG     VMKFG
+          0         0
+ 
+        LAT     MELEV     SHADE    SNOWCF    COVIND     KMELT     TBASE
+    degrees      (ft)                          (in)  (in/d.F)       (F)
+        43.     1225.       0.0      1.45       0.5      0.00      32.0
+ 
+      RDCSN     TSNOW    SNOEVP    CCFACT    MWATER    MGMELT
+              (deg F)                                (in/day)
+       0.12       32.      0.05       0.5      0.08    0.0001
+ 
+  Pack-snow  Pack-ice Pack-watr    RDENPF      DULL    PAKTMP
+       (in)      (in)      (in)                       (deg F)
+        1.4       0.2       0.1       0.2      375.      27.5
+ 
+     COVINX    XLNMLT    SKYCLR
+       (in)      (in)
+       0.50       0.0       1.0
+
+ FINISHED PROCESSING INPUT FOR SECTION SNOW
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PWATER
+ 
+   CSNOFG  RTOPFG    UZFG   VCSFG   VUZFG   VNNFG  VIFWFG  VIRCFG   VLEFG  IFFCFG   HWTFG  IRRGFG  IFRDFG
+        1       0       0       1       1       1       0       0       1       1       0       0       0
+ 
+     FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+             (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
+      0.010       9.0     0.040      250.     0.050       0.5      0.98
+ 
+     PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+     (degF)    (degF)
+        40.       35.       2.0       2.0      0.10       0.0      0.08
+ 
+      CEPSC      UZSN      NSUR     INTFW       IRC     LZETP
+   (inches)  (inches)(nManning)             (1/day)
+       0.00      0.01       0.1       1.2      0.80      0.00
+ 
+        FZG      FZGL
+      (/in)
+       1.00     0.100
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.06      0.06      0.06      0.07      0.07      0.08      0.10      0.10      0.10      0.10      0.07      0.06
+ 
+ Values of Upper Zone Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+        0.8       0.8       0.8       0.8       1.4       1.6       1.6       1.6       1.6       1.6       1.3       1.1
+ 
+ Values of Manning's N at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.30      0.30      0.30      0.30      0.30      0.30      0.30      0.30      0.30      0.30      0.30      0.30
+ 
+ Values of Lower Zone ET at start of each calendar month:
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       0.25      0.25      0.25      0.25      0.30      0.35      0.40      0.40      0.45      0.35      0.30      0.25
+ 
+ Segment-wide storages (inches):
+       CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+       0.05       0.0      0.30       0.0       6.5      0.15      0.10
+
+ FINISHED PROCESSING INPUT FOR SECTION PWATER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION SEDMNT
+ 
+      CRVFG    VSIVFG    SDOPFG
+          1         0         0
+ 
+       SMPF      KRER      JRER     AFFIX     COVER      NVSI
+                                   (/day)          (lb/ac.dy)
+        1.0       .70       2.2      .003       1.0       0.0
+ 
+ Washoff and scour parameters for sediment
+       KSER      JSER      KGER      JGER
+        3.0       2.0       1.0       1.0
+ 
+ Values for start of each calendar month for COVERM
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+        .90       .90       .90       .90       .90       .90       .90       .90       .90       .90       .90       .90
+ 
+ Detached sediment storage (tons/acre)
+       DETS
+        0.1
+
+ FINISHED PROCESSING INPUT FOR SECTION SEDMNT
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PSTEMP
+ 
+        Flags for section PSTEMP
+     SLTVFG    ULTVFG    LGTVFG    TSOPFG
+          0         0         0         0
+ 
+       ASLT      BSLT     ULTP1     ULTP2     LGTP1     LGTP2
+    (deg F) (deg F/F)
+       14.5      .365       0.4       4.0       1.2       6.0
+ 
+   Initial temperatures
+      AIRTC     SLTMP     ULTMP     LGTMP
+    (deg F)   (deg F)   (deg F)   (deg F)
+       60.0      60.0      60.0      60.0
+
+ FINISHED PROCESSING INPUT FOR SECTION PSTEMP
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION MSTLAY
+ 
+      SLMPF      ULPF      LLPF
+        0.5       5.0       1.5
+
+ TOPSOIL MOISTURE STORAGES
+ 
+       Topsoil storages
+      SMSTM     UMSTM     IMSTM
+    (lb/ac)   (lb/ac)   (lb/ac)
+       0.00      0.00      0.00
+
+ FRACTIONAL FLUXES THROUGH TOPSOIL LAYERS
+ 
+        FSO       FSP       FII       FUP       FIO  (/ivl)
+       0.00      0.00      0.00      0.00      0.00
+
+ SUBSOIL MOISTURE STORAGES
+ 
+ Subsoil moisture
+      LMSTM     AMSTM
+    (lb/ac)   (lb/ac)
+       0.00      0.00
+
+ FRACTIONAL FLUXES THROUGH SUBSOIL
+ 
+        FLP      FLDP       FAO   (/ivl)
+       0.00      0.00      0.00
+
+ FINISHED PROCESSING INPUT FOR SECTION MSTLAY
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION NITR
+ 
+           Soil depth (in)                        Bulk density (lb/ft3)
+    Surface     Upper     Lower  Grnd-wat   Surface     Upper     Lower  Grnd-wat
+       0.20      5.71     41.30       60.      62.4      79.2      81.7      85.5
+ 
+       Nitrogen flags
+     VNUTFG    FORAFG    ITMAXA     BNUMN     CNUMN    NUPTFG    FIXNFG    AMVOFG    ALPNFG    VNPRFG
+          0         0        30         2         1         0         0         0         0         0
+ 
+               Atmospheric Deposition Flags
+       NITRATE            AMMONIA           ORGANIC N
+    SURF     UPPER     SURF     UPPER     SURF     UPPER
+   FLX CON  FLX CON   FLX CON  FLX CON   FLX CON  FLX CON
+     0   0    0   0     0   0    0   0     0   0    0   0
+ 
+ Nitrogen plant uptake rates (/day)
+      SKPLN     UKPLN     LKPLN     AKPLN
+        .15       .05       .10      0.00
+ 
+  Below-ground plant nitrogen return rates and refractory fraction
+     SKPRBN    UKPRBN    LKPRBN    AKPRBN    BGNPRF
+     (/day)    (/day)    (/day)    (/day)
+       0.00      0.00      0.00      0.00      0.00
+
+ PARAMETERS TO BE USED FOR FIRST-ORDER KINETIC REACTIONS
+ 
+         Upt-facts   <----------------------------- Temp-parms (theta) ----------------------------->
+     NO3UTF    NH4UTF     THPLN    THKDSA    THKADA    THKIMN     THKAM    THKDNI     THKNI    THKIMA
+         .8        .2      1.07      1.05      1.05      1.07      1.07      1.07      1.05      1.07
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0       .10        .0       3.0        .0
+
+ PARAMETERS FOR UPPER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0    .00030      .004       .55        .0
+
+ PARAMETERS FOR LOWER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0    .00030      .004       .45        .0
+
+ PARAMETERS FOR ACTIVE GROUNDWATER LAYER
+ 
+     Nitrogen first-order parameters (/day)
+      KDSAM     KADAM     KIMNI       KAM      KDNI       KNI     KIMAM
+        .05       .05        .0       0.0      .030       .20        .0
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+ 
+  Organic nitrogen parameters
+       KLON      KRON     KONLR     THNLR
+                         (/day)
+  1.000E+20 1.000E+20      0.00      1.07
+
+ SEGMENT-WIDE STORAGES IN SURFACE, UPPER, AND INTERFLOW LAYERS
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+        15.      0.05      0.03       0.3        .0      0.00
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+       500.       0.5       0.5       5.0        .0      0.00
+ 
+   Initial N in interflow, above-ground, and litter storage (lb/ac)
+      IAMSU      INO3     ISLON     ISRON    AGPLTN    LITTRN
+       0.00      0.00      0.00      0.00      0.00      0.00
+
+ SEGMENT-WIDE STORAGES IN LOWER AND ACTIVE GROUNDWATER LAYERS
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+      1500.       5.0       3.0       30.        .0      0.00
+ 
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN  (lb/ac)
+      1000.      6.00       4.0       2.0        .0      0.00
+
+ TOTAL STORAGE IN THE SEGMENT    (LB/AC) 
+
+      LORGN      AMAD      AMSU       NO3      PLTN     RORGN
+  3.015E+03 1.155E+01 7.530E+00 3.730E+01 0.000E+00 0.000E+00
+
+ GRAND TOTAL IS:  3.071E+03
+
+ FINISHED PROCESSING INPUT FOR SECTION NITR
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION PHOS
+ 
+     VPUTFG    FORPFG    ITMAXP     BNUMP     CNUMP    PUPTFG
+          0         0        30         2         1         0
+ 
+      Atmospheric Deposition Flags
+      PHOSPHATE          ORGANIC P
+    SURF     UPPER     SURF     UPPER
+   FLX CON  FLX CON   FLX CON  FLX CON
+     0   0    0   0     0   0    0   0
+ 
+  Phosphorus plant uptake parms (/day)
+      SKPLP     UKPLP     LKPLP     AKPLP
+        .01        .7        .8        .0
+
+ PARAMETERS TO BE USED FOR FIRST-ORDER KINETIC REACTIONS
+ 
+  Temperature corection parameters (theta)
+      THPLP    THKDSP    THKADP    THKIMP     THKMP
+       1.07      1.05      1.05      1.07      1.07
+
+ PARAMETERS FOR SURFACE LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+        .02        1.        .0       .02
+
+ PARAMETERS FOR UPPER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+       .002        1.        .0      .002
+
+ PARAMETERS FOR LOWER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+       .005        1.        .0      .002
+
+ PARAMETERS FOR ACTIVE GROUNDWATER LAYER
+ 
+  Phosphorus first-order parameters  (/day)
+       KDSP      KADP      KIMP       KMP
+         .0        .0        .0        .0
+
+ SEGMENT-WIDE STORAGES IN SURFACE, UPPER, AND INTERFLOW LAYERS
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         .2        5.        1.        1.
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         1.       25.        5.        5.
+ 
+ Phosphate in interflow
+      IP4SU
+    (lb/ac)
+       0.00
+
+ SEGMENT-WIDE STORAGES IN LOWER AND ACTIVE GROUNDWATER LAYERS
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         4.      250.       50.        .0
+ 
+       ORGP      P4AD      P4SU      PLTP   (lb/ac)
+         4.      250.       50.        .0
+
+ TOTAL STORAGE IN THE SEGMENT    (LB/AC) 
+
+       ORGP      P4AD      P4SU       PLTP                   
+  9.200E+00 5.300E+02 1.060E+02 6.000E+00
+
+ GRAND TOTAL IS:  6.512E+02
+
+ FINISHED PROCESSING INPUT FOR SECTION PHOS
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ PROCESSING INPUT FOR SECTION TRACER
+ 
+ Atmospheric Deposition Flags
+    SURF     UPPER
+   FLX CON  FLX CON
+     0   0    0   0
+ 
+ Tracer Name:
+  CHEM6F             
+
+ SEGMENT-WIDE STORAGES
+ 
+ Initial storage of tracer material in topsoil
+      STRSU     UTRSU     ITRSU
+    (lb/ac)   (lb/ac)   (lb/ac)
+         5.      200.       50.
+ 
+  Initial storage of tracer material in subsoil layers (lb/ac)
+      LTRSU     ATRSU
+    (lb/ac)   (lb/ac)
+       100.      100.
+
+ TOTAL STORAGE IN THE SEGMENT:  4.550E+02
+
+ FINISHED PROCESSING INPUT FOR SECTION TRACER
+ ------------------------------------------------------------------------------------------------------------------------------------
+
+ FINISHED PROCESSING PERVIOUS LAND-SEGMENT NO.    3
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING PERLND   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING DISPLY   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    1  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ TOTAL OUTFLOW OF N (LB/AC)          SUM          0                   4              1         2        64        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    1
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    2  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ TOTAL OUTFLOW OF P (LB/AC)          SUM          0                   4              1         2        64        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    2
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    3  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ TOTAL TRACER CHEM6F (LB/AC)         SUM          0                   4              1         2        64        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    3
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING DISPLY   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING SPEC-ACTIONS BLOCK
+
+ ACTION DEFINITIONS
+   OPERATION       DEFERRAL DATE AND TIME     TYPE  DIST VARIABLE SUBSCRPTS        ADDR   ACT      VALUE
+   TYPE     #   # STEP CODE YEAR/MO/DY HR:MN  CODE       NAME   #1 #2 #3                 CODE
+   PERLND   1   1    0   MI 1976  4 14 24  0     3     0 INFILT                     515  =       0.10000                 
+   PERLND   1   1    0   MI 1976  4 29 12  0     3     0 DETS                      1147  =       1.2000                  
+   PERLND   1   1    0   MI 1976  4 29 12  0     3     0 INFILT                     515  =       0.13000                 
+   PERLND   1   1    0   MI 1976  5 27 12  0     3     0 DETS                      1147  =       2.0000                  
+   PERLND   1   1    0   MI 1976  7  1 12  0     3     0 DETS                      1147  =       1.5000                  
+   PERLND   1   1    0   MI 1976  7 25 12  0     3     0 DETS                      1147  =       1.5000                  
+   PERLND   1   1    0   MI 1976  8 24 24  0     3     0 INFILT                     515  =       0.10000                 
+   PERLND   1   1    0   MI 1976 11  1 12  0     3     0 SPLTN                     5581  =    0.0000E+00                 
+   PERLND   1   1    0   MI 1976 11  1 12  0     3     0 UPLTN                     5589  =    0.0000E+00                 
+   PERLND   1   1    0   MI 1976 11  1 12  0     3     0 LPLTN                     5601  =    0.0000E+00                 
+   PERLND   1   1    0   MI 1976 11  1 12  0     3     0 SORGN                     5577  =      15.000                   
+   PERLND   1   1    0   MI 1976 11  1 12  0     3     0 UORGN                     5585  =     500.00                    
+   PERLND   1   1    0   MI 1976 11  1 12  0     3     0 LORGN                     5597  =    1500.0                     
+   PERLND   1   1    0   MI 1976 12  1 24  0     3     0 INFILT                     515  =       0.06000                 
+   PERLND   2   2    0   MI 1976  4 14 24  0     3     0 INFILT                     515  =       0.10000                 
+   PERLND   2   2    0   MI 1976  5  7 12  0     3     0 INFILT                     515  =       0.13000                 
+   PERLND   2   2    0   MI 1976  5  7 12  0     3     0 DETS                      1147  =       2.0000                  
+   PERLND   2   2    0   MI 1976  5  7 12  0     3     0 SAMAD                     5578  +=     12.500                   
+   PERLND   2   2    0   MI 1976  5  7 12  0     3     0 UAMAD                     5586  +=     50.000                   
+   PERLND   2   2    0   MI 1976  6 20 12  0     3     0 DETS                      1147  =       1.5000                  
+   PERLND   2   2    0   MI 1976  6 20 12  0     3     0 SAMAD                     5578  +=     15.000                   
+   PERLND   2   2    0   MI 1976  6 20 12  0     3     0 UAMAD                     5586  +=     22.500                   
+   PERLND   2   2    0   MI 1976  7 15 12  0     3     0 DETS                      1147  =       1.5000                  
+   PERLND   2   2    0   MI 1976  8 24 24  0     3     0 INFILT                     515  =       0.10000                 
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 SPLTN                     5581  =    0.0000E+00                 
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 UPLTN                     5589  =    0.0000E+00                 
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 LPLTN                     5601  =    0.0000E+00                 
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 SORGN                     5577  =      15.000                   
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 UORGN                     5585  =     500.00                    
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 LORGN                     5597  =    1500.0                     
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 DETS                      1147  =       1.2000                  
+   PERLND   2   2    0   MI 1976 11  1 12  0     3     0 UAMAD                     5586  +=     25.000                   
+   PERLND   2   2    0   MI 1976 12  1 24  0     3     0 INFILT                     515  =       0.06000                 
+   PERLND   3   3    0   MI 1976  4  9 24  0     3     0 INFILT                     515  =       0.15000                 
+   PERLND   3   3    0   MI 1976 12  5 24  0     3     0 INFILT                     515  =       0.08000                 
+
+ FINISHED PROCESSING SPEC-ACTIONS BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+
+ INGROUP NO.  1    OSVSZ= 7500    INPAD WIDTH= 42540 INTERVALS    MAXROW=   12  RUNWID=    0
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND    1
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     39        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1    123       120      SAME     1.000E+00    ATEMP   AIRTMP   1   1
+     WDM1     41      1440      DIV      7.000E-01    EXTNL   PETINP   1   1
+     WDM1     42      1440      DIV      1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46       120      DIV      1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1    126      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     NITR    PONITR   1   1    1.000E+00  DISPLY    1 INPUT   TIMSER   1   1
+     PHOS    POPHOS   1   1    1.000E+00  DISPLY    2 INPUT   TIMSER   1   1
+     TRACER  POTRS    1   1    1.000E+00  DISPLY    3 INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND    2
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     39        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1    123       120      SAME     1.000E+00    ATEMP   AIRTMP   1   1
+     WDM1     41      1440      DIV      7.000E-01    EXTNL   PETINP   1   1
+     WDM1     42      1440      DIV      1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46       120      DIV      1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1    126      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     NITR    PONITR   1   1    1.000E+00  DISPLY    1 INPUT   TIMSER   1   1
+     PHOS    POPHOS   1   1    1.000E+00  DISPLY    2 INPUT   TIMSER   1   1
+     TRACER  POTRS    1   1    1.000E+00  DISPLY    3 INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   PERLND    3
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    131        60      SAME     1.000E+00    EXTNL   PREC     1   1
+     WDM1    122       120      SAME     1.000E+00    ATEMP   AIRTMP   1   1
+     WDM1     41      1440      DIV      7.000E-01    EXTNL   PETINP   1   1
+     WDM1     42      1440      DIV      1.000E+00    EXTNL   WINMOV   1   1
+     WDM1     46       120      DIV      1.000E+00    EXTNL   SOLRAD   1   1
+     WDM1    125      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     NITR    PONITR   1   1    1.000E+00  DISPLY    1 INPUT   TIMSER   1   1
+     PHOS    POPHOS   1   1    1.000E+00  DISPLY    2 INPUT   TIMSER   1   1
+     TRACER  POTRS    1   1    1.000E+00  DISPLY    3 INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    1
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND    1 NITR    PONITR   1   1  1.000E+00    INPUT   TIMSER   1   1
+     PERLND    2 NITR    PONITR   1   1  1.000E+00    INPUT   TIMSER   1   1
+     PERLND    3 NITR    PONITR   1   1  1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    2
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND    1 PHOS    POPHOS   1   1  1.000E+00    INPUT   TIMSER   1   1
+     PERLND    2 PHOS    POPHOS   1   1  1.000E+00    INPUT   TIMSER   1   1
+     PERLND    3 PHOS    POPHOS   1   1  1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    3
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     PERLND    1 TRACER  POTRS    1   1  1.000E+00    INPUT   TIMSER   1   1
+     PERLND    2 TRACER  POTRS    1   1  1.000E+00    INPUT   TIMSER   1   1
+     PERLND    3 TRACER  POTRS    1   1  1.000E+00    INPUT   TIMSER   1   1
+
+ FINISHED PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+ ====================================================================================================================================
+ 
+ INTERPRETATION OF RUN DATA SET COMPLETE
+ 
+
+ COMMENCING EXECUTION
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/ 1  1: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     1                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  2.0162E-07    0.00001   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/ 1  1: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     1                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  2.0162E-07    0.00001   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 14: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     1                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  1.4147E-06    0.00004   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 14: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     1                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  1.4147E-06    0.00004   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 15: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     1                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  3.4819E-07    0.00001   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ ************************************************************************************
+ *                                                                                  *
+ *  The count for the WARNING printed above has reached its maximum.                *
+ *                                                                                  *
+ *  If the condition is encountered again the message will not be repeated.         *
+ *                                                                                  *
+ ************************************************************************************
+ ************************************************************************************
+
+ SPEC-ACT: PERLND    1 AT 1976/ 4/15  1: 0
+   INFILT               ORIG:      0.03000          RESET TO =       0.10000
+
+ SPEC-ACT: PERLND    1 AT 1976/ 4/29 13: 0
+   DETS                 ORIG:   8.2713E-01          RESET TO =    1.2000E+00
+   INFILT               ORIG:      0.10000          RESET TO =       0.13000
+
+ SPEC-ACT: PERLND    1 AT 1976/ 5/27 13: 0
+   DETS                 ORIG:   7.5327E-01          RESET TO =    2.0000E+00
+
+ SPEC-ACT: PERLND    1 AT 1976/ 7/ 1 13: 0
+   DETS                 ORIG:      1.5436           RESET TO =       1.5000 
+
+ SPEC-ACT: PERLND    1 AT 1976/ 7/25 13: 0
+   DETS                 ORIG:      0.79758          RESET TO =       1.5000 
+
+ SPEC-ACT: PERLND    1 AT 1976/ 8/25  1: 0
+   INFILT               ORIG:      0.13000          RESET TO =       0.10000
+
+ SPEC-ACT: PERLND    1 AT 1976/11/ 1 13: 0
+   SPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
+   UPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
+   LPLTN                ORIG:   2.1217E+01          RESET TO =    0.0000E+00
+   SORGN                ORIG:   1.4810E+01          RESET TO =    1.5000E+01
+   UORGN                ORIG:    500.00             RESET TO =     500.00   
+   LORGN                ORIG:   1483.0              RESET TO =    1500.0    
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   238   1                                                     *
+ *                                                                                  *
+ *  The continuity error reported below is greater than 1 part in 1000 and is       *
+ *  therefore considered high.                                                      *
+ *                                                                                  *
+ *  Did you specify any "special actions"?  If so, they could account for it.       *
+ *                                                                                  *
+ *  Relevant data are:                                                              *
+ *  DATE/TIME: 1976/11/30 24: 0                                                     *
+ *                                                                                  *
+ *  PERLND :    1                                                                   *
+ *                                                                                  *
+ *      RELERR       STORS        STOR       MATIN      MATDIF                      *
+ *  -1.305E-03  3053.6      3049.4         0.00000    -0.22480                      *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *                                                                                  *
+ *  RELERR is the relative error (ERROR/REFVAL).                                    *
+ *  ERROR  is (STOR-STORS) - MATDIF.                                                *
+ *  REFVAL is the reference value (STORS+MATIN).                                    *
+ *  STOR   is the storage of material in the processing unit (land-segment or       *
+ *            reach/reservior) at the end of the present interval.                  *
+ *  STORS  is the storage of material in the pu at the start of the present         *
+ *            printout reporting period.                                            *
+ *  MATIN  is the total inflow of material to the pu during the present printout    *
+ *            reporting period.                                                     *
+ *  MATDIF is the net inflow (inflow-outflow) of material to the pu during the      *
+ *            present printout reporting period.                                    *
+ *                                                                                  *
+ ************************************************************************************
+ 
+
+ SPEC-ACT: PERLND    1 AT 1976/12/ 2  1: 0
+   INFILT               ORIG:      0.10000          RESET TO =       0.06000
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   238   1                                                     *
+ *                                                                                  *
+ *  The continuity error reported below is greater than 1 part in 1000 and is       *
+ *  therefore considered high.                                                      *
+ *                                                                                  *
+ *  Did you specify any "special actions"?  If so, they could account for it.       *
+ *                                                                                  *
+ *  Relevant data are:                                                              *
+ *  DATE/TIME: 1976/12/31 24: 0                                                     *
+ *                                                                                  *
+ *  PERLND :    1                                                                   *
+ *                                                                                  *
+ *      RELERR       STORS        STOR       MATIN      MATDIF                      *
+ *  -1.192E-03  3071.4      3049.2         0.00000   -18.479                        *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *                                                                                  *
+ *  RELERR is the relative error (ERROR/REFVAL).                                    *
+ *  ERROR  is (STOR-STORS) - MATDIF.                                                *
+ *  REFVAL is the reference value (STORS+MATIN).                                    *
+ *  STOR   is the storage of material in the processing unit (land-segment or       *
+ *            reach/reservior) at the end of the present interval.                  *
+ *  STORS  is the storage of material in the pu at the start of the present         *
+ *            printout reporting period.                                            *
+ *  MATIN  is the total inflow of material to the pu during the present printout    *
+ *            reporting period.                                                     *
+ *  MATDIF is the net inflow (inflow-outflow) of material to the pu during the      *
+ *            present printout reporting period.                                    *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 14: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     2                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  8.4007E-08    0.00000   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 14: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     2                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  8.4007E-08    0.00000   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 15: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     2                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  3.4488E-07    0.00001   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 15: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     2                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  3.4488E-07    0.00001   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/12 16: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     2                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  3.4645E-07    0.00001   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ ************************************************************************************
+ *                                                                                  *
+ *  The count for the WARNING printed above has reached its maximum.                *
+ *                                                                                  *
+ *  If the condition is encountered again the message will not be repeated.         *
+ *                                                                                  *
+ ************************************************************************************
+ ************************************************************************************
+
+ SPEC-ACT: PERLND    2 AT 1976/ 4/15  1: 0
+   INFILT               ORIG:      0.03000          RESET TO =       0.10000
+
+ SPEC-ACT: PERLND    2 AT 1976/ 5/ 7 13: 0
+   INFILT               ORIG:      0.10000          RESET TO =       0.13000
+   DETS                 ORIG:   6.3819E-01          RESET TO =    2.0000E+00
+   SAMAD                ORIG:   1.5780E-03  +     1.2500E+01 =    1.2502E+01
+   UAMAD                ORIG:   6.0115E-01  +     5.0000E+01 =    5.0601E+01
+
+ SPEC-ACT: PERLND    2 AT 1976/ 6/20 13: 0
+   DETS                 ORIG:      1.3415           RESET TO =       1.5000 
+   SAMAD                ORIG:   8.0727E-03  +     1.5000E+01 =    1.5008E+01
+   UAMAD                ORIG:     27.940    +       22.500   =    5.0440E+01
+
+ SPEC-ACT: PERLND    2 AT 1976/ 7/15 13: 0
+   DETS                 ORIG:      0.92108          RESET TO =       1.5000 
+
+ SPEC-ACT: PERLND    2 AT 1976/ 8/25  1: 0
+   INFILT               ORIG:      0.13000          RESET TO =       0.10000
+
+ SPEC-ACT: PERLND    2 AT 1976/11/ 1 13: 0
+   SPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
+   UPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
+   LPLTN                ORIG:   3.4698E+01          RESET TO =    0.0000E+00
+   SORGN                ORIG:   1.4789E+01          RESET TO =    1.5000E+01
+   UORGN                ORIG:    500.00             RESET TO =     500.00   
+   LORGN                ORIG:   1483.0              RESET TO =    1500.0    
+   DETS                 ORIG:   1.3985E-01          RESET TO =    1.2000E+00
+   UAMAD                ORIG:     81.630    +       25.000   =     106.63   
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   238   1                                                     *
+ *                                                                                  *
+ *  The continuity error reported below is greater than 1 part in 1000 and is       *
+ *  therefore considered high.                                                      *
+ *                                                                                  *
+ *  Did you specify any "special actions"?  If so, they could account for it.       *
+ *                                                                                  *
+ *  Relevant data are:                                                              *
+ *  DATE/TIME: 1976/11/30 24: 0                                                     *
+ *                                                                                  *
+ *  PERLND :    2                                                                   *
+ *                                                                                  *
+ *      RELERR       STORS        STOR       MATIN      MATDIF                      *
+ *  -5.487E-03  3154.4      3161.7        25.000    2.4755E+01                      *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *                                                                                  *
+ *  RELERR is the relative error (ERROR/REFVAL).                                    *
+ *  ERROR  is (STOR-STORS) - MATDIF.                                                *
+ *  REFVAL is the reference value (STORS+MATIN).                                    *
+ *  STOR   is the storage of material in the processing unit (land-segment or       *
+ *            reach/reservior) at the end of the present interval.                  *
+ *  STORS  is the storage of material in the pu at the start of the present         *
+ *            printout reporting period.                                            *
+ *  MATIN  is the total inflow of material to the pu during the present printout    *
+ *            reporting period.                                                     *
+ *  MATDIF is the net inflow (inflow-outflow) of material to the pu during the      *
+ *            present printout reporting period.                                    *
+ *                                                                                  *
+ ************************************************************************************
+ 
+
+ SPEC-ACT: PERLND    2 AT 1976/12/ 2  1: 0
+   INFILT               ORIG:      0.10000          RESET TO =       0.06000
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   238   1                                                     *
+ *                                                                                  *
+ *  The continuity error reported below is greater than 1 part in 1000 and is       *
+ *  therefore considered high.                                                      *
+ *                                                                                  *
+ *  Did you specify any "special actions"?  If so, they could account for it.       *
+ *                                                                                  *
+ *  Relevant data are:                                                              *
+ *  DATE/TIME: 1976/12/31 24: 0                                                     *
+ *                                                                                  *
+ *  PERLND :    2                                                                   *
+ *                                                                                  *
+ *      RELERR       STORS        STOR       MATIN      MATDIF                      *
+ *  -5.356E-03  3071.4      3161.5       125.00     1.0725E+02                      *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *                                                                                  *
+ *  RELERR is the relative error (ERROR/REFVAL).                                    *
+ *  ERROR  is (STOR-STORS) - MATDIF.                                                *
+ *  REFVAL is the reference value (STORS+MATIN).                                    *
+ *  STOR   is the storage of material in the processing unit (land-segment or       *
+ *            reach/reservior) at the end of the present interval.                  *
+ *  STORS  is the storage of material in the pu at the start of the present         *
+ *            printout reporting period.                                            *
+ *  MATIN  is the total inflow of material to the pu during the present printout    *
+ *            reporting period.                                                     *
+ *  MATDIF is the net inflow (inflow-outflow) of material to the pu during the      *
+ *            present printout reporting period.                                    *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/11 15: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  1.9585E-07    0.00000 2.2651E+01                                                *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/11 15: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  1.9585E-07    0.00000 2.2651E+01                                                *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/11 16: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  4.1247E-07    0.00001 2.2651E+01                                                *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/11 16: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  4.1247E-07    0.00001 2.2651E+01                                                *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/13 12: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  3.6084E-07    0.00001 2.2651E+01                                                *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ ************************************************************************************
+ *                                                                                  *
+ *  The count for the WARNING printed above has reached its maximum.                *
+ *                                                                                  *
+ *  If the condition is encountered again the message will not be repeated.         *
+ *                                                                                  *
+ ************************************************************************************
+ ************************************************************************************
+
+ SPEC-ACT: PERLND    3 AT 1976/ 4/10  1: 0
+   INFILT               ORIG:      0.04000          RESET TO =       0.15000
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   310   4                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 8/15 12: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3     Layer: GRND                                    *
+ *                                                                                  *
+ *  A negative value is projected for solution ammonium.  To avoid the problem,     *
+ *  fluxes will be arbitrarily reduced.  Relevant data are:                         *
+ *                                                                                  *
+ *        FRAC       AMSU      TAMSU      ADSAM      DESAM      AMMIF      IMMAM    *
+ *  0.0000E+00       0.00 -2.792E-05       0.00 0.0000E+00       0.00 0.0000E+00    *
+ *                                                                                  *
+ *       NITRF       UTAM      UTAMA       AMVO                                     *
+ *        0.00 0.0000E+00       0.00 0.0000E+00                                     *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FRAC is the factor by which fluxes will be reduced to avoid the negative        *
+ *       concentration                                                              *
+ *  AMSU is the mass of solution amm. before reaction (LB/ACRE or KG/HA)            *
+ *  TAMSU is the projected (negative) mass of solution amm. after reaction          *
+ *       (LB/ACRE or KG/HA)                                                         *
+ *  ADSAM is the projected adsorption flux (LB/ACRE or KG/HA) per interval          *
+ *  DESAM is the projected desorption flux per interval                             *
+ *  AMMIF is the projected ammonification (LB/ACRE or KG/HA) per interval           *
+ *  IMMAM is the projected immobilization of ammonium (LB/ACRE or KG/HA)            *
+ *        per interval                                                              *
+ *  NITRF is the projected nitrification (LB/ACRE or KG/HA) per interval            *
+ *  UTAM is the projected below-ground plant uptake of ammonium (LB/ACRE            *
+ *        or KG/HA) per interval                                                    *
+ *  UTAMA is the projected above-ground plant uptake of ammonium (LB/ACRE           *
+ *        or KG/HA) per interval                                                    *
+ *  AMVO is the projected ammonia volatilization (LB/ACRE or KG/HA) per             *
+ *       interval                                                                   *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   310   4                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 8/20 18: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3     Layer: GRND                                    *
+ *                                                                                  *
+ *  A negative value is projected for solution ammonium.  To avoid the problem,     *
+ *  fluxes will be arbitrarily reduced.  Relevant data are:                         *
+ *                                                                                  *
+ *        FRAC       AMSU      TAMSU      ADSAM      DESAM      AMMIF      IMMAM    *
+ *  0.0000E+00       0.00 -1.654E-04       0.00 0.0000E+00       0.00 0.0000E+00    *
+ *                                                                                  *
+ *       NITRF       UTAM      UTAMA       AMVO                                     *
+ *        0.00 0.0000E+00       0.00 0.0000E+00                                     *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FRAC is the factor by which fluxes will be reduced to avoid the negative        *
+ *       concentration                                                              *
+ *  AMSU is the mass of solution amm. before reaction (LB/ACRE or KG/HA)            *
+ *  TAMSU is the projected (negative) mass of solution amm. after reaction          *
+ *       (LB/ACRE or KG/HA)                                                         *
+ *  ADSAM is the projected adsorption flux (LB/ACRE or KG/HA) per interval          *
+ *  DESAM is the projected desorption flux per interval                             *
+ *  AMMIF is the projected ammonification (LB/ACRE or KG/HA) per interval           *
+ *  IMMAM is the projected immobilization of ammonium (LB/ACRE or KG/HA)            *
+ *        per interval                                                              *
+ *  NITRF is the projected nitrification (LB/ACRE or KG/HA) per interval            *
+ *  UTAM is the projected below-ground plant uptake of ammonium (LB/ACRE            *
+ *        or KG/HA) per interval                                                    *
+ *  UTAMA is the projected above-ground plant uptake of ammonium (LB/ACRE           *
+ *        or KG/HA) per interval                                                    *
+ *  AMVO is the projected ammonia volatilization (LB/ACRE or KG/HA) per             *
+ *       interval                                                                   *
+ *                                                                                  *
+ ************************************************************************************
+ 
+
+ SPEC-ACT: PERLND    3 AT 1976/12/ 6  1: 0
+   INFILT               ORIG:      0.15000          RESET TO =       0.08000
+ 
+ End of Job

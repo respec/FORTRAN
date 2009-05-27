@@ -1,0 +1,1456 @@
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 1
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.48      0.45      0.04      0.27      1.91      0.50      0.01      0.07
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.23      1.00      0.89     787.0      0.60      30.1      17.0      32.3
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.17      0.25      0.00      0.12      1.34      1.35
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.001   1.941E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.475     0.039     0.000     0.200     0.000     5.100     0.136     0.124     0.729     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.344     0.001     0.000     0.043     0.044     0.014
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.001     0.001     0.000     0.000     0.000     0.000     0.001
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.049     1.303     0.000     1.160     0.129
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.534E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 2
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.08      0.07      0.01      0.01      0.33      0.50      0.00      0.00
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.23      1.00      0.15     201.5      0.65      30.6      29.2      32.7
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     2.34      1.91      0.07      0.06      2.32      2.96
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.466E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.379     0.030     0.000     0.499     0.000     7.241     0.609     0.574     0.987     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.272     0.005     0.004     0.167     0.175     0.071
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.122     0.122     0.000     0.000     0.000     0.000     0.122
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.004     0.315     2.835     0.016     2.141     0.639
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.747E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 3
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     3.12      2.48      0.39      0.05      2.90      2.61
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.954E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.775     0.000     0.000     0.649     0.011     8.900     1.216     1.223     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.919     0.008     0.066     0.888     0.962     0.167
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.190     0.168     0.031     0.006     0.000     0.395
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.076     0.594     3.081     0.276     1.689     1.501
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.230E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 4
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.552     0.000     0.000     1.783     0.002     9.363     1.403     1.498     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    6.170     0.011     0.156     1.140     1.307     0.165
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.045     0.718     1.368     0.677     0.157     0.000     2.921
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.148     2.668     2.625     0.165     1.140     1.485
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.695E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 5
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.991     0.000     0.000     1.159     0.002     8.902     0.929     1.008     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.470     0.003     0.016     1.098     1.117     0.096
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.454     0.492     2.006     1.084     0.237     0.000     3.819
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.015     1.381     1.578     0.000     0.623     0.860
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.602E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 6
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.503     0.000     0.000     0.652     0.001     7.230     0.620     0.613     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.910     0.001     0.021     0.570     0.593     0.066
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.818     2.123     2.470     0.329     0.000     5.740
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.020     1.617     1.454     0.001     0.799     0.591
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.490E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 7
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.443     0.023     0.000     0.196     0.000     4.143     0.081     0.044     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.540     0.000     0.002     0.198     0.201     0.006
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.613     0.607     3.775     0.398     0.000     5.393
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.150     0.752     0.000     0.688     0.058
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.004E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 8
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    0.920     0.000     0.000     0.026     0.000     0.894     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.190     0.000     0.000     0.005     0.005     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.213     0.169     3.249     0.077     0.000     3.708
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.633E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/ 9
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    0.432     0.000     0.000     0.006     0.000     0.426     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.610     0.000     0.000     0.000     0.000     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.457     0.431     0.021     0.646     0.000     0.000     1.098
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.179     0.000     0.179     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.530E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/10
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.522     0.033     0.000     0.005     0.000     1.480     0.004     0.004     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.730     0.000     0.000     0.000     0.000     0.001
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.935     0.393     0.003     0.239     0.004     0.000     0.639
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     1.301     0.000     1.292     0.008
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.162E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/11
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.18      0.17      0.01      0.00      1.15      0.17      0.02      0.31
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.15      0.27      1.00      65.5      0.73      16.9      -5.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.13      0.19      0.00      0.00      0.00      0.01
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.885E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.409     0.000     0.000     0.004     0.000     1.404     0.000     0.000     1.000     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.220     0.033     0.000     0.075     0.003     0.000     0.113
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.522E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                                              REPORT FOR MONTH 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.43      0.40      0.03      0.38      1.02      0.50      0.06      0.45
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.39      1.00      0.80     554.0      0.60       9.4     -16.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.48      0.70      0.00      0.08      0.37      1.09
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.795E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.772     0.039     0.000     0.006     0.000     1.724     0.003     0.003     0.616     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.367     0.000     0.000     0.001     0.001     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.002     0.002     0.000     0.000     0.000     0.000     0.002
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     0.324     0.000     0.320     0.004
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.775E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BEANS                               REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.43      0.40      0.03      0.38      1.02      0.50      0.06      0.45
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.39      1.00      0.80     554.0      0.60       9.4     -16.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                    23.86      5.52      0.46      0.32      6.93      8.04
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.680E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.772     0.039     0.000     0.006     0.000     1.724     0.003     0.003     0.616     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   26.522     0.029     0.266     4.111     4.405     0.586
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   35.353     4.026     6.465    12.247     1.211     0.000    23.948
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.266     6.779    15.433     0.459    10.031     5.274
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.071E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 1
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.48      0.45      0.04      0.27      1.91      0.50      0.01      0.07
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.23      1.00      0.89     787.0      0.60      30.1      17.0      32.3
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.17      0.25      0.00      0.12      1.34      1.35
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.001   1.941E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.477     0.119     0.000     0.149     0.000     5.075     0.133     0.121     0.729     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.344     0.001     0.000     0.041     0.043     0.014
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.001     0.001     0.000     0.000     0.000     0.000     0.001
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.048     1.274     0.000     1.135     0.125
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.534E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 2
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.08      0.07      0.01      0.01      0.33      0.50      0.00      0.00
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.23      1.00      0.15     201.5      0.65      30.6      29.2      32.7
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     2.34      1.91      0.07      0.06      2.32      2.96
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.466E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.386     0.119     0.000     0.458     0.000     7.211     0.598     0.563     0.987     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.272     0.004     0.004     0.163     0.171     0.070
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.122     0.122     0.000     0.000     0.000     0.000     0.122
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.004     0.313     2.829     0.004     2.136     0.628
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.749E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 3
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     3.12      2.48      0.39      0.05      2.90      2.61
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.954E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.787     0.063     0.000     0.686     0.014     8.854     1.170     1.171     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.919     0.008     0.068     0.861     0.937     0.159
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.351     0.058     0.010     0.002     0.000     0.421
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.083     0.566     2.968     0.280     1.654     1.435
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.231E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 4
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.422     0.000     0.000     1.603     0.003     9.402     1.415     1.503     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    6.170     0.013     0.196     1.119     1.328     0.167
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.045     1.058     1.240     0.602     0.140     0.000     3.040
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.184     2.428     2.550     0.270     1.150     1.504
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.696E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 5
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.862     0.000     0.000     1.073     0.002     8.904     0.883     0.953     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.470     0.002     0.016     1.075     1.093     0.086
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.454     0.694     1.878     1.048     0.231     0.000     3.851
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.015     1.348     1.411     0.000     0.551     0.774
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.589E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 6
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.409     0.000     0.000     0.579     0.001     7.248     0.580     0.566     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.910     0.001     0.020     0.527     0.548     0.061
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     1.045     1.993     2.396     0.321     0.000     5.755
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.019     1.502     1.344     0.002     0.740     0.545
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.477E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 7
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.388     0.045     0.000     0.170     0.000     4.114     0.059     0.023     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.540     0.000     0.002     0.175     0.177     0.006
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.665     0.549     3.766     0.399     0.000     5.378
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.140     0.689     0.000     0.632     0.052
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   9.949E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 8
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    0.899     0.000     0.000     0.020     0.000     0.879     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.190     0.000     0.000     0.003     0.003     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.235     0.150     3.235     0.056     0.000     3.677
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.578E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/ 9
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    0.412     0.000     0.000     0.004     0.000     0.409     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.610     0.000     0.000     0.000     0.000     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.457     0.449     0.016     0.631     0.000     0.000     1.096
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.161     0.000     0.161     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.509E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/10
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.461     0.108     0.000     0.003     0.000     1.347     0.003     0.003     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.730     0.000     0.000     0.000     0.000     0.001
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.935     0.466     0.002     0.210     0.002     0.000     0.680
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     1.154     0.000     1.148     0.006
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.142E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/11
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.18      0.17      0.01      0.00      1.15      0.17      0.02      0.31
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.15      0.27      1.00      65.5      0.73      16.9      -5.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.13      0.19      0.00      0.00      0.00      0.01
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.885E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.309     0.000     0.000     0.003     0.000     1.306     0.000     0.000     1.000     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.001     0.001     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.220     0.108     0.000     0.041     0.003     0.000     0.151
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.461E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                               REPORT FOR MONTH 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.43      0.40      0.03      0.38      1.02      0.50      0.06      0.45
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.39      1.00      0.80     554.0      0.60       9.4     -16.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.48      0.70      0.00      0.08      0.37      1.09
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.795E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.673     0.120     0.000     0.004     0.000     1.547     0.002     0.002     0.616     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.367     0.000     0.000     0.000     0.001     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.002     0.002     0.000     0.000     0.000     0.000     0.002
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     0.244     0.000     0.241     0.003
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.676E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          CORN                                REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.43      0.40      0.03      0.38      1.02      0.50      0.06      0.45
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.39      1.00      0.80     554.0      0.60       9.4     -16.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                    23.86      5.52      0.46      0.32      6.93      8.04
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.680E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.673     0.120     0.000     0.004     0.000     1.547     0.002     0.002     0.616     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   26.522     0.029     0.306     3.966     4.302     0.564
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   35.353     5.194     5.887    11.939     1.153     0.000    24.174
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.307     6.347    14.625     0.556     9.546     5.072
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.071E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 1
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.36      0.33      0.03      0.24      1.46      0.50      0.02      0.09
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.23      1.00      0.67     800.0      0.60      24.6      14.0      32.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.00      0.00      0.00      0.10      1.23      1.20
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.694E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.088     0.057     0.000     0.353     0.000     7.386     0.291     0.243     0.760     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.230     0.001     0.001     0.110     0.111     0.028
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.004     0.004     0.000     0.000     0.000     0.000     0.004
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.054     1.164     0.000     0.885     0.251
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.231E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 2
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.01      0.01      0.00      0.01      0.02      0.42      0.00      0.06
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.35      1.00      0.02     182.5      0.66      29.0      24.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.80      0.43      0.00      0.04      0.75      1.49
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.977E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.920     0.057     0.000     0.424     0.000     8.070     0.368     0.304     0.993     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.248     0.001     0.001     0.211     0.213     0.032
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.172     0.172     0.000     0.000     0.000     0.000     0.172
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.070     1.004     0.000     0.684     0.288
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   9.336E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 3
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     3.80      1.59      0.58      0.04      2.14      1.91
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.181E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.021     0.016     0.000     1.090     0.010     9.734     1.171     1.120     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.275     0.004     0.012     0.570     0.586     0.153
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.473     0.318     0.075     0.036     0.006     0.000     0.435
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.022     0.754     3.219     0.013     1.700     1.379
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.319E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 4
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   13.071     0.000     0.000     1.413     0.017    10.281     1.360     1.451     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    5.900     0.009     0.248     1.223     1.479     0.172
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.054     0.812     1.527     0.722     0.137     0.000     3.198
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.255     2.184     2.656     0.335     1.269     1.549
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.792E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 5
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.964     0.000     0.000     0.553     0.001     9.441     0.969     1.065     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.100     0.005     0.027     1.154     1.185     0.116
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.414     0.542     1.377     1.707     0.280     0.000     3.906
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.010     0.517     2.026     0.000     0.868     1.042
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.617E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 6
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.472     0.000     0.000     0.426     0.000     7.599     0.446     0.448     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.200     0.001     0.016     0.583     0.600     0.050
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     1.057     1.070     2.520     0.394     0.000     5.042
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.016     0.944     1.182     0.000     0.678     0.454
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.416E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 7
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    6.874     0.000     0.000     0.689     0.004     6.088     0.092     0.078     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.600     0.000     0.007     0.119     0.127     0.019
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.662     0.466     2.519     0.405     0.000     4.052
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.010     0.729     1.199     0.000     1.009     0.171
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.107E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 8
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.009     0.000     0.000     0.381     0.001     4.627     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.900     0.000     0.008     0.011     0.020     0.010
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.501     0.694     2.364     0.175     0.000     3.734
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.005     0.386     1.007     0.000     0.903     0.094
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.774E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/ 9
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    3.673     0.000     0.000     0.151     0.000     3.522     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.000     0.000     0.002     0.002     0.003     0.004
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.378     0.210     0.296     1.792     0.031     0.000     2.329
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.066     0.723     0.000     0.687     0.033
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.009E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/10
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.208     0.037     0.000     0.118     0.000     4.023     0.030     0.028     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.500     0.001     0.000     0.006     0.007     0.006
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.979     0.321     0.066     0.551     0.015     0.000     0.953
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.032     1.109     0.000     1.052     0.051
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.173E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/11
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.056     0.000     0.000     0.109     0.000     3.940     0.007     0.003     1.000     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.010     0.010     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.219     0.037     0.009     0.083     0.014     0.000     0.142
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.208E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                                              REPORT FOR MONTH 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.23      0.21      0.02      0.21      0.32      0.42      0.03      0.46
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.65      1.00      0.50     627.5      0.60       9.1     -20.0      32.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.30      0.43      0.00      0.06      0.15      0.87
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.350E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.187     0.060     0.000     0.110     0.000     4.010     0.007     0.004     0.788     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.148     0.000     0.000     0.004     0.004     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.014     0.011     0.000     0.001     0.000     0.000     0.013
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     0.077     0.000     0.072     0.004
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.204E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          OTHER                               REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.23      0.21      0.02      0.21      0.32      0.42      0.03      0.46
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.65      1.00      0.50     627.5      0.60       9.1     -20.0      32.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                    24.10      2.46      0.58      0.24      4.26      5.47
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.735E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.187     0.060     0.000     0.110     0.000     4.010     0.007     0.004     0.788     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   26.102     0.021     0.322     4.002     4.345     0.591
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   35.391     4.647     5.579    12.296     1.458     0.000    23.980
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.322     5.737    15.364     0.348     9.805     5.316
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.310E+01

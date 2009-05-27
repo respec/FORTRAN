@@ -1,0 +1,233 @@
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+ 
+   Developed for:                Modified and Maintained by
+ 
+     U.S. Environmental            Aqua Terra Consultants
+       Protection Agency           (650)962-1864
+     Office of Research            email: hspf@aquaterra.com
+       and Development
+     Center for Exposure
+       Assessment Modeling
+     Athens, Georgia
+     (706)355-8400
+     email: ceam@epamail.epa.gov
+ 
+   In cooperation with:
+ 
+     U.S. Geological Survey                Release 12.2
+     Water Resources Discipline            July 2005
+     Office of Surface Water
+     Reston, Virginia
+     email: h2osoft@usgs.gov
+ 
+ 
+ Start of Job
+ 
+ PREPROCESSING USERS CONTROL INPUT.
+ 
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+ 
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND DURANL      
+ FOUND END DURANL      
+ FOUND MUTSIN      
+ FOUND END MUTSIN      
+ FOUND NETWORK     
+ FOUND END NETWORK     
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    Version 11 test run:  DURANL of simulated and observed flows
+
+   START       1976              END    1976
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1975/12/31 24:60    1976/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  3
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  2
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG =    1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  EMFG =     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     OPN SEQUENCE                                                                    
+         INGRP              INDELT 24:00                                             
+           MUTSIN       1                                                            
+           DURANL       1                                                            
+           DURANL       2                                                            
+         END INGRP                                                                   
+     END OPN SEQUENCE                                                                
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING DURANL   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING INPUT FOR DURATION ANALYSIS OPERATION NO.     1   TIME INTERVAL=  1440 MINS
+ 
+ Title of display                              NDUR      NLEV      PRFG     PUNIT     LCNUM     LCOUT
+ DURANL OF SIM DAILY FLOW (CFS)                   1        14         1        42         0         0
+ 
+     Analysis season
+     Start date/time       End date/time
+        1/ 1/ 1  0: 0       1/12/31 24: 0
+ 
+ Durations, in multiples of DELT
+          1
+ 
+ Levels for the analysis
+         0.      150.      300.      450.      600.      750.      900.     1050.     1200.     1350.     1500.     1650.     1800.
+      2000.
+
+ FINISHED PROCESSING DURATION ANALYSIS OPERATION NO.     1
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING INPUT FOR DURATION ANALYSIS OPERATION NO.     2   TIME INTERVAL=  1440 MINS
+ 
+ Title of display                              NDUR      NLEV      PRFG     PUNIT     LCNUM     LCOUT
+ DURANL OF OBS DAILY FLOW (CFS)                   1        14         1        42         0         0
+ 
+     Analysis season
+     Start date/time       End date/time
+        1/ 1/ 1  0: 0       1/12/31 24: 0
+ 
+ Durations, in multiples of DELT
+          1
+ 
+ Levels for the analysis
+         0.      150.      300.      450.      600.      750.      900.     1050.     1200.     1350.     1500.     1650.     1800.
+      2000.
+
+ FINISHED PROCESSING DURATION ANALYSIS OPERATION NO.     2
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING DURANL   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING MUTSIN   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING MUTSIN OPERATION NO.    1
+ 
+      MUTFL       NPT       NMN       NLI      MSFG
+         92         0         4        25         0
+
+ FINISHED PROCESSING MUTSIN OPERATION NO.    1
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING MUTSIN   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ SPEC-ACTIONS BLOCK NOT FOUND
+
+ FINISHED PROCESSING SPEC-ACTIONS BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+
+ INGROUP NO.  1    OSVSZ= 3500    INPAD WIDTH=257249 INTERVALS    MAXROW=    2  RUNWID=    0
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   MUTSIN    1
+
+   OUTPUT TIMESERIES
+
+     TO OTHER OPERATIONS(NETWORK)
+     GROUP   MEMBER  S1  S2        MFACT  TYPE      # GROUP   MEMBER  S1  S2   
+
+     OUTPUT  MEAN     3   1    1.000E+00  DURANL    1 INPUT   TIMSER   1   1
+     OUTPUT  MEAN     4   1    1.000E+00  DURANL    2 INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DURANL    1
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     MUTSIN    1 OUTPUT  MEAN     3   1  1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DURANL    2
+
+   INPUT TIMESERIES
+
+     FROM OTHER OPERATIONS(NETWORK)
+     TYPE      # GROUP   MEMBER  S1  S2      MFACT    GROUP   MEMBER  S1  S2   
+
+     MUTSIN    1 OUTPUT  MEAN     4   1  1.000E+00    INPUT   TIMSER   1   1
+
+ FINISHED PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+ ====================================================================================================================================
+ 
+ INTERPRETATION OF RUN DATA SET COMPLETE
+ 
+
+ COMMENCING EXECUTION
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   370   2                                                     *
+ *                                                                                  *
+ *  MUTSIN:     1           Sequential input file unit:    92                       *
+ *                                                                                  *
+ *  The end of the multiple timeseries sequential input file was reached before     *
+ *  any data was found.  Is the name correct in the FILES block?  Are MUTFL and     *
+ *  NLINES correct in Table-type MUTSINFO?                                          *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ ************************************************************************************
+ *                                                                                  *
+ *  The count for the ERROR printed above has reached its maximum.                  *
+ *                                                                                  *
+ *  The RUN has been terminated.                                                    *
+ *                                                                                  *
+ ************************************************************************************
+ ************************************************************************************

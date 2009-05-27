@@ -1,0 +1,325 @@
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 1
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           0.170       0.000E+00                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.440E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+           0.616                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 2
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           2.340           0.800                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -6.960E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+          86.655                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 3
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           3.120           3.800                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.440E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+         298.502                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 4
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           6.170           5.900                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.200E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+         385.985                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 5
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           3.470           3.100                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.440E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+          98.056                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 6
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           3.910           3.200                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.200E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+         205.350                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 7
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           1.540           2.600                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.440E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+          21.930                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 8
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           0.190           1.900                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.440E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+           3.293                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/ 9
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           0.610           1.000                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.200E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+           0.638                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/10
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           1.730           1.500                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.440E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+           0.392                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/11
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           0.130       0.000E+00                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.200E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+       8.960E-02                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR MONTH 1976/12
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+           0.480           0.300                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -7.440E+32                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+       1.120E-02                                                                                                                    
+1
+
+ EXTERNAL SEGMENT NO.  66      Abby's Empirical Algorithm            Joel's Bulldozer                      REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** GROUP Met ***
+
+    INPUTS
+
+           Prec1           Prec2                                                                                                    
+              in              in                                                                                                    
+          23.860          24.100                                                                                                    
+
+ *** GROUP Sediment ***
+
+    STATE VARIABLES
+
+            Clay                                                                                                                    
+            Tons                                                                                                                    
+      -8.784E+33                                                                                                                    
+
+    OUTPUTS
+
+           Total                                                                                                                    
+          lbs/ac                                                                                                                    
+        1101.518                                                                                                                    
