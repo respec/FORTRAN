@@ -1,0 +1,1412 @@
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 1
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.48      0.45      0.04      0.28      1.91      0.50      0.01      0.06
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.23      1.00      0.89     787.5      0.60      30.1      17.0      32.3
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.17      0.25      0.00      0.12      1.35      1.36
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.947E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.538     0.039     0.000     0.184     0.000     5.173     0.142     0.129     0.725     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.348     0.001     0.000     0.043     0.044     0.015
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.001     0.001     0.000     0.000     0.000     0.000     0.001
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.034     1.323     0.000     1.173     0.135
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.598E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 2
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.08      0.07      0.01      0.01      0.29      0.50      0.00      0.00
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.23      1.00      0.13     202.0      0.65      30.6      29.2      32.7
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     2.34      1.91      0.07      0.06      2.32      2.97
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.461E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.435     0.026     0.000     0.400     0.000     7.358     0.651     0.615     0.989     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.283     0.003     0.003     0.179     0.184     0.076
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.126     0.126     0.000     0.000     0.000     0.000     0.126
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.003     0.216     2.949     0.000     2.185     0.688
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.821E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 3
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     3.12      2.48      0.39      0.05      2.89      2.61
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.948E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.825     0.000     0.000     0.575     0.004     8.982     1.263     1.275     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.914     0.006     0.023     0.930     0.958     0.172
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.441     0.190     0.160     0.037     0.007     0.000     0.394
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.027     0.444     3.274     0.108     1.660     1.549
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.235E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 4
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.626     0.000     0.000     1.587     0.001     9.503     1.535     1.675     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    6.170     0.010     0.069     1.280     1.359     0.192
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.048     0.684     1.221     0.741     0.171     0.000     2.818
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.066     2.258     3.153     0.025     1.263     1.724
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.699E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 5
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   11.062     0.000     0.000     0.978     0.002     9.035     1.047     1.180     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.470     0.003     0.014     1.255     1.273     0.114
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.454     0.482     1.734     1.172     0.259     0.000     3.647
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.015     1.126     1.844     0.000     0.704     1.026
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.610E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 6
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.581     0.000     0.000     0.478     0.000     7.347     0.756     0.789     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.910     0.002     0.020     0.708     0.730     0.087
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.795     1.740     2.677     0.362     0.000     5.574
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.019     1.240     1.854     0.000     0.988     0.779
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.497E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 7
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.493     0.020     0.000     0.124     0.000     4.211     0.138     0.111     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.540     0.000     0.001     0.271     0.272     0.007
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.606     0.443     3.888     0.412     0.000     5.349
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.089     0.824     0.000     0.753     0.064
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.012E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 8
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    0.938     0.000     0.000     0.017     0.000     0.922     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.190     0.000     0.000     0.013     0.013     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.210     0.108     3.290     0.125     0.000     3.732
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.683E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/ 9
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    0.442     0.000     0.000     0.004     0.000     0.439     0.000     0.000     1.000     1.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.610     0.000     0.000     0.000     0.000     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.457     0.425     0.013     0.667     0.000     0.000     1.106
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.185     0.000     0.185     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.548E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/10
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.532     0.031     0.000     0.003     0.000     1.494     0.004     0.004     1.000     0.500
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.730     0.000     0.000     0.000     0.000     0.001
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.941     0.386     0.002     0.247     0.004     0.000     0.639
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     1.311     0.000     1.302     0.008
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.172E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/11
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.18      0.17      0.01      0.00      1.17      0.17      0.02      0.31
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.15      0.27      1.00      66.0      0.73      17.0      -5.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.13      0.19      0.00      0.01      0.00      0.01
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.885E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.420     0.000     0.000     0.003     0.000     1.417     0.000     0.000     1.000     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.222     0.031     0.000     0.077     0.003     0.000     0.112
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.532E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                                      REPORT FOR MONTH 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.43      0.39      0.04      0.37      0.99      0.50      0.06      0.45
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.39      1.00      0.77     554.5      0.60       9.4     -16.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                     0.48      0.70      0.00      0.08      0.37      1.10
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.795E-01
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.785     0.040     0.000     0.004     0.000     1.739     0.003     0.003     0.627     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.369     0.000     0.000     0.001     0.001     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.002     0.002     0.000     0.000     0.000     0.000     0.002
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     0.327     0.000     0.322     0.004
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.789E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          BICKNELL FARM                       REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** SNOW ***
+
+   STATE VARIABLES                   PACK     PACKF     PACKW     PACKI    PDEPTH    COVINX    NEGHTS    XLNMLT
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                     0.43      0.39      0.04      0.37      0.99      0.50      0.06      0.45
+
+                                   RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
+                                                                                      DEG F     DEG F     DEG F
+                                     0.39      1.00      0.77     554.5      0.60       9.4     -16.0      33.0
+
+   FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
+                                       IN        IN        IN        IN        IN        IN
+                                    23.86      5.52      0.46      0.32      6.93      8.04
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.680E+00
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS    INFFAC    PETADJ
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.785     0.040     0.000     0.004     0.000     1.739     0.003     0.003     0.627     0.000
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   26.535     0.024     0.130     4.681     4.835     0.664
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   35.376     3.938     5.422    12.796     1.344     0.000    23.500
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.131     5.408    17.044     0.133    10.535     5.978
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.078E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     32.3      10.3      10.3      5.16      103.      4.70      6.26 1.428E-03      534.     0.762
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     22.2 8.717E-02     0.222      19.7      19.7      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                 -0.001   5.225E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     41.6      11.7      11.7      5.85      117.      5.32      7.10 6.151E-03      686.      4.22
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     92.0      1.26     0.326      83.7      83.7      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.609
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.256E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     112.      19.2      19.2      9.62      192.      8.75      11.7 5.138E-03 1.851E+03      9.51
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     479.      2.18     0.995      410.      410.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     1.30
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.229E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     122.      20.1      20.1      10.0      201.      9.13      12.2 7.183E-03 2.018E+03      14.5
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     680.      5.44      4.14      671.      538.      133.
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.51
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.972E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     122.      20.0      20.0      10.0      200.      9.11      12.1 4.335E-03 2.007E+03      8.70
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     636.      3.48      5.73      635.      518.      117.
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.67
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.623E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     91.9      17.4      17.4      8.71      174.      7.91      10.6 3.864E-03 1.516E+03      5.86
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     365.      3.61      6.74      392.      387.      5.14
+
+     POTENTIAL ET (IN)              POTEV
+                                     7.05
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.903E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     33.4      10.5      10.5      5.25      105.      4.77      6.36 1.480E-03      551.     0.816
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     136.     0.830      4.16      191.      191.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     6.19
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.288E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     28.7      9.73      9.73      4.87      97.3      4.42      5.90      0.00      474.      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     6.51 9.598E-02      2.75      8.56      8.56      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                 -0.001   4.002E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     26.8      9.41      9.41      4.70      94.1      4.28      5.70      0.00      443.      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                7.396E-03     0.291      2.18      0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.52
+
+   BALANCE                      % ERROR IN    AC-FT
+                                 -0.002   2.901E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     26.6      9.37      9.37      4.68      93.7      4.26      5.68      0.00      439.      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                    0.208     0.818      1.25      0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     2.64
+
+   BALANCE                      % ERROR IN    AC-FT
+                                 -0.002   2.786E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     26.4      9.33      9.33      4.66      93.3      4.24      5.65      0.00      435.      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                    0.106 6.124E-02     0.397      0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.840
+
+   BALANCE                      % ERROR IN    AC-FT
+                                 -0.002   2.677E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     26.8      9.41      9.41      4.70      94.1      4.28      5.70      0.00      443.      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                    0.425     0.226     0.205      0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                 -0.002   2.703E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                         REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     26.8      9.41      9.41      4.70      94.1      4.28      5.70      0.00      443.      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                2.418E+03      18.4      29.1 2.410E+03 2.155E+03      255.
+
+     POTENTIAL ET (IN)              POTEV
+                                     39.6
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.466E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                6.784E-03     0.132     0.132     0.121      1.85     0.107 5.601E-02      3.40     0.224     0.762
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     19.7      0.00      0.00      19.7
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.969E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                2.471E-02     0.347     0.347     0.302      2.70     0.247 8.182E-02      5.17     0.815      4.22
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     83.7      0.00      0.00      83.7
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   8.372E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                4.322E-02     0.557     0.557     0.458      3.12     0.354 9.444E-02      6.67      1.43      9.51
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     410.      0.00      0.00      410.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.097E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                4.494E-02     0.576     0.576     0.470      3.15     0.362 9.553E-02      6.78      1.48      10.1
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     538.      0.00      0.00      538.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.378E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                3.495E-02     0.467     0.467     0.393      2.94     0.310 8.903E-02      6.08      1.15      7.01
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     518.      0.00      0.00      518.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.183E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                3.071E-02     0.419     0.419     0.357      2.84     0.285 8.612E-02      5.78      1.01      5.86
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     387.      0.00      0.00      387.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.865E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                7.267E-03     0.136     0.136     0.125      1.91     0.111 5.797E-02      3.40     0.240     0.816
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     191.      0.00      0.00      191.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.913E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     8.56      0.00      0.00      8.56
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   8.563E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                             REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                2.155E+03      0.00      0.00 2.155E+03
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.155E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                2.224E-02     0.316     0.316     0.278      2.64     0.230 7.999E-02      6.05     0.734      4.44
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     133.      0.00      0.00      133.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.330E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                1.162E-02     0.177     0.177     0.162      2.36     0.143 7.160E-02      4.40     0.383      1.69
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     117.      0.00      0.00      117.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.167E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     5.14      0.00      0.00      5.16
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.156E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                           REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     255.      0.00      0.00      255.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.548E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                    0.166     0.230     0.230     0.213      3.21     0.188     0.779      1.11     0.685     0.761
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     19.7      0.00      0.00      19.5
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.968E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                    0.543     0.619     0.619     0.528      4.24     0.423      1.03      1.88      2.24      4.21
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     83.7      0.00      0.00      83.3
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   8.386E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                    0.969     0.999     0.999     0.800      5.00     0.606      1.21      2.38      4.00      9.50
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     410.      0.00      0.00      409.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.102E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     1.31      1.27      1.27     0.978      5.53     0.722      1.34      2.68      5.41      14.5
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     671.      0.00      0.00      670.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.717E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                    0.909     0.949     0.949     0.765      4.90     0.583      1.19      2.33      3.75      8.72
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     635.      0.00      0.00      635.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.363E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                    0.689     0.757     0.757     0.630      4.51     0.492      1.09      2.06      2.84      5.86
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     392.      0.00      0.00      392.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.926E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                    0.179     0.238     0.238     0.222      3.34     0.196     0.809      1.11     0.740     0.821
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     191.      0.00      0.00      192.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.920E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     8.56      0.00      0.00      8.74
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   8.742E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                       REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2     FT3/S
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                2.410E+03      0.00      0.00 2.410E+03
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.410E+03

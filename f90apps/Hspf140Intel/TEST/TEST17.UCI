@@ -1,0 +1,113 @@
+RUN
+
+GLOBAL
+  Version 14 test run:  Using EXTMOD Module to read HBN input
+  START       1976              END    1976
+  RUN INTERP OUTPUT LEVEL   10
+  RESUME     0 RUN     1                   UNIT SYSTEM     1
+END GLOBAL
+
+FILES      
+<FILE>  <UN#>***<----FILE NAME------------------------------------------------->
+MESSU      22   test17.ech
+           61   test17.d61
+           62   test17.out
+HBN        63   test16.hbn
+BINO       64   test17.hbn
+SEQ        65   test17.seq
+END FILES
+
+OPN SEQUENCE
+    INGRP              INDELT 01:00
+      EXTMOD      66 
+      DISPLY       1
+      DISPLY       2
+      DISPLY      13
+    END INGRP
+END OPN SEQUENCE
+
+EXTMOD
+  GEN-INFO
+    # -  #<SSM-Name----------------------> <Instance-Name----------------->***
+   66     Abby's Empirical Algorithm       Joel's Bulldozer Testing Site     
+  END GEN-INFO
+
+  OUT-INFO
+            Printer BinaryOut  OutLevel ***
+    # -  #Engl Metr Engl Metr  Prt  Bin ***
+   66       62    0   64    0    4    4
+  END OUT-INFO
+
+  AREA-INFO
+    # -  #     acres ***
+   66            2.2      
+  END AREA-INFO
+
+  TIMESERIES
+    # -  #  NIN NOUT NSTA ***
+   66         2    1    1
+  END TIMESERIES
+
+  INFLUX
+    # -  #<--Group---> <---Name---> <Units-> ***
+   66     Met          Prec1        in
+  END INFLUX
+
+  INFLUX
+    # -  #<--Group---> <---Name---> <Units-> ***
+   66     Met          Prec2        in
+  END INFLUX
+
+  OUTFLUX
+    # -  #<--Group---> <---Name---> <Units-> ***
+   66     Sediment     Total        lbs/ac
+  END OUTFLUX
+
+  STATE
+    # -  #<--Group---> <---Name---> <Units-> ***
+   66     Sediment     Clay         Tons
+  END STATE
+END EXTMOD
+
+DISPLY
+  DISPLY-INFO1
+    # -  #<----------Title----------->***TRAN PIVL DIG1 FIL1  PYR DIG2 FIL2 YRND
+    1     PRECIP (IN), TRAER, IA         SUM     1    2   61    1    2   61   12
+    2     PRECIP (IN), IOWA FALLS, IA    SUM                    1    2   61   12
+   13     SEDIMENT (LBS/ACRE), MARENGO   SUM                    1        61   12
+  END DISPLY-INFO1
+END DISPLY
+
+EXT SOURCES
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   # <Name>   tem strg<-factor->strg <Name>   #   #        <Name> # #  ***
+
+HBN      1 PREC     ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 1
+HBN      1 PREC     ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 2
+HBN      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
+CDF      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
+XXX      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
+WDM4     1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
+TSS      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
+
+END EXT SOURCES
+
+NETWORK
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   #        <Name> # #<-factor->strg <Name>   #   #        <Name> # #  ***
+
+EXTMOD  66 TOHSPF INPFLX 1            SAME DISPLY   1     INPUT  TIMSER
+EXTMOD  66 TOHSPF INPFLX 2            SAME DISPLY   2     INPUT  TIMSER
+EXTMOD  66 TOHSPF OUTFLX 1            SAME DISPLY  13     INPUT  TIMSER
+
+END NETWORK
+
+EXT TARGETS
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Volume-> <Member> Tsys Tgap Amd ***
+<Name>   #        <Name> # #<-factor->strg <Name>   # <Name> #  tem strg strg***
+
+EXTMOD  66 TOHSPF OUTFLX 1                 SEQ     65 PREC     ENGL      REPL
+
+END EXT TARGETS
+
+END RUN

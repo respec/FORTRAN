@@ -1,0 +1,1352 @@
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.069E+04      84.2      84.2      29.5      137.      20.6      363.      109.
+     BY CATEGORY:  
+       fish & wildlife          7.160E+03                                                                  90.1
+       municipal                3.533E+03                                                                  19.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                2.365E+03      5.76      15.1 6.663E+03 6.663E+03      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.655E+03                     5.490E+03 5.490E+03      0.00
+       municipal                     710.                     1.172E+03 1.172E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.737E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                9.490E+03      80.7      80.7      28.7 1.607E+03      27.7      331.      10.0
+     BY CATEGORY:  
+       fish & wildlife          9.490E+03                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     114.      4.77      12.2      617.      617.      0.00
+     BY CATEGORY:  
+       fish & wildlife               114.                          617.      617.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.012E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      43.2     0.849      17.8      134.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  34.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                7.279E+03     0.247     0.641 7.279E+03 1.172E+03 6.107E+03
+     BY CATEGORY:  
+       fish & wildlife          6.107E+03                     6.107E+03      0.00 6.107E+03
+       municipal                1.172E+03                     1.172E+03 1.172E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.296E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      26.2     0.828      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                6.107E+03     0.249     0.642 6.107E+03
+     BY CATEGORY:  
+       fish & wildlife          6.107E+03                     6.107E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.123E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                9.612E+03      81.1      81.1      28.7      126.      19.7      334.      119.
+     BY CATEGORY:  
+       fish & wildlife          5.366E+03                                                                  90.0
+       municipal                4.246E+03                                                                  29.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                5.461E+03      59.8      16.3 6.586E+03 6.586E+03      0.00
+     BY CATEGORY:  
+       fish & wildlife          3.823E+03                     5.172E+03 5.172E+03      0.00
+       municipal                1.638E+03                     1.414E+03 1.414E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.609
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.621E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                9.328E+03      80.2      80.2      28.6 1.586E+03      27.6      327.      10.0
+     BY CATEGORY:  
+       fish & wildlife          9.328E+03                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     367.      63.2      16.5      575.      575.      0.00
+     BY CATEGORY:  
+       fish & wildlife               367.                          575.      575.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.609
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   9.919E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      43.2     0.849      17.8      114.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  14.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                7.161E+03      3.47     0.903 7.164E+03 1.414E+03 5.749E+03
+     BY CATEGORY:  
+       fish & wildlife          5.747E+03                     5.749E+03      0.00 5.749E+03
+       municipal                1.414E+03                     1.414E+03 1.414E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.609
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.180E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      26.2     0.828      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                5.749E+03      3.48     0.903 5.752E+03
+     BY CATEGORY:  
+       fish & wildlife          5.749E+03                     5.752E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.609
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.769E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                2.908E+04      118.      118.      39.5      278.      30.7      737.      863.
+     BY CATEGORY:  
+       fish & wildlife          2.306E+04                                                                  227.
+       municipal                6.028E+03                                                                  636.
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                3.648E+04      122.      59.3 1.707E+04 1.450E+04 2.576E+03
+     BY CATEGORY:  
+       fish & wildlife          2.554E+04                     8.126E+03 5.549E+03 2.576E+03
+       municipal                1.094E+04                     8.948E+03 8.948E+03 2.640E-15
+
+     POTENTIAL ET (IN)              POTEV
+                                     1.30
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.622E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.006E+04      82.4      82.4      29.0 1.681E+03      28.1      346.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.006E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                1.300E+03      86.9      36.6      615.      615.      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.300E+03                          615.      615.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     1.30
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.071E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     29.1      4.95      4.95      1.28      55.1      1.22      22.7      886.
+     BY CATEGORY:  
+       fish & wildlife               29.1                                                                  235.
+       municipal                     0.00                                                                  651.
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                1.769E+04      4.98      2.12 1.768E+04 8.948E+03 8.730E+03
+     BY CATEGORY:  
+       fish & wildlife          8.740E+03                     8.730E+03      0.00 8.730E+03
+       municipal                8.948E+03                     8.948E+03 8.948E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     1.30
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.771E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     28.9      4.94      4.94      1.28      33.4      1.19      22.7      233.
+     BY CATEGORY:  
+       fish & wildlife               28.9                                                                  233.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                8.730E+03      4.98      2.12 8.720E+03
+     BY CATEGORY:  
+       fish & wildlife          8.730E+03                     8.720E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     1.30
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   8.751E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                3.607E+04      127.      127.      40.9      332.      32.8      882. 1.402E+03
+     BY CATEGORY:  
+       fish & wildlife          2.706E+04                                                             1.116E+03
+       municipal                9.012E+03                                                                  286.
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                7.127E+04      443.      305. 6.442E+04 2.191E+04 4.251E+04
+     BY CATEGORY:  
+       fish & wildlife          4.989E+04                     4.798E+04 5.469E+03 4.251E+04
+       municipal                2.138E+04                     1.644E+04 1.644E+04 1.643E-13
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.51
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.008E+05
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.097E+04      84.9      84.9      29.7 1.794E+03      28.7      370.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.097E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                1.449E+03      182.      133.      595.      595.      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.449E+03                          595.      595.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.51
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.169E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     81.5      7.19      7.19      2.80      70.7      2.59      29.2 1.431E+03
+     BY CATEGORY:  
+       fish & wildlife               81.5                                                             1.130E+03
+       municipal                     0.00                                                                  301.
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                6.502E+04      14.3      9.72 6.497E+04 1.644E+04 4.853E+04
+     BY CATEGORY:  
+       fish & wildlife          4.858E+04                     4.853E+04      0.00 4.853E+04
+       municipal                1.644E+04                     1.644E+04 1.644E+04      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.51
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.506E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     81.7      7.19      7.19      2.80      43.0      2.48      29.2 1.132E+03
+     BY CATEGORY:  
+       fish & wildlife               81.7                                                             1.132E+03
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                4.853E+04      14.3      9.71 4.848E+04
+     BY CATEGORY:  
+       fish & wildlife          4.853E+04                     4.848E+04
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.51
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.857E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                3.186E+04      122.      122.      39.9      301.      31.5      798.      919.
+     BY CATEGORY:  
+       fish & wildlife          2.828E+04                                                                  595.
+       municipal                3.572E+03                                                                  324.
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                4.241E+04      228.      375. 4.648E+04 1.856E+04 2.792E+04
+     BY CATEGORY:  
+       fish & wildlife          2.969E+04                     3.340E+04 5.486E+03 2.792E+04
+       municipal                1.272E+04                     1.308E+04 1.308E+04 3.612E-14
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.67
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.871E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.183E+04      87.2      87.2      30.3 1.895E+03      29.3      390.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.183E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                1.543E+03      110.      179.      615.      615.      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.543E+03                          615.      615.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.67
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.262E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     54.8      6.14      6.14      2.05      65.0      1.92      26.8      916.
+     BY CATEGORY:  
+       fish & wildlife               54.8                                                                  607.
+       municipal                     0.00                                                                  309.
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                4.710E+04      7.57      12.4 4.712E+04 1.308E+04 3.404E+04
+     BY CATEGORY:  
+       fish & wildlife          3.402E+04                     3.404E+04      0.00 3.404E+04
+       municipal                1.308E+04                     1.308E+04 1.308E+04      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.67
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.718E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     54.9      6.14      6.14      2.05      39.5      1.86      26.8      609.
+     BY CATEGORY:  
+       fish & wildlife               54.9                                                                  609.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                3.404E+04      7.57      12.4 3.406E+04
+     BY CATEGORY:  
+       fish & wildlife          3.404E+04                     3.406E+04
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.67
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.413E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                2.983E+04      119.      119.      39.6      284.      30.9      754.      384.
+     BY CATEGORY:  
+       fish & wildlife          2.104E+04                                                                  325.
+       municipal                8.792E+03                                                                  59.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                4.109E+04      250.      469. 4.290E+04 1.276E+04 3.014E+04
+     BY CATEGORY:  
+       fish & wildlife          2.877E+04                     3.547E+04 5.330E+03 3.014E+04
+       municipal                1.233E+04                     7.427E+03 7.427E+03 6.175E-14
+
+     POTENTIAL ET (IN)              POTEV
+                                     7.05
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.320E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.244E+04      88.7      88.7      30.7 1.969E+03      29.7      406.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.244E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                1.316E+03      130.      233.      595.      595.      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.316E+03                          595.      595.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     7.05
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.327E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     37.5      5.35      5.35      1.52      59.8      1.45      24.6      379.
+     BY CATEGORY:  
+       fish & wildlife               37.5                                                                  335.
+       municipal                     0.00                                                                  44.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                4.350E+04      8.25      15.5 4.351E+04 7.427E+03 3.608E+04
+     BY CATEGORY:  
+       fish & wildlife          3.607E+04                     3.608E+04      0.00 3.608E+04
+       municipal                7.427E+03                     7.427E+03 7.427E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     7.05
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.356E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     37.6      5.36      5.36      1.52      36.3      1.41      24.7      337.
+     BY CATEGORY:  
+       fish & wildlife               37.6                                                                  337.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                3.608E+04      8.25      15.5 3.609E+04
+     BY CATEGORY:  
+       fish & wildlife          3.608E+04                     3.609E+04
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     7.05
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.614E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                2.496E+04      112.      112.      37.5      251.      28.9      666.      160.
+     BY CATEGORY:  
+       fish & wildlife          2.093E+04                                                                  119.
+       municipal                4.036E+03                                                                  41.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                8.839E+03      87.3      368. 1.342E+04 7.988E+03 5.436E+03
+     BY CATEGORY:  
+       fish & wildlife          6.187E+03                     1.095E+04 5.513E+03 5.436E+03
+       municipal                2.652E+03                     2.475E+03 2.475E+03 3.463E-15
+
+     POTENTIAL ET (IN)              POTEV
+                                     6.19
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.876E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.209E+04      87.9      87.9      30.5 1.926E+03      29.5      397.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.209E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     423.      51.1      208.      615.      615.      0.00
+     BY CATEGORY:  
+       fish & wildlife               423.                          615.      615.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     6.19
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.292E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     19.4      4.44      4.44     0.979      48.2     0.941      19.8      185.
+     BY CATEGORY:  
+       fish & wildlife               19.4                                                                  129.
+       municipal                     0.00                                                                  56.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                1.404E+04      2.62      11.2 1.405E+04 2.475E+03 1.157E+04
+     BY CATEGORY:  
+       fish & wildlife          1.156E+04                     1.157E+04      0.00 1.157E+04
+       municipal                2.475E+03                     2.475E+03 2.475E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     6.19
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.408E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     19.5      4.44      4.44     0.980      29.3     0.918      19.9      130.
+     BY CATEGORY:  
+       fish & wildlife               19.5                                                                  130.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                1.157E+04      2.62      11.2 1.158E+04
+     BY CATEGORY:  
+       fish & wildlife          1.157E+04                     1.158E+04
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     6.19
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.161E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                2.109E+04      106.      106.      35.5      224.      27.0      593.      105.
+     BY CATEGORY:  
+       fish & wildlife          1.733E+04                                                                  90.5
+       municipal                3.759E+03                                                                  15.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                3.808E+03      10.1      285. 7.411E+03 6.787E+03      624.
+     BY CATEGORY:  
+       fish & wildlife          2.666E+03                     6.166E+03 5.541E+03      624.
+       municipal                1.142E+03                     1.246E+03 1.246E+03 7.871E-16
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.878E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.148E+04      86.3      86.3      30.0 1.855E+03      29.1      382.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.148E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     172.      6.21      176.      615.      615.      0.00
+     BY CATEGORY:  
+       fish & wildlife               172.                          615.      615.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.227E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.8      4.21      4.21     0.885      43.3     0.851      17.8      101.
+     BY CATEGORY:  
+       fish & wildlife               15.8                                                                  100.
+       municipal                     0.00                                                                  1.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                8.026E+03     0.298      8.39 8.022E+03 1.246E+03 6.776E+03
+     BY CATEGORY:  
+       fish & wildlife          6.780E+03                     6.776E+03      0.00 6.776E+03
+       municipal                1.246E+03                     1.246E+03 1.246E+03      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   8.046E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.8      4.21      4.21     0.885      26.2     0.829      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.8                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                6.776E+03     0.298      8.39 6.772E+03
+     BY CATEGORY:  
+       fish & wildlife          6.776E+03                     6.772E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.796E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.676E+04      98.2      98.2      33.1      191.      24.6      507.      102.
+     BY CATEGORY:  
+       fish & wildlife          1.304E+04                                                                  90.2
+       municipal                3.726E+03                                                                  12.0
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                2.016E+03      27.3      212. 6.154E+03 6.154E+03      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.411E+03                     5.367E+03 5.367E+03      0.00
+       municipal                     605.                          786.      786.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.52
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.313E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.084E+04      84.6      84.6      29.6 1.779E+03      28.6      367.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.084E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     79.7      18.9      142.      595.      595.      0.00
+     BY CATEGORY:  
+       fish & wildlife               79.7                          595.      595.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.52
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.158E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      43.2     0.849      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                6.749E+03     0.905      6.71 6.743E+03      786. 5.957E+03
+     BY CATEGORY:  
+       fish & wildlife          5.962E+03                     5.957E+03      0.00 5.957E+03
+       municipal                     786.                          786.      786.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.52
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.765E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      26.2     0.828      17.8      99.9
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  99.9
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                5.957E+03     0.905      6.71 5.951E+03
+     BY CATEGORY:  
+       fish & wildlife          5.957E+03                     5.951E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.52
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.973E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.319E+04      90.5      90.5      31.0      160.      22.4      425.      89.0
+     BY CATEGORY:  
+       fish & wildlife          8.635E+03                                                                  89.0
+       municipal                4.557E+03                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                2.037E+03      67.5      105. 5.573E+03 5.573E+03      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.426E+03                     5.537E+03 5.537E+03      0.00
+       municipal                     611.                          35.7      35.7      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     2.64
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.887E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.027E+04      83.0      83.0      29.2 1.708E+03      28.2      352.      10.0
+     BY CATEGORY:  
+       fish & wildlife          1.027E+04                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     74.4      51.8      79.5      615.      615.      0.00
+     BY CATEGORY:  
+       fish & wildlife               74.4                          615.      615.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     2.64
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.097E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.6      4.20      4.20     0.880      43.0     0.845      17.7      98.7
+     BY CATEGORY:  
+       fish & wildlife               15.6                                                                  98.7
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                6.188E+03      2.57      3.93 6.186E+03      35.7 6.151E+03
+     BY CATEGORY:  
+       fish & wildlife          6.152E+03                     6.151E+03      0.00 6.151E+03
+       municipal                     35.7                          35.7      35.7      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     2.64
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.206E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.5      4.20      4.20     0.879      26.1     0.823      17.7      98.5
+     BY CATEGORY:  
+       fish & wildlife               15.5                                                                  98.5
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                6.151E+03      2.57      3.93 6.150E+03
+     BY CATEGORY:  
+       fish & wildlife          6.151E+03                     6.150E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     2.64
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.169E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                1.016E+04      82.7      82.7      29.1      131.      20.2      349.      90.0
+     BY CATEGORY:  
+       fish & wildlife          5.469E+03                                                                  90.0
+       municipal                4.694E+03                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                2.351E+03      3.90      27.1 5.357E+03 5.357E+03      0.00
+     BY CATEGORY:  
+       fish & wildlife          1.646E+03                     5.357E+03 5.357E+03      0.00
+       municipal                     705.                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.840
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.555E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                9.734E+03      81.4      81.4      28.8 1.639E+03      27.8      338.      10.0
+     BY CATEGORY:  
+       fish & wildlife          9.734E+03                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     74.5      3.68      24.1      595.      595.      0.00
+     BY CATEGORY:  
+       fish & wildlife               74.5                          595.      595.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.840
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.035E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      43.2     0.849      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                5.952E+03     0.193      1.25 5.951E+03      0.00 5.951E+03
+     BY CATEGORY:  
+       fish & wildlife          5.952E+03                     5.951E+03      0.00 5.951E+03
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.840
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.968E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      26.2     0.828      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                5.951E+03     0.193      1.25 5.950E+03
+     BY CATEGORY:  
+       fish & wildlife          5.951E+03                     5.950E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.840
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.967E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                                          REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                5.737E+03      67.3      67.3      24.1      89.6      15.7      238.      90.0
+     BY CATEGORY:  
+       fish & wildlife          1.404E+03                                                                  90.0
+       municipal                4.333E+03                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                1.106E+03      13.3      10.8 5.534E+03 5.534E+03      0.00
+     BY CATEGORY:  
+       fish & wildlife               774.                     5.534E+03 5.534E+03      0.00
+       municipal                     332.                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.128E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          LAKE DUDA                           REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                5.737E+03      67.3      67.3      24.1      89.6      15.7      238.      90.0
+     BY CATEGORY:  
+       fish & wildlife          1.404E+03                                                                  90.0
+       municipal                4.333E+03                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                2.192E+05 1.318E+03 2.246E+03 2.276E+05 1.184E+05 1.092E+05
+     BY CATEGORY:  
+       fish & wildlife          1.535E+05                     1.746E+05 6.535E+04 1.092E+05
+       municipal                6.577E+04                     5.302E+04 5.302E+04 2.690E-13
+
+     POTENTIAL ET (IN)              POTEV
+                                     39.6
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.356E+05
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                                    REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                9.160E+03      79.7      79.7      28.4 1.563E+03      27.4      322.      10.0
+     BY CATEGORY:  
+       fish & wildlife          9.160E+03                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     40.0      13.4      11.9      615.      615.      0.00
+     BY CATEGORY:  
+       fish & wildlife               40.0                          615.      615.      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   9.787E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          RADHA RESERVOIR                     REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                9.160E+03      79.7      79.7      28.4 1.563E+03      27.4      322.      10.0
+     BY CATEGORY:  
+       fish & wildlife          9.160E+03                                                                  10.0
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                6.952E+03      722. 1.252E+03 7.261E+03 7.261E+03      0.00
+     BY CATEGORY:  
+       fish & wildlife          6.952E+03                     7.261E+03 7.261E+03      0.00
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     39.6
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.767E+04
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                                     REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      43.2     0.849      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                6.149E+03     0.712     0.644 6.149E+03      0.00 6.149E+03
+     BY CATEGORY:  
+       fish & wildlife          6.149E+03                     6.149E+03      0.00 6.149E+03
+       municipal                     0.00                          0.00      0.00      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.165E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                          BRASCHER CREEK                      REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      43.2     0.849      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                2.348E+05      46.1      73.5 2.348E+05 5.302E+04 1.818E+05
+     BY CATEGORY:  
+       fish & wildlife          1.818E+05                     1.818E+05      0.00 1.818E+05
+       municipal                5.302E+04                     5.302E+04 5.302E+04      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     39.6
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.349E+05
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                                       REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      26.2     0.828      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                6.149E+03     0.711     0.644 6.149E+03
+     BY CATEGORY:  
+       fish & wildlife          6.149E+03                     6.149E+03
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   6.165E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                          HUMMEL RIVER                        REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA   OUTFLOW
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES     FT3/S
+                                     15.7      4.21      4.21     0.884      26.2     0.828      17.8      100.
+     BY CATEGORY:  
+       fish & wildlife               15.7                                                                  100.
+       municipal                     0.00                                                                  0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                1.818E+05      46.2      73.5 1.818E+05
+     BY CATEGORY:  
+       fish & wildlife          1.818E+05                     1.818E+05
+       municipal                     0.00                          0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     39.6
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.819E+05

@@ -1,0 +1,179 @@
+RUN
+
+GLOBAL
+  Version 11 test run:  PERLND w/ SNOW, PWATER, COPY, DISPLY, PLTGEN
+  START       1976              END    1976
+  RUN INTERP OUTPUT LEVEL    3
+  RESUME     0 RUN     1                   UNIT SYSTEM     1
+END GLOBAL
+
+FILES      
+<FILE>  <UN#>***<----FILE NAME------------------------------------------------->
+WDM        21   test.wdm
+MESSU      22   t5nsno.ech
+           01   t5nsno.out
+           62   t5nsno.d62
+           92   t5nsno.p92
+END FILES
+
+OPN SEQUENCE
+    INGRP              INDELT 01:00
+      PERLND       1
+      PERLND       2
+      PERLND       3
+      COPY         1
+      COPY         2
+      COPY         3
+      DISPLY       1
+      PLTGEN       1
+    END INGRP
+END OPN SEQUENCE
+
+PERLND
+  ACTIVITY
+    <PLS >          Active Sections (1=Active; 0=Inactive)             ***
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC ***
+    1    3              1
+  END ACTIVITY
+
+  PRINT-INFO
+    <PLS >          Print-flags                                    *** PIVL  PYR
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC       ***
+    1    3              4                                                     12
+  END PRINT-INFO
+
+  GEN-INFO
+    <PLS ><-------Name------->        Unit-systems   Printer ***
+    # -  #                                t-series Engl Metr ***
+                                           in  out           ***
+    1     BEANS                             1    1    1    0
+    2     CORN                              1    1    1    0
+    3     OTHER                             1    1    1    0
+  END GEN-INFO
+
+  *** Section PWATER ***
+
+  PWAT-PARM1
+    <PLS >  PWATER variable monthly parameter value flags ***
+    # -  # CSNO RTOP UZFG  VCS  VUZ  VNN VIFW VIRC  VLE   ***
+    1    3    0    0    0    0    0    0    0    0    0
+  END PWAT-PARM1
+
+  PWAT-PARM2
+    <PLS > ***  PWATER input info: Part 2
+    # -  # ***FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+    1    2     0.000       8.0     0.100      350.     0.010       0.5      0.98
+    3          0.010       9.0     0.150      350.     0.010       0.5      0.98
+  END PWAT-PARM2
+
+  PWAT-PARM3
+    <PLS > ***  PWATER input info: Part 3
+    # -  # ***PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+    1    3       40.       35.       2.0       2.0      0.10       0.0      0.08
+  END PWAT-PARM3
+
+  PWAT-PARM4
+    <PLS >     PWATER input info: Part 4                               ***
+    # -  #     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP ***
+    1            .04      0.40       0.3       1.0      0.60       .20
+    2            .12      0.40       0.3       1.0      0.60       .20
+    3            .06      0.80       0.1       1.2      0.80       .25
+  END PWAT-PARM4
+  PWAT-STATE1
+    <PLS > *** Initial conditions at start of simulation
+    # -  # ***  CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+    1           0.05       0.0      0.15       0.0       4.0      0.05      0.05
+    2           0.10       0.0      0.10       0.0       4.0      0.05      0.05
+    3           0.05       0.0      0.30       0.0       6.5      0.15      0.10
+  END PWAT-STATE1
+END PERLND
+
+DISPLY
+  DISPLY-INFO1
+*** # -  #<----------Title----------->***TRAN PIVL DIG1 FIL1  PYR DIG2 FIL2 YRND
+    1     SIMULATED FLOW (CFS)           AVER                   1    2   62   12
+  END DISPLY-INFO1
+END DISPLY
+
+COPY
+  TIMESERIES
+    # -  #  NPT  NMN ***
+    1              1
+    2              1
+    3              1
+  END TIMESERIES
+END COPY
+
+PLTGEN
+  PLOTINFO
+    # -  # FILE  NPT  NMN LABL  PYR PIVL ***
+    1        92         4             24
+  END PLOTINFO
+
+  GEN-LABELS
+    # -  #<----------------Title----------------->   ***    <------Y axis------>
+    1     SIMULATED FLOW                                    CFS
+  END GEN-LABELS
+
+  SCALING
+    # -  #      YMIN      YMAX     IVLIN ***
+    1             0.     1500.       20.
+  END SCALING
+
+  CURV-DATA         (first curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         SIM GROUNDWATER          5    1 AVER
+  END CURV-DATA
+
+  CURV-DATA         (second curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         SIM INTERFLOW            4    1 AVER
+  END CURV-DATA
+
+  CURV-DATA         (third curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         SIM TOTAL RUNOFF    1    1    1 AVER
+  END CURV-DATA
+
+  CURV-DATA         (fourth curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         OBS TOTAL RUNOFF    2    8    2 AVER
+  END CURV-DATA
+END PLTGEN
+
+EXT SOURCES
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   # <Name> # tem strg<-factor->strg <Name>   #   #        <Name> # #  ***
+WDM     39 PREC     ENGLZERO               PERLND   1   2 EXTNL  PREC
+WDM    131 PREC     ENGLZERO               PERLND   3     EXTNL  PREC
+WDM    123 ATMP     ENGL              SAME PERLND   1   2 ATEMP  AIRTMP
+WDM    122 ATMP     ENGL              SAME PERLND   3     ATEMP  AIRTMP
+WDM     41 EVAP     ENGL   ***  .7    DIV  PERLND   1   3 EXTNL  PETINP
+WDM     41 EVAP     ENGL        1.    DIV  PERLND   1   3 EXTNL  PETINP
+WDM    136 FLOW     ENGL              SAME PLTGEN   1     INPUT  MEAN   4
+END EXT SOURCES
+
+NETWORK
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   #        <Name> # #<-factor->strg <Name>   #   #        <Name> # #  ***
+PERLND   1 PWATER AGWO        122000.      COPY     1     INPUT  MEAN   1
+PERLND   2 PWATER AGWO        176200.      COPY     1     INPUT  MEAN   1
+PERLND   3 PWATER AGWO         75500.      COPY     1     INPUT  MEAN   1
+PERLND   1 PWATER IFWO        122000.      COPY     2     INPUT  MEAN   1
+PERLND   2 PWATER IFWO        176200.      COPY     2     INPUT  MEAN   1
+PERLND   3 PWATER IFWO         75500.      COPY     2     INPUT  MEAN   1
+COPY     1 OUTPUT MEAN   1         1.      COPY     2     INPUT  MEAN   1
+PERLND   1 PWATER PERO        122000.      COPY     3     INPUT  MEAN   1
+PERLND   2 PWATER PERO        176200.      COPY     3     INPUT  MEAN   1
+PERLND   3 PWATER PERO         75500.      COPY     3     INPUT  MEAN   1
+COPY     3 OUTPUT MEAN   1         1.      DISPLY   1     INPUT  TIMSER
+COPY     1 OUTPUT MEAN   1         1.      PLTGEN   1     INPUT  MEAN   1
+COPY     2 OUTPUT MEAN   1         1.      PLTGEN   1     INPUT  MEAN   2
+COPY     3 OUTPUT MEAN   1         1.      PLTGEN   1     INPUT  MEAN   3
+END NETWORK
+
+END RUN

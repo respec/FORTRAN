@@ -1,0 +1,23 @@
+ XGTARG1:hspfuci.inp                                                     
+       2:                                                                
+ address of IFP        2470           0
+ address of IFP        2470     2177688
+ address of IFP        2470     2180188
+ address of IFP        2470     2182688
+ OSUPER:START:CURDAT: 1975 12 31 24  0  0
+ OSUPER:grp,runwid,last     1     0     1
+ OSUPER:width,ivls,runwid,iw  8784  8784     0  8784
+  SPECLX:INSPAC:          -1
+ OSUPER:width,ivls,runwid,iw,inspac  8784  8784     0  8784    -1
+ OSUPER:TSGET:omc,optno,kst,knd,stivl,iw     1     1     3    14     1  8784
+ OSUPER:TSGET:omc,optno,kst,knd,stivl,iw     1     2    15    20     1  8784
+ OSUPER:TSGET:omc,optno,kst,knd,stivl,iw     1     3    21    26     1  8784
+ OSUPER:TSGET:omc,optno,kst,knd,stivl,iw     6     1    27    29     1  8784
+ OSUPER:TSGET:omc,optno,kst,knd,stivl,iw     6     2    30    32     1  8784
+ OSUPER:TSGET:omc,optno,kst,knd,stivl,iw     6     3    33    35     1  8784
+ OSUPER:TSGET:omc,optno,kst,knd,stivl,iw     6     4    36    38     1  8784
+ OSUPER:updated:ivls,stivl,iw     0     1  8784
+ OSUPER:end interval loop:CURDAT: 1976 12 31 24  0  0
+ OSUPER:end inpsan loop:COUNT,LAST,RETCOD     1     1     0
+ OSUPER:end ingroup loop:GRP,RETCOD     1     0
+   6.062500      0.0000000E+00   6.062500    
