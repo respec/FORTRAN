@@ -419,6 +419,7 @@ C
       USE   HMPLTGEN, ONLY : PPLTGN
       USE   HMDISPLY, ONLY : PDISPL
       USE   HMEXTMOD, ONLY : PEXTMOD
+      USE   HMEFDC, ONLY : PEFDC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     SDATIM(5),EDATIM(5),NDAMON(12),EMFG,SCLU,
@@ -473,14 +474,15 @@ C     + + + INPUT FORMATS + + +
 C
 C     + + + HISTORY + + +
 C     2009/05/12  PBD - added new EXTMOD module
+C     2009/05/28  JLK - added new EFDC module
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      I0= 0
-      I1= 1
-      I2= 2
+      I0 = 0
+      I1 = 1
+      I2 = 2
       I12= 12
-      IX= 32767
+      IX = 32767
       MESSU= FILE(1)
       MSGFL= FILE(15)
 C
@@ -493,13 +495,13 @@ C     loop thru all operations by type
       OMCNT= 0
  10   CONTINUE
 C       put blank operation number to screen
-        BLNK12 = '            '
-        IOPT   = 3
+        BLNK12= '            '
+        IOPT  = 3
         CALL HDMES3 (IOPT,BLNK12)
-        IOPT   = 4
+        IOPT  = 4
         CALL HDMES3 (IOPT,BLNK12)
-        OMCNT= OMCNT+ 1
-        KTYP= 100
+        OMCNT = OMCNT+ 1
+        KTYP  = 100
         CALL GETSE (KTYP,OMCNT,
      O              KEYST,KEYND)
 C       WRITE (MESSU,*) "returned keys ",OMCNT,keyst,keynd
@@ -507,7 +509,7 @@ C
         IF (KEYST .EQ. 0) THEN
 C         we are done
           OPTNAM= ' '
-          IOPT = 3
+          IOPT  = 3
           CALL HDMES3 (IOPT,OPTNAM)
         ELSE
           IOPT = 2
@@ -516,18 +518,18 @@ C         block for what operation-type was supplied?
           CALL GETKNM (KTYP,OMCNT,
      O                 OPTNAM)
 C         WRITE(*,*) 'HSPF:OPNBLK:proc',OPTNAM
-          OPTYP= OPTNAM(1:8)
+          OPTYP = OPTNAM(1:8)
           OMCODE= CHKSTR(LKWOPR,NKWOPR,OPTNM1,KWDOPR)
 C         get keyword info about tables
-          LCLU= OMCODE+ 120
-          LTABT= 3
-          SGRP= 1
+          LCLU  = OMCODE+ 120
+          LTABT = 3
+          SGRP  = 1
           INITFG= 1
-          NTABT= 1
+          NTABT = 1
           TABBAS= OMCODE*1000
 C
-          INLINE_TABLEDEF = GETMODULETABLEDEF(OMCODE)
-          TABLEDEF= TABLEDEFS(OMCODE)
+          INLINE_TABLEDEF= GETMODULETABLEDEF(OMCODE)
+          TABLEDEF       = TABLEDEFS(OMCODE)
           IF (INLINE_TABLEDEF) THEN
 C           new design - inline timser definition
             DO 15 NTABT = 1, UBOUND(TABLEDEF%TABLE,1)
@@ -543,16 +545,16 @@ C           new design - inline timser definition
      O                     CHSTR1,CONT)
               READ (CHSTR,1020) TABDIM(NTABT),TABNAM(NTABT)
               TABXXX(NTABT)= TABBAS+ NTABT
-              NTABT= NTABT+ 1
+              NTABT = NTABT+ 1
               INITFG= 0
             IF (CONT .EQ. 1) GO TO 20
           END IF
 C
           IF (OUTLEV .GT. 0) THEN
 C           doing this type
-            CNUM= 1
+            CNUM   = 1
             CLEN(1)= 8
-            SGRP= 41
+            SGRP   = 41
             CALL PMXTFC (MSGFL,MESSU,SCLU,SGRP,CNUM,CLEN,OPTNM1)
             IF (OUTLEV .GT. 5) THEN
 C             dump user's control input
@@ -678,20 +680,26 @@ C               extmod module
      I                        TABLEDEFS(OMCODE),
      M                        OSVKEY)
 C
+              ELSE IF (OMCODE .EQ. 13) THEN
+C               efdc module
+                CALL PEFDC (NDELT,SDATIM,NDAMON,EMFG,
+     I                      TABLEDEFS(OMCODE),
+     M                      OSVKEY)
+C
               END IF
 C
 C             find the next operation of this type
               START= OPNO+ 1
-              OPNO= OPNNO (OPTYP,I0,IX,MAXOPN,OPNTAB,START,NOPNS)
+              OPNO = OPNNO (OPTYP,I0,IX,MAXOPN,OPNTAB,START,NOPNS)
             END IF
           IF (OPNO.GT.0 .AND. RETCOD.EQ.0) GO TO 60
 C         end whiledo
 C
           IF (OUTLEV .GT. 0) THEN
 C           done this type
-            CNUM= 1
+            CNUM   = 1
             CLEN(1)= 8
-            SGRP= 42
+            SGRP   = 42
             CALL PMXTFC (MSGFL,MESSU,SCLU,SGRP,CNUM,CLEN,OPTNM1)
           END IF
         END IF

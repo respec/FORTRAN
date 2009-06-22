@@ -61,7 +61,7 @@ C     external sources/targets keyword library
       READ (INBUFF,1010) EXTKWL
 C
 C     access mode keyword library
-      INBUFF= 'ADD INST REPL'
+      INBUFF= 'ADD  INST REPL'
       READ (INBUFF,1010) AMDKWL
 C
 C     unit system keyword library
@@ -2275,6 +2275,7 @@ C
 C
       USE HMCOPY, ONLY : GETTSDEF_COPY
       USE HMEXTMOD, ONLY : GETTSDEF_EXTMOD
+      USE HMEFDC, ONLY : GETTSDEF_EFDC
 C      
       INTEGER OMCODE
 C
@@ -2283,6 +2284,8 @@ C
           CALL GETTSDEF_COPY(TIMSERDEFS(OMCODE))
         ELSEIF (OMCODE .EQ. 12) THEN
           CALL GETTSDEF_EXTMOD(TIMSERDEFS(OMCODE))
+        ELSEIF (OMCODE .EQ. 13) THEN
+          CALL GETTSDEF_EFDC(TIMSERDEFS(OMCODE))
         END IF          
       END IF    
 C
