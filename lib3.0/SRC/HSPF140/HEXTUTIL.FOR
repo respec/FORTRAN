@@ -174,10 +174,11 @@ C
       CKWDS(20) = "BMPRAC         1 100"
       CKWDS(21) = "REPORT         1 100"
       CKWDS(22) = "EXTMOD         1 100"
-      CKWDS(23) = "FILES          1  12"
-      CKWDS(24) = "CATEGORY       1  13"
-      CKWDS(25) = "MONTH-DATA     1  14"
-      CKWDS(26) = "PATHNAMES      1  15"
+      CKWDS(23) = "EFDC           1 100"
+      CKWDS(24) = "FILES          1  12"
+      CKWDS(25) = "CATEGORY       1  13"
+      CKWDS(26) = "MONTH-DATA     1  14"
+      CKWDS(27) = "PATHNAMES      1  15"
 C
  20   CONTINUE
         I= I+ 1
@@ -189,7 +190,7 @@ C         operation type keyword, save for use in opn seq block proc
         END IF
         INITFG= 0
         CLEN  = 80
-      IF (I.LT.26) GO TO 20
+      IF (I.LT.27) GO TO 20
       NKWDS= I
 C      WRITE(99,*) '   got keywords:',NKWDS
 C
