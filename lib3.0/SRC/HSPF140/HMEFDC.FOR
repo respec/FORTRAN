@@ -166,11 +166,10 @@ C
      I                  (STIVL,WIDTH,OSVKST)
 C
 C     + + + PURPOSE + + +
-C     Copy a set of point- and/or mean-valued time series
+C     Wrapper for EFDC model
 C
 C     + + + HISTORY + + +
-C     2009/04/22 JLK - use OSV module version
-C     2009/04/27 JLK - initial implementation of module version of COPY
+C     2009/05/22 JLK - initial implementation
 C
 C     + + + MODULES + + +
       USE       HIOOSV 
@@ -188,10 +187,10 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE   'cmosv.inc'
 C
 C     + + + MODULE VARIABLES + + +
-      TYPE(HTEFDC)  HEFDC    
-      POINTER    (P,HEFDC)
-      POINTER    (PNUMBR,NUMBR),(PDATIM,DATIM) 
-      INTEGER     NUMBR(2),DATIM(5)   
+      TYPE(HTEFDC)  HEFDC     
+      POINTER   (P,HEFDC)
+      POINTER   (PNUMBR,NUMBR),(PDATIM,DATIM)
+      INTEGER    NUMBR(2),DATIM(5)
 C       
 C     + + + LOCAL VARIABLES + + +
       INTEGER     IVL,IVL1,N,IDELT,PIVLNO,DUM1,DUM2,DUM3,DUM4,
@@ -202,7 +201,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL    ADDTIM,SPECL,UPQUAN
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA        OPTYP/'COPY  '/
+      DATA        OPTYP/'EFDC  '/
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -217,7 +216,6 @@ C
       I1    = 1
       I12   = 12
 C
-
 C     time loop
       DO 130 IVL= STIVL,WIDTH+ STIVL- 1
         IVL1       = IVL1+ 1
