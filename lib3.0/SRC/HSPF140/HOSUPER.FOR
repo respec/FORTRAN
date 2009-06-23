@@ -26,6 +26,7 @@ C     + + + MODULES + + +
       USE       HMPLTGEN, ONLY : PLTGEN
       USE       HMDISPLY, ONLY : HDISPL
       USE       HMEXTMOD, ONLY : EXTMOD
+      USE       HMEFDC, ONLY : EFDC
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   FILES(15),RETCOD
@@ -376,7 +377,8 @@ C                     details first time thru
                   END IF
 C
                   IF (OMCODE .NE. 4 .AND. OMCODE .NE. 5 .AND. 
-     $                OMCODE .NE. 6 .AND. OMCODE .NE. 12) THEN
+     $                OMCODE .NE. 6 .AND. OMCODE .NE. 12 .AND.
+     $                OMCODE .NE. 13) THEN
 C                   read the osv from disc
                     CALL GETOSV (OSVKST,OSVKND,MAXOSV,
      O                           OSV)
@@ -386,7 +388,7 @@ C                 call the appropriate operating module
 C                 casentry omcode
 C                  write(99,*)'omcode,opn,nopns',omcode,opn,nopns
                   GO TO (110,120,130,
-     $                   140,150,160,170,180,190,200,210,220),
+     $                   140,150,160,170,180,190,200,210,220,230),
      $                   OMCODE
 C                   case 1
  110                  CONTINUE
@@ -445,7 +447,12 @@ C                   case 11
 C
 C                   case 12
  220                  CONTINUE
-                        CALL EXTMOD (STIVL,IW,LSTCAL)
+                        CALL EXTMOD (STIVL,IW,OSVKST)
+                      GO TO 300
+C
+C                   case 13
+ 230                  CONTINUE
+                        CALL EFDC (STIVL,IW,OSVKST)
                       GO TO 300
 300              CONTINUE
 C                 endcase
