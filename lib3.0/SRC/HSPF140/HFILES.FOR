@@ -11,9 +11,10 @@ C     Process HSPF Files Block.
 C
 C     + + + MODULES + + +
       USE HMMSG, ONLY : OMSINI
+      USE HSPF_BINARY_INPUT, ONLY : INIT
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       USRFL,FILES(15),RETCOD
+      INTEGER       USRFL,FILES(18),RETCOD
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     USRFL   - fortran unit number for user's input file
@@ -60,10 +61,9 @@ C
       IF (ABS(USRFL) .GT. 0) THEN
 C       read files block from users input file and store in arrays
         FILFND= 0
-        CALL RDFLBK
-     I              (ABS(USRFL),FILES(15),
-     M               FILFND,
-     O               NUMFIL,FTYPE,FNAME,FUNIT,RETCOD)
+        CALL RDFLBK(ABS(USRFL),FILES(15),
+     M              FILFND,
+     O              NUMFIL,FTYPE,FNAME,FUNIT,RETCOD)
       END IF
 C
 C     process non-scratch disk files
@@ -87,8 +87,8 @@ C
           FILES(1)= 14
         END IF
 C
-        CALL ATTACH (I0,CMESSU,DEFNAM,CNOP,
-     O               FILNAM,ISTAT)
+        CALL ATTACH(I0,CMESSU,DEFNAM,CNOP,
+     O              FILNAM,ISTAT)
         IF (ISTAT .NE. -1) THEN
 C         default name didn't change - reset to avoid truncation at 30
 C         characters
@@ -101,9 +101,8 @@ C         try to open file
           FRM=  'FORMATTED'
           RCL=   132
           STAT= 'UNKNOWN'
-          CALL FILOPN
-     I                (ACC,FRM,RCL,STAT,FILES(1),FILNAM,
-     O                 RET)
+          CALL FILOPN(ACC,FRM,RCL,STAT,FILES(1),FILNAM,
+     O                RET)
         END IF
         RETCOD= RETCOD+ RET
       END IF
@@ -122,8 +121,8 @@ C
 C           try to open file
 C
 C           see if user specified alternate name on command line
-            CALL ATTACH (I0,FTYPE(FILX),FNAME(FILX),CNOP,
-     O                   FILNAM,ISTAT)
+            CALL ATTACH(I0,FTYPE(FILX),FNAME(FILX),CNOP,
+     O                  FILNAM,ISTAT)
             IF (ISTAT .NE. -1) THEN
 C             default name didn't change - reset to avoid truncation at 30
 C             characters
@@ -133,8 +132,8 @@ C
             IF (ISTAT .LE. 0) THEN
 C             try to open file
               FILES(10+I)= FUNIT(FILX)
-              CALL WDBOPN (FILES(10+I),FILNAM,I0,
-     O                     RET)
+              CALL WDBOPN(FILES(10+I),FILNAM,I0,
+     O                    RET)
             END IF
           END IF
           RETCOD= RETCOD+ IABS(RET)
@@ -142,12 +141,10 @@ C             try to open file
  20   CONTINUE
 C
 C     dss files
-C
-      CALL ZIPI (MAXDSS,I0,
-     O           DSSOPN)
+      CALL ZIPI(MAXDSS,I0,
+     O          DSSOPN)
 C
       DO 40 ID= 1, MAXDSS
-C
 C       construct dss character key
         IF (ID .LE. 9) THEN
           WRITE (CDSS,2000) ID
@@ -163,8 +160,8 @@ C
  30     CONTINUE
 C
         IF (FILX .GT. 0) THEN
-          CALL ATTACH (I0,CDSS,FNAME(FILX),CNOP,
-     O                 FILNAM,ISTAT)
+          CALL ATTACH(I0,CDSS,FNAME(FILX),CNOP,
+     O                FILNAM,ISTAT)
           IF (ISTAT .NE. -1) THEN
 C           default name didn't change - reset to avoid truncation at 30
 C           characters
@@ -197,8 +194,8 @@ C       tss file
  50     CONTINUE
 C
         IF (FILX .GT. 0) THEN
-          CALL ATTACH (I0,CTSS,FNAME(FILX),CNOP,
-     O                 FILNAM,ISTAT)
+          CALL ATTACH(I0,CTSS,FNAME(FILX),CNOP,
+     O                FILNAM,ISTAT)
           IF (ISTAT .NE. -1) THEN
 C           default name didn't change - reset to avoid truncation at 30
 C           characters
@@ -208,15 +205,14 @@ C
           IF (ISTAT .LE. 0) THEN
 C           try to open file
             FILES(10)= FUNIT(FILX)
-            ACC=  'DIRECT'
-            FRM=  'UNFORMATTED'
+            ACC = 'DIRECT'
+            FRM = 'UNFORMATTED'
             STAT= 'OLD'
-            BASE     = 512
-            CALL XGTRCL (BASE,
-     O                   RCL)
-            CALL FILOPN
-     I                  (ACC,FRM,RCL,STAT,FILES(10),FILNAM,
-     O                   RET)
+            BASE= 512
+            CALL XGTRCL(BASE,
+     O                  RCL)
+            CALL FILOPN(ACC,FRM,RCL,STAT,FILES(10),FILNAM,
+     O                  RET)
           END IF
           RETCOD= RETCOD+ RET
         END IF
@@ -226,13 +222,27 @@ C     initialize message output storage
       CALL OMSINI
 C
 C     set up binary file format
-      CALL BINIT (BINFRM)
+      CALL BINIT(BINFRM)
 C
-C     binary output files
       IF (USRFL.GT.0) THEN
-C       neg unit number used to indicate dont want to open bin file
+C       neg unit number used to indicate dont want to open files
         DO 60 I= 1, NUMFIL
+          IF (FTYPE(I) .EQ. 'HBN  ') THEN
+C           binary input file
+            CALL ATTACH (I0,CKEY,FNAME(I),CNOP,
+     O                   FILNAM,ISTAT)
+            IF (ISTAT .NE. -1) THEN
+C             default name didn't change - reset to avoid truncation at 30
+C             characters
+              FILNAM= FNAME(I)
+            END IF          
+            CALL INIT(FUNIT(I),FILNAM,
+     O                RET)
+            RETCOD= RETCOD+ RET
+          END IF
+C          
           IF (FTYPE(I) .EQ. 'BINO ') THEN
+C           binary output file 
 C           construct file unit character key
             IF (FUNIT(I) .LE. 9) THEN
               WRITE (CKEY,2020) FUNIT(I)
@@ -250,20 +260,18 @@ C             characters
 C
             IF (ISTAT .LE. 0) THEN
 C             try to open file
-              ACC=  'SEQUENTIAL'
-              FRM=  BINFRM
+              ACC = 'SEQUENTIAL'
+              FRM = BINFRM
               RCL = 0
               STAT= 'UNKNOWN'
-              CALL FILOPN
-     I                    (ACC,FRM,RCL,STAT,FUNIT(I),FILNAM,
-     O                     RET)
-              IF (RET.EQ.0) THEN
+              CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FILNAM,
+     O                    RET)
+              IF (RET .EQ. 0) THEN
 C               write an endfile to clear out anything existing
                 ENDFILE (FUNIT(I))
                 CLOSE (FUNIT(I))
-                CALL FILOPN
-     I                      (ACC,FRM,RCL,STAT,FUNIT(I),FILNAM,
-     O                       RET)
+                CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FILNAM,
+     O                      RET)
               END IF
             END IF
             RETCOD= RETCOD+ RET
@@ -295,9 +303,8 @@ C           try to open file
             FRM=  'FORMATTED'
             RCL=   132
             STAT= 'UNKNOWN'
-            CALL FILOPN
-     I                  (ACC,FRM,RCL,STAT,FUNIT(I),FILNAM,
-     O                   RET)
+            CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FILNAM,
+     O                  RET)
           END IF
           RETCOD= RETCOD+ RET
         END IF
@@ -314,9 +321,8 @@ C           this is a pltgen file
             ACC = 'SEQUENTIAL'
             RCL = 132
             STAT= 'UNKNOWN'
-            CALL FILOPN
-     I                  (ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
-     O                   RET)
+            CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
+     O                  RET)
             RETCOD= RETCOD + RET
           ENDIF
  80     CONTINUE
@@ -330,9 +336,8 @@ C         this is an unformatted file
           FRM = 'UNFORMATTED'
           RCL = 0
           STAT= 'REPLACE'
-          CALL FILOPN
-     I                (ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
-     O                 RET)
+          CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
+     O                RET)
           RETCOD= RETCOD + RET
         END IF
  90   CONTINUE
@@ -346,9 +351,8 @@ C          WRITE(99,*) 'HFILES:found STASAV:',FUNIT(I)
           FRM = 'FORMATTED'
           RCL = 0
           STAT= 'OLD'
-          CALL FILOPN
-     I                (ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
-     O                 RET)
+          CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
+     O                RET)
         END IF
  100  CONTINUE
 C
@@ -361,9 +365,8 @@ C          WRITE(99,*) 'HFILES:found UPDATE:',FUNIT(I)
           FRM = 'FORMATTED'
           RCL = 0
           STAT= 'OLD'
-          CALL FILOPN
-     I                (ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
-     O                 RET)
+          CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
+     O                RET)
         END IF
  110  CONTINUE
 C
@@ -375,9 +378,8 @@ C     do PEST supplemental file
           FRM     = 'FORMATTED'
           RCL     = 0
           STAT    = 'OLD'
-          CALL FILOPN
-     I                (ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
-     O                 RET)
+          CALL FILOPN(ACC,FRM,RCL,STAT,FUNIT(I),FNAME(I),
+     O                RET)
         END IF
  120  CONTINUE
 

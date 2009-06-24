@@ -1,3 +1,6 @@
+C
+C
+C
       SUBROUTINE   BINIT (
      O                    BINFRM)
 C
@@ -287,3 +290,136 @@ C       one-byte back-pointer
 C
       RETURN
       END
+C
+C
+C
+      MODULE HSPF_BINARY_INPUT
+C
+C     + + + PURPOSE + + +
+C     read from HSPF binary format file
+C
+C     + + + HISTORY + + +
+C     2009/06/24 JLK - initial implementation 
+C
+C     + + + MODULE VARIABLES + + +
+      CHARACTER*128  FILENAME
+      INTEGER        FILEUNIT, Pos
+      INTEGER        MXBBUF
+      PARAMETER     (MXBBUF=10000)
+C
+      CHARACTER*1    BINBUF(MXBBUF*4)
+      INTEGER        IBUF(MXBBUF)
+      INTEGER*1      IBUF1(MXBBUF*4)
+      INTEGER*2      IBUF2(MXBBUF*2)
+      REAL           RBUF(MXBBUF)
+      EQUIVALENCE (BINBUF,IBUF,RBUF,IBUF1,IBUF2)
+C
+      CONTAINS
+C
+C
+C
+      SUBROUTINE INIT
+     I               (FUNIT,FNAME,
+     O                RETCOD)
+C     
+C     + + + PURPOSE + + +
+C     open and read headers from HSPF binary file
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER       FUNIT,RETCOD
+      CHARACTER*(*) FNAME
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     FUNIT - fortran unit number  
+C     FNAME - binary file name
+C     RETCOD- return code
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER IOS, RecLen, I
+      Logical First
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      OPEN (UNIT=FUNIT,FILE=FNAME,STATUS='OLD',ACCESS='STREAM',
+     $      FORM='FORMATTED',ACTION='READ',ERR=10,IOSTAT=IOS)
+      GOTO 20
+ 10   CONTINUE
+C       TODO: error handling code        
+ 20   CONTINUE      
+      FILENAME= FNAME
+      FILEUNIT= FUNIT
+      Pos     = 1
+C      
+      READ(FILEUNIT,"(A1)") BINBUF(1)
+      Pos     = Pos+ 1
+C     INQUIRE(FILEUNIT,POS=I)
+C     WRITE(*,*) IBUF1(1),IBUF2(1),IBUF(1),I,Pos
+      IF (IBUF(1) .NE. 253) THEN
+C       bad header
+       
+        RETCOD = 1
+      ELSE
+        First = .True.
+        RecLen= 1
+        DO WHILE (RecLen .GT. 0) 
+          RecLen= FtnUnfSeqRecLen(FileUnit,First)
+          WRITE(*,*) "Record,Len ", RecLen
+        END DO
+      END IF      
+C      
+      END SUBROUTINE
+C
+C
+C
+      Integer Function FtnUnfSeqRecLen(aFileUnit,aFirst) 
+C
+C     + + + DUMMY ARGUMENTS + + +
+      Integer aFileUnit
+      Logical aFirst
+C
+C     + + + LOCAL VARIABLES + + +          
+      Integer      mLengthLast, c, h, lBytes, lRecordLength, I 
+      Save         mLengthLast
+C      
+      If (aFirst) Then
+          mLengthLast= 0
+          aFirst     = .False.
+          Pos        = 2
+      Else
+          c = 64
+          Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
+          Pos = Pos+ 1
+          Do While (mLengthLast .ge. c)
+              c = c * 256
+              Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
+              Pos = Pos+ 1
+C             INQUIRE(FILEUNIT,POS=I)
+C             WRITE(*,*) IBUF1(1),IBUF2(1),IBUF(1),I,Pos
+          End Do
+      End If
+      Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
+      Pos = Pos+ 1
+C     INQUIRE(FILEUNIT,POS=I)
+C     WRITE(*,*) IBUF1(1),IBUF2(1),IBUF(1),I,Pos
+      lBytes = IBUF(1) .And. 3
+        lRecordLength = IBUF(1) / 4
+        c = 64
+        h = lBytes + 1
+        Do While (lBytes .gt. 0)
+            Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
+            Pos   = Pos+ 1
+            lBytes= lBytes - 1
+            lRecordLength = lRecordLength + IBUF(1) * c
+            c = c * 256
+        End Do
+        mLengthLast    = lRecordLength + h
+        Pos            = Pos+ lRecordLength
+        FtnUnfSeqRecLen= lRecordLength
+        
+        Return 
+ 20     CONTINUE
+          WRITE(*,*) 'EndOfFileAt ', Pos
+          FtnUnfSeqRecLen= 0        
+      End Function      
+C      
+      END MODULE HSPF_BINARY_INPUT      

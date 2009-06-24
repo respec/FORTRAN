@@ -84,7 +84,7 @@ C       processing message
       END IF
 C
 C     initialize keyworks, etc for timeseries
-      CALL HRITSI (MSGFL)
+      CALL HRITSI  
 C
       IF (TSSFL .GT. 0) THEN
 C       tssfl is being used in this run, look at tss descriptor
@@ -109,12 +109,12 @@ C     initialize the tsget/tsput files
       CALL GPFINT(RECLT,FILE,GPKEY)
       PGPKEY= GPKEY
 C
-C     get keys to users ext sour block
+C     get keys to users ext source block
       ITYP= 5
       CALL GETSE(ITYP,I1,
      O           SRCKST,SRCKND)
       IF (SRCKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
-C       echo user's control input
+C       echo user's control input for ext source block
         CALL DUMPER (SRCKST,SRCKND,MESSU)
       END IF
 C
@@ -123,7 +123,7 @@ C     get keys to users formats block
       CALL GETSE(ITYP,I1,
      O           FMTKST,FMTKND)
       IF (FMTKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
-C       echo user's control input
+C       echo user's control input for formats block
         CALL DUMPER (FMTKST,FMTKND,MESSU)
       END IF
 C
@@ -132,7 +132,7 @@ C     get keys to users schematic block
       CALL GETSE(ITYP,I1,
      O           SCHKST,SCHKND)
       IF (SCHKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
-C       echo user's control input
+C       echo user's control input for schematic
         CALL DUMPER (SCHKST,SCHKND,MESSU)
       END IF
 C
@@ -141,7 +141,7 @@ C     get keys to users network block
       CALL GETSE(ITYP,I1,
      O           NETKST,NETKND)
       IF (NETKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
-C       echo user's control input
+C       echo user's control input for network
         CALL DUMPER (NETKST,NETKND,MESSU)
       END IF
 C
@@ -150,7 +150,7 @@ C     get keys to users external targets block
       CALL GETSE(ITYP,I1,
      O           TARKST,TARKND)
       IF (TARKST .GT. 0 .AND. OUTLEV .GT. 3) THEN
-C       echo user's control input
+C       echo user's control input for external targets block
         CALL DUMPER (TARKST,TARKND,MESSU)
       END IF
 C
@@ -163,7 +163,7 @@ C       find the starting and ending operations
         OPND = GRPTAB(2,GRPND)
 C
 C       call workio to initialize max key
-        MXKY= -1
+        MXKY   = -1
         DREC(1)= 0
         CALL WORKIO (I0,I1,I1,
      M               DREC,MXKY)
@@ -191,9 +191,9 @@ C         ext sources block is present - process it
           IOPT= 2
           ITYP= 5
           CALL HDMES2(IOPT,ITYP,I1)
-          CALL SRCBLK (OPST,OPND,SRCKST,SRCKND,SDATIM,EDATIM,
-     I                 FMTKST,FMTKND,IHMFG,
-     M                 WKEY,WKSTES,WKNDES)
+          CALL SRCBLK(OPST,OPND,SRCKST,SRCKND,SDATIM,EDATIM,
+     I                FMTKST,FMTKND,IHMFG,
+     M                WKEY,WKSTES,WKNDES)
         END IF
 C
         IF (SCHKST .GT. 0 .OR. NETKST .GT. 0) THEN
@@ -205,10 +205,9 @@ C           schematics block is present - process it
             IOPT= 2
             ITYP= 10
             CALL HDMES2(IOPT,ITYP,I1)
-            CALL SCHBLK
-     I                  (OPST,OPND,SCHKST,SCHKND,MAXMLK,
-     I                   MSLINX,NMLTBS,
-     M                   WKEY)
+            CALL SCHBLK(OPST,OPND,SCHKST,SCHKND,MAXMLK,
+     I                  MSLINX,NMLTBS,
+     M                  WKEY)
           END IF
 C
           IF (NETKST .GT. 0) THEN
@@ -216,8 +215,8 @@ C           network block is present - process it
             IOPT= 2
             ITYP= 7
             CALL HDMES2(IOPT,ITYP,I1)
-            CALL NETBLK (OPST,OPND,NETKST,NETKND,
-     M                   WKEY)
+            CALL NETBLK(OPST,OPND,NETKST,NETKND,
+     M                  WKEY)
           END IF
 C
 C         the following chaining has been moved up to timser from netblk
@@ -920,7 +919,7 @@ C     + + + COMMON BLOCKS- INTERP3 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      MESSU,TSSFL,WDMSFL(4),I4,I6,N,KEYIND,SCLU,SGRP,MSGFL,
-     $             EMSGCT
+     $             EMSGCT,HBNFL
       CHARACTER*4  CHSTR
       CHARACTER*80 EMSG(5)
 C
@@ -1054,11 +1053,11 @@ C       dss
      O              NUM,DELT,UNT,NTS,GAPCD,AMDCD,TABL,TABLR)
       ELSE IF (KEYIND .EQ. 5) THEN
 C       hbn
-C       CALL HBNDS
-        EMSG(1)= ' HBN IMPLEMENTATION NOT COMPLETE.'
-        EMSGCT = 1
-        CALL OMSGMSG(MESSU,SCLU,31, EMSGCT,EMSG,
-     M               ECOUNT)
+        CALL HBNDS(MSGFL,MESSU,HBNFL,VOLNO,MEMN,MEMSB,
+     I             GAPST,GAPKW1,SYST,SYSKW1,AMDKW1,AMDST,SDATIM,
+     I             EDATIM,TRFLAG,OUTLEV,MXTSTB,IHMFG,
+     M             ECOUNT,
+     O             NUM,DELT,UNT,NTS,GAPCD,AMDCD,TABL,TABLR)
       ELSE IF (KEYIND .EQ. 6) THEN
 C       cdf
 C       CALL CDFDS

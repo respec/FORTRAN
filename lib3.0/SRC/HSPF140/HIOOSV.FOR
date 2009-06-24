@@ -9,7 +9,7 @@ C
 C     + + + HISTORY + + +
 C     2009/04/22 JLK - initial implementation of OSV module version
 C
-C     + + + MODULE VARIABLES
+C     + + + MODULE VARIABLES + + +
       INTEGER, TARGET, ALLOCATABLE, DIMENSION (:,:) :: OSVM
       LOGICAL, PRIVATE                        :: INIT_NEEDED = .TRUE.
 C
