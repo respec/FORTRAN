@@ -12,8 +12,9 @@ C     12/6/2004 - jlk&pbd - reformatted to better show TSGET/TSPUTinfo
 C                           for MFACT changes during execution, 
 C                           increased size of DUMTSR to reflect longer
 C                           TSGET/TSPUT instruction
+C     2009/06/23 - JLK - more space for file unit numbers
 C
-      COMMON/CRINTP/FILE,DUMT1,DUMT2,DUMT3,WCOUNT,ECOUNT,OUTLEV,
+      COMMON/CRINTP/FILE,WCOUNT,ECOUNT,OUTLEV,
      $              RESMFG,NIVLS,IVLLIB,NXGRPS,EXGTAB,NGRPS,GRPTAB,
      $              NOPNS,OPNO,OPNTAB,DUMS,SVOLNO,SNUM,SDELT,SUNITS,
      $              DUMG1,SAMDCD,SGAPCD,SFRC,SNTS,STABL,DUMT,TVOLNO,
@@ -26,7 +27,7 @@ C
      $              KEYS,NAME,UNITS,DSCMPR,YEAROR,OBSTIM,STA,LOCATN,
      $              GAPCOD,DSDELT,NMEMS,IMEMNM,MSUB,MKIND,FMT,DUMLAB,
      $              DUM
-      INTEGER       FILE(15),DUMT1,DUMT2,DUMT3,WCOUNT(10),ECOUNT,
+      INTEGER       FILE(18),WCOUNT(10),ECOUNT,
      $              OUTLEV,RESMFG,NIVLS,IVLLIB(20),NXGRPS,
      $              EXGTAB(5,10),NGRPS,GRPTAB(5,10),NOPNS,OPNO,
      $              OPNTAB(20,MAXOPN),DUMS(2),SVOLNO,SNUM,SDELT,

@@ -21,86 +21,96 @@ C
 C
 C
       SUBROUTINE   HRITSI
-     I                   (MSGFL)
 C
 C     + + + PURPOSE + + +
-C     read in general timseries data from message file
-C
-C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   MSGFL
-C
-C     + + + ARGUMENT DEFINITIONS + + +
-C     MSGFL  - message file unit number
+C     set keywords and other constants
 C
 C     + + + COMMON BLOCKS- INTERP3 + + +
       INCLUDE 'crin3.inc'
       INCLUDE 'crin3c.inc'
 C
-C     + + + LOCAL VARIABLES + + +
-      INTEGER      N,J,CASE,STKIND,SCLU,SGRP,INITFG,CONT,CLEN
-      CHARACTER*1  INBUF1(80)
-C
-C     + + + EQUIVALENCES + + +
-      EQUIVALENCE (INBUF1,INBUFF)
-      CHARACTER*80 INBUFF
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL     WMSGTT
-C
-C     + + + INPUT FORMATS + + +
- 1010 FORMAT (8(A4,1X))
- 1040 FORMAT (A6,4X,2I10)
- 1050 FORMAT (11I5)
-C
 C     + + + END SPECIFICATIONS + + +
 C
-      SCLU  = 215
-C
 C     external sources/targets keyword library
-      INBUFF= 'TSS  SEQ  WDM  DSS  HBN  CDF'
-      READ (INBUFF,1010) EXTKWL
+      EXTKWL(1)= 'TSS '
+      EXTKWL(2)= 'SEQ '
+      EXTKWL(3)= 'WDM '
+      EXTKWL(4)= 'DSS '
+      EXTKWL(5)= 'HBN '
+      EXTKWL(6)= 'CDF '
 C
 C     access mode keyword library
-      INBUFF= 'ADD  INST REPL'
-      READ (INBUFF,1010) AMDKWL
+      AMDKWL(1)= 'ADD '
+      AMDKWL(2)= 'INST'
+      AMDKWL(3)= 'REPL'
 C
 C     unit system keyword library
-      INBUFF= 'ENGL METR'
-      READ (INBUFF,1010) SYSKWL
+      SYSKWL(1)= 'ENGL'
+      SYSKWL(2)= 'METR'
 C
 C     gap code keyword library
-      INBUFF= 'ZERO UNDF'
-      READ (INBUFF,1010) GAPKWL
+      GAPKWL(1)= 'ZERO'
+      GAPKWL(2)= 'UNDF'
 C
 C     format class keyword library
-      SGRP  = 16
-      INITFG= 1
-      N     = 0
- 10   CONTINUE
-        CLEN  = 80
-        CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M               CLEN,
-     O               INBUF1,CONT)
-        INITFG= 0
-        N     = N+ 1
-        READ (INBUFF,1040) FMTKWL(N),(FMTINF(J,N),J=1,2)
-      IF (CONT .EQ. 1) GO TO 10
+      FMTKWL(1)  = 'HYDHR '
+      FMTINF(1,1)= 60
+      FMTINF(2,1)= 3
+      FMTKWL(2)  = 'HYDDAY'
+      FMTINF(1,2)= 1440
+      FMTINF(2,2)= 3
+      FMTKWL(3)  = 'HYDSMN'
+      FMTINF(1,3)= 1440
+      FMTINF(2,3)= 3
+      FMTKWL(4)  = 'HYDMON'
+      FMTINF(1,4)= 1440
+      FMTINF(2,4)= 3
+      FMTKWL(5)  = 'HYDFIV'
+      FMTINF(1,5)= 5
+      FMTINF(2,5)= 3
+      FMTKWL(6)  = 'HYDFIF'
+      FMTINF(1,6)= 15
+      FMTINF(2,6)= 3
 C
 C     transformation keyword library
-      INBUFF= 'SAME DIV  AVER SUM  MAX  MIN  INTP'
-      READ (INBUFF,1010) TRNKWL
+      TRNKWL(1)= 'SAME'
+      TRNKWL(2)= 'DIV '
+      TRNKWL(3)= 'AVER'
+      TRNKWL(4)= 'SUM '
+      TRNKWL(5)= 'MAX '
+      TRNKWL(6)= 'MIN '
+      TRNKWL(7)= 'INTP'
 C
 C     transformation code table
-      SGRP  = 18
-      INITFG= 1
- 20   CONTINUE
-        CLEN  = 80
-        CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
-     M               CLEN,
-     O               INBUF1,CONT)
-        INITFG= 0
-        READ(INBUFF,1050) CASE,STKIND,(TRNTAB(J,STKIND,CASE),J=1,9)
-      IF (CONT .EQ. 1) GO TO 20
+      TRNTAB       = 0
+C           
+      TRNTAB(1,1,1)= 1
+      TRNTAB(9,1,1)= 1
+      TRNTAB(1,2,1)= 1
+      TRNTAB(9,2,1)= 1
+      TRNTAB(3,3,1)= 1
+      TRNTAB(9,3,1)= 3
+C      
+      TRNTAB(7,1,2)= 1
+      TRNTAB(9,1,2)= 7
+      TRNTAB(1,2,2)= 1
+      TRNTAB(2,2,2)= 2
+      TRNTAB(9,2,2)= 2
+      TRNTAB(3,3,2)= 1
+      TRNTAB(9,3,2)= 3
+C
+      TRNTAB(8,1,3)= 1
+      TRNTAB(9,1,3)= 8
+      TRNTAB(3,2,3)= 1
+      TRNTAB(4,2,3)= 1
+      TRNTAB(5,2,3)= 1
+      TRNTAB(6,2,3)= 1
+      TRNTAB(9,2,3)= 4
+      TRNTAB(3,3,3)= 1
+      TRNTAB(4,3,3)= 1
+      TRNTAB(5,3,3)= 1
+      TRNTAB(6,3,3)= 1
+      TRNTAB(9,3,3)= 3
 C
       RETURN
       END SUBROUTINE
@@ -2003,11 +2013,11 @@ C
       MESSU= FILE(1)
       MSGFL= FILE(15)
 C
-      SCLU= 215
+      SCLU = 215
 C
 C     wkst is key at which first record will be written to workfl,
 C     if any are written
-      WKST= WKEY+ 1
+      WKST = WKEY+ 1
 C
       IF (OUTLEV .GT. 4) THEN
 C       processing message
@@ -2015,8 +2025,8 @@ C       processing message
       END IF
 C
       TSBKCD= 1
-      ITSR= KEYST
-      BGRP= 50
+      ITSR  = KEYST
+      BGRP  = 50
 C
 10    CONTINUE
 C       get an ext sources entry (first entry if first time through)
