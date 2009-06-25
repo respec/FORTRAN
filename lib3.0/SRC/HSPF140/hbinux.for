@@ -290,136 +290,208 @@ C       one-byte back-pointer
 C
       RETURN
       END
-C
-C
-C
+!
+!
+!
       MODULE HSPF_BINARY_INPUT
-C
-C     + + + PURPOSE + + +
-C     read from HSPF binary format file
-C
-C     + + + HISTORY + + +
-C     2009/06/24 JLK - initial implementation 
-C
-C     + + + MODULE VARIABLES + + +
-      CHARACTER*128  FILENAME
-      INTEGER        FILEUNIT, Pos
-      INTEGER        MXBBUF
-      PARAMETER     (MXBBUF=10000)
-C
-      CHARACTER*1    BINBUF(MXBBUF*4)
-      INTEGER        IBUF(MXBBUF)
-      INTEGER*1      IBUF1(MXBBUF*4)
-      INTEGER*2      IBUF2(MXBBUF*2)
-      REAL           RBUF(MXBBUF)
-      EQUIVALENCE (BINBUF,IBUF,RBUF,IBUF1,IBUF2)
-C
+!
+!     + + + PURPOSE + + +
+!     read from HSPF binary format file
+!
+!     + + + HISTORY + + +
+!     2009/06/24 JLK - initial implementation 
+!
+!     + + + MODULE VARIABLES + + +
+      CHARACTER*128 mFileName
+      INTEGER       mFileUnit 
+      INTEGER       mMaxBinBuff,mMaxRecords
+      PARAMETER    (mMaxBinBuff=10000,mMaxRecords=20000)
+!     
+      Integer       mRecordCount,mHeaderCount    
+!
+      CHARACTER*1   mBinBuffC(mMaxBinBuff*4)
+      Character*4   mBinBuffC4(mMaxBinBuff)
+      Character*8   mBinBuffC8(mMaxBinBuff/2)
+      INTEGER       mBinBuffI(mMaxBinBuff)
+      INTEGER*1     mBinBuffI1(mMaxBinBuff*4)
+      INTEGER*2     mBinBuffI2(mMaxBinBuff*2)
+      REAL          mBinBuffR(mMaxBinBuff)
+      EQUIVALENCE  (mBinBuffC,mBinBuffC4,mBinBuffC8,
+     $              mBinBuffI,mBinBuffR,mBinBuffI1,mBinBuffI2)
+!
+      type Header
+        sequence
+        character*8 OperationName, SectionName
+        integer     OperationNumber
+        character*8, allocatable, dimension(:) :: Constituents
+      end type Header
+      type(Header), allocatable, dimension(:) :: mHeaders 
+!
+      type Record
+        sequence
+        integer  StartPos, EndPos
+      end type Record
+      type(Record) mRecords(mMaxRecords)        
+!
       CONTAINS
-C
-C
-C
-      SUBROUTINE INIT
-     I               (FUNIT,FNAME,
-     O                RETCOD)
-C     
-C     + + + PURPOSE + + +
-C     open and read headers from HSPF binary file
-C
-C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       FUNIT,RETCOD
-      CHARACTER*(*) FNAME
-C
-C     + + + ARGUMENT DEFINITIONS + + +
-C     FUNIT - fortran unit number  
-C     FNAME - binary file name
-C     RETCOD- return code
-C
-C     + + + LOCAL VARIABLES + + +
-      INTEGER IOS, RecLen, I
-      Logical First
-C
-C     + + + END SPECIFICATIONS + + +
-C
-      OPEN (UNIT=FUNIT,FILE=FNAME,STATUS='OLD',ACCESS='STREAM',
-     $      FORM='FORMATTED',ACTION='READ',ERR=10,IOSTAT=IOS)
+!
+!
+!
+      SUBROUTINE Init
+     I               (aFileUnit,aFileName,
+     O                aReturnCode)
+!     
+!     + + + PURPOSE + + +
+!     open and read headers from HSPF binary file
+!
+!     + + + DUMMY ARGUMENTS + + +
+      INTEGER       aFileUnit,aReturnCode
+      CHARACTER*(*) aFileName
+!
+!     + + + ARGUMENT DEFINITIONS + + +
+!     aFileUnit  - fortran unit number  
+!     aFileName  - binary file name
+!     aReturnCode- return code
+!
+!     + + + LOCAL VARIABLES + + +
+      integer lIOS, lRecLength, lPos, I,
+     $        lRecordIndex, lHeaderIndex, lVariableIndex,
+     $        lStartPos, lVariableNameLength
+      logical lFirst
+      character*8  :: lVariableName(256)
+      type(Header) :: lHeader
+!
+!     + + + END SPECIFICATIONS + + +
+!
+      OPEN (UNIT=aFileUnit,FILE=aFileName,STATUS='OLD',ACCESS='STREAM',
+     $      FORM='FORMATTED',ACTION='READ',ERR=10,IOSTAT=lIOS)
       GOTO 20
  10   CONTINUE
-C       TODO: error handling code        
+!       TODO: error handling code   
+        aReturnCode = 1
+        Return     
  20   CONTINUE      
-      FILENAME= FNAME
-      FILEUNIT= FUNIT
-      Pos     = 1
-C      
-      READ(FILEUNIT,"(A1)") BINBUF(1)
-      Pos     = Pos+ 1
-C     INQUIRE(FILEUNIT,POS=I)
-C     WRITE(*,*) IBUF1(1),IBUF2(1),IBUF(1),I,Pos
-      IF (IBUF(1) .NE. 253) THEN
-C       bad header
-       
-        RETCOD = 1
+      mFileName   = aFileName
+      mFileUnit   = aFileUnit
+      mRecordCount= 0
+      mHeaderCount= 0
+!      
+      READ(mFileUnit,"(A1)") mBinBuffC(1)
+      IF (mBinBuffI(1) .NE. 253) THEN
+!       bad header
+!       TODO: error handling code               
+        aReturnCode= 2
       ELSE
-        First = .True.
-        RecLen= 1
-        DO WHILE (RecLen .GT. 0) 
-          RecLen= FtnUnfSeqRecLen(FileUnit,First)
-          WRITE(*,*) "Record,Len ", RecLen
+        lFirst      = .True.
+        lRecLength  = 1
+        lPos        = 2
+        DO WHILE (lRecLength .gt. 0) 
+          Call NextRecord(lFirst, lPos, mHeaderCount, 
+     O                    lRecLength, lStartPos)
+          If (lRecLength .gt. 0) Then
+            mRecordCount= mRecordCount + 1
+            mRecords(mRecordCount)%StartPos= lStartPos
+            mRecords(mRecordCount)%EndPos  = lStartPos + lRecLength- 1
+            WRITE(*,*) "Record ", mRecordCount, lStartPos, lRecLength, 
+     $                 lPos, mHeaderCount
+          else
+            write(*,*) "EOF ", mRecordCount
+          End If
         END DO
+        if (mHeaderCount .gt. 0) then
+          allocate (mHeaders(mHeaderCount))
+          lHeaderIndex = 0
+          do lRecordIndex = 1, mRecordCount
+             lPos = mRecords(lRecordIndex)%StartPos
+             mBinBuffI(1)= 0 
+             Read(mFileUnit,"(A1)",POS=lPos) mBinBuffC(1)
+             if (mBinBuffI(1) .eq. 0) then
+               Read(mFileUnit,"(A8)",POS=lPos+4)  lHeader%OperationName
+               Read(mFileUnit,"(A4)",POS=lPos+12) mBinBuffC4(1)
+               lHeader%OperationNumber = mBinBuffI(1)
+               Read(mFileUnit,"(A8)",POS=lPos+16) lHeader%SectionName
+               lVariableIndex= 0
+               lPos = lPos+ 24
+               do while (lPos .lt. mRecords(lRecordIndex)%EndPos)
+                 Read(mFileUnit,"(A4)",POS=lPos) mBinBuffC4(1)
+                 lVariableNameLength = mBinBuffI(1)
+                 lPos= lPos+ 4
+                 mBinBuffC8(1)= ""
+                 Read(mFileUnit,"(64A1)",Pos=lPos) 
+     $               (mBinBuffC(I),I=1,lVariableNameLength)
+                 lVariableIndex = lVariableIndex + 1
+                 lVariableName(lVariableIndex)= mBinBuffC8(1)
+                 lPos= lPos+ lVariableNameLength
+               end do
+               lHeaderIndex= lHeaderIndex+ 1
+               mHeaders(lHeaderIndex)= lHeader
+               write(*,*) "Header ", lRecordIndex, lHeaderIndex, 
+     $                    lVariableIndex, lHeader%OperationName, 
+     $                    lHeader%OperationNumber, lHeader%SectionName
+               if (lHeaderIndex .eq. mHeaderCount) then
+!                have all headers, exit do loop               
+                 exit  
+               end if
+             end if
+          end do
+        end if
+        aReturnCode= 0
       END IF      
-C      
+!      
       END SUBROUTINE
-C
-C
-C
-      Integer Function FtnUnfSeqRecLen(aFileUnit,aFirst) 
-C
-C     + + + DUMMY ARGUMENTS + + +
-      Integer aFileUnit
+!
+!
+!
+      Subroutine NextRecord
+     M                     (aFirst, aPos, aHeaderCount,
+     O                      aRecordLength, aStartPos) 
+!
+!     + + + DUMMY ARGUMENTS + + +
       Logical aFirst
-C
-C     + + + LOCAL VARIABLES + + +          
-      Integer      mLengthLast, c, h, lBytes, lRecordLength, I 
-      Save         mLengthLast
-C      
+      Integer aPos, aHeaderCount, aRecordLength, aStartPos
+!
+!     + + + LOCAL VARIABLES + + +          
+      Integer lLengthLast, c, h, lBytes 
+      Save    lLengthLast
+!      
       If (aFirst) Then
-          mLengthLast= 0
-          aFirst     = .False.
-          Pos        = 2
+        lLengthLast= 0
+        aFirst     = .False.
       Else
-          c = 64
-          Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
-          Pos = Pos+ 1
-          Do While (mLengthLast .ge. c)
-              c = c * 256
-              Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
-              Pos = Pos+ 1
-C             INQUIRE(FILEUNIT,POS=I)
-C             WRITE(*,*) IBUF1(1),IBUF2(1),IBUF(1),I,Pos
-          End Do
-      End If
-      Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
-      Pos = Pos+ 1
-C     INQUIRE(FILEUNIT,POS=I)
-C     WRITE(*,*) IBUF1(1),IBUF2(1),IBUF(1),I,Pos
-      lBytes = IBUF(1) .And. 3
-        lRecordLength = IBUF(1) / 4
-        c = 64
-        h = lBytes + 1
-        Do While (lBytes .gt. 0)
-            Read(FILEUNIT,"(A1)",END=20,POS=Pos) BINBUF(1)
-            Pos   = Pos+ 1
-            lBytes= lBytes - 1
-            lRecordLength = lRecordLength + IBUF(1) * c
-            c = c * 256
+        c   = 64
+        Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+        aPos= aPos+ 1
+        Do While (lLengthLast .ge. c)
+          c   = c * 256
+          Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+          aPos= aPos+ 1
         End Do
-        mLengthLast    = lRecordLength + h
-        Pos            = Pos+ lRecordLength
-        FtnUnfSeqRecLen= lRecordLength
-        
-        Return 
- 20     CONTINUE
-          WRITE(*,*) 'EndOfFileAt ', Pos
-          FtnUnfSeqRecLen= 0        
-      End Function      
-C      
+      End If
+      Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+      aPos  = aPos+ 1
+      lBytes= mBinBuffI(1) .And. 3
+      aRecordLength= mBinBuffI(1) / 4
+      c     = 64
+      h     = lBytes + 1
+      do while (lBytes .gt. 0)
+        read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+        aPos  = aPos+ 1
+        lBytes= lBytes - 1
+        aRecordLength = aRecordLength + mBinBuffI(1) * c
+        c     = c * 256
+      end do
+      read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+      aStartPos = aPos
+      if (mBinBuffI(1) .eq. 0) then
+        aHeaderCount = aHeaderCount+ 1
+      end if
+      lLengthLast= aRecordLength + h
+      aPos       = aPos+ aRecordLength
+      Return 
+ 20   Continue
+        aRecordLength= 0  
+        aStartPos    = 0
+        Return      
+      End Subroutine    
+!      
       END MODULE HSPF_BINARY_INPUT      
