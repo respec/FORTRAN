@@ -321,15 +321,19 @@ C
 !
       type Header
         sequence
-        character*8 OperationName, SectionName
-        integer     OperationNumber
+        character*8  OperationName 
+        integer      OperationNumber
+        character*8  SectionName
+        character*24 Id
+        integer      DataRecordStart, DataRecordEnd, DataRecordCount
+        integer      RecordIndex, ConstituentCount
         character*8, allocatable, dimension(:) :: Constituents
       end type Header
       type(Header), allocatable, dimension(:) :: mHeaders 
 !
       type Record
         sequence
-        integer  StartPos, EndPos
+        integer  StartPos, EndPos, RecordType, NextRecord, PrevRecord
       end type Record
       type(Record) mRecords(mMaxRecords)        
 !
@@ -354,10 +358,10 @@ C
 !     aReturnCode- return code
 !
 !     + + + LOCAL VARIABLES + + +
-      integer lIOS, lRecLength, lPos, I,
+      integer lIOS, lPos, I,
      $        lRecordIndex, lHeaderIndex, lVariableIndex,
      $        lStartPos, lVariableNameLength
-      logical lFirst
+      logical lHeaderFound
       character*8  :: lVariableName(256)
       type(Header) :: lHeader
 !
@@ -382,34 +386,25 @@ C
 !       TODO: error handling code               
         aReturnCode= 2
       ELSE
-        lFirst      = .True.
-        lRecLength  = 1
-        lPos        = 2
-        DO WHILE (lRecLength .gt. 0) 
-          Call NextRecord(lFirst, lPos, mHeaderCount, 
-     O                    lRecLength, lStartPos)
-          If (lRecLength .gt. 0) Then
-            mRecordCount= mRecordCount + 1
-            mRecords(mRecordCount)%StartPos= lStartPos
-            mRecords(mRecordCount)%EndPos  = lStartPos + lRecLength- 1
-            WRITE(*,*) "Record ", mRecordCount, lStartPos, lRecLength, 
-     $                 lPos, mHeaderCount
-          else
-            write(*,*) "EOF ", mRecordCount
-          End If
-        END DO
+        lPos       = 2
+        do while (NextRecord(lPos))
+!         this reads through all records in the file        
+        end do
+        write(*,*) "EOF ", mRecordCount, mHeaderCount
         if (mHeaderCount .gt. 0) then
           allocate (mHeaders(mHeaderCount))
           lHeaderIndex = 0
           do lRecordIndex = 1, mRecordCount
              lPos = mRecords(lRecordIndex)%StartPos
+             read(mFileUnit,"(A8)",POS=lPos+4)  lHeader%OperationName
+             read(mFileUnit,"(A4)",POS=lPos+12) mBinBuffC4(1)
+             lHeader%OperationNumber = mBinBuffI(1)
+             read(mFileUnit,"(A8)",POS=lPos+16) lHeader%SectionName
+             write(lHeader%Id,'(A8,I4,A8)') lHeader%OperationName,
+     $                   lHeader%OperationNumber, lHeader%SectionName     
              mBinBuffI(1)= 0 
-             Read(mFileUnit,"(A1)",POS=lPos) mBinBuffC(1)
+             read(mFileUnit,"(A1)",POS=lPos) mBinBuffC(1)
              if (mBinBuffI(1) .eq. 0) then
-               Read(mFileUnit,"(A8)",POS=lPos+4)  lHeader%OperationName
-               Read(mFileUnit,"(A4)",POS=lPos+12) mBinBuffC4(1)
-               lHeader%OperationNumber = mBinBuffI(1)
-               Read(mFileUnit,"(A8)",POS=lPos+16) lHeader%SectionName
                lVariableIndex= 0
                lPos = lPos+ 24
                do while (lPos .lt. mRecords(lRecordIndex)%EndPos)
@@ -424,14 +419,62 @@ C
                  lPos= lPos+ lVariableNameLength
                end do
                lHeaderIndex= lHeaderIndex+ 1
+               lHeader%ConstituentCount= lVariableIndex 
+               lHeader%DataRecordStart = 0
+               lHeader%DataRecordEnd   = 0
+               lHeader%DataRecordCount = 0
+               lHeader%RecordIndex     = lRecordIndex
+               if (lHeaderIndex .gt. 1) then
+                 deallocate (lHeader%Constituents)
+               end if
+               allocate (lHeader%Constituents(lVariableIndex))
+               do I = 1, lVariableIndex
+                 lHeader%Constituents(I)= lVariableName(I)
+               end do
                mHeaders(lHeaderIndex)= lHeader
-               write(*,*) "Header ", lRecordIndex, lHeaderIndex, 
+               write(*,*) "Header ", lHeader%RecordIndex, lHeaderIndex, 
      $                    lVariableIndex, lHeader%OperationName, 
      $                    lHeader%OperationNumber, lHeader%SectionName
-               if (lHeaderIndex .eq. mHeaderCount) then
-!                have all headers, exit do loop               
-                 exit  
+               do I = 1, lVariableIndex
+                 Write(*,*) "  Variable ", I, 
+     $                      mHeaders(lHeaderIndex)%Constituents(I) 
+               end do
+             elseif (mBinBuffI(1) .eq. 1) then
+!              note: this is a data record, header is used for the id             
+               lHeaderFound = .false.
+               do I = 1, lHeaderIndex
+                 if (lHeader%Id .eq. mHeaders(I)%Id) then
+                   lHeaderFound = .true.
+                   lHeader = mHeaders(I)
+                   if (lHeader%DataRecordCount .eq. 0) then
+                     lHeader%DataRecordStart= lRecordIndex
+                     lHeader%DataRecordEnd  = lRecordIndex
+                     lHeader%DataRecordCount= 1
+                     mRecords(lRecordIndex)%PrevRecord= 
+     $                 lHeader%RecordIndex
+                     mRecords(lRecordIndex)%NextRecord= 0
+                   else
+                     mRecords(lRecordIndex)%PrevRecord= 
+     $                 lHeader%DataRecordEnd
+                     mRecords(lHeader%DataRecordEnd)%NextRecord = 
+     $                 lRecordIndex
+                     mRecords(lRecordIndex)%NextRecord= 0
+                     lHeader%DataRecordEnd  = lRecordIndex
+                     lHeader%DataRecordCount= lHeader%DataRecordCount+ 1
+                   end if
+                   mHeaders(I)= lHeader
+                   write(*,*) "Header", I, "Record", lRecordIndex, 
+     $                mHeaders(I)%DataRecordCount,
+     $                mHeaders(I)%DataRecordStart,
+     $                mHeaders(I)%DataRecordEnd
+                   exit   
+                 end if
+               end do
+               if (.not. lHeaderFound) then
+                 write(*,*) "MissingHeaderForDataAt ", lRecordIndex
                end if
+             else
+               write(*,*) "BadRecordTypeAt ",lRecordIndex
              end if
           end do
         end if
@@ -442,21 +485,18 @@ C
 !
 !
 !
-      Subroutine NextRecord
-     M                     (aFirst, aPos, aHeaderCount,
-     O                      aRecordLength, aStartPos) 
+      Logical Function NextRecord
+     M                           (aPos)
 !
 !     + + + DUMMY ARGUMENTS + + +
-      Logical aFirst
-      Integer aPos, aHeaderCount, aRecordLength, aStartPos
+      Integer aPos 
 !
 !     + + + LOCAL VARIABLES + + +          
-      Integer lLengthLast, c, h, lBytes 
+      Integer lLengthLast, c, h, lBytes, lRecordLength
       Save    lLengthLast
 !      
-      If (aFirst) Then
+      If (mRecordCount .eq. 0) Then
         lLengthLast= 0
-        aFirst     = .False.
       Else
         c   = 64
         Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
@@ -470,28 +510,33 @@ C
       Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
       aPos  = aPos+ 1
       lBytes= mBinBuffI(1) .And. 3
-      aRecordLength= mBinBuffI(1) / 4
+      lRecordLength= mBinBuffI(1) / 4
       c     = 64
       h     = lBytes + 1
       do while (lBytes .gt. 0)
         read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
         aPos  = aPos+ 1
         lBytes= lBytes - 1
-        aRecordLength = aRecordLength + mBinBuffI(1) * c
+        lRecordLength= lRecordLength + mBinBuffI(1) * c
         c     = c * 256
       end do
       read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
-      aStartPos = aPos
       if (mBinBuffI(1) .eq. 0) then
-        aHeaderCount = aHeaderCount+ 1
+        mHeaderCount = mHeaderCount+ 1
       end if
-      lLengthLast= aRecordLength + h
-      aPos       = aPos+ aRecordLength
+      mRecordCount= mRecordCount + 1
+      mRecords(mRecordCount)%StartPos  = aPos
+      mRecords(mRecordCount)%EndPos    = aPos + lRecordLength- 1
+      mRecords(mRecordCount)%RecordType= mBinBuffI(1)
+      WRITE(*,*) "Record ", mRecordCount, aPos, lRecordLength, 
+     $            mBinBuffI(1),mHeaderCount
+      lLengthLast= lRecordLength + h
+      aPos       = aPos+ lRecordLength
+      NextRecord = .true.
       Return 
  20   Continue
-        aRecordLength= 0  
-        aStartPos    = 0
+        NextRecord = .false.
         Return      
-      End Subroutine    
+      End Function  
 !      
       END MODULE HSPF_BINARY_INPUT      
