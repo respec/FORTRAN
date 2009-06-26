@@ -305,7 +305,7 @@ C
       CHARACTER*128 mFileName
       INTEGER       mFileUnit 
       INTEGER       mMaxBinBuff,mMaxRecords
-      PARAMETER    (mMaxBinBuff=2,mMaxRecords=20000)
+      PARAMETER    (mMaxBinBuff=2,mMaxRecords=100000)
 !     
       Integer       mRecordCount,mHeaderCount    
 !
@@ -339,6 +339,14 @@ C
       end type Record
       type(Record) mRecords(mMaxRecords)        
 !
+      type BData
+        sequence
+        type(Header) :: Header
+        integer      :: Level
+        real, allocatable, dimension(:,:) :: Values
+      end type BData
+      type(BData) mBData
+!
       CONTAINS
 !
 !
@@ -364,7 +372,7 @@ C
      $        lRecordIndex, lHeaderIndex, lVariableIndex,
      $        lStartPos, lVariableNameLength, lDPos, lDateIndex
       logical lHeaderFound
-      character*8  :: lVariableName(256)
+      character*8  ::lVariableName(256)
       type(Header) :: lHeader
 !
 !     + + + END SPECIFICATIONS + + +
@@ -465,6 +473,42 @@ C
                        read(mFileUnit,POS=lDPos) mBinBuffC4(1)
                        lHeader%DateStart(lDateIndex) = mBinBuffI(1)
                      end do
+                     write(*,*) "  DateEndI1 ", lHeader%DateStart 
+!                    adjust start date to beginning of interval
+                     GOTO (110,120,130,140,150), lDataLevel
+ 110                 continue
+                       lHeader%DateStart(5)= lHeader%DateStart(5) -1
+                       goto 200                                          
+ 120                 continue
+                       lHeader%DateStart(4)= lHeader%DateStart(4) -1
+                       goto 200                                          
+ 130                 continue
+                       lHeader%DateStart(3)= lHeader%DateStart(3) -1
+                       goto 200                                          
+ 140                 continue
+                       lHeader%DateStart(2)= lHeader%DateStart(2) -1
+                       goto 200                                          
+ 150                 continue
+                       lHeader%DateStart(1)= lHeader%DateStart(1) -1
+                       goto 200                                          
+ 200                 continue
+                     if (lHeader%DateStart(5) .lt. 0) then
+                       lHeader%DateStart(5)= 60 + lHeader%DateStart(5)
+                       lHeader%DateStart(4)= lHeader%DateStart(4) -1
+                     end if
+                     if (lHeader%DateStart(4) .lt. 0) then
+                       lHeader%DateStart(4)= 24 + lHeader%DateStart(4)
+                       lHeader%DateStart(3)= lHeader%DateStart(3) -1
+                     end if
+                     if (lHeader%DateStart(3) .le. 0) then
+                       write(*,*) "NEED DAYMON HERE"
+                       lHeader%DateStart(3)= 31 + lHeader%DateStart(3)
+                       lHeader%DateStart(2)= lHeader%DateStart(2) -1
+                     end if
+                     if (lHeader%DateStart(2) .le. 0) then
+                       lHeader%DateStart(2)= 12 + lHeader%DateStart(2)
+                       lHeader%DateStart(1)= lHeader%DateStart(1) -1
+                     end if                    
                      write(*,*) "  DateStart ", lHeader%DateStart 
                    else
                      read(mFileUnit,POS=lPos+24) mBinBuffC4(1)
@@ -511,7 +555,7 @@ C
           end do
         end if
         aReturnCode= 0
-      END IF      
+      end if     
 !      
       END SUBROUTINE
 !
@@ -570,5 +614,131 @@ C
         NextRecord = .false.
         Return      
       End Function  
+!  
+!
+!    
+      Subroutine GetBData
+     I                   (aOperationName,aOperationNumber,aSectionName,
+     I                    aLevel,aConstituent,
+     O                    aValues,aReturnCode)
+!
+!     + + + DUMMY ARGUMENTS + + +
+      Character*8 aOperationName,aSectionName,aConstituent
+      Integer     aOperationNumber,aLevel,aReturnCode
+      Real        aValues(*)
+!
+!     + + + ARGUMENT DEFINITIONS + + +
+!     aReturnCode - return status of request
+!                     0 - successful
+!                    -1 - no header match     
+!                    -2 - level out of range
+!                    -3 - no data for level 
+!                    -4 - no matching constituent
+!      
+!     + + + LOCAL VARIABLES + + +          
+      Integer      :: lIndex, lIndexCons, lIndexRecord, lPos
+      Type(Header) :: lHeader
+      Logical      :: lHaveData, lHaveHeader, lHaveCons
+!      
+      if (allocated(mBData%Values)) then    
+!       already have some data, is it the right stuff?
+        lHeader = mBData%Header
+        if ((aOperationName .eq. lHeader%OperationName) .and.
+     $      (aOperationNumber .eq. lHeader%OperationNumber) .and.
+     $      (aSectionName .eq. lHeader%SectionName)) then
+          lHaveHeader= .true.
+          if (aLevel .eq. mBData%Level) then
+            lHaveData= .true.
+          else
+            deallocate (mBData%Values)        
+            lHaveData= .false.
+          end if
+        else
+          deallocate (mBData%Values)        
+          lHaveData  = .false.
+          lHaveHeader= .false.
+        end if
+      else
+        lHaveData  = .false.
+        lHaveHeader= .false.
+      end if
+!      
+      aReturnCode = 0
+      if (.not. lHaveHeader) then
+        do lIndex = 1, mHeaderCount
+          lHeader = mHeaders(lIndex)
+          if ((aOperationName .eq. lHeader%OperationName) .and.
+     $        (aOperationNumber .eq. lHeader%OperationNumber) .and.
+     $        (aSectionName .eq. lHeader%SectionName)) then
+            mBData%Header= lHeader
+            lHaveHeader  = .true.
+            exit
+          end if
+        end do
+      end if
+!      
+      if (lHaveHeader) then
+        if (.not. lHaveData) then
+          if (aLevel .ge. 1 .and. aLevel .le. 5) then
+            if (lHeader%DataRecordCount(aLevel) .gt. 0) then
+              allocate (mBData%Values(lHeader%DataRecordCount(aLevel),
+     $                                lHeader%ConstituentCount))
+              lIndexRecord = lHeader%DataRecordStart(aLevel)
+              do lIndex = 1, lHeader%DataRecordCount(aLevel)
+                do lIndexCons = 1, lHeader%ConstituentCount
+                  lPos= mRecords(lIndexRecord)%StartPos+ 
+     $                  48+ (lIndexCons * 4)
+                  read(mFileUnit,POS=lPos) mBinBuffC4(1)
+                  mBData%Values(lIndex,lIndexCons) = mBinBuffR(1)
+                end do
+                lIndexRecord = mRecords(lIndexRecord)%NextRecord
+              end do
+              mBData%Level = aLevel
+              lHaveData  = .true.
+            else
+              aReturnCode= -3          
+            end if
+          else
+            aReturnCode= -2
+          end if
+        end if
+      else
+        aReturnCode= -1
+      end if
+!      
+      if (lHaveData) then
+        lHaveCons = .false.
+        do lIndexCons= 1, lHeader%ConstituentCount
+          if (aConstituent .eq. lHeader%Constituents(lIndexCons)) then
+            lHaveCons = .true.
+            exit
+          end if
+        end do
+        if (lHaveCons) then
+          do lIndex= 1, lHeader%DataRecordCount(aLevel)
+            aValues(lIndex)= mBData%Values(lIndex,lIndexCons)
+          end do 
+        else
+          aReturnCode = -4
+        end if
+      end if
+!
+      End Subroutine GetBData           
+!      
+!
+!
+      Subroutine GetBDataTest
+!      
+      integer lReturnCode
+      real    lValues(512)
+!         
+      write(*,*) "GetBDataTest"
+      call GetBData
+     I             ("EXTMOD  ",66,"Met     ",
+     I              4,"I:Prec1 ",
+     O              lValues,lReturnCode)
+      write(*,*) lReturnCode
+!
+      End Subroutine GetBDataTest
 !      
       END MODULE HSPF_BINARY_INPUT      

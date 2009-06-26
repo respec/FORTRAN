@@ -11,7 +11,7 @@ C     Process HSPF Files Block.
 C
 C     + + + MODULES + + +
       USE HMMSG, ONLY : OMSINI
-      USE HSPF_BINARY_INPUT, ONLY : INIT
+      USE HSPF_BINARY_INPUT, ONLY : INIT, GetBDataTest
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       USRFL,FILES(18),RETCOD
@@ -238,6 +238,10 @@ C             characters
             END IF          
             CALL INIT(FUNIT(I),FILNAM,
      O                RET)
+C
+C           dummy for testing
+            CALL GETBDATATEST
+C        
             RETCOD= RETCOD+ RET
           END IF
 C          
