@@ -305,7 +305,7 @@ C
       CHARACTER*128 mFileName
       INTEGER       mFileUnit 
       INTEGER       mMaxBinBuff,mMaxRecords
-      PARAMETER    (mMaxBinBuff=10000,mMaxRecords=20000)
+      PARAMETER    (mMaxBinBuff=2,mMaxRecords=20000)
 !     
       Integer       mRecordCount,mHeaderCount    
 !
@@ -325,8 +325,10 @@ C
         integer      OperationNumber
         character*8  SectionName
         character*24 Id
-        integer      DataRecordStart, DataRecordEnd, DataRecordCount
+        integer      DataRecordStart(5), DataRecordEnd(5)
+        integer      DataRecordCount(5)
         integer      RecordIndex, ConstituentCount
+        integer      UnitFlag, DateStart(5), DateEnd(5)
         character*8, allocatable, dimension(:) :: Constituents
       end type Header
       type(Header), allocatable, dimension(:) :: mHeaders 
@@ -358,9 +360,9 @@ C
 !     aReturnCode- return code
 !
 !     + + + LOCAL VARIABLES + + +
-      integer lIOS, lPos, I,
+      integer lIOS, lPos, I, J, lDataLevel,  
      $        lRecordIndex, lHeaderIndex, lVariableIndex,
-     $        lStartPos, lVariableNameLength
+     $        lStartPos, lVariableNameLength, lDPos, lDateIndex
       logical lHeaderFound
       character*8  :: lVariableName(256)
       type(Header) :: lHeader
@@ -368,19 +370,20 @@ C
 !     + + + END SPECIFICATIONS + + +
 !
       OPEN (UNIT=aFileUnit,FILE=aFileName,STATUS='OLD',ACCESS='STREAM',
-     $      FORM='FORMATTED',ACTION='READ',ERR=10,IOSTAT=lIOS)
+     $      FORM='UNFORMATTED',ACTION='READ',ERR=10,IOSTAT=lIOS)
       GOTO 20
  10   CONTINUE
 !       TODO: error handling code   
         aReturnCode = 1
         Return     
  20   CONTINUE      
+!                    
       mFileName   = aFileName
       mFileUnit   = aFileUnit
       mRecordCount= 0
       mHeaderCount= 0
 !      
-      READ(mFileUnit,"(A1)") mBinBuffC(1)
+      READ(mFileUnit,POS=1) mBinBuffC(1)
       IF (mBinBuffI(1) .NE. 253) THEN
 !       bad header
 !       TODO: error handling code               
@@ -396,23 +399,23 @@ C
           lHeaderIndex = 0
           do lRecordIndex = 1, mRecordCount
              lPos = mRecords(lRecordIndex)%StartPos
-             read(mFileUnit,"(A8)",POS=lPos+4)  lHeader%OperationName
-             read(mFileUnit,"(A4)",POS=lPos+12) mBinBuffC4(1)
+             read(mFileUnit,POS=lPos+4)  lHeader%OperationName
+             read(mFileUnit,POS=lPos+12) mBinBuffC4(1)
              lHeader%OperationNumber = mBinBuffI(1)
-             read(mFileUnit,"(A8)",POS=lPos+16) lHeader%SectionName
+             read(mFileUnit,POS=lPos+16) lHeader%SectionName
              write(lHeader%Id,'(A8,I4,A8)') lHeader%OperationName,
      $                   lHeader%OperationNumber, lHeader%SectionName     
              mBinBuffI(1)= 0 
-             read(mFileUnit,"(A1)",POS=lPos) mBinBuffC(1)
+             read(mFileUnit,POS=lPos) mBinBuffC(1)
              if (mBinBuffI(1) .eq. 0) then
                lVariableIndex= 0
                lPos = lPos+ 24
                do while (lPos .lt. mRecords(lRecordIndex)%EndPos)
-                 Read(mFileUnit,"(A4)",POS=lPos) mBinBuffC4(1)
+                 Read(mFileUnit,POS=lPos) mBinBuffC4(1)
                  lVariableNameLength = mBinBuffI(1)
                  lPos= lPos+ 4
                  mBinBuffC8(1)= ""
-                 Read(mFileUnit,"(64A1)",Pos=lPos) 
+                 Read(mFileUnit,Pos=lPos) 
      $               (mBinBuffC(I),I=1,lVariableNameLength)
                  lVariableIndex = lVariableIndex + 1
                  lVariableName(lVariableIndex)= mBinBuffC8(1)
@@ -444,29 +447,58 @@ C
                lHeaderFound = .false.
                do I = 1, lHeaderIndex
                  if (lHeader%Id .eq. mHeaders(I)%Id) then
-                   lHeaderFound = .true.
-                   lHeader = mHeaders(I)
-                   if (lHeader%DataRecordCount .eq. 0) then
-                     lHeader%DataRecordStart= lRecordIndex
-                     lHeader%DataRecordEnd  = lRecordIndex
-                     lHeader%DataRecordCount= 1
+                   lHeaderFound= .true.
+                   lHeader     = mHeaders(I)
+                   read(mFileUnit,POS=lPos+28) lDataLevel 
+                   if (lHeader%DataRecordCount(lDataLevel) .eq. 0) then
+                     lHeader%DataRecordStart(lDataLevel)= lRecordIndex
+                     lHeader%DataRecordEnd(lDataLevel)  = lRecordIndex
+                     lHeader%DataRecordCount(lDataLevel)= 1
                      mRecords(lRecordIndex)%PrevRecord= 
      $                 lHeader%RecordIndex
                      mRecords(lRecordIndex)%NextRecord= 0
+                     read(mFileUnit,POS=lPos+24) mBinBuffC4(1)
+                     lHeader%UnitFlag = mBinBuffI(1)
+                     lDateIndex= 0
+                     do lDateIndex = 1,5
+                       lDPos = lPos+ 28 + (lDateIndex * 4)
+                       read(mFileUnit,POS=lDPos) mBinBuffC4(1)
+                       lHeader%DateStart(lDateIndex) = mBinBuffI(1)
+                     end do
+                     write(*,*) "  DateStart ", lHeader%DateStart 
                    else
+                     read(mFileUnit,POS=lPos+24) mBinBuffC4(1)
+                     if (lHeader%UnitFlag .ne. mBinBuffI(1)) then
+                       write(*,*) "BigProblemWithUnitFlagAt ", 
+     $                            lRecordIndex,
+     $                            lHeader%UnitFlag,mBinBuffI(1)            
+                     end if
+                     lDateIndex= 0
+                     do lDateIndex = 1,5
+                       lDPos = lPos+ 28 + (lDateIndex * 4)
+                       read(mFileUnit,POS=lDPos) 
+     $                       lHeader%DateEnd(lDateIndex)
+                     end do
+                     write(*,*) "  DateEnd ", lHeader%DateEnd
                      mRecords(lRecordIndex)%PrevRecord= 
-     $                 lHeader%DataRecordEnd
-                     mRecords(lHeader%DataRecordEnd)%NextRecord = 
-     $                 lRecordIndex
+     $                 lHeader%DataRecordEnd(lDataLevel)
+                     J = lHeader%DataRecordEnd(lDataLevel)
+                     mRecords(J)%NextRecord = lRecordIndex
                      mRecords(lRecordIndex)%NextRecord= 0
-                     lHeader%DataRecordEnd  = lRecordIndex
-                     lHeader%DataRecordCount= lHeader%DataRecordCount+ 1
+                     lHeader%DataRecordEnd(lDataLevel)  = lRecordIndex
+                     lHeader%DataRecordCount(lDataLevel)= 
+     $                 lHeader%DataRecordCount(lDataLevel)+ 1
                    end if
                    mHeaders(I)= lHeader
-                   write(*,*) "Header", I, "Record", lRecordIndex, 
-     $                mHeaders(I)%DataRecordCount,
-     $                mHeaders(I)%DataRecordStart,
-     $                mHeaders(I)%DataRecordEnd
+                   write(*,*) "Header", I, "Record", lRecordIndex
+                   do J = 1, 5
+                      if (mHeaders(I)%DataRecordCount(J).gt.0) then
+                        write(*,*) "  Level",J,
+     $                     mHeaders(I)%DataRecordCount(J),
+     $                     mHeaders(I)%DataRecordStart(J),
+     $                     mHeaders(I)%DataRecordEnd(J)
+                      end if
+                   end do
                    exit   
                  end if
                end do
@@ -492,35 +524,35 @@ C
       Integer aPos 
 !
 !     + + + LOCAL VARIABLES + + +          
-      Integer lLengthLast, c, h, lBytes, lRecordLength
+      Integer lLengthLast, c, h, i, lBytes, lRecordLength
       Save    lLengthLast
 !      
       If (mRecordCount .eq. 0) Then
         lLengthLast= 0
       Else
         c   = 64
-        Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+        Read(mFileUnit,END=20,POS=aPos) mBinBuffC(1)
         aPos= aPos+ 1
         Do While (lLengthLast .ge. c)
           c   = c * 256
-          Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+          Read(mFileUnit,END=20,POS=aPos) mBinBuffC(1)
           aPos= aPos+ 1
         End Do
       End If
-      Read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+      Read(mFileUnit,END=20,POS=aPos) mBinBuffC(1)
       aPos  = aPos+ 1
       lBytes= mBinBuffI(1) .And. 3
       lRecordLength= mBinBuffI(1) / 4
       c     = 64
       h     = lBytes + 1
       do while (lBytes .gt. 0)
-        read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+        read(mFileUnit,END=20,POS=aPos) mBinBuffC(1)
         aPos  = aPos+ 1
         lBytes= lBytes - 1
         lRecordLength= lRecordLength + mBinBuffI(1) * c
         c     = c * 256
       end do
-      read(mFileUnit,"(A1)",END=20,POS=aPos) mBinBuffC(1)
+      read(mFileUnit,END=20,POS=aPos) mBinBuffC(1)
       if (mBinBuffI(1) .eq. 0) then
         mHeaderCount = mHeaderCount+ 1
       end if
