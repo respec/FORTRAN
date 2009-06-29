@@ -459,6 +459,10 @@ C
         DO 20 I= 1, 12
           HEXTMOD%NDAY(I)= NDAMON(I)
  20     CONTINUE
+C
+        HEXTMOD%PIVLNO= 0
+        HEXTMOD%BIVLNO= 0
+C        
         DO 30 I= 1, 5
           DATIM(I)= SDATIM(I)
  30     CONTINUE
@@ -641,12 +645,11 @@ C     + + + MODULE VARIABLES + + +
       INTEGER     NUMBR(2),DATIM(5)   
 C       
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     IVL,IVL1,N,IDELT,PIVLNO,
-     #            I1,I12
+      INTEGER     IVL,IVL1,N,IDELT,I1,I12
       CHARACTER*6 OPTYP
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    ADDTIM,SPECL,UPQUAN,ACCVEC
+      EXTERNAL    ADDTIM2,SPECL,UPQUAN,ACCVEC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA        OPTYP/'EXTMOD'/
@@ -660,7 +663,6 @@ C
       IVL   = STIVL- 1
       IVL1  = STIVL
       IDELT = HEXTMOD%DELT
-      PIVLNO= 0
       I1    = 1
       I12   = 12
 C
@@ -681,8 +683,8 @@ C     time loop
         HEXTMOD%SPIVL= HEXTMOD%SPIVL+ 1
 C
 C       increment date/time
-        CALL ADDTIM (IDELT,HEXTMOD%NDAY,I1,I12,
-     M               DATIM,HEXTMOD%PIVLNO,
+        CALL ADDTIM2(IDELT,HEXTMOD%NDAY,I1,I1,I12,
+     M               DATIM,HEXTMOD%PIVLNO,HEXTMOD%BIVLNO,
      O               HEXTMOD%NDAYS,HEXTMOD%NXTMON,HEXTMOD%HRFG,
      O               HEXTMOD%DAYFG,HEXTMOD%EDAYFG,
      O               HEXTMOD%EMONFG,HEXTMOD%EPYRFG)
@@ -779,6 +781,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER    EXDAT(5),I1,I2,I3,I4,I5,J,PRINTU,UNITFG,BINU
       POINTER   (PDATIM,DATIM) 
       INTEGER    DATIM(5) 
+      LOGICAL    PRINTNOW
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   EXDATE
@@ -854,9 +857,12 @@ C           transform hour and minute fields in date/time to external format
             IF (PRINTU .GT. 0 .AND. HEXTMOD%OLEV(1) .EQ. 2) THEN
               WRITE (PRINTU,2000) HEXTMOD%EXTMODNO, HEXTMOD%SSMNAME,
      $                            HEXTMOD%INNAME, HEXTMOD%PIVL(1), EXDAT
+              PRINTNOW = .TRUE.
+            ELSE
+              PRINTNOW = .FALSE.
             END IF
             CALL EXTPRT
-     I                 (UNITFG,I2,PRINTU,BINU,EXDAT,
+     I                 (UNITFG,I2,PRINTU,BINU,EXDAT,PRINTNOW,
      M                  HEXTMOD)
           END IF
 C
@@ -866,9 +872,12 @@ C             it's time to handle daily printout
               IF (PRINTU .GT. 0 .AND. HEXTMOD%OLEV(1) .LE. 3) THEN
                 WRITE (PRINTU,2010) HEXTMOD%EXTMODNO, HEXTMOD%SSMNAME,
      $                              HEXTMOD%INNAME,(DATIM(J),J=1,3)
+                PRINTNOW = .TRUE.
+              ELSE
+                PRINTNOW = .FALSE.
               END IF
               CALL EXTPRT
-     I                   (UNITFG,I3,PRINTU,BINU,EXDAT,
+     I                   (UNITFG,I3,PRINTU,BINU,EXDAT,PRINTNOW,
      M                    HEXTMOD)
             END IF
 C
@@ -878,9 +887,12 @@ C               it's time to handle monthly printout
                 IF (PRINTU .GT. 0 .AND. HEXTMOD%OLEV(1) .LE. 4) THEN
                   WRITE (PRINTU,2020) HEXTMOD%EXTMODNO, HEXTMOD%SSMNAME,
      $                                HEXTMOD%INNAME,(DATIM(J),J=1,2)
+                  PRINTNOW = .TRUE.
+                ELSE
+                  PRINTNOW = .FALSE.
                 END IF
                 CALL EXTPRT
-     I                     (UNITFG,I4,PRINTU,BINU,EXDAT,
+     I                     (UNITFG,I4,PRINTU,BINU,EXDAT,PRINTNOW,
      M                      HEXTMOD)
               END IF
 C
@@ -889,9 +901,12 @@ C               it's time to handle yearly printout
                 IF (PRINTU .GT. 0 .AND.  HEXTMOD%OLEV(1) .LE. 5) THEN
                   WRITE (PRINTU,2030) HEXTMOD%EXTMODNO, HEXTMOD%SSMNAME,
      $                                HEXTMOD%INNAME,(DATIM(J),J=1,2)
+                  PRINTNOW = .TRUE.
+                ELSE
+                  PRINTNOW = .FALSE.
                 END IF
                 CALL EXTPRT
-     I                     (UNITFG,I5,PRINTU,BINU,EXDAT,
+     I                     (UNITFG,I5,PRINTU,BINU,EXDAT,PRINTNOW,
      M                      HEXTMOD)
               END IF
             END IF
@@ -978,7 +993,7 @@ C
 C
 C    
       SUBROUTINE   EXTPRT
-     I                   (UNITFG,LEV,PRINTU,BINU,EXDAT,
+     I                   (UNITFG,LEV,PRINTU,BINU,EXDAT,PRINTNOW,
      M                    HEXTMOD)
 C
 C     + + + PURPOSE + + +
@@ -986,13 +1001,15 @@ C     Perform printout for module EXTMOD.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER        UNITFG,LEV,PRINTU,BINU,EXDAT(5)
+      LOGICAL        PRINTNOW
       TYPE(HTEXTMOD) HEXTMOD     
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     UNITFG - output units   1-english, 2-metric
-C     LEV    - current output level (2-pivl,3-day,4-mon,5-ann)
-C     PRINTU - fortran unit number on which to print output
-C     BINU   - fortran unit number on which to write binary output
+C     UNITFG  - output units   1-english, 2-metric
+C     LEV     - current output level (2-pivl,3-day,4-mon,5-ann)
+C     PRINTU  - fortran unit number on which to print output
+C     BINU    - fortran unit number on which to write binary output
+C     PRINTNOW- printed output needed
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      GROUPCOUNT, I, J, K, ACNT, I0, I1,
@@ -1011,7 +1028,7 @@ C
       I1= 1
 C
       DO I = 1, HEXTMOD%UNIQUEGROUPCOUNT
-        IF (PRINTU .GT. 0) THEN
+        IF (PRINTU .GT. 0 .AND. PRINTNOW) THEN
           GROUPHEADERPRINTED = .FALSE.
           CALL PRINTSECTION(PRINTU,LEV,'STATE VARIABLES',
      I                      HEXTMOD%UNIQUEGROUPS(I), 
@@ -1052,17 +1069,11 @@ C
 C
           SHEAD = HEXTMOD%UNIQUEGROUPS(I)(1:8)
           IF(HEXTMOD%BFLAG(I) .GT. 0) THEN
-C           WRITE (BINU) I0,'EXTMOD  ',HEXTMOD%EXTMODNO,
-C    1                   HEXTMOD%UNIQUEGROUPS(I)(1:8),
-C    1          (BHEADLEN(K),(BHEAD(K)(J:J),J=1,BHEADLEN(K)),K=1,ACNT)
             CALL BINHED (BINU,'EXTMOD  ',HEXTMOD%EXTMODNO,
      1                   SHEAD,
      1                   ACNT,BHEADLEN,BHEAD)
             HEXTMOD%BFLAG(I) = -HEXTMOD%BFLAG(I)
           END IF
-C         WRITE (BINU) I1,'EXTMOD  ',HEXTMOD%EXTMODNO, 
-C    1                 HEXTMOD%UNIQUEGROUPS(I)(1:8),UNITFG,
-C    1                 LEV,(EXDAT(K),K=1,5),(BVALUES(K),K=1,ACNT)
           CALL BINREC (BINU,'EXTMOD  ',HEXTMOD%EXTMODNO,
      1                 SHEAD,UNITFG,
      1                 LEV,EXDAT,ACNT,BVALUES)
