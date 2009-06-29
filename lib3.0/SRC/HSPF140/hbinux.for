@@ -443,13 +443,13 @@ C
                  lHeader%Constituents(I)= lVariableName(I)
                end do
                mHeaders(lHeaderIndex)= lHeader
-               write(*,*) "Header ", lHeader%RecordIndex, lHeaderIndex, 
-     $                    lVariableIndex, lHeader%OperationName, 
-     $                    lHeader%OperationNumber, lHeader%SectionName
-               do I = 1, lVariableIndex
-                 Write(*,*) "  Variable ", I, 
-     $                      mHeaders(lHeaderIndex)%Constituents(I) 
-               end do
+!               write(*,*) "Header ", lHeader%RecordIndex, lHeaderIndex, 
+!     $                    lVariableIndex, lHeader%OperationName, 
+!     $                    lHeader%OperationNumber, lHeader%SectionName
+!               do I = 1, lVariableIndex
+!                 Write(*,*) "  Variable ", I, 
+!     $                      mHeaders(lHeaderIndex)%Constituents(I) 
+!               end do
              elseif (mBinBuffI(1) .eq. 1) then
 !              note: this is a data record, header is used for the id             
                lHeaderFound = .false.
@@ -473,7 +473,7 @@ C
                        read(mFileUnit,POS=lDPos) mBinBuffC4(1)
                        lHeader%DateStart(lDateIndex) = mBinBuffI(1)
                      end do
-                     write(*,*) "  DateEndI1 ", lHeader%DateStart 
+!                     write(*,*) "  DateEndI1 ", lHeader%DateStart 
 !                    adjust start date to beginning of interval
                      GOTO (110,120,130,140,150), lDataLevel
  110                 continue
@@ -509,7 +509,7 @@ C
                        lHeader%DateStart(2)= 12 + lHeader%DateStart(2)
                        lHeader%DateStart(1)= lHeader%DateStart(1) -1
                      end if                    
-                     write(*,*) "  DateStart ", lHeader%DateStart 
+!                     write(*,*) "  DateStart ", lHeader%DateStart 
                    else
                      read(mFileUnit,POS=lPos+24) mBinBuffC4(1)
                      if (lHeader%UnitFlag .ne. mBinBuffI(1)) then
@@ -523,7 +523,7 @@ C
                        read(mFileUnit,POS=lDPos) 
      $                       lHeader%DateEnd(lDateIndex)
                      end do
-                     write(*,*) "  DateEnd ", lHeader%DateEnd
+!                     write(*,*) "  DateEnd ", lHeader%DateEnd
                      mRecords(lRecordIndex)%PrevRecord= 
      $                 lHeader%DataRecordEnd(lDataLevel)
                      J = lHeader%DataRecordEnd(lDataLevel)
@@ -534,14 +534,14 @@ C
      $                 lHeader%DataRecordCount(lDataLevel)+ 1
                    end if
                    mHeaders(I)= lHeader
-                   write(*,*) "Header", I, "Record", lRecordIndex
+!                   write(*,*) "Header", I, "Record", lRecordIndex
                    do J = 1, 5
-                      if (mHeaders(I)%DataRecordCount(J).gt.0) then
-                        write(*,*) "  Level",J,
-     $                     mHeaders(I)%DataRecordCount(J),
-     $                     mHeaders(I)%DataRecordStart(J),
-     $                     mHeaders(I)%DataRecordEnd(J)
-                      end if
+!                      if (mHeaders(I)%DataRecordCount(J).gt.0) then
+!                        write(*,*) "  Level",J,
+!     $                     mHeaders(I)%DataRecordCount(J),
+!     $                     mHeaders(I)%DataRecordStart(J),
+!     $                     mHeaders(I)%DataRecordEnd(J)
+!                      end if
                    end do
                    exit   
                  end if
@@ -604,8 +604,8 @@ C
       mRecords(mRecordCount)%StartPos  = aPos
       mRecords(mRecordCount)%EndPos    = aPos + lRecordLength- 1
       mRecords(mRecordCount)%RecordType= mBinBuffI(1)
-      WRITE(*,*) "Record ", mRecordCount, aPos, lRecordLength, 
-     $            mBinBuffI(1),mHeaderCount
+!      WRITE(*,*) "Record ", mRecordCount, aPos, lRecordLength, 
+!     $            mBinBuffI(1),mHeaderCount
       lLengthLast= lRecordLength + h
       aPos       = aPos+ lRecordLength
       NextRecord = .true.
@@ -730,12 +730,12 @@ C
       Subroutine GetBDataTest
 !      
       integer lReturnCode
-      real    lValues(512)
+      real    lValues(8192)
 !         
       write(*,*) "GetBDataTest"
       call GetBData
-     I             ("EXTMOD  ",66,"Met     ",
-     I              4,"I:Prec1 ",
+     I             ("EXTMOD  ",66,"Sediment",
+     I              2,"O:Total ",
      O              lValues,lReturnCode)
       write(*,*) lReturnCode
 !

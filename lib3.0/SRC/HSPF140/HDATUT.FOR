@@ -32,6 +32,59 @@ C     EMONFG - ???
 C     EPYRFG - ???
 C
 C     + + + LOCAL VARIABLES + + +
+      INTEGER    BIVL, BIVLNO
+C      
+C     + + + EXTERNALS + + +
+      EXTERNAL   ADDTIM2
+C      
+C     + + + END SPECIFICATIONS + + +
+C
+      BIVL  = 0
+      BIVLNO= 0
+C       
+      CALL ADDTIM2(DMIN,NDAY,PIVL,BIVL,PYREND,
+     M             DATIM,PIVLNO,BIVLNO,
+     O             NDAYS,NXTMON,HRFG,DAYFG,EDAYFG,
+     O             EMONFG,EPYRFG)
+C
+      RETURN
+      END 
+C
+C     4.02
+C
+      SUBROUTINE   ADDTIM2
+     I                   (DMIN,NDAY,PIVL,BIVL,PYREND,
+     M                    DATIM,PIVLNO,BIVLNO,
+     O                    NDAYS,NXTMON,HRFG,DAYFG,EDAYFG,
+     O                    EMONFG,EPYRFG)
+C
+C     + + + PURPOSE + + +
+C     Add a specified interval (day/hour/min) to a given date/time to
+C     obtain a new date/time.  Also, set time-related flags which
+C     application modules need.  Dates and times are in internal format.
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    DATIM(5),DAYFG,DMIN,EDAYFG,EMONFG,EPYRFG,HRFG,
+     $           NDAY(12),NDAYS,NXTMON,PIVL,BIVL,PIVLNO,BIVLNO,PYREND
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DMIN   - ???
+C     NDAY   - ???
+C     PIVL   - ???
+C     BIVL   - ???
+C     PYREND - ???
+C     DATIM  - date and time of day
+C     PIVLNO - ???
+C     BIVLNO - ???
+C     NDAYS  - no. of days in this month
+C     NXTMON - next calendar month
+C     HRFG   - ???
+C     DAYFG  - flag for first day or day change
+C     EDAYFG - ???
+C     EMONFG - ???
+C     EPYRFG - ???
+C
+C     + + + LOCAL VARIABLES + + +
       INTEGER    DAY,HR,MIN,MON,TDAY,THRS,TMINS,YR
 C
 C     + + + FUNCTIONS + + +
@@ -57,7 +110,12 @@ C
         PIVLNO= 0
       END IF
 C
+      IF (BIVLNO .EQ. PIVL) THEN
+        BIVLNO= 0
+      END IF
+C
       PIVLNO= PIVLNO + 1
+      BIVLNO= BIVLNO + 1
       TMINS = MIN + DMIN
       THRS  = (TMINS - 1)/60
       MIN   = TMINS - THRS*60
