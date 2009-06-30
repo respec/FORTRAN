@@ -48,7 +48,7 @@ C       open file as 'read only'
 c        WRITE(*,*) 'WDOPPC:WDBOPN:RWFLG:',RONWFG
 c        WRITE(*,*) '   ',WDNAME
         OPEN (UNIT=WDMSFL,FILE=WDNAME,STATUS='OLD',
-     1        ACTION='READ',
+     1        ACTION='READ', SHARE='DENYNONE',
      2        ACCESS='DIRECT',FORM='UNFORMATTED',RECL=2048,
      3        ERR=10,IOSTAT=IOS)
       ELSE IF (RONWFG.EQ.2) THEN
