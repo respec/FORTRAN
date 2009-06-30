@@ -1,8 +1,110 @@
 C
+C     
+C
+      SUBROUTINE   HBNDS
+     I                  (MSGFL,MESSU,HBNFL,VOLNO,MEMN,MEMSB,GAPST,
+     I                   GAPKW1,SYST,SYSKW1,AMDKW1,AMDST,SDATIM,
+     I                   EDATIM,TRFLAG,OUTLEV,MAXTTB,IHMFG,
+     M                   ECOUNT,
+     O                   NUM,DELT,UNT,NTS,GAPCD,AMDCD,
+     O                   TABL,TABLR)
+C
+C     + + + PURPOSE + + +
+C     process a reference to a time series dataset in a hbn file
+C
+C     + + + MODULES + + +
+      USE HMMSG, ONLY : OMSTI,OMSG
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER     MSGFL,MESSU,HBNFL,VOLNO,MEMSB(2),
+     $            SDATIM(5),EDATIM(5),TRFLAG,OUTLEV,MAXTTB,IHMFG,
+     $            ECOUNT,NUM,DELT,UNT,NTS,GAPCD,AMDCD,TABL(10,MAXTTB)
+      REAL        TABLR(10,MAXTTB)
+      CHARACTER*6 MEMN
+      CHARACTER*4 GAPST,SYST,AMDST
+      CHARACTER*1 AMDKW1(12),SYSKW1(8),GAPKW1(8)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MSGFL  - fortran unit number of HSPF message file
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     HBNFL  - hspf binary file unit number
+C     VOLNO  - ???
+C     MEMN   - ???
+C     MEMSB  - ???
+C     GAPST  - ???
+C     GAPKW1 - ???
+C     SYST   - ???
+C     SYSKW1 - ???
+C     AMDKW1 - access mode keyword library
+C     AMDST  - ???
+C     SDATIM - starting date/time
+C     EDATIM - ending date/time
+C     TRFLAG - ???
+C     OUTLEV - run interpreter output level
+C     ECOUNT - count(s) of specific errors
+C     MAXTTB - ???
+C     IHMFG  - IHM flag (normal-0,IHM control-1)
+C     NUM    - ???
+C     DELT   - simulation time interval in minutes
+C     UNT    - ???
+C     NTS    - ???
+C     GAPCD  - ???
+C     AMDCD  - ???
+C     TABL   - ???
+C     TABLR  - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I,KIND,QLFG,LREC,RETCOD,SCLU,SGRP
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  PROHBN
+C
+C     + + + INPUT FORMATS + + +
+ 1000 FORMAT(A4,A2)
+C
+C     + + + OUTPUT FORMATS + + +
+ 2010 FORMAT(' BEGIN CHECKING/EXPANDING A HSPF BINARY FILE REFERENCE')
+ 2020 FORMAT(' END CHECKING/EXPANDING A HSPF BINARY FILE REFERENCE')
+C
+C     + + + HISTORY + + +
+C     2009/06/29 - Initial implementation
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      SCLU = 217
+      IF (OUTLEV .GT. 6) WRITE(MESSU,2010)
+C
+      NTS = 0
+C     initialize unt in case dataset not found in hspf binary file
+C     subroutine memts requires a valid value
+      UNT = 0
+C      
+      CALL PROHBN (MSGFL,MESSU,HBNFL,VOLNO,MEMN,MEMSB,SYST,GAPST,
+     I             AMDST,SDATIM,EDATIM,TRFLAG,
+     I             SYSKW1,AMDKW1,GAPKW1,IHMFG,
+     M             ECOUNT,
+     O             DELT,UNT,KIND,GAPCD,AMDCD,QLFG)
+C
+      NUM = VOLNO
+      NTS = 1
+      READ(MEMN,1000) (TABL(I,NTS),I=1,2)
+      TABL(3,NTS)  = QLFG
+      TABL(4,NTS)  = MEMSB(2)
+      TABL(5,NTS)  = 0
+      TABL(6,NTS)  = KIND
+      TABLR(8,NTS) = 0.0
+      TABLR(9,NTS) = 1.0
+C        
+      IF (OUTLEV .GT. 6) WRITE(MESSU,2020)
+C
+C
+      RETURN
+      END
+C
 C
 C
       SUBROUTINE PROHBN
-     I                  (MSGFL,MESSU,WDMSFL,VOLNO,MEMN,MEMSB,SYST,
+     I                  (MSGFL,MESSU,HBNFL,VOLNO,MEMN,MEMSB,SYST,
      I                   GAPST,AMDST,SDATIM,EDATIM,TRFLAG,
      I                   SYSKW1,AMDKW1,GAPKW1,IHMFG,
      M                   ECOUNT,
@@ -16,7 +118,7 @@ C     + + + MODULES + + +
       USE HMMSG, ONLY : OMSTI,OMSG,OMSTC,OMSGMSG
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER     MSGFL,MESSU,WDMSFL,VOLNO,MEMSB(2),
+      INTEGER     MSGFL,MESSU,HBNFL,VOLNO,MEMSB(2),
      $            SDATIM(5),EDATIM(5),TRFLAG,IHMFG,
      $            ECOUNT,DELT,UNT,KIND,GAPCD,AMDCD,QLFG
       CHARACTER*6 MEMN
@@ -26,7 +128,7 @@ C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MSGFL  - fortran unit number of HSPF message file
 C     MESSU  - ftn unit no. to be used for printout of messages
-C     WDMSFL - watershed data management file unit number
+C     HBNFL  - hspf binary file unit number
 C     VOLNO  - ???
 C     MEMN   - ???
 C     MEMSB  - ???
@@ -82,7 +184,7 @@ C     + + + DATA INITIALIZATIONS + + +
       DATA        TIMFCT/0,1,60,1440,43200/
 C
 C     + + + HISTORY + + +
-C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C     2009/06/29 - JLK - initial implementation
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -443,118 +545,4 @@ C
 C
       RETURN
       END
-C
-C     
-C
-      SUBROUTINE   HBNDS
-     I                  (MSGFL,MESSU,HBNFL,VOLNO,MEMN,MEMSB,GAPST,
-     I                   GAPKW1,SYST,SYSKW1,AMDKW1,AMDST,SDATIM,
-     I                   EDATIM,TRFLAG,OUTLEV,MAXTTB,IHMFG,
-     M                   ECOUNT,
-     O                   NUM,DELT,UNT,NTS,GAPCD,AMDCD,
-     O                   TABL,TABLR)
-C
-C     + + + PURPOSE + + +
-C     process a reference to a time series dataset in a hbn file
-C
-C     + + + MODULES + + +
-      USE HMMSG, ONLY : OMSTI,OMSG
-C
-C     + + + DUMMY ARGUMENTS + + +
-      INTEGER     MSGFL,MESSU,HBNFL,VOLNO,MEMSB(2),
-     $            SDATIM(5),EDATIM(5),TRFLAG,OUTLEV,MAXTTB,IHMFG,
-     $            ECOUNT,NUM,DELT,UNT,NTS,GAPCD,AMDCD,TABL(10,MAXTTB)
-      REAL        TABLR(10,MAXTTB)
-      CHARACTER*6 MEMN
-      CHARACTER*4 GAPST,SYST,AMDST
-      CHARACTER*1 AMDKW1(12),SYSKW1(8),GAPKW1(8)
-C
-C     + + + ARGUMENT DEFINITIONS + + +
-C     MSGFL  - fortran unit number of HSPF message file
-C     MESSU  - ftn unit no. to be used for printout of messages
-C     HBNFL  - hspf binary file unit number
-C     VOLNO  - ???
-C     MEMN   - ???
-C     MEMSB  - ???
-C     GAPST  - ???
-C     GAPKW1 - ???
-C     SYST   - ???
-C     SYSKW1 - ???
-C     AMDKW1 - access mode keyword library
-C     AMDST  - ???
-C     SDATIM - starting date/time
-C     EDATIM - ending date/time
-C     TRFLAG - ???
-C     OUTLEV - run interpreter output level
-C     ECOUNT - count(s) of specific errors
-C     MAXTTB - ???
-C     IHMFG  - IHM flag (normal-0,IHM control-1)
-C     NUM    - ???
-C     DELT   - simulation time interval in minutes
-C     UNT    - ???
-C     NTS    - ???
-C     GAPCD  - ???
-C     AMDCD  - ???
-C     TABL   - ???
-C     TABLR  - ???
-C
-C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,KIND,QLFG,LREC,RETCOD,SCLU,SGRP
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL   WDDSCK,PROWDS 
-C
-C     + + + INPUT FORMATS + + +
- 1000 FORMAT(A4,A2)
-C
-C     + + + OUTPUT FORMATS + + +
- 2010 FORMAT(' BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE')
- 2020 FORMAT(' END CHECKING/EXPANDING A WDMS FILE REFERENCE')
-C
-C     + + + HISTORY + + +
-C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
-C
-C     + + + END SPECIFICATIONS + + +
-C
-      SCLU = 217
-      IF (OUTLEV .GT. 6) WRITE(MESSU,2010)
-C
-      NTS = 0
-C     initialize unt in case dataset not found in wdm file
-C     subroutine memts requires a valid value
-      UNT = 0
-C     determine whether dataset exists in wdmsfl
-      CALL WDDSCK(WDMSFL,VOLNO,
-     O            LREC,RETCOD)
-      IF (RETCOD .EQ. 0) THEN
-C       dataset exists - process it
-C
-        CALL PROWDS (MSGFL,MESSU,HBNFL,VOLNO,MEMN,MEMSB,SYST,GAPST,
-     I               AMDST,SDATIM,EDATIM,TRFLAG,
-     I               SYSKW1,AMDKW1,GAPKW1,IHMFG,
-     M               ECOUNT,
-     O               DELT,UNT,KIND,GAPCD,AMDCD,QLFG)
-C
-        NUM = VOLNO
-        NTS = 1
-        READ(MEMN,1000) (TABL(I,NTS),I=1,2)
-        TABL(3,NTS)  = QLFG
-        TABL(4,NTS)  = MEMSB(2)
-        TABL(5,NTS)  = 0
-        TABL(6,NTS)  = KIND
-        TABLR(8,NTS) = 0.0
-        TABLR(9,NTS) = 1.0
-      ELSE
-C       error - dataset does not exist
-        CALL OMSTI (VOLNO)
-        CALL OMSTI (MEMSB(2))
-        SGRP = 98
-        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M             ECOUNT)
-      END IF
-C
-      IF (OUTLEV .GT. 6) WRITE(MESSU,2020)
-C
-C
-      RETURN
-      END
+      
