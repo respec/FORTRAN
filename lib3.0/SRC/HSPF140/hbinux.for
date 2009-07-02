@@ -726,13 +726,15 @@ C
       Subroutine GetBData
      I                   (aBinaryFileIndex,
      I                    aOperationName,aOperationNumber,aSectionName,
-     I                    aLevel,aConstituent,
+     I                    aLevel,aConstituent,aStartDate,aNumValues,
      O                    aValues,aReturnCode)
 !
 !     + + + DUMMY ARGUMENTS + + +
       Character*8 aOperationName,aSectionName,aConstituent
-      Integer     aOperationNumber,aLevel,aBinaryFileIndex,aReturnCode
+      Integer     aOperationNumber,aLevel,aBinaryFileIndex,
+     $            aStartDate(5),aNumValues 
       Real        aValues(*)
+      Integer     aReturnCode
 !
 !     + + + ARGUMENT DEFINITIONS + + +
 !     aReturnCode - return status of request
@@ -752,6 +754,8 @@ C
 !     + + + END SPECIFICATIONS + + +
 !
       lBinaryFile => mBinaryFiles(aBinaryFileIndex)
+      
+!     TODO: use start date      
 !      
       if (allocated(lBinaryFile%BData%Values)) then    
 !       already have some data, is it the right stuff?
@@ -845,16 +849,21 @@ C
 !
       Subroutine GetBDataTest
 !      
-      integer lReturnCode, I
+      integer lReturnCode, I, lHbnIndex
       real    lValues(20000)
+      integer lStartDate(5),lNumValues
 !         
       write(*,*) "GetBDataTest"
       
+      lHbnIndex = 1
+      
       do I = 2, 5
-        lValues = 0.0
+        lValues   = 0.0
+        lNumValues= 
+     $    mBinaryFiles(lHbnIndex)%Headers(1)%DataRecordCount(I)
         call GetBData
-     I               (1,"EXTMOD  ",66,"Met     ",
-     I                I,"I:PREC1 ",
+     I               (lHbnIndex,"EXTMOD  ",66,"Met     ",
+     I                I,"I:PREC1 ",lStartDate,lNumValues,
      O                lValues,lReturnCode)
         write(*,*) lReturnCode, I, Sum(lValues)
       end do
