@@ -50,7 +50,7 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  GETSEQ,MOVROW,GETTSS,GETWDM,GPDUMP 
-      EXTERNAL  FDATIM,GETDSS,GETTSI,PUTTSI
+      EXTERNAL  FDATIM,GETDSS,GETTSI,PUTTSI,GETHBN
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -112,7 +112,7 @@ C           volume code is unchanged
           END IF
 C
 C         case entry
-          GO TO (10,60,20,30,40,50,60), VOLUME
+          GO TO (10,60,20,30,40,50,55,60), VOLUME
 C
 C         case sequential
  10       CONTINUE
@@ -139,6 +139,11 @@ C         case dss
             CALL GETDSS (DELT,WIDTH,FSTCAL)
             GO TO 70
 C
+C         case hbn
+ 55       CONTINUE
+            CALL GETHBN (DELT,WIDTH,I1,FSTCAL)
+            GOTO 70
+C            
 C         case error
  60       CONTINUE
             CALL FDATIM (INPSTR,YEAR,TYREND,DATIM)

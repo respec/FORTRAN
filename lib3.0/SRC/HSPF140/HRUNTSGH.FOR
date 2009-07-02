@@ -1,8 +1,8 @@
 C
 C      
 C
-      SUBROUTINE GETHBN
-     I                  (DELT,WIDTH,WDMSFL,FSTCAL)
+      SUBROUTINE   GETHBN
+     I                   (DELT,WIDTH,HBNIND,FSTCAL)
 C
 C     + + + PURPOSE + + +
 C     get values from hspf binary file, transform them and fill a row on
@@ -13,14 +13,15 @@ C     2009/06/30 - jlk - initial implementation
 C
 C     + + + MODULES + + +
       USE HMMSG, ONLY : OMSG,OMSTI,OMSTR
+      USE HSPF_BINARY_INPUT, ONLY : GetBData
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   DELT,WIDTH,WDMSFL,FSTCAL
+      INTEGER   DELT,WIDTH,HBNIND,FSTCAL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DELT   - simulation time interval in minutes
 C     WIDTH  - inpad width
-C     WDMSFL - watershed data management file unit number
+C     HBNIND - hspf binary file index
 C     FSTCAL - flag indicating first interval of run
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION GETCOM + + +
@@ -38,7 +39,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      CURVAL(1)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  WDTGET,TIMADD,SETVEC,LTRAN
+      EXTERNAL    TIMADD,SETVEC,LTRAN 
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   INT
@@ -57,7 +58,7 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      BRBFG= 0
+      BRBFG= 1
 C
       SCLU = 234
       IF (BRBFG .GE. 1) THEN
@@ -80,40 +81,37 @@ C     initialize inpad time to start time for inpad
         INPTIM(I) = INPDAT(I)
  30   CONTINUE
 C
-C     calculate number of calls to wtdget
+C     calculate number of calls to GetBData
       NGETS = INT((WIDTH-1)/500) + 1
 C
       NPTS = 1
 C
-C     call wdtget, transform data, and place data on pad;
+C     call GetBData, transform data, and place data on pad;
 C     repeat ngets times
       DO 60 I= 1,NGETS
-C
 C       number of values each call
-        NVALS = 500
-        IF (I.EQ.NGETS) NVALS= WIDTH - (NGETS - 1)*500
+        IF (I.EQ.NGETS) THEN
+          NVALS= WIDTH - (NGETS - 1)*500
+        ELSE
+          NVALS = 500
+        END IF
 C
         IF (NVALS.GT.0) THEN
-C         get values from wdmsfl
-          CALL WDTGET (WDMSFL,FILE,DELT,INPTIM,NVALS,DTRAN,QLFG,I2,
-     O                 TBUFF,RETCOD)
- 2900     format(1x,a,20i5)
-C          write(99,2900)
-C     $      'GETWDM:wdmsfl,file,delt,inptim,nvals,dtran,qlfg,i2,retcod',
-C     $              wdmsfl,file,delt,inptim,nvals,dtran,qlfg,i2,retcod
-C
+C         get values from hbnfl
+
+
           FSTFG= 1
           IF (RETCOD.NE.0.AND.FSTCAL.EQ.1.AND.I.EQ.1) THEN
 C           first time point of dataset not available - set a
 C           flag; then get remaining data normally
 C
-C           write (messu,*) ' getwdm: first tm pt of dsn not avail'
+C           write (messu,*) ' GETHBN: first tm pt of dsn not avail'
             FSTFG= 0
             CALL TIMADD (INPTIM,I2,DELT,I1,
      O                   INPNEW)
             NVALSX = NVALS - 1
-            CALL WDTGET (WDMSFL,FILE,DELT,INPNEW,NVALSX,DTRAN,QLFG,I2,
-     O                   TBUFF,RETCOD)
+
+
           END IF
 C
           IF (RETCOD.NE.0) THEN
@@ -171,7 +169,7 @@ C             a linear transformation is needed
 C             add values to current contents of row
               PAD(PLACE) = PAD(PLACE) + CURVAL(1)
               IF (BRBFG.GE.2) WRITE (MESSU,2300) PLACE,PAD(PLACE)
- 2300         FORMAT (' WDM PLACE, PAD(PLACE):  ',I10,E12.4)
+ 2300         FORMAT (' HBN PLACE, PAD(PLACE):  ',I10,E12.4)
             ELSE
 C             replace current contents of row with values
               PAD(PLACE) = CURVAL(1)
@@ -183,9 +181,7 @@ C
 C         increment time to start of next set of values
           CALL TIMADD (INPTIM,I2,DELT,NVALS,
      O                 INPTIM)
-C
         END IF
-C
  60   CONTINUE
 C
 C     increment time to start of new inspan and update instruction
