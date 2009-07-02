@@ -94,9 +94,9 @@ C     MESSU  - unit number to write message to
 C     COUNT  - count of messages written
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      MAXCLU,I0,JLEN,IREC,
+      INTEGER      MAXCLU,JLEN,IREC,
      #             INITFG,OLEN,CONT,IPOS,RPOS,CPOS,TPOS
-      INTEGER      I6
+      INTEGER      I0,I6
       CHARACTER*80 TBUFF
       CHARACTER*64 FNAME
 C
@@ -118,7 +118,8 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      I6 = 6 
+      I0= 0
+      I6= 6 
 C      
 C     increment counter for this message
       COUNT= COUNT+ 1
@@ -130,11 +131,13 @@ C       write detailed error message
 C       first write line of asterisks as separator
         WRITE (MESSU,2000)
         WRITE (MESSU,2060)
-C       message id
-        WRITE (TBUFF,2040) SCLU, SGRP
-        WRITE (MESSU,2020) TBUFF
-        CALL HDMES3(I6,TBUFF)
-        WRITE (MESSU,2060)
+C       message id - skip for new code groups with SCLU = -999
+        IF (SCLU .NE. -999) THEN
+          WRITE (TBUFF,2040) SCLU, SGRP
+          WRITE (MESSU,2020) TBUFF
+          CALL HDMES3(I6,TBUFF)
+          WRITE (MESSU,2060)
+        END IF
 C       initialize position in output arrays
         IPOS= 0
         RPOS= 0

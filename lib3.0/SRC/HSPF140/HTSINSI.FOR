@@ -1046,15 +1046,20 @@ C
 C
           IF (EXTTFG .EQ. 1) THEN
 C           ext targets block
-C           volume is 1 for tss and seq, 2 for wdms and dss
+C           volume is 1 for tss and seq, 2 for wdms and dss, 3 for hbn and cdf
             I = 1
-C           search last two keywords
-            WRITE (CHSTR,2000) TVOL(1)
+C           search last four keywords
+            WRITE(CHSTR,2000) TVOL(1)
             CHSTR1(4)= ' '
-            KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
+            KWDNO= CHKSTR(I4,I4,CHSTR1,EXTKW1(9))
             IF (KWDNO .NE. 0) THEN
-C             wdm or dss
-              I = 2
+              IF (KWDNO .LE. 2) THEN
+C               wdm or dss
+                I = 2
+              ELSE
+C               hbn or cdf                  
+                I = 3
+              END IF
             END IF
 C           AORIG is set in PAIRS to WORKFL address 21
 C           FRAC needs to be added for secondary update during run
@@ -1194,15 +1199,20 @@ C               allocate a row and move it in, replacing present
 C               contents of row
                 SROW= ROW(MROW,MESSU,MSGFL,
      M                    AVFG,ECOUNT,MAXROW)
-C               volume is 1 for tss and seq, 2 for wdms and dss
+C               volume is 1 for tss and seq, 2 for wdms and dss, 3 for hbn and cdf
                 I = 1
-C               search last two keywords
+C               search last four keywords
                 WRITE(CHSTR,2000) SVOL(1)
                 CHSTR1(4)= ' '
-                KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
-                IF (KWDNO .NE. 0) THEN
-C                 wdm or dss
-                  I = 2
+                KWDNO= CHKSTR(I4,I4,CHSTR1,EXTKW1(9))
+                 IF (KWDNO .NE. 0) THEN
+                  IF (KWDNO .LE. 2) THEN
+C                   wdm or dss
+                    I = 2
+                  ELSE
+C                   hbn or cdf                  
+                    I = 3
+                  END IF
                 END IF
 C               AORIG is set in PAIRS to WORKFL address 21
                 CALL TSINS (I,SNUM,SDELT,SROW,SOFFST,STKIND,
@@ -1253,14 +1263,20 @@ C             to refer to trow
               CALL CHANGE (I0,I0,I0,I0,WKEY,TROW,I2A,I2B)
 C
 C             move in the source, replacing existing values in row
+C             volume is 1 for tss and seq, 2 for wdms and dss, 3 for hbn and cdf
               I = 1
-C             search last two keywords
+C             search last four keywords
               WRITE(CHSTR,2000) SVOL(1)
               CHSTR1(4)= ' '
-              KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
-              IF (KWDNO .NE. 0) THEN
-C               wdm or dss
-                I = 2
+              KWDNO= CHKSTR(I4,I4,CHSTR1,EXTKW1(9))
+               IF (KWDNO .NE. 0) THEN
+                IF (KWDNO .LE. 2) THEN
+C                 wdm or dss
+                  I = 2
+                ELSE
+C                 hbn or cdf                  
+                  I = 3
+                END IF
               END IF
 C             AORIG is set in PAIRS to WORKFL address 21
               CALL TSINS (I,SNUM,SDELT,TROW,SOFFST,STKIND,
@@ -1275,14 +1291,20 @@ C
             ELSE
 C             target already has a row
 C             move in the source, adding to existing values
+C             volume is 1 for tss and seq, 2 for wdms and dss, 3 for hbn and cdf
               I = 1
-C             search last two keywords
+C             search last four keywords
               WRITE(CHSTR,2000) SVOL(1)
               CHSTR1(4)= ' '
-              KWDNO= CHKSTR(I4,I2,CHSTR1,EXTKW1(9))
+              KWDNO= CHKSTR(I4,I4,CHSTR1,EXTKW1(9))
               IF (KWDNO .NE. 0) THEN
-C               wdm or dss
-                I = 2
+                IF (KWDNO .LE. 2) THEN
+C                 wdm or dss
+                  I = 2
+                ELSE
+C                 hbn or cdf                  
+                  I = 3
+                END IF
               END IF
 C             AORIG is set in PAIRS to WORKFL address 21
               CALL TSINS (I,SNUM,SDELT,TROW,SOFFST,STKIND,
@@ -1430,7 +1452,6 @@ C         tss dataset
           FILE  = NUM
           VOLCOD= 4
         END IF
-C
       ELSE IF (VOLUME .EQ. 2) THEN
 C       may be wdms or dss
         IF (NUM .LT. 0) THEN
@@ -1442,12 +1463,19 @@ C         wdms dataset
           FILE  = NUM
           VOLCOD= -MEMSB(2)
         END IF
-C
+      ELSE IF (VOLUME .EQ. 3) THEN
+C       hbn or cdf
+        IF (NUM .LT. 0) THEN
+C         cdf
+          VOLCOD= 8
+        ELSE
+C         hbn      
+          VOLCOD= 7  
+        END IF              
       ELSE
 C       scratch pad
         VOLCOD= VOLUME
         FILE  = NUM
-C
       END IF
 C
 C     2004/12/9 jlk-force no null for MFACT changes during exec

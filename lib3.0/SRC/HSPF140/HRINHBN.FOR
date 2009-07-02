@@ -89,7 +89,7 @@ C
       NTS = 1
       READ(MEMN,1000) (TABL(I,NTS),I=1,2)
       TABL(3,NTS)  = QLFG
-      TABL(4,NTS)  = MEMSB(2)
+      TABL(4,NTS)  = 1
       TABL(5,NTS)  = 0
       TABL(6,NTS)  = KIND
       TABLR(8,NTS) = 0.0
@@ -116,6 +116,7 @@ C     in a hbn file
 C
 C     + + + MODULES + + +
       USE HMMSG, ONLY : OMSTI,OMSG,OMSTC,OMSGMSG
+      USE HSPF_BINARY_INPUT, ONLY : CheckMember
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MSGFL,MESSU,HBNFL,VOLNO,MEMSB(2),
@@ -153,10 +154,11 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     SAIND,RNSTRT(6),RNEND(6),RETCOD,RETCD1,
      $            RETCD2,DSSTRT(6),DSEND(6),TCODE,TSSTEP,GPFLG,TDSFRC,
-     $            RWFLAG,STRTFG,ENDFG,UNTDS,TSFORM,SCLU,SGRP,
+     $            RWFLAG,STRTFG,ENDFG,UNTDS,SCLU,SGRP,
      $            I,I1,I2,I3,I4,OK,ERRCOD,ITMP(1),
-     $            UNTUSR,TIMFCT(5),AGGRCD,CONV(7),VBTIME,
-     $            EMSGCT
+     $            UNTUSR,TIMFCT(4),AGGRCD,VBTIME,
+     $            EMSGCT,
+     $            lConstituentIndex 
       REAL        TSFILL,RTMP(1)
       CHARACTER*4 TSTYP
       CHARACTER*80 EMSG(5)
@@ -172,6 +174,7 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + FUNCTIONS + + +
       INTEGER     CHKSTR
+C
 C     + + + EXTERNALS + + +
       EXTERNAL    TIMHTW,WDBSGC,WDBSGI,WTFNDT,TIMADD
       EXTERNAL    CHKSTR,CKDATE,WDBSGR
@@ -180,24 +183,18 @@ C     + + + INTRINSICS + + +
       INTRINSIC   MOD
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA        CONV/60,60,24,999,12,100,999/
-      DATA        TIMFCT/0,1,60,1440,43200/
+      DATA        TIMFCT/1,60,1440,43200/
 C
 C     + + + HISTORY + + +
 C     2009/06/29 - JLK - initial implementation
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      SCLU= 217
+      SCLU= -999
       I1  = 1
       I2  = 2
       I3  = 3
       I4  = 4
-C
-      EMSG(1)= ' HBN IMPLEMENTATION NOT COMPLETE.'
-      EMSGCT = 1
-      CALL OMSGMSG(MESSU,SCLU,31,EMSGCT,EMSG,
-     M             ECOUNT)
 C
 C     convert run times from hspf internal format to wdm
       DO 10 I = 1,5
@@ -211,88 +208,44 @@ C     convert run times from hspf internal format to wdm
       CALL TIMHTW (MESSU,MSGFL,
      M             RNEND)
 C
-C     check memn (wdm attribute = tstyp)
-      SAIND = 1
-      CALL WDBSGC (WDMSFL,VOLNO,SAIND,I4,
-     O             TSTYP1,RETCOD)
+      CALL CheckMember(I1, VOLNO, MEMN,
+     O                 lConstituentIndex, 
+     O                 TCODE, DSSTRT, DSEND, UNTDS, KIND)   
 C
-      IF (RETCOD .EQ. 0) THEN
-C       attribute tstyp found - check it
-        IF (TSTYP .NE. MEMN(1:4)) THEN
-C         error - dataset tstyp does not match input memn
-          CALL OMSTI (VOLNO)
-          CALL OMSTI (MEMSB(2))
-          CHSTR= MEMN(1:4)
-          CALL OMSTC (I4,CHSTR1)
-          CHSTR= TSTYP
-          CALL OMSTC (I4,CHSTR1)
-          SGRP = 99
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+      IF (lConstituentIndex .lt. 0) THEN
+C       error - dataset tstyp does not match input memn
+        WRITE(EMSG(1),*) ' HBN DATASET PROBLEM1',lConstituentIndex
+        EMSGCT = 1
+        CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
      M               ECOUNT)
-        END IF
-      ELSE
+      ELSEIF (lConstituentIndex .eq. 0) THEN
 C       error - attribute tstyp not found
-        CALL OMSTI (VOLNO)
-        CALL OMSTI (MEMSB(2))
-        SGRP = 100
-        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M             ECOUNT)
+        WRITE(EMSG(1),*) ' HBN DATASET PROBLEM2',VOLNO,' ',MEMN
+        EMSGCT = 1
+        CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
+     M               ECOUNT)
       END IF
 C
-C
-C     check delt (wdm attributes = tcode and tsstep)
-      SAIND = 17
-      CALL WDBSGI (WDMSFL,VOLNO,SAIND,I1,
-     O             ITMP,RETCD1)
-      TCODE = ITMP(1)
-C
-      SAIND = 33
-C
-      CALL WDBSGI (WDMSFL,VOLNO,SAIND,I1,
-     O             ITMP,RETCD2)
-      TSSTEP= ITMP(1)
-C
-      IF (RETCD1 .EQ. 0 .AND. RETCD2 .EQ. 0) THEN
-C       dataset is a timeseries dataset - determine delt
-        IF (TCODE .GE. 2 .AND. TCODE .LE. 5) THEN
-C         valid tcode
-          DELT = TSSTEP * TIMFCT(TCODE)
-        ELSE
-C         error - invalid tcode for hspf; must be min., hr., or day
-C         month ok for source
-C         assign dummy time step for subsequent checks
-          TCODE  = 2
-          TSSTEP = 60
-          CALL OMSTI (VOLNO)
-          CALL OMSTI (MEMSB(2))
-          SGRP = 101
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               ECOUNT)
-        END IF
+      IF (TCODE .GE. 2 .AND. TCODE .LE. 4) THEN
+C       valid tcode
+        DELT = TIMFCT(TCODE)
       ELSE
-C
-C       error - time step not valid, so dataset is not timeseries;
+C       error - invalid tcode for hspf; must be min., hr., or day
+C       month ok for source
 C       assign dummy time step for subsequent checks
         TCODE  = 2
         TSSTEP = 60
-        CALL OMSTI (VOLNO)
-        CALL OMSTI (MEMSB(2))
-        SGRP = 102
-        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M             ECOUNT)
+        WRITE(EMSG(1),*) ' HBN DATASET PROBLEM3',VOLNO,' ',MEMN
+        EMSGCT = 1
+        CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
+     M               ECOUNT)
       END IF
 C
-C
 C     check time span
-      GPFLG = 1
-      CALL WTFNDT (WDMSFL,VOLNO,GPFLG,
-     O             TDSFRC,DSSTRT,DSEND,RETCOD)
-C
-C
       IF (TRFLAG .EQ. 0) THEN
 C       source dataset - compare time span of dataset to time span of run
         OK = 0
-        IF (RETCOD .EQ. 0) THEN
+        IF (lConstituentIndex .gt. 0) THEN
 C         move run start time forward 1 'data' interval
 C          write(99,*) 'rnstrt',rnstrt
           CALL TIMADD (RNSTRT,TCODE,TSSTEP,I1,
@@ -311,123 +264,25 @@ C          write(99,*) strtfg
 C          write(99,*) rnend
 C          write(99,*) dsend
 C          write(99,*) endfg
-          CALL OMSTI (VOLNO)
-          CALL OMSTI (MEMSB(2))
-          SGRP = 103
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               ECOUNT)
+          WRITE(EMSG(1),*) ' HBN DATE PROBLEM'
+          WRITE(EMSG(2),*) ' START DATE ', DSSTRT
+          WRITE(EMSG(3),*) ' END DATA   ', DSEND
+          EMSGCT = 3
+          CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
+     M                 ECOUNT)
 C         missing data not fatal for ihm operation
           IF (IHMFG .EQ. 1) THEN
-            WRITE(99,*) 'PROWDS:missing data IGNORE!',WDMSFL,VOLNO
+            WRITE(99,*) 'PROHBN:missing data IGNORE!',HBNFL,VOLNO
             ECOUNT = ECOUNT-1
           END IF
         END IF
       ELSE
-C       target dataset - check access mode, write flag, and aggregation
-C       access mode
-        CHSTR= AMDST
-        AMDCD= CHKSTR(I4,I3,CHSTR1,AMDKW1)
-C
-        IF (AMDCD .NE. 1 .AND. AMDCD .NE. 3) THEN
-C         access mode is invalid for wdm
-          CALL OMSTI (VOLNO)
-          CALL OMSTI (MEMSB(2))
-          SGRP = 106
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+C       target dataset - not allowed - TODO: should it be?
+        WRITE(EMSG(1),*) ' HBN DATA FORMAT NOT SUPPORTED FOR OUTPUT'
+        EMSGCT = 1
+        CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
      M               ECOUNT)
-        END IF
-C
-        IF (RETCOD .EQ. 0 .AND. AMDCD .EQ. 1) THEN
-          CALL CKDATE (DSEND,RNSTRT,
-     O                 ERRCOD)
-          IF (ERRCOD .GT. 0) THEN
-C           error - overwrite of data not allowed, but data are
-C           already present in dataset after run start time
-            CALL OMSTI (VOLNO)
-            CALL OMSTI (MEMSB(2))
-            SGRP = 109
-            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M                 ECOUNT)
-          END IF
-        END IF
-C
-C       check write flag
-        SAIND = 35
-        CALL WDBSGI (WDMSFL,VOLNO,SAIND,I1,
-     O               ITMP,RETCOD)
-        RWFLAG= ITMP(1)
-        IF (RETCOD .EQ. 0) THEN
-          IF (RWFLAG .EQ. 1) THEN
-C           error - write not allowed to target dataset
-            CALL OMSTI (VOLNO)
-            CALL OMSTI (MEMSB(2))
-            SGRP = 104
-            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M                 ECOUNT)
-          END IF
-        END IF
-C
-C       aggregation
-        IF (GAPST .EQ. '    ') THEN
-C         default: aggregation turned off
-          AGGRCD = 0
-        ELSE IF (GAPST .EQ. 'AGGR') THEN
-C         aggregate output data; will check for compatibility of
-C         time steps in subroutine pairs
-          AGGRCD = 1
-        ELSE
-C         error in user-supplied input for aggregation keyword
-          AGGRCD = 0
-          CALL OMSTI (VOLNO)
-          CALL OMSTI (MEMSB(2))
-          SGRP = 149
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               ECOUNT)
-        END IF
-C       gapcd is used to 'carry' aggrcd since gapcd not needed for target
-        GAPCD = AGGRCD
-C
-C       check vbtime
-        SAIND = 85
-        CALL WDBSGI (WDMSFL,VOLNO,SAIND,I1,
-     O               ITMP,RETCOD)
-        VBTIME= ITMP(1)
-C
-        IF (VBTIME .EQ. 1) THEN
-C         constant time step, check tsstep, tcode
-C         and modify gapcd for use in pairs
-          GAPCD= GAPCD + 2
-          IF (MOD(TSSTEP,CONV(TCODE)) .EQ. 0) THEN
-C           error
-            CALL OMSTI (VOLNO)
-            CALL OMSTI (MEMSB(2))
-            SGRP = 150
-            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M                 ECOUNT)
-          END IF
-        END IF
-C
-C       dont allow month timestep for target wdm dataset
-        IF (TCODE .GT. 4) THEN
-C         error - invalid tcode for wdm target; must be min., hr., or day
-C         assign dummy time step for subsequent checks
-          TCODE  = 2
-          TSSTEP = 60
-          CALL OMSTI (VOLNO)
-          CALL OMSTI (MEMSB(2))
-          SGRP = 101
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               ECOUNT)
-        END IF
       END IF
-C
-C
-C     check units system of dataset and the user-supplied system
-C thj this check is currently a dummy - no attribute 999 defined
-      SAIND = 999
-      CALL WDBSGI (WDMSFL,VOLNO,SAIND,I1,
-     O             ITMP,RETCOD)
-      UNTDS = ITMP(1)
 C
       CHSTR = SYST
       UNTUSR= CHKSTR(I4,I2,CHSTR1,SYSKW1)
@@ -457,91 +312,44 @@ C         user string was invalid and not blank
       END IF
       IF (ERRCOD .NE. 0) THEN
 C       unit system error
-        CALL OMSTI (VOLNO)
-        CALL OMSTI (MEMSB(2))
-        CALL OMSTI (ERRCOD)
-        SGRP = 105
-        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M             ECOUNT)
+        WRITE(EMSG(1),*) ' HBN UNITS PROBLEM'
+        WRITE(EMSG(2),*) ' HBN FILE UNITS       ', UNT
+        WRITE(EMSG(3),*) ' USER SPECIFIED UNITS ', SYST
+        EMSGCT = 3
+        CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
+     M               ECOUNT)
       END IF
 C
-C
-C     check kind (tsform) of dataset - if attribute not found, set
-C     kind = undefined
-      SAIND = 84
-      CALL WDBSGI (WDMSFL,VOLNO,SAIND,I1,
-     O             ITMP,RETCOD)
-      TSFORM= ITMP(1)
-C
-      IF (RETCOD .NE. 0 .OR. TSFORM .LT. 1 .OR. TSFORM .GT. 3) THEN
+C     check kind of dataset - if attribute not found, set
+      IF (KIND .LT. 1 .OR. KIND .GT. 3) THEN
 C       error, tsform is not found or not valid for hspf
-        CALL OMSTI (VOLNO)
-        CALL OMSTI (MEMSB(2))
-        SGRP = 151
-        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M             ECOUNT)
+        WRITE(EMSG(1),*) ' HBN DATASET KIND PROBLEM ',KIND
+        EMSGCT = 1
+        CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
+     M               ECOUNT)
+C       set to undefined     
         KIND= 3
-      ELSE IF (TSFORM .EQ. 3) THEN
-C       point
-        KIND= 1
-      ELSE
-C       mean
-        KIND= 2
       END IF
-C
 C
       IF (TRFLAG .EQ. 0) THEN
 C       check user-input for gapst; set gapcd
         IF (GAPST .EQ. '    ') THEN
 C         default to gap value of undefined
-          GAPCD = 1
+          GAPCD= 1
         ELSE
           CHSTR= GAPST
           GAPCD= CHKSTR(I4,I2,CHSTR1,GAPKW1)
           IF (GAPCD .EQ. 0) THEN
 C           error - invalid gap value requested - undefined assumed
-            CALL OMSTI (VOLNO)
-            CALL OMSTI (MEMSB(2))
-            SGRP = 107
-            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M                 ECOUNT)
+            WRITE(EMSG(1),*) ' HBN GAP CODE PROBLEM ',GAPST
+            EMSGCT = 1
+            CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
+     M                   ECOUNT)
           ELSE
-            GAPCD = GAPCD - 1
-          END IF
-        END IF
-C
-C       check attribute tsfill; if it exists, use it, otherwise
-C       use value determined above from user-input
-        SAIND = 32
-        CALL WDBSGR (WDMSFL,VOLNO,SAIND,I1,
-     O               RTMP,RETCOD)
-        TSFILL= RTMP(1)
-C
-        IF (RETCOD .EQ. 0) THEN
-C         tsfill exists - compare tsfill to 0
-          IF (TSFILL .LT. 0.001 .AND. TSFILL .GT. -0.001) THEN
-            GAPCD = 0
-          ELSE
-            GAPCD = 1
+            GAPCD= GAPCD - 1
           END IF
         END IF
       END IF
-C
-C
-C     check user-input 'data quality code'
-      IF (MEMSB(1) .GE. 0 .AND. MEMSB(1) .LE. 31) THEN
-C       valid quality code found
-        QLFG = MEMSB(1)
-      ELSE
-C       error - invalid quality code
-        QLFG = 0
-        CALL OMSTI (VOLNO)
-        CALL OMSTI (MEMSB(2))
-        SGRP = 108
-        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M             ECOUNT)
-      END IF
-C
 C
       RETURN
       END

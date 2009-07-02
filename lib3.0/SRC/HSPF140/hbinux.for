@@ -323,7 +323,7 @@ C
         integer      DataRecordStart(5), DataRecordEnd(5)
         integer      DataRecordCount(5)
         integer      RecordIndex, ConstituentCount
-        integer      UnitFlag, DateStart(5), DateEnd(5)
+        integer      UnitFlag, DateStart(6), DateEnd(6)
         character*8, allocatable, dimension(:) :: Constituents
       end type Header
 !
@@ -334,8 +334,8 @@ C
 !
       type BData
         sequence
-        type(Header) :: Header
-        integer      :: Level
+        type(Header), pointer             :: Header
+        integer                           :: Level
         real, allocatable, dimension(:,:) :: Values
       end type BData
 !
@@ -376,9 +376,10 @@ C
      $        lStartPos, lVariableNameLength, lDPos, lDateIndex,
      $        lBinaryFileIndex
       logical lHeaderFound
-      character*8      ::lVariableName(256)
+      character*8               ::lVariableName(256)
       type(BinaryFile), Pointer :: lBinaryFile
-      type(Header)     :: lHeader
+      type(Header), Pointer     :: lHeader
+      type(Header)              :: lHeaderTmp
 !
 !     + + + END SPECIFICATIONS + + +
 !
@@ -417,12 +418,12 @@ C
           lHeaderIndex = 0
           do lRecordIndex = 1, lBinaryFile%RecordCount
              lPos = lBinaryFile%Records(lRecordIndex)%StartPos
-             read(aFileUnit,POS=lPos+4)  lHeader%OperationName
+             read(aFileUnit,POS=lPos+4)  lHeaderTmp%OperationName
              read(aFileUnit,POS=lPos+12) mBinBuffC4(1)
-             lHeader%OperationNumber = mBinBuffI(1)
-             read(aFileUnit,POS=lPos+16) lHeader%SectionName
-             write(lHeader%Id,'(A8,I4,A8)') lHeader%OperationName,
-     $                   lHeader%OperationNumber, lHeader%SectionName     
+             lHeaderTmp%OperationNumber = mBinBuffI(1)
+             read(aFileUnit,POS=lPos+16) lHeaderTmp%SectionName
+             write(lHeaderTmp%Id,'(A8,I4,A8)') lHeaderTmp%OperationName,
+     $         lHeaderTmp%OperationNumber, lHeaderTmp%SectionName     
              mBinBuffI(1)= 0 
              read(aFileUnit,POS=lPos) mBinBuffC(1)
              if (mBinBuffI(1) .eq. 0) then
@@ -441,19 +442,20 @@ C
                  lPos= lPos+ lVariableNameLength
                end do
                lHeaderIndex= lHeaderIndex+ 1
-               lHeader%ConstituentCount= lVariableIndex 
-               lHeader%DataRecordStart = 0
-               lHeader%DataRecordEnd   = 0
-               lHeader%DataRecordCount = 0
-               lHeader%RecordIndex     = lRecordIndex
+               lHeaderTmp%ConstituentCount= lVariableIndex 
+               lHeaderTmp%DataRecordStart = 0
+               lHeaderTmp%DataRecordEnd   = 0
+               lHeaderTmp%DataRecordCount = 0
+               lHeaderTmp%RecordIndex     = lRecordIndex
                if (lHeaderIndex .gt. 1) then
-                 deallocate (lHeader%Constituents)
+                 deallocate (lHeaderTmp%Constituents)
                end if
-               allocate (lHeader%Constituents(lVariableIndex))
+               allocate (lHeaderTmp%Constituents(lVariableIndex))
                do I = 1, lVariableIndex
-                 lHeader%Constituents(I)= lVariableName(I)
+                 lHeaderTmp%Constituents(I)= lVariableName(I)
                end do
-               lBinaryFile%Headers(lHeaderIndex)= lHeader
+!              this should copy the header, not point to it               
+               lBinaryFile%Headers(lHeaderIndex)= lHeaderTmp
 !               write(*,*) "Header ", lHeader%RecordIndex, lHeaderIndex, 
 !     $                    lVariableIndex, lHeader%OperationName, 
 !     $                    lHeader%OperationNumber, lHeader%SectionName
@@ -465,9 +467,9 @@ C
 !              note: this is a data record, header is used for the id             
                lHeaderFound = .false.
                do I = 1, lHeaderIndex
-                 if (lHeader%Id .eq. lBinaryFile%Headers(I)%Id) then
+                 if (lHeaderTmp%Id .eq. lBinaryFile%Headers(I)%Id) then
                    lHeaderFound= .true.
-                   lHeader     = lBinaryFile%Headers(I)
+                   lHeader     => lBinaryFile%Headers(I)
                    read(aFileUnit,POS=lPos+28) lDataLevel 
                    if (lHeader%DataRecordCount(lDataLevel) .eq. 0) then
                      lHeader%DataRecordStart(lDataLevel)= lRecordIndex
@@ -544,7 +546,6 @@ C
                      lHeader%DataRecordCount(lDataLevel)= 
      $                 lHeader%DataRecordCount(lDataLevel)+ 1
                    end if
-                   lBinaryFile%Headers(I)= lHeader
 !                   write(*,*) "Header", I, "Record", lRecordIndex
                    do J = 1, 5
 !                      if (mHeaders(I)%DataRecordCount(J).gt.0) then
@@ -567,7 +568,7 @@ C
         end if
 !
         do I= 1, lBinaryFile%HeaderCount        
-          lHeader= lBinaryFile%Headers(I) 
+          lHeader=> lBinaryFile%Headers(I) 
           write(99,*) "Header", I, 
      $      lHeader%OperationName, 
      $      lHeader%OperationNumber,
@@ -589,7 +590,7 @@ C
         aReturnCode= 0
       end if     
 !      
-      END SUBROUTINE
+      End Subroutine Init
 !
 !
 !
@@ -601,8 +602,8 @@ C
       Integer aBinaryFileIndex,aPos 
 !
 !     + + + LOCAL VARIABLES + + +          
-      Integer lLengthLast, c, h, i, lBytes, lRecordLength
-      Save    lLengthLast
+      Integer  c, h, i, lBytes, lRecordLength
+      Integer, Save             :: lLengthLast
       Type(BinaryFile), Pointer :: lBinaryFile
 !      
       lBinaryFile => mBinaryFiles(aBinaryFileIndex)
@@ -652,7 +653,73 @@ C
  20   Continue
         NextRecord = .false.
         Return      
-      End Function  
+      End Function NextRecord
+!
+!
+!
+      Subroutine CheckMember 
+     I                      (aBinaryFileIndex, aHeaderIndex,
+     I                       aConstituent,
+     O                       aConstituentIndex, aTimeCodeMin,
+     O                       aDataStart, aDataEnd, aUnits, aKind)   
+!
+!     + + + DUMMY ARGUMENTS + + +
+      Integer     aBinaryFileIndex, aHeaderIndex, aConstituentIndex,
+     $            aTimeCodeMin, aDataStart(6), aDataEnd(6), 
+     $            aUnits, aKind
+      Character*6 aConstituent
+!
+!     + + + ARGUMENT DEFINITIONS + + +
+!     aConstituentIndex - constituent index, negative if problem
+!                     0 - no match
+!                    -1 - bad binary file index 
+!                    -2 - bad header index
+!     aTimeCodeMin - minimum time code, 0 if no data
+!     aDataStart   - starting date of data
+!     aDataEnd     - ending date of data
+!
+!     + + + LOCAL VARIABLES + + +          
+      Integer                   :: I
+      Type(BinaryFile), Pointer :: lBinaryFile
+      Type(Header), Pointer     :: lHeader
+      Character*6               :: lConstituent
+!      
+!     + + + END SPECIFICATIONS + + +
+!
+      aTimeCodeMin= 0
+      if (aBinaryFileIndex .eq. 1) then
+        lBinaryFile => mBinaryFiles(aBinaryFileIndex)
+        if (aHeaderIndex .ge. 1 .and. 
+     $      aHeaderIndex .le. lBinaryFile%HeaderCount) then
+            lHeader => lBinaryFile%Headers(aHeaderIndex)
+            do I = 1, 5
+              if (lHeader%DataRecordCount(I) .gt. 0) then
+                aTimeCodeMin = I
+                aDataStart   = lHeader%DateStart
+                aDataEnd     = lHeader%DateEnd
+                aUnits       = lHeader%UnitFlag
+!               TODO: define kind                
+                aKind        = 3
+                exit
+              end if
+            end do
+            aConstituentIndex= 0
+            do I = 1, lHeader%ConstituentCount
+              lConstituent= lHeader%Constituents(I)(3:8)
+              if (aConstituent .eq. lConstituent) then
+                aConstituentIndex= I
+                exit  
+              end if
+            end do
+        else
+          aConstituentIndex= -2
+        end if
+      else
+        aConstituentIndex= -1
+      end if
+!   
+      Return     
+      End Subroutine CheckMember
 !  
 !
 !    
@@ -676,16 +743,19 @@ C
 !                    -4 - no matching constituent
 !      
 !     + + + LOCAL VARIABLES + + +          
-      Integer          :: lIndex, lIndexCons, lIndexRecord, lPos
+      Integer                   :: lIndex, lIndexCons, lIndexRecord
+      Integer                   :: lPos
       Type(BinaryFile), Pointer :: lBinaryFile
-      Type(Header)     :: lHeader
-      Logical          :: lHaveData, lHaveHeader, lHaveCons
+      Type(Header), Pointer     :: lHeader
+      Logical                   :: lHaveData, lHaveHeader, lHaveCons
 !      
+!     + + + END SPECIFICATIONS + + +
+!
       lBinaryFile => mBinaryFiles(aBinaryFileIndex)
 !      
       if (allocated(lBinaryFile%BData%Values)) then    
 !       already have some data, is it the right stuff?
-        lHeader = lBinaryFile%BData%Header
+        lHeader => lBinaryFile%BData%Header
         if ((aOperationName .eq. lHeader%OperationName) .and.
      $      (aOperationNumber .eq. lHeader%OperationNumber) .and.
      $      (aSectionName .eq. lHeader%SectionName)) then
@@ -709,11 +779,11 @@ C
       aReturnCode = 0
       if (.not. lHaveHeader) then
         do lIndex = 1, lBinaryFile%HeaderCount
-          lHeader = lBinaryFile%Headers(lIndex)
+          lHeader => lBinaryFile%Headers(lIndex)
           if ((aOperationName .eq. lHeader%OperationName) .and.
      $        (aOperationNumber .eq. lHeader%OperationNumber) .and.
      $        (aSectionName .eq. lHeader%SectionName)) then
-            lBinaryFile%BData%Header= lHeader
+            lBinaryFile%BData%Header => lHeader
             lHaveHeader  = .true.
             exit
           end if
@@ -784,7 +854,7 @@ C
         lValues = 0.0
         call GetBData
      I               (1,"EXTMOD  ",66,"Met     ",
-     I                I,"I:Prec1 ",
+     I                I,"I:PREC1 ",
      O                lValues,lReturnCode)
         write(*,*) lReturnCode, I, Sum(lValues)
       end do
