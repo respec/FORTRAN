@@ -60,10 +60,11 @@ C
       I220 = 220
       BLEN = 545
       KNT  =   0
-      WIDTH= WID +1
+      WIDTH= WID+ 1
 C
-      MESSU = FILEAR(1)
-      TSSFL = FILEAR(10)
+      MESSU= FILEAR(1)
+      TSSFL= FILEAR(10)
+C      
       DO 5 I= 1, 4
         WDMSFL(I)= FILEAR(10+I)
  5    CONTINUE
@@ -72,8 +73,8 @@ C
       CALL GETTSI (I3,I1,
      O             DUMIN)
       TESTFG= DUMIN(1)
-      RECLT= DUMIN(2)
-      UNDEF= RDUMIN(3)
+      RECLT = DUMIN(2)
+      UNDEF = RDUMIN(3)
 C
 C     initialize suitability flag on for no undefined values
       SUITFG= 1
@@ -246,8 +247,8 @@ C
       CALL GETTSI (I3,I2,
      O             DUMIN)
       TESTFG= DUMIN(1)
-      RECLT= DUMIN(2)
-      UNDEF= RDUMIN(3)
+      RECLT = DUMIN(2)
+      UNDEF = RDUMIN(3)
 C
 C     process the instructions
       DO 10 I = TSPKST,TSPKND

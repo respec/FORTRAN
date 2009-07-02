@@ -12,7 +12,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER   ILEN,KEY,INSTR(ILEN)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     ILEN   - length of instruction - max 200
+C     ILEN   - length of instruction - max 220
 C     KEY    - record number
 C     INSTR  - time series instruction
 C
@@ -42,7 +42,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER    ILEN,KEY,INSTR(ILEN)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     ILEN   - length of record - max 200
+C     ILEN   - length of record - max 220
 C     KEY    - record number
 C     INSTR  - time series instruction
 C

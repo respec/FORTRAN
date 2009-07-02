@@ -172,6 +172,9 @@ C       read info for tsget and tsput errors (temp)
      O               INBUF1,CONT)
         READ(INBUFF,1000) TESTFG
 C
+C       force testing        
+        TESTFG = 1
+C
         CALL PUTTSI (I3,K,INSTR)
 C
  100  CONTINUE
@@ -641,7 +644,42 @@ C             set time at start of run
                 INPDAT(I)= START(I)
  80           CONTINUE
               INPDAT(6)= 0
+            ELSE IF (VOLCOD .EQ. 7) THEN
+C             hbn
+C             set gap value for get
+              IF (GETF .EQ. 1) THEN
+                IF (VECA(14) .EQ. 0) THEN
+                  GAPVAL= 0.0
+                ELSE
+                  GAPVAL= -1.E30
+                END IF
+              ELSE
+C               set aggregation flag for put
+                AGGRFG= VECA(14)
+              END IF
 C
+C             set data quality code
+              QLFG= VECA(11)
+C
+C             initialize nrem and pvar for put
+              NREM=    0
+              PVAR(1)= INITPV(STTRAN(1))
+C
+C             set time at start of run, convert to wdms time,
+              DO I= 1, 5
+                INPDAT(I)= START(I)
+              END DO
+              INPDAT(6)= 0
+C
+              CALL TIMHTW (MESSU,MSGFL,
+     M                     INPDAT)
+C
+              IF (GETF .EQ. 1) THEN
+                DO I= 1, DELT
+                  CALL TIMBAK (I2,
+     M                         INPDAT)
+                END DO
+              END IF
             END IF
 C
             INKEY= INKEY +1
