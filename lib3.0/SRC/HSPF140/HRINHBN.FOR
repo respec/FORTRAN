@@ -54,7 +54,7 @@ C     TABL   - ???
 C     TABLR  - ???
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,KIND,QLFG,LREC,RETCOD,SCLU,SGRP
+      INTEGER   I,KIND,QLFG,LREC,RETCOD,SCLU,SGRP,aConstituentIndex
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  PROHBN
@@ -83,7 +83,8 @@ C
      I             AMDST,SDATIM,EDATIM,TRFLAG,
      I             SYSKW1,AMDKW1,GAPKW1,IHMFG,
      M             ECOUNT,
-     O             DELT,UNT,KIND,GAPCD,AMDCD,QLFG)
+     O             DELT,UNT,KIND,GAPCD,AMDCD,QLFG,
+     O             aConstituentIndex)
 C
       NUM = VOLNO
       NTS = 1
@@ -108,7 +109,8 @@ C
      I                   GAPST,AMDST,SDATIM,EDATIM,TRFLAG,
      I                   SYSKW1,AMDKW1,GAPKW1,IHMFG,
      M                   ECOUNT,
-     O                   DELT,UNT,KIND,GAPCD,AMDCD,QLFG)
+     O                   DELT,UNT,KIND,GAPCD,AMDCD,QLFG,
+     O                   aConstituentIndex)
 C
 C     + + + PURPOSE + + +
 C     check attributes for a reference to a time series dataset
@@ -121,7 +123,8 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MSGFL,MESSU,HBNFL,VOLNO,MEMSB(2),
      $            SDATIM(5),EDATIM(5),TRFLAG,IHMFG,
-     $            ECOUNT,DELT,UNT,KIND,GAPCD,AMDCD,QLFG
+     $            ECOUNT,DELT,UNT,KIND,GAPCD,AMDCD,QLFG,
+     $            aConstituentIndex 
       CHARACTER*6 MEMN
       CHARACTER*4 GAPST,SYST,AMDST
       CHARACTER*1 AMDKW1(12),SYSKW1(8),GAPKW1(8)
@@ -157,8 +160,7 @@ C     + + + LOCAL VARIABLES + + +
      $            RWFLAG,STRTFG,ENDFG,UNTDS,SCLU,SGRP,
      $            I,I1,I2,I3,I4,OK,ERRCOD,ITMP(1),
      $            UNTUSR,TIMFCT(4),AGGRCD,VBTIME,
-     $            EMSGCT,
-     $            lConstituentIndex 
+     $            EMSGCT
       REAL        TSFILL,RTMP(1)
       CHARACTER*4 TSTYP
       CHARACTER*80 EMSG(5)
@@ -208,17 +210,18 @@ C     convert run times from hspf internal format to wdm
       CALL TIMHTW (MESSU,MSGFL,
      M             RNEND)
 C
+C     need to use BINARY file index - not just hard code 1
       CALL CheckMember(I1, VOLNO, MEMN,
-     O                 lConstituentIndex, 
+     O                 aConstituentIndex, 
      O                 TCODE, DSSTRT, DSEND, UNTDS, KIND)   
 C
-      IF (lConstituentIndex .lt. 0) THEN
+      IF (aConstituentIndex .lt. 0) THEN
 C       error - dataset tstyp does not match input memn
-        WRITE(EMSG(1),*) ' HBN DATASET PROBLEM1',lConstituentIndex
+        WRITE(EMSG(1),*) ' HBN DATASET PROBLEM1',aConstituentIndex
         EMSGCT = 1
         CALL OMSGMSG(MESSU,SCLU,I1,EMSGCT,EMSG,
      M               ECOUNT)
-      ELSEIF (lConstituentIndex .eq. 0) THEN
+      ELSEIF (aConstituentIndex .eq. 0) THEN
 C       error - attribute tstyp not found
         WRITE(EMSG(1),*) ' HBN DATASET PROBLEM2',VOLNO,' ',MEMN
         EMSGCT = 1
@@ -245,7 +248,7 @@ C     check time span
       IF (TRFLAG .EQ. 0) THEN
 C       source dataset - compare time span of dataset to time span of run
         OK = 0
-        IF (lConstituentIndex .gt. 0) THEN
+        IF (aConstituentIndex .gt. 0) THEN
 C         move run start time forward 1 'data' interval
 C          write(99,*) 'rnstrt',rnstrt
           CALL TIMADD (RNSTRT,TCODE,TSSTEP,I1,

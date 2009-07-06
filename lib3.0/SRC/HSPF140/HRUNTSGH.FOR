@@ -35,8 +35,9 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I,I1,I2,J,INPTIM(6),NGETS,NVALS,DTRAN,
      $          NPTS,RETCOD,INPNEW(6),NIVLS,PLACE,SCLU,SGRP,
-     $          BRBFG,FSTFG,NVALSX
+     $          BRBFG,FSTFG,NVALSX,lLevel
       REAL      CURVAL(1)
+      CHARACTER*8 lOperationName,lSectionName,lConstituent
 C
 C     + + + EXTERNALS + + +
       EXTERNAL    TIMADD,SETVEC,LTRAN 
@@ -48,7 +49,7 @@ C     + + + OUTPUT FORMATS + + +
  3000 FORMAT (/,' ENTERING GETHBN')
  3010 FORMAT (/,' LEAVING GETHBN',
      $          '   NGETS=',I6,';  NVALS=',I6,';  NPTS=',I6)
- 3020 FORMAT (3X,'INPAD DELTA TIME=',I6,3X, 'WDM DELTAT TIME=',I6,
+ 3020 FORMAT (3X,'INPAD DELTA TIME=',I6,3X, 'HBN DELTAT TIME=',I6,
      $        3X,'WIDTH=',I12,/,3X,
      $        'INPAD START TIME (MIN)=',I10,/,3X,
      $        'INPAD START TIME (YR,MO,DY,ETC)=',6I6)
@@ -98,9 +99,17 @@ C       number of values each call
 C
         IF (NVALS.GT.0) THEN
 C         get values from hbnfl
-
-
-          FSTFG= 1
+C 
+          WRITE(lOperationName,'(A4,A2)') SVOL
+          WRITE(lSectionName,'(A4,A2)') SGRPN
+          WRITE(lConstituent,'(A4,A2)') SMEMN
+          lLevel= 2
+          CALL GetBData
+     I                 (HBNIND,
+     I                  lOperationName,SNUM,lSectionName,
+     I                  lLevel,lConstituent,INPTIM,NVALS,
+     O                  TBUFF,RETCOD)
+C         FSTFG= 1
           IF (RETCOD.NE.0.AND.FSTCAL.EQ.1.AND.I.EQ.1) THEN
 C           first time point of dataset not available - set a
 C           flag; then get remaining data normally

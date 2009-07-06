@@ -732,7 +732,7 @@ C
 !     + + + DUMMY ARGUMENTS + + +
       Character*8 aOperationName,aSectionName,aConstituent
       Integer     aOperationNumber,aLevel,aBinaryFileIndex,
-     $            aStartDate(5),aNumValues 
+     $            aStartDate(6),aNumValues 
       Real        aValues(*)
       Integer     aReturnCode
 !
@@ -746,7 +746,7 @@ C
 !      
 !     + + + LOCAL VARIABLES + + +          
       Integer                   :: lIndex, lIndexCons, lIndexRecord
-      Integer                   :: lPos
+      Integer                   :: lPos, lDataIndex, lDataBaseIndex, lI1
       Type(BinaryFile), Pointer :: lBinaryFile
       Type(Header), Pointer     :: lHeader
       Logical                   :: lHaveData, lHaveHeader, lHaveCons
@@ -754,6 +754,7 @@ C
 !     + + + END SPECIFICATIONS + + +
 !
       lBinaryFile => mBinaryFiles(aBinaryFileIndex)
+      lI1 = 1
       
 !     TODO: use start date      
 !      
@@ -798,6 +799,7 @@ C
         if (.not. lHaveData) then
           if (aLevel .ge. 1 .and. aLevel .le. 5) then
             if (lHeader%DataRecordCount(aLevel) .gt. 0) then
+!             this reads all data, should we just read what was requested?            
               allocate (lBinaryFile%BData%Values(
      $                  lHeader%DataRecordCount(aLevel),
      $                  lHeader%ConstituentCount))
@@ -835,8 +837,16 @@ C
           end if
         end do
         if (lHaveCons) then
-          do lIndex= 1, lHeader%DataRecordCount(aLevel)
-            aValues(lIndex)= lBinaryFile%BData%Values(lIndex,lIndexCons)
+          call timdif(lHeader%DateStart,aStartDate(6),aLevel,lI1,
+     O                lDataBaseIndex)
+          do lIndex= 1, aNumValues
+            lDataIndex = lDataBaseIndex + lIndex
+            if (lDataIndex .le. lHeader%DataRecordCount(aLevel)) then
+              aValues(lIndex)= 
+     $          lBinaryFile%BData%Values(lDataIndex,lIndexCons)
+            else
+              aValues(lIndex)= -999.0
+            end if
           end do 
         else
           aReturnCode = -4
@@ -851,7 +861,7 @@ C
 !      
       integer lReturnCode, I, lHbnIndex
       real    lValues(20000)
-      integer lStartDate(5),lNumValues
+      integer lStartDate(6),lNumValues
 !         
       write(*,*) "GetBDataTest"
       
@@ -861,6 +871,7 @@ C
         lValues   = 0.0
         lNumValues= 
      $    mBinaryFiles(lHbnIndex)%Headers(1)%DataRecordCount(I)
+        lStartDate= mBinaryFiles(lHbnIndex)%Headers(1)%DateStart
         call GetBData
      I               (lHbnIndex,"EXTMOD  ",66,"Met     ",
      I                I,"I:PREC1 ",lStartDate,lNumValues,
