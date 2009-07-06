@@ -82,13 +82,9 @@ EXT SOURCES
 <-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
 <Name>   # <Name>   tem strg<-factor->strg <Name>   #   #        <Name> # #  ***
 
-HBN      1 PREC     ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 1
-HBN      1 PREC     ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 2
-HBN      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
-CDF      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
-XXX      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
-WDM4     1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
-TSS      1 SEDM     ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
+HBN      1 PREC1    ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 1
+HBN      1 PREC2    ENGLZERO          SAME EXTMOD  66     FRMEXT INPFLX 2
+HBN      2 TOTAL    ENGLZERO          SAME EXTMOD  66     FRMEXT OUTFLX 1
 
 END EXT SOURCES
 
@@ -101,13 +97,5 @@ EXTMOD  66 TOHSPF INPFLX 2            SAME DISPLY   2     INPUT  TIMSER
 EXTMOD  66 TOHSPF OUTFLX 1            SAME DISPLY  13     INPUT  TIMSER
 
 END NETWORK
-
-EXT TARGETS
-<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Volume-> <Member> Tsys Tgap Amd ***
-<Name>   #        <Name> # #<-factor->strg <Name>   # <Name> #  tem strg strg***
-
-EXTMOD  66 TOHSPF OUTFLX 1                 SEQ     65 PREC     ENGL      REPL
-
-END EXT TARGETS
 
 END RUN
