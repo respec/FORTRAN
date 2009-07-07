@@ -324,6 +324,7 @@ C
         integer      DataRecordCount(5)
         integer      RecordIndex, ConstituentCount
         integer      UnitFlag, DateStart(6), DateEnd(6)
+        integer, allocatable, dimension(:,:)   :: DataRecordStart500
         character*8, allocatable, dimension(:) :: Constituents
       end type Header
 !
@@ -336,6 +337,7 @@ C
         sequence
         type(Header), pointer             :: Header
         integer                           :: Level
+        integer                           :: DateStart(6)
         real, allocatable, dimension(:,:) :: Values
       end type BData
 !
@@ -371,12 +373,12 @@ C
 !     aReturnCode- return code
 !
 !     + + + LOCAL VARIABLES + + +
-      integer lIOS, lPos, I, J, lDataLevel,  
+      integer lIOS, lPos, I, J, K, lDataLevel,  
      $        lRecordIndex, lHeaderIndex, lVariableIndex,
      $        lStartPos, lVariableNameLength, lDPos, lDateIndex,
-     $        lBinaryFileIndex
+     $        lBinaryFileIndex, lNextRec
       logical lHeaderFound
-      character*8               ::lVariableName(256)
+      character*8               :: lVariableName(256)
       type(BinaryFile), Pointer :: lBinaryFile
       type(Header), Pointer     :: lHeader
       type(Header)              :: lHeaderTmp
@@ -584,6 +586,21 @@ C
      $           lHeader%DataRecordCount(J),
      $           lHeader%DataRecordStart(J),
      $           lHeader%DataRecordEnd(J)
+              K = lHeader%DataRecordCount(J) / 500
+              if (.not. allocated(lHeader%DataRecordStart500)) then
+                allocate(lHeader%DataRecordStart500(K,5))            
+              end if
+              if (I .gt. 0) then
+                k = 0
+                lNextRec = lHeader%DataRecordStart(J)
+                do while (K .lt. lHeader%DataRecordCount(J))
+                   k = k + 1
+                   if (mod(k,500) .eq. 0) then
+                     lHeader%DataRecordStart500(K/500,J) = lNextRec
+                   end if
+                   lNextRec = lBinaryFile%Records(lNextRec)%NextRecord
+                end do
+              end if
             end if
           end do
         end do
@@ -623,7 +640,7 @@ C
       End If
       Read(lBinaryFile%FileUnit,END=20,POS=aPos) mBinBuffC(1)
       aPos  = aPos+ 1
-      lBytes= mBinBuffI(1) .And. 3
+      lBytes= mod (mBinBuffI(1),4)
       lRecordLength= mBinBuffI(1) / 4
       c     = 64
       h     = lBytes + 1
@@ -747,6 +764,7 @@ C
 !     + + + LOCAL VARIABLES + + +          
       Integer                   :: lIndex, lIndexCons, lIndexRecord
       Integer                   :: lPos, lDataIndex, lDataBaseIndex, lI1
+      Integer                   :: lNumValues, lFinalRecord
       Type(BinaryFile), Pointer :: lBinaryFile
       Type(Header), Pointer     :: lHeader
       Logical                   :: lHaveData, lHaveHeader, lHaveCons
@@ -755,8 +773,6 @@ C
 !
       lBinaryFile => mBinaryFiles(aBinaryFileIndex)
       lI1 = 1
-      
-!     TODO: use start date      
 !      
       if (allocated(lBinaryFile%BData%Values)) then    
 !       already have some data, is it the right stuff?
@@ -766,7 +782,17 @@ C
      $      (aSectionName .eq. lHeader%SectionName)) then
           lHaveHeader= .true.
           if (aLevel .eq. lBinaryFile%BData%Level) then
-            lHaveData= .true.
+            call TimDif(lBinaryFile%BData%DateStart,aStartDate,
+     I                  aLevel+1,lI1,
+     O                  lIndex)
+            lNumValues = Ubound(lBinaryFile%BData%Values,1)
+            if (lIndex .eq. 0 .and. aNumValues .le. lNumValues) then
+              lHaveData= .true.
+            else
+              deallocate (lBinaryFile%BData%Values)        
+              lHaveData= .false.
+            end if
+!           TODO: check which time span we have          
           else
             deallocate (lBinaryFile%BData%Values)        
             lHaveData= .false.
@@ -799,12 +825,34 @@ C
         if (.not. lHaveData) then
           if (aLevel .ge. 1 .and. aLevel .le. 5) then
             if (lHeader%DataRecordCount(aLevel) .gt. 0) then
-!             this reads all data, should we just read what was requested?            
+!             figure out where to start reading 
+              call TimDif(lHeader%DateStart,aStartDate,aLevel+1,lI1,
+     O                    lDataBaseIndex)
+              lNumValues = 
+     $          lHeader%DataRecordCount(aLevel) - lDataBaseIndex
+              if (lNumValues .gt. aNumValues) then
+                lNumValues = aNumValues
+              end if     
+              lFinalRecord = lDataBaseIndex + lNumValues
               allocate (lBinaryFile%BData%Values(
-     $                  lHeader%DataRecordCount(aLevel),
-     $                  lHeader%ConstituentCount))
-              lIndexRecord = lHeader%DataRecordStart(aLevel)
-              do lIndex = 1, lHeader%DataRecordCount(aLevel)
+     $                  lNumValues,lHeader%ConstituentCount))
+              if (lDataBaseIndex .lt. 500) then
+                lIndex = 0
+                lIndexRecord = lHeader%DataRecordStart(aLevel)
+              else
+                lIndex = lDataBaseIndex/500
+                lIndexRecord = 
+     $            lHeader%DataRecordStart500(lIndex,aLevel) 
+              end if
+              lDataIndex = lIndex * 500
+              do while (lDataIndex .lt. lDataBaseIndex)
+                lDataIndex = lDataIndex + 1
+                lIndexRecord = 
+     $            lBinaryFile%Records(lIndexRecord)%NextRecord
+              end do
+!              
+              lBinaryFile%BData%DateStart= aStartDate
+              do lIndex = 1, lNumValues
                 do lIndexCons = 1, lHeader%ConstituentCount
                   lPos= lBinaryFile%Records(lIndexRecord)%StartPos+ 
      $                  48+ (lIndexCons * 4)
@@ -837,16 +885,9 @@ C
           end if
         end do
         if (lHaveCons) then
-          call timdif(lHeader%DateStart,aStartDate(6),aLevel,lI1,
-     O                lDataBaseIndex)
           do lIndex= 1, aNumValues
-            lDataIndex = lDataBaseIndex + lIndex
-            if (lDataIndex .le. lHeader%DataRecordCount(aLevel)) then
-              aValues(lIndex)= 
-     $          lBinaryFile%BData%Values(lDataIndex,lIndexCons)
-            else
-              aValues(lIndex)= -999.0
-            end if
+            aValues(lIndex)= 
+     $        lBinaryFile%BData%Values(lIndex,lIndexCons)
           end do 
         else
           aReturnCode = -4
@@ -859,24 +900,44 @@ C
 !
       Subroutine GetBDataTest
 !      
-      integer lReturnCode, I, lHbnIndex
-      real    lValues(20000)
-      integer lStartDate(6),lNumValues
+      integer lReturnCode, I, I1, lHbnIndex, lValueSize
+      real    lValues(5000), lValuesTotal, lValuesTotalNow
+      integer lStartDate(6),lNumValues, lNumValuesTotal
+      integer lGetCount, lGetIndex
 !         
       write(*,*) "GetBDataTest"
-      
+!      
+      I1        = 1
       lHbnIndex = 1
+      lValueSize= Ubound(lValues,1)
       
       do I = 2, 5
-        lValues   = 0.0
-        lNumValues= 
+        lValues= 0.0
+        lValuesTotal= 0.0
+        lNumValuesTotal= 
      $    mBinaryFiles(lHbnIndex)%Headers(1)%DataRecordCount(I)
-        lStartDate= mBinaryFiles(lHbnIndex)%Headers(1)%DateStart
-        call GetBData
-     I               (lHbnIndex,"EXTMOD  ",66,"Met     ",
-     I                I,"I:PREC1 ",lStartDate,lNumValues,
-     O                lValues,lReturnCode)
-        write(*,*) lReturnCode, I, Sum(lValues)
+        lGetCount = 1+ lNumValuesTotal/lValueSize
+        do lGetIndex = 1, lGetCount
+          if (lGetIndex .lt. lGetCount) then
+            lNumValues= lValueSize
+          else
+            lNumValues= lNumValuesTotal -((lGetCount-1) * lValueSize)
+          end if
+          if (lGetIndex .eq. 1) then
+            lStartDate= mBinaryFiles(lHbnIndex)%Headers(1)%DateStart
+          else
+            call TimAdd (lStartDate,I+1,I1,lValueSize,
+     O                   lStartDate)
+          end if
+          call GetBData
+     I                 (lHbnIndex,"EXTMOD  ",66,"Met     ",
+     I                  I,"I:PREC1 ",lStartDate,lNumValues,
+     O                  lValues,lReturnCode)
+          lValuesTotalNow = Sum(lValues(1:lNumValues))
+          lValuesTotal = lValuesTotal + lValuesTotalNow
+          write(*,*) lReturnCode, I, 
+     $      lGetIndex, lValuesTotalNow, lValuesTotal
+        end do
       end do
 !
       End Subroutine GetBDataTest
