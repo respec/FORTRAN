@@ -94,6 +94,7 @@ c              Raphson iterations (s)
 c
 c     + + + FUNCTION DECLARATIONS + + +
       external  irflow
+      real      irflow
 c
 c     + + + DATA INITIALIZATIONS + + +
       data      atoler/0.000001/,spava/0.65/,tiavq/0.35/,tiavq1/0.65/,

@@ -104,6 +104,7 @@ c              iterations (s)
 c
 c     + + + FUNCTION DECLARATIONS + + +
       external  irflow
+      real      irflow
 c
 c     + + + OUTPUT FORMATS + + +
  2000 format(/' Water supply rate for depletion level scheduling is too'
