@@ -2247,6 +2247,9 @@ C     + + + OUTPUT FORMATS + + +
  2360 FORMAT (' ',6X,'EXIT',I3,25X,4(2X,1PE10.3))
  2370 FORMAT (2A4)
 C
+C     + + + HISTORY + + +
+C     9/2009   BRB corrected mass balance errors caused by error in atmospheric deposition printout 
+C
 C     + + + END SPECIFICATIONS + + +
 C
       I0   = 0
@@ -2524,6 +2527,10 @@ C         calculate and print input fluxes of qual
         END IF
 C
         PADFG= 0
+Cbrb    initialize atmospheric deposition inflows for a qual
+        PGCF10= 0.0
+        PGCF11= 0.0
+        PADTOT= 0.0
         J= (I-1)*2+ 1
         IF ( (GQADFG(J) .NE. 0) .OR. (GQADFG(J+1) .NE. 0) ) THEN
           PADFG= 1
