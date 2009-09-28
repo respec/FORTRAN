@@ -107,11 +107,13 @@ c            ci_low(17) r*8  left end of 95% confidence interval for pq-th
 c                              quantile
 c            ci_high(17)r*8  right end of 95% confidence interval for pq-th 
 c                              quantile
+cprh (09/2009)
+c            var_est(*) r*8  variance of estimate for each quantile
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
       subroutine emafit(n,ql,qu,tl,tu,reg_skew,reg_mse,gbthrsh0,
-     1                  cmoms,pq,yp,ci_low,ci_high)
+     1                  cmoms,pq,yp,ci_low,ci_high,var_est)
 
       implicit none
 
@@ -125,7 +127,7 @@ C     use full set of probabilities found in PeakFQ
 
       double precision
      1  ql(*),qu(*),tl(*),tu(*),reg_skew,reg_mse,         ! input variables
-     2  cmoms(3,2),pq(*),yp(*),ci_low(*),ci_high(*),        ! output variables
+     2  cmoms(3,2),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),        ! output variables
      3  pqd(nq),eps(1),gbthrsh0
 
       data neps/1/,eps/0.95d0/
@@ -143,7 +145,7 @@ Cprh          pq(i) = pqd(i)
           pq(i) = 1.0 - pqd(i)
         call emafitb(n,ql,qu,tl,tu,reg_skew,reg_mse,neps,eps,
      1                  gbthrsh0,pq(i),
-     1                  cmoms,yp(i),ci_low(i),ci_high(i))
+     1                  cmoms,yp(i),ci_low(i),ci_high(i),var_est(i))
 10    continue
 c
 c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)
@@ -209,13 +211,15 @@ c            ci_low     r*8  left end of 95% confidence interval for pq-th
 c                              quantile
 c            ci_high    r*8  right end of 95% confidence interval for pq-th 
 c                              quantile
+cprh (09/2009)
+c            var_est    r*8  variance of estimate for each quantile
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 
       subroutine emafitb(n,ql_in,qu_in,tl_in,tu_in,reg_skew,reg_mse,
      1                   neps,eps,gbthrsh0,pq,
-     2                   cmoms,yp,ci_low,ci_high)
+     2                   cmoms,yp,ci_low,ci_high,var_est)
       
       implicit none
       
@@ -229,7 +233,7 @@ c
      
       double precision
      1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),reg_skew,reg_mse,pq,  ! input
-     2  cmoms(3,2),yp,ci_low(neps),ci_high(neps),                   ! output
+     2  cmoms(3,2),yp,ci_low(neps),ci_high(neps),var_est(neps),     ! output
      3  yp1,yp2,ci_low1(nn),ci_low2(nn),ci_high1(nn),ci_high2(nn),
      4  skewmin,qP3,parms(3),
      5  ql,qu,tl,tu,
@@ -342,6 +346,8 @@ c          yp        = (1.d0-wt) * yp1  +  wt * yp2
           ci_high(i) = (1.d0-wt) * ci_high1(i) +  wt * ci_high2(i)
 20      continue
       endif
+cprh  return variance of estimate (assumes neps=1)
+      var_est(1) = cv_yp_syp(1,1)
      
       return
       end

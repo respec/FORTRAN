@@ -1000,7 +1000,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      CHARACTER*13  DWORK(5)
+      CHARACTER*13  DWORK(6)
       INTEGER   I, J, SIGDIG, DECPLA, LEN
       REAL      PEP, TMP !, XTRPK
 C
@@ -1051,23 +1051,43 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3)
    11 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3)
+cprh   15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
+cprh     $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
+cprh     $        //,'      ANNUAL                            ',
+cprh     $           '  ''EXPECTED   ',I2,'-PCT CONFIDENCE LIMITS',
+cprh     $         /,'   EXCEEDANCE     BULL.17B    SYSTEMATIC',
+cprh     $           ' PROBABILITY''  FOR BULL. 17B ESTIMATES',
+cprh     $         /,'   PROBABILITY    ESTIMATE      RECORD  ',
+cprh     $           '   ESTIMATE        LOWER        UPPER',  /  )
+cprh   16 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
+cprh     $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
+cprh     $        //,'      ANNUAL                            ',
+cprh     $           '  ''EXPECTED       ',I2,'-PCT CONFIDENCE',
+cprh     $         /,'   EXCEEDANCE       EMA       SYSTEMATIC',
+cprh     $           ' PROBABILITY'' LIMITS FOR EMA ESTIMATES',
+cprh     $         /,'   PROBABILITY    ESTIMATE      RECORD  ',
+cprh     $           '   ESTIMATE        LOWER        UPPER',  /  )
+cprh  update headers to include variance of estimate
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
-     $        //,'      ANNUAL                            ',
-     $           '  ''EXPECTED   ',I2,'-PCT CONFIDENCE LIMITS',
-     $         /,'   EXCEEDANCE     BULL.17B    SYSTEMATIC',
-     $           ' PROBABILITY''  FOR BULL. 17B ESTIMATES',
-     $         /,'   PROBABILITY    ESTIMATE      RECORD  ',
-     $           '   ESTIMATE        LOWER        UPPER',  /  )
+     $        //,'   ANNUAL                      ',
+     $           '  ''EXPECTED    <-- FOR BULLETIN 17B ESTIMATES -->',
+     $         /,'EXCEEDANCE  BULL.17B SYSTEMATIC',
+     $           ' PROBABILITY''  VARIANCE  ',I2,
+     $           '% CONFIDENCE INTERVALS',
+     $         /,'PROBABILITY ESTIMATE   RECORD  ',
+     $           '   ESTIMATE     OF EST.       LOWER       UPPER', /)
    16 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
-     $        //,'      ANNUAL                            ',
-     $           '  ''EXPECTED       ',I2,'-PCT CONFIDENCE',
-     $         /,'   EXCEEDANCE       EMA       SYSTEMATIC',
-     $           ' PROBABILITY'' LIMITS FOR EMA ESTIMATES',
-     $         /,'   PROBABILITY    ESTIMATE      RECORD  ',
-     $           '   ESTIMATE        LOWER        UPPER',  /  )
-   20 FORMAT(1X,F11.4,  5A   )
+     $        //,'   ANNUAL                      ',
+     $           '  ''EXPECTED    <------ FOR EMA ESTIMATES ------->',
+     $         /,'EXCEEDANCE    EMA    SYSTEMATIC',
+     $           ' PROBABILITY''  VARIANCE  ',I2,
+     $           '% CONFIDENCE INTERVALS',
+     $         /,'PROBABILITY ESTIMATE   RECORD  ',
+     $           '   ESTIMATE     OF EST.       LOWER       UPPER', /)
+Cprh   20 FORMAT(1X,F11.4,  5A   )
+   20 FORMAT(1X,F8.4,  6A   )
  1010 FORMAT('1',//)
  2011 FORMAT ( 1X, F11.4, 1X, '         -- ',
      $         2X, '(', F6.2, '-year flood below base' )
@@ -1121,7 +1141,8 @@ Ckmf $                 10**climl(i),10**climu(i), i = 1, mxint)
 C3001 format ( 'PRTFIT:',/,'    iplist      wrcfc       sysrfc  ',
 Ckmf $         '    climl       climu   ',
 Ckmf $       / ( I8, 4X, 4f12.4 ) )
-      LEN = 13
+Cprh  LEN = 13
+      LEN = 10
       SIGDIG = 4
       DECPLA = 1
       DO 210 I = 1,NINDX
@@ -1150,24 +1171,30 @@ C              WRITE(DWORK(3),203)  10.**EPFC(J)
 C                number not to big for space
 c            write(99,*) 'PRTFIT: J,EPFC ',J,EPFC(J)
                  TMP = 10.**EPFC(J)
-                 CALL DECCHX (TMP,LEN,SIGDIG,DECPLA,DWORK(3))
+                 CALL DECCHX (TMP,LEN+3,SIGDIG,DECPLA,DWORK(3))
                  IF (DWORK(3)(13:13) .EQ. ' ') DWORK(3)(13:13) = '0'
                END IF
             END IF
             IF(NOCLIM.NE.1) THEN      
+              TMP = 10.**VAREST(J)
+              CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA,DWORK(4))
+              IF (DWORK(4)(12:12) .EQ. ' ') DWORK(4)(12:12) = '0'
 C             WRITE(DWORK(4),203) 10.**CLIML(J)
               TMP = 10.**CLIML(J)
 CPRH              TMP = EXP(CLIML(J))
-              CALL DECCHX (TMP,LEN,SIGDIG,DECPLA,DWORK(4))
-              IF (DWORK(4)(13:13) .EQ. ' ') DWORK(4)(13:13) = '0'
+              CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA,DWORK(5))
+              IF (DWORK(5)(12:12) .EQ. ' ') DWORK(5)(12:12) = '0'
 C             WRITE(DWORK(5),203) 10.**CLIMU(J)
               TMP = 10.**CLIMU(J)
 CPRH              TMP = EXP(CLIMU(J))
-              CALL DECCHX (TMP,LEN,SIGDIG,DECPLA,DWORK(5))
-              IF (DWORK(5)(13:13) .EQ. ' ') DWORK(5)(13:13) = '0'
+              CALL DECCHX (TMP,LEN+3,SIGDIG,DECPLA,DWORK(6))
+              IF (DWORK(6)(13:13) .EQ. ' ') DWORK(6)(13:13) = '0'
             END IF
           END IF
-          WRITE(MSG,20)  PEP, DWORK
+Cprh          WRITE(MSG,20)  PEP, DWORK
+          WRITE(MSG,20) PEP,DWORK(1)(1:10),DWORK(2)(1:10),
+     &                      DWORK(3)(1:13),DWORK(4)(1:12),
+     &                      DWORK(5)(1:12),DWORK(6)(1:13)
         END IF
   210 CONTINUE
 C
@@ -3573,7 +3600,7 @@ C       Weighted, set to root mean square
  15   continue
 C
       CALL EMAFIT(NOBS,QL,QU,TL,TU,REGSKEW,REGMSE,GBTHRSH,
-     O            WRCMOM,PR,WRCYP,CILOW,CIHIGH)
+     O            WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
       
 c      write(99,*) 'After EMAFIT'
 c      write(99,*) 'NOBS:',NOBS
