@@ -430,29 +430,29 @@ C
 c
 c
 c
-      double precision function kf(skew,prob)
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c    computes critical points of LP3 distribution 
-c    returns "K" value in format used by B17B
-c
-c    tim cohn........24 Nov 2003
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-
-      double precision parms(2),prob,skew,fp_z_icdf,fp_g2_icdf  
-        
-      if(skew .eq. 0.d0) then
-          kf = fp_z_icdf(prob)
-      else
-          parms(1)  = 4.d0/skew**2
-        if(skew .lt. 0.d0) then
-          parms(2) = -1.d0/sqrt(parms(1))
-        else
-          parms(2) =  1.d0/sqrt(parms(1))
-        endif  
-          kf = fp_g2_icdf(prob,parms) - parms(1)*parms(2)
-      endif
-
-      return
-      end
+!      double precision function kf(skew,prob)
+!c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!c
+!c    computes critical points of LP3 distribution 
+!c    returns "K" value in format used by B17B
+!c
+!c    tim cohn........24 Nov 2003
+!c
+!c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!      double precision parms(2),prob,skew,fp_z_icdf,fp_g2_icdf  
+!        
+!      if(skew .eq. 0.d0) then
+!          kf = fp_z_icdf(prob)
+!      else
+!          parms(1)  = 4.d0/skew**2
+!        if(skew .lt. 0.d0) then
+!          parms(2) = -1.d0/sqrt(parms(1))
+!        else
+!          parms(2) =  1.d0/sqrt(parms(1))
+!        endif  
+!          kf = fp_g2_icdf(prob,parms) - parms(1)*parms(2)
+!      endif
+!
+!      return
+!      end
