@@ -217,6 +217,8 @@ c
      1                   neps,eps,gbthrsh0,pq,
      2                   cmoms,yp,ci_low,ci_high)
       
+CDEC$ ATTRIBUTES DLLEXPORT :: emafitb
+
       implicit none
       
       integer 
@@ -247,6 +249,8 @@ c
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
       common /jfe001/as_mse
 
+      call OpenDebug
+        
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   1.  check for low outliers
@@ -270,8 +274,8 @@ c   loop up to 10 times to see if any new LOs uncovered
          nlow_V(i)     = nlow
        if(nlow .eq. 0) goto 17    ! any new low outliers?
 15    continue
-            write(*,*) ' Low outlier issues (emafit): nlow = ', nlow,i
-            write(*,*) ' User may want to specify threshold'
+            write(6,*) ' Low outlier issues (emafit): nlow = ', nlow,i
+            write(6,*) ' User may want to specify threshold'
           stop    ! Should never get here; something is wrong
 17    continue
         nGBiter = i  ! added on JRS recomendation
@@ -441,7 +445,7 @@ c  compute low outlier threshold
         endif
 10    continue
       if(ns .le. 5) then
-        write(*,*) 'inadequate data for grubbs-beck test',i
+        write(6,*) 'inadequate data for grubbs-beck test',i
         gbcrit   = -99.d0
         gbthresh = -99.d0
       else
@@ -590,10 +594,10 @@ c            moms(3,i) = moms(3,i)
 
         if(i .gt. 1000) then  !  eliminate cycles of length 2 or 3
           do 50 j=1,3
-            write(*,*) '(EMA): Convergence criteria not met, i = ',i
-            write(*,*) ' -- Cycling likely: Correction implemented'
-            write(*,'(a10,3f10.3)') ' -- M_{i}  ',moms(1,i-1)
-            write(*,'(a10,3f10.3)') ' -- M_{i}  ',moms(1,i-1)            
+            write(6,*) '(EMA): Convergence criteria not met, i = ',i
+            write(6,*) ' -- Cycling likely: Correction implemented'
+            write(6,'(a10,3f10.3)') ' -- M_{i}  ',moms(1,i-1)
+            write(6,'(a10,3f10.3)') ' -- M_{i}  ',moms(1,i-1)            
             moms(j,i) = (moms(j,i)  +moms(j,i-1)+moms(j,i-2)+
      1                   moms(j,i-3)+moms(j,i-4)+moms(j,i-5))/6.d0
 50        continue
@@ -607,12 +611,12 @@ c
               return
             endif
 10    continue
-            write(*,*) ' failure to converge in p3_mom'
+            write(6,*) ' failure to converge in p3_mom'
             do 30 i=1,10
-              write(*,*) i,(moms(j,i),j=1,3),d11(i)
+              write(6,*) i,(moms(j,i),j=1,3),d11(i)
 30          continue
             do 40 i=nsize-10,nsize
-              write(*,*) i,(moms(j,i),j=1,3),d11(i)
+              write(6,*) i,(moms(j,i),j=1,3),d11(i)
 40          continue
             stop
       end
@@ -669,7 +673,7 @@ c       2004 gets Griffis et al. [2004] -- the default!
       data bcf/2004/
 
       if(n .gt. nsize) then
-        write(*,*) '(moms_p3): sample size too large ',n
+        write(6,*) '(moms_p3): sample size too large ',n
         stop
       endif
       
@@ -978,6 +982,8 @@ c
         subroutine ci_ema_m3
      1    (yp,cv_yp_syp,neps,eps,ci_low,ci_high)
      
+CDEC$ ATTRIBUTES DLLEXPORT :: ci_ema_m3
+
         implicit none
           save
 
@@ -1006,13 +1012,7 @@ c
 c
 c    prevent numerical problems for very small nu (does this arise in practice?)
 c
-          if(nu .le. nu_min) then
-            write(*,*) 'warning: ci_ema_m3'
-            write(*,*) '  estimated nu too small',nu
-            nu = nu_min
-            write(*,*) '  value replaced with   ',nu
-        endif
-
+      call OpenDebug
 c
 c    compute confidence intervals
 c    n.b.  sign on t means that low t corresponds to high yp
@@ -1089,6 +1089,8 @@ c
         subroutine var_ema
      1    (nthresh,nobs,tl_in,tu_in,mc_in,pq,g_r_mse,yp,cv_yp_syp)
      
+CDEC$ ATTRIBUTES DLLEXPORT :: var_ema
+
         implicit none
           save
 
@@ -1111,6 +1113,8 @@ c
      
         data skewmin/0.01d0/
 
+        call OpenDebug
+        
         yp       =   qP3(pq,mc_in)
   
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1353,18 +1357,18 @@ c
         sypf = sqrt(result)
 ctac*
         if(result .le. 0.d0) then
-          write(*,*) '============'
-          write(*,*) 'sypf:', result,sqrt(result)
-          write(*,*) 'mc',mc
-          write(*,*) 'tl',tl(1),tl(2)
-          write(*,*) 'tu',tu(1),tu(2)
-          write(*,*) 'rmse',g_r_mse
-          write(*,*) 'q',q
-          write(*,*) 'jacq2',jac
-          write(*,*) 's_mc ',s_mc(1,1),s_mc(1,2),s_mc(1,3)
-          write(*,*) 's_mc ',s_mc(2,1),s_mc(2,2),s_mc(2,3)
-          write(*,*) 's_mc ',s_mc(3,1),s_mc(3,2),s_mc(3,3)
-          write(*,*) '============'
+          write(6,*) '============'
+          write(6,*) 'sypf:', result,sqrt(result)
+          write(6,*) 'mc',mc
+          write(6,*) 'tl',tl(1),tl(2)
+          write(6,*) 'tu',tu(1),tu(2)
+          write(6,*) 'rmse',g_r_mse
+          write(6,*) 'q',q
+          write(6,*) 'jacq2',jac
+          write(6,*) 's_mc ',s_mc(1,1),s_mc(1,2),s_mc(1,3)
+          write(6,*) 's_mc ',s_mc(2,1),s_mc(2,2),s_mc(2,3)
+          write(6,*) 's_mc ',s_mc(3,1),s_mc(3,2),s_mc(3,3)
+          write(6,*) '============'
         endif
 ctac*
         
@@ -1841,7 +1845,7 @@ c
       endif
 
       if(n .gt. 12) then
-        write(*,*) 'mP3: error; n too large: ',n
+        write(6,*) 'mP3: error; n too large: ',n
         stop
       endif
 c
@@ -2213,9 +2217,9 @@ c
      
       common /zap111/m(3),kk
      
-        write(*,*) 'testing qP3,pP3'
-        write(*,'(6a14)') ' g',' mu',' s^2',' pp',' p',' x'
-        write(*,*)
+        write(6,*) 'testing qP3,pP3'
+        write(6,'(6a14)') ' g',' mu',' s^2',' pp',' p',' x'
+        write(6,*)
         abserr = 0.d0
       do 10 i=1,ng
        do 10 j=1,np
@@ -2227,40 +2231,40 @@ c
           p       = pP3(x,m)
           abserr  = max(abserr,abs(p-pp(j)))
         if(abs(p-pp(j)) .gt. 1e-6) then
-          write(*,'(4f14.4,3e14.5)') m(3),m(1),m(2),pp(j),p,x
+          write(6,'(4f14.4,3e14.5)') m(3),m(1),m(2),pp(j),p,x
         endif
 10    continue
-        write(*,*)
-        write(*,*) ' probabilities tested:'
-		write(*,'(7f8.4,/)') pp
-        write(*,*)
-        write(*,*) ' skews tested:'
-		write(*,'(7f8.4,/)') gg
-        write(*,*)
-        write(*,*) ' maximum absolute error in probability:'
-		write(*,'(1f18.8/)') abserr
+        write(6,*)
+        write(6,*) ' probabilities tested:'
+		write(6,'(7f8.4,/)') pp
+        write(6,*)
+        write(6,*) ' skews tested:'
+		write(6,'(7f8.4,/)') gg
+        write(6,*)
+        write(6,*) ' maximum absolute error in probability:'
+		write(6,'(1f18.8/)') abserr
 c
-		write(*,*)
-        write(*,*) ' *** checking the censored moments ***'
-		write(*,*)
+		write(6,*)
+        write(6,*) ' *** checking the censored moments ***'
+		write(6,*)
           m(1)    = 2.54
           m(2)    = 1.66
       do 20 i=1,ng
           m(3)    = gg(i)
        do 20 j=1,np
           call mP3(qP3(pp(j-1),m),qP3(pp(j),m),m,mnout,3)
-            write(*,'(4f10.4,3e14.5)') m(3),m(1),m(2),pp(j),mnout
+            write(6,'(4f10.4,3e14.5)') m(3),m(1),m(2),pp(j),mnout
         do 30 k=0,3
             kk=k
           call dqag(ftest01,qP3(pp(j-1),m),qP3(pp(j),m),
      1                1.d-6,1.d-6,2,fp(k),abserr,neval,ier,
      2                limit,lenw,last,iwork,work)
 
-            if(ier .ne. 0) write(*,*) ' ier (dqag) = ',ier
+            if(ier .ne. 0) write(6,*) ' ier (dqag) = ',ier
           if(k .gt. 0) fp(k)=fp(k)/fp(0)
 30      continue
-            write(*,'(40x,3e14.5)') (fp(k1),k1=1,3)
-            write(*,'(10x,3f10.6,3e14.2)') 
+            write(6,'(40x,3e14.5)') (fp(k1),k1=1,3)
+            write(6,'(10x,3f10.6,3e14.2)') 
      1       pp(j-1),pp(j),
      2       fp(0),
      3       (fp(k1)/mnout(k1)-1.d0,k1=1,3)
@@ -2383,7 +2387,7 @@ c
       if(delta .eq. 0.d0) then
         result = 0.d0
       else if (delta .lt. 0.d0) then
-        write(*,*) 'limits on integral reversed'
+        write(6,*) 'limits on integral reversed'
         result = 0.d0
       else
           x   = a
@@ -2546,15 +2550,37 @@ c
         c       = 0.95d0
       call b17ci(n,moms(3),p,c,klpc,kupc)
 
-      write(*,'(a,2f10.3)') 'klpc, kupc',klpc,kupc
+      write(6,'(a,2f10.3)') 'klpc, kupc',klpc,kupc
       
         l = moms(1) + sqrt(moms(2))*klpc
         u = moms(1) + sqrt(moms(2))*kupc
-      write(*,'(a,2f10.3)') 'lci, uci  ',l,u
+      write(6,'(a,2f10.3)') 'lci, uci  ',l,u
       
       call m2p(moms,parms)
       call b17cip(n,parms,p,2*c-1.d0,l,u)
-      write(*,'(a,2f10.3)') 'cil, ciu  ',l,u
+      write(6,'(a,2f10.3)') 'cil, ciu  ',l,u
       
       stop
       end
+c
+c
+c     
+      subroutine OpenDebug
+c
+      USE IFPORT  
+c
+      integer*4     lStatus      
+      logical       lOpen
+      character*256 lFolder, lFileName
+c      
+      inquire(unit=6,opened=lOpen,name=lFileName)
+      if (.not. lOpen .or. trim(lFileName) .eq. 'CONOUT$') then
+        lStatus = GETCWD (lFolder)        
+        open(unit=6,file='swstatMsg.txt')
+        write(6,*) 'Opened swstatMsg.txt in ' // trim(lFolder)
+      else
+        write(6,*) 'Reusing open debug file'  
+      end if      
+c
+      return 
+      end       
