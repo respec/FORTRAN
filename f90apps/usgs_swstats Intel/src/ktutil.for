@@ -174,7 +174,7 @@ C               Count comparison.
                 NCOMP = NCOMP + 1
 C               Adjust for separation.
                 YY = (X(IEND) - X(ISTART)) / REAL(IEND - ISTART)
-C               write(*,*) 'YY=',YY
+C               write(6,*) 'YY=',YY
                 IF (YY.GT.0.0) THEN
 C                 Up tick.
                   NPLUS = NPLUS + 1
@@ -364,7 +364,7 @@ C         find values in the bin with the median
             END IF
  80       CONTINUE
 C
-          IF(NSORT.NE.BINS(IB)) WRITE(*,*)
+          IF(NSORT.NE.BINS(IB)) WRITE(6,*)
      &         ' PROGRAM ERROR IN ROUTINE KENS',NSORT,BINS(IB)
 C
 C         sort remaining values
@@ -372,7 +372,7 @@ C         sort remaining values
 C
 C         position in array for median
           IPOS = MEDCNT - (ISUM-BINS(IB))
-          IF (IPOS .LT. 1) WRITE(*,*) ' PROGRAM BUG IN KENS, IPOS=',IPOS
+          IF (IPOS .LT. 1) WRITE(6,*) ' PROGRAM BUG IN KENS, IPOS=',IPOS
           XMEDIN(2) = ASORT(IPOS)
           IF (EOFLG .EQ. 0) IPOS = IPOS - 1
           XMEDIN(1) = ASORT(IPOS)
