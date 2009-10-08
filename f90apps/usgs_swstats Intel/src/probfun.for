@@ -430,7 +430,7 @@ C      SAVE
       ELSE IF(BETA .LT. 0.D0) THEN
             FP_G2_ICDF  =     BETA * FP_G1_ICDF(1.D0-P,ALPHA)
       ELSE
-            WRITE(*,*) ' INVALID PARAMETERS;  BETA = 0'
+            WRITE(6,*) ' INVALID PARAMETERS;  BETA = 0'
             RETURN
       ENDIF
 
@@ -508,7 +508,7 @@ C      SAVE
       BETA  =     PARMS(2)
       
       IF(BETA .EQ. 0.D0) THEN
-            WRITE(*,*) ' INVALID PARAMETERS;  BETA = 0'
+            WRITE(6,*) ' INVALID PARAMETERS;  BETA = 0'
             RETURN
       ELSE IF(BETA .GT. 0.D0) THEN
             FP_G2_MOM_TRA = BETA**K * FP_G1_MOM_TRA(ALPHA,T/BETA,K)
@@ -598,7 +598,7 @@ C      SAVE
       BETA  =     PARMS(2)
       
       IF(BETA .EQ. 0.D0) THEN
-            WRITE(*,*) ' INVALID PARAMETERS;  BETA = 0'
+            WRITE(6,*) ' INVALID PARAMETERS;  BETA = 0'
             RETURN
       ELSE IF(BETA .GT. 0.D0) THEN
             FP_G2_MOM_TRB = BETA**K * FP_G1_MOM_TRB(ALPHA,T/BETA,K)
@@ -702,7 +702,7 @@ C      SAVE
       BETA  =     PARMS(2)
       
       IF(BETA .EQ. 0.D0) THEN
-            WRITE(*,*) ' INVALID PARAMETERS;  BETA = 0'
+            WRITE(6,*) ' INVALID PARAMETERS;  BETA = 0'
             RETURN
       ELSE IF(BETA .GT. 0.D0) THEN
             FP_G2_MOM_TRC     =     BETA**K *  
@@ -865,7 +865,7 @@ C      SAVE
       INTEGER N,K
       
       IF(N .LT. MAX(0,K)) THEN
-            WRITE(*,*) ' ERROR IN CHOOSE: (N,K) ',N,K
+            WRITE(6,*) ' ERROR IN CHOOSE: (N,K) ',N,K
             STOP
       ENDIF
 
@@ -1424,11 +1424,11 @@ C
         DDGAM      =  RESULT
       RETURN
 99    CONTINUE
-              WRITE(*,*) 'SOMETHING BAD (DDGAM).....'
-              WRITE(*,*) 'CALL TIM (703/904-7374).....'
-              WRITE(*,*) 'ALPHA: ',ALPHA
-              WRITE(*,*) 'X:     ',X
-	      READ(*,*)
+              WRITE(6,*) 'SOMETHING BAD (DDGAM).....'
+              WRITE(6,*) 'CALL TIM (703/904-7374).....'
+              WRITE(6,*) 'ALPHA: ',ALPHA
+              WRITE(6,*) 'X:     ',X
+	      READ(6,*)
 	      STOP
       END
 
@@ -1641,7 +1641,7 @@ C      SAVE
       ELSE
        ANS=  TNC(TP,NU,DELTA,IFAULT)
        IF(IFAULT .NE. 0) THEN
-          WRITE(*,*) 'TROUBLE IN FP_TNC_CDF:TP,NU,DELTA',TP,NU,DELTA
+          WRITE(6,*) 'TROUBLE IN FP_TNC_CDF:TP,NU,DELTA',TP,NU,DELTA
        Z  = (TP*(1.D0-1.D0/(4.D0*NU))-DELTA)/SQRT(1.D0+TP**2/(2.D0*NU))
        ANS=  FP_Z_CDF(Z) 
        ENDIF
@@ -1737,8 +1737,8 @@ C      SAVE
       RETURN
       
 99    CONTINUE
-        WRITE(*,*) 'ERROR IN FP_TNC2_ICDF',IFLAG,P,NU,DELTA
-	READ(*,*)
+        WRITE(6,*) 'ERROR IN FP_TNC2_ICDF',IFLAG,P,NU,DELTA
+	READ(6,*)
 	FP_TNC2_ICDF =  0.D0
       
       RETURN
