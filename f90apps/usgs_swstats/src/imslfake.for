@@ -3982,10 +3982,10 @@ C
       DOUBLE PRECISION FUNCTION GAMMP(A,X)
 	  IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       IF(X.LT.0.) THEN
-         WRITE(*,*) 'GAMMP: X < 0'
+         WRITE(6,*) 'GAMMP: X < 0'
          GAMMP = 0.D0
       ELSE IF (A.LE.0.) THEN
-         WRITE(*,*) 'GAMMP: A < 0'
+         WRITE(6,*) 'GAMMP: A < 0'
          GAMMP = 1.D0      
       ELSE IF(X.LT.A+1.)THEN
         CALL GSER(GAMSER,A,X,GLN)
@@ -4022,8 +4022,8 @@ c
           GOLD=G
         ENDIF
 11    CONTINUE
-      WRITE(*,*) 'GCF: A,X,ITMAX',A,X,ITMAX
-      WRITE(*,*) 'A too large, ITMAX too small'
+      WRITE(6,*) 'GCF: A,X,ITMAX',A,X,ITMAX
+      WRITE(6,*) 'A too large, ITMAX too small'
 1     GAMMCF=EXP(-X+A*LOG(X)-GLN)*G
       RETURN
       END
@@ -4046,7 +4046,7 @@ C
         SUM=SUM+DEL
         IF(ABS(DEL).LT.ABS(SUM)*EPS)GO TO 1
 11    CONTINUE
-      WRITE(*,*) 'GCF: A,X,ITMAX',A,X,ITMAX
+      WRITE(6,*) 'GCF: A,X,ITMAX',A,X,ITMAX
       PAUSE 'A too large, ITMAX too small'
 1     GAMSER=SUM*EXP(-X+A*LOG(X)-GLN)
       RETURN
@@ -4518,9 +4518,9 @@ C
 C     DUMMY ROUTINES
 C
         SUBROUTINE DQDAGS()
-        WRITE(*,*) ' THIS IS AN UNEXPECTED CALL TO DQDAGS'
-        WRITE(*,*) ' YOU NEED TO LINK WITH A WORKING VERSION OF'
-        WRITE(*,*) ' THAT IMSL SUBROUTINE'
+        WRITE(6,*) ' THIS IS AN UNEXPECTED CALL TO DQDAGS'
+        WRITE(6,*) ' YOU NEED TO LINK WITH A WORKING VERSION OF'
+        WRITE(6,*) ' THAT IMSL SUBROUTINE'
         STOP
         END
 C  MODIFIED BY TAC 2/5/99 TO USE DOUBLE PRECISION
@@ -7247,7 +7247,7 @@ C===============================================================================
          INTEGER IORD(*),IX(10000),I,N
          
           IF(N .GE. 10000) THEN
-            WRITE(*,*) 'ARRAY DIMENSION TOO SMALL IN DSVRGP'
+            WRITE(6,*) 'ARRAY DIMENSION TOO SMALL IN DSVRGP'
             STOP
           ENDIF
           
