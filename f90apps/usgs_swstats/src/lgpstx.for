@@ -8,7 +8,7 @@ C
      O                      C, CCPA, P, Q, ADP, QNEW, RI,
      O                      RSOUT, RETCOD )
 C
-C      dll_export LGPSTX
+      dll_export LGPSTX
 CDEC$ ATTRIBUTES DLLEXPORT :: LGPSTX
 C
 C     + + + PURPOSE + + +
