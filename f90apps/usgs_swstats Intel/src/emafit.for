@@ -981,10 +981,16 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
         subroutine ci_ema_m3
      1    (yp,cv_yp_syp,neps,eps,ci_low,ci_high)
+
+        implicit none
      
 CDEC$ ATTRIBUTES DLLEXPORT :: ci_ema_m3
 
-        implicit none
+C
+C     + + + COMMON BLOCKS
+      COMMON/CDBG/PDBG
+      LOGICAL     PDBG
+C
           save
 
         integer 
@@ -999,6 +1005,12 @@ CDEC$ ATTRIBUTES DLLEXPORT :: ci_ema_m3
      
         data nu_min/0.5d0/,c_min/0.5d0/
 
+        IF (PDBG) THEN
+          OPEN(UNIT=98,FILE="C:\TEST\USGS_SWSTATS_ERROR.FIL",
+     1         ACCESS="APPEND")
+          WRITE(98,*) 'CI_EMA:',YP,cv_yp_syp,neps
+          WRITE(98,*) 'EPS:',eps(1)
+        END IF
 c
 c    beta1 is coefficient of regression of syp on yp
 c
@@ -1025,6 +1037,17 @@ c
          t        =  -t
        ci_low(i)  =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
 10      continue
+
+        IF (PDBG) THEN
+          WRITE(98,*) YP,cv_yp_syp,neps
+          WRITE(98,*) 'EPS:',eps(1)
+          WRITE(98,*) 'CI_L:',ci_low(1)
+          WRITE(98,*) 'CI_H:',ci_high(1)
+          CLOSE(UNIT=98,ERR=380)
+ 380    CONTINUE        
+
+        END IF
+
         return
       end
       
@@ -1088,10 +1111,16 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
         subroutine var_ema
      1    (nthresh,nobs,tl_in,tu_in,mc_in,pq,g_r_mse,yp,cv_yp_syp)
-     
-CDEC$ ATTRIBUTES DLLEXPORT :: var_ema
 
         implicit none
+     
+CDEC$ ATTRIBUTES DLLEXPORT :: var_ema
+C
+C     + + + COMMON BLOCKS
+      COMMON/CDBG/PDBG
+      LOGICAL     PDBG
+C
+ 
           save
 
         integer 
@@ -1115,6 +1144,15 @@ CDEC$ ATTRIBUTES DLLEXPORT :: var_ema
 
         call OpenDebug
         
+        IF (PDBG) THEN
+          OPEN(UNIT=98,FILE="C:\TEST\USGS_SWSTATS_ERROR.FIL",
+     1         ACCESS="APPEND")
+          WRITE(98,*) 'VAR_EMA:',nthresh,nobs
+          WRITE(98,*) 'TL_IN:',tl_in
+          WRITE(98,*) 'TU_IN:',tu_in
+          WRITE(98,*) 'OTHER:',mc_in,pq,g_r_mse,yp,cv_yp_syp
+        END IF
+
         yp       =   qP3(pq,mc_in)
   
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1162,6 +1200,15 @@ c
       call dmxtyf(3,2,jac,3,3,3,s_mc,3,2,3,tmp,2)
 
       call dmrrrr(2,3,tmp,2,3,2,jac,3,2,2,cv_yp_syp,2) 
+        
+        IF (PDBG) THEN
+          WRITE(98,*) 'VAR_EMA:',nthresh,nobs
+          WRITE(98,*) 'TL_IN:',tl_in
+          WRITE(98,*) 'TU_IN:',tu_in
+          WRITE(98,*) 'OTHER:',mc_in,pq,g_r_mse,yp,cv_yp_syp
+          CLOSE(UNIT=98,ERR=380)
+ 380      CONTINUE        
+        END IF
 
       return
       end
