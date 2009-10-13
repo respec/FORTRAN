@@ -1009,7 +1009,9 @@ C
           OPEN(UNIT=98,FILE="C:\TEST\USGS_SWSTATS_ERROR.FIL",
      1         ACCESS="APPEND")
           WRITE(98,*) 'CI_EMA:',YP,cv_yp_syp,neps
-          WRITE(98,*) 'EPS:',eps(1)
+          do 5 i=1,neps
+            WRITE(98,*) ' EPS:',i,eps(i)
+ 5        continue               
         END IF
 c
 c    beta1 is coefficient of regression of syp on yp
@@ -1039,10 +1041,9 @@ c
 10      continue
 
         IF (PDBG) THEN
-          WRITE(98,*) YP,cv_yp_syp,neps
-          WRITE(98,*) 'EPS:',eps(1)
-          WRITE(98,*) 'CI_L:',ci_low(1)
-          WRITE(98,*) 'CI_H:',ci_high(1)
+          do 20 i=1,neps
+            WRITE(98,*) ' Exit:CI:',i,ci_low(i),ci_high(i)
+20        continue          
           CLOSE(UNIT=98,ERR=380)
  380    CONTINUE        
 
@@ -1147,10 +1148,12 @@ C
         IF (PDBG) THEN
           OPEN(UNIT=98,FILE="C:\TEST\USGS_SWSTATS_ERROR.FIL",
      1         ACCESS="APPEND")
-          WRITE(98,*) 'VAR_EMA:',nthresh,nobs
-          WRITE(98,*) 'TL_IN:',tl_in
-          WRITE(98,*) 'TU_IN:',tu_in
-          WRITE(98,*) 'OTHER:',mc_in,pq,g_r_mse,yp,cv_yp_syp
+          WRITE(98,*) 'VAR_EMA:',nthresh 
+          do 5 i = 1,nthresh
+            WRITE(98,*) ' NOBS,TL_IN', i,nobs(i),tl_in(i),tu_in(i)
+  5       continue            
+          WRITE(98,*) ' MC_IN',mc_in
+          WRITE(98,*) ' PQ,Q_R_MSE,YP',pq,g_r_mse,yp 
         END IF
 
         yp       =   qP3(pq,mc_in)
@@ -1201,14 +1204,11 @@ c
 
       call dmrrrr(2,3,tmp,2,3,2,jac,3,2,2,cv_yp_syp,2) 
         
-        IF (PDBG) THEN
-          WRITE(98,*) 'VAR_EMA:',nthresh,nobs
-          WRITE(98,*) 'TL_IN:',tl_in
-          WRITE(98,*) 'TU_IN:',tu_in
-          WRITE(98,*) 'OTHER:',mc_in,pq,g_r_mse,yp,cv_yp_syp
-          CLOSE(UNIT=98,ERR=380)
- 380      CONTINUE        
-        END IF
+      IF (PDBG) THEN
+        WRITE(98,*) ' Exit:CV_YP_SYP:',cv_yp_syp
+        CLOSE(UNIT=98,ERR=380)
+ 380    CONTINUE        
+      END IF
 
       return
       end
