@@ -66,6 +66,11 @@ C     RETCOD - return code
 C              -31 - skew out of range (< -3.3 or > 3.3)
 C              -32 - error in interpolation routine
 C
+C
+C     + + + COMMON BLOCKS
+      COMMON/CDBG/PDBG
+      LOGICAL     PDBG
+C      
 C     + + + LOCAL VARIABLES + + +
       INTEGER   IK, NTOP, NTOT, I
       REAL      QCPA(100), T, TZI, TNI, PX, PNX,LKF
@@ -82,10 +87,13 @@ C     + + + EXTERNALS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      PDBG = DBG     
+C      
       IF (DBG) THEN 
         OPEN(UNIT=98,FILE="C:\TEST\USGS_SWSTATS_ERROR.FIL",
      1       ACCESS="APPEND")
         WRITE(98,*) "IntelFortranVersion"
+        WRITE(98,*) "PDBG:",PDBG
         WRITE(98,*) "LGPSTX:entry:NQS:", NQS
       END IF
 C
