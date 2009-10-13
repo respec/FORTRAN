@@ -1116,7 +1116,12 @@ c
 
         dll_export var_ema
 CDEC$ ATTRIBUTES DLLEXPORT :: var_ema
-
+C
+C     + + + COMMON BLOCKS
+      COMMON/CDBG/PDBG
+      LOGICAL     PDBG
+C
+ 
           save
 
         integer 
