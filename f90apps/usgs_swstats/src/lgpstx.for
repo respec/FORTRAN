@@ -8,7 +8,8 @@ C
      O                      C, CCPA, P, Q, ADP, QNEW, RI,
      O                      RSOUT, RETCOD )
 C
-      dll_export LGPSTX
+C      dll_export LGPSTX
+CDEC$ ATTRIBUTES DLLEXPORT :: LGPSTX
 C
 C     + + + PURPOSE + + +
 C     Computes probabilities.  Does conditional probablility
@@ -68,7 +69,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   IK, NTOP, NTOT, I
       REAL      QCPA(100), T, TZI, TNI, PX, PNX,LKF
-      DOUBLE PRECISION LSKEW,LPROB
+      DOUBLE PRECISION LSKEW,LPROB 
 C
 C     + + + FUNCTIONS + + +
       DOUBLE PRECISION KF
@@ -84,11 +85,19 @@ C
       IF (DBG) THEN 
         OPEN(UNIT=98,FILE="C:\TEST\USGS_SWSTATS_ERROR.FIL",
      1       ACCESS="APPEND")
+        WRITE(98,*) "IntelFortranVersion"
         WRITE(98,*) "LGPSTX:entry:NQS:", NQS
       END IF
 C
 C     initialize variables
       RETCOD = 0
+C
+      IF (DBG) THEN
+        WRITE(98,*) "LOGARH,RETCOD:",LOGARH,RETCOD
+        DO 320 I= 1, NQS
+          WRITE(98,*) "LGPSTX:I,SE:",I,SE(I)
+ 320    CONTINUE          
+      END IF      
 C
       IF (RETCOD .EQ. 0) THEN
         LSKEW = DBLE(SKEW)
@@ -99,16 +108,17 @@ C
           C(I)= XBAR+ (LKF* STD)
 C         Dec 01 - correct for problem at lower tail for negative values
           IF (LOGARH .EQ. 2  .AND.  C(I) .LT. 0.0) C(I) = 0.0
+          IF (DBG) WRITE(98,*) "LGPSTX:I:",I,SE(I),C(I),RETCOD
  345    CONTINUE
-        IF (DBG) WRITE(98,*) "LGPSTX:done 345"
+        IF (DBG) WRITE(98,*) "LGPSTX:done 345",RETCOD
         NTOP=0
         NTOT=N + NZI
         IF (NZI.GT.0) THEN
-          IF (DBG) WRITE(98,*) "LGPSTX:conditional prob adj"
+          IF (DBG) WRITE(98,*) "LGPSTX:conditional prob adj",RETCOD
 C         zero events, conditional probability adjustment
           CALL PA193X (C,NTOT,NZI,NTOP,NQS,SE,XBAR,STD,LSKEW,
      O                 CCPA)
-          IF (DBG) WRITE(98,*) "LGPSTX:done PA193X"
+          IF (DBG) WRITE(98,*) "LGPSTX:done PA193X",RETCOD
           DO 350 I=1,NQS
 C           Dec 01 - first, correct for problem at lower tail for neg values
             IF (LOGARH .EQ. 2  .AND.  CCPA(I) .LT. 0) CCPA(I) = 0.0
@@ -124,21 +134,21 @@ C             defined in the HARTAK routine used by CPA193
               QCPA(I)=0.0
             END IF
  350      CONTINUE
-          IF (DBG) WRITE(98,*) "LGPSTX:done 350"
+          IF (DBG) WRITE(98,*) "LGPSTX:done 350",RETCOD
         END IF
 C
-        IF (DBG) WRITE(98,*) "LGPSTX:compute flow stats"
+        IF (DBG) WRITE(98,*) "LGPSTX:compute flow stats",RETCOD
 C       Compute flow statistics for selected recurrence intervals
         CALL CALQPX ( LOGARH, ILH, C, QCPA, NZI, NUMONS, NQS,
      M               SE,
      O               Q, QNEW, P )
-        IF (DBG) WRITE(98,*) "LGPSTX:done compute flow stats"
+        IF (DBG) WRITE(98,*) "LGPSTX:done compute flow stats",RETCOD
         DO 360 I = 1,NQS
           RI(I) = 1.0/P(I)
           RSOUT(I) = REAL(INT(100.0*RI(I)+0.01))/100.0
           RSOUT(I+NQS) = Q(I)
  360    CONTINUE
-        IF (DBG) WRITE(98,*) "LGPSTX:done 360"
+        IF (DBG) WRITE(98,*) "LGPSTX:done 360",RETCOD
         IF (NZI .GT. 0) THEN
 C         zero flows
           T   = N
@@ -149,13 +159,13 @@ C           n-day low flow or month
             DO 365 I = 1,NQS
               ADP(I) = (T/TNI)*P(I) + TZI/TNI
  365        CONTINUE
-            IF (DBG) WRITE(98,*) "LGPSTX:done 365"
+            IF (DBG) WRITE(98,*) "LGPSTX:done 365",RETCOD
           ELSE
 C           n-day high flows
             DO 370 I = 1,NQS
               ADP(I) = T/TNI*P(I)
  370        CONTINUE
-            IF (DBG) WRITE(98,*) "LGPSTX:done 370"
+            IF (DBG) WRITE(98,*) "LGPSTX:done 370",RETCOD
           END IF
         END IF
       END IF
@@ -166,7 +176,8 @@ C           n-day high flows
      1                           RSOUT(I),RSOUT(I+NQS),
      2                           P(I),Q(I),QNEW(I)
         END DO
-        CLOSE(UNIT=98)
+        CLOSE(UNIT=98,ERR=380)
+ 380    CONTINUE        
       END IF
 C
       RETURN
@@ -419,29 +430,29 @@ C
 c
 c
 c
-      double precision function kf(skew,prob)
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c    computes critical points of LP3 distribution 
-c    returns "K" value in format used by B17B
-c
-c    tim cohn........24 Nov 2003
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-
-      double precision parms(2),prob,skew,fp_z_icdf,fp_g2_icdf  
-        
-      if(skew .eq. 0.d0) then
-          kf = fp_z_icdf(prob)
-      else
-          parms(1)  = 4.d0/skew**2
-        if(skew .lt. 0.d0) then
-          parms(2) = -1.d0/sqrt(parms(1))
-        else
-          parms(2) =  1.d0/sqrt(parms(1))
-        endif  
-          kf = fp_g2_icdf(prob,parms) - parms(1)*parms(2)
-      endif
-
-      return
-      end
+!      double precision function kf(skew,prob)
+!c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!c
+!c    computes critical points of LP3 distribution 
+!c    returns "K" value in format used by B17B
+!c
+!c    tim cohn........24 Nov 2003
+!c
+!c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!      double precision parms(2),prob,skew,fp_z_icdf,fp_g2_icdf  
+!        
+!      if(skew .eq. 0.d0) then
+!          kf = fp_z_icdf(prob)
+!      else
+!          parms(1)  = 4.d0/skew**2
+!        if(skew .lt. 0.d0) then
+!          parms(2) = -1.d0/sqrt(parms(1))
+!        else
+!          parms(2) =  1.d0/sqrt(parms(1))
+!        endif  
+!          kf = fp_g2_icdf(prob,parms) - parms(1)*parms(2)
+!      endif
+!
+!      return
+!      end
