@@ -6,7 +6,7 @@ C
      I                      LOGARH, ILH, DBG,
      M                      SE, 
      O                      C, CCPA, P, Q, ADP, QNEW, RI,
-     O                      RSOUT, RETCOD )
+     O                      RSOUT, KP3DEV, RETCOD )
 C
 C      dll_export LGPSTX
 CDEC$ ATTRIBUTES DLLEXPORT :: LGPSTX
@@ -25,7 +25,8 @@ C     + + + DUMMY ARGUMENTS + + +
       LOGICAL   DBG
       INTEGER   N, NZI, LOGARH, ILH, NUMONS, NQS, RETCOD
       REAL      SKEW, XBAR, STD, SE(NQS), C(NQS), CCPA(NQS),
-     $          ADP(NQS), Q(NQS), QNEW(NQS), P(NQS), RI(NQS), RSOUT(*)
+     $          ADP(NQS), Q(NQS), QNEW(NQS), P(NQS), RI(NQS), RSOUT(*),
+     $          KP3DEV(NQS)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     N      - number of years
@@ -62,6 +63,7 @@ C              otherwise undefined
 C     RI     - recurrence interval
 C     RSOUT  - recurrence intervals (1:NQS) and parameter
 C              values (NQS:*), not adjusted for zero events
+C     KP3DEV - Pearson Type III deviate (K)
 C     RETCOD - return code
 C              -31 - skew out of range (< -3.3 or > 3.3)
 C              -32 - error in interpolation routine
@@ -73,7 +75,7 @@ C     + + + COMMON BLOCKS
 C      
 C     + + + LOCAL VARIABLES + + +
       INTEGER   IK, NTOP, NTOT, I
-      REAL      QCPA(100), T, TZI, TNI, PX, PNX,LKF
+      REAL      QCPA(100), T, TZI, TNI, PX, PNX
       DOUBLE PRECISION LSKEW,LPROB 
 C
 C     + + + FUNCTIONS + + +
@@ -112,8 +114,8 @@ C
         IF (DBG) WRITE(98,*) "LGPSTX:XBAR,STD,SKEW", XBAR, STD, SKEW
         DO 345 I=1,NQS
           LPROB = 1.D0 - DBLE(SE(I))
-          LKF = KF(LSKEW,LPROB)
-          C(I)= XBAR+ (LKF* STD)
+          KP3DEV(I) = KF(LSKEW,LPROB)
+          C(I)= XBAR+ (KP3DEV(I)* STD)
 C         Dec 01 - correct for problem at lower tail for negative values
           IF (LOGARH .EQ. 2  .AND.  C(I) .LT. 0.0) C(I) = 0.0
           IF (DBG) WRITE(98,*) "LGPSTX:I:",I,SE(I),C(I),RETCOD
