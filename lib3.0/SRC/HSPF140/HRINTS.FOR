@@ -118,7 +118,7 @@ C
 C
 C
       SUBROUTINE GPFINT
-     I                  (RECLT,FILE,
+     I                  (RECLT,FILE,TESTFG,
      O                   GPKEY)
 C
 C     + + + PURPOSE + + +
@@ -128,11 +128,12 @@ C     in the initial record of each instruction file.
 C     note: several scalars and EOFFST share storage with INSTR.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   RECLT,FILE(15),GPKEY
+      INTEGER   RECLT,FILE(15),TESTFG,GPKEY
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     RECLT  - record length of the time series store
 C     FILE   - array of file unit numbers
+C     TESTFG - testing flag - 1 - LOTS OF OUTPUT!
 C     GPKEY  - key in tsget file
 C
 C     + + + LOCAL VARIABLES + + +
@@ -140,9 +141,9 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*1  INBUF1(80)
 C
 C     + + + EQIVALENCES + + +
-      EQUIVALENCE (INSTR(1),TESTFG),(INSTR(2),RECL),
+      EQUIVALENCE (INSTR(2),RECL),
      #            (INSTR(3),UNDEF)
-      INTEGER      TESTFG,RECL
+      INTEGER      RECL
       REAL         UNDEF
       EQUIVALENCE (INBUF1,INBUFF)
       CHARACTER*80 INBUFF
@@ -172,9 +173,7 @@ C       read info for tsget and tsput errors (temp)
      O               INBUF1,CONT)
         READ(INBUFF,1000) TESTFG
 C
-C       force testing        
-        TESTFG = 1
-C
+        INSTR(1)= TESTFG 
         CALL PUTTSI (I3,K,INSTR)
 C
  100  CONTINUE

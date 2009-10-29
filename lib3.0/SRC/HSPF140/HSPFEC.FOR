@@ -3,7 +3,7 @@ C
 C
       SUBROUTINE   TIMSER
      I                    (SDATIM,EDATIM,MAXMLK,MSLINX,NMLTBS,RUNWID,
-     I                     IHMFG)
+     I                     IHMFG,TESTFG)
 C
 C     + + + PURPOSE + + +
 C     Process the blocks which deal with time series
@@ -14,7 +14,7 @@ C     + + + MODULES + + +
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    EDATIM(5),SDATIM(5),MAXMLK,MSLINX(MAXMLK,3),NMLTBS,
-     $           RUNWID,IHMFG
+     $           RUNWID,IHMFG,TESTFG
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     SDATIM - starting date/time
@@ -24,6 +24,7 @@ C     MSLINX - ???
 C     NMLTBS - ???
 C     RUNWID - ???
 C     IHMFG  - IHM flag (normal-0,IHM control-1)
+C     TESTFG - testing flag - 1 - LOTS OF OUTPUT!
 C
 C     + + + COMMON BLOCKS- INTERP3 + + +
       INCLUDE 'crin3.inc'
@@ -106,7 +107,7 @@ C     check open dss files
      M             ECOUNT)
 C
 C     initialize the tsget/tsput files
-      CALL GPFINT(RECLT,FILE,GPKEY)
+      CALL GPFINT(RECLT,FILE,TESTFG,GPKEY)
       PGPKEY= GPKEY
 C
 C     get keys to users ext source block

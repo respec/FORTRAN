@@ -1127,7 +1127,7 @@ C     + + + LOCAL VARIABLES + + +
      $          SSNXT,STKIND,STNXT,STTRAN,SVOL(2),TAMDCD,TCHAIN,
      $          TDELT,TFRC,TGAPCD,TGRPN(2),TINF(22),TMEMN(2),TMEMSB(2),
      $          TNUM,TOFFST,TROW,TSNXT,TTNXT,TVOL(2),WKEY,KWDNO,
-     $          I,I0,I1,I2A,I2B,I2,I3,I4,RWFG,LEN,MXKY
+     $          I,I0,I1,I2A,I2B,I2,I4,RWFG,LEN,MXKY
       REAL      A,B,AORIG,FRAC
       CHARACTER*4 CHSTR
 C
@@ -1169,7 +1169,6 @@ C
       I0  = 0
       I1  = 1
       I2  = 2
-      I3  = 3
       I4  = 4
       LEN = 50
       RWFG= 0
@@ -1340,7 +1339,7 @@ C
 C             move source from srow to trow, replacing existing
 C             values
 C             AORIG is set in PAIRS to WORKFL address 21
-              CALL TSINS (I3,SROW,SDELT,TROW,SOFFST,STKIND,
+              CALL TSINS (I4,SROW,SDELT,TROW,SOFFST,STKIND,
      I                    STTRAN,I0,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
      I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
      I                    TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
@@ -1350,7 +1349,7 @@ C
 C             target has a row
 C             add source to target
 C             AORIG is set in PAIRS to WORKFL address 21
-              CALL TSINS (I3,SROW,SDELT,TROW,SOFFST,STKIND,
+              CALL TSINS (I4,SROW,SDELT,TROW,SOFFST,STKIND,
      I                    STTRAN,I1,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
      I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
      I                    TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
@@ -1474,7 +1473,7 @@ C         hbn
         END IF              
       ELSE
 C       scratch pad
-        VOLCOD= VOLUME
+        VOLCOD= 3
         FILE  = NUM
       END IF
 C
