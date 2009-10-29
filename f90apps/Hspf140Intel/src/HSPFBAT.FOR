@@ -11,8 +11,9 @@ C     + + + PARAMETERS + + +
       INCLUDE 'pmesfl.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      FILES(15),I,I0,I1,USRFL,MESSU,
-     $             RETCOD,RCL,SCLU,SGRP,IOPT,LEN,ICOMMA,ISPACE
+      INTEGER      FILES(18),I,I0,I1,USRFL,MESSU,
+     $             RETCOD,RCL,SCLU,SGRP,IOPT,LEN,ICOMMA,ISPACE,
+     $             TESTFG
 C      INTEGER      SDATM(8),EDATM(8),IDATM(8),DSEC
       REAL         TIMES, TIMEE
       LOGICAL      LFLAG
@@ -37,6 +38,8 @@ C     + + + INPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      TESTFG = 0
+C      
 C     version info and unix what info
       INCLUDE 'versn.inc'
 C
@@ -54,7 +57,8 @@ C     avoid some lahey math errors
 C     CALL INVALOP (LFLAG)
 C     CALL UNDFL (LFLAG)
 C
-      CALL CHANGEDIRQQ('C:\F90APPS\HSPF140INTEL\TEST')
+C     CALL CHANGEDIRQQ('C:\F90APPS\HSPF140INTEL\TEST')
+C     CALL CHANGEDIRQQ('G:\Projects\coon')
       OPEN (UNIT=99,FILE='error.fil')
 C
 C     initialize wdm file common block
@@ -69,16 +73,17 @@ C     when start?
       CALL CPU_TIME(TIMES)
 C
 C     parse command line to get input filename - must be first argument
-      I= 64
-      I1= 1
-      COMMA= ','
-      SPACE= ' '
-      LEN= LENSTR (I,CLINE)
-      ICOMMA= STRFND (LEN,CLINE,I1,COMMA)- 1
-      ISPACE= STRFND (LEN,CLINE,I1,SPACE)- 1
+      I1    = 1
+      COMMA = ','
+      SPACE = ' '
+C
+      I     = 64
+      LEN   = LENSTR(I,CLINE)
+      ICOMMA= STRFND(LEN,CLINE,I1,COMMA)- 1
+      ISPACE= STRFND(LEN,CLINE,I1,SPACE)- 1
       IF (ICOMMA .LT. 0) ICOMMA= LEN
       IF (ISPACE .LT. 0) ISPACE= LEN
-      LEN= MIN (ICOMMA,ISPACE)
+      LEN   = MIN(ICOMMA,ISPACE)
       FILNAM= CLINE(1:LEN)
 C
 C     open message file
@@ -98,8 +103,6 @@ C       problem with opening message file, prompt for other file name
 C
       IF (RETCOD.EQ.0) THEN
 C       do opening message
-C       clear screen
-cthj        CALL SCCLAL
         IOPT = 1
         SCLU = 201
         SGRP = 50
@@ -110,21 +113,20 @@ C       open input file
         FRMT = 'FORMATTED'
         RCL  = 0
         STAT = 'OLD'
-        CALL FILOPN
-     I              (ACC,FRMT,RCL,STAT,USRFL,FILNAM,
-     O               RETCOD)
+        CALL FILOPN(ACC,FRMT,RCL,STAT,USRFL,FILNAM,
+     O              RETCOD)
         IF (RETCOD .EQ. 0) THEN
 C         input file opened, process files block in input file
 C         initialize files to closed
-          I = 14
+          I = 18
           I0= 0
-          CALL ZIPI (I,I0,
-     O               FILES)
-          FILES(15) = MESSFL
-          CALL FILBLK
-     I                (USRFL,
-     M                 FILES,
-     O                 RETCOD)
+          CALL ZIPI(I,I0,
+     O              FILES)
+          FILES(15)= MESSFL
+C        
+          CALL FILBLK(USRFL,
+     M                FILES,
+     O                RETCOD)
 C         back to beginning of input file
           REWIND(USRFL)
 C
@@ -140,7 +142,7 @@ C           read users uci file
 C           close users input file
             CLOSE (UNIT=USRFL)
 C           proceed to run model
-            CALL HSPF (FILES,
+            CALL HSPF (FILES,TESTFG,
      O                 RETCOD)
 C            CALL HSPF (FILES,
 C     O                 IDATM,RETCOD)
