@@ -2,7 +2,7 @@ C
 C
 C
       SUBROUTINE   HSPF
-     I                   (FILES,
+     I                   (FILES,TESTFG,
      O                    RETCOD)
 C
 C     + + + PURPOSE + + +
@@ -19,10 +19,11 @@ C     + + + MODULES + + +
       USE HMMSG, ONLY : INITMSGQ
 C      
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   FILES(15),RETCOD
+      INTEGER   FILES(15),TESTFG,RETCOD
 C
 C     + + + ARGUMENT DEFINTIONS + + +
 C     FILES  - unit numbers of files from files block in uci or application
+C     TESTFG - testing flag - 1 - LOTS OF OUTPUT!!!!
 C     RETCOD - return code - 0:run completed
 C                            1:interp only
 C                            2:errors in interp
@@ -137,7 +138,7 @@ C       a clean run data set was found, interpret it
         SGRP= 58
         CALL HDMEST (IOPT,MSGFL,SCLU,SGRP)
         MKFILS= 1
-        CALL INTERP (I1,MKFILS,
+        CALL INTERP (I1,MKFILS,TESTFG,
      M               FILES,
      O               EMFG,RETCOD)
 C
@@ -148,7 +149,7 @@ C         run data set interpreted without error - run it
           CALL HDMEST (IOPT,MSGFL,SCLU,SGRP)
           ITIM= 20
           CALL SDELAY (ITIM)
-          CALL OSUPER (FILES,RETCOD)
+          CALL OSUPER (FILES,TESTFG,RETCOD)
 C         all done - end of job
           WRITE (MESSU,*) ""
           WRITE (MESSU,*) "End of Job"
@@ -174,7 +175,7 @@ C
 C
 C
       SUBROUTINE   INTERP
-     I                    (UCLOFG,MKFILS,
+     I                    (UCLOFG,MKFILS,TESTFG,
      M                     FILES,
      O                     EMFG,RETCOD)
 C
@@ -182,12 +183,13 @@ C     + + + PURPOSE + + +
 C     Read and process a run data set in the user's control input
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    UCLOFG,MKFILS,FILES(15),EMFG,RETCOD
+      INTEGER    UCLOFG,MKFILS,TESTFG,FILES(15),EMFG,RETCOD
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     UCLOFG - uci may be closed flag - 0 - leave open
 C     MKFILS - flag to indicate if instruction files should be written,
 C                0-no,1-yes
+C     TESTFG - testing flag - 1 - LOTS OF OUTPUT!!!
 C     FILES  - array of file unit numbers
 C     EMFG   - english/metric units flag (english-1,metric-2)
 C     RETCOD - return code 0:interp ok
@@ -361,7 +363,8 @@ C       end processing message
 C
 C     process blocks dealing with time series linkages -
 C     ext sources, network, and ext targets
-      CALL TIMSER (SDATIM,EDATIM,MAXMLK,MSLINX,NMLTBS,RUNWID,IHMFG)
+      CALL TIMSER (SDATIM,EDATIM,MAXMLK,MSLINX,NMLTBS,RUNWID,IHMFG,
+     I             TESTFG)
 C
       IF (MKFILS .EQ. 1) THEN
 C       write the operations supervisor instruction file
