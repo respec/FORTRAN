@@ -1036,7 +1036,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   DSTYPE,RREC,GRPCNT,RETC,DIND,NDP,
      #          SDAT(6),EDAT(6),BDAT(6),LDAT(6),GRPPTR,I1, J, K,
-     #          RBDAT(6),RLDAT(6),VBTIME,TCODE,FLAG,TMP(5)
+     #          RBDAT(6),RLDAT(6),VBTIME,TCODE,FLAG,TMP(5),ITMP(1)
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  WDRCGO,WDSCHK,WTFNDT,WDBSGI,TIMADD,TIMDIF,CKDATE,
@@ -1086,7 +1086,8 @@ C             month or day
         BDAT(6)= 0
         J      = 34
         CALL WDBSGI(WDMSFL,DSN,J,I1,
-     O              GRPPTR,RETC)
+     O              ITMP,RETC)
+        GRPPTR= ITMP(1)
         CALL TIMADD(BDAT,GRPPTR,I1,NDP,
      O              LDAT)
 C
@@ -1137,12 +1138,14 @@ C
 C           month if possible for hourly or less data
             J = 85
             CALL WDBSGI(WDMSFL,DSN,J,I1,
-     O                  VBTIME,RETC)
+     O                  ITMP,RETC)
+            VBTIME= ITMP(1)
             IF (VBTIME .EQ. 1) THEN
 C             const interval, what is it?
               J = 17
               CALL WDBSGI(WDMSFL,DSN,J,I1,
-     O                    TCODE,RETC)
+     O                    ITMP,RETC)
+              TCODE= ITMP(1)
               IF (TCODE .LE. 3) THEN
 C               hourly or less, worth a switch if possible
                 J = 5
