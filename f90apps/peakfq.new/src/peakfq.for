@@ -1,7 +1,9 @@
 C
 C
 C
-      PROGRAM   PEAKFQBATCH
+C     PROGRAM   PEAKFQBATCH
+      SUBROUTINE PEAKFQ (INPUTARG)
+      !DEC$ ATTRIBUTES DLLEXPORT :: PEAKFQ
 C
 C     + + + PURPOSE + + +
 C     Batch version of PEAKFQ program.
@@ -9,9 +11,12 @@ C
 C     + + + HISTORY + + +
 C     created for batch version of PEAKFQ, 9/03
 C     Paul Hummel of AQUA TERRA Consultants
-C
+C     
       USE EMAThresh
       USE CompSpecs
+C
+C     + + + DUMMY ARGUMENTS + + +      
+      CHARACTER(LEN=*) :: INPUTARG
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -27,7 +32,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER      I,J,K,STAIND,IOSNUM,FUNIT
       INTEGER      IPEND, WDMSFL, FOUT, PAUSE, EMAOPT
       INTEGER      LNSPECS, NSTA, ISTA, RETCOD, RDOFLG, FE
-      INTEGER      DSN, DSTYP, GRCNT, LREC
+      INTEGER      DSN, DSTYP, GRCNT, LREC, ERRFLG
       CHARACTER*12 APNAME
       CHARACTER*8  LGNAME
       CHARACTER*64 FNAME, VERSN
@@ -42,7 +47,8 @@ C     + + + FUNCTIONS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     ZLNTXT, CVRINT, STRRETREM, J407XE, JFLUSH, WDBOPN
-      EXTERNAL     GPOPEN, GPINIT, ANINIZ, WRITESPECIO, UPDATESPECFILE
+C      EXTERNAL     GPOPEN, GPINIT, ANINIZ, 
+      EXTERNAL     WRITESPECIO, UPDATESPECFILE
       EXTERNAL     WDDSNX, WDSCHK
 C
 C     + + + INPUT FORMATS + + +
@@ -50,21 +56,34 @@ C     + + + INPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      SPCFNM= INPUTARG
+C      
 C     avoid some lahey math errors
-      LFLAG = .TRUE.
-      CALL INVALOP (LFLAG)
-      CALL UNDFL (LFLAG)
+C     LFLAG = .TRUE.
+C     CALL INVALOP (LFLAG)
+C     CALL UNDFL (LFLAG)
 C
 C     Initialize user environment
 C     version info for unix what
 C     names of application, message file, and log file
       INCLUDE 'fpeak.inc'
-      CALL ANINIZ (MESSFL, FNAME, LGNAME)
+c      CALL ANINIZ (MESSFL, FNAME, LGNAME)
+
+C     open the old WDM message file (read only if possible)
+      RDOFLG= 1
+      CALL WDBOPN (MESSFL,FNAME,RDOFLG,
+     O             ERRFLG)
+      IF (ERRFLG.NE.0) THEN
+C       bad wdm file
+        WRITE(FE,*) 'Bad WDM file:',ERRFLG,WDNAME,FILNAM
+        WRITE(*,*)  'Bad WDM file:',ERRFLG,WDNAME,FILNAM
+        STOP
+      END IF
 C
 C     init graphics
-      CALL GPOPEN (FE)
+c      CALL GPOPEN (FE)
 C     always doing some graphics (BMP at a minimum)
-      CALL GPINIT
+c      CALL GPINIT
 C
 C     assume not going to update the specification file
       UPDATEFG = .FALSE.
@@ -108,14 +127,14 @@ C      END IF
 
       SPCFUN = 11
 C     get driver input file from command line arguement
-      CALL GETCL(SPCFNM)
+C      CALL GETCL(SPCFNM)
       OPEN(SPCFUN,FILE=SPCFNM,IOSTAT=IOSNUM,ERR=5)
 C     successful open of spec file
       WRITE(*,*) "MAIN:Reading Specification file: ",SPCFNM
       GO TO 8
 
  5    CONTINUE !problem opening spec file
-        CALL IOSTAT_MSG(IOSNUM,IOSTXT)
+C        CALL IOSTAT_MSG(IOSNUM,IOSTXT)
         write(*,*) "Unable to open Specification file: ",SPCFNM
         GO TO 999
 
@@ -265,7 +284,7 @@ C         update spec file with verbose specifications
         END IF
       END DO
  120  CONTINUE  !get here on EOF (or other error)
-        CALL IOSTAT_MSG(IOSNUM,IOSTXT)
+C        CALL IOSTAT_MSG(IOSNUM,IOSTXT)
         WRITE(*,*) "Done reading spec file"  !, status : ",IOSTXT
 
       IF (INFORM.EQ.1) THEN !populate DSN buffer
@@ -340,7 +359,7 @@ Ckmf  gpclos closes unit 99 and then calls gclks.  gclks
 Ckmf  (as well as later code in this program) may still
 Ckmf  want to write to 99.
 Ckmf  CALL GPCLOS (FE)
-      CALL GCLKS
+c      CALL GCLKS
 C
 C     write out any errors read on input file and close output file
       CALL JFLUSH (91,FOUT)
@@ -351,13 +370,13 @@ C     don't see where output file is closed, try it here
       CLOSE(FOUT)
 C
 C     close and delete unused log file
-      S = TRIM(LGNAME)//'.LOG'
-      INQUIRE(FILE=S,NUMBER=FUNIT)
-      CLOSE(FUNIT,STATUS='DELETE')
+c      S = TRIM(LGNAME)//'.LOG'
+c      INQUIRE(FILE=S,NUMBER=FUNIT)
+c      CLOSE(FUNIT,STATUS='DELETE')
 C
 C      CALL ANCLOS (MESSFL)
 C
-      STOP
+      RETURN
       END
 C
 C
@@ -431,7 +450,7 @@ Cprh          IDATA = 1
       ELSE IF (KWD.EQ.'ASCI') THEN
 C       input peak data from WATSTORE formatted file
         INCRD = 13
-        OPEN(INCRD,ISTR,ERR=10,STATUS='OLD')
+        OPEN(INCRD,FILE=ISTR,ERR=10,STATUS='OLD')
 C       successful open of Watstore file
         WRITE(*,*) "OPNINP:Successful Open Watstore file:'"
      $             // TRIM(ISTR) // "'"
