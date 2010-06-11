@@ -1266,7 +1266,8 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
       subroutine jacq2(q,mc,jac)
 
-      implicit none
+c      implicit none
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         
       integer 
      1  ifail,ind
@@ -1348,14 +1349,15 @@ c
       
       double precision
      1  nobs(*),tl(*),tu(*),mc(3),g_r_mse,q,s_mc(3,3),
-     2  jac(3),tmp(3),result
+     2  jac(3),tmp(3),resulta(3,3),result
           
       call regskew(nthresh,nobs,tl,tu,mc,g_r_mse,s_mc)
       
       call jacq2(q,mc,jac)
       
       call dmxtyf(3,1,jac,3,3,3,s_mc,3,1,3,tmp,1)
-      call dmrrrr(1,3,tmp,1,3,1,jac,3,1,1,result,1) 
+      call dmrrrr(1,3,tmp,1,3,1,jac,3,1,1,resulta,1) 
+      result= resulta(1,1)
         sypf = sqrt(result)
 ctac*
         if(result .le. 0.d0) then
@@ -2202,6 +2204,7 @@ c
      1  (ng=15,np=11)
      
       external ftest01
+      double precision ftest01
       
       double precision 
      1  pp(0:np),gg(ng),m,
