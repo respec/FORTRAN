@@ -3,8 +3,8 @@ C     frequency curve tables (computed results)
      $                 CLIMU,       SYSRFC,
      $                 VAREST
       REAL             WRCFC(MXINT),EPFC(MXINT),CLIML(MXINT),
-     $                 CLIMU(MXINT),SYSRFC(MXINT),
-     $                 VAREST(MXINT)
+     $                 CLIMU(MXINT),SYSRFC(MXINT)
+      DOUBLE PRECISION VAREST(MXINT)
 C
 C WRCFC  - WRC FREQ CURVE LOGS
 C EPFC   - EXPECTED-PROBABILITY FREQ CURVE LOGS
