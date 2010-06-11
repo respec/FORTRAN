@@ -22,10 +22,11 @@ lf90 utstat.for -c -o ..\obj\utstat.obj -O0     >>comp.out
 lf90 wdpeak.for -c -o ..\obj\wdpeak.obj -O0     >>comp.out
 rem lf90 wdtble.for -c -trace -o ..\obj\wdtble.obj -O0     >>comp.out
 lf90 stutil.for -c -o ..\obj\stutil.obj -O0     >>comp.out
-lf90 pkplot.for -c -o ..\obj\pkplot.obj -O0     >>comp.out
-lf90 agplot.for -c -o ..\obj\agplot.obj -O0     >>comp.out
-lf90 agpltx.for -c -o ..\obj\agpltx.obj -O0     >>comp.out
+rem lf90 pkplot.for -c -o ..\obj\pkplot.obj -O0     >>comp.out
+rem lf90 agplot.for -c -o ..\obj\agplot.obj -O0     >>comp.out
+rem lf90 agpltx.for -c -o ..\obj\agpltx.obj -O0     >>comp.out
 rem lf90 ..\obj\*.obj ..\..\ema\*.obj -lib \lib3.0\lf90libs\aide \lib3.0\lf90libs\wdm \lib3.0\lf90libs\adwdm \lib3.0\lf90libs\util \lib3.0\lf90libs\graph90 -lisk -nwin -bind -vm -exe ..\bin\peakfq.exe >>comp.out
 rem lf90 ..\obj\*.obj -lib \lib3.0\lf90libs\aide \lib3.0\lf90libs\wdm \lib3.0\lf90libs\adwdm \lib3.0\lf90libs\util \lib3.0\lf90libs\graph90 -lisk -nwin -bind -vm -exe ..\bin\peakfq.exe >>comp.out
 rem lf90 ..\obj\*.obj ..\..\ema\*.obj lib4graph\*.obj -lib \lib3.0\lf90libs\aide \lib3.0\lf90libs\wdm \lib3.0\lf90libs\adwdm \lib3.0\lf90libs\util \int\lib\shortl90 \int\lib\intpcl90 -nwin -bind -vm -exe ..\bin\PKFQBat.exe >>comp.out
-lf90 ..\obj\*.obj ..\..\ema\*.obj lib4graph\*.obj -lib \mylib3.0\lf90libs\aide \mylib3.0\lf90libs\wdm \mylib3.0\lf90libs\adwdm \mylib3.0\lf90libs\util \int\lib\shortl90 \int\lib\intmwl90 \int\lib\winspool -winconsole -exe ..\bin\PKFQBat.exe >>comp.out
+rem lf90 ..\obj\*.obj ..\..\ema\*.obj lib4graph\*.obj -lib \mylib3.0\lf90libs\aide \mylib3.0\lf90libs\wdm \mylib3.0\lf90libs\adwdm \mylib3.0\lf90libs\util \int\lib\shortl90 \int\lib\intmwl90 \int\lib\winspool -winconsole -exe ..\bin\PKFQBat.exe >>comp.out
+lf90 ..\obj\*.obj ..\..\ema\*.obj lib4graph\*.obj -lib \mylib3.0\lf90libs\wdm \mylib3.0\lf90libs\adwdm \mylib3.0\lf90libs\util \int\lib\shortl90 \int\lib\intmwl90 \int\lib\winspool -winconsole -exe ..\bin\PKFQBat.exe >>comp.out
