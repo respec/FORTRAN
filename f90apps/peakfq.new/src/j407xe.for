@@ -248,6 +248,11 @@ C               longer output
               END IF
             END IF    
 C
+C           save data (pre-Gausex transform) for retrieval by windows interface
+c            CALL STOREDATA (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,NPLOT,
+c     I                      SYSRFC(INDX1),WRCFC(INDX1),TXPROB(INDX1),
+c     I                      HSTFLG,NOCLIM,CLIML(INDX1),CLIMU(INDX1),
+c     I                      JSEQNO)
             IF(IPLTOP.NE.0)  THEN
 C             initialize (if necessary)
               IF(NFCXPG.LE.0) THEN
@@ -281,11 +286,12 @@ C               do plot historic adjusted peaks
                 HSTFLG = 0
               END IF
               IF (.NOT.UPDATEFG) THEN
-              CALL PLTFRQ( MSG, HEADNG, IPLTOP, GRFMT,
-     $                NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
-     $                SYSRFC(INDX1),WRCFC(INDX1),FCXPG(INDX1),NFCXPG,
-     $                IWXMOD,HSTFLG,
-     $                NOCLIM, CLIML(INDX1), CLIMU(INDX1), JSEQNO )
+                CALL PLTFRQ( MSG, HEADNG, IPLTOP, GRFMT,
+     $                  NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
+     $                  SYSRFC(INDX1),WRCFC(INDX1),FCXPG(INDX1),NFCXPG,
+     $                  IWXMOD,HSTFLG,
+     $                  NOCLIM, CLIML(INDX1), CLIMU(INDX1), JSEQNO )
+
               END IF
             ENDIF
           END IF
@@ -297,6 +303,7 @@ C           summary screen output if pause=1
      $                   WRCUAV,WRCUSD,WRCSKW,WRCFC ,
      $                   INT(HISTPN+.5), NSYS,
      $                   IBCPUN, IPUNCH,  IA1,IA3, PAUSE, JSEQNO)
+
           ELSE IF (INFORM .EQ. 1  .AND.  PAUSE .EQ. 1) THEN
 C           no output statistics, but summary screen for wdm input
 Cprh            CALL OUTPT2 ( STAID, WRCUAV, WRCUSD, WRCSKW, WRCFC, IA1 )
@@ -2449,8 +2456,9 @@ C     + + + INTRINSICS + + +
       INTRINSIC   MOD, ABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   FRQPLG, FRQPLT
-      EXTERNAL   GPINIT, GPDEVC
+c      EXTERNAL   FRQPLG, FRQPLT
+      EXTERNAL   FRQPLT
+c      EXTERNAL   GPINIT, GPDEVC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA   EPSILN/1.0E-6/
@@ -2478,10 +2486,10 @@ Cprh    always generate BMP graphic files
 C       set device type and code
         CALL GPDEVC (4,8)
         PLTEXT = 'BMP'
-        CALL FRQPLG
-     $            (HEADNG,NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
-     $            NPLOT,SYSRFC,WRCFC,FCXPG,HSTFLG,
-     $            NOCLIM, CLIML, CLIMU, IPLTNO, PLTEXT )
+c        CALL FRQPLG
+c     $            (HEADNG,NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
+c     $            NPLOT,SYSRFC,WRCFC,FCXPG,HSTFLG,
+c     $            NOCLIM, CLIML, CLIMU, IPLTNO, PLTEXT )
         IF (IPLTOP.GT.0 .AND.
      $     (GRFMT.EQ.'CGM' .OR. GRFMT(1:2).EQ.'PS' .OR. 
      $      GRFMT.EQ.'WMF')) THEN !generate graphic metafiles also
@@ -2493,10 +2501,10 @@ C         set device type and code
           ELSE IF (GRFMT.EQ.'WMF') THEN
             CALL GPDEVC (4,9)
           END IF
-          CALL FRQPLG
-     $              (HEADNG,NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
-     $              NPLOT,SYSRFC,WRCFC,FCXPG,HSTFLG,
-     $              NOCLIM, CLIML, CLIMU, IPLTNO, GRFMT )
+c          CALL FRQPLG
+c     $              (HEADNG,NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
+c     $              NPLOT,SYSRFC,WRCFC,FCXPG,HSTFLG,
+c     $              NOCLIM, CLIML, CLIMU, IPLTNO, GRFMT )
         END IF
       END IF
 C
@@ -3100,7 +3108,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER   ISOURC(NITEMS),  IDATA(NITEMS)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     ISOURC -
+C     SOURC -
 C     IDATA  -
 C     NITEMS -
 C
@@ -3541,7 +3549,7 @@ C       determine default threshold value to use
         THRESH(1)%THREYR = IPKSEQ(NPKS)
 C       this is what was used in the original EMA incorporation
         THRESH(1)%THRLWR = 10**WRCHHB  
-        THRESH(1)%THRUPR = 1.0D99
+        THRESH(1)%THRUPR = 1.0D35
       END IF
 C
       ALLOCATE (THBY(NTHRESH), THEY(NTHRESH))
@@ -3688,3 +3696,135 @@ C      END IF
 C
       RETURN
       END
+C
+C
+C
+c      SUBROUTINE   STOREDATA
+c     I                      (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
+c     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
+c     I                       NOCLIM,CLIML,CLIMU,STNIND)
+C
+C     + + + PURPOSE + + +
+C     Store a station's I/O data for retrieval by Windows interface
+C
+C     + + + DUMMY ARGUMENTS + + +
+c      INTEGER       NPKPLT,NPLOT,HSTFLG, NOCLIM, STNIND
+c      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
+c     &              SYSRFC(NPLOT),WRCFC(NPLOT),FCXPG(NPLOT),WEIBA,
+c     $              CLIML(NPLOT), CLIMU(NPLOT)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     NPKPLT - number of observed peaks
+C     PKLOG  - log10 of observed peaks (plot with x and o)
+C     SYSPP  - systematic record standard deviates (-9999 for historic
+C              peaks) (plot with o) (prob non-exceedance)
+C     WRCPP  - WRC estimated standard deviates  (plot with x)
+C              (prob non-exceedance)
+C     WEIBA  - coefficient for plotting position
+C     NPLOT  - number of plot points in fitted curve
+C     SYSRFC - log10 ordinates of fitted curve, systematic record
+C              (plot with dashed line)
+C     WRCFC  - log10 ordinates of fitted curve, WRC estimates
+C              (plot with solid line)
+C     FCXPG  - tabular abscissa standard deviates for fitted curve
+C              (plot with dashed and solid line)
+C     HSPFLG - flag for use of historic info, 0-used, 1-not used
+C     NOCLIM - flag for confidence limits, 0-available, 1-not available
+C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
+C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
+C     STNIND - index number of this station
+C
+c      Use StationData
+C
+C     + + + LOCAL VARIABLES + + +
+c      INTEGER I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     TODO::  check that StationData has been allocated
+C
+c      STNDATA(STNIND)%NPKPLT = NPKPLT
+c      STNDATA(STNIND)%NPLOT = NPLOT
+c      STNDATA(STNIND)%WEIBA = WEIBA
+c      STNDATA(STNIND)%HSTFLG = HSTFLG
+c      DO 10 I = 1,NPKPLT
+c        STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
+c        STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
+c        STNDATA(STNIND)%WRCPP(I) = WRCPP(I)
+c 10   CONTINUE
+
+c      DO 20 I = 1,NPLOT
+c        STNDATA(STNIND)%SYSRFC(I) = SYSRFC(I)
+c        STNDATA(STNIND)%WRCFC(I) = WRCFC(I)
+c        STNDATA(STNIND)%FCXPG(I) = FCXPG(I)
+c        STNDATA(STNIND)%CLIML(I) = CLIML(I)
+c        STNDATA(STNIND)%CLIMU(I) = CLIMU(I)
+c 20   CONTINUE
+C
+c      RETURN
+c      END
+C
+C
+C
+c      SUBROUTINE   GETDATA
+c     I                      (STNIND,NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
+c     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
+c     I                       NOCLIM,CLIML,CLIMU)
+C
+C     + + + PURPOSE + + +
+C     Return I/O data for a station to the Windows interface
+C
+C     + + + DUMMY ARGUMENTS + + +
+c      INTEGER       STNIND,NPKPLT,NPLOT,HSTFLG,NOCLIM
+c      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
+c     &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
+c     $              CLIML(NPLOT),CLIMU(NPLOT)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STNIND - index number of this station
+C     NPKPLT - number of observed peaks
+C     PKLOG  - log10 of observed peaks (plot with x and o)
+C     SYSPP  - systematic record probabilities (-9999 for historic
+C              peaks) (plot with o) (prob non-exceedance)
+C     WRCPP  - WRC estimated probabilities (plot with x)
+C              (prob non-exceedance)
+C     WEIBA  - coefficient for plotting position
+C     NPLOT  - number of plot points in fitted curve
+C     SYSRFC - log10 ordinates of fitted curve, systematic record
+C              (plot with dashed line)
+C     WRCFC  - log10 ordinates of fitted curve, WRC estimates
+C              (plot with solid line)
+C     TXPROB - tabular abscissa standard deviates for fitted curve
+C              (plot with dashed and solid line)
+C     HSPFLG - flag for use of historic info, 0-used, 1-not used
+C     NOCLIM - flag for confidence limits, 0-available, 1-not available
+C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
+C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
+C
+c      Use StationData
+C
+C     + + + LOCAL VARIABLES + + +
+c      INTEGER I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+c      NPKPLT = STNDATA(STNIND)%NPKPLT 
+c      NPLOT = STNDATA(STNIND)%NPLOT
+c      WEIBA = STNDATA(STNIND)%WEIBA
+c      HSTFLG = STNDATA(STNIND)%HSTFLG
+c      DO 10 I = 1,NPKPLT
+c        PKLOG(I) = STNDATA(STNIND)%PKLOG(I)
+c        SYSPP(I) = STNDATA(STNIND)%SYSPP(I)
+c        WRCPP(I) = STNDATA(STNIND)%WRCPP(I)
+c 10   CONTINUE
+
+c      DO 20 I = 1,NPLOT
+c        SYSRFC(I) = STNDATA(STNIND)%SYSRFC(I)
+c        WRCFC(I) = STNDATA(STNIND)%WRCFC(I)
+c        TXPROB(I)= STNDATA(STNIND)%TXPROB(I)
+c        CLIML(I) = STNDATA(STNIND)%CLIML(I)
+c        CLIMU(I) = STNDATA(STNIND)%CLIMU(I)
+c 20   CONTINUE
+C
+c      RETURN
+c      END
