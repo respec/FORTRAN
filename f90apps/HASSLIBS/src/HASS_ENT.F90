@@ -76,7 +76,7 @@
 
       !local
       INTEGER FUNCTION INQUIRE_NAME(NAME,FUN_DEF)
-        CHARACTER*64       :: NAME
+        CHARACTER*256      :: NAME
         INTEGER            :: FUN_DEF
 
         CHARACTER*256      :: MSG
@@ -211,7 +211,7 @@
         INTEGER                     :: WDMSFL
 
         CHARACTER*256               :: MSG
-        CHARACTER*64                :: LNAME
+        CHARACTER*256               :: LNAME
         INTEGER                     :: RETCOD
 
         LNAME = WDNAME
@@ -255,7 +255,7 @@
         INTEGER                     :: RETCOD
 
         CHARACTER*256               :: MSG
-        CHARACTER*64                :: LNAME
+        CHARACTER*256               :: LNAME
 
         LNAME = WDNAME
         !WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
