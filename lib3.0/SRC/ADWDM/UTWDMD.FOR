@@ -89,7 +89,7 @@ C               read existing record from file
                 READ (WDMSFL,REC=RREC) (WIBUFF(I,RIND),I=1,512)
               ELSE
                 WRITE(STR,*) 'UTWDMD:NotOpen:',WDMSFL,RREC,TRIM(WDNAME)
-                CALL LOG_MSG(STR)
+C               CALL LOG_MSG(STR)
               END IF
             ELSE
 C             return an empty buffer
