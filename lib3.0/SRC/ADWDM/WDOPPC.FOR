@@ -12,7 +12,7 @@ C     buffer are initialized the first time this routine is called.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      WDMSFL,RONWFG,RETCOD
-      CHARACTER*64 WDNAME
+      CHARACTER(LEN=*) WDNAME
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     WDMSFL - Fortran unit number of the WDM file
