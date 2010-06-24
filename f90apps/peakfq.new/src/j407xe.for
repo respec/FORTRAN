@@ -248,21 +248,29 @@ C               longer output
               END IF
             END IF    
 C
+            IF(NFCXPG.LE.0) THEN
+              DO 170 I = 1,MXINT
+                FCXPG(I) = GAUSEX(TXPROB(I))
+  170         CONTINUE
+              NFCXPG = INDX2 - INDX1 + 1
+            ENDIF
+C
+            NPKPLT=NHIST+NSYS-NBGB
+C            
+            IF (QHIOUT .LE. 0.01 .AND. HISTPD .LE. 0.5) THEN
+C             don't plot historic adjusted peaks
+              HSTFLG = 1
+            ELSE
+C             do plot historic adjusted peaks
+              HSTFLG = 0
+            END IF
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
-            CALL STOREDATA (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,NPLOT,
+            CALL STOREDATA (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,NFCXPG,
      I                      SYSRFC(INDX1),WRCFC(INDX1),TXPROB(INDX1),
      I                      HSTFLG,NOCLIM,CLIML(INDX1),CLIMU(INDX1),
      I                      JSEQNO)
             IF(IPLTOP.NE.0)  THEN
 C             initialize (if necessary)
-              IF(NFCXPG.LE.0) THEN
-Cprh                DO 170 I = 1,31
-                DO 170 I = 1,MXINT
-                  FCXPG(I) = GAUSEX(TXPROB(I))
-  170           CONTINUE
-                NFCXPG = INDX2 - INDX1 + 1
-              ENDIF
-              NPKPLT=NHIST+NSYS-NBGB
 C             convert to std deviates
               DO 190 I=1,NPKPLT
                 SYSPP(I)=GAUSEX(SYSPP(I))
@@ -278,13 +286,6 @@ C                    a warning to the user, Is it appropriate
 C                    to have a high-outlier discharge threshold
 C                    when you don't have a lenght of historical
 C                    period?
-              IF (QHIOUT .LE. 0.01 .AND. HISTPD .LE. 0.5) THEN
-C               don't plot historic adjusted peaks
-                HSTFLG = 1
-              ELSE
-C               do plot historic adjusted peaks
-                HSTFLG = 0
-              END IF
               IF (.NOT.UPDATEFG) THEN
                 CALL PLTFRQ( MSG, HEADNG, IPLTOP, GRFMT,
      $                  NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
@@ -3738,10 +3739,24 @@ C     STNIND - index number of this station
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
+      TYPE (StnDat), ALLOCATABLE :: TMPDATA(:)      
 C
 C     + + + END SPECIFICATIONS + + +
 C
-C     TODO::  check that StationData has been allocated
+      IF (ALLOCATED(STNDATA)) THEN
+        ALLOCATE (TMPDATA(STNIND-1))
+        DO 1 I = 1, STNIND-1
+          TMPDATA(I) = STNDATA(I)
+ 1      CONTINUE                  
+        DEALLOCATE (STNDATA)
+      END IF
+c      
+      ALLOCATE (STNDATA(STNIND))
+      IF (ALLOCATED(TMPDATA)) THEN
+        DO 2 I = 1, STNIND-1
+          STNDATA(I) = TMPDATA(I)
+ 2      CONTINUE          
+      END IF
 C
       STNDATA(STNIND)%NPKPLT = NPKPLT
       STNDATA(STNIND)%NPLOT = NPLOT
