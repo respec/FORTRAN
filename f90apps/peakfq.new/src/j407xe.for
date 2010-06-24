@@ -3767,9 +3767,10 @@ C
 C
 C
       SUBROUTINE   GETDATA
-     I                      (STNIND,NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
-     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     I                       NOCLIM,CLIML,CLIMU)
+     I                      (STNIND,
+     O                       NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
+     O                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
+     O                       NOCLIM,CLIML,CLIMU)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
@@ -3779,9 +3780,9 @@ C
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       STNIND,NPKPLT,NPLOT,HSTFLG,NOCLIM
-      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
-     &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
-     $              CLIML(NPLOT),CLIMU(NPLOT)
+      REAL          PKLOG(200),SYSPP(200),WRCPP(200),
+     &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
+     $              CLIML(32),CLIMU(32)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STNIND - index number of this station
