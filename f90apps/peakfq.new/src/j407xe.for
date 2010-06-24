@@ -2481,32 +2481,32 @@ C
      $              SYSRFC,WRCFC,FCXPG,NPLOT,IWXMOD)
       END IF
 C
-      IF (IGKSPL .EQ. 1)  THEN
+c      IF (IGKSPL .EQ. 1)  THEN
 Cprh    always generate BMP graphic files
 C       set device type and code
-        CALL GPDEVC (4,8)
-        PLTEXT = 'BMP'
+c        CALL GPDEVC (4,8)
+c        PLTEXT = 'BMP'
 c        CALL FRQPLG
 c     $            (HEADNG,NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
 c     $            NPLOT,SYSRFC,WRCFC,FCXPG,HSTFLG,
 c     $            NOCLIM, CLIML, CLIMU, IPLTNO, PLTEXT )
-        IF (IPLTOP.GT.0 .AND.
-     $     (GRFMT.EQ.'CGM' .OR. GRFMT(1:2).EQ.'PS' .OR. 
-     $      GRFMT.EQ.'WMF')) THEN !generate graphic metafiles also
+c        IF (IPLTOP.GT.0 .AND.
+c     $     (GRFMT.EQ.'CGM' .OR. GRFMT(1:2).EQ.'PS' .OR. 
+c     $      GRFMT.EQ.'WMF')) THEN !generate graphic metafiles also
 C         set device type and code
-          IF (GRFMT.EQ.'CGM') THEN
-            CALL GPDEVC (4,4)
-          ELSE IF (GRFMT(1:2).EQ.'PS') THEN
-            CALL GPDEVC (4,6)
-          ELSE IF (GRFMT.EQ.'WMF') THEN
-            CALL GPDEVC (4,9)
-          END IF
+c          IF (GRFMT.EQ.'CGM') THEN
+c            CALL GPDEVC (4,4)
+c          ELSE IF (GRFMT(1:2).EQ.'PS') THEN
+c            CALL GPDEVC (4,6)
+c          ELSE IF (GRFMT.EQ.'WMF') THEN
+c            CALL GPDEVC (4,9)
+c          END IF
 c          CALL FRQPLG
 c     $              (HEADNG,NPKPLT, PKLOG, SYSPP, WRCPP, WEIBA,
 c     $              NPLOT,SYSRFC,WRCFC,FCXPG,HSTFLG,
 c     $              NOCLIM, CLIML, CLIMU, IPLTNO, GRFMT )
-        END IF
-      END IF
+c        END IF
+c      END IF
 C
       RETURN
       END
