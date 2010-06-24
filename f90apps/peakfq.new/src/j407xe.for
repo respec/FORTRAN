@@ -87,7 +87,7 @@ C
 C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB
-      EXTERNAL   SORTM, PRTIN2, PRTIN3, GAUSEX
+      EXTERNAL   SORTM, PRTIN2, PRTIN3, GAUSEX, STOREDATA
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA  IER,  NFCXPG ,  JSEQNO
@@ -248,11 +248,11 @@ C               longer output
               END IF
             END IF    
 C
-C           save data (pre-Gausex transform) for retrieval by windows interface
-c            CALL STOREDATA (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,NPLOT,
-c     I                      SYSRFC(INDX1),WRCFC(INDX1),TXPROB(INDX1),
-c     I                      HSTFLG,NOCLIM,CLIML(INDX1),CLIMU(INDX1),
-c     I                      JSEQNO)
+C           save data (pre-Gausex transform) for retrieval by PKFQWIN
+            CALL STOREDATA (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,NPLOT,
+     I                      SYSRFC(INDX1),WRCFC(INDX1),TXPROB(INDX1),
+     I                      HSTFLG,NOCLIM,CLIML(INDX1),CLIMU(INDX1),
+     I                      JSEQNO)
             IF(IPLTOP.NE.0)  THEN
 C             initialize (if necessary)
               IF(NFCXPG.LE.0) THEN
@@ -3699,19 +3699,21 @@ C
 C
 C
 C
-c      SUBROUTINE   STOREDATA
-c     I                      (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
-c     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-c     I                       NOCLIM,CLIML,CLIMU,STNIND)
+      SUBROUTINE   STOREDATA
+     I                      (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
+     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
+     I                       NOCLIM,CLIML,CLIMU,STNIND)
 C
 C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
 C
+      Use StationData
+C
 C     + + + DUMMY ARGUMENTS + + +
-c      INTEGER       NPKPLT,NPLOT,HSTFLG, NOCLIM, STNIND
-c      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
-c     &              SYSRFC(NPLOT),WRCFC(NPLOT),FCXPG(NPLOT),WEIBA,
-c     $              CLIML(NPLOT), CLIMU(NPLOT)
+      INTEGER       NPKPLT,NPLOT,HSTFLG, NOCLIM, STNIND
+      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
+     &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
+     $              CLIML(NPLOT), CLIMU(NPLOT)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NPKPLT - number of observed peaks
@@ -3726,7 +3728,7 @@ C     SYSRFC - log10 ordinates of fitted curve, systematic record
 C              (plot with dashed line)
 C     WRCFC  - log10 ordinates of fitted curve, WRC estimates
 C              (plot with solid line)
-C     FCXPG  - tabular abscissa standard deviates for fitted curve
+C     TXPROB - tabular abscissa standard deviates for fitted curve
 C              (plot with dashed and solid line)
 C     HSPFLG - flag for use of historic info, 0-used, 1-not used
 C     NOCLIM - flag for confidence limits, 0-available, 1-not available
@@ -3734,51 +3736,52 @@ C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     STNIND - index number of this station
 C
-c      Use StationData
-C
 C     + + + LOCAL VARIABLES + + +
-c      INTEGER I
+      INTEGER I
 C
 C     + + + END SPECIFICATIONS + + +
 C
 C     TODO::  check that StationData has been allocated
 C
-c      STNDATA(STNIND)%NPKPLT = NPKPLT
-c      STNDATA(STNIND)%NPLOT = NPLOT
-c      STNDATA(STNIND)%WEIBA = WEIBA
-c      STNDATA(STNIND)%HSTFLG = HSTFLG
-c      DO 10 I = 1,NPKPLT
-c        STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
-c        STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
-c        STNDATA(STNIND)%WRCPP(I) = WRCPP(I)
-c 10   CONTINUE
+      STNDATA(STNIND)%NPKPLT = NPKPLT
+      STNDATA(STNIND)%NPLOT = NPLOT
+      STNDATA(STNIND)%WEIBA = WEIBA
+      STNDATA(STNIND)%HSTFLG = HSTFLG
+      DO 10 I = 1,NPKPLT
+        STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
+        STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
+        STNDATA(STNIND)%WRCPP(I) = WRCPP(I)
+ 10   CONTINUE
 
-c      DO 20 I = 1,NPLOT
-c        STNDATA(STNIND)%SYSRFC(I) = SYSRFC(I)
-c        STNDATA(STNIND)%WRCFC(I) = WRCFC(I)
-c        STNDATA(STNIND)%FCXPG(I) = FCXPG(I)
-c        STNDATA(STNIND)%CLIML(I) = CLIML(I)
-c        STNDATA(STNIND)%CLIMU(I) = CLIMU(I)
-c 20   CONTINUE
+      DO 20 I = 1,NPLOT
+        STNDATA(STNIND)%SYSRFC(I) = SYSRFC(I)
+        STNDATA(STNIND)%WRCFC(I) = WRCFC(I)
+        STNDATA(STNIND)%TXPROB(I) = TXPROB(I)
+        STNDATA(STNIND)%CLIML(I) = CLIML(I)
+        STNDATA(STNIND)%CLIMU(I) = CLIMU(I)
+ 20   CONTINUE
 C
-c      RETURN
-c      END
+      RETURN
+      END
 C
 C
 C
-c      SUBROUTINE   GETDATA
-c     I                      (STNIND,NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
-c     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-c     I                       NOCLIM,CLIML,CLIMU)
+      SUBROUTINE   GETDATA
+     I                      (STNIND,NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
+     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
+     I                       NOCLIM,CLIML,CLIMU)
+      !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
 C     Return I/O data for a station to the Windows interface
 C
+      Use StationData
+C
 C     + + + DUMMY ARGUMENTS + + +
-c      INTEGER       STNIND,NPKPLT,NPLOT,HSTFLG,NOCLIM
-c      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
-c     &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
-c     $              CLIML(NPLOT),CLIMU(NPLOT)
+      INTEGER       STNIND,NPKPLT,NPLOT,HSTFLG,NOCLIM
+      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
+     &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
+     $              CLIML(NPLOT),CLIMU(NPLOT)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STNIND - index number of this station
@@ -3801,30 +3804,28 @@ C     NOCLIM - flag for confidence limits, 0-available, 1-not available
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C
-c      Use StationData
-C
 C     + + + LOCAL VARIABLES + + +
-c      INTEGER I
+      INTEGER I
 C
 C     + + + END SPECIFICATIONS + + +
 C
-c      NPKPLT = STNDATA(STNIND)%NPKPLT 
-c      NPLOT = STNDATA(STNIND)%NPLOT
-c      WEIBA = STNDATA(STNIND)%WEIBA
-c      HSTFLG = STNDATA(STNIND)%HSTFLG
-c      DO 10 I = 1,NPKPLT
-c        PKLOG(I) = STNDATA(STNIND)%PKLOG(I)
-c        SYSPP(I) = STNDATA(STNIND)%SYSPP(I)
-c        WRCPP(I) = STNDATA(STNIND)%WRCPP(I)
-c 10   CONTINUE
+      NPKPLT = STNDATA(STNIND)%NPKPLT 
+      NPLOT = STNDATA(STNIND)%NPLOT
+      WEIBA = STNDATA(STNIND)%WEIBA
+      HSTFLG = STNDATA(STNIND)%HSTFLG
+      DO 10 I = 1,NPKPLT
+        PKLOG(I) = STNDATA(STNIND)%PKLOG(I)
+        SYSPP(I) = STNDATA(STNIND)%SYSPP(I)
+        WRCPP(I) = STNDATA(STNIND)%WRCPP(I)
+ 10   CONTINUE
 
-c      DO 20 I = 1,NPLOT
-c        SYSRFC(I) = STNDATA(STNIND)%SYSRFC(I)
-c        WRCFC(I) = STNDATA(STNIND)%WRCFC(I)
-c        TXPROB(I)= STNDATA(STNIND)%TXPROB(I)
-c        CLIML(I) = STNDATA(STNIND)%CLIML(I)
-c        CLIMU(I) = STNDATA(STNIND)%CLIMU(I)
-c 20   CONTINUE
+      DO 20 I = 1,NPLOT
+        SYSRFC(I) = STNDATA(STNIND)%SYSRFC(I)
+        WRCFC(I) = STNDATA(STNIND)%WRCFC(I)
+        TXPROB(I)= STNDATA(STNIND)%TXPROB(I)
+        CLIML(I) = STNDATA(STNIND)%CLIML(I)
+        CLIMU(I) = STNDATA(STNIND)%CLIMU(I)
+ 20   CONTINUE
 C
-c      RETURN
-c      END
+      RETURN
+      END
