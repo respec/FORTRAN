@@ -165,6 +165,9 @@ c        write(*,*) "Prblem with REWIND, IO: ",S
 
       IF (NSTA .GT. 0) THEN
         WRITE (*,*) "MAIN:Found ",NSTA," Stations"
+        IF (ALLOCATED(STASPECS)) THEN
+          DEALLOCATE(STASPECS)
+        END IF
         ALLOCATE (STASPECS(NSTA))
         ALLSOM = 2 !only doing specified stations
       ELSE  !all stations, no updates to specifications
