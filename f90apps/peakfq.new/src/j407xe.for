@@ -268,7 +268,7 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
             CALL STOREDATA (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,NFCXPG,
      I                      SYSRFC(INDX1),WRCFC(INDX1),TXPROB(INDX1),
      I                      HSTFLG,NOCLIM,CLIML(INDX1),CLIMU(INDX1),
-     I                      JSEQNO)
+     I                      JSEQNO,HEADNG(9))
             IF(IPLTOP.NE.0)  THEN
 C             initialize (if necessary)
 C             convert to std deviates
@@ -1871,6 +1871,7 @@ C     set Z,N,H card flags
 C
       IF (ISTART .EQ. 0) THEN
 C       first call, no CARD value to process, so read one
+        REWIND(IN,ERR=999)
  9      CONTINUE
           READ(IN, '(A)', END=998) CARD
 Ckmf      left-shift station number
@@ -3703,7 +3704,7 @@ C
       SUBROUTINE   STOREDATA
      I                      (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
      I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     I                       NOCLIM,CLIML,CLIMU,STNIND)
+     I                       NOCLIM,CLIML,CLIMU,STNIND,HEADER)
 C
 C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
@@ -3715,6 +3716,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
      $              CLIML(NPLOT), CLIMU(NPLOT)
+      CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NPKPLT - number of observed peaks
@@ -3736,6 +3738,7 @@ C     NOCLIM - flag for confidence limits, 0-available, 1-not available
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     STNIND - index number of this station
+C     HEADER - Title header for each station's analysis
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
@@ -3758,6 +3761,7 @@ c
  2      CONTINUE          
       END IF
 C
+      STNDATA(STNIND)%HEADER = HEADER
       STNDATA(STNIND)%NPKPLT = NPKPLT
       STNDATA(STNIND)%NPLOT = NPLOT
       STNDATA(STNIND)%WEIBA = WEIBA
@@ -3785,7 +3789,7 @@ C
      I                      (STNIND,
      O                       NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
      O                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     O                       NOCLIM,CLIML,CLIMU)
+     O                       NOCLIM,CLIML,CLIMU,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
@@ -3798,6 +3802,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          PKLOG(200),SYSPP(200),WRCPP(200),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
      $              CLIML(32),CLIMU(32)
+      CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STNIND - index number of this station
@@ -3819,12 +3824,14 @@ C     HSPFLG - flag for use of historic info, 0-used, 1-not used
 C     NOCLIM - flag for confidence limits, 0-available, 1-not available
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
+C     HEADER - Title header for each station's analysis
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      HEADER = STNDATA(STNIND)%HEADER
       NPKPLT = STNDATA(STNIND)%NPKPLT 
       NPLOT = STNDATA(STNIND)%NPLOT
       WEIBA = STNDATA(STNIND)%WEIBA
