@@ -163,11 +163,12 @@ c        write(*,*) "Prblem with REWIND, IO: ",S
 
  30   CONTINUE
 
+      IF (ALLOCATED(STASPECS)) THEN
+        DEALLOCATE(STASPECS)
+      END IF
+      
       IF (NSTA .GT. 0) THEN
         WRITE (*,*) "MAIN:Found ",NSTA," Stations"
-        IF (ALLOCATED(STASPECS)) THEN
-          DEALLOCATE(STASPECS)
-        END IF
         ALLOCATE (STASPECS(NSTA))
         ALLSOM = 2 !only doing specified stations
       ELSE  !all stations, no updates to specifications
@@ -936,9 +937,9 @@ C             same station ID, increment STAID index
 C               this station already has an index, increment it
                 STAIND = CVRINT(STAUSED(ISTA)(J+2:K)) + 1
                 IF (STAIND.LT.10) THEN
-                  WRITE(STAID,'(I1)') STAID // "-",STAIND
+                  WRITE(STAID,'(A,I1)') TRIM(STAID) // "-",STAIND
                 ELSE
-                  WRITE(STAID,'(I2)') STAID // "-",STAIND
+                  WRITE(STAID,'(A,I2)') TRIM(STAID) // "-",STAIND
                 END IF
               ELSE !first duplicate of this station
                 STAID = TRIM(STAID) // "-1"

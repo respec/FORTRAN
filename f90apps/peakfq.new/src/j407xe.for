@@ -1450,7 +1450,7 @@ C     + + + LOCAL VARIABLES + + +
 Cprh      CHARACTER*15 CD
       CHARACTER*18 CURSTA
       INTEGER   MSG, NOBS, IBEGYR, IENDYR, IHOPTI, IKROPT, I, IBEGIN,
-     &          IEND, IPK, LOOPBK, OKFG
+     &          IEND, IPK, LOOPBK, OKFG, LSTART
 Cprh                , K, L15, IRET, SCLU, SGRP,
 Cprh     $          IVAL(2), CVAL(3), L3, L2, L7, L4, L1, L8,
 Cprh     $          L6, L9, L10
@@ -1498,6 +1498,7 @@ Cprh      L15= 15
       NSKIP1 = 0
       NSYS   = 0
       NHIST  = 0
+      LSTART = ISTART
 Cprh      SCLU   = 121
 C
   100 CONTINUE
@@ -1519,7 +1520,7 @@ C           check to see if this is a station user wanted
             OKFG = 0
 C           call to DOSTATION will update argument CURSTA with an index 
 C           if multiple instances of this station are encountered
-            IF (DOSTATION(ISTART,CURSTA)) OKFG = 1
+            IF (DOSTATION(LSTART,CURSTA)) OKFG = 1
 Cprh            DO 110 K = 1,20
 Cprh              CD = DOSTA(K)
 Cprh              CALL LFTSTR(L15,CD) 
