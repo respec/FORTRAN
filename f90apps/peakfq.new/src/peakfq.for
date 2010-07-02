@@ -728,6 +728,7 @@ C     + + + LOCAL VARIABLES
       INTEGER      I,ISTA,NSPECS,IVAL
       CHARACTER*120 S,KWD
       TYPE (ThreshSpec), ALLOCATABLE :: LTHRESH(:)
+      TYPE (IntervalSpec), ALLOCATABLE :: LINTERVAL(:)
 C
 C     + + + FUNCTIONS + + +
       INTEGER      CVRINT, IYESNO
@@ -801,7 +802,6 @@ C         init EMA Threshold specs
             FLONG = CVRDEC(S)
           ELSE IF (KWD .EQ. 'PCPT_THRESH') THEN
 C           see if any threshold specs exist
-c         write(*,*) "Processing Threshold spec, NTHRESH",NTHRESH
             IF (NTHRESH.GT.0) THEN
 C             make local copy of existing threshold specs
               ALLOCATE (LTHRESH(NTHRESH))
@@ -825,40 +825,73 @@ C             put local copy back in array
  60           CONTINUE
               DEALLOCATE (LTHRESH)
             END IF
-c         write(*,*)"Threshold record: ",S
 C           read 4 EMA Threshold components
             KWD = STRRETREM(S)
-c         write(*,*)"Threshold, 1st ",KWD
             IF (LEN_TRIM(KWD).GT.0) THEN
-c         write(*,*)"Threshold, calling CVRINT"
               IVAL = CVRINT(KWD)
-c         write(*,*)"Threshold, got 1st, IVAL",IVAL
               THRESH(NTHRESH)%THRBYR =IVAL
-c         write(*,*)"Threshold, asigned 1st to THRESH"
             ELSE
-c              WRITE(*,*) 
-c     $              "No value found for EMA Threshold Beginning Year"
             END IF
             KWD = STRRETREM(S)
-c         write(*,*)"Threshold, 2nd ",KWD
             IF (LEN_TRIM(KWD).GT.0) THEN
               THRESH(NTHRESH)%THREYR = CVRINT(KWD)
             ELSE
               WRITE(*,*) "No value found for EMA Threshold Ending Year"
             END IF
             KWD = STRRETREM(S)
-c         write(*,*)"Threshold, 3rd ",KWD
             IF (LEN_TRIM(KWD).GT.0) THEN
               THRESH(NTHRESH)%THRLWR = CVRDEC(KWD)
             ELSE
               WRITE(*,*) "No value found for EMA Threshold Lower Bound"
             END IF
             KWD = STRRETREM(S)
-c         write(*,*)"Threshold, 4th ",KWD
             IF (LEN_TRIM(KWD).GT.0) THEN
               THRESH(NTHRESH)%THRUPR = CVRDEC(KWD)
             ELSE
               WRITE(*,*) "No value found for EMA Threshold Upper Bound"
+            END IF
+          ELSE IF (KWD .EQ. 'INTERVAL') THEN
+C           see if any interval specs exist
+            IF (NINTERVAL.GT.0) THEN
+C             make local copy of existing interval specs
+              ALLOCATE (LINTERVAL(NINTERVAL))
+              DO 70 J = 1, NINTERVAL
+                LINTERVAL(J)%INTRVLYR = INTERVAL(J)%INTRVLYR
+                LINTERVAL(J)%INTRVLLWR = INTERVAL(J)%INTRVLLWR
+                LINTERVAL(J)%INTRVLUPR= INTERVAL(J)%INTRVLUPR
+ 70           CONTINUE
+              DEALLOCATE (INTERVAL)
+            END IF
+            NINTERVAL = NINTERVAL + 1
+            ALLOCATE (INTERVAL(NINTERVAL))
+            IF (ALLOCATED(LINTERVAL)) THEN
+C             put local copy back in array
+              DO 80 J = 1, NINTERVAL - 1
+                INTERVAL(J)%INTRVLYR = LINTERVAL(J)%INTRVLYR
+                INTERVAL(J)%INTRVLLWR = LINTERVAL(J)%INTRVLLWR
+                INTERVAL(J)%INTRVLUPR = LINTERVAL(J)%INTRVLUPR
+ 80           CONTINUE
+              DEALLOCATE (LINTERVAL)
+            END IF
+C           read 3 EMA Interval components
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.0) THEN
+              IVAL = CVRINT(KWD)
+              INTERVAL(NINTERVAL)%INTRVLYR =IVAL
+            ELSE
+              WRITE(*,*) "No value found for EMA Interval Year"
+            END IF
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.0) THEN
+              INTERVAL(NINTERVAL)%INTRVLLWR = CVRDEC(KWD)
+            ELSE
+              WRITE(*,*) "No value found for EMA Interval Lower Bound"
+            END IF
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.0) THEN
+              INTERVAL(NINTERVAL)%INTRVLUPR = CVRDEC(KWD)
+            ELSE
+              WRITE(*,*) "No value found for EMA Interval Upper Bound"
             END IF
           END IF
  100    CONTINUE
@@ -1087,6 +1120,8 @@ C     + + + HISTORY + + +
 C     created for batch version of PEAKFQ, 1/04
 C     Paul Hummel of AQUA TERRA Consultants
 C
+      USE EMAThresh
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT
       REAL          GENSKU, HISTPD, QHIOUT, QLWOUT, GAGEB, RMSEGS, 
@@ -1143,6 +1178,21 @@ C     start with station ID, remove any duplicate identifier at end
         STAID = STAID(1:J-1)
       END IF
       WRITE(92,*) 'Station ',STAID
+C
+C     thresholds and intervals
+      IF (NTHRESH.GT.0) THEN
+        DO 10 I=1,NTHRESH
+          WRITE(92,*) '     PCPT_THRESH ',THRESH(I)%THRBYR,
+     $                   THRESH(I)%THREYR,THRESH(I)%THRLWR,
+     $                   THRESH(I)%THRUPR
+ 10     CONTINUE  
+      END IF
+      IF (NINTERVAL.GT.0) THEN
+        DO 20 I=1,NINTERVAL
+          WRITE(92,*) '     INTERVAL ',INTERVAL(I)%INTRVLYR,
+     $                   INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLUPR
+ 20     CONTINUE  
+      END IF
 C     skew parameters
       IF (ISKUOP.EQ.-1) THEN
         WRITE(92,*) '     SkewOpt Station'
