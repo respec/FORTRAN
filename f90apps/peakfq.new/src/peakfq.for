@@ -767,6 +767,11 @@ C         init EMA Threshold specs
           NTHRESH = 0
           DEALLOCATE (THRESH)
         END IF
+        IF (ALLOCATED(INTERVAL)) THEN
+C         init EMA Interval specs
+          NINTERVAL = 0
+          DEALLOCATE (INTERVAL)
+        END IF
         DO 100 I = 1, NSPECS
           S = STASPECS(ISTA)%SPECS(I)%STR
           KWD = STRRETREM(S)
