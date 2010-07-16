@@ -3505,6 +3505,12 @@ C         enough water to have outflow
         END IF
       END IF
 C
+      IF (AGWO .LT. 0.0) THEN
+C       BRB notes that AGWO can end up less than zero, 
+C       force it to zero
+        AGWO= 0.0
+      END IF
+C
       AGWS= AGWS+ (AINFLO- AGWO)
 C
 C     This is the second part of the check on AGWS to ensure that it
