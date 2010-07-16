@@ -16,9 +16,11 @@ $TEXT
  RCHRES: &I
 
  The calculated saturation dissolved oxygen concentration (SATDO) is
- negative.  This occurs when the water temperature above 66 C (150 F).
- In most cases, this indicates an error in the time series input
- (GATMP if HTRCH is on, TW if HTRCH is off).
+ negative.  This occurs when the water temperature is above 66 C (150 F).
+ In most cases, this indicates an instability in advection or an error in 
+ the time series input (GATMP if HTRCH is on, TW if HTRCH is off). Try
+ changing the ADCALC activity flag (ADFG) to 2; this will cause the advection
+ to use the same weighting factors as are used in the flow routing.
 
  Relevant values are :
 

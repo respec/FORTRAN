@@ -1301,10 +1301,10 @@ _WIDTH   5
 _COLUMN 16
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
-Value  of 1 indicates section ADCALC is active.
+Value  of 1 or 2 indicates section ADCALC is active.
 _PNAME  ADFG
 $FIELD  FIELD5
 _WIDTH   5
