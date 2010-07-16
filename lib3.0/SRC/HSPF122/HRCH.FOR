@@ -90,7 +90,7 @@ C     input for section hydr
       END IF
 C
 C     adcalc
-      IF (ADFG.EQ.1) THEN
+      IF (ADFG.EQ.1 .OR. ADFG.EQ.2) THEN
         CALL PADCAL
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
@@ -526,7 +526,7 @@ C       perform the simulation
           CALL HYDR
         END IF
 C
-        IF (ADFG .EQ. 1) THEN
+        IF (ADFG .EQ. 1 .OR. ADFG .EQ. 2) THEN
           CALL ADCALC
 C
           IF (CONSFG .EQ. 1) THEN
