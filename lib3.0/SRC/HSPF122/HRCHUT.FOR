@@ -137,11 +137,7 @@ C         reach/res has no outflow at start of ivl
           JS= 0.0
         END IF
 C
-        IF (ADFG .EQ. 2 .AND. JS.GT.KS) THEN
-C          IF (RCHNO.EQ.115) THEN
-C            WRITE(MESSU,'(A,1X,2I5,4I2,2F10.3)')
-C     1        'ADVECT:JS problem',RCHNO,DATIM,JS,KS
-C          END IF 
+        IF (ADFG .EQ. 2 .AND. JS.GT.KS) THEN 
 Cbrb      use same weighting as used in flow routing i.e., JS= KS
 Cbrb      this was added 6/2010 by brb & pbd based on suggestion of 
 Cbrb      Sen Bai of Tetra Tech - ASCE J. Hydrol. Engr., Vol.15, No.3, March, 2010

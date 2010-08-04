@@ -199,9 +199,9 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION HTRCH2 + + +
       INCLUDE 'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,REQFG,TSSUB(2),FLGVAL
+      INTEGER     SCLU,SGRP,I,REQFG,TSSUB(2),FLGVAL
       REAL        AVDEPE,CLDFAC,CVQT,DELTTW,EVAP,MPREC,SPD,TAKELV,TMP,
-     $            TWKELV,VPRESA,VPRESW,TWS,OTW,SRAD
+     $            TWKELV,VPRESA,VPRESW,TWS,OTW,SRAD,RTW
       DOUBLE PRECISION   DTW
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
@@ -267,11 +267,23 @@ C     also save TW (TWS) for later use in the bed conduction models
      I             EOVOL,NEXITS,
      M             DTW,
      O             ROHEAT,OHEAT)
-C      IF (DTW .GT. 60.0) THEN
-C        WRITE(MESSU,'(A,1X,2I5,4I2,2F10.3)')
-C     1         'ADVECT:TW problem',RCHNO,DATIM,DTW,AIRTMP
-C        DTW = AIRTMP
-C      END IF
+      IF (DTW .GT. 66.0) THEN 
+        IF (ADFG .LT. 2) THEN
+C         warning - water temperature is too high, 
+C         may result in instability in OXREA
+          CALL OMSTD (DATIM)
+          CALL OMSTI (RCHNO)
+          RTW = DTW
+          CALL OMSTR (RTW)
+          SCLU= 344
+          SGRP= 21
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               HTWCNT)
+        ELSE
+C         reset water temp to value prior to advection
+          DTW = TWS
+        END IF
+      END IF
       TW= DTW
 C
 C     simulate heat exchange with the atmosphere
