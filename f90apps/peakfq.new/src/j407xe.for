@@ -853,6 +853,9 @@ C     NOTE -- THE PEAKS AND THEIR PLOTTING POSITIONS MUST
 C     BE LINED UP PROPERLY BY PREVIOUS CALLS TO SORTM
 C     AND ALIGNP.
 C
+C     INCLUDE PERCEPTION THRESHOLDS WITH PLOTTING POSITIONS, PRH 8/2010
+      Use EMAThresh
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MSG, NPKS, EMAOPT, WDMSFL
       REAL    PKS(NPKS),  SYSPP(NPKS), WRCPP(NPKS), WEIBA
@@ -877,8 +880,8 @@ C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number for input WDM file
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   JLINE,         I, NB, J, ILINE, ND2
-      REAL    EPSILN
+      INTEGER   JLINE,         I, NB, J, ILINE, ND2, LYR
+      REAL    EPSILN, LTHR, UTHR
       CHARACTER*8 ESTTYP(2)
 C
 C     + + + INTRINSICS + + +
@@ -917,9 +920,11 @@ C
 Cprh 1022 FORMAT( 6X, 5HWATER, 9X, 6HRANKED, 7X,
 Cprh     $       10HSYSTEMATIC, 6X,'BULL.17B'/ 
 Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
- 1022 FORMAT(6X,'WATER',7X,'  RANKED ',6X,'SYSTEMATIC',6X, A, / 
-     $       6X,' YEAR',7X,'DISCHARGE',6X,'  RECORD  ',6X,'ESTIMATE'/)
- 1023 FORMAT( I11,F15.1,2F15.4,
+ 1022 FORMAT(6X,'WATER',7X,'  RANKED ',6X,'SYSTEMATIC',6X, A,7X,
+     $       'THRESHOLDS' / 
+     $       6X,' YEAR',7X,'DISCHARGE',6X,'  RECORD  ',6X,'ESTIMATE',5X,
+     $       'LOWER    UPPER'/)
+ 1023 FORMAT( I11,F15.1,2F15.4,2X,2F9.0,
      $      2A1,T27,'           --  ',  1A1, '          --  ' )
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
@@ -970,8 +975,20 @@ C       IF(NLINES.GT.50)JLINE = ILINE+39
           NB = 1
           IF(IPKSEQ(IPKPTR(I)) .LT. 0)    NB = 2
           IF(PKS(IPKPTR(I)) .LE. GAGEB )  NB = 3
+          LYR = ABS(IPKSEQ(IPKPTR(I)))
+          LTHR = 0.0
+          UTHR = 1.0E20
+          IF (NTHRESH .GT. 0) THEN
+            DO 305 J = 1, NTHRESH
+              IF (LYR .GE. THRESH(J)%THRBYR .AND. 
+     $            LYR .LE. THRESH(J)%THREYR) THEN
+                LTHR = THRESH(J)%THRLWR
+                UTHR = THRESH(J)%THRUPR
+              END IF
+ 305        CONTINUE  
+          END IF
           WRITE(MSG,1023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     *                  SYSPP(I), WRCPP(I) ,
+     *                  SYSPP(I), WRCPP(I) , LTHR, UTHR,
      $                  (' ',J=1,NB)
   310   CONTINUE
       IF(JLINE.LT.NPKS) GO TO 302
