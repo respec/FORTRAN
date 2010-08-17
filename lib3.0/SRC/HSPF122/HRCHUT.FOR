@@ -377,8 +377,13 @@ C
           END IF
 C
 C         calculate reaeration coefficient
-          KOREA= REAK*(AVVELE**EXPREV)*(AVDEPE**EXPRED)
-     $           *(TCGINV**(TW - 20.))*DELT60
+          IF (TW .LT. 66) THEN
+            KOREA= REAK*(AVVELE**EXPREV)*(AVDEPE**EXPRED)
+     $             *(TCGINV**(TW - 20.))*DELT60
+          ELSE
+C           prevent numeric overflow when TW is extremely high
+            KOREA= .999
+          END IF 
         END IF
       END IF
 C
