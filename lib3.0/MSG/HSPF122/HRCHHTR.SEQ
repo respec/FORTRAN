@@ -28,10 +28,11 @@ $TEXT
 
  RCHRES: &I
 
- Water temperature is above 66 C (150 F).  In most cases, this indicates an 
- instability in advection.  Try changing the ADCALC activity flag (ADFG) to 2; 
- this will cause the advection to use the same weighting factors as are used 
- in the flow routing.
+ Water temperature is above 66 C (150 F).  In most cases, this indicates 
+ an instability in advection.  Try adding more definition in the FTABLE 
+ for this reach.  Or try changing the ADCALC activity flag (ADFG) to 2; 
+ this will cause the advection to use the same weighting factors as are 
+ used in the flow routing.
 
  Relevant values are :
 
