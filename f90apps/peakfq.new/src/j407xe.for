@@ -661,6 +661,9 @@ C
 C     + + + PURPOSE + + +
 C     PRINTS LISTINGS OF J407/WCF INPUT DATA --  INPUT PARAMS.
 C
+C     INCLUDE EMA PERCEPTION THRESHOLDS IN SUMMARY, PRH, 8/2010
+      Use EMAThresh
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   IDEBUG, XPKS, EMAOPT, WDMSFL
 C
@@ -683,7 +686,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER * 15  DWORK(4)
       CHARACTER*12 SKUOP(3)
       INTEGER   I
-      CHARACTER*8  YNHIST
+      CHARACTER*8  YNHIST, ATYPE
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   INT
@@ -710,7 +713,8 @@ C     + + + FORMATS + + +
      $  /16X,'Gage base discharge                  = ',F8.1,
      $  /16X,'User supplied high outlier threshold = ',A,
      $  /16X,'User supplied low outlier criterion  = ',A,
-     $  /16X,'Plotting position parameter          = ',F8.2)
+     $  /16X,'Plotting position parameter          = ',F8.2,
+     $  /16X,'Type of analysis                       ',A)
  6    FORMAT(/)
 C    $ /'     -- YEARS OF RECORD --    HISTORIC    GENERALIZED',
 C    $           'GAGE BASE'/
@@ -721,6 +725,9 @@ C    $  /' ', 8X,I3,5X,I7,9X,I3,7X,F7.3,8X, A6,5X,  A ,2X,F8.1,//
 C    $         '     USER-SET OUTLIER CRITERIA   '         /
 C    $        '     HIGH OUTLIER   LOW OUTLIER  '        /
 C    $   6X, 2A )
+ 7    FORMAT(16X,'Oservational Thresholds:',
+     $      /16X,'    Begin     End     Low     High')
+ 8    FORMAT(18X,2I8,F10.1,G10.1)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -734,6 +741,11 @@ C       historic adjustment applied
       ELSE
         YNHIST = '      NO'
       END IF
+      IF (EMAOPT .EQ. 0) THEN
+        ATYPE = 'BULL.17B'
+      ELSE
+        ATYPE = '     EMA'
+      END IF
       IF(RMSEGS .GT. 0.) THEN
         WRITE(DWORK(1),'(F6.3)') RMSEGS
         WRITE(DWORK(4),'(F6.3)') RMSEGS**2
@@ -746,7 +758,16 @@ C       historic adjustment applied
       WRITE(MSG,5) NSYS+NHIST, XPKS, NSYS-XPKS, NHIST,
 C    $             INT(HISTPD+.5), YNHIST, GENSKU, DWORK(1),
      $             INT(HISTPD+.5),         GENSKU, DWORK(1),DWORK(4),
-     $             SKUOP(IGSOPT+2),GAGEB, DWORK(2),DWORK(3),WEIBA
+     $             SKUOP(IGSOPT+2),GAGEB, DWORK(2),DWORK(3),WEIBA,ATYPE
+      IF (EMAOPT .GT. 0) THEN
+        IF (NTHRESH .GT. 0) THEN
+          WRITE(MSG,7) 
+          DO 110 I= 1, NTHRESH
+            WRITE(MSG,8) THRESH(I)%THRBYR,THRESH(I)%THREYR,
+     $                   THRESH(I)%THRLWR,THRESH(I)%THRUPR
+ 110      CONTINUE
+        END IF
+      END IF
       CALL PRTPHD( 2002,   -999, EMAOPT, WDMSFL  )
       IF(IDEBUG.NE.0) THEN
         WRITE(MSG,*)'   PeakFQ-DEBUG OPTION SET =',IDEBUG
@@ -924,7 +945,7 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
      $       'THRESHOLDS' / 
      $       6X,' YEAR',7X,'DISCHARGE',6X,'  RECORD  ',6X,'ESTIMATE',5X,
      $       'LOWER      UPPER'/)
- 1023 FORMAT( I11,F15.1,2F15.4,2G11.0,
+ 1023 FORMAT( I11,F15.1,2F15.4,F11.1,G11.1,
      $      2A1,T27,'           --  ',  1A1, '          --  ' )
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
