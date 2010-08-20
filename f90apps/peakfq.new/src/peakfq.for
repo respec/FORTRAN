@@ -38,7 +38,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*64 FNAME, VERSN
       CHARACTER*120 S, KWD, SPCFNM, IOSTXT
       CHARACTER*120, ALLOCATABLE :: SPECS(:), LSPECS(:)
-      LOGICAL      LFLAG
+      LOGICAL      LFLAG, OPENED
 C
 C     + + + FUNCTIONS + + +
       INTEGER      ZLNTXT, CVRINT
@@ -57,6 +57,12 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
       SPCFNM= INPUTARG
+C
+      FE= 99     
+      INQUIRE(UNIT=FE,OPENED=OPENED)
+      IF (.NOT.OPENED) THEN
+        OPEN(UNIT=FE,FILE='ERROR.FIL') 
+      END IF
 C      
 C     avoid some lahey math errors
 C     LFLAG = .TRUE.
@@ -76,7 +82,7 @@ C     open the old WDM message file (read only if possible)
       IF (ERRFLG.NE.0) THEN
 C       bad wdm file
         WRITE(FE,*) 'Bad WDM file:',ERRFLG,WDNAME,FILNAM
-        WRITE(*,*)  'Bad WDM file:',ERRFLG,WDNAME,FILNAM
+        WRITE(FE,*)  'Bad WDM file:',ERRFLG,WDNAME,FILNAM
         STOP
       END IF
 C
@@ -121,7 +127,7 @@ C     O             RETCOD)
 C      IF (RETCOD.NE.0) THEN
 CC       bad wdm file
 C        WRITE(91,*) 'Bad Message File:',RETCOD,FILNAM
-C        WRITE(*,*)  'Bad Message File:',RETCOD,FILNAM
+C        WRITE(FE,*)  'Bad Message File:',RETCOD,FILNAM
 C        STOP
 C      END IF
 
@@ -130,36 +136,36 @@ C     get driver input file from command line arguement
 C      CALL GETCL(SPCFNM)
       OPEN(SPCFUN,FILE=SPCFNM,IOSTAT=IOSNUM,ERR=5)
 C     successful open of spec file
-      WRITE(*,*) "MAIN:Reading Specification file: ",SPCFNM
+      WRITE(FE,*) "MAIN:Reading Specification file: ",SPCFNM
       GO TO 8
 
  5    CONTINUE !problem opening spec file
 C        CALL IOSTAT_MSG(IOSNUM,IOSTXT)
-        write(*,*) "Unable to open Specification file: ",SPCFNM
+        write(FE,*) "Unable to open Specification file: ",SPCFNM
         GO TO 999
 
  8    CONTINUE
 
 C     scan file for stations
-      write(*,*) "Scanning Spec file for stations. Spec file contents:"
+      write(FE,*) "Scanning Spec file for stations. Spec file contents:"
       NSTA = 0
       DO        !loop to count stations to process
         READ(SPCFUN,1000,IOSTAT=IOSNUM,END=10) S
-        write(*,*) "  " // S
+        write(FE,*) "  " // S
         CALL UPCASE(S)
         IF (S(1:7) .EQ. 'STATION') THEN
           NSTA = NSTA + 1
         END IF
       END DO
  10   CONTINUE  !get here on end of file
-      write(*,*) "Finished scan of Spec file."
+      write(FE,*) "Finished scan of Spec file."
 
       REWIND(SPCFUN,IOSTAT=IOSNUM,ERR=20)
-c      write(*,*) "Just did REWIND of spec file."
+c      write(FE,*) "Just did REWIND of spec file."
       GO TO 30
 
  20   CONTINUE !get here on REWIND error
-c        write(*,*) "Prblem with REWIND, IO: ",S
+c        write(FE,*) "Prblem with REWIND, IO: ",S
 
  30   CONTINUE
 
@@ -168,11 +174,11 @@ c        write(*,*) "Prblem with REWIND, IO: ",S
       END IF
       
       IF (NSTA .GT. 0) THEN
-        WRITE (*,*) "MAIN:Found ",NSTA," Stations"
+        WRITE (FE,*) "MAIN:Found ",NSTA," Stations"
         ALLOCATE (STASPECS(NSTA))
         ALLSOM = 2 !only doing specified stations
       ELSE  !all stations, no updates to specifications
-        WRITE (*,*) "MAIN:No Stations Found - Do All"
+        WRITE (FE,*) "MAIN:No Stations Found - Do All"
       END IF
 
       ISTA  = 0
@@ -181,7 +187,7 @@ C     process driver input file
       DO 
         IF (IPEND .EQ. 0) THEN !read next record
           READ(SPCFUN,1000,IOSTAT=IOSNUM,END=120) S
-          WRITE(*,*) "MAIN:Process Record:'" // TRIM(S) // "'"
+          WRITE(FE,*) "MAIN:Process Record:'" // TRIM(S) // "'"
           CALL UPCASE(S)
           KWD = STRRETREM(S)
         ELSE !have record pending to process
@@ -189,18 +195,18 @@ C     process driver input file
         END IF
 
         IF (KWD .EQ. 'I') THEN !input spec
-          WRITE(*,*) "MAIN:Got I, Remaining:'" // TRIM(S) // "'"
+          WRITE(FE,*) "MAIN:Got I, Remaining:'" // TRIM(S) // "'"
           CALL OPNINP
      M               (S,WDMSFL,INCRD,INFORM,RETCOD)
         ELSE IF (KWD .EQ. 'O') THEN !output spec
-          WRITE(*,*) "MAIN:Got O, Remaining:'" // TRIM(S) // "'"
+          WRITE(FE,*) "MAIN:Got O, Remaining:'" // TRIM(S) // "'"
           CALL OPNOUT
      M               (S, INFORM, FOUT, IPUNCH,
      M                IPLTOP, GRFMT, IPRTOP, IBCPUN, IDEBUG,
      M                CLSIZE, WEIBA, EMAOPT,
      O                RETCOD)
         ELSE IF (KWD .EQ. 'STATION') THEN !processing station specs
-          WRITE(*,*) "MAIN:Got STATION, Remaining:'" // TRIM(S) // "'"
+          WRITE(FE,*) "MAIN:Got STATION, Remaining:'" // TRIM(S) // "'"
           LNSPECS= 0
           ISTA   = ISTA + 1
           STASPECS(ISTA)%ID = TRIM(S)
@@ -224,19 +230,19 @@ C                 this station already has an index, increment it
                 ELSE !first duplicate of this station
                   STASPECS(ISTA)%ID = TRIM(STASPECS(ISTA)%ID) // "-1"
                 END IF
-                WRITE(*,*) "Duplicate Station ID: updated original ",
+                WRITE(FE,*) "Duplicate Station ID: updated original ",
      $                     TRIM(S)," to be ",STASPECS(ISTA)%ID
                 I = 0  !exit loop
               END IF
               I = I - 1
             END DO
           END IF
-          WRITE (*,*) "MAIN:Assigned " // STASPECS(ISTA)%ID //
+          WRITE (FE,*) "MAIN:Assigned " // STASPECS(ISTA)%ID //
      $                " to index ", ISTA," of STASPECS"
           DO WHILE (IPEND .EQ. 0)  !loop for station specs
             READ(SPCFUN,1000,END=90) S
             CALL UPCASE(S)
-            WRITE(*,*) "MAIN:Process RecordX:'" // TRIM(S) // "'"
+            WRITE(FE,*) "MAIN:Process RecordX:'" // TRIM(S) // "'"
             KWD = STRRETREM(S)
             IF (KWD.EQ.'STATION'.OR.KWD.EQ.'I'.OR.KWD.EQ.'O'.OR.
      $          KWD.EQ.'UPDATE') THEN
@@ -244,10 +250,10 @@ C             some other spec, end specs for this station
               IPEND = 1
             ELSE
 C             add record to this station's specs
-              WRITE(*,*) "MAIN:Add Record To Station Specs"
+              WRITE(FE,*) "MAIN:Add Record To Station Specs"
               S = TRIM(KWD) // ' ' // TRIM(S)
               IF (LNSPECS .GT. 0) THEN !make copy of existing specs
-                WRITE(*,*) "MAIN:Add to existing specs"
+                WRITE(FE,*) "MAIN:Add to existing specs"
                 ALLOCATE (LSPECS(LNSPECS))
                 DO 70 I = 1, LNSPECS
                   LSPECS(I) = SPECS(I) 
@@ -255,7 +261,7 @@ C             add record to this station's specs
                 DEALLOCATE (SPECS)
               END IF
               LNSPECS = LNSPECS + 1
-              WRITE(*,*) "MAIN:LNSPECS:", LNSPECS
+              WRITE(FE,*) "MAIN:LNSPECS:", LNSPECS
               ALLOCATE (SPECS(LNSPECS))
               IF (LNSPECS .GT. 1) THEN
                 DO 80 I = 1,LNSPECS-1
@@ -263,7 +269,7 @@ C             add record to this station's specs
  80             CONTINUE
                 DEALLOCATE(LSPECS)
               END IF
-              WRITE (*,*) "MAIN:Assign spec:'" // TRIM(S) // "'"
+              WRITE (FE,*) "MAIN:Assign spec:'" // TRIM(S) // "'"
               SPECS(LNSPECS) = S !assign new spec
             END IF
           END DO
@@ -273,11 +279,11 @@ C             add record to this station's specs
           IF (LNSPECS.GT.0) THEN !specs exist for this station
             ALLOCATE(STASPECS(ISTA)%SPECS(LNSPECS))
             STASPECS(ISTA)%NSPECS = LNSPECS
-            WRITE(*,*) "MAIN:", STASPECS(ISTA)%NSPECS,
+            WRITE(FE,*) "MAIN:", STASPECS(ISTA)%NSPECS,
      $                 " spec(s) for station ",STASPECS(ISTA)%ID
             DO 100 I = 1,LNSPECS
               STASPECS(ISTA)%SPECS(I)%STR = SPECS(I)
-              WRITE(*,*) "  Spec", I, ": '" //
+              WRITE(FE,*) "  Spec", I, ": '" //
      $                 TRIM(STASPECS(ISTA)%SPECS(I)%STR) // "'"
  100        CONTINUE
             DEALLOCATE(SPECS)
@@ -289,7 +295,7 @@ C         update spec file with verbose specifications
       END DO
  120  CONTINUE  !get here on EOF (or other error)
 C        CALL IOSTAT_MSG(IOSNUM,IOSTXT)
-        WRITE(*,*) "Done reading spec file"  !, status : ",IOSTXT
+        WRITE(FE,*) "Done reading spec file"  !, status : ",IOSTXT
 
       IF (INFORM.EQ.1) THEN !populate DSN buffer
         IF (NSTA.GT.0) THEN !get from station specs
@@ -315,12 +321,12 @@ C        CALL IOSTAT_MSG(IOSNUM,IOSTXT)
             END IF
           END DO
         END IF
-        write(*,*) 'MAIN: Analyzing',DSNCNT,' WDM data sets.'
-        write(*,*) 'MAIN: DSNs are ',(DSNBUF(I),I=1,DSNCNT)
+        write(FE,*) 'MAIN: Analyzing',DSNCNT,' WDM data sets.'
+        write(FE,*) 'MAIN: DSNs are ',(DSNBUF(I),I=1,DSNCNT)
       END IF
 
       IF (RETCOD .EQ. 0) THEN !run the analyses
-        write(*,*) 'MAIN:calling J407XE...'
+        write(FE,*) 'MAIN:calling J407XE...'
 C       do analysis, reset dataset pointer to zero
         DSNIND   = 0
 C       set all other J407 common block variables
@@ -344,16 +350,16 @@ C       do the analysis
           CLOSE(SPCFUN)
         END IF
       ELSE !major problem processing input data/specs
-        WRITE (*,*) "PeakFQ NOT RUN: Problem processing ",
+        WRITE (FE,*) "PeakFQ NOT RUN: Problem processing ",
      $              "input data or specifications."
-        WRITE (*,*) "Review log file to determine problem."
+        WRITE (FE,*) "Review log file to determine problem."
       END IF
 C
  999  CONTINUE
 C       get sent here if major problem encountered
 c        IF (ZLNTXT(IOSTXT).GT.0) THEN
 C         write out IO Status text
-c          WRITE(*,*) "  IO Status:  ",IOSTXT
+c          WRITE(FE,*) "  IO Status:  ",IOSTXT
 c        END IF
 C
       CLOSE(MESSFL)
@@ -370,7 +376,7 @@ C     write out any errors read on input file and close output file
 C
 C     don't see where output file is closed, try it here
       INQUIRE(FOUT,NAME=S)
-      write(*,*) "Closing output file " // TRIM(S)
+      write(FE,*) "Closing output file " // TRIM(S)
       CLOSE(FOUT)
 C
 C     close and delete unused log file
@@ -441,13 +447,13 @@ C       input peak data from wdm file
         CALL WDBOPN (WDMSFL,WDMNAME,0,
      O               IRET)
         IF (IRET.EQ.0) THEN !successful open of WDM file
-          WRITE(*,*) "OPNINP:Successful Open WDM file:'"
+          WRITE(99,*) "OPNINP:Successful Open WDM file:'"
      $               // WDMNAME // "'"
 Cprh          IDATA = 1
           INFORM = 1
         ELSE !WDM file not opened
           !LOG IT
-          WRITE(*,*) "OPNINP:FAILED open of WDM file'"
+          WRITE(99,*) "OPNINP:FAILED open of WDM file'"
      $               // WDMNAME // "'"
           RETCOD = -1
         END IF
@@ -456,7 +462,7 @@ C       input peak data from WATSTORE formatted file
         INCRD = 13
         OPEN(INCRD,FILE=ISTR,ERR=10,STATUS='OLD')
 C       successful open of Watstore file
-        WRITE(*,*) "OPNINP:Successful Open Watstore file:'"
+        WRITE(99,*) "OPNINP:Successful Open Watstore file:'"
      $             // TRIM(ISTR) // "'"
 
 Cprh        IDATA = 3
@@ -465,7 +471,7 @@ Cprh        IDATA = 3
 
  10     CONTINUE !get here on error opening Watstore file
           !LOG IT
-          WRITE(*,*) "OPNINP:FAILED open of Watstore file'"
+          WRITE(99,*) "OPNINP:FAILED open of Watstore file'"
      $               // TRIM(ISTR) // "'"
           RETCOD = -2
 Cprh          IDATA = 0
@@ -545,34 +551,34 @@ C     input options:  FILE, OPTIONS
         OPEN (FOUT,FILE=ISTR,ERR=10)
 C       successful open of output file
         !LOG IT
-        WRITE(*,*) "OPENOUT:Opened Output File:'" 
+        WRITE(99,*) "OPENOUT:Opened Output File:'" 
      $               // TRIM(ISTR) // "'"
         GO TO 20
 
  10     CONTINUE !get here on error opening output file
           FOUT = 0
           !LOG IT
-          WRITE(*,*) "OPENOUT:FAILED to Open Output File:'"
+          WRITE(99,*) "OPENOUT:FAILED to Open Output File:'"
      $               // TRIM(ISTR) // "'"
 
  20     CONTINUE
 
       ELSE IF (KWD.EQ.'PLOT') THEN !get next plot keyword
-c        WRITE(*,*) "OPNOUT:PLOT:'" // TRIM(ISTR) // "'"
+c        WRITE(99,*) "OPNOUT:PLOT:'" // TRIM(ISTR) // "'"
         KWD = STRRETREM(ISTR)
         IF (KWD.EQ.'STYLE') THEN
-c          WRITE(*,*) "OPNOUT:PLOT:STYLE:'" // TRIM(ISTR) // "'"
+c          WRITE(99,*) "OPNOUT:PLOT:STYLE:'" // TRIM(ISTR) // "'"
           IF (ISTR.EQ.'GRAPHICS') THEN 
-c            WRITE(*,*) "OPNOPT:PLOT:STYLE:GRAPHICS"
+c            WRITE(99,*) "OPNOPT:PLOT:STYLE:GRAPHICS"
             IPLTOP = 1
           ELSE IF (ISTR.EQ.'PRINTER') THEN 
-c            WRITE(*,*) "OPNOPT:PLOT:STYLE:PRINTER"
+c            WRITE(99,*) "OPNOPT:PLOT:STYLE:PRINTER"
             IPLTOP = 2
           ELSE IF (ISTR.EQ.'BOTH') THEN 
-c            WRITE(*,*) "OPNOPT:PLOT:STYLE:BOTH"
+c            WRITE(99,*) "OPNOPT:PLOT:STYLE:BOTH"
             IPLTOP = 3
           ELSE 
-c            WRITE(*,*) "OPNOPT:PLOT:STYLE:NONE"
+c            WRITE(99,*) "OPNOPT:PLOT:STYLE:NONE"
             IPLTOP = 0
           END IF
         ELSE IF (KWD.EQ.'FORMAT') THEN
@@ -580,7 +586,7 @@ c            WRITE(*,*) "OPNOPT:PLOT:STYLE:NONE"
           IF (GRFMT.NE.'BMP' .AND. GRFMT.NE.'CGM' .AND. 
      $        GRFMT(1:2).NE.'PS' .AND. GRFMT.NE.'WMF') THEN
 C           not a valid graphic format
-c            WRITE(*,*) "OPNOUT:PLOT:FORMAT: Graphic Format '" // 
+c            WRITE(99,*) "OPNOUT:PLOT:FORMAT: Graphic Format '" // 
 c     $                  GRFMT //"' unknown - NO GRAPHIC PLOTS"
             GRFMT = ''
           END IF
@@ -746,9 +752,9 @@ C
         ISTA = 1
         DO WHILE (ISTA .LE. UBOUND(STASPECS,1) .AND.
      $            NSPECS.LT.0)
-c       write(*,*)"PARSESTASPECS: STASPECS ID:",STASPECS(ISTA)%ID,
+c       write(99,*)"PARSESTASPECS: STASPECS ID:",STASPECS(ISTA)%ID,
 c     $                                    TRIM(STASPECS(ISTA)%ID)
-c       write(*,*)"PARSESTASPECS:       STAID:",STAID,TRIM(STAID)
+c       write(99,*)"PARSESTASPECS:       STAID:",STAID,TRIM(STAID)
           IF (TRIM(STASPECS(ISTA)%ID) .EQ. TRIM(STAID)) THEN 
 C           specs exist for this station
             NSPECS = STASPECS(ISTA)%NSPECS
@@ -758,7 +764,7 @@ c           ISTA = UBOUND(STASPECS,1)
           END IF
         END DO
       ELSE !use defaults
-        WRITE(*,*) "Using default Specs for Station: ",STAID
+        WRITE(99,*) "Using default Specs for Station: ",STAID
       END IF
     
       IF (NSPECS .GT. 0) THEN
@@ -841,19 +847,19 @@ C           read 4 EMA Threshold components
             IF (LEN_TRIM(KWD).GT.0) THEN
               THRESH(NTHRESH)%THREYR = CVRINT(KWD)
             ELSE
-              WRITE(*,*) "No value found for EMA Threshold Ending Year"
+              WRITE(99,*) "No value found for EMA Threshold Ending Year"
             END IF
             KWD = STRRETREM(S)
             IF (LEN_TRIM(KWD).GT.0) THEN
               THRESH(NTHRESH)%THRLWR = CVRDEC(KWD)
             ELSE
-              WRITE(*,*) "No value found for EMA Threshold Lower Bound"
+              WRITE(99,*) "No value found for EMA Threshold Lower Bound"
             END IF
             KWD = STRRETREM(S)
             IF (LEN_TRIM(KWD).GT.0) THEN
               THRESH(NTHRESH)%THRUPR = CVRDEC(KWD)
             ELSE
-              WRITE(*,*) "No value found for EMA Threshold Upper Bound"
+              WRITE(99,*) "No value found for EMA Threshold Upper Bound"
             END IF
           ELSE IF (KWD .EQ. 'INTERVAL') THEN
 C           see if any interval specs exist
@@ -884,19 +890,19 @@ C           read 3 EMA Interval components
               IVAL = CVRINT(KWD)
               INTERVAL(NINTERVAL)%INTRVLYR =IVAL
             ELSE
-              WRITE(*,*) "No value found for EMA Interval Year"
+              WRITE(99,*) "No value found for EMA Interval Year"
             END IF
             KWD = STRRETREM(S)
             IF (LEN_TRIM(KWD).GT.0) THEN
               INTERVAL(NINTERVAL)%INTRVLLWR = CVRDEC(KWD)
             ELSE
-              WRITE(*,*) "No value found for EMA Interval Lower Bound"
+              WRITE(99,*) "No value found for EMA Interval Lower Bound"
             END IF
             KWD = STRRETREM(S)
             IF (LEN_TRIM(KWD).GT.0) THEN
               INTERVAL(NINTERVAL)%INTRVLUPR = CVRDEC(KWD)
             ELSE
-              WRITE(*,*) "No value found for EMA Interval Upper Bound"
+              WRITE(99,*) "No value found for EMA Interval Upper Bound"
             END IF
           END IF
  100    CONTINUE
@@ -982,7 +988,7 @@ C               this station already has an index, increment it
               ELSE !first duplicate of this station
                 STAID = TRIM(STAID) // "-1"
               END IF
-              WRITE(*,*) "DOSTATION: Duplicate Station ID: look for ",
+              WRITE(99,*) "DOSTATION: Duplicate Station ID: look for ",
      $                   TRIM(STAID)
               ISTA = 0  !exit loop
             END IF
@@ -1436,7 +1442,7 @@ C
     
       STRRETREM = OUTSTR
 
-Cprh      WRITE (*,*) "STRRETREM:'" // TRIM(OUTSTR) //
+Cprh      WRITE (99,*) "STRRETREM:'" // TRIM(OUTSTR) //
 Cprh     $                    "','" // TRIM(S) // "'"
 
       RETURN
