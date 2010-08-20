@@ -10,7 +10,14 @@
       integer idfilno, jk
       real filno,vars(172)
 
-      Open(103,file='statwgn.txt', STATUS='OLD', err=150)
+      Open(unit=103,file='statwgn.txt', STATUS='OLD', err=150)
+C      integer IOERR
+C      Open(unit=103,file='statwgn.txt', STATUS='OLD',IOSTAT=IOERR)
+C      write(*,*) ' iostat returning from open statwgn',IOERR
+C      character *80 cmsg
+C      call iostat_msg(ioerr,cmsg)
+C      write(*,*) ' iostat msg returning from open statwgn',cmsg
+C      pause
       goto 200
  150  write(*,'(A)')' error opening statwgn.txt in rdwgn'
       pause
@@ -19,13 +26,13 @@
       if(idwgn.lt.2) then
          write(*,'(A,1x,I4)')' error in rdwgn, idwgn =',idwgn
       endif
-      Do jk=1, IDwgn
-         read(103,'(1x)')
-      end do
+C     Do jk=1, IDwgn
+C        read(103,'(1x)')
+C     end do
       read(103,*)cdum1,cdum2,cdum3,filno,(vars(jk),jk=1,172)
       idfilno=INT(filno)
       if(idfilno.ne.idwgn)then
-        write(*,'(A)')' wgn file not matched!'
+        write(*,'(A)')' wgn file not matched! End Run'
         write(*,*)idfilno,idwgn
         write(*,'(A)')cdum3
         pause
@@ -49,4 +56,3 @@
       
       Return
       end
-      
