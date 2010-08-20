@@ -11,7 +11,9 @@ C     2009/05/07 PBD - initial implementation of module version of EXTMOD
 C     2009/05/18 JLK - ongoing refinements
 C
 C     + + + MODULE VARIABLES + + +
-      USE HMTABLEDEF
+      USE HMTABLEDEF, ONLY : TABLE_FIELD_SET, TABLE_FIELD_SETR, 
+     $                       HMODULE_TABLE_DEFINITION, HMODULE_TABLE,
+     $                       TABLE_SET
       USE HMTIMSERDEF
       IMPLICIT NONE
 C
