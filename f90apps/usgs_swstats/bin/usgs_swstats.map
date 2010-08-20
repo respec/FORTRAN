@@ -7,17 +7,18 @@ Linking for 32-bit protected mode
 Command line switches:
 
 -LIBPATH C:\LF9045\Lib
-@C:\DOCUME~1\Jack\LOCALS~1\Temp\LFT126.
-"C:\LF9045\BIN\ptest.obj"
+@C:\DOCUME~1\duda\LOCALS~1\Temp\LFT74.
+"c:\lf9045\bin\ptest.obj"
+"emafit.obj"
 "imslfake.obj"
 "ktutil.obj"
 "lgpstx.obj"
-"probfun_025.obj"
+"probfun.obj"
 -lib import1.lib import2.lib import3.lib
 -lib lf90w.lib
 -lib lf90wiod.lib
 -stack 20000h
-"C:\LF9045\BIN\lfsold.obj"
+"c:\lf9045\bin\lfsold.obj"
 -cvsym
 -nocvpack
 -publist byvalue
@@ -36,13 +37,15 @@ Command line switches:
 -empty class BSS
 -dll "..\bin\usgs_swstats.dll"
 -twocase
+@"emafit.xp$"
+-export    EMAFITB
+-export    CI_EMA_M3
+-export    VAR_EMA
 @"ktutil.xp$"
 -export    KENT
 @"lgpstx.xp$"
 -export    LGPSTX
--export    KENT
--export    LGPSTX 
--export    KENT  
+-export    LGPSTX  
 -map "..\bin\usgs_swstats.map"
 -mapnames 32
 -mapwidth 132
@@ -50,81 +53,93 @@ Command line switches:
 
 Input module(s):
 
-Stub "lfdummy" from file "C:\LF9045\BIN\lfdummy.exe"  [Sat Mar 21 20:55:36 1998].
-"pentest" from file "C:\LF9045\BIN\ptest.obj"  [Sat Apr 25 14:18:30 1998].
-"imslfake" from file "imslfake.obj"  [Tue Sep 27 09:33:50 2005].
-"ktutil" from file "ktutil.obj"  [Thu Sep 22 16:41:46 2005].
-"lgpstx" from file "lgpstx.obj"  [Thu Sep 22 14:30:44 2005].
-"probfun_025" from file "probfun_025.obj"  [Wed Aug 24 14:49:52 2005].
-"lfsold" from file "C:\LF9045\BIN\lfsold.obj"  [Wed Apr 08 12:35:08 1998].
-"fcosf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"fexp" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"fexpf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"flog" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"flog10f" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"flogf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"fsin" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"fsinf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"fsqrt" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"fsqrtf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_dd_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_di_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_dr_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_ii_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_ir_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_ri_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_rr_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"LEN_TRIM" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"BC_DEFS" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"USERDLL" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"exp" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"expf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"f_cosf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"f_sin" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"f_sinf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"log" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"log10f" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"logf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"nsqrt" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"nsqrtf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"powf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"ERRNO" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_tbl1" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"pow_tbl2" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 14:31:58 1998].
-"_lf_check_stack" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_close" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_emit_message_string_c" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_exitdos" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_fchcmp" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_fcheqs" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_finish_message" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_fmtck" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_indnf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_init_fpu" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_intrin_stat" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_intzf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_ioerr" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_memcmpr" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_ncode" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_newmodule" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_ontzf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_open" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_otchr" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_otdnf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_otint4" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_otrel4" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_otrel8" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_pause1" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_refbnda" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_setup_flg2rt" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_stop" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_stop1" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lf_subbnda" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lflog10_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lflog_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lfno_exp_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
-"_lfsqrt_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 13:46:08 1998].
+Stub "lfdummy" from file "c:\lf9045\bin\lfdummy.exe"  [Sat Mar 21 19:55:36 1998].
+"pentest" from file "c:\lf9045\bin\ptest.obj"  [Sat Apr 25 13:18:30 1998].
+"emafit" from file "emafit.obj"  [Tue Oct 13 11:11:11 2009].
+"imslfake" from file "imslfake.obj"  [Tue Oct 13 10:10:35 2009].
+"ktutil" from file "ktutil.obj"  [Tue Oct 13 10:10:35 2009].
+"lgpstx" from file "lgpstx.obj"  [Tue Oct 13 11:08:51 2009].
+"probfun" from file "probfun.obj"  [Tue Oct 13 09:04:09 2009].
+"lfsold" from file "c:\lf9045\bin\lfsold.obj"  [Wed Apr 08 11:35:08 1998].
+"fcos" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fcosf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fexp" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fexpf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flog" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flog10" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flog10f" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"flogf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsin" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsinf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsqrt" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"fsqrtf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_dd_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_di_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_dr_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_id_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_ii_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_ir_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_ri_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_rr_v" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"LEN_TRIM" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"TRIM" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"BC_DEFS" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"USERDLL" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"exp" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"expf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_cos" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_cosf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_sin" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"f_sinf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"log" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"log10" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"log10f" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"logf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"nsqrt" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"nsqrtf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"powf" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"ERRNO" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_tbl1" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"pow_tbl2" from file "C:\LF9045\Lib\lf90w.lib"  [Wed Nov 25 13:31:58 1998].
+"_lf_check_stack" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_clear_intrin_stat" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_close" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_emit_message_string_c" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_exitdos" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_fchcmp" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_fcheqs" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_ffree" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_finish_message" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_fmalloc" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_fmtck" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_indnf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_init_fpu" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_inquire" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_intrin_stat" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_intzf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_ioerr" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_memcmpr" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_ncode" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_newmodule" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_ontzf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_open" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_otchr" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_otdnf" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_otint4" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_otlog4" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_otrel4" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_otrel8" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_pause1" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_refbnda" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_setup_flg2rt" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_stop" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_stop1" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lf_subbnda" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lflog10_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lflog_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lfno_exp_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
+"_lfsqrt_error" from file "C:\LF9045\Lib\lf90wiod.lib"  [Thu Jun 18 12:46:08 1998].
 
 
 Segment map
@@ -134,30 +149,30 @@ Segment map
 REAL STUB                                                                                                   00010000  0000036C
 PE HEADER                                                                                                   0001036C  000000F8
 OBJECT TABLE                                                                                                00010464  000000F0
-_TEXT                             CGROUP                            CODE                              PUB   00011000  000214DC
-.jdata                                                              CODE                              PUB   000324E0  000000C6
-_DATA                             DGROUP                            DATA                              PUB   000325A8  000084D8
-_lc__FLG2RT                       DGROUP                            DATA                              COM   0003AA80  00000040
-CONST2                            DGROUP                            DATA                              PUB   0003AAC0  00000000
-_data                                                               DATA                              PUB   0003AAC0  00000C20
-CONST                             DGROUP                            CONST                             PUB   0003B6E0  000002A2
-_BSS                              DGROUP                            BSS                               PUB   0003C000  0002DC44
-c_common                          DGROUP                            BSS                               PUB   00069C50  00000040
-.idata                                                              IMPORTS                           PUB   0006A000  00000338
-.edata                                                              EXPORTS                           PUB   0006B000  00000200
-.reloc                                                              RELOCS                            PUB   0006C000  00004A00
+_TEXT                             CGROUP                            CODE                              PUB   00011000  0002F9EC
+.jdata                                                              CODE                              PUB   000409F0  000000E4
+_DATA                             DGROUP                            DATA                              PUB   00040AD4  00080B4C
+_lc__FLG2RT                       DGROUP                            DATA                              COM   000C1620  00000040
+CONST2                            DGROUP                            DATA                              PUB   000C1660  00000000
+_data                                                               DATA                              PUB   000C1660  00000C20
+CONST                             DGROUP                            CONST                             PUB   000C2280  000002D6
+_BSS                              DGROUP                            BSS                               PUB   000C3000  0058014C
+c_common                          DGROUP                            BSS                               PUB   00643150  000C36D0
+.idata                                                              IMPORTS                           PUB   00707000  000003AE
+.edata                                                              EXPORTS                           PUB   00708000  00000200
+.reloc                                                              RELOCS                            PUB   00709000  00005E00
 
 
 Portable .EXE (PE) Sections
 
   Name    Address     Size    File Off  File Sz    Flags
 --------  --------  --------  --------  --------  --------
-CODE      00011000  0002A982  00000600  0002AA00  E0000020  
-.bss      0003C000  0002DC90  00000000  0002DE00  C0000080  
-.idata    0006A000  00000338  0002B000  00000400  C0000040  
-.edata    0006B000  00000200  0002B400  00000200  C0000040  
-.reloc    0006C000  00004A00  0002B600  00004A00  42000040  
-.debug    00071000  0000001C  00030000  00000200  40000040  
+CODE      00011000  000B1556  00000600  000B1600  E0000020  
+.bss      000C3000  00643820  00000000  00643A00  C0000080  
+.idata    00707000  000003AE  000B1C00  00000400  C0000040  
+.edata    00708000  00000200  000B2000  00000200  C0000040  
+.reloc    00709000  00005E00  000B2200  00005E00  42000040  
+.debug    0070F000  0000001C  000B8000  00000200  40000040  
 
 
 Public symbols
@@ -166,330 +181,415 @@ Public symbols
 --------  ------------
 00000001     $$lfdummy
 
-00011000  Segment _TEXT of module pentest.c (C:\LF9045\BIN\ptest.obj)
+00011000  Segment _TEXT of module pentest.c (c:\lf9045\bin\ptest.obj)
 00011000     _lf_penttest
 00011024     do_test
 
-00011060  Segment _TEXT of module D:\F90Apps\usgs_swstats\src\imslfake.for (imslfake.obj)
-00011060     DMRRRR
-000114E0     DMXTYF
-00011960     DMXYTF
-00011DE0     DMSUM
-00012160     DMMULT
-00012430     DAXPY
-000125A0     DLNGAM
-000126F0     DLINRG
-00012910     GAUSSJ
-00013C10     ISET
-00013CD0     DSET
-00013D90     RSET
-00013E50     DNORDF
-00013EC0     ERFCC
-00014010     DNORIN
-00014080     NORPPF
-00014300     DGAMDF
-00014530     DCHIDF
-000145B0     DCHIIN
-000146C0     DRNGAM
-000147C0     DRNORMS
-00014820     RNSET
-00014860     GAMCDF
-00014FD0     DSVRGN
-00015400     NDAYS
-00015460     NDAYS0
-000156B0     UMACH
-000156E0     DBOXP
-00015710     PAGE
-00015740     DPLOTP
-00015770     GAMPPF
-000160F0     DGAMMA
-00016B00     INITDS
-00016CB0     XERROR
-00016D90     XERRWV
-00017EC0     XERSAV
-00018770     XGETUA
-000188A0     D1MACH
-00018970     D9LGMC
-00018C00     DCSEVL
-00018E60     DGAMLM
-000191B0     FDUMP
-000191E0     I1MACH
-000192B0     J4SAVE
-00019380     XERABT
-000193E0     XERCTL
-00019410     XERPRT
-00019690     GAMRAN
-00019C30     NORRAN
-00019F80     UNIRAN
-0001A5D0     DFAC
-0001A6F0     MGAMINV
-0001ADD0     GAMMP
-0001AFF0     GCF
-0001B3B0     GSER
-0001B670     GAMMLN
-0001B7C0     DPSI
-0001BF10     DCOT
-0001CBA0     DGAMLN
-0001D130     DQDAGS
-0001D300     DIFF
-00020740     FACCUR
-00020F30     DQAGI
-000211B0     DQAGIE
-00022B20     DQELG
-000234B0     DQK15I
-00023C20     DQPSRT
-00024360     DZEROIN
-000248D0     TNC
-00024DF0     ALNGAM
-000251B0     LNGAMMA
-00025320     BETAIN
-000256A0     ALNORM
-000258A0     NORMP
-00025AF0     NPROB
-00025D50     DCOPY
-00025E60     ADJUSTLT
-00026220     DPORDER
-00026910     DSVRGP
+00011060  Segment _TEXT of module C:\F90Apps\usgs_swstats\src\emafit.for (emafit.obj)
+00011060     EMAFIT
+000114E0     EMAFITB
+00011F00     GBTEST
+00012690     P3EST_EMA
+000134E0     MOMS_P3
+00013F20     DIST_P3
+00014080     MOMSADJ
+00014250     MSEG_ALL
+000145D0     MSEG
+00014710     CI_EMA_M3
+00014F30     VAR_EMA
+00015C60     REGSKEW
+00015E50     JACQ2
+00016020     FJAC
+00016100     SYPF
+00016C60     JACS2
+00016E60     MCADJ
+00017070     VAR_MOM
+00017E70     VARB
+00018120     VARC
+00018350     D_EST
+000186D0     MN2M_VAR
+00018B50     M2MN_VAR
+00018E00     MP3
+00019F90     WHLP2Z
+0001A090     WHZ2LP
+0001A140     DP3
+0001A390     PP3
+0001A580     QP3
+0001A810     RP3
+0001A840     TESTROUTINES
+0001BC50     FTEST01
+0001BCF0     COMPRESS2
+0001C050     DQAG
+0001C300     B17CIP
+0001C3F0     B17CI
+0001C540     KF
+0001C5A0     TESTSUB001
+0001C9C0     OPENDEBUG
 
-00026B30  Segment _TEXT of module D:\F90Apps\usgs_swstats\src\ktutil.for (ktutil.obj)
-00026B30     KENT
-00026CB0     KENS
-00027220     MEDSLP
-00027FA0     CDFN
-000281D0     ASRTRP
-000283E0     ZIPI
+0001CBB0  Segment _TEXT of module C:\F90Apps\usgs_swstats\src\imslfake.for (imslfake.obj)
+0001CBB0     DMRRRR
+0001D030     DMXTYF
+0001D4B0     DMXYTF
+0001D930     DMSUM
+0001DCB0     DMMULT
+0001DF80     DAXPY
+0001E0F0     DLNGAM
+0001E240     DLINRG
+0001E460     GAUSSJ
+0001F760     ISET
+0001F820     DSET
+0001F8E0     RSET
+0001F9A0     DNORDF
+0001FA10     ERFCC
+0001FB60     DNORIN
+0001FBD0     NORPPF
+0001FE50     DGAMDF
+00020080     DCHIDF
+00020100     DCHIIN
+00020210     DRNGAM
+00020310     DRNORMS
+00020370     RNSET
+000203B0     GAMCDF
+00020B20     DSVRGN
+00020F50     NDAYS
+00020FB0     NDAYS0
+00021200     UMACH
+00021230     DBOXP
+00021260     PAGE
+00021290     DPLOTP
+000212C0     GAMPPF
+00021C40     DGAMMA
+00022650     INITDS
+00022800     XERROR
+000228E0     XERRWV
+00023A10     XERSAV
+000242C0     XGETUA
+000243F0     D1MACH
+000244C0     D9LGMC
+00024750     DCSEVL
+000249B0     DGAMLM
+00024D00     FDUMP
+00024D30     I1MACH
+00024E00     J4SAVE
+00024ED0     XERABT
+00024F30     XERCTL
+00024F60     XERPRT
+000251E0     GAMRAN
+00025780     NORRAN
+00025AD0     UNIRAN
+00026120     DFAC
+00026240     MGAMINV
+00026920     GAMMP
+00026B40     GCF
+00026F00     GSER
+000271C0     GAMMLN
+00027310     DPSI
+00027A60     DCOT
+000286F0     DGAMLN
+00028C80     DQDAGS
+00028E50     DIFF
+0002C290     FACCUR
+0002CA80     DQAGI
+0002CD00     DQAGIE
+0002E670     DQELG
+0002F000     DQK15I
+0002F770     DQPSRT
+0002FEB0     DZEROIN
+00030420     TNC
+00030940     ALNGAM
+00030D00     LNGAMMA
+00030E70     BETAIN
+000311F0     ALNORM
+000313F0     NORMP
+00031640     NPROB
+000318A0     DCOPY
+000319B0     ADJUSTLT
+00031D70     DPORDER
+00032460     DSVRGP
 
-000284B0  Segment _TEXT of module D:\F90Apps\usgs_swstats\src\lgpstx.for (lgpstx.obj)
-000284B0     LGPSTX
-00029A20     CALQPX
-0002A410     PA193X
-0002A640     HARTKX
-0002A920     KF
+00032680  Segment _TEXT of module C:\F90Apps\usgs_swstats\src\ktutil.for (ktutil.obj)
+00032680     KENT
+00032800     KENS
+00032D70     MEDSLP
+00033AF0     CDFN
+00033D20     ASRTRP
+00033F30     ZIPI
 
-0002AA30  Segment _TEXT of module D:\F90Apps\usgs_swstats\src\probfun_025.for (probfun_025.obj)
-0002AA30     FP_Z_PDF
-0002AAA0     FP_Z_CDF
-0002AB10     FP_Z_ICDF
-0002AB60     FP_N2_PDF
-0002AC20     FP_N2_CDF
-0002ACD0     FP_N2_ICDF
-0002AD40     FP_G1_PDF
-0002AEB0     FP_G2_PDF
-0002AF40     FP_G3_PDF
-0002AFD0     FP_G1_CDF
-0002B020     FP_G2_CDF
-0002B130     FP_G3_CDF
-0002B1B0     FP_G1_ICDF
-0002B260     FP_G2_ICDF
-0002B3C0     FP_G3_ICDF
-0002B430     FP_G1_MOM_TRA
-0002B580     FP_G2_MOM_TRA
-0002B740     FP_G3_MOM_TRA
-0002B8D0     FP_G1_MOM_TRB
-0002BA30     FP_G2_MOM_TRB
-0002BBF0     FP_G3_MOM_TRB
-0002BD80     FP_G1_MOM_TRC
-0002BFE0     FP_G2_MOM_TRC
-0002C1D0     FP_G3_MOM_TRC
-0002C3A0     FP_G3_MOM_TRCO
-0002C5A0     SP_Z
-0002CFF0     CHOOSE
-0002D290     SP_G1_CDF_HESS
-0002D570     FCNGAM
-0002D5F0     SIGN1
-0002D650     SP_G1_CDF_LN_HESS
-0002D990     SP_G3_CDF_LN_HESS
-0002DC40     DPDM
-0002E210     P2M
-0002E2E0     M2P
-0002E3E0     P2MN
-0002E530     MN2P
-0002E6C0     M2MN
-0002E770     MN2M
-0002E830     D_G1_INV
-0002E8C0     EXPMOMDERIV
-0002EA10     DDGAM
-0002F3F0     DEXPECT
-00030B10     POWER
-00030B90     FP_TNC_CDF
-00030E20     FP_TNC_ICDF
-00030F80     FP_TNC2_ICDF
-000313B0     FTNCINV
+00034000  Segment _TEXT of module C:\F90Apps\usgs_swstats\src\lgpstx.for (lgpstx.obj)
+00034000     LGPSTX
+00035C40     CALQPX
+00036630     PA193X
+00036880     HARTKX
 
-00031420  Segment _TEXT of module lfsold.asm (C:\LF9045\BIN\lfsold.obj)
-00031420     _lf_sold_early_exit
-0003142D     _lf_main_error
-0003142E     _lf_sold_NDP_error
-0003142F     _lf_null_proc
+00036B70  Segment _TEXT of module C:\F90Apps\usgs_swstats\src\probfun.for (probfun.obj)
+00036B70     FP_Z_PDF
+00036BE0     FP_Z_CDF
+00036C50     FP_Z_ICDF
+00036CA0     FP_N2_PDF
+00036D60     FP_N2_CDF
+00036E10     FP_N2_ICDF
+00036E80     FP_G1_PDF
+00036FF0     FP_G2_PDF
+00037080     FP_G3_PDF
+00037110     FP_G1_CDF
+00037160     FP_G2_CDF
+00037270     FP_G3_CDF
+000372F0     FP_G1_ICDF
+000373A0     FP_G2_ICDF
+00037500     FP_G3_ICDF
+00037570     FP_G1_MOM_TRA
+000376C0     FP_G2_MOM_TRA
+00037880     FP_G3_MOM_TRA
+00037A10     FP_G1_MOM_TRB
+00037B70     FP_G2_MOM_TRB
+00037D30     FP_G3_MOM_TRB
+00037EC0     FP_G1_MOM_TRC
+00038120     FP_G2_MOM_TRC
+00038310     FP_G3_MOM_TRC
+000384E0     FP_G3_MOM_TRCO
+000386E0     SP_Z
+00039130     CHOOSE
+000393D0     SP_G1_CDF_HESS
+000396B0     FCNGAM
+00039730     SIGN1
+00039790     SP_G1_CDF_LN_HESS
+00039AD0     SP_G3_CDF_LN_HESS
+00039D80     DPDM
+0003A350     P2M
+0003A420     M2P
+0003A520     P2MN
+0003A670     MN2P
+0003A800     M2MN
+0003A8B0     MN2M
+0003A970     D_G1_INV
+0003AA00     EXPMOMDERIV
+0003AB50     DDGAM
+0003B500     DEXPECT
+0003CC20     POWER
+0003CCA0     FP_TNC_CDF
+0003CF30     FP_TNC_ICDF
+0003D090     FP_TNC2_ICDF
+0003D4C0     FTNCINV
+0003D530     MDL_MR
+0003D700     PPFIT
+0003D840     ARRANGE
+0003DE90     PORDER
+0003E580     PPLOT
+0003EB60     PPSOLVE
+0003EEB0     PLPOS
+0003F2E0     SHELLSORT
+0003F500     QTL
 
-00031430  Segment _TEXT of module fcosf.c (C:\LF9045\Lib\lf90w.lib)
-00031430     _lfcosf
+0003F7A0  Segment _TEXT of module lfsold.asm (c:\lf9045\bin\lfsold.obj)
+0003F7A0     _lf_sold_early_exit
+0003F7AD     _lf_main_error
+0003F7AE     _lf_sold_NDP_error
+0003F7AF     _lf_null_proc
 
-00031440  Segment _TEXT of module fexp.c (C:\LF9045\Lib\lf90w.lib)
-00031440     _lfexp
+0003F7B0  Segment _TEXT of module fcos.c (C:\LF9045\Lib\lf90w.lib)
+0003F7B0     _lfcos
 
-00031474  Segment _TEXT of module fexpf.c (C:\LF9045\Lib\lf90w.lib)
-00031474     _lfexpf
+0003F7C0  Segment _TEXT of module fcosf.c (C:\LF9045\Lib\lf90w.lib)
+0003F7C0     _lfcosf
 
-0003148C  Segment _TEXT of module flog.c (C:\LF9045\Lib\lf90w.lib)
-0003148C     _lflog
+0003F7D0  Segment _TEXT of module fexp.c (C:\LF9045\Lib\lf90w.lib)
+0003F7D0     _lfexp
 
-000314C0  Segment _TEXT of module flog10f.c (C:\LF9045\Lib\lf90w.lib)
-000314C0     _lflog10f
+0003F804  Segment _TEXT of module fexpf.c (C:\LF9045\Lib\lf90w.lib)
+0003F804     _lfexpf
 
-000314F4  Segment _TEXT of module flogf.c (C:\LF9045\Lib\lf90w.lib)
-000314F4     _lflogf
+0003F81C  Segment _TEXT of module flog.c (C:\LF9045\Lib\lf90w.lib)
+0003F81C     _lflog
 
-00031528  Segment _TEXT of module fsin.c (C:\LF9045\Lib\lf90w.lib)
-00031528     _lfsin
+0003F850  Segment _TEXT of module flog10.c (C:\LF9045\Lib\lf90w.lib)
+0003F850     _lflog10
 
-00031538  Segment _TEXT of module fsinf.c (C:\LF9045\Lib\lf90w.lib)
-00031538     _lfsinf
+0003F884  Segment _TEXT of module flog10f.c (C:\LF9045\Lib\lf90w.lib)
+0003F884     _lflog10f
 
-00031548  Segment _TEXT of module fsqrt.c (C:\LF9045\Lib\lf90w.lib)
-00031548     _lfsqrt
+0003F8B8  Segment _TEXT of module flogf.c (C:\LF9045\Lib\lf90w.lib)
+0003F8B8     _lflogf
 
-0003157C  Segment _TEXT of module fsqrtf.c (C:\LF9045\Lib\lf90w.lib)
-0003157C     _lfsqrtf
+0003F8EC  Segment _TEXT of module fsin.c (C:\LF9045\Lib\lf90w.lib)
+0003F8EC     _lfsin
 
-000315B0  Segment _TEXT of module pow_dd_v.c (C:\LF9045\Lib\lf90w.lib)
-000315B0     _lfpow_dd_val
+0003F8FC  Segment _TEXT of module fsinf.c (C:\LF9045\Lib\lf90w.lib)
+0003F8FC     _lfsinf
 
-000315C8  Segment _TEXT of module pow_di_v.c (C:\LF9045\Lib\lf90w.lib)
-000315C8     _lfpow_di_val
+0003F90C  Segment _TEXT of module fsqrt.c (C:\LF9045\Lib\lf90w.lib)
+0003F90C     _lfsqrt
 
-00031638  Segment _TEXT of module pow_dr_v.c (C:\LF9045\Lib\lf90w.lib)
-00031638     _lfpow_dr_val
+0003F940  Segment _TEXT of module fsqrtf.c (C:\LF9045\Lib\lf90w.lib)
+0003F940     _lfsqrtf
 
-00031654  Segment _TEXT of module pow_ii_v.c (C:\LF9045\Lib\lf90w.lib)
-00031654     _lfpow_ii_val
+0003F974  Segment _TEXT of module pow_dd_v.c (C:\LF9045\Lib\lf90w.lib)
+0003F974     _lfpow_dd_val
 
-000316B8  Segment _TEXT of module pow_ir_v.c (C:\LF9045\Lib\lf90w.lib)
-000316B8     _lfpow_ir_val
+0003F98C  Segment _TEXT of module pow_di_v.c (C:\LF9045\Lib\lf90w.lib)
+0003F98C     _lfpow_di_val
 
-000316D4  Segment _TEXT of module pow_ri_v.c (C:\LF9045\Lib\lf90w.lib)
-000316D4     _lfpow_ri_val
+0003F9FC  Segment _TEXT of module pow_dr_v.c (C:\LF9045\Lib\lf90w.lib)
+0003F9FC     _lfpow_dr_val
 
-00031744  Segment _TEXT of module pow_rr_v.c (C:\LF9045\Lib\lf90w.lib)
-00031744     _lfpow_rr_val
+0003FA18  Segment _TEXT of module pow_id_v.c (C:\LF9045\Lib\lf90w.lib)
+0003FA18     _lfpow_id_val
 
-00031754  Segment _TEXT of module LEN_TRIM.C (C:\LF9045\Lib\lf90w.lib)
-00031754     _lf_len_trim_
+0003FA34  Segment _TEXT of module pow_ii_v.c (C:\LF9045\Lib\lf90w.lib)
+0003FA34     _lfpow_ii_val
 
-00031780  Segment _TEXT of module USERDLL.C (C:\LF9045\Lib\lf90w.lib)
-00031780     _DLLUserEntry
+0003FA98  Segment _TEXT of module pow_ir_v.c (C:\LF9045\Lib\lf90w.lib)
+0003FA98     _lfpow_ir_val
 
-00031810  Segment _TEXT of module pow.asm (C:\LF9045\Lib\lf90w.lib)
-00031810     _lf_pow
+0003FAB4  Segment _TEXT of module pow_ri_v.c (C:\LF9045\Lib\lf90w.lib)
+0003FAB4     _lfpow_ri_val
 
-00031DD0  Segment _TEXT of module exp.asm (C:\LF9045\Lib\lf90w.lib)
-00031DD0     _lf_exp
+0003FB24  Segment _TEXT of module pow_rr_v.c (C:\LF9045\Lib\lf90w.lib)
+0003FB24     _lfpow_rr_val
 
-00031F30  Segment _TEXT of module expf.asm (C:\LF9045\Lib\lf90w.lib)
-00031F30     _lf_expf
+0003FB34  Segment _TEXT of module LEN_TRIM.C (C:\LF9045\Lib\lf90w.lib)
+0003FB34     _lf_len_trim_
 
-00032080  Segment _TEXT of module f_cosf.asm (C:\LF9045\Lib\lf90w.lib)
-00032080     _lf_cosf
+0003FB60  Segment _TEXT of module TRIM.C (C:\LF9045\Lib\lf90w.lib)
+0003FB60     _lf_trim
 
-000320B0  Segment _TEXT of module f_sin.asm (C:\LF9045\Lib\lf90w.lib)
-000320B0     _lf_sin
+0003FB90  Segment _TEXT of module USERDLL.C (C:\LF9045\Lib\lf90w.lib)
+0003FB90     _DLLUserEntry
 
-000320E0  Segment _TEXT of module f_sinf.asm (C:\LF9045\Lib\lf90w.lib)
-000320E0     _lf_sinf
+0003FC20  Segment _TEXT of module pow.asm (C:\LF9045\Lib\lf90w.lib)
+0003FC20     _lf_pow
 
-00032110  Segment _TEXT of module log.asm (C:\LF9045\Lib\lf90w.lib)
-00032110     _lf_log
+000401E0  Segment _TEXT of module exp.asm (C:\LF9045\Lib\lf90w.lib)
+000401E0     _lf_exp
 
-000321E0  Segment _TEXT of module log10f.asm (C:\LF9045\Lib\lf90w.lib)
-000321E0     _lf_log10f
+00040340  Segment _TEXT of module expf.asm (C:\LF9045\Lib\lf90w.lib)
+00040340     _lf_expf
 
-00032290  Segment _TEXT of module logf.asm (C:\LF9045\Lib\lf90w.lib)
-00032290     _lf_logf
+00040490  Segment _TEXT of module f_cos.asm (C:\LF9045\Lib\lf90w.lib)
+00040490     _lf_cos
 
-00032340  Segment _TEXT of module nsqrt.asm (C:\LF9045\Lib\lf90w.lib)
-00032340     _lf_sqrt
+000404C0  Segment _TEXT of module f_cosf.asm (C:\LF9045\Lib\lf90w.lib)
+000404C0     _lf_cosf
 
-00032410  Segment _TEXT of module nsqrtf.asm (C:\LF9045\Lib\lf90w.lib)
-00032410     _lf_sqrtf
+000404F0  Segment _TEXT of module f_sin.asm (C:\LF9045\Lib\lf90w.lib)
+000404F0     _lf_sin
 
-000324BC  Segment _TEXT of module powf.c (C:\LF9045\Lib\lf90w.lib)
-000324BC     _lf_powf
+00040520  Segment _TEXT of module f_sinf.asm (C:\LF9045\Lib\lf90w.lib)
+00040520     _lf_sinf
 
-000324E0  Segment .jdata
-000324E0     _lf_check_stack
-000324E6     _lf_close
-000324EC     _lf_emit_message_string_c
-000324F2     _lf_exitdos
-000324F8     _lf_fchcmp
-000324FE     _lf_fcheqs
-00032504     _lf_finish_message
-0003250A     _lf_fmtck
-00032510     _lf_indnf
-00032516     _lf_init_fpu
-0003251C     _lf_intrin_stat
-00032522     _lf_intzf
-00032528     _lf_ioerr
-0003252E     _lf_memcmpr
-00032534     _lf_ncode
-0003253A     _lf_newmodule
-00032540     _lf_ontzf
-00032546     _lf_open
-0003254C     _lf_otchr
-00032552     _lf_otdnf
-00032558     _lf_otint4
-0003255E     _lf_otrel4
-00032564     _lf_otrel8
-0003256A     _lf_pause1
-00032570     _lf_refbnda
-00032576     _lf_setup_flg2rt
-0003257C     _lf_stop
-00032582     _lf_stop1
-00032588     _lf_subbnda
-0003258E     _lflog10_error
-00032594     _lflog_error
-0003259A     _lfno_exp_error
-000325A0     _lfsqrt_error
+00040550  Segment _TEXT of module log.asm (C:\LF9045\Lib\lf90w.lib)
+00040550     _lf_log
 
-0003A90C  Segment _DATA of module USERDLL.C (C:\LF9045\Lib\lf90w.lib)
-0003A940     _lf_bad_pentium_chip_message
-0003A944     _lf_contact_intel_message
-0003A948     _lf_intel_numbers_message
+00040620  Segment _TEXT of module log10.asm (C:\LF9045\Lib\lf90w.lib)
+00040620     _lf_log10
 
-0003AA7C  Segment _DATA of module ERRNO.C (C:\LF9045\Lib\lf90w.lib)
-0003AA7C     _lf_errno
+000406F0  Segment _TEXT of module log10f.asm (C:\LF9045\Lib\lf90w.lib)
+000406F0     _lf_log10f
 
-0003AA80  Segment _lc__FLG2RT of module D:\F90Apps\usgs_swstats\src\imslfake.for (imslfake.obj)
-0003AA80     _lc__FLG2RT
+000407A0  Segment _TEXT of module logf.asm (C:\LF9045\Lib\lf90w.lib)
+000407A0     _lf_logf
 
-0003AAC0  Segment _data of module pow_tbl1.asm (C:\LF9045\Lib\lf90w.lib)
-0003AAC0     inv_b_hi
+00040850  Segment _TEXT of module nsqrt.asm (C:\LF9045\Lib\lf90w.lib)
+00040850     _lf_sqrt
 
-0003AED0  Segment _data of module pow_tbl2.asm (C:\LF9045\Lib\lf90w.lib)
-0003AED0     t_hi
-0003B2D8     t_lo
+00040920  Segment _TEXT of module nsqrtf.asm (C:\LF9045\Lib\lf90w.lib)
+00040920     _lf_sqrtf
 
-00069C40  Segment _BSS of module BC_DEFS.C (C:\LF9045\Lib\lf90w.lib)
-00069C40     _mwINIT
-00069C41     _lffltused
+000409CC  Segment _TEXT of module powf.c (C:\LF9045\Lib\lf90w.lib)
+000409CC     _lf_powf
 
-00069C50  Segment c_common
-00069C50     _lc_TACGAM001
-00069C60     _lc_ZNCT02
-00069C80     _lc_ZZZ889
+000409F0  Segment .jdata
+000409F0     _lf_check_stack
+000409F6     _lf_clear_intrin_stat
+000409FC     _lf_close
+00040A02     _lf_emit_message_string_c
+00040A08     _lf_exitdos
+00040A0E     _lf_fchcmp
+00040A14     _lf_fcheqs
+00040A1A     _lf_ffree
+00040A20     _lf_finish_message
+00040A26     _lf_fmalloc
+00040A2C     _lf_fmtck
+00040A32     _lf_indnf
+00040A38     _lf_init_fpu
+00040A3E     _lf_inquire
+00040A44     _lf_intrin_stat
+00040A4A     _lf_intzf
+00040A50     _lf_ioerr
+00040A56     _lf_memcmpr
+00040A5C     _lf_ncode
+00040A62     _lf_newmodule
+00040A68     _lf_ontzf
+00040A6E     _lf_open
+00040A74     _lf_otchr
+00040A7A     _lf_otdnf
+00040A80     _lf_otint4
+00040A86     _lf_otlog4
+00040A8C     _lf_otrel4
+00040A92     _lf_otrel8
+00040A98     _lf_pause1
+00040A9E     _lf_refbnda
+00040AA4     _lf_setup_flg2rt
+00040AAA     _lf_stop
+00040AB0     _lf_stop1
+00040AB6     _lf_subbnda
+00040ABC     _lflog10_error
+00040AC2     _lflog_error
+00040AC8     _lfno_exp_error
+00040ACE     _lfsqrt_error
+
+000C14AC  Segment _DATA of module USERDLL.C (C:\LF9045\Lib\lf90w.lib)
+000C14E0     _lf_bad_pentium_chip_message
+000C14E4     _lf_contact_intel_message
+000C14E8     _lf_intel_numbers_message
+
+000C161C  Segment _DATA of module ERRNO.C (C:\LF9045\Lib\lf90w.lib)
+000C161C     _lf_errno
+
+000C1620  Segment _lc__FLG2RT of module C:\F90Apps\usgs_swstats\src\emafit.for (emafit.obj)
+000C1620     _lc__FLG2RT
+
+000C1660  Segment _data of module pow_tbl1.asm (C:\LF9045\Lib\lf90w.lib)
+000C1660     inv_b_hi
+
+000C1A70  Segment _data of module pow_tbl2.asm (C:\LF9045\Lib\lf90w.lib)
+000C1A70     t_hi
+000C1E78     t_lo
+
+00643148  Segment _BSS of module BC_DEFS.C (C:\LF9045\Lib\lf90w.lib)
+00643148     _mwINIT
+00643149     _lffltused
+
+00643150  Segment c_common
+00643150     _lc_CDBG
+00643160     _lc_FJAC01
+00643190     _lc_JFE001
+006431A0     _lc_REG001
+006431B0     _lc_TAC002
+006431D0     _lc_TACG01
+006431F0     _lc_TACG02
+007066F0     _lc_TACG03
+007067C0     _lc_TACGAM001
+007067D0     _lc_ZAP111
+007067F0     _lc_ZNCT02
+00706810     _lc_ZZZ889
 
 
 Public symbols imported from DLLs
 
    _lf_check_stack=lf90wiod.dll._lf_check_stack
+   _lf_clear_intrin_stat=lf90wiod.dll._lf_clear_intrin_stat
    _lf_close=lf90wiod.dll._lf_close
    _lf_emit_message_string_c=lf90wiod.dll._lf_emit_message_string_c
    _lf_exitdos=lf90wiod.dll._lf_exitdos
    _lf_fchcmp=lf90wiod.dll._lf_fchcmp
    _lf_fcheqs=lf90wiod.dll._lf_fcheqs
+   _lf_ffree=lf90wiod.dll._lf_ffree
    _lf_finish_message=lf90wiod.dll._lf_finish_message
+   _lf_fmalloc=lf90wiod.dll._lf_fmalloc
    _lf_fmtck=lf90wiod.dll._lf_fmtck
    _lf_indnf=lf90wiod.dll._lf_indnf
    _lf_init_fpu=lf90wiod.dll._lf_init_fpu
+   _lf_inquire=lf90wiod.dll._lf_inquire
    _lf_intrin_stat=lf90wiod.dll._lf_intrin_stat
    _lf_intzf=lf90wiod.dll._lf_intzf
    _lf_ioerr=lf90wiod.dll._lf_ioerr
@@ -501,6 +601,7 @@ Public symbols imported from DLLs
    _lf_otchr=lf90wiod.dll._lf_otchr
    _lf_otdnf=lf90wiod.dll._lf_otdnf
    _lf_otint4=lf90wiod.dll._lf_otint4
+   _lf_otlog4=lf90wiod.dll._lf_otlog4
    _lf_otrel4=lf90wiod.dll._lf_otrel4
    _lf_otrel8=lf90wiod.dll._lf_otrel8
    _lf_pause1=lf90wiod.dll._lf_pause1

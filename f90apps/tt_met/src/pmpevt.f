@@ -142,5 +142,6 @@ C  Reassign results out of common for explicit transfer back
       End do
       
 C 	stop
+      call free_parms
       return
       end
