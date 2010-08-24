@@ -2,7 +2,7 @@ C
 C
 C
       SUBROUTINE   J407XE
-     #                 ( IA1, IA3, PAUSE, EMAOPT, UPDATEFG )
+     #                 ( IA1, IA3, PAUSE, UPDATEFG )
 C
 C      + + + PURPOSE + + +
 C     This routine processes users input and options and controls
@@ -30,7 +30,7 @@ C     Updated for batch version of PEAKFQ, 9/03
 C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   IA1, IA3, PAUSE, EMAOPT
+      INTEGER   IA1, IA3, PAUSE
       LOGICAL   UPDATEFG
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -39,9 +39,6 @@ C     IA3    - Fortran unit number for users WDM file
 C     PAUSE  - Indicator flag for pause between stations
 C              1 - yes, pause and wait for user response
 C              2 - no, display summary of results and continue
-C     EMAOPT - indicator flag for performing EMA analysis
-C              0 - no, just do traditional J407
-C              1 - yes, run EMA
 C     UPDATEFG - boolean to indicate type of run
 C                TRUE - run is just updating the spec file (don't do graphics)
 C                FALSE - full run
@@ -69,7 +66,7 @@ C      + + + LOCAL VARIABLES + + +
       REAL      FCXPG(MXINT)
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
      &          NSKIP1, NPKS, I, NPKPLT, 
-     $          ISTART, HSTFLG, XPKS    
+     $          ISTART, HSTFLG, XPKS, EMAOPT
 Cprh     $      , SCLU, CNUM, CLEN, SGRP, MXLN, SCI, IWRT
 C
 C     + + + EQUIVALENCES + + +
@@ -135,7 +132,7 @@ C
         MSG = MSG1
 C
 C       PRINT J407 PAGE HEADER AT START OF JOB
-        CALL PRTPHD( 0 , IWXMOD, EMAOPT, IA3 )
+        CALL PRTPHD( 0, IWXMOD, 0, IA3 )
 C
 C       put general message about skipping records to scratch file
         WRITE(91,2000)
@@ -161,13 +158,14 @@ C     for ascii input need to reset start flag for 1st record read
 C
   100 CONTINUE
         JSEQNO = JSEQNO + 1
-        CALL PRTPHD( 1000 , JSEQNO, EMAOPT, IA3)
 C
         CALL INPUT (IA1,IA3,INFORM,MAXPKS,EMAOPT,IA3,IBCPUN,
      M              ISTART,
      O              STAID,PKS,IPKSEQ,XQUAL,IQUAL, 
      O              NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,GAGEB,
-     O              GENSKU,RMSEGS, IGSOPT, NSKIP1, IER )
+     O              GENSKU,RMSEGS, IGSOPT, NSKIP1,EMAOPT,IER)
+C
+        CALL PRTPHD( 1000 , JSEQNO, EMAOPT, IA3)
 C
            write(*,*)'After INPUT, NSYS,NHIST',NSYS,NHIST
         NPKS=NHIST+NSYS
@@ -1319,11 +1317,11 @@ C
 C
 C
       SUBROUTINE   INPUT
-     I              (IA1,IA3,INFORM,MAXPKS,EMAOPT,WDMSFL,IBCPUN,
+     I              (IA1,IA3,INFORM,MAXPKS,WDMSFL,IBCPUN,
      M               ISTART,
      O               STAID,PKSABG,IWYSN,XQUAL,IQUAL, 
      O               NHIST,NSYS,HISTPD,  QHIOUT,QLWOUT,GAGEB,
-     O               GENSKU, RMSEGS,ISKUOP,  NSKIP1,  IRC )
+     O               GENSKU, RMSEGS,ISKUOP,  NSKIP1, EMAOPT, IRC )
 C
 C     + + + PURPOSE + + +
 C     RE-WRITTEN FOR PRIME VERSION 3.8-P,  WK, 7/88.
@@ -1341,9 +1339,6 @@ C     IA1   -
 C     IA3   -
 C     INFORM -
 C     MAXPKS -
-C     EMAOPT - indicator flag for performing EMA analysis
-C              0 - no, just do traditional J407
-C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number of input WDM file
 C     IBCPUN - Additional output indicator,
 C              0 - none
@@ -1368,6 +1363,9 @@ C     GENSKU -
 C     RMSEGS  -
 C     ISKUOP -
 C     NSKIP1 -
+C     EMAOPT - Analysis option,
+C              0 - Bull. 17B
+C              1 - EMA
 C     IRC    -
 C
 C     + + + LOCAL VARIABLES + + +
@@ -1390,14 +1388,14 @@ C
         CALL INPUT1(IA1, IA3, IBCPUN,
      I              MAXPKS, STAID, PKSABG, IWYSN, XQUAL,
      O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU,
-     O              RMSEGS,ISKUOP, NSKIP1, IRC)
+     O              RMSEGS,ISKUOP, NSKIP1, EMAOPT, IRC)
 C
       ELSE IF ( INFORM .EQ. 2 )  THEN
-        CALL INPUT2(IA1, MAXPKS, EMAOPT, WDMSFL,
+        CALL INPUT2(IA1, MAXPKS, WDMSFL,
      M              ISTART,
      O              STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
      O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, GAGEB,
-     O              GENSKU, RMSEGS, ISKUOP, NSKIP1, IRC)
+     O              GENSKU, RMSEGS, ISKUOP, NSKIP1, EMAOPT, IRC)
 C
       ELSE IF ( INFORM .EQ. 3 ) THEN
         CALL INPUT3(  MAXPKS, IDSTA,PKSABG, IWYSN, NHIST,NSYS,HISTPD,
@@ -1417,11 +1415,11 @@ C
 C
 C
       SUBROUTINE   INPUT2
-     I                 (  MESSFL, MAXPKS, EMAOPT, WDMSFL,
+     I                 (  MESSFL, MAXPKS, WDMSFL,
      M                    ISTART,
      O                    STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
      O                    NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, GAGEB,
-     O                    GENSKU, RMSEGS, ISKUOP, NSKIP1, IRC )
+     O                    GENSKU, RMSEGS, ISKUOP, NSKIP1, EMAOPT, IRC )
 C
 C     + + + PURPOSE + + +
 C     GETS INPUT DATA FROM WATSTORE PEAK-FILE PUNCHED-CARD RETRIEVAL
@@ -1445,9 +1443,6 @@ C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MESSFL - Fortran unit number of AIDE message file
 C     ISTART - flag 1st time = 0, else > 0.
-C     EMAOPT - indicator flag for performing EMA analysis
-C              0 - no, just do traditional J407
-C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number of input WDM file
 C     MAXPKS - MAX NUMBER OF PEAKS THAT CAN BE STORED IN DATA ARRAYS
 C     STAID  - CHARACTER STRING STATION ID NO AND NAME --
@@ -1474,6 +1469,9 @@ C     GENSKU - GENERALIZED SKEW
 C     RMSEGS - RMS ERROR OF GENERALIZED SKEW
 C     ISKUOP - GEN.SKEW OPTION -- 1= GEN SKU, 0=WTD SKU, -1= STA SKU.
 C     NSKIP1 - NUMBER OF STATIONS SKIPPED BECAUSE OF INPUT ERRORS
+C     EMAOPT - Analysis option,
+C              0 - Bull. 17B
+C              1 - EMA
 C     IRC    - RETURN CODE - 0=NO ERROR, 1=ERRORS, 2=END OF FILE, 3=BOTH
 C
 C     + + + COMMON BLOCKS + + +
@@ -1649,7 +1647,7 @@ C             update specs
               CALL PARSESTASPECS (CURSTA,XSYSPK,XHSTPK,
      M                            GENSKU,HISTPD,QHIOUT,QLWOUT,
      M                            GAGEB,RMSEGS,IBEGYR,IENDYR,
-     M                            ISKUOP,IKROPT,FLAT,FLONG)
+     M                            ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
               
 C 
               NOHIST = HISTPD.LE.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
