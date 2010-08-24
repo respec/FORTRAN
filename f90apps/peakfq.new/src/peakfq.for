@@ -30,7 +30,7 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I,J,K,STAIND,IOSNUM,FUNIT
-      INTEGER      IPEND, WDMSFL, FOUT, PAUSE, EMAOPT
+      INTEGER      IPEND, WDMSFL, FOUT, PAUSE
       INTEGER      LNSPECS, NSTA, ISTA, RETCOD, RDOFLG, FE
       INTEGER      DSN, DSTYP, GRCNT, LREC, ERRFLG
       CHARACTER*12 APNAME
@@ -113,7 +113,6 @@ C     common JOBOPT (IPLTOP through ALLSOM)
       IMODFG= 1  
       ALLSOM= 1
       PAUSE = 2    !don't pause between stations
-      EMAOPT= 0    !default to not do EMA analysis
 C
 C     open scratch file
       OPEN (UNIT=91,FILE='RQ7J4ZV9',STATUS='UNKNOWN')
@@ -203,7 +202,7 @@ C     process driver input file
           CALL OPNOUT
      M               (S, INFORM, FOUT, IPUNCH,
      M                IPLTOP, GRFMT, IPRTOP, IBCPUN, IDEBUG,
-     M                CLSIZE, WEIBA, EMAOPT,
+     M                CLSIZE, WEIBA,
      O                RETCOD)
         ELSE IF (KWD .EQ. 'STATION') THEN !processing station specs
           WRITE(FE,*) "MAIN:Got STATION, Remaining:'" // TRIM(S) // "'"
@@ -340,10 +339,10 @@ C       set printer plot file to FOUT
         IF (UPDATEFG) THEN !write out verbose spec file
           CALL WRITESPECIO (WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
      I                      IPLTOP,GRFMT,IPRTOP,IBCPUN,IDEBUG,
-     I                      CLSIZE,WEIBA,EMAOPT)
+     I                      CLSIZE,WEIBA)
         END IF
 C       do the analysis
-        CALL J407XE (MESSFL,WDMSFL,PAUSE,EMAOPT,UPDATEFG)
+        CALL J407XE (MESSFL,WDMSFL,PAUSE,UPDATEFG)
         IF (UPDATEFG) THEN !update spec file with verbose version
           CALL UPDATESPECFILE (SPCFUN,SPCFNM)
         ELSE !just close spec file
@@ -489,7 +488,7 @@ C
      I                   ( ISTR, INFORM,
      M                     FOUT, IPUNCH,
      M                     IPLTOP, GRFMT, IPRTOP, IBCPUN, IDEBUG,
-     M                     CLSIZE, WEIBA, EMAOPT,
+     M                     CLSIZE, WEIBA,
      O                     RETCOD )
 C
 C     + + + PURPOSE + + +
@@ -500,7 +499,7 @@ C     updated for batch version of PEAKFQ, 9/03
 C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER      INFORM, FOUT, IPUNCH, EMAOPT,
+      INTEGER      INFORM, FOUT, IPUNCH,
      $             IPLTOP, IPRTOP, IBCPUN, IDEBUG, RETCOD
       REAL         CLSIZE, WEIBA
       CHARACTER*3  GRFMT
@@ -518,7 +517,6 @@ C     IBCPUN - ???
 C     IDEBUG - ???
 C     CLSIZE - ??? 
 C     WEIBA  - ???
-C     EMAOPT - flag for performing EMA analysis (0 - no, 1 - yes)
 C     RETCOD - ???
 C
 C     + + + LOCAL VARIABLES + + +
@@ -661,8 +659,6 @@ C             dummy default (following old code, prh 8/03)
 
       ELSE IF (KWD.EQ.'DEBUG') THEN
         IDEBUG = IYESNO(ISTR,1)
-      ELSE IF (KWD.EQ.'EMA') THEN
-        EMAOPT = IYESNO(ISTR,1)
       ELSE IF (KWD.EQ.'CONFIDENCE') THEN
         ILEN = ZLNTXT(ISTR)
         IF (ILEN.GT.0) THEN
@@ -692,7 +688,7 @@ C
      I                        (STAID,XSYSPK,XHSTPK,
      M                         GENSKU,HISTPD,QHIOUT,QLWOUT,
      M                         GAGEB,RMSEGS,IBEGYR,IENDYR,
-     M                         ISKUOP,IKROPT,FLAT,FLONG)
+     M                         ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     Parse driver input file records into station computational options
@@ -705,7 +701,7 @@ C
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT
+      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, EMAOPT
       REAL          XSYSPK, XHSTPK, GENSKU, HISTPD, QHIOUT, QLWOUT, 
      $              GAGEB, RMSEGS, FLAT, FLONG
       CHARACTER*(*) STAID
@@ -729,6 +725,9 @@ C               1 - Generalized
 C     IKROPT - allow urban/regularized peaks (0 - no, 1 -yes)
 C     FLAT   - station latitude, decimal
 C     FLONG  - station longitude, decimal
+C     EMAOPT - Analysis option,
+C              0 - Bull. 17B
+C              1 - EMA
 C
 C     + + + LOCAL VARIABLES
       INTEGER      I,ISTA,NSPECS,IVAL
@@ -781,7 +780,13 @@ C         init EMA Interval specs
         DO 100 I = 1, NSPECS
           S = STASPECS(ISTA)%SPECS(I)%STR
           KWD = STRRETREM(S)
-          IF (KWD .EQ. 'GENSKEW') THEN
+          IF (KWD .EQ. 'ANALYZE') THEN
+            IF (S .EQ. 'B17B') THEN
+              EMAOPT = 0
+            ELSEIF (S .EQ. 'EMA') THEN
+              EMAOPT = 1
+            END IF
+          ELSEIF (KWD .EQ. 'GENSKEW') THEN
             GENSKU = CVRDEC(S)
           ELSE IF (KWD .EQ. 'SKEWSE') THEN
             RMSEGS = CVRDEC(S)
@@ -1020,7 +1025,7 @@ C
 C
       SUBROUTINE   WRITESPECIO (WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
      I                          IPLTOP,GRFMT,IPRTOP,IBCPUN,IDEBUG,
-     I                          CLSIZE,WEIBA,EMAOPT)
+     I                          CLSIZE,WEIBA)
 C
 C     + + + PURPOSE + + +
 C     Write out verbose version of spec file (i.e. include 
@@ -1034,7 +1039,7 @@ C     created for batch version of PEAKFQ, 1/04
 C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   WDMSFL,INCRD,INFORM,FOUT,IPUNCH,EMAOPT,
+      INTEGER   WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
      $          IPLTOP,IPRTOP,IBCPUN,IDEBUG
       REAL      CLSIZE,WEIBA
       CHARACTER*3 GRFMT
@@ -1104,11 +1109,6 @@ C     additional output
       ELSE
         WRITE(92,*) 'O Debug No'
       END IF
-      IF (EMAOPT.EQ.1) THEN
-        WRITE(92,*) 'O EMA Yes'
-      ELSE
-        WRITE(92,*) 'O EMA No'
-      END IF
       WRITE(92,*) 'O Confidence ',CLSIZE
 C
       RETURN
@@ -1118,8 +1118,8 @@ C
 C
       SUBROUTINE   WRITESPECSTA
      I                        (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,
-     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,
-     M                         ISKUOP,IKROPT,FLAT,FLONG,XSYSPK,XHSTPK)
+     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
+     M                         IKROPT,FLAT,FLONG,XSYSPK,XHSTPK,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     Write out verbose version of spec file (i.e. include 
@@ -1134,7 +1134,7 @@ C
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT
+      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, EMAOPT
       REAL          GENSKU, HISTPD, QHIOUT, QLWOUT, GAGEB, RMSEGS, 
      $              FLAT, FLONG, XSYSPK, XHSTPK
       CHARACTER*(*) STAID
@@ -1158,6 +1158,9 @@ C     FLAT   - station latitude, decimal
 C     FLONG  - station longitude, decimal
 C     XSYSPK - highest systematic peak
 C     XHSTPK - lowest historic peak
+C     EMAOPT - Analysis option,
+C              0 - Bull. 17B
+C              1 - EMA
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I,J
@@ -1190,17 +1193,22 @@ C     start with station ID, remove any duplicate identifier at end
       END IF
       WRITE(92,*) 'Station ',STAID
 C
+      IF (EMAOPT .EQ. 0) THEN
+        WRITE(92,*) '     Analyze B17B'
+      ELSEIF (EMAOPT .EQ. 1) THEN
+        WRITE(92,*) '     Analyze EMA'
+      END IF
 C     thresholds and intervals
       IF (NTHRESH.GT.0) THEN
         DO 10 I=1,NTHRESH
-          WRITE(92,*) '     PCPT_THRESH ',THRESH(I)%THRBYR,
+          WRITE(92,*) '     PCPT_Thresh ',THRESH(I)%THRBYR,
      $                   THRESH(I)%THREYR,THRESH(I)%THRLWR,
      $                   THRESH(I)%THRUPR
  10     CONTINUE  
       END IF
       IF (NINTERVAL.GT.0) THEN
         DO 20 I=1,NINTERVAL
-          WRITE(92,*) '     INTERVAL ',INTERVAL(I)%INTRVLYR,
+          WRITE(92,*) '     Interval ',INTERVAL(I)%INTRVLYR,
      $                   INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLUPR
  20     CONTINUE  
       END IF

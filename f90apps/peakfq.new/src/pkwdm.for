@@ -5,7 +5,7 @@ C
      I                   (MESSFL,WDMSFL,IBCPUN,MAXPKS,
      I                    STAID,PKSABG,IWYSN,XQUAL,
      O                    NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,
-     O                    GAGEB,GENSKU,RMSEGS,ISKUOP,NSKIP1,IRC)
+     O                    GAGEB,GENSKU,RMSEGS,ISKUOP,NSKIP1,EMAOPT,IRC)
 C
 C     + + + PURPOSE + + +
 C     This routine gets data from the WDM file for analysis by J407,
@@ -17,7 +17,7 @@ C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MESSFL, WDMSFL, IBCPUN, MAXPKS, IWYSN(MAXPKS),
-     &          NHIST, NSYS, ISKUOP, NSKIP1, IRC
+     &          NHIST, NSYS, ISKUOP, NSKIP1, EMAOPT, IRC
       REAL      PKSABG(MAXPKS), HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU,
      &          RMSEGS
       CHARACTER*5  XQUAL(MAXPKS)
@@ -61,6 +61,9 @@ C               1 - generalized skew (GEN)
 C               0 - weighted skew (WTD)
 C              -1 - station skew (STA)
 C     NSKIP1 - number of stations skipped because of input errors
+C     EMAOPT - Analysis option,
+C              0 - Bull. 17B
+C              1 - EMA
 C     IRC    - return code
 C              0 - no error
 C              1 - errors
@@ -295,7 +298,7 @@ C           get any specs from spec file
             CALL PARSESTASPECS (CURSTA,SYSHI,HSTLOW,
      M                          GENSKU,HISTPD,QHIOUT,QLWOUT,
      M                          GAGEB,RMSEGS,BYR,EYR,
-     M                          ISKUOP,URBREG,FLAT,FLONG)
+     M                          ISKUOP,URBREG,FLAT,FLONG,EMAOPT)
 C
 C           Get station description/station name
             SALEN=48
