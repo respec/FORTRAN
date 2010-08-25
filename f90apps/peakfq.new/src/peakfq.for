@@ -916,7 +916,8 @@ C
       IF (UPDATEFG) THEN
         CALL WRITESPECSTA (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,
      I                     GAGEB,RMSEGS,IBEGYR,IENDYR,
-     I                     ISKUOP,IKROPT,FLAT,FLONG,XSYSPK,XHSTPK)
+     I                     ISKUOP,IKROPT,FLAT,FLONG,XSYSPK,XHSTPK,
+     I                     EMAOPT)
       END IF
 C
       RETURN

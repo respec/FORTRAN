@@ -125,7 +125,7 @@ C
 C     maximum number of peaks
       MAXPKS = MXPK
 C
-      WRITE(*,*) "J407XE:IA1:",IA1," INFORM:",INFORM," MSG1:",MSG1
+      WRITE(99,*) "J407XE:IA1:",IA1," INFORM:",INFORM," MSG1:",MSG1
 C     CHECK FOR REPEAT CALL FROM MAIN PGM
       IF( JSEQNO .LE. 0 .OR.  INFORM .GT. 0) THEN      
 C
@@ -159,15 +159,15 @@ C
   100 CONTINUE
         JSEQNO = JSEQNO + 1
 C
-        CALL INPUT (IA1,IA3,INFORM,MAXPKS,EMAOPT,IA3,IBCPUN,
+        CALL INPUT (IA1,IA3,INFORM,MAXPKS,IA3,IBCPUN,
      M              ISTART,
      O              STAID,PKS,IPKSEQ,XQUAL,IQUAL, 
      O              NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,GAGEB,
      O              GENSKU,RMSEGS, IGSOPT, NSKIP1,EMAOPT,IER)
+        write(99,*)'After INPUT - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
 C
         CALL PRTPHD( 1000 , JSEQNO, EMAOPT, IA3)
 C
-           write(*,*)'After INPUT, NSYS,NHIST',NSYS,NHIST
         NPKS=NHIST+NSYS
         NSTAYR=NSTAYR+NPKS
         NSKIP=NSKIP+NSKIP1
@@ -192,17 +192,17 @@ C
 C       CALL  PRTPHD(  2001 , -999 )
         CALL  PRTINP( IDEBUG, XPKS, EMAOPT, IA3 )
 C
-         write(*,*)'Debug Info for ',STAID
+         write(99,*)'Debug Info for ',STAID
         CALL WCFAGB(PKS, PKLOG, WRCPP, SYSPP, NPKS, IER)
-         write(*,*)'after WCFAGB, IER=',IER
+         write(99,*)'after WCFAGB, IER=',IER
 
         IF (EMAOPT.EQ.1) THEN
-       write(*,*)
+c       write(*,*)
        write(99,*)
-       write(*,*)'Running EMA for station ',STAID
+c       write(*,*)'Running EMA for station ',STAID
        write(99,*)'Running EMA for station ',STAID
-       write(*,*)
-       write(*,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
+c       write(*,*)
+       write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
      $                            NPKS,NSYS,GENSKU,RMSEGS
           CALL RUNEMA(NPKS,PKS,IPKSEQ)
         END IF
@@ -1640,6 +1640,8 @@ C             not too many peaks & user wants to continue
               IKROPT    =  AUX(11)
               FLAT      =  AUX(12)
               FLONG     =  AUX(13)
+C             default to Bull 17B analysis
+              EMAOPT = 0
 C
               IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 
@@ -2072,7 +2074,7 @@ C         insufficient data to process
           IF (NPKS .GT. 0) THEN
             IF(STANO.EQ.'               ') STANO='unknown        '
             WRITE (MSG,2010) NPKS, STANO
-       write (*,*) '3rd call to PRTPHD 1000'
+       write (99,*) '3rd call to PRTPHD 1000'
             CALL PRTPHD (1000,1,EMAOPT,WDMSFL)
           END IF
           NPKS  = 0
@@ -3610,9 +3612,9 @@ C
 
       NOBS = WYMAX - WYMIN + 1
       ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS))
-      write(*,*) 'RUNEMA: NPKS,NSYS,NHIST,NOBS,GAGEB',
+      write(99,*) 'RUNEMA: NPKS,NSYS,NHIST,NOBS,GAGEB',
      $                    NPKS,NSYS,NHIST,NOBS,GAGEB
-      write(*,*) 'RUNEMA: PKS',(PKS(I),I=1,NPKS)
+      write(99,*) 'RUNEMA: PKS',(PKS(I),I=1,NPKS)
 
       LPKIND = NPKS - (NSYS+NHIST) + 1
 c      CALL EMADATA(NSYS+NHIST,PKS(LPKIND),IPKSEQ(LPKIND),WYMIN,WYMAX,
@@ -3676,11 +3678,11 @@ c      WRCSKW = WRCMOM(3)
       WRCUSD = SQRT(WRCMOM(2,1))
       WRCSKW = WRCMOM(3,1)
 C
-      write(*,*)
-      write(*,*) 'RESULTS'
-      write(*,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
+      write(99,*)
+      write(99,*) 'RESULTS'
+      write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
       DO 20 I = 1,MXINT
-        write(*,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
+        write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
      $                          10**CILOW(I),10**CIHIGH(I)
           SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
           WRCFC(I) = WRCYP(I)
