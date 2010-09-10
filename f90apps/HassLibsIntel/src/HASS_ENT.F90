@@ -76,10 +76,10 @@
 
       !local
       INTEGER FUNCTION INQUIRE_NAME(NAME,FUN_DEF)
-        CHARACTER*64       :: NAME
+        CHARACTER*256      :: NAME
         INTEGER            :: FUN_DEF
 
-        CHARACTER*256      :: MSG
+        CHARACTER*512      :: MSG
         INTEGER            :: FUN_TRY 
         INTEGER,SAVE       :: FUN_BASE = 101
         INTEGER            :: FUN_OPN  
@@ -211,7 +211,7 @@
         INTEGER                     :: WDMSFL
 
         CHARACTER*256               :: MSG
-        CHARACTER*64                :: LNAME
+        CHARACTER*256               :: LNAME
         INTEGER                     :: RETCOD
 
         LNAME = WDNAME
@@ -255,7 +255,7 @@
         INTEGER                     :: RETCOD
 
         CHARACTER*256               :: MSG
-        CHARACTER*64                :: LNAME
+        CHARACTER*256               :: LNAME
 
         LNAME = WDNAME
         !WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
@@ -360,11 +360,11 @@
         END IF
       END FUNCTION F90_WDFLCL
 
-      FUNCTION F90_INQNAM (NAM)
+      FUNCTION F90_INQNAM (NAM) RESULT (FILE_UNIT)
         !check to see if a file name is open
         !DEC$ ATTRIBUTES DLLEXPORT :: F90_INQNAM
 
-        INTEGER          :: F90_INQNAM
+        INTEGER          :: FILE_UNIT
         CHARACTER(LEN=*) :: NAM
 
         CHARACTER*256    :: MSG
@@ -373,15 +373,13 @@
         LOGICAL          :: OPEN
 
         WRITE(LNAM,*) NAM
-        INQUIRE (FILE=LNAM,NUMBER=FUN,OPENED=OPEN)
+        INQUIRE (FILE=LNAM,NUMBER=FILE_UNIT,OPENED=OPEN)
 
-        WRITE(MSG,*) 'HASS_ENT:F90_INQNAM:',FUN,OPEN,' ',TRIM(LNAM)
+        WRITE(MSG,*) 'HASS_ENT:F90_INQNAM:',FILE_UNIT,OPEN,' ',TRIM(LNAM)
         CALL LOG_MSG(MSG)
 
-        IF (OPEN) THEN     
-          F90_INQNAM = FUN
-        ELSE
-          F90_INQNAM = 0
+        IF (.NOT. OPEN) THEN     
+          FILE_UNIT = 0
         END IF
 
       END FUNCTION F90_INQNAM
@@ -2347,6 +2345,42 @@
 
       END SUBROUTINE F90_GETOCR
 
+      !wdm:wdsagy
+!      SUBROUTINE F90_WDSAGY (WDMSFL,ID, &
+!                             LEN, TYPE, &
+!                             ATMIN, ATMAX, ATDEF, &
+!                             HLEN, HREC, HPOS, VLEN,&
+!                             SANAM,SADESC,SATVAL)
+!!     get characteristics of this wdm search attribute
+!
+!        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WDSAGY
+!
+!        INTEGER, INTENT(IN)           :: WDMSFL,ID
+!        INTEGER, INTENT(OUT)          :: LEN,TYPE
+!        INTEGER, INTENT(OUT)          :: HLEN,HREC,HPOS,VLEN
+!        REAL, INTENT(OUT)             :: ATMIN,ATMAX,ATDEF
+!        CHARACTER*6, INTENT(OUT)      :: SANAM
+!        CHARACTER*1, INTENT(OUT)      :: SADESC(47),SATVAL(240)
+!
+!        INTEGER                 :: DPTR,SARQWD,SAUPFG 
+!
+!        CALL WDSAGY (WDMSFL,ID, &
+!                     SANAM,DPTR,TYPE,LEN,SARQWD,SAUPFG)
+!        IF (DPTR.GT.0) THEN
+!          CALL WADGDS (WDMSFL,DPTR, &
+!                       SADESC)
+!          CALL WADGRA (WDMSFL,DPTR,TYPE, &
+!                       ATMIN,ATMAX)
+!          CALL WADGDF (WDMSFL,DPTR,TYPE, &
+!                       ATDEF)
+!          ILEN = 240
+!          CALL WADGVA (WDMSFL,DPTR,ILEN, &
+!                       VLEN,SATVAL)
+!          CALL WADGHL (WDMSFL,DPTR, &
+!                       HLEN,HREC,HPOS)
+!        END IF
+!      END SUBROUTINE F90_WDSAGY
+      
       !wdm:wdsagy
       SUBROUTINE F90_WDSAGY_XX (WDMSFL,ID, &
                                 LEN, TYPE, &

@@ -79,7 +79,7 @@
         CHARACTER*256      :: NAME
         INTEGER            :: FUN_DEF
 
-        CHARACTER*256      :: MSG
+        CHARACTER*512      :: MSG
         INTEGER            :: FUN_TRY 
         INTEGER,SAVE       :: FUN_BASE = 101
         INTEGER            :: FUN_OPN  
