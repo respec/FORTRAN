@@ -32,7 +32,7 @@
 				<Tool Name="VFCustomBuildTool"/>
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="copy $(OutDir)\$(ProjectName).dll C:\Dev\HSPF\bin\Debug"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Release|x64" ConfigurationType="typeDynamicLibrary">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
@@ -50,7 +50,7 @@
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\ann.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\awstat.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\graph.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\hspf.lib"/>
+		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\hspf140.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\HspNoDSS.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\iowdm.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\newaqt12.lib"/>
@@ -61,6 +61,7 @@
 		<File RelativePath=".\src\HASS_DUM.FOR"/>
 		<File RelativePath=".\src\HASS_ENT.F90"/>
 		<File RelativePath=".\src\Himutil.F90"/>
+		<File RelativePath="..\..\lib3.0\SRC\HSPF140\HIOOSV.FOR"/>
 		<File RelativePath=".\src\Hspsta.FOR"/>
 		<File RelativePath=".\src\SCENMOD.F90"/>
 		<File RelativePath=".\src\VB_SCEN.F90"/></Filter></Files>

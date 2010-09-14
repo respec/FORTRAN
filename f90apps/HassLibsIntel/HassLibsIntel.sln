@@ -1,18 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "HassEnt", "HassEnt.vfproj", "{96667BD5-097B-47AE-8EB4-A39ADE59FA52}"
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "Hass_Ent", "Hass_Ent.vfproj", "{96667BD5-097B-47AE-8EB4-A39ADE59FA52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Debug|Win32.ActiveCfg = Debug|x64
-		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Debug|Win32.Build.0 = Debug|x64
+		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Debug|Win32.Build.0 = Debug|Win32
+		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Debug|x64.ActiveCfg = Debug|x64
+		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Debug|x64.Build.0 = Debug|x64
 		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Release|Win32.ActiveCfg = Release|Win32
 		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Release|Win32.Build.0 = Release|Win32
+		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Release|x64.ActiveCfg = Release|x64
+		{96667BD5-097B-47AE-8EB4-A39ADE59FA52}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
