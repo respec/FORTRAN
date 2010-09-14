@@ -380,6 +380,7 @@ C     + + + PURPOSE + + +
 C     Pause the run each inspan, read updates from file, and alter OSV as
 C     needed.
 C
+      USE HIOOSV, ONLY : GTOSVI, GTOSVR, PTOSVR
       USE SCENMOD, ONLY: M_GETSTRING, UPDATESTATUSX
 C
 C     + + + DUMMY ARGUMENTS + + +
@@ -413,7 +414,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC     MOD
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL      GTOSVI,GTOSVR,PTOSVR,WDFLCL,WDBOPN,WDBFIN,WDGIVL
+      EXTERNAL      WDFLCL,WDBOPN,WDBFIN,WDGIVL
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA NVLIB,I0,I1/5,0,1/

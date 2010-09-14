@@ -21,6 +21,26 @@
 
       END SUBROUTINE F90_SPIPH
 
+      SUBROUTINE F90_ACTSCN_XX (MKFILS,WDMFL,MSGFL,RETCOD,CSLEN,CSCENI)
+        USE SCENMOD, ONLY : M_ACTSCN
+        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_ACTSCN_XX
+    
+        INTEGER, INTENT(IN)  :: MKFILS
+        INTEGER, INTENT(IN)  :: CSLEN
+        INTEGER, INTENT(IN)  :: CSCENI(CSLEN)
+        INTEGER, INTENT(IN)  :: WDMFL(4),MSGFL
+        INTEGER, INTENT(OUT) :: RETCOD
+ 
+        CHARACTER(LEN=24)    :: CSCEN 
+        
+        DO I = 1,CSLEN
+          CSCEN(I:I) = CHAR(CSCENI(I))
+        END DO
+        write(99,*) 'f90_actscnx',MKFILS,WDMFL,CSLEN,CSCEN(1:CSLEN)
+        CALL M_ACTSCN (MKFILS,CSCEN(1:CSLEN),WDMFL,MSGFL,RETCOD)
+ 
+      END SUBROUTINE F90_ACTSCN_XX
+        
       SUBROUTINE F90_ACTSCN (MKFILS,WDMFL,MSGFL,RETCOD,CSCEN)
 !       activate scenario
         USE SCENMOD, ONLY : M_ACTSCN
@@ -30,9 +50,11 @@
         CHARACTER(LEN=*),INTENT(IN)  :: CSCEN
         INTEGER,         INTENT(IN)  :: WDMFL(4),MSGFL
         INTEGER,         INTENT(OUT) :: RETCOD
-
+        INTEGER                      :: CSLEN 
+       
+        CSLEN = LEN(CSCEN)
+        write(99,*) 'f90_actscn',MKFILS,CSLEN,CSCEN(1:CSLEN)
         CALL M_ACTSCN (MKFILS,CSCEN,WDMFL,MSGFL,RETCOD)
-        write(99,*) 'wdmfl',wdmfl(1),wdmfl(2),wdmfl(3),wdmfl(4)
 
       END SUBROUTINE F90_ACTSCN
 

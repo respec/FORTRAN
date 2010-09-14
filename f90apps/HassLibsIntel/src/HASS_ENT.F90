@@ -65,10 +65,12 @@
 
       END SUBROUTINE
 
-      SUBROUTINE F90_MSG(MSG)
-        !DEC$ ATTRIBUTES DLLEXPORT :: F90_MSG
+      SUBROUTINE f90_msg(msg)
+        !DEC$ ATTRIBUTES DLLEXPORT :: f90_msg
+        !DEC$ ATTRIBUTES STDCALL   :: f90_msg
+        !DEC$ ATTRIBUTES REFERENCE :: msg
 
-        CHARACTER(LEN=*) :: MSG
+        CHARACTER(LEN=132) :: MSG
 
         CALL LOG_MSG(MSG)
 
@@ -246,16 +248,18 @@
       END FUNCTION F90_WDBOPN
 
       !adwdm:wdopxx
-      SUBROUTINE F90_WDBOPNR(RWFLG,WDNAME,WDMSFL,RETCOD)
-        !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDBOPNR
+      SUBROUTINE f90_wdbopnr(rwflg,wdname,wdmsfl,retcod)
+        !DEC$ ATTRIBUTES DLLEXPORT :: f90_wdbopnr
+        !DEC$ ATTRIBUTES STDCALL   :: f90_wdbopnr
+        !DEC$ ATTRIBUTES REFERENCE :: rwflg, wdname, wdmsfl, retcod
 
-        CHARACTER(LEN=*),INTENT(IN) :: WDNAME
-        INTEGER,         INTENT(IN) :: RWFLG
-        INTEGER                     :: WDMSFL
-        INTEGER                     :: RETCOD
+        CHARACTER(LEN=256),INTENT(IN) :: wdname
+        INTEGER,         INTENT(IN)   :: rwflg
+        INTEGER                       :: wdmsfl
+        INTEGER                       :: retcod
 
-        CHARACTER*256               :: MSG
-        CHARACTER*256               :: LNAME
+        CHARACTER*384                 :: MSG
+        CHARACTER*256                 :: LNAME
 
         LNAME = WDNAME
         !WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
@@ -328,8 +332,8 @@
         INTEGER, INTENT(IN) :: WDMSFL
         INTEGER             :: RETCOD
  
-        CHARACTER*256 :: MSG
-        CHARACTER*200 :: FNAM
+        CHARACTER*384 :: MSG
+        CHARACTER*256 :: FNAM
         INTEGER       :: FUN
         LOGICAL       :: OPEN
             
@@ -360,15 +364,18 @@
         END IF
       END FUNCTION F90_WDFLCL
 
-      FUNCTION F90_INQNAM (NAM) RESULT (FILE_UNIT)
+      FUNCTION f90_inqnam (nam) RESULT (file_unit)
         !check to see if a file name is open
-        !DEC$ ATTRIBUTES DLLEXPORT :: F90_INQNAM
+        !DEC$ ATTRIBUTES DLLEXPORT :: f90_inqnam
+        !DEC$ ATTRIBUTES STDCALL   :: f90_inqnam
+        !DEC$ ATTRIBUTES REFERENCE :: rwflg, wdname, wdmsfl, retcod
 
-        INTEGER          :: FILE_UNIT
-        CHARACTER(LEN=*) :: NAM
 
-        CHARACTER*256    :: MSG
-        CHARACTER*200    :: LNAM
+        INTEGER          :: file_unit
+        CHARACTER(LEN=*) :: nam
+
+        CHARACTER*384    :: MSG
+        CHARACTER*256    :: LNAM
         INTEGER          :: FUN = 0
         LOGICAL          :: OPEN
 
