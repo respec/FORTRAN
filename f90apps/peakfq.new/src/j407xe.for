@@ -212,6 +212,9 @@ c       write(*,*)
           IF(MSL .LT. 4) CALL PRTIN2 ( 1 ,MSG, NPKS, IPKSEQ,PKS,XQUAL,
      $                                 EMAOPT, IA3 )
         ELSE
+
+          CALL PRTKNT(MSG,NPKS,PKS,IPKSEQ)
+
           NPROC=NPROC+1
 C
 C         PRINT FITTED LOG-PEARSON TYPE III FREQUENCY CURVES PARAMETERS
@@ -1260,6 +1263,60 @@ Cprh        WRITE (MSG,2012) 1./TMP, XTRPK, TMP
 Cprh      ELSE
 Cprh        WRITE (MSG,2011) 1./TMP, TMP
 Cprh      END IF
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   PRTKNT
+     I                   (MSG, NPKS, IPKSEQ, PKS)
+C
+C     + + + PURPOSE + + +
+C     Prints Kendall's Tau values for systematic peaks
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER  MSG,NPKS
+      INTEGER  IPKSEQ(NPKS)
+      REAL     PKS(NPKS)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MSG    - Fortran unit number for output file
+C     NPKS   - number of peaks 
+C     IPKSEQ - array of peak years
+C     PKS    - array of peak values
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxpk.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I, LNPKS
+      REAL    LPKS(MXPK), LTAU, LPLEV, LSLOPE
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL KENT
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(40X,'Kendall''s Tau Parameters',//,
+     $       56X,'MEDIAN   No. of',/,
+     $       39X,'TAU    P-VALUE    SLOPE   PEAKS',/,
+     $       32X,'---------------------------------------',/,
+     $       13X,'SYSTEMATIC RECORD',3F11.3,I6)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      DO 10 I = 1, NPKS
+        IF (IPKSEQ(I) .GT. 0 .AND. PKS(I) .GT. 0) THEN
+C         valid systematic peak
+          LNPKS = LNPKS + 1
+          LPKS(LNPKS) = PKS(I)
+        END IF
+ 10   CONTINUE
+C
+      CALL KENT (LPKS,LNPKS,
+     O           LTAU,LPLEV,LSLOPE)
+C
+      WRITE(MSG,2000) LTAU,LPLEV,LSLOPE,LNPKS
 C
       RETURN
       END
