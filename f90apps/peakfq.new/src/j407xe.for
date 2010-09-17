@@ -84,7 +84,7 @@ C
 C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB
-      EXTERNAL   SORTM, PRTIN2, PRTIN3, GAUSEX, STOREDATA
+      EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA  IER,  NFCXPG ,  JSEQNO
@@ -1270,7 +1270,7 @@ C
 C
 C
       SUBROUTINE   PRTKNT
-     I                   (MSG, NPKS, IPKSEQ, PKS)
+     I                   (MSG, NPKS, PKS, IPKSEQ)
 C
 C     + + + PURPOSE + + +
 C     Prints Kendall's Tau values for systematic peaks
@@ -1297,14 +1297,15 @@ C     + + + EXTERNALS + + +
       EXTERNAL KENT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(40X,'Kendall''s Tau Parameters',//,
-     $       56X,'MEDIAN   No. of',/,
-     $       39X,'TAU    P-VALUE    SLOPE   PEAKS',/,
-     $       32X,'---------------------------------------',/,
-     $       13X,'SYSTEMATIC RECORD',3F11.3,I6)
+ 2000 FORMAT(//,40X,'Kendall''s Tau Parameters',//,
+     $          56X,'MEDIAN   No. of',/,
+     $          39X,'TAU    P-VALUE    SLOPE   PEAKS',/,
+     $          32X,'---------------------------------------',/,
+     $          13X,'SYSTEMATIC RECORD',3F11.3,I6,//)
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      LNPKS = 0
       DO 10 I = 1, NPKS
         IF (IPKSEQ(I) .GT. 0 .AND. PKS(I) .GT. 0) THEN
 C         valid systematic peak
