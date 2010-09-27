@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<project name="HspfWdmF90" default="dll">
+   <property name="SummaryListFile"    value="${ant.project.name}.lis"/>
+   <property name="FC"          value="lf90"/>
+   <property name="FOpts"       value="-c -o0"/>
+
+   <target name="test" depends="dll">
+      <echo message=" test${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <ant antfile="runTest.xml" dir="..\..\test\hspf\standard"/>
+   </target>
+
+   <target name="dll" depends="compile,libs">
+      <echo message=" dll${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <echo message="basedir:'${basedir}'${line.separator}" file="${SummaryListFile}" append="yes"/>
+
+      <exec executable="${FC}" dir="obj"    output="${SummaryListFile}" append="yes">
+         <arg value="@${ant.project.name}.rsp"/>
+      </exec>
+      <copy file="${SummaryListFile}" 
+            tofile="history\${DSTAMP}${TSTAMP}${ant.project.name}.lis">
+      </copy>
+      <!-- copy file="bin\HspfWdmF90.dll" tofile="c:\windows\system32\HspfWdmF90.dll"/ -->
+   </target>
+
+   <target name="compile" depends="init">
+      <echo message=" compile${line.separator}" file="${SummaryListFile}" append="yes"/>
+
+      <apply executable="${FC}" dest="obj" dir="src" output="${SummaryListFile}" append="yes">
+         <srcfile/>
+         <arg line="${FOpts} -ml winapi -mod ..\obj"/>
+         <mapper type="glob" from="*.F90" to="*.lib"/>
+         <fileset dir="src" casesensitive="false"> 
+            <include name="scenmod.F90"/>          
+         </fileset>
+      </apply>
+
+      <apply executable="${FC}" dest="obj" dir="src" output="${SummaryListFile}" append="yes">
+         <srcfile/>
+         <arg line="${FOpts} -win -dll -mod ..\obj"/>
+         <mapper type="glob" from="*.FOR" to="*.obj"/>
+         <fileset dir="src" casesensitive="false" excludesfile="src\exclude.lis"> 
+            <include name="*.FOR"/>          
+         </fileset>
+      </apply>
+
+      <apply executable="${FC}" dest="obj" dir="src" output="${SummaryListFile}" append="yes">
+         <srcfile/>
+         <arg line="-nfix ${FOpts} -win -dll -ml msvb -mod ..\obj"/>
+         <mapper type="glob" from="*.F90" to="*.obj"/>
+         <fileset dir="src" casesensitive="false"> 
+            <include name="himutil.F90"/>          
+            <include name="vb_scen.F90"/>          
+            <include name="hass_ent.F90"/>          
+         </fileset>
+      </apply>
+
+      <fileset dir="src" id="objNew"> 
+         <include name="*.obj"/>
+         <include name="*.lib"/>
+         <include name="*.mod"/>
+         <include name="*.txt"/>
+         <include name="*.xp$"/>
+         <include name="*.im$"/>
+      </fileset>
+
+      <copy todir="obj"><fileset refid="objNew"/></copy>
+
+      <delete><fileset refid="objNew"/></delete>
+
+   </target>
+
+   <target name="libs" depends="init">
+      <echo message=" libs${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <ant antfile="makeAllLib.xml" dir="..\..\lib3.0\src"/>
+      <concat destfile="${SummaryListFile}" append="yes"> 
+         <fileset dir="..\..\lib3.0\src">
+            <include name="makeAllLibDetails.lis"/>
+         </fileset>
+      </concat>
+   </target>
+
+   <target name="init">
+      <tstamp/>
+      <echo message="${ant.project.name}${line.separator} init${line.separator}" 
+            file="${SummaryListFile}"/>
+   </target> 
+
+   <target name="clean" depends="init">
+      <echo message=" clean${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <delete>
+	   <fileset dir="obj" casesensitive="no">
+            <include name="*.obj"/>
+            <include name="*.lib"/>
+            <include name="*.mod"/>
+            <include name="*.*$"/>
+         </fileset>
+      </delete>
+      <delete>
+	   <fileset dir="bin" casesensitive="no">
+            <include name="HspfWdmF90.*"/>
+         </fileset>
+      </delete>
+      <ant antfile="makeAllLib.xml" target="clean" dir="..\..\lib3.0\src"/>
+      <echo message="  done${line.separator}" file="${SummaryListFile}" append="yes"/>
+      <copy file="${SummaryListFile}" 
+            tofile="history\${DSTAMP}${TSTAMP}${ant.project.name}Clean.lis">
+      </copy>
+   </target>
+</project>
