@@ -1,0 +1,8 @@
+hass_ent.obj hass_dum.obj vb_scen.obj hspsta.obj ..\res\hspfwdmf90.res
+-OUT ..\bin\HspfWdmF90.dll
+-MAP ..\bin\HspfWdmF90.map
+-LIB hspf122.lib hspdss.lib hec.lib wdm.lib adwdm.lib util.lib
+-LIBP ..\..\..\lib3.0\lf90libs
+-win -dll -ml msvb -mapn 32 -mapw 132
+@hass_ent.xp$
+@vb_scen.xp$
