@@ -903,9 +903,9 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION GENER2 + + +
       INCLUDE   'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,UNDF,IDELT,L1,L12,DUM1,DUM2,DUM3,
-     $            DUM4,DUM5,DUM6,PIVLNO,REQFG,TSSUB(2)
-      REAL        VALONE,VALTWO,RESULT
+      INTEGER     I,UNDF(20),IDELT,L1,L12,DUM1,DUM2,DUM3,
+     $            DUM4,DUM5,DUM6,PIVLNO,REQFG,TSSUB(2),ITS
+      REAL        VALONE(20),VALTWO(20),RESULT(20)
       CHARACTER*6 OPTYP,TSNAM,OPFGNM,DUMNAM
 C
 C     + + + INTRINSICS + + +
@@ -945,171 +945,190 @@ C         special actions are being taken and there is at least one left
 C
         IF (OPCODE .EQ. 24) THEN
 C         no input timeseries required
-          UNDF= 0
+          DO I= 1,20
+            UNDF(I)= 0
+          END DO
         ELSE
 C         check to see if timeseries are available and have defined values
-          REQFG= 6
-          TSNAM= 'ONE   '
-          CALL HREQTS (DSFP1,IVL1,REQFG,MESSU,MSGFL,DATIM,OPTYP,GENRNO,
-     I                 TSNAM,TSSUB,DUMNAM,DUMNAM,OPFGNM,OPCODE,
-     O                 VALONE)
-          IF (VALONE.LE.-1.0E29) THEN
-C           undefined value for first operand
-            UNDF= 1
-          ELSE
-C           first operand is defined
-            IF ( (OPCODE .GE. 16) .AND. (OPCODE .LE. 23) ) THEN
-C             operator is binary
-              REQFG= 6
-              TSNAM= 'TWO   '
-              CALL HREQTS (DSFP2,IVL1,REQFG,MESSU,MSGFL,DATIM,OPTYP,
-     I                     GENRNO,TSNAM,TSSUB,DUMNAM,DUMNAM,OPFGNM,
-     I                     OPCODE,
-     O                     VALTWO)
-              IF (VALTWO.LE.-1.0E29) THEN
-C               undefined value for second operand
-                UNDF= 1
-              ELSE
-C               second operand is defined
-                UNDF= 0
-              END IF
+          DO ITS= 1, NTS
+C            REQFG= 6
+C            TSNAM= 'ONE   '
+C            CALL HREQTS (DSFP1(ITS),IVL1,REQFG,MESSU,MSGFL,DATIM,OPTYP,
+C     I                   GENRNO,TSNAM,TSSUB,DUMNAM,DUMNAM,OPFGNM,OPCODE,
+C     O                   VALONE(ITS))
+            IF (DSFP1(ITS) .GE. 1) THEN
+              VALONE(ITS)= PAD(DSFP1(ITS)+IVL1)
             ELSE
-C             no second operator, so all are defined
-              UNDF= 0
+              VALONE(ITS)= -1.0E30
             END IF
-          END IF
-        END IF
-C
-        IF (UNDF .EQ. 0) THEN
-          RESULT= -1.0E30
-C         casentry opcode
-          GO TO (10,20,30,40,50,60,70,80,90,100,110,120,130,140,
-     $    150,160,170,180,190,200,210,220,230,240,250,260), OPCODE
-C           case 1: c= abs(a)
- 10           RESULT= ABS(VALONE)
-              GO TO 300
-C           case 2: c= sqrt(a)
- 20           IF (VALONE.GE.0) RESULT= SQRT(VALONE)
-              GO TO 300
-C           case 3: c= trunc(a) 
- 30           RESULT= AINT(VALONE)
-              GO TO 300
-C           case 4: c= ceil(a)
- 40           RESULT= AINT(VALONE)
-C             if (result.ne.VALONE.and.VALONE.gt.0)
-C    $          result= result+ 1
-              IF ((ABS(RESULT-VALONE)).GT.1.0E-5.AND.VALONE.GT.0.0)
-     $           RESULT= RESULT + 1.0
-              GO TO 300
-C           case 5: c= floor(a)
- 50           RESULT= AINT(VALONE)
-C             if (result.ne.VALONE.and.VALONE.lt.0)
-C    $          result= result- 1
-              IF ((ABS(RESULT-VALONE)).GT.1.0E-5.AND.VALONE.LT.0.0)
-     $           RESULT= RESULT - 1.0
-              GO TO 300
-C           case 6: c= ln(a)
- 60           IF (VALONE.GT.0) RESULT= ALOG(VALONE)
-              GO TO 300
-C           case 7: c= log10(a)
- 70           IF (VALONE.GT.0) RESULT= ALOG10(VALONE)
-              GO TO 300
-C           case 8: c= polynomial in a
- 80           RESULT= K(1)
-              IF (NTERMS .GE. 2) THEN
-C               do rest of series
-                DO 85 I= 2,NTERMS
-                  RESULT= RESULT+ K(I)*VALONE**(I-1)
- 85             CONTINUE
-              END IF
-              GO TO 300
-C           case 9: c= k**a
-C             if (k(1).ne.0.0.or.VALONE.gt.0.0) result=k(1)**VALONE
- 90           IF ((ABS(K(1))).GT.0.0.OR.VALONE.GT.0.0)
-     $           RESULT= K(1)**VALONE
-              GO TO 300
-C           case 10: c= a**k
-C             if (VALONE.ne.0.0.or.k(1).gt.0.0) result=VALONE**k(1)
- 100          IF ((ABS(VALONE)).GT.0.0.OR.K(1).GT.0.0)
-     $           RESULT= VALONE**K(1)
-              GO TO 300
-C           case 11: c= a+k
- 110          RESULT=VALONE + K(1)
-              GO TO 300
-C           case 12: c= sin(k)
- 120          RESULT=SIN(VALONE)
-              GO TO 300
-C           case 13: c= cos(k)
- 130          RESULT=COS(VALONE)
-              GO TO 300
-C           case 14: c= tan(k)
- 140          RESULT=TAN(VALONE)
-              GO TO 300
-C           case 15: c= cum(a)
- 150          RESULT=SUM + VALONE
-              SUM   =RESULT
-              GO TO 300
-C           case 16: c= a+b
- 160          RESULT= VALONE+ VALTWO
-              GO TO 300
-C           case 17: c= a-b
- 170          RESULT= VALONE- VALTWO
-              GO TO 300
-C           case 18: c= a*b
- 180          RESULT= VALONE* VALTWO
-              GO TO 300
-C           case 19: c= a/b
-C             if (VALTWO.ne.0) result= VALONE/VALTWO
- 190          IF ((ABS(VALTWO)).GT.0.0) RESULT= VALONE/VALTWO
-              GO TO 300
-C           case 20: c= max(a,b)
- 200          RESULT= VALONE
-              IF (VALTWO.GT.RESULT) RESULT= VALTWO
-              GO TO 300
-C           case 21: c= min(a,b)
- 210          RESULT= VALONE
-              IF (VALTWO.LT.RESULT) RESULT= VALTWO
-              GO TO 300
-C           case 22: c= a**b
-C             if (VALONE.ne.0.0.or.VALTWO.gt.0.0)
-C    $          result=VALONE**VALTWO
- 220          IF ((ABS(VALONE)).GT.0.0.OR.
-     $            VALTWO.GT.0.0) RESULT= VALONE**VALTWO
-              GO TO 300
-C           case 23: c= cumulative departure of a below b
- 230          RESULT= VALONE- VALTWO- SUM
-              IF (RESULT.LT.0.0) THEN
-                SUM   = SUM- VALONE+ VALTWO
-                RESULT= 0.0
+            IF (VALONE(ITS).LE.-1.0E29) THEN
+C             undefined value for first operand
+              UNDF(ITS)= 1
+            ELSE
+C             first operand is defined
+              IF ( (OPCODE .GE. 16) .AND. (OPCODE .LE. 23) ) THEN
+C               operator is binary
+C               REQFG= 6
+C               TSNAM= 'TWO   '
+C                CALL HREQTS (DSFP2(ITS),IVL1,REQFG,MESSU,MSGFL,DATIM,
+C     I                       OPTYP,GENRNO,TSNAM,TSSUB,DUMNAM,DUMNAM,
+C     I                       OPFGNM,OPCODE,
+C     O                       VALTWO(ITS))
+                IF (DSFP2(ITS) .GE. 1) THEN
+                  VALTWO(ITS)= PAD(DSFP2(ITS)+IVL1)
+                ELSE
+                  VALTWO(ITS)= -1.0E30
+                END IF
+                IF (VALTWO(ITS).LE.-1.0E29) THEN
+C                 undefined value for second operand
+                  UNDF(ITS)= 1
+                ELSE
+C                 second operand is defined
+                  UNDF(ITS)= 0
+                END IF
               ELSE
-                SUM= 0.0
+C               no second operator, so all are defined
+                UNDF(ITS)= 0
               END IF
-              GO TO 300
-C           case 24: c= k
- 240          RESULT= K(1)
-              GO TO 300
-C           case 25: c= max(a,k)
- 250          RESULT= K(1)
-              IF (VALONE .GT. RESULT) THEN
-                RESULT= VALONE
-              END IF
-              GO TO 300
-C           case 26: c= min(a,k)
- 260          RESULT= K(1)
-              IF (VALONE .LT. RESULT) THEN
-                RESULT= VALONE
-              END IF
-              GO TO 300
-C
-C         end case
- 300      CONTINUE
-C
-        ELSE
-C         result is undefined
-          RESULT= -1.0E30
+            END IF
+          END DO
         END IF
+C
+        DO ITS= 1, NTS
+          IF (UNDF(ITS) .EQ. 0) THEN
+            RESULT(ITS)= -1.0E30
+C           casentry opcode
+            GO TO (10,20,30,40,50,60,70,80,90,100,110,120,130,140,
+     $      150,160,170,180,190,200,210,220,230,240,250,260), OPCODE
+C             case 1: c= abs(a)
+ 10             RESULT(ITS)= ABS(VALONE(ITS))
+                GO TO 300
+C             case 2: c= sqrt(a)
+ 20             IF (VALONE(ITS).GE.0) RESULT(ITS)= SQRT(VALONE(ITS))
+                GO TO 300
+C             case 3: c= trunc(a) 
+ 30             RESULT(ITS)= AINT(VALONE(ITS))
+                GO TO 300
+C             case 4: c= ceil(a)
+ 40             RESULT(ITS)= AINT(VALONE(ITS))
+C               if (result.ne.VALONE.and.VALONE.gt.0)
+C    $            result= result+ 1
+                IF ((ABS(RESULT(ITS)-VALONE(ITS))).GT.1.0E-5.AND.
+     $              VALONE(ITS).GT.0.0)
+     $             RESULT(ITS)= RESULT(ITS) + 1.0
+                GO TO 300
+C             case 5: c= floor(a)
+ 50             RESULT(ITS)= AINT(VALONE(ITS))
+C               if (result.ne.VALONE.and.VALONE.lt.0)
+C    $            result= result- 1
+                IF ((ABS(RESULT(ITS)-VALONE(ITS))).GT.1.0E-5.AND.
+     $              VALONE(ITS).LT.0.0)
+     $             RESULT(ITS)= RESULT(ITS) - 1.0
+                GO TO 300
+C             case 6: c= ln(a)
+ 60             IF (VALONE(ITS).GT.0) RESULT(ITS)= ALOG(VALONE(ITS))
+                GO TO 300
+C             case 7: c= log10(a)
+ 70             IF (VALONE(ITS).GT.0) RESULT(ITS)= ALOG10(VALONE(ITS))
+                GO TO 300
+C             case 8: c= polynomial in a
+ 80             RESULT(ITS)= K(1)
+                IF (NTERMS .GE. 2) THEN
+C                 do rest of series
+                  DO 85 I= 2,NTERMS
+                    RESULT(ITS)= RESULT(ITS)+ K(I)*VALONE(ITS)**(I-1)
+ 85               CONTINUE
+                END IF
+                GO TO 300
+C             case 9: c= k**a
+C               if (k(1).ne.0.0.or.VALONE.gt.0.0) result=k(1)**VALONE
+ 90             IF ((ABS(K(1))).GT.0.0.OR.VALONE(ITS).GT.0.0)
+     $             RESULT(ITS)= K(1)**VALONE(ITS)
+                GO TO 300
+C             case 10: c= a**k
+C               if (VALONE.ne.0.0.or.k(1).gt.0.0) result=VALONE**k(1)
+ 100            IF ((ABS(VALONE(ITS))).GT.0.0.OR.K(1).GT.0.0)
+     $             RESULT(ITS)= VALONE(ITS)**K(1)
+                GO TO 300
+C             case 11: c= a+k
+ 110            RESULT(ITS)=VALONE(ITS) + K(1)
+                GO TO 300
+C             case 12: c= sin(k)
+ 120            RESULT(ITS)=SIN(VALONE(ITS))
+                GO TO 300
+C             case 13: c= cos(k)
+ 130            RESULT(ITS)=COS(VALONE(ITS))
+                GO TO 300
+C             case 14: c= tan(k)
+ 140            RESULT(ITS)=TAN(VALONE(ITS))
+                GO TO 300
+C             case 15: c= cum(a)
+ 150            RESULT(ITS)=SUM(ITS) + VALONE(ITS)
+                SUM(ITS)   =RESULT(ITS)
+                GO TO 300
+C             case 16: c= a+b
+ 160            RESULT(ITS)= VALONE(ITS)+ VALTWO(ITS)
+                GO TO 300
+C             case 17: c= a-b
+ 170            RESULT(ITS)= VALONE(ITS)- VALTWO(ITS)
+                GO TO 300
+C             case 18: c= a*b
+ 180            RESULT(ITS)= VALONE(ITS)* VALTWO(ITS)
+                GO TO 300
+C             case 19: c= a/b
+C               if (VALTWO.ne.0) result= VALONE/VALTWO
+ 190            IF ((ABS(VALTWO(ITS))).GT.0.0) 
+     $              RESULT(ITS)= VALONE(ITS)/VALTWO(ITS)
+                GO TO 300
+C             case 20: c= max(a,b)
+ 200            RESULT(ITS)= VALONE(ITS)
+                IF (VALTWO(ITS).GT.RESULT(ITS)) RESULT(ITS)= VALTWO(ITS)
+                GO TO 300
+C             case 21: c= min(a,b)
+ 210            RESULT(ITS)= VALONE(ITS)
+                IF (VALTWO(ITS).LT.RESULT(ITS)) RESULT(ITS)= VALTWO(ITS)
+                GO TO 300
+C             case 22: c= a**b
+C               if (VALONE.ne.0.0.or.VALTWO.gt.0.0)
+C    $            result=VALONE**VALTWO
+ 220            IF ((ABS(VALONE(ITS))).GT.0.0.OR.VALTWO(ITS).GT.0.0)
+     $              RESULT(ITS)= VALONE(ITS)**VALTWO(ITS)
+                GO TO 300
+C             case 23: c= cumulative departure of a below b
+ 230            RESULT(ITS)= VALONE(ITS)- VALTWO(ITS)- SUM(ITS)
+                IF (RESULT(ITS).LT.0.0) THEN
+                  SUM(ITS)   = SUM(ITS)- VALONE(ITS)+ VALTWO(ITS)
+                  RESULT(ITS)= 0.0
+                ELSE
+                  SUM(ITS)= 0.0
+                END IF
+                GO TO 300
+C             case 24: c= k
+ 240            RESULT(ITS)= K(1)
+                GO TO 300
+C             case 25: c= max(a,k)
+ 250            RESULT(ITS)= K(1)
+                IF (VALONE(ITS) .GT. RESULT(ITS)) THEN
+                  RESULT(ITS)= VALONE(ITS)
+                END IF
+                GO TO 300
+C             case 26: c= min(a,k)
+ 260            RESULT(ITS)= K(1)
+                IF (VALONE(ITS) .LT. RESULT(ITS)) THEN
+                  RESULT(ITS)= VALONE(ITS)
+                END IF
+                GO TO 300
+C
+C           end case
+ 300        CONTINUE
+C
+          ELSE
+C           result is undefined
+            RESULT(ITS)= -1.0E30
+          END IF
 C        
-        IF (DSFP3.GT.0) PAD(DSFP3+ IVL1)= RESULT
+          IF (DSFP3(ITS).GT.0) PAD(DSFP3(ITS)+ IVL1)= RESULT(ITS)
+        END DO
 C
 C       update pipes for user-defined variable quantities
         CALL UPQUAN (SPIVL,SPOPNO)

@@ -7,14 +7,14 @@ C     12/16/2004 - jlk&pbd - added new variables for changing
 C        MFACT during execution
 C
       COMMON /CSPINS/SPWSIV,SPINS,SPPTR,
-     $               SPUMIN,SPUMPO,SPUMPT,NSPUM,SPOUTM
+     $               SPUMIN,SPUMPO,SPUMPT,NSPUM,NSPUNM,SPOUTM
 C
       INTEGER      SPWSIV,SPINS(LENSPI,MXSPIN),SPPTR(MXSPIN),
-     $             SPUMIN(25,MXSPUM),SPUMPO(MXSPUM),SPUMPT,NSPUM,
-     $             SPOUTM
+     $             SPUMIN(26,MXSPUM),SPUMPO(MXSPUM),SPUMPT,NSPUM,
+     $             NSPUNM,SPOUTM
 C
       EQUIVALENCE (SPINS,SPINSR),(SPUMIN,SPUMIR)
-      REAL         SPINSR(LENSPI,MXSPIN),SPUMIR(25,MXSPUM)
+      REAL         SPINSR(LENSPI,MXSPIN),SPUMIR(26,MXSPUM)
 C
 C     SPWSIV - Last interval for which workspace has been updated
 C     SPINS  - Special Action instructions
@@ -77,9 +77,11 @@ C              SPUMIN(22,*)  - Month
 C              SPUMIN(23,*)  - Day
 C              SPUMIN(24,*)  - Hour
 C              SPUMIN(25,*)  - Minute
+C              SPUMIN(26,*)  - Index of UVQUAN holding mfact
 C     SPUMPO - Sort by date position for recs in SPUMIN
 C     SPUMPT - Sort pointer for mfact update instructions
-c     NSPUM  - Number of specialactions update mfact instructions
+C     NSPUM  - Number of special actions update mfact instructions
+C     NSPUNM - Number of undated special actions update mfact instructions
 C     SPOUTM - Special action output level for MFACT changes
 C
       COMMON/CSPCH/SPHDR,SPFTR

@@ -499,7 +499,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION GENER1 + + +
       INCLUDE   'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,I1,I2,I3,I4,IVAL(1),OSVKND,OSVKST,OSVREC
+      INTEGER   I,I1,I2,I3,I4,IVAL(2),OSVKND,OSVKST,OSVREC
 C
 C     + + + FUNCTIONS + + +
       INTEGER   DAYMNH
@@ -549,12 +549,16 @@ C     work ok
       SPOPNO= OPNO
       UUNITS= EMFG
 C
-      SUM= 0.0
+      DO I= 1, 20
+        SUM(I)= 0.0
+      END DO
+
 C     get the operation code - table-type opcode
       CALL ITABLE
-     I             (I1,I1,I1,I1,
+     I             (I1,I1,I2,I1,
      M              IVAL)
       OPCODE= IVAL(1)
+      NTS= IVAL(2)
       IF (OPCODE.EQ.8) THEN
 C       operation is power series - get number of terms
         CALL ITABLE
