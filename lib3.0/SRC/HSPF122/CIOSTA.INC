@@ -6,15 +6,15 @@ C     + + + PARAMETERS + + +
       INCLUDE 'pmxosv.inc'
 C
       INTEGER MAXOS2
-      PARAMETER (MAXOS2=9000)
+      PARAMETER (MAXOS2=25000)
 C
       COMMON/CIOSTA/COLCNT,REPCOD,REPSTP,REPDAT,   RSTDAT,
      $              COLDAT,          STACNT,OPNUM,        TYP,
-     $              ADDR,        OSVRST,        OSVREN,
+     $              ADDR,        OSVRST,        OSVREN,        DUM1,
      $              OSV,        STVAL
       INTEGER       COLCNT,REPCOD,REPSTP,REPDAT(5),RSTDAT(5),
      $              COLDAT(5,MAXSTC),STACNT,OPNUM(MAXSTA),TYP(MAXSTA),
-     $              ADDR(MAXSTA),OSVRST(MAXSTA),OSVREN(MAXSTA),
+     $              ADDR(MAXSTA),OSVRST(MAXSTA),OSVREN(MAXSTA),DUM1,
      $              OSV(MAXOSV),STVAL(MAXSTA,MAXSTC)
 C
 C     + + + EQUIVALENCES + + +

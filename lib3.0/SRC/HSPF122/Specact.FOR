@@ -429,7 +429,7 @@ C
           IF (UCIBUF(1:4) .EQ. 'MULT') THEN
 C           this is an mfact update line
             CALL HDMES3 (IOPT,'MULT')
-            CALL PSPUML (UCIBUF,MESSU,OUTLEV,MSGFL,SCLU,SPOUT,
+            CALL PSPUML (UCIBUF,MESSU,OUTLEV,MSGFL,SCLU,SPOUT,CURBLK,
      M                   ECOUNT)
           ELSE
 C           find first word in case line is a free-form conditional line
@@ -6294,7 +6294,7 @@ C
 C
 C
       SUBROUTINE   PSPUML
-     I                    (UCIBUF,MESSU,OUTLEV,MSGFL,SCLU,SPOUT,
+     I                    (UCIBUF,MESSU,OUTLEV,MSGFL,SCLU,SPOUT,CURBLK,
      M                     ECOUNT)
 C
 C     + + + PURPOSE + + +
@@ -6304,7 +6304,7 @@ C     + + + HISTORY + + +
 C     2004/12/20 - jlk&pbd - initial implementation
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER      MESSU,OUTLEV,MSGFL,SCLU,ECOUNT,SPOUT
+      INTEGER      MESSU,OUTLEV,MSGFL,SCLU,ECOUNT,SPOUT,CURBLK
       CHARACTER*80 UCIBUF
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -6314,14 +6314,20 @@ C     OUTLEV - output level
 C     MSGFL  - unit number for file containing error messages
 C     SCLU   - cluster in file containing error text
 C     SPOUT  - runtime Special Action output level
+C     CURBLK - current logic block - 0 if unconditional, error if not
 C     ECOUNT - error count
 C
 C     + + + COMMON BLOCKS + + +
       INCLUDE     'pspins.inc'
       INCLUDE     'cspins.inc'
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      ERRFLG,SGRP,I80
+      INTEGER      ERRFLG,SGRP,I80,IVAL,MFUVQ,TYPCOD,I
+      REAL         RVAL
+      CHARACTER*10 CMULVL
       CHARACTER*80 EBUFF
 C
 C     + + + EQUIVALENCES + + +
@@ -6329,10 +6335,10 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1     EBUF1(80)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     OMSG,OMSTI,OMSTC
+      EXTERNAL     OMSG,OMSTI,OMSTC,MKQUAN
 C
 C     + + + INPUT FORMATS + + +
- 1000 FORMAT (5X,A4,A2,I4,2(A4,A2),2I2,F10.0,A1,1X,A4,A2,I4,2(A4,A2),
+ 1000 FORMAT (5X,A4,A2,I4,2(A4,A2),2I2,A10,A1,1X,A4,A2,I4,2(A4,A2),
      $        2I2,I4,4I2)
 C
 C     + + + OUTPUT FORMATS + + +
@@ -6342,6 +6348,7 @@ C     + + + OUTPUT FORMATS + + +
  2020 FORMAT ('   TVOL :',A4,A2,': TNUM :',I4,': TGRPN ',A4,A2,
      $        ': TGRPN :',A4,A2,': TMEMSB :',2I3)
  2030 FORMAT ('   MDATE :',I4,4I3,': MFACT :',G10.4,': FUNC :',A1)
+ 2040 FORMAT ('   MFUVQ :',I6)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -6349,22 +6356,35 @@ C
       ERRFLG= 0
 C     save special action output level in common
       SPOUTM= SPOUT
-C
-      SPUMPT = SPUMPT + 1
-      IF (SPUMPT .GT. MXSPUM) THEN
-C       error - too many mfact update records
+
+      IF (CURBLK .NE. 0) THEN
+C       error - mfact updates cannot be within a logical condition
         ERRFLG= 1
-        CALL OMSTI (MXSPUM)
-        SGRP= 109
+        EBUFF= UCIBUF
+        CALL OMSTC (I80,EBUF1)
+        SGRP= 110
         CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M             ECOUNT)
+      END IF
+C
+      IF (ERRFLG .EQ. 0) THEN
+C       try to process this record
+        SPUMPT = SPUMPT + 1
+        IF (SPUMPT .GT. MXSPUM) THEN
+C         error - too many mfact update records
+          ERRFLG= 1
+          CALL OMSTI (MXSPUM)
+          SGRP= 109
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+        END IF
       END IF
 C
       IF (ERRFLG .EQ. 0) THEN
 C       read line
 C       WRITE(99,*) 'PSPUML:about to read uci'
         READ (UCIBUF,1000,ERR=10)  (SPUMIN(I,SPUMPT),I=1,9),
-     1                              SPUMIR(10,SPUMPT),
+     1                              CMULVL,
      1                             (SPUMIN(I,SPUMPT),I=11,25)
 C       WRITE(99,*) ' PSPUML:read uci into',SPUMPT
         GO TO 20
@@ -6378,6 +6398,27 @@ C         error - read format
           ERRFLG= 1
  20     CONTINUE
 C
+C       read value - format depends on type.
+        RVAL= 0.0
+        IVAL=   0
+        MFUVQ= 0
+        I= MXSPVQ* 6
+        TYPCOD= 3
+        CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,
+     M               CMULVL,ERRFLG,ECOUNT,IVAL,RVAL,MFUVQ)
+        SPUMIR(10,SPUMPT)= RVAL
+        SPUMIN(26,SPUMPT)= MFUVQ
+        IF (SPOUT .GE. 10) THEN
+C         echo action info
+          IF (MFUVQ .NE. 0) THEN
+C           variable
+            WRITE (MESSU,*) '  mfact uvq',MFUVQ
+          ELSE
+C           real
+            WRITE (MESSU,*) '  mfact value',RVAL
+          END IF
+        END IF
+C
         IF (SPOUT .GE. 0 .AND. ERRFLG .EQ. 0) THEN
 C         echo initial read
           WRITE (MESSU,2000)
@@ -6385,6 +6426,9 @@ C         echo initial read
           WRITE (MESSU,2020) (SPUMIN(I,SPUMPT),I=12,20)
           WRITE (MESSU,2030) (SPUMIN(I,SPUMPT),I=21,25),
      1           SPUMIR(10,SPUMPT),SPUMIN(11,SPUMPT)
+          IF (MFUVQ .NE. 0) THEN
+            WRITE (MESSU,2040) SPUMIN(26,SPUMPT)
+          END IF
         END IF
       END IF
 C
@@ -6419,7 +6463,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE     'cspins.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,SORTOP,SPUMDX(MXSPUM)
+      INTEGER   I,SORTOP,SPUMDX(MXSPUM),MINDX
 C
 C     + + + EQUIVALENCES + + +
 C
@@ -6434,28 +6478,46 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
       NSPUM = SPUMPT
+      NSPUNM= 0
 C
 C     determine offset from start of run for each instruction
-      DO 10 I = 1, NSPUM
-        CALL  DIFTIM(SDATIM,SPUMIN(21,I),NDAMON,
-     O               SPUMDX(I))
- 10   CONTINUE
+      MINDX= 0
+      DO I = 1, NSPUM
+        IF (SPUMIN(21,I) .GT. 0) THEN
+C         dated - get intervals from start date
+          CALL DIFTIM(SDATIM,SPUMIN(21,I),NDAMON,
+     O                SPUMDX(I))
+          IF (SPUMDX(I) .LT. MINDX) THEN
+C           track earliest dated action if any
+            MINDX= SPUMDX(I)
+          END IF
+        END IF
+      END DO
+C
+      DO I = 1, NSPUM
+        IF (SPUMIN(21,I) .EQ. 0) THEN
+C         undated - set index to just before earliest dated and count
+          SPUMDX(I)= MINDX- 1
+          NSPUNM= NSPUNM+ 1
+        END IF
+      END DO
 C
 C     sort special action mult instructions in place by date
       SORTOP= 0
       CALL ASRTI (SORTOP,NSPUM,SPUMDX,
      O            SPUMPO)
 C    
-C     determine where to start
+C     determine where to start dated actions
       SPUMPT= 1
-      DO WHILE (SPUMDX(SPUMPO(SPUMPT)) .LT. 0) 
-C       start with instructions at or after beginning of run
+      DO WHILE (SPUMDX(SPUMPO(SPUMPT)) .LT. 0 .AND. SPUMPT.LT.NSPUM) 
+C       start dated with instructions at or after beginning of run
+C       skipping over undated actions
         SPUMPT= SPUMPT+ 1
       END DO
 C
-C      WRITE(99,*)    ' PSPUMK:NSPUM,SPUMPT',NSPUM,SPUMPT
-C      WRITE(99,2000) ' PSPUMK:SPUMDX:',(SPUMDX(I),I=1,NSPUM)
-C      WRITE(99,2000) ' PSPUMK:SPUMPO:',(SPUMPO(I),I=1,NSPUM)
+C     WRITE(99,*)    ' PSPUMK:NSPUM,SPUMPT',NSPUM,SPUMPT
+C     WRITE(99,2000) ' PSPUMK:SPUMDX:',(SPUMDX(I),I=1,NSPUM)
+C     WRITE(99,2000) ' PSPUMK:SPUMPO:',(SPUMPO(I),I=1,NSPUM)
 C
       RETURN
       END
@@ -6488,20 +6550,20 @@ C
 C     + + + COMMON BLOCKS + + +
       INCLUDE     'pspins.inc'
       INCLUDE     'cspins.inc'
+C     user defined variable quantity definitions
+      INCLUDE     'pspvqd.inc'
+      INCLUDE     'cspvqd.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER       CHKNXT,I0,I1,I2,I5,IMFACT,J,NVALS,
+      INTEGER       CHKNXT,I0,I1,I2,I5,I6,I,J,NVALS,IDELT,
      1              SNUM,SMEMSB(2),TNUM,TMEMSB(2),TMPDAT(6),
-     2              SPUMPX
-      CHARACTER*1   FUNC
+     2              SPUMPX,MFUVQ,SDATIM(6),SPIVL,DOFG,UNDCNT
+      REAL          MULT
+      CHARACTER*1   FUNC,CH
       CHARACTER*6   SVOL,SGRPN,SMEMN,TVOL,TGRPN,TMEMN
 C
-C     + + + EQUIVALENCES + + +
-      EQUIVALENCE   (MULT,IMFACT)
-      REAL          MULT
-C
 C     + + + EXTERNALS + + +
-      EXTERNAL     UPDMFT, TIMDIF
+      EXTERNAL     UPDMFT, TIMDIF, EXDATE, COPYI, GTQUAN
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A4,A2)
@@ -6514,27 +6576,49 @@ C
       I1    = 1
       I2    = 2
       I5    = 5
+      I6    = 6      
       MUPFG = 0
 C
-C      WRITE(99,2020) 'SPECLM:entry:SPUMPT,SPUMPO,DATIM:',
-C     1                       SPUMPT,SPUMPO(SPUMPT),DATIM
+C     WRITE(*,*) 'SPECLM:entry:SPUMPT,SPUMPO,DATIM,NSPUM,NSPUNM:',
+C    1                       SPUMPT,SPUMPO(SPUMPT),DATIM,NSPUM,
+C    2                       NSPUNM
+C     READ(*,*) CH
 C
-      IF (SPUMPT.GT.0) THEN
+      IF (NSPUNM.GT.0 .OR. SPUMPT.GT.0) THEN
 C       have some of these types of special actions
 C
+        UNDCNT= 0
  10     CONTINUE
+          DOFG= 0
           CHKNXT = 0
-          SPUMPX = SPUMPO(SPUMPT)
-C          WRITE(99,2020) 'SPECLM:next ',SPUMPT,SPUMPX,
-C     1               (SPUMIN(J,SPUMPX),J=21,25)
-C         see if the next one applies to this date
-          CALL COPYI(I5,SPUMIN(21,SPUMPX),TMPDAT)
-          TMPDAT(6) = 0
-          CALL TIMDIF (DATIM,TMPDAT,I2,I1,NVALS)
-C          WRITE(99,*) ' SPECLM:NVALS:',NVALS
-          IF (NVALS .EQ. 0) THEN
-C           this change is to occur now
+          IF (UNDCNT.LT.NSPUNM) THEN
+C           do next undated action
+            UNDCNT= UNDCNT+ 1
+            SPUMPX= SPUMPO(UNDCNT)
+            DOFG= 1
+C           WRITE(*,*) ' SPECLM:undated',UNDCNT,' of',NSPUNM
+C           READ(*,*) CH
+          ELSE IF (SPUMPT .GE. 1) THEN
+C           get next dated action if any
+            SPUMPX = SPUMPO(SPUMPT)
+C           WRITE(*,*) ' SPECLM:next SPUMPT,SPUMPX',SPUMPT,SPUMPX,
+C    1                 ' at',(SPUMIN(J,SPUMPX),J=21,25)
+C           READ(*,*) CH
+C           see if the next one applies to this date
+            CALL COPYI(I5,SPUMIN(21,SPUMPX),TMPDAT)
+            TMPDAT(6) = 0
+            CALL TIMDIF (DATIM,TMPDAT,I2,I1,NVALS)
+C           WRITE(*,*) ' SPECLM:NVALS:',NVALS
+C           READ(*,*) CH
+            IF (NVALS .EQ. 0) THEN
+C             this change is to occur now
+              DOFG= 2
+C             WRITE(*,*) ' SPECLM:doing a dated mult:',DATIM
+C             READ(*,*) CH
+            END IF
+          END IF
 C
+          IF (DOFG .GE. 1) THEN
 C           convert source and target from the update request 
             WRITE(SVOL,2000) SPUMIN(1,SPUMPX),SPUMIN(2,SPUMPX)
             SNUM = SPUMIN(3,SPUMPX)
@@ -6549,25 +6633,59 @@ C
             WRITE(TMEMN,2000) SPUMIN(17,SPUMPX),SPUMIN(18,SPUMPX)
             TMEMSB(1) = SPUMIN(19,SPUMPX)
             TMEMSB(2) = SPUMIN(20,SPUMPX)
-C      
-            IMFACT = SPUMIN(10,SPUMPX)
+C
             WRITE(FUNC,2010) SPUMIN(11,SPUMPX)
-C
-            CALL UPDMFT
-     I                 (MESSU,I0,FOPKEY,LOPKEY,OSUPM,
-     I                  SVOL,SNUM,SGRPN,SMEMN,SMEMSB,
-     I                  TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
-     I                  MULT,FUNC,DATIM,SPOUTM)
-C
-C            WRITE(99,*) 'SPECLM:afterUpdate:',SPUMPT,SPUMPX,NSPUM
-C
-            IF (SPUMPT.LT.NSPUM) THEN
-C             there are more to come
-              SPUMPT = SPUMPT + 1
-              CHKNXT = 1
+            MFUVQ     = SPUMIN(26,SPUMPX)
+            IF (MFUVQ .NE. 0) THEN
+C             fetch variable multiplier
+              CALL EXDATE (OSUPM(2,1),
+     O                    SDATIM)
+              SDATIM(6)= 0
+              IDELT= OSUPM(5,3)
+              CALL TIMDIF (SDATIM,DATIM,I2,IDELT,
+     O                     SPIVL)
+C             this gets minutes
+C             do we need to add one to SPIVL?
+              IF (SPIVL .GT. 0) THEN
+                CALL GTQUAN (MFUVQ,SPIVL,I0,
+     O                       I,MULT,J)
+              END IF
             ELSE
-C             this was the last one
-              SPUMPT = 0
+C             use constant multiplier
+              MULT= SPUMIR(10,SPUMPX)
+            END IF
+C
+            IF (MFUVQ .EQ. 0 .OR. SPIVL .GT. 0) THEN
+              CALL UPDMFT
+     I                   (MESSU,I0,FOPKEY,LOPKEY,OSUPM,
+     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,
+     I                    TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
+     I                    MULT,FUNC,DATIM,SPOUTM)
+C
+C             WRITE(*,*) ' SPECLM:afterUpdate:SPUMPT,SPUMPX,NSPUNM,NSPUM',
+C    1                     SPUMPT,SPUMPX,NSPUNM,NSPUM
+C             READ(*,*) CH
+            ELSE
+C             skip first interval since required MFUVQ is not yet defined
+C             this leaves MULT at initial value in UCI
+            END IF
+C
+            IF (DOFG .EQ. 2) THEN
+C             dated action - update pointers
+              IF (SPUMPT.LT.NSPUM) THEN
+C               there are more to come
+                SPUMPT = SPUMPT + 1
+                CHKNXT = 1
+              ELSE
+C               this was the last one
+                SPUMPT = 0
+              END IF
+            ELSE IF (DOFG .EQ. 1) THEN
+C             undated
+              IF (UNDCNT.LT.NSPUMN .OR. NSPUM.GT.NSPUMN) THEN
+C               there are either more undated or there are dated coming
+                CHKNXT= 1
+              END IF
             END IF
             MUPFG  = 1
           END IF
@@ -6729,10 +6847,9 @@ C       no appropriate targets
       END IF
 C      
       IF (SOPIN .EQ. 0) THEN
-C        WRITE(99,*) "  FAIL-NO MATCH"
+C       WRITE(99,*) "  FAIL-NO MATCH"
       ELSE
 C       look for time series instructions matching this source/target
-C       DO 100 I= FOPKEY, LOPKEY
 C
 C       to status monitor
         WRITE(SMSG,*) ' UPDMFT:loop to match instructions,SOPIN,TOPIN:',
@@ -6749,9 +6866,9 @@ C
           KEY  = SKEY
  10       CONTINUE
             IF (KEY .EQ. 0) THEN
-C              WRITE(99,*) 'UPDMFT:KEY:0:SKIP',I
+C             WRITE(99,*) 'UPDMFT:KEY:0:SKIP',I
             ELSE
-C              WRITE(99,*) ' UPDMFT:GETTSI:KEY',KEY
+C             WRITE(99,*) ' UPDMFT:GETTSI:KEY',KEY
               CALL GETTSI (I220,KEY,
      O                     REC)
 C 
@@ -6857,8 +6974,8 @@ C
 C
                 IF (IMATCH.EQ.1) THEN
 C                 it matches, so update accordingly
-C                  WRITE(99,2030) '  SPECACT:UPDMFT:b4 upd mfact, ' //
-C     $               'a, aratio, mult, func ',a,aratio,mult,func
+C                 WRITE(99,2030) '  SPECACT:UPDMFT:b4 upd mfact, ' //
+C    $               'a, aratio, mult, func ',a,aratio,mult,func
                   OLDA = A
                   IF (FUNC.EQ.'=') THEN
                     A = ARATIO * MULT
@@ -6869,8 +6986,8 @@ C     $               'a, aratio, mult, func ',a,aratio,mult,func
                   ELSEIF (FUNC.EQ.'*') THEN
                     A = A * MULT
                   ELSE
-C                    WRITE(99,*) '  unknown mfactr function "',
-C     $                               FUNC,'" cant update'
+C                   WRITE(99,*) '  unknown mfactr function "',
+C    $                               FUNC,'" cant update'
                     IF (MESSU.GT.0) THEN
                       WRITE(MESSU,*) 'Unknown MFACTR function"',
      $                                 FUNC,'" cant update'
@@ -6900,7 +7017,7 @@ C                   write to archive file
 C
                   WRITE(SMSG,2030) '  SPECACT:UPDMFT:af upd mfact,' //
      $               ' a, aratio, mult, func ',a,aratio,mult,func,key
-C                  WRITE(99,*) SMSG
+C                 WRITE(99,*) SMSG
                   CALL HDMES3(6,SMSG)
                 END IF
 C
@@ -6928,7 +7045,7 @@ C
 C
 C
       SUBROUTINE   SPECLX 
-     I                    (CURDAT,DELT,
+     I                    (CURDAT,DELT,NXTFG,
      O                     INSPAC)
 
 C
@@ -6939,11 +7056,12 @@ C     + + + HISTORY + + +
 C     2004/12/20 - jlk&pbd - initial implementation
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER      CURDAT(6),DELT,INSPAC
+      INTEGER      CURDAT(6),DELT,NXTFG,INSPAC
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     CURDAT - current date within this run
 C     DELT   - time step of run in minutes
+C     NXTFG  - 0 if call before SPECLM, 1 if call after
 C     INSPAC - number of intervals to get to next mfact special action
 C
 C     + + + COMMON BLOCKS + + +
@@ -6960,12 +7078,15 @@ C     + + + END SPECIFICATIONS + + +
 C
       I2    = 2
 C
-C      WRITE(99,*) ' SPECLX:entry', SPUMPT
+C     WRITE(99,*) ' SPECLX:entry', SPUMPT
 C
       INSPAC = -1
 C
-      IF (SPUMPT.GT.0) THEN
-C       have some of these types of special actions
+      IF (NSPUNM .GT. 0) THEN
+C       there are undated - force this interval (before) or next (after)
+        INSPAC= NXTFG
+      ELSE IF (SPUMPT.GT.0) THEN
+C       have some dated mult special actions
 C
         SPUMPX = SPUMPO(SPUMPT)
 C
@@ -6980,7 +7101,7 @@ C
      O               INSPAC)
       END IF
 C
-      WRITE(99,*) ' SPECLX:INSPAC:', INSPAC
+C     WRITE(99,*) ' SPECLX:INSPAC:', INSPAC
 C
       RETURN
       END

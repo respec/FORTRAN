@@ -21,15 +21,15 @@ $TEXT
 TIMSER
 #GROUP   11  TYPE TEXT
 $TEXT
-ONE     1  1     1     1 2   0 2    0    42 ENG any        0       1   0       1
+ONE    20  1   -61     1 2   0 2    0    62 ENG any        0       1   0       1
   First input time series                   MET any        0       1   0       1
 #GROUP   12  TYPE TEXT
 $TEXT
-TWO     1  1     1     1 2   0 2    0    43 ENG any        0       1   0       1
+TWO    20  1   -61     1 2   0 2    0    82 ENG any        0       1   0       1
   Second input time series                  MET any        0       1   0       1
 #GROUP   21  TYPE TEXT
 $TEXT
-TIMSER  1  1     1     1 2   0 0    0    44 ENG any        0       1   0       1
+TIMSER 20  1   -61     1 2   0 0    0   102 ENG any        0       1   0       1
   Output time series (mean-valued)          MET any        0       1   0       1
   END DATA
 END CLU
