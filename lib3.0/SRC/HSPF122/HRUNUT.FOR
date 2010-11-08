@@ -293,8 +293,8 @@ C     + + + DUMMY ARGUMENTS + + +
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE "cmdum.inc"
-      INCLUDE "cmpad.inc"
+      INCLUDE 'cmdum.inc'
+      INCLUDE 'cmpad.inc'
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     FLAGPT - flag pointer
