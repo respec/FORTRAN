@@ -438,12 +438,18 @@ C       some lateral inflow defined
       END IF
 C
       IF (SLITMP .GT. -1.0E+29) THEN
-C       convert to printout units
+C       convert to printout units
         PLITMP = SLITMP*TFACTA+ TFACTB
+      ELSE
+C       leave undefined value alone
+        PLITMP = SLITMP
       END IF
       IF (SOTMP .GT. -1.0E+29) THEN
-C       convert to printout units
+C       convert to printout units
         PSTAT = SOTMP*TFACTA+ TFACTB
+      ELSE
+C       leave undefined value alone
+        PSTAT = SOTMP
       END IF
 C
 C     state variables with concentration units do not

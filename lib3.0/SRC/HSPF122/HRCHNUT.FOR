@@ -691,7 +691,6 @@ C           use value computed in last time step
             PHVAL= PH
           ELSE
 C           need an input time series
-            PHVAL= PAD(PHVFP + IVL1)
             REQFG= 5
             TSNAM= 'PHVAL '
             MSECNM= 'PHCARB'
