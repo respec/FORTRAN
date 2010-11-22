@@ -654,7 +654,7 @@ C
      I                    SVOLNO,TVOL,TVOLNO,AREA,MAXMLK,MSLINX,NMLTBS,
      I                    MSLKTB,MAXCNX,
      M                    ECOUNT,
-     O                    SGPNAM,SMMNAM,SMMSUB,MFCT,TRANSF,
+     O                    SGPNAM,SMMNAM,SMMSUB,MFCT,CONV,TRANSF,
      O                    TGPNAM,TMMNAM,TMMSUB,NUMCON)
 C
 C     + + + PURPOSE + + +
@@ -667,7 +667,7 @@ C     + + + DUMMY ARGUMENTS + + +
      #            OPST,OPND,SVOLNO,TVOLNO,ECOUNT,
      #            SMMSUB(2,MAXCNX),
      #            TMMSUB(2,MAXCNX),NUMCON,MSLINX(MAXMLK,3),NMLTBS,MSLKTB
-      REAL        MFCT(MAXCNX),AREA
+      REAL        MFCT(MAXCNX),AREA,CONV(MAXCNX)
       CHARACTER*6 SVOL,SGPNAM(MAXCNX),SMMNAM(MAXCNX),
      #            TVOL,TGPNAM(MAXCNX),TMMNAM(MAXCNX)
       CHARACTER*4 TRANSF(MAXCNX)
@@ -694,6 +694,7 @@ C     SGPNAM - ???
 C     SMMNAM - ???
 C     SMMSUB - ???
 C     MFCT   - ???
+C     CONV   - ???
 C     TRANSF - ???
 C     TGPNAM - ???
 C     TMMNAM - ???
@@ -704,7 +705,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER      I,KEY,ERR,STTYP,SNUM,TNUM,I0,I6,
      $             CNNXN,SOPCOD,TOPCOD,MSLKFG,
      $             KEYND,SCLU,SGRP,BGRP,WCOUNT
-      REAL         CONV
+C     REAL         CONV
       CHARACTER*2  CSMSUB(2),CTMSUB(2)
       CHARACTER*6  CHSTR,TSVOL,TTVOL
       CHARACTER*10 CCONV
@@ -796,8 +797,8 @@ C                 report warning -- this can produce unintended results
 C
             CALL RDMFAC (CCONV,MESSU,MSGFL,SCLU,
      M                   ECOUNT,
-     O                   CONV)
-            MFCT(CNNXN)= AREA * CONV
+     O                   CONV(CNNXN))
+            MFCT(CNNXN)= AREA * CONV(CNNXN)
             TRANSF(CNNXN)= '    '
             NUMCON= CNNXN
           END IF
@@ -832,7 +833,7 @@ C         generate default connections implied by this schematic entry
 C         from message file
           CALL HRIMSI (MSGFL,AREA,STTYP,MAXCNX,
      O                 SGPNAM,SMMNAM,SMMSUB,
-     O                 TRANSF,NUMCON,MFCT,
+     O                 TRANSF,NUMCON,MFCT,CONV,
      O                 TGPNAM,TMMNAM,TMMSUB)
         ELSE
 C         error - invalid entry in schematic block

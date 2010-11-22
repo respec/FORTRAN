@@ -569,8 +569,8 @@ C     + + + LOCAL VARIABLES + + +
       REAL         OMFACT
 C
 C     + + + EQUIVALENCES + + +
-      EQUIVALENCE  (REC(21),RREC),(REC(22),FRAC)
-      REAL         RREC, FRAC
+      EQUIVALENCE  (REC(21),AORIG),(REC(22),FRAC), (REC(45),TSMULT)
+      REAL         AORIG, FRAC, TSMULT
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     WORKIO
@@ -603,7 +603,12 @@ C     dountil wkey= wknd
         ROW   = REC(ROWCOL)
 C
         IF (OUTLEV .GT. 2) THEN
-          OMFACT = RREC* FRAC
+C         WRITE (MESSU,*) "OSVPRO:AORIG,FRAC,TSMULT",AORIG,FRAC,TSMULT
+          IF (ABS(FRAC-1.0) .LT. 1.0E-10) THEN
+            OMFACT = AORIG
+          ELSE
+            OMFACT = AORIG*FRAC / TSMULT
+          END IF
           IF (TYP .EQ. 1) THEN
             IF (REC(3) .LT. 0) THEN
               REC(3)= -REC(3)
@@ -968,7 +973,7 @@ C     + + + LOCAL VARIABLES + + +
      $           TDELT,TGAPCD,TGRPN(2),TINF(22),TMEMN(2),TMEMSB(2),
      $           TNUM,TOFFST,TROW,TSNXT,TTNXT,TVOL(2),WKEY,MXKY,
      $           I,I0,I2,I4,I17,I18,RWFG,LEN,SFRC,TFRC,KWDNO
-      REAL       A,B,AORIG,FRAC
+      REAL       A,B,AORIG,FRAC,TSMULT
       CHARACTER*4 CHSTR
 C
 C     + + + EQUIVALENCES + + +
@@ -984,7 +989,8 @@ C     + + + EQUIVALENCES + + +
      $             (REC(18),SROW),            (REC(23),STKIND),
      $             (REC(24),STTRAN),          (REC(25),A),
      $             (REC(26),B)
-      EQUIVALENCE  (REC(21),AORIG),           (REC(22),FRAC)
+      EQUIVALENCE  (REC(21),AORIG),           (REC(22),FRAC),
+     $             (REC(45),TSMULT)
 C
       EQUIVALENCE  (REC(27),TINF(1)),         (REC(27),TVOL(1)),
      $             (REC(29),TNUM),            (REC(30),TDELT),
@@ -1051,7 +1057,7 @@ C           AORIG is set in PAIRS to WORKFL address 21
 C           FRAC needs to be added for secondary update during run
             CALL TSINS (I,TNUM,TDELT,SROW,TOFFST,STKIND,
      I                  STTRAN,I0,A,B,TMEMSB,TAMDCD,TGAPCD,TFRC,
-     I                  SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
+     I                  SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,FRAC,
      I                  TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      M                  PRPKEY)
 C
@@ -1114,7 +1120,7 @@ C     + + + LOCAL VARIABLES + + +
      $          TDELT,TFRC,TGAPCD,TGRPN(2),TINF(22),TMEMN(2),TMEMSB(2),
      $          TNUM,TOFFST,TROW,TSNXT,TTNXT,TVOL(2),WKEY,KWDNO,
      $          I,I0,I1,I2A,I2B,I2,I3,I4,RWFG,LEN,MXKY
-      REAL      A,B,AORIG
+      REAL      A,B,AORIG,FRAC,TSMULT
       CHARACTER*4 CHSTR
 C
 C     + + + EQUIVALENCES + + +
@@ -1130,7 +1136,8 @@ C     + + + EQUIVALENCES + + +
      $             (REC(18),SROW),            (REC(23),STKIND),
      $             (REC(24),STTRAN),          (REC(25),A),
      $             (REC(26),B)
-      EQUIVALENCE  (REC(21),AORIG),           (REC(22),FRAC)
+      EQUIVALENCE  (REC(21),AORIG),           (REC(22),FRAC),
+     $             (REC(45),TSMULT)
 C
       EQUIVALENCE  (REC(27),TINF(1)),         (REC(27),TVOL(1)),
      $             (REC(29),TNUM),            (REC(30),TDELT),
@@ -1199,7 +1206,7 @@ C               AORIG is set in PAIRS to WORKFL address 21
                 CALL TSINS (I,SNUM,SDELT,SROW,SOFFST,STKIND,
      I                      STTRAN,I0,1.0,0.0,SMEMSB,SAMDCD,SGAPCD,
      I                      SFRC,
-     I                      SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
+     I                      SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,FRAC,
      I                      TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      M                      PRGKEY)
 C
@@ -1256,7 +1263,7 @@ C               wdm or dss
 C             AORIG is set in PAIRS to WORKFL address 21
               CALL TSINS (I,SNUM,SDELT,TROW,SOFFST,STKIND,
      I                    STTRAN,I0,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
-     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
+     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,FRAC,
      I                    TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      M                    PRGKEY)
 C
@@ -1278,7 +1285,7 @@ C               wdm or dss
 C             AORIG is set in PAIRS to WORKFL address 21
               CALL TSINS (I,SNUM,SDELT,TROW,SOFFST,STKIND,
      I                    STTRAN,I1,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
-     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
+     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,FRAC,
      I                    TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      M                    PRGKEY)
 C
@@ -1311,7 +1318,7 @@ C             values
 C             AORIG is set in PAIRS to WORKFL address 21
               CALL TSINS (I3,SROW,SDELT,TROW,SOFFST,STKIND,
      I                    STTRAN,I0,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
-     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
+     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,FRAC,
      I                    TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      M                    PRGKEY)
 C
@@ -1321,7 +1328,7 @@ C             add source to target
 C             AORIG is set in PAIRS to WORKFL address 21
               CALL TSINS (I3,SROW,SDELT,TROW,SOFFST,STKIND,
      I                    STTRAN,I1,A,B,SMEMSB,SAMDCD,SGAPCD,SFRC,
-     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
+     I                    SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,FRAC,
      I                    TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      M                    PRGKEY)
               IF ( (STNXT .EQ. 0) .AND. (RUNWID .EQ. 0) ) THEN
@@ -1346,7 +1353,7 @@ C
       SUBROUTINE   TSINS
      I                  (VOLUME,NUM,DELTAT,ROW,OFFSET,STKIND,
      I                   STTRAN,INMODE,A,B,MEMSB,AMDCD,GAPCD,FRC,
-     I                   SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,
+     I                   SVOL,SNUM,SGRPN,SMEMN,SMEMSB,AORIG,ABAREA,
      I                   TVOL,TNUM,TGRPN,TMEMN,TMEMSB,
      M                   PRKEY)
 C
@@ -1362,7 +1369,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $           OFFSET,PRKEY,ROW,STKIND,STTRAN,VOLUME,
      $           SVOL(2),SNUM,SGRPN(2),SMEMN(2),SMEMSB(2),
      $           TVOL(2),TNUM,TGRPN(2),TMEMN(2),TMEMSB(2)
-      REAL       A,B,AORIG
+      REAL       A,B,AORIG,ABAREA
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     VOLUME - ???
@@ -1386,6 +1393,7 @@ C     SGRPN  - source group name
 C     SMEMN  - source member name
 C     SMEMSB - source member subscripts
 C     AORIG  - original multiplication factor
+C     ABAREA - internal (and MASS-LINK) part of multiplication factor
 C     TVOL   - target volume name
 C     TNUM   - target volume number
 C     TGRPN  - target group name
@@ -1516,7 +1524,7 @@ C       write primitive instruction
         REC(32) = TMEMN(2)
         REC(33) = TMEMSB(1)
         REC(34) = TMEMSB(2)
-        REC(35) = 0
+        REC(35) = ABAREA
         CALL PUTTSI (I35,PRKEY,REC)
       END IF
 C
