@@ -183,7 +183,7 @@ C
       SUBROUTINE   HRIMSI
      I                   (MSGFL,AREA,STTYP,MAXCNX,
      O                    SGPNAM,SMMNAM,SMMSUB,
-     O                    TRANSF,NUMCON,MFCT,
+     O                    TRANSF,NUMCON,MFCT,CONV,
      O                    TGPNAM,TMMNAM,TMMSUB)
 C
 C     + + + PURPOSE + + +
@@ -193,7 +193,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER     MSGFL,STTYP,MAXCNX,
      #            SMMSUB(2,MAXCNX),
      #            NUMCON,TMMSUB(2,MAXCNX)
-      REAL        AREA,MFCT(MAXCNX)
+      REAL        AREA,MFCT(MAXCNX),CONV(MAXCNX)
       CHARACTER*6 SGPNAM(MAXCNX),SMMNAM(MAXCNX),
      #            TGPNAM(MAXCNX),TMMNAM(MAXCNX)
       CHARACTER*4 TRANSF(MAXCNX)
@@ -208,13 +208,14 @@ C     SMNSUB - ???
 C     TRANSF - ???
 C     NUMCON - ???
 C     MFACT  - ???
+C     CONV   - ???
 C     TGPNAM - ???
 C     TMNNAM - ???
 C     TMNSUB - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I,SCLU,SGRP,CONT,INITFG,CLEN
-      REAL         CONV
+C     REAL         CONV
       CHARACTER*1  INBUF1(80)
 C
 C     + + + EQUIVALENCES + + +
@@ -242,11 +243,11 @@ C
         INITFG= 0
         NUMCON= NUMCON+ 1
         READ (INBUFF,1000) SGPNAM(NUMCON),SMMNAM(NUMCON),
-     $                    (SMMSUB(I,NUMCON),I=1,2),CONV,
+     $                    (SMMSUB(I,NUMCON),I=1,2),CONV(NUMCON),
      $                     TGPNAM(NUMCON),TMMNAM(NUMCON),
      $                    (TMMSUB(I,NUMCON),I=1,2)
 C
-        MFCT(NUMCON)  = AREA * CONV
+        MFCT(NUMCON)  = AREA * CONV(NUMCON)
         TRANSF(NUMCON)= '    '
       IF (CONT.EQ.1 .AND. NUMCON.LT.MAXCNX) GO TO 10
 C
@@ -434,7 +435,6 @@ C             variables in veca below needed for ability to modify mfactr during
               SMEMN(2)  = VECA(22)  
               SMEMSB(1) = VECA(23)  
               SMEMSB(2) = VECA(24)  
-              ARATIO    = AT/AORIGT
               TVOLX(1)  = VECA(26)  
               TVOLX(2)  = VECA(27)  
               TNUMX     = VECA(28)  
@@ -444,6 +444,7 @@ C             variables in veca below needed for ability to modify mfactr during
               TMEMN(2)  = VECA(32)  
               TMEMSB(1) = VECA(33)  
               TMEMSB(2) = VECA(34)
+              ARATIO    = VECA(35)
             ELSE   
 C             not the last occurance of this source/target pair,
 C             instruction modify not allowed
@@ -456,7 +457,6 @@ C             instruction modify not allowed
               SMEMN(2)  = BLNK  
               SMEMSB(1) = 0  
               SMEMSB(2) = 0  
-              ARATIO    = 0
               TVOLX(1)  = BLNK
               TVOLX(2)  = BLNK  
               TNUMX     = 0  
@@ -466,6 +466,7 @@ C             instruction modify not allowed
               TMEMN(2)  = BLNK  
               TMEMSB(1) = 0  
               TMEMSB(2) = 0  
+              ARATIO    = 0
             END IF
 C 
             NCOMPS = NTS
@@ -814,7 +815,7 @@ C                   match individual time series now situated in
 C                   source and target tables.  write matched entries
 C                   to workfl
                     CALL PAIRS
-     I                         (TRAN,-999.0,
+     I                         (TRAN,-999.0,1.0,
      M                          MFACTR,WKEY)
                   END IF
 C
@@ -1332,7 +1333,7 @@ C
 C
 C
       SUBROUTINE   PAIRS
-     I                  (TRAN,AREA,
+     I                  (TRAN,AREA,MLFACT,
      M                   MFACTR,WKEY)
 C
 C     + + + PURPOSE + + +
@@ -1341,12 +1342,13 @@ C     paired entries to workfl
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     WKEY
-      REAL        AREA,MFACTR
+      REAL        AREA,MLFACT,MFACTR
       CHARACTER*4 TRAN
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     TRAN   - ???
 C     AREA   - area term for pair, -999 for ignore
+C     MLFACT - mass-link conversion factor if SCHEM-ML, else 1.0
 C     MFACTR - ???
 C     WKEY   - ???
 C
@@ -1655,7 +1657,9 @@ C               addition for enhanced timser output
                 IF (ABS(AREA+999.0).GT.1.0E-5) THEN
 C                 area term specified, primary for update during run
                   RREC(21)= AREA
-                  RREC(22)= MFACTR/AREA
+Cthj              changed from MFACTR/AREA to handle case if AREA=0
+Cthj              this version preserves intent "everything but SCHEMATIC area"
+                  RREC(22)= (TMULT/SMULT)*MLFACT
                 ELSE
                   RREC(21)= MFACTR
                   RREC(22)= 1.0
@@ -1675,6 +1679,7 @@ C               end addition
                 DO 90 J= 1,10
                   REC(J+40)= IDUM2(1)
  90             CONTINUE
+                RREC(45)= (TMULT/SMULT)
 C
                 RWFG= 1
                 LEN = 50
@@ -1735,7 +1740,7 @@ C     + + + LOCAL VARIABLES + + +
      #            TMMSUB(2,MAXCNX),NUMCON,CNNXN,
      #            DUMSMS(2),DTMSUB(2),
      #            TSBKCD,ITSR,GTCOD,DUMTPL,SCLU,GRP,I6
-      REAL        MFACTR,MFCT(MAXCNX),AREA
+      REAL        MFACTR,MFCT(MAXCNX),AREA,CONV(MAXCNX),MLFACT
       CHARACTER*6 SMEMN,TMEMN,SGPNAM(MAXCNX),SMMNAM(MAXCNX),
      #            TGPNAM(MAXCNX),TMMNAM(MAXCNX),
      #            DUMSGN,DUMTGN,DUMSMB,DUMTMB
@@ -1789,13 +1794,14 @@ C         schematic entry, expand it
      I                 TVOLC,TVOLNO,AREA,MAXMLK,MSLINX,NMLTBS,MSLKTB,
      I                 MAXCNX,
      M                 ECOUNT,
-     O                 SGPNAM,SMMNAM,SMMSUB,MFCT,TRANSF,
+     O                 SGPNAM,SMMNAM,SMMSUB,MFCT,CONV,TRANSF,
      O                 TGPNAM,TMMNAM,TMMSUB,NUMCON)
           IF (NUMCON .GT. 0) THEN
 C           process each connection implied by the schematic entry
             DO 50 CNNXN = 1, NUMCON
 C             assign necessary variables for subroutines opnts and pairs
               MFACTR= MFCT(CNNXN)
+              MLFACT= CONV(CNNXN)
               TRAN  = TRANSF(CNNXN)
               SGRPN = SGPNAM(CNNXN)
               SMEMN = SMMNAM(CNNXN)
@@ -1880,7 +1886,7 @@ C                   will be ignored
 C                   match individual time series now situated in
 C                   source and target tables.  write matched entries
 C                   to workfl
-                    CALL PAIRS (TRAN,AREA,
+                    CALL PAIRS (TRAN,AREA,MLFACT,
      M                          MFACTR,WKEY)
                   END IF
                 END IF
@@ -2032,7 +2038,7 @@ C
 C               match source and target entries,
 C               write matched pairs to workfl
                 CALL PAIRS
-     I                     (TRAN,-999.0,
+     I                     (TRAN,-999.0,1.0,
      M                      MFACTR,WKEY)
 C
 C               find the next target opn for this entry
@@ -2194,7 +2200,7 @@ C           match any individual time series references situated
 C           in the source and target tables.  write matched
 C           references to workfl.
             CALL PAIRS
-     I                 (TRAN,-999.0,
+     I                 (TRAN,-999.0,1.0,
      M                  MFACTR,WKEY)
           END IF
         END IF
