@@ -976,7 +976,7 @@ C
       FLUXFG= 0
       DO 10 N=1, NQUAL
         WRITE (QUALNAME(N),2065) (QUALID(J,N),J=1,3)
-        QUALNAME = ADJUSTL(QUALNAME)
+        QUALNAME(N) = ADJUSTL(QUALNAME(N))
         IF (QSDFG(N) .NE. 0) THEN
 C         check qualsd
           IF (SLIQSX(QSDFP(N)) .GE. 1) THEN
