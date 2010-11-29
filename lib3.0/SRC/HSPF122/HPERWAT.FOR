@@ -226,14 +226,26 @@ C
 C       convert src to internal units (/ivl)
         SRRC= SRRC**DELT60
 C
-        IF (RTOPFG .EQ. 3) THEN
-C         process ftable
-          CALL SUTABL (STABNO,DELT60,
-     O                 NSROWS,NSCOLS,SURTAB)
-        END IF
       ELSE
 C       no high water table
         GWEL= -1.0E30
+C
+        IF (RTOPFG .EQ. 3) THEN
+C         process values in table - type pwat-parm7
+          TBNO= 19
+          TBSB= 1
+          NVAL= 1
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 RVAL)
+C
+          STABNO= RVAL(1)
+        END IF
+      END IF
+C
+      IF (RTOPFG .EQ. 3) THEN
+C       process ftable
+        CALL SUTABL (STABNO,DELT60,
+     O               NSROWS,NSCOLS,SURTAB)
       END IF
 C
       IF (VCSFG .EQ. 1) THEN
