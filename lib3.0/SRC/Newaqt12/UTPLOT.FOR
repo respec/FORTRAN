@@ -11,7 +11,7 @@ C     + + + PURPOSE + + +
 C     Call routines to make a time series plot.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       ARHLOG(2),NVAR,WHICH(NVAR),NPTS,BUFMAX,NTYPE,
+      INTEGER       ARHLOG(*),NVAR,WHICH(NVAR),NPTS,BUFMAX,NTYPE,
      $              DATE(6),TS,TU,DTYPE(*),
      $              TYPIND(NTYPE),COLOR(*),LNTYP(*),
      $              PATTRN(*),WINDOW,MNLTZO,SYMBOL(*),CMPTYP
