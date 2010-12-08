@@ -27,8 +27,8 @@ C     Write a binary output header record for a section of an operation
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       BINU,OPNO,VCOUNT,CLEN(VCOUNT)
-	CHARACTER*8   OPTYP,SECT
-	CHARACTER*256 CHEAD(VCOUNT)
+      CHARACTER*8   OPTYP,SECT
+      CHARACTER*256 CHEAD(VCOUNT)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     BINU   - fortran unit number of binary outout file
@@ -61,8 +61,8 @@ C     Write a binary output header record for a section of an operation
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     BINU,OPNO,UNITFG,LEV,EXDAT(5),VCOUNT
-	CHARACTER*8 OPTYP,SECT
-	REAL        APRINT
+      CHARACTER*8 OPTYP,SECT
+      REAL        APRINT(VCOUNT)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     BINU   - fortran unit number of binary outout file
@@ -81,8 +81,7 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
 C     direct write to unformatted sequential file
-
-      WRITE (BINU) 1,OPTYPE,OPNO,SECT,UNITFG,
+      WRITE (BINU) 1,OPTYP,OPNO,SECT,UNITFG,
      $             LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,VCOUNT)
 C
       RETURN
