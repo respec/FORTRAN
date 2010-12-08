@@ -51,6 +51,7 @@
 		<File RelativePath="..\..\SRC\HSPF140\CDURA.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CFILBK.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CGENE.INC"/>
+		<File RelativePath="..\..\SRC\HSPF140\chbin.inc"/>
 		<File RelativePath="..\..\SRC\HSPF140\CHCAT.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CIFLTB.INC"/>
 		<File RelativePath="..\..\SRC\HSPF140\CILAT.INC"/>
@@ -208,12 +209,14 @@
 		<File RelativePath="..\..\SRC\HSPF140\HREPORT.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINGEN.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINGEUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRINHBN.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINOPN.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINOPUT.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINSEQ.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINTS.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINTSS.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRINWDM.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGH.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGP.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGQ.FOR"/>
 		<File RelativePath="..\..\SRC\HSPF140\HRUNTSGT.FOR"/>
