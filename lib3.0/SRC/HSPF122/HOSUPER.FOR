@@ -40,7 +40,8 @@ C     + + + LOCAL VARIABLES + + +
      $             XDELT,XGRP,XREPET,XWIDTH,FOPKEY,LOPKEY,GKEY,PKEY,
      $             IW,IVLS,RUNWID,EXTFG,STIVL,I1,IOPT,STATFG,IVLDON,
      $             STECNT,MSGFL,STFIL,EXUPFG,CURDAT(6),NXTDAT(6),
-     $             I2,I6,MUPFG,INSPAC,CUMWID,CUMEXT,WIDREM,EXTWID,I0
+     $             I2,I6,MUPFG,INSPAC,CUMWID,CUMEXT,WIDREM,EXTWID,
+     $             IDEBUG
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE  (RUNINF(1),NXGRPS)
@@ -101,7 +102,7 @@ C     save starting date of run
       CALL COPYI (I5,RUNINF(2),NXTDAT)
       CALL EXDATE(NXTDAT,CURDAT)
       CURDAT(6)= 0
-C     WRITE(99,2020) "OSUPER:START:CURDAT:", CURDAT
+      WRITE(MESSU,2020) "OSUPER:START:CURDAT:", CURDAT
 C
 C     find the starting key for the first exgroup
       EXKEY= OSUPKY +1
@@ -110,7 +111,7 @@ C     Exgroup loop
       XGRP = 0
  10   CONTINUE
         XGRP= XGRP+ 1
-C       write(99,*) 'xgrp,nxgrps',xgrp,nxgrps
+        write(MESSU,*) 'xgrp,nxgrps',xgrp,nxgrps
 C       get information about this exgroup
         CALL COPYI (I4,OSUPM(1,EXKEY),
      O              EXGINF)
@@ -134,8 +135,8 @@ C           find the number of inspans in this exspan
             ELSE
               LAST= REPEAT
             END IF
-C           WRITE(99,2030) 'OSUPER:grp,runwid,last',
-C    1                             GRP,RUNWID,LAST
+            WRITE(MESSU,2030) 'OSUPER:grp,runwid,last',
+     1                             GRP,RUNWID,LAST
 C
             IF (EXTWID.GT.WID) THEN
 C             using external update functionality and 
@@ -164,7 +165,7 @@ C             find the width of this inspan
                 WIDTH= WID
               END IF
 C
-C              WRITE(99,*) 'OSUPER: b4EXT UPDATE ',CUMEXT,CUMWID,WIDTH,WIDREM
+              WRITE(MESSU,*) 'OSUPER: b4EXT UPDATE ',CUMEXT,CUMWID,WIDTH,WIDREM
               IF (CUMEXT.GT.0) THEN
 C               using external update functionality and 
 C               external control width is greater than an inspan
@@ -192,14 +193,14 @@ C                   usually the case but might not be at the end of a run
                   WIDREM = 0 
 C                 increment cumulative width computed
                   CUMWID = CUMWID + WIDTH 
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE WIDTH TYPE C ',CUMWID
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE WIDTH TYPE C ',CUMWID
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
                 ELSEIF (CUMWID+WIDTH .LT. CUMEXT) THEN
 C                 regular case, there is room to run another width
 C                 increment cumulative width computed   (a,h)
                   CUMWID = CUMWID + WIDTH
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE WIDTH TYPE A ',CUMWID
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE WIDTH TYPE A ',CUMWID
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
                 ELSEIF (CUMWID+WIDTH .GT. CUMEXT) THEN
 C                 a whole additional width would be too much,
 C                 run only to next external control width  (b,d,f)
@@ -209,14 +210,14 @@ C                 remember how much of the full width is remaining
 C                 increment cumulative variables
                   CUMWID = CUMWID + WIDTH
                   CUMEXT = CUMEXT + EXTWID
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE WIDTH TYPE B ',CUMWID
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE WIDTH TYPE B ',CUMWID
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
                 ELSEIF (CUMWID+WIDTH .EQ. CUMEXT) THEN
 C                 just the right amount of width, just increment
                   CUMWID = CUMWID + WIDTH
                   CUMEXT = CUMEXT + EXTWID
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE WIDTH TYPE X ',CUMWID
-C                  WRITE(99,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE WIDTH TYPE X ',CUMWID
+C                  WRITE(MESSU,*) 'OSUPER: EXT UPDATE ',CUMEXT,WIDTH,WIDREM
                 END IF
               END IF
 C
@@ -251,21 +252,21 @@ C             set up runwid loop
 C
               IF (RUNWID .GT. 0) THEN
 C               get all external time series before running any
-C               WRITE(99,2030)
-C    1            'OSUPER:runwid>0, getting all time series'
+                WRITE(MESSU,2030)
+     1            'OSUPER:runwid>0, getting all time series'
                 EXTFG= 1
                 DO 50 GKEY= FOPKEY, LOPKEY
                   CALL COPYI (I8,OSUPM(1,GKEY),
      O                        OPINF)
                   IF (TSGKST.GT.0) THEN
                     CALL TSGET (FILES,TSGKST,TSGKND,
-     I                          DELT,I1,WIDTH,FSTCAL,EXTFG)
+     I                          DELT,I1,WIDTH,FSTCAL,EXTFG,I0)
                   END IF
  50             CONTINUE
               END IF
 C
               IVLS= WIDTH
-C             WRITE(99,*)' set ivls',IVLS
+C             WRITE(MESSU,*)' set ivls',IVLS
 C
 C             begin do-until loop for runwid
  60           CONTINUE
@@ -281,9 +282,9 @@ C                 run entire remaining width
 C                 IW= WIDTH
                 END IF
 C
-C               WRITE(99,2030) 
-C    1            'OSUPER:width,ivls,runwid,iw',
-C    1                    WIDTH,IVLS,RUNWID,IW
+                WRITE(MESSU,2030) 
+     1            'OSUPER:width,ivls,runwid,iw',
+     1                    WIDTH,IVLS,RUNWID,IW
 C
 C               how many time steps to next mfact special action?
                 CALL SPECLX(CURDAT,DELT,I0,
@@ -297,7 +298,7 @@ C                 special action update to mfactr
 C                 check again for next
                   CALL SPECLX(CURDAT,DELT,I1,
      O                        INSPAC)
-C                 WRITE(99,2030) 'OSUPER:MUPFG,INSPAC:',MUPFG,INSPAC
+                  WRITE(MESSU,2030) 'OSUPER:MUPFG,INSPAC:',MUPFG,INSPAC
                 END IF
 C
                 IF (INSPAC .GT. 0 .AND. INSPAC.LT.IW) THEN
@@ -306,26 +307,26 @@ C                 to next mfact special action
                   IW = INSPAC
                 END IF
 C
-C               WRITE(99,2030)
-C    1            'OSUPER:width,ivls,runwid,iw,inspac',
-C    1                    WIDTH,IVLS,RUNWID,IW,INSPAC
+                WRITE(MESSU,2030)
+     1            'OSUPER:width,ivls,runwid,iw,inspac',
+     1                    WIDTH,IVLS,RUNWID,IW,INSPAC
 C
 C               determine whether or not this is the first or last
 C               time through operation loop
                 FSTCAL= 0
                 LSTCAL= 0
-C               WRITE(99,*)'xcount,xrepet,count,last,stivl,width,iw',
-C     #                      XCOUNT,XREPET,COUNT,LAST,STIVL,WIDTH,IW
+                WRITE(MESSU,*)'xcount,xrepet,count,last,stivl,width,iw',
+     #                      XCOUNT,XREPET,COUNT,LAST,STIVL,WIDTH,IW
                 IF ( (XCOUNT .EQ. 1) .AND. (COUNT .EQ. 1) .AND.
      #               (STIVL .EQ. 1) ) THEN
                   FSTCAL= 1
-C                  WRITE(99,*)'fstcal'
+                  WRITE(MESSU,*)'fstcal'
                 END IF
 C
                 IF ( (XCOUNT .EQ. XREPET) .AND.(COUNT .EQ. LAST) .AND.
      #               ((STIVL+ IW) .GT. WIDTH) ) THEN
                   LSTCAL= 1
-C                  WRITE(99,*)'lstcal'
+                  WRITE(MESSU,*)'lstcal'
                 END IF
 C             
 C               opn loop
@@ -333,7 +334,7 @@ C               opn loop
  70             CONTINUE
                   OPN = OPN+ 1
 C
-C                 write (99,*) '  opn,opkey:',OPN,OPKEY
+C                 write (MESSU,*) '  opn,opkey:',OPN,OPKEY
                   CALL COPYI (I8,OSUPM(1,OPKEY),
      O                        OPINF)
 C
@@ -344,7 +345,7 @@ C
 C                   show status for pc version
                     IOPT = 5
                     CALL HSPSTA (IOPT,NOPNS,LAST,COUNT,OPN,OMCODE,OPTNO)
-C                   WRITE(99,*) 'OSUPER,HSPSTA:',OPN,NOPNS,LAST,COUNT
+C                   WRITE(MESSU,*) 'OSUPER,HSPSTA:',OPN,NOPNS,LAST,COUNT
                   END IF
 C
                   IF (RUNWID .EQ. 0) THEN
@@ -357,13 +358,18 @@ C                   external done, just get internal
 C
 C                 get time series data not already done
                   IF (TSGKST.GT.0) THEN
+                    IF(OMCODE.EQ.3 .AND. OPTNO.EQ.121) THEN
+                      IDEBUG= 1
+                    ELSE
+                      IDEBUG= 0 
+                    END IF
                     CALL TSGET (FILES,TSGKST,TSGKND,
-     I                          DELT,STIVL,IW,FSTCAL,EXTFG)
+     I                          DELT,STIVL,IW,FSTCAL,EXTFG,IDEBUG)
                     IF (FSTCAL .EQ. 1) THEN
 C                     details first time thru
-C                     write(99,2030)
-C    1                  'OSUPER:TSGET:omc,optno,kst,knd,stivl,iw',
-C    1                  OMCODE,OPTNO,TSGKST,TSGKND,STIVL,IW
+                      write(MESSU,2030)
+     1                  'OSUPER:TSGET:omc,optno,kst,knd,stivl,iw',
+     1                  OMCODE,OPTNO,TSGKST,TSGKND,STIVL,IW
                     END IF
                   END IF
 C
@@ -373,7 +379,7 @@ C                 read the osv from disc
 C
 C                 call the appropriate operating module
 C                 casentry omcode
-C                  write(99,*)'omcode,opn,nopns',omcode,opn,nopns
+C                  write(MESSU,*)'omcode,opn,nopns',omcode,opn,nopns
                   GO TO (110,120,130,140,150,160,170,180,190,200,210),
      $                   OMCODE
 C                   case 1
@@ -446,7 +452,7 @@ C                   only put internal time series
 C
                   IF (TSPKST.GT.0) THEN
 C                   output time series from the inpad
-C                   WRITE(99,2030) 'OSUPER:TSPUT:',TSPKST
+                    WRITE(MESSU,2030) 'OSUPER:TSPUT:',TSPKST
                     CALL TSPUT (FILES,TSPKST,TSPKND,
      I                          DELT,STIVL,IW,FSTCAL,LSTCAL,EXTFG)
                   END IF
@@ -465,13 +471,13 @@ C
                 IF (RUNWID .GT. 0) THEN
                   STIVL = STIVL+ IW
                 END IF
-C               WRITE (99,2030)'OSUPER:updated:ivls,stivl,iw',
-C    1                                         IVLS,STIVL,IW
+                WRITE (MESSU,2030)'OSUPER:updated:ivls,stivl,iw',
+     1                                         IVLS,STIVL,IW
 C
 C               status file write
                 IF (STFIL .NE. 0) THEN
 C                 status file specified
-C                 WRITE(99,*) 'HSPF:write status file'
+C                 WRITE(MESSU,*) 'HSPF:write status file'
                   CALL PSTVFL (STFIL,IVLDON,DELT,NOPNS,LSTCAL,MESSU,
      I                         MSGFL,
      M                         STECNT)
@@ -480,15 +486,15 @@ C
 C               update current time
                 CALL TIMADD (CURDAT,I2,DELT,IW,NXTDAT)
                 CALL COPYI (I6,NXTDAT,CURDAT)
-C               WRITE(99,2020) "OSUPER:end interval loop:CURDAT:",
-C    1                                                   CURDAT
+                WRITE(MESSU,2020) "OSUPER:end interval loop:CURDAT:",
+     1                                                   CURDAT
 C
 C             end of interval loop
               IF (IVLS.GT.0 .AND. RETCOD.EQ.0) GO TO 60
 C
               IF (RUNWID .GT. 0) THEN
 C               put all external time series
-C               WRITE(99,2030) 'OSUPER:put external time series'
+                WRITE(MESSU,2030) 'OSUPER:put external time series'
                 EXTFG= 1
                 DO 310 PKEY= FOPKEY, LOPKEY
                   CALL COPYI (I8,OSUPM(1,PKEY),
@@ -500,16 +506,17 @@ C               WRITE(99,2030) 'OSUPER:put external time series'
  310            CONTINUE
               END IF
 C
-C             WRITE(99,2030) 'OSUPER:end inpsan loop:COUNT,LAST,RETCOD',
-C    1                                               COUNT,LAST,RETCOD 
+              WRITE(MESSU,2030) 
+     1            'OSUPER:end inpsan loop:COUNT,LAST,RETCOD',
+     1                                    COUNT,LAST,RETCOD 
 C
 C           end of inspan loop
             IF (COUNT.LT.LAST .AND. RETCOD.EQ.0) GO TO 40
 C           get key for start of next ingroup
             INKEY= OPKEY
 C
-C           WRITE(99,2030) 'OSUPER:end ingroup loop:GRP,RETCOD',
-C    1                                              GRP,RETCOD
+            WRITE(MESSU,2030) 'OSUPER:end ingroup loop:GRP,RETCOD',
+     1                                              GRP,RETCOD
 C         end of ingroup loop
           IF (GRP.LT.NGRPS .AND. RETCOD.EQ.0) GO TO 30
 C
