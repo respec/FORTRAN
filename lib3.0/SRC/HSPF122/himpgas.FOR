@@ -366,7 +366,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*256 CHEAD(9)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   EXDATE
+      EXTERNAL   EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** IWTGAS ***')
@@ -438,17 +438,17 @@ C       some lateral inflow defined
       END IF
 C
       IF (SLITMP .GT. -1.0E+29) THEN
-C       convert to printout units
+C       convert to printout units
         PLITMP = SLITMP*TFACTA+ TFACTB
       ELSE
-C       leave undefined value alone
+C       leave undefined value alone
         PLITMP = SLITMP
       END IF
       IF (SOTMP .GT. -1.0E+29) THEN
-C       convert to printout units
+C       convert to printout units
         PSTAT = SOTMP*TFACTA+ TFACTB
       ELSE
-C       leave undefined value alone
+C       leave undefined value alone
         PSTAT = SOTMP
       END IF
 C
@@ -578,13 +578,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(5) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'IMPLND  ',LSNO,'IWTGAS  ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C         WRITE (BINU) I0,'IMPLND  ',LSNO,'IWTGAS  ',
+C    1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'IMPLND  ',LSNO,'IWTGAS  ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(5) = -BFLAG(5)
         END IF
-        WRITE (BINU) I1,'IMPLND  ',LSNO,'IWTGAS  ',UNITFG,
-     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C       WRITE (BINU) I1,'IMPLND  ',LSNO,'IWTGAS  ',UNITFG,
+C    1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'IMPLND  ',LSNO,'IWTGAS  ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

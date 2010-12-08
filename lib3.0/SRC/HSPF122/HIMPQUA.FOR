@@ -1030,13 +1030,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(6) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'IMPLND  ',LSNO,'IQUAL   ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C         WRITE (BINU) I0,'IMPLND  ',LSNO,'IQUAL   ',
+C    1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'IMPLND  ',LSNO,'IQUAL   ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(6) = -BFLAG(6)
         END IF
-        WRITE (BINU) I1,'IMPLND  ',LSNO,'IQUAL   ',UNITFG,
-     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C       WRITE (BINU) I1,'IMPLND  ',LSNO,'IQUAL   ',UNITFG,
+C    1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'IMPLND  ',LSNO,'IQUAL   ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

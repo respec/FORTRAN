@@ -485,7 +485,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*256 CHEAD(8)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   TRNVEC,EXDATE
+      EXTERNAL   TRNVEC,EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** SEDMNT ***')
@@ -671,13 +671,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(4) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'PERLND  ',LSNO,'SEDMNT  ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C         WRITE (BINU) I0,'PERLND  ',LSNO,'SEDMNT  ',
+C    1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'PERLND  ',LSNO,'SEDMNT  ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(4) = -BFLAG(4)
         END IF
-        WRITE (BINU) I1,'PERLND  ', LSNO,'SEDMNT  ',UNITFG,
-     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C       WRITE (BINU) I1,'PERLND  ', LSNO,'SEDMNT  ',UNITFG,
+C    1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'PERLND  ',LSNO,'SEDMNT  ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

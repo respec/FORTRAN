@@ -3932,7 +3932,7 @@ C     + + + EQUIVALENCES + + +
       CHARACTER*1   TBUF1(132)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   TRNVEC,BALCHK,RHTSTR,INTCHR,EXDATE
+      EXTERNAL   TRNVEC,BALCHK,RHTSTR,INTCHR,EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** HYDR ***')
@@ -4800,15 +4800,18 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(1) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'RCHRES  ',RCHNO,'HYDR    ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C          WRITE (BINU) I0,'RCHRES  ',RCHNO,'HYDR    ',
+C     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'RCHRES  ',RCHNO,'HYDR    ',ACNT,CLEN,CHEAD)
           IF (BUNIT(2) .LE. 0 .OR. BINU .EQ. BUNIT(2)) THEN
 C           set bflag to negative to not write headers anymore
             BFLAG(1) = -BFLAG(1)
           END IF
         END IF
-        WRITE (BINU) I1,'RCHRES  ',RCHNO,'HYDR    ',UNITFG,
-     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C        WRITE (BINU) I1,'RCHRES  ',RCHNO,'HYDR    ',UNITFG,
+C     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'RCHRES  ',RCHNO,'HYDR    ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

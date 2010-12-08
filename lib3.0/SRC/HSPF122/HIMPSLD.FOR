@@ -371,7 +371,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*256 CHEAD(3)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   EXDATE
+      EXTERNAL   EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** SOLIDS ***')
@@ -495,13 +495,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(4) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'IMPLND  ',LSNO,'SOLIDS  ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C          WRITE (BINU) I0,'IMPLND  ',LSNO,'SOLIDS  ',
+C     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'IMPLND  ',LSNO,'SOLIDS  ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(4) = -BFLAG(4)
         END IF
-        WRITE (BINU) I1,'IMPLND  ',LSNO,'SOLIDS  ',UNITFG,
-     1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C       WRITE (BINU) I1,'IMPLND  ',LSNO,'SOLIDS  ',UNITFG,
+C    1               LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'IMPLND  ',LSNO,'SOLIDS  ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN
