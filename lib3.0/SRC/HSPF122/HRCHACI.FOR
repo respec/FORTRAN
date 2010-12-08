@@ -1240,7 +1240,7 @@ C     NEWAC  - new calculated acidity                   mol/L
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    IVALFE,IVALAL,IVALMN
-      DOUBLE PRECISION RSTDPOT,RPARTPS,RFACTA,RFACTB,RFACTC,RKSP2,               
+      DOUBLE PRECISION RSTDPOT,RPARTPS,RFACTA,RFACTB,RFACTC,RKSP2,RKSP1,               
      $    RFACTD,RION,RHPOW,RKPOW,RGAMMA,RACTH,RACTOH,RFE,RAL,
      $	  RMN,RAC,RIH,RIPH,RCAL,RCFE,RCMN,RK,RCAC,TMPMC,
      $    TMPAL,TMPFE,TMPMN,TMPALR,TMPFER,TMPMNR
@@ -1729,7 +1729,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*256 CHEAD(1+NUMCHM*(9+NEXITS*2))
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL    TRNVEC, BALCHK, INTCHR, EXDATE
+      EXTERNAL    TRNVEC, BALCHK, INTCHR, EXDATE, BINHED, BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' ','*** ACIDPH ***')
@@ -2049,13 +2049,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(11) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'RCHRES  ',RCHNO,'ADCALC  ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C         WRITE (BINU) I0,'RCHRES  ',RCHNO,'ADCALC  ',
+C    1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'RCHRES  ',RCHNO,'ADCALC  ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(11) = -BFLAG(11)
         END IF
-        WRITE (BINU) I1,'RCHRES  ',RCHNO,'ADCALC  ',UNITFG,
-     1               LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
+C       WRITE (BINU) I1,'RCHRES  ',RCHNO,'ADCALC  ',UNITFG,
+C    1               LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
+        CALL BINREC (BINU,'RCHRES  ',RCHNO,'ADCALC  ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

@@ -2003,7 +2003,7 @@ C     note: local arrays have same dimensions as corresponding arrays in
 C     Osv, except for dropping of dimension lev, where applicable
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   TRNVEC,BALCHK,INTCHR,EXDATE
+      EXTERNAL   TRNVEC,BALCHK,INTCHR,EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** NUTRX ***')
@@ -3105,13 +3105,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(8) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'RCHRES  ',RCHNO,'NUTRX   ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C         WRITE (BINU) I0,'RCHRES  ',RCHNO,'NUTRX   ',
+C    1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'RCHRES  ',RCHNO,'NUTRX   ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(8) = -BFLAG(8)
         END IF
-        WRITE (BINU) I1,'RCHRES  ',RCHNO,'NUTRX   ',UNITFG,
-     1               LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
+C       WRITE (BINU) I1,'RCHRES  ',RCHNO,'NUTRX   ',UNITFG,
+C    1               LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
+        CALL BINREC (BINU,'RCHRES  ',RCHNO,'NUTRX   ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

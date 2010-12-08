@@ -534,7 +534,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*256 CHEAD(14+NEXITS*2)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   TRNVEC,INTCHR,EXDATE
+      EXTERNAL   TRNVEC,INTCHR,EXDATE,BINHED,BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** PHCARB ***')
@@ -715,13 +715,16 @@ C       write binary output
      O              EXDAT)
         IF (BFLAG(10) .GT. 0) THEN
 C         at start of run, write the header
-          WRITE (BINU) I0,'RCHRES  ',RCHNO,'PHCARB  ',
-     1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C         WRITE (BINU) I0,'RCHRES  ',RCHNO,'PHCARB  ',
+C    1          (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'RCHRES  ',RCHNO,'PHCARB  ',ACNT,CLEN,CHEAD)
 C         set bflag to negative to not write headers anymore
           BFLAG(10) = -BFLAG(10)
         END IF
-        WRITE (BINU) I1,'RCHRES  ',RCHNO,'PHCARB  ',UNITFG,
-     1               LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
+C       WRITE (BINU) I1,'RCHRES  ',RCHNO,'PHCARB  ',UNITFG,
+C    1               LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
+        CALL BINREC (BINU,'RCHRES  ',RCHNO,'PHCARB  ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN

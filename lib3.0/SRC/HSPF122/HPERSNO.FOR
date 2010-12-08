@@ -1687,7 +1687,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  ABS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   TRNVEC, BALCHK, EXDATE
+      EXTERNAL   TRNVEC, BALCHK, EXDATE, BINHED, BINREC
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' *** SNOW ***')
@@ -1958,21 +1958,27 @@ C       write binary output
         IF (BFLAG(2) .GT. 0) THEN
 C         at start of run, write the header
           IF (OPERFG .EQ. 1) THEN
-            WRITE (BINU) I0,'PERLND  ',LSNO,'SNOW    ',
-     1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C           WRITE (BINU) I0,'PERLND  ',LSNO,'SNOW    ',
+C    1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'PERLND  ',LSNO,'SNOW    ',ACNT,CLEN,CHEAD)
           ELSE IF (UNITFG .EQ. 2) THEN
-            WRITE (BINU) I0,'IMPLND  ',LSNO,'SNOW    ',
-     1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+C           WRITE (BINU) I0,'IMPLND  ',LSNO,'SNOW    ',
+C    1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
+          CALL BINHED (BINU,'IMPLND  ',LSNO,'SNOW    ',ACNT,CLEN,CHEAD)
           END IF
 C         set bflag to negative to not write headers anymore
           BFLAG(2) = -BFLAG(2)
         END IF
         IF (OPERFG .EQ. 1) THEN
-          WRITE (BINU) I1,'PERLND  ', LSNO,'SNOW    ',UNITFG,
-     1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C         WRITE (BINU) I1,'PERLND  ', LSNO,'SNOW    ',UNITFG,
+C    1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'PERLND  ',LSNO,'SNOW    ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
         ELSE IF (OPERFG.EQ. 2) THEN
-          WRITE (BINU) I1,'IMPLND  ', LSNO,'SNOW    ',UNITFG,
-     1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+C         WRITE (BINU) I1,'IMPLND  ', LSNO,'SNOW    ',UNITFG,
+C    1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
+        CALL BINREC (BINU,'IMPLND  ',LSNO,'SNOW    ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
         END IF
       END IF
 C
