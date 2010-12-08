@@ -432,7 +432,8 @@ C                     need to make sure obs is plotted last
      M                             LNTYP,COLOR,PATTRN,SYMBOL,CLAB)
                     END IF
                     MNLTZO= 0
-                    CALL QDTMPL(WINACT,ARHLOG,MNLTZO,ARPCSC,TNVAR,WHICH,
+                    CALL QDTMPL(WINACT,ARHLOG,MNLTZO,ARPCSC(1),TNVAR,
+     I                          WHICH,
      I                          NPTS,MXCRV,MXBUF,YX,SDATE,LTS,LTU,DTYPE,
      I                          TYPIND,LNTYP,COLOR,PATTRN,SYMBOL,
      I                          CLAB,YLLAB,YRLAB,ALAB,TITL,CMPTYP)

@@ -437,7 +437,7 @@ C           set legend location upper left
             IF (PLTTYP .EQ. 1) THEN
 C             do standard timeseries plot
               MNLTZO= 0
-              CALL QDTMPL(WINACT,ARHLOG,MNLTZO,ARPCSC,NDSN,WHICH,
+              CALL QDTMPL(WINACT,ARHLOG,MNLTZO,ARPCSC(1),NDSN,WHICH,
      I                    NPTS,MAXD,BUFMAX,YX,SDATE,LTS,LTU,DTYPE,
      I                    TYPIND,LNTYP,COLOR,PATTRN,SYMBOL,
      I                    CLAB,YLLAB,YRLAB,ALAB,TITL,CMPTYP)
@@ -498,7 +498,7 @@ C                 scen and con vary, add location to title
 C               don't allow fills or less than 100 percent of scale
                 CALL ZIPI (MAXD,I0,LPAT)
                 RTEMP(1) = 100.0
-                CALL QDTMPL(WINACT,ARHLOG,MNLTZO,RTEMP,I1,WHICH,
+                CALL QDTMPL(WINACT,ARHLOG,MNLTZO,RTEMP(1),I1,WHICH,
      I                      NPTS,MAXD,BUFMAX,TMPYX,SDATE,LTS,LTU,DTYPE,
      I                      TYPIND,LNTYP,COLOR,LPAT,SYMBOL,
      I                      CLAB,YLLAB,YRLAB,ALAB,TPTITL,CMPTYP)
@@ -567,7 +567,7 @@ C                 scen and con vary, add location to title
 C               don't allow fills
                 CALL ZIPI (MAXD,I0,LPAT)
                 RTEMP(1) = 100.0
-                CALL QDTMPL(WINACT,ARHLOG,MNLTZO,RTEMP,I1,WHICH,
+                CALL QDTMPL(WINACT,ARHLOG,MNLTZO,RTEMP(1),I1,WHICH,
      I                      NPTS,MAXD,BUFMAX,TMPYX,SDATE,LTS,LTU,DTYPE,
      I                      TYPIND,LNTYP,COLOR,LPAT,SYMBOL,
      I                      CLAB,YLLAB,YRLAB,ALAB,TPTITL,CMPTYP)
@@ -624,7 +624,7 @@ C             now set spacing data set specs
               DTYPE(NDSN+1)  = 1
               CLAB(NDSN+1)   = ' '
 C             do plot
-              CALL QDBRPL(WINACT,ITMP2,MNLTZO,ARPCSC,NDSN+1,WHICH,
+              CALL QDBRPL(WINACT,ITMP2,MNLTZO,ARPCSC(1),NDSN+1,WHICH,
      I                    NPTS,MAXD,BUFMAX,TMPYX,SDATE,LTS,LTU,DTYPE,
      I                    TYPIND,LNTYP,COLOR,PATTRN,SYMBOL,
      I                    CLAB,YLLAB,YRLAB,ALAB,TITL,CMPTYP)
