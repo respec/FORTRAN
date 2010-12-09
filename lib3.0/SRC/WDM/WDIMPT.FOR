@@ -839,7 +839,7 @@ C     + + + LOCAL VARIABLES + + +
      2             ACLU,AGRP,AFLDS,ALEN(30),ACOL(30),ASPA,ANUM(4),
      3             BFLDS,BSPA,IPOS,IFLD,FFLD,FSPA,XNUM(4),MXPOS,LRET
       REAL         RBUFF(MXTLEN)
-      CHARACTER*1  TBUFF(80,MXTROW),TTYP(30),ATYP(30),BLNK(1),
+      CHARACTER*1  TBUFF(80,MXTROW),TTYP(30),ATYP(30),BLNK,
      1             CEXT(3),CEND(3),CMAI(3),CDAT(3),CSTAR(3),MFID(2)
       CHARACTER*16 TABNAM,MTBNAM
 C
@@ -874,7 +874,7 @@ C
       I1  = 1
       I3  = 3
       I80 = 80
-      BLNK(1)= ' '
+      BLNK= ' '
 C
       LRET= 0
  5    CONTINUE

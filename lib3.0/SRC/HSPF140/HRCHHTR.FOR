@@ -267,6 +267,10 @@ C     also save TW (TWS) for later use in the bed conduction models
      I             EOVOL,NEXITS,
      M             DTW,
      O             ROHEAT,OHEAT)
+      IF (DTW .GT. 60.0) THEN
+        WRITE(MESSU,'(A,1X,2F10.3)') 'ADVECT:TW problem ',DTW, AIRTMP
+        DTW = AIRTMP
+      END IF
       TW= DTW
 C
 C     simulate heat exchange with the atmosphere

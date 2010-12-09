@@ -56,7 +56,7 @@ C     + + + PARAMETERS + + +
       INCLUDE 'ptsmax.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,J,N,ITS(TSMAX),ITU(TSMAX),RETCOD,GTICS(3),NCRV,LOC,
+      INTEGER     I,J,N,ITS(TSMAX),ITU(TSMAX),RETCOD,GTICS(4),NCRV,LOC,
      1            GCTYP(TSMAX),ICLOS,IWAIT,GBVALF(4),GTRANF(TSMAX),
      2            GXTYP,GYTYP(2),LSYMBL(TSMAX),LDTYPE(TSMAX),
      4            EDATE(6),L0,L1,L4,IFLG1,IFLG2,IFLG3,
@@ -1092,7 +1092,7 @@ C     + + + PARAMETERS + + +
       INCLUDE 'ptsmax.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,J,N,ITS(TSMAX),ITU(TSMAX),RETCOD,GTICS(3),NCRV,LOC,
+      INTEGER     I,J,N,ITS(TSMAX),ITU(TSMAX),RETCOD,GTICS(4),NCRV,LOC,
      1            GCTYP(TSMAX),ICLOS,IWAIT,LFTRT,MINY,MAXY,LNPTS,
      2            GBVALF(4),GTRANF(TSMAX),GXTYP,GYTYP(2),LSYMBL(TSMAX),
      4            EDATE(6),L0,L1,L4,IFLG1,IFLG2,IFLG3,LCOLOR(TSMAX),
@@ -1398,7 +1398,7 @@ C       no aux axis
 C     draw left axis
       LFTRT= 1
       CALL ARAXIS (XLEN,YMLEN,YLLAB,SIZEL,PLMN(1),PLMX(1),LFTRT,
-     I             RMAX1,GTICS)
+     I             RMAX1,GTICS(1))
 C     draw right axis
       CALL RHTBDR (GYTYP(1),GTICS(1),XLEN,YMLEN,SIZEL,MINY,MAXY)
 C     draw X-axis
