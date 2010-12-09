@@ -187,7 +187,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      LATDEG, LNGDEG, RVAL(1)
 C
 C     + + + FUNCTIONS + + +
-      INTEGER   CNVTDG
+      REAL      CNVTDG
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   CNVTDG, WDBSGR, WDBSGI

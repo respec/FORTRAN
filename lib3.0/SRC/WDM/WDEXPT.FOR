@@ -214,7 +214,7 @@ C     + + + LOCAL VARIABLES + + +
      4             BSPA,IPOS,IFLD,FFLD,FSPA,XNUM(4),ID,DREC,DPOS,
      5             MLEN,GLEN,OLEN,FLEN,CONT,LMESFL,LCLU,LGRP
       REAL         RBUFF(MXTLEN)
-      CHARACTER*1  TTYP(30),ATYP(30),MFID(2),TBUFF(80,MXTROW),BLNK(1),
+      CHARACTER*1  TTYP(30),ATYP(30),MFID(2),TBUFF(80,MXTROW),BLNK,
      1             CSTAR(3),BK3(3)
       CHARACTER*16 MTBNAM,CTBNAM
 C
@@ -253,7 +253,7 @@ C
       I1 = 1
       I3 = 3
       I80= 80
-      BLNK(1)= ' '
+      BLNK= ' '
 C
 C     fill label common block
       I= 1

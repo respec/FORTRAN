@@ -183,7 +183,7 @@ C         other devices
         END IF
         IPET= 1
         CALL GINLC (WINDOW,INPT,VID,XPHYS+XPAGE/2.,YPHYS+YPAGE/2.,IPET,
-     1              ZERO,RXDC,ZERO,RYDC,ILEN,DATREC)
+     1              ZERO,RXDC,ZERO,RYDC,ILEN,DATREC(1))
       ELSE
 C       assume no input available
         INPT= 0
@@ -482,7 +482,7 @@ C       save last station id
         IOLD= ISTA
         IPET= 1
         CALL GINLC (WINDOW,INPT,VID,MKX(STACLO),MKY(STACLO),
-     1              IPET,ZERO,RXDC,ZERO,RYDC,ITMP,DATREC)
+     1              IPET,ZERO,RXDC,ZERO,RYDC,ITMP,DATREC(1))
         ISTA= MKID(STACLO)
         WRITE(FE,*) 'ID:     ',ISTA,IANS
         IF (ISTA .GT. 0) THEN
@@ -664,7 +664,7 @@ C             others, rect pet
             END IF
             WRITE(FE,*) IPET,ZERO,RXDC,RYDC
             CALL GINLC (WINDOW,INPT,VID,X1,Y1,
-     1                  IPET,ZERO,RXDC,ZERO,RYDC,ITMP,DATREC)
+     1                  IPET,ZERO,RXDC,ZERO,RYDC,ITMP,DATREC(1))
 C           sample second point
             CALL GRQLC (WINDOW,INPT,IX,IT,X2,Y2)
             WRITE (FE,*) 'zoom2 location selected:',IT,X2,Y2
