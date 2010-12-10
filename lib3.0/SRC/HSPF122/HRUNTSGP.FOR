@@ -3,7 +3,7 @@ C     4.1
 C
       SUBROUTINE TSGET
      I                 (FILEAR,TSGKST,TSGKND,DELT,STIVL,WID,FSTCAL,
-     I                  EXTFG)
+     I                  EXTFG,IDEBUG)
 C
 C     + + + PURPOSE + + +
 C     Get a time series from tss, sequential file, dss, wdm file,
@@ -14,7 +14,9 @@ C     12/6/2004 - jlk&pbd - changed I200 to I220 for new
 C       TSGET/TSPUT file length
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   DELT,FILEAR(15),TSGKND,TSGKST,STIVL,WID,FSTCAL,EXTFG
+      INTEGER   DELT,FILEAR(15),TSGKND,TSGKST,STIVL,WID,FSTCAL,EXTFG,
+     $          IDEBUG
+   
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     FILEAR - ???
@@ -107,6 +109,11 @@ C           volume code is unchanged
             VOLUME= VOLCOD
           END IF
 C
+          IF (IDEBUG.EQ.1) THEN
+            WRITE(MESSU,*) 'TSGET ', 
+     $          I,VOLUME,FILE,VOPADR(1),STIVL,WIDTH
+          END IF
+C
 C         case entry
           GO TO (10,60,20,30,40,50,60), VOLUME
 C
@@ -118,6 +125,12 @@ C
 C         case inpad
  20       CONTINUE
             CALL MOVROW (FILE,VOPADR(1),STIVL,WIDTH)
+            IF (IDEBUG.EQ.1) THEN
+              WRITE(MESSU,*) ' PAD ',
+     $          PAD(FILE+2),PAD(VOPADR(1)+2),
+     $          IPAD(FILE+2)
+            END IF
+C
             GO TO 70
 C
 C         case tss

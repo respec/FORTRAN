@@ -1266,7 +1266,7 @@ C     initialize constants used in pH determining algorithm
       RFACTC = 0.24
       RSTDPOT = -0.615
       RPARTPS = 0.21
-      RKSP1 = 10**(-33)
+      RKSP1 = 10**(-33.00)
       RKSP2 = 10**(-38.46)
 C
 C     set initial estimate of [H+]

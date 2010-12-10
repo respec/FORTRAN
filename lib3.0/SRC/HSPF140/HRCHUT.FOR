@@ -111,28 +111,39 @@ C     calculate weighting factors given to rate of outflow of
 C     constituents at start (js) and end (cojs) of interval,
 C     in calculating mean rate of outflow over the ivl
 C
-      IF (ROS .GT. 0.0) THEN
-C       calculate ratio of volume to outflow volume; delts is the
-C       simulation interval in seconds
+      IF (ADFG .GE. 1) THEN
+Cbrb    first use standard method of computing advective weighting
 C
-        RAT= VOLS/(ROS*DELTS)
-        IF (RAT .LT. CRRAT) THEN
-C         part of water in outflow volume entered control volume as
-C         inflow during same interval; hence, concentration of
-C         inflowing material will affect outflow concentration and
-C         js will be < 1.0
-          JS= RAT/CRRAT
+        IF (ROS .GT. 0.0) THEN
+C         calculate ratio of volume to outflow volume; delts is the
+C         simulation interval in seconds
+C     
+          RAT= VOLS/(ROS*DELTS)
+          IF (RAT .LT. CRRAT) THEN
+C           part of water in outflow volume entered control volume as
+C           inflow during same interval; hence, concentration of
+C           inflowing material will affect outflow concentration and
+C           js will be < 1.0
+            JS= RAT/CRRAT
+          ELSE
+C           all water in outflow volume was contained in control volume
+C           at beginning of ivl; mean rate of outflow over ivl will be
+C           wholly dependent upon rate of outflow of constituents at
+C           start of ivl
+            JS= 1.0
+          END IF
         ELSE
-C         all water in outflow volume was contained in control volume
-C         at beginning of ivl; mean rate of outflow over ivl will be
-C         wholly dependent upon rate of outflow of constituents at
-C         start of ivl
-          JS= 1.0
+C         reach/res has no outflow at start of ivl
+          JS= 0.0
         END IF
-      ELSE
-C       reach/res has no outflow at start of ivl
-        JS= 0.0
-      END IF
+C
+        IF (ADFG .EQ. 2 .AND. JS.GT.KS) THEN 
+Cbrb      use same weighting as used in flow routing i.e., JS= KS
+Cbrb      this was added 6/2010 by brb & pbd based on suggestion of 
+Cbrb      Sen Bai of Tetra Tech - ASCE J. Hydrol. Engr., Vol.15, No.3, March, 2010
+          JS= KS
+        END IF
+      END IF 
 C
 C     cojs is the complement of js
       COJS= 1.0 - JS
@@ -366,8 +377,13 @@ C
           END IF
 C
 C         calculate reaeration coefficient
-          KOREA= REAK*(AVVELE**EXPREV)*(AVDEPE**EXPRED)
-     $           *(TCGINV**(TW - 20.))*DELT60
+          IF (TW .LT. 66) THEN
+            KOREA= REAK*(AVVELE**EXPREV)*(AVDEPE**EXPRED)
+     $             *(TCGINV**(TW - 20.))*DELT60
+          ELSE
+C           prevent numeric overflow when TW is extremely high
+            KOREA= .999
+          END IF 
         END IF
       END IF
 C
