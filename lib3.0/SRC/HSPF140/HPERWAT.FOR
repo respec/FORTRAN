@@ -229,14 +229,26 @@ C
 C       convert src to internal units (/ivl)
         SRRC= SRRC**DELT60
 C
-        IF (RTOPFG .EQ. 3) THEN
-C         process ftable
-          CALL SUTABL (STABNO,DELT60,
-     O                 NSROWS,NSCOLS,SURTAB)
-        END IF
       ELSE
 C       no high water table
         GWEL= -1.0E30
+C
+        IF (RTOPFG .EQ. 3) THEN
+C         process values in table - type pwat-parm7
+          TBNO= 19
+          TBSB= 1
+          NVAL= 1
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 RVAL)
+C
+          STABNO= RVAL(1)
+        END IF
+      END IF
+C
+      IF (RTOPFG .EQ. 3) THEN
+C       process ftable
+        CALL SUTABL (STABNO,DELT60,
+     O               NSROWS,NSCOLS,SURTAB)
       END IF
 C
       IF (VCSFG .EQ. 1) THEN
@@ -1277,7 +1289,7 @@ C       detention, infiltration, interflow input, surface outflow
         CALL SURFAC (LZRAT,INFILT,INFEXP,INFFAC,INFILD,FSMSFG,DAYFG,
      I               VNNFG,NSURM,LSUR,SLSUR,VIFWFG,INTFWM,MSUPY,UZSN,
      I               UZS,DELT60,UZRA,INTGRL,RTOPFG,UZFG,MON,NXTMON,DAY,
-     I               NDAYS,LSNO,MESSU,MSGFL,DATIM,
+     I               NDAYS,LSNO,MESSU,MSGFL,DATIM,NSROWS,NSCOLS,SURTAB,
      M               DEC,SRC,NSUR,INTFW,SURS,PWECNT(1),PWECNT(2),
      O               INFIL,UZI,IFWI,SURO)
 C
@@ -1319,9 +1331,9 @@ C     iperc doesn't include lzirr
 C
 C     simulate ET
       CALL EVAPT (PET,BASETP,UZSN,AGWETP,KVARY,DAYFG,VLEFG,LZETPM,MON,
-     I            NXTMON,DAY,NDAYS,LZSN,DELT60,
-     M            AGWO,CEPS,UZS,AGWS,GWVS,LZETP,RPARM,LZS,
-     O            REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET)
+     I            NXTMON,DAY,NDAYS,LZSN,DELT60,RTOPFG,
+     M            AGWO,CEPS,UZS,AGWS,GWVS,LZETP,RPARM,LZS,SURS,
+     O            REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET,SURET)
       TGWS= AGWS
 C
 C     find total outflow
@@ -2297,9 +2309,9 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL    SURTAB(100),SURS,SURO
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     NSROWS - ???
-C     NSCOLS - ???
-C     SURTAB - ???
+C     NSROWS - number of rows in ftable
+C     NSCOLS - number of columns in ftable
+C     SURTAB - ftable stored as an array
 C     SURS   - ???
 C     SURO   - ???
 C
@@ -2741,7 +2753,7 @@ C
       SUBROUTINE   DISPOS
      I                    (IMIN,IMAX,RATIO,MSUPY,UZSN,UZS,DELT60,DEC,
      I                     SRC,UZRA,INTGRL,RTOPFG,UZFG,LSNO,MESSU,MSGFL,
-     I                     DATIM,
+     I                     DATIM,NSROWS,NSCOLS,SURTAB,
      M                     SURS,ECNT1,ECNT2,
      O                     INFIL,UZI,IFWI,SURO)
 C
@@ -2750,9 +2762,10 @@ C     Dispose of moisture supply on either an individual block of
 C     the land segment or on an entire land segment.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    ECNT1,ECNT2,MSGFL,LSNO,MESSU,RTOPFG,UZFG,DATIM(5)
+      INTEGER    ECNT1,ECNT2,MSGFL,LSNO,MESSU,RTOPFG,UZFG,DATIM(5),
+     $           NSROWS,NSCOLS
       REAL       DEC,DELT60,IFWI,IMAX,IMIN,INFIL,INTGRL(10),MSUPY,
-     $           RATIO,SRC,SURO,SURS,UZI,UZRA(10),UZS,UZSN
+     $           RATIO,SRC,SURO,SURS,UZI,UZRA(10),UZS,UZSN,SURTAB(100)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     IMIN   - ???
@@ -2771,6 +2784,10 @@ C     UZFG   - ???
 C     LSNO   - line number in the opn sequence block of uci
 C     MESSU  - ftn unit no. to be used for printout of messages
 C     MSGFL  - fortran unit number of error message file
+C     DATIM  - date and time of day
+C     NSROWS - number of rows in ftable
+C     NSCOLS - number of columns in ftable
+C     SURTAB - ftable stored as an array
 C     SURS   - ???
 C     ECNT1  - ???
 C     ECNT2  - ???
@@ -2778,7 +2795,6 @@ C     INFIL  - ???
 C     UZI    - ???
 C     IFWI   - ???
 C     SURO   - ???
-C     DATIM  - date and time of day
 C
 C     + + + LOCAL VARIABLES + + +
       REAL       IIMAX,IIMIN,OVERI,OVERII,PDRO,PIFWI,PSUR,UNDRI,UNDRII,
@@ -2837,12 +2853,19 @@ C         there will be something on or running off the surface
 C         reduce it to account for the upper zone's share
           PSUR= PSUR*(1.0- UZFRAC)
 C
-C         determine how much of this potential surface detention/
-C         outflow will run off in this time interval
-          CALL PROUTE (PSUR,RTOPFG,DELT60,DEC,SRC,MESSU,MSGFL,LSNO,
-     M                 SURS,ECNT2,
-     O                 SURO)
-C
+          IF (RTOPFG .EQ. 3) THEN
+C           ftable method
+            SURS= PSUR
+            CALL SUROFT (NSROWS,NSCOLS,SURTAB,
+     M                   SURS,
+     O                   SURO)
+          ELSE
+C           determine how much of this potential surface detention/
+C           outflow will run off in this time interval
+            CALL PROUTE (PSUR,RTOPFG,DELT60,DEC,SRC,MESSU,MSGFL,LSNO,
+     M                   SURS,ECNT2,
+     O                   SURO)
+          END IF
         ELSE
 C         there is nothing to store on the surface or to run off
           SURS= 0.0
@@ -3272,17 +3295,18 @@ C
       SUBROUTINE   EVAPT
      I                   (PET,BASETP,UZSN,AGWETP,KVARY,DAYFG,VLEFG,
      I                    LZETPM,MON,NXTMON,DAY,NDAYS,LZSN,DELT60,
-     M                    AGWO,CEPS,UZS,AGWS,GWVS,LZETP,RPARM,LZS,
-     O                    REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET)
+     I                    RTOPFG,
+     M                    AGWO,CEPS,UZS,AGWS,GWVS,LZETP,RPARM,LZS,SURS,
+     O                    REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET,SURET)
 C
 C     + + + PURPOSE + + +
 C     Simulate evapotranspiration (ET)
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    DAY,DAYFG,MON,NDAYS,NXTMON,VLEFG
+      INTEGER    DAY,DAYFG,MON,NDAYS,NXTMON,VLEFG,RTOPFG
       REAL       AGWET,AGWETP,AGWO,AGWS,BASET,BASETP,CEPE,CEPS,DELT60,
      $           GWVS,KVARY,LZET,LZETP,LZETPM(12),LZS,LZSN,PET,REMPET,
-     $           RPARM,TAET,UZET,UZS,UZSN
+     $           RPARM,TAET,UZET,UZS,UZSN,SURS,SURET
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     PET    - ???
@@ -3292,6 +3316,7 @@ C     AGWETP - ???
 C     KVARY  - ???
 C     DAYFG  - flag for first day or day change
 C     VLEFG  - ???
+C     RTOPFG - surface runoff routing flag
 C     LZETPM - ???
 C     MON    - calendar month
 C     NXTMON - next calendar month
@@ -3316,7 +3341,7 @@ C     AGWET  - ???
 C     LZET   - ???
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   ETBASE,EVICEP,ETUZON,ETLZON,ETAGW
+      EXTERNAL   ETBASE,EVICEP,ETUZON,ETLZON,ETAGW,EVSUR
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -3337,31 +3362,48 @@ C         simulate evaporation from interception
      O                CEPE)
 C
           IF (REMPET .GT. 0.0) THEN
-C           simulate et from the upper zone
-            CALL ETUZON (UZSN,
-     M                   REMPET,UZS,TAET,
-     O                   UZET)
-     C
-            IF (REMPET .GT. 0.0) THEN
-C               simulate et from active groundwater
-              CALL ETAGW (AGWETP,KVARY,
-     M                    REMPET,AGWS,TAET,GWVS,
-     O                    AGWET)
+C           simulate evaporation from surface detention
+            IF (RTOPFG .EQ. 3) THEN
+              CALL EVSUR
+     M                   (SURS,REMPET,TAET,
+     O                    SURET)
             ELSE
+              SURET= 0.0
+            END IF
+C
+            IF (REMPET .GT. 0.0) THEN
+C             simulate et from the upper zone
+              CALL ETUZON (UZSN,
+     M                     REMPET,UZS,TAET,
+     O                     UZET)
+C
+              IF (REMPET .GT. 0.0) THEN
+C                 simulate et from active groundwater
+                CALL ETAGW (AGWETP,KVARY,
+     M                      REMPET,AGWS,TAET,GWVS,
+     O                      AGWET)
+              ELSE
+                AGWET= 0.0
+              END IF
+            ELSE
+              UZET= 0.0
               AGWET= 0.0
             END IF
           ELSE
+            SURET= 0.0
             UZET= 0.0
             AGWET= 0.0
           END IF
         ELSE
           CEPE= 0.0
+          SURET= 0.0
           UZET= 0.0
           AGWET= 0.0
         END IF
       ELSE
         BASET= 0.0
         CEPE= 0.0
+        SURET= 0.0
         UZET= 0.0
         AGWET= 0.0
       END IF
@@ -3512,6 +3554,12 @@ C         end check
 C         enough water to have outflow
           AGWO= KGW*AGWS
         END IF
+      END IF
+C
+      IF (AGWO .LT. 0.0) THEN
+C       BRB notes that AGWO can end up less than zero, 
+C       force it to zero
+        AGWO= 0.0
       END IF
 C
       AGWS= AGWS+ (AINFLO- AGWO)
@@ -3959,7 +4007,7 @@ C
      I                     DAYFG,VNNFG,NSURM,LSUR,SLSUR,VIFWFG,INTFWM,
      I                     MSUPY,UZSN,UZS,DELT60,UZRA,INTGRL,RTOPFG,
      I                     UZFG,MON,NXTMON,DAY,NDAYS,LSNO,MESSU,MSGFL,
-     I                     DATIM,
+     I                     DATIM,NSROWS,NSCOLS,SURTAB,
      M                     DEC,SRC,NSUR,INTFW,SURS,ECNT1,ECNT2,
      O                     INFIL,UZI,IFWI,SURO)
 C
@@ -3969,11 +4017,12 @@ C     units of fluxes are in./ivl
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    DAY,DAYFG,FSMSFG,MON,NDAYS,NXTMON,RTOPFG,VIFWFG,VNNFG,
-     $           LSNO,MESSU,DATIM(5),ECNT1,ECNT2,MSGFL,UZFG
+     $           LSNO,MESSU,DATIM(5),ECNT1,ECNT2,MSGFL,UZFG,NSROWS,
+     $           NSCOLS
       REAL       DEC,DELT60,IFWI,INFEXP,INFIL,
      $           INFILD,INFILT,INFFAC,INTFW,INTFWM(12),INTGRL(10),
      $           LSUR,LZRAT,MSUPY,NSUR,NSURM(12),SLSUR,SRC,SURO,SURS,
-     $           UZI,UZRA(10),UZS,UZSN
+     $           UZI,UZRA(10),UZS,UZSN,SURTAB(100)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     LZRAT  - ???
@@ -4004,6 +4053,10 @@ C     NDAYS  - no. of days in this month
 C     LSNO   - line number in the opn sequence block of uci
 C     MESSU  - ftn unit no. to be used for printout of messages
 C     MSGFL  - fortran unit number of HSPF message file
+C     DATIM  - date and time of day
+C     NSROWS - number of rows in ftable
+C     NSCOLS - number of columns in ftable
+C     SURTAB - ftable stored as an array
 C     DEC    - ???
 C     SRC    - ???
 C     NSUR   - ???
@@ -4015,7 +4068,6 @@ C     INFIL  - ???
 C     UZI    - ???
 C     IFWI   - ???
 C     SURO   - ???
-C     DATIM  - date and time of day
 C
 C     + + + LOCAL VARIABLES + + +
       REAL       IBAR,IMAX,IMIN,RATIO
@@ -4061,9 +4113,11 @@ C         mannings n does not vary throughout the year.
 C         nsur value has been supplied by the run interpreter
         END IF
 C
-C       calculate parameters for routing surface runoff
-        DEC= 0.00982*(NSUR*LSUR/SQRT (SLSUR))**0.6
-        SRC= 1020.0*(SQRT (SLSUR)/(NSUR*LSUR))
+        IF (RTOPFG .LE. 1) THEN
+C         calculate parameters for routing surface runoff
+          DEC= 0.00982*(NSUR*LSUR/SQRT (SLSUR))**0.6
+          SRC= 1020.0*(SQRT (SLSUR)/(NSUR*LSUR))
+        END IF
 C
         IF (VIFWFG .EQ. 1) THEN
 C         interflow parmeters are allowed to vary throughout the year
@@ -4090,6 +4144,7 @@ C     not been subdivided into blocks
 C     determine what happens to the moisture supply
       CALL DISPOS (IMIN,IMAX,RATIO,MSUPY,UZSN,UZS,DELT60,DEC,SRC,
      I             UZRA,INTGRL,RTOPFG,UZFG,LSNO,MESSU,MSGFL,DATIM,
+     I             NSROWS,NSCOLS,SURTAB,
      M             SURS,ECNT1,ECNT2,
      O             INFIL,UZI,IFWI,SURO)
 C

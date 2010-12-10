@@ -2749,6 +2749,16 @@ C         net nitrification is negative - count as outflow
           NO2IN = PIFLX(3)
           NO2DIF= NO2IN+ PCFLX6- PCFLX1(3)
         END IF
+C
+Cbrb    if none of the NO2 quantities are larger than E-10, set balance check inputs to 0.0
+Cbrb    this gets rid of meaningless balance check errors for some situations
+        IF ((PRNO2S+PRNO2+NO2IN+ABS(NO2DIF)) .LT. 1.E-10) THEN
+          PRNO2S= 0.0
+          PRNO2= 0.0
+          NO2IN= 0.0
+          NO2DIF= 0.0
+        END IF
+C
         CALL BALCHK
      I              (I3,RCHNO,DATIM,MESSU,PRINTU,MSGFL,
      I               PRNO2S,PRNO2,NO2IN,NO2DIF,UNITID,I1,
