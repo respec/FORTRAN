@@ -54,8 +54,8 @@
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\awstat.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\graph.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\graph.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\hspf140.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\hspf140.lib"/>
+		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\hspf122.lib"/>
+		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\hspf122.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\HspNoDSS.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\HspNoDSS.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\iowdm.lib"/>
