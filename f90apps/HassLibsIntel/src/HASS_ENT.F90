@@ -65,9 +65,8 @@
 
       END SUBROUTINE
 
-      SUBROUTINE f90_msg(msg)
-        !DEC$ ATTRIBUTES DLLEXPORT :: f90_msg
-        !DEC$ ATTRIBUTES STDCALL   :: f90_msg
+      SUBROUTINE F90_MSG(msg)
+        !DEC$ ATTRIBUTES DLLEXPORT :: F90_MSG
         !DEC$ ATTRIBUTES REFERENCE :: msg
 
         CHARACTER(LEN=132) :: MSG
@@ -248,12 +247,12 @@
       END FUNCTION F90_WDBOPN
 
       !adwdm:wdopxx
-      SUBROUTINE f90_wdbopnr(rwflg,wdname,wdmsfl,retcod)
-        !DEC$ ATTRIBUTES DLLEXPORT :: f90_wdbopnr
-        !DEC$ ATTRIBUTES STDCALL   :: f90_wdbopnr
-        !DEC$ ATTRIBUTES REFERENCE :: rwflg, wdname, wdmsfl, retcod
+      SUBROUTINE F90_WDBOPNR(rwflg,wdname,wdmsfl,retcod)
+        !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDBOPNR
+        ! ATTRIBUTES STDCALL   :: F90_WDBOPNR
+        !DEC$ ATTRIBUTES REFERENCE :: wdmsfl, retcod
 
-        CHARACTER(LEN=256),INTENT(IN) :: wdname
+        CHARACTER(LEN=*),INTENT(IN)   :: wdname
         INTEGER,         INTENT(IN)   :: rwflg
         INTEGER                       :: wdmsfl
         INTEGER                       :: retcod
@@ -364,12 +363,9 @@
         END IF
       END FUNCTION F90_WDFLCL
 
-      FUNCTION f90_inqnam (nam) RESULT (file_unit)
+      FUNCTION F90_INQNAM (nam) RESULT (file_unit)
         !check to see if a file name is open
-        !DEC$ ATTRIBUTES DLLEXPORT :: f90_inqnam
-        !DEC$ ATTRIBUTES STDCALL   :: f90_inqnam
-        !DEC$ ATTRIBUTES REFERENCE :: rwflg, wdname, wdmsfl, retcod
-
+        !DEC$ ATTRIBUTES DLLEXPORT :: F90_INQNAM
 
         INTEGER          :: file_unit
         CHARACTER(LEN=*) :: nam
@@ -2390,7 +2386,7 @@
       
       !wdm:wdsagy
       SUBROUTINE F90_WDSAGY_XX (WDMSFL,ID, &
-                                LEN, TYPE, &
+                                LEN, ATYP, &
                                 ATMIN, ATMAX, ATDEF, &
                                 HLEN, HREC, HPOS, VLEN,&
                                 ANAME,ADESC,AVALID)
@@ -2399,22 +2395,37 @@
         !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WDSAGY_XX
 
         INTEGER, INTENT(IN)           :: WDMSFL,ID
-        INTEGER, INTENT(OUT)          :: LEN,TYPE,ANAME(*),ADESC(*)
+        INTEGER, INTENT(OUT)          :: LEN,ATYP,ANAME(*),ADESC(*)
         INTEGER, INTENT(OUT)          :: HLEN,HREC,HPOS,AVALID(*),VLEN
         REAL, INTENT(OUT)             :: ATMIN,ATMAX,ATDEF
 
         INTEGER                 :: I,DPTR,SARQWD,SAUPFG,ILEN
         CHARACTER*6             :: SANAM
-        CHARACTER*1             :: SADESC(47),SATVAL(240)
+        CHARACTER*1             :: SADESC(48),SATVAL(240)
 
+!       TODO: need to check size of ANAME, ADESC and AVALID, 
+!             but UBOUND and SIZE do not work with Intel compiler
+        
         CALL WDSAGY (WDMSFL,ID, &
-                     SANAM,DPTR,TYPE,LEN,SARQWD,SAUPFG)
+                     SANAM,DPTR,ATYP,LEN,SARQWD,SAUPFG)
+!        IF (ID.EQ.3) THEN
+!          WRITE(99,*) 'ID 3 NAME ' // SANAM
+!        END IF
+        DO I = 1,6
+          ANAME(I) = ICHAR(SANAM(I:I))
+!          IF (ID.EQ.3) THEN
+!            WRITE(99,*) '  I ',I,ANAME(I)
+!          END IF
+        END DO
         IF (DPTR.GT.0) THEN
           CALL WADGDS (WDMSFL,DPTR, &
                        SADESC)
-          CALL WADGRA (WDMSFL,DPTR,TYPE, &
+          DO I = 1,48
+            ADESC(I) = ICHAR(SADESC(I))
+          END DO
+          CALL WADGRA (WDMSFL,DPTR,ATYP, &
                        ATMIN,ATMAX)
-          CALL WADGDF (WDMSFL,DPTR,TYPE, &
+          CALL WADGDF (WDMSFL,DPTR,ATYP, &
                        ATDEF)
           ILEN = 240
           CALL WADGVA (WDMSFL,DPTR,ILEN, &
@@ -2423,16 +2434,9 @@
                        HLEN,HREC,HPOS)
         END IF
 
-        DO I = 1,6
-          ANAME(I) = ICHAR(SANAM(I:I))
-        END DO
-        DO I = 1,47
-          ADESC(I) = ICHAR(SADESC(I))
-        END DO
         DO I = 1,240
           AVALID(I) = ICHAR(SATVAL(I))
         END DO
-
       END SUBROUTINE F90_WDSAGY_XX
 
       SUBROUTINE F90_GETATT (WDMSFL,DSN, &
