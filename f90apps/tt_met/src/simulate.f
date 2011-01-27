@@ -95,14 +95,20 @@
           iida = i + 1
           call xmon
 
+!!          if (PevtPM(ijday) .gt. 40.0) then
+!!            write(*,*) 'in Simulate PevtPM > 40',PevtPM(ijday),ijday
+!!            pause
+!!          end if 
         end do                                        !! end daily loop
 
+!!         write(*,*) 'year,id1,idlst',iyr,id1,idlst,ijday,numdata
 !! perform end-of-year processes
 
       !! update simulation year
       iyr = iyr + 1
       end do            !!     end annual loop
 
+!!      write(*,*) 'exit simulate, ijday =',ijday
       return
 ! 1234 format (1x,' Executing year ', i4)
       end
