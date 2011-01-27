@@ -157,6 +157,10 @@
          
         !! convert from mm to inches and store PEVT for the day
         pevtpm(ijday) = pet_day * 0.039370079
+!!        if (PevtPM(ijday) .gt. 40.0) then
+!!          write(*,*) 'in subbasin PevtPM > 40',PevtPM(ijday)
+!!          pause
+!!        end if 
 
       return
       end

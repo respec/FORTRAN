@@ -138,6 +138,10 @@ C  do the calculations
         
 C  Reassign results out of common for explicit transfer back
       DO ij=1,numdata
+C        if (PevtPM(ij) .gt. 40.0) then
+C          write(*,*) 'in pmpevt PevtPM > 40',PevtPM(ij),ij
+C          pause
+C        end if 
         PevtPMz(ij)=PevtPM(ij)
       End do
       
