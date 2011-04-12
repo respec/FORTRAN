@@ -1,0 +1,6 @@
+NQUAL       1664
+NQSD        1665
+NQOF        1666
+NQIF        1667
+NQGW        1668
+NPST        3723

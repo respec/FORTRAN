@@ -1,0 +1,1407 @@
+MO   PERLND                                                                     
+SI        18000         0                                                       
+CO   SCRTCH                                                                     
+HE   PERLND module common                                                       
+PM   MXQUAL  MQ        10   0                                                   
+PM   MXQAL2  Q2        20   0                                                   
+SE   CPLPG.INC                                                                  
+HE 1        GENERAL section                                                     
+VA   AIRTFG   0   0   0   0 I P                         1111111111111           
+EQ   ASVEC   12   0   0   0 I   AIRTFG                  1111111111111           
+VA   SNOWFG   0   0   0   0 I P                         1111111111111           
+VA   PWATFG   0   0   0   0 I P                         1111111111111           
+VA   SEDFG    0   0   0   0 I P                         1111111111111           
+VA   PSTFG    0   0   0   0 I P                         1111111111111           
+VA   PWGFG    0   0   0   0 I P                         1111111111111           
+VA   PQALFG   0   0   0   0 I P                         1111111111111           
+VA   MSTLFG   0   0   0   0 I P                         1111111111111           
+VA   PESTFG   0   0   0   0 I P                         1111111111111           
+VA   NITRFG   0   0   0   0 I P                         1111111111111           
+VA   PHOSFG   0   0   0   0 I P                         1111111111111           
+VA   TRACFG   0   0   0   0 I P                         1111111111111           
+VA   AGFG     0   0   0   0 I P                         1111111111111           
+VA   PFLAG   12   0   0   0 I P                         1111111111111           
+VA   BFLAG   12   0   0   0 I P                         1111111111111           
+VA   PIVL     0   0   0   0 I P                         1111111111111           
+VA   BIVL     0   0   0   0 I P                         1111111111111           
+VA   PYREND   0   0   0   0 I P                         1111111111111           
+VA   BYREND   0   0   0   0 I P                         1111111111111           
+VA   PERPFG   0   0   0   0 I P                         1111111111111           
+VA   PERBFG   0   0   0   0 I P                         1111111111111           
+VA   UUNITS   0   0   0   0 I P                         1111111111111           
+EQ   UNIT     7   0   0   0 I   UUNITS                  1111111111111           
+VA   IUNITS   0   0   0   0 I P                         1111111111111           
+VA   OUNITS   0   0   0   0 I P                         1111111111111           
+VA   PUNIT    2   0   0   0 I P                         1111111111111           
+VA   BUNIT    2   0   0   0 I P                         1111111111111           
+VA   MESSU    0   0   0   0 I P                         1111111111111           
+VA   MSGFL    0   0   0   0 I P                         1111111111111           
+VA   LSNO     0   0   0   0 I P                         1111111111111           
+VA   LSID     5   0   0   0 I P                         1111111111111           
+VA   DELT     0   0   0   0 R P                         1111111111111           
+VA   DELT60   0   0   0   0 R P                         1111111111111           
+VA   DELT5    0   0   0   0 R P                         1111111111111           
+VA   NDAY    12   0   0   0 I P                         1111111111111           
+VA   NDAYS    0   0   0   0 I S                         1111111111111           
+VA   DUMW     2   0   0   0 I D                         1111111111111           
+VA   HRFG     0   0   0   0 I S                         1111111111111           
+EQ   TIMFG    6   0   0   0 I   HRFG                    1111111111111           
+VA   DAYFG    0   0   0   0 I S                         1111111111111           
+VA   STFG     0   0   0   0 I S                         1111111111111           
+VA   EDAYFG   0   0   0   0 I S                         1111111111111           
+VA   EMONFG   0   0   0   0 I S                         1111111111111           
+VA   EPYRFG   0   0   0   0 I S                         1111111111111           
+VA   EBYRFG   0   0   0   0 I S                         1111111111111           
+VA 1 YR       0   0   0   0 I S                         1111111111111           
+EQ   DATIM    5   0   0   0 I   YR                      1111111111111           
+VA 1 MON      0   0   0   0 I S                         1111111111111           
+VA 1 DAY      0   0   0   0 I S                         1111111111111           
+VA 1 HR       0   0   0   0 I S                         1111111111111           
+VA 1 MIN      0   0   0   0 I S                         1111111111111           
+VA   IVL      0   0   0   0 I S                         1111111111111           
+VA   IVL1     0   0   0   0 I S                         1111111111111           
+VA   PIVLNO   0   0   0   0 I S                         1111111111111           
+VA   BIVLNO   0   0   0   0 I S                         1111111111111           
+VA   NXTMON   0   0   0   0 I S                         1111111111111           
+VA   SPAFP    0   0   0   0 I S                         1111111111111           
+VA   SPAKND   0   0   0   0 I S                         1111111111111           
+VA   SPIVL    0   0   0   0 I S                         1111111111111           
+VA   SPOPNO   0   0   0   0 I S                         1111111111111           
+VA 1 SPOUT    0   0   0   0 I S                         1111111111111           
+VA   SPNUND   0   0   0   0 I S                         1111111111111           
+VA   DUMGEN  13   0   0   0 I S                         1111111111111           
+                                                                                
+SE   CPLAT.INC                                                                  
+HE 2        ATEMP section                                                       
+VA 1 GATMP    0   0   0   0 R S                         0100000000000           
+VA   PRECA    0   0   0   0 R F                         0101100000000           
+VA   GATFP    0   0   0   0 I T EXTNL            GATMP  0100000000000           
+VA   PRECFP   0   0   0   0 I T EXTNL            PREC   0111100101111           
+VA 1 LAPSE   24   0   0   0 R P                         0100000000000           
+VA 1 ELDAT    0   0   0   0 R P                         0100000000000           
+VA 1 AIRTMP   0   0   0   0 R S                         0111010000000           
+VA 1 AIRTS    0   0   0   0 R S                         0100010000000           
+VA   AIRTFP   0   0   0   0 I T ATEMP            AIRTMP 0111010000000           
+                                                                                
+SE   CPLSN.INC                                                                  
+HE 3        SNOW section                                                        
+VA   SNIF     5   0   0   0 R F                         0010000101111           
+EQ 1 PREC     0   0   0   0 R   SNIF                    0010000101111           
+VA 1 DTMPG    0   0   0   0 R S                         0010000000000           
+VA 1 WINMOV   0   0   0   0 R S                         0010000000000           
+VA 1 SOLRAD   0   0   0   0 R S                         0010000000000           
+VA   DTGFP    0   0   0   0 I T EXTNL            DTMPG  0010000000000           
+VA   WINMFP   0   0   0   0 I T EXTNL            WINMOV 0010000000000           
+VA   SOLRFP   0   0   0   0 I T EXTNL            SOLRAD 0010000000000           
+VA   CCFP     0   0   0   0 I T EXTNL            CLOUD  0010000000000           
+VA 1 ICEFG    0   0   0   0 I P                         0011000000000           
+VA 1 SNOPFG   0   0   0   0 I P                         0010000000000           
+VA 1 VKMFG    0   0   0   0 I P                         0010000000000           
+VA 1 SVP     40   0   0   0 R P                         0010000000000           
+VA 1 LAT      0   0   0   0 R P                         0010000000000           
+EQ 1 SNPM1    7   0   0   0 R   LAT                     0010000000000           
+VA 1 MELEV    0   0   0   0 R P                         0011000000000           
+VA 1 SHADE    0   0   0   0 R P                         0010000000000           
+VA 1 SNOWCF   0   0   0   0 R P                         0010000000000           
+VA 1 COVIND   0   0   0   0 R P                         0010000000000           
+VA 1 KMELT    0   0   0   0 R P                         0010000000000           
+VA 1 TBASE    0   0   0   0 R P                         0010000000000           
+VA 1 RDCSN    0   0   0   0 R P                         0010000000000           
+EQ 1 SNPM2    6   0   0   0 R   RDCSN                   0010000000000           
+VA 1 TSNOW    0   0   0   0 R P                         0010000000000           
+VA 1 SNOEVP   0   0   0   0 R P                         0010000000000           
+VA 1 CCFACT   0   0   0   0 R P                         0010000000000           
+VA 1 MWATER   0   0   0   0 R P                         0010000000000           
+VA 1 MGMELT   0   0   0   0 R P                         0010000000000           
+VA 1 KMELTM  12   0   0   0 R P                         0010000000000           
+VA 1 DRYFG    0   0   0   0 I S                         0010000000000           
+VA   IREGFG   0   0   0   0 I S                         0010000000000           
+VA 1 SNOFFG   0   0   0   0 I S                         0010000000000           
+VA 1 RAINFG   0   0   0   0 I S                         0010000000000           
+VA   HR6FG    0   0   0   0 I S                         0010000000000           
+VA   SNWCNT   1   0   0   0 I S                         0010000000000           
+VA   SNECNT   2   0   0   0 I S                         0010000000000           
+VA 1 PACKF    0   0   0   0 R S                         0010000000000           
+EQ 1 SNST1    7   0   0   0 R   PACKF                   0010000000000           
+VA 1 PACKW    0   0   0   0 R S                         0010000000000           
+VA 1 PACKI    0   0   0   0 R S                         0011000000000           
+VA 1 PDEPTH   0   0   0   0 R S                         0010000000000           
+VA 1 COVINX   0   0   0   0 R S                         0010000000000           
+VA 1 NEGHTS   0   0   0   0 R S                         0010000000000           
+VA 1 XLNMLT   0   0   0   0 R S                         0010000000000           
+VA 1 RDENPF   0   0   0   0 R S                         0010000000000           
+EQ 1 SNST2    5   0   0   0 R   RDENPF                  0010000000000           
+VA 1 SKYCLR   0   0   0   0 R S                         0010000000000           
+VA 1 SNOCOV   0   0   0   0 R S                         0011100000000           
+VA 1 DULL     0   0   0   0 R S                         0010000000000           
+VA 1 ALBEDO   0   0   0   0 R S                         0010000000000           
+VA 1 PAKTMP   0   0   0   0 R S                         0010000000000           
+EQ 1 SNST3    3   0   0   0 R   PAKTMP                  0010000000000           
+VA 1 DEWTMP   0   0   0   0 R S                         0010000000000           
+VA 1 SNOTMP   0   0   0   0 R S                         0010000000000           
+VA   SNST4    5   0   0   0 R S                         0010000000000           
+EQ 1 PACK     0   0   0   0 R   SNST4                   0010000000000           
+VA 1 RDNSN    0   0   0   0 R S                         0010000000000           
+VA 1 MNEGHS   0   0   0   0 R S                         0010000000000           
+VA 1 PACKWC   0   0   0   0 R S                         0010000000000           
+VA 1 NEGHT    0   0   0   0 R S                         0010000000000           
+VA 1 GMELTR   0   0   0   0 R S                         0010000000000           
+VA 1 COMPCT   0   0   0   0 R S                         0010000000000           
+VA 1 SNOWEP   0   0   0   0 R S                         0010000000000           
+VA 1 MOSTHT   0   0   0   0 R S                         0010000000000           
+VA 1 VAP      0   0   0   0 R S                         0010000000000           
+VA   PACKFP   0   0   0   0 I T SNOW             PACK   0010000000000           
+VA   PFFP     0   0   0   0 I T SNOW             PACKF  0010000000000           
+VA   PWFP     0   0   0   0 I T SNOW             PACKW  0010000000000           
+VA   PIFP     0   0   0   0 I T SNOW             PACKI  0011000000000           
+VA   PDEPFP   0   0   0   0 I T SNOW             PDEPTH 0010000000000           
+VA   COVXFP   0   0   0   0 I T SNOW             COVINX 0010000000000           
+VA   NHTSFP   0   0   0   0 I T SNOW             NEGHTS 0010000000000           
+VA   XLNMFP   0   0   0   0 I T SNOW             XLNMLT 0010000000000           
+VA   RDPFFP   0   0   0   0 I T SNOW             RDENPF 0010000000000           
+VA   SKYCFP   0   0   0   0 I T SNOW             SKYCLR 0010000000000           
+VA   SNOCFP   0   0   0   0 I T SNOW             SNOCOV 0011100000000           
+VA   DULLFP   0   0   0   0 I T SNOW             DULL   0010000000000           
+VA   ALBFP    0   0   0   0 I T SNOW             ALBEDO 0010000000000           
+VA   PAKTFP   0   0   0   0 I T SNOW             PAKTMP 0010000000000           
+VA   DEWTFP   0   0   0   0 I T SNOW             DEWTMP 0010000000000           
+VA   SNOTFP   0   0   0   0 I T SNOW             SNOTMP 0010000000000           
+VA   SNCF1    5   5   0   0 R F                         0011001000000           
+EQ 1 SNOWF    0   0   0   0 R   SNCF1(1,1)              0010000000000           
+EQ 1 PRAIN    0   0   0   0 R   SNCF1(2,1)              0010000000000           
+EQ 1 SNOWE    0   0   0   0 R   SNCF1(3,1)              0010000000000           
+EQ 1 WYIELD   0   0   0   0 R   SNCF1(4,1)              0011001000000           
+EQ 1 MELT     0   0   0   0 R   SNCF1(5,1)              0010000000000           
+VA   SNCF2    2   5   0   0 R F                         0010000000000           
+EQ   PAKIN    0   0   0   0 R   SNCF2(1,1)              0010000000000           
+EQ   PAKDIF   0   0   0   0 R   SNCF2(2,1)              0010000000000           
+VA 1 RAINF    0   0   0   0 R F                         0011100000000           
+VA   SNFFP    0   0   0   0 I T SNOW             SNOWF  0010000000000           
+VA   PRNFP    0   0   0   0 I T SNOW             PRAIN  0010000000000           
+VA   SNEFP    0   0   0   0 I T SNOW             SNOWE  0010000000000           
+VA   WYFP     0   0   0   0 I T SNOW             WYIELD 0011001000000           
+VA   MELTFP   0   0   0   0 I T SNOW             MELT   0010000000000           
+VA   RNFFP    0   0   0   0 I T SNOW             RAINF  0011100000000           
+                                                                                
+SE   CPLPW.INC                                                                  
+HE 4        PWATER section                                                      
+VA   PWIF     5   5   0   0 R F                         0001001100000           
+EQ 1 SURLI    0   0   0   0 R   PWIF(1,1)               0001001100000           
+EQ 1 UZLI     0   0   0   0 R   PWIF(2,1)               0001000000000           
+EQ 1 IFWLI    0   0   0   0 R   PWIF(3,1)               0001001100000           
+EQ 1 LZLI     0   0   0   0 R   PWIF(4,1)               0001000000000           
+EQ 1 AGWLI    0   0   0   0 R   PWIF(5,1)               0001001100000           
+VA 1 PETINP   0   0   0   0 R F                         0001000000000           
+VA   SLIFP    0   0   0   0 I T EXTNL            SURLI  0001001100000           
+VA   ULIFP    0   0   0   0 I T EXTNL            UZLI   0001000000000           
+VA   ILIFP    0   0   0   0 I T EXTNL            IFWLI  0001001100000           
+VA   LLIFP    0   0   0   0 I T EXTNL            LZLI   0001000000000           
+VA   ALIFP    0   0   0   0 I T EXTNL            AGWLI  0001001100000           
+VA   PETIFP   0   0   0   0 I T EXTNL            PETINP 0001000000000           
+VA   PIRIF    5   0   0   0 R F                         0001000000000           
+EQ 1 IRRINP   0   0   0   0 R   PIRIF(1)                0001000000000           
+VA   IRRIFP   0   0   0   0 I T EXTNL            IRRINP 0001000000000           
+VA 1 CSNOFG   0   0   0   0 I P                         0001101000000           
+EQ 1 PWPM1   13   0   0   0 I   CSNOFG                  0001000000000           
+VA 1 RTOPFG   0   0   0   0 I P                         0001000000000           
+VA 1 UZFG     0   0   0   0 I P                         0001000000000           
+VA 1 VCSFG    0   0   0   0 I P                         0001000000000           
+VA 1 VUZFG    0   0   0   0 I P                         0001000010000           
+VA 1 VNNFG    0   0   0   0 I P                         0001000000000           
+VA 1 VIFWFG   0   0   0   0 I P                         0001000000000           
+VA 1 VIRCFG   0   0   0   0 I P                         0001000000000           
+VA 1 VLEFG    0   0   0   0 I P                         0001000000000           
+VA 1 IFFCFG   0   0   0   0 I P                         0001000000000           
+VA 1 HWTFG    0   0   0   0 I P                         0001000000000           
+VA 1 IRRGFG   0   0   0   0 I P                         0001000000000           
+VA 1 IFRDFG   0   0   0   0 I P                         0001000000000           
+VA 1 NSROWS   0   0   0   0 I P                         0001000000000           
+VA 1 NSCOLS   0   0   0   0 I P                         0001000000000           
+VA 1 NCRP     0   0   0   0 I P                         0001000000110           
+VA 1 CRPDAT   4   3   0   0 I P                         0001000000110           
+VA 1 NSKED    0   0   0   0 I P                         0001000000000           
+EQ 1 IRPM1    5   0   0   0 I   NSKED                   0001000000000           
+VA 1 SZONFG   0   0   0   0 I P                         0001000000000           
+VA 1 VCRDFG   0   0   0   0 I P                         0001000000000           
+VA 1 VAWDFG   0   0   0   0 I P                         0001000000000           
+VA 1 IROPFG   0   0   0   0 I P                         0001000000000           
+VA 1 IRDATE   5  20   0   0 I P                         0001000000000           
+VA 1 IRDURA  20   0   0   0 I P                         0001000000000           
+VA 1 IRCHNO   0   0   0   0 I P                         0001000000000           
+VA 1 IROSVK   0   0   0   0 I P                         0001000000000           
+VA 1 FOREST   0   0   0   0 R P                         0001000000000           
+EQ 1 PWPM2    7   0   0   0 R   FOREST                  0001000000000           
+VA 1 LZSN     0   0   0   0 R P                         0001000010000           
+VA 1 INFILT   0   0   0   0 R P                         0001000000000           
+VA 1 LSUR     0   0   0   0 R P                         0001000000000           
+VA 1 SLSUR    0   0   0   0 R P                         0001000000000           
+VA 1 KVARY    0   0   0   0 R P                         0001000000000           
+VA 1 KGW      0   0   0   0 R P                         0001000000000           
+VA 1 PETMAX   0   0   0   0 R P                         0001000000000           
+EQ 1 PWPM3    7   0   0   0 R   PETMAX                  0001000000000           
+VA 1 PETMIN   0   0   0   0 R P                         0001000000000           
+VA 1 INFEXP   0   0   0   0 R P                         0001000000000           
+VA 1 INFILD   0   0   0   0 R P                         0001000000000           
+VA 1 DEEPFR   0   0   0   0 R P                         0001000000000           
+VA 1 BASETP   0   0   0   0 R P                         0001000000000           
+VA 1 AGWETP   0   0   0   0 R P                         0001000000000           
+VA 1 FZG      0   0   0   0 R P                         0001000000000           
+EQ 1 PWPM5    2   0   0   0 R   FZG                     0001000000000           
+VA 1 FZGL     0   0   0   0 R P                         0001000000000           
+VA 1 BELV     0   0   0   0 R P                         0001000000000           
+EQ 1 PWPM6    5   0   0   0 R   BELV                    0001000000000           
+VA 1 GWDATM   0   0   0   0 R P                         0001000000000           
+VA 1 PCW      0   0   0   0 R P                         0001000000000           
+VA 1 PGW      0   0   0   0 R P                         0001000000000           
+VA 1 UPGW     0   0   0   0 R P                         0001000000000           
+VA 1 SRRC     0   0   0   0 R P                         0001000000000           
+EQ 1 PWPM7    6   0   0   0 R   SRRC                    0001000000000           
+VA 1 SREXP    0   0   0   0 R P                         0001000000000           
+VA 1 IFWSC    0   0   0   0 R P                         0001000000000           
+VA 1 DELTA    0   0   0   0 R P                         0001000000000           
+VA 1 UELFAC   0   0   0   0 R P                         0001000000000           
+VA 1 LELFAC   0   0   0   0 R P                         0001000000000           
+VA 1 SELV     0   0   0   0 R P                         0001000000000           
+VA 1 UELV     0   0   0   0 R P                         0001000000000           
+VA 1 LELV     0   0   0   0 R P                         0001000000000           
+VA 1 ULGWS    0   0   0   0 R P                         0001000000000           
+VA 1 LLGWS    0   0   0   0 R P                         0001000000000           
+VA 1 BGWS     0   0   0   0 R P                         0001000000000           
+VA 1 CEPSCM  12   0   0   0 R P                         0001000000000           
+VA 1 UZSNM   12   0   0   0 R P                         0001000010000           
+VA 1 NSURM   12   0   0   0 R P                         0001000000000           
+VA 1 INTFWM  12   0   0   0 R P                         0001000000000           
+VA 1 UZRA    10   0   0   0 R P                         0001000000000           
+VA 1 INTGRL  10   0   0   0 R P                         0001000000000           
+VA 1 IRCM    12   0   0   0 R P                         0001000000000           
+VA 1 LZETPM  12   0   0   0 R P                         0001000000000           
+VA 1 SURTAB 100   0   0   0 R P                         0001000000000           
+VA 1 SOILD    4   0   0   0 R P                         0001000001110           
+VA 1 SLME     0   0   0   0 R P                         0001000001110           
+EQ   SOILM    5   0   0   0 R   SLME                    0001000001110           
+VA 1 SLSM     0   0   0   0 R P                         0001000001110           
+VA 1 ULSM     0   0   0   0 R P                         0001000001110           
+VA 1 LLSM     0   0   0   0 R P                         0001000001110           
+VA 1 ALSM     0   0   0   0 R P                         0001000001110           
+VA 1 WILTPT   4   0   0   0 R P                         0001000000110           
+VA 1 FDCAP    4   0   0   0 R P                         0001000000000           
+VA 1 AWC      4   0   0   0 R P                         0001000000000           
+VA 1 CRPSTG   4   3   0   0 R P                         0001000000000           
+VA 1 CRPAWD   4   3   0   0 R P                         0001000000000           
+VA 1 CRPRDP   2   3   0   0 R P                         0001000000000           
+VA 1 IRAFAC   0   0   0   0 R P                         0001000000000           
+EQ   IRPM2    7   0   0   0 R   IRAFAC                  0001000000000           
+VA 1 IREFF    0   0   0   0 R P                         0001000000000           
+VA 1 ARZI     0   0   0   0 R P                         0001000000000           
+VA 1 WILTP    0   0   0   0 R P                         0001000000000           
+VA 1 FLDCAP   0   0   0   0 R P                         0001000000000           
+VA 1 CRDEP    0   0   0   0 R P                         0001000000000           
+VA 1 IRAWD    0   0   0   0 R P                         0001000000000           
+VA 1 CAPRIS   0   0   0   0 R P                         0001000000000           
+VA 1 CRDEPM  12   0   0   0 R P                         0001000000000           
+VA 1 IRAWDM  12   0   0   0 R P                         0001000000000           
+VA 1 IRRATE  20   0   0   0 R P                         0001000000000           
+VA 1 IRRSRC   3   3   0   0 R P                         0001000000000           
+VA 1 IRRTGT   5   0   0   0 R P                         0001000000000           
+VA 1 SMSFG    0   0   0   0 I S                         0001000000000           
+VA 1 FSMSFG   0   0   0   0 I S                         0001000000000           
+VA   PWWCNT   1   0   0   0 I S                         0001000000000           
+VA   PWECNT   2   0   0   0 I S                         0001000000000           
+VA 1 CEPS     0   0   0   0 R S                         0001000000000           
+EQ 1 PWST1    9   0   0   0 R   CEPS                    0001000000000           
+VA 1 SURS     0   0   0   0 R S                         0001100010110           
+VA 1 UZS      0   0   0   0 R S                         0001000010110           
+VA 1 IFWS     0   0   0   0 R S                         0001000010000           
+VA 1 LZS      0   0   0   0 R S                         0001000010110           
+VA 1 AGWS     0   0   0   0 R S                         0001000010110           
+VA 1 GWVS     0   0   0   0 R S                         0001000000000           
+VA 1 TGWS     0   0   0   0 R S                         0001000000000           
+VA 1 GWEL     0   0   0   0 R S                         0001000000000           
+VA 1 INFFAC   0   0   0   0 R S                         0001000000000           
+EQ 1 PWST3    2   0   0   0 R   INFFAC                  0001000000000           
+VA 1 PETADJ   0   0   0   0 R S                         0001000000000           
+VA   PWST4    5   0   0   0 R S                         0001000000000           
+EQ 1 PERS     0   0   0   0 R   PWST4                   0001000000000           
+VA 1 CEPSC    0   0   0   0 R S                         0001000000000           
+EQ 1 PWST5    6   0   0   0 R   CEPSC                   0001000000000           
+VA 1 UZSN     0   0   0   0 R S                         0001000010000           
+VA 1 NSUR     0   0   0   0 R S                         0001000000000           
+VA 1 INTFW    0   0   0   0 R S                         0001000000000           
+VA 1 IRC      0   0   0   0 R S                         0001000000000           
+VA 1 LZETP    0   0   0   0 R S                         0001000000000           
+VA 1 SURSS    0   0   0   0 R S                         0001000010000           
+VA 1 SRC      0   0   0   0 R S                         0001000000000           
+VA 1 DEC      0   0   0   0 R S                         0001000000000           
+VA 1 IFWK1    0   0   0   0 R S                         0001000000000           
+VA 1 IFWK2    0   0   0   0 R S                         0001000000000           
+VA 1 LZFRAC   0   0   0   0 R S                         0001000000000           
+VA 1 RLZRAT   0   0   0   0 R S                         0001000000000           
+VA 1 RPARM    0   0   0   0 R S                         0001000000000           
+VA 1 RZWSC    0   0   0   0 R S                         0001000000000           
+EQ 1 IRST1    2   0   0   0 R   RZWSC                   0001000000000           
+VA 1 RZWS     0   0   0   0 R S                         0001000000000           
+VA   PERSFP   0   0   0   0 I T PWATER           PERS   0001000000000           
+VA   CEPSFP   0   0   0   0 I T PWATER           CEPS   0001000000000           
+VA   SSFP     0   0   0   0 I T PWATER           SURS   0001100010000           
+VA   UZSFP    0   0   0   0 I T PWATER           UZS    0001000010000           
+VA   ISFP     0   0   0   0 I T PWATER           IFWS   0001000010000           
+VA   LZSFP    0   0   0   0 I T PWATER           LZS    0001000010000           
+VA   AGWSFP   0   0   0   0 I T PWATER           AGWS   0001000010000           
+VA   TGWSFP   0   0   0   0 I T PWATER           TGWS   0001000000000           
+VA   GWELFP   0   0   0   0 I T PWATER           GWEL   0001000000000           
+VA   GWVSFP   0   0   0   0 I T PWATER           GWVS   0001000000000           
+VA   INFCFP   0   0   0   0 I T PWATER           INFFAC 0001000000000           
+VA   PETAFP   0   0   0   0 I T PWATER           PETADJ 0001000000000           
+VA   RPMFP    0   0   0   0 I T PWATER           RPARM  0001000000000           
+VA   RZWSFP   0   0   0   0 I T PWATER           RZWS   0001000000000           
+VA   PWCF1    6   5   0   0 R F                         0001101110000           
+EQ 1 SUPY     0   0   0   0 R   PWCF1(1,1)              0001000000000           
+EQ 1 SURO     0   0   0   0 R   PWCF1(2,1)              0001101110000           
+EQ 1 IFWO     0   0   0   0 R   PWCF1(3,1)              0001001110000           
+EQ 1 AGWO     0   0   0   0 R   PWCF1(4,1)              0001001110000           
+EQ 1 PERO     0   0   0   0 R   PWCF1(5,1)              0001000100000           
+EQ 1 IGWI     0   0   0   0 R   PWCF1(6,1)              0001000010000           
+VA   PWCF3    8   5   0   0 R F                         0001000000000           
+EQ 1 PET      0   0   0   0 R   PWCF3(1,1)              0001000000000           
+EQ 1 CEPE     0   0   0   0 R   PWCF3(2,1)              0001000000000           
+EQ 1 SURET    0   0   0   0 R   PWCF3(3,1)              0001000000000           
+EQ 1 UZET     0   0   0   0 R   PWCF3(4,1)              0001000000000           
+EQ 1 LZET     0   0   0   0 R   PWCF3(5,1)              0001000000000           
+EQ 1 AGWET    0   0   0   0 R   PWCF3(6,1)              0001000000000           
+EQ 1 BASET    0   0   0   0 R   PWCF3(7,1)              0001000000000           
+EQ 1 TAET     0   0   0   0 R   PWCF3(8,1)              0001000000000           
+VA   PWCF5    6   5   0   0 R F                         0001000010000           
+EQ 1 IFWI     0   0   0   0 R   PWCF5(1,1)              0001000010000           
+EQ 1 UZI      0   0   0   0 R   PWCF5(2,1)              0001000010000           
+EQ 1 INFIL    0   0   0   0 R   PWCF5(3,1)              0001000010000           
+EQ 1 PERC     0   0   0   0 R   PWCF5(4,1)              0001000010000           
+EQ 1 LZI      0   0   0   0 R   PWCF5(5,1)              0001000000000           
+EQ 1 AGWI     0   0   0   0 R   PWCF5(6,1)              0001000010000           
+VA   PWCF7    2   5   0   0 R F                         0001000000000           
+EQ   WATIN    0   0   0   0 R   PWCF7(1,1)              0001000000000           
+EQ   WATDIF   0   0   0   0 R   PWCF7(2,1)              0001000000000           
+VA 1 CEPO     0   0   0   0 R F                         0001000000000           
+VA 1 SURI     0   0   0   0 R F                         0001000010000           
+VA   IRRCF1   2   5   0   0 R F                         0001000000000           
+EQ 1 IRRDEM   0   0   0   0 R   IRRCF1(1,1)             0001000000000           
+EQ 1 IRSHRT   0   0   0   0 R   IRRCF1(2,1)             0001000000000           
+VA   IRRCF2   3   5   0   0 R F                         0001000000000           
+EQ 1 IRDRAW   3   0   0   0 R   IRRCF2(1,1)             0001000000000           
+VA   IRRCF3   6   5   0   0 R F                         0001000000000           
+EQ 1 IRRAPP   6   0   0   0 R   IRRCF3(1,1)             0001000000000           
+VA   SUPYFP   0   0   0   0 I T PWATER           SUPY   0001000000000           
+VA   SOFP     0   0   0   0 I T PWATER           SURO   0001101110000           
+VA   IOFP     0   0   0   0 I T PWATER           IFWO   0001001110000           
+VA   AOFP     0   0   0   0 I T PWATER           AGWO   0001001110000           
+VA   POFP     0   0   0   0 I T PWATER           PERO   0001000100000           
+VA   IGIFP    0   0   0   0 I T PWATER           IGWI   0001000010000           
+VA   PETFP    0   0   0   0 I T PWATER           PET    0001000000000           
+VA   CEFP     0   0   0   0 I T PWATER           CEPE   0001000000000           
+VA   SEFP     0   0   0   0 I T PWATER           SURET  0001000000000           
+VA   UEFP     0   0   0   0 I T PWATER           UZET   0001000000000           
+VA   LZETFP   0   0   0   0 I T PWATER           LZET   0001000000000           
+VA   AEFP     0   0   0   0 I T PWATER           AGWET  0001000000000           
+VA   BASEFP   0   0   0   0 I T PWATER           BASET  0001000000000           
+VA   TAETFP   0   0   0   0 I T PWATER           TAET   0001000000000           
+VA   IIFP     0   0   0   0 I T PWATER           IFWI   0001000010000           
+VA   UZIFP    0   0   0   0 I T PWATER           UZI    0001000010000           
+VA   INFFP    0   0   0   0 I T PWATER           INFIL  0001000010000           
+VA   PCFP     0   0   0   0 I T PWATER           PERC   0001000010000           
+VA   LZIFP    0   0   0   0 I T PWATER           LZI    0001000000000           
+VA   AIFP     0   0   0   0 I T PWATER           AGWI   0001000010000           
+VA   SURIFP   0   0   0   0 I T PWATER           SURI   0001000010000           
+VA   IRDMFP   0   0   0   0 I T PWATER           IRRDEM 0001000010000           
+VA   IRSHFP   0   0   0   0 I T PWATER           IRSHRT 0001000000000           
+VA   IRDRFP   3   0   0   0 I T PWATER           IRDRAW 0001000000000           
+VA   IRAPFP   6   0   0   0 I T PWATER           IRRAPP 0001000000000           
+                                                                                
+SE   CPLSE.INC                                                                  
+HE 5        SEDMNT section                                                      
+VA   SDIF     5   0   0   0 R F                         0000100100000           
+EQ 1 SLSED    0   0   0   0 R   SDIF                    0000100100000           
+VA   SLSDFP   0   0   0   0 I T EXTNL            SLSED  0000100100000           
+VA 1 CRVFG    0   0   0   0 I P                         0000100000000           
+EQ 1 SEDPM1   3   0   0   0 I   CRVFG                   0000100000000           
+VA 1 VSIVFG   0   0   0   0 I P                         0000100000000           
+VA 1 SDOPFG   0   0   0   0 I P                         0000100000000           
+VA 1 SMPF     0   0   0   0 R P                         0000100000000           
+VA 1 KRER     0   0   0   0 R P                         0000100000000           
+VA 1 JRER     0   0   0   0 R P                         0000100000000           
+VA 1 AFFIX    0   0   0   0 R P                         0000100000000           
+VA 1 KSER     0   0   0   0 R P                         0000100000000           
+VA 1 JSER     0   0   0   0 R P                         0000100000000           
+VA 1 KGER     0   0   0   0 R P                         0000100000000           
+VA 1 JGER     0   0   0   0 R P                         0000100000000           
+VA 1 COVERM  12   0   0   0 R P                         0000100000000           
+VA 1 NVSIM   12   0   0   0 R P                         0000100000000           
+VA 1 DRYDFG   0   0   0   0 I S                         0000100000000           
+VA 1 DETS     0   0   0   0 R S                         0000100000000           
+VA 1 STCAP    0   0   0   0 R S                         0000100000000           
+VA 1 COVER    0   0   0   0 R S                         0000100000000           
+VA   DETSFP   0   0   0   0 I T SEDMNT           DETS   0000100000000           
+VA   STCFP    0   0   0   0 I T SEDMNT           STCAP  0000100000000           
+VA   COVRFP   0   0   0   0 I T SEDMNT           COVER  0000100000000           
+VA   SDCF1    2   5   0   0 R F                         0000100100000           
+EQ 1 WSSD     0   0   0   0 R   SDCF1(1,1)              0000100100000           
+EQ 1 SCRSD    0   0   0   0 R   SDCF1(2,1)              0000100100000           
+VA 1 SOSED    0   0   0   0 R F                         0000100001110           
+VA   SDCF3    2   5   0   0 R F                         0000100000000           
+EQ 1 DET      0   0   0   0 R   SDCF3(1,1)              0000100000000           
+EQ 1 NVSI     0   0   0   0 R   SDCF3(2,1)              0000100000000           
+VA   WSDFP    0   0   0   0 I T SEDMNT           WSSD   0000100100000           
+VA   CSDFP    0   0   0   0 I T SEDMNT           SCRSD  0000100100000           
+VA   SOSDFP   0   0   0   0 I T SEDMNT           SOSED  0000100001110           
+VA   DETFP    0   0   0   0 I T SEDMNT           DET    0000100000000           
+VA   NVSIFP   0   0   0   0 I T SEDMNT           NVSI   0000100000000           
+                                                                                
+SE   CPLST.INC                                                                  
+HE 6        PSTEMP section                                                      
+VA 1 SLTVFG   0   0   0   0 I P                         0000010000000           
+EQ 1 PTPM1    4   0   0   0 I   SLTVFG                  0000010000000           
+VA 1 ULTVFG   0   0   0   0 I P                         0000010000000           
+VA 1 LGTVFG   0   0   0   0 I P                         0000010000000           
+VA 1 TSOPFG   0   0   0   0 I P                         0000010000000           
+VA 1 ASLTM   12   0   0   0 R P                         0000010000000           
+VA 1 BSLTM   12   0   0   0 R P                         0000010000000           
+VA 1 ULTP1M  12   0   0   0 R P                         0000010000000           
+VA 1 ULTP2M  12   0   0   0 R P                         0000010000000           
+VA 1 LGTP1M  12   0   0   0 R P                         0000010000000           
+VA 1 LGTP2M  12   0   0   0 R P                         0000010000000           
+VA 1 AIRTC    0   0   0   0 R S                         0000010000000           
+EQ 1 PTST1    4   0   0   0 R   AIRTC                   0000010000000           
+VA 1 SLTMP    0   0   0   0 R S                         0000011001110           
+VA 1 ULTMP    0   0   0   0 R S                         0000011001110           
+VA 1 LGTMP    0   0   0   0 R S                         0001011001110           
+VA 1 AIRTCS   0   0   0   0 R S                         0000010000000           
+VA 1 ASLT     0   0   0   0 R S                         0000010000000           
+EQ 1 PTST2    6   0   0   0 R   ASLT                    0000010000000           
+VA 1 BSLT     0   0   0   0 R S                         0000010000000           
+VA 1 ULTP1    0   0   0   0 R S                         0000010000000           
+VA 1 ULTP2    0   0   0   0 R S                         0000010000000           
+VA 1 LGTP1    0   0   0   0 R S                         0000010000000           
+VA 1 LGTP2    0   0   0   0 R S                         0000010000000           
+VA   AIRTCX   0   0   0   0 I T PSTEMP           AIRTC  0000010000000           
+EQ   PTSTFP   4   0   0   0 I   AIRTCX                  0000010000000           
+VA   SLTFP    0   0   0   0 I T PSTEMP           SLTMP  0000011001110           
+VA   ULTFP    0   0   0   0 I T PSTEMP           ULTMP  0000011001110           
+VA   LGTFP    0   0   0   0 I T PSTEMP           LGTMP  0001011001110           
+                                                                                
+SE   CPLPS.INC                                                                  
+HE 7        PWTGAS section                                                      
+VA 1 SLITMP   0   0   0   0 R S                         0000001000000           
+VA 1 ILITMP   0   0   0   0 R S                         0000001000000           
+VA 1 ALITMP   0   0   0   0 R S                         0000001000000           
+VA 1 SLIDOX   0   0   0   0 R S                         0000001000000           
+VA 1 ILIDOX   0   0   0   0 R S                         0000001000000           
+VA 1 ALIDOX   0   0   0   0 R S                         0000001000000           
+VA 1 SLICO2   0   0   0   0 R S                         0000001000000           
+VA 1 ILICO2   0   0   0   0 R S                         0000001000000           
+VA 1 ALICO2   0   0   0   0 R S                         0000001000000           
+VA   SLITFP   0   0   0   0 I T EXTNL            SLITMP 0000001000000           
+VA   ILITFP   0   0   0   0 I T EXTNL            ILITMP 0000001000000           
+VA   ALITFP   0   0   0   0 I T EXTNL            ALITMP 0000001000000           
+VA   SLDOFP   0   0   0   0 I T EXTNL            SLIDOX 0000001000000           
+VA   ILDOFP   0   0   0   0 I T EXTNL            ILIDOX 0000001000000           
+VA   ALDOFP   0   0   0   0 I T EXTNL            ALIDOX 0000001000000           
+VA   SLCOFP   0   0   0   0 I T EXTNL            SLICO2 0000001000000           
+VA   ILCOFP   0   0   0   0 I T EXTNL            ILICO2 0000001000000           
+VA   ALCOFP   0   0   0   0 I T EXTNL            ALICO2 0000001000000           
+VA 1 IDVFG    0   0   0   0 I P                         0000001000000           
+EQ 1 PGPM1    4   0   0   0 I   IDVFG                   0000001000000           
+VA 1 ICVFG    0   0   0   0 I P                         0000001000000           
+VA 1 GDVFG    0   0   0   0 I P                         0000001000000           
+VA 1 GCVFG    0   0   0   0 I P                         0000001000000           
+VA 1 ELEVGC   0   0   0   0 R P                         0000001000000           
+VA 1 IDOXPM  12   0   0   0 R P                         0000001000000           
+VA 1 ICO2PM  12   0   0   0 R P                         0000001000000           
+VA 1 ADOXPM  12   0   0   0 R P                         0000001000000           
+VA 1 ACO2PM  12   0   0   0 R P                         0000001000000           
+VA 1 LIFAC    4   0   0   0 R P                         0000001100000           
+VA 1 SOTMP    0   0   0   0 R S                         0000001000000           
+EQ 1 PGST1    3   0   0   0 R   SOTMP                   0000001000000           
+VA 1 IOTMP    0   0   0   0 R S                         0000001000000           
+VA 1 AOTMP    0   0   0   0 R S                         0000001000000           
+VA 1 SODOX    0   0   0   0 R S                         0000001000000           
+EQ 1 PGST2    6   0   0   0 R   SODOX                   0000001000000           
+VA 1 SOCO2    0   0   0   0 R S                         0000001000000           
+VA 1 IODOX    0   0   0   0 R S                         0000001000000           
+VA 1 IOCO2    0   0   0   0 R S                         0000001000000           
+VA 1 AODOX    0   0   0   0 R S                         0000001000000           
+VA 1 AOCO2    0   0   0   0 R S                         0000001000000           
+VA 1 IDOXP    0   0   0   0 R S                         0000001000000           
+VA 1 ICO2P    0   0   0   0 R S                         0000001000000           
+VA 1 ADOXP    0   0   0   0 R S                         0000001000000           
+VA 1 ACO2P    0   0   0   0 R S                         0000001000000           
+VA   SOTFP    0   0   0   0 I T PWTGAS           SOTMP  0000001000000           
+EQ   PGST1X   3   0   0   0 I   SOTFP                   0000001000000           
+VA   IOTFP    0   0   0   0 I T PWTGAS           IOTMP  0000001000000           
+VA   AOTFP    0   0   0   0 I T PWTGAS           AOTMP  0000001000000           
+VA   SODOFP   0   0   0   0 I T PWTGAS           SODOX  0000001000000           
+EQ   PGST2X   6   0   0   0 I   SODOFP                  0000001000000           
+VA   SOCDFP   0   0   0   0 I T PWTGAS           SOCO2  0000001000000           
+VA   IODOFP   0   0   0   0 I T PWTGAS           IODOX  0000001000000           
+VA   IOCDFP   0   0   0   0 I T PWTGAS           IOCO2  0000001000000           
+VA   AODOFP   0   0   0   0 I T PWTGAS           AODOX  0000001000000           
+VA   AOCDFP   0   0   0   0 I T PWTGAS           AOCO2  0000001000000           
+VA   PGCF1    3   5   0   0 R F                         0000001000000           
+EQ 1 SOHT     0   0   0   0 R   PGCF1(1,1)              0000001000000           
+EQ 1 IOHT     0   0   0   0 R   PGCF1(2,1)              0000001000000           
+EQ 1 AOHT     0   0   0   0 R   PGCF1(3,1)              0000001000000           
+VA 1 POHT     0   0   0   0 R F                         0000001000000           
+VA   PGCF2    6   5   0   0 R F                         0000001000000           
+EQ 1 SODOXM   0   0   0   0 R   PGCF2(1,1)              0000001000000           
+EQ 1 SOCO2M   0   0   0   0 R   PGCF2(2,1)              0000001000000           
+EQ 1 IODOXM   0   0   0   0 R   PGCF2(3,1)              0000001000000           
+EQ 1 IOCO2M   0   0   0   0 R   PGCF2(4,1)              0000001000000           
+EQ 1 AODOXM   0   0   0   0 R   PGCF2(5,1)              0000001000000           
+EQ 1 AOCO2M   0   0   0   0 R   PGCF2(6,1)              0000001000000           
+VA 1 PODOXM   0   0   0   0 R F                         0000001000000           
+VA 1 POCO2M   0   0   0   0 R F                         0000001000000           
+VA   SOHTFP   0   0   0   0 I T PWTGAS           SOHT   0000001000000           
+EQ   PGCF1X   3   0   0   0 I   SOHTFP                  0000001000000           
+VA   IOHTFP   0   0   0   0 I T PWTGAS           IOHT   0000001000000           
+VA   AOHTFP   0   0   0   0 I T PWTGAS           AOHT   0000001000000           
+VA   POHTFP   0   0   0   0 I T PWTGAS           POHT   0000001000000           
+VA   SODOMX   0   0   0   0 I T PWTGAS           SODOXM 0000001000000           
+EQ   PGCF2X   6   0   0   0 I   SODOMX                  0000001000000           
+VA   SOCDMX   0   0   0   0 I T PWTGAS           SOCO2M 0000001000000           
+VA   IODOMX   0   0   0   0 I T PWTGAS           IODOXM 0000001000000           
+VA   IOCDMX   0   0   0   0 I T PWTGAS           IOCO2M 0000001000000           
+VA   AODOMX   0   0   0   0 I T PWTGAS           AODOXM 0000001000000           
+VA   AOCDMX   0   0   0   0 I T PWTGAS           AOCO2M 0000001000000           
+VA   PODOMX   0   0   0   0 I T PWTGAS           PODOXM 0000001000000           
+VA   POCDMX   0   0   0   0 I T PWTGAS           POCO2M 0000001000000           
+                                                                                
+SE   CPLPQ.INC                                                                  
+HE 8        PQUAL section                                                       
+VA   PQIF    MQ   5   0   0 R F                         0000000100000           
+EQ 1 SLIQO   MQ   0   0   0 R    PQIF(1,1)              0000000100000           
+VA 1 SLIQSP  MQ   0   0   0 R S                         0000000100000           
+VA 1 ILIQC   MQ   0   0   0 R S                         0000000100000           
+VA 1 ALIQC   MQ   0   0   0 R S                         0000000100000           
+VA   SLIQOX  MQ   0   0   0 I T EXTNL            SLIQO  0000000100000           
+VA   SLIQSX  MQ   0   0   0 I T EXTNL            SLIQSP 0000000100000           
+VA   ILIQCX  MQ   0   0   0 I T EXTNL            ILIQC  0000000100000           
+VA   ALIQCX  MQ   0   0   0 I T EXTNL            ALIQC  0000000100000           
+VA   PQAFFP  MQ   0   0   0 I T EXTNL            PQADFX 0000000100000           
+VA   PQACFP  MQ   0   0   0 I T EXTNL            PQADCN 0000000100000           
+VA 2 NQUAL    0   0   0   0 I P                         0000000100000           
+VA 2 NQSD     0   0   0   0 I P                         0000000100000           
+VA 2 NQOF     0   0   0   0 I P                         0000000100000           
+VA 2 NQIF     0   0   0   0 I P                         0000000100000           
+VA 2 NQGW     0   0   0   0 I P                         0000000100000           
+VA 1 PQADFG  Q2   0   0   0 I P                         0000000100000           
+VA   QSDFG   MQ   0   0   0 I P                         0000000100000           
+VA   QSDFP   MQ   0   0   0 I P                         0000000100000           
+VA 1 VPFWFG  MQ   0   0   0 I P                         0000000100000           
+VA 1 VPFSFG  MQ   0   0   0 I P                         0000000100000           
+VA   QSOFG   MQ   0   0   0 I P                         0000000100000           
+VA   QSOFP   MQ   0   0   0 I P                         0000000100000           
+VA 1 VQOFG   MQ   0   0   0 I P                         0000000100000           
+VA   QIFWFG  MQ   0   0   0 I P                         0000000100000           
+VA   QIFWFP  MQ   0   0   0 I P                         0000000100000           
+VA 1 VIQCFG  MQ   0   0   0 I P                         0000000100000           
+VA   QAGWFG  MQ   0   0   0 I P                         0000000100000           
+VA   QAGWFP  MQ   0   0   0 I P                         0000000100000           
+VA 1 VAQCFG  MQ   0   0   0 I P                         0000000100000           
+VA   QUALID   3  MQ   0   0 I P                         0000000100000           
+VA   QTYID    1  MQ   0   0 I P                         0000000100000           
+VA 1 PQAFXM  12  MQ   0   0 R P                         0000000100000           
+VA 1 PQACNM  12  MQ   0   0 R P                         0000000100000           
+VA 1 POTFWM  12  MQ   0   0 R P                         0000000100000           
+VA 1 POTFSM  12  MQ   0   0 R P                         0000000100000           
+VA 1 ACQOPM  12  MQ   0   0 R P                         0000000100000           
+VA 1 REMQOM  12  MQ   0   0 R P                         0000000100000           
+VA 1 WSFAC   MQ   0   0   0 R P                         0000000100000           
+VA 1 IOQCM   12  MQ   0   0 R P                         0000000100000           
+VA 1 AOQCM   12  MQ   0   0 R P                         0000000100000           
+VA 1 SQO     MQ   0   0   0 R S                         0000000100000           
+VA 1 POTFW   MQ   0   0   0 R S                         0000000100000           
+VA 1 POTFS   MQ   0   0   0 R S                         0000000100000           
+VA 1 ACQOP   MQ   0   0   0 R S                         0000000100000           
+VA 1 REMQOP  MQ   0   0   0 R S                         0000000100000           
+VA 1 IOQC    MQ   0   0   0 R S                         0000000100000           
+VA 1 AOQC    MQ   0   0   0 R S                         0000000100000           
+VA 1 SOQSP   MQ   0   0   0 R S                         0000000100000           
+VA 1 IOQCE   MQ   0   0   0 R S                         0000000100000           
+VA 1 AOQCE   MQ   0   0   0 R S                         0000000100000           
+VA   SQOFP   MQ   0   0   0 I T PQUAL            SQO    0000000100000           
+VA   SOQSPX  MQ   0   0   0 I T PQUAL            SOQSP  0000000100000           
+VA   IOQCFP  MQ   0   0   0 I T PQUAL            IOQC   0000000100000           
+VA   AOQCFP  MQ   0   0   0 I T PQUAL            AOQC   0000000100000           
+VA   PQCF1   MQ   5   0   0 R F                         0000000100000           
+EQ 1 WASHQS  MQ   0   0   0 R   PQCF1(1,1)              0000000100000           
+VA   PQCF2   MQ   5   0   0 R F                         0000000100000           
+EQ 1 SCRQS   MQ   0   0   0 R   PQCF2(1,1)              0000000100000           
+VA 1 SOQS    MQ   0   0   0 R F                         0000000100000           
+VA   PQCF3   MQ   5   0   0 R F                         0000000100000           
+EQ 1 SOQO    MQ   0   0   0 R   PQCF3(1,1)              0000000100000           
+VA 1 SOQOC   MQ   0   0   0 R F                         0000000100000           
+VA 1 SOQUAL  MQ   0   0   0 R F                         0000000100000           
+VA 1 SOQC    MQ   0   0   0 R F                         0000000100000           
+VA   PQCF4   MQ   5   0   0 R F                         0000000100000           
+EQ 1 IOQUAL  MQ   0   0   0 R   PQCF4(1,1)              0000000100000           
+VA   PQCF5   MQ   5   0   0 R F                         0000000100000           
+EQ 1 AOQUAL  MQ   0   0   0 R   PQCF5(1,1)              0000000100000           
+VA 1 POQUAL  MQ   0   0   0 R F                         0000000100000           
+VA 1 POQC    MQ   0   0   0 R F                         0000000100000           
+VA   PQCF6   MQ   5   0   0 R F                         0000000100000           
+EQ 1 PQADDR  MQ   0   0   0 R   PQCF6(1,1)              0000000100000           
+VA   PQCF7   MQ   5   0   0 R F                         0000000100000           
+EQ 1 PQADWT  MQ   0   0   0 R   PQCF7(1,1)              0000000100000           
+VA 1 PQADEP  MQ   0   0   0 R F                         0000000100000           
+VA 1 ISQO    MQ   0   0   0 R F                         0000000100000           
+VA   WSQSFP  MQ   0   0   0 I T PQUAL            WASHQS 0000000100000           
+VA   SCQSFP  MQ   0   0   0 I T PQUAL            SCRQS  0000000100000           
+VA   SOQSFP  MQ   0   0   0 I T PQUAL            SOQS   0000000100000           
+VA   SOQOFP  MQ   0   0   0 I T PQUAL            SOQO   0000000100000           
+VA   SOQOCX  MQ   0   0   0 I T PQUAL            SOQOC  0000000100000           
+VA   SOQFP   MQ   0   0   0 I T PQUAL            SOQUAL 0000000100000           
+VA   SOQCFP  MQ   0   0   0 I T PQUAL            SOQC   0000000100000           
+VA   IOQFP   MQ   0   0   0 I T PQUAL            IOQUAL 0000000100000           
+VA   AOQFP   MQ   0   0   0 I T PQUAL            AOQUAL 0000000100000           
+VA   POQFP   MQ   0   0   0 I T PQUAL            POQUAL 0000000100000           
+VA   POQCFP  MQ   0   0   0 I T PQUAL            POQC   0000000100000           
+VA   PQADDX  MQ   0   0   0 I T PQUAL            PQADDR 0000000100000           
+VA   PQADWX  MQ   0   0   0 I T PQUAL            PQADWT 0000000100000           
+VA   PQADPX  MQ   0   0   0 I T PQUAL            PQADEP 0000000100000           
+VA   ISQOFP  MQ   0   0   0 I T PQUAL            ISQO   0000000100000           
+                                                                                
+SE   CPLMS.INC                                                                  
+HE 9        MSTLAY section                                                      
+VA 1 CFINMA   0   0   0   0 R P                         0000000010000           
+VA 1 SLMPF    0   0   0   0 R P                         0000000010000           
+EQ 1 MSTPM    3   0   0   0 R   SLMPF                   0000000010000           
+VA 1 ULPF     0   0   0   0 R P                         0000000010000           
+VA 1 LLPF     0   0   0   0 R P                         0000000010000           
+VA 1 MST      5   0   0   0 R S                         0000000011111           
+VA 1 FRAC     8   0   0   0 R S                         0000000011111           
+VA   MSTFP    5   0   0   0 I T MSTLAY           MST    0000000011111           
+VA   FRACFP   8   0   0   0 I T MSTLAY           FRAC   0000000011111           
+                                                                                
+SE   CPLPE.INC                                                                  
+HE10        PEST section                                                        
+VA   PSSIF    5   3   5   0 R F                         0000000001000           
+EQ 1 LIPSS    5   3   0   0 R   PSSIF(1,1,1)            0000000001000           
+VA   SDPSIF   2   3   5   0 R F                         0000000001000           
+EQ 1 LISDPS   2   3   0   0 R   SDPSIF(1,1,1)           0000000001000           
+VA   LIPSSX   5   3   0   0 I T EXTNL            LIPSS  0000000001000           
+VA   LISDPX   2   3   0   0 I T EXTNL            LISDPS 0000000001000           
+VA   PEAFFP   3   3   0   0 I T EXTNL            PEADFX 0000000001000           
+VA   PEACFP   3   3   0   0 I T EXTNL            PEADCN 0000000001000           
+VA 2 NPST     0   0   0   0 I P                         0000000001000           
+EQ   PSFLAG   7   0   0   0 I   NPST                    0000000001000           
+VA 1 ITMXPS   3   0   0   0 I P                         0000000001000           
+VA 1 ADOPFG   3   0   0   0 I P                         0000000001000           
+VA 1 PEADFG  18   0   0   0 I P                         0000000001000           
+VA 1 PEAFXM  12   3   3   0 R P                         0000000001000           
+VA 1 PEACNM  12   3   3   0 R P                         0000000001000           
+VA 1 GPSPM    8   3   0   0 R P                         0000000001000           
+VA 1 SPSPM    8   3   0   0 R P                         0000000001000           
+VA 1 UPSPM    8   3   0   0 R P                         0000000001000           
+VA 1 LPSPM    8   3   0   0 R P                         0000000001000           
+VA 1 APSPM    8   3   0   0 R P                         0000000001000           
+VA   AGGTFG   0   0   0   0 I S                         0000000001111           
+VA   PSWCNT   6   0   0   0 I S                         0000000001110           
+VA   PSECNT   1   0   0   0 I S                         0000000001000           
+VA 1 SCVFG    3   0   0   0 I S                         0000000001000           
+VA 1 UCVFG    3   0   0   0 I S                         0000000001000           
+VA 1 LCVFG    3   0   0   0 I S                         0000000001000           
+VA 1 ACVFG    3   0   0   0 I S                         0000000001000           
+VA 1 SPS      3   3   0   0 R S                         0000000001000           
+VA 1 UPS      3   3   0   0 R S                         0000000001000           
+VA 1 IPS      3   0   0   0 R S                         0000000001000           
+VA 1 LPS      3   3   0   0 R S                         0000000001000           
+VA 1 APS      3   3   0   0 R S                         0000000001000           
+VA 1 TPS      3   3   0   0 R S                         0000000001000           
+VA 1 TPST     5   3   0   0 R S                         0000000001000           
+VA   TOTPS    3   5   0   0 R S                         0000000001000           
+EQ 1 TOTPST   3   0   0   0 R   TOTPS(1,1)              0000000001000           
+VA 1 SXJCT    3   0   0   0 R S                         0000000001000           
+VA 1 UXJCT    3   0   0   0 R S                         0000000001000           
+VA 1 LXJCT    3   0   0   0 R S                         0000000001000           
+VA 1 AXJCT    3   0   0   0 R S                         0000000001000           
+VA 1 SXST     3   0   0   0 R S                         0000000001000           
+VA 1 UXST     3   0   0   0 R S                         0000000001000           
+VA 1 LXST     3   0   0   0 R S                         0000000001000           
+VA 1 AXST     3   0   0   0 R S                         0000000001000           
+VA   SPSFP    3   3   0   0 I T PEST             SPS    0000000001000           
+VA   UPSFP    3   3   0   0 I T PEST             UPS    0000000001000           
+VA   IPSFP    3   0   0   0 I T PEST             IPS    0000000001000           
+VA   LPSFP    3   3   0   0 I T PEST             LPS    0000000001000           
+VA   APSFP    3   3   0   0 I T PEST             APS    0000000001000           
+VA   TPSFP    3   3   0   0 I T PEST             TPS    0000000001000           
+VA   TPESFP   5   3   0   0 I T PEST             TPST   0000000001000           
+VA   TPSTFP   3   0   0   0 I T PEST             TOTPST 0000000001000           
+VA   PSCFX1   2   3   5   0 R F                         0000000001000           
+EQ 1 SDPS     2   3   0   0 R   PSCFX1(1,1,1)           0000000001000           
+VA   PSCFX2   5   3   5   0 R F                         0000000001000           
+EQ 1 TSPSS    5   3   0   0 R   PSCFX2(1,1,1)           0000000001000           
+VA   PSCFX3   3   3   5   0 R F                         0000000001000           
+EQ 1 SSPSS    3   3   0   0 R   PSCFX3(1,1,1)           0000000001000           
+VA   PSCFX4   5   3   5   0 R F                         0000000001000           
+EQ 1 DEGPS    5   3   0   0 R   PSCFX4(1,1,1)           0000000001000           
+VA 1 SOSDPS   3   0   0   0 R F                         0000000001000           
+VA 1 SOPEST   3   0   0   0 R F                         0000000001000           
+VA 1 POPST    3   0   0   0 R F                         0000000001000           
+VA 1 TOPST    3   0   0   0 R F                         0000000001000           
+VA   PSCFX5   3   3   5   0 R F                         0000000001000           
+EQ 1 PEADDR   3   3   0   0 R   PSCFX5(1,1,1)           0000000001000           
+VA   PSCFX6   3   3   5   0 R F                         0000000001000           
+EQ 1 PEADWT   3   3   0   0 R   PSCFX6(1,1,1)           0000000001000           
+VA 1 PEADEP   3   3   0   0 R F                         0000000001000           
+VA   SDPSFP   2   3   0   0 I T PEST             SDPS   0000000001000           
+VA   TSPSSX   5   3   0   0 I T PEST             TSPSS  0000000001000           
+VA   SSPSSX   3   3   0   0 I T PEST             SSPSS  0000000001000           
+VA   SDEGFP   3   0   0   0 I T PEST             SDEGPS 0000000001000           
+VA   UDEGFP   3   0   0   0 I T PEST             UDEGPS 0000000001000           
+VA   LDEGFP   3   0   0   0 I T PEST             LDEGPS 0000000001000           
+VA   ADEGFP   3   0   0   0 I T PEST             ADEGPS 0000000001000           
+VA   TDEGFP   3   0   0   0 I T PEST             TDEGPS 0000000001000           
+VA   OSDPSX   3   0   0   0 I T PEST             SOSDPS 0000000001000           
+VA   SOPSFP   3   0   0   0 I T PEST             SOPEST 0000000001000           
+VA   POPSFP   3   0   0   0 I T PEST             POPST  0000000001000           
+VA   TOPSFP   3   0   0   0 I T PEST             TOPST  0000000001000           
+VA   PEADDX   3   3   0   0 I T PEST             PEADDR 0000000001000           
+VA   PEADWX   3   3   0   0 I T PEST             PEADWT 0000000001000           
+VA   PEADPX   3   3   0   0 I T PEST             PEADEP 0000000001000           
+                                                                                
+SE   CPLNI.INC                                                                  
+HE11        NITR section                                                        
+VA 1 NITIF    4   5   0   0 R F                         0000000000100           
+SP 1 INO3     0   0   0         NITIF(1,1)                                      
+SP 1 INH3     0   0   0         NITIF(2,1)                                      
+SP 1 IORN     0   0   0         NITIF(3,1)                                      
+SP 1 INITR    0   0   0         NITIF(4,1)                                      
+VA   NITIFX   4   0   0   0 I T NITR             NITIF  0000000000100           
+VA   NITLIF   5   4   5   0 R F                         0000000000100           
+EQ 1 LIAMS    5   0   0   0 R   NITLIF(1,1,1)           0000000000100           
+EQ 1 LINO3    5   0   0   0 R   NITLIF(1,2,1)           0000000000100           
+EQ 1 LISLN    5   0   0   0 R   NITLIF(1,3,1)           0000000000100           
+EQ 1 LISRN    5   0   0   0 R   NITLIF(1,4,1)           0000000000100           
+VA   NSDIF    3   5   0   0 R F                         0000000000100           
+EQ   LISEDN   3   0   0   0 R   NSDIF(1,1)              0000000000100           
+VA   LIAMSX   5   0   0   0 I T EXTNL            LIAMS  0000000000100           
+VA   LINO3X   5   0   0   0 I T EXTNL            LINO3  0000000000100           
+VA   LISLNX   5   0   0   0 I T EXTNL            LISLN  0000000000100           
+VA   LISRNX   5   0   0   0 I T EXTNL            LISRN  0000000000100           
+VA   LISDNX   3   0   0   0 I T EXTNL            LISEDN 0000000000100           
+VA   NIAFFP   3   2   0   0 I T EXTNL            NIADFX 0000000000100           
+VA   NIACFP   3   2   0   0 I T EXTNL            NIADCN 0000000000100           
+VA 1 VNUTFG   0   0   0   0 I P                         0000000000100           
+EQ 1 NITFG   10   0   0   0 I   VNUTFG                  0000000000100           
+VA 1 FORAFG   0   0   0   0 I P                         0000000000100           
+VA 1 ITMAXA   0   0   0   0 I P                         0000000000100           
+VA 1 BNUMN    0   0   0   0 I P                         0000000000100           
+VA 1 CNUMN    0   0   0   0 I P                         0000000000100           
+VA 1 NUPTFG   0   0   0   0 I P                         0000000000110           
+VA 1 FIXNFG   0   0   0   0 I P                         0000000000100           
+VA 1 AMVOFG   0   0   0   0 I P                         0000000000100           
+VA 1 ALPNFG   0   0   0   0 I P                         0000000000100           
+VA 1 VNPRFG   0   0   0   0 I P                         0000000000100           
+VA 1 NIADFG  12   0   0   0 I P                         0000000000100           
+VA 1 CRPDAY  13   3   0   0 I P                         0000000000110           
+VA 1 CRPFRC  13   3   0   0 R P                         0000000000110           
+VA 1 NUPTGT   0   0   0   0 R P                         0000000000100           
+EQ 1 NYLDPM   2   0   0   0 R   NUPTGT                  0000000000100           
+VA 1 NMXRAT   0   0   0   0 R P                         0000000000100           
+VA 1 NIAFXM  12   3   2   0 R P                         0000000000100           
+VA 1 NIACNM  12   3   2   0 R P                         0000000000100           
+VA 1 SKPLNM  12   0   0   0 R P                         0000000000100           
+VA 1 UKPLNM  12   0   0   0 R P                         0000000000100           
+VA 1 LKPLNM  12   0   0   0 R P                         0000000000100           
+VA 1 AKPLNM  12   0   0   0 R P                         0000000000100           
+VA 1 SKRBNM  12   0   0   0 R P                         0000000000100           
+VA 1 UKRBNM  12   0   0   0 R P                         0000000000100           
+VA 1 LKRBNM  12   0   0   0 R P                         0000000000100           
+VA 1 AKRBNM  12   0   0   0 R P                         0000000000100           
+VA 1 KRANM   12   0   0   0 R P                         0000000000100           
+VA 1 SKRLNM  12   0   0   0 R P                         0000000000100           
+VA 1 UKRLNM  12   0   0   0 R P                         0000000000100           
+VA 1 BNPRFM  12   0   0   0 R P                         0000000000100           
+VA 1 LNPRFM  12   0   0   0 R P                         0000000000100           
+VA 1 SKUNIM  12   0   0   0 R P                         0000000000100           
+VA 1 UKUNIM  12   0   0   0 R P                         0000000000100           
+VA 1 LKUNIM  12   0   0   0 R P                         0000000000100           
+VA 1 AKUNIM  12   0   0   0 R P                         0000000000100           
+VA 1 SKUAMM  12   0   0   0 R P                         0000000000100           
+VA 1 UKUAMM  12   0   0   0 R P                         0000000000100           
+VA 1 LKUAMM  12   0   0   0 R P                         0000000000100           
+VA 1 AKUAMM  12   0   0   0 R P                         0000000000100           
+VA 1 SKINIM  12   0   0   0 R P                         0000000000100           
+VA 1 UKINIM  12   0   0   0 R P                         0000000000100           
+VA 1 LKINIM  12   0   0   0 R P                         0000000000100           
+VA 1 AKINIM  12   0   0   0 R P                         0000000000100           
+VA 1 SKIAMM  12   0   0   0 R P                         0000000000100           
+VA 1 UKIAMM  12   0   0   0 R P                         0000000000100           
+VA 1 LKIAMM  12   0   0   0 R P                         0000000000100           
+VA 1 AKIAMM  12   0   0   0 R P                         0000000000100           
+VA 1 NUPTFM  12   0   0   0 R P                         0000000000100           
+VA 1 SNUPTM  12   0   0   0 R P                         0000000000100           
+VA 1 UNUPTM  12   0   0   0 R P                         0000000000100           
+VA 1 LNUPTM  12   0   0   0 R P                         0000000000100           
+VA 1 ANUPTM  12   0   0   0 R P                         0000000000100           
+VA 1 GNPM    11   0   0   0 R P                         0000000000100           
+SP 1 NO3UTF   0   0   0         GNPM(1)                                         
+SP 1 NH4UTF   0   0   0         GNPM(2)                                         
+SP 1 THPLN    0   0   0         GNPM(3)                                         
+SP 1 THKDSA   0   0   0         GNPM(4)                                         
+SP 1 THKADA   0   0   0         GNPM(5)                                         
+SP 1 THKIMN   0   0   0         GNPM(6)                                         
+SP 1 THKAM    0   0   0         GNPM(7)                                         
+SP 1 THKDNI   0   0   0         GNPM(8)                                         
+SP 1 THKNI    0   0   0         GNPM(9)                                         
+SP 1 THKIMA   0   0   0         GNPM(10)                                        
+SP 1 CMAXAM   0   0   0         GNPM(11)                                        
+VA 1 SNPM    11   0   0   0 R P                         0000000000100           
+SP 1 SKDSAM   0   0   0         SNPM(1)                                         
+SP 1 SKADAM   0   0   0         SNPM(2)                                         
+SP 1 SKIMNI   0   0   0         SNPM(3)                                         
+SP 1 SKAM     0   0   0         SNPM(4)                                         
+SP 1 SKDNI    0   0   0         SNPM(5)                                         
+SP 1 SKNI     0   0   0         SNPM(6)                                         
+SP 1 SKIMAM   0   0   0         SNPM(7)                                         
+SP 1 SXFIXA   0   0   0         SNPM(8)                                         
+SP 1 SXMAXA   0   0   0         SNPM(9)                                         
+SP 1 SKF1AM   0   0   0         SNPM(10)                                        
+SP 1 SN1IAM   0   0   0         SNPM(11)                                        
+VA 1 UNPM    11   0   0   0 R P                         0000000000100           
+SP 1 UKDSAM   0   0   0         UNPM(1)                                         
+SP 1 UKADAM   0   0   0         UNPM(2)                                         
+SP 1 UKIMNI   0   0   0         UNPM(3)                                         
+SP 1 UKAM     0   0   0         UNPM(4)                                         
+SP 1 UKDNI    0   0   0         UNPM(5)                                         
+SP 1 UKNI     0   0   0         UNPM(6)                                         
+SP 1 UKIMAM   0   0   0         UNPM(7)                                         
+SP 1 UXFIXA   0   0   0         UNPM(8)                                         
+SP 1 UXMAXA   0   0   0         UNPM(9)                                         
+SP 1 UKF1AM   0   0   0         UNPM(10)                                        
+SP 1 UN1IAM   0   0   0         UNPM(11)                                        
+VA 1 LNPM    11   0   0   0 R P                         0000000000100           
+SP 1 LKDSAM   0   0   0         LNPM(1)                                         
+SP 1 LKADAM   0   0   0         LNPM(2)                                         
+SP 1 LKIMNI   0   0   0         LNPM(3)                                         
+SP 1 LKAM     0   0   0         LNPM(4)                                         
+SP 1 LKDNI    0   0   0         LNPM(5)                                         
+SP 1 LKNI     0   0   0         LNPM(6)                                         
+SP 1 LKIMAM   0   0   0         LNPM(7)                                         
+SP 1 LXFIXA   0   0   0         LNPM(8)                                         
+SP 1 LXMAXA   0   0   0         LNPM(9)                                         
+SP 1 LKF1AM   0   0   0         LNPM(10)                                        
+SP 1 LN1IAM   0   0   0         LNPM(11)                                        
+VA 1 ANPM    11   0   0   0 R P                         0000000000100           
+SP 1 AKDSAM   0   0   0         ANPM(1)                                         
+SP 1 AKADAM   0   0   0         ANPM(2)                                         
+SP 1 AKIMNI   0   0   0         ANPM(3)                                         
+SP 1 AKAM     0   0   0         ANPM(4)                                         
+SP 1 AKDNI    0   0   0         ANPM(5)                                         
+SP 1 AKNI     0   0   0         ANPM(6)                                         
+SP 1 AKIMAM   0   0   0         ANPM(7)                                         
+SP 1 AXFIXA   0   0   0         ANPM(8)                                         
+SP 1 AXMAXA   0   0   0         ANPM(9)                                         
+SP 1 AKF1AM   0   0   0         ANPM(10)                                        
+SP 1 AN1IAM   0   0   0         ANPM(11)                                        
+VA 1 SORNPM   4   0   0   0 R P                         0000000000100           
+SP 1 SKLON    0   0   0         SORNPM(1)                                       
+SP 1 SKRON    0   0   0         SORNPM(2)                                       
+SP 1 SKONLR   0   0   0         SORNPM(3)                                       
+SP 1 STHNLR   0   0   0         SORNPM(4)                                       
+VA 1 UORNPM   4   0   0   0 R P                         0000000000100           
+SP 1 UKLON    0   0   0         UORNPM(1)                                       
+SP 1 UKRON    0   0   0         UORNPM(2)                                       
+SP 1 UKONLR   0   0   0         UORNPM(3)                                       
+SP 1 UTHNLR   0   0   0         UORNPM(4)                                       
+VA 1 LORNPM   4   0   0   0 R P                         0000000000100           
+SP 1 LKLON    0   0   0         LORNPM(1)                                       
+SP 1 LKRON    0   0   0         LORNPM(2)                                       
+SP 1 LKONLR   0   0   0         LORNPM(3)                                       
+SP 1 LTHNLR   0   0   0         LORNPM(4)                                       
+VA 1 AORNPM   4   0   0   0 R P                         0000000000100           
+SP 1 AKLON    0   0   0         AORNPM(1)                                       
+SP 1 AKRON    0   0   0         AORNPM(2)                                       
+SP 1 AKONLR   0   0   0         AORNPM(3)                                       
+SP 1 ATHNLR   0   0   0         AORNPM(4)                                       
+VA 1 SCSATN   4   0   0   0 R P                         0000000000100           
+SP 1 SCSUNI   0   0   0         SCSATN(1)                                       
+SP 1 SCSUAM   0   0   0         SCSATN(2)                                       
+SP 1 SCSINI   0   0   0         SCSATN(3)                                       
+SP 1 SCSIAM   0   0   0         SCSATN(4)                                       
+VA 1 UCSATN   4   0   0   0 R P                         0000000000100           
+SP 1 UCSUNI   0   0   0         UCSATN(1)                                       
+SP 1 UCSUAM   0   0   0         UCSATN(2)                                       
+SP 1 UCSINI   0   0   0         UCSATN(3)                                       
+SP 1 UCSIAM   0   0   0         UCSATN(4)                                       
+VA 1 LCSATN   4   0   0   0 R P                         0000000000100           
+SP 1 LCSUNI   0   0   0         LCSATN(1)                                       
+SP 1 LCSUAM   0   0   0         LCSATN(2)                                       
+SP 1 LCSINI   0   0   0         LCSATN(3)                                       
+SP 1 LCSIAM   0   0   0         LCSATN(4)                                       
+VA 1 ACSATN   4   0   0   0 R P                         0000000000100           
+SP 1 ACSUNI   0   0   0         ACSATN(1)                                       
+SP 1 ACSUAM   0   0   0         ACSATN(2)                                       
+SP 1 ACSINI   0   0   0         ACSATN(3)                                       
+SP 1 ACSIAM   0   0   0         ACSATN(4)                                       
+VA 1 SANUFM  12   0   0   0 R P                         0000000000100           
+VA 1 UANUFM  12   0   0   0 R P                         0000000000100           
+VA 1 LANUFM  12   0   0   0 R P                         0000000000100           
+VA 1 AANUFM  12   0   0   0 R P                         0000000000100           
+VA 1 SKVOL    0   0   0   0 R P                         0000000000100           
+EQ 1 AMVOPM   6   0   0   0 R P SKVOL                   0000000000100           
+VA 1 UKVOL    0   0   0   0 R P                         0000000000100           
+VA 1 LKVOL    0   0   0   0 R P                         0000000000100           
+VA 1 AKVOL    0   0   0   0 R P                         0000000000100           
+VA 1 THVOL    0   0   0   0 R P                         0000000000100           
+VA 1 TRFVOL   0   0   0   0 R P                         0000000000100           
+VA 1 BIVLN    0   0   0   0 I S                         0000000000100           
+VA 1 CIVLN    0   0   0   0 I S                         0000000000100           
+VA   NWCNT    8   0   0   0 I S                         0000000000100           
+VA   NECNT    1   0   0   0 I S                         0000000000100           
+VA 1 AGPLTN   0   0   0   0 R S                         0000000000100           
+VA 1 LITTRN   0   0   0   0 R S                         0000000000100           
+VA 1 SN       8   0   0   0 R S                         0000000000100           
+AL 1 SORGN    0   0   0         SN(1)                                           
+SP 1 SPLON    0   0   0         SN(1)                                           
+SP 1 SAMAD    0   0   0         SN(2)                                           
+SP 1 SAMSU    0   0   0         SN(3)                                           
+SP 1 SNO3     0   0   0         SN(4)                                           
+SP 1 SPLTN    0   0   0         SN(5)                                           
+SP 1 SSLON    0   0   0         SN(6)                                           
+SP 1 SPRON    0   0   0         SN(7)                                           
+SP 1 SSRON    0   0   0         SN(8)                                           
+VA 1 UN       8   0   0   0 R S                         0000000000100           
+AL 1 UORGN    0   0   0         UN(1)                                           
+SP 1 UPLON    0   0   0         UN(1)                                           
+SP 1 UAMAD    0   0   0         UN(2)                                           
+SP 1 UAMSU    0   0   0         UN(3)                                           
+SP 1 UNO3     0   0   0         UN(4)                                           
+SP 1 UPLTN    0   0   0         UN(5)                                           
+SP 1 USLON    0   0   0         UN(6)                                           
+SP 1 UPRON    0   0   0         UN(7)                                           
+SP 1 USRON    0   0   0         UN(8)                                           
+VA 1 IN       4   0   0   0 R S                         0000000000100           
+SP 1 IAMSU    0   0   0         IN(1)                                           
+SP 1 INO3     0   0   0         IN(2)                                           
+SP 1 ISLON    0   0   0         IN(3)                                           
+SP 1 ISRON    0   0   0         IN(4)                                           
+VA 1 LN       8   0   0   0 R S                         0000000000100           
+AL 1 LORGN    0   0   0         LN(1)                                           
+SP 1 LPLON    0   0   0         LN(1)                                           
+SP 1 LAMAD    0   0   0         LN(2)                                           
+SP 1 LAMSU    0   0   0         LN(3)                                           
+SP 1 LNO3     0   0   0         LN(4)                                           
+SP 1 LPLTN    0   0   0         LN(5)                                           
+SP 1 LSLON    0   0   0         LN(6)                                           
+SP 1 LPRON    0   0   0         LN(7)                                           
+SP 1 LSRON    0   0   0         LN(8)                                           
+VA 1 AN       8   0   0   0 R S                         0000000000100           
+AL 1 AORGN    0   0   0         AN(1)                                           
+SP 1 APLON    0   0   0         AN(1)                                           
+SP 1 AAMAD    0   0   0         AN(2)                                           
+SP 1 AAMSU    0   0   0         AN(3)                                           
+SP 1 ANO3     0   0   0         AN(4)                                           
+SP 1 APLTN    0   0   0         AN(5)                                           
+SP 1 ASLON    0   0   0         AN(6)                                           
+SP 1 APRON    0   0   0         AN(7)                                           
+SP 1 ASRON    0   0   0         AN(8)                                           
+VA 1 TN       8   0   0   0 R S                         0000000000100           
+AL 1 TORGN    0   0   0         TN(1)                                           
+SP 1 TPLON    0   0   0         TN(1)                                           
+SP 1 TAMAD    0   0   0         TN(2)                                           
+SP 1 TAMSU    0   0   0         TN(3)                                           
+SP 1 TNO3     0   0   0         TN(4)                                           
+SP 1 TPLTN    0   0   0         TN(5)                                           
+SP 1 TSLON    0   0   0         TN(6)                                           
+SP 1 TPRON    0   0   0         TN(7)                                           
+SP 1 TSRON    0   0   0         TN(8)                                           
+VA 1 TNIT     5   0   0   0 R S                         0000000000100           
+VA   TOTN     5   0   0   0 R S                         0000000000100           
+EQ 1 TOTNIT   0   0   0   0 R   TOTN(1)                 0000000000100           
+VA 1 SNDFC    0   0   0   0 R S                         0000000000100           
+EQ 1 NDFCT    5   0   0   0 R   SNDFC                   0000000000100           
+VA 1 UNDFC    0   0   0   0 R S                         0000000000100           
+VA 1 LNDFC    0   0   0   0 R S                         0000000000100           
+VA 1 ANDFC    0   0   0   0 R S                         0000000000100           
+VA 1 TNDFC    0   0   0   0 R S                         0000000000100           
+VA   AGPLNX   0   0   0   0 I T NITR             AGPLTN 0000000000100           
+VA   LITRNX   0   0   0   0 I T NITR             LITTRN 0000000000100           
+VA   SNFP     8   0   0   0 I T NITR             SN     0000000000100           
+VA   UNFP     8   0   0   0 I T NITR             UN     0000000000100           
+VA   INFP     4   0   0   0 I T NITR             IN     0000000000100           
+VA   LNFP     8   0   0   0 I T NITR             LN     0000000000100           
+VA   ANFP     8   0   0   0 I T NITR             AN     0000000000100           
+VA   TNFP     8   0   0   0 I T NITR             TN     0000000000100           
+VA   TNTFP    5   0   0   0 I T NITR             TNIT   0000000000100           
+VA   TNITFP   0   0   0   0 I T NITR             TOTNIT 0000000000100           
+VA   NDFCTX   5   0   0   0 I T NITR             NDFCT  0000000000100           
+VA 1 SKPLN    0   0   0   0 R S                         0000000000100           
+EQ 1 KPLN     4   0   0   0 R S SKPLN                   0000000000100           
+VA 1 UKPLN    0   0   0   0 R S                         0000000000100           
+VA 1 LKPLN    0   0   0   0 R S                         0000000000100           
+VA 1 AKPLN    0   0   0   0 R S                         0000000000100           
+VA 1 KRETBN   5   0   0   0 R S                         0000000000100           
+SP 1 SKPRBN   0   0   0         KRETBN(1)                                       
+SP 1 UKPRBN   0   0   0         KRETBN(2)                                       
+SP 1 LKPRBN   0   0   0         KRETBN(3)                                       
+SP 1 AKPRBN   0   0   0         KRETBN(4)                                       
+SP 1 BGNPRF   0   0   0         KRETBN(5)                                       
+VA 1 KRETAN   4   0   0   0 R S                         0000000000100           
+SP 1 AGKPRN   0   0   0         KRETAN(1)                                       
+SP 1 SKPRLN   0   0   0         KRETAN(2)                                       
+SP 1 UKPRLN   0   0   0         KRETAN(3)                                       
+SP 1 LINPRF   0   0   0         KRETAN(4)                                       
+VA 1 SKSATN   4   0   0   0 R S                         0000000000100           
+SP 1 SKSUNI   0   0   0         SKSATN(1)                                       
+SP 1 SKSUAM   0   0   0         SKSATN(2)                                       
+SP 1 SKSINI   0   0   0         SKSATN(3)                                       
+SP 1 SKSIAM   0   0   0         SKSATN(4)                                       
+VA 1 UKSATN   4   0   0   0 R S                         0000000000100           
+SP 1 UKSUNI   0   0   0         UKSATN(1)                                       
+SP 1 UKSUAM   0   0   0         UKSATN(2)                                       
+SP 1 UKSINI   0   0   0         UKSATN(3)                                       
+SP 1 UKSIAM   0   0   0         UKSATN(4)                                       
+VA 1 LKSATN   4   0   0   0 R S                         0000000000100           
+SP 1 LKSUNI   0   0   0         LKSATN(1)                                       
+SP 1 LKSUAM   0   0   0         LKSATN(2)                                       
+SP 1 LKSINI   0   0   0         LKSATN(3)                                       
+SP 1 LKSIAM   0   0   0         LKSATN(4)                                       
+VA 1 AKSATN   4   0   0   0 R S                         0000000000100           
+SP 1 AKSUNI   0   0   0         AKSATN(1)                                       
+SP 1 AKSUAM   0   0   0         AKSATN(2)                                       
+SP 1 AKSINI   0   0   0         AKSATN(3)                                       
+SP 1 AKSIAM   0   0   0         AKSATN(4)                                       
+VA 1 SNUPTG   0   0   0   0 R S                         0000000000100           
+EQ 1 NUPTG    4   0   0   0 R   SNUPTG                  0000000000100           
+VA 1 UNUPTG   0   0   0   0 R S                         0000000000100           
+VA 1 LNUPTG   0   0   0   0 R S                         0000000000100           
+VA 1 ANUPTG   0   0   0   0 R S                         0000000000100           
+VA   NUPTGX   4   0   0   0 I T NITR             NUPTG  0000000000100           
+VA 1 SPNUTG   0   0   0   0 R S                         0000000000100           
+VA 1 UPNUTG   0   0   0   0 R S                         0000000000100           
+VA 1 LPNUTG   0   0   0   0 R S                         0000000000100           
+VA 1 APNUTG   0   0   0   0 R S                         0000000000100           
+VA 1 ANUTF    4   0   0   0 R P                         0000000000100           
+SP 1 SANUTF   0   0   0         ANUTF(1)                                        
+SP 1 UANUTF   0   0   0         ANUTF(2)                                        
+SP 1 LANUTF   0   0   0         ANUTF(3)                                        
+SP 1 AANUTF   0   0   0         ANUTF(4)                                        
+VA 1 SNRXF   16   0   0   0 R F                         0000000000100           
+VA 1 UNRXF   16   0   0   0 R F                         0000000000100           
+VA 1 LNRXF   16   0   0   0 R F                         0000000000100           
+VA 1 ANRXF   16   0   0   0 R F                         0000000000100           
+VA   NCFX1    3   5   0   0 R F                         0000000000100           
+EQ 1 SEDN     3   0   0   0 R   NCFX1(1,1)              0000000000100           
+VA   NCFX2    5   5   0   0 R F                         0000000000100           
+EQ 1 TSAMS    5   0   0   0 R   NCFX2(1,1)              0000000000100           
+VA   NCFX3    3   5   0   0 R F                         0000000000100           
+EQ 1 SSAMS    3   0   0   0 R   NCFX3(1,1)              0000000000100           
+VA   NCFX4    5   5   0   0 R F                         0000000000100           
+EQ 1 TSNO3    5   0   0   0 R   NCFX4(1,1)              0000000000100           
+VA   NCFX5    3   5   0   0 R F                         0000000000100           
+EQ 1 SSNO3    3   0   0   0 R   NCFX5(1,1)              0000000000100           
+VA   NCFX6    5   5   0   0 R F                         0000000000100           
+EQ 1 DENIF    5   0   0   0 R   NCFX6(1,1)              0000000000100           
+VA   NCFX7    5   5   0   0 R F                         0000000000100           
+EQ 1 AMNIT    5   0   0   0 R   NCFX7(1,1)              0000000000100           
+VA   NCFX8    5   5   0   0 R F                         0000000000100           
+EQ 1 AMIMB    5   0   0   0 R   NCFX8(1,1)              0000000000100           
+VA   NCFX9    5   5   0   0 R F                         0000000000100           
+EQ 1 ORNMN    5   0   0   0 R   NCFX9(1,1)              0000000000100           
+VA   NCFX10   3   2   5   0 R F                         0000000000100           
+EQ 1 NIADDR   3   2   0   0 R   NCFX10(1,1,1)           0000000000100           
+VA   NCFX11   3   2   5   0 R F                         0000000000100           
+EQ 1 NIADWT   3   2   0   0 R   NCFX11(1,1,1)           0000000000100           
+VA   NCFX12   5   5   0   0 R F                         0000000000100           
+VA 1 NIADEP   3   2   0   0 R F                         0000000000100           
+EQ 1 NFIXFX   5   0   0   0 R   NCFX12(1,1)             0000000000100           
+VA   NCFX13   5   5   0   0 R F                         0000000000100           
+EQ 1 TSSLN    5   0   0   0 R   NCFX13(1,1)             0000000000100           
+VA   NCFX14   3   5   0   0 R F                         0000000000100           
+EQ 1 SSSLN    3   0   0   0 R   NCFX14(1,1)             0000000000100           
+VA   NCFX15   5   5   0   0 R F                         0000000000100           
+EQ 1 TSSRN    5   0   0   0 R   NCFX15(1,1)             0000000000100           
+VA   NCFX16   3   5   0   0 R F                         0000000000100           
+EQ 1 SSSRN    3   0   0   0 R   NCFX16(1,1)             0000000000100           
+VA   NCFX17   5   5   0   0 R F                         0000000000100           
+EQ 1 NIIMB    5   0   0   0 R   NCFX17(1,1)             0000000000100           
+VA   NCFX18   5   5   0   0 R F                         0000000000100           
+EQ 1 AMVOL    5   0   0   0 R   NCFX18(1,1)             0000000000100           
+VA   NCFX19   5   5   0   0 R F                         0000000000100           
+EQ 1 REFRON   5   0   0   0 R   NCFX19(1,1)             0000000000100           
+VA   NCFX20   5   5   0   0 R F                         0000000000100           
+EQ 1 NIUPA    5   0   0   0 R   NCFX20(1,1)             0000000000100           
+VA   NCFX21   5   5   0   0 R F                         0000000000100           
+EQ 1 AMUPA    5   0   0   0 R   NCFX21(1,1)             0000000000100           
+VA   NCFX22   5   5   0   0 R F                         0000000000100           
+EQ 1 NIUPB    5   0   0   0 R   NCFX22(1,1)             0000000000100           
+VA   NCFX23   5   5   0   0 R F                         0000000000100           
+EQ 1 AMUPB    5   0   0   0 R   NCFX23(1,1)             0000000000100           
+VA   NCFX24   1   5   0   0 R F                         0000000000100           
+EQ 1 RETAGN   0   0   0   0 R   NCFX24(1,1)             0000000000100           
+VA   NCFX25   3   5   0   0 R F                         0000000000100           
+EQ 1 RTLLN    3   0   0   0 R   NCFX25(1,1)             0000000000100           
+VA   NCFX26   3   5   0   0 R F                         0000000000100           
+EQ 1 RTRLN    3   0   0   0 R   NCFX26(1,1)             0000000000100           
+VA   NCFX27   5   5   0   0 R F                         0000000000100           
+EQ 1 RTLBN    5   0   0   0 R   NCFX27(1,1)             0000000000100           
+VA   NCFX28   5   5   0   0 R F                         0000000000100           
+EQ 1 RTRBN    5   0   0   0 R   NCFX28(1,1)             0000000000100           
+VA 1 SOSEDN   0   0   0   0 R F                         0000000000100           
+VA 1 PONO3    0   0   0   0 R F                         0000000000100           
+VA 1 PONH4    0   0   0   0 R F                         0000000000100           
+VA 1 POORN    0   0   0   0 R F                         0000000000100           
+VA 1 PONITR   0   0   0   0 R F                         0000000000100           
+VA   SDNFP    3   0   0   0 I T NITR             SEDN   0000000000100           
+VA   TSAMSX   5   0   0   0 I T NITR             TSAMS  0000000000100           
+VA   SSAMSX   3   0   0   0 I T NITR             SSAMS  0000000000100           
+VA   TSNO3X   5   0   0   0 I T NITR             TSNO3  0000000000100           
+VA   SSNO3X   3   0   0   0 I T NITR             SSNO3  0000000000100           
+VA   DENIFX   5   0   0   0 I T NITR             DENIF  0000000000100           
+VA   TDNIFP   0   0   0   0 I T NITR             TDENIF 0000000000100           
+VA   AMNITX   5   0   0   0 I T NITR             AMNIT  0000000000100           
+VA   AMIMBX   5   0   0   0 I T NITR             AMIMB  0000000000100           
+VA   ORNMNX   5   0   0   0 I T NITR             ORNMN  0000000000100           
+VA   NIADDX   3   2   0   0 I T NITR             NIADDR 0000000000100           
+VA   NIADWX   3   2   0   0 I T NITR             NIADWT 0000000000100           
+VA   NIADPX   3   2   0   0 I T NITR             NIADEP 0000000000100           
+VA   NFIXFP   5   0   0   0 I T NITR             NFIXFX 0000000000100           
+VA   TSSLNX   5   0   0   0 I T NITR             TSSLN  0000000000100           
+VA   SSSLNX   3   0   0   0 I T NITR             SSSLN  0000000000100           
+VA   TSSRNX   5   0   0   0 I T NITR             TSSRN  0000000000100           
+VA   SSSRNX   3   0   0   0 I T NITR             SSSRN  0000000000100           
+VA   NIIMBX   5   0   0   0 I T NITR             NIIMB  0000000000100           
+VA   AMVOLX   5   0   0   0 I T NITR             AMVOL  0000000000100           
+VA   RFRONX   5   0   0   0 I T NITR             REFRON 0000000000100           
+VA   NIUPAX   5   0   0   0 I T NITR             NIUPA  0000000000100           
+VA   AMUPAX   5   0   0   0 I T NITR             AMUPA  0000000000100           
+VA   NIUPBX   5   0   0   0 I T NITR             NIUPB  0000000000100           
+VA   AMUPBX   5   0   0   0 I T NITR             AMUPB  0000000000100           
+VA   RTAGNX   0   0   0   0 I T NITR             RETAGN 0000000000100           
+VA   RTLLNX   3   0   0   0 I T NITR             RTLLN  0000000000100           
+VA   RTRLNX   3   0   0   0 I T NITR             RTRLN  0000000000100           
+VA   RTLBNX   5   0   0   0 I T NITR             RTLBN  0000000000100           
+VA   RTRBNX   5   0   0   0 I T NITR             RTRBN  0000000000100           
+VA   OSDNFP   0   0   0   0 I T NITR             SOSEDN 0000000000100           
+VA   PONIFP   0   0   0   0 I T NITR             PONO3  0000000000100           
+VA   POAMFP   0   0   0   0 I T NITR             PONH4  0000000000100           
+VA   POONFP   0   0   0   0 I T NITR             POORN  0000000000100           
+VA   PONFP    0   0   0   0 I T NITR             PONITR 0000000000100           
+                                                                                
+SE   CPLPH.INC                                                                  
+HE12        PHOS section                                                        
+VA   PHOIF    3   5   0   0 R F                         0000000000010           
+SP 1 IPO4     0   0   0         PHOIF(1,1)                                      
+SP 1 IORP     0   0   0         PHOIF(2,1)                                      
+SP 1 IPHOS    0   0   0         PHOIF(3,1)                                      
+VA   PHOIFX   3   0   0   0 I T PHOS             PHOIF  0000000000010           
+VA   PHOLIF   5   5   0   0 R F                         0000000000010           
+EQ 1 LIP4S    5   0   0   0 R   PHOLIF(1,1)             0000000000010           
+VA   PSDIF    2   5   0   0 R F                         0000000000010           
+EQ 1 LISEDP   2   0   0   0 R   PSDIF(1,1)              0000000000010           
+VA   LIP4SX   5   0   0   0 I T EXTNL            LIP4S  0000000000010           
+VA   LISDPX   2   0   0   0 I T EXTNL            LISEDP 0000000000010           
+VA   PHAFFP   2   2   0   0 I T EXTNL            PHADFX 0000000000010           
+VA   PHACFP   2   2   0   0 I T EXTNL            PHADCN 0000000000010           
+VA 1 VPUTFG   0   0   0   0 I P                         0000000000010           
+EQ 1 PHOFG    6   0   0   0 I   VPUTFG                  0000000000010           
+VA 1 FORPFG   0   0   0   0 I P                         0000000000010           
+VA 1 ITMAXP   0   0   0   0 I P                         0000000000010           
+VA 1 BNUMP    0   0   0   0 I P                         0000000000010           
+VA 1 CNUMP    0   0   0   0 I P                         0000000000010           
+VA 1 PUPTFG   0   0   0   0 I P                         0000000000010           
+VA 1 PHADFG   8   0   0   0 I P                         0000000000010           
+VA 1 PUPTGT   0   0   0   0 R P                         0000000000010           
+EQ 1 PYLDPM   2   0   0   0 R   PUPTGT                  0000000000010           
+VA 1 PMXRAT   0   0   0   0 R P                         0000000000010           
+VA 1 PHAFXM  12   2   2   0 R P                         0000000000010           
+VA 1 PHACNM  12   2   2   0 R P                         0000000000010           
+VA 1 SKPLPM  12   0   0   0 R P                         0000000000010           
+VA 1 UKPLPM  12   0   0   0 R P                         0000000000010           
+VA 1 LKPLPM  12   0   0   0 R P                         0000000000010           
+VA 1 AKPLPM  12   0   0   0 R P                         0000000000010           
+VA 1 PUPTFM  12   0   0   0 R P                         0000000000010           
+VA 1 SPUPTM  12   0   0   0 R P                         0000000000010           
+VA 1 UPUPTM  12   0   0   0 R P                         0000000000010           
+VA 1 LPUPTM  12   0   0   0 R P                         0000000000010           
+VA 1 APUPTM  12   0   0   0 R P                         0000000000010           
+VA 1 GPPM     6   0   0   0 R P                         0000000000010           
+SP 1 THPLP    0   0   0         GPPM(1)                                         
+SP 1 THKDSP   0   0   0         GPPM(2)                                         
+SP 1 THKADP   0   0   0         GPPM(3)                                         
+SP 1 THKIMP   0   0   0         GPPM(4)                                         
+SP 1 THKMP    0   0   0         GPPM(5)                                         
+SP 1 CMAXP    0   0   0         GPPM(6)                                         
+VA 1 SPPM     8   0   0   0 R P                         0000000000010           
+SP 1 SKDSP    0   0   0         SPPM(1)                                         
+SP 1 SKADP    0   0   0         SPPM(2)                                         
+SP 1 SKIMP    0   0   0         SPPM(3)                                         
+SP 1 SKMP     0   0   0         SPPM(4)                                         
+SP 1 SXFIXP   0   0   0         SPPM(5)                                         
+SP 1 SXMAXP   0   0   0         SPPM(6)                                         
+SP 1 SKF1P    0   0   0         SPPM(7)                                         
+SP 1 SN1IP    0   0   0         SPPM(8)                                         
+VA 1 UPPM     8   0   0   0 R P                         0000000000010           
+SP 1 UKDSP    0   0   0         UPPM(1)                                         
+SP 1 UKADP    0   0   0         UPPM(2)                                         
+SP 1 UKIMP    0   0   0         UPPM(3)                                         
+SP 1 UKMP     0   0   0         UPPM(4)                                         
+SP 1 UXFIXP   0   0   0         UPPM(5)                                         
+SP 1 UXMAXP   0   0   0         UPPM(6)                                         
+SP 1 UKF1P    0   0   0         UPPM(7)                                         
+SP 1 UN1IP    0   0   0         UPPM(8)                                         
+VA 1 LPPM     8   0   0   0 R P                         0000000000010           
+SP 1 LKDSP    0   0   0         LPPM(1)                                         
+SP 1 LKADP    0   0   0         LPPM(2)                                         
+SP 1 LKIMP    0   0   0         LPPM(3)                                         
+SP 1 LKMP     0   0   0         LPPM(4)                                         
+SP 1 LXFIXP   0   0   0         LPPM(5)                                         
+SP 1 LXMAXP   0   0   0         LPPM(6)                                         
+SP 1 LKF1P    0   0   0         LPPM(7)                                         
+SP 1 LN1IP    0   0   0         LPPM(8)                                         
+VA 1 APPM     8   0   0   0 R P                         0000000000010           
+SP 1 AKDSP    0   0   0         APPM(1)                                         
+SP 1 AKADP    0   0   0         APPM(2)                                         
+SP 1 AKIMP    0   0   0         APPM(3)                                         
+SP 1 AKMP     0   0   0         APPM(4)                                         
+SP 1 AXFIXP   0   0   0         APPM(5)                                         
+SP 1 AXMAXP   0   0   0         APPM(6)                                         
+SP 1 AKF1P    0   0   0         APPM(7)                                         
+SP 1 AN1IP    0   0   0         APPM(8)                                         
+VA 1 BIVLP    0   0   0   0 I S                         0000000000010           
+VA 1 CIVLP    0   0   0   0 I S                         0000000000010           
+VA   PWCNT    7   0   0   0 I S                         0000000000010           
+VA   PECNT    1   0   0   0 I S                         0000000000010           
+VA 1 SP       4   0   0   0 R S                         0000000000010           
+SP 1 SORGP    0   0   0         SP(1)                                           
+SP 1 SP4AD    0   0   0         SP(2)                                           
+SP 1 SP4SU    0   0   0         SP(3)                                           
+SP 1 SPLTP    0   0   0         SP(4)                                           
+VA 1 UP       4   0   0   0 R S                         0000000000010           
+SP 1 UORGP    0   0   0         UP(1)                                           
+SP 1 UP4AD    0   0   0         UP(2)                                           
+SP 1 UP4SU    0   0   0         UP(3)                                           
+SP 1 UPLTP    0   0   0         UP(4)                                           
+VA 1 IP       0   0   0   0 R S                         0000000000010           
+SP 1 IP4SU    0   0   0         IP                                              
+VA 1 LP       4   0   0   0 R S                         0000000000010           
+SP 1 LORGP    0   0   0         LP(1)                                           
+SP 1 LP4AD    0   0   0         LP(2)                                           
+SP 1 LP4SU    0   0   0         LP(3)                                           
+SP 1 LPLTP    0   0   0         LP(4)                                           
+VA 1 AP       4   0   0   0 R S                         0000000000010           
+SP 1 AORGP    0   0   0         AP(1)                                           
+SP 1 AP4AD    0   0   0         AP(2)                                           
+SP 1 AP4SU    0   0   0         AP(3)                                           
+SP 1 APLTP    0   0   0         AP(4)                                           
+VA 1 TP       4   0   0   0 R S                         0000000000010           
+SP 1 TORGP    0   0   0         TP(1)                                           
+SP 1 TP4AD    0   0   0         TP(2)                                           
+SP 1 TP4SU    0   0   0         TP(3)                                           
+SP 1 TPLTP    0   0   0         TP(4)                                           
+VA 1 TPHO     5   0   0   0 R S                         0000000000010           
+VA   TOTP     5   0   0   0 R S                         0000000000010           
+EQ 1 TOTPHO   0   0   0   0 R   TOTP(1)                 0000000000010           
+VA 1 SPDFC    0   0   0   0 R S                         0000000000010           
+EQ 1 PDFCT    5   0   0   0 R   SPDFC                   0000000000010           
+VA 1 UPDFC    0   0   0   0 R S                         0000000000010           
+VA 1 LPDFC    0   0   0   0 R S                         0000000000010           
+VA 1 APDFC    0   0   0   0 R S                         0000000000010           
+VA 1 TPDFC    0   0   0   0 R S                         0000000000010           
+VA   SPFP     4   0   0   0 I T PHOS             SP     0000000000010           
+VA   UPFP     4   0   0   0 I T PHOS             UP     0000000000010           
+VA   IPFP     0   0   0   0 I T PHOS             IP     0000000000010           
+VA   LPFP     4   0   0   0 I T PHOS             LP     0000000000010           
+VA   APFP     4   0   0   0 I T PHOS             AP     0000000000010           
+VA   TPFP     4   0   0   0 I T PHOS             TP     0000000000010           
+VA   TPHFP    5   0   0   0 I T PHOS             TPHO   0000000000010           
+VA   TPHOFP   0   0   0   0 I T PHOS             TOTPHO 0000000000010           
+VA   PDFCTX   5   0   0   0 I T PHOS             PDFCT  0000000000010           
+VA 1 SKPLP    0   0   0   0 R F                         0000000000010           
+EQ 1 KPLP     4   0   0   0 R   SKPLP                   0000000000010           
+VA 1 UKPLP    0   0   0   0 R F                         0000000000010           
+VA 1 LKPLP    0   0   0   0 R F                         0000000000010           
+VA 1 AKPLP    0   0   0   0 R F                         0000000000010           
+VA 1 SPUPTG   0   0   0   0 R S                         0000000000010           
+EQ 1 PUPTG    4   0   0   0 R   SPUPTG                  0000000000010           
+VA 1 UPUPTG   0   0   0   0 R S                         0000000000010           
+VA 1 LPUPTG   0   0   0   0 R S                         0000000000010           
+VA 1 APUPTG   0   0   0   0 R S                         0000000000010           
+VA   PUPTGX   4   0   0   0 I T PHOS             PUPTG  0000000000010           
+VA 1 SPPUTG   0   0   0   0 R S                         0000000000010           
+VA 1 UPPUTG   0   0   0   0 R S                         0000000000010           
+VA 1 LPPUTG   0   0   0   0 R S                         0000000000010           
+VA 1 APPUTG   0   0   0   0 R S                         0000000000010           
+VA 1 SPRXF    5   0   0   0 R F                         0000000000010           
+VA 1 UPRXF    5   0   0   0 R F                         0000000000010           
+VA 1 LPRXF    5   0   0   0 R F                         0000000000010           
+VA 1 APRXF    5   0   0   0 R F                         0000000000010           
+VA   PCFX1    2   5   0   0 R F                         0000000000010           
+EQ 1 SEDP     2   0   0   0 R   PCFX1(1,1)              0000000000010           
+VA   PCFX2    5   5   0   0 R F                         0000000000010           
+EQ 1 TSP4S    5   0   0   0 R   PCFX2(1,1)              0000000000010           
+VA   PCFX3    3   5   0   0 R F                         0000000000010           
+EQ 1 SSP4S    3   0   0   0 R   PCFX3(1,1)              0000000000010           
+VA   PCFX4    5   5   0   0 R F                         0000000000010           
+EQ 1 P4IMB    5   0   0   0 R   PCFX4(1,1)              0000000000010           
+VA   PCFX5    5   5   0   0 R F                         0000000000010           
+EQ 1 ORPMN    5   0   0   0 R   PCFX5(1,1)              0000000000010           
+VA 1 SOSEDP   0   0   0   0 R F                         0000000000010           
+VA 1 POPHOS   0   0   0   0 R F                         0000000000010           
+VA   PCFX6    2   2   5   0 R F                         0000000000010           
+EQ 1 PHADDR   2   2   0   0 R   PCFX6(1,1,1)            0000000000010           
+VA   PCFX7    2   2   5   0 R F                         0000000000010           
+EQ 1 PHADWT   2   2   0   0 R   PCFX7(1,1,1)            0000000000010           
+VA 1 PHADEP   2   2   0   0 R F                         0000000000010           
+VA   SDPFP    2   0   0   0 I T PHOS             SEDP   0000000000010           
+VA   TSP4SX   5   0   0   0 I T PHOS             TSP4S  0000000000010           
+VA   SSP4SX   3   0   0   0 I T PHOS             SSP4S  0000000000010           
+VA   P4IMBX   5   0   0   0 I T PHOS             P4IMB  0000000000010           
+VA   ORPMNX   5   0   0   0 I T PHOS             ORPMN  0000000000010           
+VA   OSDPFP   0   0   0   0 I T PHOS             SOSEDP 0000000000010           
+VA   POPFP    0   0   0   0 I T PHOS             POPHOS 0000000000010           
+VA   PHADDX   2   2   0   0 I T PHOS             PHADDR 0000000000010           
+VA   PHADWX   2   2   0   0 I T PHOS             PHADWT 0000000000010           
+VA   PHADPX   2   2   0   0 I T PHOS             PHADEP 0000000000010           
+                                                                                
+SE   CPLTR.INC                                                                  
+HE13        TRACER section                                                      
+VA   TRLIF    5   5   0   0 R F                         0000000000001           
+EQ 1 LITRS    5   0   0   0 R   TRLIF(1,1)              0000000000001           
+VA   LITRSX   5   0   0   0 I T EXTNL            LITRS  0000000000001           
+VA   TRAFFP   2   0   0   0 I T EXTNL            TRADFX 0000000000001           
+VA   TRACFP   2   0   0   0 I T EXTNL            TRADCN 0000000000001           
+VA 1 TRADFG   4   0   0   0 I P                         0000000000001           
+VA   TRACID   5   0   0   0 R P                         0000000000001           
+VA 1 TRAFXM  12   2   0   0 R P                         0000000000001           
+VA 1 TRACNM  12   2   0   0 R P                         0000000000001           
+VA   TRWCNT   1   0   0   0 I S                         0000000000001           
+VA 1 STRSU    0   0   0   0 R S                         0000000000001           
+EQ 1 TRST1    5   0   0   0 R   STRSU                   0000000000001           
+VA 1 UTRSU    0   0   0   0 R S                         0000000000001           
+VA 1 ITRSU    0   0   0   0 R S                         0000000000001           
+VA 1 LTRSU    0   0   0   0 R S                         0000000000001           
+VA 1 ATRSU    0   0   0   0 R S                         0000000000001           
+VA   TOTTR    5   0   0   0 R S                         0000000000001           
+EQ 1 TRSU     0   0   0   0 R   TOTTR(1)                0000000000001           
+VA   STRSFP   0   0   0   0 I T TRACER           STRSU  0000000000001           
+VA   UTRSFP   0   0   0   0 I T TRACER           UTRSU  0000000000001           
+VA   ITRSFP   0   0   0   0 I T TRACER           ITRSU  0000000000001           
+VA   LTRSFP   0   0   0   0 I T TRACER           LTRSU  0000000000001           
+VA   ATRSFP   0   0   0   0 I T TRACER           ATRSU  0000000000001           
+VA   TRSUFP   0   0   0   0 I T TRACER           TRSU   0000000000001           
+VA   TRCFX1   5   5   0   0 R F                         0000000000001           
+EQ 1 TSTRS    5   0   0   0 R   TRCFX1(1,1)             0000000000001           
+VA   TRCFX2   3   5   0   0 R F                         0000000000001           
+EQ 1 SSTRS    5   0   0   0 R   TRCFX2(1,1)             0000000000001           
+VA 1 POTRS    0   0   0   0 R F                         0000000000001           
+VA   TRCFX3   2   5   0   0 R F                         0000000000001           
+EQ 1 TRADDR   2   0   0   0 R   TRCFX3(1,1)             0000000000001           
+VA   TRCFX4   2   5   0   0 R F                         0000000000001           
+EQ 1 TRADWT   2   0   0   0 R   TRCFX4(1,1)             0000000000001           
+VA 1 TRADEP   2   0   0   0 R F                         0000000000001           
+VA   TSTRFP   5   0   0   0 I T TRACER           TSTRS  0000000000001           
+VA   SSTRFP   3   0   0   0 I T TRACER           SSTRS  0000000000001           
+VA   POTRFP   0   0   0   0 I T TRACER           POTRS  0000000000001           
+VA   TRADDX   2   0   0   0 I T TRACER           TRADDR 0000000000001           
+VA   TRADWX   2   0   0   0 I T TRACER           TRADWT 0000000000001           
+VA   TRADPX   2   0   0   0 I T TRACER           TRADEP 0000000000001           
+WR                                                                              
