@@ -22,7 +22,8 @@ C     + + + LOCAL VARIABLES + + +
      $             SECSIZ(MXSECT),SECSKP(MXSECT,MXSECT),DUMCNT,EQUPTR,
      $             VARADD(MXVAR),EQUADD(MXEQU),SPADD(MXSPA),PARCNT,
      $             PARVAL(MXPARM),PARFIL(MXPARM),PARFCT,PARWRI,PARDEC,
-     $             PARUSE(MXPARM,MXSECT),PARFUS(MXPARM,MXSECT)
+     $             PARUSE(MXPARM,MXSECT),PARFUS(MXPARM,MXSECT),ADDFL,
+     $             IERROR,ECHOFL
       CHARACTER*1  VARTYP(MXVAR),VARCOD(MXVAR),EQUTYP(MXEQU),CR
       CHARACTER*4  VARSUB(4,MXVAR),EQUSUB(4,MXEQU),SPASUB(4,MXSPA),
      $             PARTAG(MXPARM)
@@ -80,6 +81,9 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      ILEN= 80
+      BUFF= 'C:\lib3.0\MkCom\PERLND\v12.3'
+      CALL PXFCHDIR (BUFF,ILEN,IERROR)
       INPFL= 10
       OPEN (UNIT=INPFL,FILE='MKCOM.INP',STATUS='OLD')
       OUTFL= 11
@@ -93,6 +97,10 @@ C
       OPEN (UNIT=SECSFL,FILE='MKCOM.SEC')
       NFL= 16
       OPEN (UNIT=NFL,FILE='MKCOM.N')
+      ADDFL= 17
+      OPEN (UNIT=ADDFL,FILE='MKCOM.ADD')
+      ECHOFL= 18
+      OPEN (UNIT=ECHOFL,FILE='MKCOM.ECHO')
 C
       I0= 0
       I1= 1
@@ -132,6 +140,7 @@ C     no parameters or parm files used
 C
  30   CONTINUE
         READ (INPFL,1000,END=200) BUFF
+        WRITE(ECHOFL,1000) BUFF
         IF (BUFF(1:2) .EQ. 'VA') THEN
 C         variable
           VARCNT= VARCNT+ 1
@@ -188,6 +197,8 @@ C           flag pointer loc needed for timser sections
      $                         VARADD(VARCNT),VARDEP(VARCNT),
      $                         VARSUB(1,VARCNT),VARSUB(2,VARCNT)
           END IF
+C
+          WRITE (ADDFL,2350) VARNAM(VARCNT), VARADD(VARCNT)
 C
           IF ( (SPAFG .EQ. 1) .OR. (SPAFG .EQ. 3) ) THEN
 C           info for special actions
