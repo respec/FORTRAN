@@ -51,8 +51,8 @@ C            PEST section
      $              PSCFX2(5,3,5),PSCFX3(3,3,5),PSCFX4(5,3,5),
      $              SOSDPS(3),SOPEST(3),POPST(3),TOPST(3),
      $              PSCFX5(3,3,5),PSCFX6(3,3,5),PEADEP(3,3)
-      INTEGER       DUM1(3),DUM2(28),DUM3(652),DUM4(464),DUM5(12),
-     $              DUM6(79),DUM7(8),DUM8(2186),DUMPER(13294)
+      INTEGER       DUM1(3),DUM2(28),DUM3(652),DUM4(463),DUM5(12),
+     $              DUM6(79),DUM7(8),DUM8(2186),DUMPER(13295)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(PREC,SNIF),(SOILM,SLME),

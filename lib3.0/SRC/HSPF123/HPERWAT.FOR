@@ -25,7 +25,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER1 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    TBSB,TBNO,NVAL,SCLU,SGRP,I,J,RDFLAG,STABNO,IRRPRI(3),
-     $           ANNFLG,N
+     $           ANNFLG,N,ID
       REAL       AGWRC,RVAL(140),UELVM,AGWSMX,IRRFRC(3),IRRTOT(3),R,
      $           PELEV(6),PFAC
 C
@@ -54,6 +54,7 @@ C
 C     + + + HISTORY + + +
 C     2002  THJ added optional LZET method for IHM; selected with VLEFG = 2,3
 C     5/2004 brb added optional infiltration redistribution method to LZONE
+C     4/2011  jlk - add canopy layers
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -153,7 +154,7 @@ C     convert to internal units
 C
 C     groundwater recession parameters
       AGWRC= PWPM2(7)
-      KGW= 1.0- AGWRC**(DELT60/24.0)
+      KGW  = 1.0- AGWRC**(DELT60/24.0)
 C
 C     process values in table - type pwat-parm3
       TBNO= 15
@@ -168,14 +169,39 @@ C       process values in table - type pwat-parm4
         TBSB= 1
         NVAL= 6
         CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
-     M               PWST5)
+     M               RVAL)
+        CEPSC(1)= RVAL(1)
+        UZSN    = RVAL(2)
+        NSUR    = RVAL(3)
+        INTFG   = RVAL(4)
+        IRC     = RVAL(5)
+        LZETP   = RVAL(6)
       ELSE
 C       dummy values until dayval is called on first interval
-        DO 20 I= 1, 6
+        DO 20 I= 1, 10
           PWST5(I)= 0.0
  20     CONTINUE
       END IF
 C
+C     table PWAT-CANOPY
+      DO I= 1, NCANPY
+        TBNO= 40
+        TBSB= I
+        NVAL= 6
+        CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M               RVAL)
+        ID         = RVAL(4)
+        IF (ID .NE. I) THEN
+C         id does not match layer - need an official error here
+          WRITE(MESSU,*) "******** LAYER PROBLEM *************", ID, I          
+        END IF
+        CANNAM(1,I)= RVAL(1)
+        CANNAM(2,I)= RVAL(2)
+        CANNAM(3,I)= RVAL(3)
+        CEPSC(I)   = RVAL(5)
+        CEPS(I)    = RVAL(6)
+      END DO
+C      
 C     process values in table - type pwat-parm5
 C     fzg and fzgl - frozen ground parameters for
 C     corps of engineers - chicago district 10/93
@@ -250,11 +276,13 @@ C       process ftable
 C
       IF (VCSFG .EQ. 1) THEN
 C       get monthly interception storage capacity - table-type mon-intercep
-        TBNO= 21
-        TBSB= 1
-        NVAL= 12
-        CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
-     M               CEPSCM)
+        DO I= 1, NCANPY
+          TBNO= 21
+          TBSB= I
+          NVAL= 12
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 CEPSCM(1,I))
+        END DO
       END IF
 C
       IF (VUZFG .EQ. 1) THEN
@@ -722,7 +750,7 @@ C         error - gw is below datum - cannot track
       END IF
 C
 C     total storage in the pls
-      PERS= CEPS+ SURS+ IFWS+ UZS+ LZS+ TGWS
+      PERS= CALCPERS(NCANPY,CEPS,SURS,IFWS,UZS,LZS,TGWS)
 C
       IF (OUTLEV .GT. 1) THEN
 C       end processing section message
@@ -1231,18 +1259,18 @@ C     + + + EXTERNALS + + +
 C
 C     + + + HISTORY + + +
 C     5/2004  (brb) IFRDFG added to call to subr LZONE for IHM infilt redistrib method
+C     4/2011  jlk - add canopy layers
 C
 C     + + + END SPECIFICATIONS + + +
 C
 C     simulate interception
       CALL ICEPT (VCSFG,DAYFG,CEPSCM,MON,NXTMON,DAY,NDAYS,SUPY,
-     I            IRRAPP(1),
      M            CEPSC,CEPS,
      O            CEPO)
 C
 C     surface inflow is the sum of interception outflow and surface
 C     lateral inflow (if any)
-      SURI= CEPO+ SURLI
+      SURI= CEPO(NCANPY)+ SURLI
 C
 C     Msupy is used below and again in subroutine group surfac
 C     it includes irrigation application not subject
@@ -1340,7 +1368,7 @@ C     net input of water to the pervious land segment
       WATDIF= WATIN- (PERO+ IGWI+ TAET+ IRDRAW(2))
 C
 C     total moisture storage
-      PERS= CEPS+ SURS+ IFWS+ UZS+ LZS+ TGWS
+      PERS= CALCPERS(NCANPY,CEPS,SURS,IFWS,UZS,LZS,TGWS)
 C
       RETURN
       END
@@ -1368,6 +1396,7 @@ C     + + + EXTERNALS + + +
 C
 C     + + + HISTORY + + +
 C     5/2004  (brb) IFRDFG added to call to subr LZONE for IHM infilt redistrib method
+C     4/2011  jlk - add canopy layers
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1441,13 +1470,13 @@ C         currently above UELV
 C
 C     simulate interception 
       CALL ICEPT (VCSFG,DAYFG,CEPSCM,MON,NXTMON,DAY,NDAYS,SUPY,
-     I            IRRAPP(1),
+     I            IRRAPP(1),NCANPY,
      M            CEPSC,CEPS,
      O            CEPO)
 C
 C     surface inflow is the sum of interception outflow and surface
 C     lateral inflow (if any)
-      SURI= CEPO+ SURLI
+      SURI= CEPO(NCANPY)+ SURLI
 C
 C     Msupy is used below and again in subroutine group surfac
 C     it includes irrigation application not subject
@@ -1573,7 +1602,7 @@ C     net input of water to the pervious land segment
       WATDIF= WATIN- (PERO+ IGWI+ TAET+ IRDRAW(2))
 C
 C     total moisture storage
-      PERS= CEPS+ SURS+ IFWS+ UZS+ LZS+ TGWS
+      PERS= CALCPERS(NCANPY,CEPS,SURS,IFWS,UZS,LZS,TGWS)
 C
       RETURN
       END
@@ -1699,6 +1728,7 @@ C
      I                    (PET,BASETP,UZSN,AGWETP,KVARY,DAYFG,VLEFG,
      I                     LZETPM,MON,NXTMON,DAY,NDAYS,LZSN,DELT60,
      I                     ULGWS,LLGWS,SELV,UELV,LELV,UPGW,PGW,IFWS,
+     I                     NCANPY,
      M                     AGWO,CEPS,UZS,AGWS,TGWS,GWVS,LZETP,RPARM,
      M                     LZS,SURS,GWEL,
      O                     REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET,
@@ -1708,11 +1738,11 @@ C     + + + PURPOSE + + +
 C     Simulate evapotranspiration (ET) for high water table conditions.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    DAYFG,VLEFG,MON,NXTMON,DAY,NDAYS
+      INTEGER    DAYFG,VLEFG,MON,NXTMON,DAY,NDAYS,NCANPY
       REAL       PET,BASETP,UZSN,AGWETP,KVARY,LZETPM(12),LZSN,DELT60,
-     $           ULGWS,LLGWS,SELV,UELV,LELV,UPGW,PGW,IFWS,AGWO,CEPS,
+     $           ULGWS,LLGWS,SELV,UELV,LELV,UPGW,PGW,IFWS,AGWO,CEPS(5),
      $           UZS,AGWS,TGWS,GWVS,LZETP,RPARM,LZS,SURS,GWEL,REMPET,
-     $           TAET,BASET,CEPE,UZET,AGWET,LZET,SURET
+     $           TAET,BASET,CEPE(5),UZET,AGWET,LZET,SURET
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     PET    - potential evaporation
@@ -1760,6 +1790,9 @@ C
 C     + + + EXTERNALS + + +
       EXTERNAL   ETBASE,EVICEP,EVSUR,ETUZON,ETLZON,ETAGW
 C
+C     + + + HISTORY + + +
+C     4/2011  jlk - add canopy layers
+C
 C     + + + END SPECIFICATIONS + + +
 C
 C     Taet is total actual et - inches/ivl
@@ -1775,7 +1808,8 @@ C
         IF (REMPET .GT. 0.0) THEN
 C         simulate evaporation from interception
           CALL EVICEP
-     M                (CEPS,REMPET,TAET,
+     I                (NCANPY,
+     M                 CEPS,REMPET,TAET,
      O                 CEPE)
 C
           IF (REMPET .GT. 0.0) THEN
@@ -3349,7 +3383,8 @@ C
         IF (REMPET .GT. 0.0) THEN
 C         simulate evaporation from interception
           CALL EVICEP
-     M               (CEPS,REMPET,TAET,
+     I               (NCANPY,
+     M                CEPS,REMPET,TAET,
      O                CEPE)
 C
           IF (REMPET .GT. 0.0) THEN
@@ -3414,44 +3449,55 @@ C
 C
 C
       SUBROUTINE   EVICEP
-     M                    (CEPS,REMPET,TAET,
+     I                    (NCANPY,
+     M                     CEPS,REMPET,TAET,
      O                     CEPE)
 C
 C     + + + PURPOSE + + +
 C     Simulate evaporation from interception storage.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      REAL       CEPE,CEPS,REMPET,TAET
+      INTEGER    NCANPY
+      REAL       CEPE(5),CEPS(5),REMPET,TAET
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     CEPS   - ???
-C     REMPET - ???
-C     TAET   - ???
-C     CEPE   - ???
+C     NCANPY - number of canopy layers
+C     CEPS   - interception storage by layer
+C     REMPET - remaining pet
+C     TAET   - total actual et
+C     CEPE   - et by layer
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+C      
+C     + + + HISTORY + + +
+C     4/2011  jlk - add canopy layers
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (CEPS .GT. 0.0) THEN
-C       there is something in interception storage to evaporate
-        IF (REMPET .GT. CEPS) THEN
-C         evaporation from interception storage is limited
-C         by quantity available
-          CEPE= CEPS
-          CEPS= 0.0
-        ELSE
-C         interception evaporation will not exhaust storage, so
-C         empty at potential
-          CEPE= REMPET
-          CEPS= CEPS- CEPE
-        END IF
+      DO I = 1, NCANPY
+        IF (CEPS(I) .GT. 0.0) THEN
+C         there is something in interception storage to evaporate
+          IF (REMPET .GT. CEPS(I)) THEN
+C           evaporation from interception storage is limited
+C           by quantity available
+            CEPE(I)= CEPS(I)
+            CEPS(I)= 0.0
+          ELSE
+C           interception evaporation will not exhaust storage, so
+C           empty at potential
+            CEPE(I)= REMPET
+            CEPS(I)= CEPS(I)- CEPE(I)
+          END IF
 C
-C       update totals
-        TAET= TAET+ CEPE
-        REMPET= REMPET- CEPE
-      ELSE
-C       there is no evaporation from interception storage
-        CEPE= 0.0
-      END IF
+C         update totals
+          TAET  = TAET+ CEPE(I)
+          REMPET= REMPET- CEPE(I)
+        ELSE
+C         there is no evaporation from interception storage in this layer
+          CEPE(I)= 0.0
+        END IF
+      END DO
 C
       RETURN
       END
@@ -3592,7 +3638,7 @@ C
 C
       SUBROUTINE   ICEPT
      I                   (VCSFG,DAYFG,CEPSCM,MON,NXTMON,DAY,NDAYS,SUPY,
-     I                    IRRCEP,
+     I                    IRRCEP,NCANPY,
      M                    CEPSC,CEPS,
      O                    CEPO)
 C
@@ -3601,22 +3647,27 @@ C     Simulate the interception of moisture by vegetal or other
 C     ground cover.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    VCSFG,DAYFG,MON,NXTMON,DAY,NDAYS
-      REAL       CEPSCM(12),SUPY,IRRCEP,CEPSC,CEPS,CEPO
+      INTEGER    VCSFG,DAYFG,MON,NXTMON,DAY,NDAYS,NCANPY
+      REAL       CEPSCM(12,5),SUPY,IRRCEP,CEPSC(5),CEPS(5),CEPO(5)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     VCSFG  - ???
+C     VCSFG  - intercepton storage varies montly flag
 C     DAYFG  - flag for first day or day change
-C     CEPSCM - ???
+C     CEPSCM - monthly interception storage values
 C     MON    - calendar month
 C     NXTMON - next calendar month
 C     DAY    - day of month
 C     NDAYS  - no. of days in this month
-C     SUPY   - ???
+C     SUPY   - moisture supply
 C     IRRCEP - irrigation application subject to interception
-C     CEPSC  - ???
-C     CEPS   - ???
-C     CEPO   - ???
+C     NCANPY - number of canopy layers
+C     CEPSC  - interception storage capacity
+C     CEPS   - interception storage
+C     CEPO   - outflow from interception storage
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    I
+      REAL       LSUPY
 C
 C     + + + FUNCTIONS + + +
       REAL       DAYVAL
@@ -3633,22 +3684,28 @@ C         interception capacity allowed to vary throughout the year
 C         interpolate for the daily value
 C         linearly interpolate cepsc between two values from the
 C         monthly array cepscm(12)
-          CEPSC= DAYVAL (CEPSCM(MON),CEPSCM(NXTMON),DAY,NDAYS)
+          DO I = 1, NCANPY
+            CEPSC(I)= DAYVAL (CEPSCM(MON,I),CEPSCM(NXTMON,I),DAY,NDAYS)
+          END DO
         ELSE
 C         interception capacity does not vary throughout the year
 C         cepsc value has been supplied by the run interpreter
         END IF
       END IF
 C
-C     add to interception storage
-      CEPS= CEPS+ SUPY+ IRRCEP
-      IF (CEPS .GT. CEPSC) THEN
-C       there is outflow from interception storage
-        CEPO= CEPS- CEPSC
-        CEPS= CEPSC
-      ELSE
-        CEPO= 0.0
-      END IF
+C     add to interception storage in each layer
+      LSUPY= SUPY+ IRRCEP
+      DO I = 1, NCANPY
+        CEPS(I)= CEPS(I)+ LSUPY
+        IF (CEPS(I) .GT. CEPSC(I)) THEN
+C         there is outflow from interception storage
+          CEPO(I)= CEPS(I)- CEPSC(I)
+          CEPS(I)= CEPSC(I)
+        ELSE
+          CEPO(I)= 0.0
+        END IF
+        LSUPY= CEPO(I)
+      END DO
 C
       RETURN
       END
@@ -5175,6 +5232,10 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER2 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     I
+      REAL        CEPET
+C      
+C     + + + HISTORY + + +
+C     4/2011  jlk - add canopy layers
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -5246,8 +5307,15 @@ C
         PAD(BASEFP+ IVL1)= BASET
       END IF
 C
-      IF (CEFP .GE. 1) THEN
-        PAD(CEFP+ IVL1)= CEPE
+      CEPET= 0.0
+      DO I = 1, NCANPY
+        IF (CEFP(I) .GE. 1) THEN
+          PAD(CEFP(I)+ IVL1)= CEPE(I)
+          CEPET= CEPET+ CEPE(I)
+        END IF
+      END DO
+      IF (CETFP .GE. 1) THEN
+        PAD(CETFP+ IVL1)= CEPET
       END IF
 C
       IF (SEFP .GE. 1) THEN
@@ -5300,11 +5368,25 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER2 + + +
       INCLUDE   'cplpw.inc'
       INCLUDE   'cmpad.inc'
 C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     I
+      REAL        CEPST
+C    
+C     + + + HISTORY + + +
+C     4/2011  jlk - add canopy layers
+C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (CEPSFP .GE. 1) THEN
-        PAD(CEPSFP+ IVL1)= CEPS
-      END IF
+      CEPST= 0.0
+      DO I = 1, NCANPY
+        IF (CEPSFP(I) .GE. 1) THEN
+          PAD(CEPSFP(I)+ IVL1)= CEPS(I)
+          CEPST= CEPST+ CEPS(I)
+        END IF
+      END DO
+      IF (CESTFP .GE. 1) THEN
+        PAD(CESTFP+ IVAL1) = CEPST
+      END IF 
 C
       IF (UZSFP .GE. 1) THEN
         PAD(UZSFP+ IVL1)= UZS
@@ -5353,6 +5435,44 @@ C
       IF (RZWSFP .GE. 1) THEN
         PAD(RZWSFP+ IVL1)= RZWS
       END IF
+C
+      RETURN
+      END
+C
+C
+C
+      REAL  FUNCTION   CALCPERS
+     I                         (NCANPY,CEPS,SURS,IFWS,UZS,LZS,TGWS)
+C
+C     + + + PURPOSE + + +
+C     calculate total moisture in the pls
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER    NCANPY
+      REAL       CEPS(5),SURS,IFWS,UZS,LZS,TGWS
+C
+C     + + + ARGUMENT DEFINTIONS + + +
+C     NCANPY - number of canopy layers
+C     CEPS   - upper zone nominal storage
+C     SURS   - initial upper zone storage
+C     IFWS   - ???
+C     UZS    - ???
+C     LZS    - ???
+C     TGWS   - ???
+C
+C     + + + LOCAL VARIABLES + + +
+      REAL       CEPST
+C      
+C     + + + HISTORY + + +
+C     4/2011  jlk - added to support canopy layers
+C
+C     + + + END SPECIFICATIONS + + +      
+C
+      CEPST= 0.0
+      DO I = 1, NCANPY
+        CEPST= CEPST+ CEPS(I)
+      END DO
+      CALCPERS= CEPST+ SURS+ IFWS+ UZS+ LZS+ TGWS
 C
       RETURN
       END
