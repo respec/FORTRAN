@@ -203,11 +203,10 @@ VA   PIRIF    5   0   0   0 R F                         0001000000000
 EQ 1 IRRINP   0   0   0   0 R   PIRIF(1)                0001000000000
 VA   IRRIFP   0   0   0   0 I T EXTNL            IRRINP 0001000000000
 VA 1 CSNOFG   0   0   0   0 I P                         0001101000000
-EQ 1 PWPM1   13   0   0   0 I   CSNOFG                  0001000000000
+EQ 1 PWPM1   14   0   0   0 I   CSNOFG                  0001000000000
 VA 1 RTOPFG   0   0   0   0 I P                         0001000000000
 VA 1 UZFG     0   0   0   0 I P                         0001000000000
 VA 1 VCSFG    0   0   0   0 I P                         0001000000000
-VA 1 NCANPY   0   0   0   0 I P                         0001000000000
 VA 1 VUZFG    0   0   0   0 I P                         0001000010000
 VA 1 VNNFG    0   0   0   0 I P                         0001000000000
 VA 1 VIFWFG   0   0   0   0 I P                         0001000000000
@@ -217,6 +216,8 @@ VA 1 IFFCFG   0   0   0   0 I P                         0001000000000
 VA 1 HWTFG    0   0   0   0 I P                         0001000000000
 VA 1 IRRGFG   0   0   0   0 I P                         0001000000000
 VA 1 IFRDFG   0   0   0   0 I P                         0001000000000
+VA 1 NCANPY   0   0   0   0 I P                         0001000000000
+VA 1 CANNAM   3   5   0   0 R P                         0001000000000
 VA 1 NSROWS   0   0   0   0 I P                         0001000000000
 VA 1 NSCOLS   0   0   0   0 I P                         0001000000000
 VA 1 NCRP     0   0   0   0 I P                         0001000000110
