@@ -1,6 +1,6 @@
-NQUAL       1679
-NQSD        1680
-NQOF        1681
-NQIF        1682
-NQGW        1683
-NPST        3738
+NQUAL       1678
+NQSD        1679
+NQOF        1680
+NQIF        1681
+NQGW        1682
+NPST        3737

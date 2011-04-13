@@ -31,8 +31,8 @@ C            MSTLAY section
      $              CFINMA,SLMPF,ULPF,LLPF,MST(5),FRAC(8)
       INTEGER       DUM1(249),DUM2(167),DUM3(91),DUM4(295),DUM5(15),
      $              DUM6(4),DUM7(15),DUM8(7),DUM9(60),DUM10(15),
-     $              DUM11(56),DUM12,DUM13(20),DUM14,DUM15(2357),
-     $              DUMPER(14407)
+     $              DUM11(56),DUM12,DUM13(19),DUM14,DUM15(2357),
+     $              DUMPER(14408)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(SURO,PWCF1(2,1)),(IFWO,PWCF1(3,1)),
