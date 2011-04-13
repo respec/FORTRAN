@@ -32,8 +32,8 @@ C            SEDMNT section
      $              KGER,JGER,COVERM(12),NVSIM(12),DETS,STCAP,COVER,
      $              SDCF1(2,5),SOSED,SDCF3(2,5)
       INTEGER       DUM1,DUM2,DUM3(125),DUM4(29),DUM5(40),DUM6(5),
-     $              DUM7(38),DUM8(502),DUM9(32),DUM10(11),DUM11(138),
-     $              DUM12(30),DUMPER(16822)
+     $              DUM7(38),DUM8(570),DUM9(40),DUM10(11),DUM11(162),
+     $              DUM12(42),DUMPER(16710)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(SURO,PWCF1(2,1)),(SLSED,SDIF),
