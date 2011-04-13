@@ -32,8 +32,8 @@ C            TRACER section
      $              STRSU,UTRSU,ITRSU,LTRSU,ATRSU,TOTTR(5),
      $              TRCFX1(5,5),TRCFX2(3,5),POTRS,TRCFX3(2,5),
      $              TRCFX4(2,5),TRADEP(2)
-      INTEGER       DUM1(3),DUM2(28),DUM3(3418),DUM4(505),DUM5(3201),
-     $              DUMPER(10514)
+      INTEGER       DUM1(3),DUM2(28),DUM3(3417),DUM4(505),DUM5(3201),
+     $              DUMPER(10515)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(PREC,SNIF),(LITRS,TRLIF(1,1)),

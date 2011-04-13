@@ -402,8 +402,7 @@ VA   PETFP    0   0   0   0 I T PWATER           PET    0001000000000
 VA   CEFP     5   0   0   0 I T PWATER           CEPE   0001000000000           
 VA   CETFP    0   0   0   0 I T PWATER                  0001000000000           
 VA   CESTFP   0   0   0   0 I T PWATER                  0001000000000           
-VA   CEPOFP   5   0   0   0 I T PWATER                  0001000000000           
-VA   CEOTFP   0   0   0   0 I T PWATER                  0001000000000           
+VA   CEPOFP   5   0   0   0 I T PWATER           CEPO   0001000000000           
 VA   SEFP     0   0   0   0 I T PWATER           SURET  0001000000000           
 VA   UEFP     0   0   0   0 I T PWATER           UZET   0001000000000           
 VA   LZETFP   0   0   0   0 I T PWATER           LZET   0001000000000           

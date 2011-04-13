@@ -60,9 +60,9 @@ C            PHOS section
      $              PCFX5(5,5),SOSEDP,POPHOS,PCFX6(2,2,5),
      $              PCFX7(2,2,5),PHADEP(2,2)
       INTEGER       DUM1(3),DUM2(28),DUM3(239),DUM4(400),DUM5(114),
-     $              DUM6,DUM7(341),DUM8(12),DUM9(79),DUM10(8),
+     $              DUM6,DUM7(340),DUM8(12),DUM9(79),DUM10(8),
      $              DUM11(2186),DUM12(505),DUM13(780),DUM14(16),
-     $              DUM15(1700),DUMPER(10700)
+     $              DUM15(1700),DUMPER(10701)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(PREC,SNIF),(SOILM,SLME),

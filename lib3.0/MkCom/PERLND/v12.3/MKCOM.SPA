@@ -239,673 +239,673 @@ IRRDEM              1118
 IRSHRT              1119
 IRDRAW   3          1128
 IRRAPP   6          1143
-SLSED               1217
-CRVFG               1223
-SEDPM1   3          1223
-VSIVFG              1224
-SDOPFG              1225
-SMPF                1226
-KRER                1227
-JRER                1228
-AFFIX               1229
-KSER                1230
-JSER                1231
-KGER                1232
-JGER                1233
-COVERM  12          1234
-NVSIM   12          1246
-DRYDFG              1258
-DETS                1259
-STCAP               1260
-COVER               1261
-WSSD                1265
-SCRSD               1266
-SOSED               1275
-DET                 1276
-NVSI                1277
-SLTVFG              1291
-PTPM1    4          1291
-ULTVFG              1292
-LGTVFG              1293
-TSOPFG              1294
-ASLTM   12          1295
-BSLTM   12          1307
-ULTP1M  12          1319
-ULTP2M  12          1331
-LGTP1M  12          1343
-LGTP2M  12          1355
-AIRTC               1367
-PTST1    4          1367
-SLTMP               1368
-ULTMP               1369
-LGTMP               1370
-AIRTCS              1371
-ASLT                1372
-PTST2    6          1372
-BSLT                1373
-ULTP1               1374
-ULTP2               1375
-LGTP1               1376
-LGTP2               1377
-SLITMP              1382
-ILITMP              1383
-ALITMP              1384
-SLIDOX              1385
-ILIDOX              1386
-ALIDOX              1387
-SLICO2              1388
-ILICO2              1389
-ALICO2              1390
-IDVFG               1400
-PGPM1    4          1400
-ICVFG               1401
-GDVFG               1402
-GCVFG               1403
-ELEVGC              1404
-IDOXPM  12          1405
-ICO2PM  12          1417
-ADOXPM  12          1429
-ACO2PM  12          1441
-LIFAC    4          1453
-SOTMP               1457
-PGST1    3          1457
-IOTMP               1458
-AOTMP               1459
-SODOX               1460
-PGST2    6          1460
-SOCO2               1461
-IODOX               1462
-IOCO2               1463
-AODOX               1464
-AOCO2               1465
-IDOXP               1466
-ICO2P               1467
-ADOXP               1468
-ACO2P               1469
-SOHT                1479
-IOHT                1480
-AOHT                1481
-POHT                1494
-SODOXM              1495
-SOCO2M              1496
-IODOXM              1497
-IOCO2M              1498
-AODOXM              1499
-AOCO2M              1500
-PODOXM              1525
-POCO2M              1526
-SLIQO   10          1539
-SLIQSP  10          1589
-ILIQC   10          1599
-ALIQC   10          1609
-PQADFG  20          1684
-VPFWFG  10          1724
-VPFSFG  10          1734
-VQOFG   10          1764
-VIQCFG  10          1794
-VAQCFG  10          1824
-PQAFXM  12  10      1874
-PQACNM  12  10      1994
-POTFWM  12  10      2114
-POTFSM  12  10      2234
-ACQOPM  12  10      2354
-REMQOM  12  10      2474
-WSFAC   10          2594
-IOQCM   12  10      2604
-AOQCM   12  10      2724
-SQO     10          2844
-POTFW   10          2854
-POTFS   10          2864
-ACQOP   10          2874
-REMQOP  10          2884
-IOQC    10          2894
-AOQC    10          2904
-SOQSP   10          2914
-IOQCE   10          2924
-AOQCE   10          2934
-WASHQS  10          2984
-SCRQS   10          3034
-SOQS    10          3084
-SOQO    10          3094
-SOQOC   10          3144
-SOQUAL  10          3154
-SOQC    10          3164
-IOQUAL  10          3174
-AOQUAL  10          3224
-POQUAL  10          3274
-POQC    10          3284
-PQADDR  10          3294
-PQADWT  10          3344
-PQADEP  10          3394
-ISQO    10          3404
-CFINMA              3564
-SLMPF               3565
-MSTPM    3          3565
-ULPF                3566
-LLPF                3567
-MST      5          3568
-FRAC     8          3573
-LIPSS    5   3      3594
-LISDPS   2   3      3669
-ITMXPS   3          3739
-ADOPFG   3          3742
-PEADFG  18          3745
-PEAFXM  12   3   3  3763
-PEACNM  12   3   3  3871
-GPSPM    8   3      3979
-SPSPM    8   3      4003
-UPSPM    8   3      4027
-LPSPM    8   3      4051
-APSPM    8   3      4075
-SCVFG    3          4107
-UCVFG    3          4110
-LCVFG    3          4113
-ACVFG    3          4116
-SPS      3   3      4119
-UPS      3   3      4128
-IPS      3          4137
-LPS      3   3      4140
-APS      3   3      4149
-TPS      3   3      4158
-TPST     5   3      4167
-TOTPST   3          4182
-SXJCT    3          4197
-UXJCT    3          4200
-LXJCT    3          4203
-AXJCT    3          4206
-SXST     3          4209
-UXST     3          4212
-LXST     3          4215
-AXST     3          4218
-SDPS     2   3      4287
-TSPSS    5   3      4317
-SSPSS    3   3      4392
-DEGPS    5   3      4437
-SOSDPS   3          4512
-SOPEST   3          4515
-POPST    3          4518
-TOPST    3          4521
-PEADDR   3   3      4524
-PEADWT   3   3      4569
-PEADEP   3   3      4614
-NITIF    4   5      4707
-INO3                4707
-INH3                4708
-IORN                4709
-INITR               4710
-LIAMS    5          4731
-LINO3    5          4736
-LISLN    5          4741
-LISRN    5          4746
-VNUTFG              4881
-NITFG   10          4881
-FORAFG              4882
-ITMAXA              4883
-BNUMN               4884
-CNUMN               4885
-NUPTFG              4886
-FIXNFG              4887
-AMVOFG              4888
-ALPNFG              4889
-VNPRFG              4890
-NIADFG  12          4891
-CRPDAY  13   3      4903
-CRPFRC  13   3      4942
-NUPTGT              4981
-NYLDPM   2          4981
-NMXRAT              4982
-NIAFXM  12   3   2  4983
-NIACNM  12   3   2  5055
-SKPLNM  12          5127
-UKPLNM  12          5139
-LKPLNM  12          5151
-AKPLNM  12          5163
-SKRBNM  12          5175
-UKRBNM  12          5187
-LKRBNM  12          5199
-AKRBNM  12          5211
-KRANM   12          5223
-SKRLNM  12          5235
-UKRLNM  12          5247
-BNPRFM  12          5259
-LNPRFM  12          5271
-SKUNIM  12          5283
-UKUNIM  12          5295
-LKUNIM  12          5307
-AKUNIM  12          5319
-SKUAMM  12          5331
-UKUAMM  12          5343
-LKUAMM  12          5355
-AKUAMM  12          5367
-SKINIM  12          5379
-UKINIM  12          5391
-LKINIM  12          5403
-AKINIM  12          5415
-SKIAMM  12          5427
-UKIAMM  12          5439
-LKIAMM  12          5451
-AKIAMM  12          5463
-NUPTFM  12          5475
-SNUPTM  12          5487
-UNUPTM  12          5499
-LNUPTM  12          5511
-ANUPTM  12          5523
-GNPM    11          5535
-NO3UTF              5535
-NH4UTF              5536
-THPLN               5537
-THKDSA              5538
-THKADA              5539
-THKIMN              5540
-THKAM               5541
-THKDNI              5542
-THKNI               5543
-THKIMA              5544
-CMAXAM              5545
-SNPM    11          5546
-SKDSAM              5546
-SKADAM              5547
-SKIMNI              5548
-SKAM                5549
-SKDNI               5550
-SKNI                5551
-SKIMAM              5552
-SXFIXA              5553
-SXMAXA              5554
-SKF1AM              5555
-SN1IAM              5556
-UNPM    11          5557
-UKDSAM              5557
-UKADAM              5558
-UKIMNI              5559
-UKAM                5560
-UKDNI               5561
-UKNI                5562
-UKIMAM              5563
-UXFIXA              5564
-UXMAXA              5565
-UKF1AM              5566
-UN1IAM              5567
-LNPM    11          5568
-LKDSAM              5568
-LKADAM              5569
-LKIMNI              5570
-LKAM                5571
-LKDNI               5572
-LKNI                5573
-LKIMAM              5574
-LXFIXA              5575
-LXMAXA              5576
-LKF1AM              5577
-LN1IAM              5578
-ANPM    11          5579
-AKDSAM              5579
-AKADAM              5580
-AKIMNI              5581
-AKAM                5582
-AKDNI               5583
-AKNI                5584
-AKIMAM              5585
-AXFIXA              5586
-AXMAXA              5587
-AKF1AM              5588
-AN1IAM              5589
-SORNPM   4          5590
-SKLON               5590
-SKRON               5591
-SKONLR              5592
-STHNLR              5593
-UORNPM   4          5594
-UKLON               5594
-UKRON               5595
-UKONLR              5596
-UTHNLR              5597
-LORNPM   4          5598
-LKLON               5598
-LKRON               5599
-LKONLR              5600
-LTHNLR              5601
-AORNPM   4          5602
-AKLON               5602
-AKRON               5603
-AKONLR              5604
-ATHNLR              5605
-SCSATN   4          5606
-SCSUNI              5606
-SCSUAM              5607
-SCSINI              5608
-SCSIAM              5609
-UCSATN   4          5610
-UCSUNI              5610
-UCSUAM              5611
-UCSINI              5612
-UCSIAM              5613
-LCSATN   4          5614
-LCSUNI              5614
-LCSUAM              5615
-LCSINI              5616
-LCSIAM              5617
-ACSATN   4          5618
-ACSUNI              5618
-ACSUAM              5619
-ACSINI              5620
-ACSIAM              5621
-SANUFM  12          5622
-UANUFM  12          5634
-LANUFM  12          5646
-AANUFM  12          5658
-SKVOL               5670
-AMVOPM   6          5670
-UKVOL               5671
-LKVOL               5672
-AKVOL               5673
-THVOL               5674
-TRFVOL              5675
-BIVLN               5676
-CIVLN               5677
-AGPLTN              5687
-LITTRN              5688
-SN       8          5689
-SORGN               5689
-SPLON               5689
-SAMAD               5690
-SAMSU               5691
-SNO3                5692
-SPLTN               5693
-SSLON               5694
-SPRON               5695
-SSRON               5696
-UN       8          5697
-UORGN               5697
-UPLON               5697
-UAMAD               5698
-UAMSU               5699
-UNO3                5700
-UPLTN               5701
-USLON               5702
-UPRON               5703
-USRON               5704
-IN       4          5705
-IAMSU               5705
-INO3                5706
-ISLON               5707
-ISRON               5708
-LN       8          5709
-LORGN               5709
-LPLON               5709
-LAMAD               5710
-LAMSU               5711
-LNO3                5712
-LPLTN               5713
-LSLON               5714
-LPRON               5715
-LSRON               5716
-AN       8          5717
-AORGN               5717
-APLON               5717
-AAMAD               5718
-AAMSU               5719
-ANO3                5720
-APLTN               5721
-ASLON               5722
-APRON               5723
-ASRON               5724
-TN       8          5725
-TORGN               5725
-TPLON               5725
-TAMAD               5726
-TAMSU               5727
-TNO3                5728
-TPLTN               5729
-TSLON               5730
-TPRON               5731
-TSRON               5732
-TNIT     5          5733
-TOTNIT              5738
-SNDFC               5743
-NDFCT    5          5743
-UNDFC               5744
-LNDFC               5745
-ANDFC               5746
-TNDFC               5747
-SKPLN               5805
-KPLN     4          5805
-UKPLN               5806
-LKPLN               5807
-AKPLN               5808
-KRETBN   5          5809
-SKPRBN              5809
-UKPRBN              5810
-LKPRBN              5811
-AKPRBN              5812
-BGNPRF              5813
-KRETAN   4          5814
-AGKPRN              5814
-SKPRLN              5815
-UKPRLN              5816
-LINPRF              5817
-SKSATN   4          5818
-SKSUNI              5818
-SKSUAM              5819
-SKSINI              5820
-SKSIAM              5821
-UKSATN   4          5822
-UKSUNI              5822
-UKSUAM              5823
-UKSINI              5824
-UKSIAM              5825
-LKSATN   4          5826
-LKSUNI              5826
-LKSUAM              5827
-LKSINI              5828
-LKSIAM              5829
-AKSATN   4          5830
-AKSUNI              5830
-AKSUAM              5831
-AKSINI              5832
-AKSIAM              5833
-SNUPTG              5834
-NUPTG    4          5834
-UNUPTG              5835
-LNUPTG              5836
-ANUPTG              5837
-SPNUTG              5842
-UPNUTG              5843
-LPNUTG              5844
-APNUTG              5845
-ANUTF    4          5846
-SANUTF              5846
-UANUTF              5847
-LANUTF              5848
-AANUTF              5849
-SNRXF   16          5850
-UNRXF   16          5866
-LNRXF   16          5882
-ANRXF   16          5898
-SEDN     3          5914
-TSAMS    5          5929
-SSAMS    3          5954
-TSNO3    5          5969
-SSNO3    3          5994
-DENIF    5          6009
-AMNIT    5          6034
-AMIMB    5          6059
-ORNMN    5          6084
-NIADDR   3   2      6109
-NIADWT   3   2      6139
-NIADEP   3   2      6194
-NFIXFX   5          6194
-TSSLN    5          6200
-SSSLN    3          6225
-TSSRN    5          6240
-SSSRN    3          6265
-NIIMB    5          6280
-AMVOL    5          6305
-REFRON   5          6330
-NIUPA    5          6355
-AMUPA    5          6380
-NIUPB    5          6405
-AMUPB    5          6430
-RETAGN              6455
-RTLLN    3          6460
-RTRLN    3          6475
-RTLBN    5          6490
-RTRBN    5          6515
-SOSEDN              6540
-PONO3               6541
-PONH4               6542
-POORN               6543
-PONITR              6544
-IPO4                6681
-IORP                6682
-IPHOS               6683
-LIP4S    5          6699
-LISEDP   2          6724
-VPUTFG              6749
-PHOFG    6          6749
-FORPFG              6750
-ITMAXP              6751
-BNUMP               6752
-CNUMP               6753
-PUPTFG              6754
-PHADFG   8          6755
-PUPTGT              6763
-PYLDPM   2          6763
-PMXRAT              6764
-PHAFXM  12   2   2  6765
-PHACNM  12   2   2  6813
-SKPLPM  12          6861
-UKPLPM  12          6873
-LKPLPM  12          6885
-AKPLPM  12          6897
-PUPTFM  12          6909
-SPUPTM  12          6921
-UPUPTM  12          6933
-LPUPTM  12          6945
-APUPTM  12          6957
-GPPM     6          6969
-THPLP               6969
-THKDSP              6970
-THKADP              6971
-THKIMP              6972
-THKMP               6973
-CMAXP               6974
-SPPM     8          6975
-SKDSP               6975
-SKADP               6976
-SKIMP               6977
-SKMP                6978
-SXFIXP              6979
-SXMAXP              6980
-SKF1P               6981
-SN1IP               6982
-UPPM     8          6983
-UKDSP               6983
-UKADP               6984
-UKIMP               6985
-UKMP                6986
-UXFIXP              6987
-UXMAXP              6988
-UKF1P               6989
-UN1IP               6990
-LPPM     8          6991
-LKDSP               6991
-LKADP               6992
-LKIMP               6993
-LKMP                6994
-LXFIXP              6995
-LXMAXP              6996
-LKF1P               6997
-LN1IP               6998
-APPM     8          6999
-AKDSP               6999
-AKADP               7000
-AKIMP               7001
-AKMP                7002
-AXFIXP              7003
-AXMAXP              7004
-AKF1P               7005
-AN1IP               7006
-BIVLP               7007
-CIVLP               7008
-SP       4          7017
-SORGP               7017
-SP4AD               7018
-SP4SU               7019
-SPLTP               7020
-UP       4          7021
-UORGP               7021
-UP4AD               7022
-UP4SU               7023
-UPLTP               7024
-IP                  7025
-IP4SU               7025
-LP       4          7026
-LORGP               7026
-LP4AD               7027
-LP4SU               7028
-LPLTP               7029
-AP       4          7030
-AORGP               7030
-AP4AD               7031
-AP4SU               7032
-APLTP               7033
-TP       4          7034
-TORGP               7034
-TP4AD               7035
-TP4SU               7036
-TPLTP               7037
-TPHO     5          7038
-TOTPHO              7043
-SPDFC               7048
-PDFCT    5          7048
-UPDFC               7049
-LPDFC               7050
-APDFC               7051
-TPDFC               7052
-SKPLP               7085
-KPLP     4          7085
-UKPLP               7086
-LKPLP               7087
-AKPLP               7088
-SPUPTG              7089
-PUPTG    4          7089
-UPUPTG              7090
-LPUPTG              7091
-APUPTG              7092
-SPPUTG              7097
-UPPUTG              7098
-LPPUTG              7099
-APPUTG              7100
-SPRXF    5          7101
-UPRXF    5          7106
-LPRXF    5          7111
-APRXF    5          7116
-SEDP     2          7121
-TSP4S    5          7131
-SSP4S    3          7156
-P4IMB    5          7171
-ORPMN    5          7196
-SOSEDP              7221
-POPHOS              7222
-PHADDR   2   2      7223
-PHADWT   2   2      7243
-PHADEP   2   2      7263
-LITRS    5          7301
-TRADFG   4          7335
-TRAFXM  12   2      7344
-TRACNM  12   2      7368
-STRSU               7393
-TRST1    5          7393
-UTRSU               7394
-ITRSU               7395
-LTRSU               7396
-ATRSU               7397
-TRSU                7398
-TSTRS    5          7409
-SSTRS    5          7434
-POTRS               7449
-TRADDR   2          7450
-TRADWT   2          7460
-TRADEP   2          7470
+SLSED               1216
+CRVFG               1222
+SEDPM1   3          1222
+VSIVFG              1223
+SDOPFG              1224
+SMPF                1225
+KRER                1226
+JRER                1227
+AFFIX               1228
+KSER                1229
+JSER                1230
+KGER                1231
+JGER                1232
+COVERM  12          1233
+NVSIM   12          1245
+DRYDFG              1257
+DETS                1258
+STCAP               1259
+COVER               1260
+WSSD                1264
+SCRSD               1265
+SOSED               1274
+DET                 1275
+NVSI                1276
+SLTVFG              1290
+PTPM1    4          1290
+ULTVFG              1291
+LGTVFG              1292
+TSOPFG              1293
+ASLTM   12          1294
+BSLTM   12          1306
+ULTP1M  12          1318
+ULTP2M  12          1330
+LGTP1M  12          1342
+LGTP2M  12          1354
+AIRTC               1366
+PTST1    4          1366
+SLTMP               1367
+ULTMP               1368
+LGTMP               1369
+AIRTCS              1370
+ASLT                1371
+PTST2    6          1371
+BSLT                1372
+ULTP1               1373
+ULTP2               1374
+LGTP1               1375
+LGTP2               1376
+SLITMP              1381
+ILITMP              1382
+ALITMP              1383
+SLIDOX              1384
+ILIDOX              1385
+ALIDOX              1386
+SLICO2              1387
+ILICO2              1388
+ALICO2              1389
+IDVFG               1399
+PGPM1    4          1399
+ICVFG               1400
+GDVFG               1401
+GCVFG               1402
+ELEVGC              1403
+IDOXPM  12          1404
+ICO2PM  12          1416
+ADOXPM  12          1428
+ACO2PM  12          1440
+LIFAC    4          1452
+SOTMP               1456
+PGST1    3          1456
+IOTMP               1457
+AOTMP               1458
+SODOX               1459
+PGST2    6          1459
+SOCO2               1460
+IODOX               1461
+IOCO2               1462
+AODOX               1463
+AOCO2               1464
+IDOXP               1465
+ICO2P               1466
+ADOXP               1467
+ACO2P               1468
+SOHT                1478
+IOHT                1479
+AOHT                1480
+POHT                1493
+SODOXM              1494
+SOCO2M              1495
+IODOXM              1496
+IOCO2M              1497
+AODOXM              1498
+AOCO2M              1499
+PODOXM              1524
+POCO2M              1525
+SLIQO   10          1538
+SLIQSP  10          1588
+ILIQC   10          1598
+ALIQC   10          1608
+PQADFG  20          1683
+VPFWFG  10          1723
+VPFSFG  10          1733
+VQOFG   10          1763
+VIQCFG  10          1793
+VAQCFG  10          1823
+PQAFXM  12  10      1873
+PQACNM  12  10      1993
+POTFWM  12  10      2113
+POTFSM  12  10      2233
+ACQOPM  12  10      2353
+REMQOM  12  10      2473
+WSFAC   10          2593
+IOQCM   12  10      2603
+AOQCM   12  10      2723
+SQO     10          2843
+POTFW   10          2853
+POTFS   10          2863
+ACQOP   10          2873
+REMQOP  10          2883
+IOQC    10          2893
+AOQC    10          2903
+SOQSP   10          2913
+IOQCE   10          2923
+AOQCE   10          2933
+WASHQS  10          2983
+SCRQS   10          3033
+SOQS    10          3083
+SOQO    10          3093
+SOQOC   10          3143
+SOQUAL  10          3153
+SOQC    10          3163
+IOQUAL  10          3173
+AOQUAL  10          3223
+POQUAL  10          3273
+POQC    10          3283
+PQADDR  10          3293
+PQADWT  10          3343
+PQADEP  10          3393
+ISQO    10          3403
+CFINMA              3563
+SLMPF               3564
+MSTPM    3          3564
+ULPF                3565
+LLPF                3566
+MST      5          3567
+FRAC     8          3572
+LIPSS    5   3      3593
+LISDPS   2   3      3668
+ITMXPS   3          3738
+ADOPFG   3          3741
+PEADFG  18          3744
+PEAFXM  12   3   3  3762
+PEACNM  12   3   3  3870
+GPSPM    8   3      3978
+SPSPM    8   3      4002
+UPSPM    8   3      4026
+LPSPM    8   3      4050
+APSPM    8   3      4074
+SCVFG    3          4106
+UCVFG    3          4109
+LCVFG    3          4112
+ACVFG    3          4115
+SPS      3   3      4118
+UPS      3   3      4127
+IPS      3          4136
+LPS      3   3      4139
+APS      3   3      4148
+TPS      3   3      4157
+TPST     5   3      4166
+TOTPST   3          4181
+SXJCT    3          4196
+UXJCT    3          4199
+LXJCT    3          4202
+AXJCT    3          4205
+SXST     3          4208
+UXST     3          4211
+LXST     3          4214
+AXST     3          4217
+SDPS     2   3      4286
+TSPSS    5   3      4316
+SSPSS    3   3      4391
+DEGPS    5   3      4436
+SOSDPS   3          4511
+SOPEST   3          4514
+POPST    3          4517
+TOPST    3          4520
+PEADDR   3   3      4523
+PEADWT   3   3      4568
+PEADEP   3   3      4613
+NITIF    4   5      4706
+INO3                4706
+INH3                4707
+IORN                4708
+INITR               4709
+LIAMS    5          4730
+LINO3    5          4735
+LISLN    5          4740
+LISRN    5          4745
+VNUTFG              4880
+NITFG   10          4880
+FORAFG              4881
+ITMAXA              4882
+BNUMN               4883
+CNUMN               4884
+NUPTFG              4885
+FIXNFG              4886
+AMVOFG              4887
+ALPNFG              4888
+VNPRFG              4889
+NIADFG  12          4890
+CRPDAY  13   3      4902
+CRPFRC  13   3      4941
+NUPTGT              4980
+NYLDPM   2          4980
+NMXRAT              4981
+NIAFXM  12   3   2  4982
+NIACNM  12   3   2  5054
+SKPLNM  12          5126
+UKPLNM  12          5138
+LKPLNM  12          5150
+AKPLNM  12          5162
+SKRBNM  12          5174
+UKRBNM  12          5186
+LKRBNM  12          5198
+AKRBNM  12          5210
+KRANM   12          5222
+SKRLNM  12          5234
+UKRLNM  12          5246
+BNPRFM  12          5258
+LNPRFM  12          5270
+SKUNIM  12          5282
+UKUNIM  12          5294
+LKUNIM  12          5306
+AKUNIM  12          5318
+SKUAMM  12          5330
+UKUAMM  12          5342
+LKUAMM  12          5354
+AKUAMM  12          5366
+SKINIM  12          5378
+UKINIM  12          5390
+LKINIM  12          5402
+AKINIM  12          5414
+SKIAMM  12          5426
+UKIAMM  12          5438
+LKIAMM  12          5450
+AKIAMM  12          5462
+NUPTFM  12          5474
+SNUPTM  12          5486
+UNUPTM  12          5498
+LNUPTM  12          5510
+ANUPTM  12          5522
+GNPM    11          5534
+NO3UTF              5534
+NH4UTF              5535
+THPLN               5536
+THKDSA              5537
+THKADA              5538
+THKIMN              5539
+THKAM               5540
+THKDNI              5541
+THKNI               5542
+THKIMA              5543
+CMAXAM              5544
+SNPM    11          5545
+SKDSAM              5545
+SKADAM              5546
+SKIMNI              5547
+SKAM                5548
+SKDNI               5549
+SKNI                5550
+SKIMAM              5551
+SXFIXA              5552
+SXMAXA              5553
+SKF1AM              5554
+SN1IAM              5555
+UNPM    11          5556
+UKDSAM              5556
+UKADAM              5557
+UKIMNI              5558
+UKAM                5559
+UKDNI               5560
+UKNI                5561
+UKIMAM              5562
+UXFIXA              5563
+UXMAXA              5564
+UKF1AM              5565
+UN1IAM              5566
+LNPM    11          5567
+LKDSAM              5567
+LKADAM              5568
+LKIMNI              5569
+LKAM                5570
+LKDNI               5571
+LKNI                5572
+LKIMAM              5573
+LXFIXA              5574
+LXMAXA              5575
+LKF1AM              5576
+LN1IAM              5577
+ANPM    11          5578
+AKDSAM              5578
+AKADAM              5579
+AKIMNI              5580
+AKAM                5581
+AKDNI               5582
+AKNI                5583
+AKIMAM              5584
+AXFIXA              5585
+AXMAXA              5586
+AKF1AM              5587
+AN1IAM              5588
+SORNPM   4          5589
+SKLON               5589
+SKRON               5590
+SKONLR              5591
+STHNLR              5592
+UORNPM   4          5593
+UKLON               5593
+UKRON               5594
+UKONLR              5595
+UTHNLR              5596
+LORNPM   4          5597
+LKLON               5597
+LKRON               5598
+LKONLR              5599
+LTHNLR              5600
+AORNPM   4          5601
+AKLON               5601
+AKRON               5602
+AKONLR              5603
+ATHNLR              5604
+SCSATN   4          5605
+SCSUNI              5605
+SCSUAM              5606
+SCSINI              5607
+SCSIAM              5608
+UCSATN   4          5609
+UCSUNI              5609
+UCSUAM              5610
+UCSINI              5611
+UCSIAM              5612
+LCSATN   4          5613
+LCSUNI              5613
+LCSUAM              5614
+LCSINI              5615
+LCSIAM              5616
+ACSATN   4          5617
+ACSUNI              5617
+ACSUAM              5618
+ACSINI              5619
+ACSIAM              5620
+SANUFM  12          5621
+UANUFM  12          5633
+LANUFM  12          5645
+AANUFM  12          5657
+SKVOL               5669
+AMVOPM   6          5669
+UKVOL               5670
+LKVOL               5671
+AKVOL               5672
+THVOL               5673
+TRFVOL              5674
+BIVLN               5675
+CIVLN               5676
+AGPLTN              5686
+LITTRN              5687
+SN       8          5688
+SORGN               5688
+SPLON               5688
+SAMAD               5689
+SAMSU               5690
+SNO3                5691
+SPLTN               5692
+SSLON               5693
+SPRON               5694
+SSRON               5695
+UN       8          5696
+UORGN               5696
+UPLON               5696
+UAMAD               5697
+UAMSU               5698
+UNO3                5699
+UPLTN               5700
+USLON               5701
+UPRON               5702
+USRON               5703
+IN       4          5704
+IAMSU               5704
+INO3                5705
+ISLON               5706
+ISRON               5707
+LN       8          5708
+LORGN               5708
+LPLON               5708
+LAMAD               5709
+LAMSU               5710
+LNO3                5711
+LPLTN               5712
+LSLON               5713
+LPRON               5714
+LSRON               5715
+AN       8          5716
+AORGN               5716
+APLON               5716
+AAMAD               5717
+AAMSU               5718
+ANO3                5719
+APLTN               5720
+ASLON               5721
+APRON               5722
+ASRON               5723
+TN       8          5724
+TORGN               5724
+TPLON               5724
+TAMAD               5725
+TAMSU               5726
+TNO3                5727
+TPLTN               5728
+TSLON               5729
+TPRON               5730
+TSRON               5731
+TNIT     5          5732
+TOTNIT              5737
+SNDFC               5742
+NDFCT    5          5742
+UNDFC               5743
+LNDFC               5744
+ANDFC               5745
+TNDFC               5746
+SKPLN               5804
+KPLN     4          5804
+UKPLN               5805
+LKPLN               5806
+AKPLN               5807
+KRETBN   5          5808
+SKPRBN              5808
+UKPRBN              5809
+LKPRBN              5810
+AKPRBN              5811
+BGNPRF              5812
+KRETAN   4          5813
+AGKPRN              5813
+SKPRLN              5814
+UKPRLN              5815
+LINPRF              5816
+SKSATN   4          5817
+SKSUNI              5817
+SKSUAM              5818
+SKSINI              5819
+SKSIAM              5820
+UKSATN   4          5821
+UKSUNI              5821
+UKSUAM              5822
+UKSINI              5823
+UKSIAM              5824
+LKSATN   4          5825
+LKSUNI              5825
+LKSUAM              5826
+LKSINI              5827
+LKSIAM              5828
+AKSATN   4          5829
+AKSUNI              5829
+AKSUAM              5830
+AKSINI              5831
+AKSIAM              5832
+SNUPTG              5833
+NUPTG    4          5833
+UNUPTG              5834
+LNUPTG              5835
+ANUPTG              5836
+SPNUTG              5841
+UPNUTG              5842
+LPNUTG              5843
+APNUTG              5844
+ANUTF    4          5845
+SANUTF              5845
+UANUTF              5846
+LANUTF              5847
+AANUTF              5848
+SNRXF   16          5849
+UNRXF   16          5865
+LNRXF   16          5881
+ANRXF   16          5897
+SEDN     3          5913
+TSAMS    5          5928
+SSAMS    3          5953
+TSNO3    5          5968
+SSNO3    3          5993
+DENIF    5          6008
+AMNIT    5          6033
+AMIMB    5          6058
+ORNMN    5          6083
+NIADDR   3   2      6108
+NIADWT   3   2      6138
+NIADEP   3   2      6193
+NFIXFX   5          6193
+TSSLN    5          6199
+SSSLN    3          6224
+TSSRN    5          6239
+SSSRN    3          6264
+NIIMB    5          6279
+AMVOL    5          6304
+REFRON   5          6329
+NIUPA    5          6354
+AMUPA    5          6379
+NIUPB    5          6404
+AMUPB    5          6429
+RETAGN              6454
+RTLLN    3          6459
+RTRLN    3          6474
+RTLBN    5          6489
+RTRBN    5          6514
+SOSEDN              6539
+PONO3               6540
+PONH4               6541
+POORN               6542
+PONITR              6543
+IPO4                6680
+IORP                6681
+IPHOS               6682
+LIP4S    5          6698
+LISEDP   2          6723
+VPUTFG              6748
+PHOFG    6          6748
+FORPFG              6749
+ITMAXP              6750
+BNUMP               6751
+CNUMP               6752
+PUPTFG              6753
+PHADFG   8          6754
+PUPTGT              6762
+PYLDPM   2          6762
+PMXRAT              6763
+PHAFXM  12   2   2  6764
+PHACNM  12   2   2  6812
+SKPLPM  12          6860
+UKPLPM  12          6872
+LKPLPM  12          6884
+AKPLPM  12          6896
+PUPTFM  12          6908
+SPUPTM  12          6920
+UPUPTM  12          6932
+LPUPTM  12          6944
+APUPTM  12          6956
+GPPM     6          6968
+THPLP               6968
+THKDSP              6969
+THKADP              6970
+THKIMP              6971
+THKMP               6972
+CMAXP               6973
+SPPM     8          6974
+SKDSP               6974
+SKADP               6975
+SKIMP               6976
+SKMP                6977
+SXFIXP              6978
+SXMAXP              6979
+SKF1P               6980
+SN1IP               6981
+UPPM     8          6982
+UKDSP               6982
+UKADP               6983
+UKIMP               6984
+UKMP                6985
+UXFIXP              6986
+UXMAXP              6987
+UKF1P               6988
+UN1IP               6989
+LPPM     8          6990
+LKDSP               6990
+LKADP               6991
+LKIMP               6992
+LKMP                6993
+LXFIXP              6994
+LXMAXP              6995
+LKF1P               6996
+LN1IP               6997
+APPM     8          6998
+AKDSP               6998
+AKADP               6999
+AKIMP               7000
+AKMP                7001
+AXFIXP              7002
+AXMAXP              7003
+AKF1P               7004
+AN1IP               7005
+BIVLP               7006
+CIVLP               7007
+SP       4          7016
+SORGP               7016
+SP4AD               7017
+SP4SU               7018
+SPLTP               7019
+UP       4          7020
+UORGP               7020
+UP4AD               7021
+UP4SU               7022
+UPLTP               7023
+IP                  7024
+IP4SU               7024
+LP       4          7025
+LORGP               7025
+LP4AD               7026
+LP4SU               7027
+LPLTP               7028
+AP       4          7029
+AORGP               7029
+AP4AD               7030
+AP4SU               7031
+APLTP               7032
+TP       4          7033
+TORGP               7033
+TP4AD               7034
+TP4SU               7035
+TPLTP               7036
+TPHO     5          7037
+TOTPHO              7042
+SPDFC               7047
+PDFCT    5          7047
+UPDFC               7048
+LPDFC               7049
+APDFC               7050
+TPDFC               7051
+SKPLP               7084
+KPLP     4          7084
+UKPLP               7085
+LKPLP               7086
+AKPLP               7087
+SPUPTG              7088
+PUPTG    4          7088
+UPUPTG              7089
+LPUPTG              7090
+APUPTG              7091
+SPPUTG              7096
+UPPUTG              7097
+LPPUTG              7098
+APPUTG              7099
+SPRXF    5          7100
+UPRXF    5          7105
+LPRXF    5          7110
+APRXF    5          7115
+SEDP     2          7120
+TSP4S    5          7130
+SSP4S    3          7155
+P4IMB    5          7170
+ORPMN    5          7195
+SOSEDP              7220
+POPHOS              7221
+PHADDR   2   2      7222
+PHADWT   2   2      7242
+PHADEP   2   2      7262
+LITRS    5          7300
+TRADFG   4          7334
+TRAFXM  12   2      7343
+TRACNM  12   2      7367
+STRSU               7392
+TRST1    5          7392
+UTRSU               7393
+ITRSU               7394
+LTRSU               7395
+ATRSU               7396
+TRSU                7397
+TSTRS    5          7408
+SSTRS    5          7433
+POTRS               7448
+TRADDR   2          7449
+TRADWT   2          7459
+TRADEP   2          7469
  
