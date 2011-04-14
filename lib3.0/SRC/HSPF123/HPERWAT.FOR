@@ -103,15 +103,18 @@ C
 C     initialize some other variables
       RLZRAT= -1.0E30
       LZFRAC= -1.0E30
-      BGWS= 0.0
+      BGWS  = 0.0
 C
 C     initialize fluxes that may not be used
-      SURET= 0.0
+      SURET = 0.0
+C
+C     default to single interception layer
+      NCANPY= 1
 C
 C     process values in table - type pwat-parm1
       TBNO= 13
       TBSB= 1
-      NVAL= 13
+      NVAL= 14
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             PWPM1)
 C
@@ -170,12 +173,12 @@ C       process values in table - type pwat-parm4
         NVAL= 6
         CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
      M               RVAL)
-        CEPSC(1)= RVAL(1)
-        UZSN    = RVAL(2)
-        NSUR    = RVAL(3)
-        INTFG   = RVAL(4)
-        IRC     = RVAL(5)
-        LZETP   = RVAL(6)
+        CEPSC(1)= RVAL(2)
+        UZSN    = RVAL(3)
+        NSUR    = RVAL(4)
+        INTFG   = RVAL(5)
+        IRC     = RVAL(6)
+        LZETP   = RVAL(7)
       ELSE
 C       dummy values until dayval is called on first interval
         DO 20 I= 1, 10
@@ -5074,7 +5077,7 @@ C       details of et from layers
         IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN    
           WRITE(PRINTU,2250)
           DO I= 1, NCANPY
-            WRITE(PRINTU,2255) I,(CANNAM(J,I),J=1,3),PCFLX(I+1),DEPUNT
+            WRITE(PRINTU,2255) I,(CANNAM(J,I),J=1,3),PCFLX3(I+1),DEPUNT
           END DO        
         END IF
         IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
