@@ -186,20 +186,17 @@ C
 C     table PWAT-CANOPY
       DO I= 1, NCANPY
         TBNO= 40
-        TBSB= I
         NVAL= 6
-        CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+        CALL RTABLE (TBNO,I,NVAL,UUNITS,
      M               RVAL)
-        ID         = RVAL(4)
-        IF (ID .NE. I) THEN
-C         id does not match layer - need an official error here
-          WRITE(MESSU,*) "******** LAYER PROBLEM *************", ID, I          
+        ID= RVAL(4)
+        IF (ID .GT. 0) THEN
+          CANNAM(1,ID)= RVAL(1)
+          CANNAM(2,ID)= RVAL(2)
+          CANNAM(3,ID)= RVAL(3)
+          CEPSC(ID)   = RVAL(5)
+          CEPS(ID)    = RVAL(6)
         END IF
-        CANNAM(1,I)= RVAL(1)
-        CANNAM(2,I)= RVAL(2)
-        CANNAM(3,I)= RVAL(3)
-        CEPSC(I)   = RVAL(5)
-        CEPS(I)    = RVAL(6)
       END DO
 C      
 C     process values in table - type pwat-parm5
@@ -4437,18 +4434,18 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER2 + + +
       INCLUDE  'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I2,I3,I5,I6,I8
+      INTEGER   I2,I3,I5,I6,I12
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  ACCVEC
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      I2= 2
-      I3= 3
-      I5= 5
-      I6= 6
-      I8= 8
+      I2 = 2
+      I3 = 3
+      I5 = 5
+      I6 = 6
+      I12= 12
 C     handle flux groups containing segment-wide variables
 C
       IF ( (SLIFP .GT. 0) .OR. (ULIFP .GT. 0) .OR. (ILIFP .GT. 0) .OR.
@@ -4461,7 +4458,7 @@ C
       CALL ACCVEC (I6,PWCF1(1,FRMROW),
      M             PWCF1(1,TOROW))
 C
-      CALL ACCVEC (I8,PWCF3(1,FRMROW),
+      CALL ACCVEC (I12,PWCF3(1,FRMROW),
      M             PWCF3(1,TOROW))
 C
       CALL ACCVEC (I6,PWCF5(1,FRMROW),
@@ -4511,13 +4508,15 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER2 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I,J,I0,I1,I2,I3,I5,I6,I8,I9,ACNT,CLEN(56),EXDAT(5)
-      REAL      DFACTA,DFACTB,PCFLX1(6),PCFLX3(8),PCFLX5(6),
+      REAL      DFACTA,DFACTB,PCFLX1(6),PCFLX3(12),PCFLX5(6),
      $          PCFLX7(2),PIFLX(5),PPERS,PPERSS,PSTAT1(9),
-     $          PIRFX1(2),PIRFX2(3),PIRFX3(6),PRZWS,APRINT(56)
-      CHARACTER*8    UNITID,CSTAT1(9),CWST3(2),CCFLX1(6),
-     $               CIFLX(5),CCFLX3(8),CCFLX5(6)
-      CHARACTER*24   CIRFX1(2),CIRFX2(3),CIRFX3(6)
-      CHARACTER*256  CHEAD(56)
+     $          PIRFX1(2),PIRFX2(3),PIRFX3(6),PRZWS,APRINT(56),
+     $          PCEPE
+      CHARACTER*2   DEPUNT
+      CHARACTER*8   UNITID,CSTAT1(9),CWST3(2),CCFLX1(6),
+     $              CIFLX(5),CCFLX3(12),CCEPE,CCFLX5(6)
+      CHARACTER*24  CIRFX1(2),CIRFX2(3),CIRFX3(6)
+      CHARACTER*256 CHEAD(56)
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   TRNVEC,BALCHK,EXDATE,BINHED,BINREC
@@ -4577,6 +4576,9 @@ C     + + + OUTPUT FORMATS + + +
  2230 FORMAT (31X,7(8X,'MM'))
  2235 FORMAT (31X,8(8X,'MM'))
  2240 FORMAT (31X,8F10.3)
+ 2250 FORMAT (/,'     EVAPOTRANSPIRATION             LAYER        ',
+     $        'NAME             VALUE')
+ 2255 FORMAT (31X,I10,3A4,8X,F10.3,2X,A2)  
  2260 FORMAT (/,'     INTERNAL FLUXES',11X,
      $  '      IFWI       UZI     INFIL      PERC       LZI      AGWI')
  2270 FORMAT (31X,6(8X,'IN'))
@@ -4593,14 +4595,14 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      I0= 0
-      I1= 1
-      I2= 2
-      I3= 3
-      I5= 5
-      I6= 6
-      I8= 8
-      I9= 9
+      I0 = 0
+      I1 = 1
+      I2 = 2
+      I3 = 3
+      I5 = 5
+      I6 = 6
+      I9 = 9
+      I12= 12
 C
 C     initialize array counter for binary printout, store variable
 C     names in local strings for use in building binary headers
@@ -4628,13 +4630,18 @@ C     names in local strings for use in building binary headers
       CIFLX(4)  = 'LZLI'
       CIFLX(5)  = 'AGWLI'
       CCFLX3(1) = 'PET'
-      CCFLX3(2) = 'CEPE'
-      CCFLX3(3) = 'SURET'
-      CCFLX3(4) = 'UZET'
-      CCFLX3(5) = 'LZET'
-      CCFLX3(6) = 'AGWET'
-      CCFLX3(7) = 'BASET'
-      CCFLX3(8) = 'TAET'
+      CCEPE     = 'CEPE'
+      CCFLX3(2) = 'CEPE1'
+      CCFLX3(3) = 'CEPE2'
+      CCFLX3(4) = 'CEPE3'
+      CCFLX3(5) = 'CEPE4'
+      CCFLX3(6) = 'CEPE5'
+      CCFLX3(7) = 'SURET'
+      CCFLX3(8) = 'UZET'
+      CCFLX3(9) = 'LZET'
+      CCFLX3(10)= 'AGWET'
+      CCFLX3(11)= 'BASET'
+      CCFLX3(12)= 'TAET'
       CCFLX5(1) = 'IFWI'
       CCFLX5(2) = 'UZI'
       CCFLX5(3) = 'INFIL'
@@ -4659,9 +4666,11 @@ C     depth units
       IF (UNITFG .EQ. 1) THEN
 C       english units
         DFACTA= 1.0
+        DEPUNT= 'IN'
       ELSE
 C       metric units
         DFACTA= 25.4
+        DEPUNT= 'MM'
       END IF
 C
       DFACTB= 0.0
@@ -4702,7 +4711,7 @@ C     computed fluxes
       CALL TRNVEC (I6,PWCF1(1,LEV),DFACTA,DFACTB,
      O             PCFLX1)
 C
-      CALL TRNVEC (I8,PWCF3(1,LEV),DFACTA,DFACTB,
+      CALL TRNVEC (I12,PWCF3(1,LEV),DFACTA,DFACTB,
      O             PCFLX3)
 C
       CALL TRNVEC (I6,PWCF5(1,LEV),DFACTA,DFACTB,
@@ -5008,39 +5017,74 @@ C         using high water table algorithms
         END IF
       END IF
 C
+C     calculate total et from interception - handle multiple layers 
+      PCEPE = 0.0
+      DO I = 1, NCANPY
+        PCEPE= PCEPE+ PCFLX3(I+1)
+      END DO
+C
       IF (HWTFG .EQ. 0) THEN
 C       not using high water table algorithms
         IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-          WRITE (PRINTU,2240)  (PCFLX3(I), I= 1,2),(PCFLX3(I), I= 4,8)
+          WRITE (PRINTU,2240) PCFLX3(1), PCEPE, (PCFLX3(I), I= 8,12)
         END IF
         IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C         compile values for binary printout
-          DO 60 I = 1, 2
+          ACNT= ACNT + 1
+          APRINT(ACNT)= PCFLX3(1)
+          CHEAD(ACNT) = CCFLX3(1)
+          CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
+          ACNT= ACNT+ 1
+          APRINT(ACNT)= PCEPE
+          CHEAD(ACNT) = CCEPE
+          CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
+          DO I = 8, 12
             ACNT = ACNT + 1
-            APRINT(ACNT) = PCFLX3(I)
+            APRINT(ACNT)= PCFLX3(I)
             CHEAD(ACNT) = CCFLX3(I)
-            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
- 60       CONTINUE
-          DO 61 I = 4, 8
-            ACNT = ACNT + 1
-            APRINT(ACNT) = PCFLX3(I)
-            CHEAD(ACNT) = CCFLX3(I)
-            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
- 61       CONTINUE
+            CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
+          END DO
         END IF
       ELSE
 C       using high water table algorithms
         IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-          WRITE (PRINTU,2240)  PCFLX3
+          WRITE (PRINTU,2240) PCFLX3(1), PCEPE, (PCFLX3(I), I= 7,12)
         END IF
         IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C         compile values for binary printout
-          DO 70 I = 1, 8
+          ACNT= ACNT + 1
+          APRINT(ACNT)= PCFLX3(1)
+          CHEAD(ACNT) = CCFLX3(1)
+          CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
+          ACNT= ACNT+ 1
+          APRINT(ACNT)= PCEPE
+          CHEAD(ACNT) = CCEPE
+          CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
+          DO I = 7, 12
             ACNT = ACNT + 1
             APRINT(ACNT) = PCFLX3(I)
             CHEAD(ACNT) = CCFLX3(I)
             CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
- 70       CONTINUE
+          END DO
+        END IF
+      END IF
+C      
+      IF (NCANPY .GT. 1) THEN
+C       details of et from layers
+        IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN    
+          WRITE(PRINTU,2250)
+          DO I= 1, NCANPY
+            WRITE(PRINTU,2255) I,(CANNAM(J,I),J=1,3),PCFLX(I+1),DEPUNT
+          END DO        
+        END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
+C         compile values for binary printout
+          DO I= 1, NCANPY
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PCFLX3(I+1)
+            CHEAD(ACNT) = CCFLX3(I+1)
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          END DO
         END IF
       END IF
 C
@@ -5174,18 +5218,18 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I2,I3,I5,I6,I8
+      INTEGER    I2,I3,I5,I6,I12
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   SETVEC
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      I2= 2
-      I3= 3
-      I5= 5
-      I6= 6
-      I8= 8
+      I2 = 2
+      I3 = 3
+      I5 = 5
+      I6 = 6
+      I12= 12
 C     handle flux groups containing
 C
       CALL SETVEC (I5,0.0,
@@ -5194,7 +5238,7 @@ C
       CALL SETVEC (I6,0.0,
      O             PWCF1(1,LEV))
 C
-      CALL SETVEC (I8,0.0,
+      CALL SETVEC (I12,0.0,
      O             PWCF3(1,LEV))
 C
       CALL SETVEC (I6,0.0,
