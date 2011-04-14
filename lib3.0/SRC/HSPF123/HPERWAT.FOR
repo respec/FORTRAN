@@ -173,12 +173,12 @@ C       process values in table - type pwat-parm4
         NVAL= 6
         CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
      M               RVAL)
-        CEPSC(1)= RVAL(2)
-        UZSN    = RVAL(3)
-        NSUR    = RVAL(4)
-        INTFG   = RVAL(5)
-        IRC     = RVAL(6)
-        LZETP   = RVAL(7)
+        CEPSC(1)= RVAL(1)
+        UZSN    = RVAL(2)
+        NSUR    = RVAL(3)
+        INTFW   = RVAL(4)
+        IRC     = RVAL(5)
+        LZETP   = RVAL(6)
       ELSE
 C       dummy values until dayval is called on first interval
         DO 20 I= 1, 10
@@ -192,11 +192,11 @@ C     table PWAT-CANOPY
         NVAL= 6
         CALL RTABLE (TBNO,I,NVAL,UUNITS,
      M               RVAL)
-        ID= RVAL(4)
+        ID= RVAL(1)
         IF (ID .GT. 0) THEN
-          CANNAM(1,ID)= RVAL(1)
-          CANNAM(2,ID)= RVAL(2)
-          CANNAM(3,ID)= RVAL(3)
+          CANNAM(1,ID)= RVAL(2)
+          CANNAM(2,ID)= RVAL(3)
+          CANNAM(3,ID)= RVAL(4)
           CEPSC(ID)   = RVAL(5)
           CEPS(ID)    = RVAL(6)
         END IF
@@ -582,7 +582,20 @@ C     process values in table-type pwat-state1
       TBSB= 1
       NVAL= 7
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
-     M             PWST1)
+     M             RVAL)
+      IF (NCANPY .EQ. 1) THEN
+        CEPS(1)= RVAL(1)
+        DO I= 2, 5
+          CEPS(I)= 0.0
+        END DO
+      END IF
+      SURS= RVAL(2)
+      UZS = RVAL(3)
+      IFWS= RVAL(4)
+      LZS = RVAL(5)
+      AGWS= RVAL(6)
+      GWVS= RVAL(7)
+C      
       TGWS= AGWS
       RZWS= 0.0
       RZWSC= 0.0
@@ -4512,13 +4525,13 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER2 + + +
       INCLUDE   'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,J,I0,I1,I2,I3,I5,I6,I8,I9,ACNT,CLEN(56),EXDAT(5)
+      INTEGER   I,J,I0,I1,I2,I3,I5,I6,I12,I13,ACNT,CLEN(56),EXDAT(5)
       REAL      DFACTA,DFACTB,PCFLX1(6),PCFLX3(12),PCFLX5(6),
-     $          PCFLX7(2),PIFLX(5),PPERS,PPERSS,PSTAT1(9),
+     $          PCFLX7(2),PIFLX(5),PPERS,PPERSS,PSTAT1(13),
      $          PIRFX1(2),PIRFX2(3),PIRFX3(6),PRZWS,APRINT(56),
      $          PCEPE
       CHARACTER*2   DEPUNT
-      CHARACTER*8   UNITID,CSTAT1(9),CWST3(2),CCFLX1(6),
+      CHARACTER*8   UNITID,CSTAT1(13),CWST3(2),CCFLX1(6),
      $              CIFLX(5),CCFLX3(12),CCEPE,CCFLX5(6)
       CHARACTER*24  CIRFX1(2),CIRFX2(3),CIRFX3(6)
       CHARACTER*256 CHEAD(56)
@@ -4606,21 +4619,25 @@ C
       I3 = 3
       I5 = 5
       I6 = 6
-      I9 = 9
       I12= 12
+      I13= 13
 C
 C     initialize array counter for binary printout, store variable
 C     names in local strings for use in building binary headers
       ACNT = 0
       CSTAT1(1) = 'CEPS'
-      CSTAT1(2) = 'SURS'
-      CSTAT1(3) = 'UZS'
-      CSTAT1(4) = 'IFWS'
-      CSTAT1(5) = 'LZS'
-      CSTAT1(6) = 'AGWS'
-      CSTAT1(7) = 'GWVS'
-      CSTAT1(8) = 'TGWS'
-      CSTAT1(9) = 'GWEL'
+      CSTAT1(2) = 'CEPS2'
+      CSTAT1(3) = 'CEPS3'
+      CSTAT1(4) = 'CEPS4'
+      CSTAT1(5) = 'CEPS5'
+      CSTAT1(6) = 'SURS'
+      CSTAT1(7) = 'UZS'
+      CSTAT1(8) = 'IFWS'
+      CSTAT1(9) = 'LZS'
+      CSTAT1(10)= 'AGWS'
+      CSTAT1(11)= 'GWVS'
+      CSTAT1(12)= 'TGWS'
+      CSTAT1(13)= 'GWEL'
       CWST3(1)  = 'INFFAC'
       CWST3(2)  = 'PETADJ'
       CCFLX1(1) = 'SUPY'
@@ -4683,17 +4700,17 @@ C
 C     convert dimensional variables to external units
 C
 C     segment-wide state variables
-      CALL TRNVEC (I9,PWST1,DFACTA,DFACTB,
+      CALL TRNVEC (I13,PWST1,DFACTA,DFACTB,
      O             PSTAT1)
       IF (HWTFG .EQ. 1) THEN
 C       using high water table algorithms
-        PSTAT1(9)= PSTAT1(9)+ GWDATM
+        PSTAT1(13)= PSTAT1(13)+ GWDATM
         IF (UNITFG .EQ. 1) THEN
 C         english units
-          PSTAT1(9)= PSTAT1(9)/12.0
+          PSTAT1(13)= PSTAT1(13)/12.0
         ELSE
 C         metric units
-          PSTAT1(9)= PSTAT1(9)/39.4
+          PSTAT1(13)= PSTAT1(13)/39.4
         END IF
       END IF
 C
@@ -4786,7 +4803,7 @@ C       snow is being considered
         IF (HWTFG .EQ. 1) THEN
 C         using high water table algorithms
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-            WRITE (PRINTU,2055)  PPERS, PSTAT1, PWST3
+            WRITE(PRINTU,2055) PPERS,PSTAT1(1),(PSTAT1(I),I=6,13),PWST3
           END IF
           IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C           compile values for binary printout
@@ -4794,7 +4811,11 @@ C           compile values for binary printout
             APRINT(ACNT) = PPERS
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
-            DO 10 I = 1, 9
+            ACNT = ACNT + 1
+            APRINT(ACNT)= PSTAT1(1)
+            CHEAD(ACNT) = CSTAT1(1)
+            CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
+            DO 10 I = 6, 13
               ACNT = ACNT + 1
               APRINT(ACNT) = PSTAT1(I)
               CHEAD(ACNT) = CSTAT1(I)
@@ -4810,7 +4831,7 @@ C           compile values for binary printout
         ELSE
 C         not using high water table algorithms
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-            WRITE (PRINTU,2050)  PPERS, (PSTAT1(I),I=1,7), PWST3
+            WRITE (PRINTU,2050) PPERS,PSTAT1(1),(PSTAT1(I),I=6,11),PWST3
           END IF
           IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C           compile values for binary printout
@@ -4818,7 +4839,11 @@ C           compile values for binary printout
             APRINT(ACNT) = PPERS
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
-            DO 20 I = 1, 7
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PSTAT1(1)
+            CHEAD(ACNT) = CSTAT1(1)
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            DO 20 I = 6, 11
               ACNT = ACNT + 1
               APRINT(ACNT) = PSTAT1(I)
               CHEAD(ACNT) = CSTAT1(I)
@@ -4837,7 +4862,7 @@ C       snow is not being considered
         IF (HWTFG .EQ. 1) THEN
 C         using high water table algorithms
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-            WRITE (PRINTU,2055)  PPERS, PSTAT1
+            WRITE (PRINTU,2055) PPERS,PSTAT1(1),(PSTAT1(I),I=6,13)
           END IF
           IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C           compile values for binary printout
@@ -4845,7 +4870,11 @@ C           compile values for binary printout
             APRINT(ACNT) = PPERS
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
-            DO 30 I = 1, 9
+            ACNT = ACNT + 1
+            APRINT(ACNT)= PSTAT1(1)
+            CHEAD(ACNT) = CSTAT1(1)
+            CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
+            DO 30 I = 6,13
               ACNT = ACNT + 1
               APRINT(ACNT) = PSTAT1(I)
               CHEAD(ACNT) = CSTAT1(I)
@@ -4863,7 +4892,11 @@ C           compile values for binary printout
             APRINT(ACNT) = PPERS
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
-            DO 31 I = 1, 7
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PSTAT1(1)
+            CHEAD(ACNT) = CSTAT1(1)
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            DO 31 I = 6, 11
               ACNT = ACNT + 1
               APRINT(ACNT) = PSTAT1(I)
               CHEAD(ACNT) = CSTAT1(I)
