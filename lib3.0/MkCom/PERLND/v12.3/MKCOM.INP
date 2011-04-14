@@ -326,7 +326,7 @@ VA 1 PETADJ   0   0   0   0 R S                         0001000000000
 VA   PWST4    5   0   0   0 R S                         0001000000000
 EQ 1 PERS     0   0   0   0 R   PWST4                   0001000000000
 VA 1 CEPSC    5   0   0   0 R S                         0001000000000
-EQ 1 PWST5    6   0   0   0 R   CEPSC                   0001000000000
+EQ 1 PWST5   10   0   0   0 R   CEPSC                   0001000000000
 VA 1 UZSN     0   0   0   0 R S                         0001000010000
 VA 1 NSUR     0   0   0   0 R S                         0001000000000
 VA 1 INTFW    0   0   0   0 R S                         0001000000000
