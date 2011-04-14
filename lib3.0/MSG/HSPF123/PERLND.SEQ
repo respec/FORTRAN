@@ -3475,7 +3475,7 @@ PLSs to which these data apply.
 _PNAME  OPNID
 $FIELD  FIELD2
 _WIDTH   5
-_COLUMN 11
+_COLUMN  9
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3491,7 +3491,7 @@ functional description for further information.
 _PNAME  CSNOFG
 $FIELD  FIELD3
 _WIDTH   5
-_COLUMN 16
+_COLUMN 14
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 3
@@ -3507,7 +3507,7 @@ storage (HWTFG must be 1).
 _PNAME  RTOPFG
 $FIELD  FIELD4
 _WIDTH   5
-_COLUMN 21
+_COLUMN 19
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3520,7 +3520,7 @@ sensitive to changes in DELT.
 _PNAME  UZFG
 $FIELD  FIELD5
 _WIDTH   5
-_COLUMN 26
+_COLUMN 24
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3531,7 +3531,7 @@ monthly; 0 means use annual value.
 _PNAME  VCSFG
 $FIELD  FIELD6
 _WIDTH   5
-_COLUMN 31
+_COLUMN 29
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3542,7 +3542,7 @@ monthly; 0 means use annual value.
 _PNAME  VUZFG
 $FIELD  FIELD7
 _WIDTH   5
-_COLUMN 36
+_COLUMN 34
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3553,7 +3553,7 @@ flow plane monthly; 0 means use annual value.
 _PNAME  VNNFG
 $FIELD  FIELD8
 _WIDTH   5
-_COLUMN 41
+_COLUMN 39
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3564,7 +3564,7 @@ monthly; 0 means use annual value.
 _PNAME  VIFWFG
 $FIELD  FIELD9
 _WIDTH   5
-_COLUMN 46
+_COLUMN 44
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3575,7 +3575,7 @@ monthly; 0 means use annual value.
 _PNAME  VIRCFG
 $FIELD  FIELD10
 _WIDTH   5
-_COLUMN 51
+_COLUMN 49
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 3
@@ -3588,7 +3588,7 @@ use annual value.
 _PNAME  VLEFG
 $FIELD  FIELD11
 _WIDTH   5
-_COLUMN 56
+_COLUMN 54
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  1 : 2
@@ -3601,7 +3601,7 @@ INFFAC on temperature of the lower soil layer (section PSTEMP must be active).
 _PNAME  IFFCFG
 $FIELD  FIELD12
 _WIDTH   5
-_COLUMN 61
+_COLUMN 59
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 1
@@ -3612,7 +3612,7 @@ land segment, and different algorithms are used for some processes.
 _PNAME  HWTFG
 $FIELD  FIELD13
 _WIDTH   5
-_COLUMN 66
+_COLUMN 64
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 3
@@ -3625,7 +3625,7 @@ IRRIG-SCHED.
 _PNAME  IRRGFG
 $FIELD  FIELD14
 _WIDTH   5
-_COLUMN 71
+_COLUMN 69
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  0 : 7
@@ -3636,7 +3636,7 @@ assigned as the exponent in infiltration equation.
 _PNAME  IFRDFG
 $FIELD  FIELD15
 _WIDTH   5
-_COLUMN 76
+_COLUMN 74
 _PROTECT CORRECT
 _TYPE INTEGER
 _RANGE  1 : 5
