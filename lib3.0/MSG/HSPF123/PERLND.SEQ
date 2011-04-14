@@ -7922,8 +7922,8 @@ _WIDTH  10
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  1. : 5.
-_DEFAULT  1.
+_RANGE  0. : 5.
+_DEFAULT  0.
 _HELP
 Canopy layer to which these parameters apply.  
 This table is only necessary if NCANOPY > 1.
@@ -7981,8 +7981,8 @@ _WIDTH  10
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  1. : 5.
-_DEFAULT  1.
+_RANGE  0. : 5.
+_DEFAULT  0.
 _HELP
 Canopy layer to which these parameters apply.  
 This table is only necessary if NCANOPY > 1.
