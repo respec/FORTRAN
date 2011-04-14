@@ -1,0 +1,1393 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          141    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 400
+  LABEL
+    GRPNAM  PERLNDTS
+  END LABEL
+  DATA   CLU   141
+#GROUP    1  TYPE TEXT
+$TEXT
+EXTNL   20
+ATEMP   70
+SNOW    80
+PWATER 110
+SEDMNT 150
+PSTEMP 160
+PWTGAS 170
+PQUAL  200
+MSTLAY 220
+PEST   230
+NITR   260
+PHOS   310
+TRACER 340
+#GROUP    2  TYPE TEXT
+$TEXT
+GATMP
+PREC
+DTMPG
+WINMOV
+SOLRAD
+CLOUD
+SURLI
+UZLI
+IFWLI
+LZLI
+AGWLI
+PETINP
+IRRINP
+SLSED
+SLITMP
+ILITMP
+ALITMP
+SLIDOX
+ILIDOX
+ALIDOX
+SLICO2
+ILICO2
+ALICO2
+SLIQO
+SLIQSP
+ILIQC
+ALIQC
+PQADFX
+PQADCN
+LIPSS
+LISDPS
+PEADFX
+PEADCN
+LIAMS
+LINO3
+LISLN
+LISRN
+LISEDN
+NIADFX
+NIADCN
+LIP4S
+LISEDP
+PHADFX
+PHADCN
+LITRS
+TRADFX
+TRADCN
+#GROUP    3  TYPE TEXT
+$TEXT
+AIRTMP
+#GROUP    4  TYPE TEXT
+$TEXT
+PACK  
+PACKF 
+PACKW 
+PACKI 
+PDEPTH
+COVINX
+NEGHTS
+XLNMLT
+RDENPF
+SKYCLR
+SNOCOV
+DULL  
+ALBEDO
+PAKTMP
+DEWTMP
+SNOTMP
+SNOWF 
+PRAIN 
+SNOWE 
+WYIELD
+MELT  
+RAINF 
+#GROUP    5  TYPE TEXT
+$TEXT
+PERS  
+CEPS  
+SURS  
+UZS   
+IFWS  
+LZS   
+AGWS  
+TGWS  
+GWEL
+GWVS  
+INFFAC
+PETADJ
+RPARM 
+RZWS
+SUPY  
+SURO
+IFWO  
+AGWO  
+PERO  
+IGWI  
+PET   
+CEPE 
+CEPO 
+SURET
+UZET  
+LZET  
+AGWET 
+BASET 
+TAET  
+IFWI  
+UZI   
+INFIL 
+PERC  
+LZI   
+AGWI  
+SURI
+IRRDEM
+IRSHRT
+IRDRAW
+IRRAPP
+#GROUP    6  TYPE TEXT
+$TEXT
+DETS  
+STCAP 
+COVER 
+WSSD  
+SCRSD 
+SOSED 
+DET   
+NVSI  
+#GROUP    7  TYPE TEXT
+$TEXT
+AIRTC 
+SLTMP 
+ULTMP 
+LGTMP 
+#GROUP    8  TYPE TEXT
+$TEXT
+SOTMP 
+IOTMP 
+AOTMP 
+SODOX 
+SOCO2 
+IODOX 
+IOCO2 
+AODOX 
+AOCO2 
+SOHT  
+IOHT  
+AOHT  
+POHT  
+SODOXM
+SOCO2M
+IODOXM
+IOCO2M
+AODOXM
+AOCO2M
+PODOXM
+POCO2M
+#GROUP    9  TYPE TEXT
+$TEXT
+SQO   
+SOQSP 
+IOQC
+AOQC
+WASHQS
+SCRQS 
+SOQS  
+SOQO  
+SOQOC 
+SOQUAL
+SOQC  
+IOQUAL
+AOQUAL
+POQUAL
+POQC  
+PQADDR
+PQADWT
+PQADEP
+ISQO
+#GROUP   10  TYPE TEXT
+$TEXT
+MST   
+FRAC  
+#GROUP   11  TYPE TEXT
+$TEXT
+SPS   
+UPS   
+IPS   
+LPS   
+APS   
+TPS   
+TPST
+TOTPST
+SDPS  
+TSPSS 
+SSPSS 
+SDEGPS
+UDEGPS
+LDEGPS
+ADEGPS
+TDEGPS
+SOSDPS
+SOPEST
+POPST 
+TOPST 
+PEADDR
+PEADWT
+PEADEP
+#GROUP   12  TYPE TEXT
+$TEXT
+NITIF
+AGPLTN
+LITTRN
+SN    
+UN    
+IN    
+LN    
+AN    
+TN
+TNIT
+TOTNIT
+NDFCT 
+NUPTG 
+SEDN  
+TSAMS 
+SSAMS 
+TSNO3 
+SSNO3 
+DENIF
+TDENIF
+AMNIT 
+AMIMB 
+ORNMN 
+NIADDR
+NIADWT
+NIADEP
+NFIXFX
+TSSLN 
+SSSLN 
+TSSRN 
+SSSRN 
+NIIMB 
+AMVOL 
+REFRON
+NIUPA 
+AMUPA 
+NIUPB 
+AMUPB 
+RETAGN
+RTLLN 
+RTRLN 
+RTLBN 
+RTRBN 
+SOSEDN
+PONO3 
+PONH4 
+POORN 
+PONITR
+#GROUP   13  TYPE TEXT
+$TEXT
+PHOIF 
+SP    
+UP    
+IP    
+LP    
+AP    
+TP
+TPHO
+TOTPHO
+PDFCT
+PUPTG
+SEDP  
+TSP4S 
+SSP4S 
+P4IMB 
+ORPMN 
+SOSEDP
+POPHOS
+PHADDR
+PHADWT
+PHADEP
+#GROUP   14  TYPE TEXT
+$TEXT
+STRSU 
+UTRSU 
+ITRSU 
+LTRSU 
+ATRSU 
+TRSU  
+TSTRS 
+SSTRS 
+POTRS 
+TRADDR
+TRADWT
+TRADEP
+#GROUP   21  TYPE TEXT
+$TEXT
+GATMP   1  1     1     1 2   0 2    0   115 ENG Deg F      0       117.8     1.8
+ Measured air temp over PLS                 MET Deg C      0       117.8     1.8
+#GROUP   22  TYPE TEXT
+$TEXT
+PREC    1  1     1     1 2   0 2    0   116 ENG in/iv      0       1   0   .0394
+ Measured precipitation on PLS              MET mm/iv      0       1   0   .0394
+#GROUP   23  TYPE TEXT
+$TEXT
+DTMPG   1  1     1     1 2   0 2    0   153 ENG Deg F      0       117.8     1.8
+ Measured dewpoint temp over PLS            MET Deg C      0       117.8     1.8
+#GROUP   24  TYPE TEXT
+$TEXT
+WINMOV  1  1     1     1 2   0 2    0   154 ENG mi/iv      0       1   0    .621
+ Measured wind movement over PLS            MET km/iv      0       1   0    .621
+#GROUP   25  TYPE TEXT
+$TEXT
+SOLRAD  1  1     1     1 2   0 2    0   155 ENG Ly/iv      0       1   0       1
+ Measured solar radiation over PLS          MET Ly/iv      0       1   0       1
+#GROUP   26  TYPE TEXT
+$TEXT
+CLOUD   1  1     1     1 2   0 2    0   156 ENG tenths     0       1   0       1
+ Cloud cover (range 0 thru 10)              MET tenths     0       1   0       1
+#GROUP   27  TYPE TEXT
+$TEXT
+SURLI   1  1     1     1 2   0 2    0   346 ENG in/iv      0       1   0   .0394
+ Surface lateral inflow to PLS              MET mm/iv      0       1   0   .0394
+#GROUP   28  TYPE TEXT
+$TEXT
+UZLI    1  1     1     1 2   0 2    0   347 ENG in/iv      0       1   0   .0394
+ Upper zone lateral inflow to PLS           MET mm/iv      0       1   0   .0394
+#GROUP   29  TYPE TEXT
+$TEXT
+IFWLI   1  1     1     1 2   0 2    0   348 ENG in/iv      0       1   0   .0394
+ Interflow lateral inflow to PLS            MET mm/iv      0       1   0   .0394
+#GROUP   30  TYPE TEXT
+$TEXT
+LZLI    1  1     1     1 2   0 2    0   349 ENG in/iv      0       1   0   .0394
+ Lower zone lateral inflow to PLS           MET mm/iv      0       1   0   .0394
+#GROUP   31  TYPE TEXT
+$TEXT
+AGWLI   1  1     1     1 2   0 2    0   350 ENG in/iv      0       1   0   .0394
+ Active groundwater lateral inflow to PLS   MET mm/iv      0       1   0   .0394
+#GROUP   32  TYPE TEXT
+$TEXT
+PETINP  1  1     1     1 2   0 2    0   351 ENG in/iv      0       1   0   .0394
+ Input potential E-T from PLS               MET mm/iv      0       1   0   .0394
+#GROUP   33  TYPE TEXT
+$TEXT
+IRRINP  1  1     1     1 2   0 2    0   357 ENG in/iv      0       1   0   .0394
+  Input irrigation demand                   MET mm/iv      0       1   0   .0394
+#GROUP   34  TYPE TEXT
+$TEXT
+SLSED   1  1     1     1 2   0 2    0  1110 ENG tn/aciv    0       1   0   .4462
+ Lateral input of sediment to PLS           MET tne/haiv   0       1   0   .4462
+#GROUP   35  TYPE TEXT
+$TEXT
+SLITMP  1  1     1     1 2   0 2    0  1279 ENG Deg F    -32    .555   0       1
+ Temp of surface lateral inflow             MET Deg C    -32    .555   0       1
+#GROUP   36  TYPE TEXT
+$TEXT
+ILITMP  1  1     1     1 2   0 2    0  1280 ENG Deg F    -32    .555   0       1
+ Temp of interflow lateral inflow           MET Deg C    -32    .555   0       1
+#GROUP   37  TYPE TEXT
+$TEXT
+ALITMP  1  1     1     1 2   0 2    0  1281 ENG Deg F    -32    .555   0       1
+ Temp of groundwater lateral inflow         MET Deg C    -32    .555   0       1
+#GROUP   38  TYPE TEXT
+$TEXT
+SLIDOX  1  1     1     1 2   0 2    0  1282 ENG mg/l       0       1   0       1
+ Conc of DO in surface lateral inflow       MET mg/l       0       1   0       1
+#GROUP   39  TYPE TEXT
+$TEXT
+ILIDOX  1  1     1     1 2   0 2    0  1283 ENG mg/l       0       1   0       1
+ Conc of DO in interflow lateral inflow     MET mg/l       0       1   0       1
+#GROUP   40  TYPE TEXT
+$TEXT
+ALIDOX  1  1     1     1 2   0 2    0  1284 ENG mg/l       0       1   0       1
+ Conc of DO in groundwater lateral inflow   MET mg/l       0       1   0       1
+#GROUP   41  TYPE TEXT
+$TEXT
+SLICO2  1  1     1     1 2   0 2    0  1285 ENG mg/l       0       1   0       1
+ Conc of CO2 in surface lateral inflow      MET mg/l       0       1   0       1
+#GROUP   42  TYPE TEXT
+$TEXT
+ILICO2  1  1     1     1 2   0 2    0  1286 ENG mg/l       0       1   0       1
+ Conc of CO2 in interflow lateral inflow    MET mg/l       0       1   0       1
+#GROUP   43  TYPE TEXT
+$TEXT
+ALICO2  1  1     1     1 2   0 2    0  1287 ENG mg/l       0       1   0       1
+ Conc of CO2 in groundwater lateral inflow  MET mg/l       0       1   0       1
+#GROUP   44  TYPE TEXT
+$TEXT
+SLIQO  10  1 -1569     1 2   0 2    0  1507 ENG qty/aciv   0       1   0   .4047
+ Lateral input of QUALOF to PLS             MET qty/haiv   0       1   0   .4047
+#GROUP   45  TYPE TEXT
+$TEXT
+SLIQSP 10  1 -1568     1 2   0 2    0  1517 ENG qty/ton    0       1   0   .9072
+ Pot fac of QUALSD on lat sediment inflow   MET qty/tonn   0       1   0   .9072
+#GROUP   46  TYPE TEXT
+$TEXT
+ILIQC  10  1 -1570     1 2   0 2    0  1527 ENG qty/ft3    0   3630.   0 102833.
+ Conc of QUALIF in lateral interflow inflow MET qty/l      0   3630.   0 102833.
+#GROUP   47  TYPE TEXT
+$TEXT
+ALIQC   7  1 -1571     1 2   0 2    0  1537 ENG qty/ft3    0   3630.   0 102833.
+ Conc of QUALGW in lat groundwater inflow   MET qty/l      0   3630.   0 102833.
+#GROUP   48  TYPE TEXT
+$TEXT
+PQADFX 10  1 -1567     1 2   0 2    0  1547 ENG qty/aciv   0       1   0   .4047
+ Atmospheric deposition of QUAL to PLS      MET qty/haiv   0       1   0   .4047
+#GROUP   49  TYPE TEXT
+$TEXT
+PQADCN 10  1 -1567     1 2   0 2    0  1557 ENG qty/ft3    0   3630.   0 102833.
+ Concentration of QUAL in precip over PLS   MET qty/l      0   3630.   0 102833.
+#GROUP   50  TYPE TEXT
+$TEXT
+LIPSS   5  3     5 -3626 2   0 2    0  3587 ENG lb/aciv    0       1   0    .892
+ Lateral input of soln pest. to each layer  MET kg/haiv    0    1.12   0       1
+#GROUP   51  TYPE TEXT
+$TEXT
+LISDPS  2  3     2 -3626 2   0 2    0  3602 ENG lb/aciv    0       1   0    .892
+ Lateral input of sediment-associated pest. MET kg/haiv    0    1.12   0       1
+#GROUP   52  TYPE TEXT
+$TEXT
+PEADFX  3  3 -3626     3 2   0 2    0  3608 ENG lb/aciv    0       1   0    .892
+ Atmospheric deposition of pesticide form   MET kg/haiv    0    1.12   0       1
+#GROUP   53  TYPE TEXT
+$TEXT
+PEADCN  3  3 -3626     3 2   0 2    0  3617 ENG mg/l       0 .226635   0     .01
+ Concentration of pesticide form in precip  MET mg/l       0 .226635   0     .01
+#GROUP   54  TYPE TEXT
+$TEXT
+LIAMS   5  1     5     1 2   0 2    0  4734 ENG lb/aciv    0       1   0    .892
+ Lateral inflow of soln ammon to each layer MET kg/haiv    0    1.12   0       1
+#GROUP   55  TYPE TEXT
+$TEXT
+LINO3   5  1     5     1 2   0 2    0  4739 ENG lb/aciv    0       1   0    .892
+ Lateral inflow of nitrate to each layer    MET kg/haiv    0    1.12   0       1
+#GROUP   56  TYPE TEXT
+$TEXT
+LISLN   5  1     5     1 2   0 2    0  4744 ENG lb/aciv    0       1   0    .892
+ Lat inflow of soln lab ORGN to each layer  MET kg/haiv    0    1.12   0       1
+#GROUP   57  TYPE TEXT
+$TEXT
+LISRN   5  1     5     1 2   0 2    0  4749 ENG lb/aciv    0       1   0    .892
+ Lat inflow of soln ref ORGN to each layer  MET kg/haiv    0    1.12   0       1
+#GROUP   58  TYPE TEXT
+$TEXT
+LISEDN  3  1     3     1 2   0 2    0  4754 ENG lb/aciv    0       1   0    .892
+ Lat inflow of sediment-associated N        MET kg/haiv    0    1.12   0       1
+#GROUP   59  TYPE TEXT
+$TEXT
+NIADFX  3  2     3     2 2   0 2    0  4757 ENG lb/aciv    0       1   0    .892
+ Atmospheric deposition of N to soil layer  MET kg/haiv    0    1.12   0       1
+#GROUP   60  TYPE TEXT
+$TEXT
+NIADCN  3  2     3     2 2   0 2    0  4763 ENG mg/l       0 .226635   0     .01
+ Concentration of N to soil layer in precip MET mg/l       0 .226635   0     .01
+#GROUP   61  TYPE TEXT
+$TEXT
+LIP4S   5  1     5     1 2   0 2    0  6622 ENG lb/aciv    0       1   0    .892
+ Lateral inflow of soln PO4 to each layer   MET kg/haiv    0    1.12   0       1
+#GROUP   62  TYPE TEXT
+$TEXT
+LISEDP  2  1     2     1 2   0 2    0  6627 ENG lb/aciv    0       1   0    .892
+ Lateral inflow of sediment-associated P    MET kg/haiv    0    1.12   0       1
+#GROUP   63  TYPE TEXT
+$TEXT
+PHADFX  2  2     2     2 2   0 2    0  6629 ENG lb/aciv    0       1   0    .892
+ Atmospheric deposition of P to soil layer  MET kg/haiv    0    1.12   0       1
+#GROUP   64  TYPE TEXT
+$TEXT
+PHADCN  2  2     2     2 2   0 2    0  6633 ENG mg/l       0 .226635   0     .01
+ Concentration of P to soil layer in precip MET mg/l       0 .226635   0     .01
+#GROUP   65  TYPE TEXT
+$TEXT
+LITRS   5  1     5     1 2   0 2    0  7214 ENG lb/aciv    0       1   0    .892
+ Lateral inflow of tracer to each layer     MET kg/haiv    0    1.12   0       1
+#GROUP   66  TYPE TEXT
+$TEXT
+TRADFX  2  1     2     1 2   0 2    0  7219 ENG lb/aciv    0       1   0    .892
+ Atmospheric deposition of tracer to layer  MET kg/haiv    0    1.12   0       1
+#GROUP   67  TYPE TEXT
+$TEXT
+TRADCN  2  1     2     1 2   0 2    0  7221 ENG mg/l       0 .226635   0     .01
+ Concentration of tracer to layer in precip MET mg/l       0 .226635   0     .01
+#GROUP   71  TYPE TEXT
+$TEXT
+AIRTMP  1  1     1     1 2   1 1    0   144 ENG Deg F      0       117.8     1.8
+  Estimated surf air temp over PLS          MET Deg C      0       117.8     1.8
+#GROUP   81  TYPE TEXT
+$TEXT
+PACK    1  1     1     1 1   2      0   262 ENG in         0       1   0   .0394
+  Total contents of pack(water equiv)       MET mm         0       1   0   .0394
+#GROUP   82  TYPE TEXT
+$TEXT
+PACKF   1  1     1     1 1   2 1    0   263 ENG in         0       1   0   .0394
+  Frozen contents of pack (water equiv)     MET mm         0       1   0   .0394
+#GROUP   83  TYPE TEXT
+$TEXT
+PACKW   1  1     1     1 1   2      0   264 ENG in         0       1   0   .0394
+  Liquid water in pack                      MET mm         0       1   0   .0394
+#GROUP   84  TYPE TEXT
+$TEXT
+PACKI   1  1     1     1 1   2 1    0   265 ENG in         0       1   0   .0394
+  Ice in pack (water equiv)                 MET mm         0       1   0   .0394
+#GROUP   85  TYPE TEXT
+$TEXT
+PDEPTH  1  1     1     1 1   2      0   266 ENG in         0       1   0   .0394
+  Pack depth                                MET mm         0       1   0   .0394
+#GROUP   86  TYPE TEXT
+$TEXT
+COVINX  1  1     1     1 1   2      0   267 ENG in         0       1   0   .0394
+  Snowfall cover index for complete cover   MET mm         0       1   0   .0394
+#GROUP   87  TYPE TEXT
+$TEXT
+NEGHTS  1  1     1     1 1   2      0   268 ENG in         0       1   0   .0394
+  Negative heat storage of pack (water eq)  MET mm         0       1   0   .0394
+#GROUP   88  TYPE TEXT
+$TEXT
+XLNMLT  1  1     1     1 1   2      0   269 ENG in         0       1   0   .0394
+  Curr max increment to ice in pack         MET mm         0       1   0   .0394
+#GROUP   89  TYPE TEXT
+$TEXT
+RDENPF  1  1     1     1 1   2      0   270 ENG none       0       1   0       1
+  Rel density of frozen contents of pack    MET none       0       1   0       1
+#GROUP   90  TYPE TEXT
+$TEXT
+SKYCLR  1  1     1     1 1   2      0   271 ENG none       0       1   0       1
+  Fraction of sky assumed clear             MET none       0       1   0       1
+#GROUP   91  TYPE TEXT
+$TEXT
+SNOCOV  1  1     1     1 1   2 1    0   272 ENG none       0       1   0       1
+  Fraction of PLS covered by pack           MET none       0       1   0       1
+#GROUP   92  TYPE TEXT
+$TEXT
+DULL    1  1     1     1 1   2      0   273 ENG none       0       1   0       1
+  Dullness index of the pack                MET none       0       1   0       1
+#GROUP   93  TYPE TEXT
+$TEXT
+ALBEDO  1  1     1     1 1   2      0   274 ENG none       0       1   0       1
+  Albedo of the pack                        MET none       0       1   0       1
+#GROUP   94  TYPE TEXT
+$TEXT
+PAKTMP  1  1     1     1 1   2      0   275 ENG Deg F      0       117.8     1.8
+  Mean temp of the pack                     MET Deg C      0       117.8     1.8
+#GROUP   95  TYPE TEXT
+$TEXT
+DEWTMP  1  1     1     1 1   2      0   276 ENG Deg F      0       117.8     1.8
+  Effective dewpoint temp                   MET Deg C      0       117.8     1.8
+#GROUP   96  TYPE TEXT
+$TEXT
+SNOTMP  1  1     1     1 1   2      0   277 ENG Deg F      0       117.8     1.8
+  Curren max temp for precip as snowfall    MET Deg C      0       117.8     1.8
+#GROUP   97  TYPE TEXT
+$TEXT
+SNOWF   1  1     1     1 2   2      0   314 ENG in/iv      0       1   0   .0394
+  Snowfall, water equivalent                MET mm/iv      0       1   0   .0394
+#GROUP   98  TYPE TEXT
+$TEXT
+PRAIN   1  1     1     1 2   2      0   315 ENG in/iv      0       1   0   .0394
+  Rainfall on pack                          MET mm/iv      0       1   0   .0394
+#GROUP   99  TYPE TEXT
+$TEXT
+SNOWE   1  1     1     1 2   2      0   316 ENG in/iv      0       1   0   .0394
+  Evap from PACKF (sublimation)             MET mm/iv      0       1   0   .0394
+#GROUP  100  TYPE TEXT
+$TEXT
+WYIELD  1  1     1     1 2   2 1    0   317 ENG in/iv      0       1   0   .0394
+  Water yielded by pack (to land-surface)   MET mm/iv      0       1   0   .0394
+#GROUP  101  TYPE TEXT
+$TEXT
+MELT    1  1     1     1 2   2      0   318 ENG in/iv      0       1   0   .0394
+  Quantity of melt from PACKF(water equiv)  MET mm/iv      0       1   0   .0394
+#GROUP  102  TYPE TEXT
+$TEXT
+RAINF   1  1     1     1 2   2 1    0   319 ENG in/iv      0       1   0   .0394
+  Rainfall                                  MET mm/iv      0       1   0   .0394
+#GROUP  111  TYPE TEXT
+$TEXT
+PERS    1  1     1     1 1   3      0   964 ENG in         0       1   0   .0394
+  Total water stored in the PLS             MET mm         0       1   0   .0394
+#GROUP  112  TYPE TEXT
+$TEXT
+CEPS    5  1     5     1 1   3      0   965 ENG in         0       1   0   .0394
+  Interception storage                      MET mm         0       1   0   .0394
+#GROUP  113  TYPE TEXT
+$TEXT
+SURS    1  1     1     1 1   3 1    0   970 ENG in         0       1   0   .0394
+  Surface (overland flow) storage           MET mm         0       1   0   .0394
+#GROUP  114  TYPE TEXT
+$TEXT
+UZS     1  1     1     1 1   3 1    0   971 ENG in         0       1   0   .0394
+  Upper zone storage                        MET mm         0       1   0   .0394
+#GROUP  115  TYPE TEXT
+$TEXT
+IFWS    1  1     1     1 1   3 1    0   972 ENG in         0       1   0   .0394
+  Interflow storage                         MET mm         0       1   0   .0394
+#GROUP  116  TYPE TEXT
+$TEXT
+LZS     1  1     1     1 1   3 1    0   973 ENG in         0       1   0   .0394
+  Lower zone storage                        MET mm         0       1   0   .0394
+#GROUP  117  TYPE TEXT
+$TEXT
+AGWS    1  1     1     1 1   3 1    0   974 ENG in         0       1   0   .0394
+  Active groundwater storage above base elevMET mm         0       1   0   .0394
+#GROUP  118  TYPE TEXT
+$TEXT
+TGWS    1  1     1     1 1   3 1    0   975 ENG in         0       1   0   .0394
+  Total groundwater storage above datum     MET mm         0       1   0   .0394
+#GROUP  119  TYPE TEXT
+$TEXT
+GWEL    1  1     1     1 1   3 1    0   976 ENG ft         0    12.0   0    39.4
+  Groundwater elevation                     MET m          0    12.0   0    39.4
+#GROUP  120  TYPE TEXT
+$TEXT
+GWVS    1  1     1     1 1   3 1    0   977 ENG in         0       1   0   .0394
+  Groundwater slope index                   MET mm         0       1   0   .0394
+#GROUP  121  TYPE TEXT
+$TEXT
+INFFAC  1  1     1     1 1   3 1    0   978 ENG none       0       1   0       1
+  Infiltration adjustment factor            MET none       0       1   0       1
+#GROUP  122  TYPE TEXT
+$TEXT
+PETADJ  1  1     1     1 1   3 1    0   979 ENG none       0       1   0       1
+  Potential ET adjustment factor            MET none       0       1   0       1
+#GROUP  123  TYPE TEXT
+$TEXT
+RPARM   1  1     1     1 2   3      0   980 ENG in/iv      0       1   0   .0394
+  Value of max lower zone E-T opportunity   MET mm/iv      0       1   0   .0394
+#GROUP  124  TYPE TEXT
+$TEXT
+RZWS    1  1     1     1 1   3      0   981 ENG in         0       1   0   .0394
+  Root zone water storage                   MET mm         0       1   0   .0394
+#GROUP  125  TYPE TEXT
+$TEXT
+SUPY    1  1     1     1 2   3 1    0  1173 ENG in/iv      0       1   0   .0394
+  Moisture supply                           MET mm/iv      0       1   0   .0394
+#GROUP  126  TYPE TEXT
+$TEXT
+SURO    1  1     1     1 2   3 1    0  1174 ENG in/iv      0       1   0   .0394
+  Surface outflow                           MET mm/iv      0       1   0   .0394
+#GROUP  127  TYPE TEXT
+$TEXT
+IFWO    1  1     1     1 2   3 1    0  1175 ENG in/iv      0       1   0   .0394
+  Interflow outflow                         MET mm/iv      0       1   0   .0394
+#GROUP  128  TYPE TEXT
+$TEXT
+AGWO    1  1     1     1 2   3 1    0  1176 ENG in/iv      0       1   0   .0394
+  Active groundwater outflow                MET mm/iv      0       1   0   .0394
+#GROUP  129  TYPE TEXT
+$TEXT
+PERO    1  1     1     1 2   3 1    0  1177 ENG in/iv      0       1   0   .0394
+  Total outflow from PLS                    MET mm/iv      0       1   0   .0394
+#GROUP  130  TYPE TEXT
+$TEXT
+IGWI    1  1     1     1 2   3 1    0  1178 ENG in/iv      0       1   0   .0394
+  Inflow to inactive (deep) groundwater     MET mm/iv      0       1   0   .0394
+#GROUP  131  TYPE TEXT
+$TEXT                                      
+PET     1  1     1     1 2   3      0  1179 ENG in/iv      0       1   0   .0394
+  Potential E-T                             MET mm/iv      0       1   0   .0394
+#GROUP  132  TYPE TEXT
+$TEXT
+CEPE    5  1     5     1 2   3      0  1180 ENG in/iv      0       1   0   .0394
+  Evap from interception storage            MET mm/iv      0       1   0   .0394
+#GROUP  133  TYPE TEXT
+$TEXT
+CEPO    5  1     5     1 2   3      0  1187 ENG in/iv      0       1   0   .0394
+  Evap from interception storage            MET mm/iv      0       1   0   .0394
+#GROUP  134  TYPE TEXT
+$TEXT
+SURET   1  1     1     1 2   3      0  1192 ENG in/iv      0       1   0   .0394
+  E-T from surface storage                  MET mm/iv      0       1   0   .0394
+#GROUP  135  TYPE TEXT
+$TEXT
+UZET    1  1     1     1 2   3      0  1193 ENG in/iv      0       1   0   .0394
+  E-T from upper zone                       MET mm/iv      0       1   0   .0394
+#GROUP  136  TYPE TEXT
+$TEXT
+LZET    1  1     1     1 2   3      0  1194 ENG in/iv      0       1   0   .0394
+  E-T from lower zone                       MET mm/iv      0       1   0   .0394
+#GROUP  137  TYPE TEXT
+$TEXT
+AGWET   1  1     1     1 2   3      0  1195 ENG in/iv      0       1   0   .0394
+  E-T from active groundwater storage       MET mm/iv      0       1   0   .0394
+#GROUP  138  TYPE TEXT
+$TEXT
+BASET   1  1     1     1 2   3      0  1196 ENG in/iv      0       1   0   .0394
+  E-T from active groundwater outflow       MET mm/iv      0       1   0   .0394
+#GROUP  139  TYPE TEXT
+$TEXT      
+TAET    1  1     1     1 2   3      0  1197 ENG in/iv      0       1   0   .0394
+  Total simulated E-T                       MET mm/iv      0       1   0   .0394
+#GROUP  140  TYPE TEXT
+$TEXT
+IFWI    1  1     1     1 2   3 1    0  1198 ENG in/iv      0       1   0   .0394
+  Interflow inflow(excluding lateral flow)  MET mm/iv      0       1   0   .0394
+#GROU   141  TYPE TEXT
+$TEXT
+UZI     1  1     1     1 2   3 1    0  1199 ENG in/iv      0       1   0   .0394
+  Upper zone inflow                         MET mm/iv      0       1   0   .0394
+#GROUP  142  TYPE TEXT
+$TEXT
+INFIL   1  1     1     1 2   3 1    0  1200 ENG in/iv      0       1   0   .0394
+  Infiltration to the soil                  MET mm/iv      0       1   0   .0394
+#GROUP  143  TYPE TEXT
+$TEXT
+PERC    1  1     1     1 2   3 1    0  1201 ENG in/iv      0       1   0   .0394
+  Percolation from upper to lower zone      MET mm/iv      0       1   0   .0394
+#GROUP  144  TYPE TEXT
+$TEXT
+LZI     1  1     1     1 2   3      0  1202 ENG in/iv      0       1   0   .0394
+  Lower zone inflow                         MET mm/iv      0       1   0   .0394
+#GROUP  145  TYPE TEXT
+$TEXT
+AGWI    1  1     1     1 2   3 1    0  1203 ENG in/iv      0       1   0   .0394
+  Act. groundwater inflow(no lateral flow)  MET mm/iv      0       1   0   .0394
+#GROUP  146  TYPE TEXT
+$TEXT
+SURI    1  1     1     1 2   3 1    0  1204 ENG in/iv      0       1   0   .0394
+  Surface inflow(including lateral inflow)  MET mm/iv      0       1   0   .0394
+#GROUP  147  TYPE TEXT
+$TEXT
+IRRDEM  1  1     1     1 2   3      0  1205 ENG in/iv      0       1   0   .0394
+  Calculated irrigation demand              MET mm/iv      0       1   0   .0394
+#GROUP  148  TYPE TEXT
+$TEXT
+IRSHRT  1  1     1     1 2   3      0  1206 ENG in/iv      0       1   0   .0394
+  Irrigation shortfall                      MET mm/iv      0       1   0   .0394
+#GROUP  149  TYPE TEXT
+$TEXT
+IRDRAW  3  1     3     1 2   3      0  1207 ENG in/iv      0       1   0   .0394
+  Irrigation withdrawal by source           MET mm/iv      0       1   0   .0394
+#GROUP  150  TYPE TEXT
+$TEXT
+IRRAPP  6  1     6     1 2   3      0  1210 ENG in/iv      0       1   0   .0394
+  Irrigation application                    MET mm/iv      0       1   0   .0394
+#GROUP  151  TYPE TEXT
+$TEXT
+DETS    1  1     1     1 1   4      0  1261 ENG tn/ac      0       1   0   .4462
+  Storage of detached sediment              MET tne/ha     0       1   0   .4462
+#GROUP  152  TYPE TEXT
+$TEXT
+STCAP   1  1     1     1 1   4      0  1262 ENG tn/aciv    0       1   0   .4462
+  Sed. transport capacity by surf. runoff   MET tne/haiv   0       1   0   .4462
+#GROUP  153  TYPE TEXT
+$TEXT
+COVER   1  1     1     1 1   4      0  1263 ENG none       0       1   0       1
+  Cover fraction for PLS                    MET none       0       1   0       1
+#GROUP  154  TYPE TEXT
+$TEXT
+WSSD    1  1     1     1 2   4 1    0  1285 ENG tn/aciv    0       1   0   .4462
+  Washoff of detached sediment              MET tne/haiv   0       1   0   .4462
+#GROUP  155  TYPE TEXT
+$TEXT
+SCRSD   1  1     1     1 2   4 1    0  1286 ENG tn/aciv    0       1   0   .4462
+  Scour of matrix (attached) soil           MET tne/haiv   0       1   0   .4462
+#GROUP  156  TYPE TEXT
+$TEXT
+SOSED   1  1     1     1 2   4 1    0  1287 ENG tn/aciv    0       1   0   .4462
+  Total removal of soil and sediment        MET tne/haiv   0       1   0   .4462
+#GROUP  157  TYPE TEXT
+$TEXT
+DET     1  1     1     1 2   4      0  1288 ENG tn/aciv    0       1   0   .4462
+  Sediment detached by rainfall impact      MET tne/haiv   0       1   0   .4462
+#GROUP  158  TYPE TEXT
+$TEXT
+NVSI    1  1     1     1 2   4      0  1289 ENG tn/aciv    0       1   0   .4462
+  Net vertical sediment input               MET tne/haiv   0       1   0   .4462
+#GROUP  161  TYPE TEXT
+$TEXT
+AIRTC   1  1     1     1 2   5      0  1377 ENG Deg F    -32    .555   0       1
+  Air temp on the PLS                       MET Deg C    -32    .555   0       1
+#GROUP  162  TYPE TEXT
+$TEXT
+SLTMP   1  1     1     1 2   5 1    0  1378 ENG Deg F    -32    .555   0       1
+  Surface layer soil temp                   MET Deg C    -32    .555   0       1
+#GROUP  163  TYPE TEXT
+$TEXT
+ULTMP   1  1     1     1 2   5 1    0  1379 ENG Deg F    -32    .555   0       1
+  Upper layer soil temp                     MET Deg C    -32    .555   0       1
+#GROUP  164  TYPE TEXT
+$TEXT                                      
+LGTMP   1  1     1     1 2   5 1    0  1380 ENG Deg F    -32    .555   0       1
+  Lower and groundwater layer               MET Deg C    -32    .555   0       1
+#GROUP  171  TYPE TEXT
+$TEXT
+SOTMP   1  1     1     1 1   6      0  1469 ENG Deg F    -32    .555   0       1
+  Temp of surface outflow                   MET Deg C    -32    .555   0       1
+#GROUP  172  TYPE TEXT
+$TEXT
+IOTMP   1  1     1     1 1   6      0  1470 ENG Deg F    -32    .555   0       1
+  Temp of interflow outflow                 MET Deg C    -32    .555   0       1
+#GROUP  173  TYPE TEXT
+$TEXT
+AOTMP   1  1     1     1 1   6      0  1471 ENG Deg F    -32    .555   0       1
+  Temp of active groundwater outflow        MET Deg C    -32    .555   0       1
+#GROUP  174  TYPE TEXT
+$TEXT
+SODOX   1  1     1     1 1   6      0  1472 ENG mg/l       0       1   0       1
+  DO conc in surface outflow                MET mg/l       0       1   0       1
+#GROUP  175  TYPE TEXT
+$TEXT
+SOCO2   1  1     1     1 1   6      0  1473 ENG mg/l       0       1   0       1
+  CO2 conc in surface outflow               MET mg/l       0       1   0       1
+#GROUP  176  TYPE TEXT
+$TEXT
+IODOX   1  1     1     1 1   6      0  1474 ENG mg/l       0       1   0       1
+  DO conc in interflow outflow              MET mg/l       0       1   0       1
+#GROUP  177  TYPE TEXT
+$TEXT
+IOCO2   1  1     1     1 1   6      0  1475 ENG mg/l       0       1   0       1
+  CO2 conc in interflow outflow             MET mg/l       0       1   0       1
+#GROUP  178  TYPE TEXT
+$TEXT
+AODOX   1  1     1     1 1   6      0  1476 ENG mg/l       0       1   0       1
+  DO conc in active groundwater outflow     MET mg/l       0       1   0       1
+#GROUP  179  TYPE TEXT
+$TEXT
+AOCO2   1  1     1     1 1   6      0  1477 ENG mg/l       0       1   0       1
+  CO2 conc in active groundwater outflow    MET mg/l       0       1   0       1
+#GROUP  180  TYPE TEXT
+$TEXT
+SOHT    1  1     1     1 2   6      0  1526 ENG BTU/aciv 0.02.455E-6 0.03.942E-6
+  Heat energy in surface outflow            MET kcl/haiv 0.02.455E-6 0.03.942E-6
+#GROUP  181  TYPE TEXT
+$TEXT
+IOHT    1  1     1     1 2   6      0  1527 ENG BTU/aciv 0.02.455E-6 0.03.942E-6
+  Heat energy in interflow outflow          MET kcl/haiv 0.02.455E-6 0.03.942E-6
+#GROUP  182  TYPE TEXT
+$TEXT
+AOHT    1  1     1     1 2   6      0  1528 ENG BTU/aciv 0.02.455E-6 0.03.942E-6
+  Heat energy in act. groundwater outflow   MET kcl/haiv 0.02.455E-6 0.03.942E-6
+#GROUP  183  TYPE TEXT
+$TEXT
+POHT    1  1     1     1 2   6      0  1529 ENG BTU/aciv 0.02.455E-6 0.03.942E-6
+  Heat energy in total outflow from PLS     MET kcl/haiv 0.02.455E-6 0.03.942E-6
+#GROUP  184  TYPE TEXT
+$TEXT
+SODOXM  1  1     1     1 2   6      0  1530 ENG lb/aciv    0   4.411   0   3.937
+  Flux of DO in surface outflow             MET kg/haiv    0   4.411   0   3.937
+#GROUP  185  TYPE TEXT
+$TEXT
+SOCO2M  1  1     1     1 2   6      0  1531 ENG lb/aciv    0   4.411   0   3.937
+  Flux of CO2 in surface outflow            MET kg/haiv    0   4.411   0   3.937
+#GROUP  186  TYPE TEXT
+$TEXT
+IODOXM  1  1     1     1 2   6      0  1532 ENG lb/aciv    0   4.411   0   3.937
+  Flux of DO in interflow outflow           MET kg/haiv    0   4.411   0   3.937
+#GROUP  187  TYPE TEXT
+$TEXT
+IOCO2M  1  1     1     1 2   6      0  1533 ENG lb/aciv    0   4.411   0   3.937
+  Flux of CO2 in interflow outflow          MET kg/haiv    0   4.411   0   3.937
+#GROUP  188  TYPE TEXT
+$TEXT
+AODOXM  1  1     1     1 2   6      0  1534 ENG lb/aciv    0   4.411   0   3.937
+  Flux of DO in active groundwater outflow  MET kg/haiv    0   4.411   0   3.937
+#GROUP  189  TYPE TEXT
+$TEXT
+AOCO2M  1  1     1     1 2   6      0  1535 ENG lb/aciv    0   4.411   0   3.937
+  Flux of CO2 in act. groundwater outflow   MET kg/haiv    0   4.411   0   3.937
+#GROUP  190  TYPE TEXT
+$TEXT
+PODOXM  1  1     1     1 2   6      0  1536 ENG lb/aciv    0   4.411   0   3.937
+  DO in total outflow from PLS              MET kg/haiv    0   4.411   0   3.937
+#GROUP  191  TYPE TEXT
+$TEXT
+POCO2M  1  1     1     1 2   6      0  1537 ENG lb/aciv    0   4.411   0   3.937
+  CO2 in total outflow from PLS             MET kg/haiv    0   4.411   0   3.937
+#GROUP  201  TYPE TEXT
+$TEXT
+SQO     7  1 -1569     1 1   7      0  2943 ENG qty/ac     0       1   0   .4047
+  Storage of QUALOF on the surface          MET qty/ha     0       1   0   .4047
+#GROUP  202  TYPE TEXT
+$TEXT
+SOQSP   7  1 -1568     1 1   7      0  2953 ENG qty/ton    0       1   0   .9072
+ Pot factor of QUALSD on sediment outflow   MET qty/tonn   0       1   0   .9072
+#GROUP  203  TYPE TEXT
+$TEXT
+IOQC    7  1 -1570     1 1   7      0  2963 ENG qty/ft3    0   3630.   0 102833.
+ Conc of QUALIF in interflow outflow        MET qty/l      0   3630.   0 102833.
+#GROUP  204  TYPE TEXT
+$TEXT
+AOQC    7  1 -1571     1 1   7      0  2973 ENG qty/ft3    0   3630.   0 102833.
+ Conc of QUALGW in interflow outflow        MET qty/l      0   3630.   0 102833.
+#GROUP  205  TYPE TEXT
+$TEXT
+WASHQS  7  1 -1568     1 2   7      0  3413 ENG qty/aciv   0       1   0   .4047
+  Removal of QUALSD with det. sed washoff   MET qty/haiv   0       1   0   .4047
+#GROUP  206  TYPE TEXT
+$TEXT
+SCRQS   7  1 -1568     1 2   7      0  3423 ENG qty/aciv   0       1   0   .4047
+  Removal of QUALSD with matrix soil scour  MET qty/haiv   0       1   0   .4047
+#GROUP  207  TYPE TEXT
+$TEXT
+SOQS    7  1 -1568     1 2   7      0  3433 ENG qty/aciv   0       1   0   .4047
+  Total outflow of QUALSD from surface      MET qty/aciv   0       1   0   .4047
+#GROUP  208  TYPE TEXT
+$TEXT
+SOQO    7  1 -1569     1 2   7      0  3443 ENG qty/aciv   0       1   0   .4047
+  Washoff of QUALOF from surface            MET qty/haiv   0       1   0   .4047
+#GROUP  209  TYPE TEXT
+$TEXT
+SOQOC   7  1 -1569     1 2   7      0  3453 ENG qty/ft3    0   3630.   0 102833.
+  Conc of QUALOF in surface outflow         MET qty/l      0   3630.   0 102833.
+#GROUP  210  TYPE TEXT
+$TEXT
+SOQUAL 10  1 -1567     1 2   7      0  3463 ENG qty/aciv   0       1   0   .4047
+  Total outflow of QUAL from the surface    MET qty/haiv   0       1   0   .4047
+#GROUP  211  TYPE TEXT
+$TEXT
+SOQC   10  1 -1567     1 2   7      0  3473 ENG qty/ft3    0   3630.   0 102833.
+  Conc of QUAL in surface outflow           MET qty/l      0   3630.   0 102833.
+#GROUP  212  TYPE TEXT
+$TEXT
+IOQUAL  7  1 -1570     1 2   7      0  3483 ENG qty/aciv   0       1   0   .4047
+  Outflow of QUALIF in interflow            MET qty/haiv   0       1   0   .4047
+#GROUP  213  TYPE TEXT
+$TEXT
+AOQUAL  7  1 -1571     1 2   7      0  3493 ENG qty/aciv   0       1   0   .4047
+  Outflow of QUALGW in baseflow             MET qty/haiv   0       1   0   .4047
+#GROUP  214  TYPE TEXT
+$TEXT
+POQUAL 10  1 -1567     1 2   7      0  3503 ENG qty/aciv   0       1   0   .4047
+  Total flux of QUAL from the PLS           MET qty/haiv   0       1   0   .4047
+#GROUP  215  TYPE TEXT
+$TEXT
+POQC   10  1 -1567     1 2   7      0  3513 ENG qty/ft3    0   3630.   0 102833.
+  Conc of QUAL in total outflow from PLS    MET qty/l      0   3630.   0 102833.
+#GROUP  216  TYPE TEXT
+$TEXT
+PQADDR 10  1 -1567     1 2   7      0  3523 ENG qty/aciv   0       1   0   .4047
+  Dry atmospheric deposition flux to PLS    MET qty/haiv   0       1   0   .4047
+#GROUP  217  TYPE TEXT
+$TEXT
+PQADWT 10  1 -1567     1 2   7      0  3533 ENG qty/aciv   0       1   0   .4047
+  Wet atmospheric deposition flux to PLS    MET qty/haiv   0       1   0   .4047
+#GROUP  218  TYPE TEXT
+$TEXT
+PQADEP 10  1 -1567     1 2   7      0  3543 ENG qty/aciv   0       1   0   .4047
+  Total atmospheric deposition flux to PLS  MET qty/haiv   0       1   0   .4047
+#GROUP  219  TYPE TEXT
+$TEXT
+ISQO   10  1 -1567     1 2   7      0  3553 ENG qty/aciv   0       1   0   .4047
+  Total input flux if QUALOF to PLS         MET qty/haiv   0       1   0   .4047
+#GROUP  221  TYPE TEXT
+$TEXT
+MST     5  1     5     1 1   8 1    0  3580 ENG lb/ac      0       1   0    .892
+  Water storages by zone                    MET kg/ha      0    1.12   0       1
+#GROUP  222  TYPE TEXT
+$TEXT
+FRAC    8  1     8     1 1   8      0  3585 ENG /ivl       0       1   0       1
+  Fractional fluxes thru soil               MET /ivl       0       1   0       1
+#GROUP  231  TYPE TEXT
+$TEXT
+SPS     3  3     3 -3626 1   9      0  4220 ENG lb/ac      0       1   0    .892
+  Amt. of pestic. in surface storage        MET kg/ha      0    1.12   0       1
+#GROUP  232  TYPE TEXT
+$TEXT
+UPS     3  3     3 -3626 1   9      0  4229 ENG lb/ac      0       1   0    .892
+  Amt. of pestic. in upper princ. storage   MET kg/ha      0    1.12   0       1
+#GROUP  233  TYPE TEXT
+$TEXT
+IPS     3  1 -3626     1 1   9      0  4238 ENG lb/ac      0       1   0    .892
+  Amt. of pestic. in upper auxil storage    MET kg/ha      0    1.12   0       1
+#GROUP  234  TYPE TEXT
+$TEXT
+LPS     3  3     3 -3626 1   9      0  4241 ENG lb/ac      0       1   0    .892
+  Amt. of pestic. in lower layer storage    MET kg/ha      0    1.12   0       1
+#GROUP  235  TYPE TEXT
+$TEXT
+APS     3  3     3 -3626 1   9      0  4250 ENG lb/ac      0       1   0    .892
+  Amt of pest. in act. groundwater storage  MET kg/ha      0    1.12   0       1
+#GROUP  236  TYPE TEXT
+$TEXT
+TPS     3  3     3 -3626 1   9      0  4259 ENG lb/ac      0       1   0    .892
+  Total amount of pesticide in the soil     MET kg/ha      0    1.12   0       1
+#GROUP  237  TYPE TEXT
+$TEXT
+TPST    5  3     5 -3626 1   9      0  4268 ENG lb/ac      0       1   0    .892
+  Total amount of pesticide in each layer   MET kg/ha      0    1.12   0       1
+#GROUP  238  TYPE TEXT
+$TEXT
+TOTPST  3  1 -3626     1 1   9      0  4283 ENG lb/ac      0       1   0    .892
+  Total amount of pesticide in the soil     MET kg/ha      0    1.12   0       1
+#GROUP  239  TYPE TEXT
+$TEXT
+SDPS    2  3     2 -3626 2   9      0  4622 ENG lb/aciv    0       1   0    .892
+  Outflow of sediment-associated pesticide  MET kg/haiv    0    1.12   0       1
+#GROUP  240  TYPE TEXT
+$TEXT
+TSPSS   5  3     5 -3626 2   9      0  4628 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln pest. for topsoil layers   MET kg/haiv    0    1.12   0       1
+#GROUP  241  TYPE TEXT
+$TEXT
+SSPSS   3  3     3 -3626 2   9      0  4643 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln pest. for subsoil layers   MET kg/haiv    0    1.12   0       1
+#GROUP  242  TYPE TEXT
+$TEXT
+SDEGPS  3  1 -3626     1 2   9      0  4652 ENG lb/aciv    0       1   0    .892
+  Amount of degradation in surf. layer      MET kg/haiv    0    1.12   0       1
+#GROUP  243  TYPE TEXT
+$TEXT
+UDEGPS  3  1 -3626     1 2   9      0  4655 ENG lb/aciv    0       1   0    .892
+  Amount of degradation in upper layer      MET kg/haiv    0    1.12   0       1
+#GROUP  244  TYPE TEXT
+$TEXT
+LDEGPS  3  1 -3626     1 2   9      0  4658 ENG lb/aciv    0       1   0    .892
+  Amount of degradation in lower layer      MET kg/haiv    0    1.12   0       1
+#GROUP  245  TYPE TEXT
+$TEXT
+ADEGPS  3  1 -3626     1 2   9      0  4661 ENG lb/aciv    0       1   0    .892
+  Amount of degr. in groundw. layer         MET kg/haiv    0    1.12   0       1
+#GROUP  246  TYPE TEXT
+$TEXT
+TDEGPS  3  1 -3626     1 2   9      0  4664 ENG lb/aciv    0       1   0    .892
+  Total amount of degradation in soil       MET kg/haiv    0    1.12   0       1
+#GROUP  247  TYPE TEXT
+$TEXT
+SOSDPS  3  1 -3626     1 2   9      0  4667 ENG lb/aciv    0       1   0    .892
+  Total outflow of sed-assoc. pesticide     MET kg/haiv    0    1.12   0       1
+#GROUP  248  TYPE TEXT
+$TEXT
+SOPEST  3  1 -3626     1 2   9      0  4670 ENG lb/aciv    0       1   0    .892
+  Total surface outflow of pesticide        MET kg/haiv    0    1.12   0       1
+#GROUP  249  TYPE TEXT
+$TEXT
+POPST   3  1 -3626     1 2   9      0  4673 ENG lb/aciv    0       1   0    .892
+  Total outflow of sol. pestic. from PLS    MET kg/haiv    0    1.12   0       1
+#GROUP  250  TYPE TEXT
+$TEXT
+TOPST   3  1 -3626     1 2   9      0  4676 ENG lb/aciv    0       1   0    .892
+  Total outflow of pest. from PLS           MET kg/haiv    0    1.12   0       1
+#GROUP  251  TYPE TEXT
+$TEXT
+PEADDR  3  3 -3626     3 2   9      0  4679 ENG lb/aciv    0       1   0    .892
+  Dry atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  252  TYPE TEXT
+$TEXT
+PEADWT  3  3 -3626     3 2   9      0  4688 ENG lb/aciv    0       1   0    .892
+  Wet atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  253  TYPE TEXT
+$TEXT
+PEADEP  3  3 -3626     3 2   9      0  4697 ENG lb/aciv    0       1   0    .892
+  Total atmospheric deposition to PLS       MET kg/haiv    0    1.12   0       1
+#GROUP  261  TYPE TEXT
+$TEXT
+NITIF   4  1     4     1 2  10      0  4726 ENG lb/ac      0       1   0    .892
+  Special Action inflow of nitrogen species MET kg/ha      0    1.12   0       1
+#GROUP  262  TYPE TEXT
+$TEXT
+AGPLTN  1  1     1     1 1  10      0  5747 ENG lb/ac      0       1   0    .892
+  N in above-ground plant storage           MET kg/ha      0    1.12   0       1
+#GROUP  263  TYPE TEXT
+$TEXT
+LITTRN  1  1     1     1 1  10      0  5748 ENG lb/ac      0       1   0    .892
+  N in litter storage                       MET kg/ha      0    1.12   0       1
+#GROUP  264  TYPE TEXT
+$TEXT
+SN      8  1     8     1 1  10      0  5749 ENG lb/ac      0       1   0    .892
+  N in surface layer storage                MET kg/ha      0    1.12   0       1
+#GROUP  265  TYPE TEXT
+$TEXT
+UN      8  1     8     1 1  10      0  5757 ENG lb/ac      0       1   0    .892
+  N in upper layer princ storage            MET kg/ha      0    1.12   0       1
+#GROUP  266  TYPE TEXT
+$TEXT
+IN      4  1     4     1 1  10      0  5765 ENG lb/ac      0       1   0    .892
+  N in upper auxil layer storage            MET kg/ha      0    1.12   0       1
+#GROUP  267  TYPE TEXT
+$TEXT
+LN      8  1     8     1 1  10      0  5769 ENG lb/ac      0       1   0    .892
+  N in lower layer storage                  MET kg/ha      0    1.12   0       1
+#GROUP  268  TYPE TEXT
+$TEXT
+AN      8  1     8     1 1  10      0  5777 ENG lb/ac      0       1   0    .892
+  N in groundwater layer storage            MET kg/ha      0    1.12   0       1
+#GROUP  269  TYPE TEXT
+$TEXT
+TN      8  1     8     1 1  10      0  5785 ENG lb/ac      0       1   0    .892
+  Total N in soil, by species               MET kg/ha      0    1.12   0       1
+#GROUP  270  TYPE TEXT
+$TEXT
+TNIT    5  1     5     1 1  10      0  5793 ENG lb/ac      0       1   0    .892
+  Total N stored in each layer (all species)MET kg/ha      0    1.12   0       1
+#GROUP  271  TYPE TEXT
+$TEXT
+TOTNIT  1  1     1     1 1  10      0  5798 ENG lb/ac      0       1   0    .892
+  Total N stored in the PLS (all species)   MET kg/ha      0    1.12   0       1
+#GROUP  272  TYPE TEXT
+$TEXT     
+NDFCT   5  1     5     1 1  10      0  5799 ENG lb/ac      0       1   0    .892
+  Plant uptake deficit by layer, and total  MET kg/ha      0    1.12   0       1
+#GROUP  273  TYPE TEXT
+$TEXT
+NUPTG   4  1     4     1 2  10      0  5837 ENG lb/aciv    0       1   0    .892
+  Plant uptake target by layer              MET kg/haiv    0    1.12   0       1
+#GROUP  274  TYPE TEXT
+$TEXT
+SEDN    3  1     3     1 2  10      0  6544 ENG lb/aciv    0       1   0    .892
+  Outflows of sediment-associated N         MET kg/haiv    0    1.12   0       1
+#GROUP  275  TYPE TEXT
+$TEXT
+TSAMS   5  1     5     1 2  10      0  6547 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln ammon in the topsoil       MET kg/haiv    0    1.12   0       1
+#GROUP  276  TYPE TEXT
+$TEXT
+SSAMS   3  1     3     1 2  10      0  6552 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln ammon in the subsoil       MET kg/haiv    0    1.12   0       1
+#GROUP  277  TYPE TEXT
+$TEXT
+TSNO3   5  1     5     1 2  10      0  6555 ENG lb/aciv    0       1   0    .892
+  Fluxes of nitrate in the topsoil          MET kg/haiv    0    1.12   0       1
+#GROUP  278  TYPE TEXT
+$TEXT
+SSNO3   3  1     3     1 2  10      0  6560 ENG lb/aciv    0       1   0    .892
+  Fluxes of nitrate in the subsoil          MET kg/haiv    0    1.12   0       1
+#GROUP  279  TYPE TEXT
+$TEXT
+DENIF   5  1     5     1 2  10      0  6563 ENG lb/aciv    0       1   0    .892
+  Denitrification by layer & total          MET kg/haiv    0    1.12   0       1
+#GROUP  280  TYPE TEXT
+$TEXT
+TDENIF  1  1     1     1 2  10      0  6568 ENG lb/aciv    0       1   0    .892
+  Total denitrification in the PLS          MET kg/haiv    0    1.12   0       1
+#GROUP  281  TYPE TEXT
+$TEXT
+AMNIT   5  1     5     1 2  10      0  6569 ENG lb/aciv    0       1   0    .892
+  Ammonia nitrification by layer & total    MET kg/haiv    0    1.12   0       1
+#GROUP  282  TYPE TEXT
+$TEXT
+AMIMB   5  1     5     1 2  10      0  6574 ENG lb/aciv    0       1   0    .892
+  Ammonia immobilization by layer & total   MET kg/haiv    0    1.12   0       1
+#GROUP  283  TYPE TEXT
+$TEXT
+ORNMN   5  1     5     1 2  10      0  6579 ENG lb/aciv    0       1   0    .892
+  Organic N mineralization by layer & total MET kg/haiv    0    1.12   0       1
+#GROUP  284  TYPE TEXT
+$TEXT
+NIADDR  3  2     3     2 2  10      0  6584 ENG lb/aciv    0       1   0    .892
+  Dry atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  285  TYPE TEXT
+$TEXT
+NIADWT  3  2     3     2 2  10      0  6590 ENG lb/aciv    0       1   0    .892
+  Wet atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  286  TYPE TEXT
+$TEXT
+NIADEP  3  2     3     2 2  10      0  6596 ENG lb/aciv    0       1   0    .892
+  Total atmospheric deposition to PLS       MET kg/haiv    0    1.12   0       1
+#GROUP  287  TYPE TEXT
+$TEXT
+NFIXFX  5  1     5     1 2  10      0  6602 ENG lb/aciv    0       1   0    .892
+  Nitrogen fixation (4 layers and total)    MET kg/haiv    0    1.12   0       1
+#GROUP  288  TYPE TEXT
+$TEXT
+TSSLN   5  1     5     1 2  10      0  6607 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln labile ORGN in the topsoil MET kg/haiv    0    1.12   0       1
+#GROUP  289  TYPE TEXT
+$TEXT
+SSSLN   3  1     3     1 2  10      0  6612 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln labile ORGN in the subsoil MET kg/haiv    0    1.12   0       1
+#GROUP  290  TYPE TEXT
+$TEXT
+TSSRN   5  1     5     1 2  10      0  6615 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln refrac ORGN in the topsoil MET kg/haiv    0    1.12   0       1
+#GROUP  291  TYPE TEXT
+$TEXT
+SSSRN   3  1     3     1 2  10      0  6620 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln refrac ORGN in the subsoil MET kg/haiv    0    1.12   0       1
+#GROUP  292  TYPE TEXT
+$TEXT
+NIIMB   5  1     5     1 2  10      0  6623 ENG lb/aciv    0       1   0    .892
+  Nitrate immobilization by layer & total   MET kg/haiv    0    1.12   0       1
+#GROUP  293  TYPE TEXT
+$TEXT
+AMVOL   5  1     5     1 2  10      0  6628 ENG lb/aciv    0       1   0    .892
+  Ammonia volatilization by layer & total   MET kg/haiv    0    1.12   0       1
+#GROUP  294  TYPE TEXT
+$TEXT
+REFRON  5  1     5     1 2  10      0  6633 ENG lb/aciv    0       1   0    .892
+  Refractory N conversion by layer & total  MET kg/haiv    0    1.12   0       1
+#GROUP  295  TYPE TEXT
+$TEXT
+NIUPA   5  1     5     1 2  10      0  6638 ENG lb/aciv    0       1   0    .892
+  Above-ground NO3 uptake by layer & total  MET kg/haiv    0    1.12   0       1
+#GROUP  296  TYPE TEXT
+$TEXT
+AMUPA   5  1     5     1 2  10      0  6643 ENG lb/aciv    0       1   0    .892
+  Above-ground NH3 uptake by layer & total  MET kg/haiv    0    1.12   0       1
+#GROUP  297  TYPE TEXT
+$TEXT
+NIUPB   5  1     5     1 2  10      0  6648 ENG lb/aciv    0       1   0    .892
+  Below-ground NO3 uptake by layer & total  MET kg/haiv    0    1.12   0       1
+#GROUP  298  TYPE TEXT
+$TEXT
+AMUPB   5  1     5     1 2  10      0  6653 ENG lb/aciv    0       1   0    .892
+  Below-ground NH3 uptake by layer & total  MET kg/haiv    0    1.12   0       1
+#GROUP  299  TYPE TEXT
+$TEXT
+RETAGN  1  1     1     1 2  10      0  6658 ENG lb/aciv    0       1   0    .892
+  Above-ground plant N return to litter     MET kg/haiv    0    1.12   0       1
+#GROUP  300  TYPE TEXT
+$TEXT
+RTLLN   3  1     3     1 2  10      0  6659 ENG lb/aciv    0       1   0    .892
+  Litter return to labile by layer & total  MET kg/haiv    0    1.12   0       1
+#GROUP  301  TYPE TEXT
+$TEXT
+RTRLN   3  1     3     1 2  10      0  6662 ENG lb/aciv    0       1   0    .892
+  Litter return to refrac by layer & total  MET kg/haiv    0    1.12   0       1
+#GROUP  302  TYPE TEXT
+$TEXT
+RTLBN   5  1     5     1 2  10      0  6665 ENG lb/aciv    0       1   0    .892
+  Plant N return to labile by layer & total MET kg/haiv    0    1.12   0       1
+#GROUP  303  TYPE TEXT
+$TEXT
+RTRBN   5  1     5     1 2  10      0  6670 ENG lb/aciv    0       1   0    .892
+  Plant N return to refrac by layer & total MET kg/haiv    0    1.12   0       1
+#GROUP  304  TYPE TEXT
+$TEXT
+SOSEDN  1  1     1     1 2  10      0  6675 ENG lb/aciv    0       1   0    .892
+  Outflow of sed-assoc N (orgN + ads NH3)   MET kg/haiv    0    1.12   0       1
+#GROUP  305  TYPE TEXT
+$TEXT
+PONO3   1  1     1     1 2  10      0  6676 ENG lb/aciv    0       1   0    .892
+  Total outflow of NO3 from the PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  306  TYPE TEXT
+$TEXT
+PONH4   1  1     1     1 2  10      0  6677 ENG lb/aciv    0       1   0    .892
+  Total outflow of NH4 from the PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  307  TYPE TEXT
+$TEXT
+POORN   1  1     1     1 2  10      0  6678 ENG lb/aciv    0       1   0    .892
+  Total outflow of ORG N from the PLS       MET kg/haiv    0    1.12   0       1
+#GROUP  308  TYPE TEXT
+$TEXT
+PONITR  1  1     1     1 2  10      0  6679 ENG lb/aciv    0       1   0    .892
+  Tot outflow of N (NO3+NH4+ORGN) from PLS  MET kg/haiv    0    1.12   0       1
+#GROUP  311  TYPE TEXT
+$TEXT
+PHOIF   3  1     3     1 2  11      0  6695 ENG lb/ac      0       1   0    .892
+  Special Action inflow of phosphorus spec. MET kg/ha      0    1.12   0       1
+#GROUP  312  TYPE TEXT
+$TEXT
+SP      4  1     4     1 1  11      0  7052 ENG lb/ac      0       1   0    .892
+  P in surface layer storage                MET kg/ha      0    1.12   0       1
+#GROUP  313  TYPE TEXT
+$TEXT
+UP      4  1     4     1 1  11      0  7056 ENG lb/ac      0       1   0    .892
+  P in upper layer princ storage            MET kg/ha      0    1.12   0       1
+#GROUP  314  TYPE TEXT
+$TEXT
+IP      1  1     1     1 1  11      0  7060 ENG lb/ac      0       1   0    .892
+  P in upper layer auxil storage            MET kg/ha      0    1.12   0       1
+#GROUP  315  TYPE TEXT
+$TEXT                                 
+LP      4  1     4     1 1  11      0  7061 ENG lb/ac      0       1   0    .892
+  P in lower layer storage                  MET kg/ha      0    1.12   0       1
+#GROUP  316  TYPE TEXT
+$TEXT
+AP      4  1     4     1 1  11      0  7065 ENG lb/ac      0       1   0    .892
+  P in groundwater layer storage            MET kg/ha      0    1.12   0       1
+#GROUP  317  TYPE TEXT
+$TEXT
+TP      4  1     4     1 1  11      0  7069 ENG lb/ac      0       1   0    .892
+  Total P in soil, by species               MET kg/ha      0    1.12   0       1
+#GROUP  318  TYPE TEXT
+$TEXT
+TPHO    5  1     5     1 1  11      0  7073 ENG lb/ac      0       1   0    .892
+  Total P stored in each layer (all species)MET kg/ha      0    1.12   0       1
+#GROUP  319  TYPE TEXT
+$TEXT
+TOTPHO  1  1     1     1 1  11      0  7078 ENG lb/ac      0       1   0    .892
+  Total P stored in the PLS (all species)   MET kg/ha      0    1.12   0       1
+#GROUP  320  TYPE TEXT
+$TEXT
+PDFCT   5  1     5     1 1  11      0  7079 ENG lb/ac      0       1   0    .892
+  Plant uptake deficit by layer, and total  MET kg/ha      0    1.12   0       1
+#GROUP  321  TYPE TEXT
+$TEXT
+PUPTG   4  1     4     1 2  11      0  7092 ENG lb/aciv    0       1   0    .892
+  Plant uptake target by layer              MET kg/haiv    0    1.12   0       1
+#GROUP  322  TYPE TEXT
+$TEXT
+SEDP    2  1     2     1 2  11      0  7266 ENG lb/aciv    0       1   0    .892
+  Outflows of sediment-associated P         MET kg/haiv    0    1.12   0       1
+#GROUP  323  TYPE TEXT
+$TEXT
+TSP4S   5  1     5     1 2  11      0  7268 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln phosphate in the topsoil   MET kg/haiv    0    1.12   0       1
+#GROUP  324  TYPE TEXT
+$TEXT
+SSP4S   3  1     3     1 2  11      0  7273 ENG lb/aciv    0       1   0    .892
+  Fluxes of soln phosphate in the subsoil   MET kg/haiv    0    1.12   0       1
+#GROUP  325  TYPE TEXT
+$TEXT
+P4IMB   5  1     5     1 2  11      0  7276 ENG lb/aciv    0       1   0    .892
+  PO4 immobilization flux (each layer & tot)MET kg/haiv    0    1.12   0       1
+#GROUP  326  TYPE TEXT
+$TEXT
+ORPMN   5  1     5     1 2  11      0  7281 ENG lb/aciv    0       1   0    .892
+  ORP mineralization flux (each layer & tot)MET kg/haiv    0    1.12   0       1
+#GROUP  327  TYPE TEXT
+$TEXT
+SOSEDP  1  1     1     1 2  11      0  7286 ENG lb/aciv    0       1   0    .892
+  Outflow of sed-assoc P (orgP + ads PO4)   MET kg/haiv    0    1.12   0       1
+#GROUP  328  TYPE TEXT
+$TEXT
+POPHOS  1  1     1     1 2  11      0  7287 ENG lb/aciv    0       1   0    .892
+  Total outflow of P from the PLS.          MET kg/haiv    0    1.12   0       1
+#GROUP  329  TYPE TEXT
+$TEXT
+PHADDR  2  2     2     2 2  11      0  7288 ENG lb/aciv    0       1   0    .892
+  Dry atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  330  TYPE TEXT
+$TEXT
+PHADWT  2  2     2     2 2  11      0  7292 ENG lb/aciv    0       1   0    .892
+  Wet atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  331  TYPE TEXT
+$TEXT
+PHADEP  2  2     2     2 2  11      0  7296 ENG lb/aciv    0       1   0    .892
+  Total atmospheric deposition to PLS       MET kg/haiv    0    1.12   0       1
+#GROUP  341  TYPE TEXT
+$TEXT
+STRSU   1  1     1     1 1  12      0  7402 ENG lb/ac      0       1   0    .892
+  Tracer in surface layer storage           MET kg/ha      0    1.12   0       1
+#GROUP  342  TYPE TEXT
+$TEXT
+UTRSU   1  1     1     1 1  12      0  7403 ENG lb/ac      0       1   0    .892
+  Tracer in upper layer princ storage       MET kg/ha      0    1.12   0       1
+#GROUP  343  TYPE TEXT
+$TEXT
+ITRSU   1  1     1     1 1  12      0  7404 ENG lb/ac      0       1   0    .892
+  Tracer in upper layer auxil storage       MET kg/ha      0    1.12   0       1
+#GROUP  344  TYPE TEXT
+$TEXT
+LTRSU   1  1     1     1 1  12      0  7405 ENG lb/ac      0       1   0    .892
+  Tracer in lower layer storage             MET kg/ha      0    1.12   0       1
+#GROUP  345  TYPE TEXT
+$TEXT
+ATRSU   1  1     1     1 1  12      0  7406 ENG lb/ac      0       1   0    .892
+  Tracer in groundwater layer storage       MET kg/ha      0    1.12   0       1
+#GROUP  346  TYPE TEXT
+$TEXT
+TRSU    1  1     1     1 1  12      0  7407 ENG lb/ac      0       1   0    .892
+  Total tracer stored in the PLS            MET kg/ha      0    1.12   0       1
+#GROUP  347  TYPE TEXT
+$TEXT
+TSTRS   5  1     5     1 2  12      0  7471 ENG lb/aciv    0       1   0    .892
+  Fluxes of tracer in topsoil               MET kg/haiv    0    1.12   0       1
+#GROUP  348  TYPE TEXT
+$TEXT
+SSTRS   3  1     3     1 2  12      0  7476 ENG lb/aciv    0       1   0    .892
+  Fluxes of tracer in subsoil               MET kg/haiv    0    1.12   0       1
+#GROUP  349  TYPE TEXT
+$TEXT
+POTRS   1  1     1     1 2  12      0  7479 ENG lb/aciv    0       1   0    .892
+  Total outflow of tracer from the PLS      MET kg/haiv    0    1.12   0       1
+#GROUP  350  TYPE TEXT
+$TEXT
+TRADDR  2  1     2     1 2  12      0  7480 ENG lb/aciv    0       1   0    .892
+  Dry atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  351  TYPE TEXT
+$TEXT
+TRADWT  2  1     2     1 2  12      0  7482 ENG lb/aciv    0       1   0    .892
+  Wet atmospheric deposition to PLS         MET kg/haiv    0    1.12   0       1
+#GROUP  352  TYPE TEXT
+$TEXT
+TRADEP  2  1     2     1 2  12      0  7484 ENG lb/aciv    0       1   0    .892
+  Total atmospheric deposition to PLS       MET kg/haiv    0    1.12   0       1
+  END DATA
+END CLU
