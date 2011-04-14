@@ -1265,6 +1265,7 @@ C     + + + END SPECIFICATIONS + + +
 C
 C     simulate interception
       CALL ICEPT (VCSFG,DAYFG,CEPSCM,MON,NXTMON,DAY,NDAYS,SUPY,
+     I            0.0,NCANPY,     
      M            CEPSC,CEPS,
      O            CEPO)
 C
@@ -1353,7 +1354,7 @@ C     iperc doesn't include lzirr
 C
 C     simulate ET
       CALL EVAPT (PET,BASETP,UZSN,AGWETP,KVARY,DAYFG,VLEFG,LZETPM,MON,
-     I            NXTMON,DAY,NDAYS,LZSN,DELT60,RTOPFG,
+     I            NXTMON,DAY,NDAYS,LZSN,DELT60,RTOPFG,NCANPY,
      M            AGWO,CEPS,UZS,AGWS,GWVS,LZETP,RPARM,LZS,SURS,
      O            REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET,SURET)
       TGWS= AGWS
@@ -3320,7 +3321,7 @@ C
       SUBROUTINE   EVAPT
      I                   (PET,BASETP,UZSN,AGWETP,KVARY,DAYFG,VLEFG,
      I                    LZETPM,MON,NXTMON,DAY,NDAYS,LZSN,DELT60,
-     I                    RTOPFG,
+     I                    RTOPFG,NCANPY,
      M                    AGWO,CEPS,UZS,AGWS,GWVS,LZETP,RPARM,LZS,SURS,
      O                    REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET,SURET)
 C
@@ -3328,7 +3329,7 @@ C     + + + PURPOSE + + +
 C     Simulate evapotranspiration (ET)
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    DAY,DAYFG,MON,NDAYS,NXTMON,VLEFG,RTOPFG
+      INTEGER    DAY,DAYFG,MON,NDAYS,NXTMON,VLEFG,RTOPFG,NCANPY
       REAL       AGWET,AGWETP,AGWO,AGWS,BASET,BASETP,CEPE,CEPS,DELT60,
      $           GWVS,KVARY,LZET,LZETP,LZETPM(12),LZS,LZSN,PET,REMPET,
      $           RPARM,TAET,UZET,UZS,UZSN,SURS,SURET
@@ -3342,6 +3343,7 @@ C     KVARY  - ???
 C     DAYFG  - flag for first day or day change
 C     VLEFG  - ???
 C     RTOPFG - surface runoff routing flag
+C     NCANPY - number of canopy layers
 C     LZETPM - ???
 C     MON    - calendar month
 C     NXTMON - next calendar month
