@@ -106,7 +106,11 @@ C     initialize some other variables
       BGWS  = 0.0
 C
 C     initialize fluxes that may not be used
-      SURET = 0.0
+      SURET  = 0.0
+      CEPE(2)= 0.0
+      CEPE(3)= 0.0
+      CEPE(4)= 0.0
+      CEPE(5)= 0.0
 C
 C     default to single interception layer
       NCANPY= 1
@@ -4529,7 +4533,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL      DFACTA,DFACTB,PCFLX1(6),PCFLX3(12),PCFLX5(6),
      $          PCFLX7(2),PIFLX(5),PPERS,PPERSS,PSTAT1(13),
      $          PIRFX1(2),PIRFX2(3),PIRFX3(6),PRZWS,APRINT(56),
-     $          PCEPE
+     $          PCEPE,PSTATC
       CHARACTER*2   DEPUNT
       CHARACTER*8   UNITID,CSTAT1(13),CWST3(2),CCFLX1(6),
      $              CIFLX(5),CCFLX3(12),CCEPE,CCFLX5(6)
@@ -4594,9 +4598,9 @@ C     + + + OUTPUT FORMATS + + +
  2230 FORMAT (31X,7(8X,'MM'))
  2235 FORMAT (31X,8(8X,'MM'))
  2240 FORMAT (31X,8F10.3)
- 2250 FORMAT (/,'     EVAPOTRANSPIRATION             LAYER        ',
-     $        'NAME             VALUE')
- 2255 FORMAT (31X,I10,3A4,8X,F10.3,2X,A2)  
+ 2250 FORMAT (/,'     EVAPOTRANSPIRATION             LAYER           ',
+     $        'NAME          VALUE')
+ 2255 FORMAT (31X,I10,3X,3A4,5X,F10.3,2X,A2)  
  2260 FORMAT (/,'     INTERNAL FLUXES',11X,
      $  '      IFWI       UZI     INFIL      PERC       LZI      AGWI')
  2270 FORMAT (31X,6(8X,'IN'))
@@ -4798,12 +4802,18 @@ C           using high water table algorithms
         END IF
       END IF
 C
+C     calculate total storage in all surface layers 
+      PSTATC = 0.0
+      DO I = 1, NCANPY
+        PSTATC= PSTATC+ PSTAT1(I)
+      END DO
+C
       IF (CSNOFG .EQ. 1) THEN
 C       snow is being considered
         IF (HWTFG .EQ. 1) THEN
 C         using high water table algorithms
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-            WRITE(PRINTU,2055) PPERS,PSTAT1(1),(PSTAT1(I),I=6,13),PWST3
+            WRITE(PRINTU,2055) PPERS,PSTATC,(PSTAT1(I),I=6,13),PWST3
           END IF
           IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C           compile values for binary printout
@@ -4812,7 +4822,7 @@ C           compile values for binary printout
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
             ACNT = ACNT + 1
-            APRINT(ACNT)= PSTAT1(1)
+            APRINT(ACNT)= PSTATC
             CHEAD(ACNT) = CSTAT1(1)
             CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
             DO 10 I = 6, 13
@@ -4831,7 +4841,7 @@ C           compile values for binary printout
         ELSE
 C         not using high water table algorithms
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-            WRITE (PRINTU,2050) PPERS,PSTAT1(1),(PSTAT1(I),I=6,11),PWST3
+            WRITE (PRINTU,2050) PPERS,PSTATC,(PSTAT1(I),I=6,11),PWST3
           END IF
           IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C           compile values for binary printout
@@ -4840,7 +4850,7 @@ C           compile values for binary printout
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
             ACNT = ACNT + 1
-            APRINT(ACNT) = PSTAT1(1)
+            APRINT(ACNT) = PSTATC
             CHEAD(ACNT) = CSTAT1(1)
             CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
             DO 20 I = 6, 11
@@ -4862,7 +4872,7 @@ C       snow is not being considered
         IF (HWTFG .EQ. 1) THEN
 C         using high water table algorithms
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-            WRITE (PRINTU,2055) PPERS,PSTAT1(1),(PSTAT1(I),I=6,13)
+            WRITE (PRINTU,2055) PPERS,PSTATC,(PSTAT1(I),I=6,13)
           END IF
           IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C           compile values for binary printout
@@ -4871,7 +4881,7 @@ C           compile values for binary printout
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
             ACNT = ACNT + 1
-            APRINT(ACNT)= PSTAT1(1)
+            APRINT(ACNT)= PSTATC
             CHEAD(ACNT) = CSTAT1(1)
             CLEN(ACNT)  = LEN_TRIM(CHEAD(ACNT))
             DO 30 I = 6,13
@@ -4893,7 +4903,7 @@ C           compile values for binary printout
             CHEAD(ACNT) = 'PERS'
             CLEN(ACNT) = 4
             ACNT = ACNT + 1
-            APRINT(ACNT) = PSTAT1(1)
+            APRINT(ACNT) = PSTATC
             CHEAD(ACNT) = CSTAT1(1)
             CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
             DO 31 I = 6, 11
