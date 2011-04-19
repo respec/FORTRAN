@@ -4563,6 +4563,9 @@ C     + + + OUTPUT FORMATS + + +
  2045 FORMAT (31X,9(6X,'MM'),7X,'M')
  2050 FORMAT (31X,11F10.3)
  2055 FORMAT (31X,12F8.3)
+ 2057 FORMAT (/,'      SURFACE   LAYER           ',
+     $        'NAME          VALUE')
+ 2058 FORMAT (11X,I10,3X,3A4,5X,F10.3,2X,A2)  
  2060 FORMAT (/,37X,'RZWS')
  2065 FORMAT (39X,'IN')
  2070 FORMAT (39X,'MM')
@@ -4598,9 +4601,9 @@ C     + + + OUTPUT FORMATS + + +
  2230 FORMAT (31X,7(8X,'MM'))
  2235 FORMAT (31X,8(8X,'MM'))
  2240 FORMAT (31X,8F10.3)
- 2250 FORMAT (/,'     EVAPOTRANSPIRATION             LAYER           ',
+ 2250 FORMAT (/,'     SURFACE ET LAYER           ',
      $        'NAME          VALUE')
- 2255 FORMAT (31X,I10,3X,3A4,5X,F10.3,2X,A2)  
+ 2255 FORMAT (11X,I10,3X,3A4,5X,F10.3,2X,A2)  
  2260 FORMAT (/,'     INTERNAL FLUXES',11X,
      $  '      IFWI       UZI     INFIL      PERC       LZI      AGWI')
  2270 FORMAT (31X,6(8X,'IN'))
@@ -4914,6 +4917,13 @@ C           compile values for binary printout
  31         CONTINUE
           END IF
         END IF
+      END IF
+C      
+      IF (NCANPY .GT. 1) THEN
+        WRITE(PRINTU,2057)
+        DO I = 1, NCANPY
+          WRITE(PRINTU,2058) I,(CANNAM(J,I),J=1,3),PSTAT1(I),DEPUNT
+        END DO
       END IF
 C
       IF (IRRGFG .EQ. 2) THEN
