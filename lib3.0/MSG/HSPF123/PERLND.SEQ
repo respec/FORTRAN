@@ -53,7 +53,7 @@ $TEXT
   3  1 1SED-PARM1         139    139    339    339   41    5
   6  1 2SED-PARM2         140    262    340    462   42    5
   4  1 2SED-PARM3         141    141    341    341   43    5
- 12  1 2MON-COVER         142    142    342    342   44    5
+ 12  5 2MON-COVER         142    142    342    342   44    5
  12  1 2MON-NVSI          143    263    343    463   45    5
   1  1 2SED-STOR          144    264    344    464   46    5
   4  1 1PSTEMP-PARM1      145    145    345    345   47    6
@@ -3523,68 +3523,74 @@ _WIDTH   5
 _COLUMN 24
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  -1 : 1
 _DEFAULT  0
 _HELP
 VCSFG:value  of  1 means vary interception  storage capacity
 monthly; 0 means use annual value.
+A value of -1 indicates that it is supplied as direct time series CEPSC.
 _PNAME  VCSFG
 $FIELD  FIELD6
 _WIDTH   5
 _COLUMN 29
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  -1 : 1
 _DEFAULT  0
 _HELP
 VUZFG:value   of 1  means vary  upper  zone nominal  storage
 monthly; 0 means use annual value.
+A value of -1 indicates that it is supplied as direct time series UZSN.
 _PNAME  VUZFG
 $FIELD  FIELD7
 _WIDTH   5
 _COLUMN 34
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  -1 : 1
 _DEFAULT  0
 _HELP
 VNNFG:value  of  1 means vary  Manning's n for  the overland
 flow plane monthly; 0 means use annual value.
+A value of -1 indicates that it is supplied as direct time series NSUR.
 _PNAME  VNNFG
 $FIELD  FIELD8
 _WIDTH   5
 _COLUMN 39
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  -1 : 1
 _DEFAULT  0
 _HELP
 VIFWFG:value   of 1  means vary  interflow inflow  parameter
 monthly; 0 means use annual value.
+A value of -1 indicates that it is supplied as direct time series INTFW.
 _PNAME  VIFWFG
 $FIELD  FIELD9
 _WIDTH   5
 _COLUMN 44
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  -1 : 1
 _DEFAULT  0
 _HELP
 VIRCFG:value  of  1 means vary interflow  recession constant
 monthly; 0 means use annual value.
+A value of -1 indicates that it is supplied as direct time series IRC.
 _PNAME  VIRCFG
 $FIELD  FIELD10
 _WIDTH   5
 _COLUMN 49
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 3
+_RANGE  -1 : 3
 _DEFAULT  0
 _HELP
 VLEFG:value   of  1  means vary  lower  zone  E-T  parameter
 monthly; value of 2 means constant E-T with optional IHM method;
 value of 3 means variable E-T with optional IHM method; 0 means
 use annual value.
+A value of -1 indicates that it is supplied as direct time series LZETP.
 _PNAME  VLEFG
 $FIELD  FIELD11
 _WIDTH   5
@@ -7870,10 +7876,11 @@ _WIDTH   5
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  -1 : 1
 _DEFAULT  0
 _HELP
 If  CRVFG is 1, erosion-related cover may vary monthly.
+A value of -1 indicates that it is supplied as direct time series COVER.
 _PNAME  CRVFG
 $FIELD  FIELD3
 _WIDTH   5
@@ -8379,6 +8386,7 @@ _PNAME  COVDEC
 $HELP
 Monthly erosion related cover values.
 This table is only required if CRVFG in Table-type SED-PARM1 is 1.
+If required, this table must be repeated for each canopy layer if NCANPY > 1 in table PWAT-PARM1.
 #GROUP  342  TYPE TEXT
 $TEXT
 (1X,12(1PE10.3))
