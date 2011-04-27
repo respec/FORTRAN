@@ -1185,8 +1185,29 @@ C         has been supplied by the run interpreter
         END IF
       END IF
 C
-C     get lateral inflow timeseries
+C     get varying parameter values
+      DO I = 1, NCANPY
+        IF (CEPCFP(I) .GT. 0 .AND. VCSFG .EQ. -1) THEN
+          CEPSC(I)= PAD(CEPCFP(I)+ IVL1)
+        END IF
+      END DO
+      IF (UZSNFP .GT. 0 .AND. VUZFG .EQ. -1) THEN
+        UZSN= PAD(UZSNFP+ IVL1)
+      END IF
+      IF (NSURFP .GT. 0 .AND. VNNFG .EQ. -1) THEN
+        NSUR= PAD(NSURFP+ IVL1)
+      END IF
+      IF (INFWFP .GT. 0 .AND. VIFWFG .EQ. -1) THEN
+        INTFW= PAD(INFWFP+ IVL1)
+      END IF
+      IF (IRCFP .GT. 0 .AND. VIRCFG .EQ. -1) THEN
+        IRC= PAD(IRCFP+ IVL1)
+      END IF
+      IF (LZEMFP .GT. 0 .AND. VLEFG .EQ. -1) THEN
+        LZETP= PAD(LZEMFP+ IVL1)
+      END IF
 C
+C     get lateral inflow timeseries
       IF (SLIFP .GT. 0) THEN
 C       surface lateral inflow timseries
         SURLI= PAD(SLIFP+ IVL1)
@@ -1194,6 +1215,7 @@ C       surface lateral inflow timseries
 C       surface lateral inflow not considered
         SURLI= 0.0
       END IF
+C      
       IF (ILIFP .GT. 0) THEN
 C       interflow lateral inflow timseries
         IFWLI= PAD(ILIFP+ IVL1)
@@ -1201,6 +1223,7 @@ C       interflow lateral inflow timseries
 C       interflow lateral not being considered
         IFWLI= 0.0
       END IF
+C      
       IF (ULIFP .GE. 1) THEN
 C       there is lateral inflow to upper zone
         UZLI= PAD(ULIFP+IVL1)
@@ -1208,6 +1231,7 @@ C       there is lateral inflow to upper zone
 C       no lateral inflow
         UZLI= 0.0
       END IF
+C      
       IF (LLIFP .GE. 1) THEN
 C       there is lateral inflow to lower zone
         LZLI= PAD(LLIFP+IVL1)
@@ -1215,6 +1239,7 @@ C       there is lateral inflow to lower zone
 C       no lateral inflow
         LZLI= 0.0
       END IF
+C      
       IF (ALIFP .GT. 0) THEN
 C       groundwater lateral inflow timeseries
         AGWLI= PAD(ALIFP+ IVL1)
@@ -1225,7 +1250,6 @@ C       groundwater lateral inflow not considered
 C
       IF (IRRGFG .GE. 1) THEN
 C       perform irrigation routine
-C
         IF (IRRGFG .EQ. 1) THEN
 C         input demand timeseries
           IF (IRRIFP .GE. 1) THEN

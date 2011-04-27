@@ -191,6 +191,13 @@ C
         SLSED= 0.0
       END IF
 C
+C     get varying parameter values
+      DO I = 1, NCANPY
+        IF (COVMFP(I) .GT. 0 .AND. CRVFG .EQ. -1) THEN
+          COVER(I)= PAD(COVMFP(I)+ IVL1)
+        END IF
+      END DO    
+C
       IF (PWATFG.EQ.0) THEN
 C       read time series supplied by pwater
 CTHJ        SURO= PAD(SOFP+IVL1)
@@ -323,7 +330,7 @@ C     4.2(1).4.1
 C
       SUBROUTINE DETACH
      I                  (DAYFG,CRVFG,COVERM,MON,NXTMON,DAY,NDAYS,RAIN,
-     I                   CSNOFG,SNOCOV,DELT60,SMPF,KRER,JRER,
+     I                   CSNOFG,SNOCOV,DELT60,SMPF,KRER,JRER,NCANPY,
      M                   COVER,DETS,
      O                   DET)
 C
@@ -331,9 +338,9 @@ C     + + + PURPOSE + + +
 C     Detach soil by rainfall
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    CRVFG,CSNOFG,DAY,DAYFG,MON,NDAYS,NXTMON
-      REAL       COVER,COVERM(12),DELT60,DET,DETS,JRER,KRER,RAIN,SMPF,
-     $           SNOCOV
+      INTEGER    CRVFG,CSNOFG,DAY,DAYFG,MON,NDAYS,NXTMON,NCANPY
+      REAL       COVER(5),COVERM(12,5),DELT60,DET,DETS,JRER,KRER,RAIN,
+     $           SMPF,SNOCOV
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DAYFG  - flag for first day or day change
@@ -350,12 +357,13 @@ C     DELT60 - simulation time interval in hours
 C     SMPF   - ???
 C     KRER   - ???
 C     JRER   - ???
+C     NCANPY - number of canopy layers
 C     COVER  - ???
 C     DETS   - ???
 C     DET    - ???
 C
 C     + + + LOCAL VARIABLES + + +
-      REAL       CR
+      REAL       CR, I
 C
 C     + + + FUNCTIONS + + +
       REAL       DAYVAL
@@ -373,7 +381,9 @@ C         year
 C         interpolate for the daily value
 C         linearly interpolate cover between two values from the
 C         monthly array coverm(12)
-          COVER= DAYVAL(COVERM(MON),COVERM(NXTMON),DAY,NDAYS)
+          DO I= 1, NCANPY
+            COVER(I)= DAYVAL(COVERM(MON,I),COVERM(NXTMON,I),DAY,NDAYS)
+          END DO
         ELSE
 C         erosion related cover does not vary throughout the year.
 C         cover value has been supplied by the run interpreter
@@ -388,12 +398,12 @@ C       snowpack and other cover
 C         snow is being considered
           IF (SNOCOV .GT. 0.0) THEN
 C           there is a snowpack
-            CR= COVER+ (1.0- COVER)*SNOCOV
+            CR= COVER(1)+ (1.0- COVER(1))*SNOCOV
           ELSE
-            CR= COVER
+            CR= COVER(1)
           END IF
         ELSE
-          CR= COVER
+          CR= COVER(1)
         END IF
 C
 C       calculate the rate of soil detachment, delt60= delt/60 -
@@ -581,7 +591,7 @@ C       compile values for binary printout
         CHEAD(ACNT) = 'DETS'
         CLEN(ACNT) = 4
         ACNT = ACNT + 1
-        APRINT(ACNT) = COVER
+        APRINT(ACNT) = COVER(1)
         CHEAD(ACNT) = 'COVER'
         CLEN(ACNT) = 5
       END IF
@@ -932,9 +942,9 @@ C     + + + END SPECIFICATIONS + + +
 C
 C     handle section sedmnt
 C
-      IF (DETSFP.GE.1)  PAD(DETSFP+IVL1)= DETS
-      IF (STCFP.GE.1) PAD(STCFP + IVL1) =STCAP
-      IF (COVRFP.GE.1) PAD(COVRFP + IVL1) =COVER
+      IF (DETSFP.GE.1)  PAD(DETSFP+IVL1) = DETS
+      IF (STCFP.GE.1) PAD(STCFP + IVL1)  = STCAP
+      IF (COVRFP.GE.1) PAD(COVRFP + IVL1)= COVER(1)
 C
       RETURN
       END

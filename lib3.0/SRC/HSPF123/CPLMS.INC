@@ -29,10 +29,10 @@ C            MSTLAY section
       REAL          DELT,DELT60,DELT5,LZSN,UZSNM(12),SURS,UZS,IFWS,
      $              LZS,AGWS,UZSN,SURSS,PWCF1(6,5),PWCF5(6,5),SURI,
      $              CFINMA,SLMPF,ULPF,LLPF,MST(5),FRAC(8)
-      INTEGER       DUM1(249),DUM2(167),DUM3(91),DUM4(295),DUM5(15),
+      INTEGER       DUM1(259),DUM2(167),DUM3(91),DUM4(295),DUM5(15),
      $              DUM6(4),DUM7(15),DUM8(7),DUM9(60),DUM10(15),
-     $              DUM11(56),DUM12,DUM13(19),DUM14,DUM15(2357),
-     $              DUMPER(14408)
+     $              DUM11(56),DUM12,DUM13(19),DUM14,DUM15(2414),
+     $              DUMPER(14341)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(SURO,PWCF1(2,1)),(IFWO,PWCF1(3,1)),
