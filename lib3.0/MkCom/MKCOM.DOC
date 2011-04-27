@@ -115,7 +115,7 @@ manually changed in the .inc files.
 
 Note also that the flag pointers in the *ts.seq files will have to be
 corrected.  The correct values for the flag pointers can be found in
-MKCOM.OUT.  The variable positions in *ts.seq should also be updated
+MKCOM.OUT.  The variable positions in specact.seq should also be updated
 according to the values in MKCOM.SPA.
 
 Note also that the subscript pointers in the *ts.seq files will have to be
