@@ -378,139 +378,139 @@ IRRINP  1  1     1     1 2   0 2    0   357 ENG in/iv      0       1   0   .0394
   Input irrigation demand                   MET mm/iv      0       1   0   .0394
 #GROUP   34  TYPE TEXT
 $TEXT
-SLSED   1  1     1     1 2   0 2    0  1110 ENG tn/aciv    0       1   0   .4462
+SLSED   1  1     1     1 2   0 2    0  1221 ENG tn/aciv    0       1   0   .4462
  Lateral input of sediment to PLS           MET tne/haiv   0       1   0   .4462
 #GROUP   35  TYPE TEXT
 $TEXT
-SLITMP  1  1     1     1 2   0 2    0  1279 ENG Deg F    -32    .555   0       1
+SLITMP  1  1     1     1 2   0 2    0  1390 ENG Deg F    -32    .555   0       1
  Temp of surface lateral inflow             MET Deg C    -32    .555   0       1
 #GROUP   36  TYPE TEXT
 $TEXT
-ILITMP  1  1     1     1 2   0 2    0  1280 ENG Deg F    -32    .555   0       1
+ILITMP  1  1     1     1 2   0 2    0  1391 ENG Deg F    -32    .555   0       1
  Temp of interflow lateral inflow           MET Deg C    -32    .555   0       1
 #GROUP   37  TYPE TEXT
 $TEXT
-ALITMP  1  1     1     1 2   0 2    0  1281 ENG Deg F    -32    .555   0       1
+ALITMP  1  1     1     1 2   0 2    0  1392 ENG Deg F    -32    .555   0       1
  Temp of groundwater lateral inflow         MET Deg C    -32    .555   0       1
 #GROUP   38  TYPE TEXT
 $TEXT
-SLIDOX  1  1     1     1 2   0 2    0  1282 ENG mg/l       0       1   0       1
+SLIDOX  1  1     1     1 2   0 2    0  1393 ENG mg/l       0       1   0       1
  Conc of DO in surface lateral inflow       MET mg/l       0       1   0       1
 #GROUP   39  TYPE TEXT
 $TEXT
-ILIDOX  1  1     1     1 2   0 2    0  1283 ENG mg/l       0       1   0       1
+ILIDOX  1  1     1     1 2   0 2    0  1394 ENG mg/l       0       1   0       1
  Conc of DO in interflow lateral inflow     MET mg/l       0       1   0       1
 #GROUP   40  TYPE TEXT
 $TEXT
-ALIDOX  1  1     1     1 2   0 2    0  1284 ENG mg/l       0       1   0       1
+ALIDOX  1  1     1     1 2   0 2    0  1395 ENG mg/l       0       1   0       1
  Conc of DO in groundwater lateral inflow   MET mg/l       0       1   0       1
 #GROUP   41  TYPE TEXT
 $TEXT
-SLICO2  1  1     1     1 2   0 2    0  1285 ENG mg/l       0       1   0       1
+SLICO2  1  1     1     1 2   0 2    0  1396 ENG mg/l       0       1   0       1
  Conc of CO2 in surface lateral inflow      MET mg/l       0       1   0       1
 #GROUP   42  TYPE TEXT
 $TEXT
-ILICO2  1  1     1     1 2   0 2    0  1286 ENG mg/l       0       1   0       1
+ILICO2  1  1     1     1 2   0 2    0  1397 ENG mg/l       0       1   0       1
  Conc of CO2 in interflow lateral inflow    MET mg/l       0       1   0       1
 #GROUP   43  TYPE TEXT
 $TEXT
-ALICO2  1  1     1     1 2   0 2    0  1287 ENG mg/l       0       1   0       1
+ALICO2  1  1     1     1 2   0 2    0  1398 ENG mg/l       0       1   0       1
  Conc of CO2 in groundwater lateral inflow  MET mg/l       0       1   0       1
 #GROUP   44  TYPE TEXT
 $TEXT
-SLIQO  10  1 -1680     1 2   0 2    0  1507 ENG qty/aciv   0       1   0   .4047
+SLIQO  10  1 -1680     1 2   0 2    0  1618 ENG qty/aciv   0       1   0   .4047
  Lateral input of QUALOF to PLS             MET qty/haiv   0       1   0   .4047
 #GROUP   45  TYPE TEXT
 $TEXT
-SLIQSP 10  1 -1679     1 2   0 2    0  1517 ENG qty/ton    0       1   0   .9072
+SLIQSP 10  1 -1679     1 2   0 2    0  1628 ENG qty/ton    0       1   0   .9072
  Pot fac of QUALSD on lat sediment inflow   MET qty/tonn   0       1   0   .9072
 #GROUP   46  TYPE TEXT
 $TEXT
-ILIQC  10  1 -1681     1 2   0 2    0  1527 ENG qty/ft3    0   3630.   0 102833.
+ILIQC  10  1 -1681     1 2   0 2    0  1638 ENG qty/ft3    0   3630.   0 102833.
  Conc of QUALIF in lateral interflow inflow MET qty/l      0   3630.   0 102833.
 #GROUP   47  TYPE TEXT
 $TEXT
-ALIQC   7  1 -1682     1 2   0 2    0  1537 ENG qty/ft3    0   3630.   0 102833.
+ALIQC   7  1 -1682     1 2   0 2    0  1648 ENG qty/ft3    0   3630.   0 102833.
  Conc of QUALGW in lat groundwater inflow   MET qty/l      0   3630.   0 102833.
 #GROUP   48  TYPE TEXT
 $TEXT
-PQADFX 10  1 -1678     1 2   0 2    0  1547 ENG qty/aciv   0       1   0   .4047
+PQADFX 10  1 -1678     1 2   0 2    0  1658 ENG qty/aciv   0       1   0   .4047
  Atmospheric deposition of QUAL to PLS      MET qty/haiv   0       1   0   .4047
 #GROUP   49  TYPE TEXT
 $TEXT
-PQADCN 10  1 -1678     1 2   0 2    0  1557 ENG qty/ft3    0   3630.   0 102833.
+PQADCN 10  1 -1678     1 2   0 2    0  1668 ENG qty/ft3    0   3630.   0 102833.
  Concentration of QUAL in precip over PLS   MET qty/l      0   3630.   0 102833.
 #GROUP   50  TYPE TEXT
 $TEXT
-LIPSS   5  3     5 -3737 2   0 2    0  3587 ENG lb/aciv    0       1   0    .892
+LIPSS   5  3     5 -3737 2   0 2    0  3698 ENG lb/aciv    0       1   0    .892
  Lateral input of soln pest. to each layer  MET kg/haiv    0    1.12   0       1
 #GROUP   51  TYPE TEXT
 $TEXT
-LISDPS  2  3     2 -3737 2   0 2    0  3602 ENG lb/aciv    0       1   0    .892
+LISDPS  2  3     2 -3737 2   0 2    0  3713 ENG lb/aciv    0       1   0    .892
  Lateral input of sediment-associated pest. MET kg/haiv    0    1.12   0       1
 #GROUP   52  TYPE TEXT
 $TEXT
-PEADFX  3  3 -3737     3 2   0 2    0  3608 ENG lb/aciv    0       1   0    .892
+PEADFX  3  3 -3737     3 2   0 2    0  3719 ENG lb/aciv    0       1   0    .892
  Atmospheric deposition of pesticide form   MET kg/haiv    0    1.12   0       1
 #GROUP   53  TYPE TEXT
 $TEXT
-PEADCN  3  3 -3737     3 2   0 2    0  3617 ENG mg/l       0 .226635   0     .01
+PEADCN  3  3 -3737     3 2   0 2    0  3728 ENG mg/l       0 .226635   0     .01
  Concentration of pesticide form in precip  MET mg/l       0 .226635   0     .01
 #GROUP   54  TYPE TEXT
 $TEXT
-LIAMS   5  1     5     1 2   0 2    0  4734 ENG lb/aciv    0       1   0    .892
+LIAMS   5  1     5     1 2   0 2    0  4845 ENG lb/aciv    0       1   0    .892
  Lateral inflow of soln ammon to each layer MET kg/haiv    0    1.12   0       1
 #GROUP   55  TYPE TEXT
 $TEXT
-LINO3   5  1     5     1 2   0 2    0  4739 ENG lb/aciv    0       1   0    .892
+LINO3   5  1     5     1 2   0 2    0  4850 ENG lb/aciv    0       1   0    .892
  Lateral inflow of nitrate to each layer    MET kg/haiv    0    1.12   0       1
 #GROUP   56  TYPE TEXT
 $TEXT
-LISLN   5  1     5     1 2   0 2    0  4744 ENG lb/aciv    0       1   0    .892
+LISLN   5  1     5     1 2   0 2    0  4855 ENG lb/aciv    0       1   0    .892
  Lat inflow of soln lab ORGN to each layer  MET kg/haiv    0    1.12   0       1
 #GROUP   57  TYPE TEXT
 $TEXT
-LISRN   5  1     5     1 2   0 2    0  4749 ENG lb/aciv    0       1   0    .892
+LISRN   5  1     5     1 2   0 2    0  4860 ENG lb/aciv    0       1   0    .892
  Lat inflow of soln ref ORGN to each layer  MET kg/haiv    0    1.12   0       1
 #GROUP   58  TYPE TEXT
 $TEXT
-LISEDN  3  1     3     1 2   0 2    0  4754 ENG lb/aciv    0       1   0    .892
+LISEDN  3  1     3     1 2   0 2    0  4865 ENG lb/aciv    0       1   0    .892
  Lat inflow of sediment-associated N        MET kg/haiv    0    1.12   0       1
 #GROUP   59  TYPE TEXT
 $TEXT
-NIADFX  3  2     3     2 2   0 2    0  4757 ENG lb/aciv    0       1   0    .892
+NIADFX  3  2     3     2 2   0 2    0  4868 ENG lb/aciv    0       1   0    .892
  Atmospheric deposition of N to soil layer  MET kg/haiv    0    1.12   0       1
 #GROUP   60  TYPE TEXT
 $TEXT
-NIADCN  3  2     3     2 2   0 2    0  4763 ENG mg/l       0 .226635   0     .01
+NIADCN  3  2     3     2 2   0 2    0  4874 ENG mg/l       0 .226635   0     .01
  Concentration of N to soil layer in precip MET mg/l       0 .226635   0     .01
 #GROUP   61  TYPE TEXT
 $TEXT
-LIP4S   5  1     5     1 2   0 2    0  6622 ENG lb/aciv    0       1   0    .892
+LIP4S   5  1     5     1 2   0 2    0  6733 ENG lb/aciv    0       1   0    .892
  Lateral inflow of soln PO4 to each layer   MET kg/haiv    0    1.12   0       1
 #GROUP   62  TYPE TEXT
 $TEXT
-LISEDP  2  1     2     1 2   0 2    0  6627 ENG lb/aciv    0       1   0    .892
+LISEDP  2  1     2     1 2   0 2    0  6738 ENG lb/aciv    0       1   0    .892
  Lateral inflow of sediment-associated P    MET kg/haiv    0    1.12   0       1
 #GROUP   63  TYPE TEXT
 $TEXT
-PHADFX  2  2     2     2 2   0 2    0  6629 ENG lb/aciv    0       1   0    .892
+PHADFX  2  2     2     2 2   0 2    0  6740 ENG lb/aciv    0       1   0    .892
  Atmospheric deposition of P to soil layer  MET kg/haiv    0    1.12   0       1
 #GROUP   64  TYPE TEXT
 $TEXT
-PHADCN  2  2     2     2 2   0 2    0  6633 ENG mg/l       0 .226635   0     .01
+PHADCN  2  2     2     2 2   0 2    0  6744 ENG mg/l       0 .226635   0     .01
  Concentration of P to soil layer in precip MET mg/l       0 .226635   0     .01
 #GROUP   65  TYPE TEXT
 $TEXT
-LITRS   5  1     5     1 2   0 2    0  7214 ENG lb/aciv    0       1   0    .892
+LITRS   5  1     5     1 2   0 2    0  7325 ENG lb/aciv    0       1   0    .892
  Lateral inflow of tracer to each layer     MET kg/haiv    0    1.12   0       1
 #GROUP   66  TYPE TEXT
 $TEXT
-TRADFX  2  1     2     1 2   0 2    0  7219 ENG lb/aciv    0       1   0    .892
+TRADFX  2  1     2     1 2   0 2    0  7330 ENG lb/aciv    0       1   0    .892
  Atmospheric deposition of tracer to layer  MET kg/haiv    0    1.12   0       1
 #GROUP   67  TYPE TEXT
 $TEXT
-TRADCN  2  1     2     1 2   0 2    0  7221 ENG mg/l       0 .226635   0     .01
+TRADCN  2  1     2     1 2   0 2    0  7332 ENG mg/l       0 .226635   0     .01
  Concentration of tracer to layer in precip MET mg/l       0 .226635   0     .01
 #GROUP   68  TYPE TEXT
 $TEXT
