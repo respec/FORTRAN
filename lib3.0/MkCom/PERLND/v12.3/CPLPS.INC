@@ -43,9 +43,9 @@ C            PWTGAS section
      $              LIFAC(4),SOTMP,IOTMP,AOTMP,SODOX,SOCO2,IODOX,
      $              IOCO2,AODOX,AOCO2,IDOXP,ICO2P,ADOXP,ACO2P,
      $              PGCF1(3,5),POHT,PGCF2(6,5),PODOXM,POCO2M
-      INTEGER       DUM1(165),DUM2(14),DUM3(2),DUM4,DUM5,DUM6,DUM7(7),
-     $              DUM8(623),DUM9(162),DUM10(190),DUM11(8),
-     $              DUMPER(16463)
+      INTEGER       DUM1(165),DUM2(14),DUM3(2),DUM4,DUM5,DUM6,
+     $              DUM7(17),DUM8(623),DUM9(162),DUM10(195),DUM11(8),
+     $              DUMPER(16448)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(WYIELD,SNCF1(4,1)),(SURLI,PWIF(1,1)),
