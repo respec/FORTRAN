@@ -101,8 +101,8 @@ C            NITR section
      $              NCFX27(5,5),NCFX28(5,5),SOSEDN,PONO3,PONH4,POORN,
      $              PONITR
       INTEGER       DUM1(3),DUM2(28),DUM3(249),DUM4(400),DUM5(114),
-     $              DUM6,DUM7(345),DUM8(12),DUM9(79),DUM10(8),
-     $              DUM11(2186),DUM12(505),DUM13(601),DUMPER(11306)
+     $              DUM6,DUM7(397),DUM8(12),DUM9(79),DUM10(8),
+     $              DUM11(2186),DUM12(505),DUM13(601),DUMPER(11254)
 C
       EQUIVALENCE   (ASVEC,AIRTFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(PREC,SNIF),(SOILM,SLME),
