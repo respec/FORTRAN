@@ -199,6 +199,12 @@ VA   ILIFP    0   0   0   0 I T EXTNL            IFWLI  0001001100000
 VA   LLIFP    0   0   0   0 I T EXTNL            LZLI   0001000000000
 VA   ALIFP    0   0   0   0 I T EXTNL            AGWLI  0001001100000
 VA   PETIFP   0   0   0   0 I T EXTNL            PETINP 0001000000000
+VA   CEPSFP   5   0   0   0 I T EXTNL            CEPSC  0001000000000
+VA   UZSNFP   0   0   0   0 I T EXTNL            UZSN   0001000000000
+VA   NSURFP   0   0   0   0 I T EXTNL            NSUR   0001000000000
+VA   INFWFP   0   0   0   0 I T EXTNL            INTFW  0001000000000
+VA   IRCFP    0   0   0   0 I T EXTNL            IRC    0001000000000
+VA   LZETFP   0   0   0   0 I T EXTNL            LZETP  0001000000000
 VA   PIRIF    5   0   0   0 R F                         0001000000000
 EQ 1 IRRINP   0   0   0   0 R   PIRIF(1)                0001000000000
 VA   IRRIFP   0   0   0   0 I T EXTNL            IRRINP 0001000000000
@@ -216,7 +222,7 @@ VA 1 IFFCFG   0   0   0   0 I P                         0001000000000
 VA 1 HWTFG    0   0   0   0 I P                         0001000000000
 VA 1 IRRGFG   0   0   0   0 I P                         0001000000000
 VA 1 IFRDFG   0   0   0   0 I P                         0001000000000
-VA 1 NCANPY   0   0   0   0 I P                         0001000000000
+VA 1 NCANPY   0   0   0   0 I P                         0001100000000
 VA 1 CANNAM   3   5   0   0 R P                         0001000000000
 VA 1 NSROWS   0   0   0   0 I P                         0001000000000
 VA 1 NSCOLS   0   0   0   0 I P                         0001000000000
@@ -426,6 +432,7 @@ HE 5        SEDMNT section
 VA   SDIF     5   0   0   0 R F                         0000100100000
 EQ 1 SLSED    0   0   0   0 R   SDIF                    0000100100000
 VA   SLSDFP   0   0   0   0 I T EXTNL            SLSED  0000100100000
+VA   COVRFP   5   0   0   0 I T EXTNL            COVER  0001000000000
 VA 1 CRVFG    0   0   0   0 I P                         0000100000000
 EQ 1 SEDPM1   3   0   0   0 I   CRVFG                   0000100000000
 VA 1 VSIVFG   0   0   0   0 I P                         0000100000000
