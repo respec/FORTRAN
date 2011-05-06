@@ -220,7 +220,7 @@ C     estimate the quantity of sediment particles detached from the
 C     soil surface by rainfall and augment the detached sediment
 C     storage
       CALL DETACH (DAYFG,CRVFG,COVERM,MON,NXTMON,DAY,NDAYS,RAIN,
-     I             CSNOFG,SNOCOV,DELT60,SMPF,KRER,JRER,
+     I             CSNOFG,SNOCOV,DELT60,SMPF,KRER,JRER,NCANPY,
      M             COVER,DETS,
      O             DET)
 C
@@ -363,13 +363,17 @@ C     DETS   - ???
 C     DET    - ???
 C
 C     + + + LOCAL VARIABLES + + +
-      REAL       CR, I
+      INTEGER    I 
+      REAL       CR
 C
 C     + + + FUNCTIONS + + +
       REAL       DAYVAL
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   DAYVAL
+C
+C     + + + HISTORY + + +
+C     5/6/2011   PBD - enhanced to handle multiple canopy layers
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -394,16 +398,18 @@ C
 C       simulate detachment because it is raining
 C       find the proportion of area shielded from raindrop impact by
 C       snowpack and other cover
+C
+C       compute the composite effect of multi-layer cover
+        CR= 0.0
+        DO I= 1, NCANPY
+          CR= CR+ (1.0- CR)*COVER(I)
+        END DO
         IF (CSNOFG .EQ. 1) THEN
 C         snow is being considered
           IF (SNOCOV .GT. 0.0) THEN
 C           there is a snowpack
-            CR= COVER(1)+ (1.0- COVER(1))*SNOCOV
-          ELSE
-            CR= COVER(1)
+            CR= CR+ (1.0- CR)*SNOCOV
           END IF
-        ELSE
-          CR= COVER(1)
         END IF
 C
 C       calculate the rate of soil detachment, delt60= delt/60 -
@@ -491,6 +497,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER  I,J,I0,I1,I2,ACNT,CLEN(8),EXDAT(5)
       REAL     MFACTA,MFACTB,PCFLX1(2),PCFLX3(2),PDETS,PSDIF,APRINT(8)
+      REAL     COVERC
       CHARACTER*8   CCFLX1(2),CCFLX3(2)
       CHARACTER*256 CHEAD(8)
 C
@@ -523,6 +530,9 @@ C     + + + OUTPUT FORMATS + + +
  2150 FORMAT (' ',40X,' TONNES/HA',10X,' TONNES/HA TONNES/HA',10X,
      $        ' TONNES/HA TONNES/HA')
  2160 FORMAT (' ',40X,1PG10.3,10X,2G10.3,10X,2G10.3)
+C
+C     + + + HISTORY + + +
+C     5/6/2011   PBD - enhanced to handle multi-layer combined cover 
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -567,6 +577,12 @@ C
       CALL TRNVEC (I2,SDCF3(1,LEV),MFACTA,MFACTB,
      O             PCFLX3)
 C
+C     compute the composite effect of multi-layer cover for reporting
+      COVERC= 0.0
+      DO I= 1, NCANPY
+        COVERC= COVERC+ (1.0- COVERC)*COVER(I)
+      END DO
+C
 C     write to unit printu
 C
       IF (PRINTU .GT. 0 .AND. PFLAG(4) .LE. LEV) THEN
@@ -581,7 +597,7 @@ C
           WRITE (PRINTU,2040)
         END IF
 C
-        WRITE (PRINTU,2050)  PDETS, COVER
+        WRITE (PRINTU,2050)  PDETS, COVERC
       END IF
 C
       IF (BINU .GT. 0 .AND. ABS(BFLAG(4)) .LE. LEV) THEN
@@ -591,7 +607,7 @@ C       compile values for binary printout
         CHEAD(ACNT) = 'DETS'
         CLEN(ACNT) = 4
         ACNT = ACNT + 1
-        APRINT(ACNT) = COVER(1)
+        APRINT(ACNT) = COVERC
         CHEAD(ACNT) = 'COVER'
         CLEN(ACNT) = 5
       END IF
