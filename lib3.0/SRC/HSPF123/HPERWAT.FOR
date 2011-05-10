@@ -4829,7 +4829,7 @@ C           using high water table algorithms
         END IF
       END IF
 C
-C     calculate total storage in all surface layers 
+C     calculate total storage in all canopy layers 
       PSTATC = 0.0
       DO I = 1, NCANPY
         PSTATC= PSTATC+ PSTAT1(I)

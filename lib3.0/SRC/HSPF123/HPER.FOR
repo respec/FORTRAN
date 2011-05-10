@@ -135,7 +135,7 @@ C         section delimeter
           WRITE (MESSU,2020)
         END IF
 C       bigger osv needed
-        OSVREC= MAX(OSVREC,3)
+        OSVREC= MAX(OSVREC,4)
       END IF
 C
       IF (PQALFG.EQ.1) THEN
@@ -146,7 +146,7 @@ C         section delimeter
           WRITE (MESSU,2020)
         END IF
 C       bigger osv needed
-        OSVREC= MAX(OSVREC,7)
+        OSVREC= MAX(OSVREC,8)
       END IF
 C
       IF (AGFG.EQ.1) THEN
@@ -160,7 +160,7 @@ C           section delimeter
             WRITE (MESSU,2020)
           END IF
 C         bigger osv needed
-          OSVREC= MAX(OSVREC,7)
+          OSVREC= MAX(OSVREC,8)
         END IF
 C
         IF (PESTFG.EQ.1) THEN
@@ -204,7 +204,7 @@ C           section delimeter
             WRITE (MESSU,2020)
           END IF
 C         bigger osv needed
-          OSVREC= MAX(OSVREC,15)
+          OSVREC= MAX(OSVREC,16)
         END IF
       END IF
 C
