@@ -266,7 +266,7 @@ C             do plot historic adjusted peaks
               HSTFLG = 0
             END IF
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
-            CALL STOREDATA (NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
+            CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
      I                      IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,NOCLIM,
      I                      CLIML(INDX1),CLIMU(INDX1),JSEQNO,HEADNG(9))
@@ -3799,7 +3799,7 @@ C
 C
 C
       SUBROUTINE   STOREDATA
-     I                      (NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
+     I                      (NPKS,NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
      I                       IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,
      I                       HSTFLG,NOCLIM,CLIML,CLIMU,STNIND,HEADER)
 C
@@ -3809,16 +3809,17 @@ C
       Use StationData
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       NPKPLT,IPKPTR(NPKPLT),IPKSEQ(NPKPLT),
+      INTEGER       NPKS,NPKPLT,IPKPTR(NPKS),IPKSEQ(NPKS),
      1              NPLOT,HSTFLG,NOCLIM,STNIND
-      REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
+      REAL          PKLOG(NPKS),SYSPP(NPKS),WRCPP(NPKS),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
      $              CLIML(NPLOT), CLIMU(NPLOT)
-      CHARACTER*5   XQUAL(NPKPLT)
+      CHARACTER*5   XQUAL(NPKS)
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     NPKPLT - number of observed peaks
+C     NPKS   - total peaks (systematic + historic)
+C     NPKPLT - number of peaks in analysis
 C     IPKPTR - array of pointer positions of ranked peaks
 C     PKLOG  - log10 of observed peaks (plot with x and o)
 C     SYSPP  - systematic record standard deviates (-9999 for historic
@@ -3868,7 +3869,7 @@ C
       STNDATA(STNIND)%NPLOT = NPLOT
       STNDATA(STNIND)%WEIBA = WEIBA
       STNDATA(STNIND)%HSTFLG = HSTFLG
-      DO 10 I = 1,NPKPLT
+      DO 10 I = 1,NPKS
         STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
         STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
         STNDATA(STNIND)%WRCPP(I) = WRCPP(I)
