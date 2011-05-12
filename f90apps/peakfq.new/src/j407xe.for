@@ -266,10 +266,10 @@ C             do plot historic adjusted peaks
               HSTFLG = 0
             END IF
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
-            CALL STOREDATA (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,NFCXPG,
-     I                      SYSRFC(INDX1),WRCFC(INDX1),TXPROB(INDX1),
-     I                      HSTFLG,NOCLIM,CLIML(INDX1),CLIMU(INDX1),
-     I                      JSEQNO,HEADNG(9))
+            CALL STOREDATA (NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
+     I                      IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
+     I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,NOCLIM,
+     I                      CLIML(INDX1),CLIMU(INDX1),JSEQNO,HEADNG(9))
             IF(IPLTOP.NE.0)  THEN
 C             initialize (if necessary)
 C             convert to std deviates
@@ -3799,9 +3799,9 @@ C
 C
 C
       SUBROUTINE   STOREDATA
-     I                      (NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
-     I                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     I                       NOCLIM,CLIML,CLIMU,STNIND,HEADER)
+     I                      (NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
+     I                       IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,
+     I                       HSTFLG,NOCLIM,CLIML,CLIMU,STNIND,HEADER)
 C
 C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
@@ -3809,19 +3809,24 @@ C
       Use StationData
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       NPKPLT,NPLOT,HSTFLG, NOCLIM, STNIND
+      INTEGER       NPKPLT,IPKPTR(NPKPLT),IPKSEQ(NPKPLT),
+     1              NPLOT,HSTFLG,NOCLIM,STNIND
       REAL          PKLOG(NPKPLT),SYSPP(NPKPLT),WRCPP(NPKPLT),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
      $              CLIML(NPLOT), CLIMU(NPLOT)
+      CHARACTER*5   XQUAL(NPKPLT)
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NPKPLT - number of observed peaks
+C     IPKPTR - array of pointer positions of ranked peaks
 C     PKLOG  - log10 of observed peaks (plot with x and o)
 C     SYSPP  - systematic record standard deviates (-9999 for historic
 C              peaks) (plot with o) (prob non-exceedance)
 C     WRCPP  - WRC estimated standard deviates  (plot with x)
 C              (prob non-exceedance)
+C     XQUAL  - array of quality codes for observed peaks
+C     IPKSEQ - array of years in which peaks occurred
 C     WEIBA  - coefficient for plotting position
 C     NPLOT  - number of plot points in fitted curve
 C     SYSRFC - log10 ordinates of fitted curve, systematic record
@@ -3867,6 +3872,8 @@ C
         STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
         STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
         STNDATA(STNIND)%WRCPP(I) = WRCPP(I)
+        STNDATA(STNIND)%XQUAL(I) = XQUAL(IPKPTR(I))
+        STNDATA(STNIND)%IPKSEQ(I)= IPKSEQ(IPKPTR(I))
  10   CONTINUE
 
       DO 20 I = 1,NPLOT
@@ -3883,10 +3890,10 @@ C
 C
 C
       SUBROUTINE   GETDATA
-     I                      (STNIND,
-     O                       NPKPLT,PKLOG,SYSPP,WRCPP,WEIBA,
-     O                       NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     O                       NOCLIM,CLIML,CLIMU,HEADER)
+     I                     (STNIND,
+     O                      NPKPLT,PKLOG,SYSPP,WRCPP,IXQUAL,IPKSEQ,
+     O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
+     O                      NOCLIM,CLIML,CLIMU,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
@@ -3895,7 +3902,7 @@ C
       Use StationData
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       STNIND,NPKPLT,NPLOT,HSTFLG,NOCLIM
+      INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,HSTFLG,NOCLIM
       REAL          PKLOG(200),SYSPP(200),WRCPP(200),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
      $              CLIML(32),CLIMU(32)
@@ -3909,6 +3916,8 @@ C     SYSPP  - systematic record probabilities (-9999 for historic
 C              peaks) (plot with o) (prob non-exceedance)
 C     WRCPP  - WRC estimated probabilities (plot with x)
 C              (prob non-exceedance)
+C     IXQUAL - array of quality codes for observed peaks (Integer version)
+C     IPKSEQ - array of years in which peaks occurred
 C     WEIBA  - coefficient for plotting position
 C     NPLOT  - number of plot points in fitted curve
 C     SYSRFC - log10 ordinates of fitted curve, systematic record
@@ -3937,6 +3946,10 @@ C
         PKLOG(I) = STNDATA(STNIND)%PKLOG(I)
         SYSPP(I) = STNDATA(STNIND)%SYSPP(I)
         WRCPP(I) = STNDATA(STNIND)%WRCPP(I)
+        DO 5 J = 1,5
+          IXQUAL(J,I) = ICHAR(STNDATA(STNIND)%XQUAL(I)(J:J))
+ 5      CONTINUE
+        IPKSEQ(I)= STNDATA(STNIND)%IPKSEQ(I)
  10   CONTINUE
 
       DO 20 I = 1,NPLOT
