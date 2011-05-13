@@ -45,6 +45,9 @@ C     + + + FUNCTIONS + + +
       CHARACTER*120 STRRETREM
       INTEGER      INFOERROR
 C
+C     + + + INTRINSICS + + +
+      INTRINSIC    INDEX
+C
 C     + + + EXTERNALS + + +
       EXTERNAL     ZLNTXT, CVRINT, STRRETREM, J407XE, JFLUSH, WDBOPN
 C      EXTERNAL     GPOPEN, GPINIT, ANINIZ, 
@@ -152,7 +155,7 @@ C     scan file for stations
         READ(SPCFUN,1000,IOSTAT=IOSNUM,END=10) S
         write(FE,*) "  " // S
         CALL UPCASE(S)
-        IF (S(1:7) .EQ. 'STATION') THEN
+        IF (INDEX(S, 'STATION') .GT. 0) THEN
           NSTA = NSTA + 1
         END IF
       END DO
