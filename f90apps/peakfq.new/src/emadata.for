@@ -1,6 +1,7 @@
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       SUBROUTINE EMADATA(NPKS,Q,WY,WYMIN,WYMAX,
      I                   NT,THBY,THEY,THLO,THUP,GAGEB,
+     I                   NINTVL,INTVLYR,INTVLLWR,INTVLUPR,
      M                   NO,
      O                   QL,QU,TL,TU)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -12,6 +13,9 @@ c    Timothy A. Cohn        05 December 2003
 c
 c    Modified 6/2007 to accomodate perception thresholds
 c      modifications by AQUA TERRA and Tim Cohn
+c
+c    Revised 5/2011 by Paul Hummel of AQUA TERRA to 
+c    include interval data
 c
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -29,6 +33,10 @@ c            THEY       I*4  Array of threshold ending years
 c            THLO       R*4  Array of threshold lower bounds
 c            THUP       R*4  Array of threshold upper bounds
 c            GAGEB      R*4  Gage base discharge
+c            NINTVL     I*4  Number of interval data values
+c            INTVLYR    I*4  Array of interval data years (0 = no value)
+c            INTVLLWR   R*4  Array of low interval data values
+c            INTVLUPR   R*4  Array of high interval data values
 c
 c       output variables: (input to "emafit")
 c       ---------------------------------------------------------------------------
@@ -69,9 +77,10 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       implicit none
 
 C     + + + DUMMY ARGUMENTS + + +      
-      INTEGER NPKS,NT,WYMIN,WYMAX,NO
+      INTEGER NPKS,NT,WYMIN,WYMAX,NO,NINTVL
       INTEGER WY(NPKS),THBY(NT),THEY(NT)
-      REAL  Q(NPKS),THLO(NT),THUP(NT),GAGEB
+      REAL  Q(NPKS),THLO(NT),THUP(NT),GAGEB,
+     $      INTVLYR(NINTVL),INTVLLWR(NINTVL),INTVLUPR(NINTVL)
       DOUBLE PRECISION QL(NO),QU(NO),TL(NO),TU(NO)
 C
 C     + + + LOCAL VARIABLES + + +
@@ -131,6 +140,15 @@ c         write(*,*)"EMADATA: in 40,WY(J),WYMIN",ABS(WY(J)),WYMIN
         END IF
  40   CONTINUE
       write(*,*)"EMADATA: set QL/QU for NPKS",NPKS
+C
+C     fill in interval data
+      DO 45 J=1,NINTVL
+        IF (INTVLYR(J).GT.0) THEN
+          I = INTVLYR(J) - WYMIN + 1
+          QL(I) = INTVLLWR(J)
+          QU(I) = INTVLUPR(J)
+        END IF
+ 45   CONTINUE
 C
 C     For years without peaks, assume peak is less than threshold tl
       DO 50 K = WYMIN, WYMAX
