@@ -3619,15 +3619,20 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,NOBS,WYMIN,WYMAX,LPKIND
-      DOUBLE PRECISION WRCMOM(3,2),PR(MXINT),       !SKWWGT,
+      DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
-     $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH
+     $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
+     $                 REGVAR,REGVMSE
       INTEGER, ALLOCATABLE :: THBY(:),THEY(:),INTVLYR(:)
       REAL, ALLOCATABLE :: THLO(:),THUP(:),INTVLLWR(:),INTVLUPR(:)
       DOUBLE PRECISION, ALLOCATABLE :: QL(:),QU(:),TL(:),TU(:)
+      CHARACTER*4, ALLOCATABLE :: DTYPE(:)
+      CHARACTER*4  GBTYPE
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MISSNG /1.0D-99/
+      DATA GBTYPE /'GBT '/
+      DATA REGVAR, REGVMSE /0.0, 1.0D99/
 C
 C     + + + FUNCTIONS + + +
       DOUBLE PRECISION QP3
@@ -3687,7 +3692,7 @@ C       create dummy interval placeholder
  10   CONTINUE
 
       NOBS = WYMAX - WYMIN + 1
-      ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS))
+      ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS), DTYPE(NOBS))
       write(99,*) 'RUNEMA: NPKS,NSYS,NHIST,NOBS,GAGEB',
      $                    NPKS,NSYS,NHIST,NOBS,GAGEB
       write(99,*) 'RUNEMA: PKS',(PKS(I),I=1,NPKS)
@@ -3698,7 +3703,7 @@ c      CALL EMADATA(NSYS+NHIST,PKS(LPKIND),IPKSEQ(LPKIND),WYMIN,WYMAX,
      I             NTHRESH,THBY,THEY,THLO,THUP,GAGEB,
      I             NINTERVAL,INTVLYR,INTVLLWR,INTVLUPR,
      M             NOBS,
-     O             QL,QU,TL,TU)
+     O             QL,QU,TL,TU,DTYPE)
 C
       REGSKEW= GENSKU
       IF (IGSOPT.EQ.1) THEN
@@ -3725,7 +3730,8 @@ C       Weighted, set to root mean square
         write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
  15   continue
 C
-      CALL EMAFIT(NOBS,QL,QU,TL,TU,REGSKEW,REGMSE,GBTHRSH,
+      CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
+     I            REGVAR,REGVMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
      O            WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
       
 c      write(99,*) 'After EMAFIT'
@@ -3744,7 +3750,8 @@ c 70   CONTINUE
       write(99,*) '  Prob       EMA Est.        CL Low       CL High'
  2100 format(1X,F6.4,3F14.3)
       do 18 i = 1,MXINT
-        write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i)
+        write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
+     $                VAREST(i)
  18   continue
 
 C     store EMA moments in WRC variables
@@ -3767,8 +3774,9 @@ C
           CLIMU(I) = CIHIGH(I)
  20   CONTINUE
 
-      DEALLOCATE (QL, QU, TL, TU)
+      DEALLOCATE (QL, QU, TL, TU, DTYPE)
       DEALLOCATE (THBY, THEY, THLO, THUP)
+      DEALLOCATE (INTVLYR, INTVLLWR, INTVLUPR)
 
 C      IF (N.GT.0) THEN !perform EMA
 C        DO 20 I = 1,MXINT
