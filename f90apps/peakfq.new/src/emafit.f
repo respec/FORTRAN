@@ -1,6 +1,8 @@
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c****|subroutine emafit
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     REVISED VERSION FROM 2011
 c    
 c    this routine fits the pearson type iii distribution to 
 c      a data set using the ema algorithm 
@@ -14,7 +16,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c    development history
 c
-c    timothy a. cohn        09 nov 2003
+c    timothy a. cohn        09 nov 2003 
 c       modified            31 dec 2003
 c       modified            27 mar 2004  (better small skew approx)
 c       modified            07 dec 2004  (typos in comments corrected)
@@ -31,9 +33,24 @@ c       modified            13 aug 2007  final low-outlier default procedure
 c                                          implemented
 c       modified            17 aug 2007  final, final LO default procedure
 c                                          implemented
-c       modified            25 sep 2007  final 'argh!' w/update to mseg procedure
+c       modified            25 sep 2007  final 'argh!' w/update to mseg 
 c                                          to correct for censored data
-c                                       
+c       modified            28 feb 2008  computed moments for both B17B 
+c                                          and EMA at-site MSE(skew)
+c       modified            18 jun 2008  added constraint to ensure skews 
+c                                          within reliable range of computation
+c       modified            02 jul 2008  set default MSE for at-site skew to
+c                                          equal B17B MSE when only systematic
+c                                          data are present ('ADJE')
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       NEW VERSION         05 jan 2011  employs 
+c                                          1) Multiple Grubbs-Beck Test
+c                                          2) Regional standard deviation 
+c
+c       modified            08 apr 2011  fixed MGBT to deal with more than 
+c                                          50% zero flows
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -70,8 +87,15 @@ c            n          i*4  number of observations (censored, uncensored, or
 c                              other)
 c            ql(n)      r*8  vector of lower bounds on (log) floods
 c            qu(n)      r*8  vector of upper bounds on (log) floods
+c                            NOTE: Zero flows enter as lmissing=-80.d0
 c            tl(n)      r*8  vector of lower bounds on (log) flood threshold
 c            tu(n)      r*8  vector of upper bounds on (log) flood threshold
+c            dtype(n)   c*4  vector describing input data
+c                              dtype(i) = "Syst" => systematic data
+c                              dtype(i) = "Hist" => historic data
+c                              dtype(i) = "Othr" => other
+c            r_s2       r*8  regional variance (std.dev^2)
+c            r_s2_mse   r*8  mean square error of regional variance
 c            reg_skew   r*8  regional skew
 c            reg_mse    r*8  mean square error of regional skew
 c                            this variable encodes four distinct cases:
@@ -84,7 +108,9 @@ c                                use g = weighted average of at-site and
 c                                regional skew (b17b recommendation)
 c                            4) 1.d10 < reg_mse ("STATION SKEW")
 c                                use g = at-site skew
-c
+c            gbtype     c*4  type of Grubbs-Beck test
+c                               = "GB"  => standard GB test
+c                               = "MGB" => Multiple GB test
 c            gbthrsh0   r*8  critical value for Grubbs-Beck test
 c                              N.B. gbthrsh0 codes for 3 cases
 c                               1. gbthrsh0 <= -6  ==> Compute GB critical value
@@ -96,9 +122,10 @@ c
 c       output variables:
 c       ------------------------------------------------------------------------
 c
-c            cmoms(3,2) r*8  first 3 central moments
-c                              using regional info and at-site data in column 1
-c                              using just at-site data in column 2
+c            cmoms(3,3) r*8  first 3 central moments
+c                             (,1) using regional info and at-site data
+c                             (,2) using just at-site data
+c                             (,3) using B17B formula for at-site MSE(G)
 c                              mc = {mean, variance, coeff. skew}
 c            pq(17)     r*8  quantiles estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
@@ -112,7 +139,8 @@ c            var_est(*) r*8  variance of estimate for each quantile
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-      subroutine emafit(n,ql,qu,tl,tu,reg_skew,reg_mse,gbthrsh0,
+      subroutine emafit(n,ql,qu,tl,tu,dtype,
+     1                r_s2,r_s2_mse,reg_skew,reg_mse,gbtype,gbthrsh0,
      1                  cmoms,pq,yp,ci_low,ci_high,var_est)
 
       implicit none
@@ -121,14 +149,17 @@ c
      1  i,n,                                                ! input variables
      2  neps,nq
      
-Cprh      parameter (nq=15)
+C      parameter (nq=15)
 C     use full set of probabilities found in PeakFQ
       parameter (nq=32)
 
       double precision
      1  ql(*),qu(*),tl(*),tu(*),reg_skew,reg_mse,         ! input variables
-     2  cmoms(3,2),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),        ! output variables
-     3  pqd(nq),eps(1),gbthrsh0
+     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),        ! output variables
+     3  pqd(nq),eps(1),gbthrsh0,r_s2,r_s2_mse,var_est(*)
+     
+      character*4
+     1  dtype(*),gbtype
 
       data neps/1/,eps/0.95d0/
       
@@ -143,8 +174,9 @@ Cprh     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
       do 10 i=1,nq
 Cprh          pq(i) = pqd(i)
           pq(i) = 1.0 - pqd(i)
-        call emafitb(n,ql,qu,tl,tu,reg_skew,reg_mse,neps,eps,
-     1                  gbthrsh0,pq(i),
+        call emafitb(n,ql,qu,tl,tu,dtype,
+     1                  r_s2,r_s2_mse,reg_skew,reg_mse,neps,eps,
+     1                  gbtype,gbthrsh0,pq(i),
      1                  cmoms,yp(i),ci_low(i),ci_high(i),var_est(i))
 10    continue
 c
@@ -178,6 +210,12 @@ c            ql(n)      r*8  vector of lower bounds on (log) floods
 c            qu(n)      r*8  vector of upper bounds on (log) floods
 c            tl(n)      r*8  vector of lower bounds on (log) flood threshold
 c            tu(n)      r*8  vector of upper bounds on (log) flood threshold
+c            dtype(n)   c*4  vector describing input data
+c                              dtype(i) = "Syst" => systematic data
+c                              dtype(i) = "Hist" => historic data
+c                              dtype(i) = "Othr" => other
+c            r_s2       r*8  regional variance (std.dev^2)
+c            r_s2_mse   r*8  mean square error of regional variance
 c            reg_skew   r*8  regional skew
 c            reg_mse    r*8  mean square error of regional skew
 c                            this variable encodes four distinct cases:
@@ -204,7 +242,7 @@ c
 c       output variables:
 c       ------------------------------------------------------------------------
 c
-c            cmoms(3,2) r*8  first 3 central moments 
+c            cmoms(3,3) r*8  first 3 central moments 
 c                              mc = {mean, variance, coeff. skew}
 c            yp         r*8  estimated pq-th quantile of fitted p3 distribution
 c            ci_low     r*8  left end of 95% confidence interval for pq-th 
@@ -217,8 +255,9 @@ c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 
-      subroutine emafitb(n,ql_in,qu_in,tl_in,tu_in,reg_skew,reg_mse,
-     1                   neps,eps,gbthrsh0,pq,
+      subroutine emafitb(n,ql_in,qu_in,tl_in,tu_in,dtype_in,
+     1                   r_s2,r_s2_mse,reg_skew,reg_mse,
+     1                   neps,eps,gbtype_in,gbthrsh0,pq,
      2                   cmoms,yp,ci_low,ci_high,var_est)
       
       implicit none
@@ -229,26 +268,33 @@ c
       parameter (ntmax=100,nn=100,nx=25000)
       
       integer
-     1  n,k,i,nt,neps,nlow,nlow_old,nGBiter,nlow_V
+     1  n,k,i,nt,neps,nlow,nlow_old,nzero,nGBiter,nlow_V,it_max
      
       double precision
-     1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),reg_skew,reg_mse,pq,  ! input
-     2  cmoms(3,2),yp,ci_low(neps),ci_high(neps),var_est(neps),     ! output
+     1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),r_s2,r_s2_mse,
+     1  reg_skew,reg_mse,pq,                                        ! input
+     2  cmoms(3,3),yp,ci_low(neps),ci_high(neps),var_est(neps),     ! output
      3  yp1,yp2,ci_low1(nn),ci_low2(nn),ci_high1(nn),ci_high2(nn),
      4  skewmin,qP3,parms(3),
-     5  ql,qu,tl,tu,
+     5  ql,qu,tl,tu,qs,
      6  cv_yp_syp(2,2),eps(1),tl2(ntmax),tu2(ntmax),nobs(ntmax),
      7  skew,wt,as_mse,gbthrsh0,gbcrit,gbthresh,
-     8  gbcrit_V,gbthresh_V
+     8  gbcrit_V,gbthresh_V,pvaluew
      
       parameter (skewmin=0.06324555)
       
       double precision
      1  mseg_all
      
-      common /tacg01/gbcrit,gbthresh,nlow
-      common /tacg02/ql(nx),qu(nx),tl(nx),tu(nx)
+      character*4 
+     1  at_site_option,at_site_default,at_site_std,gbtype,gbtype_in,
+     2  dtype,dtype_in(*)
+      
+      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
+     1               nlow,nzero,gbtype
+      common /tacg02/ql(nx),qu(nx),tl(nx),tu(nx),dtype(nx)
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
+      common /tacg04/at_site_option,at_site_default,at_site_std
       common /jfe001/as_mse
 
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -259,47 +305,88 @@ c        b) Iterate search for LOs using at-site systematic + historical data
 c             combined with regional skew information
 c
       do 12 i=1,n
-        ql(i) = ql_in(i)
-        qu(i) = qu_in(i)
-        tl(i) = tl_in(i)
-        tu(i) = tu_in(i)
+        ql(i)    = ql_in(i)
+        qu(i)    = qu_in(i)
+        tl(i)    = tl_in(i)
+        tu(i)    = tu_in(i)
 12    continue
 
+       gbtype  = gbtype_in
 c   loop up to 10 times to see if any new LOs uncovered
-      do 15 i=1,10
-        call gbtest(n,ql,qu,tl,tu,gbthrsh0,
+      if(gbtype .eq. 'GBit') then
+        it_max = 10
+      else
+        it_max = 1
+      endif
+
+      do 15 i=1,it_max
+        call gbtest(n,ql,qu,tl,tu,dtype_in,gbthrsh0,
      1              reg_skew,reg_mse,ql,qu,tl,tu)
          gbcrit_V(i)   = gbcrit
          gbthresh_V(i) = gbthresh
          nlow_V(i)     = nlow
        if(nlow .eq. 0) goto 17    ! any new low outliers?
 15    continue
+        if(gbtype .eq. 'GBit') then
             write(*,*) ' Low outlier issues (emafit): nlow = ', nlow,i
             write(*,*) ' User may want to specify threshold'
-          stop    ! Should never get here; something is wrong
+            stop    ! Should never get here; something is wrong
+        endif
 17    continue
         nGBiter = i  ! added on JRS recomendation
 
-      
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c   If we have censoring due to low outliers using new Resample, the MSE of
+c   at-site skew will tend to stay constant or decline because skew 
+c   will be driven toward zero.
+c   Thus first-order approximation based on fixed censoring, which would 
+c   suggest increased MSE, is incorrect. 
+c   As a temporary fix, if MGBT is used and low outliers are detected,
+c   the B17B formula will be used to estimate the MSE of the skew.
+c
+      if(gbtype .eq. "MGBT" .and. nlow .gt. 0) then
+        at_site_std = "B17B"
+      endif
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   2.  organize data for computing ci and set up the tl and tu vectors
 c
+
       call compress2(n,tl,tu,nt,nobs,tl2,tu2)
       
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   3.  begin by fitting the p3 distn to the at-site and regional data
 c       
-c       n.b.  two calls are necessary:
-c            a.  compute the at-site moments without employing regional skew
+c       n.b.  four calls are necessary:
+c            1.  compute at-site moments without employing regional skew;
+c                   this is used to compute the MSE(G) and moments for 
+c                   the case of only at-site data employing the B17B 
+c                   formula for MSE(G) [this is a very poor approximation
+c                   when historical info or left-tail censoring is present]
+c            2.  EMA/B17B computation using regional skew information 
+c                   with B17B MSE(G) formula  (B17B eqn 6; p. 13)
+c            3.  compute the at-site moments without employing regional skew;
+c                   EMA formula for MSE(G) is employed;
 c                   this is used to compute the appropriate weight for regional 
 c                   skew (set as_mse=1.0; reg_mse=-99.)
-c            b.  final computation using regional skew information
+c            4.  final computation using regional skew information 
+c                   with EMA MSE(G)
 c
-      call p3est_ema(n,ql,qu,1.d0,reg_skew,-99.d0,cmoms(1,2))
+      call p3est_ema(n,ql,qu,1.d0,r_s2,r_s2_mse,
+     1                 reg_skew,-99.d0,cmoms(1,3))
+        at_site_option = "B17B"
+        as_mse   = mseg_all(nt,nobs,tl2,tu2,cmoms(1,3))
+      call p3est_ema(n,ql,qu,as_mse,r_s2,r_s2_mse,
+     1                reg_skew,reg_mse,cmoms(1,3))
+      
+      call p3est_ema(n,ql,qu,1.d0,r_s2,r_s2_mse,
+     1                reg_skew,-99.d0,cmoms(1,2))
+        at_site_option = at_site_std
         as_mse   = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))
-      call p3est_ema(n,ql,qu,as_mse,reg_skew,reg_mse,cmoms(1,1))
+      call p3est_ema(n,ql,qu,as_mse,r_s2,r_s2_mse,
+     1                reg_skew,reg_mse,cmoms(1,1))
         yp       = qP3(pq,cmoms)
         call m2p(cmoms,parms)
 
@@ -356,7 +443,7 @@ c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine gbtest
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c   grubbs-beck test for low outliers
+c   grubbs-beck test for single low outliers
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -400,97 +487,148 @@ c            tu(n)      r*8  vector of upper bounds on (log) flood threshold
 c
 c    n.b. routine also returns info on low outliers through common block
 c
-c          common /tacg01/gbcrit,gbthresh,nlow
+c      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),nlow,nzero,gbtype
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-      subroutine gbtest(n,ql_in,qu_in,tl_in,tu_in,gbthrsh0,
+      subroutine gbtest(n,ql_in,qu_in,tl_in,tu_in,dtype,gbthrsh0,
      1   reg_skew,reg_mse,
      2   ql,qu,tl,tu)
 
       implicit none
       
       integer
-     1  n,ns,i,nlow,
-     2  nt
+     1  n,ns,i,nlow,klow,
+     2  nt,nzero
      
+      integer p_nq
+      parameter (p_nq=20000)
+
       double precision
      1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),
-     2  ql(*),qu(*),tl(*),tu(*),gbcrit,gbthresh,gbthrsh0,
+     2  ql(*),qu(*),tl(*),tu(*),gbcrit,gbthresh,gbthrsh0,qs,
      3  as_mse,reg_skew,reg_mse,
-     4  x(10000),xm,xsum,xss,s,t,cmoms(3),gbtmin,
-     5  nobs(10000),tl2(10000),tu2(10000)
+     4  x(p_nq),xm,xsum,xss,s,t,cmoms(3),gbtmin,pvaluew,
+     5  nobs(p_nq),tl2(p_nq),tu2(p_nq),
+     6  r_s2,r_s2_mse,lmissing
      
       double precision
      1  mseg_all
-
-      common /tacg01/gbcrit,gbthresh,nlow
+     
+c      integer MGBTP
       
-      data gbtmin/-6.d0/
+      character*4
+     1  gbtype,dtype(*)
+
+      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
+     1               nlow,nzero,gbtype
+      
+      data gbtmin/-6.d0/,lmissing/-80.d0/
 !     allows very small positive log(q) values
-
       
+c no low outlier test
+      if(gbtype .eq. "NONE") then
+        gbthresh  = -99.d0        
+        gbcrit    =  gbthresh        
+        goto 25
+      endif     
+ 
 c specified low outlier threshold?
-      if(gbthrsh0 .gt. gbtmin) then
+      if(gbtype .eq. "FIXE") then
         gbthresh  = gbthrsh0        
         gbcrit    = gbthrsh0        
         goto 25
-      endif     
-
-c  compute low outlier threshold
-
-        ns   = 0
-      do 10 i=1,n
-        if(ql_in(i) .eq. qu_in(i) .and. qu_in(i) .gt. gbtmin) then
-          ns = ns + 1
-          x(ns) = ql_in(i)
-        endif
-10    continue
-      if(ns .le. 5) then
-        write(*,*) 'inadequate data for grubbs-beck test',i
-        gbcrit   = -99.d0
-        gbthresh = -99.d0
-      else
-          call p3est_ema(n,ql_in,qu_in,1.d0,reg_skew,-99.d0,cmoms)
-            call compress2(n,tl_in,tu_in,nt,nobs,tl2,tu2)
-            as_mse   = mseg_all(nt,nobs,tl2,tu2,cmoms)
-          call p3est_ema(n,ql_in,qu_in,as_mse,reg_skew,reg_mse,cmoms)
-          xm      = cmoms(1)
-          s       = sqrt(cmoms(2))
-          t       = -0.9043+3.345*sqrt(log10(dble(ns))) ! N.B. ns, not n
-     1                         -0.4046*log10(dble(ns))  ! Lu formula [JRS]
-          gbcrit  = xm - s*t
-          gbthresh= 1.d10   ! starting value to find gbthresh
       endif
       
-      do 20 i=1,ns
-        if(x(i) .gt. gbcrit .and. x(i) .lt. gbthresh) gbthresh=x(i)
-20    continue
 
+c  computed low outlier threshold and count zero flows
+c  note that zero flows are automatically treated as low outliers in MGBT
+        ns   = 0
+        nzero   = 0
+      do 10 i=1,n
+        if(ql_in(i) .eq. qu_in(i) .and. dtype(i) .eq. 'Syst') then ! N.B. Criterion
+          ns = ns + 1
+          x(ns) = ql_in(i)
+          qs(ns)= 10**x(ns)
+          if(qu_in(i) .le. lmissing) nzero = nzero + 1
+        endif
+10    continue
+          call dsvrgn(ns,x,x)
+          call dsvrgn(ns,qs,qs)
+      if( (ns-nzero) .le. 5) then    ! not enough data>0 to apply low-outlier test
+        write(*,*) 'inadequate data for grubbs-beck test',ns-nzero
+        write(*,*) 'all zeroes recoded as smaller than: ',qs(nzero+1)
+        write(*,*) 'this is the smallest non-zero systematic obs.'
+        gbcrit   = x(nzero+1)
+        gbthresh = x(nzero+1)
+        goto 25
+      endif
+c
+c  Limit of use of MGBT Test; substitute BG when over half zeros
+c
+      if( (gbtype .eq. 'MGBT') .and. (nzero .ge. ns/2) ) then
+        gbtype = 'GBT'
+        write(*,*) 'too many zeros for MGBT test (ns, nzero) ',ns,nzero
+        write(*,*) 'traditional Grubbs-Beck (GB) used instead'
+      endif
+c
+c  Traditional Grubbs-Beck Test
+c
+      if(gbtype .eq. 'GBT') then  ! B17B Grubbs-Beck test for 1 outlier
+          call p3est_ema(n-nzero,x(nzero+1),x(nzero+1),1.d0,r_s2,-99.d0,
+     1                      reg_skew,-99.d0,cmoms) !  get moms
+          xm      = cmoms(1)
+          s       = sqrt(cmoms(2))
+          t       = -0.9043+3.345*sqrt(log10(dble(ns-nzero))) ! N.B. ns, not n
+     1                         -0.4046*log10(dble(ns-nzero))  ! Lu formula [JRS]
+          gbcrit  = xm - s*t
+          gbthresh= 1.d10   ! starting value to find gbthresh
+        do 20 i=1,ns
+          if(x(i) .ge. gbcrit) then
+            gbthresh = min(x(i),gbthresh)
+          endif
+20      continue
+c
+c  Multiple Grubbs-Beck Test
+c
+      else if(gbtype .eq. "MGBT") then  ! Multiple Grubbs-Beck (Cohn, 2011)
+c          klow = MGBTP(qs,ns,pvaluew)
+        if(klow .gt. 0) then
+          gbcrit   = x(klow+1)
+          gbthresh = gbcrit
+        else
+          if(nzero .gt. 0) then  ! zero flows are low outliers
+            klow = nzero
+            gbcrit = x(klow+1)/2.d0  ! smallest obs > 0 divided by 2...why not?
+            gbthresh = x(klow+1)
+          else
+            gbcrit = -99.d0   !  no low outlier issues
+            gbthresh = gbcrit
+          endif
+        endif
+      endif
+      
 c  fill in various arrays and compute nlow
 25    continue
 
-        nlow = 0
+          nlow    = 0
       do 30 i=1,n
-        if(qu_in(i) .lt. gbthresh) then
-          nlow  = nlow + 1
+        if(qu_in(i) .lt. gbcrit) then     ! note:
+          nlow  = nlow+1
           qu(i) = gbthresh
-c set lower bound to half the observed value
-c          ql(i) = qu_in(i)-log(2.d0)
-c
-c     jfe modify set lower bound to gbtmin (-6.d0)
           ql(i) = gbtmin
         else
           ql(i) = ql_in(i)
           qu(i) = qu_in(i)
         endif
           tl(i) = max(tl_in(i),gbcrit)  ! change made 13 aug 07 (TAC)
+                                        ! note: recode to smallest X>Crit_GB
           tu(i) = tu_in(i)
 30    continue
 
       return
       end
-      
+    
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine p3est_ema
 c****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -529,6 +667,8 @@ c            ql(n)      r*8  vector of lower bounds on (log) floods
 c            qu(n)      r*8  vector of upper bounds on (log) floods
 c            asmse      r*8  mean square error of at-site skew
 c                              this is calculated by mseg
+c            r_s2       r*8  regional variance (std.dev^2)
+c            r_s2_mse   r*8  mean square error of regional variance
 c            reg_skew   r*8  regional skew
 c            reg_mse    r*8  mean square error of regional skew
 c            pq         r*8  quantile to be estimated 
@@ -554,20 +694,22 @@ c           qu(i) is the upper bound
 c            if( qu == ql) then we have an ordinary observation at qu
 c
 c
-      subroutine p3est_ema(n,ql,qu,as_mse,reg_skew,reg_mse,moms_out)
+      subroutine p3est_ema(n,ql,qu,as_mse,r_s2,r_s2_mse,
+     1  reg_skew,reg_mse,moms_out)
 
       implicit none
       
       integer
      1  n,nsize,i,j,k
       
-      common /reg001/rskew,rmse
+      common /reg001/rskew,rmse,rs2,rs2mse
       
       parameter (nsize=20001)
       
       double precision 
      1     ql(*),qu(*),as_mse,reg_skew,reg_mse,moms_out(3),
-     2     moms(3,nsize),d11(nsize),dist_p3,tol,rskew,rmse,asmse
+     2     moms(3,nsize),d11(nsize),dist_p3,tol,rskew,rmse,asmse,
+     3     rs2,r_s2,rs2mse,r_s2_mse,w
      
       double precision
      1     momsadj
@@ -576,10 +718,12 @@ c
       data moms(1,1),moms(2,1),moms(3,1)/0.0, 1.0, 0.0/
 
             asmse = as_mse
+            rs2   = r_s2
+            rs2mse= r_s2_mse
             rskew = reg_skew
             rmse  = reg_mse
 c            if(rmse .lt. 0.d0) rmse = 1.0d30
-      
+     
       do 10 i=2,nsize
         call moms_p3(n,ql,qu,moms(1,i-1),moms(1,i))
           if(rmse .le. 0.d0 .and. rmse .gt. -98.d0) then ! "GENERALIZED, NO MSE"
@@ -591,9 +735,16 @@ c            moms(3,i) = moms(3,i)
           else if (rmse .ge. 1.d10) then                 ! "STATION SKEW
 c            moms(3,i) = moms(3,i)
           endif
-          
-          moms(3,i) = momsadj(n,ql,moms(1,i))   ! correct
+                 
+          moms(3,i) = momsadj(n,ql,moms(1,i))            ! correct
 
+        if(r_s2 .ge. 0.d0 
+     1       .or. r_s2 .le.0.d0) then                    ! XXXXXXX needs to be fixed
+          w = 0.d0                                       ! temporary fix until I TAC
+                              !  figure out how to compute mse of s2
+          moms(2,i) = w*r_s2 + (1.d0-w)*moms(2,i)        !  Use Regional SD XXXX
+        endif
+ 
         if(i .gt. 1000) then  !  eliminate cycles of length 2 or 3
           do 50 j=1,3
             write(*,*) '(EMA): Convergence criteria not met, i = ',i
@@ -683,8 +834,8 @@ c       2004 gets Griffis et al. [2004] -- the default!
         moms(1)     = 0.d0
       do 10 i=1,n
         if(ql(i) .eq. qu(i)) n_e = n_e+1
-        if((i .gt. 1) .and. (ql(i) .eq. ql(i-1)) .and. 
-     1    (qu(i) .eq. qu(i-1)) ) then
+        if( (i .gt. 1) .and. (ql(i) .eq. ql(max(1,i-1))) .and. 
+     1    (qu(i) .eq. qu(max(1,(i-1)))) ) then
             m_nc_moms(1,i) = m_nc_moms(1,i-1)
             m_nc_moms(2,i) = m_nc_moms(2,i-1)
             m_nc_moms(3,i) = m_nc_moms(3,i-1)
@@ -819,20 +970,35 @@ c        skxmax  = 2.d0/sqrt(m(2))/(m(1)-xmax)       ! 2:  parms(1) < xmax
       return
       end
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c****|double precision function mseg_all
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c     computes the mse of station skew for the bulletin 17b analysis (see p. 13)
+c     computes the mse of station skew for the bulletin 17b/17c analysis
+c     (see p. 13 B17b)
 c
 c     n.b.  b17b recommends using h -- the entire period length --
 c           for the record length with historical information.
 c
-c     timothy a. cohn, 2007
+c     n.b.  at_site_option, stored in common, determines how things are
+c           computed.  
+c
+c               at_site_option = 'B17B' => Bulletin 17B MSE formula
+c                              = 'EMA'  => First-order EMA MSE
+c                              = 'ADJE' => Adjusted first-order
+c
+c           the 'ADJE' result is identical to the 'B17B' result if there is
+c           no censored data.  Otherwise, 'ADJE' is the adjusted version 
+c           (multiplied by a factor of the ratio 
+c
+c                bias_adj = MSE(B17B,syst=Nh)/MSE(EMA,syst=Nh)
+c
+c     timothy a. cohn, 2008
 c
 c     *** do not modify without author''s consent ***
 c
 c           author.......tim cohn
-c           date.........18 sep 2007
+c           date.........02 jul 2008
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -857,15 +1023,90 @@ c
       implicit none
       
       double precision
+     1    nobs(*),tl(*),tu(*),mc(3)
+     
+      double precision mseg,mse_ema,bias_adj,INF(2)
+
+      integer 
+     1    nthresh,i,n,n_adj
+     
+      character*4 at_site_option,at_site_default,at_site_std
+      
+      common /tacg04/at_site_option,at_site_default,at_site_std
+      
+      data INF/-99.d0,99.d0/
+      
+        n      = 0
+      do 10 i=1,nthresh
+        n      = n + nobs(i)
+10    continue
+      
+c 
+      if(at_site_option .eq. 'B17B') then
+        mseg_all = mseg(n,mc(3))
+      else if(at_site_option(1:3) .eq. 'EMA') then
+        mseg_all = mse_ema(nthresh,nobs,tl,tu,mc,3)
+      else if(at_site_option .eq. 'ADJE') then
+        n_adj  = min(n,150)
+        bias_adj = mseg(n_adj,mc(3)) /
+     1             mse_ema(1,dble(n_adj),INF(1),INF(2),mc,3)
+        mseg_all = bias_adj * mse_ema(nthresh,nobs,tl,tu,mc,3)
+      endif
+      
+      return
+      end
+
+c****|double precision function mse_ema
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     computes the mse of station skew for an ema analysis
+c
+c     timothy a. cohn, 2008
+c
+c     *** do not modify without author''s consent ***
+c
+c           author.......tim cohn
+c           date.........1 jul 2008
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            nthresh      i*4  number of distinct censoring thresholds 
+c                                ( (a,b) pairs)
+c            nobs(*)      r*8  vector of number of observations corresponding 
+c                                to threshold pair (tl(i),tu(i))
+c            tl(*)        r*8  vector of lower bounds (a)
+c            tu(*)        r*8  vector of upper bounds (b)
+c            mc(3)        r*8  vector of estimated lp3 moments
+c            kmom         i*4  which moment? (1=mean; 2=variance; 3=skew)
+c
+c       output variables:
+c       ------------------------------------------------------------------------
+c            mse_ema      r*8  mse of at-site (station) skew
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      double precision function mse_ema(nthresh,nobs,tl,tu,mc,kmom)
+
+      implicit none
+      
+      double precision
      1    nobs(*),tl(*),tu(*),mc(3),mc2(3),tl2(100),tu2(100),
      2    s_mn(3,3),s_mc(3,3),mn(3),
      3    skewmin,tneg,tpos,w
-
+     
       parameter (skewmin=0.06324555)
 
       integer 
-     1    nthresh,i
-     
+     1    nthresh,i,kmom
+
+c   test input value of kmom     
+      if(kmom .gt. 3 .or. kmom .lt. 1) then
+        write(*,*) 'kmom error ',kmom,' (mse_ema)'
+        stop
+      endif
+      
 c   begin by pseudo-orthogalizing the parameters
         mc2(1) = 0.d0
         mc2(2) = mc(2)
@@ -879,22 +1120,21 @@ c   begin by pseudo-orthogalizing the parameters
         call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
         call m2mn(mc2,mn)
         call mn2m_var(mn,s_mn,mc2,s_mc)
-        mseg_all = s_mc(3,3)
+        mse_ema = s_mc(kmom,kmom)
       else  !  use weighted sum for skew = skewmin, -skewmin
         mc2(3) = -skewmin
         call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
         call m2mn(mc2,mn)
         call mn2m_var(mn,s_mn,mc2,s_mc)
-        tneg = s_mc(3,3)
+        tneg = s_mc(kmom,kmom)
         mc2(3) = skewmin
         call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
         call m2mn(mc2,mn)
         call mn2m_var(mn,s_mn,mc2,s_mc)
-        tpos = s_mc(3,3)
+        tpos = s_mc(kmom,kmom)
         w    = (mc(3)-skewmin)/(2.d0*skewmin)
-        mseg_all = w*tneg + (1.d0-w)*tpos
+        mse_ema = w*tneg + (1.d0-w)*tpos
       endif
-
       
       return
       end
@@ -1266,15 +1506,15 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
       subroutine jacq2(q,mc,jac)
 
-c      implicit none
-      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      implicit none
         
       integer 
      1  ifail,ind
       
       double precision
      1  q,mc(3),jac(3),
-     2  mc2,q2,error,qP3
+     2  mc2,q2,error,qP3,
+     3  xmin,xmax
      
       external fjac
 
@@ -1291,8 +1531,18 @@ c  derivative of quantile wrt shape parameter is computed numerically
        mc2(1) = mc(1)
        mc2(2) = mc(2)
         q2    = q      
+c  indx=3 involves partial deriv wrt skew; ind=1,2 would be m, s
       do 10 ind=3,3
-      call diff(1,0.d0,-0.1d0,0.1d0,fjac,0.d0,0.d0,jac(ind),error,ifail)
+ctac  ensure skews within range of reliable computation (tac 06/18/08)
+        if(mc2(3) .gt. 0.d0) then
+          xmin = max(-0.1d0,-mc2(3)/2.d0)
+          xmax = 0.1d0
+        else
+          xmin = -0.1d0
+          xmax = min(0.1d0,-mc2(3)/2.d0)
+        endif
+ctac
+      call diff(1,0.d0,xmin,xmax,fjac,0.d0,0.d0,jac(ind),error,ifail)
 10    continue
       return
       end
@@ -1349,15 +1599,14 @@ c
       
       double precision
      1  nobs(*),tl(*),tu(*),mc(3),g_r_mse,q,s_mc(3,3),
-     2  jac(3),tmp(3),resulta(3,3),result
+     2  jac(3),tmp(3),result
           
       call regskew(nthresh,nobs,tl,tu,mc,g_r_mse,s_mc)
       
       call jacq2(q,mc,jac)
       
       call dmxtyf(3,1,jac,3,3,3,s_mc,3,1,3,tmp,1)
-      call dmrrrr(1,3,tmp,1,3,1,jac,3,1,1,resulta,1) 
-      result= resulta(1,1)
+      call dmrrrr(1,3,tmp,1,3,1,jac,3,1,1,result,1) 
         sypf = sqrt(result)
 ctac*
         if(result .le. 0.d0) then
@@ -2169,9 +2418,9 @@ c
       double precision 
      1  m,qP3
       
-c      real rand
+      real rand
       
-c      rP3 = qP3(dble(rand()),m)
+      rP3 = qP3(dble(rand()),m)
       return
       end
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
@@ -2204,7 +2453,6 @@ c
      1  (ng=15,np=11)
      
       external ftest01
-      double precision ftest01
       
       double precision 
      1  pp(0:np),gg(ng),m,
@@ -2261,11 +2509,11 @@ c
             write(*,'(4f10.4,3e14.5)') m(3),m(1),m(2),pp(j),mnout
         do 30 k=0,3
             kk=k
-          call dqag(ftest01,qP3(pp(j-1),m),qP3(pp(j),m),
-     1                1.d-6,1.d-6,2,fp(k),abserr,neval,ier,
-     2                limit,lenw,last,iwork,work)
+c          call dqag(ftest01,qP3(pp(j-1),m),qP3(pp(j),m),
+c     1                1.d-6,1.d-6,2,fp(k),abserr,neval,ier,
+c     2                limit,lenw,last,iwork,work)
 
-            if(ier .ne. 0) write(*,*) ' ier (dqag) = ',ier
+c            if(ier .ne. 0) write(*,*) ' ier (dqag) = ',ier
           if(k .gt. 0) fp(k)=fp(k)/fp(0)
 30      continue
             write(*,'(40x,3e14.5)') (fp(k1),k1=1,3)
@@ -2358,55 +2606,6 @@ c
       return
       end
       
-c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|subroutine dqag
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c     program to integrate a univariate function using simpson's rule
-c
-c     this is a cheap substitute for the dqag routine available from 
-c     nist as part of gams library of fortran subroutine
-c
-c     author.....tim cohn
-c     date.......2 feb 2007
-c     
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-      subroutine dqag(f,a,b,
-     1                err1,err2,key,result,abserr,neval,ier,
-     2                limit,lenw,last,iwork,work)
-     
-      implicit none
-      
-      integer
-     1  key,neval,ier,limit,lenw,last,iwork(*),npt,i
-     
-      double precision
-     1  f,a,b,err1,err2,result,abserr,work(*),sum,delta,x
-     
-      external f
-      
-      data npt /1001/
-      
-        delta=(b-a)/(npt-1.d0)
-      if(delta .eq. 0.d0) then
-        result = 0.d0
-      else if (delta .lt. 0.d0) then
-        write(*,*) 'limits on integral reversed'
-        result = 0.d0
-      else
-          x   = a
-          sum = f(x) + 4.d0*f(x+delta) + f(b)
-        do 10 i=1,(npt-3)/2
-          x   = x+2.d0*delta
-          sum = sum+2.d0*f(x)+4.d0*f(x+delta)
-10      continue
-        result = delta*sum/3.d0
-      endif
-          ier    =  0
-          abserr = -99.d0
-        return
-      end
       subroutine b17cip(n,moms,pq,peps,cil,ciu)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -2566,4 +2765,34 @@ c
       write(*,'(a,2f10.3)') 'cil, ciu  ',l,u
       
       stop
+      end
+c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
+      block data
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     author.....tim cohn
+c     date.......27 feb 2008
+c     
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      implicit none
+      
+      double precision
+     1  gbcrit,gbthresh,alph01,alph10,pvaluew,qs
+     
+      integer
+     1  nlow,nzero
+      
+      character*4 at_site_option,at_site_default,at_site_std,gbtype
+      
+      common /tacg04/at_site_option,at_site_default,at_site_std
+      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
+     1               nlow,nzero,gbtype
+      common /tacmg1/alph01,alph10
+
+      data at_site_option/'ADJE'/
+      data at_site_default/'ADJE'/
+      data at_site_std/'ADJE'/
+      data alph01/0.01d0/,alph10/0.10d0/
+      
       end
