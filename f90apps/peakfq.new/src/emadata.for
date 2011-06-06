@@ -3,7 +3,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
      I                   NT,THBY,THEY,THLO,THUP,GAGEB,
      I                   NINTVL,INTVLYR,INTVLLWR,INTVLUPR,
      M                   NO,
-     O                   QL,QU,TL,TU)
+     O                   QL,QU,TL,TU,DTYPE)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c    
 c    This routine arranges a data set using the EMA algorithm 
@@ -82,6 +82,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL  Q(NPKS),THLO(NT),THUP(NT),GAGEB,
      $      INTVLYR(NINTVL),INTVLLWR(NINTVL),INTVLUPR(NINTVL)
       DOUBLE PRECISION QL(NO),QU(NO),TL(NO),TU(NO)
+      CHARACTER*4 DTYPE(NO)
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I,J,K
@@ -102,6 +103,7 @@ C     init arrays
         QU(I) = MISSING
         TL(I) = MISSING
         TU(I) = MISSING
+        DTYPE(I)= 'Othr'
  10   CONTINUE
       write(*,*)"EMADATA: initialized arrays, NT",NT
 C
@@ -137,6 +139,7 @@ c         write(*,*)"EMADATA: in 40,WY(J),WYMIN",ABS(WY(J)),WYMIN
           END IF
           QL(I) = Q(J)
           QU(I) = Q(J)
+          DTYPE(I)= 'Syst'
         END IF
  40   CONTINUE
       write(*,*)"EMADATA: set QL/QU for NPKS",NPKS
@@ -174,6 +177,7 @@ C         write(*,*)"EMADATA: in 60, fill pos NO",NO
           QL(NO) = QL(J)
           QU(NO) = QU(J) 
           OWY(NO) = OWY(J)
+          DTYPE(NO)= DTYPE(J)
         END IF
  60   CONTINUE
       write(*,*)"EMADATA: collapsed arrays, NO",NO
