@@ -962,11 +962,11 @@ C      SAVE
             HESS(2,1)   =     HESS(1,2)
 C
       M     =     1
-C            CALL DQDAGS(FCNGAM,0.D0,P,   ERRABS,ERREL,FP,ERREST)
-C            CALL DQDAGS(FCNGAM,0.D0,1.D0,ERRABS,ERREL,GP,ERREST)
+            CALL DQDAGS(FCNGAM,0.D0,P,   ERRABS,ERREL,FP,ERREST)
+            CALL DQDAGS(FCNGAM,0.D0,1.D0,ERRABS,ERREL,GP,ERREST)
       M     =     2
-C            CALL DQDAGS(FCNGAM,0.D0,P,   ERRABS,ERREL,FPP,ERREST)
-C            CALL DQDAGS(FCNGAM,0.D0,1.D0,ERRABS,ERREL,GPP,ERREST)
+            CALL DQDAGS(FCNGAM,0.D0,P,   ERRABS,ERREL,FPP,ERREST)
+            CALL DQDAGS(FCNGAM,0.D0,1.D0,ERRABS,ERREL,GPP,ERREST)
 C
 C
 C     N.B.  P IS F
@@ -1687,7 +1687,7 @@ C      SAVE
       RETURN
       END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
-      DOUBLE PRECISION FUNCTION FP_TNC_ICDF(P,NU,DELTA)
+      DOUBLE PRECISION FUNCTION FP_TNC_ICDF_OLD(P,NU,DELTA)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C 
 C     PROGRAM TO COMPUTE NON-CENTRAL T INVERSE CDF
@@ -1699,14 +1699,18 @@ C     REQUIRES FUNCTIONS FOR Z-INVERSE
 C
 C     REFERENCE:  INVERSION OF APPROXIMATE FORMULA ON PAGE 949, A&S
 C
+C     NOTE:  THIS IS NOT VERY ACCURATE (TAC: 20 SEP 2010)
+C            USED TO BE CALLED FP_TNC_ICDF; NOW FP_TNC_ICDF_OLD
+C            FORMER FP_TNC2_ICDF NOW FP_TNC_ICDF (TAC: 20 SEP 2010)
+C
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       IMPLICIT NONE
 C      SAVE
-      DOUBLE PRECISION P,NU,DELTA,X,ANS,FP_Z_ICDF,FP_TNC2_ICDF
+      DOUBLE PRECISION P,NU,DELTA,X,ANS,FP_Z_ICDF,FP_TNC_ICDF
 
       IF(NU .LE. 20.D0) THEN
-           ANS = FP_TNC2_ICDF(P,NU,DELTA)
+           ANS = FP_TNC_ICDF(P,NU,DELTA)
       ELSE
       X    =  FP_Z_ICDF(P)
       ANS  =  (4.D0*NU*(DELTA*(-1.D0 + 4.D0*NU) + 
@@ -1715,11 +1719,11 @@ C      SAVE
      3           (1.D0 + 16.D0*NU**2 - 8.D0*NU*(1.D0 + X**2))
       ENDIF
      
-      FP_TNC_ICDF =  ANS
+      FP_TNC_ICDF_OLD =  ANS
       RETURN
       END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
-      DOUBLE PRECISION FUNCTION FP_TNC2_ICDF(P_IN,NU_IN,DELTA_IN)
+      DOUBLE PRECISION FUNCTION FP_TNC_ICDF(P_IN,NU_IN,DELTA_IN)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C 
 C     PROGRAM TO COMPUTE NON-CENTRAL T INVERSE CDF
@@ -1728,6 +1732,8 @@ C     AUTHOR.....TIM COHN
 C     DATE.......APRIL 9, 1999
 C
 C     REQUIRES FUNCTIONS FOR Z-INVERSE, GAMMA INVERSE
+C
+C     NOTE:  THIS USED TO BE LABELED FP_TNC2_ICDF (TAC: 20 SEP 2010)
 C
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
@@ -1747,34 +1753,38 @@ C      SAVE
       
       COMMON /ZNCT02/P,NU,DELTA
 
-      DATA RE/1.D-6/,AE/1.D-6/
+      DATA RE/1.D-8/,AE/1.D-8/
 
       P     =  P_IN
       NU    =  NU_IN
       DELTA =  DELTA_IN
       
-      X1    =  FP_Z_ICDF(P)+DELTA
-        	PARMS(1)  =  NU/2.D0
-	        PARMS(2)  =  2.D0
-      X2    =  SQRT(FP_G2_ICDF(1.D0-P,PARMS)/NU)
-      
-      IF(X2 .LE. 0.D0) GOTO 99
-      
-        B     =  MIN(0.D0,X1,1.D0/X2,X1/X2)
-        C     =  MAX(0.D0,X1,1.D0/X2,X1/X2)
-	      
+c  change made to limits 20 Sep 2010 (TAC)
+c      X1    =  FP_Z_ICDF(P)+DELTA
+c        	PARMS(1)  =  NU/2.D0
+c	        PARMS(2)  =  2.D0
+c      X2    =  SQRT(FP_G2_ICDF(1.D0-P,PARMS)/NU)
+c      
+c      IF(X2 .LE. 0.D0) GOTO 99
+c      
+c        B     =  MIN(0.D0,X1,1.D0/X2,X1/X2)
+c        C     =  MAX(0.D0,X1,1.D0/X2,X1/X2)
+
+         B     =  -10.D0
+         C     =   10.D0 
+        	      
       CALL DZEROIN(FTNCINV,B,C,RE,AE,IFLAG)
       
-      IF(IFLAG .GE. 5) GOTO 99
+      IF(IFLAG .NE. 1) GOTO 99
       
-      FP_TNC2_ICDF =  B
+      FP_TNC_ICDF =  B
       
       RETURN
       
 99    CONTINUE
-        WRITE(*,*) 'ERROR IN FP_TNC2_ICDF',IFLAG,P,NU,DELTA
-	READ(*,*)
-	FP_TNC2_ICDF =  0.D0
+        WRITE(*,*) 'ERROR IN FP_TNC_ICDF',IFLAG,P,NU,DELTA
+C	READ(*,*)
+	FP_TNC_ICDF =  0.D0
       
       RETURN
       END
@@ -1854,12 +1864,19 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       
       RETURN
       END
+c
+c
+c  Note:  The following two commented-out functions do not work
+c         They do not deal with the non-centrality parameter at all
+c
+c         tac 15 Sep 2010
+c
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C
-      DOUBLE PRECISION FUNCTION FP_T_CDF(T,DF,NCP)
+      DOUBLE PRECISION FUNCTION FP_T_CDF(T,DF)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C 
-C     PROGRAM TO COMPUTE CDF OF NONCENTRAL T(T,DF,NCP)
+C     PROGRAM TO COMPUTE CDF OF CENTRAL T(T,DF)
 C
 C     AUTHOR.....TIM COHN
 C     DATE.......08 MAR 2010
@@ -1876,19 +1893,17 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       CALL CDFT ( WHICH, P, Q, T, DF, STATUS, BOUND )
         IF(STATUS .NE. 0) WRITE(*,*) ' ERROR IN CDFT/FP_T_CDF2',STATUS
-        
-        WRITE(*,*) 'P,Q',P,Q
-      
+              
       FP_T_CDF = P
       
       RETURN
       END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C
-      DOUBLE PRECISION FUNCTION FP_T_ICDF(P,DF,NCP)
+      DOUBLE PRECISION FUNCTION FP_T_ICDF(P,DF)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C 
-C     PROGRAM TO COMPUTE CDF OF NONCENTRAL T(T,DF,NCP)
+C     PROGRAM TO COMPUTE CDF OF CENTRAL T(T,DF)
 C
 C     AUTHOR.....TIM COHN
 C     DATE.......08 MAR 2010
@@ -1902,11 +1917,1112 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
      1  WHICH,STATUS
        
       DATA WHICH/2/
-
-      CALL CDFT ( WHICH, P, 1.D0-P, T, DF, STATUS, BOUND )
+ 
+        CALL CDFT ( WHICH, P, 1.D0-P, T, DF, STATUS, BOUND )
         IF(STATUS .NE. 0) WRITE(*,*) ' ERROR IN CDFT/FP_T_CDF2',STATUS
       
       FP_T_ICDF = T
       
       RETURN
       END
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+      INTEGER FUNCTION MGBTP(X,N,PVALUEW)
+!*** REVISION 2011.01
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+! 
+!       IDENTIFIES THE NUMBER OF LOW OUTLIERS USING THE 
+!       GENERALIZED GRUBBS-BECK TEST
+!       NOTES:  SEE 2011 MANUSCRIPT BY COHN, STEDINGER, ENGLAND, ET AL.
+! 
+!       AUTHOR.........TIM COHN
+!       DATE...........1 MAR 2010 (TAC)
+!               MODIFIED....... 8 MAR 2010 (TAC)
+!               MODIFIED.......29 APR 2010 (TAC) [OFFSET ADDED FOR SMALL N]
+!               MODIFIED.......21 OCT 2010 (TAC) [OFFSET REMOVED; ESTIMATOR
+!                                  FOR E[S] REPLACED WITH GAMMA FUNCTION
+!               MODIFIED.......5 JAN 2011 (TAC)
+!               MODIFIED.......16 FEB 2011 (TAC) RETURNS PVALUEW
+!
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+      IMPLICIT NONE
+      
+      INTEGER DIM1
+      PARAMETER (DIM1=10000)
+      
+      DOUBLE PRECISION 
+     * X(N),PVALUEW(DIM1),W(DIM1),ALPH01,ALPH10,ZT(DIM1),S1,S2,XM,XV,
+     1 GGBCRITP
+
+      INTEGER 
+     * I,J2,N,N2,NC
+     
+      DATA ALPH01,ALPH10/0.01D0,0.1D0/     
+      
+      DO 10 I=1,N
+        ZT(I) = LOG10(MAX(1D-88,X(I)))
+        PVALUEW(I) = -99.D0 ! MISSING VALUES
+10    CONTINUE
+        CALL DSVRGN(N,ZT,ZT)
+        
+      N2    = N/2
+
+        S1 = 0.D0
+        S2 = 0.D0
+      DO 20 I=N,N2+2,-1
+        S1 = S1 + ZT(I)
+        S2 = S2 + ZT(I)**2
+20    CONTINUE
+
+      DO 30 I=N2,1,-1
+        S1  = S1 + ZT(I+1)
+        S2  = S2 + ZT(I+1)**2
+        NC  = N-I
+        XM  = S1/DBLE(NC)
+        XV  = (S2-NC*XM**2)/(NC-1.D0)
+        W(I)       = (ZT(I)-XM)/SQRT(XV)
+        PVALUEW(I) = GGBCRITP(N,I,W(I))
+30    CONTINUE
+C
+C  FIRST CHECK TO SEE IF WE HAVE ANY 1% LOW OUTLIERS
+C  --ONCE YOU FIND LARGEST SIGNIFICANT LOW OUTLIER AT ALPHA=1% LEVEL,
+C      (POSSIBLY THE 0-TH OBSERVATION), THEN WALK FORWARD CHECKING 
+C       FOR LARGER LOW OUTLIERS AT ALPHA=10% LEVEL.
+        J2 = 0
+      DO 40 I=1,N2
+        IF(PVALUEW(I) .LT. ALPH01) THEN
+          J2 = I
+        ENDIF
+        IF((PVALUEW(I) .LT. ALPH10) .AND. (J2 .EQ. I-1)) THEN
+         J2 = I
+        ENDIF
+40     CONTINUE
+
+        MGBTP = J2
+      RETURN
+      END
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+      INTEGER FUNCTION MGBT(X,N)
+!*** REVISION 2011.01
+!  RETURNS JUST NUMBER OF LOW OUTLIERS; MGBTP ALSO RETURNS PVALUES
+      IMPLICIT NONE
+      INTEGER DIM1,N,MGBTP
+      PARAMETER (DIM1=10000)
+      DOUBLE PRECISION X(*),PVALUEW(10000)
+      MGBT = MGBTP(X,N,PVALUEW)
+      RETURN
+      END
+
+        DOUBLE PRECISION FUNCTION GGBCRITP(N,R,ETA)
+!*** REVISION 2011.01
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+! 
+!       PROGRAM TO COMPUTE P-VALUES (GGCRITP) AND CRITICAL POINTS  (GGCRITK)
+!         FOR A GENERALIZED GRUBBS-BECK TEST
+!       NOTES:  SEE 2010 MANUSCRIPT BY COHN, ENGLAND, ET AL.
+! 
+!       AUTHOR.........TIM COHN
+!       DATE...........1 MAR 2010 (TAC)
+!               MODIFIED....... 8 MAR 2010 (TAC)
+!               MODIFIED.......29 APR 2010 (TAC) [OFFSET ADDED FOR SMALL N]
+!               MODIFIED.......21 OCT 2010 (TAC) [OFFSET REMOVED; ESTIMATOR
+!                                  FOR E[S] REPLACED WITH GAMMA FUNCTION
+!               MODIFIED........5 JAN 2011 (TAC) MGBT REVISED
+!
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+      IMPLICIT NONE
+      
+      INTEGER
+     1 LIMIT
+     
+      PARAMETER
+     1 (LIMIT=40000)
+     
+      INTEGER
+     * N,R,N_IN,R_IN,
+     1 NEVAL,IER,LENW,LAST,IWORK(LIMIT),
+     2 IFAULT,KEY
+     
+      DOUBLE PRECISION 
+     * ETA,ETA_IN,
+     1 FGGB,BOUND,EPSABS,EPSREL,RESULT,ABSERR,WORK(4*LIMIT),
+     2 DF,DELTA
+
+      EXTERNAL FGGB
+      
+      COMMON /GGB001/ETA_IN,N_IN,R_IN
+ 
+      DATA EPSABS/1.D-5/,EPSREL/1.D-5/,KEY/3/,LENW/160000/
+      
+     
+      IF(N .LT. 10 .OR. R .GT. N/2) THEN
+        WRITE(*,*) ' INVALID INPUT DATA/GGBCRITP (N,R): ', N,R
+        GGBCRITP = 0.5D0
+        RETURN
+      ELSE
+          N_IN   = N
+          R_IN   = R
+          ETA_IN = ETA
+      ENDIF
+      
+      CALL DQAG(FGGB,0.D0,1.D0,EPSABS,EPSREL,KEY,RESULT,ABSERR,
+     *    NEVAL,IER,LIMIT,LENW,LAST,IWORK,WORK)
+
+      GGBCRITP   =  RESULT
+      
+      RETURN
+      END
+            
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+      DOUBLE PRECISION FUNCTION FGGB(PZR)
+!*** REVISION 2011.01
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+      IMPLICIT NONE
+      
+      INTEGER
+     * N,R,IFAULT
+     
+      DOUBLE PRECISION 
+     * PZR,ETA,DF,DELTA,MuM, MuS2,VarM,VarS2,CovMS2,EX1,EX2,EX3,EX4,
+     2 ES,CovMS,VarS,alpha,beta,dlngam,
+     3 MuMP,EtaP,H,Lambda,MuS,ncp,q,VarMP,PR,ZR,N2,
+     4 FP_B_ICDF,FP_Z_ICDF,FP_Z_CDF,FP_Z_PDF,TNC,FP_T_CDF,FP_NCT_CDF,
+     5 FP_TNC_CDF,FP_NonCentral_T_CDF
+
+      COMMON /GGB001/ETA,N,R
+!
+!  Compute the value of the r-th smallest obs. based on its order statistic
+!
+      N2   = dble(N-R)
+      PR   = FP_B_ICDF(PZR,dble(R),dble(N+1-R))
+      ZR   = FP_Z_ICDF(PR)
+
+!
+!  Calculate the expected values of M, S2, S and their variances/covariances
+!
+      H        =  FP_Z_PDF(ZR)/(Max(1.d-10,1.d0-PR))
+      EX1      =  H
+      EX2      =  1 + H * ZR
+      EX3      =  2 * EX1 + H * ZR**2
+      EX4      =  3 * EX2 + H * ZR**3
+      
+      MuM      =  EX1
+      MuS2     =  (EX2-EX1**2)
+      VarM     =  MuS2/N2
+      VarS2    =  ((EX4 - 4*EX3*EX1 + 6*EX2*EX1**2 - 3*EX1**4) - 
+     1                MuS2**2)/N2 + 2.d0/((N2-1.d0)*n2)*MuS2**2
+
+       alpha    =  MuS2**2/VarS2
+       beta     =  MuS2/alpha
+
+      CovMS2   =  (EX3 - 3*EX2*EX1 + 2*EX1**3)/SQRT(N2*(N2-1.D0))
+      
+      MuS      =  SQRT(beta) * exp(dlngam(alpha+0.5d0)-dlngam(alpha))
+      CovMS    =  CovMS2/(2*MuS)
+      VarS     =  MuS2 - MuS**2
+      
+        Lambda = CovMS/VarS
+        EtaP   = Eta + Lambda
+        MuMP   = MuM - Lambda * MuS
+        VarMP  = VarM - CovMS**2/VarS
+        df     = 2.d0*alpha
+        ncp    = (MuMP -zr)/SQRT(VarMP)
+        q      = -sqrt(MuS2/VarMP) * EtaP
+       FGGB = 1.d0 - FP_TNC_CDF(q,df,ncp)
+c        FGGB = 1.d0 - FP_NonCentral_T_CDF(q,df,ncp)
+
+      return
+      end
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!*** 
+!*** 
+      DOUBLE PRECISION FUNCTION GGBCRITK(N,R,P)
+!*** REVISION 2011.01
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+! 
+!       PROGRAM TO COMPUTE CRITICAL POINTS FOR A GENERALIZED GRUBBS-BECK
+!         TEST
+!       NOTES:  SEE 2010 MANUSCRIPT BY COHN, ENGLAND, ET AL.
+! 
+!       AUTHOR.........TIM COHN
+!       DATE...........25 OCT 2010 (TAC)
+!               MODIFIED....... 8 MAR 2010 (TAC)
+!
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+      IMPLICIT NONE
+      
+      INTEGER
+     1 LIMIT
+     
+      PARAMETER
+     1 (LIMIT=40000)
+     
+      INTEGER
+     * N,R,N_IN,R_IN,IFLAG,NCALLS
+     
+      DOUBLE PRECISION 
+     * FGGBX,FP_Z_ICDF,
+     1 P,P_IN,B,C,GUESS,RE,AE
+
+      EXTERNAL FGGBX
+      
+      COMMON /GGB002/P_IN,N_IN,R_IN,NCALLS
+ 
+      DATA RE/1.D-6/,AE/1.D-6/
+      
+      IF(R .LT. 1 .OR. R .GT. (N-1)) THEN
+        WRITE(*,*) 'ERROR IN GGBCRITK, R,N: ',R,N
+        STOP
+      ENDIF
+       N_IN  = N
+       R_IN  = R
+       P_IN  = P
+       GUESS = FP_Z_ICDF(DBLE(R)/DBLE(N))
+         NCALLS = 0
+         B = -20.d0
+         C =  20.d0
+      CALL DFZERO (FGGBX, B, C, GUESS, RE, AE, IFLAG)
+        IF(IFLAG .NE. 1) THEN
+          WRITE(*,*) 'ERROR DFZERO/GGBCRITK, IFLAG: ',IFLAG
+          WRITE(*,*)
+        ENDIF
+        
+      GGBCRITK = B
+      RETURN
+      END
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+      DOUBLE PRECISION FUNCTION FGGBX(ETA)
+!*** REVISION 2011.01
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+      IMPLICIT NONE
+      
+      INTEGER
+     * N,R,NCALLS
+     
+      DOUBLE PRECISION 
+     * GGBCRITP,ETA,P
+
+      COMMON /GGB002/P,N,R,NCALLS
+!
+!  Compute the value of the r-th smallest obs. based on its order statistic
+!
+      FGGBX = GGBCRITP(N,R,ETA) - P
+        NCALLS = NCALLS+1
+      RETURN
+      END
+      
+      DOUBLE PRECISION FUNCTION FP_NonCentral_T_CDF(X,DF_IN,NCP_IN)
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C 
+C     PROGRAM TO COMPUTE CDF OF NONCENTRAL T(T,DF,NCP)
+C
+C     AUTHOR.....TIM COHN
+C     DATE.......01 APR 2010
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+
+      IMPLICIT NONE
+      
+      INTEGER
+     1 LIMIT
+     
+      PARAMETER
+     1 (LIMIT=40000)
+     
+      INTEGER
+     * N,R,N_IN,R_IN,
+     1 NEVAL,IER,LENW,LAST,IWORK(LIMIT),
+     2 IFAULT,KEY
+     
+      DOUBLE PRECISION 
+     * ETA,ETA_IN,
+     1 FGGB,BOUND,EPSABS,EPSREL,RESULT,ABSERR,WORK(4*LIMIT),
+     2 DELTA,NCP,W
+
+      DOUBLE PRECISION
+     1  DF_IN,NCP_IN,X,DF,P,Q
+      
+      INTEGER
+     1  INF
+     
+      COMMON /FPNC01/W,DF,NCP
+
+      DATA BOUND/0.D0/,INF/1/
+      
+      DATA EPSABS/1.D-10/,EPSREL/1.D-10/,KEY/3/,LENW/160000/
+     
+      EXTERNAL FNCT01
+      
+      W   =  X
+      DF  =  DF_IN
+      NCP =  NCP_IN
+       
+      CALL DQAGI(FNCT01,BOUND,INF,EPSABS,EPSREL,RESULT,ABSERR,NEVAL,
+     1   IER,LIMIT,LENW,LAST,IWORK,WORK)
+      
+      FP_NonCentral_T_CDF = RESULT
+      
+      RETURN
+      END
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+      DOUBLE PRECISION FUNCTION FNCT01(S2)
+!*** REVISION 2011.01
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+      IMPLICIT NONE
+      
+      DOUBLE PRECISION 
+     * W,DF,NCP,S2,PARMS(2),
+     2 FP_Z_CDF,FP_G2_PDF
+
+      COMMON /FPNC01/W,DF,NCP
+      
+        PARMS(1) = DF/2.D0
+        PARMS(2) = 2.D0/DF
+
+      FNCT01 = FP_Z_CDF(W*SQRT(S2)-NCP) * FP_G2_PDF(S2,PARMS)
+      
+      RETURN
+      END 
+         SUBROUTINE MDL_MR(N,X,XD,MU,SIGMA,PPALL,XSYNTH,MOMS,QUANTS)
+
+C===============================================================================
+C
+C        SUBROUTINE TO FIT LN2 DISTRIBUTION TO MULTIPLY-CENSORED DATA
+C          USING THE MR METHOD (SEE HELSEL AND COHN, WRR, 1988)
+C
+C
+C        AUTHOR........TIM COHN
+C        DATE..........12 FEBRUARY 2003 (TAC)
+C
+C===============================================================================
+C     
+C     ***  N.B.  THIS METHOD SHOULD NOT BE APPLIED TO WATER QUALITY DATA 
+C     ***          EXCEPT WITH GREAT CARE...  TAC (12 MARCH 2003)
+C
+C     ***        THE MR/MDL APPROACH ASSUMES A TYPE II CENSORING MODEL;
+C     ***          CENSORING RELATED TO WATER QUALITY DATA IS INVARIABLY TYPE I
+C
+C     ***        SEE WARNINGS OR CONTACT AUTHOR IF THERE IS ANY QUESTION
+C     ***          ABOUT THIS.
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
+C        MU        R*8       OUTPUT FITTED VALUE OF MU
+C        SIGMA     R*8       OUTPUT FITTED VALUE OF SIGMA
+C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X
+C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
+C        XSYNTH(N) R*8       OUTPUT VECTOR OF REAL AND SYNTHETIC OBSERVATIONS
+C                              XSYNTH(I) = X(I);                       X(I)>=XD(I) 
+C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA);  X(I)<XD(I)
+C        MOMS(2)   R*8       OUTPUT VECTOR OF MEAN(X), VARIANCE(X)
+C        QUANTS(5) R*8       OUTPUT VECTOR OF 10TH, 25TH, 50TH, 75TH, AND 90TH
+C                              PERCENTILES OF SAMPLE USING WEIBULL PLOTTING POS.
+C
+C===============================================================================
+C
+C        N.B.   1)  "SYNTHETIC" VALUES ARE ASSIGNED TO THE "LESS-THAN" VALUES.
+C               2)  THE "SYNTHETIC VALUES" MAY EXCEED THE CENSORING THRESHOLD
+C                   (THIS OCCURS FOR TWO REASONS:
+C                    1)  AN LN2 MODEL IS EMPLOYED TO MODEL THE CENSORED DATA
+C                    2)  THE PLOTTING POSITION AND MR FORMULAS ASSUME A
+C                        TYPE-II CENSORING MODEL.  IN FACT, CENSORING OF WATER
+C                        QUALITY DATA ALMOST INVARIABLY RESULTS FROM A TYPE-I
+C                        CENSORING PROCESS)   
+C
+C===============================================================================
+
+      IMPLICIT NONE
+
+      DOUBLE PRECISION
+     1     X(*),XD(*),MU,SIGMA,PPALL(*),XSYNTH(*),MOMS(2),
+     2     P(5),QUANTS(5),
+     3     XS,XSS,XM,XV,XSD
+     
+      INTEGER
+     1     N,I,NP
+     
+      DATA NP/5/,P/0.10,0.25,0.50,0.75,0.90/
+         
+
+      CALL PPFIT(N,X,XD,MU,SIGMA,PPALL,XSYNTH)
+         
+        XS  = 0.D0
+	    XSS = 0.D0
+	  DO 30 I=1,N
+	    XS  =  XS+XSYNTH(I)
+	    XSS =  XSS+XSYNTH(I)**2
+30    CONTINUE
+        MOMS(1)  =  XS/DBLE(N)
+        MOMS(2)  =  (XSS-N*MOMS(1)**2)/(N-1.D0)
+        
+      CALL QTL(XSYNTH,N,P,NP,QUANTS)
+
+      RETURN
+      END
+
+         SUBROUTINE PPFIT(N,X,XD,MU,SIGMA,PPALL,XSYNTH)
+
+C===============================================================================
+C
+C        SUBROUTINE TO FIT LN2 DISTRIBUTION TO MULTIPLY-CENSORED DATA
+C
+C        AUTHOR........TIM COHN
+C        DATE..........APRIL 7, 1986
+C        MODIFIED......12 FEBRUARY 2003 (TAC)
+C         --REMOVED ERRORS INTRODUCED IN 1986
+C           WHEN CODE WAS REVISED BY DRH.  
+C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
+C         --DOUBLE PRECISION
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
+C        MU        R*8       OUTPUT FITTED VALUE OF MU
+C        SIGMA     R*8       OUTPUT FITTED VALUE OF SIGMA
+C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X
+C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
+C        XSYNTH(N) R*8       OUTPUT VECTOR OF REAL AND SYNTHETIC OBSERVATIONS
+C                              XSYNTH(I) = X(I);                       X(I)>=XD(I) 
+C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA);  X(I)<XD(I)
+C===============================================================================
+C
+C        N.B.   1)  "SYNTHETIC" VALUES ARE ASSIGNED TO THE "LESS-THAN" VALUES.
+C               2)  THE "SYNTHETIC VALUES" MAY EXCEED THE CENSORING THRESHOLD
+C                   (THIS OCCURS FOR TWO REASONS:
+C                    1)  AN LN2 MODEL IS EMPLOYED TO MODEL THE CENSORED DATA
+C                    2)  THE PLOTTING POSITION AND MR FORMULAS ASSUME A
+C                        TYPE-II CENSORING MODEL.  IN FACT, CENSORING OF WATER
+C                        QUALITY DATA ALMOST INVARIABLY RESULTS FROM A TYPE-I
+C                        CENSORING PROCESS)   
+C
+C===============================================================================
+C
+C        NT        I*4       NUMBER OF THRESHOLDS
+C        NB(NT)    I*4       NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
+C        ND(NT)    I*4       NUMBER OF DETECTS ABOVE THIS THR. AND BELOW NEXT
+C        NVAL      I*4       TOTAL NUMBER OF DETECTS
+C
+C===============================================================================
+
+         IMPLICIT NONE
+
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION
+     1     X(*),XD(*),MU,SIGMA,
+     2     W(N_PTS),WD(N_PTS),WTHRESH(N_T),Y(N_PTS),PP(N_PTS),ALPHA,
+     3     PPC(N_PTS),PPALL(*),XSYNTH(*)
+     
+         INTEGER
+     1     N,ND(N_T),NB(N_T),NT,NVAL,j
+
+         CALL ARRANGE(X,XD,N,NT,ND,NB,NVAL,Y)
+
+         CALL PPLOT(NT,ND,NB,PP,PPC)
+         
+         CALL PPSOLVE(Y,PP,NVAL,MU,SIGMA)
+         
+         CALL PLPOS(N,X,XD,PP,PPC,MU,SIGMA,PPALL,XSYNTH)
+
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE ARRANGE(X,XD,N,NT,ND,NB,NVAL,Y)
+C===============================================================================
+C
+C        SUBROUTINE DESIGNED TO ARRANGE DATA FOR PPFIT, WHICH EMPLOYS DATA TO
+C        FIT LN2 DISTRIBUTION TO MULTIPLY-CENSORED DATA
+C
+C        AUTHOR........TIM COHN
+C        DATA..........APRIL 7, 1986
+C        MODIFIED......12 FEBRUARY 2003 (TAC)
+C         --REMOVED ERRORS INTRODUCED IN 1986
+C           WHEN CODE WAS REVISED BY DRH.  
+C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
+C         --DOUBLE PRECISION
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
+C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
+C        NT        I*4       OUTPUT NUMBER OF THRESHOLDS
+C        NB(NT)    I*4       OUTPUT NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
+C        ND(NT)    I*4       OUTPUT NUMBER OF DETECTS ABOVE THIS THR. AND BELOW NEXT
+C        NVAL      I*4       OUTPUT TOTAL NUMBER OF DETECTS
+C        Y         R*8       OUTPUT VECTOR OF SORTED DETECTS
+C
+C===============================================================================
+
+         IMPLICIT NONE
+
+         DOUBLE PRECISION
+     1      X(*),XD(*),Y(*),
+     2      THRESH(200),PLUSINF
+     
+         INTEGER
+     1      N,NT,NVAL,ND(*),NB(*),IP(10000),
+     2      I,ICT,J
+
+         DATA PLUSINF/1.0D30/
+
+         CALL PORDER(XD,N,IP)
+
+           ICT          =  0
+           J            =  1
+           THRESH(1)    =  XD(IP(1))
+           NB(1)        =  0
+
+         DO 10 I=1,N
+
+            IF(XD(IP(I)) .NE. THRESH(J)) THEN
+              J    =  J+1
+              THRESH(J) =  XD(IP(I))
+              ND(J)     =  0
+              NB(J)     =  0
+            ENDIF
+
+            IF(X(IP(I)) .GE. THRESH(J)) THEN
+              ICT       =  ICT+1
+              Y(ICT)    =  X(IP(I))
+            ELSE
+              NB(J)     =  NB(J)+1
+            ENDIF
+   10    CONTINUE
+
+         NT             =  J
+         NVAL           =  ICT
+         THRESH(NT+1)   =  PLUSINF
+
+         CALL SHELLSORT(Y,ICT)
+		
+           J       =  1
+           ND(1)   =  0
+         DO 20 I=1,NVAL
+   30      IF(Y(I) .GE. THRESH(J+1)) THEN
+              J    =  J+1
+              ND(J)=  0
+              GOTO 30
+           ELSE
+              ND(J)=  ND(J)+1
+           ENDIF
+   20    CONTINUE
+
+         DO 40 I=2,NT
+           NB(I)   =  NB(I)+NB(I-1)+ND(I-1)
+   40    CONTINUE
+
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE PORDER(X,N,IX)
+C===============================================================================
+C
+C        SUBROUTINE PORDER GIVES THE PERMUTATION OF A USER-SUPPLIED
+C        VECTOR.  TREE-SORT ALGORITHM IS EMPLOYED (WHY NOT?)
+C        RETURN RESULTING IX ARRAY WITH THE ASCENDING PERMUTATIONS
+C
+C          X(IX(1)) = SMALLEST VALUE IN X
+C          X(IX(N)) = LARGEST VALUE IN X
+C
+C
+C        AUTHOR....TIM COHN
+C        DATE......APRIL 1,  1986
+C        REVISED...AUGUST 9, 1986      (TAC)
+C        MODIFIED......12 FEBRUARY 2003 (TAC)
+C         --REMOVED ERRORS INTRODUCED IN 1986
+C           WHEN CODE WAS REVISED BY DRH.  
+C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
+C         --DOUBLE PRECISION
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        X(N)      R*8       INPUT VECTOR OF UNORDERED DATA
+C        N         I*4       INPUT NUMBER OF OBSERVATIONS IN X
+C        IX(N)     I*4       OUTPUT VECTOR CONTAINING PERMUTATION OF X
+C                               X(IX(1)) IS THE SMALLEST VALUE OF X
+C                                 . . . 
+C                               X(IX(N)) IS THE LARGEST VALUE OF X
+C
+C===============================================================================
+
+         IMPLICIT NONE
+         
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION X(*)
+         
+         INTEGER
+     1     L(0:N_PTS),R(0:N_PTS),P(0:N_PTS),
+     2     IX(*),I2,I,INDX,N,ICT
+
+C===============================================================================
+C
+C    FIRST CHECK TO SEE IF WE HAVE AN ORDERED DATA VECTOR TO BEGIN WITH
+C
+         DO 50 I2=2,N
+              IX(I2)    =  I2
+              IF(X(I2) .LT. X(I2-1)) GOTO 1
+   50    CONTINUE
+              IX(1)     =  1
+              RETURN
+
+    1    CONTINUE
+
+         L(1) =  0
+         R(1) =  0
+         P(1) =  0
+
+        DO 10 I=2,N
+         INDX =  1
+         L(I)   =  0
+         R(I)   =  0
+
+   20    CONTINUE
+         IF(X(I) .GE. X(INDX)) THEN
+              IF(R(INDX) .EQ. 0) THEN
+                   R(INDX)   =  I
+                   P(I)      =  INDX
+                   GOTO 10
+              ELSE
+                   INDX =  R(INDX)
+                   GOTO 20
+              ENDIF
+         ELSE
+              IF(L(INDX) .EQ. 0) THEN
+                   L(INDX)   =  I
+                   P(I)      =  INDX
+                   GOTO 10
+              ELSE
+                   INDX =  L(INDX)
+                   GOTO 20
+              ENDIF
+         ENDIF
+   10   CONTINUE
+
+          INDX =  1
+         DO 40 ICT=1,N
+
+   30    CONTINUE
+         IF(L(INDX) .EQ. 0) THEN
+              IX(ICT)     =  INDX
+              P(R(INDX))   =  P(INDX)
+              L(P(INDX))   =  R(INDX)
+              INDX         =  P(INDX)
+         ELSE
+              INDX =  L(INDX)
+              GOTO 30
+         ENDIF
+   40    CONTINUE
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE PPLOT(NT,ND,NB,PP,PPC)
+C===============================================================================
+C
+C        SUBROUTINE TO FIND PLOTTING POSITIONS FOR DATA CENSORED AT MULTIPLE THRESHOLDS
+C
+C        AUTHOR........TIM COHN
+C        DATE..........APRIL 7, 1986
+C        MODIFIED......12 FEBRUARY 2003 (TAC)
+C         --REMOVED ERRORS INTRODUCED IN 1986
+C           WHEN CODE WAS REVISED BY DRH.  
+C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
+C         --DOUBLE PRECISION
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        NT        I*4       INPUT NUMBER OF THRESHOLDS
+C        ND(NT)    I*4       INPUT NUMBER OF DETECTS ABOVE THIS THR. AND BELOW NEXT
+C        NB(NT)    I*4       INPUT NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
+C        PP(NA)    R*8       OUTPUT VECTOR OF PLOTTING POSITIONS
+C        PPC(NB)   R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X<XD
+C
+C===============================================================================
+
+         IMPLICIT NONE
+
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION
+     1     PP(*),PE(0:N_T),ALPHA,PD,PPT,PPC(*)
+     
+         INTEGER
+     1     ND(*),NB(*),NT,
+     2     ISUM,I,J,JSUM,NBT
+
+         DATA ALPHA/0.000D0/
+
+           PE(NT+1)  =  0.D0
+         DO 10 I=NT,1,-1
+           PD        =  ND(I)/FLOAT(MAX(1,ND(I))+NB(I))
+           PE(I)     =  PE(I+1) + (1.D0-PE(I+1)) * PD
+   10    CONTINUE
+
+           ISUM    =  0
+           JSUM    =  0
+           PE(0)   =  1.00D0
+
+         DO 20 I=1,NT
+           DO 30 J=1,ND(I)
+               PPT  =  (J-ALPHA)/(ND(I) + 1.0 - 2.0*ALPHA)
+               PP(ISUM+J)    =  (1.D0-PE(I)) + (PE(I)-PE(I+1))*PPT
+   30      CONTINUE
+               ISUM =  ISUM+ND(I)
+
+           IF(I .EQ. 1) THEN
+              NBT = NB(1)
+           ELSE
+              NBT = NB(I)-NB(I-1)-ND(I-1)
+           ENDIF
+           
+           DO  40 J=1,NBT
+             PPT= (J-ALPHA)/(NBT+1.0-2*ALPHA)
+             PPC(JSUM+J) = (1-PE(I))*PPT
+   40      CONTINUE
+             JSUM=JSUM+NBT
+
+   20    CONTINUE
+
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE PPSOLVE(Y,PP,NVAL,MU,SIGMA)
+C===============================================================================
+C
+C        SUBROUTINE TO SOLVE FOR LEAST SQUARES ESTIMATES OF MU AND SIGMA
+C        ASSUMING A LINEAR MODEL
+C
+C        AUTHOR........TIM COHN
+C        DATE..........APRIL 7, 1986
+C        MODIFIED......12 FEBRUARY 2003 (TAC)
+C         --REMOVED ERRORS INTRODUCED IN 1986
+C           WHEN CODE WAS REVISED BY DRH.  
+C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
+C         --DOUBLE PRECISION
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        Y(N)      R*8       INPUT VECTOR CONTAINING SORTED DETECT-DATA
+C        PP(NA)    R*8       INPUT VECTOR OF PLOTTING POSITIONS
+C        NVAL      I*4       INPUT TOTAL NUMBER OF DETECTS
+C        MU        R*8       OUTPUT FITTED VALUE OF MU
+C        SIGMA     R*8       OUTPUT FITTED VALUE OF SIGMA
+C
+C===============================================================================
+
+         IMPLICIT NONE
+
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION
+     1     Y(*),PP(*),MU,SIGMA,
+     2     PSIG(N_PTS),LOGY(N_PTS),
+     3     FP_Z_ICDF,
+     4     SUMY,SUMP,SUMPY,SUMP2,YBAR,PBAR
+     
+         INTEGER
+     1     I,NVAL
+
+              SUMY =  0.D0
+              SUMP =  0.D0
+              SUMPY=  0.D0
+              SUMP2=  0.D0
+
+         DO 10 I=1,NVAL
+              PSIG(I)   =  FP_Z_ICDF(PP(I))
+              LOGY(I)   =  LOG(Y(I))
+              SUMY      =  SUMY    +  LOGY(I)
+              SUMPY     =  SUMPY   +  LOGY(I)*PSIG(I)
+              SUMP      =  SUMP    +  PSIG(I)
+              SUMP2     =  SUMP2   +  PSIG(I)**2
+   10    CONTINUE
+              YBAR      =  SUMY/NVAL
+              PBAR      =  SUMP/NVAL
+
+              SIGMA     =  (SUMPY-NVAL*PBAR*YBAR)/(SUMP2-NVAL*PBAR**2)
+              MU        =  YBAR - SIGMA*PBAR
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE PLPOS(N,X,XD,PP,PPC,MU,SIGMA,PPALL,XSYNTH)
+C===============================================================================
+C
+C        SUBROUTINE PLPOS GIVES THE PLOTTING POSITIONS FOR ALL OF THE
+C          OBSERVATIONS, CENSORED AND UNCENSORED, IN THE ORIGINAL INPUT
+C          DATA SET
+C
+C
+C        AUTHOR....TIM COHN
+C        DATE......12 FEBRUARY 2003 (TAC)
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
+C        PP(NA)    R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X>=XD
+C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
+C        PPC(NB)   R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X<XD
+C        MU        R*8       INPUT FITTED VALUE OF MU
+C        SIGMA     R*8       INPUT FITTED VALUE OF SIGMA
+C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X
+C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
+C        XSYNTH    R*8       OUTPUT VECTOR OF REAL AND SYNTHETIC OBSERVATIONS
+C                              XSYNTH(I) = X(I);                       X(I)>=XD(I) 
+C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA);  X(I)<XD(I)
+C
+C===============================================================================
+
+         IMPLICIT NONE
+         
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION 
+     1     X(*),XD(*),MU,SIGMA,PPALL(*),PP(*),PPC(*),XSYNTH(*),
+     2     FP_Z_ICDF
+         
+         INTEGER
+     1     IX(N_PTS),IXD(N_PTS),N,NA,NB,I
+
+         CALL PORDER(X,N,IX)
+         CALL PORDER(XD,N,IXD)
+         
+           NA  =  0
+           NB  =  0
+         DO 10 I=1,N
+           IF(X(IX(I)) .GE. XD(IX(I))) THEN
+             NA            =  NA+1
+             PPALL(IX(I))  =  PP(NA)
+             XSYNTH(IX(I)) =  X(IX(I))
+           ENDIF
+           IF(X(IXD(I)) .LT. XD(IXD(I))) THEN
+             NB            =  NB+1
+             PPALL(IXD(I)) =  PPC(NB)
+             XSYNTH(IXD(I))=  EXP(MU+FP_Z_ICDF(PPC(NB))*SIGMA)
+           ENDIF
+10       CONTINUE
+
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE SHELLSORT(X,N)
+C===============================================================================
+C
+C        SUBROUTINE TO SORT A VECTOR IN PLACE
+C
+C        AUTHOR........TIM COHN
+C        DATE..........12 FEBRUARY 2003 (TAC)
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        X(N)      R*8       INPUT/OUTPUT VECTOR OF DATA
+C        N         I*4       INPUT SAMPLE SIZE
+C
+C===============================================================================
+
+      IMPLICIT NONE
+      
+      DOUBLE PRECISION X(*),R
+      
+      INTEGER N,M,I,J,S,Z
+      
+      M=N
+  100 M=INT(M/2)
+      IF (M.EQ.0) GOTO 210
+      DO 190 S=1,M
+  130 I=S
+      J=S+M
+      Z=0
+  140 IF (X(I).LE.X(J)) GOTO 160
+      Z=1
+      R=X(I)
+      X(I)=X(J)
+      X(J)=R
+  160 I=J
+      J=J+M
+      IF (J.LT.(N+1)) GOTO 140
+      IF (Z.EQ.1) GOTO 130
+  190 CONTINUE
+      GOTO 100
+  210 RETURN
+      END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE QTL(X,N,P,NP,Q)
+C===============================================================================
+C
+C        SUBROUTINE TO COMPUTE QUANTILES OF A VECTOR
+C        THIS EMPLOYS THE WEIBULL OR GUMBEL PLOTTING POSITIONS (I/(N+1))
+C
+C        AUTHOR........TIM COHN
+C        DATE..........12 FEBRUARY 2003 (TAC)
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)   
+C
+C
+C===============================================================================
+C
+C        X(N)      R*8       INPUT VECTOR OF DATA
+C        N         I*4       INPUT SAMPLE SIZE
+C        P(N)      R*8       INPUT VECTOR OF PROBABILITIES (PERCENTILES/100) TO 
+C                              ESTIMATE
+C        Q(N)      R*8       OUTPUT VECTOR OF QUANTILES 
+C
+C===============================================================================
+C
+C        N.B.   1)  WEIBULL (AKA "GUMBEL") PLOTTING POSTIONS ARE USED, WHICH 
+C                   CORRESPOND TO ALPHA=0.0 IN THE GENERAL EQUATION FOR 
+C                   PLOTTING POSTIONS PP(I) =(I-ALPHA)/(N+1-2*ALPHA)
+C                   EXCEL, AND MANY OTHER STATISTICAL PACKAGES, EMPLOY THE 
+C                   "HAZEN" PLOTTING POSITIONS (ALPHA=0.5).
+C                   
+C===============================================================================
+
+         IMPLICIT NONE
+         
+         INTEGER N_PTS
+         PARAMETER (N_PTS=10000)
+
+         DOUBLE PRECISION 
+     1     X(*),P(*),Q(*),XS(0:N_PTS),FN,ALPHA
+     
+         INTEGER 
+     1     I,INDX,NP,N
+     
+         CALL DSVRGN(N,X,XS(1))
+           XS(0)     = -9.0D99
+           XS(N+1)   =  9.0D99
+         
+         DO 20 I=1,NP
+           FN        =  MAX(0.D0,MIN(1.D0,P(I)))*(N+1.D0)
+           INDX      =  INT(FN)
+           ALPHA     =  FN-INDX
+           Q(I)      =  (1.D0-ALPHA)*XS(INDX)+ALPHA*XS(INDX+1)
+20       CONTINUE
+
+         RETURN
+         END
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    silly little function to print asterisks for p-value significance
+c
+c    timothy a. cohn        9 mar 2011
+c
+      character*4 function signif(p)
+      double precision p
+      if(p .lt. 0.01) then
+        signif = ' ***'
+      else if(p .lt. 0.05d0) then
+        signif = ' ** '
+      else if(p .lt. 0.10d0) then
+        signif = ' *  '
+      else if(p .ge. 0.10d0) then
+        signif = '    '
+      endif
+        return
+      end
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    another silly little function to grab last 4 characters in filename
+c      (usually the ".ext") and make it available.
+c
+c    timothy a. cohn        9 mar 2011
+c
+      character*4 function filext(fname)
+      character*(*) fname
+      integer ichar
+        ichar=len_trim(fname)
+      filext=fname(max(1,(ichar-3)):ichar)
+      return
+      end
