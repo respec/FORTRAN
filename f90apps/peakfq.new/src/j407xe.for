@@ -3649,10 +3649,17 @@ C
 C       determine default threshold value to use
         NTHRESH = 1
         ALLOCATE (THRESH(1))
-        THRESH(1)%THRBYR = ABS(IPKSEQ(1))
+        THRESH(1)%THRBYR = 0
+        I = 0
+ 2      CONTINUE
+          I = I + 1
+        IF (PKS(I).LT.0) GOTO 2
+        THRESH(1)%THRBYR = IPKSEQ(I)
         THRESH(1)%THREYR = IPKSEQ(NPKS)
-C       this is what was used in the original EMA incorporation
-        THRESH(1)%THRLWR = 10**WRCHHB  
+C        this is what was used in the original EMA incorporation
+C        THRESH(1)%THRLWR = 10**WRCHHB  
+C       per phone call w/Tim C, now lower thresh is as follows
+        THRESH(1)%THRLWR = MAX(0.0,GAGEB)
         THRESH(1)%THRUPR = 1.0D35
       END IF
 C
@@ -3720,8 +3727,11 @@ C       Weighted, set to root mean square
 
       write(99,*) 'calling EMAFIT'
       write(99,*) 'NOBS:',NOBS
+      write(99,*) 'REGVAR:',REGVAR
+      write(99,*) 'REGVMSE:',REGVMSE
       write(99,*) 'REGSKEW:',REGSKEW
       write(99,*) 'REGMSE:',REGMSE
+      write(99,*) 'GBTYPE:',GBTYPE
       write(99,*) 'GBTHRSH',GBTHRSH
       write(99,*) '        QLow        QUpr',
      $            '         TLow        TUpr'
@@ -3746,9 +3756,10 @@ c 70   CONTINUE
  2010 format(1X,A8,3D16.8)
       write(99,2010) 'WRCMOM-1',(WRCMOM(i,1),i=1,3)
       write(99,2010) 'WRCMOM-2',(WRCMOM(i,2),i=1,3)
+      write(99,2010) 'WRCMOM-3',(WRCMOM(i,3),i=1,3)
       write(99,*)
       write(99,*) '  Prob       EMA Est.        CL Low       CL High'
- 2100 format(1X,F6.4,3F14.3)
+ 2100 format(1X,F6.4,4F14.3)
       do 18 i = 1,MXINT
         write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
      $                VAREST(i)
@@ -3767,7 +3778,7 @@ C
       write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
       DO 20 I = 1,MXINT
         write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
-     $                          10**CILOW(I),10**CIHIGH(I)
+     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
           SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
           WRCFC(I) = WRCYP(I)
           CLIML(I) = CILOW(I)
