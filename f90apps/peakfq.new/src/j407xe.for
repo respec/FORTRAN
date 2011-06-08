@@ -1224,7 +1224,7 @@ c            write(99,*) 'PRTFIT: J,EPFC ',J,EPFC(J)
             END IF
             IF(NOCLIM.NE.1) THEN      
               TMP = 10.**VAREST(J)
-              CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA,DWORK(4))
+              CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA+2,DWORK(4))
               IF (DWORK(4)(12:12) .EQ. ' ') DWORK(4)(12:12) = '0'
 C             WRITE(DWORK(4),203) 10.**CLIML(J)
               TMP = 10.**CLIML(J)
