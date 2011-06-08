@@ -222,27 +222,27 @@ C===============================================================================
       RETURN
       END
 C****       
-      SUBROUTINE DLINRG(N,A,LDA,AINV,LDAINV)
+        SUBROUTINE DLINRG(N,A,LDA,AINV,LDAINV)
 C===============================================================================
 C
 C       SIMPLE MATRIX INVERSION
 C
 C
 C===============================================================================
-      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      SAVE
-C
-      DIMENSION A(LDA,LDA),AINV(LDAINV,N),B(1000,1000)
-C
-      DO 10 I=1,N
-      DO 10 J=1,N
-        AINV(I,J)  =  A(I,J)
- 10   CONTINUE
-C  
-      CALL GAUSSJ(AINV,N,LDAINV,B,0,1)
-C       
-      RETURN
-      END
+        IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+        SAVE
+
+        DIMENSION A(LDA,LDA),AINV(LDAINV,N)
+
+        DO 10 I=1,N
+        DO 10 J=1,N
+          AINV(I,J)  =  A(I,J)
+   10   CONTINUE
+   
+        CALL GAUSSJ(AINV,N,LDAINV,B,0,1)
+        
+        RETURN
+        END
 C****       
       SUBROUTINE GAUSSJ(A,N,NP,B,M,MP)
 C
@@ -672,14 +672,14 @@ C===============================================================================
 
       DOUBLE PRECISION X(*)
       INTEGER N,ISEED
-      REAL*4 GAMMA,X2(1)
+      REAL*4 GAMMA,X2
       
       COMMON /ZZZ889/ISEED
       
       GAMMA = ALPHA
       DO 10 I=1,N
         CALL GAMRAN(1,GAMMA,ISEED,X2)
-        X(I) = X2(1)
+        X(I) = X2
 10    CONTINUE
       
       RETURN
@@ -698,12 +698,12 @@ C===============================================================================
       SAVE
 
       INTEGER ISEED
-      REAL*4 X2(1)
+      REAL*4 X2
       
       COMMON /ZZZ889/ISEED
       
         CALL NORRAN(1,ISEED,X2)
-        DRNORMS = X2(1)
+        DRNORMS = X2
       
       RETURN
       END
@@ -2965,7 +2965,6 @@ C
 C---------------------------------------------------------------------
 C
       DIMENSION X(*)
-      DIMENSION XNA(1), UA(1)
 C
 C---------------------------------------------------------------------
 C
@@ -3036,15 +3035,13 @@ C
       XN0=-SQRT3+B1
       XG0=GAMMA*(1.0-A1+B1*XN0)**3
       DO100I=1,N
-  150 CALL NORRAN(1,ISEED,XNA)
-      XN= XNA(1)
+  150 CALL NORRAN(1,ISEED,XN)
       XG=GAMMA*(1.0-A1+B1*XN)**3
       IF(XG.LT.0.0)GOTO150
       TERM=(XG/XG0)**(GAMMA-ATHIRD)
       ARG=0.5*XN*XN-XG-0.5*XN0*XN0+XG0
       FUNCT=TERM*EXP(ARG)
-      CALL UNIRAN(1,ISEED,UA)
-      U= UA(1)
+      CALL UNIRAN(1,ISEED,U)
       IF(U.LE.FUNCT)GOTO170
       GOTO150
   170 X(I)=XG
@@ -4770,188 +4767,188 @@ C*DECK FACCUR
       FACC = 2.*FACC
       RETURN
       END 
-!      subroutine dqag(f,a,b,epsabs,epsrel,key,result,abserr,neval,ier,
-!     *    limit,lenw,last,iwork,work)
-!c***begin prologue  dqag
-!c***date written   800101   (yymmdd)
-!c***revision date  830518   (yymmdd)
-!c***category no.  h2a1a1
-!c***keywords  automatic integrator, general-purpose,
-!c             integrand examinator, globally adaptive,
-!c             gauss-kronrod
-!c***author  piessens,robert,appl. math. & progr. div - k.u.leuven
-!c           de doncker,elise,appl. math. & progr. div. - k.u.leuven
-!c***purpose  the routine calculates an approximation result to a given
-!c            definite integral i = integral of f over (a,b),
-!c            hopefully satisfying following claim for accuracy
-!c            abs(i-result)le.max(epsabs,epsrel*abs(i)).
-!c***description
-!c
-!c        computation of a definite integral
-!c        standard fortran subroutine
-!c        double precision version
-!c
-!c            f      - double precision
-!c                     function subprogam defining the integrand
-!c                     function f(x). the actual name for f needs to be
-!c                     declared e x t e r n a l in the driver program.
-!c
-!c            a      - double precision
-!c                     lower limit of integration
-!c
-!c            b      - double precision
-!c                     upper limit of integration
-!c
-!c            epsabs - double precision
-!c                     absolute accoracy requested
-!c            epsrel - double precision
-!c                     relative accuracy requested
-!c                     if  epsabs.le.0
-!c                     and epsrel.lt.max(50*rel.mach.acc.,0.5d-28),
-!c                     the routine will end with ier = 6.
-!c
-!c            key    - integer
-!c                     key for choice of local integration rule
-!c                     a gauss-kronrod pair is used with
-!c                       7 - 15 points if key.lt.2,
-!c                      10 - 21 points if key = 2,
-!c                      15 - 31 points if key = 3,
-!c                      20 - 41 points if key = 4,
-!c                      25 - 51 points if key = 5,
-!c                      30 - 61 points if key.gt.5.
-!c
-!c         on return
-!c            result - double precision
-!c                     approximation to the integral
-!c
-!c            abserr - double precision
-!c                     estimate of the modulus of the absolute error,
-!c                     which should equal or exceed abs(i-result)
-!c
-!c            neval  - integer
-!c                     number of integrand evaluations
-!c
-!c            ier    - integer
-!c                     ier = 0 normal and reliable termination of the
-!c                             routine. it is assumed that the requested
-!c                             accuracy has been achieved.
-!c                     ier.gt.0 abnormal termination of the routine
-!c                             the estimates for result and error are
-!c                             less reliable. it is assumed that the
-!c                             requested accuracy has not been achieved.
-!c                      error messages
-!c                     ier = 1 maximum number of subdivisions allowed
-!c                             has been achieved. one can allow more
-!c                             subdivisions by increasing the value of
-!c                             limit (and taking the according dimension
-!c                             adjustments into account). however, if
-!c                             this yield no improvement it is advised
-!c                             to analyze the integrand in order to
-!c                             determine the integration difficulaties.
-!c                             if the position of a local difficulty can
-!c                             be determined (i.e.singularity,
-!c                             discontinuity within the interval) one
-!c                             will probably gain from splitting up the
-!c                             interval at this point and calling the
-!c                             integrator on the subranges. if possible,
-!c                             an appropriate special-purpose integrator
-!c                             should be used which is designed for
-!c                             handling the type of difficulty involved.
-!c                         = 2 the occurrence of roundoff error is
-!c                             detected, which prevents the requested
-!c                             tolerance from being achieved.
-!c                         = 3 extremely bad integrand behaviour occurs
-!c                             at some points of the integration
-!c                             interval.
-!c                         = 6 the input is invalid, because
-!c                             (epsabs.le.0 and
-!c                              epsrel.lt.max(50*rel.mach.acc.,0.5d-28))
-!c                             or limit.lt.1 or lenw.lt.limit*4.
-!c                             result, abserr, neval, last are set
-!c                             to zero.
-!c                             except when lenw is invalid, iwork(1),
-!c                             work(limit*2+1) and work(limit*3+1) are
-!c                             set to zero, work(1) is set to a and
-!c                             work(limit+1) to b.
-!c
-!c         dimensioning parameters
-!c            limit - integer
-!c                    dimensioning parameter for iwork
-!c                    limit determines the maximum number of subintervals
-!c                    in the partition of the given integration interval
-!c                    (a,b), limit.ge.1.
-!c                    if limit.lt.1, the routine will end with ier = 6.
-!c
-!c            lenw  - integer
-!c                    dimensioning parameter for work
-!c                    lenw must be at least limit*4.
-!c                    if lenw.lt.limit*4, the routine will end with
-!c                    ier = 6.
-!c
-!c            last  - integer
-!c                    on return, last equals the number of subintervals
-!c                    produced in the subdiviosion process, which
-!c                    determines the number of significant elements
-!c                    actually in the work arrays.
-!c
-!c         work arrays
-!c            iwork - integer
-!c                    vector of dimension at least limit, the first k
-!c                    elements of which contain pointers to the error
-!c                    estimates over the subintervals, such that
-!c                    work(limit*3+iwork(1)),... , work(limit*3+iwork(k))
-!c                    form a decreasing sequence with k = last if
-!c                    last.le.(limit/2+2), and k = limit+1-last otherwise
-!c
-!c            work  - double precision
-!c                    vector of dimension at least lenw
-!c                    on return
-!c                    work(1), ..., work(last) contain the left end
-!c                    points of the subintervals in the partition of
-!c                     (a,b),
-!c                    work(limit+1), ..., work(limit+last) contain the
-!c                     right end points,
-!c                    work(limit*2+1), ..., work(limit*2+last) contain
-!c                     the integral approximations over the subintervals,
-!c                    work(limit*3+1), ..., work(limit*3+last) contain
-!c                     the error estimates.
-!c
-!c***references  (none)
-!c***routines called  dqage,xerror
-!c***end prologue  dqag
-!      double precision a,abserr,b,epsabs,epsrel,f,result,work
-!      integer ier,iwork,key,last,lenw,limit,lvl,l1,l2,l3,neval
-!c
-!      dimension iwork(limit),work(lenw)
-!c
-!      external f
-!c
-!c         check validity of lenw.
-!c
-!c***first executable statement  dqag
-!      ier = 6
-!      neval = 0
-!      last = 0
-!      result = 0.0d+00
-!      abserr = 0.0d+00
-!      if(limit.lt.1.or.lenw.lt.limit*4) go to 10
-!c
-!c         prepare call for dqage.
-!c
-!      l1 = limit+1
-!      l2 = limit+l1
-!      l3 = limit+l2
-!c
-!      call dqage(f,a,b,epsabs,epsrel,key,limit,result,abserr,neval,
-!     *  ier,work(1),work(l1),work(l2),work(l3),iwork,last)
-!c
-!c         call error handler if necessary.
-!c
-!      lvl = 0
-!10    if(ier.eq.6) lvl = 1
-!      if(ier.ne.0) call xerror("abnormal return from dqag" ,26,ier,lvl)
-!      return
-!      end
+      subroutine dqag(f,a,b,epsabs,epsrel,key,result,abserr,neval,ier,
+     *    limit,lenw,last,iwork,work)
+c***begin prologue  dqag
+c***date written   800101   (yymmdd)
+c***revision date  830518   (yymmdd)
+c***category no.  h2a1a1
+c***keywords  automatic integrator, general-purpose,
+c             integrand examinator, globally adaptive,
+c             gauss-kronrod
+c***author  piessens,robert,appl. math. & progr. div - k.u.leuven
+c           de doncker,elise,appl. math. & progr. div. - k.u.leuven
+c***purpose  the routine calculates an approximation result to a given
+c            definite integral i = integral of f over (a,b),
+c            hopefully satisfying following claim for accuracy
+c            abs(i-result)le.max(epsabs,epsrel*abs(i)).
+c***description
+c
+c        computation of a definite integral
+c        standard fortran subroutine
+c        double precision version
+c
+c            f      - double precision
+c                     function subprogam defining the integrand
+c                     function f(x). the actual name for f needs to be
+c                     declared e x t e r n a l in the driver program.
+c
+c            a      - double precision
+c                     lower limit of integration
+c
+c            b      - double precision
+c                     upper limit of integration
+c
+c            epsabs - double precision
+c                     absolute accoracy requested
+c            epsrel - double precision
+c                     relative accuracy requested
+c                     if  epsabs.le.0
+c                     and epsrel.lt.max(50*rel.mach.acc.,0.5d-28),
+c                     the routine will end with ier = 6.
+c
+c            key    - integer
+c                     key for choice of local integration rule
+c                     a gauss-kronrod pair is used with
+c                       7 - 15 points if key.lt.2,
+c                      10 - 21 points if key = 2,
+c                      15 - 31 points if key = 3,
+c                      20 - 41 points if key = 4,
+c                      25 - 51 points if key = 5,
+c                      30 - 61 points if key.gt.5.
+c
+c         on return
+c            result - double precision
+c                     approximation to the integral
+c
+c            abserr - double precision
+c                     estimate of the modulus of the absolute error,
+c                     which should equal or exceed abs(i-result)
+c
+c            neval  - integer
+c                     number of integrand evaluations
+c
+c            ier    - integer
+c                     ier = 0 normal and reliable termination of the
+c                             routine. it is assumed that the requested
+c                             accuracy has been achieved.
+c                     ier.gt.0 abnormal termination of the routine
+c                             the estimates for result and error are
+c                             less reliable. it is assumed that the
+c                             requested accuracy has not been achieved.
+c                      error messages
+c                     ier = 1 maximum number of subdivisions allowed
+c                             has been achieved. one can allow more
+c                             subdivisions by increasing the value of
+c                             limit (and taking the according dimension
+c                             adjustments into account). however, if
+c                             this yield no improvement it is advised
+c                             to analyze the integrand in order to
+c                             determine the integration difficulaties.
+c                             if the position of a local difficulty can
+c                             be determined (i.e.singularity,
+c                             discontinuity within the interval) one
+c                             will probably gain from splitting up the
+c                             interval at this point and calling the
+c                             integrator on the subranges. if possible,
+c                             an appropriate special-purpose integrator
+c                             should be used which is designed for
+c                             handling the type of difficulty involved.
+c                         = 2 the occurrence of roundoff error is
+c                             detected, which prevents the requested
+c                             tolerance from being achieved.
+c                         = 3 extremely bad integrand behaviour occurs
+c                             at some points of the integration
+c                             interval.
+c                         = 6 the input is invalid, because
+c                             (epsabs.le.0 and
+c                              epsrel.lt.max(50*rel.mach.acc.,0.5d-28))
+c                             or limit.lt.1 or lenw.lt.limit*4.
+c                             result, abserr, neval, last are set
+c                             to zero.
+c                             except when lenw is invalid, iwork(1),
+c                             work(limit*2+1) and work(limit*3+1) are
+c                             set to zero, work(1) is set to a and
+c                             work(limit+1) to b.
+c
+c         dimensioning parameters
+c            limit - integer
+c                    dimensioning parameter for iwork
+c                    limit determines the maximum number of subintervals
+c                    in the partition of the given integration interval
+c                    (a,b), limit.ge.1.
+c                    if limit.lt.1, the routine will end with ier = 6.
+c
+c            lenw  - integer
+c                    dimensioning parameter for work
+c                    lenw must be at least limit*4.
+c                    if lenw.lt.limit*4, the routine will end with
+c                    ier = 6.
+c
+c            last  - integer
+c                    on return, last equals the number of subintervals
+c                    produced in the subdiviosion process, which
+c                    determines the number of significant elements
+c                    actually in the work arrays.
+c
+c         work arrays
+c            iwork - integer
+c                    vector of dimension at least limit, the first k
+c                    elements of which contain pointers to the error
+c                    estimates over the subintervals, such that
+c                    work(limit*3+iwork(1)),... , work(limit*3+iwork(k))
+c                    form a decreasing sequence with k = last if
+c                    last.le.(limit/2+2), and k = limit+1-last otherwise
+c
+c            work  - double precision
+c                    vector of dimension at least lenw
+c                    on return
+c                    work(1), ..., work(last) contain the left end
+c                    points of the subintervals in the partition of
+c                     (a,b),
+c                    work(limit+1), ..., work(limit+last) contain the
+c                     right end points,
+c                    work(limit*2+1), ..., work(limit*2+last) contain
+c                     the integral approximations over the subintervals,
+c                    work(limit*3+1), ..., work(limit*3+last) contain
+c                     the error estimates.
+c
+c***references  (none)
+c***routines called  dqage,xerror
+c***end prologue  dqag
+      double precision a,abserr,b,epsabs,epsrel,f,result,work
+      integer ier,iwork,key,last,lenw,limit,lvl,l1,l2,l3,neval
+c
+      dimension iwork(limit),work(lenw)
+c
+      external f
+c
+c         check validity of lenw.
+c
+c***first executable statement  dqag
+      ier = 6
+      neval = 0
+      last = 0
+      result = 0.0d+00
+      abserr = 0.0d+00
+      if(limit.lt.1.or.lenw.lt.limit*4) go to 10
+c
+c         prepare call for dqage.
+c
+      l1 = limit+1
+      l2 = limit+l1
+      l3 = limit+l2
+c
+      call dqage(f,a,b,epsabs,epsrel,key,limit,result,abserr,neval,
+     *  ier,work(1),work(l1),work(l2),work(l3),iwork,last)
+c
+c         call error handler if necessary.
+c
+      lvl = 0
+10    if(ier.eq.6) lvl = 1
+      if(ier.ne.0) call xerror("abnormal return from dqag" ,26,ier,lvl)
+      return
+      end
       subroutine dqage(f,a,b,epsabs,epsrel,key,limit,result,abserr,
      *   neval,ier,alist,blist,rlist,elist,iord,last)
 c***begin prologue  dqage
@@ -8718,5 +8715,228 @@ C
       END SELECT
       RETURN
       END
-
-         
+*DECK DFZERO
+      SUBROUTINE DFZERO (F, B, C, R, RE, AE, IFLAG)
+C***BEGIN PROLOGUE  DFZERO
+C***PURPOSE  Search for a zero of a function F(X) in a given interval
+C            (B,C).  It is designed primarily for problems where F(B)
+C            and F(C) have opposite signs.
+C***LIBRARY   SLATEC
+C***CATEGORY  F1B
+C***TYPE      DOUBLE PRECISION (FZERO-S, DFZERO-D)
+C***KEYWORDS  BISECTION, NONLINEAR, ROOTS, ZEROS
+C***AUTHOR  Shampine, L. F., (SNLA)
+C           Watts, H. A., (SNLA)
+C***DESCRIPTION
+C
+C     DFZERO searches for a zero of a DOUBLE PRECISION function F(X)
+C     between the given DOUBLE PRECISION values B and C until the width
+C     of the interval (B,C) has collapsed to within a tolerance
+C     specified by the stopping criterion,
+C        ABS(B-C) .LE. 2.*(RW*ABS(B)+AE).
+C     The method used is an efficient combination of bisection and the
+C     secant rule and is due to T. J. Dekker.
+C
+C     Description Of Arguments
+C
+C   F     :EXT   - Name of the DOUBLE PRECISION external function.  This
+C                  name must be in an EXTERNAL statement in the calling
+C                  program.  F must be a function of one DOUBLE
+C                  PRECISION argument.
+C
+C   B     :INOUT - One end of the DOUBLE PRECISION interval (B,C).  The
+C                  value returned for B usually is the better
+C                  approximation to a zero of F.
+C
+C   C     :INOUT - The other end of the DOUBLE PRECISION interval (B,C)
+C
+C   R     :IN    - A (better) DOUBLE PRECISION guess of a zero of F
+C                  which could help in speeding up convergence.  If F(B)
+C                  and F(R) have opposite signs, a root will be found in
+C                  the interval (B,R);  if not, but F(R) and F(C) have
+C                  opposite signs, a root will be found in the interval
+C                  (R,C);  otherwise, the interval (B,C) will be
+C                  searched for a possible root.  When no better guess
+C                  is known, it is recommended that R be set to B or C,
+C                  since if R is not interior to the interval (B,C), it
+C                  will be ignored.
+C
+C   RE    :IN    - Relative error used for RW in the stopping criterion.
+C                  If the requested RE is less than machine precision,
+C                  then RW is set to approximately machine precision.
+C
+C   AE    :IN    - Absolute error used in the stopping criterion.  If
+C                  the given interval (B,C) contains the origin, then a
+C                  nonzero value should be chosen for AE.
+C
+C   IFLAG :OUT   - A status code.  User must check IFLAG after each
+C                  call.  Control returns to the user from DFZERO in all
+C                  cases.
+C
+C                1  B is within the requested tolerance of a zero.
+C                   The interval (B,C) collapsed to the requested
+C                   tolerance, the function changes sign in (B,C), and
+C                   F(X) decreased in magnitude as (B,C) collapsed.
+C
+C                2  F(B) = 0.  However, the interval (B,C) may not have
+C                   collapsed to the requested tolerance.
+C
+C                3  B may be near a singular point of F(X).
+C                   The interval (B,C) collapsed to the requested tol-
+C                   erance and the function changes sign in (B,C), but
+C                   F(X) increased in magnitude as (B,C) collapsed, i.e.
+C                     ABS(F(B out)) .GT. MAX(ABS(F(B in)),ABS(F(C in)))
+C
+C                4  No change in sign of F(X) was found although the
+C                   interval (B,C) collapsed to the requested tolerance.
+C                   The user must examine this case and decide whether
+C                   B is near a local minimum of F(X), or B is near a
+C                   zero of even multiplicity, or neither of these.
+C
+C                5  Too many (.GT. 500) function evaluations used.
+C
+C***REFERENCES  L. F. Shampine and H. A. Watts, FZERO, a root-solving
+C                 code, Report SC-TM-70-631, Sandia Laboratories,
+C                 September 1970.
+C               T. J. Dekker, Finding a zero by means of successive
+C                 linear interpolation, Constructive Aspects of the
+C                 Fundamental Theorem of Algebra, edited by B. Dejon
+C                 and P. Henrici, Wiley-Interscience, 1969.
+C***ROUTINES CALLED  D1MACH
+C***REVISION HISTORY  (YYMMDD)
+C   700901  DATE WRITTEN
+C   890531  Changed all specific intrinsics to generic.  (WRB)
+C   890531  REVISION DATE from Version 3.2
+C   891214  Prologue converted to Version 4.0 format.  (BAB)
+C   920501  Reformatted the REFERENCES section.  (WRB)
+C***END PROLOGUE  DFZERO
+      DOUBLE PRECISION A,ACBS,ACMB,AE,AW,B,C,CMB,D1MACH,ER,
+     +                 F,FA,FB,FC,FX,FZ,P,Q,R,RE,RW,T,TOL,Z
+      INTEGER IC,IFLAG,KOUNT
+C
+C***FIRST EXECUTABLE STATEMENT  DFZERO
+C
+C   ER is two times the computer unit roundoff value which is defined
+C   here by the function D1MACH.
+C
+      ER = 2.0D0 * D1MACH(4)
+C
+C   Initialize.
+C
+      Z = R
+      IF (R .LE. MIN(B,C)  .OR.  R .GE. MAX(B,C)) Z = C
+      RW = MAX(RE,ER)
+      AW = MAX(AE,0.D0)
+      IC = 0
+      T = Z
+      FZ = F(T)
+      FC = FZ
+      T = B
+      FB = F(T)
+      KOUNT = 2
+      IF (SIGN(1.0D0,FZ) .EQ. SIGN(1.0D0,FB)) GO TO 1
+      C = Z
+      GO TO 2
+    1 IF (Z .EQ. C) GO TO 2
+      T = C
+      FC = F(T)
+      KOUNT = 3
+      IF (SIGN(1.0D0,FZ) .EQ. SIGN(1.0D0,FC)) GO TO 2
+      B = Z
+      FB = FZ
+    2 A = C
+      FA = FC
+      ACBS = ABS(B-C)
+      FX = MAX(ABS(FB),ABS(FC))
+C
+    3 IF (ABS(FC) .GE. ABS(FB)) GO TO 4
+C
+C   Perform interchange.
+C
+      A = B
+      FA = FB
+      B = C
+      FB = FC
+      C = A
+      FC = FA
+C
+    4 CMB = 0.5D0*(C-B)
+      ACMB = ABS(CMB)
+      TOL = RW*ABS(B) + AW
+C
+C   Test stopping criterion and function count.
+C
+      IF (ACMB .LE. TOL) GO TO 10
+      IF (FB .EQ. 0.D0) GO TO 11
+      IF (KOUNT .GE. 500) GO TO 14
+C
+C   Calculate new iterate implicitly as B+P/Q, where we arrange
+C   P .GE. 0.  The implicit form is used to prevent overflow.
+C
+      P = (B-A)*FB
+      Q = FA - FB
+      IF (P .GE. 0.D0) GO TO 5
+      P = -P
+      Q = -Q
+C
+C   Update A and check for satisfactory reduction in the size of the
+C   bracketing interval.  If not, perform bisection.
+C
+    5 A = B
+      FA = FB
+      IC = IC + 1
+      IF (IC .LT. 4) GO TO 6
+      IF (8.0D0*ACMB .GE. ACBS) GO TO 8
+      IC = 0
+      ACBS = ACMB
+C
+C   Test for too small a change.
+C
+    6 IF (P .GT. ABS(Q)*TOL) GO TO 7
+C
+C   Increment by TOLerance.
+C
+      B = B + SIGN(TOL,CMB)
+      GO TO 9
+C
+C   Root ought to be between B and (C+B)/2.
+C
+    7 IF (P .GE. CMB*Q) GO TO 8
+C
+C   Use secant rule.
+C
+      B = B + P/Q
+      GO TO 9
+C
+C   Use bisection (C+B)/2.
+C
+    8 B = B + CMB
+C
+C   Have completed computation for new iterate B.
+C
+    9 T = B
+      FB = F(T)
+      KOUNT = KOUNT + 1
+C
+C   Decide whether next step is interpolation or extrapolation.
+C
+      IF (SIGN(1.0D0,FB) .NE. SIGN(1.0D0,FC)) GO TO 3
+      C = A
+      FC = FA
+      GO TO 3
+C
+C   Finished.  Process results for proper setting of IFLAG.
+C
+   10 IF (SIGN(1.0D0,FB) .EQ. SIGN(1.0D0,FC)) GO TO 13
+      IF (ABS(FB) .GT. FX) GO TO 12
+      IFLAG = 1
+      RETURN
+   11 IFLAG = 2
+      RETURN
+   12 IFLAG = 3
+      RETURN
+   13 IFLAG = 4
+      RETURN
+   14 IFLAG = 5
+      RETURN
+      END
