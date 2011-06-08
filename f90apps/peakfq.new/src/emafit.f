@@ -515,7 +515,7 @@ c
       double precision
      1  mseg_all
      
-c      integer MGBTP
+      integer MGBTP
       
       character*4
      1  gbtype,dtype(*)
@@ -592,7 +592,7 @@ c
 c  Multiple Grubbs-Beck Test
 c
       else if(gbtype .eq. "MGBT") then  ! Multiple Grubbs-Beck (Cohn, 2011)
-c          klow = MGBTP(qs,ns,pvaluew)
+          klow = MGBTP(qs,ns,pvaluew)
         if(klow .gt. 0) then
           gbcrit   = x(klow+1)
           gbthresh = gbcrit
