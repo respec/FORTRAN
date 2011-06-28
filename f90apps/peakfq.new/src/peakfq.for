@@ -689,7 +689,7 @@ C
 C
       SUBROUTINE PARSESTASPECS
      I                        (STAID,XSYSPK,XHSTPK,
-     M                         GENSKU,HISTPD,QHIOUT,QLWOUT,
+     M                         GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      M                         GAGEB,RMSEGS,IBEGYR,IENDYR,
      M                         ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
 C
@@ -708,6 +708,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          XSYSPK, XHSTPK, GENSKU, HISTPD, QHIOUT, QLWOUT, 
      $              GAGEB, RMSEGS, FLAT, FLONG
       CHARACTER*(*) STAID
+      CHARACTER*4   LOTYPE
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STAID  - Station ID being processed
@@ -717,6 +718,7 @@ C     GENSKU - generalized skew
 C     HISTPD - length of historic period
 C     QHIOUT - hi-outlier threshold
 C     QLWOUT - lo-outlier threshold
+C     LOTYPE - lo-outlier test type (NONE, GBT, MGBT, FIXE)
 C     GAGEB  - gage base discharge
 C     RMSEGS - standard error of generalized skew
 C     IBEGYR - beginning year of analysis
@@ -811,6 +813,8 @@ C         init EMA Interval specs
             IKROPT = IYESNO(S,0)
           ELSE IF (KWD .EQ. 'LOTHRESH') THEN
             QLWOUT = CVRDEC(S)
+          ELSE IF (KWD .EQ. 'LOTYPE') THEN
+            LOTYPE = S
           ELSE IF (KWD .EQ. 'HITHRESH') THEN
             QHIOUT = CVRDEC(S)
           ELSE IF (KWD .EQ. 'GAGEBASE') THEN
@@ -917,7 +921,7 @@ C           read 3 EMA Interval components
       END IF
 C
       IF (UPDATEFG) THEN
-        CALL WRITESPECSTA (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,
+        CALL WRITESPECSTA (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      I                     GAGEB,RMSEGS,IBEGYR,IENDYR,
      I                     ISKUOP,IKROPT,FLAT,FLONG,XSYSPK,XHSTPK,
      I                     EMAOPT)
@@ -1121,7 +1125,7 @@ C
 C
 C
       SUBROUTINE   WRITESPECSTA
-     I                        (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,
+     I                        (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
      M                         IKROPT,FLAT,FLONG,XSYSPK,XHSTPK,EMAOPT)
 C
@@ -1142,6 +1146,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          GENSKU, HISTPD, QHIOUT, QLWOUT, GAGEB, RMSEGS, 
      $              FLAT, FLONG, XSYSPK, XHSTPK
       CHARACTER*(*) STAID
+      CHARACTER*4   LOTYPE
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STAID  - Station ID being processed
@@ -1149,6 +1154,7 @@ C     GENSKU - generalized skew
 C     HISTPD - length of historic period
 C     QHIOUT - hi-outlier threshold
 C     QLWOUT - lo-outlier threshold
+C     LOTYPE - lo-outlier test type (NONE, GBT, MGBT, FIXE)
 C     GAGEB  - gage base discharge
 C     RMSEGS - standard error of generalized skew
 C     IBEGYR - beginning year of analysis
@@ -1236,6 +1242,7 @@ C     other flow parameters
       ELSE
         WRITE(92,*) '     Urb/Reg No'
       END IF
+      WRITE(92,*) '     LOType ',LOTYPE
       WRITE(92,*) '     LoThresh ',QLWOUT
       WRITE(92,*) '     HiThresh ',QHIOUT
       WRITE(92,*) '     GageBase ',GAGEB
