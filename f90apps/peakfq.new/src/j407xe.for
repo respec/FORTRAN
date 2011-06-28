@@ -162,7 +162,7 @@ C
         CALL INPUT (IA1,IA3,INFORM,MAXPKS,IA3,IBCPUN,
      M              ISTART,
      O              STAID,PKS,IPKSEQ,XQUAL,IQUAL, 
-     O              NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,GAGEB,
+     O              NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,LOTYPE,GAGEB,
      O              GENSKU,RMSEGS, IGSOPT, NSKIP1,EMAOPT,IER)
         write(99,*)'After INPUT - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
 C
@@ -728,7 +728,9 @@ C    $        '     HIGH OUTLIER   LOW OUTLIER  '        /
 C    $   6X, 2A )
  7    FORMAT(16X,'Oservational Thresholds:',
      $      /16X,'    Begin     End     Low     High')
- 8    FORMAT(18X,2I8,F10.1,G10.1)
+ 8    FORMAT(16X,'Oservational Thresholds (defaults set by PeakFQ):',
+     $      /16X,'    Begin     End     Low     High')
+ 10    FORMAT(18X,2I8,F10.1,G10.1)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -762,10 +764,14 @@ C    $             INT(HISTPD+.5), YNHIST, GENSKU, DWORK(1),
      $             SKUOP(IGSOPT+2),GAGEB, DWORK(2),DWORK(3),WEIBA,ATYPE
       IF (EMAOPT .GT. 0) THEN
         IF (NTHRESH .GT. 0) THEN
-          WRITE(MSG,7) 
+          IF (THRDEF .EQ. 0) THEN
+            WRITE(MSG,7) 
+          ELSE
+            WRITE(MSG,8) 
+          END IF
           DO 110 I= 1, NTHRESH
-            WRITE(MSG,8) THRESH(I)%THRBYR,THRESH(I)%THREYR,
-     $                   THRESH(I)%THRLWR,THRESH(I)%THRUPR
+            WRITE(MSG,10) THRESH(I)%THRBYR,THRESH(I)%THREYR,
+     $                    THRESH(I)%THRLWR,THRESH(I)%THRUPR
  110      CONTINUE
         END IF
       END IF
@@ -1378,7 +1384,7 @@ C
      I              (IA1,IA3,INFORM,MAXPKS,WDMSFL,IBCPUN,
      M               ISTART,
      O               STAID,PKSABG,IWYSN,XQUAL,IQUAL, 
-     O               NHIST,NSYS,HISTPD,  QHIOUT,QLWOUT,GAGEB,
+     O               NHIST,NSYS,HISTPD,  QHIOUT,QLWOUT,LOTYPE,GAGEB,
      O               GENSKU, RMSEGS,ISKUOP,  NSKIP1, EMAOPT, IRC )
 C
 C     + + + PURPOSE + + +
@@ -1391,6 +1397,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL       PKSABG(MAXPKS)
       REAL       HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
       CHARACTER*(*)  STAID , XQUAL(MAXPKS)
+      CHARACTER*4 LOTYPE
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     IA1   -
@@ -1416,6 +1423,7 @@ C     NSYS   -
 C     HISTPD -
 C     QHIOUT -
 C     QLWOUT -
+C     LOTYPE - lo-outlier type (NONE, GBT, MGBT, FIXE)
 C     GAGEB  -
 C     GENSKU -
 C     RMSEGS  -
@@ -1445,14 +1453,14 @@ C
       ELSE IF ( INFORM .EQ. 1 )  THEN
         CALL INPUT1(IA1, IA3, IBCPUN,
      I              MAXPKS, STAID, PKSABG, IWYSN, XQUAL,
-     O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU,
-     O              RMSEGS,ISKUOP, NSKIP1, EMAOPT, IRC)
+     O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB, 
+     O              GENSKU,RMSEGS,ISKUOP, NSKIP1, EMAOPT, IRC)
 C
       ELSE IF ( INFORM .EQ. 2 )  THEN
         CALL INPUT2(IA1, MAXPKS, WDMSFL,
      M              ISTART,
      O              STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
-     O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, GAGEB,
+     O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB,
      O              GENSKU, RMSEGS, ISKUOP, NSKIP1, EMAOPT, IRC)
 C
       ELSE IF ( INFORM .EQ. 3 ) THEN
@@ -1475,8 +1483,8 @@ C
       SUBROUTINE   INPUT2
      I                 (  MESSFL, MAXPKS, WDMSFL,
      M                    ISTART,
-     O                    STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
-     O                    NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, GAGEB,
+     O                    STAID, PKSABG, IWYSN, XQUAL, IQUAL, NHIST, 
+     O                    NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB,
      O                    GENSKU, RMSEGS, ISKUOP, NSKIP1, EMAOPT, IRC )
 C
 C     + + + PURPOSE + + +
@@ -1497,6 +1505,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL      HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
       CHARACTER*(*) XQUAL(MAXPKS)
       CHARACTER*(*) STAID
+      CHARACTER*4 LOTYPE
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MESSFL - Fortran unit number of AIDE message file
@@ -1522,6 +1531,7 @@ C     NSYS   - number of systematic peaks
 C     HISTPD - LENGTH OF HISTORIC PERIOD
 C     QHIOUT - USER-SET HIGH- OUTLIER DISCHARGE THRESHOLDS
 C     QLWOUT - USER-SET low-outlier discharge threshold
+C     LOTYPE - LO-OUTLIER TYPE (NONE, GBT, MGBT, FIXE)
 C     GAGEB  - GAGE BASE DISCHARGE
 C     GENSKU - GENERALIZED SKEW
 C     RMSEGS - RMS ERROR OF GENERALIZED SKEW
@@ -1700,12 +1710,14 @@ C             not too many peaks & user wants to continue
               FLONG     =  AUX(13)
 C             default to Bull 17B analysis
               EMAOPT = 0
+C             default low outlier test to multiple GB
+              LOTYPE = 'MGBT'
 C
               IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 
 C             update specs
               CALL PARSESTASPECS (CURSTA,XSYSPK,XHSTPK,
-     M                            GENSKU,HISTPD,QHIOUT,QLWOUT,
+     M                            GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      M                            GAGEB,RMSEGS,IBEGYR,IENDYR,
      M                            ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
               
@@ -3618,11 +3630,12 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,NOBS,WYMIN,WYMAX,LPKIND
+      INTEGER    I,NOBS,WYMIN,WYMAX,LPKIND,NT,NB(MXPK)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
-     $                 REGVAR,REGVMSE
+     $                 REGVAR,REGVMSE,
+     $                 Q(MXPK),PEX(MXPK),THR(MXPK),PET(MXPK)
       INTEGER, ALLOCATABLE :: THBY(:),THEY(:),INTVLYR(:)
       REAL, ALLOCATABLE :: THLO(:),THUP(:),INTVLLWR(:),INTVLUPR(:)
       DOUBLE PRECISION, ALLOCATABLE :: QL(:),QU(:),TL(:),TU(:)
@@ -3631,7 +3644,6 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MISSNG /1.0D-99/
-      DATA GBTYPE /'GBT '/
       DATA REGVAR, REGVMSE /0.0, 1.0D99/
 C
 C     + + + FUNCTIONS + + +
@@ -3646,21 +3658,48 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
       IF (NTHRESH.EQ.0) THEN
-C       determine default threshold value to use
-        NTHRESH = 1
-        ALLOCATE (THRESH(1))
-        THRESH(1)%THRBYR = 0
+C       determine default threshold value(s) to use
+        THRDEF = 1
+        IF (HISTPD .GT. 0) THEN
+C         historic period in use, will need 2 default thresholds
+          NTHRESH = 2          
+          ALLOCATE (THRESH(NTHRESH))
+          THRESH(1)%THRLWR= 1.0D35
+          THRESH(1)%THRUPR= 1.0D35
+C         determine threshold specs for historic period
+          I = 1
+ 2        CONTINUE
+            IF (ABS(PKS(I)) .LT. THRESH(1)%THRLWR) THEN
+              THRESH(1)%THRLWR = ABS(PKS(I))
+            END IF
+            I = I + 1
+          IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 2
+        ELSE
+          NTHRESH = 1
+          ALLOCATE (THRESH(NTHRESH))
+        END IF
+
+C       determine threshold specs for systematic record
+        THRESH(NTHRESH)%THRBYR = 0
         I = 0
- 2      CONTINUE
+ 3      CONTINUE
           I = I + 1
-        IF (PKS(I).LT.0) GOTO 2
-        THRESH(1)%THRBYR = IPKSEQ(I)
-        THRESH(1)%THREYR = IPKSEQ(NPKS)
+        IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 3
+        THRESH(NTHRESH)%THRBYR = IPKSEQ(I)
+        THRESH(NTHRESH)%THREYR = IPKSEQ(NPKS)
 C        this is what was used in the original EMA incorporation
 C        THRESH(1)%THRLWR = 10**WRCHHB  
 C       per phone call w/Tim C, now lower thresh is as follows
-        THRESH(1)%THRLWR = MAX(0.0,GAGEB)
-        THRESH(1)%THRUPR = 1.0D35
+        THRESH(NTHRESH)%THRLWR = MAX(0.0,GAGEB)
+        THRESH(NTHRESH)%THRUPR = 1.0D35
+        IF (NTHRESH .EQ. 2) THEN
+C         start of historic threshold based on end of sys and historic length
+          THRESH(1)%THRBYR = THRESH(2)%THREYR - HISTPD + 1
+C         end of historic threshold is year before systematic period
+          THRESH(1)%THREYR = THRESH(2)%THRBYR - 1
+        END IF
+      ELSE 'user defined thresholds
+        THRDEF = 0
       END IF
 C
       ALLOCATE (THBY(NTHRESH), THEY(NTHRESH))
@@ -3723,6 +3762,7 @@ C       Station skew, ignore regional skew
 C       Weighted, set to root mean square
         REGMSE = RMSEGS**2
       END IF
+      GBTYPE = LOTYPE
       GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
 
       write(99,*) 'calling EMAFIT'
@@ -3744,6 +3784,9 @@ C
      I            REGVAR,REGVMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
      O            WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
       
+C     get plotting positions for all peaks and thresholds
+      CALL plotposHS(NOBS,QL,QU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
+
 c      write(99,*) 'After EMAFIT'
 c      write(99,*) 'NOBS:',NOBS
 c      write(99,*) 'REGSKEW:',REGSKEW
@@ -3753,17 +3796,15 @@ c      write(99,*) 'QLow        QUpr        TLow        TUpr'
 c      DO 70 I = 1,NOBS
 c        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
 c 70   CONTINUE
+
+      write(99,*)
+      write(99,*) 'RESULTS'
+
  2010 format(1X,A8,3D16.8)
       write(99,2010) 'WRCMOM-1',(WRCMOM(i,1),i=1,3)
       write(99,2010) 'WRCMOM-2',(WRCMOM(i,2),i=1,3)
       write(99,2010) 'WRCMOM-3',(WRCMOM(i,3),i=1,3)
       write(99,*)
-      write(99,*) '  Prob       EMA Est.        CL Low       CL High'
- 2100 format(1X,F6.4,4F14.3)
-      do 18 i = 1,MXINT
-        write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
-     $                VAREST(i)
- 18   continue
 
 C     store EMA moments in WRC variables
 c      WRCUAV = LOG10(EXP(WRCMOM(1)))
@@ -3772,13 +3813,41 @@ c      WRCSKW = WRCMOM(3)
       WRCUAV = WRCMOM(1,1)
       WRCUSD = SQRT(WRCMOM(2,1))
       WRCSKW = WRCMOM(3,1)
-C
-      write(99,*)
-      write(99,*) 'RESULTS'
+
       write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
+      write(99,*)
+      write(99,*) 'Plotting Positions of peaks'
+      write(99,*) 'Plot Pos      Obs. Q'
+      DO 16 I = 1,NOBS
+        write(99,*) PEX(I),Q(I)
+ 16   CONTINUE
+
+      write(99,*)
+      write(99,*) 'Threshold positions'
+      write(99,*) 'Plot Pos     Threshold    NumPeaks'
+      DO 18 I = 1,NT
+        write(99,*) PET(I),THR(I),NB(I)
+C       set plotting position data for retrieval by PKFQWin
+        DO 17 J = 1,NTHRESH
+          IF (ABS(THR(I)-THRESH(J)%THRLWR) .LT. 0.001) THEN
+C           assume matching threshold value means matching thresholds
+            THRESH(J)%THPP = PET(I)
+            THRESH(J)%NOBS = NB(I)
+          END IF
+ 17     CONTINUE
+ 18   CONTINUE
+
+      write(99,*)
+      write(99,*) '  Prob       EMA Est.        CL Low       CL High'
+ 2100 format(1X,F6.4,4F14.3)
+      do 18 i = 1,MXINT
+        write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
+     $                VAREST(i)
+ 18   continue
+C
       DO 20 I = 1,MXINT
-        write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
-     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
+C        write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
+C     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
           SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
           WRCFC(I) = WRCYP(I)
           CLIML(I) = CILOW(I)
@@ -3932,19 +4001,22 @@ C
      I                     (STNIND,
      O                      NPKPLT,PKLOG,SYSPP,WRCPP,IXQUAL,IPKSEQ,
      O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     O                      NOCLIM,CLIML,CLIMU,HEADER)
+     O                      NOCLIM,CLIML,CLIMU,NT,THR,PPTH,NOBSTH,
+     O                      THRSYR,THREYR,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
 C     Return I/O data for a station to the Windows interface
 C
       Use StationData
+      Use EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,HSTFLG,NOCLIM
+      INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,HSTFLG,
+     $              NOCLIM,NT,NOBSTH(200),THRSYR(200),THREYR(200)
       REAL          PKLOG(200),SYSPP(200),WRCPP(200),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
-     $              CLIML(32),CLIMU(32)
+     $              CLIML(32),CLIMU(32),THR(200),PPTH(200)
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -3969,6 +4041,12 @@ C     HSPFLG - flag for use of historic info, 0-used, 1-not used
 C     NOCLIM - flag for confidence limits, 0-available, 1-not available
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
+C     NT     - number of perception thresholds
+C     THR    - array of threshold values
+C     PPTH   - array of threshold plotting positions
+C     NOBSTH - number of observations associated with each threshold
+C     THRSYR - array of threshold start years
+C     THREYR - array of threshold end years
 C     HEADER - Title header for each station's analysis
 C
 C     + + + LOCAL VARIABLES + + +
@@ -3998,6 +4076,16 @@ C
         CLIML(I) = STNDATA(STNIND)%CLIML(I)
         CLIMU(I) = STNDATA(STNIND)%CLIMU(I)
  20   CONTINUE
+C
+C     threshold data
+      NT = NTHRESH
+      DO 30 I = 1,NT
+        THR(I) = THRESH(I)%THRLWR
+        PPTH(I) = THRESH(I)%THPP
+        NOBSTH(I) = THRESH(I)%NOBS
+        THRSYR(I) = THRESH(I)%THRBYR
+        THREYR(I) = THRESH(I)%THREYR
+ 30   CONTINUE
 C
       RETURN
       END

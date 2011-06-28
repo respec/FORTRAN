@@ -3,8 +3,8 @@
       PUBLIC ThreshSpec, IntervalSpec
 
       TYPE ThreshSpec
-        INTEGER :: THRBYR, THREYR
-        REAL    :: THRLWR, THRUPR
+        INTEGER :: THRBYR, THREYR, NOBS
+        REAL    :: THRLWR, THRUPR, THPP
       END TYPE
 
       TYPE IntervalSpec
@@ -14,7 +14,7 @@
 
       TYPE (ThreshSpec), ALLOCATABLE :: THRESH(:)
       TYPE (IntervalSpec), ALLOCATABLE :: INTERVAL(:)
-      INTEGER NTHRESH, NINTERVAL
+      INTEGER NTHRESH, THRDEF, NINTERVAL
 
       END
 
