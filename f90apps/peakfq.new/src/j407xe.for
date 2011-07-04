@@ -83,7 +83,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT
-      EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB
+      EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -189,6 +189,11 @@ C
         IF(NHIST.GT.0 .OR. HISTPD.GT.0.) STAID(79:90) =
      $                                    '* HISTORIC *'
 C
+        IF (EMAOPT.EQ.1) THEN
+C         need to set thresholds before input data listing
+          CALL SETTHRESH (NPKS,PKS,IPKSEQ,HISTPD,GAGEB,QHIOUT,WRCHHB)
+        END IF
+C
 C       CALL  PRTPHD(  2001 , -999 )
         CALL  PRTINP( IDEBUG, XPKS, EMAOPT, IA3 )
 C
@@ -197,13 +202,10 @@ C
          write(99,*)'after WCFAGB, IER=',IER
 
         IF (EMAOPT.EQ.1) THEN
-c       write(*,*)
-       write(99,*)
-c       write(*,*)'Running EMA for station ',STAID
-       write(99,*)'Running EMA for station ',STAID
-c       write(*,*)
-       write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
-     $                            NPKS,NSYS,GENSKU,RMSEGS
+          write(99,*)
+          write(99,*)'Running EMA for station ',STAID
+          write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
+     $                                NPKS,NSYS,GENSKU,RMSEGS
           CALL RUNEMA(NPKS,PKS,IPKSEQ)
         END IF
 
@@ -3657,50 +3659,6 @@ C     + + + INTRINSICS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (NTHRESH.EQ.0) THEN
-C       determine default threshold value(s) to use
-        THRDEF = 1
-        IF (HISTPD .GT. 0) THEN
-C         historic period in use, will need 2 default thresholds
-          NTHRESH = 2          
-          ALLOCATE (THRESH(NTHRESH))
-          THRESH(1)%THRLWR= 1.0D35
-          THRESH(1)%THRUPR= 1.0D35
-C         determine threshold specs for historic period
-          I = 1
- 2        CONTINUE
-            IF (ABS(PKS(I)) .LT. THRESH(1)%THRLWR) THEN
-              THRESH(1)%THRLWR = ABS(PKS(I))
-            END IF
-            I = I + 1
-          IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 2
-        ELSE
-          NTHRESH = 1
-          ALLOCATE (THRESH(NTHRESH))
-        END IF
-
-C       determine threshold specs for systematic record
-        THRESH(NTHRESH)%THRBYR = 0
-        I = 0
- 3      CONTINUE
-          I = I + 1
-        IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 3
-        THRESH(NTHRESH)%THRBYR = IPKSEQ(I)
-        THRESH(NTHRESH)%THREYR = IPKSEQ(NPKS)
-C        this is what was used in the original EMA incorporation
-C        THRESH(1)%THRLWR = 10**WRCHHB  
-C       per phone call w/Tim C, now lower thresh is as follows
-        THRESH(NTHRESH)%THRLWR = MAX(0.0,GAGEB)
-        THRESH(NTHRESH)%THRUPR = 1.0D35
-        IF (NTHRESH .EQ. 2) THEN
-C         start of historic threshold based on end of sys and historic length
-          THRESH(1)%THRBYR = THRESH(2)%THREYR - HISTPD + 1
-C         end of historic threshold is year before systematic period
-          THRESH(1)%THREYR = THRESH(2)%THRBYR - 1
-        END IF
-      ELSE 'user defined thresholds
-        THRDEF = 0
-      END IF
 C
       ALLOCATE (THBY(NTHRESH), THEY(NTHRESH))
       ALLOCATE (THLO(NTHRESH), THUP(NTHRESH))
@@ -3829,7 +3787,7 @@ c      WRCSKW = WRCMOM(3)
         write(99,*) PET(I),THR(I),NB(I)
 C       set plotting position data for retrieval by PKFQWin
         DO 17 J = 1,NTHRESH
-          IF (ABS(THR(I)-THRESH(J)%THRLWR) .LT. 0.001) THEN
+          IF (ABS((10**THR(I))-THRESH(J)%THRLWR) .LT. 0.001) THEN
 C           assume matching threshold value means matching thresholds
             THRESH(J)%THPP = PET(I)
             THRESH(J)%NOBS = NB(I)
@@ -3840,10 +3798,10 @@ C           assume matching threshold value means matching thresholds
       write(99,*)
       write(99,*) '  Prob       EMA Est.        CL Low       CL High'
  2100 format(1X,F6.4,4F14.3)
-      do 18 i = 1,MXINT
+      do 19 i = 1,MXINT
         write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
      $                VAREST(i)
- 18   continue
+ 19   continue
 C
       DO 20 I = 1,MXINT
 C        write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
@@ -3914,6 +3872,7 @@ C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
 C
       Use StationData
+      Use EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       NPKS,NPKPLT,IPKPTR(NPKS),IPKSEQ(NPKS),
@@ -3976,6 +3935,8 @@ C
       STNDATA(STNIND)%NPLOT = NPLOT
       STNDATA(STNIND)%WEIBA = WEIBA
       STNDATA(STNIND)%HSTFLG = HSTFLG
+      STNDATA(STNIND)%NTHRESH = NTHRESH
+C
       DO 10 I = 1,NPKS
         STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
         STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
@@ -3991,6 +3952,15 @@ C
         STNDATA(STNIND)%CLIML(I) = CLIML(I)
         STNDATA(STNIND)%CLIMU(I) = CLIMU(I)
  20   CONTINUE
+C
+      DO 30 I = 1,NTHRESH
+        STNDATA(STNIND)%THRSYR(I) = THRESH(I)%THRBYR
+        STNDATA(STNIND)%THREYR(I) = THRESH(I)%THREYR
+        STNDATA(STNIND)%THRNOB(I) = THRESH(I)%NOBS
+        STNDATA(STNIND)%THRLWR(I) = THRESH(I)%THRLWR
+        STNDATA(STNIND)%THRUPR(I) = THRESH(I)%THRUPR
+        STNDATA(STNIND)%THRPP(I)  = THRESH(I)%THPP
+ 30   CONTINUE
 C
       RETURN
       END
@@ -4078,14 +4048,106 @@ C
  20   CONTINUE
 C
 C     threshold data
-      NT = NTHRESH
+      NT = STNDATA(STNIND)%NTHRESH
       DO 30 I = 1,NT
-        THR(I) = THRESH(I)%THRLWR
-        PPTH(I) = THRESH(I)%THPP
-        NOBSTH(I) = THRESH(I)%NOBS
-        THRSYR(I) = THRESH(I)%THRBYR
-        THREYR(I) = THRESH(I)%THREYR
+        THR(I) = STNDATA(STNIND)%THRLWR(I)
+        PPTH(I) = STNDATA(STNIND)%THRPP(I)
+        NOBSTH(I) = STNDATA(STNIND)%THRNOB(I)
+        THRSYR(I) = STNDATA(STNIND)%THRSYR(I)
+        THREYR(I) = STNDATA(STNIND)%THREYR(I)
  30   CONTINUE
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   SETTHRESH
+     I                      (NPKS,PKS,IPKSEQ,HISTPD,
+     I                       GAGEB,QHIOUT,WRCHHB)
+C
+C     + + + PURPOSE + + +
+C     set initial threshold values based on input peaks if none
+C     have been specified by user (otherwise indicate that 
+C     user has provided thresholds)
+C
+C     EMAThresh contains Threshold specifications pulled from the .psf file
+      USE EMAThresh
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   NPKS
+      INTEGER   IPKSEQ(NPKS)
+      REAL      PKS(NPKS),HISTPD,GAGEB,QHIOUT,WRCHHB
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     NPKS   - number of peaks
+C     PKS    - array of annual peak values
+C     IPKSEQ - array of peak value water years
+C     HISTPD - historic period
+C     GAGE   - gage base discharge
+C     QHIOUT - user-specified hi outlier threshold
+C     WRCHHB - PeakFQ-determined hi outlier threshold
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   I
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC MAX
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (NTHRESH.EQ.0) THEN
+C       determine default threshold value(s) to use
+        THRDEF = 1
+        IF (HISTPD .GT. 0) THEN
+C         historic period in use, will need 2 default thresholds
+          NTHRESH = 2          
+          ALLOCATE (THRESH(NTHRESH))
+          THRESH(1)%THRLWR= 1.0D35
+          THRESH(1)%THRUPR= 1.0D35
+C         determine threshold specs for historic period
+          I = 1
+ 2        CONTINUE
+            IF (PKS(I) .LT. 0) THEN
+C             historic peak
+              IF (ABS(PKS(I)) .LT. THRESH(1)%THRLWR) THEN
+                THRESH(1)%THRLWR = ABS(PKS(I))
+              END IF
+            END IF
+            I = I + 1
+          IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 2
+          IF (THRESH(1)%THRLWR .GT. 1.0D34) THEN
+C           valid threshold default still not found
+            THRESH(1)%THRLWR = MAX(QHIOUT, 10**WRCHHB)
+          END IF
+        ELSE
+          NTHRESH = 1
+          ALLOCATE (THRESH(NTHRESH))
+        END IF
+
+C       determine threshold specs for systematic record
+        THRESH(NTHRESH)%THRBYR = 0
+        I = 0
+ 3      CONTINUE
+          I = I + 1
+        IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 3
+        THRESH(NTHRESH)%THRBYR = IPKSEQ(I)
+        THRESH(NTHRESH)%THREYR = IPKSEQ(NPKS)
+C        this is what was used in the original EMA incorporation
+C        THRESH(1)%THRLWR = 10**WRCHHB  
+C       per phone call w/Tim C (6/2011), lower thresh default is as follows
+        THRESH(NTHRESH)%THRLWR = MAX(0.0,GAGEB)
+        THRESH(NTHRESH)%THRUPR = 1.0D35
+        IF (NTHRESH .EQ. 2) THEN
+C         start of historic threshold based on end of sys and historic length
+          THRESH(1)%THRBYR = THRESH(2)%THREYR - HISTPD + 1
+C         end of historic threshold is year before systematic period
+          THRESH(1)%THREYR = THRESH(2)%THRBYR - 1
+        END IF
+      ELSE 
+C       user has defined thresholds
+        THRDEF = 0
+      END IF
 C
       RETURN
       END
