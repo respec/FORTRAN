@@ -4108,8 +4108,8 @@ C         historic period in use, will need 2 default thresholds
 C         determine threshold specs for historic period
           I = 1
  2        CONTINUE
-            IF (PKS(I) .LT. 0) THEN
-C             historic peak
+            IF (IPKSEQ(I).LT.0) THEN
+C             historic peak that is in use
               IF (ABS(PKS(I)) .LT. THRESH(1)%THRLWR) THEN
                 THRESH(1)%THRLWR = ABS(PKS(I))
               END IF
