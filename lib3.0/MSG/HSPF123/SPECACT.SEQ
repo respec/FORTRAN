@@ -245,16 +245,16 @@ $TEXT
  &CCCCCCCCCCCCCCCCCCCC
 #GROUP   51  TYPE TEXT
 $TEXT
-    PERLND         1        94        95        98        99         1       909
-    IMPLND         1        94        95        98        99       844       162
-    RCHRES         1        93        94        97        98      1006       679
-    COPY           1        24        25        28       150      1687         8
+    PERLND         1        94        95        98        99         1       912
+    IMPLND         1        94        95        98        99       847       162
+    RCHRES         1        93        94        97        98      1009       679
+    COPY           1        24        25        28       150      1690         8
     PLTGEN         1        11        12        15        16         0         0
     DISPLY         0         0         0         0         0         0         0
     DURANL         0         0         0         0         0         0         0
-    GENER          1        23        24        27        28      1696        10
+    GENER          1        23        24        27        28      1699        10
     MUTSIN         0         0         0         0         0         0         0
-    BMPRAC         1        63        64        67        68      1708        69
+    BMPRAC         1        63        64        67        68      1711        69
     REPORT         0         0         0         0         0         0         0
 #GROUP   52  TYPE TEXT
 $TEXT

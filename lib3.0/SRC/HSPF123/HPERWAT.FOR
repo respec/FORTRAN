@@ -25,7 +25,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION PWATER1 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    TBSB,TBNO,NVAL,SCLU,SGRP,I,J,RDFLAG,STABNO,IRRPRI(3),
-     $           ANNFLG,N,ID
+     $           ANNFLG,N,ID,LNCAN
       REAL       AGWRC,RVAL(140),UELVM,AGWSMX,IRRFRC(3),IRRTOT(3),R,
      $           PELEV(6),PFAC
 C
@@ -113,7 +113,8 @@ C     initialize fluxes that may not be used
       CEPE(5)= 0.0
 C
 C     default to single interception layer
-      NCANPY= 1
+C     '0' means multiple canopy feature is not in use
+      NCANPY= 0
 C
 C     process values in table - type pwat-parm1
       TBNO= 13
@@ -191,6 +192,8 @@ C       dummy values until dayval is called on first interval
       END IF
 C
 C     table PWAT-CANOPY
+C     if NCANPY = 1-5 then table-type PWAT-CANOPY is expected
+C     that number of times
       DO I= 1, NCANPY
         TBNO= 40
         NVAL= 6
@@ -280,7 +283,12 @@ C       process ftable
 C
       IF (VCSFG .EQ. 1) THEN
 C       get monthly interception storage capacity - table-type mon-intercep
-        DO I= 1, NCANPY
+        IF (NCANPY.EQ.0) THEN
+          LNCAN = 1
+        ELSE
+          LNCAN = NCANPY
+        END IF
+        DO I= 1, LNCAN
           TBNO= 21
           TBSB= I
           NVAL= 12
@@ -587,7 +595,10 @@ C     process values in table-type pwat-state1
       NVAL= 7
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
      M             RVAL)
-      IF (NCANPY .EQ. 1) THEN
+      IF (NCANPY .EQ. 0) THEN
+C       '0' means multiple canopy feature is not in use,
+C       initial storages are set in this table
+C       (otherwise initial storages are set in pwat-canopy)
         CEPS(1)= RVAL(1)
         DO I= 2, 5
           CEPS(I)= 0.0
@@ -603,6 +614,12 @@ C
       TGWS= AGWS
       RZWS= 0.0
       RZWSC= 0.0
+C
+      IF (NCANPY.EQ.0) then
+C       '0' means multiple canopy feature is not in use,
+C       default to single interception layer
+        NCANPY= 1
+      END IF
 C
       IF (HWTFG .EQ. 1) THEN
 C       compute initial value of groundwater elevation
