@@ -3645,10 +3645,12 @@ _WIDTH   5
 _COLUMN 74
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  1 : 5
-_DEFAULT  1
+_RANGE  0 : 5
+_DEFAULT  0
 _HELP
-Number of canopy layers to be used in interception accounting.
+Number of canopy layers to be used in interception accounting; 
+0 means multiple canopy feature is not is use; if 1-5 then table-type
+PWAT-CANOPY is expected that number of times.
 _PNAME  NCANPY
 $HELP
 First group of PWATER Parameters (flags).
@@ -7929,11 +7931,11 @@ _WIDTH  10
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0. : 5.
-_DEFAULT  0.
+_RANGE  1. : 5.
+_DEFAULT  1.
 _HELP
 Canopy layer to which these parameters apply.  
-This table is only necessary if NCANOPY > 1.
+This table is only necessary if NCANOPY > 0.
 _PNAME  CANOPY
 $FIELD  FIELD3
 _WIDTH  12
@@ -7988,11 +7990,11 @@ _WIDTH  10
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE REAL
-_RANGE  0. : 5.
-_DEFAULT  0.
+_RANGE  1. : 5.
+_DEFAULT  1.
 _HELP
 Canopy layer to which these parameters apply.  
-This table is only necessary if NCANOPY > 1.
+This table is only necessary if NCANOPY > 0.
 _PNAME  CANOPY
 $FIELD  FIELD3
 _WIDTH  12
