@@ -4921,7 +4921,7 @@ C           compile values for binary printout
         ELSE
 C         not using high water table algorithms
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
-            WRITE (PRINTU,2050)  PPERS, (PSTAT1(I),I=1,7)
+            WRITE (PRINTU,2050)  PPERS, PSTATC,(PSTAT1(I),I=6,11)
           END IF
           IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
 C           compile values for binary printout
