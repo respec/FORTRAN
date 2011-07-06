@@ -81,10 +81,12 @@ C
       IF (CRVFG.EQ.1) THEN
 C       get monthly values of erosion-related cover -
 C       table-type mon-cover
-        I2= 44
-        I4= 12
-        CALL RTABLE (I2,I1,I4,UUNITS,
-     M               COVERM)
+        DO I= 1, NCANPY
+          I2= 44
+          I4= 12
+          CALL RTABLE (I2,I,I4,UUNITS,
+     M                 COVERM(1,I))
+        END DO
       END IF
 C
       IF (VSIVFG.NE.0) THEN

@@ -7970,8 +7970,8 @@ Name, interception storage capacity and initial interception storage for this ca
 $TEXT
 (1X,I10,3X,3A4,2(1PE10.3))
 Values of canopy layer interception storage terms:
-    CANOPY         CANOPY     CEPSC      CEPS
-         #           NAME      (in)      (in)
+    CANOPY              CANOPY     CEPSC      CEPS
+         #                NAME      (in)      (in)
 #GROUP  439  TYPE PRM2
 $HEADER
     <PLS >    CANOPY         CANOPY     CEPSC      CEPS   
@@ -8029,8 +8029,8 @@ Name, interception storage capacity and initial interception storage for this ca
 $TEXT
 (1X,I10,3X,3A4,2(1PE10.3))
 Values of canopy layer interception storage terms:
-    CANOPY         CANOPY     CEPSC      CEPS
-         #           NAME      (mm)      (mm)
+    CANOPY              CANOPY     CEPSC      CEPS
+         #                NAME      (mm)      (mm)
 #GROUP  140  TYPE PRM2
 $HEADER
     <PLS >      SMPF      KRER      JRER     AFFIX     COVER      NVSI
