@@ -4604,7 +4604,7 @@ C     + + + OUTPUT FORMATS + + +
  2045 FORMAT (31X,9(6X,'MM'),7X,'M')
  2050 FORMAT (31X,11F10.3)
  2055 FORMAT (31X,12F8.3)
- 2057 FORMAT (/,'      SURFACE   LAYER           ',
+ 2057 FORMAT (/,'         CANOPY LAYER           ',
      $        'NAME          VALUE')
  2058 FORMAT (11X,I10,3X,3A4,5X,F10.3,2X,A2)  
  2060 FORMAT (/,37X,'RZWS')
@@ -4642,7 +4642,7 @@ C     + + + OUTPUT FORMATS + + +
  2230 FORMAT (31X,7(8X,'MM'))
  2235 FORMAT (31X,8(8X,'MM'))
  2240 FORMAT (31X,8F10.3)
- 2250 FORMAT (/,'     SURFACE ET LAYER           ',
+ 2250 FORMAT (/,'         CANOPY LAYER           ',
      $        'NAME          VALUE')
  2255 FORMAT (11X,I10,3X,3A4,5X,F10.3,2X,A2)  
  2260 FORMAT (/,'     INTERNAL FLUXES',11X,
