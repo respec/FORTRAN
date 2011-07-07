@@ -1,0 +1,174 @@
+FILE COMPARISON
+Produced: 7/7/2011 9:41:46 AM
+
+Mode:  Just Differences
+Left base folder: D:\F90Apps\Hspf12.3\Test\Base
+Right base folder: D:\F90Apps\Hspf12.3\Test\Current
+
+File: hspf04.dat
+
+File: test01.ech
+
+File: TEST01.UCI
+
+File: TEST01DT.P91
+
+File: test02.ech
+
+File: TEST02.UCI
+
+File: TEST02DT.S31
+
+File: TEST02DT.S32
+
+File: TEST02DT.S33
+
+File: TEST02DT.S34
+
+File: TEST02DT.S35
+
+File: TEST02DT.S36
+
+File: TEST02DT.S37
+
+File: test03.ech
+
+File: TEST03.UCI
+
+File: TEST03DT.S57
+
+File: TEST03DT.S58
+
+File: test04.d61
+
+File: test04.ech
+
+File: TEST04.UCI
+
+File: test05.d62
+
+File: test05.ech
+
+File: test05.out
+
+File: test05.p92
+
+File: TEST05.UCI
+
+File: test06.ech
+
+File: test06.out
+
+File: TEST06.UCI
+
+File: TEST06DT.P92
+
+File: test07.d63
+
+File: test07.ech
+
+File: test07.out
+
+File: TEST07.UCI
+
+File: test08.d64
+
+File: test08.ech
+
+File: test08.out
+
+File: TEST08.UCI
+
+File: test09.d65
+
+File: test09.ech
+
+File: test09.out
+
+File: test09.p93
+
+File: TEST09.UCI
+
+File: test10.d66
+
+File: test10.ech
+
+File: test10.out
+
+File: test10.p94
+
+File: test10.p95
+
+File: TEST10.UCI
+
+File: test11.d67
+
+File: test11.ech
+
+File: test11.eng
+
+File: test11.met
+
+File: test11.p96
+
+File: TEST11.UCI
+
+File: test12.d68
+
+File: test12.ech
+
+File: test12.out
+
+File: test12.p97
+
+File: TEST12.UCI
+
+File: test13.d69
+
+File: test13.ech
+
+File: test13.out
+
+File: test13.p98
+
+File: TEST13.UCI
+
+File: test14.ech
+
+File: TEST14.UCI
+
+File: test15.dis
+
+File: test15.ech
+
+File: test15.out
+
+File: test15.plt
+
+File: TEST15.UCI
+
+File: test15p.hbn
+
+File: test15r.hbn
+
+File: test16.ech
+
+File: test16.hbn
+
+File: TEST16.log
+L1 00:00:00.031    Main:StartToFile 2011-07-06 03:23:43
+   00:00:00.031    Main:Begin Logging
+   00:00:00.031    WriteStatus:(LOGTOFILE D:\Test\hspf\standard\Base\TEST16.log)
+   00:00:00.031    Main:Pre:  F90_ACTSCN (-1, 0, 100, 0, TEST16, 6)
+   00:00:00.280    Main:Post: F90_ACTSCN (-1, 0, 100, 0, TEST16, 6)
+   00:00:00.280    Main:Pre:  F90_SIMSCN (0)
+   00:00:00.280    WriteStatus:(Progress Percent Off)
+   00:00:01.544    Main:Post: F90_SIMSCN (0)
+   00:00:01.544    WriteStatus:(EXIT)
+------------------------------------------------------------------------
+
+File: test16.out
+
+File: test16.p97
+
+File: TEST16.UCI

@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<project name="runTest" default="all">
+   <property name="TestSummaryFile"    value="${ant.project.name}.lis"/>
+   <property name="WinHspfLt"          value="d:\basins\models\hspf\bin\winhspflt.exe"/>
+   <property name="BC2"                value="C:\Program Files\Beyond Compare 2\BC2.exe"/>
+
+   <target name="all" depends="run,compare"/>
+
+   <target name="compare" depends="init">
+      <exec executable="${BC2}" output="${TestSummaryFile}" append="yes">
+         <arg value="@bc.inp"/>
+         <arg value="/silent"/>
+      </exec>
+   </target>
+
+   <target name="run" depends="init">
+      <echo message=" all${line.separator}" file="${TestSummaryFile}" append="yes"/>
+      <echo message=" basedir:'${basedir}'${line.separator}" file="${TestSummaryFile}" append="yes"/>
+
+      <copy toDir=".">
+        <fileset dir="Base" casesensitive="false">
+           <include name="*.uci"/>
+           <include name="*dt.*"/>
+           <include name="*.wdm"/>
+           <include name="test?.dss"/>
+        </fileset>
+      </copy>
+
+      <delete><fileset dir="Current"/></delete>
+
+      <apply executable="${WinHspfLt}" dir="." output="${TestSummaryFile}" append="yes">
+         <srcfile/>
+         <fileset dir="." casesensitive="false" excludesfile="exclude.lis"> 
+            <include name="*.uci"/>          
+         </fileset>
+      </apply>
+
+      <fileset dir="." id="outFiles" casesensitive="false"> 
+         <include name="*.ech"/>
+         <include name="*.out"/>
+         <include name="*.p*"/>
+         <include name="*.d*"/>
+         <include name="*.eng"/>
+         <include name="*.met"/>
+         <include name="*.hbn"/>
+         <include name="*.uci"/>
+         <include name="*dt.*"/>
+         <include name="*.uci"/>
+         <include name="*.wdm"/>
+         <include name="*.dss"/>
+     </fileset>
+
+      <copy todir="Current"><fileset refid="outFiles"/></copy>
+
+      <delete><fileset refid="outFiles"/></delete>
+
+      <delete><fileset dir="." casesensitive="false" ><include name="error.fil"/></fileset></delete>
+   </target>
+
+   <target name="init">
+      <echo message="${ant.project.name}${line.separator} init${line.separator}" 
+            file="${TestSummaryFile}"/>
+   </target> 
+</project>
