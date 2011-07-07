@@ -735,7 +735,7 @@ C              0 - Bull. 17B
 C              1 - EMA
 C
 C     + + + LOCAL VARIABLES
-      INTEGER      I,ISTA,NSPECS,IVAL
+      INTEGER      I,J,ISTA,NSPECS,IVAL
       CHARACTER*120 S,KWD
       TYPE (ThreshSpec), ALLOCATABLE :: LTHRESH(:)
       TYPE (IntervalSpec), ALLOCATABLE :: LINTERVAL(:)
@@ -882,9 +882,10 @@ C           read 4 EMA Threshold components
               WRITE(99,*) "No value found for EMA Threshold Upper Bound"
             END IF
             KWD = STRRETREM(S)
-            IF (LEN_TRIM(KWD).GT.0) THEN
-C             include all of remaining spec string
-              THRESH(NTHRESH)%THRCOM = KWD // S
+            J = LEN_TRIM(KWD)
+            IF (J.GT.0) THEN
+C             include all of remaining spec string for comment
+              THRESH(NTHRESH)%THRCOM = KWD(1:J+1) // S
             ELSE
               WRITE(99,*) "No value found for EMA Threshold Comment"
             END IF
@@ -934,8 +935,10 @@ C           read 4 EMA Interval components
               WRITE(99,*) "No value found for EMA Interval Upper Bound"
             END IF
             KWD = STRRETREM(S)
-            IF (LEN_TRIM(KWD).GT.0) THEN
-              INTERVAL(NINTERVAL)%INTRVLCOM = KWD // S
+            J = LEN_TRIM(KWD)
+            IF (J.GT.0) THEN
+C             include all of remaining spec string for comment
+              INTERVAL(NINTERVAL)%INTRVLCOM = KWD(1:J+1) // S
             ELSE
               WRITE(99,*) "No value found for EMA Interval Comment"
             END IF
@@ -977,9 +980,10 @@ C           read 4 peak components
               WRITE(99,*) "No value found for Peak Value"
             END IF
             KWD = STRRETREM(S)
-            IF (LEN_TRIM(KWD).GT.5) THEN
+            J = LEN_TRIM(KWD)
+            IF (J.GT.5) THEN
 C             assume this is the comment and there is no quality code
-              NEWPKS(NNEWPKS)%PKCOM = KWD // S
+              NEWPKS(NNEWPKS)%PKCOM = KWD(1:J+1) // S
               NEWPKS(NNEWPKS)%PKCODE = '     '
             ELSE IF (LEN_TRIM(KWD).GT.0) THEN
 C             assume this is a quality code
@@ -988,9 +992,11 @@ C             assume this is a quality code
               WRITE(99,*) "No value found for Peak Code"
               NEWPKS(NNEWPKS)%PKCODE = '     '
             END IF
-            IF (LEN_TRIM(KWD).GT.0) THEN
+            KWD = STRRETREM(S)
+            J = LEN_TRIM(KWD)
+            IF (J.GT.0) THEN
 C             include remaining part of spec string
-              NEWPKS(NNEWPKS)%PKCOM = KWD // S
+              NEWPKS(NNEWPKS)%PKCOM = KWD(1:J+1) // S
             ELSE
               WRITE(99,*) "No value found for Peak Comment"
             END IF
