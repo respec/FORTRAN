@@ -277,7 +277,8 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,NOCLIM,
-     I                      CLIML(INDX1),CLIMU(INDX1),JSEQNO,HEADNG(9))
+     I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
+     I                      JSEQNO,HEADNG(9))
             IF(IPLTOP.NE.0)  THEN
 C             initialize (if necessary)
 C             convert to std deviates
@@ -3718,7 +3719,7 @@ C     + + + FUNCTIONS + + +
       DOUBLE PRECISION QP3
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   EMADATA, EMAFIT
+      EXTERNAL   EMADATA, EMAFIT, plotposHS
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  LOG, LOG10, EXP, DBLE
@@ -3884,47 +3885,6 @@ C     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
       DEALLOCATE (THBY, THEY, THLO, THUP)
       DEALLOCATE (INTVLYR, INTVLLWR, INTVLUPR)
 
-C      IF (N.GT.0) THEN !perform EMA
-C        DO 20 I = 1,MXINT
-C          PR(I)= 1.0 - DBLE(TXPROB(I))
-C          CALL EMAFIT (N,QL,QU,TL,TU,REGSKEW,REGMSE,PR(I),
-C     O                 WRCMOM,WRCYP,CILOW,CIHIGH)
-Cc         if (i.eq.1) then 
-Cc           write(*,*) '  SYS Moments ',sysmom
-Cc           write(*,*) '  WRC Moments ',wrcmom
-Cc         end if
-Cc         write(*,'(f8.4,4f12.3)')txprob(i),exp(SYSYP),exp(WRCYP),
-Cc     $                           exp(CILOW),exp(CIHIGH)
-Cc          SYSRFC(I)= LOG10(EXP(SYSYP))
-C          WRCFC(I) = LOG10(EXP(WRCYP))
-C          CLIML(I) = LOG10(EXP(CILOW))
-C          CLIMU(I) = LOG10(EXP(CIHIGH))
-C 20     CONTINUE
-
-
-Cprh     This call to EMAFIT was an attempt to do all intervals
-Cprh     within EMAFIT and pass whole arrays back and forth.
-Cprh     This would be more efficient, but never got it quite working.
-c        CALL EMAFIT (N,QL,QU,TL,TU,REGSKEW,REGMSE,MXINT,PR,
-c     O               SYSMOM,WRCMOM,SYSYP,WRCYP,CILOW,CIHIGH)
-C       write(*,*)'EMAFIT RESULTS'
-C       write(*,*)'  SYSMOM ',SYSMOM
-C       write(*,*)'  WRCMOM ',WRCMOM
-c        SYSUAV = LOG10(EXP(SYSMOM(1)))
-c        SYSUSD = LOG10(EXP(SQRT(SYSMOM(2))))
-c        SYSSKW = SYSMOM(3)
-c        WRCUAV = LOG10(EXP(WRCMOM(1)))
-c        WRCUSD = LOG10(EXP(SQRT(WRCMOM(2))))
-c        WRCSKW = WRCMOM(3)
-c        DO 30 I = 1,MXINT
-c          SYSRFC(I)= LOG10(EXP(SYSYP(I)))
-c          WRCFC(I) = LOG10(EXP(WRCYP(I)))
-c          CLIML(I) = LOG10(EXP(CILOW(I)))
-c          CLIMU(I) = LOG10(EXP(CIHIGH(I)))
-c         write(*,'(f8.4,4f12.3)')txprob(i),exp(wrcfc(i)),exp(sysrfc(i)),
-c     $             exp(climl(i)),exp(climu(i))
-c 30     CONTINUE
-C      END IF
 C
       RETURN
       END
@@ -3934,8 +3894,8 @@ C
       SUBROUTINE   STOREDATA
      I                      (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                       XQUAL,IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,
-     I                       TXPROB,HSTFLG,NOCLIM,CLIML,CLIMU,STNIND,
-     I                       HEADER)
+     I                       TXPROB,HSTFLG,NOCLIM,CLIML,CLIMU,WRCSKW,
+     I                       RMSEGS,STNIND,HEADER)
 C
 C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
@@ -3948,7 +3908,7 @@ C     + + + DUMMY ARGUMENTS + + +
      1              NPLOT,HSTFLG,NOCLIM,STNIND
       REAL          PKS(NPKS),PKLOG(NPKS),SYSPP(NPKS),WRCPP(NPKS),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
-     $              CLIML(NPLOT), CLIMU(NPLOT)
+     $              CLIML(NPLOT),CLIMU(NPLOT),WRCSKW,RMSEGS
       CHARACTER*5   XQUAL(NPKS)
       CHARACTER*80  HEADER
 C
@@ -3979,6 +3939,23 @@ C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits
 C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
 C
+C     + + + COMMON BLOCKS + + +
+      integer nx
+      parameter (nx=25000)
+      
+      integer nlow_V,nlow,nzero,nGBiter
+      double precision  gbcrit,gbthresh,gbcrit_V,gbthresh_V,
+     $                  pvaluew,ql,qu,tl,tu,qs,as_mse
+      character*4 gbtype,dtype,at_site_option,at_site_default,at_site_std
+
+C     used by Tim's EMA code
+      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
+     1               nlow,nzero,gbtype
+      common /tacg02/ql(nx),qu(nx),tl(nx),tu(nx),dtype(nx)
+      common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
+      common /tacg04/at_site_option,at_site_default,at_site_std
+      common /jfe001/as_mse
+C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
       TYPE (StnDat), ALLOCATABLE :: TMPDATA(:)      
@@ -4007,6 +3984,12 @@ C
       STNDATA(STNIND)%WEIBA = WEIBA
       STNDATA(STNIND)%HSTFLG = HSTFLG
       STNDATA(STNIND)%NTHRESH = NTHRESH
+      STNDATA(STNIND)%NLOW = nlow
+      STNDATA(STNIND)%NZERO = nzero
+      STNDATA(STNIND)%GBTYPE = gbtype
+      STNDATA(STNIND)%GBCRIT = gbcrit
+      STNDATA(STNIND)%WRCSKW = WRCSKW
+      STNDATA(STNIND)%RMSEGS = RMSEGS
 C
       DO 10 I = 1,NPKS
         STNDATA(STNIND)%PKS(I) = PKS(I)
@@ -4044,7 +4027,8 @@ C
      O                      NPKPLT,PKLOG,SYSPP,WRCPP,IXQUAL,IPKSEQ,
      O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
      O                      NOCLIM,CLIML,CLIMU,NT,THR,PPTH,NOBSTH,
-     O                      THRSYR,THREYR,HEADER)
+     O                      THRSYR,THREYR,GBCRIT,NLOW,NZERO,
+     O                      SKEW,RMSEGS,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
@@ -4055,10 +4039,12 @@ C
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,HSTFLG,
-     $              NOCLIM,NT,NOBSTH(200),THRSYR(200),THREYR(200)
+     $              NOCLIM,NT,NOBSTH(200),THRSYR(200),THREYR(200),
+     $              NLOW,NZERO
       REAL          PKLOG(200),SYSPP(200),WRCPP(200),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
-     $              CLIML(32),CLIMU(32),THR(200),PPTH(200)
+     $              CLIML(32),CLIMU(32),THR(200),PPTH(200),GBCRIT,
+     $              SKEW,RMSEGS
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -4089,6 +4075,11 @@ C     PPTH   - array of threshold plotting positions
 C     NOBSTH - number of observations associated with each threshold
 C     THRSYR - array of threshold start years
 C     THREYR - array of threshold end years
+C     GBCRIT - low outlier threshold value
+C     NLOW   - number of low outliers
+C     NZERO  - number of zero values
+C     SKEW   - skew value used in computation
+C     RMSEGS - mean standard error
 C     HEADER - Title header for each station's analysis
 C
 C     + + + LOCAL VARIABLES + + +
@@ -4101,6 +4092,12 @@ C
       NPLOT = STNDATA(STNIND)%NPLOT
       WEIBA = STNDATA(STNIND)%WEIBA
       HSTFLG = STNDATA(STNIND)%HSTFLG
+      GBCRIT = STNDATA(STNIND)%GBCRIT
+      NLOW   = STNDATA(STNIND)%NLOW
+      NZERO  = STNDATA(STNIND)%NZERO
+      SKEW   = STNDATA(STNIND)%WRCSKW
+      RMSEGS = STNDATA(STNIND)%RMSEGS
+
       DO 10 I = 1,NPKPLT
         PKLOG(I) = STNDATA(STNIND)%PKLOG(I)
         SYSPP(I) = STNDATA(STNIND)%SYSPP(I)
