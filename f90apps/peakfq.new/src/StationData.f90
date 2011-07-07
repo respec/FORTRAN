@@ -6,6 +6,7 @@
         CHARACTER (LEN=80) :: HEADER
         CHARACTER (LEN=5)  :: XQUAL(200)
         INTEGER            :: NPLOT
+        INTEGER            :: NPKS
         INTEGER            :: NPKPLT
         INTEGER            :: NTHRESH
         INTEGER            :: NINTRVL
@@ -15,6 +16,7 @@
         INTEGER            :: THREYR(20)
         INTEGER            :: THRNOB(20)
         REAL               :: WEIBA
+        REAL               :: PKS(200)
         REAL               :: PKLOG(200)
         REAL               :: SYSPP(200)
         REAL               :: WRCPP(200)
