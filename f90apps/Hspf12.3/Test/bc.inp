@@ -1,0 +1,8 @@
+#log verbose
+load base current
+expand all
+select all
+filter -*.wdm;-*.dss
+compare CRC
+file-report options:display-mismatches layout:over-under output-to:bc.lis
+#folder-report options:display-mismatches layout:side-by-side output-to:bc.lis

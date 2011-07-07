@@ -1,0 +1,3237 @@
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 1
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.851     0.000     0.000     0.105     0.000     4.009     0.737     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.204     0.000     0.000     0.268     0.268     0.001
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.136     0.047     0.094     0.008     0.000     0.285
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.116     0.000     0.103     0.013
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.404E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 2
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    7.032     0.000     0.000     0.246     0.000     5.842     0.944     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.808     0.003     0.003     0.226     0.232     0.023
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.609     0.123     0.090     0.147     0.012     0.000     0.372
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.003     0.230     2.449     0.000     1.980     0.445
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.659E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 3
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    9.303     0.000     0.000     0.443     0.001     7.241     1.618     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.744     0.002     0.012     0.413     0.427     0.058
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.302     0.280     0.470     0.222     0.017     0.000     0.988
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.013     0.691     2.759     0.023     1.620     1.104
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.078E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 4
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.874     0.000     0.000     1.702     0.002     8.173     2.996     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    7.404     0.037     0.151     0.613     0.801     0.109
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.515     0.705     1.271     0.871     0.076     0.000     2.923
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.153     2.707     3.803     0.177     1.804     2.067
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.671E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 5
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.217     0.000     0.000     1.204     0.002     7.826     3.185     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.164     0.005     0.019     0.951     0.974     0.065
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.670     0.495     1.985     1.206     0.096     0.000     3.782
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.018     1.487     2.159     0.000     0.859     1.235
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.704E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 6
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.218     0.000     0.000     0.669     0.001     6.478     3.071     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.692     0.004     0.030     0.917     0.951     0.049
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.813     2.238     2.519     0.120     0.000     5.691
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.028     1.708     2.138     0.005     1.170     0.924
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.691E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 7
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.976     0.020     0.000     0.169     0.000     3.591     2.196     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.848     0.000     0.001     0.803     0.804     0.004
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.620     0.619     3.894     0.149     0.000     5.282
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.119     1.087     0.000     1.007     0.076
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.207E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 8
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.081     0.000     0.000     0.023     0.000     0.580     1.477     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.228     0.000     0.000     0.568     0.568     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.248     0.146     3.011     0.151     0.000     3.556
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.204E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/ 9
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.415     0.000     0.000     0.005     0.000     0.420     0.991     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.732     0.000     0.000     0.364     0.364     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.522     0.398     0.018     0.494     0.123     0.000     1.033
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.334     0.000     0.334     0.001
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.813E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/10
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.252     0.013     0.000     0.004     0.000     1.553     0.682     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.076     0.000     0.000     0.255     0.255     0.001
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    2.646     0.423     0.003     0.490     0.067     0.000     0.983
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.003     1.638     0.000     1.624     0.014
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.491E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/11
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.837     0.016     0.000     0.003     0.000     1.333     0.486     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.156     0.000     0.000     0.174     0.174     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.840     0.069     0.001     0.303     0.023     0.000     0.396
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.084     0.000     0.082     0.001
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.408E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                                             REPORT FOR MONTH 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.037     0.000     0.000     0.004     0.000     1.679     0.354     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.576     0.000     0.000     0.131     0.131     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.128     0.001     0.108     0.009     0.000     0.246
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.462     0.000     0.454     0.007
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.413E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   1                          LAND 1                              REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.037     0.000     0.000     0.004     0.000     1.679     0.354     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   28.632     0.051     0.216     5.683     5.950     0.310
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   39.655     4.437     6.890    13.359     0.850     0.000    25.535
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.217     6.949    17.028     0.206    11.038     5.886
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.383E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 1
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.917     0.000     0.000     0.105     0.000     4.075     0.737     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.204     0.000     0.000     0.268     0.268     0.001
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.136     0.047     0.028     0.008     0.000     0.218
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.116     0.000     0.103     0.013
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.404E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 2
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    7.189     0.000     0.000     0.255     0.000     5.966     0.967     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.808     0.003     0.003     0.228     0.234     0.025
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.609     0.123     0.092     0.050     0.012     0.000     0.277
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.003     0.242     2.436     0.000     1.941     0.470
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.725E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 3
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    9.540     0.000     0.000     0.460     0.001     7.406     1.674     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.744     0.002     0.015     0.427     0.444     0.061
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.302     0.280     0.483     0.110     0.016     0.000     0.889
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.016     0.717     2.730     0.029     1.549     1.150
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.093E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 4
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   13.320     0.000     0.000     1.750     0.003     8.457     3.111     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    7.404     0.046     0.177     0.636     0.859     0.113
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.515     0.705     1.317     0.556     0.075     0.000     2.652
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.178     2.805     3.671     0.198     1.608     2.148
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.694E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 5
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   13.030     0.000     0.000     1.271     0.003     8.442     3.314     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.164     0.005     0.021     0.989     1.015     0.068
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.670     0.495     2.060     0.723     0.093     0.000     3.372
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.021     1.582     2.061     0.000     0.707     1.286
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.748E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 6
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   11.792     0.000     0.000     0.808     0.001     7.694     3.290     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.692     0.007     0.043     0.958     1.009     0.055
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.813     2.448     1.491     0.114     0.000     4.866
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.042     1.990     1.840     0.006     0.743     1.048
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.772E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 7
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.383     0.020     0.000     0.380     0.001     5.510     2.472     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.848     0.001     0.005     0.868     0.873     0.010
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.620     0.768     2.841     0.144     0.000     4.374
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.004     0.341     0.862     0.000     0.657     0.194
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.364E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 8
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.992     0.000     0.000     0.052     0.000     3.256     1.684     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.228     0.000     0.001     0.642     0.643     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.248     0.329     2.254     0.146     0.000     2.976
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.611E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/ 9
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    3.709     0.000     0.000     0.017     0.000     2.537     1.155     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.732     0.000     0.000     0.419     0.419     0.001
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.522     0.398     0.043     1.032     0.122     0.000     1.595
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.008     0.326     0.000     0.312     0.013
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.724E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/10
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.572     0.013     0.000     0.028     0.000     3.657     0.874     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.076     0.001     0.000     0.310     0.311     0.005
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    2.646     0.423     0.019     0.390     0.066     0.000     0.897
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.030     1.610     0.000     1.510     0.095
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.785E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/11
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.305     0.016     0.000     0.020     0.000     3.636     0.634     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.156     0.000     0.000     0.225     0.225     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.840     0.069     0.009     0.097     0.023     0.000     0.198
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     0.083     0.000     0.076     0.007
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.728E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                                             REPORT FOR MONTH 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.523     0.000     0.000     0.024     0.000     4.010     0.489     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.576     0.000     0.000     0.178     0.179     0.002
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.128     0.007     0.033     0.009     0.000     0.177
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.011     0.452     0.000     0.407     0.043
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   4.881E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                          LAND 2                              REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.523     0.000     0.000     0.024     0.000     4.010     0.489     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   28.632     0.065     0.264     6.149     6.479     0.340
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   39.655     4.437     7.621     9.604     0.828     0.000    22.490
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.265     7.729    16.187     0.233     9.613     6.466
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.383E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 1
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.853     0.000     0.000     0.105     0.000     4.022     0.726     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.204     0.000     0.000     0.267     0.267     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.136     0.047     0.094     0.008     0.000     0.285
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.116     0.000     0.116     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.404E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 2
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    7.099     0.000     0.000     0.260     0.000     6.307     0.532     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.808     0.003     0.003     0.182     0.188     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.609     0.123     0.093     0.146     0.012     0.000     0.373
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.003     0.248     2.431     0.000     2.431     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.661E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 3
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    9.582     0.000     0.000     0.528     0.003     8.273     0.778     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.744     0.003     0.028     0.181     0.212     0.023
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.302     0.280     0.533     0.198     0.015     0.000     1.025
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.032     0.839     2.591     0.037     2.164     0.442
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.084E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 4
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   13.123     0.000     0.000     1.868     0.004     9.278     1.972     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    7.404     0.086     0.285     0.343     0.715     0.085
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.515     0.705     1.444     0.845     0.071     0.000     3.064
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.286     2.966     3.360     0.183     1.851     1.608
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.699E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 5
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.573     0.000     0.000     1.338     0.004     8.939     2.293     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.164     0.007     0.027     0.658     0.693     0.056
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.670     0.495     2.217     1.164     0.089     0.000     3.965
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.027     1.687     1.948     0.000     0.824     1.068
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.729E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 6
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.641     0.000     0.000     0.816     0.001     7.725     2.098     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.692     0.008     0.048     0.649     0.704     0.030
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.813     2.538     2.428     0.111     0.000     5.891
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.045     2.022     1.804     0.006     1.215     0.565
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.727E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 7
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    6.429     0.020     0.000     0.278     0.000     4.716     1.415     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.848     0.001     0.003     0.539     0.543     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.620     0.764     3.987     0.144     0.000     5.516
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.002     0.226     0.979     0.000     0.979     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.249E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 8
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.063     0.000     0.000     0.038     0.000     1.117     0.907     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.228     0.000     0.000     0.359     0.359     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.248     0.241     3.599     0.148     0.000     4.235
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.657E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/ 9
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.134     0.000     0.000     0.008     0.000     0.558     0.569     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.732     0.000     0.000     0.216     0.216     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.522     0.398     0.030     0.894     0.123     0.000     1.444
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.334     0.000     0.334     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.795E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/10
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.031     0.013     0.000     0.006     0.000     1.650     0.362     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.076     0.000     0.000     0.141     0.141     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    2.646     0.423     0.006     0.544     0.067     0.000     1.039
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.004     1.637     0.000     1.637     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.210E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/11
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.694     0.016     0.000     0.004     0.000     1.427     0.248     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.156     0.000     0.000     0.091     0.091     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.840     0.069     0.002     0.308     0.023     0.000     0.402
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.084     0.000     0.084     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.187E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                                             REPORT FOR MONTH 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.958     0.000     0.000     0.005     0.000     1.780     0.173     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.576     0.000     0.000     0.065     0.065     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.128     0.001     0.108     0.009     0.000     0.247
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.462     0.000     0.462     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.270E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   3                          LAND 3                              REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.958     0.000     0.000     0.005     0.000     1.780     0.173     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   28.632     0.109     0.395     3.690     4.194     0.194
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   39.655     4.437     7.915    14.315     0.819     0.000    27.486
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.395     7.995    15.745     0.226    12.095     3.683
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.383E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 1
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.853     0.000     0.000     0.105     0.000     4.022     0.726     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.204     0.000     0.000     0.267     0.267     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.136     0.047     0.094     0.008     0.000     0.285
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.116     0.000     0.116     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.404E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 2
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    7.099     0.000     0.000     0.260     0.000     6.307     0.532     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.808     0.003     0.003     0.182     0.188     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.609     0.123     0.093     0.146     0.012     0.000     0.373
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.003     0.248     2.431     0.000     2.431     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.661E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 3
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    9.557     0.000     0.000     0.520     0.003     8.099     0.934     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.744     0.003     0.028     0.200     0.230     0.032
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.302     0.280     0.531     0.199     0.015     0.000     1.024
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.031     0.829     2.602     0.039     1.991     0.617
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.084E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 4
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   13.078     0.000     0.000     1.815     0.004     8.801     2.458     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    7.404     0.069     0.244     0.423     0.736     0.106
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.515     0.705     1.411     0.852     0.072     0.000     3.040
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.245     2.916     3.470     0.209     1.554     2.019
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.696E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 5
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.439     0.000     0.000     1.278     0.003     8.347     2.811     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.164     0.005     0.023     0.815     0.843     0.066
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.670     0.495     2.130     1.179     0.091     0.000     3.895
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.022     1.592     2.050     0.000     0.725     1.259
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.724E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 6
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.475     0.000     0.000     0.756     0.001     7.319     2.399     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.692     0.006     0.039     0.781     0.827     0.025
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.813     2.402     2.473     0.115     0.000     5.803
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.038     1.885     1.949     0.005     1.445     0.484
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.713E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 7
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    6.253     0.020     0.000     0.237     0.000     4.362     1.633     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.848     0.001     0.002     0.619     0.623     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.620     0.705     3.976     0.146     0.000     5.447
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.002     0.187     1.019     0.000     1.019     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.232E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 8
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.018     0.000     0.000     0.032     0.000     0.919     1.067     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.228     0.000     0.000     0.417     0.418     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.248     0.205     3.443     0.149     0.000     4.045
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.481E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/ 9
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.200     0.000     0.000     0.007     0.000     0.507     0.687     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.732     0.000     0.000     0.257     0.257     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.522     0.398     0.026     0.746     0.123     0.000     1.293
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.334     0.000     0.334     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.750E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/10
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.085     0.013     0.000     0.005     0.000     1.619     0.448     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.076     0.000     0.000     0.172     0.172     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    2.646     0.423     0.005     0.525     0.067     0.000     1.019
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.003     1.637     0.000     1.637     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.276E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/11
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.727     0.016     0.000     0.004     0.000     1.396     0.311     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.156     0.000     0.000     0.113     0.113     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.840     0.069     0.002     0.306     0.023     0.000     0.400
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.084     0.000     0.084     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.241E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                                             REPORT FOR MONTH 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.975     0.000     0.000     0.004     0.000     1.750     0.220     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.576     0.000     0.000     0.082     0.082     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.128     0.001     0.108     0.009     0.000     0.246
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.462     0.000     0.462     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   2.303E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   4                          LAND 4                              REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.975     0.000     0.000     0.004     0.000     1.750     0.220     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   28.632     0.088     0.340     4.329     4.756     0.230
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   39.655     4.437     7.556    14.048     0.830     0.000    26.871
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.340     7.664    16.153     0.254    11.798     4.378
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.383E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 1
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.877     0.000     0.000     0.105     0.000     4.047     0.726     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.204     0.000     0.000     0.267     0.267     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.136     0.047     0.070     0.008     0.000     0.260
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.116     0.000     0.116     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.404E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 2
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    7.143     0.000     0.000     0.264     0.000     6.347     0.532     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.808     0.003     0.003     0.182     0.188     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.609     0.123     0.094     0.126     0.012     0.000     0.354
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.003     0.253     2.426     0.000     2.426     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.685E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 3
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    9.584     0.000     0.000     0.529     0.003     8.268     0.784     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.744     0.003     0.030     0.183     0.216     0.024
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.302     0.280     0.536     0.233     0.015     0.000     1.063
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.033     0.841     2.588     0.040     2.154     0.449
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.089E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 4
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.879     0.000     0.000     1.850     0.004     9.153     1.873     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    7.404     0.076     0.262     0.331     0.670     0.078
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.515     0.705     1.430     1.155     0.071     0.000     3.360
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.263     2.929     3.431     0.178     2.039     1.491
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.699E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 5
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.115     0.000     0.000     1.309     0.003     8.644     2.159     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.164     0.006     0.025     0.624     0.655     0.053
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.670     0.495     2.185     1.450     0.090     0.000     4.220
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.025     1.644     1.994     0.000     0.941     1.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.704E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 6
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.880     0.000     0.000     0.826     0.001     8.034     2.018     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.692     0.007     0.045     0.609     0.662     0.031
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.813     2.489     1.820     0.113     0.000     5.236
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.043     2.012     1.816     0.005     1.211     0.580
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.681E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 7
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.409     0.020     0.000     0.481     0.001     6.551     1.357     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.848     0.001     0.006     0.518     0.525     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.620     0.797     2.233     0.143     0.000     3.794
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.006     0.451     0.749     0.000     0.749     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.273E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 8
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.633     0.000     0.000     0.065     0.000     4.698     0.869     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.228     0.000     0.001     0.344     0.345     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.248     0.415     1.853     0.143     0.000     2.659
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.637E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/ 9
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.410     0.000     0.000     0.028     0.000     3.840     0.541     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.732     0.000     0.000     0.206     0.206     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.522     0.398     0.057     1.172     0.122     0.000     1.749
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.020     0.314     0.000     0.314     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.365E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/10
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.188     0.013     0.000     0.053     0.000     4.780     0.342     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.076     0.001     0.001     0.133     0.135     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    2.646     0.423     0.035     0.640     0.066     0.000     1.163
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.059     1.580     0.000     1.580     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.486E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/11
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.905     0.016     0.000     0.037     0.000     4.619     0.234     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.156     0.000     0.000     0.086     0.086     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.840     0.069     0.017     0.244     0.023     0.000     0.352
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     0.083     0.000     0.083     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.344E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                                             REPORT FOR MONTH 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.169     0.000     0.000     0.043     0.000     4.963     0.163     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.576     0.000     0.000     0.061     0.062     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.128     0.012     0.101     0.009     0.000     0.250
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.018     0.445     0.000     0.445     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.481E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   5                          LAND 5                              REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.169     0.000     0.000     0.043     0.000     4.963     0.163     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   28.632     0.099     0.374     3.545     4.017     0.185
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   39.655     4.437     8.114    11.097     0.813     0.000    24.460
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.374     8.229    15.543     0.223    12.060     3.521
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.383E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 1
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.877     0.000     0.000     0.105     0.000     4.047     0.726     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.204     0.000     0.000     0.267     0.267     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.136     0.047     0.070     0.008     0.000     0.260
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.002     0.116     0.000     0.116     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.404E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 2
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    7.143     0.000     0.000     0.264     0.000     6.347     0.532     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.808     0.003     0.003     0.182     0.188     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.609     0.123     0.094     0.126     0.012     0.000     0.354
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.003     0.253     2.426     0.000     2.426     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   7.685E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 3
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    9.558     0.000     0.000     0.520     0.003     8.092     0.942     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    3.744     0.003     0.029     0.202     0.234     0.033
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    1.302     0.280     0.534     0.234     0.015     0.000     1.062
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.032     0.831     2.599     0.041     1.980     0.627
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.089E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 4
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   12.827     0.000     0.000     1.800     0.003     8.700     2.324     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    7.404     0.061     0.224     0.406     0.691     0.098
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.515     0.705     1.399     1.170     0.072     0.000     3.345
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.225     2.880     3.534     0.202     1.778     1.860
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.696E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 5
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   11.958     0.000     0.000     1.250     0.002     8.087     2.618     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.164     0.005     0.020     0.768     0.793     0.061
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.670     0.495     2.101     1.491     0.092     0.000     4.179
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.019     1.552     2.093     0.000     0.878     1.155
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.699E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 6
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                   10.686     0.000     0.000     0.768     0.001     7.613     2.304     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    4.692     0.006     0.037     0.723     0.765     0.028
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    7.056     0.813     2.357     1.884     0.117     0.000     5.172
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.036     1.880     1.958     0.005     1.410     0.525
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.665E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 7
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    8.250     0.020     0.000     0.441     0.001     6.224     1.565     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    1.848     0.001     0.006     0.594     0.601     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    6.195     0.620     0.740     2.177     0.145     0.000     3.682
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.006     0.413     0.788     0.000     0.788     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.253E+01
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 8
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.534     0.000     0.000     0.060     0.000     4.453     1.021     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.228     0.000     0.001     0.400     0.401     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.248     0.381     1.771     0.144     0.000     2.544
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   8.478E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/ 9
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.336     0.000     0.000     0.026     0.000     3.657     0.653     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.732     0.000     0.000     0.245     0.246     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    4.522     0.398     0.052     1.113     0.122     0.000     1.685
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.018     0.316     0.000     0.316     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.266E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/10
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.111     0.013     0.000     0.049     0.000     4.626     0.424     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    2.076     0.001     0.000     0.163     0.165     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    2.646     0.423     0.032     0.615     0.066     0.000     1.135
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.001     0.055     1.585     0.000     1.585     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   6.412E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/11
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    4.816     0.016     0.000     0.034     0.000     4.472     0.294     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.156     0.000     0.000     0.107     0.107     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.840     0.069     0.016     0.236     0.023     0.000     0.344
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.001     0.083     0.000     0.083     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.267E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                                             REPORT FOR MONTH 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.068     0.000     0.000     0.040     0.000     4.820     0.208     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.576     0.000     0.000     0.078     0.078     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    0.434     0.128     0.011     0.099     0.009     0.000     0.247
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.017     0.447     0.000     0.447     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.392E+00
+1
+
+ PERVIOUS LAND SEGMENT NO.   6                          LAND 6                              REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    5.068     0.000     0.000     0.040     0.000     4.820     0.208     0.050
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                   28.632     0.080     0.321     4.135     4.536     0.219
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                   39.655     4.437     7.762    10.986     0.824     0.000    24.009
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.321     7.900    15.944     0.248    11.806     4.166
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.383E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     37.5      11.1      11.1      5.56      111.      5.06      6.74 4.352E-03      618.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.541E-04 4.601E-08      2.69
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     192.     0.116     0.247      188.      188.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.262E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     37.0      11.0      11.0      5.52      110.      5.02      6.69 4.100E-03      610.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.453E-04 4.089E-08      2.50
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     146.      1.58     0.340      148.      148.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.609
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.852E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     42.4      11.8      11.8      5.91      118.      5.38      7.17 6.487E-03      700.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                2.285E-04 1.012E-07      4.54
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     211.      2.12     0.748      207.      207.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     1.30
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.505E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     121.      20.0      20.0      9.98      200.      9.07      12.1 5.008E-03 1.991E+03
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.686E-04 5.509E-08      9.97
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     536.      5.58      3.20      460.      364.      96.6
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.51
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.840E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     122.      20.1      20.1      10.0      201.      9.12      12.2 5.175E-03 2.014E+03
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.742E-04 5.879E-08      10.4
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     595.      4.12      5.65      592.      508.      84.4
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.67
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.198E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     122.      20.0      20.0      10.0      200.      9.11      12.1 4.637E-03 2.009E+03
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.561E-04 4.720E-08      9.32
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     589.      4.76      7.15      587.      418.      169.
+
+     POTENTIAL ET (IN)              POTEV
+                                     7.05
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.157E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     119.      19.8      19.8      9.92      198.      9.02      12.0 3.518E-03 1.970E+03
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.185E-04 2.722E-08      6.93
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     476.      1.86      6.25      474.      430.      43.3
+
+     POTENTIAL ET (IN)              POTEV
+                                     6.19
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.992E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     71.7      15.4      15.4      7.69      154.      6.99      9.32 4.199E-03 1.183E+03
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.445E-04 4.048E-08      4.97
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     328.     0.213      4.87      371.      371.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.472E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     37.8      11.2      11.2      5.59      112.      5.08      6.77 4.515E-03      624.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.598E-04 4.951E-08      2.82
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     205.     0.434      3.03      236.      236.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     4.52
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.769E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     35.5      10.8      10.8      5.41      108.      4.92      6.56 3.348E-03      586.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                1.188E-04 2.737E-08      1.96
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     141.      1.15      1.47      143.      143.      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                     2.64
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.804E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     33.9      10.6      10.6      5.29      106.      4.81      6.41 2.431E-03      560.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                8.646E-05 1.449E-08      1.36
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     95.6 8.353E-02     0.453      96.8      96.8      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.840
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.312E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                                        REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     32.9      10.4      10.4      5.21      104.      4.74      6.32 1.821E-03      544.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                6.487E-05 8.154E-09     0.990
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                     71.7     0.307     0.230      72.8      72.8      0.00
+
+     POTENTIAL ET (IN)              POTEV
+                                    0.434
+
+   BALANCE                      % ERROR IN    AC-FT
+                                 -0.001   1.060E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                           MEIER POND                         REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     32.9      10.4      10.4      5.21      104.      4.74      6.32 1.821E-03      544.
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                6.487E-05 8.154E-09     0.990
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS
+                                   INFLOW                LOSS   OUTFLOW         1         2
+     VOLUMES  (AC-FT)                IVOL    PRSUPY     VOLEV     ROVOL                OVOL
+                                3.586E+03      22.3      33.6 3.576E+03 3.183E+03      393.
+
+     POTENTIAL ET (IN)              POTEV
+                                     39.6
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.642E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                1.782E-02     0.260     0.260     0.233      2.53     0.196 7.661E-02      4.58     0.588
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.310     0.186      2.69
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     188.      0.00      0.00      188.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.884E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                1.693E-02     0.249     0.249     0.223      2.51     0.189 7.591E-02      4.48     0.559
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.304     0.179      2.50
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     148.      0.00      0.00      148.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.479E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                2.589E-02     0.361     0.361     0.313      2.73     0.255 8.268E-02      5.31     0.854
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.352     0.241      4.54
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     207.      0.00      0.00      207.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.074E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                4.467E-02     0.573     0.573     0.468      3.15     0.361 9.536E-02      6.76      1.47
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.420     0.341      9.97
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     364.      0.00      0.00      364.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.636E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                3.501E-02     0.468     0.468     0.393      2.94     0.310 8.907E-02      6.08      1.16
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.389     0.293      7.03
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     508.      0.00      0.00      508.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.077E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                3.497E-02     0.467     0.467     0.393      2.94     0.310 8.904E-02      6.08      1.15
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.389     0.293      7.02
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     418.      0.00      0.00      418.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.180E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                3.465E-02     0.464     0.464     0.390      2.93     0.308 8.882E-02      6.06      1.14
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.388     0.291      6.93
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     430.      0.00      0.00      430.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.302E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                2.745E-02     0.380     0.380     0.328      2.77     0.265 8.381E-02      5.48     0.906
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.359     0.250      4.97
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     371.      0.00      0.00      371.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.707E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                1.842E-02     0.268     0.268     0.239      2.54     0.201 7.708E-02      4.64     0.608
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.313     0.190      2.82
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     236.      0.00      0.00      236.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.361E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                1.439E-02     0.215     0.215     0.195      2.44     0.168 7.388E-02      4.13     0.475
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.286     0.159      1.96
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     143.      0.00      0.00      143.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.434E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                1.155E-02     0.176     0.176     0.161      2.36     0.142 7.154E-02      3.57     0.381
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.263     0.134      1.36
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     96.8      0.00      0.00      96.8
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   9.680E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                                            REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                8.817E-03     0.150     0.150     0.138      2.11     0.122 6.386E-02      3.40     0.291
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.244     0.115     0.990
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     72.8      0.00      0.00      72.8
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.283E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                           OUTLET                             REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                8.817E-03     0.150     0.150     0.138      2.11     0.122 6.386E-02      3.40     0.291
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.244     0.115     0.990
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                3.183E+03      0.00      0.00 3.183E+03
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.183E+03
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     96.6      0.00      0.00      96.6
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   9.660E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                1.820E-02     0.265     0.265     0.237      2.54     0.199 7.691E-02      5.65     0.601
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.382     0.283      3.39
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     84.4      0.00      0.00      84.4
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   8.441E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                1.398E-02     0.209     0.209     0.190      2.43     0.164 7.355E-02      4.98     0.461
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.347     0.233      2.30
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     169.      0.00      0.00      169.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.687E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     43.3      0.00      0.00      43.3
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.334E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                                          REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     0.00      0.00      0.00      0.00
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   0.000E+00
+1
+
+ REACH/MIXED-RESERVOIR NO.   3                           SPILLWAY                           REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                     0.00      0.00      0.00
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     393.      0.00      0.00      393.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.931E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 1
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.402     0.477     0.477     0.419      3.96     0.346     0.959      1.62      1.66
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.205 8.178E-02      2.69
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     188.      0.00      0.00      188.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.884E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 2
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.380     0.454     0.454     0.401      3.91     0.333     0.948      1.60      1.57
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.202 7.871E-02      2.50
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     148.      0.00      0.00      148.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.483E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 3
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.572     0.647     0.647     0.549      4.30     0.438      1.04      1.92      2.36
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.231     0.103      4.54
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     207.      0.00      0.00      207.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.077E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 4
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     1.00      1.03      1.03     0.818      5.05     0.618      1.22      2.41      4.13
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.274     0.146      9.97
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     460.      0.00      0.00      460.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.607E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 5
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                     1.03      1.05      1.05     0.835      5.10     0.629      1.24      2.45      4.26
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.277     0.149      10.4
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     592.      0.00      0.00      592.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.930E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 6
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.955     0.988     0.988     0.792      4.98     0.601      1.21      2.37      3.94
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.271     0.142      9.33
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     587.      0.00      0.00      587.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   5.878E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 7
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.772     0.831     0.831     0.683      4.66     0.528      1.13      2.18      3.18
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.254     0.125      6.93
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     474.      0.00      0.00      474.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   4.745E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.611     0.684     0.684     0.577      4.37     0.456      1.06      1.97      2.52
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.236     0.108      4.97
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     371.      0.00      0.00      371.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.714E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/ 9
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.417     0.492     0.492     0.431      3.99     0.355     0.966      1.64      1.72
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.208 8.380E-02      2.82
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     236.      0.00      0.00      236.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   2.367E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/10
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.319     0.388     0.388     0.348      3.78     0.294     0.915      1.49      1.32
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.189 6.950E-02      1.97
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     143.      0.00      0.00      143.
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.438E+02
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/11
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.250     0.311     0.311     0.284      3.62     0.246     0.878      1.32      1.03
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.173 5.810E-02      1.36
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     96.8      0.00      0.00      96.9
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   9.711E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                                      REPORT FOR MONTH 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.207     0.262     0.262     0.243      3.52     0.213     0.854      1.16     0.854
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.161 5.040E-02     0.991
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     72.8      0.00      0.00      72.9
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   7.307E+01
+1
+
+ REACH/MIXED-RESERVOIR NO.   4                           KITTLE CREEK                       REPORT FOR PRINTOUT YEAR ENDING 1976/12
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.207     0.262     0.262     0.243      3.52     0.213     0.854      1.16     0.854
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.161 5.040E-02     0.991
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                3.576E+03      0.00      0.00 3.576E+03
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   3.576E+03

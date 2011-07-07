@@ -1,0 +1,4 @@
+runTest
+ init
+ all
+ basedir:'D:\F90Apps\Hspf12.3\Test'
