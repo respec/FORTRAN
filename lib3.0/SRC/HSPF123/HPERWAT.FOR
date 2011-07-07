@@ -195,6 +195,14 @@ C     table PWAT-CANOPY
 C     if NCANPY = 1-5 then table-type PWAT-CANOPY is expected
 C     that number of times
       DO I= 1, NCANPY
+C       initialize variables first
+        READ ('    ','(A4)') CANNAM(1,I)
+        READ ('    ','(A4)') CANNAM(2,I)
+        READ ('    ','(A4)') CANNAM(3,I)
+        CEPSC(I)   = 0.0
+        CEPS(I)    = 0.0
+      END DO
+      DO I= 1, NCANPY
         TBNO= 40
         NVAL= 6
         CALL RTABLE (TBNO,I,NVAL,UUNITS,
