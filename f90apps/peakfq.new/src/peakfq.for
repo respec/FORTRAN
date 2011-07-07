@@ -739,6 +739,7 @@ C     + + + LOCAL VARIABLES
       CHARACTER*120 S,KWD
       TYPE (ThreshSpec), ALLOCATABLE :: LTHRESH(:)
       TYPE (IntervalSpec), ALLOCATABLE :: LINTERVAL(:)
+      TYPE (PeakSpec), ALLOCATABLE :: LPKS(:)
 C
 C     + + + FUNCTIONS + + +
       INTEGER      CVRINT, IYESNO
@@ -781,6 +782,11 @@ C         init EMA Threshold specs
 C         init EMA Interval specs
           NINTERVAL = 0
           DEALLOCATE (INTERVAL)
+        END IF
+        IF (ALLOCATED(NEWPKS)) THEN
+C         init new peaks specs
+          NNEWPKS = 0
+          DEALLOCATE (NEWPKS)
         END IF
         DO 100 I = 1, NSPECS
           S = STASPECS(ISTA)%SPECS(I)%STR
@@ -833,6 +839,7 @@ C             make local copy of existing threshold specs
                 LTHRESH(J)%THREYR = THRESH(J)%THREYR
                 LTHRESH(J)%THRLWR = THRESH(J)%THRLWR
                 LTHRESH(J)%THRUPR = THRESH(J)%THRUPR
+                LTHRESH(J)%THRCOM = THRESH(J)%THRCOM
  50           CONTINUE
               DEALLOCATE (THRESH)
             END IF
@@ -845,6 +852,7 @@ C             put local copy back in array
                 THRESH(J)%THREYR = LTHRESH(J)%THREYR
                 THRESH(J)%THRLWR = LTHRESH(J)%THRLWR
                 THRESH(J)%THRUPR = LTHRESH(J)%THRUPR
+                THRESH(J)%THRCOM = LTHRESH(J)%THRCOM
  60           CONTINUE
               DEALLOCATE (LTHRESH)
             END IF
@@ -873,6 +881,13 @@ C           read 4 EMA Threshold components
             ELSE
               WRITE(99,*) "No value found for EMA Threshold Upper Bound"
             END IF
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.0) THEN
+C             include all of remaining spec string
+              THRESH(NTHRESH)%THRCOM = KWD // S
+            ELSE
+              WRITE(99,*) "No value found for EMA Threshold Comment"
+            END IF
           ELSE IF (KWD .EQ. 'INTERVAL') THEN
 C           see if any interval specs exist
             IF (NINTERVAL.GT.0) THEN
@@ -882,6 +897,7 @@ C             make local copy of existing interval specs
                 LINTERVAL(J)%INTRVLYR = INTERVAL(J)%INTRVLYR
                 LINTERVAL(J)%INTRVLLWR = INTERVAL(J)%INTRVLLWR
                 LINTERVAL(J)%INTRVLUPR= INTERVAL(J)%INTRVLUPR
+                LINTERVAL(J)%INTRVLCOM= INTERVAL(J)%INTRVLCOM
  70           CONTINUE
               DEALLOCATE (INTERVAL)
             END IF
@@ -893,10 +909,11 @@ C             put local copy back in array
                 INTERVAL(J)%INTRVLYR = LINTERVAL(J)%INTRVLYR
                 INTERVAL(J)%INTRVLLWR = LINTERVAL(J)%INTRVLLWR
                 INTERVAL(J)%INTRVLUPR = LINTERVAL(J)%INTRVLUPR
+                INTERVAL(J)%INTRVLCOM= LINTERVAL(J)%INTRVLCOM
  80           CONTINUE
               DEALLOCATE (LINTERVAL)
             END IF
-C           read 3 EMA Interval components
+C           read 4 EMA Interval components
             KWD = STRRETREM(S)
             IF (LEN_TRIM(KWD).GT.0) THEN
               IVAL = CVRINT(KWD)
@@ -915,6 +932,67 @@ C           read 3 EMA Interval components
               INTERVAL(NINTERVAL)%INTRVLUPR = CVRDEC(KWD)
             ELSE
               WRITE(99,*) "No value found for EMA Interval Upper Bound"
+            END IF
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.0) THEN
+              INTERVAL(NINTERVAL)%INTRVLCOM = KWD // S
+            ELSE
+              WRITE(99,*) "No value found for EMA Interval Comment"
+            END IF
+          ELSE IF (KWD .EQ. 'PEAK') THEN
+C           see if any new peak specs exist
+            IF (NNEWPKS.GT.0) THEN
+C             make local copy of existing new peak specs
+              ALLOCATE (LPKS(NNEWPKS))
+              DO 90 J = 1, NNEWPKS
+                LPKS(J)%PKYR = NEWPKS(J)%PKYR
+                LPKS(J)%PKVAL= NEWPKS(J)%PKVAL
+                LPKS(J)%PKCOM= NEWPKS(J)%PKCOM
+ 90           CONTINUE
+              DEALLOCATE (NEWPKS)
+            END IF
+            NNEWPKS = NNEWPKS + 1
+            ALLOCATE (NEWPKS(NNEWPKS))
+            IF (ALLOCATED(LPKS)) THEN
+C             put local copy back in array
+              DO 95 J = 1, NNEWPKS - 1
+                NEWPKS(J)%PKYR = LPKS(J)%PKYR
+                NEWPKS(J)%PKVAL= LPKS(J)%PKVAL
+                NEWPKS(J)%PKCOM= LPKS(J)%PKCOM
+ 95           CONTINUE
+              DEALLOCATE (LINTERVAL)
+            END IF
+C           read 4 peak components
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.0) THEN
+              IVAL = CVRINT(KWD)
+              NEWPKS(NNEWPKS)%PKYR =IVAL
+            ELSE
+              WRITE(99,*) "No value found for Peak Year"
+            END IF
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.0) THEN
+              NEWPKS(NNEWPKS)%PKVAL = CVRDEC(KWD)
+            ELSE
+              WRITE(99,*) "No value found for Peak Value"
+            END IF
+            KWD = STRRETREM(S)
+            IF (LEN_TRIM(KWD).GT.5) THEN
+C             assume this is the comment and there is no quality code
+              NEWPKS(NNEWPKS)%PKCOM = KWD // S
+              NEWPKS(NNEWPKS)%PKCODE = '     '
+            ELSE IF (LEN_TRIM(KWD).GT.0) THEN
+C             assume this is a quality code
+              NEWPKS(NNEWPKS)%PKCODE = KWD
+            ELSE
+              WRITE(99,*) "No value found for Peak Code"
+              NEWPKS(NNEWPKS)%PKCODE = '     '
+            END IF
+            IF (LEN_TRIM(KWD).GT.0) THEN
+C             include remaining part of spec string
+              NEWPKS(NNEWPKS)%PKCOM = KWD // S
+            ELSE
+              WRITE(99,*) "No value found for Peak Comment"
             END IF
           END IF
  100    CONTINUE
@@ -1213,14 +1291,22 @@ C     thresholds and intervals
         DO 10 I=1,NTHRESH
           WRITE(92,*) '     PCPT_Thresh ',THRESH(I)%THRBYR,
      $                   THRESH(I)%THREYR,THRESH(I)%THRLWR,
-     $                   THRESH(I)%THRUPR
+     $                   THRESH(I)%THRUPR,THRESH(I)%THRCOM
  10     CONTINUE  
       END IF
       IF (NINTERVAL.GT.0) THEN
         DO 20 I=1,NINTERVAL
           WRITE(92,*) '     Interval ',INTERVAL(I)%INTRVLYR,
-     $                   INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLUPR
+     $                   INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLUPR,
+     $                   INTERVAL(I)%INTRVLCOM
  20     CONTINUE  
+      END IF
+C     new/revised peaks
+      IF (NNEWPKS.GT.0) THEN
+        DO 30 I=1,NNEWPKS
+          WRITE(92,*) '     Peak ',NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
+     $                             NEWPKS(I)%PKCODE,NEWPKS(I)%PKCOM
+ 30     CONTINUE  
       END IF
 C     skew parameters
       IF (ISKUOP.EQ.-1) THEN

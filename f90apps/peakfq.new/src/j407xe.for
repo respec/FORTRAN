@@ -166,6 +166,11 @@ C
      O              GENSKU,RMSEGS, IGSOPT, NSKIP1,EMAOPT,IER)
         write(99,*)'After INPUT - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
 C
+C       see if any revised/new peaks need to be accounted for
+        CALL UPDATEPEAKS (MAXPKS,
+     M                    NHIST,NSYS,PKS,IPKSEQ,XQUAL,IQUAL)
+        write(99,*)'After UPDATEPEAKS - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
+C
         CALL PRTPHD( 1000 , JSEQNO, EMAOPT, IA3)
 C
         NPKS=NHIST+NSYS
@@ -212,7 +217,7 @@ C
         IF(IER .GE. 3)  THEN
           NERR=NERR+1
           IF(MSL .LT. 4) CALL PRTIN2 ( 1 ,MSG, NPKS, IPKSEQ,PKS,XQUAL,
-     $                                 EMAOPT, IA3 )
+     $                                 IQUAL, EMAOPT, IA3 )
         ELSE
 
           CALL PRTKNT(MSG,NPKS,PKS,IPKSEQ)
@@ -242,10 +247,11 @@ C           print input data and plotting positions
             IF(IPRTOP .NE. 0 )  THEN      
               IF(IPPOS.EQ.0) THEN
 C               short output
-                CALL PRTIN2(0,MSG,NPKS,IPKSEQ,PKS,XQUAL,EMAOPT,IA3)
+                CALL PRTIN2(0,MSG,NPKS,IPKSEQ,PKS,
+     $                      XQUAL,IQUAL,EMAOPT,IA3)
               ELSE
 C               longer output
-                CALL PRTIN3 (MSG,NPKS,IPKSEQ,PKS,XQUAL,
+                CALL PRTIN3 (MSG,NPKS,IPKSEQ,PKS,XQUAL,IQUAL,
      $                       GAGEB, IPKPTR, SYSPP, WRCPP, WEIBA,
      $                       EMAOPT, IA3)
               END IF
@@ -268,8 +274,8 @@ C             do plot historic adjusted peaks
               HSTFLG = 0
             END IF
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
-            CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
-     I                      IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
+            CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
+     I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,NOCLIM,
      I                      CLIML(INDX1),CLIMU(INDX1),JSEQNO,HEADNG(9))
             IF(IPLTOP.NE.0)  THEN
@@ -728,11 +734,18 @@ C    $  /' ', 8X,I3,5X,I7,9X,I3,7X,F7.3,8X, A6,5X,  A ,2X,F8.1,//
 C    $         '     USER-SET OUTLIER CRITERIA   '         /
 C    $        '     HIGH OUTLIER   LOW OUTLIER  '        /
 C    $   6X, 2A )
- 7    FORMAT(16X,'Oservational Thresholds:',
-     $      /16X,'    Begin     End     Low     High')
- 8    FORMAT(16X,'Oservational Thresholds (defaults set by PeakFQ):',
-     $      /16X,'    Begin     End     Low     High')
- 10    FORMAT(18X,2I8,F10.1,G10.1)
+ 7    FORMAT(16X,'Observational Thresholds:',
+     $      /16X,'     Begin     End     Low     High     Comment')
+ 8    FORMAT(16X,'Observational Thresholds (defaults set by PeakFQ):',
+     $      /16X,'     Begin     End     Low     High     Comment')
+ 10   FORMAT(18X,2I8,F10.1,G10.1,5X,A)
+ 11   FORMAT(16X,'Observational Thresholds         =   None Specified')
+ 15   FORMAT(16X,'Interval Data:',
+     $       16X,'              Year     Low     High     Comment')
+ 20   FORMAT(24X,I8,F10.1,G10.1,5X,A)
+ 21   FORMAT(16X,'Interval Data                    =   None Specified')
+ 30   FORMAT(16X,'Observational Thresholds         =   Not Applicable',
+     $      /16X,'Interval Data                    =   Not Applicable')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -773,9 +786,26 @@ C    $             INT(HISTPD+.5), YNHIST, GENSKU, DWORK(1),
           END IF
           DO 110 I= 1, NTHRESH
             WRITE(MSG,10) THRESH(I)%THRBYR,THRESH(I)%THREYR,
-     $                    THRESH(I)%THRLWR,THRESH(I)%THRUPR
+     $                    THRESH(I)%THRLWR,THRESH(I)%THRUPR,
+     $                    THRESH(I)%THRCOM
  110      CONTINUE
+        ELSE
+C         no thresholds (don't think this is possible with SETTHRESH)
+          WRITE(MSG,11)
         END IF
+        IF (NINTERVAL .GT. 0) THEN
+          WRITE(MSG,15)
+          DO 120 I = 1, NINTERVAL
+            WRITE(MSG,20) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
+     $                    INTERVAL(I)%INTRVLUPR,INTERVAL(I)%INTRVLCOM
+ 120      CONTINUE
+        ELSE
+C         no interval data specified
+          WRITE(MSG,21)
+        END IF
+      ELSE
+C       threshold and interval data not applicable for Bull 17B method
+        WRITE(MSG,30)
       END IF
       CALL PRTPHD( 2002,   -999, EMAOPT, WDMSFL  )
       IF(IDEBUG.NE.0) THEN
@@ -789,14 +819,14 @@ C
 C
       SUBROUTINE   PRTIN2
      #                 ( IOPT, MSG, NPKS, IPKSEQ, PKS, XQUAL,
-     #                   EMAOPT, WDMSFL )
+     #                   IQUAL, EMAOPT, WDMSFL )
 C
 C     + + + PURPOSE + + +
 C     PRINTS SHORT LIST OF INPUT PEAKS
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MSG, NPKS, IOPT, EMAOPT, WDMSFL
-      INTEGER  IPKSEQ(NPKS)
+      INTEGER  IPKSEQ(NPKS),IQUAL(NPKS)
       CHARACTER*(*)  XQUAL(NPKS)
       REAL     PKS(NPKS)
 C
@@ -807,6 +837,7 @@ C     NPKS   -
 C     IPKSEQ -
 C     PKS    -
 C     XQUAL  -
+C     IQUAL  -
 C     EMAOPT - indicator flag for performing EMA analysis
 C              0 - no, just do traditional J407
 C              1 - yes, run EMA
@@ -839,8 +870,14 @@ C     + + + FORMATS + + +
      $            'Historic peak used in computation' ///)
  1010 FORMAT('1',//)
  1011 FORMAT(//23X,'I N P U T   D A T A   L I S T I N G')
- 1012 FORMAT(//,2('     WATER YEAR    DISCHARGE   CODES ')/)
- 1013 FORMAT(2(I12,F15.1, 1A10))
+ 1012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ',
+     $        /,'     YEAR      VALUE   CODES    CODES  REMARKS')
+ 2012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ   ',
+     $          '<--- Intervals --->',
+     $        /,'     YEAR      VALUE   CODES    CODES   ',
+     $          '  LOW         HIGH   REMARKS')
+ 1013 FORMAT(I9,F11.1,A6,A9,A)
+ 2013 FORMAT(I9,F11.1,A6,A9,2F12.1,A)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -850,14 +887,18 @@ C     IF(IOPT .NE. 1)  CALL PRTPHD( 3000, -3301 )
 C     write table of observed data
       CALL PRTPHD ( 2001, -999, EMAOPT, WDMSFL )
       WRITE(MSG,1011)
-      WRITE(MSG,1012)
-      ND2 = (NPKS+1)/2
-      DO 210 I = 1,ND2
-        IF (I+ND2 .LE. NPKS) THEN
-          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I),
-     $             IPKSEQ(I+ND2), PKS(I+ND2), XQUAL(I+ND2)
+      IF (EMAOPT .EQ. 1) THEN
+        WRITE(MSG,2012)
+      ELSE
+        WRITE(MSG,1012)
+      END IF
+      DO 210 I = 1,NPKS
+        IF (EMAOPT .EQ. 1) THEN
+          WRITE(MSG,2013) IPKSEQ(I), PKS(I), XQUAL(I),
+     $                    XQUAL(I)
         ELSE
-          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I)
+          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I),
+     $                    XQUAL(I)
         END IF
   210 CONTINUE
 C
@@ -872,7 +913,7 @@ C
 C
 C
       SUBROUTINE   PRTIN3
-     #                 ( MSG,  NPKS, IPKSEQ,PKS, XQUAL,
+     #                 ( MSG,  NPKS, IPKSEQ,PKS, XQUAL, IQUAL,
      $     GAGEB,  IPKPTR, SYSPP, WRCPP , WEIBA, EMAOPT, WDMSFL )
 C
 C     + + + PURPOSE + + +
@@ -888,9 +929,9 @@ C     INCLUDE PERCEPTION THRESHOLDS WITH PLOTTING POSITIONS, PRH 8/2010
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MSG, NPKS, EMAOPT, WDMSFL
-      REAL    PKS(NPKS),  SYSPP(NPKS), WRCPP(NPKS), WEIBA
+      REAL    PKS(NPKS), SYSPP(NPKS), WRCPP(NPKS), WEIBA
       REAL    GAGEB
-      INTEGER  IPKSEQ(NPKS), IPKPTR(NPKS)
+      INTEGER  IPKSEQ(NPKS), IQUAL(NPKS), IPKPTR(NPKS)
       CHARACTER*(*)  XQUAL(NPKS)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -910,7 +951,7 @@ C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number for input WDM file
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   JLINE,         I, NB, J, ILINE, ND2, LYR
+      INTEGER   JLINE,         I, NB, J, ILINE, LYR
       REAL    EPSILN, LTHR, UTHR
       CHARACTER*8 ESTTYP(2)
 C
@@ -937,11 +978,15 @@ C     + + + FORMATS + + +
      $            'Historic peak used in computation' ///)
  1010 FORMAT('1',//)
  1011 FORMAT(//23X,'I N P U T   D A T A   L I S T I N G')
-C1012 FORMAT(/ 23X,10HWATER YEAR,4X, 9HDISCHARGE,    
-C    $       9H   CODES /)  
- 1012 FORMAT(//,2('     WATER YEAR    DISCHARGE   CODES ')/)
-C1013 FORMAT(20X,I10,F15.1, 1A10) 
- 1013 FORMAT(2(I12,F15.1, 1A10))
+ 1012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ',
+     $        /,'     YEAR      VALUE   CODES    CODES  REMARKS')
+ 2012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ   ',
+     $          '<--- Intervals --->',
+     $        /,'     YEAR      VALUE   CODES    CODES   ',
+     $          '  LOW         HIGH   REMARKS')
+ 1013 FORMAT(I9,F11.1,A6,A9,A)
+ 2013 FORMAT(I9,F11.1,A6,A9,24X,A)
+ 2014 FORMAT(I9,26X,2F12.1,A)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
  1021 FORMAT( //3X,
@@ -956,6 +1001,8 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
      $       'LOWER      UPPER'/)
  1023 FORMAT( I11,F15.1,2F15.4,F11.1,G11.1,
      $      2A1,T27,'           --  ',  1A1, '          --  ' )
+ 2023 FORMAT( I11,F15.1,2F15.4,F11.1,G11.1,
+     $      2A1,T27,'           --  ',  1A1, '          --  ' )
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -968,16 +1015,28 @@ C     write table of observed data
       WRITE(MSG,1010)
       CALL PRTPHD ( 2001, -999, EMAOPT, WDMSFL )
       WRITE(MSG,1011)
-      WRITE(MSG,1012)
-      ND2 = (NPKS+1)/2
-      DO 210 I = 1,ND2
-        IF (I+ND2 .LE. NPKS) THEN
-          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I),
-     $             IPKSEQ(I+ND2), PKS(I+ND2), XQUAL(I+ND2)
+      IF (EMAOPT .EQ.1) THEN
+        WRITE(MSG,2012)
+      ELSE
+        WRITE(MSG,1012)
+      END IF
+      DO 210 I = 1,NPKS
+        IF (EMAOPT .EQ. 1) THEN
+          WRITE(MSG,2013) IPKSEQ(I), PKS(I), XQUAL(I),
+     $                    XQUAL(I)
         ELSE
-          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I)
+          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I),
+     $                    XQUAL(I)
         END IF
   210 CONTINUE
+
+      IF (EMAOPT.EQ.1 .AND. NINTERVAL.GT.0) THEN
+C       output interval data
+        DO 220 I = 1, NINTERVAL
+          WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
+     $                    INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLCOM
+ 220    CONTINUE
+      END IF
 C
 C     write key to codes
       WRITE(MSG, 104 )
@@ -1017,9 +1076,16 @@ C       IF(NLINES.GT.50)JLINE = ILINE+39
               END IF
  305        CONTINUE  
           END IF
-          WRITE(MSG,1023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     *                  SYSPP(I), WRCPP(I) , LTHR, UTHR,
-     $                  (' ',J=1,NB)
+          IF (EMAOPT .EQ. 1) THEN
+C           include thresholds and intervals
+            WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
+     $                    SYSPP(I), WRCPP(I) , LTHR, UTHR,
+     $                    (' ',J=1,NB)
+          ELSE
+            WRITE(MSG,1023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
+     $                    SYSPP(I), WRCPP(I) , LTHR, UTHR,
+     $                    (' ',J=1,NB)
+          END IF
   310   CONTINUE
       IF(JLINE.LT.NPKS) GO TO 302
 C
@@ -3632,7 +3698,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,NOBS,WYMIN,WYMAX,LPKIND,NT,NB(MXPK)
+      INTEGER    I,NOBS,WYMIN,WYMAX,LPKIND,NT,NB(MXPK),LNINT
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
@@ -3679,17 +3745,19 @@ C
 
       IF (NINTERVAL.EQ.0) THEN
 C       create dummy interval placeholder
-        NINTERVAL = 1
+        LNINT = 1
         ALLOCATE (INTERVAL(1))
         INTERVAL(1)%INTRVLYR = 0
         INTERVAL(1)%INTRVLLWR = 0.0
         INTERVAL(1)%INTRVLUPR = 0.0
+      ELSE
+        LNINT = NINTERVAL
       END IF
 
-      ALLOCATE (INTVLYR(NINTERVAL))
-      ALLOCATE (INTVLLWR(NINTERVAL))
-      ALLOCATE (INTVLUPR(NINTERVAL))
-      DO 10 I = 1, NINTERVAL
+      ALLOCATE (INTVLYR(LNINT))
+      ALLOCATE (INTVLLWR(LNINT))
+      ALLOCATE (INTVLUPR(LNINT))
+      DO 10 I = 1, LNINT
         INTVLYR(I) = INTERVAL(I)%INTRVLYR
         INTVLLWR(I) = INTERVAL(I)%INTRVLLWR
         INTVLUPR(I) = INTERVAL(I)%INTRVLUPR
@@ -3705,7 +3773,7 @@ C       create dummy interval placeholder
 c      CALL EMADATA(NSYS+NHIST,PKS(LPKIND),IPKSEQ(LPKIND),WYMIN,WYMAX,
       CALL EMADATA(NPKS,PKS,IPKSEQ,WYMIN,WYMAX,
      I             NTHRESH,THBY,THEY,THLO,THUP,GAGEB,
-     I             NINTERVAL,INTVLYR,INTVLLWR,INTVLUPR,
+     I             LNINT,INTVLYR,INTVLLWR,INTVLUPR,
      M             NOBS,
      O             QL,QU,TL,TU,DTYPE)
 C
@@ -3864,9 +3932,10 @@ C
 C
 C
       SUBROUTINE   STOREDATA
-     I                      (NPKS,NPKPLT,IPKPTR,PKLOG,SYSPP,WRCPP,XQUAL,
-     I                       IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,
-     I                       HSTFLG,NOCLIM,CLIML,CLIMU,STNIND,HEADER)
+     I                      (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
+     I                       XQUAL,IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,
+     I                       TXPROB,HSTFLG,NOCLIM,CLIML,CLIMU,STNIND,
+     I                       HEADER)
 C
 C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
@@ -3877,7 +3946,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       NPKS,NPKPLT,IPKPTR(NPKS),IPKSEQ(NPKS),
      1              NPLOT,HSTFLG,NOCLIM,STNIND
-      REAL          PKLOG(NPKS),SYSPP(NPKS),WRCPP(NPKS),
+      REAL          PKS(NPKS),PKLOG(NPKS),SYSPP(NPKS),WRCPP(NPKS),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
      $              CLIML(NPLOT), CLIMU(NPLOT)
       CHARACTER*5   XQUAL(NPKS)
@@ -3887,6 +3956,7 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     NPKS   - total peaks (systematic + historic)
 C     NPKPLT - number of peaks in analysis
 C     IPKPTR - array of pointer positions of ranked peaks
+C     PKS    - observed peaks
 C     PKLOG  - log10 of observed peaks (plot with x and o)
 C     SYSPP  - systematic record standard deviates (-9999 for historic
 C              peaks) (plot with o) (prob non-exceedance)
@@ -3931,6 +4001,7 @@ c
       END IF
 C
       STNDATA(STNIND)%HEADER = HEADER
+      STNDATA(STNIND)%NPKS = NPKS
       STNDATA(STNIND)%NPKPLT = NPKPLT
       STNDATA(STNIND)%NPLOT = NPLOT
       STNDATA(STNIND)%WEIBA = WEIBA
@@ -3938,6 +4009,7 @@ C
       STNDATA(STNIND)%NTHRESH = NTHRESH
 C
       DO 10 I = 1,NPKS
+        STNDATA(STNIND)%PKS(I) = PKS(I)
         STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
         STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
         STNDATA(STNIND)%WRCPP(I) = WRCPP(I)
@@ -4105,11 +4177,12 @@ C         historic period in use, will need 2 default thresholds
           ALLOCATE (THRESH(NTHRESH))
           THRESH(1)%THRLWR= 1.0D35
           THRESH(1)%THRUPR= 1.0D35
+          THRESH(1)%THRCOM= ' '
 C         determine threshold specs for historic period
           I = 1
  2        CONTINUE
-            IF (IPKSEQ(I).LT.0) THEN
-C             historic peak that is in use
+            IF (IPKSEQ(I) .LT. 0) THEN
+C             historic peak
               IF (ABS(PKS(I)) .LT. THRESH(1)%THRLWR) THEN
                 THRESH(1)%THRLWR = ABS(PKS(I))
               END IF
@@ -4127,6 +4200,7 @@ C           valid threshold default still not found
 
 C       determine threshold specs for systematic record
         THRESH(NTHRESH)%THRBYR = 0
+        THRESH(NTHRESH)%THRCOM= ' '
         I = 0
  3      CONTINUE
           I = I + 1
@@ -4148,6 +4222,121 @@ C         end of historic threshold is year before systematic period
 C       user has defined thresholds
         THRDEF = 0
       END IF
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE UPDATEPEAKS 
+     I                      (MAXPKS,
+     M                       NHIST,NSYS,PKS,IPKSEQ,XQUAL,IQUAL)
+C
+C     + + + PURPOSE + + +
+C     Make any revisions to peak data arrays based on spec file inputs
+C
+C     EMAThresh contains Threshold, Interval, and Peak 
+C     specifications pulled from the .psf file
+      USE EMAThresh
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER MAXPKS,NHIST,NSYS,IPKSEQ(MAXPKS),IQUAL(MAXPKS)
+      REAL    PKS(MAXPKS)
+      CHARACTER*(*) XQUAL(MAXPKS)
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I,J,LYR
+      CHARACTER*5 LQUAL
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC ABS
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (NNEWPKS.GT.0) THEN
+        DO 100 I=1,NNEWPKS
+          LYR = NEWPKS(I)%PKYR
+C         look for matching year in existing peaks
+          J = 0
+ 10       CONTINUE
+            J = J + 1
+            IF (ABS(IPKSEQ(J)) .EQ. LYR) THEN
+C             modifying this year's peak
+              PKS(J) = NEWPKS(I)%PKVAL
+              XQUAL(J) = NEWPKS(I)%PKCODE
+              J = NHIST + NSYS + 1
+            END IF
+          IF (J .LT. NHIST+NSYS) GO TO 10
+
+          IF (J .EQ. NHIST+NSYS) THEN
+C           did not find matching year, must be new peak
+            LQUAL = NEWPKS(I)%PKCODE
+            CALL ZLJUST(LQUAL)
+            IF (LQUAL .EQ. 'H    ' .OR. LQUAL .EQ. '7    ') THEN
+C             historic peak
+              NHIST = NHIST + 1
+C             move systematic to make space for it
+              DO 20 J=NSYS+NHIST,NHIST+1,-1
+                PKS(J)= PKS(J-1)
+                IPKSEQ(J)= IPKSEQ(J-1)
+                XQUAL(J)= XQUAL(J-1)
+                IQUAL(J)= IQUAL(J-1)
+ 20           CONTINUE
+              PKS(NHIST)= NEWPKS(I)%PKVAL
+              IPKSEQ(NHIST)= -NEWPKS(I)%PKYR
+              XQUAL(NHIST) = NEWPKS(I)%PKCODE
+            ELSE
+C             just add to end of systematic peaks
+              NSYS = NSYS + 1
+              J = NHIST + NSYS
+              PKS(J) = NEWPKS(I)%PKVAL
+              IPKSEQ(J) = NEWPKS(I)%PKYR
+              XQUAL(J)  = NEWPKS(I)%PKCODE
+            END IF
+          END IF
+ 100    CONTINUE
+      END IF
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   GETPEAKS
+     I                     (STNIND,
+     O                      NPKS,APKS,IXQUAL,IPKSEQ)
+      !DEC$ ATTRIBUTES DLLEXPORT :: GETPEAKS
+C
+C     + + + PURPOSE + + +
+C     Return Peak data for a station to the Windows interface
+C
+      Use StationData
+      Use EMAThresh
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER       STNIND,NPKS,IXQUAL(5,200),IPKSEQ(200)
+      REAL          APKS(200)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STNIND - index number of this station
+C     NPKS   - number of observed peaks
+C     APKS   - array of observed peaks (non-log)
+C     IXQUAL - array of quality codes for observed peaks (Integer version)
+C     IPKSEQ - array of years in which peaks occurred
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      NPKS = STNDATA(STNIND)%NPKS
+      DO 10 I = 1,NPKS
+        APKS(I) = STNDATA(STNIND)%PKS(I)
+        DO 5 J = 1,5
+          IXQUAL(J,I) = ICHAR(STNDATA(STNIND)%XQUAL(I)(J:J))
+ 5      CONTINUE
+        IPKSEQ(I)= STNDATA(STNIND)%IPKSEQ(I)
+ 10   CONTINUE
 C
       RETURN
       END
