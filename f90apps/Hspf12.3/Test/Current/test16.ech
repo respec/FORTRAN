@@ -456,7 +456,7 @@
  PROCESSING INPUT FOR SECTION PWATER
  
    CSNOFG  RTOPFG    UZFG   VCSFG   VUZFG   VNNFG  VIFWFG  VIRCFG   VLEFG  IFFCFG   HWTFG  IRRGFG  IFRDFG  NCANPY
-        0       1       1       1       0       0       0       0       0       1       0       0       0       2
+        0       1       1       1       0       0       0       0       0       1       0       0       0       3
  
      FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
              (inches)   (in/hr)    (feet)          (1/inches)   (1/day)
@@ -473,12 +473,17 @@
  Values of canopy layer interception storage terms:
      CANOPY              CANOPY     CEPSC      CEPS
           #                NAME      (in)      (in)
-          1           TopCanopy       0.0     0.025
+          1           TopCanopy       0.0     0.020
  
  Values of canopy layer interception storage terms:
      CANOPY              CANOPY     CEPSC      CEPS
           #                NAME      (in)      (in)
-          2        BottomCanopy       0.0     0.025
+          2        MiddleCanopy       0.0     0.010
+ 
+ Values of canopy layer interception storage terms:
+     CANOPY              CANOPY     CEPSC      CEPS
+          #                NAME      (in)      (in)
+          3        BottomCanopy       0.0     0.020
  
         FZG      FZGL
       (/in)
@@ -486,11 +491,15 @@
  
  Values of Interception Storage at start of each calendar month (inches):
         JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
-       .030      .030      .030      .050      .080      .080      .080      .080      .080      .050      .030      .030
+       .020      .020      .020      .033      .053      .053      .053      .053      .053      .033      .020      .020
  
  Values of Interception Storage at start of each calendar month (inches):
         JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
-       .030      .030      .030      .050      .080      .080      .080      .080      .080      .050      .030      .030
+       .020      .020      .020      .033      .053      .053      .053      .053      .053      .033      .020      .020
+ 
+ Values of Interception Storage at start of each calendar month (inches):
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       .020      .020      .020      .033      .053      .053      .053      .053      .053      .033      .020      .020
  
  Segment-wide storages (inches):
        CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
@@ -502,7 +511,7 @@
  PROCESSING INPUT FOR SECTION SEDMNT
  
       CRVFG    VSIVFG    SDOPFG
-          0         0         0
+          1         0         0
  
        SMPF      KRER      JRER     AFFIX     COVER      NVSI
                                    (/day)          (lb/ac.dy)
@@ -511,6 +520,18 @@
  Washoff and scour parameters for sediment
        KSER      JSER      KGER      JGER
       13.00     2.000     0.000     2.000
+ 
+ Values for start of each calendar month for COVERM
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       .500      .500      .500      .500      .500      .500      .500      .500      .500      .500      .500      .500
+ 
+ Values for start of each calendar month for COVERM
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       .500      .500      .500      .500      .500      .500      .500      .500      .500      .500      .500      .500
+ 
+ Values for start of each calendar month for COVERM
+        JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC
+       .500      .500      .500      .500      .500      .500      .500      .500      .500      .500      .500      .500
  
  Detached sediment storage (tons/acre)
        DETS
@@ -1299,17 +1320,17 @@ prec       1     1    1       145   3  1.00          0     24     1
  COMMENCING EXECUTION
 
  SPEC-ACT: PERLND    1 AT 1976/ 4/13  1: 0
-IF (prec < 0.05) THEN       743
+IF (prec < 0.05) THEN       767
           CONDITION IS TRUE 
    DETS                 ORIG:      0.40625          RESET TO =       3.0000 
 
  SPEC-ACT: PERLND    1 AT 1976/ 5/12  1: 0
-IF (prec < 0.05) THEN       743
+IF (prec < 0.05) THEN       767
           CONDITION IS TRUE 
    DETS                 ORIG:   2.6120E+00          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    1 AT 1976/10/15  1: 0
-IF (prec < 0.05) THEN       743
+IF (prec < 0.05) THEN       767
           CONDITION IS TRUE 
    DETS                 ORIG:   5.8779E-01          RESET TO =    1.0000E+00
 END IF              
