@@ -1603,7 +1603,8 @@
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1617,8 +1618,9 @@
                                     0.434     0.166     0.170     0.082     0.000     0.000     0.418
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.110  IN
-                    2   BottomCanopy          0.056  IN
+                    1      TopCanopy          0.080  IN
+                    2   MiddleCanopy          0.045  IN
+                    3   BottomCanopy          0.040  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1632,12 +1634,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                          0.126                0.00    
+                                          0.125               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          5.491E-08            0.00     5.491E-08           1.003E-03 3.100E-02
+                                          5.491E-08            0.00     5.491E-08           1.253E-04 3.100E-02
 
  *** PSTEMP ***
 
@@ -1695,7 +1697,8 @@
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1709,8 +1712,9 @@
                                     0.609     0.175     0.262     0.143     0.000     0.000     0.580
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.115  IN
-                    2   BottomCanopy          0.060  IN
+                    1      TopCanopy          0.095  IN
+                    2   MiddleCanopy          0.040  IN
+                    3   BottomCanopy          0.040  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1724,12 +1728,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                          0.209                0.00    
+                                          0.155               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          4.513E-06            0.00     4.513E-06           6.168E-02 2.900E-02
+                                          4.513E-06            0.00     4.513E-06           7.710E-03 2.900E-02
 
  *** PSTEMP ***
 
@@ -1777,11 +1781,12 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                   12.079     0.027     0.000     1.536     0.024     9.048     1.444     0.000
+                                   12.079     0.026     0.000     1.536     0.024     9.049     1.444     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.027  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.026  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1795,12 +1800,13 @@
                                     1.302     0.485     0.602     0.178     0.000     0.000     1.265
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.324  IN
-                    2   BottomCanopy          0.161  IN
+                    1      TopCanopy          0.258  IN
+                    2   MiddleCanopy          0.129  IN
+                    3   BottomCanopy          0.097  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.253     1.113     1.229     0.409     0.687     0.950
+                                    0.253     1.113     1.230     0.409     0.688     0.951
 
    BALANCE                      % ERROR IN   INCHES
                                   0.000   1.424E+01
@@ -1810,12 +1816,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                          0.322                0.00    
+                                          0.189               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          2.373E-04            0.00     2.373E-04           9.593E-02 3.100E-02
+                                          2.374E-04            0.00     2.374E-04           1.199E-02 3.100E-02
 
  *** PSTEMP ***
 
@@ -1841,9 +1847,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.1380E+05          0.2910E+06          0.3001E+07          0.3306E+07
+         (RELATIVE TO FREEZING)          0.1380E+05          0.2911E+06          0.3001E+07          0.3306E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                3.524E-02 6.815E-04 0.573      0.00      1.54      0.00      2.15     6.815E-04
+                                3.525E-02 6.817E-04 0.573      0.00      1.54      0.00      2.15     6.817E-04
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 4
@@ -1858,30 +1864,32 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                   12.769     0.000     0.000     1.380     0.045     9.134     2.210     0.000
+                                   12.768     0.000     0.000     1.379     0.045     9.133     2.211     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
                                      SUPY      SURO      IFWO      AGWO      PERO      IGWI
                                        IN        IN        IN        IN        IN        IN
-                                    6.170     0.064     0.555     0.730     1.349     0.000
+                                    6.170     0.064     0.556     0.730     1.350     0.000
 
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                    4.515     1.297     1.770     1.064     0.000     0.000     4.131
+                                    4.515     1.292     1.773     1.065     0.000     0.000     4.131
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.966  IN
-                    2   BottomCanopy          0.331  IN
+                    1      TopCanopy          0.815  IN
+                    2   MiddleCanopy          0.263  IN
+                    3   BottomCanopy          0.214  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.576     2.364     1.897     0.750     1.150     1.496
+                                    0.577     2.366     1.897     0.749     1.150     1.496
 
    BALANCE                      % ERROR IN   INCHES
                                   0.000   1.825E+01
@@ -1891,12 +1899,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                          0.719                0.00    
+                                          0.246               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.365E-02            0.00     1.365E-02           0.399     3.000E-02
+                                          1.373E-02            0.00     1.373E-02           4.983E-02 3.000E-02
 
  *** PSTEMP ***
 
@@ -1922,9 +1930,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.3520E+06          0.2540E+07          0.4072E+07          0.6964E+07
+         (RELATIVE TO FREEZING)          0.3530E+06          0.2542E+07          0.4074E+07          0.6969E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                0.141     2.463E-03  1.01      0.00      1.43      0.00      2.58     2.463E-03
+                                0.141     2.471E-03  1.01      0.00      1.43      0.00      2.58     2.471E-03
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 5
@@ -1939,30 +1947,32 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                   10.439     0.000     0.000     1.013     0.004     7.648     1.774     0.000
+                                   10.439     0.000     0.000     1.013     0.004     7.647     1.775     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
                                      SUPY      SURO      IFWO      AGWO      PERO      IGWI
                                        IN        IN        IN        IN        IN        IN
-                                    3.470     0.002     0.071     0.920     0.992     0.000
+                                    3.470     0.002     0.071     0.920     0.993     0.000
 
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                    5.670     1.126     1.718     1.964     0.000     0.000     4.808
+                                    5.670     1.122     1.719     1.966     0.000     0.000     4.807
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.773  IN
-                    2   BottomCanopy          0.353  IN
+                    1      TopCanopy          0.631  IN
+                    2   MiddleCanopy          0.272  IN
+                    3   BottomCanopy          0.219  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.029     1.358     0.955     0.006     0.478     0.484
+                                    0.029     1.359     0.958     0.006     0.479     0.485
 
    BALANCE                      % ERROR IN   INCHES
                                   0.000   1.624E+01
@@ -1972,12 +1982,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                          0.927                0.00    
+                                          0.292               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          3.885E-06            0.00     3.885E-06           0.210     3.100E-02
+                                          3.925E-06            0.00     3.925E-06           2.627E-02 3.100E-02
 
  *** PSTEMP ***
 
@@ -2003,9 +2013,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           9656.              0.3728E+06          0.5615E+07          0.5997E+07
+         (RELATIVE TO FREEZING)           9707.              0.3732E+06          0.5617E+07          0.6000E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                3.341E-03 5.777E-05 0.116      0.00      1.37      0.00      1.49     5.777E-05
+                                3.363E-03 5.817E-05 0.116      0.00      1.37      0.00      1.49     5.817E-05
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 6
@@ -2020,30 +2030,32 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                    8.026     0.000     0.000     0.581     0.001     6.054     1.391     0.000
+                                    8.026     0.000     0.000     0.580     0.001     6.053     1.392     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
                                      SUPY      SURO      IFWO      AGWO      PERO      IGWI
                                        IN        IN        IN        IN        IN        IN
-                                    3.910     0.001     0.024     0.697     0.721     0.000
+                                    3.910     0.001     0.024     0.697     0.722     0.000
 
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                    7.056     1.254     1.847     2.500     0.000     0.000     5.601
+                                    7.056     1.249     1.850     2.501     0.000     0.000     5.600
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.854  IN
-                    2   BottomCanopy          0.400  IN
+                    1      TopCanopy          0.708  IN
+                    2   MiddleCanopy          0.276  IN
+                    3   BottomCanopy          0.265  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.021     1.423     1.211     0.008     0.905     0.313
+                                    0.021     1.425     1.213     0.008     0.907     0.314
 
    BALANCE                      % ERROR IN   INCHES
                                   0.000   1.435E+01
@@ -2053,12 +2065,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.19                0.00    
+                                          0.343               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          2.695E-06            0.00     2.695E-06           0.269     3.000E-02
+                                          2.729E-06            0.00     2.729E-06           3.359E-02 3.000E-02
 
  *** PSTEMP ***
 
@@ -2084,9 +2096,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.1040E+05          0.1917E+06          0.4494E+07          0.4696E+07
+         (RELATIVE TO FREEZING)          0.1046E+05          0.1923E+06          0.4497E+07          0.4700E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                2.059E-03 3.336E-05 3.217E-02  0.00     0.795      0.00     0.829     3.336E-05
+                                2.071E-03 3.355E-05 3.227E-02  0.00     0.796      0.00     0.830     3.355E-05
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 7
@@ -2101,30 +2113,32 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                    5.334     0.014     0.000     0.231     0.000     4.165     0.923     0.000
+                                    5.335     0.013     0.000     0.232     0.000     4.166     0.924     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.014  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.013  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
                                      SUPY      SURO      IFWO      AGWO      PERO      IGWI
                                        IN        IN        IN        IN        IN        IN
-                                    1.540     0.000     0.001     0.524     0.525     0.000
+                                    1.540     0.000     0.001     0.525     0.526     0.000
 
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                    6.195     0.622     0.575     2.510     0.000     0.000     3.707
+                                    6.195     0.620     0.575     2.511     0.000     0.000     3.706
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.397  IN
-                    2   BottomCanopy          0.226  IN
+                    1      TopCanopy          0.316  IN
+                    2   MiddleCanopy          0.159  IN
+                    3   BottomCanopy          0.146  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.000     0.225     0.678     0.000     0.622     0.056
+                                    0.000     0.226     0.680     0.000     0.624     0.056
 
    BALANCE                      % ERROR IN   INCHES
                                   0.000   9.566E+00
@@ -2134,12 +2148,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.29                0.00    
+                                          0.373               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.098E-08            0.00     1.098E-08           0.128     3.100E-02
+                                          1.108E-08            0.00     1.108E-08           1.604E-02 3.100E-02
 
  *** PSTEMP ***
 
@@ -2165,9 +2179,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           430.4              0.1027E+05          0.3471E+07          0.3482E+07
+         (RELATIVE TO FREEZING)           433.0              0.1029E+05          0.3474E+07          0.3485E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                9.156E-05 1.495E-06 1.566E-03  0.00     0.508      0.00     0.509     1.495E-06
+                                9.209E-05 1.504E-06 1.569E-03  0.00     0.508      0.00     0.510     1.504E-06
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 8
@@ -2186,41 +2200,43 @@
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
                                      SUPY      SURO      IFWO      AGWO      PERO      IGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.190     0.000     0.000     0.345     0.345     0.000
+                                    0.190     0.000     0.000     0.346     0.346     0.000
 
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                    5.432     0.204     0.214     1.979     0.000     0.000     2.398
+                                    5.432     0.203     0.215     1.980     0.000     0.000     2.398
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.168  IN
-                    2   BottomCanopy          0.036  IN
+                    1      TopCanopy          0.141  IN
+                    2   MiddleCanopy          0.049  IN
+                    3   BottomCanopy          0.013  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
                                     0.000     0.000     0.000     0.000     0.000     0.000
 
    BALANCE                      % ERROR IN   INCHES
-                                  0.000   5.524E+00
+                                  0.000   5.525E+00
 
  *** SEDMNT ***
 
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.25                0.00    
+                                          0.383               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                           0.00                0.00      0.00               3.062E-03 3.100E-02
+                                           0.00                0.00      0.00               3.828E-04 3.100E-02
 
  *** PSTEMP ***
 
@@ -2246,9 +2262,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           0.000               248.1              0.2238E+07          0.2239E+07
+         (RELATIVE TO FREEZING)           0.000               252.0              0.2241E+07          0.2241E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                 0.00      0.00     4.100E-05  0.00     0.330      0.00     0.330      0.00    
+                                 0.00      0.00     4.160E-05  0.00     0.331      0.00     0.331      0.00    
 1
 
  REACH/MIXED-RESERVOIR NO.   2                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 1
@@ -2425,7 +2441,7 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              9.232E+09  -1.207E+09   8.019E+09
+                              9.233E+09  -1.207E+09   8.019E+09
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
@@ -2444,7 +2460,7 @@
      CONC. IN SUSPENSION (MG/L)            1.68      0.00     0.348E-02  1.68    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  8.938E-04 0.000E+00 1.853E-06 8.957E-04
+              SUSPENSION                  8.940E-04 0.000E+00 1.853E-06 8.958E-04
               BED                         1.332E+03 1.749E+02 1.668E+02 1.674E+03
               TOTAL                       1.332E+03 1.749E+02 1.668E+02 1.674E+03
 
@@ -2474,7 +2490,7 @@
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                    0.149 4.279E-02      1.57
+                                    0.149 4.280E-02      1.57
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
@@ -2496,14 +2512,14 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              3.342E+10  -6.467E+08   3.275E+10
+                              3.342E+10  -6.466E+08   3.276E+10
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                             -3.745E+03   3.866E+04  -1.496E+04  -2.665E+04  -2.870E+03   7.616E+02   1.306E+03
+                             -3.744E+03   3.866E+04  -1.496E+04  -2.664E+04  -2.870E+03   7.616E+02   1.306E+03
 
    BALANCE                      % ERROR IN      BTU
                                   0.000   3.343E+10
@@ -2523,9 +2539,9 @@
 
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
-     TOTAL INFLOWS                        2.049E+00 9.311E+01 4.834E+01 1.435E+02
-     DEPOSITION/SCOUR                    -1.129E+00 2.135E+01 3.146E-02 2.026E+01
-     TOTAL OUTFLOWS                       3.178E+00 7.175E+01 4.831E+01 1.232E+02
+     TOTAL INFLOWS                        2.051E+00 9.314E+01 4.835E+01 1.435E+02
+     DEPOSITION/SCOUR                    -1.127E+00 2.136E+01 3.146E-02 2.026E+01
+     TOTAL OUTFLOWS                       3.178E+00 7.178E+01 4.832E+01 1.233E+02
 
                                FOR SAND, SILT, CLAY
 
@@ -2556,7 +2572,7 @@
                                      5.67
 
    BALANCE                      % ERROR IN    AC-FT
-                                  0.000   2.111E+02
+                                  0.000   2.112E+02
 
  *** HTRCH ***
 
@@ -2567,14 +2583,14 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              1.670E+10  -2.924E+08   1.640E+10
+                              1.670E+10  -2.923E+08   1.640E+10
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                             -4.854E+02   4.696E+04  -1.568E+04  -2.995E+04  -2.641E+03   3.404E+02   4.829E+02
+                             -4.844E+02   4.696E+04  -1.568E+04  -2.995E+04  -2.641E+03   3.404E+02   4.830E+02
 
    BALANCE                      % ERROR IN      BTU
                                   0.000   1.672E+10
@@ -2583,10 +2599,10 @@
 
    STATE VARIABLES
                                                SAND      SILT      CLAY     TOTAL
-     CONC. IN SUSPENSION (MG/L)            1.68      0.00     0.849E-05  1.68    
+     CONC. IN SUSPENSION (MG/L)            1.68      0.00     0.848E-05  1.68    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  8.705E-04 0.000E+00 4.399E-09 8.705E-04
+              SUSPENSION                  8.708E-04 0.000E+00 4.400E-09 8.708E-04
               BED                         1.331E+03 1.994E+02 1.668E+02 1.697E+03
               TOTAL                       1.331E+03 1.994E+02 1.668E+02 1.697E+03
 
@@ -2595,7 +2611,7 @@
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
      TOTAL INFLOWS                        6.035E-01 8.315E+00 8.720E+00 1.764E+01
-     DEPOSITION/SCOUR                    -4.761E-01 3.136E+00 2.306E-02 2.683E+00
+     DEPOSITION/SCOUR                    -4.762E-01 3.136E+00 2.306E-02 2.683E+00
      TOTAL OUTFLOWS                       1.080E+00 5.179E+00 8.697E+00 1.496E+01
 
                                FOR SAND, SILT, CLAY
@@ -2612,11 +2628,11 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                    0.268     0.238     0.238     0.221      3.33     0.195      1.21      1.10     0.736
+                                    0.268     0.238     0.238     0.221      3.33     0.195      1.21      1.10     0.737
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                    0.126 3.074E-02     0.809
+                                    0.126 3.075E-02     0.809
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
@@ -2627,7 +2643,7 @@
                                      7.05
 
    BALANCE                      % ERROR IN    AC-FT
-                                  0.000   2.044E+02
+                                  0.000   2.045E+02
 
  *** HTRCH ***
 
@@ -2638,14 +2654,14 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              1.931E+10   6.407E+08   1.996E+10
+                              1.931E+10   6.409E+08   1.996E+10
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                              1.231E+04   5.286E+04  -1.003E+04  -3.399E+04   3.321E+03   3.417E+02  -1.965E+02
+                              1.232E+04   5.286E+04  -1.003E+04  -3.399E+04   3.321E+03   3.417E+02  -1.963E+02
 
    BALANCE                      % ERROR IN      BTU
                                   0.000   1.934E+10
@@ -2657,7 +2673,7 @@
      CONC. IN SUSPENSION (MG/L)            1.68      0.00     0.229E-02  1.68    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  6.100E-04 0.000E+00 8.336E-07 6.108E-04
+              SUSPENSION                  6.103E-04 0.000E+00 8.338E-07 6.111E-04
               BED                         1.330E+03 2.019E+02 1.668E+02 1.699E+03
               TOTAL                       1.330E+03 2.019E+02 1.668E+02 1.699E+03
 
@@ -2709,17 +2725,17 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              1.402E+10   1.068E+09   1.510E+10
+                              1.402E+10   1.069E+09   1.510E+10
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                              2.300E+04   5.373E+04  -1.534E+04  -1.512E+04   3.550E+02   1.704E+02  -7.988E+02
+                              2.300E+04   5.373E+04  -1.534E+04  -1.511E+04   3.557E+02   1.704E+02  -7.985E+02
 
    BALANCE                      % ERROR IN      BTU
-                                  0.000   1.404E+10
+                                  0.000   1.405E+10
 
  *** SEDTRN ***
 
@@ -2728,7 +2744,7 @@
      CONC. IN SUSPENSION (MG/L)            1.68     0.166E-12 0.179      1.86    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  4.130E-04 4.074E-17 4.398E-05 4.570E-04
+              SUSPENSION                  4.132E-04 4.085E-17 4.398E-05 4.572E-04
               BED                         1.330E+03 2.042E+02 1.668E+02 1.701E+03
               TOTAL                       1.330E+03 2.042E+02 1.668E+02 1.701E+03
 
@@ -2737,7 +2753,7 @@
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
      TOTAL INFLOWS                        4.825E-01 7.770E+00 8.760E+00 1.701E+01
-     DEPOSITION/SCOUR                    -4.299E-01 2.277E+00 2.072E-02 1.868E+00
+     DEPOSITION/SCOUR                    -4.300E-01 2.277E+00 2.071E-02 1.867E+00
      TOTAL OUTFLOWS                       9.126E-01 5.493E+00 8.739E+00 1.514E+01
 
                                FOR SAND, SILT, CLAY
@@ -2754,11 +2770,11 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                    0.105     0.149     0.149     0.139      2.09     0.122     0.760      1.10     0.289
+                                    0.105     0.149     0.149     0.139      2.09     0.122     0.760      1.10     0.290
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                9.974E-02 1.928E-02     0.318
+                                9.975E-02 1.928E-02     0.318
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
@@ -2780,14 +2796,14 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              1.017E+10   5.152E+08   1.069E+10
+                              1.017E+10   5.181E+08   1.070E+10
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                              5.332E+03   1.277E+04  -3.920E+03  -3.767E+03   1.365E+02   4.933E+01   6.111E+01
+                              5.405E+03   1.292E+04  -3.944E+03  -3.810E+03   1.318E+02   4.936E+01   5.731E+01
 
    BALANCE                      % ERROR IN      BTU
                                   0.000   1.019E+10
@@ -2808,8 +2824,8 @@
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
      TOTAL INFLOWS                        3.477E-01 9.363E+00 1.012E+01 1.983E+01
-     DEPOSITION/SCOUR                    -2.570E-01 6.533E-01 1.588E-02 4.122E-01
-     TOTAL OUTFLOWS                       6.052E-01 8.709E+00 1.011E+01 1.942E+01
+     DEPOSITION/SCOUR                    -2.571E-01 6.533E-01 1.588E-02 4.121E-01
+     TOTAL OUTFLOWS                       6.053E-01 8.709E+00 1.011E+01 1.942E+01
 
                                FOR SAND, SILT, CLAY
 
@@ -3841,11 +3857,12 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                    1.806     0.000     0.000     0.004     0.000     1.432     0.370     0.000
+                                    1.808     0.000     0.000     0.004     0.000     1.433     0.371     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -3856,15 +3873,16 @@
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                    4.522     0.348     0.016     1.009     0.000     0.000     1.373
+                                    4.522     0.347     0.016     1.009     0.000     0.000     1.372
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.234  IN
-                    2   BottomCanopy          0.114  IN
+                    1      TopCanopy          0.195  IN
+                    2   MiddleCanopy          0.077  IN
+                    3   BottomCanopy          0.075  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.000     0.003     0.258     0.000     0.255     0.003
+                                    0.000     0.003     0.260     0.000     0.256     0.003
 
    BALANCE                      % ERROR IN   INCHES
                                   0.000   3.391E+00
@@ -3874,12 +3892,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.23                0.00    
+                                          0.396               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          5.787E-15            0.00     5.787E-15           1.542E-02 3.000E-02
+                                          5.995E-15            0.00     5.995E-15           1.927E-03 3.000E-02
 
  *** PSTEMP ***
 
@@ -3905,9 +3923,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.1936               0.000              0.1240E+07          0.1240E+07
+         (RELATIVE TO FREEZING)          0.1975               0.000              0.1241E+07          0.1241E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                5.746E-08 9.756E-10  0.00      0.00     0.279      0.00     0.279     9.756E-10
+                                5.863E-08 9.957E-10  0.00      0.00     0.279      0.00     0.279     9.957E-10
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/10
@@ -3922,11 +3940,12 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                    2.235     0.020     0.000     0.009     0.000     1.958     0.248     0.000
+                                    2.237     0.020     0.000     0.009     0.000     1.960     0.248     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.020  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.020  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -3937,30 +3956,31 @@
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                    2.646     0.405     0.007     0.746     0.000     0.000     1.158
+                                    2.646     0.403     0.007     0.747     0.000     0.000     1.157
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.274  IN
-                    2   BottomCanopy          0.131  IN
+                    1      TopCanopy          0.223  IN
+                    2   MiddleCanopy          0.100  IN
+                    3   BottomCanopy          0.080  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.000     0.012     1.293     0.000     1.272     0.021
+                                    0.000     0.012     1.295     0.000     1.275     0.021
 
    BALANCE                      % ERROR IN   INCHES
-                                  0.000   3.536E+00
+                                  0.000   3.538E+00
 
  *** SEDMNT ***
 
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.24                0.00    
+                                          0.412               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          2.598E-14            0.00     2.598E-14           2.805E-02 3.100E-02
+                                          2.652E-14            0.00     2.652E-14           3.506E-03 3.100E-02
 
  *** PSTEMP ***
 
@@ -3986,9 +4006,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.8193               0.000              0.7187E+06          0.7187E+06
+         (RELATIVE TO FREEZING)          0.8280               0.000              0.7195E+06          0.7195E+06
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                4.066E-07 7.271E-09  0.00      0.00     0.265      0.00     0.265     7.271E-09
+                                4.106E-07 7.342E-09  0.00      0.00     0.265      0.00     0.265     7.342E-09
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/11
@@ -4014,17 +4034,18 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                    1.649     0.012     0.000     0.006     0.000     1.473     0.158     0.000
+                                    1.651     0.012     0.000     0.006     0.000     1.474     0.158     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.012  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
                                      SUPY      SURO      IFWO      AGWO      PERO      IGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.130     0.000     0.000     0.090     0.090     0.000
+                                    0.130     0.000     0.000     0.091     0.091     0.000
 
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
@@ -4032,27 +4053,28 @@
                                     0.840     0.095     0.003     0.528     0.000     0.000     0.626
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.045  IN
-                    2   BottomCanopy          0.050  IN
+                    1      TopCanopy          0.035  IN
+                    2   MiddleCanopy          0.020  IN
+                    3   BottomCanopy          0.040  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
                                     0.000     0.000     0.043     0.000     0.042     0.001
 
    BALANCE                      % ERROR IN   INCHES
-                                  0.000   2.365E+00
+                                  0.000   2.367E+00
 
  *** SEDMNT ***
 
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.20                0.00    
+                                          0.419               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          7.610E-18            0.00     7.610E-18           6.775E-04 3.000E-02
+                                          7.734E-18            0.00     7.734E-18           8.469E-05 3.000E-02
 
  *** PSTEMP ***
 
@@ -4078,9 +4100,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.2164E-03           0.000              0.3872E+06          0.3872E+06
+         (RELATIVE TO FREEZING)          0.2181E-03           0.000              0.3876E+06          0.3876E+06
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                3.244E-09 6.409E-11  0.00      0.00     0.194      0.00     0.194     6.409E-11
+                                3.269E-09 6.459E-11  0.00      0.00     0.194      0.00     0.194     6.459E-11
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/12
@@ -4106,11 +4128,12 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                    1.700     0.000     0.000     0.008     0.000     1.590     0.102     0.000
+                                    1.702     0.000     0.000     0.008     0.000     1.592     0.103     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -4124,27 +4147,28 @@
                                     0.434     0.138     0.001     0.228     0.000     0.000     0.368
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.108  IN
-                    2   BottomCanopy          0.030  IN
+                    1      TopCanopy          0.090  IN
+                    2   MiddleCanopy          0.028  IN
+                    3   BottomCanopy          0.020  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
                                     0.000     0.003     0.351     0.000     0.346     0.005
 
    BALANCE                      % ERROR IN   INCHES
-                                  0.000   2.129E+00
+                                  0.000   2.131E+00
 
  *** SEDMNT ***
 
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.17                0.00    
+                                          0.429               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          4.067E-15            0.00     4.067E-15           4.824E-03 3.100E-02
+                                          4.110E-15            0.00     4.110E-15           6.030E-04 3.100E-02
 
  *** PSTEMP ***
 
@@ -4170,9 +4194,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.1282E-01           0.000              0.2382E+06          0.2382E+06
+         (RELATIVE TO FREEZING)          0.1288E-01           0.000              0.2385E+06          0.2385E+06
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                1.300E-07 2.562E-09  0.00      0.00     0.150      0.00     0.150     2.562E-09
+                                1.307E-07 2.575E-09  0.00      0.00     0.150      0.00     0.150     2.575E-09
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                       REPORT FOR PRINTOUT YEAR ENDING 1976/12
@@ -4198,30 +4222,32 @@
 
    STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
                                        IN        IN        IN        IN        IN        IN        IN        IN
-                                    1.700     0.000     0.000     0.008     0.000     1.590     0.102     0.000
+                                    1.702     0.000     0.000     0.008     0.000     1.592     0.103     0.000
 
          CANOPY LAYER           NAME          VALUE
                     1      TopCanopy          0.000  IN
-                    2   BottomCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
                                      SUPY      SURO      IFWO      AGWO      PERO      IGWI
                                        IN        IN        IN        IN        IN        IN
-                                   23.860     0.081     0.973     5.128     6.182     0.000
+                                   23.860     0.082     0.974     5.130     6.186     0.000
 
      EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
                                       PET      CEPE      UZET      LZET     AGWET     BASET      TAET
                                        IN        IN        IN        IN        IN        IN        IN
-                                   39.655     6.317     7.185    12.931     0.000     0.000    26.433
+                                   39.655     6.295     7.193    12.940     0.000     0.000    26.428
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          4.369  IN
-                    2   BottomCanopy          1.948  IN
+                    1      TopCanopy          3.588  IN
+                    2   MiddleCanopy          1.458  IN
+                    3   BottomCanopy          1.249  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
-                                    0.973     7.205     9.333     1.512     6.621     4.224
+                                    0.974     7.212     9.347     1.512     6.632     4.227
 
    BALANCE                      % ERROR IN   INCHES
                                   0.000   3.432E+01
@@ -4231,12 +4257,12 @@
    STATE VARIABLES                          STORAGE
                                                DETS               COVER
                                             TONS/AC            FRACTION
-                                           1.17                0.00    
+                                          0.429               0.875    
 
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.390E-02            0.00     1.390E-02            1.22     0.366    
+                                          1.398E-02            0.00     1.398E-02           0.152     0.366    
 
  *** PSTEMP ***
 
@@ -4262,9 +4288,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.3874E+06          0.3493E+07          0.2841E+08          0.3229E+08
+         (RELATIVE TO FREEZING)          0.3885E+06          0.3497E+07          0.2842E+08          0.3231E+08
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                0.188     3.370E-03  1.96      0.00      8.88      0.00      11.0     3.370E-03
+                                0.189     3.378E-03  1.96      0.00      8.89      0.00      11.0     3.378E-03
 1
 
  REACH/MIXED-RESERVOIR NO.   2                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 9
@@ -4273,11 +4299,11 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                6.758E-02     0.119     0.119     0.111      1.67 9.802E-02     0.609      1.10     0.186
+                                6.762E-02     0.119     0.119     0.111      1.67 9.805E-02     0.609      1.10     0.186
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                8.928E-02 1.545E-02     0.204
+                                8.929E-02 1.545E-02     0.204
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
@@ -4288,7 +4314,7 @@
                                      4.52
 
    BALANCE                      % ERROR IN    AC-FT
-                                  0.000   5.777E+01
+                                  0.000   5.778E+01
 
  *** HTRCH ***
 
@@ -4299,17 +4325,17 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              4.838E+09   1.519E+08   4.995E+09
+                              4.839E+09   1.520E+08   4.996E+09
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                              1.393E+03   2.008E+03  -9.070E+02  -3.185E+02  -2.284E+01   1.005E+02   5.322E+02
+                              1.393E+03   2.008E+03  -9.070E+02  -3.185E+02  -2.284E+01   1.005E+02   5.323E+02
 
    BALANCE                      % ERROR IN      BTU
-                                  0.000   4.847E+09
+                                  0.000   4.848E+09
 
  *** SEDTRN ***
 
@@ -4327,7 +4353,7 @@
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
      TOTAL INFLOWS                        2.165E-01 4.766E+00 5.223E+00 1.021E+01
-     DEPOSITION/SCOUR                    -1.275E-01 1.938E-01 6.455E-03 7.273E-02
+     DEPOSITION/SCOUR                    -1.275E-01 1.938E-01 6.455E-03 7.272E-02
      TOTAL OUTFLOWS                       3.440E-01 4.572E+00 5.217E+00 1.013E+01
 
                                FOR SAND, SILT, CLAY
@@ -4344,11 +4370,11 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                4.936E-02     0.102     0.102 9.488E-02      1.43 8.377E-02     0.520      1.10     0.136
+                                4.939E-02     0.102     0.102 9.491E-02      1.43 8.380E-02     0.520      1.10     0.136
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                8.253E-02 1.320E-02     0.149
+                                8.255E-02 1.320E-02     0.149
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
@@ -4359,7 +4385,7 @@
                                      2.64
 
    BALANCE                      % ERROR IN    AC-FT
-                                  0.000   7.351E+01
+                                  0.000   7.352E+01
 
  *** HTRCH ***
 
@@ -4370,7 +4396,7 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              5.277E+09  -3.641E+08   4.916E+09
+                              5.277E+09  -3.642E+08   4.916E+09
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
@@ -4399,7 +4425,7 @@
 
      TOTAL INFLOWS                        2.299E-01 2.754E+00 3.316E+00 6.300E+00
      DEPOSITION/SCOUR                    -1.164E-01 1.197E+00 2.191E-02 1.102E+00
-     TOTAL OUTFLOWS                       3.463E-01 1.557E+00 3.294E+00 5.197E+00
+     TOTAL OUTFLOWS                       3.464E-01 1.557E+00 3.294E+00 5.197E+00
 
                                FOR SAND, SILT, CLAY
 
@@ -4415,22 +4441,22 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                2.969E-02 7.916E-02 7.916E-02 7.359E-02      1.11 6.497E-02     0.403      1.10 8.164E-02
+                                2.971E-02 7.919E-02 7.919E-02 7.361E-02      1.11 6.499E-02     0.404      1.10 8.170E-02
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                7.268E-02 1.024E-02 8.968E-02
+                                7.270E-02 1.024E-02 8.974E-02
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
        VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
-                                     6.74      0.00 3.162E-02      6.72
+                                     6.74      0.00 3.163E-02      6.73
 
      POTENTIAL ET (IN)              POTEV
                                     0.840
 
    BALANCE                      % ERROR IN    AC-FT
-                                  0.000   6.785E+00
+                                  0.000   6.789E+00
 
  *** HTRCH ***
 
@@ -4441,7 +4467,7 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              2.241E+08  -1.551E+08   6.995E+07
+                              2.244E+08  -1.553E+08   7.000E+07
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
@@ -4451,7 +4477,7 @@
                               0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
 
    BALANCE                      % ERROR IN      BTU
-                                  0.000   2.251E+08
+                                  0.000   2.253E+08
 
  *** SEDTRN ***
 
@@ -4468,8 +4494,8 @@
 
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
-     TOTAL INFLOWS                        1.899E-16 2.144E-09 1.357E-06 1.359E-06
-     DEPOSITION/SCOUR                     1.899E-16 0.000E+00 0.000E+00 1.899E-16
+     TOTAL INFLOWS                        1.930E-16 2.144E-09 1.357E-06 1.359E-06
+     DEPOSITION/SCOUR                     1.930E-16 0.000E+00 0.000E+00 1.930E-16
      TOTAL OUTFLOWS                       0.000E+00 1.499E-08 1.627E-05 1.628E-05
 
                                FOR SAND, SILT, CLAY
@@ -4486,11 +4512,11 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                1.959E-02 6.431E-02 6.431E-02 5.978E-02     0.901 5.278E-02     0.328      1.10 5.388E-02
+                                1.960E-02 6.433E-02 6.433E-02 5.980E-02     0.902 5.280E-02     0.328      1.10 5.391E-02
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                6.551E-02 8.316E-03 5.918E-02
+                                6.552E-02 8.319E-03 5.922E-02
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
@@ -4512,17 +4538,17 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              2.910E+08  -1.056E+08   1.854E+08
+                              2.911E+08  -1.057E+08   1.854E+08
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                             -5.096E+02   8.832E+02  -1.850E+03  -9.193E+02   5.126E+01   0.000E+00   1.325E+03
+                             -5.096E+02   8.832E+02  -1.850E+03  -9.194E+02   5.124E+01   0.000E+00   1.325E+03
 
    BALANCE                      % ERROR IN      BTU
-                                  0.000   2.910E+08
+                                  0.000   2.911E+08
 
  *** SEDTRN ***
 
@@ -4557,16 +4583,16 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                1.959E-02 6.431E-02 6.431E-02 5.978E-02     0.901 5.278E-02     0.328      1.10 5.388E-02
+                                1.960E-02 6.433E-02 6.433E-02 5.980E-02     0.902 5.280E-02     0.328      1.10 5.391E-02
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                6.551E-02 8.316E-03 5.918E-02
+                                6.552E-02 8.319E-03 5.922E-02
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
        VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
-                                1.745E+03      5.35      4.16 1.748E+03
+                                1.746E+03      5.35      4.16 1.748E+03
 
      POTENTIAL ET (IN)              POTEV
                                      39.6
@@ -4583,14 +4609,14 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              1.179E+11  -1.746E+09   1.161E+11
+                              1.179E+11  -1.742E+09   1.162E+11
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                             -5.689E+04   2.720E+05  -1.298E+05  -1.764E+05  -4.214E+04   2.126E+03   1.733E+04
+                             -5.681E+04   2.722E+05  -1.298E+05  -1.764E+05  -4.214E+04   2.126E+03   1.733E+04
 
    BALANCE                      % ERROR IN      BTU
                                   0.000   1.179E+11
@@ -4610,9 +4636,9 @@
 
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
-     TOTAL INFLOWS                        5.968E+00 1.668E+02 1.166E+02 2.894E+02
-     DEPOSITION/SCOUR                    -4.140E+00 3.962E+01 2.145E-01 3.569E+01
-     TOTAL OUTFLOWS                       1.011E+01 1.272E+02 1.164E+02 2.538E+02
+     TOTAL INFLOWS                        5.970E+00 1.668E+02 1.166E+02 2.894E+02
+     DEPOSITION/SCOUR                    -4.138E+00 3.962E+01 2.145E-01 3.569E+01
+     TOTAL OUTFLOWS                       1.012E+01 1.272E+02 1.164E+02 2.538E+02
 
                                FOR SAND, SILT, CLAY
 
