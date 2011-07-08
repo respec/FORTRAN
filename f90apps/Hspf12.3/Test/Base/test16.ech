@@ -1104,7 +1104,7 @@ prec       1     1    1       145   3  1.00          0     24     1
  ====================================================================================================================================
  PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
 
- INGROUP NO.  1    OSVSZ=11500    INPAD WIDTH=  6252 INTERVALS    MAXROW=   81  RUNWID=10000
+ INGROUP NO.  1    OSVSZ=11500    INPAD WIDTH=  5957 INTERVALS    MAXROW=   85  RUNWID=10000
 
 
  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1234,6 +1234,9 @@ prec       1     1    1       145   3  1.00          0     24     1
      WDM1     46       120      DIV      1.000E+00    EXTNL   SOLRAD   1   1
      WDM1    126      1440      SAME     1.000E+00    EXTNL   DTMPG    1   1
      WDM1    135      1440      SAME     1.000E+00    EXTNL   CLOUD    1   1
+     WDM3    100     43200      SAME     1.000E+00    EXTNL   CEPSC    1   1
+     WDM3    100     43200      SAME     1.000E+00    EXTNL   CEPSC    2   1
+     WDM3    100     43200      SAME     1.000E+00    EXTNL   CEPSC    3   1
 
    OUTPUT TIMESERIES
 
@@ -1320,17 +1323,17 @@ prec       1     1    1       145   3  1.00          0     24     1
  COMMENCING EXECUTION
 
  SPEC-ACT: PERLND    1 AT 1976/ 4/13  1: 0
-IF (prec < 0.05) THEN       767
+IF (prec < 0.05) THEN       773
           CONDITION IS TRUE 
    DETS                 ORIG:      0.40625          RESET TO =       3.0000 
 
  SPEC-ACT: PERLND    1 AT 1976/ 5/12  1: 0
-IF (prec < 0.05) THEN       767
+IF (prec < 0.05) THEN       773
           CONDITION IS TRUE 
    DETS                 ORIG:   2.6120E+00          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    1 AT 1976/10/15  1: 0
-IF (prec < 0.05) THEN       767
+IF (prec < 0.05) THEN       773
           CONDITION IS TRUE 
    DETS                 ORIG:   5.8779E-01          RESET TO =    1.0000E+00
 END IF              
