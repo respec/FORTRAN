@@ -11,7 +11,8 @@ FILES
 <FILE>  <UN#>***<----FILE NAME------------------------------------------------->
 WDM        21   test.wdm
 WDM2       22   test2.wdm
-MESSU      23   test16.ech
+WDM3       23   test16.wdm
+MESSU      24   test16.ech
            01   test16.out
 BINO       62   test16.hbn
            97   test16.p97
@@ -97,6 +98,7 @@ PERLND
     # -  # CSNO RTOP UZFG  VCS  VUZ  VNN VIFW VIRC  VLE IFFC  HWT IRRG IFRD NCAN  ***
     1         0    1    1    1    1    1    0    0    1                        
     2         0    1    1    1    0    0    0    0    0                        3 
+          *** change VCS to -1 to get cepsc values from ext source timeseries
   END PWAT-PARM1
 
   PWAT-PARM2
@@ -142,21 +144,21 @@ PERLND
     # -  #  Interception storage capacity at start of each month       ***
             JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
     1      .030 .030 .030 .030 .015 .060 .120 .143 .135 .105 .050 .040
-    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020
+    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020 
   END MON-INTERCEP
 
   MON-INTERCEP
     <PLS>   Only required if VCSFG=1 in PWAT-PARM1                     ***
     # -  #  Interception storage capacity at start of each month       ***
             JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
-    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020
+    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020 
   END MON-INTERCEP
 
   MON-INTERCEP
     <PLS>   Only required if VCSFG=1 in PWAT-PARM1                     ***
     # -  #  Interception storage capacity at start of each month       ***
             JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
-    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020
+    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020 
   END MON-INTERCEP
 
   MON-UZSN
@@ -675,6 +677,10 @@ WDM    125 DEWP     ENGL              SAME RCHRES   1   2 EXTNL  DEWTMP
 WDM    135 CLDC     ENGL              SAME PERLND   1   2 EXTNL  CLOUD
 WDM    135 CLDC     ENGL              SAME IMPLND   1     EXTNL  CLOUD
 WDM    135 CLDC     ENGL              SAME RCHRES   1   2 EXTNL  CLOUD
+*** the following 3 lines are not used unless VCSFG = -1 
+WDM3   100 CEPSC    ENGL              SAME PERLND   2     EXTNL  CEPSC  1
+WDM3   100 CEPSC    ENGL              SAME PERLND   2     EXTNL  CEPSC  2
+WDM3   100 CEPSC    ENGL              SAME PERLND   2     EXTNL  CEPSC  3
 END EXT SOURCES
 
 SCHEMATIC
