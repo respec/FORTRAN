@@ -5464,6 +5464,9 @@ C
           PAD(CEFP(I)+ IVL1)= CEPE(I)
           CEPET= CEPET+ CEPE(I)
         END IF
+        IF (CEPOFP(I) .GE. 1) THEN
+          PAD(CEPOFP(I)+ IVL1)= CEPO(I)
+        END IF
       END DO
       IF (CETFP .GE. 1) THEN
         PAD(CETFP+ IVL1)= CEPET
