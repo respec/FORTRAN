@@ -1104,7 +1104,7 @@ prec       1     1    1       145   3  1.00          0     24     1
  ====================================================================================================================================
  PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
 
- INGROUP NO.  1    OSVSZ=11500    INPAD WIDTH=  5957 INTERVALS    MAXROW=   85  RUNWID=10000
+ INGROUP NO.  1    OSVSZ=11500    INPAD WIDTH=  5504 INTERVALS    MAXROW=   92  RUNWID=10000
 
 
  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1249,6 +1249,17 @@ prec       1     1    1       145   3  1.00          0     24     1
      SEDMNT  SOSED    1   1    1.300E+02  RCHRES    2 INFLOW  ISED     3   1
      PWTGAS  POHT     1   1    5.000E+02  RCHRES    2 INFLOW  IHEAT    1   1
 
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     PWATER  CEPE     1   1    1.000E+00      SUM   WDM3    201      1440
+     PWATER  CEPE     2   1    1.000E+00      SUM   WDM3    202      1440
+     PWATER  CEPE     3   1    1.000E+00      SUM   WDM3    203      1440
+     PWATER  CEPO     1   1    1.000E+00      SUM   WDM3    204      1440
+     PWATER  CEPO     2   1    1.000E+00      SUM   WDM3    205      1440
+     PWATER  CEPO     3   1    1.000E+00      SUM   WDM3    206      1440
+     SEDMNT  COVER    1   1    1.000E+00      AVER  WDM3    207      1440
+
 
  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -1323,17 +1334,17 @@ prec       1     1    1       145   3  1.00          0     24     1
  COMMENCING EXECUTION
 
  SPEC-ACT: PERLND    1 AT 1976/ 4/13  1: 0
-IF (prec < 0.05) THEN       773
+IF (prec < 0.05) THEN       784
           CONDITION IS TRUE 
    DETS                 ORIG:      0.40625          RESET TO =       3.0000 
 
  SPEC-ACT: PERLND    1 AT 1976/ 5/12  1: 0
-IF (prec < 0.05) THEN       773
+IF (prec < 0.05) THEN       784
           CONDITION IS TRUE 
    DETS                 ORIG:   2.6120E+00          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    1 AT 1976/10/15  1: 0
-IF (prec < 0.05) THEN       773
+IF (prec < 0.05) THEN       784
           CONDITION IS TRUE 
    DETS                 ORIG:   5.8779E-01          RESET TO =    1.0000E+00
 END IF              

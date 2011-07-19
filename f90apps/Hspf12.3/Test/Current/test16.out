@@ -538,79 +538,6 @@
                                 2.198E-04 3.466E-06 1.826E-03  0.00     0.407      0.00     0.409     3.466E-06
 1
 
- PERVIOUS LAND SEGMENT NO.   1                           BICKNELL FARM                                     REPORT FOR MONTH 1976/ 8
-
- *** SNOW ***
-
-   NO PACK
-
-   FLUXES ALL ZERO
-
- *** PWATER ***
-
-   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
-                                       IN        IN        IN        IN        IN        IN        IN        IN
-                                    1.642     0.000     0.000     0.001     0.000     1.186     0.454     0.000
-
-   FLUXES
-     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
-                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
-                                       IN        IN        IN        IN        IN        IN
-                                    0.190     0.000     0.000     0.271     0.272     0.000
-
-     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
-                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
-                                       IN        IN        IN        IN        IN        IN        IN
-                                    5.432     0.190     0.116     1.749     0.000     0.000     2.055
-
-     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
-                                       IN        IN        IN        IN        IN        IN
-                                    0.000     0.000     0.000     0.000     0.000     0.000
-
-   BALANCE                      % ERROR IN   INCHES
-                                  0.000   3.968E+00
-
- *** SEDMNT ***
-
-   STATE VARIABLES                          STORAGE
-                                               DETS               COVER
-                                            TONS/AC            FRACTION
-                                          0.789               0.930    
-
-   FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
-                                               WSSD               SCRSD     SOSED                 DET      NVSI
-                                            TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                           0.00                0.00      0.00               2.531E-04 1.550E-02
-
- *** PSTEMP ***
-
-   STATE VARIABLES
-
-     TEMPERATURES (DEG F)             AIR<--------SOIL LAYERS--------->
-                                            SURFACE     UPPER  LOWER/GW
-                                     AIRT     SLTMP     ULTMP     LGTMP
-                                     64.1      69.7      73.3      58.1
-
- *** PWTGAS ***
-
-   STATE VARIABLES
-
-                               <---SURFACE FLOW---><----INTERFLOW-----><-GROUNDWATER FLOW->
-     WATER TEMPERATURES                       SOTMP               IOTMP               AOTMP
-       (DEG F)                           -0.100E+31          -0.100E+31            58.1    
-
-     DISSOLVED GASES                SODOX     SOCO2     IODOX     IOCO2     AODOX     AOCO2
-       (MG/L)                  -0.100E+31-0.100E+31-0.100E+31-0.100E+31  4.48      0.00    
-
-   FLUXES
-
-     OUTFLOWS IN WATER                                                                                  (TOTAL)
-       HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           0.000               171.5              0.1736E+07          0.1736E+07
-       DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                 0.00      0.00     1.807E-05  0.00     0.260      0.00     0.260      0.00    
-1
-
  IMPERVIOUS LAND SEGMENT NO.   1                         DONIGIAN INDUSTRY                                 REPORT FOR MONTH 1976/ 1
 
  *** SNOW ***
@@ -959,53 +886,6 @@
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
                                 0.197E+08                      5.20               0.869E-01
-1
-
- IMPERVIOUS LAND SEGMENT NO.   1                         DONIGIAN INDUSTRY                                 REPORT FOR MONTH 1976/ 8
-
- *** SNOW ***
-
-   NO PACK
-
-   FLUXES ALL ZERO
-
- *** IWATER ***
-
-   STATE VARIABLES              RETN STOR SURF STOR
-                                     RETS      SURS                        PETADJ
-                                       IN        IN
-                                     0.00      0.00                          1.00
-
-   FLUXES                        MOISTURE   OUTFLOW EVAP. POT    ACTUAL
-                                     SUPY      SURO       PET     IMPEV
-                                       IN        IN        IN        IN
-                                    1.900     1.900      5.43      0.00
-
-   BALANCE                      % ERROR IN   INCHES
-                                  0.000   1.900E+00
-
- *** SOLIDS ***
-
-   STATE VARIABLES                   SOLIDS STORAGE
-                                               SLDS
-                                            TONS/AC
-                                              0.019
-
-   FLUXES                            SOLIDS WASHOFF
-                                              SOSLD
-                                            TONS/AC
-                                              0.041
-
- *** IWTGAS ***
-
-   STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
-                                    SOTMP                         SODOX               SOCO2
-                                    DEG F                          MG/L           MG OF C/L
-                               -0.100E+31                    -0.100E+31          -0.100E+31
-   FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
-     OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
-                                   BTU/AC                         LB/AC               LB/AC
-                                0.148E+08                      3.76               0.626E-01
 1
 
  REACH/MIXED-RESERVOIR NO.   1                          UPPER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 1
@@ -1503,77 +1383,6 @@
                                   0.000   6.810E+02
                                   0.000   9.515E+01
                                   0.000   7.703E+01
-1
-
- REACH/MIXED-RESERVOIR NO.   1                          UPPER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 8
-
- *** HYDR ***
-
-   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
-     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                4.644E-02 9.901E-02 9.901E-02 9.204E-02      2.08 8.456E-02     0.505     0.732     0.192
-
-                                   PUSTAR      PTAU   OUTFLOW
-                                     FT/S    LB/FT2     FT3/S
-                                    0.102 1.999E-02     0.140
-
-   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
-     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
-       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
-                                     90.5     0.139     0.315      90.3
-
-     POTENTIAL ET (IN)              POTEV
-                                     5.43
-
-   BALANCE                      % ERROR IN    AC-FT
-                                  0.000   9.070E+01
-
- *** HTRCH ***
-
-   STATE VARIABLES                  AIR    DEWPOINT       WATER
-     TEMPERATURES (DEG F)        AIRTMP      DEWTMP          TW
-                                   62.5        55.0        62.5
-
-   FLUXES                         TOTAL       ATMOS       TOTAL
-     HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
-                                  IHEAT      HTEXCH      ROHEAT
-                              8.258E+09   7.972E+08   9.056E+09
-
-   ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
-     (POSITIVE INDICATES GAIN)
-                                  TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
-                                   HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
-                                 QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                              3.974E+03   4.323E+03  -5.086E+02  -6.998E+02   3.214E+02   4.494E+02   8.843E+01
-
-   BALANCE                      % ERROR IN      BTU
-                                  0.000   8.263E+09
-
- *** SEDTRN ***
-
-   STATE VARIABLES
-                                               SAND      SILT      CLAY     TOTAL
-     CONC. IN SUSPENSION (MG/L)            0.00      0.00      0.00      0.00    
-
-     STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  0.000E+00 0.000E+00 0.000E+00 0.000E+00
-              BED                         6.822E+02 8.732E+01 6.705E+01 8.366E+02
-              TOTAL                       6.822E+02 8.732E+01 6.705E+01 8.366E+02
-
-     BED DEPTH (FT)                            1.01
-
-   FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
-
-     TOTAL INFLOWS                        2.022E+00 9.300E+00 8.896E+00 2.022E+01
-     DEPOSITION/SCOUR                     1.674E+00-6.246E-02-1.226E+00 3.855E-01
-     TOTAL OUTFLOWS                       3.477E-01 9.363E+00 1.012E+01 1.983E+01
-
-                               FOR SAND, SILT, CLAY
-
-   BALANCE                      % ERROR IN     TONS
-                                  0.000   6.826E+02
-                                  0.000   9.669E+01
-                                  0.000   7.717E+01
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 1
@@ -2184,89 +1993,6 @@
                                 9.209E-05 1.504E-06 1.569E-03  0.00     0.508      0.00     0.510     1.504E-06
 1
 
- PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 8
-
- *** SNOW ***
-
-   NO PACK
-
-   FLUXES ALL ZERO
-
- *** PWATER ***
-
-   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
-                                       IN        IN        IN        IN        IN        IN        IN        IN
-                                    2.781     0.000     0.000     0.017     0.000     2.186     0.578     0.000
-
-         CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
-
-   FLUXES
-     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
-                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
-                                       IN        IN        IN        IN        IN        IN
-                                    0.190     0.000     0.000     0.346     0.346     0.000
-
-     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
-                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
-                                       IN        IN        IN        IN        IN        IN        IN
-                                    5.432     0.203     0.215     1.980     0.000     0.000     2.398
-
-         CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.141  IN
-                    2   MiddleCanopy          0.049  IN
-                    3   BottomCanopy          0.013  IN
-
-     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
-                                       IN        IN        IN        IN        IN        IN
-                                    0.000     0.000     0.000     0.000     0.000     0.000
-
-   BALANCE                      % ERROR IN   INCHES
-                                  0.000   5.525E+00
-
- *** SEDMNT ***
-
-   STATE VARIABLES                          STORAGE
-                                               DETS               COVER
-                                            TONS/AC            FRACTION
-                                          0.383               0.875    
-
-   FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
-                                               WSSD               SCRSD     SOSED                 DET      NVSI
-                                            TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                           0.00                0.00      0.00               3.828E-04 3.100E-02
-
- *** PSTEMP ***
-
-   STATE VARIABLES
-
-     TEMPERATURES (DEG F)             AIR<--------SOIL LAYERS--------->
-                                            SURFACE     UPPER  LOWER/GW
-                                     AIRT     SLTMP     ULTMP     LGTMP
-                                     64.1      68.0      65.7      59.6
-
- *** PWTGAS ***
-
-   STATE VARIABLES
-
-                               <---SURFACE FLOW---><----INTERFLOW-----><-GROUNDWATER FLOW->
-     WATER TEMPERATURES                       SOTMP               IOTMP               AOTMP
-       (DEG F)                           -0.100E+31          -0.100E+31            59.6    
-
-     DISSOLVED GASES                SODOX     SOCO2     IODOX     IOCO2     AODOX     AOCO2
-       (MG/L)                  -0.100E+31-0.100E+31-0.100E+31-0.100E+31  4.48      0.00    
-
-   FLUXES
-
-     OUTFLOWS IN WATER                                                                                  (TOTAL)
-       HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           0.000               252.0              0.2241E+07          0.2241E+07
-       DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                 0.00      0.00     4.160E-05  0.00     0.331      0.00     0.331      0.00    
-1
-
  REACH/MIXED-RESERVOIR NO.   2                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 1
 
  *** HYDR ***
@@ -2764,75 +2490,77 @@
                                   0.000   1.756E+02
 1
 
- REACH/MIXED-RESERVOIR NO.   2                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 8
+ PERVIOUS LAND SEGMENT NO.   1                           BICKNELL FARM                                     REPORT FOR MONTH 1976/ 8
 
- *** HYDR ***
+ *** SNOW ***
 
-   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
-     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                    0.105     0.149     0.149     0.139      2.09     0.122     0.760      1.10     0.290
+   NO PACK
 
-                                   PUSTAR      PTAU   OUTFLOW
-                                     FT/S    LB/FT2     FT3/S
-                                9.975E-02 1.928E-02     0.318
+   FLUXES ALL ZERO
 
-   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
-     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
-       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
-                                     105.     0.206     0.436      105.
+ *** PWATER ***
 
-     POTENTIAL ET (IN)              POTEV
-                                     5.43
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    1.642     0.000     0.000     0.001     0.000     1.186     0.454     0.000
 
-   BALANCE                      % ERROR IN    AC-FT
-                                  0.000   1.051E+02
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.190     0.000     0.000     0.271     0.272     0.000
 
- *** HTRCH ***
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.190     0.116     1.749     0.000     0.000     2.055
 
-   STATE VARIABLES                  AIR    DEWPOINT       WATER
-     TEMPERATURES (DEG F)        AIRTMP      DEWTMP          TW
-                                   62.5        55.0        62.5
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
 
-   FLUXES                         TOTAL       ATMOS       TOTAL
-     HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
-                                  IHEAT      HTEXCH      ROHEAT
-                              1.017E+10   5.181E+08   1.070E+10
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   3.968E+00
 
-   ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
-     (POSITIVE INDICATES GAIN)
-                                  TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
-                                   HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
-                                 QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                              5.405E+03   1.292E+04  -3.944E+03  -3.810E+03   1.318E+02   4.936E+01   5.731E+01
+ *** SEDMNT ***
 
-   BALANCE                      % ERROR IN      BTU
-                                  0.000   1.019E+10
+   STATE VARIABLES                          STORAGE
+                                               DETS               COVER
+                                            TONS/AC            FRACTION
+                                          0.789               0.930    
 
- *** SEDTRN ***
+   FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
+                                               WSSD               SCRSD     SOSED                 DET      NVSI
+                                            TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
+                                           0.00                0.00      0.00               2.531E-04 1.550E-02
+
+ *** PSTEMP ***
 
    STATE VARIABLES
-                                               SAND      SILT      CLAY     TOTAL
-     CONC. IN SUSPENSION (MG/L)            0.00      0.00      0.00      0.00    
 
-     STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  0.000E+00 0.000E+00 0.000E+00 0.000E+00
-              BED                         1.330E+03 2.049E+02 1.669E+02 1.701E+03
-              TOTAL                       1.330E+03 2.049E+02 1.669E+02 1.701E+03
+     TEMPERATURES (DEG F)             AIR<--------SOIL LAYERS--------->
+                                            SURFACE     UPPER  LOWER/GW
+                                     AIRT     SLTMP     ULTMP     LGTMP
+                                     64.1      69.7      73.3      58.1
 
-     BED DEPTH (FT)                            1.03
+ *** PWTGAS ***
 
-   FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
+   STATE VARIABLES
 
-     TOTAL INFLOWS                        3.477E-01 9.363E+00 1.012E+01 1.983E+01
-     DEPOSITION/SCOUR                    -2.571E-01 6.533E-01 1.588E-02 4.121E-01
-     TOTAL OUTFLOWS                       6.053E-01 8.709E+00 1.011E+01 1.942E+01
+                               <---SURFACE FLOW---><----INTERFLOW-----><-GROUNDWATER FLOW->
+     WATER TEMPERATURES                       SOTMP               IOTMP               AOTMP
+       (DEG F)                           -0.100E+31          -0.100E+31            58.1    
 
-                               FOR SAND, SILT, CLAY
+     DISSOLVED GASES                SODOX     SOCO2     IODOX     IOCO2     AODOX     AOCO2
+       (MG/L)                  -0.100E+31-0.100E+31-0.100E+31-0.100E+31  4.48      0.00    
 
-   BALANCE                      % ERROR IN     TONS
-                                  0.000   1.330E+03
-                                  0.000   2.136E+02
-                                  0.000   1.770E+02
+   FLUXES
+
+     OUTFLOWS IN WATER                                                                                  (TOTAL)
+       HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
+         (RELATIVE TO FREEZING)           0.000               171.5              0.1736E+07          0.1736E+07
+       DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
+                                 0.00      0.00     1.807E-05  0.00     0.260      0.00     0.260      0.00    
 1
 
  PERVIOUS LAND SEGMENT NO.   1                           BICKNELL FARM                                     REPORT FOR MONTH 1976/ 9
@@ -3233,6 +2961,53 @@
                                  7.48     0.133      3.07      0.00      8.15      0.00      18.7     0.133    
 1
 
+ IMPERVIOUS LAND SEGMENT NO.   1                         DONIGIAN INDUSTRY                                 REPORT FOR MONTH 1976/ 8
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** IWATER ***
+
+   STATE VARIABLES              RETN STOR SURF STOR
+                                     RETS      SURS                        PETADJ
+                                       IN        IN
+                                     0.00      0.00                          1.00
+
+   FLUXES                        MOISTURE   OUTFLOW EVAP. POT    ACTUAL
+                                     SUPY      SURO       PET     IMPEV
+                                       IN        IN        IN        IN
+                                    1.900     1.900      5.43      0.00
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   1.900E+00
+
+ *** SOLIDS ***
+
+   STATE VARIABLES                   SOLIDS STORAGE
+                                               SLDS
+                                            TONS/AC
+                                              0.019
+
+   FLUXES                            SOLIDS WASHOFF
+                                              SOSLD
+                                            TONS/AC
+                                              0.041
+
+ *** IWTGAS ***
+
+   STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
+                                    SOTMP                         SODOX               SOCO2
+                                    DEG F                          MG/L           MG OF C/L
+                               -0.100E+31                    -0.100E+31          -0.100E+31
+   FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
+     OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
+                                   BTU/AC                         LB/AC               LB/AC
+                                0.148E+08                      3.76               0.626E-01
+1
+
  IMPERVIOUS LAND SEGMENT NO.   1                         DONIGIAN INDUSTRY                                 REPORT FOR MONTH 1976/ 9
 
  *** SNOW ***
@@ -3488,6 +3263,77 @@
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
                                 0.160E+09                      58.5                1.03    
+1
+
+ REACH/MIXED-RESERVOIR NO.   1                          UPPER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                4.644E-02 9.901E-02 9.901E-02 9.204E-02      2.08 8.456E-02     0.505     0.732     0.192
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                    0.102 1.999E-02     0.140
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     90.5     0.139     0.315      90.3
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   9.070E+01
+
+ *** HTRCH ***
+
+   STATE VARIABLES                  AIR    DEWPOINT       WATER
+     TEMPERATURES (DEG F)        AIRTMP      DEWTMP          TW
+                                   62.5        55.0        62.5
+
+   FLUXES                         TOTAL       ATMOS       TOTAL
+     HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
+                                  IHEAT      HTEXCH      ROHEAT
+                              8.258E+09   7.972E+08   9.056E+09
+
+   ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
+     (POSITIVE INDICATES GAIN)
+                                  TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
+                                   HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
+                                 QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
+                              3.974E+03   4.323E+03  -5.086E+02  -6.998E+02   3.214E+02   4.494E+02   8.843E+01
+
+   BALANCE                      % ERROR IN      BTU
+                                  0.000   8.263E+09
+
+ *** SEDTRN ***
+
+   STATE VARIABLES
+                                               SAND      SILT      CLAY     TOTAL
+     CONC. IN SUSPENSION (MG/L)            0.00      0.00      0.00      0.00    
+
+     STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
+              SUSPENSION                  0.000E+00 0.000E+00 0.000E+00 0.000E+00
+              BED                         6.822E+02 8.732E+01 6.705E+01 8.366E+02
+              TOTAL                       6.822E+02 8.732E+01 6.705E+01 8.366E+02
+
+     BED DEPTH (FT)                            1.01
+
+   FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
+
+     TOTAL INFLOWS                        2.022E+00 9.300E+00 8.896E+00 2.022E+01
+     DEPOSITION/SCOUR                     1.674E+00-6.246E-02-1.226E+00 3.855E-01
+     TOTAL OUTFLOWS                       3.477E-01 9.363E+00 1.012E+01 1.983E+01
+
+                               FOR SAND, SILT, CLAY
+
+   BALANCE                      % ERROR IN     TONS
+                                  0.000   6.826E+02
+                                  0.000   9.669E+01
+                                  0.000   7.717E+01
 1
 
  REACH/MIXED-RESERVOIR NO.   1                          UPPER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 9
@@ -3843,6 +3689,89 @@
                                   0.000   6.891E+02
                                   0.000   2.497E+02
                                   0.000   1.808E+02
+1
+
+ PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 8
+
+ *** SNOW ***
+
+   NO PACK
+
+   FLUXES ALL ZERO
+
+ *** PWATER ***
+
+   STATE VARIABLES                   PERS      CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+                                       IN        IN        IN        IN        IN        IN        IN        IN
+                                    2.781     0.000     0.000     0.017     0.000     2.186     0.578     0.000
+
+         CANOPY LAYER           NAME          VALUE
+                    1      TopCanopy          0.000  IN
+                    2   MiddleCanopy          0.000  IN
+                    3   BottomCanopy          0.000  IN
+
+   FLUXES
+     EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
+                                     SUPY      SURO      IFWO      AGWO      PERO      IGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.190     0.000     0.000     0.346     0.346     0.000
+
+     EVAPOTRANSPIRATION         POTENTIAL<--------------------ET COMPONENTS-------------------->(SUM)
+                                      PET      CEPE      UZET      LZET     AGWET     BASET      TAET
+                                       IN        IN        IN        IN        IN        IN        IN
+                                    5.432     0.203     0.215     1.980     0.000     0.000     2.398
+
+         CANOPY LAYER           NAME          VALUE
+                    1      TopCanopy          0.141  IN
+                    2   MiddleCanopy          0.049  IN
+                    3   BottomCanopy          0.013  IN
+
+     INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
+                                       IN        IN        IN        IN        IN        IN
+                                    0.000     0.000     0.000     0.000     0.000     0.000
+
+   BALANCE                      % ERROR IN   INCHES
+                                  0.000   5.525E+00
+
+ *** SEDMNT ***
+
+   STATE VARIABLES                          STORAGE
+                                               DETS               COVER
+                                            TONS/AC            FRACTION
+                                          0.383               0.875    
+
+   FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
+                                               WSSD               SCRSD     SOSED                 DET      NVSI
+                                            TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
+                                           0.00                0.00      0.00               3.828E-04 3.100E-02
+
+ *** PSTEMP ***
+
+   STATE VARIABLES
+
+     TEMPERATURES (DEG F)             AIR<--------SOIL LAYERS--------->
+                                            SURFACE     UPPER  LOWER/GW
+                                     AIRT     SLTMP     ULTMP     LGTMP
+                                     64.1      68.0      65.7      59.6
+
+ *** PWTGAS ***
+
+   STATE VARIABLES
+
+                               <---SURFACE FLOW---><----INTERFLOW-----><-GROUNDWATER FLOW->
+     WATER TEMPERATURES                       SOTMP               IOTMP               AOTMP
+       (DEG F)                           -0.100E+31          -0.100E+31            59.6    
+
+     DISSOLVED GASES                SODOX     SOCO2     IODOX     IOCO2     AODOX     AOCO2
+       (MG/L)                  -0.100E+31-0.100E+31-0.100E+31-0.100E+31  4.48      0.00    
+
+   FLUXES
+
+     OUTFLOWS IN WATER                                                                                  (TOTAL)
+       HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
+         (RELATIVE TO FREEZING)           0.000               252.0              0.2241E+07          0.2241E+07
+       DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
+                                 0.00      0.00     4.160E-05  0.00     0.331      0.00     0.331      0.00    
 1
 
  PERVIOUS LAND SEGMENT NO.   2                           JOBES FOREST                                      REPORT FOR MONTH 1976/ 9
@@ -4291,6 +4220,77 @@
          (RELATIVE TO FREEZING)          0.3885E+06          0.3497E+07          0.2842E+08          0.3231E+08
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
                                 0.189     3.378E-03  1.96      0.00      8.89      0.00      11.0     3.378E-03
+1
+
+ REACH/MIXED-RESERVOIR NO.   2                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 8
+
+ *** HYDR ***
+
+   STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
+     ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
+                                    0.105     0.149     0.149     0.139      2.09     0.122     0.760      1.10     0.290
+
+                                   PUSTAR      PTAU   OUTFLOW
+                                     FT/S    LB/FT2     FT3/S
+                                9.975E-02 1.928E-02     0.318
+
+   FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
+     ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
+       VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
+                                     105.     0.206     0.436      105.
+
+     POTENTIAL ET (IN)              POTEV
+                                     5.43
+
+   BALANCE                      % ERROR IN    AC-FT
+                                  0.000   1.051E+02
+
+ *** HTRCH ***
+
+   STATE VARIABLES                  AIR    DEWPOINT       WATER
+     TEMPERATURES (DEG F)        AIRTMP      DEWTMP          TW
+                                   62.5        55.0        62.5
+
+   FLUXES                         TOTAL       ATMOS       TOTAL
+     HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
+                                  IHEAT      HTEXCH      ROHEAT
+                              1.017E+10   5.181E+08   1.070E+10
+
+   ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
+     (POSITIVE INDICATES GAIN)
+                                  TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
+                                   HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
+                                 QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
+                              5.405E+03   1.292E+04  -3.944E+03  -3.810E+03   1.318E+02   4.936E+01   5.731E+01
+
+   BALANCE                      % ERROR IN      BTU
+                                  0.000   1.019E+10
+
+ *** SEDTRN ***
+
+   STATE VARIABLES
+                                               SAND      SILT      CLAY     TOTAL
+     CONC. IN SUSPENSION (MG/L)            0.00      0.00      0.00      0.00    
+
+     STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
+              SUSPENSION                  0.000E+00 0.000E+00 0.000E+00 0.000E+00
+              BED                         1.330E+03 2.049E+02 1.669E+02 1.701E+03
+              TOTAL                       1.330E+03 2.049E+02 1.669E+02 1.701E+03
+
+     BED DEPTH (FT)                            1.03
+
+   FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
+
+     TOTAL INFLOWS                        3.477E-01 9.363E+00 1.012E+01 1.983E+01
+     DEPOSITION/SCOUR                    -2.571E-01 6.533E-01 1.588E-02 4.121E-01
+     TOTAL OUTFLOWS                       6.053E-01 8.709E+00 1.011E+01 1.942E+01
+
+                               FOR SAND, SILT, CLAY
+
+   BALANCE                      % ERROR IN     TONS
+                                  0.000   1.330E+03
+                                  0.000   2.136E+02
+                                  0.000   1.770E+02
 1
 
  REACH/MIXED-RESERVOIR NO.   2                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 9
