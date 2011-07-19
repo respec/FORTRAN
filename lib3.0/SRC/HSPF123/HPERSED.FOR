@@ -956,13 +956,23 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION SEDMNT2 + + +
       INCLUDE   'cplse.inc'
       INCLUDE   'cmpad.inc'
 C
+C     + + + LOCAL VARIABLES + + +
+      REAL     COVERC
+C
 C     + + + END SPECIFICATIONS + + +
 C
 C     handle section sedmnt
 C
       IF (DETSFP.GE.1)  PAD(DETSFP+IVL1) = DETS
       IF (STCFP.GE.1) PAD(STCFP + IVL1)  = STCAP
-      IF (COVRFP.GE.1) PAD(COVRFP + IVL1)= COVER(1)
+      IF (COVRFP.GE.1) THEN 
+C       compute the composite effect of multi-layer cover for reporting
+        COVERC= 0.0
+        DO I= 1, NCANPY
+          COVERC= COVERC+ (1.0- COVERC)*COVER(I)
+        END DO
+        PAD(COVRFP + IVL1)= COVERC
+      END IF
 C
       RETURN
       END
