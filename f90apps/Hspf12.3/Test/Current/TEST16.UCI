@@ -124,19 +124,19 @@ PERLND
   PWAT-CANOPY
     <PLS >    CANOPY         CANOPY     CEPSC      CEPS   ***
     x -  x         #           NAME      (in)      (in)   ***
-    2              1      TopCanopy       0.0     0.020
+    2              1      Overstory       0.0     0.020
   END PWAT-CANOPY
 
   PWAT-CANOPY
     <PLS >    CANOPY         CANOPY     CEPSC      CEPS   ***
     x -  x         #           NAME      (in)      (in)   ***
-    2              2   MiddleCanopy       0.0     0.010
+    2              2     Understory       0.0     0.010
   END PWAT-CANOPY
 
   PWAT-CANOPY
     <PLS >    CANOPY         CANOPY     CEPSC      CEPS   ***
     x -  x         #           NAME      (in)      (in)   ***
-    2              3   BottomCanopy       0.0     0.020
+    2              3    ForestFloor       0.0     0.020
   END PWAT-CANOPY
 
   MON-INTERCEP

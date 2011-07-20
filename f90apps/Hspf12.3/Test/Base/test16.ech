@@ -473,17 +473,17 @@
  Values of canopy layer interception storage terms:
      CANOPY              CANOPY     CEPSC      CEPS
           #                NAME      (in)      (in)
-          1           TopCanopy       0.0     0.020
+          1           Overstory       0.0     0.020
  
  Values of canopy layer interception storage terms:
      CANOPY              CANOPY     CEPSC      CEPS
           #                NAME      (in)      (in)
-          2        MiddleCanopy       0.0     0.010
+          2          Understory       0.0     0.010
  
  Values of canopy layer interception storage terms:
      CANOPY              CANOPY     CEPSC      CEPS
           #                NAME      (in)      (in)
-          3        BottomCanopy       0.0     0.020
+          3         ForestFloor       0.0     0.020
  
         FZG      FZGL
       (/in)
