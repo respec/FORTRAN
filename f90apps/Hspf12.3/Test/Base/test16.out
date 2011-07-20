@@ -1411,9 +1411,9 @@
                                     9.805     0.000     0.000     1.165     0.000     7.931     0.709     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1427,9 +1427,9 @@
                                     0.434     0.166     0.170     0.082     0.000     0.000     0.418
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.080  IN
-                    2   MiddleCanopy          0.045  IN
-                    3   BottomCanopy          0.040  IN
+                    1      Overstory          0.080  IN
+                    2     Understory          0.045  IN
+                    3    ForestFloor          0.040  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1505,9 +1505,9 @@
                                    11.121     0.000     0.000     1.434     0.006     8.539     1.141     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1521,9 +1521,9 @@
                                     0.609     0.175     0.262     0.143     0.000     0.000     0.580
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.095  IN
-                    2   MiddleCanopy          0.040  IN
-                    3   BottomCanopy          0.040  IN
+                    1      Overstory          0.095  IN
+                    2     Understory          0.040  IN
+                    3    ForestFloor          0.040  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1593,9 +1593,9 @@
                                    12.079     0.026     0.000     1.536     0.024     9.049     1.444     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.026  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.026  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1609,9 +1609,9 @@
                                     1.302     0.485     0.602     0.178     0.000     0.000     1.265
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.258  IN
-                    2   MiddleCanopy          0.129  IN
-                    3   BottomCanopy          0.097  IN
+                    1      Overstory          0.258  IN
+                    2     Understory          0.129  IN
+                    3    ForestFloor          0.097  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1676,9 +1676,9 @@
                                    12.768     0.000     0.000     1.379     0.045     9.133     2.211     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1692,9 +1692,9 @@
                                     4.515     1.292     1.773     1.065     0.000     0.000     4.131
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.815  IN
-                    2   MiddleCanopy          0.263  IN
-                    3   BottomCanopy          0.214  IN
+                    1      Overstory          0.815  IN
+                    2     Understory          0.263  IN
+                    3    ForestFloor          0.214  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1759,9 +1759,9 @@
                                    10.439     0.000     0.000     1.013     0.004     7.647     1.775     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1775,9 +1775,9 @@
                                     5.670     1.122     1.719     1.966     0.000     0.000     4.807
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.631  IN
-                    2   MiddleCanopy          0.272  IN
-                    3   BottomCanopy          0.219  IN
+                    1      Overstory          0.631  IN
+                    2     Understory          0.272  IN
+                    3    ForestFloor          0.219  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1842,9 +1842,9 @@
                                     8.026     0.000     0.000     0.580     0.001     6.053     1.392     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1858,9 +1858,9 @@
                                     7.056     1.249     1.850     2.501     0.000     0.000     5.600
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.708  IN
-                    2   MiddleCanopy          0.276  IN
-                    3   BottomCanopy          0.265  IN
+                    1      Overstory          0.708  IN
+                    2     Understory          0.276  IN
+                    3    ForestFloor          0.265  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -1925,9 +1925,9 @@
                                     5.335     0.013     0.000     0.232     0.000     4.166     0.924     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.013  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.013  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -1941,9 +1941,9 @@
                                     6.195     0.620     0.575     2.511     0.000     0.000     3.706
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.316  IN
-                    2   MiddleCanopy          0.159  IN
-                    3   BottomCanopy          0.146  IN
+                    1      Overstory          0.316  IN
+                    2     Understory          0.159  IN
+                    3    ForestFloor          0.146  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -3706,9 +3706,9 @@
                                     2.781     0.000     0.000     0.017     0.000     2.186     0.578     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -3722,9 +3722,9 @@
                                     5.432     0.203     0.215     1.980     0.000     0.000     2.398
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.141  IN
-                    2   MiddleCanopy          0.049  IN
-                    3   BottomCanopy          0.013  IN
+                    1      Overstory          0.141  IN
+                    2     Understory          0.049  IN
+                    3    ForestFloor          0.013  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -3789,9 +3789,9 @@
                                     1.808     0.000     0.000     0.004     0.000     1.433     0.371     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -3805,9 +3805,9 @@
                                     4.522     0.347     0.016     1.009     0.000     0.000     1.372
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.195  IN
-                    2   MiddleCanopy          0.077  IN
-                    3   BottomCanopy          0.075  IN
+                    1      Overstory          0.195  IN
+                    2     Understory          0.077  IN
+                    3    ForestFloor          0.075  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -3872,9 +3872,9 @@
                                     2.237     0.020     0.000     0.009     0.000     1.960     0.248     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.020  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.020  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -3888,9 +3888,9 @@
                                     2.646     0.403     0.007     0.747     0.000     0.000     1.157
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.223  IN
-                    2   MiddleCanopy          0.100  IN
-                    3   BottomCanopy          0.080  IN
+                    1      Overstory          0.223  IN
+                    2     Understory          0.100  IN
+                    3    ForestFloor          0.080  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -3966,9 +3966,9 @@
                                     1.651     0.012     0.000     0.006     0.000     1.474     0.158     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.012  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.012  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -3982,9 +3982,9 @@
                                     0.840     0.095     0.003     0.528     0.000     0.000     0.626
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.035  IN
-                    2   MiddleCanopy          0.020  IN
-                    3   BottomCanopy          0.040  IN
+                    1      Overstory          0.035  IN
+                    2     Understory          0.020  IN
+                    3    ForestFloor          0.040  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -4060,9 +4060,9 @@
                                     1.702     0.000     0.000     0.008     0.000     1.592     0.103     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -4076,9 +4076,9 @@
                                     0.434     0.138     0.001     0.228     0.000     0.000     0.368
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.090  IN
-                    2   MiddleCanopy          0.028  IN
-                    3   BottomCanopy          0.020  IN
+                    1      Overstory          0.090  IN
+                    2     Understory          0.028  IN
+                    3    ForestFloor          0.020  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
@@ -4154,9 +4154,9 @@
                                     1.702     0.000     0.000     0.008     0.000     1.592     0.103     0.000
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          0.000  IN
-                    2   MiddleCanopy          0.000  IN
-                    3   BottomCanopy          0.000  IN
+                    1      Overstory          0.000  IN
+                    2     Understory          0.000  IN
+                    3    ForestFloor          0.000  IN
 
    FLUXES
      EXTNL INFLOWS & OUTFLOWS    MOISTURE<-----OUTFLOWS TO STREAM---------->(SUM) DEEP PERC
@@ -4170,9 +4170,9 @@
                                    39.655     6.295     7.193    12.940     0.000     0.000    26.428
 
          CANOPY LAYER           NAME          VALUE
-                    1      TopCanopy          3.588  IN
-                    2   MiddleCanopy          1.458  IN
-                    3   BottomCanopy          1.249  IN
+                    1      Overstory          3.588  IN
+                    2     Understory          1.458  IN
+                    3    ForestFloor          1.249  IN
 
      INTERNAL FLUXES                 IFWI       UZI     INFIL      PERC       LZI      AGWI
                                        IN        IN        IN        IN        IN        IN
