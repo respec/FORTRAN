@@ -62,7 +62,7 @@ Toggle this field on to edit the GENER PARM table.
 #GROUP  101  TYPE PRM2
 $HEADER
     GENER   OP-
-    x -  x CODE  NTS
+    x -  x CODE
 $TNAME  OPCODE
 $FIELD  FIELD1
 _WIDTH  10
@@ -83,22 +83,12 @@ _HELP
 OPCODE  is the  GENER operation code.  For  further details,
 see Section 4.2(15) of Part E.
 _PNAME  OPCODE
-$FIELD  FIELD4
-_WIDTH   5
-_COLUMN 16
-_PROTECT CORRECT
-_TYPE INTEGER
-_RANGE  1 : 20
-_DEFAULT  1
-_HELP
-NTS is the number of timeseries being modified by GENER.
-_PNAME  NTS
 $HELP
-Operation code and number of members for time series generation.
+Operation code for time series generation.
 #GROUP  301  TYPE TEXT
 $TEXT
-(1X,2I10)
-    OPCODE       NTS
+(1X,I10)
+    OPCODE
 #GROUP  102  TYPE PRM2
 $HEADER
     GENER NTERMS
