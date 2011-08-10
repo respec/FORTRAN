@@ -1,0 +1,1116 @@
+DATE    
+WDMSFL  
+SYSTEM  
+COMMENT 
+END COMMENT 
+CLU          143    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 300
+  LABEL   
+    GRPNAM  RCHRESTS                                                            
+  END LABEL   
+  DATA   CLU   143
+#GROUP    1  TYPE TEXT
+$TEXT
+EXTNL   20
+HYDR    50
+CONS    80
+HTRCH   90
+SEDTRN 100
+GQUAL  110
+OXRX   140
+NUTRX  150
+PLANK  180
+PHCARB 210
+ACIDPH 220
+ROFLOW 230
+INFLOW 250
+OFLOW  270
+#GROUP    2  TYPE TEXT
+$TEXT
+IVOL
+CIVOL
+PREC
+POTEV
+COLIND
+OUTDGT
+COTDGT
+ICON
+COADFX
+COADCN
+SOLRAD
+CLOUD
+DEWTMP
+GATMP
+WIND
+DSOLAR
+TGRND
+PHVAL
+ROC
+BIO
+GQADFX
+GQADCN
+NUADFX
+NUADCN
+PLADFX
+PLADCN
+BINV
+#GROUP    3  TYPE TEXT
+$TEXT
+IVOL
+CIVOL
+VOL
+CVOL
+CDFVOL
+DEP
+STAGE
+AVDEP
+TWID
+HRAD
+SAREA
+AVVEL
+AVSECT
+USTAR
+TAU
+RO
+CRO
+O
+CO
+PRSUPY
+VOLEV
+ROVOL
+CROVOL
+OVOL
+COVOL
+RIRDEM
+RIRSHT
+#GROUP    4  TYPE TEXT
+$TEXT
+ICON
+CON
+ROCON
+OCON
+COADDR
+COADWT
+COADEP
+#GROUP    5  TYPE TEXT
+$TEXT
+IHEAT
+TW
+AIRTMP
+SHDFAC
+HTEXCH
+ROHEAT
+OHEAT
+HTCF4
+#GROUP    6  TYPE TEXT
+$TEXT
+ISED
+RSED
+SSED
+TSED
+BEDDEP
+DEPSCR
+ROSED
+OSED
+#GROUP    7  TYPE TEXT
+$TEXT
+IDQAL
+ISQAL
+TIQAL
+DQAL
+SQAL
+RDQAL
+RSQAL
+RRQAL
+PDQAL
+DDQAL
+RODQAL
+DSQAL
+ROSQAL
+TROQAL
+SQDEC
+ADQAL
+ODQAL
+OSQAL
+TOSQAL
+TOQAL
+GQADDR
+GQADWT
+GQADEP
+#GROUP    8  TYPE TEXT
+$TEXT
+OXIF
+DOX
+BOD
+SATDO
+OXCF1
+OXCF2
+OXCF3
+OXCF4
+#GROUP    9  TYPE TEXT
+$TEXT
+NUIF1
+NUIF2
+TNUIF
+DNUST
+SNH4
+SPO4
+DNUST2
+RSNH4
+RSPO4
+NUST
+NUCF1
+NUCF2
+TNUCF1
+NUCF3
+NUCF4
+NUCF5
+NUCF6
+NUCF7
+NUCF8
+NUCF9
+OSNH4
+OSPO4
+TNUCF2
+NUADDR
+NUADWT
+NUADEP
+#GROUP   10  TYPE TEXT
+$TEXT
+PKIF
+TPKIF
+PKST3
+PHYTO
+ZOO
+BENAL
+PHYCLA
+BALCLA
+TBENAL
+PKST4
+PKCF1
+TPKCF1
+PKCF2
+TPKCF2
+PLADDR
+PLADWT
+PLADEP
+PKCF5
+PKCF6
+PKCF7
+TPKCF7
+PKCF8
+PKCF9
+PKCF10
+#GROUP   11  TYPE TEXT
+$TEXT
+PHIF
+PHST
+SATCO2
+PHCF1
+PHCF2
+PHCF3
+#GROUP   12  TYPE TEXT
+$TEXT
+ACINFL
+ACCONC
+ACSTOR
+ACFLX1
+ACFLX2
+ACFLXC
+ACFLXG
+ACPH
+#GROUP   13  TYPE TEXT
+$TEXT
+ROVOL
+CROVOL
+ROCON
+ROHEAT
+ROSED
+RODQAL
+ROSQAL
+OXCF1
+NUCF1
+NUCF2
+PKCF1
+PHCF1
+ACFLX1
+#GROUP   14  TYPE TEXT
+$TEXT
+IVOL
+CIVOL
+ICON
+IHEAT
+ISED
+IDQAL
+ISQAL
+OXIF
+NUIF1
+NUIF2
+PKIF
+PHIF
+ACINFL
+#GROUP   15  TYPE TEXT
+$TEXT
+OVOL
+COVOL
+OCON
+OHEAT
+OSED
+ODQAL
+OSQAL
+OXCF2
+NUCF9
+OSNH4
+OSPO4
+PKCF2
+PHCF2
+ACFLX2
+#GROUP   21  TYPE TEXT
+$TEXT
+IVOL    1  1     1     1 2   0 2    0   623 ENG acft/iv    0  43560.   0 35.31E6
+  Inflow of water to the RCHRES             MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   22  TYPE TEXT
+$TEXT
+CIVOL 100  1 -2347     1 2   0 2    0   625 ENG acft/iv    0  43560.   0 35.31E6
+  Inflow of water to the RCHRES by comp.    MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   23  TYPE TEXT
+$TEXT
+PREC    1  1     1     1 2   0 2    0   825 ENG in/iv      0   .0833   0 3.28E-3
+  Precip on surface of the RCHRES           MET mm/iv      0 25.4E-3   0  1.0E-3
+#GROUP   24  TYPE TEXT
+$TEXT
+POTEV   1  1     1     1 2   0 2    0   826 ENG in/iv      0   .0833   0 3.28E-3
+  Potential evap from the surface           MET mm/iv      0 25.4E-3   0  1.0E-3
+#GROUP   25  TYPE TEXT
+$TEXT
+COLIND  5  1   -75     1 2   0 2    0  1837 ENG none       0       1   0       1
+  See documentation                         MET none       0       1   0       1
+#GROUP   26  TYPE TEXT
+$TEXT
+OUTDGT  5  1   -75     1 2   0 2    0  1842 ENG ft3/s      0       1   0   35.31
+  g(t) component of outflow demand          MET m3/s       0  0.0283   0       1
+#GROUP   27  TYPE TEXT
+$TEXT
+COTDGT  5100   -75 -2347 2   0 2    0  1847 ENG ft3/s      0       1   0   35.31
+  g(t) component of category outflow demand MET m3/s       0  0.0283   0       1
+#GROUP   28  TYPE TEXT
+$TEXT
+ICON   10  1 -9694     1 2   0 2    0  9654 ENG qty/iv     0       1   0       1
+  Inflow of conservative constits.          MET qty/iv     0       1   0       1
+#GROUP   29  TYPE TEXT
+$TEXT
+COADFX 10  1 -9694     1 2   0 2    0  9674 ENG qty/aciv   02.296E-5   09.291E-6
+  Atmospheric deposition of CONS to RCHRES  MET qty/haiv   02.471E-4   0  1.0E-4
+#GROUP   30  TYPE TEXT
+$TEXT
+COADCN 10  1 -9694     1 2   0 2    0  9684 ENG conc       0       1   0       1
+  Concentration of CONS in precip to RCHRES MET conc       0       1   0       1
+#GROUP   31  TYPE TEXT
+$TEXT
+SOLRAD  1  1     1     1 2   0 2    0 10708 ENG Ly/iv      0       1   0       1
+  Solar radiation                           MET Ly/iv      0       1   0       1
+#GROUP   32  TYPE TEXT
+$TEXT
+CLOUD   1  1     1     1 2   0 2    0 10709 ENG tenths     0       1   0       1
+  Cloud cover (range 0 thru 10)             MET tenths     0       1   0       1
+#GROUP   33  TYPE TEXT
+$TEXT
+DEWTMP  1  1     1     1 2   0 2    0 10710 ENG DegF     -32    .555   0       1
+  Dewpoint                                  MET DegC     -32    .555   0       1
+#GROUP   34  TYPE TEXT
+$TEXT
+GATMP   1  1     1     1 2   0 2    0 10711 ENG DegF     -32    .555   0       1
+  Air temp at meteorologic station          MET DegC     -32    .555   0       1
+#GROUP   35  TYPE TEXT
+$TEXT
+WIND    1  1     1     1 2   0 2    0 10712 ENG miles/iv   0    1609   0    1000
+  Wind movement                             MET km/iv      0    1609   0    1000
+#GROUP   36  TYPE TEXT
+$TEXT
+DSOLAR  1  1     1     1 2   0 2    0 10713 ENG miles/iv   0       1   0       1
+  Daily solar radiation every ivl           MET km/iv      0       1   0       1
+#GROUP   37  TYPE TEXT
+$TEXT
+TGRND   1  1     1     1 2   0 2    0 10864 ENG DegF     -32    .555   0       1
+  Ground (bed) temperature                  MET DegC     -32    .555   0       1
+#GROUP   38  TYPE TEXT
+$TEXT
+PHVAL   1  1     1     1 2   0 2    0 11628 ENG            0       1   0       1
+  pH of RCHRES (used in Section GQUAL)      MET            0       1   0       1
+#GROUP   39  TYPE TEXT
+$TEXT
+ROC     1  1     1     1 2   0 2    0 11629 ENG moles/l    0       1   0       1
+  Free radical oxygen conc (section GQUAL)  MET moles/l    0       1   0       1
+#GROUP   40  TYPE TEXT
+$TEXT
+BIO     3  1-11651     1 2   0 2    0 11630 ENG mgbio/l    0       1   0       1
+  Biomass active in biodeg (section GQUAL)  MET mgbio/l    0       1   0       1
+#GROUP   41  TYPE TEXT
+$TEXT
+GQADFX  3  1-11651     1 2   0 2    0 11637 ENG qty/aciv   02.296E-5   09.291E-6
+  Atmospheric deposition of QUAL to RCHRES  MET qty/haiv   02.471E-4   0  1.0E-4
+#GROUP   42  TYPE TEXT
+$TEXT
+GQADCN  3  1-11651     1 2   0 2    0 11644 ENG concu/l    0       1   0       1
+  Concentration of QUAL in precip to RCHRES MET concu/l    0       1   0       1
+#GROUP   43  TYPE TEXT
+$TEXT
+NUADFX  3  1     3     1 2   0 2    0 16099 ENG lb/aciv    0  0.3677   0  0.3281
+  Atmospheric deposition of nutrient        MET kg/haiv    0  0.1121   0     0.1
+#GROUP   44  TYPE TEXT
+$TEXT
+NUADCN  3  1     3     1 2   0 2    0 16102 ENG mg/l       0       1   0       1
+  Concentration of nutrient in precip       MET mg/l       0       1   0       1
+#GROUP   45  TYPE TEXT
+$TEXT
+PLADFX  3  1     3     1 2   0 2    0 17153 ENG lb/aciv    0  0.3677   0  0.3281
+  Atmospheric deposition of constituent     MET kg/haiv    0  0.1121   0     0.1
+#GROUP   46  TYPE TEXT
+$TEXT
+PLADCN  3  1     3     1 2   0 2    0 17156 ENG mg/l       0       1   0       1
+  Concentration of constituent in precip    MET mg/l       0       1   0       1
+#GROUP   47  TYPE TEXT
+$TEXT
+BINV    1  1     1     1 2   0 2    0 17355 ENG mg/l       0       1   0       1
+  Benthic invertebrate density for grazing  MET mg/l       0       1   0       1
+#GROUP   51  TYPE TEXT
+$TEXT
+IVOL    1  1     1     1 2   1      0   624 ENG acft/iv    0  43560.   0 35.31E6
+  Inflow of water to the RCHRES             MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   52  TYPE TEXT
+$TEXT
+CIVOL 100  1 -2347     1 2   0      0   725 ENG acft/iv    0  43560.   0 35.31E6
+  Inflow of water to the RCHRES by comp.    MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   53  TYPE TEXT
+$TEXT
+VOL     1  1     1     1 1   1 1    0  4204 ENG acft       0  43560.   0 35.31E6
+  Volume of water in the RCHRES             MET Mm3        0 1233.6    0  1.00E6
+#GROUP   54  TYPE TEXT
+$TEXT
+CVOL  100  1 -2347     1 1   1      0  4205 ENG acft       0  43560.   0 35.31E6
+  Volume of water in the RCHRES by category MET Mm3        0 1233.6    0  1.00E6
+#GROUP   55  TYPE TEXT
+$TEXT
+CDFVOL  5100   -75 -2347 1   1      0  4305 ENG acft       0  43560.   0 35.31E6
+  Deficit in category demand from an exit   MET Mm3        0 1233.6    0  1.00E6
+#GROUP   56  TYPE TEXT
+$TEXT
+DEP     1  1     1     1 1   1      0  4805 ENG ft         0       1   0   3.281
+  RCHRES Depth at specified location        MET m          0   .3048   0       1
+#GROUP   57  TYPE TEXT
+$TEXT
+STAGE   1  1     1     1 1   1      0  4806 ENG ft         0       1   0   3.281
+  RCHRES Stage (DEP+STCOR)                  MET m          0   .3048   0       1
+#GROUP   58  TYPE TEXT
+$TEXT
+AVDEP   1  1     1     1 1   1 1    0  4807 ENG ft         0       1   0   3.281
+  RCHRES Average depth (volume/surf area)   MET m          0   .3048   0       1
+#GROUP   59  TYPE TEXT
+$TEXT
+TWID    1  1     1     1 1   1 1    0  4808 ENG ft         0       1   0   3.281
+  RCHRES Mean topwidth (surf area/length)   MET m          0   .3048   0       1
+#GROUP   60  TYPE TEXT
+$TEXT
+HRAD    1  1     1     1 1   1 1    0  4809 ENG ft         0       1   0   3.281
+  RCHRES Hydraulic radius                   MET m          0   .3048   0       1
+#GROUP   61  TYPE TEXT
+$TEXT
+SAREA   1  1     1     1 1   1      0  4810 ENG ac         0  43560.   0 107640.
+  RCHRES Surface area                       MET ha         0 4046.8    0  10000.
+#GROUP   62  TYPE TEXT
+$TEXT
+AVVEL   1  1     1     1 1   1 1    0  4811 ENG ft/s       0       1   0   3.281
+  Average flow velocity (RO/VOL)            MET m/s        0  .3048    0       1
+#GROUP   63  TYPE TEXT
+$TEXT
+AVSECT  1  1     1     1 1   1      0  4812 ENG ft2        0       1   0   10.76
+  Average cross-sectional area of RCHRES    MET m2         0   .0929   0       1
+#GROUP   64  TYPE TEXT
+$TEXT
+USTAR   1  1     1     1 1   1      0  4813 ENG ft/s       0       1   0   3.281
+  Shear velocity of flow in RCHRES          MET m/s        0   .3048   0       1
+#GROUP   65  TYPE TEXT
+$TEXT
+TAU     1  1     1     1 1   1 1    0  4814 ENG lb/ft2     0       1   0   .2048
+  Bed shear stress of flow in RCHRES        MET kg/m2      0   4.883   0       1
+#GROUP   66  TYPE TEXT
+$TEXT
+RO      1  1     1     1 1   1 1    0  4815 ENG ft3/s      0       1   0   35.31
+  Total rate of outflow from RCHRES         MET m3/s       0   .0283   0       1
+#GROUP   67  TYPE TEXT
+$TEXT
+CRO   100  1 -2347     1 1   1      0  4816 ENG ft3/s      0       1   0   35.31
+  Total rate of outflow from RCHRES by comp MET m3/s       0   .0283   0       1
+#GROUP   68  TYPE TEXT
+$TEXT
+O       5  1   -75     1 1   1 1    0  5426 ENG ft3/s      0       1   0   35.31
+  Outflow rates thru indiv RCHRES exits     MET m3/s       0   .0283   0       1
+#GROUP   69  TYPE TEXT
+$TEXT
+CO      5100   -75 -2347 1   1      0  5431 ENG ft3/s      0       1   0   35.31
+  Outflow rates thru indiv RCHRES exits by cMET m3/s       0   .0283   0       1
+#GROUP   70  TYPE TEXT
+$TEXT
+PRSUPY  1  1     1     1 2   1      0  6446 ENG acft/iv    0  43560.   0 35.31E6
+  Water contrib to RCHRES by precip on sur  MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   71  TYPE TEXT
+$TEXT
+VOLEV   1  1     1     1 2   1      0  6447 ENG acft/iv    0  43560.   0 35.31E6
+  Water lost to RCHRES by evap              MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   72  TYPE TEXT
+$TEXT
+ROVOL   1  1     1     1 2   1      0  6448 ENG acft/iv    0  43560.   0 35.31E6
+  Total outflow of water from RCHRES        MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   73  TYPE TEXT
+$TEXT
+CROVOL100  1 -2347     1 2   1      0  6449 ENG acft/iv    0  43560.   0 35.31E6
+  Total outflow of water from RCHRES by com MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   74  TYPE TEXT
+$TEXT
+OVOL    5  1   -75     1 2   1      0  9074 ENG acft/iv    0  43560.   0 35.31E6
+  Outflow of water through indiv exits      MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   75  TYPE TEXT
+$TEXT
+COVOL   5100   -75 -2347 2   0      0  9079 ENG acft/iv    0  43560.   0 35.31E6
+  Outflow of water through indiv exits by c MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   76  TYPE TEXT
+$TEXT
+RIRDEM  1  1     1     1 2   0      0  9589 ENG acft/iv    0  43560.   0 35.31E6
+  Irrigation withdrawal demanded by all PLS MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   77  TYPE TEXT
+$TEXT
+RIRSHT  1  1     1     1 2   0      0  9590 ENG acft/iv    0  43560.   0 35.31E6
+  Irrigation shortage relative to demand    MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   81  TYPE TEXT
+$TEXT
+ICON   10  1 -9694     1 2   3      0  9664 ENG qty/iv     0       1   0       1
+  Inflow of conservative constits.          MET qty/iv     0       1   0       1
+#GROUP   82  TYPE TEXT
+$TEXT
+CON    10  1 -9694     1 1   3 1    0 10185 ENG concid     0       1   0       1
+  Concentration of conservative constits    MET concid     0       1   0       1
+#GROUP   83  TYPE TEXT
+$TEXT
+ROCON  10  1 -9694     1 2   3      0 10245 ENG qty/iv     0       1   0       1
+  Outflow of conservatives from RCHRES      MET qty/iv     0       1   0       1
+#GROUP   84  TYPE TEXT
+$TEXT
+OCON    5 10   -75 -9694 2   3      0 10505 ENG qty/iv     0       1   0       1
+  Outflow of conserv through indiv exits    MET qty/iv     0       1   0       1
+#GROUP   85  TYPE TEXT
+$TEXT
+COADDR 10  1 -9694     1 2   3      0 10665 ENG qty/iv     0       1   0       1
+  Dry deposition flux to reach              MET qty/iv     0       1   0       1
+#GROUP   86  TYPE TEXT
+$TEXT
+COADWT 10  1 -9694     1 2   3      0 10675 ENG qty/iv     0       1   0       1
+  Wet deposition flux to reach              MET qty/iv     0       1   0       1
+#GROUP   87  TYPE TEXT
+$TEXT
+COADEP 10  1 -9694     1 2   3      0 10685 ENG qty/iv     0       1   0       1
+  Total deposition flux to reach            MET qty/iv     0       1   0       1
+#GROUP   91  TYPE TEXT
+$TEXT
+IHEAT   1  1     1     1 2   4      0 10707 ENG BTU/iv     0   .0089   0   .0353
+  Inflow of heat to RCHRES                  MET kcl/iv     0252.E-06   0    .001
+#GROUP   92  TYPE TEXT
+$TEXT
+TW      1  1     1     1 1   4 1    0 10981 ENG DegF     -32    .555   0       1
+  Simulated water temperature in RCHRES     MET DegC     -32    .555   0       1
+#GROUP   93  TYPE TEXT
+$TEXT
+AIRTMP  1  1     1     1 1   4      0 10982 ENG DegF     -32    .555   0       1
+  Air temp, adjusted for elev difference    MET DegC     -32    .555   0       1
+#GROUP   94  TYPE TEXT
+$TEXT
+SHDFAC  1  1     1     1 1   4      0 10984 ENG DegF       0       1   0       1
+  Shading factor from topog and vegetation  MET DegC       0       1   0       1
+#GROUP   95  TYPE TEXT
+$TEXT
+HTEXCH  1  1     1     1 2   4      0 10995 ENG BTU/iv     0   .0089   0   .0353
+  Net heat exchanged with atmosphere        MET kcl/iv     0252.E-06   0    .001
+#GROUP   96  TYPE TEXT
+$TEXT
+ROHEAT  1  1     1     1 2   4      0 10996 ENG BTU/iv     0   .0089   0   .0353
+  Outflow of heat through active exits      MET kcl/iv     0252.E-06   0    .001
+#GROUP   97  TYPE TEXT
+$TEXT
+OHEAT   5  1   -75     1 2   4      0 11022 ENG BTU/iv     0   .0089   0   .0353
+  Outflow of heat through individual exits  MET kcl/iv     0252.E-06   0    .001
+#GROUP   98  TYPE TEXT
+$TEXT
+HTCF4   7  1     7     1 2   4      0 11062 ENG BT/f2.iv   0  .36866   0       1
+  Areal heat flux rates                     MET kc/m2.iv   0  .36866   0       1
+#GROUP  101  TYPE TEXT
+$TEXT
+ISED    4  1     4     1 2   5      0 11092 ENG tn/iv      0 3.204E7   0 3.531E7
+  Inflows of sediments to RCHRES            MET tne/iv     0 9.074E5   0 1.000E6
+#GROUP  102  TYPE TEXT
+$TEXT
+RSED   10  1    10     1 1   5      0 11181 ENG tn         0 3.204E7   0 3.531E7
+  Sediment storages                         MET tne        0 9.074E5   0 1.000E6
+#GROUP  103  TYPE TEXT
+$TEXT
+SSED    4  1     4     1 1   5 1    0 11191 ENG mg/l       0       1   0       1
+  Suspended sediment concentrations         MET mg/l       0       1   0       1
+#GROUP  104  TYPE TEXT
+$TEXT
+TSED    3  1     3     1 1   5      0 11195 ENG tn         0 3.204E7   0 3.531E7
+  Total sediment storages by fraction       MET tne        0 9.074E5   0 1.000E6
+#GROUP  105  TYPE TEXT
+$TEXT
+BEDDEP  1  1     1     1 1   5      0 11198 ENG ft         0       1   0   3.281
+  Bed depth (thickness)                     MET m          0   .3048   0       1
+#GROUP  106  TYPE TEXT
+$TEXT
+DEPSCR  4  1     4     1 2   5      0 11239 ENG tn/iv      0 3.204E7   0 3.531E7
+  Sediment deposition (pos) or scour (neg)  MET tne/iv     0 9.074E5   0 1.000E6
+#GROUP  107  TYPE TEXT
+$TEXT
+ROSED   4  1     4     1 2   5      0 11243 ENG tn/iv      0 3.204E7   0 3.531E7
+  Total outflows of sediment from RCHRES    MET tne/iv     0 9.074E5   0 1.000E6
+#GROUP  108  TYPE TEXT
+$TEXT
+OSED    5  4   -75     4 2   5      0 11347 ENG tn/iv      0 3.204E7   0 3.531E7
+  Outflows of sediment through indiv exits  MET tne/iv     0 9.074E5   0 1.000E6
+#GROUP  111  TYPE TEXT
+$TEXT
+IDQAL   3  1-11651     1 2   6      0 11565 ENG qty/iv     0       1   0       1
+  Inflow of dissolved qual to RCHRES        MET qty/iv     0       1   0       1
+#GROUP  112  TYPE TEXT
+$TEXT
+ISQAL   4  3     4-11651 2   6      0 11593 ENG qty/iv     0       1   0       1
+  Inflows of sed-assoc qual to RCHRES       MET qty/iv     0       1   0       1
+#GROUP  113  TYPE TEXT
+$TEXT
+TIQAL   3  1-11651     1 2   6      0 11621 ENG qty/iv     0       1   0       1
+  Total inflow of qual.                     MET qty/iv     0       1   0       1
+#GROUP  114  TYPE TEXT
+$TEXT                                    
+DQAL    3  1-11651     1 1   6      0 13241 ENG concu/l    0       1   0       1
+  Dissolved concentration of qual.          MET concu/l    0       1   0       1
+#GROUP  115  TYPE TEXT
+$TEXT
+SQAL    6  3     6-11651 1   6      0 13248 ENG concu/mg   0       1   0       1
+  Concentrations of qual on sediment        MET concu/mg   0       1   0       1
+#GROUP  116  TYPE TEXT
+$TEXT
+RDQAL   3  1-11651     1 1   6      0 13290 ENG qty        0       1   0       1
+  Total storage of qual in dissolved form   MET qty        0       1   0       1
+#GROUP  117  TYPE TEXT
+$TEXT
+RSQAL  12  3    12-11651 1   6      0 13297 ENG qty        0       1   0       1
+  Storage of sediment-associated qual       MET qty        0       1   0       1
+#GROUP  118  TYPE TEXT
+$TEXT
+RRQAL   3  1-11651     1 1   6      0 13381 ENG qty        0       1   0       1
+  Total storage of qual in the RCHRES       MET qty        0       1   0       1
+#GROUP  119  TYPE TEXT
+$TEXT
+PDQAL   3  1-11651     1 2   6      0 15327 ENG qty/iv     0       1   0       1
+  Input to qual, from decay of parent qual  MET qty/iv     0       1   0       1
+#GROUP  120  TYPE TEXT
+$TEXT
+DDQAL   7  3     7-11651 2   6      0 15334 ENG qty/iv     0       1   0       1
+  Decay of diss qual by specific processes  MET qty/iv     0       1   0       1
+#GROUP  121  TYPE TEXT
+$TEXT
+RODQAL  3  1-11651     1 2   6      0 15383 ENG qty/iv     0       1   0       1
+  Outflow of dissolved qual from RCHRES     MET qty/iv     0       1   0       1
+#GROUP  122  TYPE TEXT
+$TEXT
+DSQAL   4  3     4-11651 2   6      0 15390 ENG qty/iv     0       1   0       1
+  Deposition/scour of sed-assoc. qual       MET qty/iv     0       1   0       1
+#GROUP  123  TYPE TEXT
+$TEXT
+ROSQAL  4  3     4-11651 2   6      0 15418 ENG qty/iv     0       1   0       1
+  Outflow of sed-assoc qual from RCHRES     MET qty/iv     0       1   0       1
+#GROUP  124  TYPE TEXT
+$TEXT
+TROQAL  3  1-11651     1 2   6      0 15446 ENG qty/iv     0       1   0       1
+  Total outflow of qual from RCHRES         MET qty/iv     0       1   0       1
+#GROUP  125  TYPE TEXT
+$TEXT
+SQDEC   7  3     7-11651 2   6      0 15453 ENG qty/iv     0       1   0       1
+  Decay of sediment-associated qual         MET qty/iv     0       1   0       1
+#GROUP  126  TYPE TEXT
+$TEXT
+ADQAL   7  3     7-11651 2   6      0 15502 ENG qty/iv     0       1   0       1
+  Ads/des between diss state and sediments  MET qty/iv     0       1   0       1
+#GROUP  127  TYPE TEXT
+$TEXT
+ODQAL   5  3   -75-11651 2   6      0 15551 ENG qty/iv     0       1   0       1
+  Outflow of diss qual through indiv exits  MET qty/iv     0       1   0       1
+#GROUP  128  TYPE TEXT
+$TEXT
+OSQAL   5  9   -75-11798 2   6      0 15586 ENG qty/iv     0       1   0       1
+  Sed-assoc qual outflow thru indiv exits   MET qty/iv     0       1   0       1
+#GROUP  129  TYPE TEXT
+$TEXT
+TOSQAL  5  3   -75-11651 2   6      0 15691 ENG qty/iv     0       1   0       1
+  Tot sed-assoc qual outflow by exit        MET qty/iv     0       1   0       1
+#GROUP  130  TYPE TEXT
+$TEXT
+TOQAL   5  3   -75-11651 2   6      0 15726 ENG qty/iv     0       1   0       1
+  Outflow of total qual through indiv exits MET qty/iv     0       1   0       1
+#GROUP  131  TYPE TEXT
+$TEXT
+GQADDR  3  1-11651     1 2   6      0 15761 ENG qty/iv     0       1   0       1
+  Dry atmoshpheric deposition to reach      MET qty/iv     0       1   0       1
+#GROUP  132  TYPE TEXT
+$TEXT
+GQADWT  3  1-11651     1 2   6      0 15768 ENG qty/iv     0       1   0       1
+  Wet atmoshpheric deposition to reach      MET qty/iv     0       1   0       1
+#GROUP  133  TYPE TEXT
+$TEXT
+GQADEP  3  1-11651     1 2   6      0 15775 ENG qty/iv     0       1   0       1
+  Total atmoshpheric deposition to reach    MET qty/iv     0       1   0       1
+#GROUP  141  TYPE TEXT
+$TEXT
+OXIF    2  1     2     1 2   7      0 15803 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of DO and BOD to RCHRES           MET kg/iv      0 4.537E2   0   1000.
+#GROUP  142  TYPE TEXT
+$TEXT
+DOX     1  1     1     1 1   7      0 15836 ENG mg/l       0       1   0       1
+  DO concentration in RCHRES                MET mg/l       0       1   0       1
+#GROUP  143  TYPE TEXT
+$TEXT
+BOD     1  1     1     1 1   7      0 15837 ENG mg/l       0       1   0       1
+  BOD concentration in RCHRES               MET mg/l       0       1   0       1
+#GROUP  144  TYPE TEXT
+$TEXT
+SATDO   1  1     1     1 1   7      0 15838 ENG mg/l       0       1   0       1
+  Saturation DO concentration in RCHRES     MET mg/l       0       1   0       1
+#GROUP  145  TYPE TEXT
+$TEXT
+OXCF1   2  1     2     1 2   7      0 15849 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of DO and BOD from the RCHRES    MET kg/iv      0 4.537E2   0   1000.
+#GROUP  146  TYPE TEXT
+$TEXT
+OXCF2   5  2   -75     2 2   7      0 15903 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of DO and BOD thru indiv exits   MET kg/iv      0 4.537E2   0   1000.
+#GROUP  147  TYPE TEXT
+$TEXT
+OXCF3   8  1     8     1 2   7      0 15993 ENG lb/iv      0 1.602E4   0 3.531E4
+  DO process fluxes                         MET kg/iv      0 4.537E2   0   1000.
+#GROUP  148  TYPE TEXT
+$TEXT
+OXCF4   8  1     8     1 2   7      0 16001 ENG lb/iv      0 1.602E4   0 3.531E4
+  BOD process fluxes                        MET kg/iv      0 4.537E2   0   1000.
+#GROUP  151  TYPE TEXT
+$TEXT
+NUIF1   4  1     4     1 2   8      0 16077 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of dissolved nutrients            MET kg/iv      0 4.537E2   0   1000.
+#GROUP  152  TYPE TEXT
+$TEXT     
+NUIF2   4  2     4     2 2   8      0 16087 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of adsorbed NH4 and PO4           MET kg/iv      0 4.537E2   0   1000.
+#GROUP  153  TYPE TEXT
+$TEXT
+TNUIF   4  1     4     1 2   8      0 16095 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total inflows of nutrients                MET kg/iv      0 4.537E2   0   1000.
+#GROUP  154  TYPE TEXT
+$TEXT
+DNUST   6  1     6     1 1   8      0 16291 ENG mg/l       0       1   0       1
+  Dissolved nutrient concentrations         MET mg/l       0       1   0       1
+#GROUP  155  TYPE TEXT
+$TEXT
+SNH4    3  1     3     1 1   8      0 16297 ENG mg/kg      0  1.0E-6   0  1.0E-6
+  Adsorbed NH4 concentrations               MET mg/kg      0  1.0E-6   0  1.0E-6
+#GROUP  156  TYPE TEXT
+$TEXT
+SPO4    3  1     3     1 1   8      0 16300 ENG mg/kg      0  1.0E-6   0  1.0E-6
+  Adsorbed PO4 concentrations               MET mg/kg      0  1.0E-6   0  1.0E-6
+#GROUP  157  TYPE TEXT
+$TEXT
+DNUST2  6  1     6     1 1   8      0 16303 ENG lb         0 1.602E4   0 3.531E4
+  Dissolved nutrient storages               MET kg         0 4.537E2   0   1000.
+#GROUP  158  TYPE TEXT
+$TEXT
+RSNH4  12  1    12     1 1   8      0 16309 ENG lb         0 1.602E4   0 3.531E4
+  Adsorbed NH4 storages                     MET kg         0 4.537E2   0   1000.
+#GROUP  159  TYPE TEXT
+$TEXT
+RSPO4  12  1    12     1 1   8      0 16321 ENG lb         0 1.602E4   0 3.531E4
+  Adsorbed PO4 storages                     MET kg         0 4.537E2   0   1000.
+#GROUP  160  TYPE TEXT
+$TEXT
+NUST    4  1     4     1 1   8      0 16333 ENG lb         0 1.602E4   0 3.531E4
+  Total nutrient storages in RCHRES         MET kg         0 4.537E2   0   1000.
+#GROUP  161  TYPE TEXT
+$TEXT
+NUCF1   4  1     4     1 2   8      0 16945 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total outflows of dissolved nutrients     MET kg/iv      0 4.537E2   0   1000.
+#GROUP  162  TYPE TEXT
+$TEXT
+NUCF2   4  2     4     2 2   8      0 16949 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total outflows of adsorbed NH4 and PO4    MET kg/iv      0 4.537E2   0   1000.
+#GROUP  163  TYPE TEXT
+$TEXT
+TNUCF1  4  1     4     1 2   8      0 16957 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total outflows of nutrients               MET kg/iv      0 4.537E2   0   1000.
+#GROUP  164  TYPE TEXT
+$TEXT
+NUCF3   4  2     4     2 2   8      0 16961 ENG lb/iv      0 1.602E4   0 3.531E4
+  Scour/deposition of adsorbed NH4 and PO4  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  165  TYPE TEXT
+$TEXT
+NUCF4   7  1     7     1 2   8      0 16969 ENG lb/iv      0 1.602E4   0 3.531E4
+  NO3 process fluxes                        MET kg/iv      0 4.537E2   0   1000.
+#GROUP  166  TYPE TEXT
+$TEXT
+NUCF5   8  1     8     1 2   8      0 16976 ENG lb/iv      0 1.602E4   0 3.531E4
+  TAM process fluxes                        MET kg/iv      0 4.537E2   0   1000.
+#GROUP  167  TYPE TEXT
+$TEXT
+NUCF6   1  1     1     1 2   8      0 16984 ENG lb/iv      0 1.602E4   0 3.531E4
+  NO2 process fluxes                        MET kg/iv      0 4.537E2   0   1000.
+#GROUP  168  TYPE TEXT
+$TEXT
+NUCF7   6  1     6     1 2   8      0 16985 ENG lb/iv      0 1.602E4   0 3.531E4
+  PO4 process fluxes                        MET kg/iv      0 4.537E2   0   1000.
+#GROUP  169  TYPE TEXT
+$TEXT
+NUCF8   4  2     4     2 2   8      0 16991 ENG lb/iv      0 1.602E4   0 3.531E4
+  Adsorption/desorption of NH4 and PO4      MET kg/iv      0 4.537E2   0   1000.
+#GROUP  170  TYPE TEXT
+$TEXT
+NUCF9   5  4   -75     4 2   8      0 16999 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of dissolved nutrients via exits MET kg/iv      0 4.537E2   0   1000.
+#GROUP  171  TYPE TEXT
+$TEXT
+OSNH4   5  4   -75     4 2   8      0 17019 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of adsorbed NH4 via exits        MET kg/iv      0 4.537E2   0   1000.
+#GROUP  172  TYPE TEXT
+$TEXT
+OSPO4   5  4   -75     4 2   8      0 17039 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of adsorbed PO4 via exits        MET kg/iv      0 4.537E2   0   1000.
+#GROUP  173  TYPE TEXT
+$TEXT
+TNUCF2  5  4   -75     4 2   8      0 17059 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of nutrients via exits           MET kg/iv      0 4.537E2   0   1000.
+#GROUP  174  TYPE TEXT
+$TEXT
+NUADDR  3  1     3     1 2   8      0 17079 ENG lb/iv      0 1.602E4   0 3.531E4
+  Dry atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
+#GROUP  175  TYPE TEXT
+$TEXT
+NUADWT  3  1     3     1 2   8      0 17082 ENG lb/iv      0 1.602E4   0 3.531E4
+  Wet atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
+#GROUP  176  TYPE TEXT
+$TEXT
+NUADEP  3  1     3     1 2   8      0 17085 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total atmospheric deposition to reach     MET kg/iv      0 4.537E2   0   1000.
+#GROUP  181  TYPE TEXT
+$TEXT
+PKIF    5  1     5     1 2   9      0 17118 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of plankton related constituents  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  182  TYPE TEXT
+$TEXT
+TPKIF   5  1     5     1 2   9      0 17148 ENG lb/iv      0 1.602E4   0 3.531E4
+  Summary inflows of org & total N, P, & C  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  183  TYPE TEXT
+$TEXT
+PKST3   7  1     7     1 1   9      0 17419 ENG mg/l       0       1   0       1
+  Concentrations in Group PLANK (RCHRES)    MET mg/l       0       1   0       1
+#GROUP  184  TYPE TEXT
+$TEXT
+PHYTO   1  1     1     1 1   9 1    0 17426 ENG mg/l       0       1   0       1
+  Phytoplankton concentration in RCHRES     MET mg/l       0       1   0       1
+#GROUP  185  TYPE TEXT
+$TEXT
+ZOO     1  1     1     1 1   9      0 17427 ENG org/l      0       1   0       1
+  Zooplankton population in RCHRES          MET org/l      0       1   0       1
+#GROUP  186  TYPE TEXT
+$TEXT
+BENAL   4  1-17174     1 1   9      0 17428 ENG mg/m2      0       1   0       1
+  Benthic algae as biomass by species       MET mg/m2      0       1   0       1
+#GROUP  187  TYPE TEXT
+$TEXT
+PHYCLA  1  1     1     1 1   9      0 17432 ENG ug/l       0       1   0       1
+  Phytoplankton conc. as chlorophyll a      MET ug/l       0       1   0       1
+#GROUP  188  TYPE TEXT
+$TEXT
+BALCLA  4  1-17174     1 1   9      0 17433 ENG ug/m2      0       1   0       1
+  Benthic algae as chlorophyll a by species MET ug/m2      0       1   0       1
+#GROUP  189  TYPE TEXT
+$TEXT
+TBENAL  2  1     1     1 1   9      0 17437 ENG mg/m2      0       1   0       1
+  Total benthic algae in RCHRES             MET mg/m2      0       1   0       1
+#GROUP  190  TYPE TEXT
+$TEXT
+PKST4   2  1     2     1 1   9      0 17439 ENG mg/l       0       1   0       1
+  Total nitrogen and phosphorus concs.      MET mg/l       0       1   0       1
+#GROUP  191  TYPE TEXT
+$TEXT
+PKCF1   5  1     5     1 2   9      0 17967 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total outflows from RCHRES (Group PLANK)  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  192  TYPE TEXT
+$TEXT
+TPKCF1  5  1     5     1 2   9      0 17972 ENG lb/iv      0 1.602E4   0 3.531E4
+  Summary outflows of org & total N, P, & C MET kg/iv      0 4.537E2   0   1000.
+#GROUP  193  TYPE TEXT
+$TEXT
+PKCF2   5  5   -75     5 2   9      0 17977 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows thru indiv exits (Group PLANK)   MET kg/iv      0 4.537E2   0   1000.
+#GROUP  194  TYPE TEXT
+$TEXT
+TPKCF2  5  5   -75     5 2   9      0 18002 ENG lb/iv      0 1.602E4   0 3.531E4
+  Summary outflows thru indiv exits         MET kg/iv      0 4.537E2   0   1000.
+#GROUP  195  TYPE TEXT
+$TEXT
+PLADDR  3  1     3     1 2   9      0 18027 ENG lb/iv      0 1.602E4   0 3.531E4
+  Dry atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
+#GROUP  196  TYPE TEXT
+$TEXT
+PLADWT  3  1     3     1 2   9      0 18030 ENG lb/iv      0 1.602E4   0 3.531E4
+  Wet atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
+#GROUP  197  TYPE TEXT
+$TEXT
+PLADEP  3  1     3     1 2   9      0 18033 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total atmospheric deposition to reach     MET kg/iv      0 4.537E2   0   1000.
+#GROUP  198  TYPE TEXT
+$TEXT
+PKCF5   5  1     5     1 2   9      0 18036 ENG lb/iv      0 1.602E4   0 3.531E4
+  Phytoplankton reaction fluxes             MET kg/iv      0 4.537E2   0   1000.
+#GROUP  199  TYPE TEXT
+$TEXT
+PKCF6   3  1     3     1 2   9      0 18041 ENG lb/iv      0 1.602E4   0 3.531E4
+  Zooplankton reaction fluxes               MET kg/iv      0 4.537E2   0   1000.
+#GROUP  200  TYPE TEXT
+$TEXT
+PKCF7   3  4     3-17174 2   9      0 18044 ENG mg/m2.iv   0       1   0       1
+  Benthic algae reaction fluxes             MET mg/m2.iv   0       1   0       1
+#GROUP  201  TYPE TEXT
+$TEXT
+TPKCF7  3  1     3     1 2   9      0 18056 ENG mg/m2.iv   0       1   0       1
+  Benthic algae reaction fluxes             MET mg/m2.iv   0       1   0       1
+#GROUP  202  TYPE TEXT
+$TEXT
+PKCF8   5  1     5     1 2   9      0 18059 ENG lb/iv      0 1.602E4   0 3.531E4
+  Dead refractory organic N fluxes          MET kg/iv      0 4.537E2   0   1000.
+#GROUP  203  TYPE TEXT
+$TEXT
+PKCF9   5  1     5     1 2   9      0 18064 ENG lb/iv      0 1.602E4   0 3.531E4
+  Dead refractory organic P fluxes          MET kg/iv      0 4.537E2   0   1000.
+#GROUP  204  TYPE TEXT
+$TEXT
+PKCF10  5  1     5     1 2   9      0 18069 ENG lb/iv      0 1.602E4   0 3.531E4
+  Dead refractory organic C fluxes          MET kg/iv      0 4.537E2   0   1000.
+#GROUP  211  TYPE TEXT
+$TEXT
+PHIF    2  1     2     1 2  10      0 18086 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of TIC and CO2 to RCHRES          MET kg/iv      0 4.537E2   0   1000.
+#GROUP  212  TYPE TEXT
+$TEXT
+PHST    3  1     3     1 1  10      0 18098 ENG mg/l;pH    0       1   0       1
+  TIC and CO2 concs, and pH,                MET mg/l;pH    0       1   0       1
+#GROUP  213  TYPE TEXT
+$TEXT
+SATCO2  1  1     3     1 1  10      0 18102 ENG mg/l       0       1   0       1
+  Saturation CO2 concentration              MET mg/l       0       1   0       1
+#GROUP  214  TYPE TEXT
+$TEXT
+PHCF1   2  1     2     1 2  10      0 18113 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of TIC and CO2 from RCHRES       MET kg/iv      0 4.537E2   0   1000.
+#GROUP  215  TYPE TEXT
+$TEXT
+PHCF2   5  2   -75     2 2  10      0 18165 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of TIC and CO2 thru indiv exits  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  216  TYPE TEXT
+$TEXT
+PHCF3   7  1     7     1 2  10      0 18210 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inorganic carbon reaction fluxes          MET kg/iv      0 4.537E2   0   1000.
+#GROUP  221  TYPE TEXT
+$TEXT
+ACINFL  7  1-18238     1 2  11      0 18375 ENG lb/iv      0 1.602E1   0 3.531E1
+  Inflows of acid chemicals (Group ACIDPH)  MET kg/iv      0  0.4537   0      1.
+#GROUP  222  TYPE TEXT
+$TEXT
+ACCONC  7  1-18238     1 1  11      0 18284 ENG mol/l      0       1   0       1
+  Concentrations (Group ACIDPH)             MET mol/l      0       1   0       1
+#GROUP  223  TYPE TEXT
+$TEXT
+ACSTOR  7  1-18238     1 1  11      0 18326 ENG lb         0 1.602E1   0 3.531E1
+  Storages (Group ACIDPH)                   MET kg         0  0.4537   0       1
+#GROUP  224  TYPE TEXT
+$TEXT
+ACFLX1  7  1-18238     1 2  11      0 18417 ENG lb/iv      0 1.602E1   0 3.531E1
+  Total outflows  (Group ACIDPH)            MET kg/iv      0  0.4537   0       1
+#GROUP  225  TYPE TEXT
+$TEXT
+ACFLX2  5  7   -75-18238 2  11      0 18599 ENG lb/iv      0 1.602E1   0 3.531E1
+  Outflows thru indiv exits (Group ACIDPH)  MET kg/iv      0  0.4537   0       1
+#GROUP  226  TYPE TEXT
+$TEXT
+ACFLXC 10  1 -9694     1 2  11      0 18684 ENG qty/iv     0       1   0       1
+  Net fluxes of conservatives (ACIDPH)      MET qty/iv     0       1   0       1
+#GROUP  227  TYPE TEXT
+$TEXT
+ACFLXG  3  1-11651     1 2  11      0 18729 ENG qty/iv     0       1   0       1
+  Net fluxes of GQUALS (Group ACIDPH)       MET qty/iv     0       1   0       1
+#GROUP  228  TYPE TEXT
+$TEXT
+ACPH    1  1     1     1 1  11      0 18772 ENG pH units   0       1   0       1
+  pH  (Group ACIDPH)                        MET pH units   0       1   0       1
+#GROUP  231  TYPE TEXT
+$TEXT
+ROVOL   1  1     1     1 2   1      0  6448 ENG acft/iv    0  43560.   0 35.31E6
+  Total outflow of water from RCHRES        MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP  232  TYPE TEXT
+$TEXT
+CROVOL100  1 -2347     1 2   1      0  6449 ENG acft/iv    0  43560.   0 35.31E6
+  Total outflow of water from RCHRES by com MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP  233  TYPE TEXT
+$TEXT
+ROCON  10  1 -9694     1 2   3      0 10245 ENG qty/iv     0       1   0       1
+  Outflow of conservatives from RCHRES      MET qty/iv     0       1   0       1
+#GROUP  234  TYPE TEXT
+$TEXT
+ROHEAT  1  1     1     1 2   4      0 10996 ENG BTU/iv     0   .0089   0   .0353
+  Outflow of heat through active exits      MET kcl/iv     0252.E-06   0    .001
+#GROUP  235  TYPE TEXT
+$TEXT
+ROSED   4  1     3     1 2   5      0 11243 ENG tn/iv      0 3.204E7   0 3.531E7
+  Total outflows of sediment from RCHRES    MET tne/iv     0 9.074E5   0 1.000E6
+#GROUP  236  TYPE TEXT
+$TEXT
+RODQAL  3  1-11651     1 2   6      0 15383 ENG qty/iv     0       1   0       1
+  Outflow of dissolved qual from RCHRES     MET qty/iv     0       1   0       1
+#GROUP  237  TYPE TEXT
+$TEXT
+ROSQAL  4  3     3-11651 2   6      0 15418 ENG qty/iv     0       1   0       1
+  Outflow of sed-assoc qual from RCHRES     MET qty/iv     0       1   0       1
+#GROUP  238  TYPE TEXT
+$TEXT
+OXCF1   2  1     2     1 2   7      0 15849 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of DO and BOD from the RCHRES    MET kg/iv      0 4.537E2   0   1000.
+#GROUP  239  TYPE TEXT
+$TEXT
+NUCF1   4  1     4     1 2   8      0 16945 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total outflows of dissolved nutrients     MET kg/iv      0 4.537E2   0   1000.
+#GROUP  240  TYPE TEXT
+$TEXT
+NUCF2   4  2     3     2 2   8      0 16949 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total outflows of adsorbed NH4 and PO4    MET kg/iv      0 4.537E2   0   1000.
+#GROUP  241  TYPE TEXT
+$TEXT
+PKCF1   5  1     5     1 2   9      0 17967 ENG lb/iv      0 1.602E4   0 3.531E4
+  Total outflows from RCHRES (Group PLANK)  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  242  TYPE TEXT
+$TEXT
+PHCF1   2  1     2     1 2  10      0 18113 ENG lb/iv      0 1.602E4   0 3.531E4
+  PHCARB     TIC, CO2                       MET kg/iv      0 4.537E2   0   1000.
+#GROUP  243  TYPE TEXT
+$TEXT
+ACFLX1  7  1-18238     1 2  11      0 18417 ENG lb/iv      0 1.602E1   0 3.531E1
+  Total outflows  (Group ACIDPH)            MET kg/iv      0  0.4537   0      1.
+#GROUP  251  TYPE TEXT
+$TEXT
+IVOL    1  1     1     1 2   1 2    0   623 ENG acft/iv    0  43560.   0 35.31E6
+  Inflow of water to the RCHRES             MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP  252  TYPE TEXT
+$TEXT
+CIVOL 100  1 -2347     1 2   0 2    0   625 ENG acft/iv    0  43560.   0 35.31E6
+  Inflow of water to the RCHRES by comp.    MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP  253  TYPE TEXT
+$TEXT
+ICON   10  1 -9694     1 2   3 2    0  9654 ENG qty/iv     0       1   0       1
+  Inflow of conservative constits.          MET qty/iv     0       1   0       1
+#GROUP  254  TYPE TEXT
+$TEXT
+IHEAT   1  1     1     1 2   4 2    0 10706 ENG BTU/iv     0   .0089   0   .0353
+  Inflow of heat to RCHRES                  MET kcl/iv     0252.E-06   0    .001
+#GROUP  255  TYPE TEXT
+$TEXT
+ISED    3  1     3     1 2   5 2    0 11089 ENG tn/iv      0 3.204E7   0 3.531E7
+  Inflows of sediments to RCHRES            MET tne/iv     0 9.074E5   0 1.000E6
+#GROUP  256  TYPE TEXT
+$TEXT
+IDQAL   3  1-11651     1 2   6 2    0 11558 ENG qty/iv     0       1   0       1
+  Inflow of dissolved qual to RCHRES        MET qty/iv     0       1   0       1
+#GROUP  257  TYPE TEXT
+$TEXT
+ISQAL   3  3     3-11651 2   6 2    0 11572 ENG qty/iv     0       1   0       1
+  Inflows of sed-assoc qual to RCHRES       MET qty/iv     0       1   0       1
+#GROUP  258  TYPE TEXT
+$TEXT
+OXIF    2  1     2     1 2   7 2    0 15801 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of DO and BOD to RCHRES           MET kg/iv      0 4.537E2   0   1000.
+#GROUP  259  TYPE TEXT
+$TEXT
+NUIF1   4  1     4     1 2   8 2    0 16073 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of dissolved nutrients            MET kg/iv      0 4.537E2   0   1000.
+#GROUP  260  TYPE TEXT
+$TEXT
+NUIF2   3  2     3     2 2   8 2    0 16081 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of adsorbed NH4 and PO4           MET kg/iv      0 4.537E2   0   1000.
+#GROUP  261  TYPE TEXT
+$TEXT
+PKIF    5  1     5     1 2   9 2    0 17113 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of plankton related constituents  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  262  TYPE TEXT
+$TEXT
+PHIF    2  1     2     1 2  10 2    0 18084 ENG lb/iv      0 1.602E4   0 3.531E4
+  Inflows of TIC and CO2 to RCHRES          MET kg/iv      0 4.537E2   0   1000.
+#GROUP  263  TYPE TEXT
+$TEXT
+ACINFL  7  1-18238     1 2  11 2    0 18368 ENG lb/iv      0 1.602E1   0 3.531E1
+  Inflows of acid chemicals (Group ACIDPH)  MET kg/iv      0  0.4537   0      1.
+#GROUP  271  TYPE TEXT
+$TEXT
+OVOL    5  1   -75     1 2   1      0  9074 ENG acft/iv    0  43560.   0 35.31E6
+  Outflow of water through indiv exits      MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP  272  TYPE TEXT
+$TEXT
+COVOL   5100   -75 -2347 2   1      0  9079 ENG acft/iv    0  43560.   0 35.31E6
+  Outflow of water through indiv exits by c MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP  273  TYPE TEXT
+$TEXT
+OCON    5 10   -75 -9694 2   3      0 10505 ENG qty/iv     0       1   0       1
+  Outflow of conserv through indiv exits    MET qty/iv     0       1   0       1
+#GROUP  274  TYPE TEXT
+$TEXT
+OHEAT   5  1   -75     1 2   4      0 11022 ENG BTU/iv     0   .0089   0   .0353
+  Outflow of heat through individual exits  MET kcl/iv     0252.E-06   0    .001
+#GROUP  275  TYPE TEXT
+$TEXT
+OSED    5  4   -75     3 2   5      0 11347 ENG tn/iv      0 3.204E7   0 3.531E7
+  Outflows of sediment through indiv exits  MET tne/iv     0 9.074E5   0 1.000E6
+#GROUP  276  TYPE TEXT
+$TEXT
+ODQAL   5  3   -75-11651 2   6      0 15551 ENG qty/iv     0       1   0       1
+  Outflow of diss qual through indiv exits  MET qty/iv     0       1   0       1
+#GROUP  277  TYPE TEXT
+$TEXT
+OSQAL   5  9   -75-11798 2   6      0 15586 ENG qty/iv     0       1   0       1
+  Sed-assoc qual outflow thru indiv exits   MET qty/iv     0       1   0       1
+#GROUP  278  TYPE TEXT
+$TEXT
+OXCF2   5  2   -75     2 2   7      0 15903 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of DO and BOD thru indiv exits   MET kg/iv      0 4.537E2   0   1000.
+#GROUP  279  TYPE TEXT
+$TEXT
+NUCF9   5  4   -75     4 2   8      0 16999 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of dissolved nutrients via exits MET kg/iv      0 4.537E2   0   1000.
+#GROUP  280  TYPE TEXT
+$TEXT
+OSNH4   5  4   -75     3 2   8      0 17019 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of adsorbed NH4 thru indiv exits MET kg/iv      0 4.537E2   0   1000.
+#GROUP  281  TYPE TEXT
+$TEXT
+OSPO4   5  4   -75     3 2   8      0 17039 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of adsorbed PO4 thru indiv exits MET kg/iv      0 4.537E2   0   1000.
+#GROUP  282  TYPE TEXT
+$TEXT
+PKCF2   5 10   -75     5 2   9      0 17977 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows thru indiv exits (Group PLANK)   MET kg/iv      0 4.537E2   0   1000.
+#GROUP  283  TYPE TEXT
+$TEXT
+PHCF2   5  3   -75     2 2  10      0 18165 ENG lb/iv      0 1.602E4   0 3.531E4
+  Outflows of TIC and CO2 thru indiv exits  MET kg/iv      0 4.537E2   0   1000.
+#GROUP  284  TYPE TEXT
+$TEXT
+ACFLX2  5  7   -75-18238 2  11      0 18599 ENG lb/iv      0 1.602E1   0 3.531E1
+  Outflows thru indiv exits (Group ACIDPH)  MET lb/iv      0  0.4537   0      1.
+  END DATA
+END CLU
