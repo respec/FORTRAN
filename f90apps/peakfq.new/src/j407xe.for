@@ -476,13 +476,13 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
 Cprh 202 FORMAT( 21X, 'OFFICE OF SURFACE WATER, RESTON, VA' )
-  202 FORMAT( 2X,'Ver. 5.2',
+  202 FORMAT( 2X,'Ver. 6.0',
      $       12X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
 Cprh 203 FORMAT( 21X, 'ANNUAL PEAK FLOW FREQUENCY ANALYSIS' )
-  203 FORMAT( 2X,'11/01/2007',
+  203 FORMAT( 2X,'7/08/2011',
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
-  213 FORMAT( 2X,'11/01/2007',
+  213 FORMAT( 2X,'7/08/2011',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
 Cprh 204 FORMAT( 21X, 'Following Bulletin 17-B Guidelines' )
 Cprh 205 FORMAT( 21X, '          Program peakfq    ' )
@@ -3792,20 +3792,21 @@ C       Weighted, set to root mean square
       GBTYPE = LOTYPE
       GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
 
-      write(99,*) 'calling EMAFIT'
+      write(99,*)
+      write(99,*) 'calling EMAFIT with the following input Args:'
       write(99,*) 'NOBS:',NOBS
+      write(99,*) '        QLow        QUpr',
+     $            '         TLow        TUpr        DType'
+ 2000 format(1X,2F12.1,2D14.4,5X,A4)
+      do 15 i = 1,NOBS
+        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I),DTYPE(I)
+ 15   continue
       write(99,*) 'REGVAR:',REGVAR
       write(99,*) 'REGVMSE:',REGVMSE
       write(99,*) 'REGSKEW:',REGSKEW
       write(99,*) 'REGMSE:',REGMSE
       write(99,*) 'GBTYPE:',GBTYPE
       write(99,*) 'GBTHRSH',GBTHRSH
-      write(99,*) '        QLow        QUpr',
-     $            '         TLow        TUpr'
- 2000 format(1X,2F12.1,2D14.4)
-      do 15 i = 1,NOBS
-        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
- 15   continue
 C
       CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
      I            REGVAR,REGVMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
