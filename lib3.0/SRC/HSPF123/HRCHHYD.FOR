@@ -3915,16 +3915,20 @@ C     LASTOP - last operation printed
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER       I,J,I0,I1,I2,IC,IX,JLEN,RLEN,TLEN,TPOS,ACNT,
-     $              CLEN(19+MXEXIT+(MXCAT*(MXEXIT+2))),EXDAT(5)
+     $              CLEN(21+(2*MXEXIT)+(4*MXCAT)+(2*MXCAT*MXEXIT)),
+     $              EXDAT(5)
       REAL          AFACTA,LFACTA,LFACTB,PAVVEL,PAVSEC,PCFLX1(3),
      $              SFACTA,PCFLX2(MXEXIT),PIFLX,PRO,PSAREA,PSTAT(5),
      $              PTAU,PUSTAR,PVOL,PVOLS,TFACTA,VFACTA,VFACTB,VOLDIF,
      $              VOLIN,PCST(MXCAT,2),PCFLX(MXCAT,MXEXIT+2),PIRFLX(3),
-     $              APRINT(19+MXEXIT+(MXCAT*(MXEXIT+2))),L2FACT,PPOTEV
+     $              APRINT(21+(2*MXEXIT)+(4*MXCAT)+(2*MXCAT*MXEXIT)),
+     $              L2FACT,PPOTEV,PO(MXEXIT),PCST2(MXEXIT,MXCAT)
       CHARACTER*1   CSTR(2)
-      CHARACTER*8   UNITID,CSTAT(5),CCST(MXCAT,2),CCFLX2(MXEXIT),
-     $              CCFLX(MXCAT,MXEXIT+2),CCFLX1(3),CIRFLX(3)
-      CHARACTER*256 CHEAD(19+MXEXIT+(MXCAT*(MXEXIT+2)))
+      CHARACTER*8   UNITID
+      CHARACTER*10  CSTAT(5),CCST(MXCAT,2),CCFLX2(MXEXIT),
+     $              CCFLX(MXCAT,MXEXIT+2),CCFLX1(3),CIRFLX(3),
+     $              CCST2(MXEXIT,MXCAT),CSTAT2(MXEXIT)
+      CHARACTER*256 CHEAD(21+(2*MXEXIT)+(4*MXCAT)+(2*MXCAT*MXEXIT))
       CHARACTER*132 TBUFF
 C
 C     + + + EQUIVALENCES + + +
@@ -3947,7 +3951,7 @@ C     + + + OUTPUT FORMATS + + +
      $          '        M2')
  2040 FORMAT (1PG10.3)
  2050 FORMAT (132A1)
- 2060 FORMAT (/,35X,'PUSTAR      PTAU   OUTFLOW')
+ 2060 FORMAT (/,35X,' USTAR       TAU   OUTFLOW')
  2070 FORMAT (  35X,'  FT/S    LB/FT2     FT3/S')
  2080 FORMAT (  35X,'   M/S     KG/M2      M3/S')
  2090 FORMAT (/,'   STATE VARIABLES',18X,'  VOL       DEP     STAGE',
@@ -3967,33 +3971,39 @@ C     + + + OUTPUT FORMATS + + +
      $          '         M         M         M        HA      M3/S')
  2150 FORMAT (/,'   STATE VARIABLES',20X,'VOL   OUTFLOW')
  2160 FORMAT (  '     ENTIRE REACH:',18X,'AC-FT     FT3/S')
- 2170 FORMAT (  '     ENTIRE REACH:',18X,'  MM3      M3/S')
- 2180 FORMAT (  '     BY CATEGORY:  ')
- 2190 FORMAT (/,'   FLUXES                           TOTAL    PRECIP',
+ 2170 FORMAT (  '     ENTIRE REACH:',20X,'MM3      M3/S')
+ 2180 FORMAT (/,'       BY CATEGORY:',17X,' CVOL       CRO')
+ 2190 FORMAT (  '                   ',17X,'AC-FT     FT3/S')
+ 2200 FORMAT (  '                   ',17X,'  MM3      M3/S')
+ 2210 FORMAT (/,'     OUTFLOW BY EXIT (FT3/S)',3X,5I10)
+ 2220 FORMAT (/,'     OUTFLOW BY EXIT (M3/S)',4X,5I10)
+ 2230 FORMAT (  '       BY CATEGORY:')
+ 2240 FORMAT (/,'   FLUXES                           TOTAL    PRECIP',
      $          '      EVAP     TOTAL    INDIVIDUAL GATE OUTFLOWS')
- 2200 FORMAT (  '                                   INFLOW          ',
+ 2250 FORMAT (  '                                   INFLOW          ',
      $          '      LOSS   OUTFLOW', 5I10)
- 2210 FORMAT (  '     VOLUMES  (AC-FT)                IVOL    PRSUPY',
+ 2260 FORMAT (  '     VOLUMES  (AC-FT)                IVOL    PRSUPY',
      $          '     VOLEV     ROVOL                OVOL')
- 2220 FORMAT (  '     VOLUMES  (MM3)                  IVOL    PRSUPY',
+ 2270 FORMAT (  '     VOLUMES  (MM3)                  IVOL    PRSUPY',
      $          '     VOLEV     ROVOL                OVOL')
- 2230 FORMAT (/,'   FLUXES                           TOTAL    PRECIP',
+ 2280 FORMAT (/,'   FLUXES                           TOTAL    PRECIP',
      $          '      EVAP     TOTAL')
- 2240 FORMAT (  '     ENTIRE REACH:                 INFLOW          ',
+ 2290 FORMAT (  '     ENTIRE REACH:                 INFLOW          ',
      $          '      LOSS   OUTFLOW')
- 2250 FORMAT (  '       VOLUMES  (AC-FT)              IVOL    PRSUPY',
+ 2300 FORMAT (  '       VOLUMES  (AC-FT)              IVOL    PRSUPY',
      $          '     VOLEV     ROVOL')
- 2260 FORMAT (  '       VOLUMES  (MM3)                IVOL    PRSUPY',
+ 2310 FORMAT (  '       VOLUMES  (MM3)                IVOL    PRSUPY',
      $          '     VOLEV     ROVOL')
- 2270 FORMAT (/,'     POTENTIAL ET (IN)              POTEV')
- 2280 FORMAT (/,'     POTENTIAL ET (MM)              POTEV')
- 2290 FORMAT (/,'     IRRIGATION (AC-FT)            RIRDEM    RIRWDL',
+ 2320 FORMAT (/,'     POTENTIAL ET (IN)              POTEV')
+ 2330 FORMAT (/,'     POTENTIAL ET (MM)              POTEV')
+ 2340 FORMAT (/,'     IRRIGATION (AC-FT)            RIRDEM    RIRWDL',
      $          '    RIRSHT')
- 2300 FORMAT (/,'     IRRIGATION (MM3)              RIRDEM    RIRWDL',
+ 2350 FORMAT (/,'     IRRIGATION (MM3)              RIRDEM    RIRWDL',
      $          '    RIRSHT')
 C
 C     + + + HISTORY + + +
 C     2005  BRB added potential et to output summaries
+C     2011  THJ added exit-by-exit outflow rate
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4012,51 +4022,51 @@ C     names in local strings for use in building binary headers
       CSTAT(3) = 'AVDEP'
       CSTAT(4) = 'TWID'
       CSTAT(5) = 'HRAD'
-      DO 1 IC= 1, NCATS
-        CALL INTCHR (IC, I2, I1,
-     O               JLEN, CSTR)
+      DO 30 IC= 1, NCATS
         CCST(IC,1) = 'CVOL-'
+        CCST(IC,1) = TRIM(CCST(IC,1)) // CATTAG(IC)
         CCST(IC,2) = 'CRO-'
-        DO 2 I= 1, JLEN
-          CCST(IC,1) = TRIM(CCST(IC,1)) // CSTR(I)
-          CCST(IC,2) = TRIM(CCST(IC,2)) // CSTR(I)
- 2      CONTINUE
- 1    CONTINUE
+        CCST(IC,2) = TRIM(CCST(IC,2)) // CATTAG(IC)
+        IF (NEXITS .GT. 1) THEN
+          DO 20 IX=1, NEXITS
+            CCST2(IX,IC)= 'CO-'
+            CALL INTCHR (IX, I2, I1,
+     O                   JLEN, CSTR)
+            DO 10 I= 1, JLEN
+              CCST2(IX,IC) = TRIM(CCST2(IX,IC)) // CSTR(I)
+ 10         CONTINUE
+            CCST2(IX,IC) = TRIM(CCST2(IX,IC)) // '-' // CATTAG(IC)
+ 20       CONTINUE
+        END IF
+ 30   CONTINUE
       CCFLX1(1) = 'PRSUPY'
       CCFLX1(2) = 'VOLEV'
       CCFLX1(3) = 'ROVOL'
-      DO 3 IX= 1, NEXITS
+      DO 50 IX= 1, NEXITS
         CALL INTCHR (IX, I2, I1,
      O               JLEN, CSTR)
         CCFLX2(IX) = 'OVOL-'
-        DO 4 I= 1, JLEN
+        CSTAT2(IX) = 'O-'
+        DO 40 I= 1, JLEN
           CCFLX2(IX) = TRIM(CCFLX2(IX)) // CSTR(I)
- 4      CONTINUE
- 3    CONTINUE
-      DO 5 IC= 1, NCATS
-        CALL INTCHR (IC, I2, I1,
-     O               JLEN, CSTR)
-        CCFLX(IC,1) = 'IVOL'
-        CCFLX(IC,2) = 'ROVOL'
-        DO 6 I= 1, JLEN
-          CCFLX(IC,1) = TRIM(CCFLX(IC,1)) // CSTR(I)
-          CCFLX(IC,2) = TRIM(CCFLX(IC,2)) // CSTR(I)
- 6      CONTINUE
-        DO 7 IX= 1, NEXITS
-          CCFLX(IC,IX+2) = 'ROVOL'
-          CALL INTCHR (IC, I2, I1,
-     O                 JLEN, CSTR)
-          DO 8 I= 1, JLEN
-            CCFLX(IC,IX+2) = TRIM(CCFLX(IC,IX+2)) // CSTR(I)
- 8        CONTINUE
+          CSTAT2(IX) = TRIM(CSTAT2(IX)) // CSTR(I)
+ 40     CONTINUE
+ 50   CONTINUE
+      DO 80 IC= 1, NCATS
+        CCFLX(IC,1) = 'CIVOL-'
+        CCFLX(IC,1) = TRIM(CCFLX(IC,1)) // CATTAG(IC)
+        CCFLX(IC,2) = 'CROVOL-'
+        CCFLX(IC,2) = TRIM(CCFLX(IC,2)) // CATTAG(IC)
+        DO 70 IX= 1, NEXITS
+          CCFLX(IC,IX+2) = 'COVOL-'
           CALL INTCHR (IX, I2, I1,
      O                 JLEN, CSTR)
-          CCFLX(IC,IX+2) = TRIM(CCFLX(IC,IX+2)) // '-'
-          DO 9 I= 1, JLEN
+          DO 60 I= 1, JLEN
             CCFLX(IC,IX+2) = TRIM(CCFLX(IC,IX+2)) // CSTR(I)
- 9        CONTINUE
- 7      CONTINUE
- 5    CONTINUE
+ 60       CONTINUE
+          CCFLX(IC,IX+2) = TRIM(CCFLX(IC,IX+2)) // '-' // CATTAG(IC)
+ 70     CONTINUE
+ 80   CONTINUE
       CIRFLX(1) = 'RIRDEM'
       CIRFLX(2) = 'RIRWDL'
       CIRFLX(3) = 'RIRSHT'
@@ -4117,6 +4127,11 @@ C     rchres-wide variables - state variables and storages
       PVOL= VOLUME(1)*VFACTA
       PVOLS= PREVOL(LEV - 1)*VFACTA
       PRO= RO*SFACTA*LFACTA
+      IF (NEXITS .GT. 1) THEN
+        DO 90 IX= 1, NEXITS
+          PO(IX)= O(IX)*SFACTA*LFACTA
+ 90     CONTINUE
+      END IF
 C
       IF (AUX1FG .GE. 1) THEN
         I= 5
@@ -4150,22 +4165,28 @@ C
 C
       IF (NCATS .GE. 1) THEN
 C       calculate printout category variables
-        DO 20 IC= 1, NCATS
+        DO 120 IC= 1, NCATS
 C         category volume
           PCST(IC,1)= CVOL(IC)*VFACTA
 C         category outflow rate
           PCST(IC,2)= CRO(IC)*SFACTA*LFACTA
+          IF (NEXITS .GT. 1) THEN
+C           category outflow rate by exit
+            DO 100 IX= 1, NEXITS
+              PCST2(IX,IC)= CO(IX,IC)*SFACTA*LFACTA
+ 100        CONTINUE
+          END IF
 C         category inflow flux
           PCFLX(IC,1)= HYIFC(IC,LEV)*VFACTA
 C         category total outflow flux
           PCFLX(IC,2)= HYCF1C(IC,LEV)*VFACTA
           IF (NEXITS .GT. 1) THEN
 C           category exit outflow flux
-            DO 10 IX= 1, NEXITS
+            DO 110 IX= 1, NEXITS
               PCFLX(IC,2+IX)= HYCF2C(IX,IC,LEV)*VFACTA
- 10         CONTINUE
+ 110        CONTINUE
           END IF
- 20     CONTINUE
+ 120    CONTINUE
       END IF
 C
       IF (PEVFP .GT. 0) THEN
@@ -4227,7 +4248,7 @@ C             compile values for direct access printout
               CHEAD(ACNT) = 'VOL'
               CLEN(ACNT) = 3
             END IF
-            DO 30 I= 1, 5
+            DO 130 I= 1, 5
               IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
                 TPOS= TPOS+ RLEN+ 1
                 WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PSTAT(I)
@@ -4240,7 +4261,7 @@ C             compile values for direct access printout
                 CHEAD(ACNT) = CSTAT(I)
                 CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
               END IF
- 30         CONTINUE
+ 130        CONTINUE
             IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
               TPOS= TPOS+ RLEN+ 1
               WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PSAREA
@@ -4356,7 +4377,7 @@ C             compile values for direct access printout
               CHEAD(ACNT) = 'VOL'
               CLEN(ACNT) = 3
             END IF
-            DO 40 I= 1, 5
+            DO 140 I= 1, 5
               IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
                 TPOS= TPOS+ RLEN+ 1
                 WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PSTAT(I)
@@ -4369,7 +4390,7 @@ C             compile values for direct access printout
                 CHEAD(ACNT) = CSTAT(I)
                 CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
               END IF
- 40         CONTINUE
+ 140        CONTINUE
             IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
               TPOS= TPOS+ RLEN+ 1
               WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PSAREA
@@ -4446,7 +4467,7 @@ C           compile values for direct access printout
             CHEAD(ACNT) = 'VOL'
             CLEN(ACNT) = 3
           END IF
-          DO 50 I= 1, 5
+          DO 150 I= 1, 5
             IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
               TPOS= TPOS+ RLEN+ 1
               WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PSTAT(I)
@@ -4461,7 +4482,7 @@ C           compile values for direct access printout
               CHEAD(ACNT) = CSTAT(I)
               CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
             END IF
- 50       CONTINUE
+ 150      CONTINUE
           IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
             TPOS= TPOS+ RLEN+ 1
             WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PSAREA
@@ -4534,8 +4555,17 @@ C         compile values for direct access printout
 C
       IF (NCATS .GE. 1) THEN
 C       category state variable output
-        IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) WRITE (PRINTU,2180)
-        DO 60 IC= 1, NCATS
+        IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+          WRITE (PRINTU,2180)
+          IF (UNITFG .EQ. 1) THEN
+C           english units
+            WRITE (PRINTU,2190)
+          ELSE
+C           metric units
+            WRITE (PRINTU,2200)
+          END IF
+        END IF
+        DO 160 IC= 1, NCATS
 C         first volume, then flow
 C         build output buffer
           IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
@@ -4553,17 +4583,8 @@ C         build output buffer
             CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
           END IF
           IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
-C           determine offset for outflow
-            IF (AUX1FG.GE.1 .AND. AUX2FG.EQ.1 .AND. AUX3FG.EQ.1) THEN
-              TPOS= TPOS+ 20
-            ELSE IF (AUX1FG.GE.1 .AND. AUX2FG.EQ.1) THEN
-              TPOS= TPOS+ 90
-            ELSE IF (AUX1FG.GE.1) THEN
-              TPOS= TPOS+ 70
-            ELSE IF (AUX1FG.EQ.0 .AND. AUX2FG.EQ.0 .AND.
-     $               AUX3FG.EQ.0) THEN
-              TPOS= TPOS+ 10
-            END IF
+C           outflow
+            TPOS= TPOS+ 10
             WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PCST(IC,2)
             CALL RHTSTR (TLEN,
      M                   TBUF1(TPOS))
@@ -4578,33 +4599,96 @@ C           determine offset for outflow
             TPOS= TPOS + RLEN
             WRITE(PRINTU,2050) (TBUF1(I), I= 1, TPOS)
           END IF
- 60     CONTINUE
+ 160    CONTINUE
+      END IF
+C
+      IF (NEXITS .GT. 1) THEN
+C       print outflow rate by exit
+        DO 170 IX= 1, NEXITS
+          IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+            IF (IX .EQ. 1) THEN
+              TBUFF= ' '
+              TPOS= 22
+            END IF
+            TPOS= TPOS+ RLEN+ 1
+            WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PO(IX)
+            CALL RHTSTR (TLEN,
+     M                   TBUF1(TPOS))
+          END IF
+          IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PO(IX)
+            CHEAD(ACNT) = CSTAT2(IX)
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          END IF
+ 170    CONTINUE
+        IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+          TPOS= TPOS+ RLEN
+          IF (UNITFG .EQ. 1) THEN
+C           english units
+            WRITE (PRINTU,2210) (IX,IX=1,NEXITS)
+          ELSE
+C           metric units
+            WRITE (PRINTU,2220) (IX,IX=1,NEXITS)
+          END IF
+          WRITE (PRINTU,2050) (TBUF1(I), I= 1, TPOS)
+        END IF
+        IF (NCATS .GE. 1) THEN
+C         category state variable output
+          IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) WRITE (PRINTU,2230)
+          DO 190 IC= 1, NCATS
+C           build output buffer
+            IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+              TBUFF= ' '
+              TBUFF(8:25)= CATNAM(IC)
+              TPOS= 32
+            END IF
+            DO 180 IX= 1, NEXITS
+              IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+                WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PCST2(IX,IC)
+                CALL RHTSTR (TLEN,
+     M                     TBUF1(TPOS))
+                TPOS= TPOS + RLEN+1
+              END IF
+              IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+                ACNT = ACNT + 1
+                APRINT(ACNT) = PCST2(IX,IC)
+                CHEAD(ACNT) = CCST2(IX,IC)
+                CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+              END IF
+ 180        CONTINUE
+            IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+              TPOS= TPOS- 1
+              WRITE(PRINTU,2050) (TBUF1(I), I= 1, TPOS)
+            END IF
+ 190      CONTINUE
+        END IF
       END IF
 C
 C     flux output
       IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
         IF (NEXITS .GT. 1) THEN
 C         output for each exit
-          WRITE (PRINTU,2190)
+          WRITE (PRINTU,2240)
 C
-          WRITE (PRINTU,2200) (IX, IX= 1, NEXITS)
+          WRITE (PRINTU,2250) (IX, IX= 1, NEXITS)
           IF (UNITFG .EQ. 1) THEN
 C           english units
-            WRITE (PRINTU,2210)
+            WRITE (PRINTU,2260)
           ELSE
 C           metric units
-            WRITE (PRINTU,2220)
+            WRITE (PRINTU,2270)
           END IF
         ELSE
 C         just total output
-          WRITE (PRINTU,2230)
-          WRITE (PRINTU,2240)
+          WRITE (PRINTU,2280)
+          WRITE (PRINTU,2290)
           IF (UNITFG .EQ. 1) THEN
 C           english units
-            WRITE (PRINTU,2250)
+            WRITE (PRINTU,2300)
           ELSE
 C           metric units
-            WRITE (PRINTU,2260)
+            WRITE (PRINTU,2310)
           END IF
         END IF
       END IF
@@ -4624,7 +4708,7 @@ C       initialize output array
         CHEAD(ACNT) = 'IVOL'
         CLEN(ACNT) = 4
       END IF
-      DO 70 I= 1, 3
+      DO 200 I= 1, 3
         IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
           TPOS= TPOS+ RLEN+ 1
           WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PCFLX1(I)
@@ -4637,10 +4721,10 @@ C       initialize output array
           CHEAD(ACNT) = CCFLX1(I)
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         END IF
- 70   CONTINUE
+ 200  CONTINUE
       IF (NEXITS .GT. 1) THEN
 C       print outflow volume by exit
-        DO 80 IX= 1, NEXITS
+        DO 210 IX= 1, NEXITS
           IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
             TPOS= TPOS+ RLEN+ 1
             WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PCFLX2(IX)
@@ -4653,7 +4737,7 @@ C       print outflow volume by exit
             CHEAD(ACNT) = CCFLX2(IX)
             CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
           END IF
- 80     CONTINUE
+ 210    CONTINUE
       END IF
       IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
         TPOS= TPOS+ RLEN
@@ -4662,8 +4746,8 @@ C       print outflow volume by exit
 C
       IF (NCATS .GE. 1) THEN
 C       category flux output
-        IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) WRITE (PRINTU,2180)
-        DO 100 IC= 1, NCATS
+        IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) WRITE (PRINTU,2230)
+        DO 230 IC= 1, NCATS
 C         first inflow, then outflow
 C         build output buffer
           IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
@@ -4694,7 +4778,7 @@ C         build output buffer
           END IF
           IF (NEXITS .GT. 1) THEN
 C           print category outflows by exit
-            DO 90 IX= 1, NEXITS
+            DO 220 IX= 1, NEXITS
               IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
                 TPOS= TPOS+ RLEN+ 1
                 WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PCFLX(IC,2+IX)
@@ -4707,13 +4791,13 @@ C           print category outflows by exit
                 CHEAD(ACNT) = CCFLX(IC,2+IX)
                 CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
               END IF
- 90         CONTINUE
+ 220        CONTINUE
           END IF
           IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
             TPOS= TPOS+ RLEN
             WRITE (PRINTU,2050) (TBUF1(I), I= 1, TPOS)
           END IF
- 100    CONTINUE
+ 230    CONTINUE
       END IF
 C
       IF (PEVFP .GT. 0) THEN
@@ -4721,10 +4805,10 @@ C       potential et
         IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
           IF (UNITFG .EQ. 1) THEN
 C           english units
-            WRITE (PRINTU,2270)
+            WRITE (PRINTU,2320)
           ELSE
 C           metric units
-            WRITE (PRINTU,2280)
+            WRITE (PRINTU,2330)
           END IF
           TBUFF= ' '
           TPOS= 32
@@ -4747,16 +4831,16 @@ C       irrigation fluxes
         IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
           IF (UNITFG .EQ. 1) THEN
 C           english units
-            WRITE (PRINTU,2290)
+            WRITE (PRINTU,2340)
           ELSE
 C           metric units
-            WRITE (PRINTU,2300)
+            WRITE (PRINTU,2350)
           END IF
           TBUFF= ' '
           TPOS= 32
         END IF
 C       build output buffer
-        DO 110 I= 1, 3
+        DO 240 I= 1, 3
           IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
             WRITE (TBUFF(TPOS:TPOS+RLEN),2040) PIRFLX(I)
             CALL RHTSTR (TLEN,
@@ -4769,7 +4853,7 @@ C       build output buffer
             CHEAD(ACNT) = CIRFLX(I)
             CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
           END IF
- 110    CONTINUE
+ 240    CONTINUE
         IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
           WRITE (PRINTU,2050) (TBUF1(I), I= 1, TPOS)
         END IF

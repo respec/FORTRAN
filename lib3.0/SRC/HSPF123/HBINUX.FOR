@@ -18,7 +18,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER I
 C
 C     + + + INCLUDES + + +
-      INCLUDE 'chbin.inc'
+      INCLUDE 'CHBIN.INC'
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -65,7 +65,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL CVARAR,COPYC
 C
 C     + + + INCLUDES + + +
-      INCLUDE 'chbin.inc'
+      INCLUDE 'CHBIN.INC'
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -134,7 +134,7 @@ C
      I                   VALUES)
 C
 C     + + + PURPOSE + + +
-C     Write a binary output header record for a section of an operation
+C     Write a binary output data record for a section of an operation
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       BINU,OPNO,UNITFG,LEV,DATE(5),VCOUNT
@@ -165,7 +165,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL CVARAR,COPYC
 C
 C     + + + INCLUDES + + +
-      INCLUDE 'chbin.inc'
+      INCLUDE 'CHBIN.INC'
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -252,7 +252,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC MOD,INT
 C
 C     + + + INCLUDES + + +
-      INCLUDE 'chbin.inc'
+      INCLUDE 'CHBIN.INC'
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -274,7 +274,16 @@ C     then pack one byte at a time.
 C
 C     now create back-pointer at end of record
       FIELD= CPOS * 4 + 1
-      IF (FIELD .GE. 256) THEN
+      IF (FIELD .GE. 256**2.0) THEN
+C       three-byte back-pointer
+        PI(1)= INT (FIELD / 256.0**2.0)
+        PI(2)= INT (FIELD / 256.0)
+        PI(3)= MOD(FIELD,256)+ 1
+        BINBUF(CPOS+1)= PC(1)
+        BINBUF(CPOS+2)= PC(5)
+        BINBUF(CPOS+3)= PC(9)
+        CPOS= CPOS+ 3
+      ELSE IF (FIELD .GE. 256) THEN
 C       two-byte back-pointer
         PI(1)= INT (FIELD / 256.0)
         PI(2)= MOD(FIELD,256)
@@ -311,8 +320,8 @@ C
       INTEGER*1     mBinBuffI1(mMaxBinBuff*4)
       INTEGER*2     mBinBuffI2(mMaxBinBuff*2)
       REAL          mBinBuffR(mMaxBinBuff)
-      EQUIVALENCE  (mBinBuffC,mBinBuffC4,mBinBuffC8,
-     $              mBinBuffI,mBinBuffR,mBinBuffI1,mBinBuffI2)
+!     EQUIVALENCE  (mBinBuffC,mBinBuffC4,mBinBuffC8,
+!    $              mBinBuffI,mBinBuffR,mBinBuffI1,mBinBuffI2)
 !
       type Header
         sequence
