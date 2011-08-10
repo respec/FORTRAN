@@ -5,7 +5,7 @@ C
 C     COPYRIGHT, TIMOTHY A. COHN, 1995
 C     PROPERTY OF US GOVERNMENT, GEOLOGICAL SURVEY
 C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
 C     
 C
 C     AUTHOR.......TIM COHN
@@ -276,10 +276,10 @@ C      SAVE
       IF(X .GT. 0.D0 .AND. ALPHA .GT. 0.D0) THEN
             IF((ALPHA+X) .LT. 100.D0) THEN
                   FP_G1_PDF   =     X**(ALPHA-1.D0) * 
-     1	                               EXP(-X)/DGAMMA(ALPHA)
+     1                                 EXP(-X)/DGAMMA(ALPHA)
             ELSE
                   TEMP        =     (ALPHA-1.D0) * LOG(X) - X -  
-     1	                               DLNGAM(ALPHA)
+     1                                 DLNGAM(ALPHA)
                   FP_G1_PDF   =     EXP(TEMP)
             ENDIF 
       ELSE
@@ -380,11 +380,11 @@ C      SAVE
       ELSE IF(BETA .LT. 0.D0) THEN
             FP_G2_CDF   =     1.D0 - FP_G1_CDF(X/BETA,ALPHA)
       ELSE
-            IF(X .GT. 0.D0) THEN
+        IF(X .GT. 0.D0) THEN
               FP_G2_CDF   =     1.D0
-	    ELSE
+        ELSE
               FP_G2_CDF   =     0.D0
-	    ENDIF
+      ENDIF
       ENDIF
       
       RETURN
@@ -432,9 +432,9 @@ C      SAVE
       IF(P .GT. 0.999999999) THEN
             FP_G1_ICDF  =     9.D99
             RETURN
-	ELSE IF(P .LT. 0.000000001) THEN
+      ELSE IF(P .LT. 0.000000001) THEN
             FP_G1_ICDF  =     0.D0
-            RETURN	      
+            RETURN      
       ENDIF
       
             FP_G1_ICDF  =     0.5*DCHIIN(P,2.D0*ALPHA)
@@ -692,25 +692,25 @@ C
 C      SAVE
 
             TL1   =     MAX(MIN(0.D0,TU),TL)
-	IF(TL1 .EQ. TU) THEN
-	      ANS = TL1**K
-	ELSE
-		DOWN	=  DGAMDF(TU,ALPHA) - DGAMDF(TL1,ALPHA)
-	IF(DOWN .GT. 0.D0) THEN
-		UP    =  DGAMDF(TU,ALPHA+K) - DGAMDF(TL1,ALPHA+K)
-		ANS	=  UP/DOWN
+      IF(TL1 .EQ. TU) THEN
+          ANS = TL1**K
+      ELSE
+        DOWN    =  DGAMDF(TU,ALPHA) - DGAMDF(TL1,ALPHA)
+      IF(DOWN .GT. 0.D0) THEN
+        UP    =  DGAMDF(TU,ALPHA+K) - DGAMDF(TL1,ALPHA+K)
+        ANS    =  UP/DOWN
 C     THIS SECTION COMPUTES RATIO GAMMA(ALPHA+K)/GAMMA(ALPHA)
             DO 10 J=0,K-1
                   ANS   =     ANS*(ALPHA+J)
 10          CONTINUE
-	ELSE
-	      IF(TL1 .GT. ALPHA) THEN
-		   ANS = TL1**K
-		ELSE
-		   ANS = TU**K
-		ENDIF
+      ELSE
+        IF(TL1 .GT. ALPHA) THEN
+           ANS = TL1**K
+        ELSE
+           ANS = TU**K
+        ENDIF
       ENDIF
-	ENDIF
+      ENDIF
 
       FP_G1_MOM_TRC     =     ANS
 
@@ -741,10 +741,10 @@ C      SAVE
             RETURN
       ELSE IF(BETA .GT. 0.D0) THEN
             FP_G2_MOM_TRC     =     BETA**K *  
-     1	        FP_G1_MOM_TRC(ALPHA,TL/BETA,TU/BETA,K)
+     1            FP_G1_MOM_TRC(ALPHA,TL/BETA,TU/BETA,K)
       ELSE
             FP_G2_MOM_TRC     =     BETA**K *  
-     1	        FP_G1_MOM_TRC(ALPHA,TU/BETA,TL/BETA,K)
+     1            FP_G1_MOM_TRC(ALPHA,TU/BETA,TL/BETA,K)
       ENDIF
             
       RETURN
@@ -866,7 +866,7 @@ C      SAVE
                         ARG   =     1.D0
                   ELSE
                      ARGT      =  (ABS(XSI)-(LIMIT+LIMITI)/2.D0) 
-     1	                               /(LIMIT-LIMITI)
+     1                                   /(LIMIT-LIMITI)
                      ARG       =  (1.D0+SIN(3.14159*ARGT))/2.D0
                   ENDIF
              ELSE
@@ -908,7 +908,7 @@ C      SAVE
             CHOOSE      =     DFAC(N)/(DFAC(N-K)*DFAC(K))
       ELSE
             ARG         =     DLNGAM(N+1.D0)-DLNGAM(N-K+1.D0)- 
-     1	                               DLNGAM(K+1.D0)
+     1                                   DLNGAM(K+1.D0)
             IF(ARG .LT. 500.D0) THEN
                   CHOOSE      =     EXP(ARG)
             ELSE
@@ -922,7 +922,7 @@ C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
       SUBROUTINE SP_G1_CDF_HESS(X,ALPHA_IN,GRAD,HESS)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
-C     PROGRAM TO COMPUTE HESSIAN AND GRADIENT OF 1-P GAMMA D'N
+C     PROGRAM TO COMPUTE HESSIAN AND GRADIENT OF 1-P GAMMA D''N
 C
 C     AUTHOR.....TIM COHN
 C     DATE.......JANUARY 30, 1995
@@ -976,7 +976,7 @@ C                 D2    =     ( ( (FPP * G + GP * FP) ) * G**2 - 2 * G * GP * (F
 C
       GRAD(2)     =     FP - GP*P
 
-      HESS(2,2)   =     ( ( (FPP +     GP * FP) - (GPP * P + GP * FP) )       
+      HESS(2,2)   = ( ( (FPP +     GP * FP) - (GPP * P + GP * FP) )    
      1                  - 2 *     GP * (FP   - GP*P) )
       
       RETURN
@@ -1012,7 +1012,7 @@ C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
       SUBROUTINE SP_G1_CDF_LN_HESS(X,ALPHA,GRAD,HESS)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
-C     PROGRAM TO COMPUTE HESSIAN AND GRADIENT OF LOGARITHM OF 1-P GAMMA D'N
+C     PROGRAM TO COMPUTE HESSIAN AND GRADIENT OF LOGARITHM OF 1-P GAMMA D''N
 C
 C     AUTHOR.....TIM COHN
 C     DATE.......MARCH 1, 1995
@@ -1059,7 +1059,7 @@ C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
       SUBROUTINE SP_G3_CDF_LN_HESS(X,PARMS,GRAD,HESS)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
-C     PROGRAM TO COMPUTE HESSIAN AND GRADIENT OF LOGARITHM OF 3-P GAMMA D'N
+C     PROGRAM TO COMPUTE HESSIAN AND GRADIENT OF LOGARITHM OF 3-P GAMMA D''N
 C
 C     AUTHOR.....TIM COHN
 C     DATE.......MARCH 1, 1995
@@ -1103,11 +1103,11 @@ C      SAVE
                   HESS(1,1)   =     H2(1,1) * (1.D0/BETA**2)
                   HESS(1,2)   =     H2(1,2) * (-1.D0/BETA)
                   HESS(1,3)   =     H2(1,1) * (Y/BETA**2) + G1(1) *  
-     1	                               (1.D0/BETA**2)
+     1                                   (1.D0/BETA**2)
                   HESS(2,2)   =     H2(2,2)
                   HESS(2,3)   =     H2(1,2) * (-Y/BETA)
                   HESS(3,3)   =     H2(1,1) * (-Y/BETA)**2 + G1(1) *  
-     1	                               (2*Y/BETA**2)
+     1                                   (2*Y/BETA**2)
                   
       DO 10 I=1,3
             DO 10 J=I+1,3
@@ -1161,13 +1161,13 @@ C   V IS THE VARIANCE
       V        =  M2 - M1**2
         DVDM1  =  -2.D0*M1
         DVDM2  =  1.D0
-	DVDM3  =  0.D0
+        DVDM3  =  0.D0
 
 C   S  IS THE SKEW       
       S        =  M3 - 3.D0*M2*M1 + 2.D0*M1**3
         DSDM1  =  -3.D0*M2 + 6.D0*M1**2
-	DSDM2  =  -3.D0*M1
-	DSDM3  =  1.D0
+        DSDM2  =  -3.D0*M1
+        DSDM3  =  1.D0
 
 C   A  IS THE PARAMETER
 
@@ -1175,8 +1175,8 @@ C   A  IS THE PARAMETER
         DADM1  =  4.D0*(3.D0*V**2*DVDM1 * S**2 - 2*S*DSDM1*V**3)/S**4
         DADM2  =  4.D0*(3.D0*V**2*DVDM2 * S**2 - 2*S*DSDM2*V**3)/S**4
         DADM3  =  4.D0*(3.D0*V**2*DVDM3 * S**2 - 2*S*DSDM3*V**3)/S**4
-	
-	
+        
+        
 C   D IS B**2
 
       D        =  V/A
@@ -1212,102 +1212,102 @@ C   T
       
       DO 10 I=1,3
         DO 10 J=1,3
-	  JACT(I,J) = JAC(J,I)
+          JACT(I,J) = JAC(J,I)
 10    CONTINUE
 
       RETURN
       END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-C	
+C        
         SUBROUTINE P2M(P,M)
 C        SAVE
-	IMPLICIT NONE
-	DOUBLE PRECISION P(3),M(3),T,A,B
-	T=P(1)
-	A=P(2)
-	B=P(3)
-	M(1) =  A*B + T
-	M(2) =  A*B**2
+        IMPLICIT NONE
+        DOUBLE PRECISION P(3),M(3),T,A,B
+        T=P(1)
+        A=P(2)
+        B=P(3)
+        M(1) =  A*B + T
+        M(2) =  A*B**2
         M(3) =  2.D0/SQRT(A)
-	IF(B .LT. 0.D0) M(3) = -M(3)
-	RETURN
-	END
+        IF(B .LT. 0.D0) M(3) = -M(3)
+        RETURN
+        END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
         SUBROUTINE M2P(M,P)
-	IMPLICIT NONE
+        IMPLICIT NONE
 C        SAVE
-	DOUBLE PRECISION P(3),A,B,T,M(3),M1,M2,M3
-	M1=M(1)
-	M2=M(2)
-	M3=M(3)
+        DOUBLE PRECISION P(3),A,B,T,M(3),M1,M2,M3
+        M1=M(1)
+        M2=M(2)
+        M3=M(3)
         A = 4.D0/M3**2
-	B = SQRT(M2/A)
-	IF(M3 .LT. 0.D0) B=-B
-	T = M1 - A*B
-	P(1)  =  T
-	P(2)  =  A
-	P(3)  =  B
-	RETURN
-	END
+        B = SQRT(M2/A)
+        IF(M3 .LT. 0.D0) B=-B
+        T = M1 - A*B
+        P(1)  =  T
+        P(2)  =  A
+        P(3)  =  B
+        RETURN
+        END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-C	
+C        
         SUBROUTINE P2MN(P,M)
 C        SAVE
-	IMPLICIT NONE
-	DOUBLE PRECISION P(3),M(3),T,A,B
-	T=P(1)
-	A=P(2)
-	B=P(3)
-	M(1) =  A*B + T
-	M(2) =  A*(1 + A)*B**2 + 2*A*B*T + T**2
+        IMPLICIT NONE
+        DOUBLE PRECISION P(3),M(3),T,A,B
+        T=P(1)
+        A=P(2)
+        B=P(3)
+        M(1) =  A*B + T
+        M(2) =  A*(1 + A)*B**2 + 2*A*B*T + T**2
         M(3) =  A*(1 + A)*(2 + A)*B**3 + 3*A*(1 + A)*B**2*T + 
      1             3*A*B*T**2 + T**3
-	RETURN
-	END
+        RETURN
+        END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
         SUBROUTINE MN2P(M,P)
-	IMPLICIT NONE
+        IMPLICIT NONE
 C      SAVE
-	DOUBLE PRECISION P(3),M(3),M1,M2,M3
-	M1=M(1)
-	M2=M(2)
-	M3=M(3)
+        DOUBLE PRECISION P(3),M(3),M1,M2,M3
+        M1=M(1)
+        M2=M(2)
+        M3=M(3)
         P(1) = (M1**2*M2 - 2*M2**2 + M1*M3)/(2*M1**3 - 3*M1*M2 + M3)
-	P(2) = -4*(M1**2 - M2)**3/(2*M1**3 - 3*M1*M2 + M3)**2
-	P(3) = (2*M1**3 - 3*M1*M2 + M3)/(-2*M1**2 + 2*M2)
-	RETURN
-	END
+        P(2) = -4*(M1**2 - M2)**3/(2*M1**3 - 3*M1*M2 + M3)**2
+        P(3) = (2*M1**3 - 3*M1*M2 + M3)/(-2*M1**2 + 2*M2)
+        RETURN
+        END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-C	
+C        
         SUBROUTINE M2MN(M,MN)
 C      SAVE
-	IMPLICIT NONE
-	DOUBLE PRECISION M(3),MN(3)
-	MN(1) =  M(1)
-	MN(2) =  M(2)+M(1)**2
+        IMPLICIT NONE
+        DOUBLE PRECISION M(3),MN(3)
+        MN(1) =  M(1)
+        MN(2) =  M(2)+M(1)**2
         MN(3) =  M(3)*M(2)**1.5 + 3.D0*MN(2)*M(1) - 2.D0 * M(1)**3
-	RETURN
-	END
+        RETURN
+        END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-C	
+C        
         SUBROUTINE MN2M(MN,M)
 C      SAVE
-	IMPLICIT NONE
-	DOUBLE PRECISION M(3),MN(3)
-	M(1) =  MN(1)
-	M(2) =  MN(2)-MN(1)**2
+        IMPLICIT NONE
+        DOUBLE PRECISION M(3),MN(3)
+        M(1) =  MN(1)
+        M(2) =  MN(2)-MN(1)**2
         M(3) =  (MN(3) - 3.D0*MN(2)*MN(1) + 2.D0 * MN(1)**3)
      1              /M(2)**1.5
-	RETURN
-	END
+        RETURN
+        END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
       DOUBLE PRECISION FUNCTION D_G1_INV(PQ,ALPHA)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1332,13 +1332,13 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C      SAVE
       DOUBLE PRECISION PQ,Q1P,ALPHA
       
-	 Q1P      =   FP_G1_ICDF(PQ,ALPHA)
-	 D_G1_INV =  -DDGAM(ALPHA,Q1P)/FP_G1_PDF(Q1P,ALPHA)
-	 
+         Q1P      =   FP_G1_ICDF(PQ,ALPHA)
+         D_G1_INV =  -DDGAM(ALPHA,Q1P)/FP_G1_PDF(Q1P,ALPHA)
+         
       RETURN
       END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
-	 SUBROUTINE EXPMOMDERIV(PARMS,XMIN,XMAX,JAC)
+         SUBROUTINE EXPMOMDERIV(PARMS,XMIN,XMAX,JAC)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C 
 C     PROGRAM TO COMPUTE DERIVATIVE OF EXPECTED VALUE OF 
@@ -1358,17 +1358,17 @@ C      SAVE
      2  JAC1(3,3),JAC2(3,3),ALPHA,BETA,TAU,M(3)
 
           TAU   = PARMS(1)
-	  ALPHA = PARMS(2)
-	  BETA  = PARMS(3)
+          ALPHA = PARMS(2)
+          BETA  = PARMS(3)
         CALL DEXPECT(TAU,ALPHA,BETA,XMIN,XMAX,M,JAC1)
-	 
+         
         CALL DPDM(PARMS,JAC2)
-	
-	CALL DMRRRR(3,3,JAC1,3,3,3,JAC2,3,3,3,JAC,3)
-	
-	RETURN
-	END
-	
+        
+        CALL DMRRRR(3,3,JAC1,3,3,3,JAC2,3,3,3,JAC,3)
+        
+        RETURN
+        END
+        
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
       DOUBLE PRECISION FUNCTION DDGAM(ALPHA,X)
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1390,67 +1390,67 @@ C      SAVE
       
        IF(ALPHA .LE. 0.D0 .OR. X .LE. 0.D0) THEN
                RESULT = 0.D0
-	       GOTO 100
+               GOTO 100
        END IF
               
        IF(ABS(X-ALPHA)/SQRT(ALPHA+1.D0) .GT. 7.D0) THEN
                RESULT = 0.D0
-	       GOTO 100
+               GOTO 100
        END IF
       
           A        = ALPHA
-	  LOGX     =  LOG(X)
+          LOGX     =  LOG(X)
 C
       IF(X .LT. 5.D0) THEN
           T        =  X**A
-	  R        =  (A*LOGX-1.D0)/A**2
-	  SUM      =  T*R
-	DO 10 I2=1,1000
-	  I        =  I2
-	  AI       =  A+I
-	  T        =  -T*X/I
-	  R        =  (AI*LOGX-1.D0)/AI**2
-	  DEL      =  R*T
-	  SUM      =  SUM + DEL
-	   IF(I .GT. 1 .AND. ABS(DEL) .LT. (1.D0+ABS(SUM))*TOL) THEN
-	     RESULT =  SUM/EXP(DGAMLN(A,IERR)) - DPSI(A)*FP_G1_CDF(X,A)
-	     GOTO 100
-	   ENDIF
+          R        =  (A*LOGX-1.D0)/A**2
+          SUM      =  T*R
+        DO 10 I2=1,1000
+          I        =  I2
+          AI       =  A+I
+          T        =  -T*X/I
+          R        =  (AI*LOGX-1.D0)/AI**2
+          DEL      =  R*T
+          SUM      =  SUM + DEL
+           IF(I .GT. 1 .AND. ABS(DEL) .LT. (1.D0+ABS(SUM))*TOL) THEN
+             RESULT =  SUM/EXP(DGAMLN(A,IERR)) - DPSI(A)*FP_G1_CDF(X,A)
+             GOTO 100
+           ENDIF
 10      CONTINUE
           GOTO 99
 C
       ELSE IF(X .GT. A+30.D0) THEN
           T        =  EXP(-X + (A-1.D0)*LOGX - DGAMLN(A,IERR) )
-	  R        =  LOGX - DPSI(A)
-	  SUM      =  R*T
-	DO 20 I2=1,INT(A-1.D0)
-	  I         =  I2
-	  AMI       =  A-I
-	  T        =  T*(AMI)/X
-	  R        =  LOGX - DPSI(AMI)
-	  DEL      =  R*T
-	  SUM      =  SUM + DEL
-	   IF(I .GT. 1 .AND. ABS(DEL) .LT. (1.D0+ABS(SUM))*TOL) THEN
-	     RESULT = -SUM
-	     GOTO 100
-	   ENDIF
+          R        =  LOGX - DPSI(A)
+          SUM      =  R*T
+        DO 20 I2=1,INT(A-1.D0)
+          I         =  I2
+          AMI       =  A-I
+          T        =  T*(AMI)/X
+          R        =  LOGX - DPSI(AMI)
+          DEL      =  R*T
+          SUM      =  SUM + DEL
+           IF(I .GT. 1 .AND. ABS(DEL) .LT. (1.D0+ABS(SUM))*TOL) THEN
+             RESULT = -SUM
+             GOTO 100
+           ENDIF
 20      CONTINUE
           GOTO 99
 C
       ELSE
           T        =  EXP(-X + A*LOGX - DGAMLN(A+1.D0,IERR) )
-	  R        =  LOGX - DPSI(A+1.D0)
-	  SUM      =  R*T
-	DO 30 I2=1,10000
-	  I        =  I2
-	  T        =  T*X/(A+I)
-	  R        =  LOGX - DPSI(A+I+1.D0)
-	  DEL      =  R*T
-	  SUM      =  SUM + DEL
-	   IF(I .GT. 1 .AND. ABS(DEL) .LT. (1.D0+ABS(SUM))*TOL) THEN
-	     RESULT = SUM
-	     GOTO 100
-	   ENDIF
+          R        =  LOGX - DPSI(A+1.D0)
+          SUM      =  R*T
+        DO 30 I2=1,10000
+          I        =  I2
+          T        =  T*X/(A+I)
+          R        =  LOGX - DPSI(A+I+1.D0)
+          DEL      =  R*T
+          SUM      =  SUM + DEL
+           IF(I .GT. 1 .AND. ABS(DEL) .LT. (1.D0+ABS(SUM))*TOL) THEN
+             RESULT = SUM
+             GOTO 100
+           ENDIF
 30      CONTINUE
           GOTO 99
       ENDIF
@@ -1460,11 +1460,12 @@ C
       RETURN
 99    CONTINUE
               WRITE(*,*) 'SOMETHING BAD (DDGAM).....'
-              WRITE(*,*) 'CALL TIM (703/904-7374).....'
+              WRITE(*,*) 'Contact Tim Cohn (703/648-5711).....'
+              WRITE(*,*) 'tacohn@usgs.gov.....'
               WRITE(*,*) 'ALPHA: ',ALPHA
               WRITE(*,*) 'X:     ',X
-	      READ(*,*)
-	      STOP
+              READ(*,*)
+              STOP
       END
 
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
@@ -1511,28 +1512,28 @@ C      SAVE
 C
 C    RETURN IF THE RESULTS DO NOT DEPEND ON THE PARAMETERS
 C
-	IF(TU .LE. TL) GOTO 99
-	
+        IF(TU .LE. TL) GOTO 99
+        
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C    STANDARDIZE THE THRESHOLDS;  COMPUTE DERIVATIVES
 C
-	IF(BETA .GT. 0.D0) THEN
+        IF(BETA .GT. 0.D0) THEN
           STDL  =  MAX(0.D0,(TL-TAU)/BETA)
-	  STDU  =  (TU-TAU)/BETA
-	ELSE IF(BETA .LT. 0.D0) THEN
+          STDU  =  (TU-TAU)/BETA
+        ELSE IF(BETA .LT. 0.D0) THEN
           STDL  =  MAX(0.D0,(TU-TAU)/BETA)
-	  STDU  =  (TL-TAU)/BETA
+          STDU  =  (TL-TAU)/BETA
         ELSE IF(BETA .EQ. 0.D0) THEN
-	  GOTO 99
+          GOTO 99
         ENDIF
-	  LSTDL   =  LOG(MAX(1.D-99,STDL))
-	  LSTDU   =  LOG(MAX(1.D-99,STDU))
-	  
-	  DSTDLT  =  -1.D0/BETA
-	  DSTDUT  =  -1.D0/BETA
-	  DSTDLB  =  -STDL/BETA
-	  DSTDUB  =  -STDU/BETA
+          LSTDL   =  LOG(MAX(1.D-99,STDL))
+          LSTDU   =  LOG(MAX(1.D-99,STDU))
+          
+          DSTDLT  =  -1.D0/BETA
+          DSTDUT  =  -1.D0/BETA
+          DSTDLB  =  -STDL/BETA
+          DSTDUB  =  -STDU/BETA
 
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
@@ -1549,10 +1550,10 @@ C
 C      1.A   FIRST COMPUTE THE ADJUSTMENT FACTOR
 C
           ADJ(0)    =  1.D0
-	  DADJ(0)   =  0.D0
-	DO 40 J=1,3
-	  ADJ(J)    =  (ALPHA+J-1.D0) * ADJ(J-1)
-	  DADJ(J)   =  ADJ(J-1) + (ALPHA+J-1.D0) * DADJ(J-1)
+          DADJ(0)   =  0.D0
+        DO 40 J=1,3
+          ADJ(J)    =  (ALPHA+J-1.D0) * ADJ(J-1)
+          DADJ(J)   =  ADJ(J-1) + (ALPHA+J-1.D0) * DADJ(J-1)
 40      CONTINUE
 
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1564,13 +1565,13 @@ C                      G1 CONTAINS TAU, BETA THROUGH STDL
 C
       DO 20 J=0,3
         GU      =  FP_G1_CDF(STDU,ALPHA+J)
-	GL      =  FP_G1_CDF(STDL,ALPHA+J)
-	G1(J)   =  GU-GL
+        GL      =  FP_G1_CDF(STDL,ALPHA+J)
+        G1(J)   =  GU-GL
         DG1(J)  =  DDGAM(ALPHA+J,STDU) - DDGAM(ALPHA+J,STDL)
-	B(J)    =  G1(J)/G1(0)
-	DB(J)   =  (DG1(J)*G1(0) - DG1(0)*G1(J))/G1(0)**2
-	FU(J)   =  FP_G1_PDF(STDU,ALPHA+J)
-	FL(J)   =  FP_G1_PDF(STDL,ALPHA+J)
+        B(J)    =  G1(J)/G1(0)
+        DB(J)   =  (DG1(J)*G1(0) - DG1(0)*G1(J))/G1(0)**2
+        FU(J)   =  FP_G1_PDF(STDU,ALPHA+J)
+        FL(J)   =  FP_G1_PDF(STDL,ALPHA+J)
         DM1(J,1) = (
      1     (FU(J)*DSTDUT - FL(J)*DSTDLT) * G1(0) -
      2     (FU(0)*DSTDUT - FL(0)*DSTDLT) * G1(J) )/G1(0)**2
@@ -1585,8 +1586,8 @@ C
       DO 50 J=1,3
         M1(J)     =  ADJ(J)*B(J)
         DM1(J,2)  =  ADJ(J)*DB(J) + DADJ(J)*B(J)
-	DM1(J,1)  =  ADJ(J)*DM1(J,1)
-	DM1(J,3)  =  ADJ(J)*DM1(J,3)
+        DM1(J,1)  =  ADJ(J)*DM1(J,1)
+        DM1(J,3)  =  ADJ(J)*DM1(J,3)
 50    CONTINUE
 
 C
@@ -1600,9 +1601,9 @@ C              DM2(J,3) REFERS TO BETA
 C
       DO 60 J=1,3
         M2(J)     = BETA**J * M1(J)
-	DM2(J,1)  = BETA**J * DM1(J,1)
-	DM2(J,2)  = BETA**J * DM1(J,2)
-	DM2(J,3)  = J * BETA**(J-1) * M1(J) + BETA**J * DM1(J,3)
+        DM2(J,1)  = BETA**J * DM1(J,1)
+        DM2(J,2)  = BETA**J * DM1(J,2)
+        DM2(J,3)  = J * BETA**(J-1) * M1(J) + BETA**J * DM1(J,3)
 60    CONTINUE
 C
 C
@@ -1611,17 +1612,17 @@ C
 C
       DO 70 J=1,3
           M3(J)     = M2(J) + TAU**J
-	  DM3(J,1)  = J * POWER(TAU,(J-1)) + DM2(J,1)
-	  DM3(J,2)  = DM2(J,2)
-	  DM3(J,3)  = DM2(J,3)
-	DO 70 K=1,J-1
-	  CH        =  CHOOSE(J,K)
-	  M3(J)     =  M3(J) + CH*TAU**(J-K) * M2(K)
-	  DM3(J,1)  =  DM3(J,1) + CH*(
+          DM3(J,1)  = J * POWER(TAU,(J-1)) + DM2(J,1)
+          DM3(J,2)  = DM2(J,2)
+          DM3(J,3)  = DM2(J,3)
+        DO 70 K=1,J-1
+          CH        =  CHOOSE(J,K)
+          M3(J)     =  M3(J) + CH*TAU**(J-K) * M2(K)
+          DM3(J,1)  =  DM3(J,1) + CH*(
      1                   (J-K)*POWER(TAU,(J-K-1)) * M2(K) +
      2                   TAU**(J-K) * DM2(K,1) )
-	  DM3(J,2)  =  DM3(J,2) + CH*TAU**(J-K) * DM2(K,2)
-	  DM3(J,3)  =  DM3(J,3) + CH*TAU**(J-K) * DM2(K,3)
+          DM3(J,2)  =  DM3(J,2) + CH*TAU**(J-K) * DM2(K,2)
+          DM3(J,3)  =  DM3(J,3) + CH*TAU**(J-K) * DM2(K,3)
 70    CONTINUE
 
       RETURN
@@ -1629,9 +1630,9 @@ C
 C  NON-FUNCTIONAL EXIT
 C
 99    CONTINUE
-	  CALL DSET(9,0.D0,DM3,1)
-	  CALL DSET(3,0.D0,M3,1)
-	  RETURN
+          CALL DSET(9,0.D0,DM3,1)
+          CALL DSET(3,0.D0,M3,1)
+          RETURN
       END
 C
       DOUBLE PRECISION FUNCTION POWER(X,I)
@@ -1761,8 +1762,8 @@ C      SAVE
       
 c  change made to limits 20 Sep 2010 (TAC)
 c      X1    =  FP_Z_ICDF(P)+DELTA
-c        	PARMS(1)  =  NU/2.D0
-c	        PARMS(2)  =  2.D0
+c                PARMS(1)  =  NU/2.D0
+c                PARMS(2)  =  2.D0
 c      X2    =  SQRT(FP_G2_ICDF(1.D0-P,PARMS)/NU)
 c      
 c      IF(X2 .LE. 0.D0) GOTO 99
@@ -1772,7 +1773,7 @@ c        C     =  MAX(0.D0,X1,1.D0/X2,X1/X2)
 
          B     =  -10.D0
          C     =   10.D0 
-        	      
+                      
       CALL DZEROIN(FTNCINV,B,C,RE,AE,IFLAG)
       
       IF(IFLAG .NE. 1) GOTO 99
@@ -1783,8 +1784,8 @@ c        C     =  MAX(0.D0,X1,1.D0/X2,X1/X2)
       
 99    CONTINUE
         WRITE(*,*) 'ERROR IN FP_TNC_ICDF',IFLAG,P,NU,DELTA
-C	READ(*,*)
-	FP_TNC_ICDF =  0.D0
+C        READ(*,*)
+        FP_TNC_ICDF =  0.D0
       
       RETURN
       END
@@ -1805,10 +1806,10 @@ c        SAVE
       
         COMMON /ZNCT02/P,NU,DELTA
 
-	  ANS     =    FP_TNC_CDF(TP,NU,DELTA) - P
-	  FTNCINV =    ANS
-	  
-	RETURN
+          ANS     =    FP_TNC_CDF(TP,NU,DELTA) - P
+          FTNCINV =    ANS
+          
+        RETURN
         END
 C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
 C
@@ -2294,6 +2295,183 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       
       RETURN
       END 
+c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|subroutine plotposHS
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c    
+c    this routine provides plotting positions for censored data 
+c      using the Hirsch/Stedinger plotting position formula (hirsch, 1987)
+c      Purpose is operational version of peakfq (bulletin 17b
+c      implementation) which would include the expected moments
+c      algorithm (ema; cohn et al. 1997; 2001)
+c
+c    N.B:  The returned values are "exceedance probabilities" which are 
+c             equal to 1-NonExceedance probabilities
+c       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c    
+c    References
+c    ----------
+c
+c    @article{hirsch1987plotting,
+c      title={{Plotting positions for historical floods and their precision}},
+c      author={Hirsch, R.M. and Stedinger, J.R.},
+c      journal={Water Resources Research},
+c      volume={23},
+c      number={4},
+c      pages={715--727},
+c      year={1987}
+c    }
+c
+c    @article{cohn1997algorithm,
+c      title={{An algorithm for computing moments-based flood quantile estimates when historical flood information is available}},
+c      author={Cohn, TA and Lane, WL and Baier, WG},
+c      journal={Water Resources Research},
+c      volume={33},
+c      number={9},
+c      pages={2089--2096},
+c      year={1997}
+c    }
+c
+c    @article{cohn2001confidence,
+c      title={{Confidence intervals for Expected Moments Algorithm flood quantile estimates}},
+c      author={Cohn, T.A. and Lane, W.L. and Stedinger, J.R.},
+c      journal={Water resources research},
+c      volume={37},
+c      number={6},
+c      pages={1695--1706},
+c      year={2001}
+c    }
+c
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    development history
+c
+c    timothy a. cohn        15 apr 2010
+c       modified            16 apr 2010
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    subroutine calls
+c
+c    ppfit                  available in probfun.f
+c    arrange                available in probfun.f
+c    porder                 available in probfun.f
+c    ppsolve                available in probfun.f
+c    plpos                  available in probfun.f
+c    shellsort              available in probfun.f
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       n.b.  use of plotposHS requires two distinct types of information:
+c
+c            a.  "observations," which are described by {ql,qu};
+c                  specifically, the true value of q is assumed to lie
+c                  wihin the interval ql(i) <= q(i) <= qu(i);
+c                  if q(i) is known exactly, then ql(i) = q(i) = qu(i);
+c
+c                  {ql,qu} are required by ema to fit p3 distn to data
+c
+c            b.  "censoring pattern," which is described by {tl,tu}
+c                  {tl,tu} define the interval on which data get observed:
+c                  if q is not inside {tl,tu}, q is either left or right 
+c                  censored.
+c
+c                  examples:
+c                    {-inf,+inf}  => systematic data (exact value of q
+c                      would be measured)
+c                    {t,   +inf}  => historical data 
+c                      q>=t would be known exactly; 
+c                      q<t would be reported as censored ("less-than")
+c                
+c                    {tl,tu} are required by ema to estimate confidence 
+c                      intervals; they are not required for frequency
+c                      curve determination
+c
+c       n.b.  broken record is represented in the time-series data by a
+c             threshold value, tl(i), equal to 1.d12 or larger.  This
+c             indicates that only flows greater than 1.d12 would have 
+c             been recorded.  No such floods have ever occurred on the
+c             planet [TAC, 2010, personal communication].
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            n          i*4  number of observations (censored, uncensored, or 
+c                              other)
+c            ql(n)      r*8  vector of lower bounds on floods
+c            qu(n)      r*8  vector of upper bounds on floods
+c            tl(n)      r*8  vector of lower bounds on flood threshold
+c            tu(n)      r*8  vector of upper bounds on flood threshold
+c            alpha      r*8  alpha value to be used in defining plotting
+c                              position pp(i) = (i-alpha)/(n+1-2*alpha)
+c
+c       n.b.  input data are the same as the first 5 arguments to emafit
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       output variables:
+c       ------------------------------------------------------------------------
+c
+c            q(n)       r*8  sorted discharges
+c            peX(n)     r*8  estimated exceedance probabilities
+c            nt         i*4  number of censoring thresholds
+c            thr(nt)    r*8  vector of censoring thresholds
+c            peT(nt)    r*8  estimated exceedance probabilities of thresholds
+c            nb(nt)     i*4  number of observations censored at each threshold
+c
+c       n.b.  output data correspond to every observation that is not identified
+c             as broken record.  Censored data are assigned relative plotting
+c             positions according to their order in the input time series.
+c             
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      subroutine plotposHS(n,ql,qu,tl,tu,alpha,q,peX,nt,thr,peT,nb)
+
+      implicit none
+      
+      integer
+     1 n,i,j,n_true,nmax
+     
+      parameter (nmax=10000)
+      
+      integer
+     1 ix(nmax),nt,nb(nmax)
+      
+      double precision
+     1 ql(n),qu(n),tl(n),tu(n),peX(*),peT(*),infty,
+     2 q(nmax),t(nmax),mu,sigma,pp(nmax),xsynth(nmax),
+     3 alpha,thr(nmax)
+     
+      data infty/1.d12/
+     
+        n_true = 0
+      do 10 i=1,n
+        if(tl(i) .lt. infty) then
+          n_true = n_true + 1
+c  for interval data, use average of endpoints to determine order for plotting
+          q(n_true) = (ql(i)+qu(i))/2.d0
+          t(n_true) = tl(i)
+          ix(n_true) = i
+        else
+          peX(i) = -99.d0
+        endif
+10    continue
+
+      
+      call ppfit2(n_true,q,t,mu,sigma,pp,xsynth,
+     1            alpha,nt,thr,peT,nb)
+      
+      do 20 j=1,n_true
+        peX(ix(j)) = 1.d0-pp(j)
+20    continue
+      
+      return
+      end
+C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
          SUBROUTINE MDL_MR(N,X,XD,MU,SIGMA,PPALL,XSYNTH,MOMS,QUANTS)
 
 C===============================================================================
@@ -2320,22 +2498,24 @@ C===============================================================================
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
 C===============================================================================
 C
 C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
-C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
-C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES 
+C                              NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR 
+C                              EACH PT.
 C        MU        R*8       OUTPUT FITTED VALUE OF MU
 C        SIGMA     R*8       OUTPUT FITTED VALUE OF SIGMA
-C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X
+C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORR. TO X
 C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
 C        XSYNTH(N) R*8       OUTPUT VECTOR OF REAL AND SYNTHETIC OBSERVATIONS
-C                              XSYNTH(I) = X(I);                       X(I)>=XD(I) 
-C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA);  X(I)<XD(I)
+C                              XSYNTH(I) = X(I); X(I)>=XD(I) 
+C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA); X(I)<XD(I)
 C        MOMS(2)   R*8       OUTPUT VECTOR OF MEAN(X), VARIANCE(X)
 C        QUANTS(5) R*8       OUTPUT VECTOR OF 10TH, 25TH, 50TH, 75TH, AND 90TH
 C                              PERCENTILES OF SAMPLE USING WEIBULL PLOTTING POS.
@@ -2365,14 +2545,13 @@ C===============================================================================
      
       DATA NP/5/,P/0.10,0.25,0.50,0.75,0.90/
          
-
       CALL PPFIT(N,X,XD,MU,SIGMA,PPALL,XSYNTH)
          
         XS  = 0.D0
-	    XSS = 0.D0
-	  DO 30 I=1,N
-	    XS  =  XS+XSYNTH(I)
-	    XSS =  XSS+XSYNTH(I)**2
+            XSS = 0.D0
+          DO 30 I=1,N
+            XS  =  XS+XSYNTH(I)
+            XSS =  XSS+XSYNTH(I)**2
 30    CONTINUE
         MOMS(1)  =  XS/DBLE(N)
         MOMS(2)  =  (XSS-N*MOMS(1)**2)/(N-1.D0)
@@ -2383,6 +2562,29 @@ C===============================================================================
       END
 
          SUBROUTINE PPFIT(N,X,XD,MU,SIGMA,PPALL,XSYNTH)
+C===============================================================================
+C
+C     DUMMY ROUTINE TO REPRODUCE RESULTS FROM PREVIOUS VERSIONS OF PPFIT
+C
+      
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION
+     1     X(*),XD(*),MU,SIGMA,PPALL(*),XSYNTH(*),PE(N_T),THR(N_T)
+     
+         INTEGER 
+     1     N,NT,ND(N_T),NBT(N_T)
+         
+         CALL PPFIT2(N,X,XD,MU,SIGMA,PPALL,XSYNTH,
+     1     0.D0,NT,THR,PE,ND,NBT)
+         
+         RETURN
+         END
+C===============================================================================
+
+         SUBROUTINE PPFIT2(N,X,XD,MU,SIGMA,PPALL,XSYNTH,
+     1       ALPHA,NT,THR,PE_OFF,NBT)
 
 C===============================================================================
 C
@@ -2391,31 +2593,42 @@ C
 C        AUTHOR........TIM COHN
 C        DATE..........APRIL 7, 1986
 C        MODIFIED......12 FEBRUARY 2003 (TAC)
-C         --REMOVED ERRORS INTRODUCED IN 1986
-C           WHEN CODE WAS REVISED BY DRH.  
+C         --REMOVED ERRORS INTRODUCED IN 1986 REVISION TO CODE
 C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
 C         --DOUBLE PRECISION
+C        MODIFIED......10 JUNE 2011 (TAC)
+C         --COMPUTE PLOTTING POSITIONS FOR ''GLYPHS''
 C
 C===============================================================================
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
 C===============================================================================
 C
 C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
-C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
-C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES
+C                              NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR 
+C                              EACH PT.
 C        MU        R*8       OUTPUT FITTED VALUE OF MU
 C        SIGMA     R*8       OUTPUT FITTED VALUE OF SIGMA
-C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X
+C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS 
+C                              CORRESPONDING TO X
 C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
 C        XSYNTH(N) R*8       OUTPUT VECTOR OF REAL AND SYNTHETIC OBSERVATIONS
-C                              XSYNTH(I) = X(I);                       X(I)>=XD(I) 
-C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA);  X(I)<XD(I)
+C                              XSYNTH(I) = X(I);  X(I)>=XD(I) 
+C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA); X(I)<XD(I)
+C        NT        I*4       OUTPUT NUMBER OF DISTINCT THRESHOLD
+C        THR(NT)   R*8       OUTPUT VECTOR OF THRESHOLDS
+C        PE_OFF(NT)R*8       OUTPUT VECTOR NON-EXCEEDANCE PROBS CORR. TO
+C                              THRESHOLDS; NOTE THAT PE(0) HAS BEEN OMITTED
+C        NBT(NT)    I*4       OUTPUT NO. NO-DETECTS CENSORED AT THR(I)
+C                              (OBSVS SPECIFIED AS "<THR(I)")
+C
 C===============================================================================
 C
 C        N.B.   1)  "SYNTHETIC" VALUES ARE ASSIGNED TO THE "LESS-THAN" VALUES.
@@ -2430,7 +2643,7 @@ C
 C===============================================================================
 C
 C        NT        I*4       NUMBER OF THRESHOLDS
-C        NB(NT)    I*4       NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
+C        NBT(NT)   I*4       NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
 C        ND(NT)    I*4       NUMBER OF DETECTS ABOVE THIS THR. AND BELOW NEXT
 C        NVAL      I*4       TOTAL NUMBER OF DETECTS
 C
@@ -2443,15 +2656,19 @@ C===============================================================================
 
          DOUBLE PRECISION
      1     X(*),XD(*),MU,SIGMA,
-     2     W(N_PTS),WD(N_PTS),WTHRESH(N_T),Y(N_PTS),PP(N_PTS),ALPHA,
-     3     PPC(N_PTS),PPALL(*),XSYNTH(*)
+     2     Y(N_PTS),PP(N_PTS),ALPHA,
+     3     PPC(N_PTS),PPALL(*),XSYNTH(*),
+     4     THR(N_T),PE(0:N_T),PE_OFF(N_T)
      
          INTEGER
-     1     N,ND(N_T),NB(N_T),NT,NVAL,j
+     1     N,ND(N_T),NBT(N_T),NB(N_T),NT,NVAL,I,J
 
-         CALL ARRANGE(X,XD,N,NT,ND,NB,NVAL,Y)
+         CALL ARRANGE2(X,XD,N,NT,ND,NB,NVAL,Y,THR,NBT)
 
-         CALL PPLOT(NT,ND,NB,PP,PPC)
+         CALL PPLOT2(NT,ND,NB,ALPHA,PP,PPC,PE)
+           DO 10 I=1,NT
+             PE_OFF(I) = PE(I)      ! ELIMINATE PE(0), WHICH EQUALS 1.0
+   10      CONTINUE
          
          CALL PPSOLVE(Y,PP,NVAL,MU,SIGMA)
          
@@ -2460,7 +2677,7 @@ C===============================================================================
          RETURN
          END
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-         SUBROUTINE ARRANGE(X,XD,N,NT,ND,NB,NVAL,Y)
+         SUBROUTINE ARRANGE2(X,XD,N,NT,ND,NB,NVAL,Y,THRESH,NBT)
 C===============================================================================
 C
 C        SUBROUTINE DESIGNED TO ARRANGE DATA FOR PPFIT, WHICH EMPLOYS DATA TO
@@ -2468,6 +2685,8 @@ C        FIT LN2 DISTRIBUTION TO MULTIPLY-CENSORED DATA
 C
 C        AUTHOR........TIM COHN
 C        DATA..........APRIL 7, 1986
+C        MODIFIED......10 JUNE 2011 (TAC)
+C         --COMPUTE PLOTTING POSITIONS FOR ''GLYPHS''
 C        MODIFIED......12 FEBRUARY 2003 (TAC)
 C         --REMOVED ERRORS INTRODUCED IN 1986
 C           WHEN CODE WAS REVISED BY DRH.  
@@ -2478,20 +2697,25 @@ C===============================================================================
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
 C===============================================================================
 C
-C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
-C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES 
+C                              NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR 
+C                              EACH PT.
 C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
 C        NT        I*4       OUTPUT NUMBER OF THRESHOLDS
-C        NB(NT)    I*4       OUTPUT NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
-C        ND(NT)    I*4       OUTPUT NUMBER OF DETECTS ABOVE THIS THR. AND BELOW NEXT
+C        NB(NT)    I*4       OUTPUT TOTAL NO. OBS. BELOW EACH THRESHOLD
+C        NBT(NT)   I*4       OUTPUT NO. OBS. BELOW SPECIFIC THRESHOLD
+C        ND(NT)    I*4       OUTPUT NUMBER OF DETECTS ABOVE THIS THR. AND 
+C                              BELOW NEXT
 C        NVAL      I*4       OUTPUT TOTAL NUMBER OF DETECTS
-C        Y         R*8       OUTPUT VECTOR OF SORTED DETECTS
+C        Y(N)      R*8       OUTPUT VECTOR OF SORTED DETECTS
+C        THRESH(NT)R*8       OUTPUT VECTOR OF SORTED THRESHOLDS
 C
 C===============================================================================
 
@@ -2502,7 +2726,7 @@ C===============================================================================
      2      THRESH(200),PLUSINF
      
          INTEGER
-     1      N,NT,NVAL,ND(*),NB(*),IP(10000),
+     1      N,NT,NVAL,ND(*),NBT(*),NB(*),IP(10000),
      2      I,ICT,J
 
          DATA PLUSINF/1.0D30/
@@ -2512,7 +2736,7 @@ C===============================================================================
            ICT          =  0
            J            =  1
            THRESH(1)    =  XD(IP(1))
-           NB(1)        =  0
+           NBT(1)       =  0
 
          DO 10 I=1,N
 
@@ -2520,14 +2744,14 @@ C===============================================================================
               J    =  J+1
               THRESH(J) =  XD(IP(I))
               ND(J)     =  0
-              NB(J)     =  0
+              NBT(J)    =  0
             ENDIF
-
+              
             IF(X(IP(I)) .GE. THRESH(J)) THEN
               ICT       =  ICT+1
               Y(ICT)    =  X(IP(I))
             ELSE
-              NB(J)     =  NB(J)+1
+              NBT(J)    =  NBT(J)+1
             ENDIF
    10    CONTINUE
 
@@ -2536,7 +2760,7 @@ C===============================================================================
          THRESH(NT+1)   =  PLUSINF
 
          CALL SHELLSORT(Y,ICT)
-		
+                
            J       =  1
            ND(1)   =  0
          DO 20 I=1,NVAL
@@ -2549,9 +2773,238 @@ C===============================================================================
            ENDIF
    20    CONTINUE
 
+           NB(1)       =  NBT(1)
          DO 40 I=2,NT
-           NB(I)   =  NB(I)+NB(I-1)+ND(I-1)
+           NB(I)   =  NB(I-1)+NBT(I)+ND(I-1)
    40    CONTINUE
+
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE PPLOT2(NT,ND,NB,ALPHA,PP,PPC,PE)
+C===============================================================================
+C
+C        SUBROUTINE TO FIND PLOTTING POSITIONS FOR DATA CENSORED AT MULTIPLE 
+C          THRESHOLDS
+C
+C        AUTHOR........TIM COHN
+C        DATE..........APRIL 7, 1986
+C        MODIFIED......12 FEBRUARY 2003 (TAC)
+C         --REMOVED ERRORS INTRODUCED IN 1986
+C           WHEN CODE WAS REVISED BY DRH.  
+C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
+C         --DOUBLE PRECISION
+C        MODIFIED......15 JUNE 2011 (TAC)
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        NT        I*4       INPUT NUMBER OF THRESHOLDS
+C        ND(NT)    I*4       INPUT NUMBER OF DETECTS ABOVE THIS THR. AND BELOW 
+C                              NEXT
+C        NB(NT)    I*4       INPUT NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
+C        ALPHA     R*8       INPUT PLOTTING POSITION ALPHA (I-A)/(N+1-2A)
+C        PP(NA)    R*8       OUTPUT VECTOR OF PLOTTING POSITIONS
+C        PPC(NB)   R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO 
+C                              X<XD
+C        PE(0:NT)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO 
+C                              THRESHOLDS
+C
+C===============================================================================
+
+         IMPLICIT NONE
+
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION
+     1     PP(*),PE(0:N_T),ALPHA,PD,PPT,PPC(*)
+     
+         INTEGER
+     1     ND(*),NB(*),NT,
+     2     ISUM,I,J,JSUM,NBT
+
+
+           PE(NT+1)  =  0.D0
+         DO 10 I=NT,1,-1
+           PD        =  ND(I)/FLOAT(MAX(1,ND(I))+NB(I))
+           PE(I)     =  PE(I+1) + (1.D0-PE(I+1)) * PD
+   10    CONTINUE
+
+           ISUM    =  0
+           JSUM    =  0
+           PE(0)   =  1.00D0
+
+         DO 20 I=1,NT
+           DO 30 J=1,ND(I)
+               PPT  =  (J-ALPHA)/(ND(I) + 1.0 - 2.0*ALPHA)
+               PP(ISUM+J)    =  (1.D0-PE(I)) + (PE(I)-PE(I+1))*PPT
+   30      CONTINUE
+               ISUM =  ISUM+ND(I)
+
+           IF(I .EQ. 1) THEN
+              NBT = NB(1)
+           ELSE
+              NBT = NB(I)-NB(I-1)-ND(I-1)
+           ENDIF
+           
+           DO 40 J=1,NBT
+             PPT  = (J-ALPHA)/(NBT+1.0-2*ALPHA)
+             PPC(JSUM+J) = (1-PE(I))*PPT
+   40      CONTINUE
+             JSUM=JSUM+NBT
+
+   20    CONTINUE
+
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE PPSOLVE(Y,PP,NVAL,MU,SIGMA)
+C===============================================================================
+C
+C        SUBROUTINE TO SOLVE FOR LEAST SQUARES ESTIMATES OF MU AND SIGMA
+C        ASSUMING A LINEAR MODEL
+C
+C        AUTHOR........TIM COHN
+C        DATE..........APRIL 7, 1986
+C        MODIFIED......12 FEBRUARY 2003 (TAC)
+C         --REMOVED ERRORS INTRODUCED IN 1986
+C           WHEN CODE WAS REVISED BY DRH.  
+C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
+C         --DOUBLE PRECISION
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        Y(N)      R*8       INPUT VECTOR CONTAINING SORTED DETECT-DATA
+C        PP(NA)    R*8       INPUT VECTOR OF PLOTTING POSITIONS
+C        NVAL      I*4       INPUT TOTAL NUMBER OF DETECTS
+C        MU        R*8       OUTPUT FITTED VALUE OF MU
+C        SIGMA     R*8       OUTPUT FITTED VALUE OF SIGMA
+C
+C===============================================================================
+
+         IMPLICIT NONE
+
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION
+     1     Y(*),PP(*),MU,SIGMA,
+     2     PSIG(N_PTS),LOGY(N_PTS),
+     3     FP_Z_ICDF,
+     4     SUMY,SUMP,SUMPY,SUMP2,YBAR,PBAR
+     
+         INTEGER
+     1     I,NVAL
+
+              SUMY =  0.D0
+              SUMP =  0.D0
+              SUMPY=  0.D0
+              SUMP2=  0.D0
+
+         DO 10 I=1,NVAL
+              PSIG(I)   =  FP_Z_ICDF(PP(I))
+              LOGY(I)   =  LOG(Y(I))
+              SUMY      =  SUMY    +  LOGY(I)
+              SUMPY     =  SUMPY   +  LOGY(I)*PSIG(I)
+              SUMP      =  SUMP    +  PSIG(I)
+              SUMP2     =  SUMP2   +  PSIG(I)**2
+   10    CONTINUE
+              YBAR      =  SUMY/NVAL
+              PBAR      =  SUMP/NVAL
+
+              SIGMA     =  (SUMPY-NVAL*PBAR*YBAR)/(SUMP2-NVAL*PBAR**2)
+              MU        =  YBAR - SIGMA*PBAR
+         RETURN
+         END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+         SUBROUTINE PLPOS(N,X,XD,PP,PPC,MU,SIGMA,PPALL,XSYNTH)
+C===============================================================================
+C
+C        SUBROUTINE PLPOS GIVES THE PLOTTING POSITIONS FOR ALL OF THE
+C          OBSERVATIONS, CENSORED AND UNCENSORED, IN THE ORIGINAL INPUT
+C          DATA SET
+C
+C
+C        AUTHOR....TIM COHN
+C        DATE......12 FEBRUARY 2003 (TAC)
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
+C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES 
+C                              NO-DETECT
+C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR 
+C                              EACH PT.
+C        PP(NA)    R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO 
+C                              X>=XD
+C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
+C        PPC(NB)   R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO 
+C                              X<XD
+C        MU        R*8       INPUT FITTED VALUE OF MU
+C        SIGMA     R*8       INPUT FITTED VALUE OF SIGMA
+C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X
+C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
+C        XSYNTH    R*8       OUTPUT VECTOR OF REAL AND SYNTHETIC OBSERVATIONS
+C                              XSYNTH(I) = X(I);                       
+C                              X(I)>=XD(I) 
+C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA);  
+C                              X(I)<XD(I)
+C
+C===============================================================================
+
+         IMPLICIT NONE
+         
+         INTEGER N_PTS,N_T
+         PARAMETER (N_T=10000,N_PTS=10000)
+
+         DOUBLE PRECISION 
+     1     X(*),XD(*),MU,SIGMA,PPALL(*),PP(*),PPC(*),XSYNTH(*),
+     2     FP_Z_ICDF
+         
+         INTEGER
+     1     IX(N_PTS),IXD(N_PTS),N,NA,NB,I
+
+         CALL PORDER(X,N,IX)
+         CALL PORDER(XD,N,IXD)
+         
+           NA  =  0
+           NB  =  0
+         DO 10 I=1,N
+           IF(X(IX(I)) .GE. XD(IX(I))) THEN
+             NA            =  NA+1
+             PPALL(IX(I))  =  PP(NA)
+             XSYNTH(IX(I)) =  X(IX(I))
+           ENDIF
+           IF(X(IXD(I)) .LT. XD(IXD(I))) THEN
+             NB            =  NB+1
+             PPALL(IXD(I)) =  PPC(NB)
+             XSYNTH(IXD(I))=  EXP(MU+FP_Z_ICDF(PPC(NB))*SIGMA)
+           ENDIF
+10       CONTINUE
 
          RETURN
          END
@@ -2580,7 +3033,7 @@ C===============================================================================
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
@@ -2667,222 +3120,6 @@ C
          RETURN
          END
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-         SUBROUTINE PPLOT(NT,ND,NB,PP,PPC)
-C===============================================================================
-C
-C        SUBROUTINE TO FIND PLOTTING POSITIONS FOR DATA CENSORED AT MULTIPLE THRESHOLDS
-C
-C        AUTHOR........TIM COHN
-C        DATE..........APRIL 7, 1986
-C        MODIFIED......12 FEBRUARY 2003 (TAC)
-C         --REMOVED ERRORS INTRODUCED IN 1986
-C           WHEN CODE WAS REVISED BY DRH.  
-C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
-C         --DOUBLE PRECISION
-C
-C===============================================================================
-C
-C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
-C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
-C
-C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
-C
-C===============================================================================
-C
-C        NT        I*4       INPUT NUMBER OF THRESHOLDS
-C        ND(NT)    I*4       INPUT NUMBER OF DETECTS ABOVE THIS THR. AND BELOW NEXT
-C        NB(NT)    I*4       INPUT NUMBER OF OBSERVATIONS BELOW EACH THRESHOLD
-C        PP(NA)    R*8       OUTPUT VECTOR OF PLOTTING POSITIONS
-C        PPC(NB)   R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X<XD
-C
-C===============================================================================
-
-         IMPLICIT NONE
-
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
-
-         DOUBLE PRECISION
-     1     PP(*),PE(0:N_T),ALPHA,PD,PPT,PPC(*)
-     
-         INTEGER
-     1     ND(*),NB(*),NT,
-     2     ISUM,I,J,JSUM,NBT
-
-         DATA ALPHA/0.000D0/
-
-           PE(NT+1)  =  0.D0
-         DO 10 I=NT,1,-1
-           PD        =  ND(I)/FLOAT(MAX(1,ND(I))+NB(I))
-           PE(I)     =  PE(I+1) + (1.D0-PE(I+1)) * PD
-   10    CONTINUE
-
-           ISUM    =  0
-           JSUM    =  0
-           PE(0)   =  1.00D0
-
-         DO 20 I=1,NT
-           DO 30 J=1,ND(I)
-               PPT  =  (J-ALPHA)/(ND(I) + 1.0 - 2.0*ALPHA)
-               PP(ISUM+J)    =  (1.D0-PE(I)) + (PE(I)-PE(I+1))*PPT
-   30      CONTINUE
-               ISUM =  ISUM+ND(I)
-
-           IF(I .EQ. 1) THEN
-              NBT = NB(1)
-           ELSE
-              NBT = NB(I)-NB(I-1)-ND(I-1)
-           ENDIF
-           
-           DO  40 J=1,NBT
-             PPT= (J-ALPHA)/(NBT+1.0-2*ALPHA)
-             PPC(JSUM+J) = (1-PE(I))*PPT
-   40      CONTINUE
-             JSUM=JSUM+NBT
-
-   20    CONTINUE
-
-         RETURN
-         END
-C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-         SUBROUTINE PPSOLVE(Y,PP,NVAL,MU,SIGMA)
-C===============================================================================
-C
-C        SUBROUTINE TO SOLVE FOR LEAST SQUARES ESTIMATES OF MU AND SIGMA
-C        ASSUMING A LINEAR MODEL
-C
-C        AUTHOR........TIM COHN
-C        DATE..........APRIL 7, 1986
-C        MODIFIED......12 FEBRUARY 2003 (TAC)
-C         --REMOVED ERRORS INTRODUCED IN 1986
-C           WHEN CODE WAS REVISED BY DRH.  
-C         --IMPLICIT NONE ADDED; ALL VARIABLES DECLARED
-C         --DOUBLE PRECISION
-C
-C===============================================================================
-C
-C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
-C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
-C
-C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
-C
-C===============================================================================
-C
-C        Y(N)      R*8       INPUT VECTOR CONTAINING SORTED DETECT-DATA
-C        PP(NA)    R*8       INPUT VECTOR OF PLOTTING POSITIONS
-C        NVAL      I*4       INPUT TOTAL NUMBER OF DETECTS
-C        MU        R*8       OUTPUT FITTED VALUE OF MU
-C        SIGMA     R*8       OUTPUT FITTED VALUE OF SIGMA
-C
-C===============================================================================
-
-         IMPLICIT NONE
-
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
-
-         DOUBLE PRECISION
-     1     Y(*),PP(*),MU,SIGMA,
-     2     PSIG(N_PTS),LOGY(N_PTS),
-     3     FP_Z_ICDF,
-     4     SUMY,SUMP,SUMPY,SUMP2,YBAR,PBAR
-     
-         INTEGER
-     1     I,NVAL
-
-              SUMY =  0.D0
-              SUMP =  0.D0
-              SUMPY=  0.D0
-              SUMP2=  0.D0
-
-         DO 10 I=1,NVAL
-              PSIG(I)   =  FP_Z_ICDF(PP(I))
-              LOGY(I)   =  LOG(Y(I))
-              SUMY      =  SUMY    +  LOGY(I)
-              SUMPY     =  SUMPY   +  LOGY(I)*PSIG(I)
-              SUMP      =  SUMP    +  PSIG(I)
-              SUMP2     =  SUMP2   +  PSIG(I)**2
-   10    CONTINUE
-              YBAR      =  SUMY/NVAL
-              PBAR      =  SUMP/NVAL
-
-              SIGMA     =  (SUMPY-NVAL*PBAR*YBAR)/(SUMP2-NVAL*PBAR**2)
-              MU        =  YBAR - SIGMA*PBAR
-         RETURN
-         END
-C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-         SUBROUTINE PLPOS(N,X,XD,PP,PPC,MU,SIGMA,PPALL,XSYNTH)
-C===============================================================================
-C
-C        SUBROUTINE PLPOS GIVES THE PLOTTING POSITIONS FOR ALL OF THE
-C          OBSERVATIONS, CENSORED AND UNCENSORED, IN THE ORIGINAL INPUT
-C          DATA SET
-C
-C
-C        AUTHOR....TIM COHN
-C        DATE......12 FEBRUARY 2003 (TAC)
-C
-C===============================================================================
-C
-C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
-C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
-C
-C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
-C
-C===============================================================================
-C
-C        N         I*4       INPUT NUMBER OF OBSERVATIONS (NO-DETECTS COUNT)
-C        X(N)      R*8       INPUT VECTOR CONTAINING DATA;  '0' INDICATES NO-DETECT
-C        XD(N)     R*8       INPUT VECTOR CONTAINING CENSORING THRESHOLD FOR EACH PT.
-C        PP(NA)    R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X>=XD
-C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
-C        PPC(NB)   R*8       INPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X<XD
-C        MU        R*8       INPUT FITTED VALUE OF MU
-C        SIGMA     R*8       INPUT FITTED VALUE OF SIGMA
-C        PPALL(N)  R*8       OUTPUT VECTOR OF PLOTTING POSITIONS CORRESONDING TO X
-C                              (SEE HELSEL & COHN, WRR 24(12), 1988)
-C        XSYNTH    R*8       OUTPUT VECTOR OF REAL AND SYNTHETIC OBSERVATIONS
-C                              XSYNTH(I) = X(I);                       X(I)>=XD(I) 
-C                              XSYNTH(I) = EXP(MU+Z(PPALL(I))*SIGMA);  X(I)<XD(I)
-C
-C===============================================================================
-
-         IMPLICIT NONE
-         
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
-
-         DOUBLE PRECISION 
-     1     X(*),XD(*),MU,SIGMA,PPALL(*),PP(*),PPC(*),XSYNTH(*),
-     2     FP_Z_ICDF
-         
-         INTEGER
-     1     IX(N_PTS),IXD(N_PTS),N,NA,NB,I
-
-         CALL PORDER(X,N,IX)
-         CALL PORDER(XD,N,IXD)
-         
-           NA  =  0
-           NB  =  0
-         DO 10 I=1,N
-           IF(X(IX(I)) .GE. XD(IX(I))) THEN
-             NA            =  NA+1
-             PPALL(IX(I))  =  PP(NA)
-             XSYNTH(IX(I)) =  X(IX(I))
-           ENDIF
-           IF(X(IXD(I)) .LT. XD(IXD(I))) THEN
-             NB            =  NB+1
-             PPALL(IXD(I)) =  PPC(NB)
-             XSYNTH(IXD(I))=  EXP(MU+FP_Z_ICDF(PPC(NB))*SIGMA)
-           ENDIF
-10       CONTINUE
-
-         RETURN
-         END
-C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
          SUBROUTINE SHELLSORT(X,N)
 C===============================================================================
 C
@@ -2895,7 +3132,7 @@ C===============================================================================
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
@@ -2946,7 +3183,7 @@ C===============================================================================
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
-C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)   
 C
