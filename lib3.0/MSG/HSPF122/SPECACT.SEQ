@@ -830,7 +830,7 @@ HR                    21 MIN                   22 POINT   20           110
 MEAN    20           130 SPOUT                 28 @@@@@@                 1 
 YR                    17 MON                   18 DAY                   19 
 HR                    20 MIN                   21 OPCODE                30 
-NTERMS                31 K        7            32 SUM                   39 
+NTERMS                31 K        7            32 SUM     20            39 
 SPOUT                 27 @@@@@@                 1 @@@@@@                 1 
 YR                    54 MON                   55 DAY                   56 
 HR                    57 MIN                   58 SPOUT                 67 
@@ -1109,5 +1109,13 @@ $TEXT
  Too many mfact update special actions have been requested.
 
  The maximum number allowed is &I   .
+#GROUP  110  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Mfact updates cannot be conditional, i.e. anywhere within an IF-END IF block
+
+ This one must be moved:
+ 
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
   END DATA
 END CLU
