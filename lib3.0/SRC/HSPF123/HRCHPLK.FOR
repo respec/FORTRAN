@@ -8,9 +8,9 @@ C     Process input for the plank section of the rchres application
 C     module
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK1 + + +
-      INCLUDE    'crhpl.inc'
-      INCLUDE    'crin2.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHPL.INC'
+      INCLUDE    'CRIN2.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,I1,I2,I4,J,SCLU,SGRP,N,RETCOD,IVAL(9)
@@ -448,8 +448,8 @@ C     Simulate behavior of plankton populations and associated
 C     reactions
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK2 + + +
-      INCLUDE  'crhpl.inc'
-      INCLUDE  'cmpad.inc'
+      INCLUDE  'CRHPL.INC'
+      INCLUDE  'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER  I,N,REQFG,TSSUB(2),FLGVAL
@@ -461,7 +461,6 @@ C     + + + LOCAL VARIABLES + + +
      $         ORPBAL,ORCBAL,DUMVAL,INNO3,INTAM,INPO4,PLADFX,PLADCN,
      $         TURB,GROBAL(4),DTHBAL(4),LSNH4(3),LSPO4(3)
       DOUBLE PRECISION DORC,DORN,DORP,DPHYTO
-      CHARACTER*4 LIMIT(7),LIMC
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
 C     + + + FUNCTIONS + + +
@@ -472,12 +471,8 @@ C     + + + EXTERNALS + + +
       EXTERNAL LITRCH,PHYRX,ZORX,BALRX,BALRX2,PKSUMS,AMMION
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA LIMIT/'LIT ','NON ','TEM ','NIT ','PO4 ','NONE','WAT '/
       DATA TSSUB/1,1/
       DATA OPTYP,SECNAM/'RCHRES','PLANK '/
-C
-C     + + + INPUT FORMATS + + +
- 1000 FORMAT(A4)
 C
 C     + + + HISTORY + + +
 C     12/11/2003   BRB  added call to ammion to redistribute TAM after algal influence
@@ -763,8 +758,8 @@ C         simulate phytoplankton
      I                CMMNP,TAMFG,AMRFG,NSFG,CMMN,CMMLT,DELT60,
      I                CFLIT,ALR20,CVBPN,PHFG,DECFG,CVBPC,PALDH,
      I                NALDH,CLALDH,ALDL,ALDH,ANAER,OXALD,ALNPR,
-     I                CVBO,REFR,CVNRBO,CVPB,CVBCL,LIMIT,CO2,
-     I                NMINGR,PMINGR,CMINGR,LMINGR,NMINC,
+     I                CVBO,REFR,CVNRBO,CVPB,CVBCL,CO2,NMINGR,PMINGR,
+     I                CMINGR,LMINGR,NMINC,
      M                PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,PHYTO,
      O                LIMPHY,PYCO2,PHYCLA,DOPHY,BODPHY,TAMPHY,
      O                NO3PHY,PO4PHY,PHDTH,PHGRO,ORNPHY,ORPPHY,
@@ -830,8 +825,7 @@ C         simulate benthic algae
      I                CFLIT,ALR20,CVBPN,PHFG,DECFG,CVBPC,PALDH,
      I                NALDH,ALDL,ALDH,ANAER,OXALD,CFBALG,CFBALR,
      I                ALNPR,CVBO,REFR,CVNRBO,CVPB,MBAL,DEPCOR,
-     I                LIMIT,CVBCL,CO2,NMINGR,PMINGR,CMINGR,LMINGR,
-     I                NMINC,
+     I                CVBCL,CO2,NMINGR,PMINGR,CMINGR,LMINGR,NMINC,
      M                PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,BENAL(1),
      O                LIMBAL(1),BACO2,BALCLA(1),DOBALG,BODBAL,
      O                TAMBAL,NO3BAL,PO4BAL,BGRO(1),BDTH(1),ORNBAL,
@@ -870,12 +864,12 @@ C             interpolate a new value
 C
 C         then perform reactions
           CALL BALRX2 (BALLIT,TW,TAMFG,NSFG,DELT60,CVBPN,PHFG,DECFG,
-     I                 CVBPC,ALNPR,CVBO,REFR,CVNRBO,CVPB,DEPCOR,
-     I                 LIMIT,CVBCL,CO2,NUMBAL,MBALGR,CMMPB,CMMNB,
-     I                 BALR20,TCBALG,BALVEL,CMMV,BFIXFG,CSLIT,CMMD1,
-     I                 CMMD2,TCBALR,FRRIF,CREMVL,CMMBI,BINV,TCGRAZ,
-     I                 CSLOF1,CSLOF2,MINBAL,FRAVL,BNPFG,CAMPR,NMINGR,
-     I                 PMINGR,CMINGR,LMINGR,NMINC,NMAXFX,GRORES,
+     I                 CVBPC,ALNPR,CVBO,REFR,CVNRBO,CVPB,DEPCOR,CVBCL,
+     I                 CO2,NUMBAL,MBALGR,CMMPB,CMMNB,BALR20,TCBALG,
+     I                 BALVEL,CMMV,BFIXFG,CSLIT,CMMD1,CMMD2,TCBALR,
+     I                 FRRIF,CREMVL,CMMBI,BINV,TCGRAZ,CSLOF1,CSLOF2,
+     I                 MINBAL,FRAVL,BNPFG,CAMPR,NMINGR,PMINGR,CMINGR,
+     I                 LMINGR,NMINC,NMAXFX,GRORES,
      M                 PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,BENAL,
      O                 LIMBAL,BACO2,BALCLA,DOBALG,BODBAL,TAMBAL,
      O                 NO3BAL,PO4BAL,BGRO,BDTH,ORNBAL,ORPBAL,
@@ -928,8 +922,7 @@ C       quality processes
 C
         IF (PHYFG .EQ. 1) THEN
 C         water scarcity limits phytoplankton growth
-          LIMC  = LIMIT(7)
-          READ (LIMC,1000) LIMPHY
+          LIMPHY= 1.0
           PHYCLA= PHYTO*CVBCL
           GROPHY= 0.0
           DTHPHY= 0.0
@@ -939,16 +932,14 @@ C         water scarcity limits phytoplankton growth
 C
         IF (BALFG .EQ. 1) THEN
 C         water scarcity limits benthic algae growth
-          LIMC= LIMIT(7)
-          READ (LIMC,1000) LIMBAL(1)
+          LIMBAL(1)= 1.0
           BALCLA(1)= BENAL(1)*CVBCL
           GROBAL(1)= 0.0
           DTHBAL(1)= 0.0
         ELSE IF (BALFG .EQ. 2) THEN
 C         water scarcity limits benthic algae growth
-          LIMC= LIMIT(7)
           DO 30 I= 1, NUMBAL
-            READ (LIMC,1000) LIMBAL(I)
+            LIMBAL(I)= 1.0
             BALCLA(I)= BENAL(I)*CVBCL
             GROBAL(I)= 0.0
             DTHBAL(I)= 0.0
@@ -1158,9 +1149,8 @@ C
       SUBROUTINE   ALGRO
      I                   (LIGHT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,
      I                    CMMP,CMMNP,TAMFG,AMRFG,TAM,NSFG,CMMN,CMMLT,
-     I                    ALR20,CFLIT,DELT60,LIMIT,NMINGR,PMINGR,
-     I                    LMINGR,
-     O                    LIMR,GRO,RES)
+     I                    ALR20,CFLIT,DELT60,NMINGR,PMINGR,LMINGR,
+     O                    LIM,GRO,RES)
 C
 C     + + + PURPOSE + + +
 C     Calculate unit growth and respiration rates for algae
@@ -1170,8 +1160,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER     TAMFG,AMRFG,NSFG
       REAL        LIGHT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,
      $            CMMP,CMMNP,TAM,CMMN,CMMLT,ALR20,CFLIT,DELT60,
-     $            NMINGR,PMINGR,LMINGR,LIMR,GRO,RES
-      CHARACTER*4 LIMIT(7)
+     $            NMINGR,PMINGR,LMINGR,LIM,GRO,RES
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     LIGHT  - ???
@@ -1193,20 +1182,15 @@ C     CMMLT  - ???
 C     ALR20  - ???
 C     CFLIT  - ???
 C     DELT60 - simulation time interval in hours
-C     LIMIT  - ???
 C     NMINGR - minimum nitrate concentration for algal growth
 C     PMINGR - minimum phosphate concentration for algal growth
 C     LMINGR - minimum light intensity for algal growth
-C     LIMR   - ???
-C     GRO    - ???
-C     RES    - ???
+C     LIM    - code for limiting factor in growth
+C     GRO    - growth rate
+C     RES    - respiration rate
 C
 C     + + + LOCAL VARIABLES + + +
       REAL        TCMALG,MALGRT,GROP,MALGN,LOLIM,MMN,GRON,GROL
-      CHARACTER*4 LIM
-C
-C     + + + INPUT FORMATS + + +
- 1000 FORMAT(A4)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1285,26 +1269,26 @@ C
 C           find the actual algal unit growth rate (gro); gro is
 C           the smallest of the three computed unit growth rates
 C           (grop,gron,grol) and is expressed in units of per
-C           interval; assign a three letter label to lim which will
+C           interval; assign a numeric code to lim which will
 C           be printed in the output to indicate the growth limiting
-C           factor for the interval: limit(1)= 'lit'
-C                                    limit(2)= 'non'
-C                                    limit(3)= 'tem'
-C                                    limit(4)= 'nit'
-C                                    limit(5)= 'po4'
-C                                    limit(6)= 'none'
-C                                    limit(7)= 'wat'
+C           factor for the interval: lim= 1 : 'wat'  i.e. water limited - small depth
+C                                    lim= 2 : 'non'  i.e. extreme low nutrients
+C                                    lim= 3 : 'tem'  i.e. temperature limited
+C                                    lim= 4 : 'lit'  i.e. light-limited
+C                                    lim= 5 : 'nit'  i.e. nitrogen limited
+C                                    lim= 6 : 'po4'  i.e. phosphate limited
+C                                    lim= 7 : 'none' i.e. no limitation - max growth
 C
             IF (GROP .LT. GRON .AND. GROP .LT. GROL) THEN
               GRO= GROP
-              LIM= LIMIT(5)
+              LIM= 6.0
             ELSE
               IF (GRON .LT. GROL) THEN
                 GRO= GRON
-                LIM= LIMIT(4)
+                LIM= 5.0
               ELSE
                 GRO= GROL
-                LIM= LIMIT(1)
+                LIM= 4.0
               END IF
             END IF
 C
@@ -1315,7 +1299,7 @@ C
             IF (GRO .GT. (.95*MALGRT)) THEN
 C             there is no limiting factor to cause less than maximum
 C             growth rate
-              LIM= LIMIT(6)
+              LIM= 7.0
             END IF
 C
 C           adjust growth rate if control volume is not entirely
@@ -1326,27 +1310,24 @@ C           would be reduced to one half of its specified value
           ELSE
 C           water temperature does not allow algal growth
             GRO= 0.0
-            LIM= LIMIT(3)
+            LIM= 3.0
           END IF
         ELSE
 C         no algal growth occurs; necessary nutrients are not
 C         available
           GRO= 0.0
-          LIM= LIMIT(2)
+          LIM= 2.0
         END IF
       ELSE
 C       no algal growth occurs; necessary light is not available
         GRO= 0.0
-        LIM= LIMIT(1)
+        LIM= 4.0
       END IF
 C
 C     calculate unit algal respiration rate; res is expressed in
 C     units of per interval; alr20 is the respiration rate at 20
 C     degrees c
       RES= ALR20*TW/20.
-C
-C     save limiting factor character string as real
-      READ (LIM,1000) LIMR
 C
       RETURN
       END
@@ -1443,8 +1424,7 @@ C
      I                    CFLIT,ALR20,CVBPN,PHFG,DECFG,CVBPC,PALDH,
      I                    NALDH,ALDL,ALDH,ANAER,OXALD,CFBALG,CFBALR,
      I                    ALNPR,CVBO,REFR,CVNRBO,CVPB,MBAL,DEPCOR,
-     I                    LIMIT,CVBCL,CO2,NMINGR,PMINGR,CMINGR,LMINGR,
-     I                    NMINC,
+     I                    CVBCL,CO2,NMINGR,PMINGR,CMINGR,LMINGR,NMINC,
      M                    PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,BENAL,
      O                    LIMBAL,BACO2,BALCLA,DOBALG,BODBAL,TAMBAL,
      O                    NO3BAL,PO4BAL,BALGRO,BDTH,BALORN,BALORP,
@@ -1468,7 +1448,6 @@ C     + + + DUMMY ARGUMENTS + + +
      $            ORC,BOD,BENAL,BACO2,BALCLA,DOBALG,BODBAL,TAMBAL,
      $            NO3BAL,PO4BAL,BALGRO,BDTH,BALORN,BALORP,BALORC
       REAL        LIMBAL
-      CHARACTER*4 LIMIT(7)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     BALLIT - ???
@@ -1506,7 +1485,6 @@ C     CVNRBO - ???
 C     CVPB   - ???
 C     MBAL   - ???
 C     DEPCOR - ???
-C     LIMIT  - ???
 C     CVBCL  - ???
 C     CO2    - ???
 C     NMINGR - minimum nitrate concentration for algal growth
@@ -1556,7 +1534,7 @@ C     determine growth limiting factor
       CALL ALGRO
      I           (BALLIT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,CMMP,
      I            CMMNP,TAMFG,AMRFG,TAM,NSFG,CMMN,CMMLT,ALR20,
-     I            CFLIT,DELT60,LIMIT,NMINGR,PMINGR,LMINGR,
+     I            CFLIT,DELT60,NMINGR,PMINGR,LMINGR,
      O            LIMBAL,GRO,RES)
 C
 C     calculate net growth rate of algae; grobal is expressed as
@@ -2100,7 +2078,7 @@ C
      I                    CMMNP,TAMFG,AMRFG,NSFG,CMMN,CMMLT,DELT60,
      I                    CFLIT,ALR20,CVBPN,PHFG,DECFG,CVBPC,PALDH,
      I                    NALDH,CLALDH,ALDL,ALDH,ANAER,OXALD,ALNPR,
-     I                    CVBO,REFR,CVNRBO,CVPB,CVBCL,LIMIT,CO2,
+     I                    CVBO,REFR,CVNRBO,CVPB,CVBCL,CO2,
      I                    NMINGR,PMINGR,CMINGR,LMINGR,NMINC,
      M                    PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,PHYTO,
      O                    LIMPHY,PYCO2,PHYCLA,DOPHY,BODPHY,TAMPHY,
@@ -2120,7 +2098,6 @@ C     + + + DUMMY ARGUMENTS + + +
      $            NMINC,PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,PHYTO,LIMPHY,
      $            PYCO2,PHYCLA,DOPHY,BODPHY,TAMPHY,NO3PHY,PO4PHY,
      $            PHDTH,PHGRO,PHYORN,PHYORP,PHYORC
-      CHARACTER*4 LIMIT(7)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     PHYLIT - ???
@@ -2156,7 +2133,6 @@ C     REFR   - ???
 C     CVNRBO - ???
 C     CVPB   - ???
 C     CVBCL  - ???
-C     LIMIT  - ???
 C     CO2    - ???
 C     NMINGR - minimum nitrate concentration for algal growth
 C     PMINGR - minimum phosphate concentration for algal growth
@@ -2207,7 +2183,7 @@ C     determine growth limiting factor
       CALL ALGRO
      I           (PHYLIT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,CMMP,
      I            CMMNP,TAMFG,AMRFG,TAM,NSFG,CMMN,CMMLT,ALR20,
-     I            CFLIT,DELT60,LIMIT,NMINGR,PMINGR,LMINGR,
+     I            CFLIT,DELT60,NMINGR,PMINGR,LMINGR,
      O            LIMPHY,GRO,RES)
 C
 C     calculate net growth rate of phytoplankton; grophy is
@@ -2309,8 +2285,8 @@ C     FRMROW - row containing incremental flux accumulation
 C     TOROW  - flux row to be incremented
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK2 + + +
-      INCLUDE    'crhpl.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHPL.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I3,I5,I
@@ -2431,8 +2407,8 @@ C     UNITFG - output units   1-english, 2-metric
 C     BINU   - fortran unit number on which to write binary output
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK2 + + +
-      INCLUDE    'crhpl.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHPL.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     I,IX,J,PADFG,I0,I1,I2,I3,I4,I5,ACNT,JLEN,
@@ -2447,6 +2423,10 @@ C     + + + LOCAL VARIABLES + + +
      $             CCFLX6(2),CCFLX(4)
       CHARACTER*1   CSTR(2)
       CHARACTER*256 CHEAD(70+NEXITS*8+NUMBAL*6)
+      CHARACTER*4 LIMIT(7),LIMC
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA LIMIT/'WAT ','NON ','TEM ','LIT ','NIT ','PO4 ','NONE'/
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   TRNVEC,INTCHR,EXDATE,BINHED,BINREC
@@ -2722,14 +2702,15 @@ C
         WRITE (PRINTU,2010)
 C
         IF (PHYFG .EQ. 1) THEN
+          LIMC= LIMIT(INT(PKST1(3)+0.01))
           IF (ZOOFG .EQ. 1) THEN
             WRITE (PRINTU,2020)
             WRITE (PRINTU,2030)
-            WRITE (PRINTU,2040)  PKST1, PZOO
+            WRITE (PRINTU,2040)  PKST1(1),PKST1(2),LIMC,PZOO
           ELSE
             WRITE (PRINTU,2050)
             WRITE (PRINTU,2060)
-            WRITE (PRINTU,2040)  PKST1
+            WRITE (PRINTU,2040)  PKST1(1),PKST1(2),LIMC
           END IF
         END IF
 C
@@ -2737,10 +2718,11 @@ C
           WRITE (PRINTU,2070)
           WRITE (PRINTU,2080)
           DO 60 I= 1, NUMBAL
+            LIMC= LIMIT(INT(PKST2(I,3)+0.01))
             IF (NUMBAL .GE. 2) THEN
-              WRITE (PRINTU,2085) I,(PKST2(I,J),J=1,3)
+              WRITE (PRINTU,2085) I,(PKST2(I,J),J=1,2),LIMC
             ELSE
-              WRITE (PRINTU,2040) (PKST2(I,J),J=1,3)
+              WRITE (PRINTU,2040) (PKST2(I,J),J=1,2),LIMC
             END IF
  60       CONTINUE
           IF (BALFG .GT. 1) THEN
@@ -3475,8 +3457,8 @@ C     + + + PURPOSE + + +
 C     Handle subroutine group plank
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK2 + + +
-      INCLUDE    'crhpl.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHPL.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,J
@@ -3565,8 +3547,8 @@ C     + + + PURPOSE + + +
 C     Handle subroutine group plank
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK2 + + +
-      INCLUDE    'crhpl.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHPL.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I
@@ -3631,8 +3613,8 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     LEV    - current output level (2-pivl,3-day,4-mon,5-ann)
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION PLANK2 + + +
-      INCLUDE    'crhpl.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHPL.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I3,I5,I
@@ -4066,10 +4048,10 @@ C
 C
       SUBROUTINE   ALGRO2
      I                    (BALLIT,PO4,NO3,TW,MBALGR,CMMP,TAMFG,TAM,
-     I                    NSFG,CMMN,BALR20,DELT60,LIMIT,TCBALG,BALVEL,
+     I                    NSFG,CMMN,BALR20,DELT60,TCBALG,BALVEL,
      I                    CMMV,BFIXFG,CSLIT,CMMD1,CMMD2,SUMBA,TCBALR,
      I                    NMINGR,PMINGR,LMINGR,NMAXFX,GRORES,
-     O                    NFIXFG,LIMR,GROBA,RESBA)
+     O                    NFIXFG,LIM,GROBA,RESBA)
 C
 C     + + + PURPOSE + + +
 C     Calculate unit growth and respiration rates for benthic algae
@@ -4080,8 +4062,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER     TAMFG,NSFG,BFIXFG,NFIXFG
       REAL        BALLIT,PO4,NO3,TW,MBALGR,CMMP,TAM,CMMN,BALR20,DELT60,
      $            TCBALG,BALVEL,CMMV,CSLIT,CMMD1,CMMD2,SUMBA,TCBALR,
-     $            NMINGR,PMINGR,LMINGR,NMAXFX,GRORES,GROBA,RESBA,LIMR
-      CHARACTER*4 LIMIT(7)
+     $            NMINGR,PMINGR,LMINGR,NMAXFX,GRORES,GROBA,RESBA,LIM
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     BALLIT - amount of light available to benthic algae in lgly/min
@@ -4105,26 +4086,21 @@ C     CMMD1  - intercept for density function for current algal type
 C     CMMD2  - half-saturation coefficient for density function
 C     SUMBA  - total benthic algal biomass in mg OM/m2
 C     TCBALR - temperature coefficient for benthic algal respiration
-C     LIMIT  - labels indicating which factor is limiting algal growth
 C     NMINGR - minimum nitrate concentration for algal growth
 C     PMINGR - minimum phosphate concentration for algal growth
 C     LMINGR - minimum light intensity for algal growth
 C     NMAXFX - maximum available nitrogen concentration for n-fixation to occur
 C     GRORES - fraction of photorespiration required to support growth
 C     NFIXFG - flag indicating if n-fixation occurs
-C     LIMR   - active label of growth-limiting factor
+C     LIM    - active label of growth-limiting factor
 C     GROBA  - growth rate of benthic algae in per interval
 C     RESBA  - respiration rate of benthic algae in per interval
 C
 C     + + + LOCAL VARIABLES + + +
       REAL        TCMBAG,GROFP,MMN,GROFN,GROFL,GROFV,GROFD,GROMIN
-      CHARACTER*4 LIM
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  EXP
-C
-C     + + + INPUT FORMATS + + +
- 1000 FORMAT(A4)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4187,34 +4163,34 @@ C
 C         find the limiting algal growth factor; gromin is
 C         the smallest of the three computed growth factors
 C         (grofp,grofn,grofl);
-C         assign a three letter label to lim which will
+C         assign a numeric code to lim which will
 C         be printed in the output to indicate the growth limiting
-C         factor for the interval: limit(1)= 'lit'
-C                                  limit(2)= 'non'
-C                                  limit(3)= 'tem'
-C                                  limit(4)= 'nit'
-C                                  limit(5)= 'po4'
-C                                  limit(6)= 'none'
-C                                  limit(7)= 'wat'
+C         factor for the interval: lim= 1 : 'wat'  i.e. water limited - small depth
+C                                  lim= 2 : 'non'  i.e. extreme low nutrients
+C                                  lim= 3 : 'tem'  i.e. temperature limited
+C                                  lim= 4 : 'lit'  i.e. light-limited
+C                                  lim= 5 : 'nit'  i.e. nitrogen limited
+C                                  lim= 6 : 'po4'  i.e. phosphate limited
+C                                  lim= 7 : 'none' i.e. no limitation - max growth
 C
           IF ((GROFP .LT. GROFN) .AND. (GROFP .LT. GROFL)) THEN
 C           phosphorus limited
             GROMIN= GROFP
-            LIM= LIMIT(5)
+            LIM= 6.0
           ELSE IF (GROFN .LT. GROFL) THEN
 C           nitrogen limited
             GROMIN= GROFN
-            LIM= LIMIT(4)
+            LIM= 5.0
           ELSE
 C           light limited
             GROMIN= GROFL
-            LIM= LIMIT(1)
+            LIM= 4.0
           END IF
 C
           IF (GROMIN .GT. 0.95) THEN
 C           there is no limiting factor to cause less than maximum
 C           growth rate
-            LIM= LIMIT(6)
+            LIM= 7.0
           END IF
 C
 C         calculate overall growth rate; expressed in units of per interval
@@ -4228,21 +4204,18 @@ C
 C         no algal growth occurs; necessary nutrients are not
 C         available
           GROBA= 0.0
-          LIM= LIMIT(2)
+          LIM= 2.0
         END IF
       ELSE
 C       no algal growth occurs; necessary light is not available
         GROBA= 0.0
-        LIM= LIMIT(1)
+        LIM= 4.0
       END IF
 C
 C     calculate unit algal respiration rate; res is expressed in
 C     units of per interval; balr20 is the benthic algal respiration
 C     rate at 20 degrees c
       RESBA = BALR20*TCBALR**(TW- 20.0)+ GRORES*GROBA
-C
-C     save limiting factor character string as real
-      READ (LIM,1000) LIMR
 C
       RETURN
       END
@@ -4466,7 +4439,7 @@ C
       SUBROUTINE   BALRX2
      I                    (BALLIT,TW,TAMFG,NSFG,DELT60,CVBPN,PHFG,
      I                     DECFG,CVBPC,ALNPR,CVBO,REFR,CVNRBO,CVPB,
-     I                     DEPCOR,LIMIT,CVBCL,CO2,NUMBAL,MBALGR,CMMPB,
+     I                     DEPCOR,CVBCL,CO2,NUMBAL,MBALGR,CMMPB,
      I                     CMMNB,BALR20,TCBALG,BALVEL,CMMV,BFIXFG,
      I                     CSLIT,CMMD1,CMMD2,TCBALR,FRRIF,CREMVL,
      I                     CMMBI,BINV,TCGRAZ,CSLOF1,CSLOF2,MINBAL,
@@ -4495,7 +4468,6 @@ C     + + + DUMMY ARGUMENTS + + +
      $            BENAL(NUMBAL),LIMBAL(NUMBAL),BACO2,BALCLA(NUMBAL),
      $            DOBALG,BODBAL,TAMBAL,NO3BAL,PO4BAL,BALGRO(NUMBAL),
      $            BDTH(NUMBAL),BALORN,BALORP,BALORC
-      CHARACTER*4 LIMIT(7)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     BALLIT - amount of light available to benthic algae in lgly/min
@@ -4513,7 +4485,6 @@ C     REFR   - refractory fraction
 C     CVNRBO - conversion from biomass to BOD
 C     CVPB   - conversion between biomass and umol P/L
 C     DEPCOR - depth correction factor to convert from areal to volume terms
-C     LIMIT  - label indicating which factor is limiting algal growth
 C     CVBCL  - conversion between biomass and ug chla/L
 C     CO2    - concentration of CO2 as carbon
 C     NUMBAL - number of benthic algae types in the model
@@ -4610,7 +4581,7 @@ C
 C       compute unit growth and respiration rates
         CALL ALGRO2 (BALLIT,PO4,NO3,TW,MBALGR(I),CMMPB(I),
      I               TAMFG,TAM,NSFG,CMMNB(I),BALR20(I),
-     I               DELT60,LIMIT,TCBALG(I),BALVEL,CMMV,BFIXFG(I),
+     I               DELT60,TCBALG(I),BALVEL,CMMV,BFIXFG(I),
      I               CSLIT(I),CMMD1(I),CMMD2(I),SUMBA,TCBALR(I),
      I               NMINGR,PMINGR,LMINGR,NMAXFX,GRORES(I),
      O               NFIXFG,LIMBAL(I),GROBA,RESBA)
