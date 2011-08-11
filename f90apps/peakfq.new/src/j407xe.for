@@ -82,7 +82,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC  INT, MIN0, MAX0
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT
+      EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT, PRTEMA
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
 C
@@ -212,6 +212,7 @@ C
           write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
      $                                NPKS,NSYS,GENSKU,RMSEGS
           CALL RUNEMA(NPKS,PKS,IPKSEQ)
+          CALL PRTEMA(MSG,NSYS,NHIST)
         END IF
 
         IF(IER .GE. 3)  THEN
@@ -1338,6 +1339,47 @@ Cprh        WRITE (MSG,2012) 1./TMP, XTRPK, TMP
 Cprh      ELSE
 Cprh        WRITE (MSG,2011) 1./TMP, TMP
 Cprh      END IF
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   PRTEMA
+     I                   (MSG, NSYS, NHIST)
+C
+C     + + + PURPOSE + + +
+C     Print EMA warning messages
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER  MSG,NSYS,NHIST
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MSG    - Fortran unit number for output file
+C     NSYS   - number of systematic peaks 
+C     NHIST  - length of historic period
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I, LNPKS
+      REAL    LPKS(MXPK), LTAU, LPLEV, LSLOPE
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL KENT
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(4X'EMA001W - VARIANCE OF ESTIMATE WARNING, ',
+     $         'HISTORIC PERIOD > 2* SYS')
+ 2010 FORMAT(4X'EMA002W - CONFIDENCE INTERVALS ARE NOT EXACT ',
+     $         'IF HISTORIC PERIOD > 0')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      IF (NHIST .GT. 0) THEN
+        IF (NHIST .GT. 2*NSYS) THEN
+          WRITE(MSG,2000) 
+        END IF
+        WRITE(MSG,2010) 
+      END IF
 C
       RETURN
       END
@@ -3997,8 +4039,8 @@ C
         STNDATA(STNIND)%PKLOG(I) = PKLOG(I)
         STNDATA(STNIND)%SYSPP(I) = SYSPP(I)
         STNDATA(STNIND)%WRCPP(I) = WRCPP(I)
-        STNDATA(STNIND)%XQUAL(I) = XQUAL(IPKPTR(I))
-        STNDATA(STNIND)%IPKSEQ(I)= IPKSEQ(IPKPTR(I))
+        STNDATA(STNIND)%XQUAL(I) = XQUAL(I)
+        STNDATA(STNIND)%IPKSEQ(I)= IPKSEQ(I)
  10   CONTINUE
 
       DO 20 I = 1,NPLOT
