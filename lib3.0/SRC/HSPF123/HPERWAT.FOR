@@ -3182,6 +3182,9 @@ C
 C     + + + LOCAL VARIABLES + + +
       REAL       LZPET,LZRAT
 C
+C     + + + SAVES + + +
+      SAVE       LZRAT
+C
 C     + + + FUNCTIONS + + +
       REAL       DAYVAL
 C
