@@ -1331,7 +1331,7 @@ C     + + + END SPECIFICATIONS + + +
 C
 C     simulate interception
       CALL ICEPT (VCSFG,DAYFG,CEPSCM,MON,NXTMON,DAY,NDAYS,SUPY,
-     I            0.0,NCANPY,     
+     I            IRRAPP(1),NCANPY,     
      M            CEPSC,CEPS,
      O            CEPO)
 C
