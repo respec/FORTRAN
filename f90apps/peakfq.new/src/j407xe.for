@@ -1360,8 +1360,6 @@ C     NSYS   - number of systematic peaks
 C     NHIST  - length of historic period
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER I, LNPKS
-      REAL    LPKS(MXPK), LTAU, LPLEV, LSLOPE
 C
 C     + + + EXTERNALS + + +
       EXTERNAL KENT
