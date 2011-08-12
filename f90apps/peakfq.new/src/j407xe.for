@@ -3855,7 +3855,10 @@ C
 C     get plotting positions for all peaks and thresholds
       CALL plotposHS(NOBS,QL,QU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
 
-c      write(99,*) 'After EMAFIT'
+      write(99,*) 'After EMAFIT, Representation of Data'
+      do 16 i = 1,NOBS
+        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I),DTYPE(I)
+ 16   continue
 c      write(99,*) 'NOBS:',NOBS
 c      write(99,*) 'REGSKEW:',REGSKEW
 c      write(99,*) 'REGMSE:',REGMSE
