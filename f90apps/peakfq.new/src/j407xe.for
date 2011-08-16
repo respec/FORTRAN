@@ -740,7 +740,7 @@ C    $   6X, 2A )
      $      /16X,'     Begin     End     Low     High     Comment')
  8    FORMAT(16X,'Observational Thresholds (defaults set by PeakFQ):',
      $      /16X,'     Begin     End     Low     High     Comment')
- 10   FORMAT(18X,2I8,F10.1,G10.1,5X,A)
+ 10   FORMAT(18X,2I8,2G10.1,5X,A)
  11   FORMAT(16X,'Observational Thresholds         =   None Specified')
  15   FORMAT(16X,'Interval Data:',
      $       16X,'              Year     Low     High     Comment')
@@ -3855,10 +3855,7 @@ C
 C     get plotting positions for all peaks and thresholds
       CALL plotposHS(NOBS,QL,QU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
 
-      write(99,*) 'After EMAFIT, Representation of Data'
-      do 16 i = 1,NOBS
-        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I),DTYPE(I)
- 16   continue
+c      write(99,*) 'After EMAFIT'
 c      write(99,*) 'NOBS:',NOBS
 c      write(99,*) 'REGSKEW:',REGSKEW
 c      write(99,*) 'REGMSE:',REGMSE
