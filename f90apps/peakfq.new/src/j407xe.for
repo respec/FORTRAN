@@ -740,11 +740,11 @@ C    $   6X, 2A )
      $      /16X,'     Begin     End     Low     High     Comment')
  8    FORMAT(16X,'Observational Thresholds (defaults set by PeakFQ):',
      $      /16X,'     Begin     End     Low     High     Comment')
- 10   FORMAT(18X,2I8,2G10.1,5X,A)
+ 10   FORMAT(18X,2I8,F10.1,G10.1,5X,A)
  11   FORMAT(16X,'Observational Thresholds         =   None Specified')
  15   FORMAT(16X,'Interval Data:',
      $       16X,'              Year     Low     High     Comment')
- 20   FORMAT(24X,I8,F10.1,G10.1,5X,A)
+ 20   FORMAT(24X,I8,2F10.1,5X,A)
  21   FORMAT(16X,'Interval Data                    =   None Specified')
  30   FORMAT(16X,'Observational Thresholds         =   Not Applicable',
      $      /16X,'Interval Data                    =   Not Applicable')
@@ -955,7 +955,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   JLINE,         I, NB, J, ILINE, LYR
       REAL    EPSILN, LTHR, UTHR
-      CHARACTER*8 ESTTYP(2)
+      CHARACTER*9 LTHRCHR(2)
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   ABS
@@ -997,19 +997,20 @@ C
 Cprh 1022 FORMAT( 6X, 5HWATER, 9X, 6HRANKED, 7X,
 Cprh     $       10HSYSTEMATIC, 6X,'BULL.17B'/ 
 Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
- 1022 FORMAT(6X,'WATER',7X,'  RANKED ',6X,'SYSTEMATIC',6X, A,8X,
-     $       'THRESHOLDS' / 
-     $       6X,' YEAR',7X,'DISCHARGE',6X,'  RECORD  ',6X,'ESTIMATE',5X,
-     $       'LOWER      UPPER'/)
- 1023 FORMAT( I11,F15.1,2F15.4,F11.1,G11.1,
+ 1022 FORMAT('   WATER     RANKED   SYSTEMATIC     B17B' / 
+     $       '    YEAR   DISCHARGE    RECORD     ESTIMATE')
+ 2022 FORMAT('   WATER     RANKED   SYSTEMATIC',6X,
+     $       'EMA',8X,'THRESHOLDS',7X,'INTERVALS' / 
+     $       '    YEAR   DISCHARGE    RECORD  ',5X,
+     $       'ESTIMATE',5X,'LOWER      UPPER    LOW    HIGH')
+ 1023 FORMAT( I8,F11.1,F11.4,F12.4,
      $      2A1,T27,'           --  ',  1A1, '          --  ' )
- 2023 FORMAT( I11,F15.1,2F15.4,F11.1,G11.1,
+ 2023 FORMAT( I8,F11.1,F11.4,F12.4,2(2x,A9),
      $      2A1,T27,'           --  ',  1A1, '          --  ' )
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA   EPSILN/1.0E-6/
-      DATA   ESTTYP/ 'BULL.17B' , '  EMA   ' /
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1056,7 +1057,11 @@ C       CALL PRTPHD( 3000 , -999  )
         ELSE
           WRITE(MSG,1021) 'WEIBULL'
         END IF
-        WRITE(MSG,1022) ESTTYP(EMAOPT + 1)
+        IF (EMAOPT.EQ.1) THEN
+          WRITE(MSG,2022)
+        ELSE
+          WRITE(MSG,1022)
+        END IF
 C       IF(ILINE.GT.1)WRITE(MSG,1027)
         JLINE = NPKS
 C       NLINES = JLINE-ILINE+1
@@ -1078,15 +1083,21 @@ C       IF(NLINES.GT.50)JLINE = ILINE+39
               END IF
  305        CONTINUE  
           END IF
+          WRITE(LTHRCHR(1),'(F9.0)') LTHR
+          IF (UTHR .GT. 1.0E10) THEN
+            WRITE(LTHRCHR(2),'(A9)') '      inf'
+          ELSE
+            WRITE(LTHRCHR(2),'(F9.0)') UTHR
+          END IF
           IF (EMAOPT .EQ. 1) THEN
 C           include thresholds and intervals
             WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     $                    SYSPP(I), WRCPP(I) , LTHR, UTHR,
+     $                    SYSPP(I), WRCPP(I) , LTHRCHR(1), LTHRCHR(2),
      $                    (' ',J=1,NB)
           ELSE
+C           no thresholds or intervals
             WRITE(MSG,1023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     $                    SYSPP(I), WRCPP(I) , LTHR, UTHR,
-     $                    (' ',J=1,NB)
+     $                    SYSPP(I), WRCPP(I) , (' ',J=1,NB)
           END IF
   310   CONTINUE
       IF(JLINE.LT.NPKS) GO TO 302
@@ -4283,7 +4294,7 @@ C     + + + DUMMY ARGUMENTS + + +
       CHARACTER*(*) XQUAL(MAXPKS)
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER I,J,LYR
+      INTEGER I,J,K,LYR
       CHARACTER*5 LQUAL
 C
 C     + + + INTRINSICS + + +
@@ -4298,40 +4309,73 @@ C         look for matching year in existing peaks
           J = 0
  10       CONTINUE
             J = J + 1
-            IF (ABS(IPKSEQ(J)) .EQ. LYR) THEN
+            IF (LYR .EQ. ABS(IPKSEQ(J))) THEN
 C             modifying this year's peak
               PKS(J) = NEWPKS(I)%PKVAL
               XQUAL(J) = NEWPKS(I)%PKCODE
               J = NHIST + NSYS + 1
+            ELSEIF (LYR .GT. ABS(IPKSEQ(J))) THEN
+              IF (J .EQ. NHIST+NSYS) THEN
+C               at last peak, just add new peak to end OF systematics
+                NSYS = NSYS + 1
+                J = NHIST + NSYS
+                PKS(J) = NEWPKS(I)%PKVAL
+                IPKSEQ(J) = NEWPKS(I)%PKYR
+                XQUAL(J)  = NEWPKS(I)%PKCODE
+              ELSEIF (LYR .LT. ABS(IPKSEQ(J+1))) THEN
+C               new peak is in between 2 years, insert it
+                LQUAL = NEWPKS(I)%PKCODE
+                CALL ZLJUST(LQUAL)
+                IF (LQUAL .EQ. 'H    ' .OR. LQUAL .EQ. '7    ') THEN
+C                 historic peak
+                  NHIST = NHIST + 1
+                ELSE
+                  NSYS = NSYS + 1
+                END IF
+                DO 20 K = NHIST+NSYS,J+2,-1
+                  PKS(K)= PKS(K-1)
+                  IPKSEQ(K)= IPKSEQ(K-1)
+                  XQUAL(K)= XQUAL(K-1)
+                  IQUAL(K)= IQUAL(K-1)
+ 20             CONTINUE
+                J = J + 1
+                PKS(J)= NEWPKS(I)%PKVAL
+                IF (LQUAL .EQ. 'H    ' .OR. LQUAL .EQ. '7    ') THEN
+                  IPKSEQ(J)= -NEWPKS(I)%PKYR
+                ELSE
+                  IPKSEQ(J)= NEWPKS(I)%PKYR
+                END IF
+                XQUAL(J) = NEWPKS(I)%PKCODE
+              END IF
             END IF
           IF (J .LT. NHIST+NSYS) GO TO 10
 
-          IF (J .EQ. NHIST+NSYS) THEN
-C           did not find matching year, must be new peak
-            LQUAL = NEWPKS(I)%PKCODE
-            CALL ZLJUST(LQUAL)
-            IF (LQUAL .EQ. 'H    ' .OR. LQUAL .EQ. '7    ') THEN
-C             historic peak
-              NHIST = NHIST + 1
-C             move systematic to make space for it
-              DO 20 J=NSYS+NHIST,NHIST+1,-1
-                PKS(J)= PKS(J-1)
-                IPKSEQ(J)= IPKSEQ(J-1)
-                XQUAL(J)= XQUAL(J-1)
-                IQUAL(J)= IQUAL(J-1)
- 20           CONTINUE
-              PKS(NHIST)= NEWPKS(I)%PKVAL
-              IPKSEQ(NHIST)= -NEWPKS(I)%PKYR
-              XQUAL(NHIST) = NEWPKS(I)%PKCODE
-            ELSE
-C             just add to end of systematic peaks
-              NSYS = NSYS + 1
-              J = NHIST + NSYS
-              PKS(J) = NEWPKS(I)%PKVAL
-              IPKSEQ(J) = NEWPKS(I)%PKYR
-              XQUAL(J)  = NEWPKS(I)%PKCODE
-            END IF
-          END IF
+C          IF (J .EQ. NHIST+NSYS) THEN
+CC           did not find matching year, must be new peak
+C            LQUAL = NEWPKS(I)%PKCODE
+C            CALL ZLJUST(LQUAL)
+C            IF (LQUAL .EQ. 'H    ' .OR. LQUAL .EQ. '7    ') THEN
+CC             historic peak
+C              NHIST = NHIST + 1
+CC             move systematic to make space for it
+C              DO 20 J=NSYS+NHIST,NHIST+1,-1
+C                PKS(J)= PKS(J-1)
+C                IPKSEQ(J)= IPKSEQ(J-1)
+C                XQUAL(J)= XQUAL(J-1)
+C                IQUAL(J)= IQUAL(J-1)
+C 20           CONTINUE
+C              PKS(NHIST)= NEWPKS(I)%PKVAL
+C              IPKSEQ(NHIST)= -NEWPKS(I)%PKYR
+C              XQUAL(NHIST) = NEWPKS(I)%PKCODE
+C            ELSE
+CC             just add to end of systematic peaks
+C              NSYS = NSYS + 1
+C              J = NHIST + NSYS
+C              PKS(J) = NEWPKS(I)%PKVAL
+C              IPKSEQ(J) = NEWPKS(I)%PKYR
+C              XQUAL(J)  = NEWPKS(I)%PKCODE
+C            END IF
+C          END IF
  100    CONTINUE
       END IF
 C
