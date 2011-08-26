@@ -988,7 +988,7 @@ C     + + + FORMATS + + +
      $          '  LOW         HIGH   REMARKS')
  1013 FORMAT(I9,F11.1,A6,A9,A)
  2013 FORMAT(I9,F11.1,A6,A9,24X,A)
- 2014 FORMAT(I9,26X,2F12.1,A)
+ 2014 FORMAT(I9,26X,2F12.1,2X,A)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
  1021 FORMAT( //3X,
@@ -999,14 +999,14 @@ Cprh     $       10HSYSTEMATIC, 6X,'BULL.17B'/
 Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
  1022 FORMAT('   WATER     RANKED   SYSTEMATIC     B17B' / 
      $       '    YEAR   DISCHARGE    RECORD     ESTIMATE')
- 2022 FORMAT('   WATER     RANKED   SYSTEMATIC',6X,
-     $       'EMA',8X,'THRESHOLDS',7X,'INTERVALS' / 
-     $       '    YEAR   DISCHARGE    RECORD  ',5X,
-     $       'ESTIMATE',5X,'LOWER      UPPER    LOW    HIGH')
+ 2022 FORMAT('   WATER     RANKED   SYSTEMATIC',5X,
+     $       'EMA',10X,'THRESHOLDS',7X,'INTERVALS' / 
+     $       '    YEAR   DISCHARGE    RECORD     ',
+     $       'ESTIMATE',5X,'LOWER    UPPER    LOW    HIGH')
  1023 FORMAT( I8,F11.1,F11.4,F12.4,
-     $      2A1,T27,'           --  ',  1A1, '          --  ' )
- 2023 FORMAT( I8,F11.1,F11.4,F12.4,2(2x,A9),
-     $      2A1,T27,'           --  ',  1A1, '          --  ' )
+     $      2A1,T20,'       --  ',  1A1, '       --  ' )
+ 2023 FORMAT( I8,F11.1,F11.4,F12.4,2x,2A9,
+     $      2A1,T20,'       --  ',  1A1, '       --  ' )
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
