@@ -988,7 +988,7 @@ C     + + + FORMATS + + +
      $          '  LOW         HIGH   REMARKS')
  1013 FORMAT(I9,F11.1,A6,A9,A)
  2013 FORMAT(I9,F11.1,A6,A9,24X,A)
- 2014 FORMAT(I9,26X,2F12.1,2X,A)
+ 2014 FORMAT(I9,26X,2F12.1,A)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
  1021 FORMAT( //3X,
@@ -3756,7 +3756,7 @@ C     + + + LOCAL VARIABLES + + +
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
      $                 REGVAR,REGVMSE,
      $                 Q(MXPK),PEX(MXPK),THR(MXPK),PET(MXPK)
-      INTEGER, ALLOCATABLE :: THBY(:),THEY(:),INTVLYR(:)
+      INTEGER, ALLOCATABLE :: THBY(:),THEY(:),INTVLYR(:),OPKSEQ(:)
       REAL, ALLOCATABLE :: THLO(:),THUP(:),INTVLLWR(:),INTVLUPR(:)
       DOUBLE PRECISION, ALLOCATABLE :: QL(:),QU(:),TL(:),TU(:)
       CHARACTER*4, ALLOCATABLE :: DTYPE(:)
@@ -3816,7 +3816,8 @@ C       create dummy interval placeholder
  10   CONTINUE
 
       NOBS = WYMAX - WYMIN + 1
-      ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS), DTYPE(NOBS))
+      ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS), 
+     $          DTYPE(NOBS), OPKSEQ(NOBS))
       write(99,*) 'RUNEMA: NPKS,NSYS,NHIST,NOBS,GAGEB',
      $                    NPKS,NSYS,NHIST,NOBS,GAGEB
       write(99,*) 'RUNEMA: PKS',(PKS(I),I=1,NPKS)
@@ -3827,7 +3828,7 @@ c      CALL EMADATA(NSYS+NHIST,PKS(LPKIND),IPKSEQ(LPKIND),WYMIN,WYMAX,
      I             NTHRESH,THBY,THEY,THLO,THUP,GAGEB,
      I             LNINT,INTVLYR,INTVLLWR,INTVLUPR,
      M             NOBS,
-     O             QL,QU,TL,TU,DTYPE)
+     O             OPKSEQ,QL,QU,TL,TU,DTYPE)
 C
       REGSKEW= GENSKU
       IF (IGSOPT.EQ.1) THEN
@@ -3897,24 +3898,35 @@ c      WRCSKW = WRCMOM(3)
       write(99,*)
       write(99,*) 'Plotting Positions of peaks'
       write(99,*) 'Plot Pos      Obs. Q'
-      DO 16 I = 1,NOBS
+      DO 20 I = 1,NOBS
         write(99,*) PEX(I),Q(I)
- 16   CONTINUE
+ 20   CONTINUE
+
+      IF (NINTERVAL.GT.0) THEN
+        DO 30 I = 1,NINTERVAL
+          DO 25 J = 1,NOBS
+            IF (OPKSEQ(J) .EQ. INTERVAL(I)%INTRVLYR) THEN
+C             assign plotting position for this interval
+              INTERVAL(I)%INTRVLPP = PEX(J)
+            END IF
+ 25       CONTINUE
+ 30     CONTINUE
+      END IF
 
       write(99,*)
       write(99,*) 'Threshold positions'
       write(99,*) 'Plot Pos     Threshold    NumPeaks'
-      DO 18 I = 1,NT
+      DO 40 I = 1,NT
         write(99,*) PET(I),THR(I),NB(I)
 C       set plotting position data for retrieval by PKFQWin
-        DO 17 J = 1,NTHRESH
+        DO 35 J = 1,NTHRESH
           IF (ABS((10**THR(I))-THRESH(J)%THRLWR) .LT. 0.001) THEN
 C           assume matching threshold value means matching thresholds
             THRESH(J)%THPP = PET(I)
             THRESH(J)%NOBS = NB(I)
           END IF
- 17     CONTINUE
- 18   CONTINUE
+ 35     CONTINUE
+ 40   CONTINUE
 
       write(99,*)
       write(99,*) '  Prob       EMA Est.        CL Low       CL High'
@@ -3924,16 +3936,16 @@ C           assume matching threshold value means matching thresholds
      $                VAREST(i)
  19   continue
 C
-      DO 20 I = 1,MXINT
+      DO 50 I = 1,MXINT
 C        write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
 C     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
           SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
           WRCFC(I) = WRCYP(I)
           CLIML(I) = CILOW(I)
           CLIMU(I) = CIHIGH(I)
- 20   CONTINUE
+ 50   CONTINUE
 
-      DEALLOCATE (QL, QU, TL, TU, DTYPE)
+      DEALLOCATE (QL, QU, TL, TU, DTYPE, OPKSEQ)
       DEALLOCATE (THBY, THEY, THLO, THUP)
       DEALLOCATE (INTVLYR, INTVLLWR, INTVLUPR)
 
@@ -4069,6 +4081,12 @@ C
         STNDATA(STNIND)%THRPP(I)  = THRESH(I)%THPP
  30   CONTINUE
 C
+      DO 40 I = 1,NINTERVAL
+        STNDATA(STNIND)%INTLWR(I) = INTERVAL(I)%INTRVLLWR
+        STNDATA(STNIND)%INTUPR(I) = INTERVAL(I)%INTRVLUPR
+        STNDATA(STNIND)%INTPPOS(I) = INTERVAL(I)%INTRVLPP
+ 40   CONTINUE
+C
       RETURN
       END
 C
@@ -4079,8 +4097,8 @@ C
      O                      NPKPLT,PKLOG,SYSPP,WRCPP,IXQUAL,IPKSEQ,
      O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
      O                      NOCLIM,CLIML,CLIMU,NT,THR,PPTH,NOBSTH,
-     O                      THRSYR,THREYR,GBCRIT,NLOW,NZERO,
-     O                      SKEW,RMSEGS,HEADER)
+     O                      THRSYR,THREYR,NINTVL,INTLWR,INTUPR,INTPPOS,
+     O                      GBCRIT,NLOW,NZERO,SKEW,RMSEGS,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
@@ -4092,11 +4110,12 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,HSTFLG,
      $              NOCLIM,NT,NOBSTH(200),THRSYR(200),THREYR(200),
-     $              NLOW,NZERO
+     $              NINTVL,NLOW,NZERO
       REAL          PKLOG(200),SYSPP(200),WRCPP(200),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
-     $              CLIML(32),CLIMU(32),THR(200),PPTH(200),GBCRIT,
-     $              SKEW,RMSEGS
+     $              CLIML(32),CLIMU(32),THR(200),PPTH(200),
+     $              INTLWR(200),INTUPR(200),INTPPOS(200),
+     $              GBCRIT,SKEW,RMSEGS
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -4127,6 +4146,10 @@ C     PPTH   - array of threshold plotting positions
 C     NOBSTH - number of observations associated with each threshold
 C     THRSYR - array of threshold start years
 C     THREYR - array of threshold end years
+C     NINTVL - number of interval data entries
+C     INTLWR - array of lower interval values
+C     INTUPR - array of upper interval values
+C     INTPPOS - array of interval data plotting positions
 C     GBCRIT - low outlier threshold value
 C     NLOW   - number of low outliers
 C     NZERO  - number of zero values
@@ -4178,6 +4201,14 @@ C     threshold data
         THREYR(I) = STNDATA(STNIND)%THREYR(I)
  30   CONTINUE
 C
+C     interval data
+      NINTVL = STNDATA(STNIND)%NINTRVL
+      DO 40 I = 1,NINTVL
+        INTLWR(I) = STNDATA(STNIND)%INTLWR(I)
+        INTUPR(I) = STNDATA(STNIND)%INTLWR(I)
+        INTPPOS(I)= STNDATA(STNIND)%INTPPOS(I)
+ 40   CONTINUE
+C 
       RETURN
       END
 C

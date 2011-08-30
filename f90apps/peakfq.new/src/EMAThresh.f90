@@ -10,7 +10,7 @@
 
       TYPE IntervalSpec
         INTEGER :: INTRVLYR
-        REAL    :: INTRVLLWR, INTRVLUPR
+        REAL    :: INTRVLLWR, INTRVLUPR, INTRVLPP
         CHARACTER*80 :: INTRVLCOM
       END TYPE
 
