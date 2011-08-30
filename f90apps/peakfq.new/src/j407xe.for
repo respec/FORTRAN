@@ -743,8 +743,8 @@ C    $   6X, 2A )
  10   FORMAT(18X,2I8,F10.1,G10.1,5X,A)
  11   FORMAT(16X,'Observational Thresholds         =   None Specified')
  15   FORMAT(16X,'Interval Data:',
-     $       16X,'              Year     Low     High     Comment')
- 20   FORMAT(24X,I8,2F10.1,5X,A)
+     $      /16X,'               Year     Low     High     Comment')
+ 20   FORMAT(26X,I8,2F10.1,5X,A)
  21   FORMAT(16X,'Interval Data                    =   None Specified')
  30   FORMAT(16X,'Observational Thresholds         =   Not Applicable',
      $      /16X,'Interval Data                    =   Not Applicable')
@@ -953,8 +953,8 @@ C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number for input WDM file
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   JLINE,         I, NB, J, ILINE, LYR
-      REAL    EPSILN, LTHR, UTHR
+      INTEGER   JLINE,         I, NB, J, ILINE, LYR, K
+      REAL    EPSILN, LTHR, UTHR, INTVAL(200)
       CHARACTER*9 LTHRCHR(2)
 C
 C     + + + INTRINSICS + + +
@@ -988,7 +988,7 @@ C     + + + FORMATS + + +
      $          '  LOW         HIGH   REMARKS')
  1013 FORMAT(I9,F11.1,A6,A9,A)
  2013 FORMAT(I9,F11.1,A6,A9,24X,A)
- 2014 FORMAT(I9,26X,2F12.1,A)
+ 2014 FORMAT(I9,26X,2F12.1,2X,A)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
  1021 FORMAT( //3X,
@@ -1002,11 +1002,12 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
  2022 FORMAT('   WATER     RANKED   SYSTEMATIC',5X,
      $       'EMA',10X,'THRESHOLDS',7X,'INTERVALS' / 
      $       '    YEAR   DISCHARGE    RECORD     ',
-     $       'ESTIMATE',5X,'LOWER    UPPER    LOW    HIGH')
+     $       'ESTIMATE',5X,'LOWER    UPPER    LOW      HIGH')
  1023 FORMAT( I8,F11.1,F11.4,F12.4,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
  2023 FORMAT( I8,F11.1,F11.4,F12.4,2x,2A9,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
+ 2024 FORMAT( I8,F11.1,F11.4,F12.4,2x,2A9,2F10.0)
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1038,6 +1039,9 @@ C       output interval data
         DO 220 I = 1, NINTERVAL
           WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
      $                    INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLCOM
+C         save average of interval lower/upper bounds
+          INTVAL(I)= 10**((LOG10(INTERVAL(I)%INTRVLLWR) + 
+     $                     LOG10(INTERVAL(I)%INTRVLUPR))/2)
  220    CONTINUE
       END IF
 C
@@ -1071,26 +1075,64 @@ C       IF(NLINES.GT.50)JLINE = ILINE+39
           NB = 1
           IF(IPKSEQ(IPKPTR(I)) .LT. 0)    NB = 2
           IF(PKS(IPKPTR(I)) .LE. GAGEB )  NB = 3
-          LYR = ABS(IPKSEQ(IPKPTR(I)))
-          LTHR = 0.0
-          UTHR = 1.0E20
-          IF (NTHRESH .GT. 0) THEN
-            DO 305 J = 1, NTHRESH
-              IF (LYR .GE. THRESH(J)%THRBYR .AND. 
-     $            LYR .LE. THRESH(J)%THREYR) THEN
-                LTHR = THRESH(J)%THRLWR
-                UTHR = THRESH(J)%THRUPR
-              END IF
- 305        CONTINUE  
-          END IF
-          WRITE(LTHRCHR(1),'(F9.0)') LTHR
-          IF (UTHR .GT. 1.0E10) THEN
-            WRITE(LTHRCHR(2),'(A9)') '      inf'
-          ELSE
-            WRITE(LTHRCHR(2),'(F9.0)') UTHR
-          END IF
           IF (EMAOPT .EQ. 1) THEN
 C           include thresholds and intervals
+            IF (NINTERVAL .GT. 0) THEN
+              DO 308 J = 1,NINTERVAL
+                LYR = 0
+                IF (I .EQ. ILINE) THEN
+C                 see if any intervals bigger than 1st peak
+                  IF (INTVAL(J) .GE. PKS(IPKPTR(I))) THEN
+                    LYR = INTERVAL(J)%INTRVLYR
+                  END IF
+                ELSEIF (INTVAL(J) .GE. PKS(IPKPTR(I)) .AND.
+     $                  INTVAL(J) .LT. PKS(IPKPTR(I-1))) THEN
+C                 interval is between current and previous peak
+                  LYR = INTERVAL(J)%INTRVLYR
+                END IF
+                IF (LYR .GT. 0) THEN
+C                 need to print interval record
+                  LTHR = 0.0
+                  UTHR = 1.0E20
+                  IF (NTHRESH .GT. 0) THEN
+                    DO 303 K = 1, NTHRESH
+                      IF (LYR .GE. THRESH(K)%THRBYR .AND. 
+     $                    LYR .LE. THRESH(K)%THREYR) THEN
+                        LTHR = THRESH(K)%THRLWR
+                        UTHR = THRESH(K)%THRUPR
+                      END IF
+ 303                CONTINUE  
+                  END IF
+                  WRITE(LTHRCHR(1),'(F9.0)') LTHR
+                  IF (UTHR .GT. 1.0E10) THEN
+                    WRITE(LTHRCHR(2),'(A9)') '      inf'
+                  ELSE
+                    WRITE(LTHRCHR(2),'(F9.0)') UTHR
+                  END IF
+                  WRITE(MSG,2024) LYR,INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $                  INTERVAL(J)%INTRVLPP,LTHRCHR(1),LTHRCHR(2),
+     $                  INTERVAL(J)%INTRVLLWR,INTERVAL(J)%INTRVLUPR
+                END IF
+ 308          CONTINUE
+            END IF
+            LYR = ABS(IPKSEQ(IPKPTR(I)))
+            LTHR = 0.0
+            UTHR = 1.0E20
+            IF (NTHRESH .GT. 0) THEN
+              DO 309 J = 1, NTHRESH
+                IF (LYR .GE. THRESH(J)%THRBYR .AND. 
+     $              LYR .LE. THRESH(J)%THREYR) THEN
+                  LTHR = THRESH(J)%THRLWR
+                  UTHR = THRESH(J)%THRUPR
+                END IF
+ 309          CONTINUE  
+            END IF
+            WRITE(LTHRCHR(1),'(F9.0)') LTHR
+            IF (UTHR .GT. 1.0E10) THEN
+              WRITE(LTHRCHR(2),'(A9)') '      inf'
+            ELSE
+              WRITE(LTHRCHR(2),'(F9.0)') UTHR
+            END IF
             WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
      $                    SYSPP(I), WRCPP(I) , LTHRCHR(1), LTHRCHR(2),
      $                    (' ',J=1,NB)
