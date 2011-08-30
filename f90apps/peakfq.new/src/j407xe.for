@@ -1038,7 +1038,7 @@ C     write table of observed data
 C       output interval data
         DO 220 I = 1, NINTERVAL
           WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
-     $                    INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLCOM
+     $                    INTERVAL(I)%INTRVLUPR,INTERVAL(I)%INTRVLCOM
 C         save average of interval lower/upper bounds
           INTVAL(I)= 10**((LOG10(INTERVAL(I)%INTRVLLWR) + 
      $                     LOG10(INTERVAL(I)%INTRVLUPR))/2)
@@ -4090,6 +4090,7 @@ C
       STNDATA(STNIND)%WEIBA = WEIBA
       STNDATA(STNIND)%HSTFLG = HSTFLG
       STNDATA(STNIND)%NTHRESH = NTHRESH
+      STNDATA(STNIND)%NINTRVL = NINTERVAL
       STNDATA(STNIND)%NLOW = nlow
       STNDATA(STNIND)%NZERO = nzero
       STNDATA(STNIND)%GBTYPE = gbtype
