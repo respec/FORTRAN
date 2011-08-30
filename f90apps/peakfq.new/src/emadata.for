@@ -3,7 +3,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
      I                   NT,THBY,THEY,THLO,THUP,GAGEB,
      I                   NINTVL,INTVLYR,INTVLLWR,INTVLUPR,
      M                   NO,
-     O                   QL,QU,TL,TU,DTYPE)
+     O                   OWY,QL,QU,TL,TU,DTYPE)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c    
 c    This routine arranges a data set using the EMA algorithm 
@@ -42,6 +42,7 @@ c       output variables: (input to "emafit")
 c       ---------------------------------------------------------------------------
 c            NO         i*4  total number of observations, 
 c                            determined from start/end of threshold years
+c            OW(NO)     i*4  vector of water years
 c            QL(NO)     r*8  vector of lower bounds on floods
 c            QU(NO)     r*8  vector of upper bounds on floods
 c            TL(NO)     r*8  vector of lower bounds on flood threshold
@@ -78,16 +79,15 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
 C     + + + DUMMY ARGUMENTS + + +      
       INTEGER NPKS,NT,WYMIN,WYMAX,NO,NINTVL
-      INTEGER WY(NPKS),THBY(NT),THEY(NT)
+      INTEGER WY(NPKS),THBY(NT),THEY(NT),INTVLYR(NINTVL),OWY(NO)
       REAL  Q(NPKS),THLO(NT),THUP(NT),GAGEB,
-     $      INTVLYR(NINTVL),INTVLLWR(NINTVL),INTVLUPR(NINTVL)
+     $      INTVLLWR(NINTVL),INTVLUPR(NINTVL)
       DOUBLE PRECISION QL(NO),QU(NO),TL(NO),TU(NO)
       CHARACTER*4 DTYPE(NO)
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I,J,K
       DOUBLE PRECISION  MISSING,QMIN,QAVE
-      INTEGER, ALLOCATABLE :: OWY(:)
      
       DATA MISSING, QMIN 
      $      /-10.0, 1.0D-99/
@@ -95,7 +95,6 @@ C     + + + LOCAL VARIABLES + + +
 C     + + + END SPECIFICATIONS + + +
 C
       write(*,*)"EMADATA: entry"
-      ALLOCATE (OWY(NO))
 C     init arrays
       DO 10 I = 1,NO
         OWY(I) = WYMIN + I - 1
