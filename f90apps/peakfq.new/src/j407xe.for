@@ -4284,7 +4284,8 @@ C     QHIOUT - user-specified hi outlier threshold
 C     WRCHHB - PeakFQ-determined hi outlier threshold
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I
+      INTEGER   I,J,ITHRESH,NEWTHBYR,NEWTHEYR
+      TYPE (ThreshSpec), ALLOCATABLE :: TMPTHRESH(:)
 C
 C     + + + INTRINSICS + + +
       INTRINSIC MAX
@@ -4300,7 +4301,7 @@ C         historic period in use, will need 2 default thresholds
           ALLOCATE (THRESH(NTHRESH))
           THRESH(1)%THRLWR= 1.0D35
           THRESH(1)%THRUPR= 1.0D35
-          THRESH(1)%THRCOM= ' '
+          THRESH(1)%THRCOM= 'Default Historic Threshold'
 C         determine threshold specs for historic period
           I = 1
  2        CONTINUE
@@ -4323,7 +4324,7 @@ C           valid threshold default still not found
 
 C       determine threshold specs for systematic record
         THRESH(NTHRESH)%THRBYR = 0
-        THRESH(NTHRESH)%THRCOM= ' '
+        THRESH(NTHRESH)%THRCOM= 'Default Systematic Threshold'
         I = 0
  3      CONTINUE
           I = I + 1
@@ -4344,6 +4345,48 @@ C         end of historic threshold is year before systematic period
       ELSE 
 C       user has defined thresholds
         THRDEF = 0
+C       make sure thresholds cover span of peaks
+        NEWTHBYR = 9999
+        NEWTHEYR = 0
+        DO 10 I = 1,NPKS
+          ITHRESH = 0
+          DO 5 J = 1,NTHRESH
+            IF (IPKSEQ(I) .GE. THRESH(J)%THRBYR .AND.
+     $          IPKSEQ(I) .LE. THRESH(J)%THREYR) THEN
+C             this peak is in a threshold span
+              ITHRESH = J
+            END IF
+ 5        CONTINUE
+          IF (ITHRESH .EQ. 0) THEN
+C           this peak is not in a threshold's span
+            IF (IPKSEQ(I).LT.NEWTHBYR) NEWTHBYR = IPKSEQ(I)
+            IF (IPKSEQ(I).GT.NEWTHEYR) NEWTHEYR = IPKSEQ(I)
+          END IF
+ 10     CONTINUE
+        IF (NEWTHBYR .LT. 9999) THEN
+C         new threshold is needed
+          IF (ALLOCATED(THRESH)) THEN
+            ALLOCATE (TMPTHRESH(NTHRESH))
+            DO 20 I = 1, NTHRESH
+              TMPTHRESH(I) = THRESH(I)
+ 20         CONTINUE                  
+            DEALLOCATE (THRESH)
+          END IF
+C
+          NTHRESH = NTHRESH + 1
+          ALLOCATE (THRESH(NTHRESH))
+          IF (ALLOCATED(TMPTHRESH)) THEN
+            DO 30 I = 1, NTHRESH-1
+              THRESH(I) = TMPTHRESH(I)
+ 30         CONTINUE          
+          END IF
+C         add new threshold
+          THRESH(NTHRESH)%THRBYR = NEWTHBYR
+          THRESH(NTHRESH)%THREYR = NEWTHEYR
+          THRESH(NTHRESH)%THRLWR = 0.0
+          THRESH(NTHRESH)%THRUPR = 1.0D35
+          THRESH(NTHRESH)%THRCOM = 'Default Threshold'
+        END IF
       END IF
 C
       RETURN
