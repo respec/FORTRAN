@@ -2,7 +2,7 @@ C
 C
 C
       SUBROUTINE   J407XE
-     #                 ( IA1, IA3, PAUSE, UPDATEFG )
+     #                 ( IA1, IA3, PAUSE, UPDATEFG, NSTA )
 C
 C      + + + PURPOSE + + +
 C     This routine processes users input and options and controls
@@ -30,7 +30,7 @@ C     Updated for batch version of PEAKFQ, 9/03
 C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   IA1, IA3, PAUSE
+      INTEGER   IA1, IA3, PAUSE, NSTA
       LOGICAL   UPDATEFG
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -42,6 +42,7 @@ C              2 - no, display summary of results and continue
 C     UPDATEFG - boolean to indicate type of run
 C                TRUE - run is just updating the spec file (don't do graphics)
 C                FALSE - full run
+C     NSTA     - number of stations to be run (from spec file)
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -66,7 +67,7 @@ C      + + + LOCAL VARIABLES + + +
       REAL      FCXPG(MXINT)
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
      &          NSKIP1, NPKS, I, NPKPLT, 
-     $          ISTART, HSTFLG, XPKS, EMAOPT
+     $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT
 Cprh     $      , SCLU, CNUM, CLEN, SGRP, MXLN, SCI, IWRT
 C
 C     + + + EQUIVALENCES + + +
@@ -83,12 +84,12 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT, PRTEMA
-      EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH
+      EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH, PKFQSTA
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA  IER,  NFCXPG ,  JSEQNO
-     $     /  0,   -777 ,     0    /
+      DATA  IER,  NFCXPG ,  JSEQNO, IOPT
+     $     /  0,   -777 ,     0 ,    5 /
 C
 C     + + + FORMATS + + +
  1000 FORMAT(///' End PeakFQ analysis.'
@@ -182,11 +183,6 @@ C       count peaks to be skipped
           IF (PKS(I) .LT. 0.0) XPKS = XPKS + 1
  120    CONTINUE
         IF(IER.GE.2) GO TO  970
-        IF(NSKIP1.NE.0 )  THEN
-           JSEQNO = JSEQNO + 1
-cprh       this call just creates a null page, messes up the page numbering
-cprh           CALL PRTPHD(  1000, JSEQNO, EMAOPT, IA3 )
-        ENDIF
 C
         IGSOPT=MAX0(-1,MIN0(+1,IGSOPT))
         IF(IWXMOD.NE.0  .AND. RMSEGS.LE.0.) RMSEGS = RMSDGS
@@ -280,6 +276,11 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,NOCLIM,
      I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
      I                      JSEQNO,HEADNG(9))
+            IF(NSKIP1.NE.0 )  THEN
+               JSEQNO = JSEQNO + 1
+cprh           this call just creates a null page, messes up the page numbering
+cprh           CALL PRTPHD(  1000, JSEQNO, EMAOPT, IA3 )
+            ENDIF
             IF(IPLTOP.NE.0)  THEN
 C             initialize (if necessary)
 C             convert to std deviates
@@ -322,6 +323,7 @@ Cprh            CALL OUTPT2 ( STAID, WRCUAV, WRCUSD, WRCSKW, WRCFC, IA1 )
           END IF
         END IF
 C
+        CALL PKFQSTA(IOPT,JSEQNO,NSTA)
         IF (INFORM .EQ. 2  .AND.  PAUSE .EQ. 1) THEN
 C         ascii input and pause between statTions, stats to screen
 Cprh          CALL OUTPT2 ( STAID, WRCUAV, WRCUSD, WRCSKW, WRCFC,
