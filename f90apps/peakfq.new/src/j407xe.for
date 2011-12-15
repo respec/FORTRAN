@@ -3692,7 +3692,7 @@ C     fill in measured peaks
           I = ABS(IPKSEQ(J)) - WYMIN + 1
           IF (ABS(TL(I)-MISSING) .GT. QMIN) THEN  ! this should never occur
             write(99,*) ' *** PROBLEM ***'
-            write(99,*) ' Water Year ',ABS(WY(J)),
+            write(99,*) ' Water Year ',ABS(IPKSEQ(J)),
      $                 ' has peak without tl, tu'
           END IF
           QL(I) = PKS(J)
