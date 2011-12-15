@@ -86,6 +86,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT, PRTEMA
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH, PKFQSTA
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
+      EXTERNAL   SETEMADATA
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA  IER,  NFCXPG ,  JSEQNO, IOPT
@@ -170,7 +171,8 @@ C
 C       see if any revised/new peaks need to be accounted for
         CALL UPDATEPEAKS (MAXPKS,
      M                    NHIST,NSYS,PKS,IPKSEQ,XQUAL,IQUAL)
-        write(99,*)'After UPDATEPEAKS - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
+        write(99,*)'After UPDATEPEAKS - NSYS,NHIST,EMAOPT',
+     $                                  NSYS,NHIST,EMAOPT
 C
         CALL PRTPHD( 1000 , JSEQNO, EMAOPT, IA3)
 C
@@ -190,9 +192,14 @@ C
         IF(NHIST.GT.0 .OR. HISTPD.GT.0.) STAID(79:90) =
      $                                    '* HISTORIC *'
 C
-        IF (EMAOPT.EQ.1) THEN
+C        call needed for both analysis opts, for Mult. G-B test
+C        IF (EMAOPT.EQ.1) THEN
 C         need to set thresholds before input data listing
           CALL SETTHRESH (NPKS,PKS,IPKSEQ,HISTPD,GAGEB,QHIOUT,WRCHHB)
+C        END IF
+        IF (EMAOPT.EQ.1 .OR. LOTYPE.EQ.'MGBT') THEN
+C         need to set EMA arrays 
+          CALL SETEMADATA(NPKS,PKS,IPKSEQ,GAGEB)
         END IF
 C
 C       CALL  PRTPHD(  2001 , -999 )
@@ -207,7 +214,7 @@ C
           write(99,*)'Running EMA for station ',STAID
           write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
      $                                NPKS,NSYS,GENSKU,RMSEGS
-          CALL RUNEMA(NPKS,PKS,IPKSEQ)
+          CALL RUNEMA
           CALL PRTEMA(MSG,NSYS,NHIST)
         END IF
 
@@ -848,7 +855,7 @@ C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number for input WDM file
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I, ND2
+      INTEGER   I
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   PRTPHD
@@ -2723,7 +2730,7 @@ C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits
 C     IPLTNO - sequence number of this station (for identifying plots)
 C
 C     + + + LOCAL VARIALBES + + +
-      INTEGER   IPRTPL, IGKSPL, DEVCOD
+      INTEGER   IPRTPL, IGKSPL
       REAL      EPSILN
       CHARACTER*3 PLTEXT
 C
@@ -3582,194 +3589,27 @@ C
 C
 C
 C
-Ckmf  SUBROUTINE   DATTIM
-Ckmf #                 ( JDATE, JTIME )
-C
-C     + + + PURPOSE + + +
-C     This routine
+      SUBROUTINE   SETEMADATA
+     I                       (NPKS,PKS,IPKSEQ,GAGEB)
 C
 C     + + + HISTORY + + +
-C     kmf - Nov 09, 2000 - replaced by libanne routine
+C     Created 12/2011 by Paul Hummel, AQUA TERRA Consultants
+C     for incorporating EMA into PEAKFQ, most of this was 
+C     previously the routine EMADATA, whose history is:
 C
-C     + + + DUMMY ARGUMENTS + + +
-Ckmf  INTEGER    JDATE(3), JTIME
+C     This routine arranges a data set using the EMA algorithm 
 C
-C     + + + ARGUMENT DEFINITIONS + + +
-C     JDATE  -
-C     JTIME  -
+C     Originally prepared for Aquaterra by Tim Cohn, US Geological Survey
+C     Timothy A. Cohn        05 December 2003
 C
-C     + + + LOCAL VARIABLES + + +
-Ckmf  INTEGER *2  STRING(28)
-C     INTEGER     NUM
-Ckmf  CHARACTER*6  IMAGE
-Ckmf  INTEGER   J
+C     Modified 6/2007 to accomodate perception thresholds
+C     modifications by AQUA TERRA and Tim Cohn
 C
-C     + + + INTRINSICS + + +
-Ckmf  INTRINSIC   MOD
-C
-C     + + + EXTERNALS + + +
-Cmyg  EXTERNAL   TIMDAT
-C
-C     + + + DATA INITIALIZATIONS + + +
-C     DATA     NUM / 28 /
-Ckmf  DATA  STRING / 28*0/
-C
-C     + + + END SPECIFICATIONS + + +
-C
-Cmyg  CALL TIMDAT( STRING, NUM )
-Ckmf  WRITE(IMAGE,1) ( STRING(J), J = 1, 3 )
-Ckmf  READ(IMAGE,2) ( JDATE(J), J = 1, 3 )
-Ckmf  JTIME = ( STRING(4) / 60 ) * 100  +  MOD( STRING(4), 60 )
-Ckmf1 FORMAT( 3A2 )
-Ckmf2 FORMAT( 3I2 )
-Ckmf  RETURN
-Ckmf  END
-C
-C
-C
-Cprh      SUBROUTINE   OUTPT2
-Cprh     I                    ( STAID, WRCUAV, WRCUSD, WRCSKW, WRCFC,
-Cprh     I                      MESSFL )
-CprhC
-CprhC     + + + PURPOSE + + +
-CprhC     Send summary of computed statistics to screen for ascii input.
-Cprh
-CprhC     + + + DUMMY ARGUMENTS + + +
-Cprh      INTEGER   MESSFL
-Cprh      REAL      WRCUAV, WRCUSD, WRCSKW, WRCFC(*)
-Cprh      CHARACTER*90   STAID
-Cprh
-CprhC     + + + ARGUMENT DEFINITIONS + + +
-CprhC     STAID  - station identification number
-CprhC     WRCUAV - WRC mean of peaks
-CprhC     WRCUSD - WRC standard deviation of peaks
-CprhC     WRCSKW - WRC skew of peaks
-CprhC     WRCFC  - array of logs of computed peaks
-CprhC
-CprhC     + + + LOCAL VARIABLES + + +
-Cprh      INTEGER      I, J, ORD(9), TXTL(14), TXTFLG,
-Cprh     $             GROUP,  SCLU, LEN, RTCMND
-Cprh      REAL         PEAKST(12)
-Cprh      CHARACTER*1  BLNK, FLAG
-Cprh      CHARACTER*71 TXT
-CprhC
-CprhC     + + + INTRINSICS + + +
-Cprh      INTRINSIC   ABS
-CprhC
-CprhC     + + + EXTERNALS + + +
-Cprh      EXTERNAL    ZIPI, ZIPC, CVARAR, LFTSTR
-Cprh      EXTERNAL    Q1INIT, QSETCT, QSETR, Q1EDIT
-CprhC
-CprhC     + + + DATA INITIALIZATIONS + + +
-CprhC     return period 1.25  2   5  10  25  50 100 200 500
-Cprh      DATA ORD  /    12, 16, 20, 21, 23, 25, 26, 27, 28 /
-Cprh      DATA BLNK, FLAG, TXTL,       SCLU
-Cprh     $    / ' ',  '*', 15,12*1,45,  121 /
-CprhC
-CprhC     + + + END SPECIFICATIONS + + +
-CprhC
-Cprh      TXTFLG = 0
-Cprh      I = 71
-Cprh      CALL ZIPC ( I, BLNK, TXT )
-CprhC
-CprhC     compute t-year peaks
-Cprh      DO 100 I = 1, 9
-Cprh        J = ORD(I)
-Cprh        IF (ABS( WRCFC(J) ) .LT. 20.0) THEN
-Cprh          PEAKST(I) = 10.0**WRCFC(J)
-Cprh        ELSE
-CprhC         magnitude of the exponent is too large
-Cprh          PEAKST(I) = -999.
-Cprh          TXT(I+15:I+15) = FLAG
-Cprh          TXTFLG = 1
-Cprh        END IF
-Cprh  100 CONTINUE
-CprhC
-CprhC     bulletin 17b mean, sd, and skew of log of Q
-Cprh      PEAKST(10) = WRCUAV
-Cprh      PEAKST(11) = WRCUSD
-Cprh      PEAKST(12) = WRCSKW
-CprhC
-CprhC     station number
-Cprh      TXT(1:15) = STAID(1:15)
-CprhC
-Cprh      IF (TXTFLG .EQ. 1) THEN
-CprhC       problem with one of more of the statistics, include warning
-Cprh        TXT(28:71) = 'WARNING:  problem with flagged (*) attributes'
-Cprh      END IF
-CprhC
-CprhC     bulletin 17B estimates to screen
-Cprh      GROUP = 55
-Cprh      CALL Q1INIT ( MESSFL, SCLU, GROUP )
-Cprh      LEN = 12
-Cprh      CALL QSETR ( LEN, PEAKST )
-Cprh      I = 14
-Cprh      LEN = 71
-Cprh      CALL QSETCT ( I, TXTL, LEN, TXT )
-Cprh      CALL Q1EDIT ( RTCMND )
-CprhC
-Cprh      RETURN
-Cprh      END
-C
-C
-C
-Cprh      SUBROUTINE   QEXTRA
-Cprh     I                    ( XYEAR,
-Cprh     O                      PEAK )
-CprhC
-CprhC     + + + PURPOSE + + +
-CprhC     For the specified recurrence interval, calculate the
-CprhC     corresponding peak.
-CprhC
-CprhC     + + + DUMMY ARGUMENTS + + +
-Cprh      REAL      XYEAR, PEAK
-CprhC
-CprhC     + + + ARGUMENT DEFINTIONS + + +
-CprhC     XYEAR  - recurrence interval, in years
-CprhC     PEAK   - flood peak corresponding to XYEAR recurrence
-CprhC
-CprhC     + + + PARAMETERS + + +
-Cprh      INCLUDE 'pmxint.inc'
-CprhC
-CprhC     + + + COMMON BLOCKS + + +
-Cprh      INCLUDE 'cwcf1.inc'
-CprhC
-CprhC     + + + LOCAL VARIABLES + + +
-Cprh      REAL   Q, QBAS
-CprhC
-CprhC     + + + FUNCTIONS + + +
-Cprh      REAL   HARTK
-CprhC
-CprhC     + + + EXTERNALS + + +
-Cprh      EXTERNAL   HARTIV, HARTK
-CprhC
-CprhC     + + + END SPECIFICATIONS + + +
-CprhC
-Cprh      CALL HARTIV ( WRCSKW, WORK )
-Cprh      Q    = WRCUAV + WRCUSD * HARTK ( (1.-1./XYEAR), WORK )
-Cprh      QBAS = WRCUAV + WRCUSD * HARTK ( 1.-WRCPAB, WORK )
-CprhC
-Cprh      IF (Q .LT. QBAS ) THEN
-Cprh        PEAK = -999.
-Cprh      ELSE
-Cprh        PEAK = 10**Q
-Cprh      END IF
-CprhC
-Cprh      RETURN
-Cprh      END
-C
-C
-C
-      SUBROUTINE   RUNEMA
-     I                   (NPKS,PKS,IPKSEQ)
-C
-C     + + + HISTORY + + +
-C     Created 11/2003 by Paul Hummel, AQUA TERRA Consultants
-C     for incorporating EMA into PEAKFQ
+C     Revised 5/2011 by Paul Hummel of AQUA TERRA to 
+C     include interval data
 C
 C     + + + PURPOSE + + +
-C     Transfers PEAKFQ input data to arguments used in EMA,
-C     runs EMA, transfers EMA results to PEAKFQ output
+C     populates arrays for EMA calls using traditional PeakFQ data array
 C
 C     EMAThresh contains Threshold specifications pulled from the .psf file
       USE EMAThresh
@@ -3777,12 +3617,155 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   NPKS
       INTEGER   IPKSEQ(NPKS)
-      REAL      PKS(NPKS)
+      REAL      PKS(NPKS),GAGEB
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     NPKS    - number of peaks
 C     PKS     - array of annual peak values
 C     IPKSEQ  - array of peak value water years
+C     GAGEB   - gage base discharge
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER    I,J,K,WYMIN,WYMAX
+      DOUBLE PRECISION MISSING,QMIN
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA MISSING, QMIN 
+     $      /-10.0, 1.0D-99/
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC  ABS, MAX, LOG, LOG10
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      write(99,*) 'SETEMADATA: NTHRESH =',NTHRESH
+      write(99,*) 'SETEMADATA: THRBYR,   THREYR,   THRLWR,       THRUPR'
+      WYMIN = 9999
+      WYMAX = -9999
+      DO 5 I = 1,NTHRESH
+        write(99,*) THRESH(I)%THRBYR,THRESH(I)%THREYR,
+     $              THRESH(I)%THRLWR,THRESH(I)%THRUPR
+        IF (THRESH(I)%THRBYR .LT. WYMIN) WYMIN = THRESH(I)%THRBYR
+        IF (THRESH(I)%THREYR.GT.WYMAX) WYMAX = THRESH(I)%THREYR
+ 5    CONTINUE
+
+      NOBS = WYMAX - WYMIN + 1
+
+      IF (ALLOCATED(QL)) THEN
+        DEALLOCATE(QL)
+        DEALLOCATE(QU)
+        DEALLOCATE(TL)
+        DEALLOCATE(TU)
+        DEALLOCATE(DTYPE)
+        DEALLOCATE(OPKSEQ)
+      END IF
+      ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS), 
+     $          DTYPE(NOBS), OPKSEQ(NOBS))
+C
+C     init arrays
+      DO 15 I = 1,NOBS
+        OPKSEQ(I) = WYMIN + I - 1
+        QL(I) = MISSING
+        QU(I) = MISSING
+        TL(I) = MISSING
+        TU(I) = MISSING
+        DTYPE(I)= 'Othr'
+ 15   CONTINUE
+C
+C     N.B. If gage base discharge is greater than zero, this provides a lower
+C          bound on the observation threshold corresponding to all flows
+      DO 30 J = 1,NTHRESH
+        DO 20 K = THRESH(J)%THRBYR,THRESH(J)%THREYR
+          I = K - WYMIN + 1
+          TU(I) = THRESH(J)%THRUPR
+          IF (GAGEB .GT. 0) THEN
+            TL(I) = MAX(LOG(GAGEB),THRESH(J)%THRLWR)
+          ELSE
+            TL(I) = THRESH(J)%THRLWR
+          END IF         
+ 20     CONTINUE
+ 30   CONTINUE
+C
+C     fill in measured peaks
+      DO 40 J=1,NPKS
+        IF (PKS(J) .GT. MISSING) THEN
+          I = ABS(IPKSEQ(J)) - WYMIN + 1
+          IF (ABS(TL(I)-MISSING) .GT. QMIN) THEN  ! this should never occur
+            write(99,*) ' *** PROBLEM ***'
+            write(99,*) ' Water Year ',ABS(WY(J)),
+     $                 ' has peak without tl, tu'
+          END IF
+          QL(I) = PKS(J)
+          QU(I) = PKS(J)
+          DTYPE(I)= 'Syst'
+        END IF
+ 40   CONTINUE
+C
+      IF (NINTERVAL.GT.0) THEN
+C       fill in interval data
+        DO 45 J=1,NINTERVAL
+          IF (INTERVAL(J)%INTRVLYR.GT.0) THEN
+            I = INTERVAL(J)%INTRVLYR - WYMIN + 1
+            QL(I) = INTERVAL(J)%INTRVLLWR
+            QU(I) = INTERVAL(J)%INTRVLUPR
+          END IF
+ 45     CONTINUE
+      END IF
+C
+C     For years without peaks, assume peak is less than threshold tl
+      DO 50 K = WYMIN, WYMAX
+        I = K - WYMIN + 1
+        IF (ABS(QL(I)-MISSING) .GT. QMIN) THEN  ! no peak for this year
+          IF(TL(I) .GT. 0.d0) THEN
+            QL(I) = 0.0
+            QU(I) = TL(I)
+          END IF
+        END IF
+ 50   CONTINUE
+
+C     collapse the data set, eliminating any periods of missing record
+      NOBS = 0
+      DO 60 J = 1, WYMAX - WYMIN + 1
+        IF (ABS(QL(J)-MISSING) .GT. QMIN) THEN
+          NOBS = NOBS + 1
+          TL(NOBS) = TL(J)
+          TU(NOBS) = TU(J)
+          QL(NOBS) = QL(J)
+          QU(NOBS) = QU(J) 
+          OPKSEQ(NOBS) = OPKSEQ(J)
+          DTYPE(NOBS)= DTYPE(J)
+        END IF
+ 60   CONTINUE
+
+      DO 100 J = 1,NOBS
+        QL(J) = LOG10(MAX(QMIN,QL(J)))
+        QU(J) = LOG10(MAX(QMIN,QU(J)))
+        TL(J) = LOG10(MAX(QMIN,TL(J)))
+        TU(J) = LOG10(MAX(QMIN,TU(J)))
+ 100  CONTINUE
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   RUNEMA
+C
+C     + + + HISTORY + + +
+C     Created 11/2003 by Paul Hummel, AQUA TERRA Consultants
+C     for incorporating EMA into PEAKFQ
+C
+C     revised 12/2011 by Paul Hummel to remove call to EMADATA
+C     EMADATA has been replaced by SETEMADATA
+C     calls to SETTHRESH and SETEMADATA should be made prior to RUNEMA
+C
+C     + + + PURPOSE + + +
+C     Runs EMA, transfers EMA results to PEAKFQ output
+C     SETTHRESH and SETEMADATA need to be called prior to this
+C     in order to transfer PeakFQ peak data to EMA arrays
+C
+C     EMAThresh contains Threshold specs and EMA data arrays
+      USE EMAThresh
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'PMXPK.INC'
@@ -3794,16 +3777,12 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,NOBS,WYMIN,WYMAX,LPKIND,NT,NB(MXPK),LNINT
+      INTEGER    I,NB(MXPK)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
      $                 REGVAR,REGVMSE,
      $                 Q(MXPK),PEX(MXPK),THR(MXPK),PET(MXPK)
-      INTEGER, ALLOCATABLE :: THBY(:),THEY(:),INTVLYR(:),OPKSEQ(:)
-      REAL, ALLOCATABLE :: THLO(:),THUP(:),INTVLLWR(:),INTVLUPR(:)
-      DOUBLE PRECISION, ALLOCATABLE :: QL(:),QU(:),TL(:),TU(:)
-      CHARACTER*4, ALLOCATABLE :: DTYPE(:)
       CHARACTER*4  GBTYPE
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -3814,65 +3793,12 @@ C     + + + FUNCTIONS + + +
       DOUBLE PRECISION QP3
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   EMADATA, EMAFIT, plotposHS
+      EXTERNAL   EMAFIT, plotposHS
 C
 C     + + + INTRINSICS + + +
-      INTRINSIC  LOG, LOG10, EXP, DBLE
+      INTRINSIC  LOG10
 C
 C     + + + END SPECIFICATIONS + + +
-C
-C
-      ALLOCATE (THBY(NTHRESH), THEY(NTHRESH))
-      ALLOCATE (THLO(NTHRESH), THUP(NTHRESH))
-C
-      write(99,*) 'RUNEMA: NTHRESH =',NTHRESH
-      write(99,*) 'RUNEMA: THRBYR,   THREYR,   THRLWR,       THRUPR'
-      WYMIN = 9999
-      WYMAX = -9999
-      DO 5 I = 1,NTHRESH
-        THBY(I) = THRESH(I)%THRBYR
-        THEY(I) = THRESH(I)%THREYR
-        THLO(I) = THRESH(I)%THRLWR
-        THUP(I) = THRESH(I)%THRUPR
-        write(99,*) THBY(I),THEY(I),THLO(I),THUP(I)
-        IF (THBY(I).LT.WYMIN) WYMIN = THBY(I)
-        IF (THEY(I).GT.WYMAX) WYMAX = THEY(I)
- 5    CONTINUE
-
-      IF (NINTERVAL.EQ.0) THEN
-C       create dummy interval placeholder
-        LNINT = 1
-        ALLOCATE (INTERVAL(1))
-        INTERVAL(1)%INTRVLYR = 0
-        INTERVAL(1)%INTRVLLWR = 0.0
-        INTERVAL(1)%INTRVLUPR = 0.0
-      ELSE
-        LNINT = NINTERVAL
-      END IF
-
-      ALLOCATE (INTVLYR(LNINT))
-      ALLOCATE (INTVLLWR(LNINT))
-      ALLOCATE (INTVLUPR(LNINT))
-      DO 10 I = 1, LNINT
-        INTVLYR(I) = INTERVAL(I)%INTRVLYR
-        INTVLLWR(I) = INTERVAL(I)%INTRVLLWR
-        INTVLUPR(I) = INTERVAL(I)%INTRVLUPR
- 10   CONTINUE
-
-      NOBS = WYMAX - WYMIN + 1
-      ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS), 
-     $          DTYPE(NOBS), OPKSEQ(NOBS))
-      write(99,*) 'RUNEMA: NPKS,NSYS,NHIST,NOBS,GAGEB',
-     $                    NPKS,NSYS,NHIST,NOBS,GAGEB
-      write(99,*) 'RUNEMA: PKS',(PKS(I),I=1,NPKS)
-
-      LPKIND = NPKS - (NSYS+NHIST) + 1
-c      CALL EMADATA(NSYS+NHIST,PKS(LPKIND),IPKSEQ(LPKIND),WYMIN,WYMAX,
-      CALL EMADATA(NPKS,PKS,IPKSEQ,WYMIN,WYMAX,
-     I             NTHRESH,THBY,THEY,THLO,THUP,GAGEB,
-     I             LNINT,INTVLYR,INTVLLWR,INTVLUPR,
-     M             NOBS,
-     O             OPKSEQ,QL,QU,TL,TU,DTYPE)
 C
       REGSKEW= GENSKU
       IF (IGSOPT.EQ.1) THEN
@@ -3988,11 +3914,6 @@ C     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
           CLIML(I) = CILOW(I)
           CLIMU(I) = CIHIGH(I)
  50   CONTINUE
-
-      DEALLOCATE (QL, QU, TL, TU, DTYPE, OPKSEQ)
-      DEALLOCATE (THBY, THEY, THLO, THUP)
-      DEALLOCATE (INTVLYR, INTVLLWR, INTVLUPR)
-
 C
       RETURN
       END
@@ -4048,18 +3969,14 @@ C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
 C
 C     + + + COMMON BLOCKS + + +
-      integer nx
-      parameter (nx=25000)
-      
       integer nlow_V,nlow,nzero,nGBiter
       double precision  gbcrit,gbthresh,gbcrit_V,gbthresh_V,
-     $                  pvaluew,ql,qu,tl,tu,qs,as_mse
-      character*4 gbtype,dtype,at_site_option,at_site_default,at_site_std
+     $                  pvaluew,qs,as_mse
+      character*4 gbtype,at_site_option,at_site_default,at_site_std
 
 C     used by Tim's EMA code
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
      1               nlow,nzero,gbtype
-      common /tacg02/ql(nx),qu(nx),tl(nx),tu(nx),dtype(nx)
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
       common /tacg04/at_site_option,at_site_default,at_site_std
       common /jfe001/as_mse
@@ -4153,9 +4070,9 @@ C
       Use EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,HSTFLG,
-     $              NOCLIM,NT,NOBSTH(200),THRSYR(200),THREYR(200),
-     $              NINTVL,NLOW,NZERO
+      INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,
+     $              HSTFLG,NOCLIM,NT,NOBSTH(200),THRSYR(200),
+     $              THREYR(200),NINTVL,NLOW,NZERO
       REAL          PKLOG(200),SYSPP(200),WRCPP(200),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
      $              CLIML(32),CLIMU(32),THR(200),PPTH(200),
