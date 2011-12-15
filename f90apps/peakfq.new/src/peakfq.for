@@ -345,7 +345,7 @@ C       set printer plot file to FOUT
      I                      CLSIZE,WEIBA)
         END IF
 C       do the analysis
-        CALL J407XE (MESSFL,WDMSFL,PAUSE,UPDATEFG)
+        CALL J407XE (MESSFL,WDMSFL,PAUSE,UPDATEFG,NSTA)
         IF (UPDATEFG) THEN !update spec file with verbose version
           CALL UPDATESPECFILE (SPCFUN,SPCFNM)
         ELSE !just close spec file
