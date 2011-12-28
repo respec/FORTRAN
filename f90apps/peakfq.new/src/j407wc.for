@@ -86,7 +86,7 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  WCFASP, WCFDHH, WCFCSA, WCFDLO, WCFAPI, WCFFCA,
-     #          WCFFCX, WCFEPP
+     #          WCFFCX, WCFEPP, GBTESTX
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -97,55 +97,61 @@ C
      $     /,5X,'      -PRELIMINARY MACHINE COMPUTATIONS.  USER IS RE-',
      $     /,5X,'      -SPONSIBLE FOR ASSESSMENT AND INTERPRETATION.  ')
 C
-c      write(*,*) 'WCFAGB: B4 WCFAPI'
       CALL WCFAPI (PKQ,PKLOG,WRCPP,SYSPP,NPK,IRC)
       IF(IRC.GE.3)GOTO95
       ISYS=NHIST+1
       NSYS1=NPK-NHIST
 C
-c      write(*,*) 'WCFAGB: B4 WCFASP'
       CALL WCFASP (PKLOG(ISYS),SYSPP(ISYS),NSYS1,IRC)
       IF(IRC.GE.3)GOTO95
 C
       IF(WRCASK.GT.EPS2)GOTO50
       IF(WRCASK.GE.EPS1)GOTO30
 C
-c      write(*,*) 'WCFAGB: B4 WCFDLO'
-      CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+      IF (LOTYPE .EQ. 'MGBT') THEN
+C       perform Multiple Grubbs-Beck LO test
+        CALL GBTESTX
+      ELSE
+C       perform traditional B17B LO test
+        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+      END IF
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA (4H17B1, IRC)
-c      write(*,*) 'WCFAGB: B4 WCFCSA'
       IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA ('17B1', IRC)
       IF(IRC.GE.3)GOTO95
-c      write(*,*) 'WCFAGB: B4 WCFDHH'
       CALL WCFDHH (PKLOG,NPK, IRC)
 Ckmf  IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B2,IRC)
-c      write(*,*) 'WCFAGB: B4 WCFCSA-2'
       IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B2',IRC)
       IF(IRC.GE.3)GOTO95
       GOTO70
 C
-c      write(*,*) 'WCFAGB: B4 WCFDLO-30'
-   30 CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+   30 CONTINUE
+      IF (LOTYPE .EQ. 'MGBT') THEN
+C       perform Multiple Grubbs-Beck LO test
+        CALL GBTESTX
+      ELSE
+C       perform traditional B17B LO test
+        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+      END IF
       IF(IRC.GE.3)GOTO95
-c      write(*,*) 'WCFAGB: B4 WCFDHH-30'
       CALL WCFDHH (PKLOG,NPK,IRC)
       IF(IRC.GE.3)GOTO95
 Ckmf  IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA (4H17B3,IRC)
-c      write(*,*) 'WCFAGB: B4 WCFCSA-30'
       IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA ('17B3',IRC)
       IF(IRC.GE.3)GOTO95
       GOTO70
 C
-c      write(*,*) 'WCFAGB: B4 WCFDHH-50'
    50 CALL WCFDHH (PKLOG,NPK,IRC)
 Ckmf  IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B4,IRC)
-c      write(*,*) 'WCFAGB: B4 WCFCSA-50'
       IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B4',IRC)
       IF(IRC.GE.3)GOTO95
-c      write(*,*) 'WCFAGB: B4 WCFDLO-50'
-      CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+      IF (LOTYPE .EQ. 'MGBT') THEN
+C       perform Multiple Grubbs-Beck LO test
+        CALL GBTESTX
+      ELSE
+C       perform traditional B17B LO test
+        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+      END IF
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B5,IRC)
-c      write(*,*) 'WCFAGB: B4 WCFCSA-50'
       IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B5',IRC)
       IF(IRC.GE.3)GOTO95
 C
@@ -153,15 +159,11 @@ C
 C
 C     IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, 4H17B ,NSYS+NHIST)
 C     CALL WCFFCA (WRCFC,4H17B ,IRC)
-c      write(*,*) 'WCFAGB: B4 WCFEPP'
       IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, '17B ', NSYS+NHIST)
-c      write(*,*) 'WCFAGB: B4 WCFFCA'
       CALL WCFFCA (WRCFC, '17B ', IRC )
       IF(IRC.GE.3)GOTO95
 C
-c      write(*,*) 'WCFAGB: B4 WCFFCX'
       CALL WCFFCX (IRC)
-c      write(*,*) 'WCFAGB: After WCFFCX, IRC =',IRC
       IF(IRC.GE.3)GOTO95
 C
       IF(MSL.GE.3 .OR. (IRC.GE.2.AND.MSL.GE.2) ) WRITE(MSG,2)IRC
@@ -1549,5 +1551,47 @@ Caml  37 changed to 29 fro 5/94 compiler
       S = -1E29
   150 GSK = GSK + 0.01*S*WX*WY
       IF(GSK.GT.-1E29) WCFGSM = GSK
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   GBTESTX
+C
+C     + + + PURPOSE + + +
+C     wrapper for call to Multiple Grubbs-Beck test in EMA code
+C
+C     EMAThresh contains Threshold specs and EMA data arrays
+      USE EMAThresh
+C
+C     + + + COMMON BLOCKS + + +
+      integer nlow,nzero
+      double precision  gbcrit,gbthresh,pvaluew,qs
+      character*4 gbtype
+
+C     used by Tim's EMA code
+      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
+     1               nlow,nzero,gbtype
+C
+C     + + + LOCAL VARIABLES + + +
+      DOUBLE PRECISION MISSNG,GBTHRSH
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA MISSNG /1.0D-99/
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL GBTEST
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC LOG10, MAX
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      GBTYPE = 'MGBT'
+      GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
+
+      CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
+     M            QL,QU,TL,TU)
+C
       RETURN
       END
