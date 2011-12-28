@@ -110,7 +110,7 @@ C
 C
       IF (LOTYPE .EQ. 'MGBT') THEN
 C       perform Multiple Grubbs-Beck LO test
-        CALL GBTESTX
+        CALL GBTESTX (IGSOPT,RMSEGS)
       ELSE
 C       perform traditional B17B LO test
         CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
@@ -127,7 +127,7 @@ C
    30 CONTINUE
       IF (LOTYPE .EQ. 'MGBT') THEN
 C       perform Multiple Grubbs-Beck LO test
-        CALL GBTESTX
+        CALL GBTESTX (IGSOPT,RMSEGS)
       ELSE
 C       perform traditional B17B LO test
         CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
@@ -146,7 +146,7 @@ Ckmf  IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B4,IRC)
       IF(IRC.GE.3)GOTO95
       IF (LOTYPE .EQ. 'MGBT') THEN
 C       perform Multiple Grubbs-Beck LO test
-        CALL GBTESTX
+        CALL GBTESTX (IGSOPT,RMSEGS)
       ELSE
 C       perform traditional B17B LO test
         CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
@@ -1557,12 +1557,17 @@ C
 C
 C
       SUBROUTINE   GBTESTX
+     I                    (LGSOPT, LRMSEGS)
 C
 C     + + + PURPOSE + + +
 C     wrapper for call to Multiple Grubbs-Beck test in EMA code
 C
 C     EMAThresh contains Threshold specs and EMA data arrays
       USE EMAThresh
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER LGSOPT  !Skew option
+      REAL    LRMSEGS !MSE of skew
 C
 C     + + + COMMON BLOCKS + + +
       integer nlow,nzero
@@ -1574,7 +1579,7 @@ C     used by Tim's EMA code
      1               nlow,nzero,gbtype
 C
 C     + + + LOCAL VARIABLES + + +
-      DOUBLE PRECISION MISSNG,GBTHRSH
+      DOUBLE PRECISION MISSNG,GBTHRSH,REGSKEW,REGMSE
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MISSNG /1.0D-99/
@@ -1589,8 +1594,20 @@ C     + + + END SPECIFICATIONS + + +
 C
       GBTYPE = 'MGBT'
       GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
-
-      CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
+      REGSKEW= GENSKU
+      IF (LGSOPT.EQ.1) THEN
+C       Generalized skew, set to very small
+        REGMSE = 0.0
+      ELSE IF (LGSOPT.EQ.-1) THEN
+C       Station skew, ignore regional skew
+        REGMSE = 1.0D10
+      ELSE
+C       Weighted, set to root mean square
+        REGMSE = LRMSEGS**2
+      END IF
+ 
+      CALL GBTEST(NOBS,QLIN,QUIN,TLIN,TUIN,DTYPE,GBTHRSH,
+     I            REGSKEW,REGMSE,
      M            QL,QU,TL,TU)
 C
       RETURN
