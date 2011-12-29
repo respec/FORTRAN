@@ -1882,7 +1882,7 @@ C             not too many peaks & user wants to continue
 C             default to Bull 17B analysis
               EMAOPT = 0
 C             default low outlier test to multiple GB
-              LOTYPE = 'MGBT'
+              LOTYPE = 'GBT'
 C
               IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 

@@ -1606,7 +1606,7 @@ C       Weighted, set to root mean square
         REGMSE = LRMSEGS**2
       END IF
  
-      CALL GBTEST(NOBS,QLIN,QUIN,TLIN,TUIN,DTYPE,GBTHRSH,
+      CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
      I            REGSKEW,REGMSE,
      M            QL,QU,TL,TU)
 C
