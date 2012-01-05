@@ -85,7 +85,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   NSYS1, ISYS
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  WCFASP, WCFDHH, WCFCSA, WCFDLO, WCFAPI, WCFFCA,
+      EXTERNAL  WCFASP, WCFDHH, WCFCSA, WCFAPI, WCFFCA,
      #          WCFFCX, WCFEPP, GBTESTX
 C
 C     + + + END SPECIFICATIONS + + +
@@ -108,13 +108,15 @@ C
       IF(WRCASK.GT.EPS2)GOTO50
       IF(WRCASK.GE.EPS1)GOTO30
 C
-      IF (LOTYPE .EQ. 'MGBT') THEN
-C       perform Multiple Grubbs-Beck LO test
-        CALL GBTESTX (IGSOPT,RMSEGS)
-      ELSE
-C       perform traditional B17B LO test
-        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
-      END IF
+      CALL GBTESTX (PKLOG(ISYS),NSYS1,
+     O              IER)
+c      IF (LOTYPE .EQ. 'MGBT') THEN
+cC       perform Multiple Grubbs-Beck LO test
+c        CALL GBTESTX (IGSOPT,RMSEGS)
+c      ELSE
+cC       perform traditional B17B LO test
+c        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+c      END IF
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA (4H17B1, IRC)
       IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA ('17B1', IRC)
       IF(IRC.GE.3)GOTO95
@@ -125,13 +127,15 @@ Ckmf  IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B2,IRC)
       GOTO70
 C
    30 CONTINUE
-      IF (LOTYPE .EQ. 'MGBT') THEN
-C       perform Multiple Grubbs-Beck LO test
-        CALL GBTESTX (IGSOPT,RMSEGS)
-      ELSE
-C       perform traditional B17B LO test
-        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
-      END IF
+      CALL GBTESTX (PKLOG(ISYS),NSYS1,
+     O              IER)
+c      IF (LOTYPE .EQ. 'MGBT') THEN
+cC       perform Multiple Grubbs-Beck LO test
+c        CALL GBTESTX (IGSOPT,RMSEGS)
+c      ELSE
+cC       perform traditional B17B LO test
+c        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+c      END IF
       IF(IRC.GE.3)GOTO95
       CALL WCFDHH (PKLOG,NPK,IRC)
       IF(IRC.GE.3)GOTO95
@@ -144,13 +148,15 @@ C
 Ckmf  IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B4,IRC)
       IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B4',IRC)
       IF(IRC.GE.3)GOTO95
-      IF (LOTYPE .EQ. 'MGBT') THEN
-C       perform Multiple Grubbs-Beck LO test
-        CALL GBTESTX (IGSOPT,RMSEGS)
-      ELSE
-C       perform traditional B17B LO test
-        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
-      END IF
+      CALL GBTESTX (PKLOG(ISYS),NSYS1,
+     O              IER)
+c      IF (LOTYPE .EQ. 'MGBT') THEN
+cC       perform Multiple Grubbs-Beck LO test
+c        CALL GBTESTX (IGSOPT,RMSEGS)
+c      ELSE
+cC       perform traditional B17B LO test
+c        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
+c      END IF
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B5,IRC)
       IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B5',IRC)
       IF(IRC.GE.3)GOTO95
@@ -1557,19 +1563,31 @@ C
 C
 C
       SUBROUTINE   GBTESTX
-     I                    (LGSOPT, LRMSEGS)
+     I                    (SYSLOG,NSYS1,
+     O                     IER)
 C
 C     + + + PURPOSE + + +
-C     wrapper for call to Multiple Grubbs-Beck test in EMA code
+C     wrapper for call to call low outlier tests, 
+C     both traditional B17B and Multiple Grubbs-Beck test in EMA code
 C
 C     EMAThresh contains Threshold specs and EMA data arrays
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER LGSOPT  !Skew option
-      REAL    LRMSEGS !MSE of skew
+      INTEGER NSYS1,IER
+      REAL    SYSLOG(NSYS1)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     SYSLOG - systematic peak logarithms (input)
+C     NSYS1  - number of systematic peak logarithms
+C     IER    - error return code
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxint.inc'
 C
 C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cwcf1.inc'
+
       integer nlow,nzero
       double precision  gbcrit,gbthresh,pvaluew,qs
       character*4 gbtype
@@ -1579,36 +1597,55 @@ C     used by Tim's EMA code
      1               nlow,nzero,gbtype
 C
 C     + + + LOCAL VARIABLES + + +
+      INTEGER I
       DOUBLE PRECISION MISSNG,GBTHRSH,REGSKEW,REGMSE
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MISSNG /1.0D-99/
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL GBTEST
+      EXTERNAL GBTEST, WCFDLO
 C
 C     + + + INTRINSICS + + +
       INTRINSIC LOG10, MAX
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      GBTYPE = 'MGBT'
-      GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
-      REGSKEW= GENSKU
-      IF (LGSOPT.EQ.1) THEN
-C       Generalized skew, set to very small
-        REGMSE = 0.0
-      ELSE IF (LGSOPT.EQ.-1) THEN
-C       Station skew, ignore regional skew
-        REGMSE = 1.0D10
-      ELSE
-C       Weighted, set to root mean square
-        REGMSE = LRMSEGS**2
-      END IF
+      IF (LOTYPE .EQ. 'MGBT') THEN
+C       perform Multiple Grubbs-Beck LO test
+        GBTYPE = 'MGBT'
+        GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
+        REGSKEW= GENSKU
+        IF (IGSOPT.EQ.1) THEN
+C         Generalized skew, set to very small
+          REGMSE = 0.0
+        ELSE IF (IGSOPT.EQ.-1) THEN
+C         Station skew, ignore regional skew
+          REGMSE = 1.0D10
+        ELSE
+C         Weighted, set to root mean square
+          REGMSE = RMSEGS**2
+        END IF
  
-      CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
-     I            REGSKEW,REGMSE,
-     M            QL,QU,TL,TU)
+        CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
+     I              REGSKEW,REGMSE,
+     M              QL,QU,TL,TU)
+      ELSE
+C       perform traditional B17B LO test
+        CALL WCFDLO (SYSLOG,NSYS1,IER)
+C       low outlier info needs to be set here for later storage/use
+C       (GBTEST sets these in call for multiple GB)
+        gbcrit = WRCBAS
+        nlow = NBGB + NLWOUT
+        nzero= NBGB
+c        nzero= 0
+c        DO 10 I = 1, NSYS1
+c          IF (SYSLOG(I) .LT. 1.0E-6) THEN
+c            nzero = nzero + 1
+c          END IF
+c 10     CONTINUE
+      END IF
+
 C
       RETURN
       END
