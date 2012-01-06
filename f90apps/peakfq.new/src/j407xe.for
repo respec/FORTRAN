@@ -3690,7 +3690,7 @@ C     fill in measured peaks
       DO 40 J=1,NPKS
         IF (PKS(J) .GT. MISSING) THEN
           I = ABS(IPKSEQ(J)) - WYMIN + 1
-          IF (ABS(TL(I)-MISSING) .GT. QMIN) THEN  ! this should never occur
+          IF (ABS(TL(I)-MISSING) .LT. QMIN) THEN  ! this should never occur
             write(99,*) ' *** PROBLEM ***'
             write(99,*) ' Water Year ',ABS(IPKSEQ(J)),
      $                 ' has peak without tl, tu'
@@ -3715,7 +3715,7 @@ C
 C     For years without peaks, assume peak is less than threshold tl
       DO 50 K = WYMIN, WYMAX
         I = K - WYMIN + 1
-        IF (ABS(QL(I)-MISSING) .GT. QMIN) THEN  ! no peak for this year
+        IF (ABS(QL(I)-MISSING) .LT. QMIN) THEN  ! no peak for this year
           IF(TL(I) .GT. 0.d0) THEN
             QL(I) = 0.0
             QU(I) = TL(I)
@@ -4203,11 +4203,11 @@ C     QHIOUT - user-specified hi outlier threshold
 C     WRCHHB - PeakFQ-determined hi outlier threshold
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,J,ITHRESH,NEWTHBYR,NEWTHEYR
+      INTEGER   I,J,ITHRESH,NEWTHBYR,NEWTHEYR,LYR
       TYPE (ThreshSpec), ALLOCATABLE :: TMPTHRESH(:)
 C
 C     + + + INTRINSICS + + +
-      INTRINSIC MAX
+      INTRINSIC MAX, ABS
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4269,17 +4269,18 @@ C       make sure thresholds cover span of peaks
         NEWTHEYR = 0
         DO 10 I = 1,NPKS
           ITHRESH = 0
+          LYR = ABS(IPKSEQ(I))
           DO 5 J = 1,NTHRESH
-            IF (IPKSEQ(I) .GE. THRESH(J)%THRBYR .AND.
-     $          IPKSEQ(I) .LE. THRESH(J)%THREYR) THEN
+            IF (LYR .GE. THRESH(J)%THRBYR .AND.
+     $          LYR .LE. THRESH(J)%THREYR) THEN
 C             this peak is in a threshold span
               ITHRESH = J
             END IF
  5        CONTINUE
           IF (ITHRESH .EQ. 0) THEN
 C           this peak is not in a threshold's span
-            IF (IPKSEQ(I).LT.NEWTHBYR) NEWTHBYR = IPKSEQ(I)
-            IF (IPKSEQ(I).GT.NEWTHEYR) NEWTHEYR = IPKSEQ(I)
+            IF (LYR.LT.NEWTHBYR) NEWTHBYR = LYR
+            IF (LYR.GT.NEWTHEYR) NEWTHEYR = LYR
           END IF
  10     CONTINUE
         IF (NEWTHBYR .LT. 9999) THEN
