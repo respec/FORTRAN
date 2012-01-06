@@ -772,22 +772,22 @@ c           ISTA = UBOUND(STASPECS,1)
         WRITE(99,*) "Using default Specs for Station: ",STAID
       END IF
     
+C     init EMA Threshold specs
+      NTHRESH = 0
+      IF (ALLOCATED(THRESH)) THEN
+        DEALLOCATE (THRESH)
+      END IF
+C     init EMA Interval specs
+      NINTERVAL = 0
+      IF (ALLOCATED(INTERVAL)) THEN
+        DEALLOCATE (INTERVAL)
+      END IF
+C     init new peaks specs
+      NNEWPKS = 0
+      IF (ALLOCATED(NEWPKS)) THEN
+        DEALLOCATE (NEWPKS)
+      END IF
       IF (NSPECS .GT. 0) THEN
-        IF (ALLOCATED(THRESH)) THEN
-C         init EMA Threshold specs
-          NTHRESH = 0
-          DEALLOCATE (THRESH)
-        END IF
-        IF (ALLOCATED(INTERVAL)) THEN
-C         init EMA Interval specs
-          NINTERVAL = 0
-          DEALLOCATE (INTERVAL)
-        END IF
-        IF (ALLOCATED(NEWPKS)) THEN
-C         init new peaks specs
-          NNEWPKS = 0
-          DEALLOCATE (NEWPKS)
-        END IF
         DO 100 I = 1, NSPECS
           S = STASPECS(ISTA)%SPECS(I)%STR
           KWD = STRRETREM(S)
