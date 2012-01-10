@@ -1586,6 +1586,7 @@ C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
 C
 C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cwcf0.inc'
       INCLUDE 'cwcf1.inc'
 
       integer nlow,nzero
@@ -1609,6 +1610,13 @@ C
 C     + + + INTRINSICS + + +
       INTRINSIC LOG10, MAX
 C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT('    EMA003I-LOW OUTLIERS WERE DETECTED USING ',
+     $       'MULTIPLE GRUBBS-BECK TEST',I8,4X,F8.1,/
+     $       '      THE FOLLOWING PEAKS (WITH CORRESPONDING P-VALUES)',
+     $       ' WERE DROPPED:')
+ 2010 FORMAT(8X,F8.1,4X,'(',F8.4,')')
+C
 C     + + + END SPECIFICATIONS + + +
 C
       IF (LOTYPE .EQ. 'MGBT') THEN
@@ -1630,6 +1638,27 @@ C         Weighted, set to root mean square
         CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
      I              REGSKEW,REGMSE,
      M              QL,QU,TL,TU)
+
+C       report Multiple GB LO messges
+        IF (NLOW .GT. 0) THEN
+          WRITE(MSG,2000) nlow-nzero,10**gbcrit
+          DO 10 I = 1,NLOW
+            IF (qs(I).GT.1.0D-99) THEN
+              WRITE(MSG,2010)qs(I),pvaluew(I)
+            END IF
+ 10       CONTINUE
+        END IF
+
+C       report Warnings/Errors
+        IF (HISTPD .GT. 0) THEN
+          IF (HISTPD .GT. 2*NSYS) THEN
+            WRITE(MSG,*) '    EMA001W-VARIANCE OF ESTIMATE WARNING, ',
+     $                   'HISTORIC PERIOD > 2* SYS.'
+          END IF
+          WRITE(MSG,*) '    EMA002W-CONFIDENCE INTERVALS ARE NOT ',
+     $                 'EXACT IF HISTORIC PERIOD > 0'
+        END IF
+
       ELSE
 C       perform traditional B17B LO test
         CALL WCFDLO (SYSLOG,NSYS1,IER)
