@@ -1615,7 +1615,7 @@ C     + + + OUTPUT FORMATS + + +
      $       'MULTIPLE GRUBBS-BECK TEST',I8,4X,F8.1,/
      $       '      THE FOLLOWING PEAKS (WITH CORRESPONDING P-VALUES)',
      $       ' WERE DROPPED:')
- 2010 FORMAT(8X,F8.1,4X,'(',F8.4,')')
+ 2010 FORMAT(8X,F8.1,4X,'(',F6.4,')')
 C
 C     + + + END SPECIFICATIONS + + +
 C
