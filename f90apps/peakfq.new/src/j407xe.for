@@ -3781,13 +3781,13 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
-     $                 REGVAR,REGVMSE,
+     $                 REGSTD,GENSDMSE,
      $                 Q(MXPK),PEX(MXPK),THR(MXPK),PET(MXPK)
       CHARACTER*4  GBTYPE
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MISSNG /1.0D-99/
-      DATA REGVAR, REGVMSE /0.0, 1.0D99/
+      DATA REGSTD, GENSDMSE / 1.0 , -999 /
 C
 C     + + + FUNCTIONS + + +
       DOUBLE PRECISION QP3
@@ -3823,15 +3823,15 @@ C       Weighted, set to root mean square
       do 15 i = 1,NOBS
         write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I),DTYPE(I)
  15   continue
-      write(99,*) 'REGVAR:',REGVAR
-      write(99,*) 'REGVMSE:',REGVMSE
+      write(99,*) 'REGSTD:',REGSTD
+      write(99,*) 'GENSDMSE:',GENSDMSE
       write(99,*) 'REGSKEW:',REGSKEW
       write(99,*) 'REGMSE:',REGMSE
       write(99,*) 'GBTYPE:',GBTYPE
       write(99,*) 'GBTHRSH',GBTHRSH
 C
       CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
-     I            REGVAR,REGVMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
+     I            REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
      O            WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
       
 C     get plotting positions for all peaks and thresholds
