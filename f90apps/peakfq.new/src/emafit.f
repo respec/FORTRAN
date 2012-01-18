@@ -27,7 +27,7 @@ c       modified            24 may 2007  changed default pqd values (TAC)
 c                                        corrected errors (John England)
 c       modified            05 jun 2007  added gbthrsh0 to subroutine call
 c                                          permits user to specify lower bound
-c       modified            21 jun 2007  corrected error in rmse treatment wrt
+c       modified            21 jun 2007  corrected error in rGmse treatment wrt
 c                                          generalized skew
 c       modified            13 aug 2007  final low-outlier default procedure
 c                                          implemented
@@ -42,6 +42,15 @@ c                                          within reliable range of computation
 c       modified            02 jul 2008  set default MSE for at-site skew to
 c                                          equal B17B MSE when only systematic
 c                                          data are present ('ADJE')
+c       modified            15 sep 2011  set default lskewXmax to .FALSE. 
+c                                          this determines whether to 
+c                                          adjust skew so that Qmax is inside
+c                                          support of fitted distribution
+c                                          (previously set to .TRUE.)
+c                                          B17B provides no test or correction
+c       modified            26 sep 2011  added regional estimate for M 
+c                                          this is analogous to region S2, G 
+c       modified            24 oct 2011  simplified calls to p3est; results same 
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -94,19 +103,27 @@ c            dtype(n)   c*4  vector describing input data
 c                              dtype(i) = "Syst" => systematic data
 c                              dtype(i) = "Hist" => historic data
 c                              dtype(i) = "Othr" => other
-c            r_s2       r*8  regional variance (std.dev^2)
-c            r_s2_mse   r*8  mean square error of regional variance
-c            reg_skew   r*8  regional skew
-c            reg_mse    r*8  mean square error of regional skew
+c            reg_SD     r*8  regional standard deviation
+c            reg_SD_mse r*8  mean square error of generalized standard deviation
+c                            notes:
+c                            1) reg_SD_mse = 0 ("GENERALIZED STD DEV, NO ERROR")
+c                                use fixed parms(*) = reg_SD w/ mse = 0.0
+c                            2) -999 < reg_SD_mse< 0 ("AT-SITE STD DEV")
+c                                use at-site estimated standard deviation
+c                            3) 0 < reg_SD_mse < 1.d10 ("WEIGHTED STD. DEV.")
+c                                use sd = weighted average of at-site and 
+c                                regional standard deviation
+c            r_G        r*8  regional skew
+c            r_G_mse    r*8  mean square error of regional skew
 c                            this variable encodes four distinct cases:
-c                            1) reg_mse = 0 ("GENERALIZED SKEW, NO ERROR")
-c                                use fixed g = reg_skew w/ mse = 0.0
-c                            2) -98 < reg_mse < 0 ("GENERALIZED SKEW, MSE > 0")
-c                                use fixed g = reg_skew w/ mse = -reg_mse
-c                            3) 0 < reg_mse < 1.d10 ("WEIGHTED SKEW")
+c                            1) r_G_mse  = 0 ("GENERALIZED SKEW, NO ERROR")
+c                                use fixed g = r_G w/ mse = 0.0
+c                            2) -98 < r_G_mse  < 0 ("GENERALIZED SKEW, MSE > 0")
+c                                use fixed g = w/ mse = -r_G_mse  
+c                            3) 0 < r_G_mse  < 1.d10 ("WEIGHTED SKEW")
 c                                use g = weighted average of at-site and 
 c                                regional skew (b17b recommendation)
-c                            4) 1.d10 < reg_mse ("STATION SKEW")
+c                            4) 1.d10 < r_G_mse  ("STATION SKEW")
 c                                use g = at-site skew
 c            gbtype     c*4  type of Grubbs-Beck test
 c                               = "GB"  => standard GB test
@@ -139,8 +156,49 @@ c            var_est(*) r*8  variance of estimate for each quantile
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
+c       parameters set in common block data/emablk/ (can be reset if desired)
+c       ------------------------------------------------------------------------
+c       /tacg04/at_site_std  c*4   formula employed for computing mse of
+c                                  estimated at-site skew 
+c                                    'B17B' => Bulletin 17B MSE formula
+c                                    'EMA'  => First-order EMA MSE
+c                                    'ADJE' => Adjusted first-order (Default)
+c
+c       /tacmg1/alph01       r*8   alpha level for MGBT check for low outliers
+c                                    Default value is 0.01  [corr. 1% test]
+c
+c       /tacmg1/alph10       r*8   alpha level for MGBT check for low outliers
+c                                    Default value is 0.10 [corr. 10% test]
+c
+c       /tac002/sk141        r*8   minimum value of skew 
+c                                    Default value is -1.41
+c
+c       /tac002/bcf          r*8   bias correction factor to use for S2, G 
+c                                    1997  => Cohn [1997] factors (Default)
+c                                    2004  => Griffis et al. [2004] factors
+c                                    0     => None
+c
+c       /tac002/lskewXmax    r*8   do you want to test fitted support to
+c                                  include Qmax?
+c                                    Default value is .FALSE.
+c
+c       /tacR01/VarS2opt     c*4   formula employed for computing weighting of
+c                                  at-site and regional info for computing S2
+c                                  (the problem: MSE of \hat{S^2} proportional
+c                                   to \sigma^4; we have two estimates of \sigma
+c                                   at-site and regional. What should weight
+c                                   reflect?)
+c                                    'DF'   => inversely to degrees of freedom
+c                                                df = 2*(S^4)/MSE[S^2] (DEFAULT)
+c                                    'S2'   => inversely to MSE[S^2_{at-site}]
+c                                              and MSE[S^2_{regional}] 
+c                                    'S1'   => inversely to MSE[S_{at-site}]
+c                                              and MSE[S_{reg.}] (NOT AVAIL.)
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
       subroutine emafit(n,ql,qu,tl,tu,dtype,
-     1                r_s2,r_s2_mse,reg_skew,reg_mse,gbtype,gbthrsh0,
+     1               reg_SD,reg_SD_mse,r_G,r_G_mse,gbtype,gbthrsh0,
      1                  cmoms,pq,yp,ci_low,ci_high,var_est)
 
       implicit none
@@ -154,9 +212,10 @@ C     use full set of probabilities found in PeakFQ
       parameter (nq=32)
 
       double precision
-     1  ql(*),qu(*),tl(*),tu(*),reg_skew,reg_mse,         ! input variables
-     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),        ! output variables
-     3  pqd(nq),eps(1),gbthrsh0,r_s2,r_s2_mse,var_est(*)
+     1  ql(*),qu(*),tl(*),tu(*),reg_SD,reg_SD_mse,r_G,r_G_mse, ! input variables
+     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),! output variables
+     3  pqd(nq),eps(1),gbthrsh0,
+     4  r_M,r_M_mse,r_S2,r_S2_mse
      
       character*4
      1  dtype(*),gbtype
@@ -165,19 +224,203 @@ C     use full set of probabilities found in PeakFQ
       
 Cprh      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
 Cprh     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
-      data  pqd /
-     $ 0.9999, 0.9995, 0.9990, 0.9980, 0.9950, 0.9900, 0.9800, 0.9750,
-     $ 0.9600, 0.9500, 0.9000, 0.8000, 0.7000, 0.6667, 0.6000, 0.5704, 
-     $ 0.5000, 0.4292, 0.4000, 0.3000, 0.2000, 0.1000, 0.0500, 0.0400,
-     $ 0.0250, 0.0200, 0.0100, 0.0050, 0.0020, 0.0010, 0.0005, 0.0001/
+      data pqd/0.0001,0.0005,0.001 ,0.002 ,0.005 ,0.010 ,0.020 ,0.025 ,
+     1         0.040 ,0.050 ,0.100 ,0.200 ,0.300 ,0.3333,0.400 ,0.4296,
+     2         0.5   ,0.5708,0.600 ,0.700 ,0.800 ,0.900 ,0.950 ,0.960 ,
+     3         0.975 ,0.980 ,0.990 ,0.995 ,0.998 ,0.999 ,0.9995,0.9999/
      
+c    
+c     set regional information for mean equal to zero
+c
+      r_M       =   0.d0   
+      r_M_mse   = -99.d0   !  ignore regional info on M
+c    
+c     calculate stats for variances (S^2) from standard deviations input
+c
+      r_S2      = reg_SD**2
+      r_S2_mse  = 4.d0 * r_S2 * reg_SD_mse  !  first order approximation
+      
       do 10 i=1,nq
-Cprh          pq(i) = pqd(i)
-          pq(i) = 1.0 - pqd(i)
+          pq(i) = pqd(i)
         call emafitb(n,ql,qu,tl,tu,dtype,
-     1                  r_s2,r_s2_mse,reg_skew,reg_mse,neps,eps,
+     1                  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
+     1                  neps,eps,
      1                  gbtype,gbthrsh0,pq(i),
      1                  cmoms,yp(i),ci_low(i),ci_high(i),var_est(i))
+10    continue
+c
+c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)
+c
+      do 20 i=(nq-1)/2,1,-1
+        ci_low(i)  = min(ci_low(i),ci_low(i+1))
+        ci_high(i) = min(ci_high(i),ci_high(i+1))
+20    continue
+      do 30 i=(nq+3)/2,nq
+        ci_low(i)  = max(ci_low(i),ci_low(i-1))
+        ci_high(i) = max(ci_high(i),ci_high(i-1))
+30    continue
+     
+      return
+      end
+
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|subroutine emafitpr
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     REVISED VERSION FROM 2011
+c    
+c    this routine fits the pearson type iii distribution to 
+c      a data set using the ema algorithm. 
+c    it includes the ability to employ regional information on 3 parameters
+c    otherwise it works the same as emafit
+c
+c    so far this feature is not adequately documented
+c       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    development history
+c
+c    timothy a. cohn        26 sep 2011  added regional estimate for M 
+c                                          this is analogous to region S2, G 
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            n          i*4  number of observations (censored, uncensored, or 
+c                              other)
+c            ql(n)      r*8  vector of lower bounds on (log) floods
+c            qu(n)      r*8  vector of upper bounds on (log) floods
+c                            NOTE: Zero flows enter as lmissing=-80.d0
+c            tl(n)      r*8  vector of lower bounds on (log) flood threshold
+c            tu(n)      r*8  vector of upper bounds on (log) flood threshold
+c            dtype(n)   c*4  vector describing input data
+c                              dtype(i) = "Syst" => systematic data
+c                              dtype(i) = "Hist" => historic data
+c                              dtype(i) = "Othr" => other
+c            reg_M      r*8  regional mean (M)
+c            reg_M_mse  r*8  mean square error of generalized mean
+c                            notes:
+c                            1) reg_M_mse = 0 ("GENERALIZED MEAN, NO ERROR")
+c                                use fixed parms(*) = reg_M w/ mse = 0.0
+c                            2) -999 < reg_M_mse< 0 ("AT-SITE MEAN")
+c                                use at-site estimated mean
+c                            3) 0 < reg_M_mse < 1.d10 ("WEIGHTED MEAN")
+c                                use M = weighted average of at-site and 
+c                                regional mean
+c            reg_SD     r*8  regional standard deviation
+c            reg_SD_mse r*8  mean square error of generalized standard deviation
+c                            notes:
+c                            1) reg_SD_mse = 0 ("GENERALIZED STD DEV, NO ERROR")
+c                                use fixed parms(*) = reg_SD w/ mse = 0.0
+c                            2) -999 < reg_SD_mse< 0 ("AT-SITE STD DEV")
+c                                use at-site estimated standard deviation
+c                            3) 0 < reg_SD_mse < 1.d10 ("WEIGHTED STD. DEV.")
+c                                use sd = weighted average of at-site and 
+c                                regional standard deviation
+c            r_G        r*8  regional skew
+c            r_G_mse    r*8  mean square error of regional skew
+c                            this variable encodes four distinct cases:
+c                            1) r_G_mse  = 0 ("GENERALIZED SKEW, NO ERROR")
+c                                use fixed g = r_G w/ mse = 0.0
+c                            2) -98 < r_G_mse  < 0 ("GENERALIZED SKEW, MSE > 0")
+c                                use fixed g = w/ mse = -r_G_mse  
+c                            3) 0 < r_G_mse  < 1.d10 ("WEIGHTED SKEW")
+c                                use g = weighted average of at-site and 
+c                                regional skew (b17b recommendation)
+c                            4) 1.d10 < r_G_mse  ("STATION SKEW")
+c                                use g = at-site skew
+c            gbtype     c*4  type of Grubbs-Beck test
+c                               = "GB"  => standard GB test
+c                               = "MGB" => Multiple GB test
+c            gbthrsh0   r*8  critical value for Grubbs-Beck test
+c                              N.B. gbthrsh0 codes for 3 cases
+c                               1. gbthrsh0 <= -6  ==> Compute GB critical value
+c                               2. gbthrsh0 >  -6  ==> gbthrsh0 as crit. val.
+c                               3. gbthrsh0 (small, e.g. -5.9) no low out. test
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       output variables:
+c       ------------------------------------------------------------------------
+c
+c            cmoms(3,3) r*8  first 3 central moments
+c                             (,1) using regional info and at-site data
+c                             (,2) using just at-site data
+c                             (,3) using B17B formula for at-site MSE(G)
+c                              mc = {mean, variance, coeff. skew}
+c            pq(17)     r*8  quantiles estimated 
+c                            --pq=0.99 corresponds to "100-year flood"
+c            yp(17)     r*8  estimated pq-th quantile of fitted p3 distribution
+c            ci_low(17) r*8  left end of 95% confidence interval for pq-th 
+c                              quantile
+c            ci_high(17)r*8  right end of 95% confidence interval for pq-th 
+c                              quantile
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      subroutine emafitpr(n,ql,qu,tl,tu,dtype,
+     1               reg_M,reg_M_mse,reg_SD,reg_SD_mse,r_G,r_G_mse,
+     2               gbtype,gbthrsh0,
+     2               cmoms,pq,yp,ci_low,ci_high)
+
+      implicit none
+
+      integer
+     1  i,n,                                                ! input variables
+     2  neps,nq
+     
+      parameter (nq=15)
+
+      double precision
+     1  ql(*),qu(*),tl(*),tu(*),reg_SD,reg_SD_mse,r_G,r_G_mse, ! input variables
+     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),           ! output variables
+     3  pqd(nq),eps(1),gbthrsh0,
+     4  reg_M,reg_M_mse,r_M,r_M_mse,r_S2,r_S2_mse
+     
+      character*4
+     1  dtype(*),gbtype
+
+      data neps/1/,eps/0.95d0/
+      
+      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
+     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
+     
+c     1.  bring in regional information for M, S, and g
+
+c     1a. set regional information for mean
+
+      r_M_mse   = reg_M_mse
+      if(r_M_mse .le. 0.d0) then
+        r_M     =  0.d0
+        r_M_mse = -99.d0
+      else
+        r_M     =  reg_M
+        r_M_mse =  reg_M_mse
+      endif
+        
+c     1b. set regional information for variance
+c    
+c     calculate stats for variances (S^2) from standard deviations input
+c     N.B.  This is an approximation. The results would be slightly different
+c           if regionalization were done on S^2 or if estimation weighting
+c           were done on S. However, this is more convenient given the
+c           parametrization based on (M, S2, G) rather than (M, S, G)
+c
+      r_S2      = reg_SD**2
+      r_S2_mse  = 4.d0 * r_S2 * reg_SD_mse  !  first order approximation
+
+c     1c. regional information for skew must be supplied by user as argument
+      
+      do 10 i=1,nq
+          pq(i) = pqd(i)
+        call emafitb(n,ql,qu,tl,tu,dtype,
+     1                  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
+     1                  neps,eps,
+     1                  gbtype,gbthrsh0,pq(i),
+     1                  cmoms,yp(i),ci_low(i),ci_high(i))
 10    continue
 c
 c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)
@@ -214,19 +457,35 @@ c            dtype(n)   c*4  vector describing input data
 c                              dtype(i) = "Syst" => systematic data
 c                              dtype(i) = "Hist" => historic data
 c                              dtype(i) = "Othr" => other
-c            r_s2       r*8  regional variance (std.dev^2)
-c            r_s2_mse   r*8  mean square error of regional variance
-c            reg_skew   r*8  regional skew
-c            reg_mse    r*8  mean square error of regional skew
+c            r_M        r*8  regional mean
+c            r_M_mse    r*8  mean square error of regional mean
+c                            1) r_M_mse = 0 ("GENERALIZED S2, NO ERROR")
+c                                use fixed M = r_M w/ mse = 0.0
+c                            2) -999 < r_M_mse < 0 ("AT-SITE MEAN")
+c                                use at-site estimated mean (M)
+c                            3) 0 < r_M_mse < 1.d10 ("WEIGHTED MEAN")
+c                                use M = weighted average of at-site and 
+c                                regional variance
+c            r_S2       r*8  regional variance (std.dev^2)
+c            r_S2_mse   r*8  mean square error of regional variance
+c                            1) r_S2_mse = 0 ("GENERALIZED S2, NO ERROR")
+c                                use fixed sd = reg_SD w/ mse = 0.0
+c                            2) -999 < r_S2_mse < 0 ("AT-SITE VARIANCE")
+c                                use at-site estimated variance (S^2)
+c                            3) 0 < r_S2_mse < 1.d10 ("WEIGHTED VARIANCE")
+c                                use S2 = weighted average of at-site and 
+c                                regional variance
+c            r_G        r*8  regional skew
+c            r_G_mse    r*8  mean square error of regional skew
 c                            this variable encodes four distinct cases:
-c                            1) reg_mse = 0 ("GENERALIZED SKEW, NO ERROR")
-c                                use fixed g = reg_skew w/ mse = 0.0
-c                            2) -98 < reg_mse < 0 ("GENERALIZED SKEW, MSE > 0")
-c                                use fixed g = reg_skew w/ mse = -reg_mse
-c                            3) 0 < reg_mse < 1.d10 ("WEIGHTED SKEW")
+c                            1) r_G_mse  = 0 ("GENERALIZED SKEW, NO ERROR")
+c                                use fixed g = r_G w/ mse = 0.0
+c                            2) -98 < r_G_mse  < 0 ("GENERALIZED SKEW, MSE > 0")
+c                                use fixed g = r_G w/ mse = -r_G_mse  
+c                            3) 0 < r_G_mse  < 1.d10 ("WEIGHTED SKEW")
 c                                use g = weighted average of at-site and 
 c                                regional skew (b17b recommendation)
-c                            4) 1.d10 < reg_mse ("STATION SKEW")
+c                            4) 1.d10 < r_G_mse  ("STATION SKEW")
 c                                use g = at-site skew
 c            pq         r*8  quantile to be estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
@@ -256,7 +515,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 
       subroutine emafitb(n,ql_in,qu_in,tl_in,tu_in,dtype_in,
-     1                   r_s2,r_s2_mse,reg_skew,reg_mse,
+     1                   r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse  ,
      1                   neps,eps,gbtype_in,gbthrsh0,pq,
      2                   cmoms,yp,ci_low,ci_high,var_est)
       
@@ -268,35 +527,39 @@ c
       parameter (ntmax=100,nn=100,nx=25000)
       
       integer
-     1  n,k,i,nt,neps,nlow,nlow_old,nzero,nGBiter,nlow_V,it_max
+     1  n,i,nt,neps,nlow,nzero,nGBiter,nlow_V,it_max
      
       double precision
-     1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),r_s2,r_s2_mse,
-     1  reg_skew,reg_mse,pq,                                        ! input
+     1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),
+     1  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,pq,                   ! input
      2  cmoms(3,3),yp,ci_low(neps),ci_high(neps),var_est(neps),     ! output
      3  yp1,yp2,ci_low1(nn),ci_low2(nn),ci_high1(nn),ci_high2(nn),
      4  skewmin,qP3,parms(3),
      5  ql,qu,tl,tu,qs,
      6  cv_yp_syp(2,2),eps(1),tl2(ntmax),tu2(ntmax),nobs(ntmax),
-     7  skew,wt,as_mse,gbthrsh0,gbcrit,gbthresh,
+     7  skew,wt,as_M_mse,as_S2_mse,as_G_mse,gbthrsh0,gbcrit,gbthresh,
      8  gbcrit_V,gbthresh_V,pvaluew
      
       parameter (skewmin=0.06324555)
       
       double precision
-     1  mseg_all
+     1  mseg_all,mse_ema
      
       character*4 
      1  at_site_option,at_site_default,at_site_std,gbtype,gbtype_in,
-     2  dtype,dtype_in(*)
+     2  dtype,dtype_in(*),VarS2opt
+     
+      logical cirun
       
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
      1               nlow,nzero,gbtype
       common /tacg02/ql(nx),qu(nx),tl(nx),tu(nx),dtype(nx)
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
       common /tacg04/at_site_option,at_site_default,at_site_std
-      common /jfe001/as_mse
-
+      common /tacdgb/cirun
+      common /tac005/as_M_mse,as_S2_mse,as_G_mse
+      common /tacR01/VarS2opt
+      
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   1.  check for low outliers
@@ -321,7 +584,7 @@ c   loop up to 10 times to see if any new LOs uncovered
 
       do 15 i=1,it_max
         call gbtest(n,ql,qu,tl,tu,dtype_in,gbthrsh0,
-     1              reg_skew,reg_mse,ql,qu,tl,tu)
+     1              ql,qu,tl,tu)
          gbcrit_V(i)   = gbcrit
          gbthresh_V(i) = gbthresh
          nlow_V(i)     = nlow
@@ -337,7 +600,7 @@ c   loop up to 10 times to see if any new LOs uncovered
 
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c   If we have censoring due to low outliers using new Resample, the MSE of
+c   If we have censoring due to low outliers using new MGBT, the MSE of
 c   at-site skew will tend to stay constant or decline because skew 
 c   will be driven toward zero.
 c   Thus first-order approximation based on fixed censoring, which would 
@@ -359,48 +622,72 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   3.  begin by fitting the p3 distn to the at-site and regional data
 c       
-c       n.b.  four calls are necessary:
+c       n.b.  three calls are necessary:
 c            1.  compute at-site moments without employing regional skew;
 c                   this is used to compute the MSE(G) and moments for 
 c                   the case of only at-site data employing the B17B 
 c                   formula for MSE(G) [this is a very poor approximation
-c                   when historical info or left-tail censoring is present]
+c                   when historical info or left-tail censoring is present].
+c                   However, the moments are needed to compute at-site MSEs
+c                   for call 2.
 c            2.  EMA/B17B computation using regional skew information 
 c                   with B17B MSE(G) formula  (B17B eqn 6; p. 13)
-c            3.  compute the at-site moments without employing regional skew;
-c                   EMA formula for MSE(G) is employed;
-c                   this is used to compute the appropriate weight for regional 
-c                   skew (set as_mse=1.0; reg_mse=-99.)
-c            4.  final computation using regional skew information 
+c            3.  final computation using regional skew information 
 c                   with EMA MSE(G)
 c
-      call p3est_ema(n,ql,qu,1.d0,r_s2,r_s2_mse,
-     1                 reg_skew,-99.d0,cmoms(1,3))
-        at_site_option = "B17B"
-        as_mse   = mseg_all(nt,nobs,tl2,tu2,cmoms(1,3))
-      call p3est_ema(n,ql,qu,as_mse,r_s2,r_s2_mse,
-     1                reg_skew,reg_mse,cmoms(1,3))
-      
-      call p3est_ema(n,ql,qu,1.d0,r_s2,r_s2_mse,
-     1                reg_skew,-99.d0,cmoms(1,2))
-        at_site_option = at_site_std
-        as_mse   = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))
-      call p3est_ema(n,ql,qu,as_mse,r_s2,r_s2_mse,
-     1                reg_skew,reg_mse,cmoms(1,1))
-        yp       = qP3(pq,cmoms)
-        call m2p(cmoms,parms)
+c  1) Get at-site skews
+      call p3est_ema(n,ql,qu,
+     1      1.d0,  1.d0,  1.d0,       ! set all at-site MSEs to 1
+     2      r_M,      r_S2,     r_G, 
+     3      -99.d0, -99.d0,  -99.d0,  ! set all regional MSEs to Infinity
+     4      cmoms(1,2))               ! return moments (only skew is needed)
 
+c  2) EMA computation using weighted regional information/B17B MSEs
+        at_site_option = "B17B"
+        as_M_mse  = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),1) ! compute true a-s
+        as_S2_mse = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),2) ! MSEs based on at-
+        as_G_mse  = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))  ! site skew cmoms(1,3)
+      call p3est_ema(n,ql,qu,
+     1      as_M_mse,as_S2_mse,as_G_mse,
+     2      r_M,     r_S2,     r_G, 
+     3      r_M_mse, r_S2_mse, r_G_mse,
+     4      cmoms(1,3))
+      
+c  3) final computation using weighted regional info
+      if(at_site_std .ne. 'B17B') then
+        at_site_option = at_site_std
+        as_M_mse  = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),1) ! compute true a-s
+        as_S2_mse = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),2) ! MSEs based on at-
+        as_G_mse  = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))  ! site skew cmoms(1,3)
+        call p3est_ema(n,ql,qu,
+     1      as_M_mse,as_S2_mse,as_G_mse, ! use at-site MSEs
+     2      r_M,     r_S2,     r_G,      ! and weighted regional info
+     3      r_M_mse, r_S2_mse, r_G_mse,
+     4      cmoms(1,1))                  ! these are the EMA results
+       else
+         cmoms(1,1) = cmoms(1,3)
+         cmoms(2,1) = cmoms(2,3)
+         cmoms(3,1) = cmoms(3,3)
+       endif
+         yp       = qP3(pq,cmoms)
+         call m2p(cmoms,parms)
+
+      if(.not. cirun) return
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c   4.  compute quantiles and confidence intervals
+c   4.  compute confidence intervals
 c
       if( abs(cmoms(3,1)) .gt. skewmin) then
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   4.1  for skews far from zero
 c
+
         call var_ema(nt,nobs,tl2,tu2,cmoms,pq,
-     1         reg_mse,yp1,cv_yp_syp)
+     1         r_S2,
+     2         r_M_mse, r_S2_mse, r_G_mse,
+     3         yp1,cv_yp_syp)
+
         call ci_ema_m3 
      1    (yp,cv_yp_syp,neps,eps,ci_low,ci_high)
      
@@ -413,14 +700,20 @@ c
           cmoms(3,1) = -skewmin  
         call m2p(cmoms,parms)
         call var_ema(nt,nobs,tl2,tu2,cmoms,pq,
-     1         reg_mse,yp1,cv_yp_syp)
+     1         r_S2,
+     2         r_M_mse, r_S2_mse, r_G_mse,
+     3         yp1,cv_yp_syp)
+
         call ci_ema_m3
      1    (yp1,cv_yp_syp,neps,eps,ci_low1,ci_high1)
 
           cmoms(3,1) =  skewmin  
         call m2p(cmoms,parms)
         call var_ema(nt,nobs,tl2,tu2,cmoms,pq,
-     1         reg_mse,yp2,cv_yp_syp)
+     1         r_S2,
+     2         r_M_mse, r_S2_mse, r_G_mse,
+     3         yp2,cv_yp_syp)
+
         call ci_ema_m3
      1    (yp2,cv_yp_syp,neps,eps,ci_low2,ci_high2)
 
@@ -468,12 +761,12 @@ c            ql_in(n)   r*8  vector of lower bounds on (log) floods
 c            qu_in(n)   r*8  vector of upper bounds on (log) floods
 c            tl_in(n)   r*8  vector of lower bounds on (log) flood threshold
 c            tu_in(n)   r*8  vector of upper bounds on (log) flood threshold
-c            gbthrsh0  r*8  critical value for Grubbs-Beck test
+c            gbthrsh0   r*8  critical value for Grubbs-Beck test
 c                              (0 or negative values => estimate threshold)
 c                              (small value (1e-10) => no low outlier test)
-c            as_mse     r*8  mse of at-site skew estimate
-c            reg_skew   r*8  regional skew
-c            reg_mse    r*8  mean square error of regional skew
+c            as_G_mse   r*8  mse of at-site skew estimate
+c            r_G        r*8  regional skew
+c            r_G_mse    r*8  mean square error of regional skew
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -492,14 +785,13 @@ c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
       subroutine gbtest(n,ql_in,qu_in,tl_in,tu_in,dtype,gbthrsh0,
-     1   reg_skew,reg_mse,
-     2   ql,qu,tl,tu)
+     1   ql,qu,tl,tu)
 
       implicit none
       
       integer
      1  n,ns,i,nlow,klow,
-     2  nt,nzero
+     2  nzero
      
       integer p_nq
       parameter (p_nq=20000)
@@ -507,13 +799,8 @@ c
       double precision
      1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),
      2  ql(*),qu(*),tl(*),tu(*),gbcrit,gbthresh,gbthrsh0,qs,
-     3  as_mse,reg_skew,reg_mse,
-     4  x(p_nq),xm,xsum,xss,s,t,cmoms(3),gbtmin,pvaluew,
-     5  nobs(p_nq),tl2(p_nq),tu2(p_nq),
-     6  r_s2,r_s2_mse,lmissing
-     
-      double precision
-     1  mseg_all
+     3  x(p_nq),xm,s,t,cmoms(3),gbtmin,pvaluew,
+     5  lmissing
      
       integer MGBTP
       
@@ -540,10 +827,9 @@ c specified low outlier threshold?
         goto 25
       endif
       
-
 c  computed low outlier threshold and count zero flows
 c  note that zero flows are automatically treated as low outliers in MGBT
-        ns   = 0
+        ns      = 0
         nzero   = 0
       do 10 i=1,n
         if(ql_in(i) .eq. qu_in(i) .and. dtype(i) .eq. 'Syst') then ! N.B. Criterion
@@ -574,9 +860,12 @@ c
 c
 c  Traditional Grubbs-Beck Test
 c
-      if(gbtype .eq. 'GBT') then  ! B17B Grubbs-Beck test for 1 outlier
-          call p3est_ema(n-nzero,x(nzero+1),x(nzero+1),1.d0,r_s2,-99.d0,
-     1                      reg_skew,-99.d0,cmoms) !  get moms
+      if(gbtype .eq. 'GBT') then     ! B17B Grubbs-Beck test for 1 outlier
+          call p3est_ema(n-nzero,x(nzero+1),x(nzero+1),
+     1                      1.d0,  1.d0,  1.d0,   ! At-site MSEs
+     2                      0.d0,  1.d0,  0.d0,   ! Regional parameters (dumb)
+     3                    -99.d0,-99.d0,-99.d0,   ! use no regional info
+     4                      cmoms)                ! get moms
           xm      = cmoms(1)
           s       = sqrt(cmoms(2))
           t       = -0.9043+3.345*sqrt(log10(dble(ns-nzero))) ! N.B. ns, not n
@@ -641,19 +930,20 @@ c
 c     author....tim cohn
 c     date......february 9, 1994
 c
-c     modified 2/8/95    tac
-c     modified 2/22/95   tac
-c     modified 12/16/96  tac  fixed bias-correction factors
+c     modified 2/8/1995    tac
+c     modified 2/22/1995   tac
+c     modified 12/16/1996  tac  fixed bias-correction factors
 c                              and added second convergence criterion
-c     modified 11/17/98  tac  conv crit. added
-c     modified 03/13/99  tac  removed bias correction factors
+c     modified 11/17/1998  tac  conv crit. added
+c     modified 03/13/1999  tac  removed bias correction factors
+c     modified 09/28/2011  tac  changed call arguments; added regional M, S2
 c
 c****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c     modified 10/31/98 tac;  added regional skewness/fixed skewness
 c                             capability;  note that call now has two
 c                             additional arguments:
-c                               reg_skew    is the regional skew
+c                               r_G         is the regional skew
 c                               reg_wgt     is the relative weight (0-1) to
 c                                           assign regional vs at-site skew
 c                                           
@@ -665,27 +955,26 @@ c            n          i*4  number of observations (censored, uncensored, or
 c                              other)
 c            ql(n)      r*8  vector of lower bounds on (log) floods
 c            qu(n)      r*8  vector of upper bounds on (log) floods
-c            asmse      r*8  mean square error of at-site skew
-c                              this is calculated by mseg
-c            r_s2       r*8  regional variance (std.dev^2)
-c            r_s2_mse   r*8  mean square error of regional variance
-c            reg_skew   r*8  regional skew
-c            reg_mse    r*8  mean square error of regional skew
-c            pq         r*8  quantile to be estimated 
-c                            --pq=0.99 corresponds to "100-year flood"
+c            as_M_mse   r*8  mean square error of at-site mean (M)
+c                              this is calculated by mse_ema
+c            as_S2_mse  r*8  mean square error of at-site variance (S2)
+c                              this is calculated by mse_ema
+c            as_G_mse   r*8  mean square error of at-site skew (G)
+c                              this is calculated by mseg_all
+c            r_M        r*8  regional mean (M)
+c            r_S2       r*8  regional variance (std.dev^2) (S2)
+c            r_G        r*8  regional skew (G)
+c            r_M_mse    r*8  mean square error of regional mean
+c            r_S2_mse   r*8  mean square error of regional variance
+c            r_G_mse    r*8  mean square error of regional skew
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c       output variables: 
+c       output variable: 
 c       ------------------------------------------------------------------------
 c
 c            cmoms(3)   r*8  first 3 central moments 
 c                              mc = {mean, variance, coeff. skew}
-c            yp         r*8  estimated pq-th quantile of fitted p3 distribution
-c            ci_low     r*8  left end of 95% confidence interval for pq-th 
-c                              quantile
-c            ci_high    r*8  right end of 95% confidence interval for pq-th 
-c                              quantile
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -694,22 +983,30 @@ c           qu(i) is the upper bound
 c            if( qu == ql) then we have an ordinary observation at qu
 c
 c
-      subroutine p3est_ema(n,ql,qu,as_mse,r_s2,r_s2_mse,
-     1  reg_skew,reg_mse,moms_out)
+      subroutine p3est_ema(n,ql,qu,
+     1      as_M_mse,as_S2_mse,as_G_mse, ! use at-site MSEs
+     2      r_M,     r_S2,     r_G,      ! and weighted regional info
+     3      r_M_mse, r_S2_mse, r_G_mse,
+     4      moms_out)
 
       implicit none
       
       integer
      1  n,nsize,i,j,k
       
-      common /reg001/rskew,rmse,rs2,rs2mse
+      character*4 VarS2opt      
+      common /tacR01/VarS2opt     
+      common /reg001/rM,rMmse,rS2,rS2mse,rG,rGmse
       
       parameter (nsize=20001)
       
       double precision 
-     1     ql(*),qu(*),as_mse,reg_skew,reg_mse,moms_out(3),
-     2     moms(3,nsize),d11(nsize),dist_p3,tol,rskew,rmse,asmse,
-     3     rs2,r_s2,rs2mse,r_s2_mse,w
+     1     ql(*),qu(*),as_M_mse,as_S2_mse,as_G_mse,
+     1     r_M,     r_S2,     r_G,
+     3     r_M_mse, r_S2_mse, r_G_mse,
+     4     moms_out(3),
+     2     moms(3,nsize),d11(nsize),dist_p3,tol,
+     3     rM,rMmse,rS2,rS2mse,rG,rGmse
      
       double precision
      1     momsadj
@@ -717,47 +1014,88 @@ c
       data tol/1.d-10/ 
       data moms(1,1),moms(2,1),moms(3,1)/0.0, 1.0, 0.0/
 
-            asmse = as_mse
-            rs2   = r_s2
-            rs2mse= r_s2_mse
-            rskew = reg_skew
-            rmse  = reg_mse
-c            if(rmse .lt. 0.d0) rmse = 1.0d30
-     
+            rG    = r_G
+            rGmse = r_G_mse       
       do 10 i=2,nsize
         call moms_p3(n,ql,qu,moms(1,i-1),moms(1,i))
-          if(rmse .le. 0.d0 .and. rmse .gt. -98.d0) then ! "GENERALIZED, NO MSE"
-            moms(3,i) = rskew
-          else if (rmse .gt. 0.d0) then                  ! "WEIGHTED"
-            moms(3,i) = (rskew*asmse+moms(3,i)*rmse)/(rmse+asmse)
-          else if (rmse .lt. -98.d0) then                ! "STATION SKEW
+c
+c   compute weighted regional mean (M)? 
+c    N.B. Uncertainty in at-site mean is based on previous call to 
+c         p3est_ema() without regional info. A weighted average is
+c         computed based on the mse of the at-site mean computed
+c         without regional info and the generalized mean (which 
+c         is defined on a "mean map"
+c
+        if(r_M_mse .gt. 0.d0 .and. r_M_mse .lt. 1.d10) then  ! => weighted M
+          rMmse     = r_M_mse
+          moms(1,i) = (as_M_mse*r_M + rMmse*moms(1,i))/
+     1                 (as_M_mse + rMmse)
+        else if (r_M_mse .eq. 0.d0) then
+          moms(1,i) = r_M
+        else
+          ! moms(2,i) = moms(1,i)
+        endif
+
+c
+c   compute weighted regional variance (S2)? 
+c     note: we assume mse of regional estimate proportional to sigma^4
+c           thus, if VarS2opt is "DF" (default) we adjust rS2mse
+c           (see notes in Cohn 2011)
+c           this is a tricky computation, and the arguments are 
+c           non-trivial.
+c
+c
+        if(r_S2_mse .ge. 1.d10) then     ! "At-Site/STATION"
+c           moms(2,i) = moms(2,i)
+        else if(r_S2_mse .lt. 0.d0) then  ! "At-Site/STATION"
+c           moms(2,i) = moms(2,i)
+        else if(r_S2_mse .eq. 0.d0) then ! "Regional/Generalized"
+           moms(2,i) = r_S2
+        else                             ! "WEIGHTED"
+          if(VarS2opt .eq. 'DF') then
+            rS2mse = r_S2_mse*(moms(2,i)/r_S2)**2 ! correct MSE[S] = f(\sigma)
+          else if(VarS2opt .eq. 'S2') then
+            rS2mse = r_S2_mse ! no adjustment
+          else
+            rS2mse = r_S2_mse ! no adjustment
+          endif
+            moms(2,i) = (as_S2_mse*r_S2 + rS2mse*moms(2,i))/
+     1                  (as_S2_mse + rS2mse)
+        endif
+
+c
+c   compute weighted regional skew (G)? 
+c
+          if(rGmse .le. 0.d0 .and. rGmse .gt. -98.d0) then ! "GENERALIZED, NO MSE"
+            moms(3,i) = rG
+          else if (rGmse .gt. 0.d0) then                  ! "WEIGHTED"
+            moms(3,i) = (rG*as_G_mse+moms(3,i)*rGmse)/
+     1                     (rGmse+as_G_mse)
+          else if (rGmse .lt. -98.d0) then                ! "STATION SKEW
 c            moms(3,i) = moms(3,i)
-          else if (rmse .ge. 1.d10) then                 ! "STATION SKEW
+          else if (rGmse .ge. 1.d10) then                 ! "STATION SKEW
 c            moms(3,i) = moms(3,i)
           endif
-                 
-          moms(3,i) = momsadj(n,ql,moms(1,i))            ! correct
+c
+c  following call prevents skew from going below -1.41 and also
+c  ensures that largest observation is within support of fitted distn
+c
+          moms(3,i) = momsadj(n,ql,moms(1,i))  
 
-        if(r_s2 .ge. 0.d0 
-     1       .or. r_s2 .le.0.d0) then                    ! XXXXXXX needs to be fixed
-          w = 0.d0                                       ! temporary fix until I TAC
-                              !  figure out how to compute mse of s2
-          moms(2,i) = w*r_s2 + (1.d0-w)*moms(2,i)        !  Use Regional SD XXXX
-        endif
- 
         if(i .gt. 1000) then  !  eliminate cycles of length 2 or 3
           do 50 j=1,3
             write(*,*) '(EMA): Convergence criteria not met, i = ',i
             write(*,*) ' -- Cycling likely: Correction implemented'
             write(*,'(a10,3f10.3)') ' -- M_{i}  ',moms(1,i-1)
-            write(*,'(a10,3f10.3)') ' -- M_{i}  ',moms(1,i-1)            
+            write(*,'(a10,3f10.3)') ' -- M_{i}  ',moms(1,i-1)
             moms(j,i) = (moms(j,i)  +moms(j,i-1)+moms(j,i-2)+
      1                   moms(j,i-3)+moms(j,i-4)+moms(j,i-5))/6.d0
 50        continue
         endif
 c
           d11(i) =  dist_p3(moms(1,i-1),moms(1,i))
-            if(d11(i) .le. tol) then
+c            if(d11(i) .le. tol) then  ! tac added additional test 15 sep 11
+            if( (d11(i) .le. tol) .and. (d11(i) .ge. d11(i-1)) ) then 
                do 20 k=1,3
                  moms_out(k) = moms(k,i)
 20             continue
@@ -818,12 +1156,16 @@ c
      1     ql(*),qu(*),mc_old(3),moms(3),s_e(3),s_c(3),
      2     m_nc_moms(3,nsize),
      3     sum,c2,c3,n_bcf,
-     4     choose
+     4     choose,
+     5     sk0,sk141,skxmax
+     
+      logical lskewXmax
+
+      common /tac002/sk0,sk141,skxmax,lskewXmax,bcf
 
 c     note that setting bcf to 0 shuts off bias correction;
 c       1997 gets the original Cohn et al. [1997] bcfs
 c       2004 gets Griffis et al. [2004] -- the default!
-      data bcf/2004/
 
       if(n .gt. nsize) then
         write(*,*) '(moms_p3): sample size too large ',n
@@ -947,13 +1289,16 @@ c
       implicit none
       
       integer
-     1  n,i
+     1  n,i,bcf
      
       double precision
      1  ql(*),m(3),xmax,parms(3),
      2  sk0,sk141,skxmax
      
-      common /tac002/sk0,sk141,skxmax
+      logical
+     1  lskewXmax
+     
+      common /tac002/sk0,sk141,skxmax,lskewXmax,bcf
 
         xmax = ql(1)
       do 10 i=2,n
@@ -963,9 +1308,12 @@ c
         
         sk0     = m(3)
         sk141   = -1.41d0                           ! 1: m(3) < -1.41
-c       N.B. Following line corrected by JFE (TAC, 24 may 2007)
-c        skxmax  = 2.d0/sqrt(m(2))/(m(1)-xmax)       ! 2:  parms(1) < xmax
-        skxmax  = 2.d0*sqrt(m(2))/(m(1)-xmax)       ! 2:  parms(1) < xmax
+        if(lskewXmax) then
+          skxmax  = 2.d0*sqrt(m(2))/(m(1)-xmax)     ! 2:  parms(1) < xmax
+        else
+          skxmax  = sk141
+        endif
+        
         momsadj = max(sk0,sk141,skxmax)
       return
       end
@@ -1310,17 +1658,19 @@ c            tl_in(*)     r*8  vector of lower bounds (a)
 c            tu_in(*)     r*8  vector of upper bounds (b)
 c            mc_in(3)     r*8  vector of estimated lp3 moments
 c            pq           r*8  quantile to be estimated
-c            g_r_mse      r*8  mse of g_r (b17) ; 
+c            r_G_mse      r*8  mse of g_r (b17) ; 
 c                            this variable encodes four distinct cases:
-c                            1) g_r_mse = 0 ("GENERALIZED SKEW, NO ERROR")
-c                                use fixed g = reg_skew w/ mse = 0.0
-c                            2) -98 < g_r_mse < 0 ("GENERALIZED SKEW, MSE > 0")
-c                                use fixed g = reg_skew w/ mse = -reg_mse
-c                            3) 0 < g_r_mse < 1.d10 ("WEIGHTED SKEW")
+c                            1) r_G_mse = 0 ("GENERALIZED SKEW, NO ERROR")
+c                                use fixed g = r_G w/ mse = 0.0
+c                            2) -98 < r_G_mse < 0 ("GENERALIZED SKEW, MSE > 0")
+c                                use fixed g = r_G w/ mse = -r_G_mse  
+c                            3) 0 < r_G_mse < 1.d10 ("WEIGHTED SKEW")
 c                                use g = weighted average of at-site and 
 c                                regional skew (b17b recommendation)
-c                            4) 1.d10 < g_r_mse ("STATION SKEW")
+c                            4) 1.d10 < r_G_mse ("STATION SKEW")
 c                                use g = at-site skew
+c            r_S2       r*8  regional variance (std.dev^2)
+c            r_S2_mse   r*8  mean square error of regional variance
 c
 c            n.b.:  g_r, the regional skewness, 
 c                          is set = sign(2,parms(3))/sqrt(parms(2))
@@ -1333,7 +1683,9 @@ c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
         subroutine var_ema
-     1    (nthresh,nobs,tl_in,tu_in,mc_in,pq,g_r_mse,yp,cv_yp_syp)
+     1    (nthresh,nobs,tl_in,tu_in,mc_in,pq,
+     2         r_S2, r_M_mse, r_S2_mse, r_G_mse,
+     4         yp,cv_yp_syp)
      
         implicit none
           save
@@ -1346,12 +1698,13 @@ c
      
         double precision
      1    nobs(nth_p),tl_in(nth_p),tu_in(nth_p),pq,
-     2    g_r_mse,yp,cv_yp_syp(2,2),
+     2    yp,cv_yp_syp(2,2),
      3    mc(3),mc_in(3),parms(3),
      4    tl(nth_p),tu(nth_p),
-     4    skewmin,s_mc(3,3),
-     4    tmp(2,3),jac(3,2)
-
+     5    skewmin,s_mc(3,3),
+     6    tmp(2,3),jac(3,2),
+     7    r_S2, r_M_mse, r_S2_mse, r_G_mse
+     
         double precision
      1    qP3
      
@@ -1394,12 +1747,13 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c    compute covariance matrix
 c
-
-      call regskew(nthresh,nobs,tl,tu,mc,g_r_mse,s_mc)
+      call regmoms(nthresh,nobs,tl,tu,mc,
+     1                    r_G_mse,r_M_mse,r_S2,r_S2_mse,s_mc)
       
       call jacq2(pq,mc,jac(1,1))
 
-      call jacs2(nthresh,nobs,tl,tu,mc,g_r_mse,pq,jac(1,2))
+      call jacs2(
+     1 nthresh,nobs,tl,tu,mc,r_G_mse,r_M_mse,r_S2,r_S2_mse,pq,jac(1,2))
 
       call dmxtyf(3,2,jac,3,3,3,s_mc,3,2,3,tmp,2)
 
@@ -1409,13 +1763,14 @@ c
       end
 
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|subroutine regskew(nthresh,nobs,tl,tu,mc,g_r_mse,s_mc)
+c****|subroutine regmoms(nthresh,nobs,tl,tu,mc,r_G_mse,r_S2,r_S2_mse,s_mc)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c     *** do not modify without authors consent ***
 c
 c           author.......tim cohn
 c           date.........10 feb 2007
+c             modified...16 jun 2011
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -1428,13 +1783,16 @@ c            tl(*)      r*8  vector of lower bounds (a) of censoring
 c            tu(*)      r*8  vector of upper bounds (b) of censoring
 c            mc         r*8  vector of parameters (first 3 central 
 c                              moments of lp3 distribution
-c            g_r_mse    r*8  scalar mse of regional skewness estimator 
+c            r_G_mse    r*8  scalar mse of regional skewness estimator 
 c                            N.B.  the mse codes for four distinct cases
 c                              1) mse>0 => weighted skew
 c                              2) mse=0 => generalized skew (no uncertainty)
 c                              3) -98< mse <0 => generalized skew (mse = -mse) 
 c                              4) mse < -98 => station skew 
-c                                   (using g_r_mse = 1.d10 is equivalent)
+c                                   (using r_G_mse = 1.d10 is equivalent)
+c            r_M_mse    r*8  estimated MSE of M
+c            r_S2       r*8  regional estimate of variance (S^2)
+c            r_S2_mse   r*8  estimated MSE of r_S2
 c
 c       output variables:
 c       ---------------------------------------------------------------
@@ -1443,7 +1801,8 @@ c                              n.b: central parameter estimators
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
-      subroutine regskew(nthresh,nobs,tl,tu,mc,g_r_mse,s_mc)
+      subroutine regmoms(
+     1  nthresh,nobs,tl,tu,mc,r_G_mse,r_M_mse,r_S2,r_S2_mse,s_mc)
       
       implicit none
       
@@ -1451,32 +1810,89 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
      1  nthresh
       
       double precision
-     1  nobs(*),tl(*),tu(*),mc(3),g_r_mse,s_mc(3,3),
-     2  s_mn(3,3),mn(3),w
+     1  nobs(*),tl(*),tu(*),mc(3),r_G_mse,s_mc(3,3),
+     2  s_mn(3,3),mn(3),wG,r_M,r_M_mse,wM,r_S2,r_S2_mse,rS2mse,wS2
      
       double precision mseg_all
+
+      character*4 VarS2opt
+      
+      common /tacR01/VarS2opt
+     
      
       call var_mom(nthresh,nobs,tl,tu,mc,s_mn)
       
       call m2mn(mc,mn)
       
       call mn2m_var(mn,s_mn,mc,s_mc)
-      
-        if(g_r_mse .gt. 0.d0) then   ! "WEIGHTED"
-           w = g_r_mse/(mseg_all(nthresh,nobs,tl,tu,mc) + g_r_mse)
-        else if(g_r_mse .ge. -98.d0 .and. g_r_mse .le. 0.d0) then ! "G-w/skew"
-          w =  0.d0
-        else if(g_r_mse .lt. -98.d0) then ! "STATION"
-          w =  1.d0
-        else if(g_r_mse .ge. 1.d10) then  ! "STATION"
-          w =  1.d0
+
+c
+c  compute variance of regional skew
+c
+        if(r_G_mse .gt. 0.d0) then   ! "WEIGHTED"
+           wG = r_G_mse/(mseg_all(nthresh,nobs,tl,tu,mc) + r_G_mse)
+        else if(r_G_mse .ge. -98.d0 .and. r_G_mse .le. 0.d0) then ! "G-w/skew"
+          wG =  0.d0
+        else if(r_G_mse .lt. -98.d0) then ! "STATION"
+          wG =  1.d0
+        else if(r_G_mse .ge. 1.d10) then  ! "STATION"
+          wG =  1.d0
         endif
       
-        s_mc(1,3) = w*s_mc(1,3)
+        s_mc(1,3) = wG*s_mc(1,3)
         s_mc(3,1) = s_mc(1,3)
-        s_mc(2,3) = w*s_mc(2,3)
+        s_mc(2,3) = wG*s_mc(2,3)
         s_mc(3,2) = s_mc(2,3)
-        s_mc(3,3) = w**2*s_mc(3,3) + (1.d0-w)**2*abs(g_r_mse)
+        s_mc(3,3) = wG**2*s_mc(3,3) + (1.d0-wG)**2*abs(r_G_mse)
+
+c
+c  variance of mean (M)
+c
+
+      if(r_M_mse .lt. 1.d10 .and. r_M_mse .ge. 0.d0) then    ! do nothing?
+        if(r_M_mse .eq. 0.d0) then       ! "Regional/Generalized"
+          wM = 0.d0
+        else                             ! "WEIGHTED"
+          wM = r_M_mse/(s_mc(1,1)+r_M_mse)
+        endif
+      
+        s_mc(1,2) = wM*s_mc(1,2)
+        s_mc(2,1) = s_mc(1,2)
+        s_mc(1,3) = wM*s_mc(1,3)
+        s_mc(3,1) = s_mc(1,3)
+        s_mc(1,1) = wM**2*s_mc(1,1) + (1.d0-wM)**2*abs(r_M_mse)
+      endif
+
+c
+c  variance of variance (standard deviation)
+c
+        if(r_S2_mse .gt. 1.d10) return   ! most likely case -- do nothing
+               
+        if(r_S2_mse .ge. 1.d10) then     ! "At-Site/STATION"
+           wS2 = 1.D0
+        else if(r_S2_mse .eq. 0.d0) then ! "Regional/Generalized"
+           wS2 = 0.d0
+        else if(r_S2_mse .lt. 0.d0) then  ! "At-Site/STATION"
+           wS2 =  1.d0
+        else                             ! "WEIGHTED"
+          if(VarS2opt .eq. 'DF') then
+            rS2mse = r_S2_mse*(mc(2)/r_S2)**2 ! correct MSE[S] = f(\sigma)
+          else if(VarS2opt .eq. 'S2') then
+            rS2mse = r_S2_mse ! no adjustment
+c         else if(VarS2opt .eq. 'S1') then
+c           rS2mse = ???
+          else
+            rS2mse = r_S2_mse ! no adjustment
+          endif
+c                                             ! 
+          wS2 = rS2mse/(s_mc(2,2)+rS2mse)
+        endif
+      
+        s_mc(1,2) = wS2*s_mc(1,2)
+        s_mc(2,1) = s_mc(1,2)
+        s_mc(2,3) = wS2*s_mc(2,3)
+        s_mc(3,2) = s_mc(2,3)
+        s_mc(2,2) = wS2**2*s_mc(2,2) + (1.d0-wS2)**2*abs(rS2mse)
 
       return
       end
@@ -1561,10 +1977,11 @@ c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
       end
       
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|double precision function sypf(nthresh,nobs,tl,tu,mc,g_r_mse,q)
+c****|double precision function sypf(nt,nobs,tl,tu,mc,
+c                                      r_M_mse,r_G_mse,r_S2,r_S2_mse,q)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c     *** do not modify without author's consent ***
+c     *** do not modify without author''s consent ***
 c
 c           author.......tim cohn
 c           date.........10 feb 2007
@@ -1580,8 +1997,10 @@ c            tl(*)      r*8  vector of lower bounds (a) of censoring
 c            tu(*)      r*8  vector of upper bounds (b) of censoring
 c            mc         r*8  vector of parameters (first 3 central 
 c                              moments of lp3 distribution
-c            g_r_mse    r*8  scalar mse of regional skewness estimator 
+c            r_G_mse    r*8  scalar mse of regional skewness estimator 
 c                              (see comments above)
+c            r_S2       r*8  regional variance (std.dev^2)
+c            r_S2_mse   r*8  mean square error of regional variance
 c            q          r*8  quantile to be estimated (in range (0-1)
 c
 c       output variables:
@@ -1590,7 +2009,9 @@ c            result     r*8  estimated standard deviation of y-hat-q
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-      double precision function sypf(nthresh,nobs,tl,tu,mc,g_r_mse,q)
+      double precision function sypf(
+     1    nthresh,nobs,tl,tu,mc,
+     2       r_G_mse,r_M_mse,r_S2,r_S2_mse,q)
       
       implicit none
       
@@ -1598,10 +2019,11 @@ c
      1  nthresh
       
       double precision
-     1  nobs(*),tl(*),tu(*),mc(3),g_r_mse,q,s_mc(3,3),
-     2  jac(3),tmp(3),result
+     1  nobs(*),tl(*),tu(*),mc(3),r_G_mse,q,s_mc(3,3),
+     2  jac(3),tmp(3),result,r_M_mse,r_S2,r_S2_mse
           
-      call regskew(nthresh,nobs,tl,tu,mc,g_r_mse,s_mc)
+      call regmoms(nthresh,nobs,tl,tu,mc,
+     1               r_G_mse,r_M_mse,r_S2,r_S2_mse,s_mc)
       
       call jacq2(q,mc,jac)
       
@@ -1615,7 +2037,7 @@ ctac*
           write(*,*) 'mc',mc
           write(*,*) 'tl',tl(1),tl(2)
           write(*,*) 'tu',tu(1),tu(2)
-          write(*,*) 'rmse',g_r_mse
+          write(*,*) 'rGmse',r_G_mse
           write(*,*) 'q',q
           write(*,*) 'jacq2',jac
           write(*,*) 's_mc ',s_mc(1,1),s_mc(1,2),s_mc(1,3)
@@ -1632,10 +2054,11 @@ c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine jacs2
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c     *** do not modify without author's consent ***
+c     *** do not modify without author''s consent ***
 c
 c           author.......tim cohn
 c           date.........10 feb 2007
+c              modified..28 sep 2011 (tac)
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -1648,7 +2071,10 @@ c            tl(*)      r*8  vector of lower bounds (a) of censoring
 c            tu(*)      r*8  vector of upper bounds (b) of censoring
 c            mc(*)      r*8  vector of parameters (first 3 central 
 c                              moments of lp3 distribution
-c            g_r_mse    r*8  scalar mse of regional skewness estimator 
+c            r_G_mse    r*8  scalar mse of regional skewness estimator 
+c            r_M_mse    r*8  mean square error of regional mean
+c            r_S2       r*8  regional variance (std.dev^2)
+c            r_S2_mse   r*8  mean square error of regional variance
 c            q          r*8  quantile to be estimated (in range (0-1)
 c
 c       output variables:
@@ -1657,7 +2083,8 @@ c            jacss(3)   r*8  jacobian of syp wrt (m,s^2,g)
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-      subroutine jacs2(nthresh,nobs,tl,tu,mc,g_r_mse,q,jacss)
+      subroutine jacs2(
+     1  nthresh,nobs,tl,tu,mc,r_G_mse,r_M_mse,r_S2,r_S2_mse,q,jacss)
 
       implicit none
       
@@ -1665,18 +2092,26 @@ c
      1  nthresh,i
       
       double precision
-     1  nobs(*),tl(*),tu(*),mc(3),g_r_mse,q,jacss(3),
-     3  sypf,dgv(3),delta,mc_l(3),mc_u(3),d
+     1  nobs(*),tl(*),tu(*),mc(3),r_G_mse,q,jacss(3),
+     3  sypf,dgv(3),delta,mc_l(3),mc_u(3),d,r_M_mse,r_S2,r_S2_mse
      
       data dgv/1.d0,2.d0,6.d0/,d/0.05d0/
+      
       
       do 10 i=1,3
         delta = d*sqrt(dgv(i)*mc(2)/nobs(nthresh+1))
         call mcadj(mc,i,delta,mc_l,mc_u)
-        jacss(i) = (sypf(nthresh,nobs,tl,tu,mc_u,g_r_mse,q) -
-     1              sypf(nthresh,nobs,tl,tu,mc_l,g_r_mse,q) )/
+        jacss(i) = 
+     1     (sypf(nthresh,nobs,tl,tu,mc_u,
+     2               r_G_mse,r_M_mse,r_S2,r_S2_mse,q) -
+     1      sypf(nthresh,nobs,tl,tu,mc_l,
+     2               r_G_mse,r_M_mse,r_S2,r_S2_mse,q) )/
      1              (2.d0*delta)
 10    continue
+c
+c   The following only works if FORTRAN compiler allows re-entrant code
+c     i.e. arguments must be passed in the stack (value or addresses)
+c
       return
       end
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
@@ -2236,7 +2671,7 @@ c
      1  x,m(3),
      2  parms(3),g,mu,s,z,
      3  w,wg,wwh,dp3g,dp3wh,
-     4	fp_g3_pdf,fp_z_pdf,whlp2z
+     4  fp_g3_pdf,fp_z_pdf,whlp2z
      
       g = m(3)
 c
@@ -2288,7 +2723,7 @@ c
      1  x,m(3),
      2  parms(3),g,mu,s,z,
      3  w,wg,wwh,pP3g,pP3wh,
-     4	fp_g3_cdf,fp_z_cdf,whlp2z
+     4  fp_g3_cdf,fp_z_cdf,whlp2z
      
       g = m(3)
 c
@@ -2339,7 +2774,7 @@ c
      1  q,m(3),
      2  parms(3),g,mu,s,
      3  w,wg,wwh,qP3g,qP3wh,
-     4	fp_g3_icdf,fp_z_icdf,whz2lp,infinity
+     4  fp_g3_icdf,fp_z_icdf,whz2lp,infinity
      
       data infinity/1.0d31/
      
@@ -2489,17 +2924,17 @@ c
 10    continue
         write(*,*)
         write(*,*) ' probabilities tested:'
-		write(*,'(7f8.4,/)') pp
+        write(*,'(7f8.4,/)') pp
         write(*,*)
         write(*,*) ' skews tested:'
-		write(*,'(7f8.4,/)') gg
+        write(*,'(7f8.4,/)') gg
         write(*,*)
         write(*,*) ' maximum absolute error in probability:'
-		write(*,'(1f18.8/)') abserr
+        write(*,'(1f18.8/)') abserr
 c
-		write(*,*)
+        write(*,*)
         write(*,*) ' *** checking the censored moments ***'
-		write(*,*)
+        write(*,*)
           m(1)    = 2.54
           m(2)    = 1.66
       do 20 i=1,ng
@@ -2509,11 +2944,11 @@ c
             write(*,'(4f10.4,3e14.5)') m(3),m(1),m(2),pp(j),mnout
         do 30 k=0,3
             kk=k
-c          call dqag(ftest01,qP3(pp(j-1),m),qP3(pp(j),m),
-c     1                1.d-6,1.d-6,2,fp(k),abserr,neval,ier,
-c     2                limit,lenw,last,iwork,work)
+          call dqag(ftest01,qP3(pp(j-1),m),qP3(pp(j),m),
+     1                1.d-6,1.d-6,2,fp(k),abserr,neval,ier,
+     2                limit,lenw,last,iwork,work)
 
-c            if(ier .ne. 0) write(*,*) ' ier (dqag) = ',ier
+            if(ier .ne. 0) write(*,*) ' ier (dqag) = ',ier
           if(k .gt. 0) fp(k)=fp(k)/fp(0)
 30      continue
             write(*,'(40x,3e14.5)') (fp(k1),k1=1,3)
@@ -2684,10 +3119,10 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       double precision
      1 skew,p,c,klpc,kupc,
      2 zc,kgwp,a,b,
-     3 fp_z_icdf,kf
+     3 fp_z_icdf,kfxx
      
       zc     = fp_z_icdf(c)
-      kgwp   = kf(skew,p)
+      kgwp   = kfxx(skew,p)
 
       a      = 1.d0 - zc**2/(2.d0*(n-1.d0))
       b      =  kgwp**2 - zc**2/n
@@ -2699,7 +3134,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       end
             
       
-      double precision function kf(skew,prob)
+      double precision function kfxx(skew,prob)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c    computes critical points of LP3 distribution 
@@ -2718,7 +3153,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
           
       m(3) = skew
 
-      kf = qp3(prob,m)
+      kfxx = qp3(prob,m)
       
       return
       end
@@ -2767,7 +3202,7 @@ c
       stop
       end
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-      block data
+      blockdata emablk
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c     author.....tim cohn
@@ -2778,21 +3213,39 @@ c
       implicit none
       
       double precision
-     1  gbcrit,gbthresh,alph01,alph10,pvaluew,qs
+     1  gbcrit,gbthresh,alph01,alph10,pvaluew,qs,
+     2  sk0,sk141,skxmax
      
       integer
-     1  nlow,nzero
+     1  nlow,nzero,bcf
       
-      character*4 at_site_option,at_site_default,at_site_std,gbtype
+      character*4 
+     1  at_site_option,at_site_default,at_site_std,gbtype,VarS2opt
       
+      logical lskewXmax
+      
+      logical cirun
+      
+      common /tac002/sk0,sk141,skxmax,lskewXmax,bcf
       common /tacg04/at_site_option,at_site_default,at_site_std
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
      1               nlow,nzero,gbtype
       common /tacmg1/alph01,alph10
-
+      common /tacdgb/cirun
+      common /tacR01/VarS2opt
+      
       data at_site_option/'ADJE'/
       data at_site_default/'ADJE'/
       data at_site_std/'ADJE'/
-      data alph01/0.01d0/,alph10/0.10d0/
       
+      data cirun/.TRUE./
+      data alph01/0.01d0/,alph10/0.10d0/
+
+      data sk141/-1.41d0/
+      data lskewXmax/.FALSE./
+
+      data bcf/2004/
+
+      data VarS2opt/'DF'/
       end
+      

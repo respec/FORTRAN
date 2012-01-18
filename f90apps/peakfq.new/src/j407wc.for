@@ -1636,7 +1636,6 @@ C         Weighted, set to root mean square
         END IF
  
         CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
-     I              REGSKEW,REGMSE,
      M              QL,QU,TL,TU)
 
 C       report Multiple GB LO messges

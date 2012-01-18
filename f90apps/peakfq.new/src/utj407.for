@@ -6,7 +6,7 @@ C
      O                     PD)
 C
 C     + + + PURPOSE + + +
-C     Uses EMA module KF to calculate output percentage point array,
+C     Uses EMA module KFXX to calculate output percentage point array,
 C     previously done through Harter's Table.
 C     Skew must not exceed 9.0.
 C     Updated 12/04 for batch version of PEAKFQ,
@@ -27,13 +27,13 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION  LSKU,LPROB,LPD
 C
 C     + + + FUNCTIONS + + +
-      DOUBLE PRECISION  KF
+      DOUBLE PRECISION  KFXX
 C
 C     + + + INTRINSICS + + +
       INTRINSIC ABS, DBLE
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  KF
+      EXTERNAL  KFXX
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -45,7 +45,7 @@ C
         LSKU = DBLE(SKU)
         DO 20 I = 1,NINT
           LPROB = 1.D0 - DBLE(PROB(I))
-          LPD   = KF(LSKU,LPROB)
+          LPD   = KFXX(LSKU,LPROB)
           PD(I) = LPD
  20     CONTINUE
       END IF
@@ -374,7 +374,7 @@ C
 C
 C     + + + PURPOSE + + +
 C     Calculate Harter K value for a give probability and skew
-C     using EMA module KF.  
+C     using EMA module KFXX.  
 C
 C     + + + DUMMY ARGUMENTS + + +
       REAL   P, SKU
@@ -387,10 +387,10 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION  LP,LSKU,TMP
 C
 C     + + + FUNCTIONS + + + 
-      DOUBLE PRECISION  KF
+      DOUBLE PRECISION  KFXX
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   KF
+      EXTERNAL   KFXX
 C
 C     + + + END SPECIFICATIONS + + + 
 C
@@ -399,12 +399,12 @@ C
       ELSE
         LP    = P
         LSKU  = SKU
-c       write(*,*) 'HARTK: B4 KF-LSKU,LP',LSKU,LP
-        TMP   = KF(LSKU,LP)
+c       write(*,*) 'HARTK: B4 KFXX-LSKU,LP',LSKU,LP
+        TMP   = KFXX(LSKU,LP)
         IF (ABS(TMP).GT.1.0E30) THEN
           TMP = 1.0E30
         END IF
-c       write(*,*) 'HARTK: after KF-TMP',TMP
+c       write(*,*) 'HARTK: after KFXX-TMP',TMP
       END IF
 
       HARTK = TMP
@@ -489,83 +489,3 @@ C
 C
       RETURN
       END
-Cc
-Cc
-Cc
-C      double precision function kf(skew,prob)
-Cc****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-Cc
-Cc    computes critical points of LP3 distribution 
-Cc    returns "K" value in format used by B17B
-Cc
-Cc    tim cohn........24 Nov 2003
-Cc
-Cc****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-C
-C      double precision parms(2),prob,skew,fp_z_icdf,fp_g2_icdf  
-C        
-C      if(skew .eq. 0.d0) then
-C          kf = fp_z_icdf(prob)
-C      else
-C          parms(1)  = 4.d0/skew**2
-C        if(skew .lt. 0.d0) then
-C          parms(2) = -1.d0/sqrt(parms(1))
-C        else
-C          parms(2) =  1.d0/sqrt(parms(1))
-C        endif  
-C          kf = fp_g2_icdf(prob,parms) - parms(1)*parms(2)
-C      endif
-C
-C      return
-C      end
-c
-c
-c
-c      double precision function kf(skew,prob) 
-cc****|===|====-====|====-====|====-====|====-====|====-====|====-====|==//////// 
-cc 
-cc computes critical points of LP3 distribution 
-cc returns "K" value in format used by B17B 
-cc 
-cc tim cohn........24 Nov 2003 
-cc ........21 Dec 2006 modified 
-cc 
-cc****|===|====-====|====-====|====-====|====-====|====-====|====-====|==//////// 
-c
-c      implicit none 
-c      double precision parms(2),prob,skew,fp_z_icdf,fp_g2_icdf,g,Xy, 
-c     1 kf1,kf2 
-c
-cc     skew = 0 implies normal distribution 
-c      if(abs(skew) .lt. 1.d-9) then 
-c        kf = fp_z_icdf(prob) 
-c        return 
-c      endif 
-cc     addition added to deal with small skews not equal to zero 
-cc     compute Wilson-Hilferty k-factor [Loucks, Stedinger, Haith, 1981, p. 286] 
-c      if(abs(skew) .lt. 0.1d0) then 
-c        g = skew 
-c        Xy = fp_z_icdf(prob) 
-c        kf1 = (2.d0/g)*(1.d0 + g*Xy/6.d0 - g**2/36.d0)**3 - (2.d0/g) 
-c        if(abs(skew) .lt. 0.05d0) then 
-c          kf = kf1 
-c          return 
-c        endif 
-c      endif 
-cc     solution based on 2-parameter gamma cdf 
-c      parms(1) = 4.d0/skew**2 
-c      if(skew .lt. 0.d0) then 
-c        parms(2) = -1.d0/sqrt(parms(1)) 
-c      else 
-c        parms(2) = 1.d0/sqrt(parms(1)) 
-c      endif 
-c      kf2 = fp_g2_icdf(prob,parms) - parms(1)*parms(2) 
-c      if(abs(skew) .ge. 0.1d0) then 
-c        kf = kf2 
-c        return 
-c      endif 
-cc 
-c      kf = ((0.10d0-abs(skew))*kf1 + (abs(skew)-0.05d0)*kf2)/0.05d0 
-c
-c      return 
-c      end
