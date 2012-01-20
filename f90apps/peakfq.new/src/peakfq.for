@@ -116,6 +116,9 @@ C     common JOBOPT (IPLTOP through ALLSOM)
       IMODFG= 1  
       ALLSOM= 1
       PAUSE = 2    !don't pause between stations
+C     assume no export or empirical output files
+      EXPFUN= 0
+      EMPFUN= 0
 C
 C     open scratch file
       OPEN (UNIT=91,FILE='RQ7J4ZV9',STATUS='UNKNOWN')
@@ -205,7 +208,7 @@ C     process driver input file
           CALL OPNOUT
      M               (S, INFORM, FOUT, IPUNCH,
      M                IPLTOP, GRFMT, IPRTOP, IBCPUN, IDEBUG,
-     M                CLSIZE, WEIBA,
+     M                CLSIZE, WEIBA, EXPFUN, EMPFUN,
      O                RETCOD)
         ELSE IF (KWD .EQ. 'STATION') THEN !processing station specs
           WRITE(FE,*) "MAIN:Got STATION, Remaining:'" // TRIM(S) // "'"
@@ -342,7 +345,7 @@ C       set printer plot file to FOUT
         IF (UPDATEFG) THEN !write out verbose spec file
           CALL WRITESPECIO (WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
      I                      IPLTOP,GRFMT,IPRTOP,IBCPUN,IDEBUG,
-     I                      CLSIZE,WEIBA)
+     I                      CLSIZE,WEIBA,EXPFUN,EMPFUN)
         END IF
 C       do the analysis
         CALL J407XE (MESSFL,WDMSFL,PAUSE,UPDATEFG,NSTA)
@@ -491,7 +494,7 @@ C
      I                   ( ISTR, INFORM,
      M                     FOUT, IPUNCH,
      M                     IPLTOP, GRFMT, IPRTOP, IBCPUN, IDEBUG,
-     M                     CLSIZE, WEIBA,
+     M                     CLSIZE, WEIBA, EXPFUN, EMPFUN,
      O                     RETCOD )
 C
 C     + + + PURPOSE + + +
@@ -503,7 +506,8 @@ C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      INFORM, FOUT, IPUNCH,
-     $             IPLTOP, IPRTOP, IBCPUN, IDEBUG, RETCOD
+     $             IPLTOP, IPRTOP, IBCPUN, IDEBUG, 
+     $             EXPFUN, EMPFUN, RETCOD
       REAL         CLSIZE, WEIBA
       CHARACTER*3  GRFMT
       CHARACTER*120 ISTR
@@ -520,6 +524,8 @@ C     IBCPUN - ???
 C     IDEBUG - ???
 C     CLSIZE - ??? 
 C     WEIBA  - ???
+C     EXPFUN - export file unit number
+C     EMPFUN - empirical file unit number
 C     RETCOD - ???
 C
 C     + + + LOCAL VARIABLES + + +
@@ -659,6 +665,40 @@ C             dummy default (following old code, prh 8/03)
             IBCPUN = MOD(IBCPUN,2)
           END IF
         END IF
+
+      ELSE IF (KWD.EQ.'EXPORT') THEN
+        EXPFUN = 16
+        OPEN (EXPFUN,FILE=ISTR,ERR=50)
+C       successful open of Export output file
+        !LOG IT
+        WRITE(99,*) "OPENOUT:Opened EXPORT Output File:'" 
+     $               // TRIM(ISTR) // "'"
+        GO TO 60
+
+ 50     CONTINUE !get here on error opening output file
+          EXPFUN = 0
+          !LOG IT
+          WRITE(99,*) "OPENOUT:FAILED to Open EXPORT Output File:'"
+     $               // TRIM(ISTR) // "'"
+
+ 60     CONTINUE
+
+      ELSE IF (KWD.EQ.'EMPIRICAL') THEN
+        EMPFUN = 17
+        OPEN (EMPFUN,FILE=ISTR,ERR=70)
+C       successful open of Empirical output file
+        !LOG IT
+        WRITE(99,*) "OPENOUT:Opened EMPIRICAL Output File:'" 
+     $               // TRIM(ISTR) // "'"
+        GO TO 80
+
+ 70     CONTINUE !get here on error opening output file
+          EMPFUN = 0
+          !LOG IT
+          WRITE(99,*) "OPENOUT:FAILED to Open EMPIRICAL Output File:'"
+     $               // TRIM(ISTR) // "'"
+
+ 80     CONTINUE
 
       ELSE IF (KWD.EQ.'DEBUG') THEN
         IDEBUG = IYESNO(ISTR,1)
@@ -1117,7 +1157,7 @@ C
 C
       SUBROUTINE   WRITESPECIO (WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
      I                          IPLTOP,GRFMT,IPRTOP,IBCPUN,IDEBUG,
-     I                          CLSIZE,WEIBA)
+     I                          CLSIZE,WEIBA,EXPFUN,EMPFUN)
 C
 C     + + + PURPOSE + + +
 C     Write out verbose version of spec file (i.e. include 
@@ -1132,7 +1172,7 @@ C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
-     $          IPLTOP,IPRTOP,IBCPUN,IDEBUG
+     $          IPLTOP,IPRTOP,IBCPUN,IDEBUG,EXPFUN,EMPFUN
       REAL      CLSIZE,WEIBA
       CHARACTER*3 GRFMT
 C
@@ -1195,6 +1235,14 @@ C     additional output
         WRITE(92,*) 'O Additional TAB '//TRIM(FNAME)
       ELSE IF (IBCPUN.EQ.5) THEN
         WRITE(92,*) 'O Additional Both TAB '//TRIM(FNAME)
+      END IF
+      IF (EXPFUN.GT.0) THEN
+        INQUIRE(EXPFUN,NAME=FNAME)
+        WRITE(92,*) 'O Export '//TRIM(FNAME)
+      END IF
+      IF (EMPFUN.GT.0) THEN
+        INQUIRE(EMPFUN,NAME=FNAME)
+        WRITE(92,*) 'O Empirical '//TRIM(FNAME)
       END IF
       IF (IDEBUG.EQ.1) THEN
         WRITE(92,*) 'O Debug Yes'
