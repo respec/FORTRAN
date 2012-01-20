@@ -1648,16 +1648,6 @@ C       report Multiple GB LO messges
  10       CONTINUE
         END IF
 
-C       report Warnings/Errors
-        IF (HISTPD .GT. 0) THEN
-          IF (HISTPD .GT. 2*NSYS) THEN
-            WRITE(MSG,*) '    EMA001W-VARIANCE OF ESTIMATE WARNING, ',
-     $                   'HISTORIC PERIOD > 2* SYS.'
-          END IF
-          WRITE(MSG,*) '    EMA002W-CONFIDENCE INTERVALS ARE NOT ',
-     $                 'EXACT IF HISTORIC PERIOD > 0'
-        END IF
-
       ELSE
 C       perform traditional B17B LO test
         CALL WCFDLO (SYSLOG,NSYS1,IER)

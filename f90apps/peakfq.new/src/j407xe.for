@@ -64,7 +64,7 @@ C
 C
 C      + + + LOCAL VARIABLES + + +
       INTEGER   IPKPTR(MXPK),  IQUAL(MXPK)
-      REAL      FCXPG(MXINT)
+      REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
      &          NSKIP1, NPKS, I, NPKPLT, 
      $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT
@@ -86,7 +86,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT, PRTEMA
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH, PKFQSTA
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
-      EXTERNAL   SETEMADATA
+      EXTERNAL   SETEMADATA, PRTEXP, PRTEMP
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA  IER,  NFCXPG ,  JSEQNO, IOPT
@@ -215,7 +215,7 @@ C
           write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
      $                                NPKS,NSYS,GENSKU,RMSEGS
           CALL RUNEMA
-          CALL PRTEMA(MSG,NSYS,NHIST)
+          CALL PRTEMA(MSG,NSYS,HISTPD)
         END IF
 
         IF(IER .GE. 3)  THEN
@@ -224,7 +224,8 @@ C
      $                                 IQUAL, EMAOPT, IA3 )
         ELSE
 
-          CALL PRTKNT(MSG,NPKS,PKS,IPKSEQ)
+          CALL PRTKNT(MSG,NPKS,PKS,IPKSEQ,
+     O                KENTAU,KENPVL,KENSLP)
 
           NPROC=NPROC+1
 C
@@ -269,7 +270,20 @@ C
             ENDIF
 C
             NPKPLT=NHIST+NSYS-NBGB
-C            
+C
+            IF (EXPFUN .GT. 0) THEN
+C             output export file
+              CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
+     I                     KENTAU,KENPVL,KENSLP,NFCXPG,WRCFC(INDX1),
+     I                     TXPROB(INDX1),CLIML(INDX1),CLIMU(INDX1),
+     I                     VAREST(INDX1),JSEQNO,STAID,HEADNG(9),EMAOPT)
+            END IF
+            IF (EMPFUN .GT. 0) THEN
+C             output empircal frequency table file
+              CALL PRTEMP(EMPFUN,NPKS,IPKSEQ,PKS,GAGEB,IPKPTR,
+     I                    SYSPP,WRCPP,WEIBA,EMAOPT)
+            END IF
+
             IF (QHIOUT .LE. 0.01 .AND. HISTPD .LE. 0.5) THEN
 C             don't plot historic adjusted peaks
               HSTFLG = 1
@@ -280,7 +294,7 @@ C             do plot historic adjusted peaks
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
-     I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,NOCLIM,
+     I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
      I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
      I                      JSEQNO,HEADNG(9))
             IF(NSKIP1.NE.0 )  THEN
@@ -935,7 +949,8 @@ C     NOTE -- THE PEAKS AND THEIR PLOTTING POSITIONS MUST
 C     BE LINED UP PROPERLY BY PREVIOUS CALLS TO SORTM
 C     AND ALIGNP.
 C
-C     INCLUDE PERCEPTION THRESHOLDS WITH PLOTTING POSITIONS, PRH 8/2010
+C     Include perception thresholds and interval data
+C     with plotting positions, PRH 8/2010
       Use EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
@@ -1408,34 +1423,30 @@ C
 C
 C
       SUBROUTINE   PRTEMA
-     I                   (MSG, NSYS, NHIST)
+     I                   (MSG, NSYS, HISTPD)
 C
 C     + + + PURPOSE + + +
 C     Print EMA warning messages
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER  MSG,NSYS,NHIST
+      INTEGER  MSG,NSYS
+      REAL     HISTPD
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MSG    - Fortran unit number for output file
 C     NSYS   - number of systematic peaks 
-C     NHIST  - length of historic period
-C
-C     + + + LOCAL VARIABLES + + +
-C
-C     + + + EXTERNALS + + +
-      EXTERNAL KENT
+C     HISTPD - length of historic period
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(4X'EMA001W - VARIANCE OF ESTIMATE WARNING, ',
+ 2000 FORMAT(4X'EMA001W-VARIANCE OF ESTIMATE WARNING, ',
      $         'HISTORIC PERIOD > 2* SYS')
- 2010 FORMAT(4X'EMA002W - CONFIDENCE INTERVALS ARE NOT EXACT ',
+ 2010 FORMAT(4X'EMA002W-CONFIDENCE INTERVALS ARE NOT EXACT ',
      $         'IF HISTORIC PERIOD > 0')
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (NHIST .GT. 0) THEN
-        IF (NHIST .GT. 2*NSYS) THEN
+      IF (HISTPD .GT. 0) THEN
+        IF (HISTPD .GT. 2*NSYS) THEN
           WRITE(MSG,2000) 
         END IF
         WRITE(MSG,2010) 
@@ -1447,34 +1458,35 @@ C
 C
 C
       SUBROUTINE   PRTKNT
-     I                   (MSG, NPKS, PKS, IPKSEQ)
+     I                   (MSG, NPKS, PKS, IPKSEQ,
+     O                    KENTAU, KENPVL, KENSLP)
 C
 C     + + + PURPOSE + + +
-C     Prints Kendall's Tau values for systematic peaks
+C     Prints Kendall's KENTAU values for systematic peaks
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER  MSG,NPKS
       INTEGER  IPKSEQ(NPKS)
-      REAL     PKS(NPKS)
+      REAL     PKS(NPKS),KENTAU,KENPVL,KENSLP
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MSG    - Fortran unit number for output file
 C     NPKS   - number of peaks 
-C     IPKSEQ - array of peak years
 C     PKS    - array of peak values
+C     IPKSEQ - array of peak years
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxpk.inc'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I, LNPKS
-      REAL    LPKS(MXPK), LTAU, LPLEV, LSLOPE
+      REAL    LPKS(MXPK)
 C
 C     + + + EXTERNALS + + +
       EXTERNAL KENT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(//,40X,'Kendall''s Tau Parameters',//,
+ 2000 FORMAT(//,40X,'Kendall''s KENTAU Parameters',//,
      $          56X,'MEDIAN   No. of',/,
      $          39X,'TAU    P-VALUE    SLOPE   PEAKS',/,
      $          32X,'---------------------------------------',/,
@@ -1492,9 +1504,9 @@ C         valid systematic peak
  10   CONTINUE
 C
       CALL KENT (LPKS,LNPKS,
-     O           LTAU,LPLEV,LSLOPE)
+     O           KENTAU,KENPVL,KENSLP)
 C
-      WRITE(MSG,2000) LTAU,LPLEV,LSLOPE,LNPKS
+      WRITE(MSG,2000) KENTAU,KENPVL,KENSLP,LNPKS
 C
       RETURN
       END
@@ -3923,7 +3935,7 @@ C
       SUBROUTINE   STOREDATA
      I                      (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                       XQUAL,IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,
-     I                       TXPROB,HSTFLG,NOCLIM,CLIML,CLIMU,WRCSKW,
+     I                       TXPROB,HSTFLG,CLIML,CLIMU,WRCSKW,
      I                       RMSEGS,STNIND,HEADER)
 C
 C     + + + PURPOSE + + +
@@ -3934,7 +3946,7 @@ C
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       NPKS,NPKPLT,IPKPTR(NPKS),IPKSEQ(NPKS),
-     1              NPLOT,HSTFLG,NOCLIM,STNIND
+     1              NPLOT,HSTFLG,STNIND
       REAL          PKS(NPKS),PKLOG(NPKS),SYSPP(NPKS),WRCPP(NPKS),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
      $              CLIML(NPLOT),CLIMU(NPLOT),WRCSKW,RMSEGS
@@ -3962,7 +3974,6 @@ C              (plot with solid line)
 C     TXPROB - tabular abscissa standard deviates for fitted curve
 C              (plot with dashed and solid line)
 C     HSPFLG - flag for use of historic info, 0-used, 1-not used
-C     NOCLIM - flag for confidence limits, 0-available, 1-not available
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     STNIND - index number of this station
@@ -4058,7 +4069,7 @@ C
      I                     (STNIND,
      O                      NPKPLT,PKLOG,SYSPP,WRCPP,IXQUAL,IPKSEQ,
      O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     O                      NOCLIM,CLIML,CLIMU,NT,THR,PPTH,NOBSTH,
+     O                      CLIML,CLIMU,NT,THR,PPTH,NOBSTH,
      O                      THRSYR,THREYR,NINTVL,INTLWR,INTUPR,INTPPOS,
      O                      GBCRIT,NLOW,NZERO,SKEW,RMSEGS,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
@@ -4071,7 +4082,7 @@ C
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,
-     $              HSTFLG,NOCLIM,NT,NOBSTH(200),THRSYR(200),
+     $              HSTFLG,NT,NOBSTH(200),THRSYR(200),
      $              THREYR(200),NINTVL,NLOW,NZERO
       REAL          PKLOG(200),SYSPP(200),WRCPP(200),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
@@ -4099,7 +4110,6 @@ C              (plot with solid line)
 C     TXPROB - tabular abscissa standard deviates for fitted curve
 C              (plot with dashed and solid line)
 C     HSPFLG - flag for use of historic info, 0-used, 1-not used
-C     NOCLIM - flag for confidence limits, 0-available, 1-not available
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     NT     - number of perception thresholds
@@ -4456,6 +4466,283 @@ C
  5      CONTINUE
         IPKSEQ(I)= STNDATA(STNIND)%IPKSEQ(I)
  10   CONTINUE
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   PRTEXP
+     I                      (EXPFUN,NSYS,NHIST,WRCSKW,WRCMN,WRCSD,
+     I                       KENTAU,KENPVL,KENSLP,NPLOT,WRCFC,
+     I                       TXPROB,CLIML,CLIMU,VAREST,
+     I                       STNIND,STAID,HEADER,EMAOPT)
+C
+C     + + + PURPOSE + + +
+C     Output analysis results to PeakFQ export file
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT
+      REAL          WRCSKW,WRCMN,WRCSD,KENTAU,KENPVL,KENSLP,
+     $              WRCFC(NPLOT),TXPROB(NPLOT),
+     $              CLIML(NPLOT),CLIMU(NPLOT)
+      DOUBLE PRECISION VAREST(NPLOT)
+      CHARACTER*(*) STAID
+      CHARACTER*80  HEADER
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     NSYS   - number of systematic peaks
+C     NHIST  - number of historic peaks
+C     WRCFC  - log10 ordinates of fitted curve, WRC estimates
+C              (plot with solid line)
+C     TXPROB - tabular abscissa standard deviates for fitted curve
+C              (plot with dashed and solid line)
+C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
+C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
+C     STNIND - index number of this station
+C     HEADER - Title header for each station's analysis
+C
+C     + + + PARAMETERS + + +
+      INCLUDE 'pmxint.inc'
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I
+      DOUBLE PRECISION KVALS(MXINT)
+      CHARACTER*1 LTAB
+      CHARACTER*4 LCHTYPE
+      CHARACTER*8 LLABEL
+C
+C     + + + FUNCTIONS + + +
+      DOUBLE PRECISION KFXX
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL KFXX
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC DBLE, REAL
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A,2X,A)
+ 2010 FORMAT (4X,'Analysis',A,A4,/,
+     $        4X,'WRCSKW  ',A,F8.3,/,4X,'WRCMN   ',A,F8.3,/,
+     $        4X,'WRCSD   ',A,F8.3,/,4X,'YRSPK   ',A,I8,/,
+     $        4X,'YRSHPK  ',A,I8,/,  4X,'KENTAU  ',A,F8.3,/,
+     $        4X,'KENPLV  ',A,F8.3,/,4X,'KENSLP  ',A,F8.3)
+ 2020 FORMAT (4X,A8,32(A,F8.4))
+ 2030 FORMAT (4X,A8,32(A,F8.0))
+ 2040 FORMAT (4X,A8,32(A,A8))
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      LTAB = CHAR(9)
+      WRITE(EXPFUN,2000) STAID,HEADER
+      IF (EMAOPT.EQ.1) THEN
+        LCHTYPE = 'EMA '
+      ELSE
+        LCHTYPE = 'B17B'
+      END IF
+      WRITE(EXPFUN,2010) LTAB,LCHTYPE,LTAB,WRCSKW,LTAB,WRCMN,
+     $                   LTAB,WRCSD,LTAB,NSYS,LTAB,NHIST,
+     $                   LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
+      LLABEL = 'EXC_Prob'
+      WRITE(EXPFUN,2020) LLABEL,(LTAB,TXPROB(I),I=1,NPLOT)
+      IF (EMAOPT .EQ. 1) THEN
+        LLABEL = 'B17B_Est'
+      ELSE
+        LLABEL = 'EMA_Est '
+      END IF
+      WRITE(EXPFUN,2030) LLABEL,(LTAB,10**WRCFC(I),I=1,NPLOT)
+      LLABEL = 'Variance'
+      IF (EMAOPT .EQ. 1) THEN
+        WRITE(EXPFUN,2020)LLABEL,(LTAB,REAL(10**VAREST(I)),I=1,NPLOT)
+      ELSE
+        WRITE(EXPFUN,2040) LLABEL,(LTAB,'    ----',I=1,NPLOT)
+      END IF
+      LLABEL = 'Conf_Low'
+      WRITE(EXPFUN,2030) LLABEL,(LTAB,10**CLIML(I),I=1,NPLOT)
+      LLABEL = 'Conf_Up '
+      WRITE(EXPFUN,2030) LLABEL,(LTAB,10**CLIMU(I),I=1,NPLOT)
+      LLABEL = 'K-Value'
+      DO 10 I= 1,NPLOT
+        KVALS(I) = KFXX(DBLE(WRCSKW),DBLE(TXPROB(I)))
+ 10   CONTINUE
+      WRITE(EXPFUN,2020) LLABEL,(LTAB,REAL(KVALS(I)),I=1,NPLOT)
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   PRTEMP
+     I                   (MSG,NPKS,IPKSEQ,PKS,GAGEB,IPKPTR,
+     I                    SYSPP,WRCPP,WEIBA,EMAOPT)
+C
+C     + + + PURPOSE + + +
+C     Prints Empirical Frequency Curve table to separate output file.
+C     Input peaks printed in ranked order with systematic and WRC
+C     plotting positions. Output is tab-separated.
+C
+C     NOTE -- THE PEAKS AND THEIR PLOTTING POSITIONS MUST
+C     BE LINED UP PROPERLY BY PREVIOUS CALLS TO SORTM
+C     AND ALIGNP.
+C
+C     Include perception thresholds and interval data
+C     with plotting positions, PRH 8/2010
+      Use EMAThresh
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   MSG, NPKS, EMAOPT
+      REAL    PKS(NPKS), SYSPP(NPKS), WRCPP(NPKS), WEIBA
+      REAL    GAGEB
+      INTEGER  IPKSEQ(NPKS), IPKPTR(NPKS)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     MSG    - FORTRAN unit number for output file
+C     NPKS   -
+C     IPKSEQ -
+C     PKS    -
+C     GAGEB  -
+C     IPKPTR -
+C     SYSPP  -
+C     WRCPP  -
+C     WEIBA  -
+C     EMAOPT - indicator flag for performing EMA analysis
+C              0 - no, just do traditional J407
+C              1 - yes, run EMA
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER   JLINE,         I, NB, J, ILINE, LYR, K
+      REAL    EPSILN, LTHR, UTHR, INTVAL(200)
+      CHARACTER*1 LTAB
+      CHARACTER*9 LTHRCHR(2)
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC   ABS, LOG10
+C
+C     + + + FORMATS + + +
+ 1021 FORMAT( //3X,
+     $      'EMPIRICAL FREQUENCY CURVES -- ',A,' PLOTTING POSITIONS'
+     $      / 73X, A, '** WEIBA =', F6.3, ' ***' )
+ 1022 FORMAT('   WATER     RANKED   SYSTEMATIC     B17B' / 
+     $       '    YEAR   DISCHARGE    RECORD     ESTIMATE')
+ 2022 FORMAT('   WATER     RANKED   SYSTEMATIC',5X,
+     $       'EMA',10X,'THRESHOLDS',7X,'INTERVALS' / 
+     $       '    YEAR   DISCHARGE    RECORD     ',
+     $       'ESTIMATE',5X,'LOWER    UPPER    LOW      HIGH')
+ 1023 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4)
+C     $      2A1,T20,'       --  ',  1A1, '       --  ' )
+ 2023 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4,A,A9,A,A9)
+C     $      2A1,T20,'       --  ',  1A1, '       --  ' )
+ 2024 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4,A,A9,A,A9,A,F10.0,A,F10.0)
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA   EPSILN/1.0E-6/
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      LTAB = CHAR(9)
+C
+      IF (EMAOPT.EQ.1 .AND. NINTERVAL.GT.0) THEN
+C       output interval data
+        DO 220 I = 1, NINTERVAL
+C         save average of interval lower/upper bounds
+          INTVAL(I)= 10**((LOG10(INTERVAL(I)%INTRVLLWR) + 
+     $                     LOG10(INTERVAL(I)%INTRVLUPR))/2)
+ 220    CONTINUE
+      END IF
+C
+C     write table of frequency curves
+      JLINE = 0
+  302 CONTINUE
+        ILINE = JLINE+1
+        IF ( ABS(WEIBA).GT.EPSILN ) THEN
+          WRITE(MSG,1021) 'WEIBXXX', '*', WEIBA
+        ELSE
+          WRITE(MSG,1021) 'WEIBULL'
+        END IF
+        IF (EMAOPT.EQ.1) THEN
+          WRITE(MSG,2022)
+        ELSE
+          WRITE(MSG,1022)
+        END IF
+C       IF(ILINE.GT.1)WRITE(MSG,1027)
+        JLINE = NPKS
+        DO 310 I = ILINE,JLINE
+          NB = 1
+          IF(IPKSEQ(IPKPTR(I)) .LT. 0)    NB = 2
+          IF(PKS(IPKPTR(I)) .LE. GAGEB )  NB = 3
+          IF (EMAOPT .EQ. 1) THEN
+C           include thresholds and intervals
+            IF (NINTERVAL .GT. 0) THEN
+              DO 308 J = 1,NINTERVAL
+                LYR = 0
+                IF (I .EQ. ILINE) THEN
+C                 see if any intervals bigger than 1st peak
+                  IF (INTVAL(J) .GE. PKS(IPKPTR(I))) THEN
+                    LYR = INTERVAL(J)%INTRVLYR
+                  END IF
+                ELSEIF (INTVAL(J) .GE. PKS(IPKPTR(I)) .AND.
+     $                  INTVAL(J) .LT. PKS(IPKPTR(I-1))) THEN
+C                 interval is between current and previous peak
+                  LYR = INTERVAL(J)%INTRVLYR
+                END IF
+                IF (LYR .GT. 0) THEN
+C                 need to print interval record
+                  LTHR = 0.0
+                  UTHR = 1.0E20
+                  IF (NTHRESH .GT. 0) THEN
+                    DO 303 K = 1, NTHRESH
+                      IF (LYR .GE. THRESH(K)%THRBYR .AND. 
+     $                    LYR .LE. THRESH(K)%THREYR) THEN
+                        LTHR = THRESH(K)%THRLWR
+                        UTHR = THRESH(K)%THRUPR
+                      END IF
+ 303                CONTINUE  
+                  END IF
+                  WRITE(LTHRCHR(1),'(F9.0)') LTHR
+                  IF (UTHR .GT. 1.0E10) THEN
+                    WRITE(LTHRCHR(2),'(A9)') '      inf'
+                  ELSE
+                    WRITE(LTHRCHR(2),'(F9.0)') UTHR
+                  END IF
+                  WRITE(MSG,2024) LYR,LTAB,INTVAL(J),LTAB,
+     $                            INTERVAL(J)%INTRVLPP,LTAB,
+     $                            INTERVAL(J)%INTRVLPP,LTAB,
+     $                            LTHRCHR(1),LTAB,LTHRCHR(2),LTAB,
+     $                            INTERVAL(J)%INTRVLLWR,LTAB,
+     $                            INTERVAL(J)%INTRVLUPR
+                END IF
+ 308          CONTINUE
+            END IF
+            LYR = ABS(IPKSEQ(IPKPTR(I)))
+            LTHR = 0.0
+            UTHR = 1.0E20
+            IF (NTHRESH .GT. 0) THEN
+              DO 309 J = 1, NTHRESH
+                IF (LYR .GE. THRESH(J)%THRBYR .AND. 
+     $              LYR .LE. THRESH(J)%THREYR) THEN
+                  LTHR = THRESH(J)%THRLWR
+                  UTHR = THRESH(J)%THRUPR
+                END IF
+ 309          CONTINUE  
+            END IF
+            WRITE(LTHRCHR(1),'(F9.0)') LTHR
+            IF (UTHR .GT. 1.0E10) THEN
+              WRITE(LTHRCHR(2),'(A9)') '      inf'
+            ELSE
+              WRITE(LTHRCHR(2),'(F9.0)') UTHR
+            END IF
+            WRITE(MSG,2023) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),LTAB,
+     $                    SYSPP(I),LTAB,WRCPP(I),LTAB,LTHRCHR(1),LTAB,
+     $                    LTHRCHR(2),LTAB,(' ',J=1,NB)
+          ELSE
+C           no thresholds or intervals
+            WRITE(MSG,1023) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),LTAB,
+     $                      SYSPP(I),LTAB,WRCPP(I)
+C                           , (' ',J=1,NB)
+          END IF
+  310   CONTINUE
+      IF(JLINE.LT.NPKS) GO TO 302
 C
       RETURN
       END
