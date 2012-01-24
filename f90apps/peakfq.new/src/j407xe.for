@@ -67,7 +67,8 @@ C      + + + LOCAL VARIABLES + + +
       REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
      &          NSKIP1, NPKS, I, NPKPLT, 
-     $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT
+     $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT, ECHFUN
+      CHARACTER*1 LTAB
 Cprh     $      , SCLU, CNUM, CLEN, SGRP, MXLN, SCI, IWRT
 C
 C     + + + EQUIVALENCES + + +
@@ -89,8 +90,8 @@ C     + + + EXTERNALS + + +
       EXTERNAL   SETEMADATA, PRTEXP, PRTEMP
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA  IER,  NFCXPG ,  JSEQNO, IOPT
-     $     /  0,   -777 ,     0 ,    5 /
+      DATA  IER,  NFCXPG ,  JSEQNO, IOPT, ECHFUN
+     $     /  0,   -777 ,     0 ,    5 ,   18/
 C
 C     + + + FORMATS + + +
  1000 FORMAT(///' End PeakFQ analysis.'
@@ -102,6 +103,10 @@ C     + + + FORMATS + + +
      $       'for the stations listed below.',
      $    /, '(Card type must be Y, Z, N, H, I, 2, 3, 4,  or *.)',
      $    /, '(2, 4, and * records are ignored.)')
+ 2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,'HISTPD',A,
+     $        'SKEWOPT',A,'GENSKEW',A,'SKEWSTD',A,'SKEWMSE',A,
+     $        'LO OUT',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
+     $        'LATITUDE',A,'LONGITUDE')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -155,13 +160,18 @@ C
         JSEQNO = 0
       END IF
 C
+      LTAB = CHAR(9)
+C     open input data echo file
+      OPEN (ECHFUN,FILE='PEAKFQ.ECH',STATUS='REPLACE')
+      WRITE(ECHFUN,2010) (LTAB,I=1,14)
+
 C     for ascii input need to reset start flag for 1st record read
       ISTART = 0
 C
   100 CONTINUE
         JSEQNO = JSEQNO + 1
 C
-        CALL INPUT (IA1,IA3,INFORM,MAXPKS,IA3,IBCPUN,
+        CALL INPUT (IA1,IA3,INFORM,MAXPKS,IA3,IBCPUN,ECHFUN,
      M              ISTART,
      O              STAID,PKS,IPKSEQ,XQUAL,IQUAL, 
      O              NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,LOTYPE,GAGEB,
@@ -381,6 +391,9 @@ C
 C
   970 CONTINUE
       WRITE(MSG,1000) NPROC,NERR,NSKIP,NSTAYR
+C
+C     close echo file
+      CLOSE(ECHFUN)
 C
       RETURN
       END
@@ -1564,7 +1577,7 @@ C
 C
 C
       SUBROUTINE   INPUT
-     I              (IA1,IA3,INFORM,MAXPKS,WDMSFL,IBCPUN,
+     I              (IA1,IA3,INFORM,MAXPKS,WDMSFL,IBCPUN,ECHFUN,
      M               ISTART,
      O               STAID,PKSABG,IWYSN,XQUAL,IQUAL, 
      O               NHIST,NSYS,HISTPD,  QHIOUT,QLWOUT,LOTYPE,GAGEB,
@@ -1575,7 +1588,7 @@ C     RE-WRITTEN FOR PRIME VERSION 3.8-P,  WK, 7/88.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   IA1,IA3, INFORM, MAXPKS, EMAOPT, WDMSFL, NHIST, 
-     &          NSYS, ISKUOP, NSKIP1, IRC, ISTART, IBCPUN
+     &          NSYS, ISKUOP, NSKIP1, IRC, ISTART, IBCPUN, ECHFUN
       INTEGER                     IWYSN(MAXPKS),  IQUAL(MAXPKS)
       REAL       PKSABG(MAXPKS)
       REAL       HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
@@ -1595,6 +1608,7 @@ C              2 - Watstore BCD file
 C              3 - Both WDM and BCD
 C              4 - Tab-separated file
 C              5 - Both WDM and Tab-separated
+C     ECHFUN - FORTRAN unit number for input echo file 
 C     ISTART -
 C     STAID  -
 C     PKSABG -
@@ -1634,13 +1648,13 @@ C
 C       do nothing
 C
       ELSE IF ( INFORM .EQ. 1 )  THEN
-        CALL INPUT1(IA1, IA3, IBCPUN,
+        CALL INPUT1(IA1, IA3, IBCPUN, ECHFUN,
      I              MAXPKS, STAID, PKSABG, IWYSN, XQUAL,
      O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB, 
      O              GENSKU,RMSEGS,ISKUOP, NSKIP1, EMAOPT, IRC)
 C
       ELSE IF ( INFORM .EQ. 2 )  THEN
-        CALL INPUT2(IA1, MAXPKS, WDMSFL,
+        CALL INPUT2(IA1, MAXPKS, WDMSFL, ECHFUN,
      M              ISTART,
      O              STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
      O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB,
@@ -1664,7 +1678,7 @@ C
 C
 C
       SUBROUTINE   INPUT2
-     I                 (  MESSFL, MAXPKS, WDMSFL,
+     I                 (  MESSFL, MAXPKS, WDMSFL, ECHFUN,
      M                    ISTART,
      O                    STAID, PKSABG, IWYSN, XQUAL, IQUAL, NHIST, 
      O                    NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB,
@@ -1683,7 +1697,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MAXPKS, NHIST, NSYS, ISKUOP, NSKIP1, IRC, ISTART
       INTEGER   MESSFL,         IWYSN(MAXPKS) , IQUAL(MAXPKS)
-      INTEGER   EMAOPT, WDMSFL
+      INTEGER   EMAOPT, WDMSFL, ECHFUN
       REAL      PKSABG(MAXPKS)
       REAL      HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
       CHARACTER*(*) XQUAL(MAXPKS)
@@ -1694,6 +1708,7 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     MESSFL - Fortran unit number of AIDE message file
 C     ISTART - flag 1st time = 0, else > 0.
 C     WDMSFL - FORTRAN unit number of input WDM file
+C     ECHFUN - FORTRAN unit number for input echo file 
 C     MAXPKS - MAX NUMBER OF PEAKS THAT CAN BE STORED IN DATA ARRAYS
 C     STAID  - CHARACTER STRING STATION ID NO AND NAME --
 C              1-15 = 15-DIGIT STATION ID NO.  (8-DIGIT D.S. ORDER NO,
@@ -1732,8 +1747,10 @@ C
 C     + + + LOCAL VARIABLES + + +
       REAL      AUX(13),  FLAT, FLONG, GAGEBT, XSYSPK,XHSTPK
       LOGICAL   BIT(15) ,  NOHIST,  REJECT
-      CHARACTER*1   LQCODE(6)
-      CHARACTER*4  LREG
+      CHARACTER*1   LQCODE(6),LTAB
+      CHARACTER*3  CHKROPT
+      CHARACTER*4  LREG,CHEMAOPT
+      CHARACTER*11 CHSKUOP
 Cprh      CHARACTER*15 CD
       CHARACTER*18 CURSTA
       INTEGER   MSG, NOBS, IBEGYR, IENDYR, IHOPTI, IKROPT, I, IBEGIN,
@@ -1768,6 +1785,8 @@ C     + + + FORMATS + + +
   486 FORMAT(/' *** INPUT2 - REQUESTED YEARS NOT IN RECORD',4I8,3X,
      $        30A1/  /' *** SKIPPING FOR NEXT STATION.')
   493 FORMAT(I4,'-',I4)
+ 2000 FORMAT (A18,A,A4,A,I4,A,I4,A,F5.0,A,A11,A,3(F6.3,A),
+     $        3(F8.0,A),A3,A,F8.3,A,F8.3)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1786,6 +1805,7 @@ Cprh      L15= 15
       NSYS   = 0
       NHIST  = 0
       LSTART = ISTART
+      LTAB   = CHAR(9)
 Cprh      SCLU   = 121
 C
   100 CONTINUE
@@ -1893,7 +1913,7 @@ C             not too many peaks & user wants to continue
               FLONG     =  AUX(13)
 C             default to Bull 17B analysis
               EMAOPT = 0
-C             default low outlier test to multiple GB
+C             default low outlier test to single GB
               LOTYPE = 'GBT'
 C
               IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
@@ -1904,7 +1924,31 @@ C             update specs
      M                            GAGEB,RMSEGS,IBEGYR,IENDYR,
      M                            ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
               
-C 
+C
+C             write inputs to echo file
+              IF (EMAOPT.EQ.1) THEN
+                CHEMAOPT = 'EMA '
+              ELSE
+                CHEMAOPT = 'B17B'
+              END IF
+              IF (ISKUOP.EQ.0) THEN
+                CHSKUOP = 'WEIGHTED'
+              ELSE IF (ISKUOP.EQ.-1) THEN
+                CHSKUOP = 'STATION'
+              ELSE
+                CHSKUOP = 'GENERALIZED'
+              END IF
+              IF (IKROPT.EQ.1) THEN
+                CHKROPT = 'YES'
+              ELSE
+                CHKROPT = 'NO'
+              END IF
+              WRITE(ECHFUN,2000) CURSTA,LTAB,CHEMAOPT,LTAB,IBEGYR,LTAB,
+     $                           IENDYR,LTAB,HISTPD,LTAB,CHSKUOP,LTAB,
+     $                           GENSKU,LTAB,RMSEGS,LTAB,RMSEGS**2,LTAB,
+     $                           QLWOUT,LTAB,QHIOUT,LTAB,GAGEB,LTAB,
+     $                           CHKROPT,LTAB,FLAT,LTAB,FLONG
+C
               NOHIST = HISTPD.LE.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
               GAGEBT= 0.
 C
