@@ -276,12 +276,12 @@ C             output export file
               CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
      I                     KENTAU,KENPVL,KENSLP,NFCXPG,WRCFC(INDX1),
      I                     TXPROB(INDX1),CLIML(INDX1),CLIMU(INDX1),
-     I                     VAREST(INDX1),JSEQNO,STAID,HEADNG(9),EMAOPT)
+     I                     VAREST(INDX1),JSEQNO,HEADNG(9),EMAOPT)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
               CALL PRTEMP(EMPFUN,NPKS,IPKSEQ,PKS,GAGEB,IPKPTR,
-     I                    SYSPP,WRCPP,WEIBA,EMAOPT)
+     I                    SYSPP,WRCPP,WEIBA,EMAOPT,HEADNG(9))
             END IF
 
             IF (QHIOUT .LE. 0.01 .AND. HISTPD .LE. 0.5) THEN
@@ -4476,7 +4476,7 @@ C
      I                      (EXPFUN,NSYS,NHIST,WRCSKW,WRCMN,WRCSD,
      I                       KENTAU,KENPVL,KENSLP,NPLOT,WRCFC,
      I                       TXPROB,CLIML,CLIMU,VAREST,
-     I                       STNIND,STAID,HEADER,EMAOPT)
+     I                       STNIND,HEADER,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     Output analysis results to PeakFQ export file
@@ -4487,7 +4487,6 @@ C     + + + DUMMY ARGUMENTS + + +
      $              WRCFC(NPLOT),TXPROB(NPLOT),
      $              CLIML(NPLOT),CLIMU(NPLOT)
       DOUBLE PRECISION VAREST(NPLOT)
-      CHARACTER*(*) STAID
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -4522,7 +4521,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC DBLE, REAL
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT (A,2X,A)
+ 2000 FORMAT (A80)
  2010 FORMAT (4X,'Analysis',A,A4,/,
      $        4X,'WRCSKW  ',A,F8.3,/,4X,'WRCMN   ',A,F8.3,/,
      $        4X,'WRCSD   ',A,F8.3,/,4X,'YRSPK   ',A,I8,/,
@@ -4535,7 +4534,7 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
       LTAB = CHAR(9)
-      WRITE(EXPFUN,2000) STAID,HEADER
+      WRITE(EXPFUN,2000) HEADER
       IF (EMAOPT.EQ.1) THEN
         LCHTYPE = 'EMA '
       ELSE
@@ -4575,7 +4574,7 @@ C
 C
       SUBROUTINE   PRTEMP
      I                   (MSG,NPKS,IPKSEQ,PKS,GAGEB,IPKPTR,
-     I                    SYSPP,WRCPP,WEIBA,EMAOPT)
+     I                    SYSPP,WRCPP,WEIBA,EMAOPT,HEADER)
 C
 C     + + + PURPOSE + + +
 C     Prints Empirical Frequency Curve table to separate output file.
@@ -4595,6 +4594,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL    PKS(NPKS), SYSPP(NPKS), WRCPP(NPKS), WEIBA
       REAL    GAGEB
       INTEGER  IPKSEQ(NPKS), IPKPTR(NPKS)
+      CHARACTER*80 HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MSG    - FORTRAN unit number for output file
@@ -4619,21 +4619,23 @@ C
 C     + + + INTRINSICS + + +
       INTRINSIC   ABS, LOG10
 C
-C     + + + FORMATS + + +
- 1021 FORMAT( //3X,
-     $      'EMPIRICAL FREQUENCY CURVES -- ',A,' PLOTTING POSITIONS'
-     $      / 73X, A, '** WEIBA =', F6.3, ' ***' )
- 1022 FORMAT('   WATER     RANKED   SYSTEMATIC     B17B' / 
-     $       '    YEAR   DISCHARGE    RECORD     ESTIMATE')
- 2022 FORMAT('   WATER     RANKED   SYSTEMATIC',5X,
-     $       'EMA',10X,'THRESHOLDS',7X,'INTERVALS' / 
-     $       '    YEAR   DISCHARGE    RECORD     ',
-     $       'ESTIMATE',5X,'LOWER    UPPER    LOW      HIGH')
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT(A80)
+ 1021 FORMAT( 3X,'EMPIRICAL FREQUENCY CURVES -- ',A,
+     $       ' PLOTTING POSITIONS'/ 73X, A, '** WEIBA =', F6.3, ' ***')
+ 1022 FORMAT('   WATER',A,'   RANKED',A,'SYSTEMATIC',A,'      B17B' / 
+     $       '    YEAR',A,'DISCHARGE',A,'    RECORD',A,'  ESTIMATE')
+ 2022 FORMAT('   WATER',A,'   RANKED',A,'SYSTEMATIC',A,'       EMA',A,
+     $       'THRESHOLDS',2A,'INTERVALS' / 
+     $       '    YEAR',A,'DISCHARGE',A,'    RECORD',A,'  ESTIMATE',A,
+     $       'LOWER',A,'UPPER',A,'  LOW',A,' HIGH')
  1023 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4)
-C     $      2A1,T20,'       --  ',  1A1, '       --  ' )
+ 1024 FORMAT(I8,A,F11.1,A,'       --  ',A,F12.4)
+ 1025 FORMAT(I8,A,F11.1,A,'       --  ',A,'       --  ')
  2023 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4,A,A9,A,A9)
-C     $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2024 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4,A,A9,A,A9,A,F10.0,A,F10.0)
+ 2024 FORMAT(I8,A,F11.1,A,'       --  ',A,F12.4,A,A9,A,A9)
+ 2025 FORMAT(I8,A,F11.1,A,'       --  ',A,'       --  ',A,A9,A,A9)
+ 2030 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4,A,A9,A,A9,A,F10.0,A,F10.0)
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA   EPSILN/1.0E-6/
@@ -4652,6 +4654,8 @@ C         save average of interval lower/upper bounds
       END IF
 C
 C     write table of frequency curves
+      WRITE(MSG,2000) HEADER
+C
       JLINE = 0
   302 CONTINUE
         ILINE = JLINE+1
@@ -4661,16 +4665,13 @@ C     write table of frequency curves
           WRITE(MSG,1021) 'WEIBULL'
         END IF
         IF (EMAOPT.EQ.1) THEN
-          WRITE(MSG,2022)
+          WRITE(MSG,2022) (LTAB,J=1,13)
         ELSE
-          WRITE(MSG,1022)
+          WRITE(MSG,1022) (LTAB,J=1,6)
         END IF
-C       IF(ILINE.GT.1)WRITE(MSG,1027)
         JLINE = NPKS
         DO 310 I = ILINE,JLINE
           NB = 1
-          IF(IPKSEQ(IPKPTR(I)) .LT. 0)    NB = 2
-          IF(PKS(IPKPTR(I)) .LE. GAGEB )  NB = 3
           IF (EMAOPT .EQ. 1) THEN
 C           include thresholds and intervals
             IF (NINTERVAL .GT. 0) THEN
@@ -4705,7 +4706,7 @@ C                 need to print interval record
                   ELSE
                     WRITE(LTHRCHR(2),'(F9.0)') UTHR
                   END IF
-                  WRITE(MSG,2024) LYR,LTAB,INTVAL(J),LTAB,
+                  WRITE(MSG,2030) LYR,LTAB,INTVAL(J),LTAB,
      $                            INTERVAL(J)%INTRVLPP,LTAB,
      $                            INTERVAL(J)%INTRVLPP,LTAB,
      $                            LTHRCHR(1),LTAB,LTHRCHR(2),LTAB,
@@ -4732,14 +4733,31 @@ C                 need to print interval record
             ELSE
               WRITE(LTHRCHR(2),'(F9.0)') UTHR
             END IF
-            WRITE(MSG,2023) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),LTAB,
-     $                    SYSPP(I),LTAB,WRCPP(I),LTAB,LTHRCHR(1),LTAB,
-     $                    LTHRCHR(2),LTAB,(' ',J=1,NB)
+            IF (IPKSEQ(IPKPTR(I)) .LT. 0) THEN
+              WRITE(MSG,2024) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+     $                        LTAB,LTAB,WRCPP(I),LTAB,
+     $                        LTHRCHR(1),LTAB,LTHRCHR(2)
+            ELSEIF (PKS(IPKPTR(I)) .LE. GAGEB) THEN
+              WRITE(MSG,2025) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+     $                        LTAB,LTAB,LTAB,
+     $                        LTHRCHR(1),LTAB,LTHRCHR(2)
+            ELSE
+              WRITE(MSG,2023) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+     $                        LTAB,SYSPP(I),LTAB,WRCPP(I),LTAB,
+     $                        LTHRCHR(1),LTAB,LTHRCHR(2)
+            END IF
           ELSE
 C           no thresholds or intervals
-            WRITE(MSG,1023) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),LTAB,
-     $                      SYSPP(I),LTAB,WRCPP(I)
-C                           , (' ',J=1,NB)
+            IF (IPKSEQ(IPKPTR(I)) .LT. 0) THEN
+              WRITE(MSG,1024) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+     $                        LTAB,LTAB,WRCPP(I)
+            ELSEIF (PKS(IPKPTR(I)) .LE. GAGEB) THEN
+              WRITE(MSG,1025) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+     $                        LTAB,LTAB
+            ELSE
+              WRITE(MSG,1023) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+     $                        LTAB,SYSPP(I),LTAB,WRCPP(I)
+            END IF
           END IF
   310   CONTINUE
       IF(JLINE.LT.NPKS) GO TO 302
