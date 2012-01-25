@@ -2,7 +2,7 @@ C
 C
 C
       SUBROUTINE   INPUT1
-     I                   (MESSFL,WDMSFL,IBCPUN,MAXPKS,
+     I                   (MESSFL,WDMSFL,IBCPUN,ECHFUN,MAXPKS,
      I                    STAID,PKSABG,IWYSN,XQUAL,
      O                    NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,
      O                    GAGEB,GENSKU,RMSEGS,ISKUOP,NSKIP1,EMAOPT,IRC)
@@ -16,7 +16,7 @@ C     updated for batch version of PEAKFQ, 9/03
 C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   MESSFL, WDMSFL, IBCPUN, MAXPKS, IWYSN(MAXPKS),
+      INTEGER   MESSFL, WDMSFL, IBCPUN, ECHFUN, MAXPKS, IWYSN(MAXPKS),
      &          NHIST, NSYS, ISKUOP, NSKIP1, EMAOPT, IRC
       REAL      PKSABG(MAXPKS), HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU,
      &          RMSEGS
@@ -33,6 +33,7 @@ C              2 - Watstore BCD file
 C              3 - Both WDM and BCD
 C              4 - Tab-separated file
 C              5 - Both WDM and tab-separated
+C     ECHFUN - FORTRAN unit number for input echo file 
 C     MAXPKS - max number of peaks that can be stored in data arrays
 C     STAID  - character string station id number and name
 C               1-15 - 15-digit station id number or
@@ -103,7 +104,8 @@ C
 C     + + + EXTERNALS + + +
       EXTERNAL     WDBSGC, WDBSGI, INTCHR, ZIPC, WDTBFX, GETTS, GETTB
       EXTERNAL     STRLNX, CARVAR, STRFND, WDBSGR, SIMIN, SIMAX
-      EXTERNAL     CHRCHR, WDBSAI, COMSKU, DSINF1, PARSESTASPECS, LFTSTR
+      EXTERNAL     CHRCHR, WDBSAI, COMSKU, DSINF1, LFTSTR
+      EXTERNAL     PARSESTASPECS, ECHOINPUT
 C
 C     + + + DATA INITIALIZATION + + +
       DATA  L1/1/, L5/5/, L4/4/, L70/70/, L90/90/, 
@@ -299,6 +301,11 @@ C           get any specs from spec file
      M                          GENSKU,HISTPD,QHIOUT,QLWOUT,
      M                          GAGEB,RMSEGS,BYR,EYR,
      M                          ISKUOP,URBREG,FLAT,FLONG,EMAOPT)
+C
+C           write inputs to echo file
+            CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BYR,EYR,
+     I                      HISTPD,ISKUOP,GENSKU,RMSEGS,QLWOUT,
+     I                      QHIOUT,GAGEB,URBREG,FLAT,FLONG)
 C
 C           Get station description/station name
             SALEN=48
