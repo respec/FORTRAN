@@ -1747,10 +1747,8 @@ C
 C     + + + LOCAL VARIABLES + + +
       REAL      AUX(13),  FLAT, FLONG, GAGEBT, XSYSPK,XHSTPK
       LOGICAL   BIT(15) ,  NOHIST,  REJECT
-      CHARACTER*1   LQCODE(6),LTAB
-      CHARACTER*3  CHKROPT
-      CHARACTER*4  LREG,CHEMAOPT
-      CHARACTER*11 CHSKUOP
+      CHARACTER*1   LQCODE(6)
+      CHARACTER*4  LREG
 Cprh      CHARACTER*15 CD
       CHARACTER*18 CURSTA
       INTEGER   MSG, NOBS, IBEGYR, IENDYR, IHOPTI, IKROPT, I, IBEGIN,
@@ -1769,7 +1767,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   PKFRD4, WCFGSM, IBITEX, LFTSTR
-      EXTERNAL   DOSTATION, PARSESTASPECS
+      EXTERNAL   DOSTATION, PARSESTASPECS, ECHOINPUT
 Cprh      EXERNAL    Q1EDIT, Q1INIT, QGETR
 Cprh      EXTERNAL   QSETR, QSETI, QGETI, QSETCO, QGETCO, QSTCTF
 Cprh      EXTERNAL   ZSTCMA, QSETRB, QGETRB
@@ -1785,8 +1783,6 @@ C     + + + FORMATS + + +
   486 FORMAT(/' *** INPUT2 - REQUESTED YEARS NOT IN RECORD',4I8,3X,
      $        30A1/  /' *** SKIPPING FOR NEXT STATION.')
   493 FORMAT(I4,'-',I4)
- 2000 FORMAT (A18,A,A4,A,I4,A,I4,A,F5.0,A,A11,A,3(F6.3,A),
-     $        3(F8.0,A),A3,A,F8.3,A,F8.3)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1805,7 +1801,6 @@ Cprh      L15= 15
       NSYS   = 0
       NHIST  = 0
       LSTART = ISTART
-      LTAB   = CHAR(9)
 Cprh      SCLU   = 121
 C
   100 CONTINUE
@@ -1923,31 +1918,11 @@ C             update specs
      M                            GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      M                            GAGEB,RMSEGS,IBEGYR,IENDYR,
      M                            ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
-              
 C
 C             write inputs to echo file
-              IF (EMAOPT.EQ.1) THEN
-                CHEMAOPT = 'EMA '
-              ELSE
-                CHEMAOPT = 'B17B'
-              END IF
-              IF (ISKUOP.EQ.0) THEN
-                CHSKUOP = 'WEIGHTED'
-              ELSE IF (ISKUOP.EQ.-1) THEN
-                CHSKUOP = 'STATION'
-              ELSE
-                CHSKUOP = 'GENERALIZED'
-              END IF
-              IF (IKROPT.EQ.1) THEN
-                CHKROPT = 'YES'
-              ELSE
-                CHKROPT = 'NO'
-              END IF
-              WRITE(ECHFUN,2000) CURSTA,LTAB,CHEMAOPT,LTAB,IBEGYR,LTAB,
-     $                           IENDYR,LTAB,HISTPD,LTAB,CHSKUOP,LTAB,
-     $                           GENSKU,LTAB,RMSEGS,LTAB,RMSEGS**2,LTAB,
-     $                           QLWOUT,LTAB,QHIOUT,LTAB,GAGEB,LTAB,
-     $                           CHKROPT,LTAB,FLAT,LTAB,FLONG
+              CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,IBEGYR,IENDYR,
+     I                        HISTPD,ISKUOP,GENSKU,RMSEGS,QLWOUT,
+     I                        QHIOUT,GAGEB,IKROPT,FLAT,FLONG)
 C
               NOHIST = HISTPD.LE.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
               GAGEBT= 0.
@@ -4655,7 +4630,7 @@ C              0 - no, just do traditional J407
 C              1 - yes, run EMA
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   JLINE,         I, NB, J, ILINE, LYR, K
+      INTEGER   JLINE,         I, J, ILINE, LYR, K
       REAL    EPSILN, LTHR, UTHR, INTVAL(200)
       CHARACTER*1 LTAB
       CHARACTER*9 LTHRCHR(2)
@@ -4715,7 +4690,6 @@ C
         END IF
         JLINE = NPKS
         DO 310 I = ILINE,JLINE
-          NB = 1
           IF (EMAOPT .EQ. 1) THEN
 C           include thresholds and intervals
             IF (NINTERVAL .GT. 0) THEN
@@ -4805,6 +4779,61 @@ C           no thresholds or intervals
           END IF
   310   CONTINUE
       IF(JLINE.LT.NPKS) GO TO 302
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   ECHOINPUT 
+     I                       (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
+     I                        HISTPD,SKUOPT,GENSKU,RMSEGS,QLWOUT,
+     I                        QHIOUT,GAGEB,URBOPT,FLAT,FLONG)
+C
+C     + + + PURPOSE + + +
+C     write input parameters to echo file
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER ECHFUN,EMAOPT,BEGYR,ENDYR,SKUOPT,URBOPT
+      REAL    HISTPD,GENSKU,RMSEGS,QLWOUT,QHIOUT,GAGEB,FLAT,FLONG
+      CHARACTER*18 CURSTA
+C
+C     + + + LOCAL VARIABLES + + +
+      CHARACTER*1 LTAB
+      CHARACTER*3 CHURBOPT
+      CHARACTER*4 CHEMAOPT
+      CHARACTER*11 CHSKUOPT
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT (A18,A,A4,A,I4,A,I4,A,F5.0,A,A11,A,3(F6.3,A),
+     $        3(F8.0,A),A3,A,F8.3,A,F8.3)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      LTAB = CHAR(9)
+C
+      IF (EMAOPT.EQ.1) THEN
+        CHEMAOPT = 'EMA '
+      ELSE
+        CHEMAOPT = 'B17B'
+      END IF
+      IF (SKUOPT.EQ.0) THEN
+        CHSKUOPT = 'WEIGHTED'
+      ELSE IF (SKUOPT.EQ.-1) THEN
+        CHSKUOPT = 'STATION'
+      ELSE
+        CHSKUOPT = 'GENERALIZED'
+      END IF
+      IF (URBOPT.EQ.1) THEN
+        CHURBOPT = 'YES'
+      ELSE
+        CHURBOPT = 'NO'
+      END IF
+      WRITE(ECHFUN,2000) CURSTA,LTAB,CHEMAOPT,LTAB,BEGYR,LTAB,
+     $                   ENDYR,LTAB,HISTPD,LTAB,CHSKUOPT,LTAB,
+     $                   GENSKU,LTAB,RMSEGS,LTAB,RMSEGS**2,LTAB,
+     $                   QLWOUT,LTAB,QHIOUT,LTAB,GAGEB,LTAB,
+     $                   CHURBOPT,LTAB,FLAT,LTAB,FLONG
 C
       RETURN
       END
