@@ -67,7 +67,7 @@ C      + + + LOCAL VARIABLES + + +
       REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
      &          NSKIP1, NPKS, I, NPKPLT, 
-     $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT, ECHFUN
+     $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT, ECHFUN, DT(6)
       CHARACTER*1 LTAB
 Cprh     $      , SCLU, CNUM, CLEN, SGRP, MXLN, SCI, IWRT
 C
@@ -87,7 +87,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT, PRTEMA
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH, PKFQSTA
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
-      EXTERNAL   SETEMADATA, PRTEXP, PRTEMP
+      EXTERNAL   SETEMADATA, PRTEXP, PRTEMP, SYDATM
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA  IER,  NFCXPG ,  JSEQNO, IOPT, ECHFUN
@@ -103,6 +103,11 @@ C     + + + FORMATS + + +
      $       'for the stations listed below.',
      $    /, '(Card type must be Y, Z, N, H, I, 2, 3, 4,  or *.)',
      $    /, '(2, 4, and * records are ignored.)')
+ 2005 FORMAT('# US Geological Survey',/,
+     $       '# PeakFQ Flood Frequency Analysis, ',
+     $       'version 6.0 dated 07/08/2011',/,
+     $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
+     $       '#',/,'# Summary of input parameters',/,'#',/)
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,'HISTPD',A,
      $        'SKEWOPT',A,'GENSKEW',A,'SKEWSTD',A,'SKEWMSE',A,
      $        'LO OUT',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
@@ -163,6 +168,15 @@ C
       LTAB = CHAR(9)
 C     open input data echo file
       OPEN (ECHFUN,FILE='PEAKFQ.ECH',STATUS='REPLACE')
+      CALL SYDATM (DT(1),DT(2),DT(3),DT(4),DT(5),DT(6))
+      IF (DT(1) .LT. 90) THEN
+C       assume 2000 or later
+        DT(1) = DT(1) + 2000
+      ELSE IF (DT(1) .LT. 100) THEN
+C       assume before 2000
+        DT(1) = DT(1) + 1900
+      END IF
+      WRITE(ECHFUN,2005) DT(2),DT(3),DT(1),DT(4),DT(5)
       WRITE(ECHFUN,2010) (LTAB,I=1,14)
 
 C     for ascii input need to reset start flag for 1st record read
@@ -306,7 +320,7 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
      I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
-     I                      JSEQNO,HEADNG(9))
+     I                      JSEQNO,HEADNG(9),ECHFUN)
             IF(NSKIP1.NE.0 )  THEN
                JSEQNO = JSEQNO + 1
 cprh           this call just creates a null page, messes up the page numbering
@@ -3955,7 +3969,7 @@ C
      I                      (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                       XQUAL,IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,
      I                       TXPROB,HSTFLG,CLIML,CLIMU,WRCSKW,
-     I                       RMSEGS,STNIND,HEADER)
+     I                       RMSEGS,STNIND,HEADER,ECHFUN)
 C
 C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
@@ -3965,7 +3979,7 @@ C
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       NPKS,NPKPLT,IPKPTR(NPKS),IPKSEQ(NPKS),
-     1              NPLOT,HSTFLG,STNIND
+     1              NPLOT,HSTFLG,STNIND,ECHFUN
       REAL          PKS(NPKS),PKLOG(NPKS),SYSPP(NPKS),WRCPP(NPKS),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
      $              CLIML(NPLOT),CLIMU(NPLOT),WRCSKW,RMSEGS
@@ -3997,6 +4011,7 @@ C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
+C     ECHFUN - FORTRAN unit number for echo file
 C
 C     + + + COMMON BLOCKS + + +
       integer nlow_V,nlow,nzero,nGBiter
@@ -4013,9 +4028,21 @@ C     used by Tim's EMA code
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
+      CHARACTER*1 LTAB
       TYPE (StnDat), ALLOCATABLE :: TMPDATA(:)      
 C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT ('#',/,'# Perception Thresholds',/,'#',/,
+     $        'Station',A,'OrderNo',A,'Begin',A,'End',A,
+     $        'Low',A,'High',A,'Comment')
+ 2010 FORMAT (2A,3(I4,A),F8.0,A,G8.1,2A)
+ 2020 FORMAT ('#',/,'# Interval Data',/,'#',/,
+     $        'Station',A,'OrderNo',A,'Date',A,
+     $        'Low',A,'High',A,'Comment')
+C
 C     + + + END SPECIFICATIONS + + +
+C
+      LTAB = CHAR(9)
 C
       IF (ALLOCATED(STNDATA)) THEN
         ALLOCATE (TMPDATA(STNIND-1))
@@ -4064,6 +4091,11 @@ C
         STNDATA(STNIND)%CLIMU(I) = CLIMU(I)
  20   CONTINUE
 C
+      IF (STNIND.EQ.1 .AND. NTHRESH.GT.0) THEN
+C       write threshold column headers to echo file
+        WRITE(ECHFUN,2000) (LTAB,I=1,6)
+      END IF
+C
       DO 30 I = 1,NTHRESH
         STNDATA(STNIND)%THRSYR(I) = THRESH(I)%THRBYR
         STNDATA(STNIND)%THREYR(I) = THRESH(I)%THREYR
@@ -4071,12 +4103,28 @@ C
         STNDATA(STNIND)%THRLWR(I) = THRESH(I)%THRLWR
         STNDATA(STNIND)%THRUPR(I) = THRESH(I)%THRUPR
         STNDATA(STNIND)%THRPP(I)  = THRESH(I)%THPP
+C       write threshold values to echo file
+        WRITE(ECHFUN,2010) HEADER(1:9),LTAB,I,LTAB,
+     $                     THRESH(I)%THRBYR,LTAB,THRESH(I)%THREYR,LTAB,
+     $                     THRESH(I)%THRLWR,LTAB,THRESH(I)%THRUPR,LTAB,
+     $                     THRESH(I)%THRCOM
  30   CONTINUE
+C
+      IF (STNIND.EQ.1) THEN
+C       write threshold column headers to echo file
+        WRITE(ECHFUN,2020) (LTAB,I=1,5)
+      END IF
 C
       DO 40 I = 1,NINTERVAL
         STNDATA(STNIND)%INTLWR(I) = INTERVAL(I)%INTRVLLWR
         STNDATA(STNIND)%INTUPR(I) = INTERVAL(I)%INTRVLUPR
         STNDATA(STNIND)%INTPPOS(I) = INTERVAL(I)%INTRVLPP
+C       write interval data to echo file
+        WRITE(ECHFUN,2020) HEADER(1:9),LTAB,I,LTAB,
+     $                     INTERVAL(I)%INTRVLYR,LTAB,
+     $                     INTERVAL(I)%INTRVLLWR,LTAB,
+     $                     INTERVAL(I)%INTRVLUPR,LTAB,
+     $                     INTERVAL(I)%INTRVLCOM
  40   CONTINUE
 C
       RETURN
