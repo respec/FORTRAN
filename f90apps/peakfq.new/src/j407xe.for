@@ -87,7 +87,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT, PRTEMA
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH, PKFQSTA
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
-      EXTERNAL   SETEMADATA, PRTEXP, PRTEMP, SYDATM
+      EXTERNAL   SETEMADATA, PRTEXP, PRTEMP, SYDATM, ECHOTHRINT
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA  IER,  NFCXPG ,  JSEQNO, IOPT, ECHFUN
@@ -320,7 +320,7 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
      I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
-     I                      JSEQNO,HEADNG(9),ECHFUN)
+     I                      JSEQNO,HEADNG(9))
             IF(NSKIP1.NE.0 )  THEN
                JSEQNO = JSEQNO + 1
 cprh           this call just creates a null page, messes up the page numbering
@@ -406,6 +406,10 @@ C
   970 CONTINUE
       WRITE(MSG,1000) NPROC,NERR,NSKIP,NSTAYR
 C
+      IF (EMAOPT .EQ. 1) THEN
+C       echo threshold and interval info     
+        CALL ECHOTHRINT (ECHFUN,JSEQNO)
+      END IF
 C     close echo file
       CLOSE(ECHFUN)
 C
@@ -3969,7 +3973,7 @@ C
      I                      (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                       XQUAL,IPKSEQ,WEIBA,NPLOT,SYSRFC,WRCFC,
      I                       TXPROB,HSTFLG,CLIML,CLIMU,WRCSKW,
-     I                       RMSEGS,STNIND,HEADER,ECHFUN)
+     I                       RMSEGS,STNIND,HEADER)
 C
 C     + + + PURPOSE + + +
 C     Store a station's I/O data for retrieval by Windows interface
@@ -3979,7 +3983,7 @@ C
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       NPKS,NPKPLT,IPKPTR(NPKS),IPKSEQ(NPKS),
-     1              NPLOT,HSTFLG,STNIND,ECHFUN
+     1              NPLOT,HSTFLG,STNIND
       REAL          PKS(NPKS),PKLOG(NPKS),SYSPP(NPKS),WRCPP(NPKS),
      &              SYSRFC(NPLOT),WRCFC(NPLOT),TXPROB(NPLOT),WEIBA,
      $              CLIML(NPLOT),CLIMU(NPLOT),WRCSKW,RMSEGS
@@ -4011,7 +4015,6 @@ C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
-C     ECHFUN - FORTRAN unit number for echo file
 C
 C     + + + COMMON BLOCKS + + +
       integer nlow_V,nlow,nzero,nGBiter
@@ -4028,21 +4031,9 @@ C     used by Tim's EMA code
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
-      CHARACTER*1 LTAB
       TYPE (StnDat), ALLOCATABLE :: TMPDATA(:)      
 C
-C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT ('#',/,'# Perception Thresholds',/,'#',/,
-     $        'Station',A,'OrderNo',A,'Begin',A,'End',A,
-     $        'Low',A,'High',A,'Comment')
- 2010 FORMAT (2A,3(I4,A),F8.0,A,G8.1,2A)
- 2020 FORMAT ('#',/,'# Interval Data',/,'#',/,
-     $        'Station',A,'OrderNo',A,'Date',A,
-     $        'Low',A,'High',A,'Comment')
-C
 C     + + + END SPECIFICATIONS + + +
-C
-      LTAB = CHAR(9)
 C
       IF (ALLOCATED(STNDATA)) THEN
         ALLOCATE (TMPDATA(STNIND-1))
@@ -4091,11 +4082,6 @@ C
         STNDATA(STNIND)%CLIMU(I) = CLIMU(I)
  20   CONTINUE
 C
-      IF (STNIND.EQ.1 .AND. NTHRESH.GT.0) THEN
-C       write threshold column headers to echo file
-        WRITE(ECHFUN,2000) (LTAB,I=1,6)
-      END IF
-C
       DO 30 I = 1,NTHRESH
         STNDATA(STNIND)%THRSYR(I) = THRESH(I)%THRBYR
         STNDATA(STNIND)%THREYR(I) = THRESH(I)%THREYR
@@ -4103,28 +4089,15 @@ C
         STNDATA(STNIND)%THRLWR(I) = THRESH(I)%THRLWR
         STNDATA(STNIND)%THRUPR(I) = THRESH(I)%THRUPR
         STNDATA(STNIND)%THRPP(I)  = THRESH(I)%THPP
-C       write threshold values to echo file
-        WRITE(ECHFUN,2010) HEADER(1:9),LTAB,I,LTAB,
-     $                     THRESH(I)%THRBYR,LTAB,THRESH(I)%THREYR,LTAB,
-     $                     THRESH(I)%THRLWR,LTAB,THRESH(I)%THRUPR,LTAB,
-     $                     THRESH(I)%THRCOM
+        STNDATA(STNIND)%THRCOM(I) = THRESH(I)%THRCOM
  30   CONTINUE
 C
-      IF (STNIND.EQ.1) THEN
-C       write threshold column headers to echo file
-        WRITE(ECHFUN,2020) (LTAB,I=1,5)
-      END IF
-C
       DO 40 I = 1,NINTERVAL
+        STNDATA(STNIND)%INTYR(I) = INTERVAL(I)%INTRVLYR
         STNDATA(STNIND)%INTLWR(I) = INTERVAL(I)%INTRVLLWR
         STNDATA(STNIND)%INTUPR(I) = INTERVAL(I)%INTRVLUPR
         STNDATA(STNIND)%INTPPOS(I) = INTERVAL(I)%INTRVLPP
-C       write interval data to echo file
-        WRITE(ECHFUN,2020) HEADER(1:9),LTAB,I,LTAB,
-     $                     INTERVAL(I)%INTRVLYR,LTAB,
-     $                     INTERVAL(I)%INTRVLLWR,LTAB,
-     $                     INTERVAL(I)%INTRVLUPR,LTAB,
-     $                     INTERVAL(I)%INTRVLCOM
+        STNDATA(STNIND)%INTCOM(I) = INTERVAL(I)%INTRVLCOM
  40   CONTINUE
 C
       RETURN
@@ -4882,6 +4855,85 @@ C
      $                   GENSKU,LTAB,RMSEGS,LTAB,RMSEGS**2,LTAB,
      $                   QLWOUT,LTAB,QHIOUT,LTAB,GAGEB,LTAB,
      $                   CHURBOPT,LTAB,FLAT,LTAB,FLONG
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   ECHOTHRINT
+     I                       (ECHFUN,STNIND)
+C
+C     + + + PURPOSE + + +
+C     write input perception thresholds and interval data to echo file
+C
+      Use StationData
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER ECHFUN,STNIND
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER     I,J,LIND
+      CHARACTER*1 LTAB
+      CHARACTER*20 LSTNID
+      CHARACTER*120 LHEADER
+C
+C     + + + FUNCTIONS + + +
+      CHARACTER*120 STRRETREM
+
+C     + + + INTRINSICS + + +
+      INTRINSIC UBOUND
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL  STRRETREM
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT ('#',/,'# Perception Thresholds',/,'#',/,
+     $        'Station',A,'OrderNo',A,'Begin',A,'End',A,
+     $        'Low',A,'High',A,'Comment')
+ 2010 FORMAT (2A,3(I4,A),F8.0,A,G8.1,2A)
+ 2020 FORMAT ('#',/,'# Interval Data',/,'#',/,
+     $        'Station',A,'OrderNo',A,'Date',A,
+     $        'Low',A,'High',A,'Comment')
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      LTAB = CHAR(9)
+C
+C     write threshold column headers to echo file
+      WRITE(ECHFUN,2000) (LTAB,I=1,6)
+C
+      LIND = UBOUND(STNDATA,1)
+C
+      DO 20 J = 1, LIND
+        DO 10 I= 1, STNDATA(J)%NTHRESH
+C         write threshold values to echo file
+          LHEADER= STNDATA(J)%HEADER(10:80)
+          LSTNID = STRRETREM(LHEADER)
+          WRITE(ECHFUN,2010) LSTNID,LTAB,I,LTAB,
+     $                       STNDATA(J)%THRSYR(I),LTAB,
+     $                       STNDATA(J)%THREYR(I),LTAB,
+     $                       STNDATA(J)%THRLWR(I),LTAB,
+     $                       STNDATA(J)%THRUPR(I),LTAB,
+     $                       STNDATA(J)%THRCOM(I)
+ 10     CONTINUE
+ 20   CONTINUE
+C
+C     write interval column headers to echo file
+      WRITE(ECHFUN,2020) (LTAB,I=1,5)
+C
+      DO 40 J = 1,LIND
+        DO 30 I= 1, STNDATA(J)%NINTRVL
+C         write interval data to echo file
+          LHEADER= STNDATA(J)%HEADER(10:80)
+          LSTNID = STRRETREM(LHEADER)
+          WRITE(ECHFUN,2020) LSTNID,LTAB,I,LTAB,
+     $                       STNDATA(J)%INTYR(I),LTAB,
+     $                       STNDATA(J)%INTLWR(I),LTAB,
+     $                       STNDATA(J)%INTUPR(I),LTAB,
+     $                       STNDATA(J)%INTCOM(I)
+ 30     CONTINUE
+ 40   CONTINUE
 C
       RETURN
       END
