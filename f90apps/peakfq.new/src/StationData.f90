@@ -16,6 +16,7 @@
         INTEGER            :: THRSYR(20)
         INTEGER            :: THREYR(20)
         INTEGER            :: THRNOB(20)
+        INTEGER            :: INTYR(200)
         INTEGER            :: NLOW
         INTEGER            :: NZERO
         REAL               :: WEIBA
@@ -37,6 +38,8 @@
         REAL               :: GBCRIT
         REAL               :: WRCSKW
         REAL               :: RMSEGS
+        CHARACTER*80       :: THRCOM(20)
+        CHARACTER*80       :: INTCOM(200)
       END TYPE
 
       TYPE (StnDat), ALLOCATABLE :: STNDATA(:)
