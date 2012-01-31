@@ -927,6 +927,7 @@ C           read 4 EMA Threshold components
 C             include all of remaining spec string for comment
               THRESH(NTHRESH)%THRCOM = KWD(1:J+1) // S
             ELSE
+              THRESH(NTHRESH)%THRCOM = ' '
               WRITE(99,*) "No value found for EMA Threshold Comment"
             END IF
           ELSE IF (KWD .EQ. 'INTERVAL') THEN
@@ -980,6 +981,7 @@ C           read 4 EMA Interval components
 C             include all of remaining spec string for comment
               INTERVAL(NINTERVAL)%INTRVLCOM = KWD(1:J+1) // S
             ELSE
+              INTERVAL(NINTERVAL)%INTRVLCOM = ' '
               WRITE(99,*) "No value found for EMA Interval Comment"
             END IF
           ELSE IF (KWD .EQ. 'PEAK') THEN
@@ -1038,6 +1040,7 @@ C             assume this is a quality code
 C             include remaining part of spec string
               NEWPKS(NNEWPKS)%PKCOM = KWD(1:J+1) // S
             ELSE
+              NEWPKS(NNEWPKS)%PKCOM = ' '
               WRITE(99,*) "No value found for Peak Comment"
             END IF
           END IF
@@ -1345,21 +1348,22 @@ C     thresholds and intervals
         DO 10 I=1,NTHRESH
           WRITE(92,*) '     PCPT_Thresh ',THRESH(I)%THRBYR,
      $                   THRESH(I)%THREYR,THRESH(I)%THRLWR,
-     $                   THRESH(I)%THRUPR,THRESH(I)%THRCOM
+     $                   THRESH(I)%THRUPR,TRIM(THRESH(I)%THRCOM)
  10     CONTINUE  
       END IF
       IF (NINTERVAL.GT.0) THEN
         DO 20 I=1,NINTERVAL
           WRITE(92,*) '     Interval ',INTERVAL(I)%INTRVLYR,
      $                   INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLUPR,
-     $                   INTERVAL(I)%INTRVLCOM
+     $                   TRIM(INTERVAL(I)%INTRVLCOM)
  20     CONTINUE  
       END IF
 C     new/revised peaks
       IF (NNEWPKS.GT.0) THEN
         DO 30 I=1,NNEWPKS
           WRITE(92,*) '     Peak ',NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
-     $                             NEWPKS(I)%PKCODE,NEWPKS(I)%PKCOM
+     $                             NEWPKS(I)%PKCODE,
+     $                             TRIM(NEWPKS(I)%PKCOM)
  30     CONTINUE  
       END IF
 C     skew parameters
