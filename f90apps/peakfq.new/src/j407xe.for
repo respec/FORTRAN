@@ -107,7 +107,7 @@ C     + + + FORMATS + + +
      $       '# PeakFQ Flood Frequency Analysis, ',
      $       'version 6.0 dated 07/08/2011',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
-     $       '#',/,'# Summary of input parameters',/,'#',/)
+     $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,'HISTPD',A,
      $        'SKEWOPT',A,'GENSKEW',A,'SKEWSTD',A,'SKEWMSE',A,
      $        'LO OUT',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
