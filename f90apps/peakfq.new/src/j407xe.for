@@ -226,6 +226,7 @@ C         need to set EMA arrays
           CALL SETEMADATA(NPKS,PKS,IPKSEQ,GAGEB)
         END IF
 C
+       IF (.NOT.UPDATEFG) THEN
 C       CALL  PRTPHD(  2001 , -999 )
         CALL  PRTINP( IDEBUG, XPKS, EMAOPT, IA3 )
 C
@@ -241,6 +242,7 @@ C
           CALL RUNEMA
           CALL PRTEMA(MSG,NSYS,HISTPD)
         END IF
+       END IF
 
         IF(IER .GE. 3)  THEN
           NERR=NERR+1
@@ -298,9 +300,10 @@ C
             IF (EXPFUN .GT. 0) THEN
 C             output export file
               CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
-     I                     KENTAU,KENPVL,KENSLP,NFCXPG,WRCFC(INDX1),
-     I                     TXPROB(INDX1),CLIML(INDX1),CLIMU(INDX1),
-     I                     VAREST(INDX1),JSEQNO,HEADNG(9),EMAOPT)
+     I                     ASMSEG,KENTAU,KENPVL,KENSLP,NFCXPG,
+     I                     WRCFC(INDX1),TXPROB(INDX1),CLIML(INDX1),
+     I                     CLIMU(INDX1),VAREST(INDX1),
+     I                     JSEQNO,HEADNG(9),EMAOPT)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
@@ -322,7 +325,7 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
      I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
      I                      JSEQNO,HEADNG(9))
             IF(NSKIP1.NE.0 )  THEN
-               JSEQNO = JSEQNO + 1
+c               JSEQNO = JSEQNO + 1
 cprh           this call just creates a null page, messes up the page numbering
 cprh           CALL PRTPHD(  1000, JSEQNO, EMAOPT, IA3 )
             ENDIF
@@ -1229,6 +1232,9 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf0.inc'
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
+C     from Tim Cohn's code, for output of EMA at-site MSE of G
+      double precision as_M_mse,as_S2_mse,as_G_mse
+      common /tac005/as_M_mse,as_S2_mse,as_G_mse
 C
 C     + + + LOCAL VARIABLES + + +
       CHARACTER*13  DWORK(6)
@@ -1279,9 +1285,11 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $         /,'   ABOVE BASE            ---     ---   ',
      $           F11.4,F12.4,F11.3)
    10 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
-     $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3)
+     $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3
+     $        //,' BULL.17B ESTIMATE OF AT-STIE MSE OF SKEW',F11.4)
    11 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
-     $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3)
+     $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3
+     $        //,' EMA ESTIMATE OF AT-STIE MSE OF SKEW',F11.4)
 cprh   15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
 cprh     $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
 cprh     $        //,'      ANNUAL                            ',
@@ -1348,12 +1356,12 @@ C
       IF (EMAOPT.EQ.0) THEN
 C       original B-17 estimates
         WRITE(MSG,10)SYSBAS,SYSPAB,SYSUAV,SYSUSD,SYSSKW,
-     $               WRCBAS,WRCPAB,WRCUAV,WRCUSD,WRCSKW
+     $               WRCBAS,WRCPAB,WRCUAV,WRCUSD,WRCSKW,ASMSEG
         WRITE(MSG,15) INT( CLSIZE*100. + .5)
       ELSE
 C       new EMA estimates
         WRITE(MSG,11)SYSBAS,SYSPAB,SYSUAV,SYSUSD,SYSSKW,
-     $               WRCBAS,WRCPAB,WRCUAV,WRCUSD,WRCSKW
+     $               WRCBAS,WRCPAB,WRCUAV,WRCUSD,WRCSKW,as_G_mse
         WRITE(MSG,16) INT( CLSIZE*100. + .5)
       END IF
 C
@@ -4514,7 +4522,7 @@ C
 C
       SUBROUTINE   PRTEXP
      I                      (EXPFUN,NSYS,NHIST,WRCSKW,WRCMN,WRCSD,
-     I                       KENTAU,KENPVL,KENSLP,NPLOT,WRCFC,
+     I                       ASMSEG,KENTAU,KENPVL,KENSLP,NPLOT,WRCFC,
      I                       TXPROB,CLIML,CLIMU,VAREST,
      I                       STNIND,HEADER,EMAOPT)
 C
@@ -4523,7 +4531,7 @@ C     Output analysis results to PeakFQ export file
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT
-      REAL          WRCSKW,WRCMN,WRCSD,KENTAU,KENPVL,KENSLP,
+      REAL          WRCSKW,WRCMN,WRCSD,ASMSEG,KENTAU,KENPVL,KENSLP,
      $              WRCFC(NPLOT),TXPROB(NPLOT),
      $              CLIML(NPLOT),CLIMU(NPLOT)
       DOUBLE PRECISION VAREST(NPLOT)
@@ -4534,6 +4542,7 @@ C     NSYS   - number of systematic peaks
 C     NHIST  - number of historic peaks
 C     WRCFC  - log10 ordinates of fitted curve, WRC estimates
 C              (plot with solid line)
+C     ASMSEG - at-site MSE of skew
 C     TXPROB - tabular abscissa standard deviates for fitted curve
 C              (plot with dashed and solid line)
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
@@ -4564,9 +4573,10 @@ C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A80)
  2010 FORMAT (4X,'Analysis',A,A4,/,
      $        4X,'WRCSKW  ',A,F8.3,/,4X,'WRCMN   ',A,F8.3,/,
-     $        4X,'WRCSD   ',A,F8.3,/,4X,'YRSPK   ',A,I8,/,
-     $        4X,'YRSHPK  ',A,I8,/,  4X,'KENTAU  ',A,F8.3,/,
-     $        4X,'KENPLV  ',A,F8.3,/,4X,'KENSLP  ',A,F8.3)
+     $        4X,'WRCSD   ',A,F8.3,/,4X,'AtSiteMSEG',A,F8.3,/,
+     $        4X,'YRSPK   ',A,I8,/,4X,'YRSHPK  ',A,I8,/,
+     $        4X,'KENTAU  ',A,F8.3,/,4X,'KENPLV  ',A,F8.3,/,
+     $        4X,'KENSLP  ',A,F8.3)
  2020 FORMAT (4X,A8,32(A,F8.4))
  2030 FORMAT (4X,A8,32(A,F8.0))
  2040 FORMAT (4X,A8,32(A,A8))
@@ -4581,7 +4591,7 @@ C
         LCHTYPE = 'B17B'
       END IF
       WRITE(EXPFUN,2010) LTAB,LCHTYPE,LTAB,WRCSKW,LTAB,WRCMN,
-     $                   LTAB,WRCSD,LTAB,NSYS,LTAB,NHIST,
+     $                   LTAB,WRCSD,LTAB,ASMSEG,LTAB,NSYS,LTAB,NHIST,
      $                   LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
       LLABEL = 'EXC_Prob'
       WRITE(EXPFUN,2020) LLABEL,(LTAB,TXPROB(I),I=1,NPLOT)

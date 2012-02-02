@@ -567,6 +567,8 @@ C  MSE OF STATION SKEW
       S = 0.94 - 0.26*AG
       IF(AG.GT.1.50) S = 0.55
       VSTA = 10.**(A - S*(ALOG10(ERL)-1.))
+C     assign to common variable for printout later
+      ASMSEG = VSTA
 C
 C  MSE OF GEN SKEW
       VGS = RMSEGS**2
