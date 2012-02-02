@@ -105,7 +105,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'version 6.0 dated 07/08/2011',/,
+     $       'version 6.1b dated 02/02/2012',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,'HISTPD',A,
@@ -534,13 +534,13 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
 Cprh 202 FORMAT( 21X, 'OFFICE OF SURFACE WATER, RESTON, VA' )
-  202 FORMAT( 2X,'Ver. 6.0',
+  202 FORMAT( 2X,'Ver. 6.1b',
      $       12X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
 Cprh 203 FORMAT( 21X, 'ANNUAL PEAK FLOW FREQUENCY ANALYSIS' )
-  203 FORMAT( 2X,'7/08/2011',
+  203 FORMAT( 2X,'2/02/2012',
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
-  213 FORMAT( 2X,'7/08/2011',
+  213 FORMAT( 2X,'2/02/2012',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
 Cprh 204 FORMAT( 21X, 'Following Bulletin 17-B Guidelines' )
 Cprh 205 FORMAT( 21X, '          Program peakfq    ' )
