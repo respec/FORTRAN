@@ -51,6 +51,7 @@ c                                          B17B provides no test or correction
 c       modified            26 sep 2011  added regional estimate for M 
 c                                          this is analogous to region S2, G 
 c       modified            24 oct 2011  simplified calls to p3est; results same 
+c       modified            08 feb 2012  added return for var_est in  
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -126,8 +127,8 @@ c                                regional skew (b17b recommendation)
 c                            4) 1.d10 < r_G_mse  ("STATION SKEW")
 c                                use g = at-site skew
 c            gbtype     c*4  type of Grubbs-Beck test
-c                               = "GB"  => standard GB test
-c                               = "MGB" => Multiple GB test
+c                               = "GBT"  => standard GB test
+c                               = "MGBT" => Multiple GB test
 c            gbthrsh0   r*8  critical value for Grubbs-Beck test
 c                              N.B. gbthrsh0 codes for 3 cases
 c                               1. gbthrsh0 <= -6  ==> Compute GB critical value
@@ -144,12 +145,12 @@ c                             (,1) using regional info and at-site data
 c                             (,2) using just at-site data
 c                             (,3) using B17B formula for at-site MSE(G)
 c                              mc = {mean, variance, coeff. skew}
-c            pq(17)     r*8  quantiles estimated 
+c            pq(32)     r*8  quantiles estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
-c            yp(17)     r*8  estimated pq-th quantile of fitted p3 distribution
-c            ci_low(17) r*8  left end of 95% confidence interval for pq-th 
+c            yp(32)     r*8  estimated pq-th quantile of fitted p3 distribution
+c            ci_low(32) r*8  left end of 95% confidence interval for pq-th 
 c                              quantile
-c            ci_high(17)r*8  right end of 95% confidence interval for pq-th 
+c            ci_high(32)r*8  right end of 95% confidence interval for pq-th 
 c                              quantile
 cprh (09/2009)
 c            var_est(*) r*8  variance of estimate for each quantile
@@ -333,8 +334,8 @@ c                                regional skew (b17b recommendation)
 c                            4) 1.d10 < r_G_mse  ("STATION SKEW")
 c                                use g = at-site skew
 c            gbtype     c*4  type of Grubbs-Beck test
-c                               = "GB"  => standard GB test
-c                               = "MGB" => Multiple GB test
+c                               = "GBT"  => standard GB test
+c                               = "MGBT" => Multiple GB test
 c            gbthrsh0   r*8  critical value for Grubbs-Beck test
 c                              N.B. gbthrsh0 codes for 3 cases
 c                               1. gbthrsh0 <= -6  ==> Compute GB critical value
@@ -351,12 +352,12 @@ c                             (,1) using regional info and at-site data
 c                             (,2) using just at-site data
 c                             (,3) using B17B formula for at-site MSE(G)
 c                              mc = {mean, variance, coeff. skew}
-c            pq(17)     r*8  quantiles estimated 
+c            pq(32)     r*8  quantiles estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
-c            yp(17)     r*8  estimated pq-th quantile of fitted p3 distribution
-c            ci_low(17) r*8  left end of 95% confidence interval for pq-th 
+c            yp(32)     r*8  estimated pq-th quantile of fitted p3 distribution
+c            ci_low(32) r*8  left end of 95% confidence interval for pq-th 
 c                              quantile
-c            ci_high(17)r*8  right end of 95% confidence interval for pq-th 
+c            ci_high(32)r*8  right end of 95% confidence interval for pq-th 
 c                              quantile
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -364,7 +365,7 @@ c
       subroutine emafitpr(n,ql,qu,tl,tu,dtype,
      1               reg_M,reg_M_mse,reg_SD,reg_SD_mse,r_G,r_G_mse,
      2               gbtype,gbthrsh0,
-     2               cmoms,pq,yp,ci_low,ci_high)
+     2               cmoms,pq,yp,ci_low,ci_high,var_est)
 
       implicit none
 
@@ -372,11 +373,11 @@ c
      1  i,n,                                                ! input variables
      2  neps,nq
      
-      parameter (nq=15)
+      parameter (nq=32)
 
       double precision
      1  ql(*),qu(*),tl(*),tu(*),reg_SD,reg_SD_mse,r_G,r_G_mse, ! input variables
-     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),           ! output variables
+     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),! output variables
      3  pqd(nq),eps(1),gbthrsh0,
      4  reg_M,reg_M_mse,r_M,r_M_mse,r_S2,r_S2_mse
      
@@ -385,8 +386,12 @@ c
 
       data neps/1/,eps/0.95d0/
       
-      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
-     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
+Cprh      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
+Cprh     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
+      data pqd/0.0001,0.0005,0.001 ,0.002 ,0.005 ,0.010 ,0.020 ,0.025 ,
+     1         0.040 ,0.050 ,0.100 ,0.200 ,0.300 ,0.3333,0.400 ,0.4296,
+     2         0.5   ,0.5708,0.600 ,0.700 ,0.800 ,0.900 ,0.950 ,0.960 ,
+     3         0.975 ,0.980 ,0.990 ,0.995 ,0.998 ,0.999 ,0.9995,0.9999/
      
 c     1.  bring in regional information for M, S, and g
 
@@ -420,7 +425,7 @@ c     1c. regional information for skew must be supplied by user as argument
      1                  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
      1                  neps,eps,
      1                  gbtype,gbthrsh0,pq(i),
-     1                  cmoms,yp(i),ci_low(i),ci_high(i))
+     1                  cmoms,yp(i),ci_low(i),ci_high(i),var_est(i))
 10    continue
 c
 c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)

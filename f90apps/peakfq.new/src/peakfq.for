@@ -158,7 +158,7 @@ C     scan file for stations
         READ(SPCFUN,1000,IOSTAT=IOSNUM,END=10) S
         write(FE,*) "  " // S
         CALL UPCASE(S)
-        IF (INDEX(S, 'STATION') .GT. 0) THEN
+        IF (INDEX(S(1:14), 'STATION') .GT. 0) THEN
           NSTA = NSTA + 1
         END IF
       END DO
@@ -383,6 +383,18 @@ C     don't see where output file is closed, try it here
       INQUIRE(FOUT,NAME=S)
       write(FE,*) "Closing output file " // TRIM(S)
       CLOSE(FOUT)
+C
+      IF (IPUNCH .EQ. 15) THEN
+C       need to close BCD output file
+        CLOSE(IPUNCH)
+      END IF
+C     close export/empirical output files
+      IF (EXPFUN .GT. 0) THEN
+        CLOSE(EXPFUN)
+      END IF
+      IF (EMPFUN .GT. 0) THEN
+        CLOSE(EMPFUN)
+      END IF
 C
 C     close and delete unused log file
 c      S = TRIM(LGNAME)//'.LOG'
@@ -1317,6 +1329,11 @@ C
 C     + + + EXTERNALS + + +
       EXTERNAL  ZLNTXT
 C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT('      PCPT_Thresh ',2I6,2G12.1,2X,A)
+ 2010 FORMAT('      Interval ',I6,2F10.0,2X,A)
+ 2020 FORMAT('      Peak ',I6,F10.0,2X,A,2X,A)
+C
 C     + + + END SPECIFICATIONS + + +
 C
       write(99,*) 'Updating spec file Station info'
@@ -1346,14 +1363,14 @@ C
 C     thresholds and intervals
       IF (NTHRESH.GT.0) THEN
         DO 10 I=1,NTHRESH
-          WRITE(92,*) '     PCPT_Thresh ',THRESH(I)%THRBYR,
-     $                   THRESH(I)%THREYR,THRESH(I)%THRLWR,
-     $                   THRESH(I)%THRUPR,TRIM(THRESH(I)%THRCOM)
+          WRITE(92,2000) THRESH(I)%THRBYR,THRESH(I)%THREYR,
+     $                   THRESH(I)%THRLWR,THRESH(I)%THRUPR,
+     $                   TRIM(THRESH(I)%THRCOM)
  10     CONTINUE  
       END IF
       IF (NINTERVAL.GT.0) THEN
         DO 20 I=1,NINTERVAL
-          WRITE(92,*) '     Interval ',INTERVAL(I)%INTRVLYR,
+          WRITE(92,2010) INTERVAL(I)%INTRVLYR,
      $                   INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLUPR,
      $                   TRIM(INTERVAL(I)%INTRVLCOM)
  20     CONTINUE  
@@ -1361,7 +1378,7 @@ C     thresholds and intervals
 C     new/revised peaks
       IF (NNEWPKS.GT.0) THEN
         DO 30 I=1,NNEWPKS
-          WRITE(92,*) '     Peak ',NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
+          WRITE(92,2020) NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
      $                             NEWPKS(I)%PKCODE,
      $                             TRIM(NEWPKS(I)%PKCOM)
  30     CONTINUE  

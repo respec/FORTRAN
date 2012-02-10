@@ -308,7 +308,8 @@ C             output export file
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
               CALL PRTEMP(EMPFUN,NPKS,IPKSEQ,PKS,GAGEB,IPKPTR,
-     I                    SYSPP,WRCPP,WEIBA,EMAOPT,HEADNG(9))
+     I                    SYSPP,WRCPP,WEIBA,EMAOPT,HEADNG(9),
+     i                    JSEQNO,DT)
             END IF
 
             IF (QHIOUT .LE. 0.01 .AND. HISTPD .LE. 0.5) THEN
@@ -1286,10 +1287,10 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $           F11.4,F12.4,F11.3)
    10 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3
-     $        //,' BULL.17B ESTIMATE OF AT-STIE MSE OF SKEW',F11.4)
+     $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
    11 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3
-     $        //,' EMA ESTIMATE OF AT-STIE MSE OF SKEW',F11.4)
+     $        //,' EMA ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
 cprh   15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
 cprh     $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
 cprh     $        //,'      ANNUAL                            ',
@@ -4624,7 +4625,8 @@ C
 C
       SUBROUTINE   PRTEMP
      I                   (MSG,NPKS,IPKSEQ,PKS,GAGEB,IPKPTR,
-     I                    SYSPP,WRCPP,WEIBA,EMAOPT,HEADER)
+     I                    SYSPP,WRCPP,WEIBA,EMAOPT,HEADER,
+     I                    STNIND,RUNDATE)
 C
 C     + + + PURPOSE + + +
 C     Prints Empirical Frequency Curve table to separate output file.
@@ -4640,7 +4642,7 @@ C     with plotting positions, PRH 8/2010
       Use EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   MSG, NPKS, EMAOPT
+      INTEGER   MSG, NPKS, EMAOPT, STNIND, RUNDATE(6)
       REAL    PKS(NPKS), SYSPP(NPKS), WRCPP(NPKS), WEIBA
       REAL    GAGEB
       INTEGER  IPKSEQ(NPKS), IPKPTR(NPKS)
@@ -4659,6 +4661,8 @@ C     WEIBA  -
 C     EMAOPT - indicator flag for performing EMA analysis
 C              0 - no, just do traditional J407
 C              1 - yes, run EMA
+C     STNIND - station index
+C     RUNDATE = date/time of this run
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   JLINE,         I, J, ILINE, LYR, K
@@ -4670,15 +4674,19 @@ C     + + + INTRINSICS + + +
       INTRINSIC   ABS, LOG10
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(A80)
- 1021 FORMAT( 3X,'EMPIRICAL FREQUENCY CURVES -- ',A,
-     $       ' PLOTTING POSITIONS'/ 73X, A, '** WEIBA =', F6.3, ' ***')
- 1022 FORMAT('   WATER',A,'   RANKED',A,'SYSTEMATIC',A,'      B17B' / 
-     $       '    YEAR',A,'DISCHARGE',A,'    RECORD',A,'  ESTIMATE')
- 2022 FORMAT('   WATER',A,'   RANKED',A,'SYSTEMATIC',A,'       EMA',A,
-     $       'THRESHOLDS',2A,'INTERVALS' / 
-     $       '    YEAR',A,'DISCHARGE',A,'    RECORD',A,'  ESTIMATE',A,
-     $       'LOWER',A,'UPPER',A,'  LOW',A,' HIGH')
+ 2000 FORMAT('# US Geological Survey',/,
+     $       '# PeakFQ Flood Frequency Analysis, '
+     $       'Version 6.1b dated 02/02/2012',/,'#',/,
+     $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
+ 2001 FORMAT('# Empirical Frequency Curves -- ',
+     $       'Weibull Plotting Positions',/,'#')
+ 2002 FORMAT('# Empirical Frequency Curves -- ',
+     $       'Weibxxx Plotting Positions',/,
+             '#',73X,'*** WEIBA =', F6.3, ' ***',/,'#')
+ 2010 FORMAT(A80)
+ 1022 FORMAT('  WaterYr',A,'  RankedQ',A,'  SystRec',A,'  B17BEst') 
+ 2022 FORMAT('  WaterYr',A,'  RankedQ',A,'  SystRec',A,'   EMAEst',A,
+     $       'ThreshLow',A,' ThreshUp',A,'  IntvLow',A,' IntvHigh')
  1023 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4)
  1024 FORMAT(I8,A,F11.1,A,'       --  ',A,F12.4)
  1025 FORMAT(I8,A,F11.1,A,'       --  ',A,'       --  ')
@@ -4703,21 +4711,27 @@ C         save average of interval lower/upper bounds
  220    CONTINUE
       END IF
 C
+      IF (STNIND .EQ. 1) THEN
+C       write initial header for file
+        WRITE(MSG,2000) RUNDATE(2),RUNDATE(3),RUNDATE(1),
+     $                  RUNDATE(4),RUNDATE(5)
+        IF (ABS(WEIBA) .GT. EPSILN) THEN
+          WRITE(MSG,2002) WEIBA
+        ELSE
+          WRITE(MSG,2001)
+        END IF
+      END IF
+C
 C     write table of frequency curves
-      WRITE(MSG,2000) HEADER
+      WRITE(MSG,2010) HEADER
 C
       JLINE = 0
   302 CONTINUE
         ILINE = JLINE+1
-        IF ( ABS(WEIBA).GT.EPSILN ) THEN
-          WRITE(MSG,1021) 'WEIBXXX', '*', WEIBA
-        ELSE
-          WRITE(MSG,1021) 'WEIBULL'
-        END IF
         IF (EMAOPT.EQ.1) THEN
-          WRITE(MSG,2022) (LTAB,J=1,13)
+          WRITE(MSG,2022) (LTAB,J=1,7)
         ELSE
-          WRITE(MSG,1022) (LTAB,J=1,6)
+          WRITE(MSG,1022) (LTAB,J=1,3)
         END IF
         JLINE = NPKS
         DO 310 I = ILINE,JLINE
