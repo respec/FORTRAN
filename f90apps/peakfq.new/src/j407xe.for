@@ -1526,7 +1526,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL KENT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(//,40X,'Kendall''s KENTAU Parameters',//,
+ 2000 FORMAT(//,40X,'Kendall''s Tau Parameters',//,
      $          56X,'MEDIAN   No. of',/,
      $          39X,'TAU    P-VALUE    SLOPE   PEAKS',/,
      $          32X,'---------------------------------------',/,
@@ -3918,9 +3918,9 @@ C     store EMA moments in WRC variables
 c      WRCUAV = LOG10(EXP(WRCMOM(1)))
 c      WRCUSD = LOG10(EXP(SQRT(WRCMOM(2))))
 c      WRCSKW = WRCMOM(3)
-      WRCUAV = WRCMOM(1,1)
-      WRCUSD = SQRT(WRCMOM(2,1))
-      WRCSKW = WRCMOM(3,1)
+      WRCUAV = WRCMOM(1,2)
+      WRCUSD = SQRT(WRCMOM(2,2))
+      WRCSKW = WRCMOM(3,2)
 
       write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
       write(99,*)
@@ -4682,7 +4682,7 @@ C     + + + OUTPUT FORMATS + + +
      $       'Weibull Plotting Positions',/,'#')
  2002 FORMAT('# Empirical Frequency Curves -- ',
      $       'Weibxxx Plotting Positions',/,
-             '#',73X,'*** WEIBA =', F6.3, ' ***',/,'#')
+     $       '#',73X,'*** WEIBA =', F6.3, ' ***',/,'#')
  2010 FORMAT(A80)
  1022 FORMAT('  WaterYr',A,'  RankedQ',A,'  SystRec',A,'  B17BEst') 
  2022 FORMAT('  WaterYr',A,'  RankedQ',A,'  SystRec',A,'   EMAEst',A,
