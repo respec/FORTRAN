@@ -2622,7 +2622,10 @@ c
           do 35 j=0,i-1
             mwh(i) = mwh(i) + choose(i,j)*mu**(i-j)*s**j*fwh(j)
 35      continue
-
+      else
+        do 37 i=1,n
+          mwh(i) = 0.0
+37      continue        
       endif
 c
 c   compute weighted sum
@@ -2819,6 +2822,8 @@ c
       if(wg .gt. 0.d0) then
         call m2p(m,parms)
         qP3g = fp_g3_icdf(q,parms)
+      else
+        qP3g = 0.0
       endif
 c
 c  compute cdf for small skews using wilson-hilferty transformation
@@ -2827,6 +2832,8 @@ c
         mu = m(1)
         s  = sqrt(m(2))
         qP3wh = mu+s*whz2lp(fp_z_icdf(q),g)
+      else
+        qP3wh = 0.0
       endif
 c
 c   compute weighted sum
