@@ -2,7 +2,7 @@ C
 C
 C
       SUBROUTINE   WCFAGB
-     #                    (PKQ,PKLOG,WRCPP,SYSPP,NPK,IRC)
+     #                    (PKQ,PKLOG,WRCPP,SYSPP,NPK,IRC,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     WRC FLOOD FREQ ANALYSIS BULL 17 GUIDELINES EXECUTIVE RTNE.
@@ -60,7 +60,7 @@ C     WCFAGB AND THE PKLOG ELEMENTS ARE IN THE SAME ORDER AS THE PKQS.
 C     A SAMPLE MAIN PROGRAM, WCFZSD, IS INCLUDED IN THIS DISTRIBUTION.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   NPK, IRC
+      INTEGER   NPK, IRC, EMAOPT
       REAL      PKQ(NPK), PKLOG(NPK), WRCPP(NPK), SYSPP(NPK)
 C
 C     + + + ARGUMENT DEFINITION + + +
@@ -72,6 +72,9 @@ C     NPK    - number of observed peaks--first historic, then systematic
 C     IRC    - return code--0, 1, 2, or 3:
 C              0 - no error
 C              3 - error, calculation aborted
+C     EMAOPT - indicator flag for performing EMA analysis
+C              0 - no, just do traditional J407
+C              1 - yes, run EMA
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -108,15 +111,8 @@ C
       IF(WRCASK.GT.EPS2)GOTO50
       IF(WRCASK.GE.EPS1)GOTO30
 C
-      CALL GBTESTX (PKLOG(ISYS),NSYS1,
+      CALL GBTESTX (PKLOG(ISYS),NSYS1,EMAOPT,
      O              IER)
-c      IF (LOTYPE .EQ. 'MGBT') THEN
-cC       perform Multiple Grubbs-Beck LO test
-c        CALL GBTESTX (IGSOPT,RMSEGS)
-c      ELSE
-cC       perform traditional B17B LO test
-c        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
-c      END IF
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA (4H17B1, IRC)
       IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA ('17B1', IRC)
       IF(IRC.GE.3)GOTO95
@@ -127,15 +123,8 @@ Ckmf  IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B2,IRC)
       GOTO70
 C
    30 CONTINUE
-      CALL GBTESTX (PKLOG(ISYS),NSYS1,
+      CALL GBTESTX (PKLOG(ISYS),NSYS1,EMAOPT,
      O              IER)
-c      IF (LOTYPE .EQ. 'MGBT') THEN
-cC       perform Multiple Grubbs-Beck LO test
-c        CALL GBTESTX (IGSOPT,RMSEGS)
-c      ELSE
-cC       perform traditional B17B LO test
-c        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
-c      END IF
       IF(IRC.GE.3)GOTO95
       CALL WCFDHH (PKLOG,NPK,IRC)
       IF(IRC.GE.3)GOTO95
@@ -148,15 +137,8 @@ C
 Ckmf  IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B4,IRC)
       IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B4',IRC)
       IF(IRC.GE.3)GOTO95
-      CALL GBTESTX (PKLOG(ISYS),NSYS1,
+      CALL GBTESTX (PKLOG(ISYS),NSYS1,EMAOPT,
      O              IER)
-c      IF (LOTYPE .EQ. 'MGBT') THEN
-cC       perform Multiple Grubbs-Beck LO test
-c        CALL GBTESTX (IGSOPT,RMSEGS)
-c      ELSE
-cC       perform traditional B17B LO test
-c        CALL WCFDLO (PKLOG(ISYS),NSYS1,IRC)
-c      END IF
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B5,IRC)
       IF(NLWOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B5',IRC)
       IF(IRC.GE.3)GOTO95
@@ -1565,7 +1547,7 @@ C
 C
 C
       SUBROUTINE   GBTESTX
-     I                    (SYSLOG,NSYS1,
+     I                    (SYSLOG,NSYS1,EMAOPT,
      O                     IER)
 C
 C     + + + PURPOSE + + +
@@ -1576,13 +1558,16 @@ C     EMAThresh contains Threshold specs and EMA data arrays
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER NSYS1,IER
+      INTEGER NSYS1,IER,EMAOPT
       REAL    SYSLOG(NSYS1)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     SYSLOG - systematic peak logarithms (input)
 C     NSYS1  - number of systematic peak logarithms
 C     IER    - error return code
+C     EMAOPT - indicator flag for performing EMA analysis
+C              0 - no, just do traditional J407
+C              1 - yes, run EMA
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -1623,31 +1608,34 @@ C     + + + END SPECIFICATIONS + + +
 C
       IF (LOTYPE .EQ. 'MGBT') THEN
 C       perform Multiple Grubbs-Beck LO test
-        GBTYPE = 'MGBT'
-        GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
-        REGSKEW= GENSKU
-        IF (IGSOPT.EQ.1) THEN
-C         Generalized skew, set to very small
-          REGMSE = 0.0
-        ELSE IF (IGSOPT.EQ.-1) THEN
-C         Station skew, ignore regional skew
-          REGMSE = 1.0D10
-        ELSE
-C         Weighted, set to root mean square
-          REGMSE = RMSEGS**2
-        END IF
+        IF (EMAOPT.EQ.0) THEN
+C         but only perform it here for B17B method (EMA has it built into code)
+          GBTYPE = 'MGBT'
+          GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
+          REGSKEW= GENSKU
+          IF (IGSOPT.EQ.1) THEN
+C           Generalized skew, set to very small
+            REGMSE = 0.0
+          ELSE IF (IGSOPT.EQ.-1) THEN
+C           Station skew, ignore regional skew
+            REGMSE = 1.0D10
+          ELSE
+C           Weighted, set to root mean square
+            REGMSE = RMSEGS**2
+          END IF
  
-        CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
-     M              QL,QU,TL,TU)
+          CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
+     M                QL,QU,TL,TU)
 
-C       report Multiple GB LO messges
-        IF (NLOW .GT. 0) THEN
-          WRITE(MSG,2000) nlow-nzero,10**gbcrit
-          DO 10 I = 1,NLOW
-            IF (qs(I).GT.1.0D-99) THEN
-              WRITE(MSG,2010)qs(I),pvaluew(I)
-            END IF
- 10       CONTINUE
+C         report Multiple GB LO messges
+          IF (NLOW .GT. 0) THEN
+            WRITE(MSG,2000) nlow-nzero,10**gbcrit
+            DO 10 I = 1,NLOW
+              IF (qs(I).GT.1.0D-99) THEN
+                WRITE(MSG,2010)qs(I),pvaluew(I)
+              END IF
+ 10         CONTINUE
+          END IF
         END IF
 
       ELSE
