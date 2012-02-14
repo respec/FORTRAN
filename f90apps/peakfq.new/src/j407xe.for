@@ -60,6 +60,14 @@ C
       INCLUDE 'cwcf0.inc'
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
+
+      integer nlow,nzero
+      double precision  gbcrit,gbthresh,pvaluew,qs
+      character*4 gbtype
+
+C     used by Tim's EMA code
+      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
+     1               nlow,nzero,gbtype
 C
 C
 C      + + + LOCAL VARIABLES + + +
@@ -112,6 +120,11 @@ C     + + + FORMATS + + +
      $        'SKEWOPT',A,'GENSKEW',A,'SKEWSTD',A,'SKEWMSE',A,
      $        'LO OUT',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
      $        'LATITUDE',A,'LONGITUDE')
+ 2020 FORMAT('    EMA003I-LOW OUTLIERS WERE DETECTED USING ',
+     $       'MULTIPLE GRUBBS-BECK TEST',I8,4X,F8.1,/
+     $       '      THE FOLLOWING PEAKS (WITH CORRESPONDING P-VALUES)',
+     $       ' WERE DROPPED:')
+ 2030 FORMAT(8X,F8.1,4X,'(',F6.4,')')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -231,7 +244,7 @@ C       CALL  PRTPHD(  2001 , -999 )
         CALL  PRTINP( IDEBUG, XPKS, EMAOPT, IA3 )
 C
          write(99,*)'Debug Info for ',STAID
-        CALL WCFAGB(PKS, PKLOG, WRCPP, SYSPP, NPKS, IER)
+        CALL WCFAGB(PKS, PKLOG, WRCPP, SYSPP, NPKS, IER, EMAOPT)
          write(99,*)'after WCFAGB, IER=',IER
 
         IF (EMAOPT.EQ.1) THEN
@@ -240,6 +253,17 @@ C
           write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
      $                                NPKS,NSYS,GENSKU,RMSEGS
           CALL RUNEMA
+          IF (LOTYPE .EQ. 'MGBT') THEN
+C           report Multiple GB LO messges
+            IF (NLOW .GT. 0) THEN
+              WRITE(MSG,2020) nlow-nzero,10**gbcrit
+              DO 10 I = 1,NLOW
+                IF (qs(I).GT.1.0D-99) THEN
+                  WRITE(MSG,2030)qs(I),pvaluew(I)
+                END IF
+ 10           CONTINUE
+            END IF
+          END IF
           CALL PRTEMA(MSG,NSYS,HISTPD)
         END IF
        END IF
@@ -300,10 +324,10 @@ C
             IF (EXPFUN .GT. 0) THEN
 C             output export file
               CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
-     I                     ASMSEG,KENTAU,KENPVL,KENSLP,NFCXPG,
-     I                     WRCFC(INDX1),TXPROB(INDX1),CLIML(INDX1),
-     I                     CLIMU(INDX1),VAREST(INDX1),
-     I                     JSEQNO,HEADNG(9),EMAOPT)
+     I                     SYSSKW,GENSKU,RMSEGS,ASMSEG,KENTAU,KENPVL,
+     I                     KENSLP,NFCXPG,WRCFC(INDX1),TXPROB(INDX1),
+     I                     CLIML(INDX1),CLIMU(INDX1),VAREST(INDX1),
+     I                     JSEQNO,HEADNG(9),EMAOPT,IGSOPT)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
@@ -1291,43 +1315,25 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
    11 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' EMA ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
-cprh   15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
-cprh     $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
-cprh     $        //,'      ANNUAL                            ',
-cprh     $           '  ''EXPECTED   ',I2,'-PCT CONFIDENCE LIMITS',
-cprh     $         /,'   EXCEEDANCE     BULL.17B    SYSTEMATIC',
-cprh     $           ' PROBABILITY''  FOR BULL. 17B ESTIMATES',
-cprh     $         /,'   PROBABILITY    ESTIMATE      RECORD  ',
-cprh     $           '   ESTIMATE        LOWER        UPPER',  /  )
-cprh   16 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
-cprh     $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
-cprh     $        //,'      ANNUAL                            ',
-cprh     $           '  ''EXPECTED       ',I2,'-PCT CONFIDENCE',
-cprh     $         /,'   EXCEEDANCE       EMA       SYSTEMATIC',
-cprh     $           ' PROBABILITY'' LIMITS FOR EMA ESTIMATES',
-cprh     $         /,'   PROBABILITY    ESTIMATE      RECORD  ',
-cprh     $           '   ESTIMATE        LOWER        UPPER',  /  )
-cprh  update headers to include variance of estimate
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL                      ',
-     $           '  ''EXPECTED    <-- FOR BULLETIN 17B ESTIMATES -->',
+     $           '   <-- FOR BULLETIN 17B ESTIMATES -->',
      $         /,'EXCEEDANCE  BULL.17B SYSTEMATIC',
-     $           ' PROBABILITY''  VARIANCE  ',I2,
+     $           '   VARIANCE  ',I2,
      $           '% CONFIDENCE INTERVALS',
      $         /,'PROBABILITY ESTIMATE   RECORD  ',
-     $           '   ESTIMATE     OF EST.       LOWER       UPPER', /)
+     $           '    OF EST.       LOWER       UPPER', /)
    16 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL                      ',
-     $           '  ''EXPECTED    <------ FOR EMA ESTIMATES ------->',
+     $           '   <------ FOR EMA ESTIMATES ------->',
      $         /,'EXCEEDANCE    EMA    SYSTEMATIC',
-     $           ' PROBABILITY''  VARIANCE  ',I2,
+     $           '   VARIANCE  ',I2,
      $           '% CONFIDENCE INTERVALS',
      $         /,'PROBABILITY ESTIMATE   RECORD  ',
-     $           '   ESTIMATE     OF EST.       LOWER       UPPER', /)
-Cprh   20 FORMAT(1X,F11.4,  5A   )
-   20 FORMAT(1X,F8.4,  6A   )
+     $           '    OF EST.       LOWER       UPPER', /)
+   20 FORMAT(1X,F8.4,  5A   )
  1010 FORMAT('1',//)
  2011 FORMAT ( 1X, F11.4, 1X, '         -- ',
      $         2X, '(', F6.2, '-year flood below base' )
@@ -1415,11 +1421,16 @@ c            write(99,*) 'PRTFIT: J,EPFC ',J,EPFC(J)
                  IF (DWORK(3)(13:13) .EQ. ' ') DWORK(3)(13:13) = '0'
                END IF
             END IF
-            IF(NOCLIM.NE.1) THEN      
-              TMP = 10.**VAREST(J)
-              CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA+2,DWORK(4))
-              IF (DWORK(4)(12:12) .EQ. ' ') DWORK(4)(12:12) = '0'
-C             WRITE(DWORK(4),203) 10.**CLIML(J)
+            IF(NOCLIM.NE.1) THEN
+              IF (EMAOPT .EQ. 0) THEN
+C               no variance term for B17B
+                DWORK(4)= '       ----  '
+              ELSE
+                TMP = 10.**VAREST(J)
+                CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA+2,DWORK(4))
+                IF (DWORK(4)(12:12) .EQ. ' ') DWORK(4)(12:12) = '0'
+C               WRITE(DWORK(4),203) 10.**CLIML(J)
+              END IF
               TMP = 10.**CLIML(J)
 CPRH              TMP = EXP(CLIML(J))
               CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA,DWORK(5))
@@ -1433,7 +1444,7 @@ CPRH              TMP = EXP(CLIMU(J))
           END IF
 Cprh          WRITE(MSG,20)  PEP, DWORK
           WRITE(MSG,20) PEP,DWORK(1)(1:10),DWORK(2)(1:10),
-     &                      DWORK(3)(1:13),DWORK(4)(1:12),
+     &                      DWORK(4)(1:12),
      &                      DWORK(5)(1:12),DWORK(6)(1:13)
         END IF
   210 CONTINUE
@@ -3918,9 +3929,9 @@ C     store EMA moments in WRC variables
 c      WRCUAV = LOG10(EXP(WRCMOM(1)))
 c      WRCUSD = LOG10(EXP(SQRT(WRCMOM(2))))
 c      WRCSKW = WRCMOM(3)
-      WRCUAV = WRCMOM(1,2)
-      WRCUSD = SQRT(WRCMOM(2,2))
-      WRCSKW = WRCMOM(3,2)
+      WRCUAV = WRCMOM(1,1)
+      WRCUSD = SQRT(WRCMOM(2,1))
+      WRCSKW = WRCMOM(3,1)
 
       write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
       write(99,*)
@@ -4523,18 +4534,18 @@ C
 C
       SUBROUTINE   PRTEXP
      I                      (EXPFUN,NSYS,NHIST,WRCSKW,WRCMN,WRCSD,
-     I                       ASMSEG,KENTAU,KENPVL,KENSLP,NPLOT,WRCFC,
-     I                       TXPROB,CLIML,CLIMU,VAREST,
-     I                       STNIND,HEADER,EMAOPT)
+     I                       SYSSKW,GENSKU,RMSEGS,ASMSEG,KENTAU,KENPVL,
+     I                       KENSLP,NPLOT,WRCFC,TXPROB,CLIML,CLIMU,
+     I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT)
 C
 C     + + + PURPOSE + + +
 C     Output analysis results to PeakFQ export file
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT
-      REAL          WRCSKW,WRCMN,WRCSD,ASMSEG,KENTAU,KENPVL,KENSLP,
-     $              WRCFC(NPLOT),TXPROB(NPLOT),
-     $              CLIML(NPLOT),CLIMU(NPLOT)
+      REAL          WRCSKW,WRCMN,WRCSD,SYSSKW,GENSKU,RMSEGS,
+     $              ASMSEG,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
+     $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT)
       DOUBLE PRECISION VAREST(NPLOT)
       CHARACTER*80  HEADER
 C
@@ -4560,6 +4571,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*1 LTAB
       CHARACTER*4 LCHTYPE
       CHARACTER*8 LLABEL
+      CHARACTER*11 CHSKUOPT
 C
 C     + + + FUNCTIONS + + +
       DOUBLE PRECISION KFXX
@@ -4572,9 +4584,11 @@ C     + + + INTRINSICS + + +
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A80)
- 2010 FORMAT (4X,'Analysis',A,A4,/,
-     $        4X,'WRCSKW  ',A,F8.3,/,4X,'WRCMN   ',A,F8.3,/,
-     $        4X,'WRCSD   ',A,F8.3,/,4X,'AtSiteMSEG',A,F8.3,/,
+ 2010 FORMAT (4X,'Analysis',A,A4,/,4X,'Skew Option',2A,/,
+     $        4X,'Skew    ',A,F8.3,/,4X,'Mean    ',A,F8.3,/,
+     $        4X,'StandDev',A,F8.3,/,4X,'AtSiteSkew',A,F8.3,/,
+     $        4X,'AtSiteMSEG',A,F8.3,/,
+     $        4X,'Reg Skew',A,F8.3,/,4X,'Reg MSEG',A,F8.3,/,
      $        4X,'YRSPK   ',A,I8,/,4X,'YRSHPK  ',A,I8,/,
      $        4X,'KENTAU  ',A,F8.3,/,4X,'KENPLV  ',A,F8.3,/,
      $        4X,'KENSLP  ',A,F8.3)
@@ -4591,16 +4605,20 @@ C
       ELSE
         LCHTYPE = 'B17B'
       END IF
-      WRITE(EXPFUN,2010) LTAB,LCHTYPE,LTAB,WRCSKW,LTAB,WRCMN,
-     $                   LTAB,WRCSD,LTAB,ASMSEG,LTAB,NSYS,LTAB,NHIST,
-     $                   LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
+      IF (IGSOPT.EQ.1) THEN
+        CHSKUOPT = 'Generalized'
+      ELSE IF (IGSOPT.EQ.-1) THEN
+        CHSKUOPT = 'Station'
+      ELSE
+        CHSKUOPT = 'Weighted'
+      END IF
+      WRITE(EXPFUN,2010) LTAB,LCHTYPE,LTAB,CHSKUOPT,LTAB,WRCSKW,LTAB,
+     $                   WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,LTAB,
+     $                   GENSKU,LTAB,RMSEGS,LTAB,NSYS,LTAB,
+     $                   NHIST,LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
       LLABEL = 'EXC_Prob'
       WRITE(EXPFUN,2020) LLABEL,(LTAB,TXPROB(I),I=1,NPLOT)
-      IF (EMAOPT .EQ. 1) THEN
-        LLABEL = 'B17B_Est'
-      ELSE
-        LLABEL = 'EMA_Est '
-      END IF
+      LLABEL = 'Estimate'
       WRITE(EXPFUN,2030) LLABEL,(LTAB,10**WRCFC(I),I=1,NPLOT)
       LLABEL = 'Variance'
       IF (EMAOPT .EQ. 1) THEN
@@ -4897,14 +4915,16 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER ECHFUN,STNIND
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,J,LIND
-      CHARACTER*1 LTAB
-      CHARACTER*20 LSTNID
+      INTEGER      I,J,K,LIND
+      INTEGER      ISTA,STAIND
+      CHARACTER*1  LTAB
+      CHARACTER*20 LSTNID,STAUSED(1000)
       CHARACTER*120 LHEADER
 C
 C     + + + FUNCTIONS + + +
+      INTEGER       ZLNTXT, CVRINT
       CHARACTER*120 STRRETREM
-
+C
 C     + + + INTRINSICS + + +
       INTRINSIC UBOUND
 C
@@ -4929,12 +4949,40 @@ C     write threshold column headers to echo file
 C
       LIND = UBOUND(STNDATA,1)
 C
+C     check for duplicate station IDs
+      DO 5 I = 1,LIND
+        LHEADER= STNDATA(I)%HEADER(10:80)
+        LSTNID = STRRETREM(LHEADER)
+        IF (I.GT.0) THEN !look through stations used so far
+          ISTA = I
+          DO WHILE (ISTA.GT.0)
+            J = ZLNTXT(LSTNID)
+            IF (STAUSED(ISTA)(1:J).EQ.LSTNID) THEN
+C             same station ID, increment STAID index
+              K = ZLNTXT(STAUSED(ISTA))
+              IF (K.GT.J) THEN 
+C               this station already has an index, increment it
+                STAIND = CVRINT(STAUSED(ISTA)(J+2:K)) + 1
+                IF (STAIND.LT.10) THEN
+                  WRITE(LSTNID,'(A,I1)') TRIM(LSTNID) // "-",STAIND
+                ELSE
+                  WRITE(LSTNID,'(A,I2)') TRIM(LSTNID) // "-",STAIND
+                END IF
+              ELSE !first duplicate of this station
+                LSTNID = TRIM(LSTNID) // "-1"
+              END IF
+              ISTA = 0  !exit loop
+            END IF
+            ISTA = ISTA - 1
+          END DO
+        END IF
+        STAUSED(I) = LSTNID
+ 5    CONTINUE
+C
       DO 20 J = 1, LIND
         DO 10 I= 1, STNDATA(J)%NTHRESH
 C         write threshold values to echo file
-          LHEADER= STNDATA(J)%HEADER(10:80)
-          LSTNID = STRRETREM(LHEADER)
-          WRITE(ECHFUN,2010) LSTNID,LTAB,I,LTAB,
+          WRITE(ECHFUN,2010) STAUSED(J),LTAB,I,LTAB,
      $                       STNDATA(J)%THRSYR(I),LTAB,
      $                       STNDATA(J)%THREYR(I),LTAB,
      $                       STNDATA(J)%THRLWR(I),LTAB,
@@ -4949,9 +4997,7 @@ C
       DO 40 J = 1,LIND
         DO 30 I= 1, STNDATA(J)%NINTRVL
 C         write interval data to echo file
-          LHEADER= STNDATA(J)%HEADER(10:80)
-          LSTNID = STRRETREM(LHEADER)
-          WRITE(ECHFUN,2020) LSTNID,LTAB,I,LTAB,
+          WRITE(ECHFUN,2020) STAUSED(J),LTAB,I,LTAB,
      $                       STNDATA(J)%INTYR(I),LTAB,
      $                       STNDATA(J)%INTLWR(I),LTAB,
      $                       STNDATA(J)%INTUPR(I),LTAB,
