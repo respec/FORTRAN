@@ -4939,6 +4939,7 @@ C     + + + OUTPUT FORMATS + + +
  2020 FORMAT ('#',/,'# Interval Data',/,'#',/,
      $        'Station',A,'OrderNo',A,'Date',A,
      $        'Low',A,'High',A,'Comment')
+ 2030 FORMAT (2A,2(I4,A),2(F8.0,A),2A)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4997,7 +4998,7 @@ C
       DO 40 J = 1,LIND
         DO 30 I= 1, STNDATA(J)%NINTRVL
 C         write interval data to echo file
-          WRITE(ECHFUN,2020) STAUSED(J),LTAB,I,LTAB,
+          WRITE(ECHFUN,2030) STAUSED(J),LTAB,I,LTAB,
      $                       STNDATA(J)%INTYR(I),LTAB,
      $                       STNDATA(J)%INTLWR(I),LTAB,
      $                       STNDATA(J)%INTUPR(I),LTAB,
