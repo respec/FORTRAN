@@ -1426,7 +1426,7 @@ c            write(99,*) 'PRTFIT: J,EPFC ',J,EPFC(J)
 C               no variance term for B17B
                 DWORK(4)= '       ----  '
               ELSE
-                TMP = 10.**VAREST(J)
+                TMP = VAREST(J)
                 CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA+2,DWORK(4))
                 IF (DWORK(4)(12:12) .EQ. ' ') DWORK(4)(12:12) = '0'
 C               WRITE(DWORK(4),203) 10.**CLIML(J)
@@ -3978,10 +3978,12 @@ C
       DO 50 I = 1,MXINT
 C        write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
 C     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
+        IF (TXPROB(I) .LE. WRCPAB) THEN
           SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
           WRCFC(I) = WRCYP(I)
           CLIML(I) = CILOW(I)
           CLIMU(I) = CIHIGH(I)
+        END IF
  50   CONTINUE
 C
       RETURN
