@@ -1427,7 +1427,7 @@ C               no variance term for B17B
                 DWORK(4)= '       ----  '
               ELSE
                 TMP = VAREST(J)
-                CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA+2,DWORK(4))
+                CALL DECCHX (TMP,LEN+2,SIGDIG,DECPLA+3,DWORK(4))
                 IF (DWORK(4)(12:12) .EQ. ' ') DWORK(4)(12:12) = '0'
 C               WRITE(DWORK(4),203) 10.**CLIML(J)
               END IF
