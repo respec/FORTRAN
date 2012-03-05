@@ -1330,7 +1330,8 @@ C     + + + EXTERNALS + + +
       EXTERNAL  ZLNTXT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT('      PCPT_Thresh ',2I6,2G12.1,2X,A)
+c 2000 FORMAT('      PCPT_Thresh ',2I6,2G12.1,2X,A)
+ 2000 FORMAT('      PCPT_Thresh ',2I6,F10.0,G12.1,2X,A)
  2010 FORMAT('      Interval ',I6,2F10.0,2X,A)
  2020 FORMAT('      Peak ',I6,F10.0,2X,A,2X,A)
 C
