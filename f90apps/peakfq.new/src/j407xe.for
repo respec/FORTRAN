@@ -113,7 +113,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'version 6.1b dated 02/02/2012',/,
+     $       'version 6.1b dated 03/05/2012',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,'HISTPD',A,
@@ -563,7 +563,7 @@ Cprh 202 FORMAT( 21X, 'OFFICE OF SURFACE WATER, RESTON, VA' )
      $       12X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
 Cprh 203 FORMAT( 21X, 'ANNUAL PEAK FLOW FREQUENCY ANALYSIS' )
-  203 FORMAT( 2X,'2/02/2012',
+  203 FORMAT( 2X,'03/05/2012',
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
   213 FORMAT( 2X,'2/02/2012',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
@@ -4698,7 +4698,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Version 6.1b dated 02/02/2012',/,'#',/,
+     $       'Version 6.1b dated 03/05/2012',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves -- ',
      $       'Weibull Plotting Positions',/,'#')
