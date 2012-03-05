@@ -807,7 +807,8 @@ C     + + + FORMATS + + +
      $  /16X,'User supplied high outlier threshold = ',A,
      $  /16X,'User supplied low outlier criterion  = ',A,
      $  /16X,'Plotting position parameter          = ',F8.2,
-     $  /16X,'Type of analysis                       ',A)
+     $  /16X,'Type of analysis                       ',A,
+     $  /16X,'Low-outlier Test Method                ',4X,A)
  6    FORMAT(/)
 C    $ /'     -- YEARS OF RECORD --    HISTORIC    GENERALIZED',
 C    $           'GAGE BASE'/
@@ -860,7 +861,8 @@ C       historic adjustment applied
       WRITE(MSG,5) NSYS+NHIST, XPKS, NSYS-XPKS, NHIST,
 C    $             INT(HISTPD+.5), YNHIST, GENSKU, DWORK(1),
      $             INT(HISTPD+.5),         GENSKU, DWORK(1),DWORK(4),
-     $             SKUOP(IGSOPT+2),GAGEB, DWORK(2),DWORK(3),WEIBA,ATYPE
+     $             SKUOP(IGSOPT+2),GAGEB, DWORK(2),DWORK(3),WEIBA,
+     $             ATYPE,LOTYPE
       IF (EMAOPT .GT. 0) THEN
         IF (NTHRESH .GT. 0) THEN
           IF (THRDEF .EQ. 0) THEN
