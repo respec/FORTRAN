@@ -462,11 +462,11 @@ ALIQC   7  1 -1749     1 2   0 2    0  1715 ENG qty/ft3    0   3630.   0 102833.
  Conc of QUALGW in lat groundwater inflow   MET qty/l      0   3630.   0 102833.
 #GROUP   55  TYPE TEXT
 $TEXT
-PQADFX 10  1 -1678     1 2   0 2    0  1725 ENG qty/aciv   0       1   0   .4047
+PQADFX 10  1 -1745     1 2   0 2    0  1725 ENG qty/aciv   0       1   0   .4047
  Atmospheric deposition of QUAL to PLS      MET qty/haiv   0       1   0   .4047
 #GROUP   56  TYPE TEXT
 $TEXT
-PQADCN 10  1 -1678     1 2   0 2    0  1735 ENG qty/ft3    0   3630.   0 102833.
+PQADCN 10  1 -1745     1 2   0 2    0  1735 ENG qty/ft3    0   3630.   0 102833.
  Concentration of QUAL in precip over PLS   MET qty/l      0   3630.   0 102833.
 #GROUP   57  TYPE TEXT
 $TEXT
