@@ -619,9 +619,10 @@ C         traditional B17 analysis
         ELSE
 C         using new EMA option
           WRITE(MSG1,  213) CHDTTM
-          WRITE(MSG1, *)
-          WRITE(MSG1,  205)
-          WRITE(MSG1,  206)
+Cprh        EMA Warning removed 5/2012
+Cprh          WRITE(MSG1, *)
+Cprh          WRITE(MSG1,  205)
+Cprh          WRITE(MSG1,  206)
         END IF
 Cprh       WRITE(MSG1,  205)
 Cprh       WRITE(MSG1,  206)
@@ -666,9 +667,10 @@ C         traditional B17 analysis
         ELSE
 C         using new EMA option
           WRITE(HEAD4,213) CHDTTM
-C         include warning about using EMA method
-          WRITE(HEAD5,205)
-          WRITE(HEAD6,206)
+Cprh        EMA Warning removed 5/2012
+CprhC         include warning about using EMA method
+Cprh          WRITE(HEAD5,205)
+Cprh          WRITE(HEAD6,206)
         END IF
 C       WRITE(HEAD7,207) JOBTTL
 C       put date/time here for plots
@@ -1314,7 +1316,7 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
    10 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
-   11 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
+   11 FORMAT(    ' STATION ESTIMEATE',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' EMA ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
