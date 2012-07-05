@@ -3918,12 +3918,13 @@ C       Weighted, set to root mean square
       write(99,*) 'GBTYPE:',GBTYPE
       write(99,*) 'GBTHRSH',GBTHRSH
 C
-      CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
-     I            REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
-     O            WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
+      IF (NOBS.GT.0) THEN
+        CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
+     I              REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
+     O              WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
       
-C     get plotting positions for all peaks and thresholds
-      CALL plotposHS(NOBS,QL,QU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
+C       get plotting positions for all peaks and thresholds
+        CALL plotposHS(NOBS,QL,QU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
 
 c      write(99,*) 'After EMAFIT'
 c      write(99,*) 'NOBS:',NOBS
@@ -3935,14 +3936,14 @@ c      DO 70 I = 1,NOBS
 c        write(99,2000) 10**QL(I),10**QU(I),10**TL(I),10**TU(I)
 c 70   CONTINUE
 
-      write(99,*)
-      write(99,*) 'RESULTS'
+        write(99,*)
+        write(99,*) 'RESULTS'
 
- 2010 format(1X,A8,3D16.8)
-      write(99,2010) 'WRCMOM-1',(WRCMOM(i,1),i=1,3)
-      write(99,2010) 'WRCMOM-2',(WRCMOM(i,2),i=1,3)
-      write(99,2010) 'WRCMOM-3',(WRCMOM(i,3),i=1,3)
-      write(99,*)
+ 2010   format(1X,A8,3D16.8)
+        write(99,2010) 'WRCMOM-1',(WRCMOM(i,1),i=1,3)
+        write(99,2010) 'WRCMOM-2',(WRCMOM(i,2),i=1,3)
+        write(99,2010) 'WRCMOM-3',(WRCMOM(i,3),i=1,3)
+        write(99,*)
 
 C     store EMA moments in WRC variables
 c      WRCUAV = LOG10(EXP(WRCMOM(1)))
@@ -3952,58 +3953,63 @@ c      WRCSKW = WRCMOM(3)
       WRCUSD = SQRT(WRCMOM(2,1))
       WRCSKW = WRCMOM(3,1)
 
-      write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
-      write(99,*)
-      write(99,*) 'Plotting Positions of peaks'
-      write(99,*) 'Plot Pos      Obs. Q'
-      DO 20 I = 1,NOBS
-        write(99,*) PEX(I),Q(I)
- 20   CONTINUE
+        write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
+        write(99,*)
+        write(99,*) 'Plotting Positions of peaks'
+        write(99,*) 'Plot Pos      Obs. Q'
+        DO 20 I = 1,NOBS
+          write(99,*) PEX(I),Q(I)
+ 20     CONTINUE
 
-      IF (NINTERVAL.GT.0) THEN
-        DO 30 I = 1,NINTERVAL
-          DO 25 J = 1,NOBS
-            IF (OPKSEQ(J) .EQ. INTERVAL(I)%INTRVLYR) THEN
-C             assign plotting position for this interval
-              INTERVAL(I)%INTRVLPP = PEX(J)
-            END IF
- 25       CONTINUE
- 30     CONTINUE
-      END IF
-
-      write(99,*)
-      write(99,*) 'Threshold positions'
-      write(99,*) 'Plot Pos     Threshold    NumPeaks'
-      DO 40 I = 1,NT
-        write(99,*) PET(I),THR(I),NB(I)
-C       set plotting position data for retrieval by PKFQWin
-        DO 35 J = 1,NTHRESH
-          IF (ABS((10**THR(I))-THRESH(J)%THRLWR) .LT. 0.001) THEN
-C           assume matching threshold value means matching thresholds
-            THRESH(J)%THPP = PET(I)
-            THRESH(J)%NOBS = NB(I)
-          END IF
- 35     CONTINUE
- 40   CONTINUE
-
-      write(99,*)
-      write(99,*) '  Prob       EMA Est.        CL Low       CL High'
- 2100 format(1X,F6.4,4F14.3)
-      do 19 i = 1,MXINT
-        write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
-     $                VAREST(i)
- 19   continue
-C
-      DO 50 I = 1,MXINT
-C        write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
-C     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
-        IF (TXPROB(I) .LE. WRCPAB) THEN
-          SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
-          WRCFC(I) = WRCYP(I)
-          CLIML(I) = CILOW(I)
-          CLIMU(I) = CIHIGH(I)
+        IF (NINTERVAL.GT.0) THEN
+          DO 30 I = 1,NINTERVAL
+            DO 25 J = 1,NOBS
+              IF (OPKSEQ(J) .EQ. INTERVAL(I)%INTRVLYR) THEN
+C               assign plotting position for this interval
+                INTERVAL(I)%INTRVLPP = PEX(J)
+              END IF
+ 25         CONTINUE
+ 30       CONTINUE
         END IF
- 50   CONTINUE
+
+        write(99,*)
+        write(99,*) 'Threshold positions'
+        write(99,*) 'Plot Pos     Threshold    NumPeaks'
+        DO 40 I = 1,NT
+          write(99,*) PET(I),THR(I),NB(I)
+C         set plotting position data for retrieval by PKFQWin
+          DO 35 J = 1,NTHRESH
+            IF (ABS((10**THR(I))-THRESH(J)%THRLWR) .LT. 0.001) THEN
+C             assume matching threshold value means matching thresholds
+              THRESH(J)%THPP = PET(I)
+              THRESH(J)%NOBS = NB(I)
+            END IF
+ 35       CONTINUE
+ 40     CONTINUE
+
+        write(99,*)
+        write(99,*) '  Prob       EMA Est.        CL Low       CL High'
+ 2100   format(1X,F6.4,4F14.3)
+        do 19 i = 1,MXINT
+          write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
+     $                  VAREST(i)
+ 19     continue
+C
+        DO 50 I = 1,MXINT
+C         write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
+C     $                  10**CILOW(I),10**CIHIGH(I),VAREST(I)
+          IF (TXPROB(I) .LE. WRCPAB) THEN
+            SYSRFC(I)= QP3(PR(I),WRCMOM(1,2))
+            WRCFC(I) = WRCYP(I)
+            CLIML(I) = CILOW(I)
+            CLIMU(I) = CIHIGH(I)
+          END IF
+ 50     CONTINUE
+      ELSE
+        write(99,*)
+        write(99,*) "*** NOBS=0, EMA not run ***"
+        write(99,*)
+      END IF
 C
       RETURN
       END
