@@ -201,8 +201,9 @@ C
         CALL INPUT (IA1,IA3,INFORM,MAXPKS,IA3,IBCPUN,ECHFUN,
      M              ISTART,
      O              STAID,PKS,IPKSEQ,XQUAL,IQUAL, 
-     O              NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,LOTYPE,GAGEB,
-     O              GENSKU,RMSEGS, IGSOPT, NSKIP1,EMAOPT,IER)
+     O              NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
+     O              LOTYPE,GAGEB,GENSKU,RMSEGS, IGSOPT,
+     O              NSKIP1,EMAOPT,IER)
         write(99,*)'After INPUT - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
 C
 C       see if any revised/new peaks need to be accounted for
@@ -272,6 +273,15 @@ C           report Multiple GB LO messges
           NERR=NERR+1
           IF(MSL .LT. 4) CALL PRTIN2 ( 1 ,MSG, NPKS, IPKSEQ,PKS,XQUAL,
      $                                 IQUAL, EMAOPT, IA3 )
+C           sort input peak logs and correlate with plotting positions
+            CALL SORTM( PKLOG, IPKPTR, 1, -1, NPKS )
+            IF(NHIST.GT.0) CALL ALIGNP(IPKPTR,IPKSEQ,NPKS,NHIST,SYSPP)
+C           save data (pre-Gausex transform) for retrieval by PKFQWIN
+            CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
+     I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
+     I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
+     I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
+     I                      JSEQNO,HEADNG(9))
         ELSE
 
           CALL PRTKNT(MSG,NPKS,PKS,IPKSEQ,
@@ -558,20 +568,15 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   200 FORMAT('  ')
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
-Cprh 202 FORMAT( 21X, 'OFFICE OF SURFACE WATER, RESTON, VA' )
-  202 FORMAT( 2X,'Ver. 6.1b',
-     $       12X,'Annual peak flow frequency analysis',
+  202 FORMAT( 2X,'Prov. Ver. 7.0',
+     $        6X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
-Cprh 203 FORMAT( 21X, 'ANNUAL PEAK FLOW FREQUENCY ANALYSIS' )
-  203 FORMAT( 2X,'03/05/2012',
+  203 FORMAT( 2X,'07/04/2012',
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
-  213 FORMAT( 2X,'2/02/2012',
+  213 FORMAT( 2X,'07/04/2012',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
-Cprh 204 FORMAT( 21X, 'Following Bulletin 17-B Guidelines' )
-Cprh 205 FORMAT( 21X, '          Program peakfq    ' )
   205 FORMAT(12X,'WARNING:  For experimental use only, EMA is not the')
   206 FORMAT(22X,'standard method for flood frequency analysis.')
-Cprh 206 FORMAT( 21X, '     (Version 4.1, February, 2002)' )
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
   208 FORMAT( ' ',2A1,T1,5('   *** EXPERIMENTAL ***   ')  )
@@ -800,7 +805,9 @@ C     + + + FORMATS + + +
      $  /16X,'Peaks not used in analysis           = ',I8,
      $  /16X,'Systematic peaks in analysis         = ',I8,
      $  /16X,'Historic peaks in analysis           = ',I8,
-     $  /16X,'Years of historic record             = ',I8,
+     $  /16X,'Beginning Year                       = ',I8,
+     $  /16X,'Ending Year                          = ',I8,
+     $  /16X,'Historical Period Length             = ',I8,
      $  /16X,'Generalized skew                     = ',F8.3,
      $  /16X,'     Standard error                  = ',2X,A6,
      $  /16X,'     Mean Square error               = ',2X,A6,
@@ -860,9 +867,8 @@ C       historic adjustment applied
       WRITE(MSG,6) 
       CALL  PRTPHD(  2001 , -999, EMAOPT, WDMSFL )
       WRITE(MSG,4)
-      WRITE(MSG,5) NSYS+NHIST, XPKS, NSYS-XPKS, NHIST,
-C    $             INT(HISTPD+.5), YNHIST, GENSKU, DWORK(1),
-     $             INT(HISTPD+.5),         GENSKU, DWORK(1),DWORK(4),
+      WRITE(MSG,5) NSYS+NHIST, XPKS, NSYS-XPKS, NHIST,BEGYR,ENDYR,
+     $             INT(HISTPD+.5), GENSKU, DWORK(1),DWORK(4),
      $             SKUOP(IGSOPT+2),GAGEB, DWORK(2),DWORK(3),WEIBA,
      $             ATYPE,LOTYPE
       IF (EMAOPT .GT. 0) THEN
@@ -1041,7 +1047,7 @@ C     WDMSFL - FORTRAN unit number for input WDM file
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   JLINE,         I, NB, J, ILINE, LYR, K
-      REAL    EPSILN, LTHR, UTHR, INTVAL(200)
+      REAL    EPSILN, LTHR, UTHR, INTVAL(500)
       CHARACTER*9 LTHRCHR(2)
 C
 C     + + + INTRINSICS + + +
@@ -1622,15 +1628,17 @@ C
      I              (IA1,IA3,INFORM,MAXPKS,WDMSFL,IBCPUN,ECHFUN,
      M               ISTART,
      O               STAID,PKSABG,IWYSN,XQUAL,IQUAL, 
-     O               NHIST,NSYS,HISTPD,  QHIOUT,QLWOUT,LOTYPE,GAGEB,
-     O               GENSKU, RMSEGS,ISKUOP,  NSKIP1, EMAOPT, IRC )
+     O               NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
+     O               LOTYPE,GAGEB,GENSKU, RMSEGS,ISKUOP,  
+     O               NSKIP1,EMAOPT,IRC)
 C
 C     + + + PURPOSE + + +
 C     RE-WRITTEN FOR PRIME VERSION 3.8-P,  WK, 7/88.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   IA1,IA3, INFORM, MAXPKS, EMAOPT, WDMSFL, NHIST, 
-     &          NSYS, ISKUOP, NSKIP1, IRC, ISTART, IBCPUN, ECHFUN
+     &          NSYS, BEGYR,ENDYR,ISKUOP, NSKIP1, IRC, ISTART, 
+     &          IBCPUN, ECHFUN
       INTEGER                     IWYSN(MAXPKS),  IQUAL(MAXPKS)
       REAL       PKSABG(MAXPKS)
       REAL       HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
@@ -1660,6 +1668,8 @@ C     IQUAL  -
 C     NHIST  -
 C     NSYS   -
 C     HISTPD -
+C     BEGYR  - BEGINNING YEAR OF ANALYSIS
+C     ENDYR  - ENDING YEAR OF ANALYSIS
 C     QHIOUT -
 C     QLWOUT -
 C     LOTYPE - lo-outlier type (NONE, GBT, MGBT, FIXE)
@@ -1692,15 +1702,17 @@ C
       ELSE IF ( INFORM .EQ. 1 )  THEN
         CALL INPUT1(IA1, IA3, IBCPUN, ECHFUN,
      I              MAXPKS, STAID, PKSABG, IWYSN, XQUAL,
-     O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB, 
-     O              GENSKU,RMSEGS,ISKUOP, NSKIP1, EMAOPT, IRC)
+     O              NHIST, NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT,
+     O              LOTYPE, GAGEB, GENSKU,RMSEGS,ISKUOP, 
+     O              NSKIP1, EMAOPT, IRC)
 C
       ELSE IF ( INFORM .EQ. 2 )  THEN
         CALL INPUT2(IA1, MAXPKS, WDMSFL, ECHFUN,
      M              ISTART,
      O              STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
-     O              NHIST, NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB,
-     O              GENSKU, RMSEGS, ISKUOP, NSKIP1, EMAOPT, IRC)
+     O              NHIST, NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT,
+     O              LOTYPE, GAGEB, GENSKU, RMSEGS, ISKUOP, 
+     O              NSKIP1, EMAOPT, IRC)
 C
       ELSE IF ( INFORM .EQ. 3 ) THEN
         CALL INPUT3(  MAXPKS, IDSTA,PKSABG, IWYSN, NHIST,NSYS,HISTPD,
@@ -1723,8 +1735,9 @@ C
      I                 (  MESSFL, MAXPKS, WDMSFL, ECHFUN,
      M                    ISTART,
      O                    STAID, PKSABG, IWYSN, XQUAL, IQUAL, NHIST, 
-     O                    NSYS, HISTPD, QHIOUT, QLWOUT, LOTYPE, GAGEB,
-     O                    GENSKU, RMSEGS, ISKUOP, NSKIP1, EMAOPT, IRC )
+     O                    NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT, 
+     O                    LOTYPE, GAGEB, GENSKU, RMSEGS, ISKUOP,
+     O                    NSKIP1, EMAOPT, IRC )
 C
 C     + + + PURPOSE + + +
 C     GETS INPUT DATA FROM WATSTORE PEAK-FILE PUNCHED-CARD RETRIEVAL
@@ -1739,7 +1752,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MAXPKS, NHIST, NSYS, ISKUOP, NSKIP1, IRC, ISTART
       INTEGER   MESSFL,         IWYSN(MAXPKS) , IQUAL(MAXPKS)
-      INTEGER   EMAOPT, WDMSFL, ECHFUN
+      INTEGER   BEGYR, ENDYR, EMAOPT, WDMSFL, ECHFUN
       REAL      PKSABG(MAXPKS)
       REAL      HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
       CHARACTER*(*) XQUAL(MAXPKS)
@@ -1769,6 +1782,8 @@ C     IQUAL  - QUALIFICATION CODES FOR PKSABG  --   INTEGER
 C     NHIST  - NUMBER  OF HISTORIC peaks returned
 C     NSYS   - number of systematic peaks
 C     HISTPD - LENGTH OF HISTORIC PERIOD
+C     BEGYR  - BEGINNING YEAR OF ANALYSIS
+C     ENDYR  - ENDING YEAR OF ANALYSIS
 C     QHIOUT - USER-SET HIGH- OUTLIER DISCHARGE THRESHOLDS
 C     QLWOUT - USER-SET low-outlier discharge threshold
 C     LOTYPE - LO-OUTLIER TYPE (NONE, GBT, MGBT, FIXE)
@@ -1793,7 +1808,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*4  LREG
 Cprh      CHARACTER*15 CD
       CHARACTER*18 CURSTA
-      INTEGER   MSG, NOBS, IBEGYR, IENDYR, IHOPTI, IKROPT, I, IBEGIN,
+      INTEGER   MSG, NOBS, IHOPTI, IKROPT, I, IBEGIN,
      &          IEND, IPK, LOOPBK, OKFG, LSTART
 Cprh                , K, L15, IRET, SCLU, SGRP,
 Cprh     $          IVAL(2), CVAL(3), L3, L2, L7, L4, L1, L8,
@@ -1941,8 +1956,8 @@ C             not too many peaks & user wants to continue
               QLWOUT    =  AUX(4)
               GAGEB     =  AUX(5)
               RMSEGS    =  AUX(6)
-              IBEGYR    =  AUX(7)            
-              IENDYR    =  AUX(8)             
+              BEGYR    =  AUX(7)            
+              ENDYR    =  AUX(8)             
               IHOPTI    =  AUX(10)
               ISKUOP    =  AUX(9)      
               IKROPT    =  AUX(11)
@@ -1958,11 +1973,11 @@ C
 C             update specs
               CALL PARSESTASPECS (CURSTA,XSYSPK,XHSTPK,
      M                            GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                            GAGEB,RMSEGS,IBEGYR,IENDYR,
+     M                            GAGEB,RMSEGS,BEGYR,ENDYR,
      M                            ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
 C
 C             write inputs to echo file
-              CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,IBEGYR,IENDYR,
+              CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
      I                        HISTPD,ISKUOP,GENSKU,RMSEGS,QLWOUT,
      I                        QHIOUT,GAGEB,IKROPT,FLAT,FLONG)
 C
@@ -1970,23 +1985,23 @@ C
               GAGEBT= 0.
 C
 C             find first and last years of record
-              IF(IENDYR.LE.0) IENDYR = 9999
-              IF(IWYSN(20+NOBS).LT.IBEGYR. OR. IWYSN(21).GT.IENDYR)
+              IF(ENDYR.LE.0) ENDYR = 9999
+              IF(IWYSN(20+NOBS).LT.BEGYR. OR. IWYSN(21).GT.ENDYR)
      $          GO TO 485
 C
                 DO 470 I = 1, NOBS
-                  IF(IWYSN(20+I).GE.IBEGYR) GO TO 475
+                  IF(IWYSN(20+I).GE.BEGYR) GO TO 475
   470           CONTINUE
                 GO TO 485
 C
   475         CONTINUE
                 IBEGIN = 20 + I
                 DO 480 I=1,NOBS
-                  IF(IWYSN(21+NOBS-I).LE.IENDYR) GO TO 490
+                  IF(IWYSN(21+NOBS-I).LE.ENDYR) GO TO 490
   480           CONTINUE
 C
   485         CONTINUE
-                WRITE(MSG,486)IBEGYR,IENDYR,IWYSN(21),IWYSN(20+NOBS),
+                WRITE(MSG,486)BEGYR,ENDYR,IWYSN(21),IWYSN(20+NOBS),
      $                        STAID(1:30)
                 NSKIP1  = NSKIP1 + 1
                 LOOPBK = 1
@@ -4147,13 +4162,13 @@ C
       Use EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       STNIND,NPKPLT,IXQUAL(5,200),IPKSEQ(200),NPLOT,
-     $              HSTFLG,NT,NOBSTH(200),THRSYR(200),
-     $              THREYR(200),NINTVL,NLOW,NZERO
-      REAL          PKLOG(200),SYSPP(200),WRCPP(200),
+      INTEGER       STNIND,NPKPLT,IXQUAL(5,500),IPKSEQ(500),NPLOT,
+     $              HSTFLG,NT,NOBSTH(500),THRSYR(500),
+     $              THREYR(500),NINTVL,NLOW,NZERO
+      REAL          PKLOG(500),SYSPP(500),WRCPP(500),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
-     $              CLIML(32),CLIMU(32),THR(200),PPTH(200),
-     $              INTLWR(200),INTUPR(200),INTPPOS(200),
+     $              CLIML(32),CLIMU(32),THR(500),PPTH(500),
+     $              INTLWR(500),INTUPR(500),INTPPOS(500),
      $              GBCRIT,SKEW,RMSEGS
       CHARACTER*80  HEADER
 C
@@ -4323,7 +4338,7 @@ C       determine threshold specs for systematic record
         I = 0
  3      CONTINUE
           I = I + 1
-        IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 3
+        IF ((PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) .AND. I.LT.NPKS) GOTO 3
         THRESH(NTHRESH)%THRBYR = IPKSEQ(I)
         THRESH(NTHRESH)%THREYR = IPKSEQ(NPKS)
 C        this is what was used in the original EMA incorporation
@@ -4509,8 +4524,8 @@ C
       Use EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       STNIND,NPKS,IXQUAL(5,200),IPKSEQ(200)
-      REAL          APKS(200)
+      INTEGER       STNIND,NPKS,IXQUAL(5,500),IPKSEQ(500)
+      REAL          APKS(500)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STNIND - index number of this station
@@ -4690,7 +4705,7 @@ C     RUNDATE = date/time of this run
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   JLINE,         I, J, ILINE, LYR, K
-      REAL    EPSILN, LTHR, UTHR, INTVAL(200)
+      REAL    EPSILN, LTHR, UTHR, INTVAL(500)
       CHARACTER*1 LTAB
       CHARACTER*9 LTHRCHR(2)
 C
