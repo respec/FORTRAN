@@ -1,5 +1,5 @@
       INTEGER   MXPK
-      PARAMETER (MXPK=200)
+      PARAMETER (MXPK=500)
 C
 C     + + + PARAMETER DEFINITIONS + + +
 C     MXPK   - maximum number of peaks for a station
