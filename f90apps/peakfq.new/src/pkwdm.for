@@ -4,7 +4,7 @@ C
       SUBROUTINE   INPUT1
      I                   (MESSFL,WDMSFL,IBCPUN,ECHFUN,MAXPKS,
      I                    STAID,PKSABG,IWYSN,XQUAL,
-     O                    NHIST,NSYS,HISTPD,QHIOUT,QLWOUT,
+     O                    NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
      O                    GAGEB,GENSKU,RMSEGS,ISKUOP,NSKIP1,EMAOPT,IRC)
 C
 C     + + + PURPOSE + + +
@@ -17,7 +17,7 @@ C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MESSFL, WDMSFL, IBCPUN, ECHFUN, MAXPKS, IWYSN(MAXPKS),
-     &          NHIST, NSYS, ISKUOP, NSKIP1, EMAOPT, IRC
+     &          NHIST, NSYS, BEGYR, ENDYR, ISKUOP, NSKIP1, EMAOPT, IRC
       REAL      PKSABG(MAXPKS), HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU,
      &          RMSEGS
       CHARACTER*5  XQUAL(MAXPKS)
@@ -52,6 +52,8 @@ C     XQUAL  - qualification codes for PKSABG
 C     NHIST  - number of historic peaks returned
 C     NSYS   - number of systematic peaks returned
 C     HISTPD - length of historic period
+C     BEGYR  - beginning year of analysis
+C     ENDYR  - ending year of analysis
 C     QHIOUT - user-set high-outlier discharge threshold
 C     QLWOUT - user-set low-outlier discharge threshhold
 C     GAGEB  - gage base discharge
@@ -81,7 +83,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER      I,J,L1,L4,L5,L12,L15,L16,L70,L90,NREC,WYR(MXPK),
      1             DSN,SALEN,URBREG,SAIND,     JUST,
      1                    RETCOD,TABID,TBCNT,LREC,TGRPT,INITFG,
-     2             SCLU,GROUP,NROW,OLEN,LEN,BYR,SKIP,POS,EYR,IWRT,
+     2             SCLU,GROUP,NROW,OLEN,LEN,SKIP,POS,IWRT,
      3             II,ITEMP
 Cprh     $             IBUF(3),L3,MAXL,SCNFG,
       REAL         PK(MXPK),XGAGEB,RTEMP,FLAT,FLONG,SYSHI,HSTLOW
@@ -166,11 +168,11 @@ C
 C         get begining and ending year
           SAIND = 278
           SALEN = 1
-          CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,BYR,RETCOD)
-          IF (RETCOD .NE. 0) BYR = -1
+          CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,BEGYR,RETCOD)
+          IF (RETCOD .NE. 0) BEGYR = -1
           SAIND = 279
-          CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,EYR,RETCOD)
-          IF (RETCOD .NE. 0) EYR = -1
+          CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,ENDYR,RETCOD)
+          IF (RETCOD .NE. 0) ENDYR = -1
 C
 C         get low outlier
           SAIND = 269
@@ -259,8 +261,8 @@ Cprh            CALL PRNTXI (MESSFL, SCLU, GROUP, DSNBUF(DSNIND))
             !LOG IT
           ENDIF
           IF (NREC .GT. 0) THEN
-            IF (BYR .LT. 0) BYR = SIMIN(NREC,WYR)
-            IF (EYR .LT. 0) EYR = SIMAX(NREC,WYR)
+            IF (BEGYR .LT. 0) BEGYR = SIMIN(NREC,WYR)
+            IF (ENDYR .LT. 0) ENDYR = SIMAX(NREC,WYR)
           ELSE
 C           Couldn't get data from dataset &.
 Cprh            GROUP = 8
@@ -299,11 +301,11 @@ C           get any specs from spec file
             CURSTA = TRIM(CTEMP)
             CALL PARSESTASPECS (CURSTA,SYSHI,HSTLOW,
      M                          GENSKU,HISTPD,QHIOUT,QLWOUT,
-     M                          GAGEB,RMSEGS,BYR,EYR,
+     M                          GAGEB,RMSEGS,BEGYR,ENDYR,
      M                          ISKUOP,URBREG,FLAT,FLONG,EMAOPT)
 C
 C           write inputs to echo file
-            CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BYR,EYR,
+            CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
      I                      HISTPD,ISKUOP,GENSKU,RMSEGS,QLWOUT,
      I                      QHIOUT,GAGEB,URBREG,FLAT,FLONG)
 C
@@ -314,10 +316,10 @@ C           Get station description/station name
             LEN = STRLNX (L70,CBUFF(21))
             IF (LEN .LE. 50) THEN
 C             room to add date
-              IF (BYR .GT. 0 .AND. EYR .GT. 0) THEN
-                CALL INTCHR (BYR, L4, JUST, OLEN, CBUFF(70))
+              IF (BEGYR .GT. 0 .AND. ENDYR .GT. 0) THEN
+                CALL INTCHR (BEGYR, L4, JUST, OLEN, CBUFF(70))
                 CALL CHRCHR (L1,DASH,CBUFF(74))
-                CALL INTCHR (EYR, L4, JUST, OLEN, CBUFF(75))
+                CALL INTCHR (ENDYR, L4, JUST, OLEN, CBUFF(75))
               END IF
             END IF
             CALL CARVAR (L90,CBUFF,L90,STAID)
@@ -333,7 +335,7 @@ C           look for historic peaks
               SKIP = 0
               POS = 0
               IF (STRFND(L12,QFLG(1,I),L1,C7) .GT. 0) THEN
-                IF (WYR(I) .GE. BYR .AND. WYR(I) .LE. EYR) THEN
+                IF (WYR(I) .GE. BEGYR .AND. WYR(I) .LE. ENDYR) THEN
 C                 historic peak
                   J = J + 1
 C                 check condition for skipping historic peaks
@@ -430,9 +432,9 @@ Cprh     &                       L3,IBUF)
             IF (IBCPUN.EQ.1 .OR. IBCPUN.EQ.3 .OR. IBCPUN.EQ.5) THEN
 C             set input specification attributes
               SAIND = 278  ! J407BY
-              CALL WDBSAI (WDMSFL,DSN,MESSFL,SAIND,L1,BYR,RETCOD)
+              CALL WDBSAI (WDMSFL,DSN,MESSFL,SAIND,L1,BEGYR,RETCOD)
               SAIND = 279  ! J407EY
-              CALL WDBSAI (WDMSFL,DSN,MESSFL,SAIND,L1,EYR,RETCOD)
+              CALL WDBSAI (WDMSFL,DSN,MESSFL,SAIND,L1,ENDYR,RETCOD)
               SAIND = 271  ! J407SO
               CALL WDBSAI (WDMSFL,DSN,MESSFL,SAIND,L1,ISKUOP,RETCOD)
               SAIND = 276  ! J407UR
@@ -457,7 +459,7 @@ C           look for systematic peaks
               SKIP = 0
               POS = 0
               IF (STRFND(L12,QFLG(1,I),L1,C7) .LE. 0) THEN
-                IF (WYR(I) .GE. BYR .AND. WYR(I) .LE. EYR) THEN
+                IF (WYR(I) .GE. BEGYR .AND. WYR(I) .LE. ENDYR) THEN
                   NSYS = NSYS + 1
                   J = J + 1
 C                 set XQUAL
