@@ -575,7 +575,8 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
   213 FORMAT( 2X,'07/04/2012',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
-  205 FORMAT(12X,'WARNING:  For experimental use only, EMA is not the')
+  205 FORMAT(12X,'Preliminary release of PeakFQ for review and ',
+     $           'testing only.')
   206 FORMAT(22X,'standard method for flood frequency analysis.')
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
@@ -629,7 +630,8 @@ Cprh          WRITE(MSG1, *)
 Cprh          WRITE(MSG1,  205)
 Cprh          WRITE(MSG1,  206)
         END IF
-Cprh       WRITE(MSG1,  205)
+C       temporary warning message for Prov. beta 7.0
+        WRITE(MSG1,  205)
 Cprh       WRITE(MSG1,  206)
 Cprh    original version never set JOBTTL, leave out for new version
 Cprh        WRITE(MSG1,  207)  JOBTTL
@@ -716,10 +718,14 @@ C         traditional B17 analysis
         ELSE
 C         using new EMA option
           WRITE(MSG1,  213) CHDTTM
-          WRITE(MSG1, *)
-          WRITE(MSG1,  205)
-          WRITE(MSG1,  206)
+C          WRITE(MSG1, *)
+C          WRITE(MSG1,  205)
+C          WRITE(MSG1,  206)
         END IF
+C       temporary warning message for provisional beta 7.0
+        WRITE(MSG1, *)
+        WRITE(MSG1,  205)
+
         WRITE(MSG1,200)
 C       build station id/ description
         CALL CHRCHR(L10,CSTA,HEADA9(1))
@@ -832,7 +838,7 @@ C    $   6X, 2A )
      $      /16X,'     Begin     End     Low     High     Comment')
  8    FORMAT(16X,'Observational Thresholds (defaults set by PeakFQ):',
      $      /16X,'     Begin     End     Low     High     Comment')
- 10   FORMAT(18X,2I8,F10.1,G10.1,5X,A)
+ 10   FORMAT(18X,2I8,2G10.1,5X,A)
  11   FORMAT(16X,'Observational Thresholds         =   None Specified')
  15   FORMAT(16X,'Interval Data:',
      $      /16X,'               Year     Low     High     Comment')
@@ -1322,7 +1328,7 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
    10 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
-   11 FORMAT(    ' STATION ESTIMEATE',F10.1,F11.4,F11.4,F12.4,F11.3
+   11 FORMAT(    ' STATION ESTIMATE ',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' EMA ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
