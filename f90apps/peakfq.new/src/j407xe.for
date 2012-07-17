@@ -3750,10 +3750,15 @@ C
         DEALLOCATE(QU)
         DEALLOCATE(TL)
         DEALLOCATE(TU)
+        DEALLOCATE(Q)
+        DEALLOCATE(PET)
+        DEALLOCATE(PEX)
+        DEALLOCATE(THR)
         DEALLOCATE(DTYPE)
         DEALLOCATE(OPKSEQ)
       END IF
       ALLOCATE (QL(NOBS), QU(NOBS), TL(NOBS), TU(NOBS), 
+     $          Q(NOBS), PET(NOBS), PEX(NOBS), THR(NOBS),
      $          DTYPE(NOBS), OPKSEQ(NOBS))
 C
 C     init arrays
@@ -3763,6 +3768,10 @@ C     init arrays
         QU(I) = MISSING
         TL(I) = MISSING
         TU(I) = MISSING
+        Q(I)  = MISSING
+        PET(I)= MISSING
+        PEX(I)= MISSING
+        THR(I)= MISSING
         DTYPE(I)= 'Othr'
  15   CONTINUE
 C
@@ -3875,8 +3884,8 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
-     $                 REGSTD,GENSDMSE,
-     $                 Q(MXPK),PEX(MXPK),THR(MXPK),PET(MXPK)
+     $                 REGSTD,GENSDMSE
+C     $                 Q(MXPK),PEX(MXPK),THR(MXPK),PET(MXPK)
       CHARACTER*4  GBTYPE
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -4162,7 +4171,7 @@ C
      I                     (STNIND,
      O                      NPKPLT,PKLOG,SYSPP,WRCPP,IXQUAL,IPKSEQ,
      O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
-     O                      CLIML,CLIMU,NT,THR,PPTH,NOBSTH,
+     O                      CLIML,CLIMU,NT,THRSH,PPTH,NOBSTH,
      O                      THRSYR,THREYR,NINTVL,INTLWR,INTUPR,INTPPOS,
      O                      GBCRIT,NLOW,NZERO,SKEW,RMSEGS,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
@@ -4179,7 +4188,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $              THREYR(500),NINTVL,NLOW,NZERO
       REAL          PKLOG(500),SYSPP(500),WRCPP(500),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
-     $              CLIML(32),CLIMU(32),THR(500),PPTH(500),
+     $              CLIML(32),CLIMU(32),THRSH(500),PPTH(500),
      $              INTLWR(500),INTUPR(500),INTPPOS(500),
      $              GBCRIT,SKEW,RMSEGS
       CHARACTER*80  HEADER
@@ -4206,7 +4215,7 @@ C     HSPFLG - flag for use of historic info, 0-used, 1-not used
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     NT     - number of perception thresholds
-C     THR    - array of threshold values
+C     THRSH  - array of threshold values
 C     PPTH   - array of threshold plotting positions
 C     NOBSTH - number of observations associated with each threshold
 C     THRSYR - array of threshold start years
@@ -4259,7 +4268,7 @@ C
 C     threshold data
       NT = STNDATA(STNIND)%NTHRESH
       DO 30 I = 1,NT
-        THR(I) = STNDATA(STNIND)%THRLWR(I)
+        THRSH(I)= STNDATA(STNIND)%THRLWR(I)
         PPTH(I) = STNDATA(STNIND)%THRPP(I)
         NOBSTH(I) = STNDATA(STNIND)%THRNOB(I)
         THRSYR(I) = STNDATA(STNIND)%THRSYR(I)
