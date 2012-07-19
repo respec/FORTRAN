@@ -22,6 +22,7 @@ lf90 utstat.for -c -o ..\obj\utstat.obj -O0     >>comp.out
 lf90 wdpeak.for -c -o ..\obj\wdpeak.obj -O0     >>comp.out
 rem lf90 wdtble.for -c -trace -o ..\obj\wdtble.obj -O0     >>comp.out
 lf90 stutil.for -c -o ..\obj\stutil.obj -O0     >>comp.out
+lf90 ktutil.for -c -o ..\obj\ktutil.obj -O0     >>comp.out
 rem lf90 pkplot.for -c -o ..\obj\pkplot.obj -O0     >>comp.out
 rem lf90 agplot.for -c -o ..\obj\agplot.obj -O0     >>comp.out
 rem lf90 agpltx.for -c -o ..\obj\agpltx.obj -O0     >>comp.out
