@@ -92,7 +92,8 @@ C     + + + INTRINSICS + + +
       INTRINSIC  INT, MIN0, MAX0
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT, PRTEMA
+      EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT
+      EXTERNAL   PRTEMAWARN, PRTEMADATA
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH, PKFQSTA
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
       EXTERNAL   SETEMADATA, PRTEXP, PRTEMP, SYDATM, ECHOTHRINT
@@ -265,7 +266,7 @@ C           report Multiple GB LO messges
  10           CONTINUE
             END IF
           END IF
-          CALL PRTEMA(MSG,NSYS,HISTPD)
+          CALL PRTEMAWARN(MSG,NSYS,HISTPD)
         END IF
        END IF
 
@@ -321,6 +322,10 @@ C               longer output
      $                       EMAOPT, IA3)
               END IF
             END IF    
+
+            IF (EMAOPT.EQ.1) THEN
+              CALL PRTEMADATA (MSG)
+            END IF
 C
             IF(NFCXPG.LE.0) THEN
               DO 170 I = 1,MXINT
@@ -834,17 +839,17 @@ C    $  /' ', 8X,I3,5X,I7,9X,I3,7X,F7.3,8X, A6,5X,  A ,2X,F8.1,//
 C    $         '     USER-SET OUTLIER CRITERIA   '         /
 C    $        '     HIGH OUTLIER   LOW OUTLIER  '        /
 C    $   6X, 2A )
- 7    FORMAT(16X,'Observational Thresholds:',
+ 7    FORMAT(16X,'Perception Thresholds:',
      $      /16X,'     Begin     End     Low     High     Comment')
- 8    FORMAT(16X,'Observational Thresholds (defaults set by PeakFQ):',
+ 8    FORMAT(16X,'Perception Thresholds (defaults set by PeakFQ):',
      $      /16X,'     Begin     End     Low     High     Comment')
  10   FORMAT(18X,2I8,2G10.1,5X,A)
- 11   FORMAT(16X,'Observational Thresholds         =   None Specified')
+ 11   FORMAT(16X,'Perception Thresholds            =   None Specified')
  15   FORMAT(16X,'Interval Data:',
      $      /16X,'               Year     Low     High     Comment')
  20   FORMAT(26X,I8,2F10.1,5X,A)
  21   FORMAT(16X,'Interval Data                    =   None Specified')
- 30   FORMAT(16X,'Observational Thresholds         =   Not Applicable',
+ 30   FORMAT(16X,'Perception Thresholds            =   Not Applicable',
      $      /16X,'Interval Data                    =   Not Applicable')
 C
 C     + + + END SPECIFICATIONS + + +
@@ -1079,15 +1084,15 @@ C     + + + FORMATS + + +
      $            'Historic peak used in computation' ///)
  1010 FORMAT('1',//)
  1011 FORMAT(//23X,'I N P U T   D A T A   L I S T I N G')
- 1012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ',
-     $        /,'     YEAR      VALUE   CODES    CODES  REMARKS')
- 2012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ   ',
+ 1012 FORMAT(//,'    WATER       PEAK   PEAKFQ',
+     $        /,'     YEAR      VALUE    CODES  REMARKS')
+ 2012 FORMAT(//,'    WATER       PEAK   PEAKFQ   ',
      $          '<--- Intervals --->',
-     $        /,'     YEAR      VALUE   CODES    CODES   ',
+     $        /,'     YEAR      VALUE    CODES   ',
      $          '  LOW         HIGH   REMARKS')
- 1013 FORMAT(I9,F11.1,A6,A9,A)
- 2013 FORMAT(I9,F11.1,A6,A9,24X,A)
- 2014 FORMAT(I9,26X,2F12.1,2X,A)
+ 1013 FORMAT(I9,F11.1,A7,A)
+ 2013 FORMAT(I9,F11.1,A7,24X,A)
+ 2014 FORMAT(I9,18X,2F12.1,2X,A)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
  1021 FORMAT( //3X,
@@ -1125,11 +1130,9 @@ C     write table of observed data
       END IF
       DO 210 I = 1,NPKS
         IF (EMAOPT .EQ. 1) THEN
-          WRITE(MSG,2013) IPKSEQ(I), PKS(I), XQUAL(I),
-     $                    XQUAL(I)
+          WRITE(MSG,2013) IPKSEQ(I), PKS(I), XQUAL(I)
         ELSE
-          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I),
-     $                    XQUAL(I)
+          WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I)
         END IF
   210 CONTINUE
 
@@ -1248,6 +1251,81 @@ C
 C
 C
 C
+      SUBROUTINE   PRTEMADATA
+     I                       (MSG)
+C
+C     + + + PURPOSE + + +
+C     Output EMA representation of peaks/intervals/thresholds
+C
+C     Input EMA arrays are in here
+      Use EMAThresh
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER   MSG
+C
+C     + + + PARAMETERS + + +
+      INTEGER NX
+C      
+      PARAMETER (NX=25000)
+C
+C     + + + COMMON BLOCKS + + +
+      DOUBLE PRECISION EMAQL,EMAQU,EMATL,EMATU
+      CHARACTER*4 EMADTYPE
+      COMMON /tacg02/EMAQL(NX),EMAQU(NX),
+     $               EMATL(NX),EMATU(NX),EMADTYPE(NX)
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I
+      CHARACTER*11 LQUSTR,LEQUSTR,LTLSTR,LTUSTR
+C
+C     + + + OUTPUT FORMATS + + +
+ 2000 FORMAT('1',//)
+ 2010 FORMAT(//,20X,'EMA REPRESENTATION OF DATA',
+     $       //,'  WATER <----- OBSERVED-----><-------- EMA ------->',
+     $          '<---- THRESHOLDS ---->  DATA',
+     $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
+     $          '      LOWER      UPPER  TYPE')
+ 2015 FORMAT(F11.0)
+ 2020 FORMAT(1X,I6,2(F11.0,A11),2A11,A6)
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     write table of EMA data arrays
+      WRITE(MSG,2000)
+      CALL PRTPHD (2001, -999, 1, 0)
+      WRITE(MSG,2010)
+C
+      DO 100 I = 1,NOBS
+        IF (QU(I).GT.19) THEN
+          LQUSTR = '       INF '
+        ELSE
+          WRITE(LQUSTR,2015) 10**QU(I)
+        END IF
+        IF (EMAQU(I).GT.19) THEN
+          LEQUSTR = '       INF '
+        ELSE
+          WRITE(LEQUSTR,2015) 10**EMAQU(I)
+        END IF
+        IF (EMATL(I).GT.19) THEN
+          LTLSTR = '       INF '
+        ELSE
+          WRITE(LTLSTR,2015) 10**EMATL(I)
+        END IF
+        IF (EMATU(I).GT.19) THEN
+          LTUSTR = '       INF '
+        ELSE
+          WRITE(LTUSTR,2015) 10**EMATU(I)
+        END IF
+
+        WRITE(MSG,2020) OPKSEQ(I),10**QL(I),LQUSTR,10**EMAQL(I),
+     $                  LEQUSTR,LTLSTR,LTUSTR,EMADTYPE(I)
+ 100  CONTINUE
+C
+      RETURN
+      END
+C
+C
+C
       SUBROUTINE   PRTFIT
      #                 ( IDEBUG, EMAOPT, WDMSFL )
 C
@@ -1328,9 +1406,9 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
    10 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
-   11 FORMAT(    ' STATION ESTIMATE ',F10.1,F11.4,F11.4,F12.4,F11.3
-     $         /,' EMA ESTIMATE     ',F10.1,F11.4,F11.4,F12.4,F11.3
-     $        //,' EMA ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
+   11 FORMAT(    ' EMA W/O REG. INFO',F10.1,F11.4,F11.4,F12.4,F11.3
+     $         /,' EMA W/REG. INFO  ',F10.1,F11.4,F11.4,F12.4,F11.3
+     $        //,' EMA ESTIMATE OF MSE OF SKEW'W/O REG. INFO (AT-SITE),F8.4)
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL                      ',
@@ -1344,10 +1422,10 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL                      ',
      $           '   <------ FOR EMA ESTIMATES ------->',
-     $         /,'EXCEEDANCE    EMA    SYSTEMATIC',
+     $         /,'EXCEEDANCE    EMA      STATION ',
      $           '   VARIANCE  ',I2,
      $           '% CONFIDENCE INTERVALS',
-     $         /,'PROBABILITY ESTIMATE   RECORD  ',
+     $         /,'PROBABILITY ESTIMATE  ESTIMATE ',
      $           '    OF EST.       LOWER       UPPER', /)
    20 FORMAT(1X,F8.4,  5A   )
  1010 FORMAT('1',//)
@@ -1489,7 +1567,7 @@ C
 C
 C
 C
-      SUBROUTINE   PRTEMA
+      SUBROUTINE   PRTEMAWARN
      I                   (MSG, NSYS, HISTPD)
 C
 C     + + + PURPOSE + + +
