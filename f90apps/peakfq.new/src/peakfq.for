@@ -1005,6 +1005,7 @@ C             make local copy of existing new peak specs
                 LPKS(J)%PKYR = NEWPKS(J)%PKYR
                 LPKS(J)%PKVAL= NEWPKS(J)%PKVAL
                 LPKS(J)%PKCOM= NEWPKS(J)%PKCOM
+                LPKS(J)%PKCODE= NEWPKS(J)%PKCODE
  90           CONTINUE
               DEALLOCATE (NEWPKS)
             END IF
@@ -1016,14 +1017,15 @@ C             put local copy back in array
                 NEWPKS(J)%PKYR = LPKS(J)%PKYR
                 NEWPKS(J)%PKVAL= LPKS(J)%PKVAL
                 NEWPKS(J)%PKCOM= LPKS(J)%PKCOM
+                NEWPKS(J)%PKCODE= LPKS(J)%PKCODE
  95           CONTINUE
-              DEALLOCATE (LINTERVAL)
+              DEALLOCATE (LPKS)
             END IF
 C           read 4 peak components
             KWD = STRRETREM(S)
             IF (LEN_TRIM(KWD).GT.0) THEN
               IVAL = CVRINT(KWD)
-              NEWPKS(NNEWPKS)%PKYR =IVAL
+              NEWPKS(NNEWPKS)%PKYR = IVAL
             ELSE
               WRITE(99,*) "No value found for Peak Year"
             END IF
@@ -1321,6 +1323,7 @@ C              1 - EMA
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I,J
+      CHARACTER*12 LWRSTR, UPRSTR
       CHARACTER*15 OSTAID
 C
 C     + + + FUNCTIONS + + +
@@ -1330,10 +1333,13 @@ C     + + + EXTERNALS + + +
       EXTERNAL  ZLNTXT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT('      PCPT_Thresh ',2I6,2G12.1,2X,A)
+ 2000 FORMAT('      PCPT_Thresh ',2I6,2A12,2X,A)
 C 2000 FORMAT('      PCPT_Thresh ',2I6,F10.0,G12.1,2X,A)
- 2010 FORMAT('      Interval ',I6,2F10.0,2X,A)
- 2020 FORMAT('      Peak ',I6,F10.0,2X,A,2X,A)
+ 2010 FORMAT('      Interval ',I6,2A12,2X,A)
+ 2020 FORMAT('      Peak ',I6,F10.1,2X,A,2X,A)
+ 2021 FORMAT('      Peak ',I6,F10.0,2X,A,2X,A)
+ 2030 FORMAT(F10.0)
+ 2040 FORMAT(G12.1)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1364,24 +1370,48 @@ C
 C     thresholds and intervals
       IF (NTHRESH.GT.0) THEN
         DO 10 I=1,NTHRESH
+          IF (THRESH(I)%THRLWR .LT. 1.0E9) THEN
+            WRITE(LWRSTR,2030) THRESH(I)%THRLWR
+          ELSE
+            WRITE(LWRSTR,2040) THRESH(I)%THRLWR
+          END IF
+          IF (THRESH(I)%THRUPR .LT. 1.0E9) THEN
+            WRITE(UPRSTR,2030) THRESH(I)%THRUPR
+          ELSE
+            WRITE(UPRSTR,2040) THRESH(I)%THRUPR
+          END IF
           WRITE(92,2000) THRESH(I)%THRBYR,THRESH(I)%THREYR,
-     $                   THRESH(I)%THRLWR,THRESH(I)%THRUPR,
-     $                   TRIM(THRESH(I)%THRCOM)
+     $                   LWRSTR,UPRSTR,TRIM(THRESH(I)%THRCOM)
  10     CONTINUE  
       END IF
       IF (NINTERVAL.GT.0) THEN
         DO 20 I=1,NINTERVAL
-          WRITE(92,2010) INTERVAL(I)%INTRVLYR,
-     $                   INTERVAL(I)%INTRVLLWR,INTERVAL(I)%INTRVLUPR,
+          IF (INTERVAL(I)%INTRVLLWR .LT. 1.0E9) THEN
+            WRITE(LWRSTR,2030) INTERVAL(I)%INTRVLLWR
+          ELSE
+            WRITE(LWRSTR,2040) INTERVAL(I)%INTRVLLWR
+          END IF
+          IF (INTERVAL(I)%INTRVLUPR .LT. 1.0E9) THEN
+            WRITE(UPRSTR,2030) INTERVAL(I)%INTRVLUPR
+          ELSE
+            WRITE(UPRSTR,2040) INTERVAL(I)%INTRVLUPR
+          END IF
+          WRITE(92,2010) INTERVAL(I)%INTRVLYR,LWRSTR,UPRSTR,
      $                   TRIM(INTERVAL(I)%INTRVLCOM)
  20     CONTINUE  
       END IF
 C     new/revised peaks
       IF (NNEWPKS.GT.0) THEN
         DO 30 I=1,NNEWPKS
-          WRITE(92,2020) NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
-     $                             NEWPKS(I)%PKCODE,
-     $                             TRIM(NEWPKS(I)%PKCOM)
+          IF (NEWPKS(I)%PKVAL .LT. 100) THEN
+            WRITE(92,2020) NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
+     $                               NEWPKS(I)%PKCODE,
+     $                               TRIM(NEWPKS(I)%PKCOM)
+          ELSE
+            WRITE(92,2021) NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
+     $                               NEWPKS(I)%PKCODE,
+     $                               TRIM(NEWPKS(I)%PKCOM)
+          END  IF
  30     CONTINUE  
       END IF
 C     skew parameters
