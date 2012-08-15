@@ -798,6 +798,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*12 SKUOP(3)
       INTEGER   I
       CHARACTER*8  YNHIST, ATYPE
+      CHARACTER*10 LWRSTR, UPRSTR
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   INT
@@ -843,14 +844,16 @@ C    $   6X, 2A )
      $      /16X,'     Begin     End     Low     High     Comment')
  8    FORMAT(16X,'Perception Thresholds (defaults set by PeakFQ):',
      $      /16X,'     Begin     End     Low     High     Comment')
- 10   FORMAT(18X,2I8,2G10.1,5X,A)
+ 10   FORMAT(18X,2I8,2A10,5X,A)
  11   FORMAT(16X,'Perception Thresholds            =   None Specified')
  15   FORMAT(16X,'Interval Data:',
      $      /16X,'               Year     Low     High     Comment')
- 20   FORMAT(26X,I8,2F10.1,5X,A)
+ 20   FORMAT(26X,I8,2A10,5X,A)
  21   FORMAT(16X,'Interval Data                    =   None Specified')
  30   FORMAT(16X,'Perception Thresholds            =   Not Applicable',
      $      /16X,'Interval Data                    =   Not Applicable')
+ 2030 FORMAT(F10.1)
+ 2040 FORMAT(G10.1)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -890,9 +893,18 @@ C       historic adjustment applied
             WRITE(MSG,8) 
           END IF
           DO 110 I= 1, NTHRESH
+            IF (THRESH(I)%THRLWR .LT. 1.0E9) THEN
+              WRITE(LWRSTR,2030) THRESH(I)%THRLWR
+            ELSE
+              WRITE(LWRSTR,2040) THRESH(I)%THRLWR
+            END IF
+            IF (THRESH(I)%THRUPR .LT. 1.0E9) THEN
+              WRITE(UPRSTR,2030) THRESH(I)%THRUPR
+            ELSE
+              WRITE(UPRSTR,2040) THRESH(I)%THRUPR
+            END IF
             WRITE(MSG,10) THRESH(I)%THRBYR,THRESH(I)%THREYR,
-     $                    THRESH(I)%THRLWR,THRESH(I)%THRUPR,
-     $                    THRESH(I)%THRCOM
+     $                    LWRSTR,UPRSTR,THRESH(I)%THRCOM
  110      CONTINUE
         ELSE
 C         no thresholds (don't think this is possible with SETTHRESH)
@@ -901,8 +913,18 @@ C         no thresholds (don't think this is possible with SETTHRESH)
         IF (NINTERVAL .GT. 0) THEN
           WRITE(MSG,15)
           DO 120 I = 1, NINTERVAL
-            WRITE(MSG,20) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
-     $                    INTERVAL(I)%INTRVLUPR,INTERVAL(I)%INTRVLCOM
+            IF (INTERVAL(I)%INTRVLLWR .LT. 1.0E9) THEN
+              WRITE(LWRSTR,2030) INTERVAL(I)%INTRVLLWR
+            ELSE
+              WRITE(LWRSTR,2040) INTERVAL(I)%INTRVLLWR
+            END IF
+            IF (INTERVAL(I)%INTRVLUPR .LT. 1.0E9) THEN
+              WRITE(UPRSTR,2030) INTERVAL(I)%INTRVLUPR
+            ELSE
+              WRITE(UPRSTR,2040) INTERVAL(I)%INTRVLUPR
+            END IF
+            WRITE(MSG,20) INTERVAL(I)%INTRVLYR,LWRSTR,UPRSTR,
+     $                    INTERVAL(I)%INTRVLCOM
  120      CONTINUE
         ELSE
 C         no interval data specified
@@ -1280,11 +1302,17 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('1',//)
+Cprh  temporarily remove DATA TYPE from output, 8/2012
+c 2010 FORMAT(//,20X,'EMA REPRESENTATION OF DATA',
+c     $       //,'  WATER <----- OBSERVED-----><-------- EMA ------->',
+c     $          '<---- THRESHOLDS ---->  DATA',
+c     $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
+c     $          '      LOWER      UPPER  TYPE')
  2010 FORMAT(//,20X,'EMA REPRESENTATION OF DATA',
      $       //,'  WATER <----- OBSERVED-----><-------- EMA ------->',
-     $          '<---- THRESHOLDS ---->  DATA',
+     $          '<---- THRESHOLDS ---->',
      $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
-     $          '      LOWER      UPPER  TYPE')
+     $          '      LOWER      UPPER')
  2015 FORMAT(F11.0)
  2020 FORMAT(1X,I6,2(F11.0,A11),2A11,A6)
 C
@@ -1317,8 +1345,9 @@ C
           WRITE(LTUSTR,2015) 10**EMATU(I)
         END IF
 
+Cprh  temporarily remove DATA TYPE from output, 8/2012
         WRITE(MSG,2020) OPKSEQ(I),10**QL(I),LQUSTR,10**EMAQL(I),
-     $                  LEQUSTR,LTLSTR,LTUSTR,EMADTYPE(I)
+     $                  LEQUSTR,LTLSTR,LTUSTR !,EMADTYPE(I)
  100  CONTINUE
 C
       RETURN
@@ -1408,7 +1437,8 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
    11 FORMAT(    ' EMA W/O REG. INFO',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' EMA W/REG. INFO  ',F10.1,F11.4,F11.4,F12.4,F11.3
-     $        //,' EMA ESTIMATE OF MSE OF SKEW'W/O REG. INFO (AT-SITE),F8.4)
+     $        //,' EMA ESTIMATE OF MSE OF SKEW W/O REG. INFO (AT-SITE)',
+     $           F8.4)
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL                      ',
