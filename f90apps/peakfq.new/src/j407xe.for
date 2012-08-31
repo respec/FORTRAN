@@ -1082,6 +1082,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   JLINE,         I, NB, J, ILINE, LYR, K
       REAL    EPSILN, LTHR, UTHR, INTVAL(500)
       CHARACTER*9 LTHRCHR(2)
+      CHARACTER*12 LINTVLSTR
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   ABS
@@ -1114,7 +1115,8 @@ C     + + + FORMATS + + +
      $          '  LOW         HIGH   REMARKS')
  1013 FORMAT(I9,F11.1,A7,A)
  2013 FORMAT(I9,F11.1,A7,24X,A)
- 2014 FORMAT(I9,18X,2F12.1,2X,A)
+ 2014 FORMAT(I9,18X,F12.1,A12,2X,A)
+ 2015 FORMAT(F12.1)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
  1021 FORMAT( //3X,
@@ -1125,15 +1127,15 @@ Cprh     $       10HSYSTEMATIC, 6X,'BULL.17B'/
 Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
  1022 FORMAT('   WATER     RANKED   SYSTEMATIC     B17B' / 
      $       '    YEAR   DISCHARGE    RECORD     ESTIMATE')
- 2022 FORMAT('   WATER     RANKED   SYSTEMATIC',5X,
+ 2022 FORMAT('   WATER     RANKED ',5X,
      $       'EMA',10X,'THRESHOLDS',7X,'INTERVALS' / 
-     $       '    YEAR   DISCHARGE    RECORD     ',
+     $       '    YEAR   DISCHARGE   ',
      $       'ESTIMATE',5X,'LOWER    UPPER    LOW      HIGH')
  1023 FORMAT( I8,F11.1,F11.4,F12.4,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2023 FORMAT( I8,F11.1,F11.4,F12.4,2x,2A9,
+ 2023 FORMAT( I8,F11.1,F11.4,2x,2A9,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2024 FORMAT( I8,F11.1,F11.4,F12.4,2x,2A9,2F10.0)
+ 2024 FORMAT( I8,F11.1,F11.4,2x,2A9,F10.1,A)
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1161,11 +1163,21 @@ C     write table of observed data
       IF (EMAOPT.EQ.1 .AND. NINTERVAL.GT.0) THEN
 C       output interval data
         DO 220 I = 1, NINTERVAL
+          IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
+            LINTVLSTR = '        INF '
+          ELSE
+            WRITE(LINTVLSTR,2015) INTERVAL(I)%INTRVLUPR
+          END IF
           WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
-     $                    INTERVAL(I)%INTRVLUPR,INTERVAL(I)%INTRVLCOM
-C         save average of interval lower/upper bounds
-          INTVAL(I)= 10**((LOG10(INTERVAL(I)%INTRVLLWR) + 
-     $                     LOG10(INTERVAL(I)%INTRVLUPR))/2)
+     $                    LINTVLSTR,INTERVAL(I)%INTRVLCOM
+          IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
+C           upper Interval is infinity, just use lower Interval value
+            INTVAL(I) = INTERVAL(I)%INTRVLLWR
+          ELSE
+C           save average of interval lower/upper bounds
+            INTVAL(I)= 10**((LOG10(INTERVAL(I)%INTRVLLWR) + 
+     $                       LOG10(INTERVAL(I)%INTRVLUPR))/2)
+          END IF
  220    CONTINUE
       END IF
 C
@@ -1233,9 +1245,14 @@ C                 need to print interval record
                   ELSE
                     WRITE(LTHRCHR(2),'(F9.0)') UTHR
                   END IF
+                  IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
+                    LINTVLSTR = '     INF    '
+                  ELSE
+                    WRITE(LINTVLSTR,'(F10.1)') INTERVAL(I)%INTRVLUPR
+                  END IF
                   WRITE(MSG,2024) LYR,INTVAL(J),INTERVAL(J)%INTRVLPP,
-     $                  INTERVAL(J)%INTRVLPP,LTHRCHR(1),LTHRCHR(2),
-     $                  INTERVAL(J)%INTRVLLWR,INTERVAL(J)%INTRVLUPR
+     $                  LTHRCHR(1),LTHRCHR(2),
+     $                  INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
                 END IF
  308          CONTINUE
             END IF
@@ -1258,7 +1275,7 @@ C                 need to print interval record
               WRITE(LTHRCHR(2),'(F9.0)') UTHR
             END IF
             WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     $                    SYSPP(I), WRCPP(I) , LTHRCHR(1), LTHRCHR(2),
+     $                    WRCPP(I) , LTHRCHR(1), LTHRCHR(2),
      $                    (' ',J=1,NB)
           ELSE
 C           no thresholds or intervals
@@ -1313,8 +1330,8 @@ c     $          '      LOWER      UPPER  TYPE')
      $          '<---- THRESHOLDS ---->',
      $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
      $          '      LOWER      UPPER')
- 2015 FORMAT(F11.0)
- 2020 FORMAT(1X,I6,2(F11.0,A11),2A11,A6)
+ 2015 FORMAT(F11.1)
+ 2020 FORMAT(1X,I6,2(F11.1,A11),2A11,A6)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1324,22 +1341,22 @@ C     write table of EMA data arrays
       WRITE(MSG,2010)
 C
       DO 100 I = 1,NOBS
-        IF (QU(I).GT.19) THEN
+        IF (QU(I).GT.18) THEN
           LQUSTR = '       INF '
         ELSE
           WRITE(LQUSTR,2015) 10**QU(I)
         END IF
-        IF (EMAQU(I).GT.19) THEN
+        IF (EMAQU(I).GT.18) THEN
           LEQUSTR = '       INF '
         ELSE
           WRITE(LEQUSTR,2015) 10**EMAQU(I)
         END IF
-        IF (EMATL(I).GT.19) THEN
+        IF (EMATL(I).GT.18) THEN
           LTLSTR = '       INF '
         ELSE
           WRITE(LTLSTR,2015) 10**EMATL(I)
         END IF
-        IF (EMATU(I).GT.19) THEN
+        IF (EMATU(I).GT.18) THEN
           LTUSTR = '       INF '
         ELSE
           WRITE(LTUSTR,2015) 10**EMATU(I)
@@ -2168,7 +2185,7 @@ C                     CODE IQUAL = -999 TO DENOTE MOVED HIST PEAK
                   END IF  
   590           CONTINUE
 C
-                IF(GAGEB.LE.0.) GAGEB = GAGEBT
+                IF(GAGEB.LE.0. .AND. EMAOPT.EQ.0) GAGEB = GAGEBT
 C  
                 IF(NHIST.GT. IBEGIN) THEN      
                   WRITE(MSG,593) NHIST, IBEGIN, STAID(1:30)
@@ -3889,11 +3906,11 @@ C          bound on the observation threshold corresponding to all flows
         DO 20 K = THRESH(J)%THRBYR,THRESH(J)%THREYR
           I = K - WYMIN + 1
           TU(I) = THRESH(J)%THRUPR
-          IF (GAGEB .GT. 0) THEN
-            TL(I) = MAX(LOG(GAGEB),THRESH(J)%THRLWR)
-          ELSE
+!          IF (GAGEB .GT. 0) THEN
+!            TL(I) = MAX(LOG(GAGEB),THRESH(J)%THRLWR)
+!          ELSE
             TL(I) = THRESH(J)%THRLWR
-          END IF         
+!          END IF         
  20     CONTINUE
  30   CONTINUE
 C
@@ -4072,6 +4089,9 @@ C     store EMA moments in WRC variables
 c      WRCUAV = LOG10(EXP(WRCMOM(1)))
 c      WRCUSD = LOG10(EXP(SQRT(WRCMOM(2))))
 c      WRCSKW = WRCMOM(3)
+      SYSUAV = WRCMOM(1,2)
+      SYSUSD = SQRT(WRCMOM(2,2))
+      SYSSKW = WRCMOM(3,2)
       WRCUAV = WRCMOM(1,1)
       WRCUSD = SQRT(WRCMOM(2,1))
       WRCSKW = WRCMOM(3,1)

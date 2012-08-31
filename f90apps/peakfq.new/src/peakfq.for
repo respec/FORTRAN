@@ -846,8 +846,10 @@ C     init new peaks specs
           IF (KWD .EQ. 'ANALYZE') THEN
             IF (S .EQ. 'B17B') THEN
               EMAOPT = 0
+              LOTYPE = 'GBT'
             ELSEIF (S .EQ. 'EMA') THEN
               EMAOPT = 1
+              LOTYPE = 'MGBT'
             END IF
           ELSEIF (KWD .EQ. 'GENSKEW') THEN
             GENSKU = CVRDEC(S)
