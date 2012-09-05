@@ -1248,7 +1248,7 @@ C                 need to print interval record
                   IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
                     LINTVLSTR = '     INF    '
                   ELSE
-                    WRITE(LINTVLSTR,'(F10.1)') INTERVAL(I)%INTRVLUPR
+                    WRITE(LINTVLSTR,'(F10.1)') INTERVAL(J)%INTRVLUPR
                   END IF
                   WRITE(MSG,2024) LYR,INTVAL(J),INTERVAL(J)%INTRVLPP,
      $                  LTHRCHR(1),LTHRCHR(2),
@@ -1467,9 +1467,9 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $           '    OF EST.       LOWER       UPPER', /)
    16 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
-     $        //,'   ANNUAL                      ',
+     $        //,'   ANNUAL   EMA W/    EMA W/O  ',
      $           '   <------ FOR EMA ESTIMATES ------->',
-     $         /,'EXCEEDANCE    EMA      STATION ',
+     $         /,'EXCEEDANCE  REG INFO  REG INFO ',
      $           '   VARIANCE  ',I2,
      $           '% CONFIDENCE INTERVALS',
      $         /,'PROBABILITY ESTIMATE  ESTIMATE ',
@@ -3925,7 +3925,11 @@ C     fill in measured peaks
           END IF
           QL(I) = PKS(J)
           QU(I) = PKS(J)
-          DTYPE(I)= 'Syst'
+          IF (IPKSEQ(J) .GT. 0) THEN !systematic peak
+            DTYPE(I)= 'Syst'
+          ELSE
+            DTYPE(I)= 'Hist'
+          END IF
         END IF
  40   CONTINUE
 C
