@@ -4868,7 +4868,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Version 6.1b dated 03/05/2012',/,'#',/,
+     $       'Provisional Ver. 7.0 dated 09/06/2012',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves -- ',
      $       'Weibull Plotting Positions',/,'#')
