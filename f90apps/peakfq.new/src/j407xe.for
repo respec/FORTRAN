@@ -1192,7 +1192,9 @@ C     write table of frequency curves
         ILINE = JLINE+1
 C       IF(ILINE.GT.1)  WRITE(MSG,1027)
 C       CALL PRTPHD( 3000 , -999  )
-        IF ( ABS(WEIBA).GT.EPSILN ) THEN
+        IF (EMAOPT.EQ.1) THEN
+          WRITE(MSG,1021) 'HIRSCH-STEDINGER'
+        ELSE IF ( ABS(WEIBA).GT.EPSILN ) THEN
           WRITE(MSG,1021) 'WEIBXXX', '*', WEIBA
         ELSE
           WRITE(MSG,1021) 'WEIBULL'
@@ -1275,8 +1277,8 @@ C                 need to print interval record
               WRITE(LTHRCHR(2),'(F9.0)') UTHR
             END IF
             WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     $                    WRCPP(I) , LTHRCHR(1), LTHRCHR(2),
-     $                    (' ',J=1,NB)
+     $                    WRCPP(I) , LTHRCHR(1), LTHRCHR(2)
+C     $                    (' ',J=1,NB)
           ELSE
 C           no thresholds or intervals
             WRITE(MSG,1023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
@@ -4004,12 +4006,14 @@ C     + + + PARAMETERS + + +
       INCLUDE 'PMXINT.INC'
 C
 C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cj407.inc'
       INCLUDE 'cwcf0.inc'
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,NB(MXPK)
+      INTEGER    I,NB(MXPK),IPKPTR(MXPK)
+      REAL       LQ(MXPK)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
@@ -4025,7 +4029,7 @@ C     + + + FUNCTIONS + + +
       DOUBLE PRECISION QP3
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   EMAFIT, plotposHS
+      EXTERNAL   EMAFIT, plotposHS, SORTM
 C
 C     + + + INTRINSICS + + +
       INTRINSIC  LOG10
@@ -4102,10 +4106,17 @@ c      WRCSKW = WRCMOM(3)
 
         write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
         write(99,*)
+
+        DO 18 I = 1,NOBS
+          LQ(I) = Q(I)
+ 18     CONTINUE
+        CALL SORTM(LQ, IPKPTR, 1, -1, NOBS )
         write(99,*) 'Plotting Positions of peaks'
         write(99,*) 'Plot Pos      Obs. Q'
         DO 20 I = 1,NOBS
           write(99,*) PEX(I),Q(I)
+C         store Hirsch-Stedinger plotting positions from EMA
+          WRCPP(I) = PEX(IPKPTR(I))
  20     CONTINUE
 
         IF (NINTERVAL.GT.0) THEN
@@ -4870,22 +4881,23 @@ C     + + + OUTPUT FORMATS + + +
      $       '# PeakFQ Flood Frequency Analysis, '
      $       'Provisional Ver. 7.0 dated 09/06/2012',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
- 2001 FORMAT('# Empirical Frequency Curves -- ',
-     $       'Weibull Plotting Positions',/,'#')
- 2002 FORMAT('# Empirical Frequency Curves -- ',
-     $       'Weibxxx Plotting Positions',/,
-     $       '#',73X,'*** WEIBA =', F6.3, ' ***',/,'#')
+ 2001 FORMAT('# Empirical Frequency Curves')
+c 2001 FORMAT('# Empirical Frequency Curves -- ',
+c     $       'Weibull Plotting Positions',/,'#')
+c 2002 FORMAT('# Empirical Frequency Curves -- ',
+c     $       'Weibxxx Plotting Positions',/,
+c     $       '#',73X,'*** WEIBA =', F6.3, ' ***',/,'#')
  2010 FORMAT(A80)
  1022 FORMAT('  WaterYr',A,'  RankedQ',A,'  SystRec',A,'  B17BEst') 
- 2022 FORMAT('  WaterYr',A,'  RankedQ',A,'  SystRec',A,'   EMAEst',A,
+ 2022 FORMAT('  WaterYr',A,'  RankedQ',A,'   EMAEst',A,
      $       'ThreshLow',A,' ThreshUp',A,'  IntvLow',A,' IntvHigh')
  1023 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4)
  1024 FORMAT(I8,A,F11.1,A,'       --  ',A,F12.4)
  1025 FORMAT(I8,A,F11.1,A,'       --  ',A,'       --  ')
- 2023 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4,A,A9,A,A9)
- 2024 FORMAT(I8,A,F11.1,A,'       --  ',A,F12.4,A,A9,A,A9)
- 2025 FORMAT(I8,A,F11.1,A,'       --  ',A,'       --  ',A,A9,A,A9)
- 2030 FORMAT(I8,A,F11.1,A,F11.4,A,F12.4,A,A9,A,A9,A,F10.0,A,F10.0)
+ 2023 FORMAT(I8,A,F11.1,A,F12.4,A,A9,A,A9)
+ 2024 FORMAT(I8,A,F11.1,A,F12.4,A,A9,A,A9)
+ 2025 FORMAT(I8,A,F11.1,A,'       --  ',A,A9,A,A9)
+ 2030 FORMAT(I8,A,F11.1,A,F12.4,A,A9,A,A9,A,F10.0,A,F10.0)
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA   EPSILN/1.0E-6/
@@ -4907,11 +4919,12 @@ C
 C       write initial header for file
         WRITE(MSG,2000) RUNDATE(2),RUNDATE(3),RUNDATE(1),
      $                  RUNDATE(4),RUNDATE(5)
-        IF (ABS(WEIBA) .GT. EPSILN) THEN
-          WRITE(MSG,2002) WEIBA
-        ELSE
-          WRITE(MSG,2001)
-        END IF
+        WRITE(MSG,2001)
+c        IF (ABS(WEIBA) .GT. EPSILN) THEN
+c          WRITE(MSG,2002) WEIBA
+c        ELSE
+c          WRITE(MSG,2001)
+c        END IF
       END IF
 C
 C     write table of frequency curves
@@ -4921,7 +4934,7 @@ C
   302 CONTINUE
         ILINE = JLINE+1
         IF (EMAOPT.EQ.1) THEN
-          WRITE(MSG,2022) (LTAB,J=1,7)
+          WRITE(MSG,2022) (LTAB,J=1,6)
         ELSE
           WRITE(MSG,1022) (LTAB,J=1,3)
         END IF
@@ -4963,7 +4976,6 @@ C                 need to print interval record
                   END IF
                   WRITE(MSG,2030) LYR,LTAB,INTVAL(J),LTAB,
      $                            INTERVAL(J)%INTRVLPP,LTAB,
-     $                            INTERVAL(J)%INTRVLPP,LTAB,
      $                            LTHRCHR(1),LTAB,LTHRCHR(2),LTAB,
      $                            INTERVAL(J)%INTRVLLWR,LTAB,
      $                            INTERVAL(J)%INTRVLUPR
@@ -4988,19 +5000,20 @@ C                 need to print interval record
             ELSE
               WRITE(LTHRCHR(2),'(F9.0)') UTHR
             END IF
-            IF (IPKSEQ(IPKPTR(I)) .LT. 0) THEN
-              WRITE(MSG,2024) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
-     $                        LTAB,LTAB,WRCPP(I),LTAB,
-     $                        LTHRCHR(1),LTAB,LTHRCHR(2)
-            ELSEIF (PKS(IPKPTR(I)) .LE. GAGEB) THEN
-              WRITE(MSG,2025) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
-     $                        LTAB,LTAB,LTAB,
-     $                        LTHRCHR(1),LTAB,LTHRCHR(2)
-            ELSE
+c            IF (IPKSEQ(IPKPTR(I)) .LT. 0) THEN
+c              WRITE(MSG,2024) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+c     $                        LTAB,WRCPP(I),LTAB,
+c     $                        LTHRCHR(1),LTAB,LTHRCHR(2)
+c            ELSEIF (PKS(IPKPTR(I)) .LE. GAGEB) THEN
+c              WRITE(MSG,2025) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
+c     $                        LTAB,LTAB,
+c     $                        LTHRCHR(1),LTAB,LTHRCHR(2)
+c            ELSE
+C      For EMA the plotting position for all peaks should be output             
               WRITE(MSG,2023) IPKSEQ(IPKPTR(I)),LTAB,PKS(IPKPTR(I)),
-     $                        LTAB,SYSPP(I),LTAB,WRCPP(I),LTAB,
+     $                        LTAB,WRCPP(I),LTAB,
      $                        LTHRCHR(1),LTAB,LTHRCHR(2)
-            END IF
+c            END IF
           ELSE
 C           no thresholds or intervals
             IF (IPKSEQ(IPKPTR(I)) .LT. 0) THEN
