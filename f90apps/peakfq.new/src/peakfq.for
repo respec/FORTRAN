@@ -859,8 +859,9 @@ C     init new peaks specs
             IBEGYR = CVRINT(S)
           ELSE IF (KWD .EQ. 'ENDYEAR') THEN
             IENDYR = CVRINT(S)
-          ELSE IF (KWD .EQ. 'HISTPERIOD') THEN
-            HISTPD = CVRDEC(S)
+c         depricated 9/2012 with BEGYEAR/ENDYEAR superseding it
+c          ELSE IF (KWD .EQ. 'HISTPERIOD') THEN
+c            HISTPD = CVRDEC(S)
           ELSE IF (KWD .EQ. 'SKEWOPT') THEN
             IF (S .EQ. 'STATION') THEN 
               ISKUOP = -1
@@ -1429,7 +1430,8 @@ C     skew parameters
 C     historic parameters
       WRITE(92,*) '     BegYear ',IBEGYR
       WRITE(92,*) '     EndYear ',IENDYR
-      WRITE(92,*) '     HistPeriod ',HISTPD
+c     depricated in 9/2012 with BegYear/EndYear superseding it
+c      WRITE(92,*) '     HistPeriod ',HISTPD
 C     other flow parameters
       IF (IKROPT.EQ.1) THEN
         WRITE(92,*) '     Urb/Reg Yes'

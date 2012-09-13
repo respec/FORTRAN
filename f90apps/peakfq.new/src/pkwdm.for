@@ -5,7 +5,8 @@ C
      I                   (MESSFL,WDMSFL,IBCPUN,ECHFUN,MAXPKS,
      I                    STAID,PKSABG,IWYSN,XQUAL,
      O                    NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
-     O                    GAGEB,GENSKU,RMSEGS,ISKUOP,NSKIP1,EMAOPT,IRC)
+     O                    LOTYPE,GAGEB,GENSKU,RMSEGS,ISKUOP,
+     O                    NSKIP1,EMAOPT,IRC)
 C
 C     + + + PURPOSE + + +
 C     This routine gets data from the WDM file for analysis by J407,
@@ -20,8 +21,9 @@ C     + + + DUMMY ARGUMENTS + + +
      &          NHIST, NSYS, BEGYR, ENDYR, ISKUOP, NSKIP1, EMAOPT, IRC
       REAL      PKSABG(MAXPKS), HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU,
      &          RMSEGS
+      CHARACTER*4  LOTYPE
       CHARACTER*5  XQUAL(MAXPKS)
-      CHARACTER*90  STAID
+      CHARACTER*90 STAID
 C
 C     + + + ARGUMENT DEFINITION + + +
 C     MESSFL - Fortran unit number of message file
@@ -56,6 +58,7 @@ C     BEGYR  - beginning year of analysis
 C     ENDYR  - ending year of analysis
 C     QHIOUT - user-set high-outlier discharge threshold
 C     QLWOUT - user-set low-outlier discharge threshhold
+C     LOTYPE - LO-OUTLIER TYPE (NONE, GBT, MGBT, FIXE)
 C     GAGEB  - gage base discharge
 C     GENSKU - generalized skew
 C     RMSEGS - RMS error of generalized skew
@@ -306,7 +309,7 @@ C           get any specs from spec file
 C
 C           write inputs to echo file
             CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
-     I                      HISTPD,ISKUOP,GENSKU,RMSEGS,QLWOUT,
+     I                      ISKUOP,GENSKU,RMSEGS,QLWOUT,LOTYPE,
      I                      QHIOUT,GAGEB,URBREG,FLAT,FLONG)
 C
 C           Get station description/station name

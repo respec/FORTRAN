@@ -68,11 +68,14 @@ C
 C     used by Tim's EMA code
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
      1               nlow,nzero,gbtype
+C     from Tim Cohn's code, for output of EMA at-site MSE of G
+      double precision as_M_mse,as_S2_mse,as_G_mse
+      common /tac005/as_M_mse,as_S2_mse,as_G_mse
 C
 C
 C      + + + LOCAL VARIABLES + + +
       INTEGER   IPKPTR(MXPK),  IQUAL(MXPK)
-      REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP
+      REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP,LASGMSE
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
      &          NSKIP1, NPKS, I, NPKPLT, 
      $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT, ECHFUN, DT(6)
@@ -117,9 +120,9 @@ C     + + + FORMATS + + +
      $       'version 6.1b dated 03/05/2012',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
- 2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,'HISTPD',A,
+ 2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
      $        'SKEWOPT',A,'GENSKEW',A,'SKEWSTD',A,'SKEWMSE',A,
-     $        'LO OUT',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
+     $        'LO OUT',A,'LO TEST',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
      $        'LATITUDE',A,'LONGITUDE')
  2020 FORMAT('    EMA003I-LOW OUTLIERS WERE DETECTED USING ',
      $       'MULTIPLE GRUBBS-BECK TEST',I8,4X,F8.1,/
@@ -278,10 +281,11 @@ C           sort input peak logs and correlate with plotting positions
             CALL SORTM( PKLOG, IPKPTR, 1, -1, NPKS )
             IF(NHIST.GT.0) CALL ALIGNP(IPKPTR,IPKSEQ,NPKS,NHIST,SYSPP)
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
+            LASGMSE = as_G_mse
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
-     I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
+     I                      CLIML(INDX1),CLIMU(INDX1),SYSSKW,LASGMSE,
      I                      JSEQNO,HEADNG(9))
         ELSE
 
@@ -359,10 +363,11 @@ C             do plot historic adjusted peaks
               HSTFLG = 0
             END IF
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
+            LASGMSE = as_G_mse
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
-     I                      CLIML(INDX1),CLIMU(INDX1),WRCSKW,RMSEGS**2,
+     I                      CLIML(INDX1),CLIMU(INDX1),SYSSKW,LASGMSE,
      I                      JSEQNO,HEADNG(9))
             IF(NSKIP1.NE.0 )  THEN
 c               JSEQNO = JSEQNO + 1
@@ -1535,7 +1540,7 @@ Cprh  LEN = 13
       SIGDIG = 4
       DECPLA = 1
       DO 210 I = 1,NINDX
-        DO 201 J = 1,5
+        DO 201 J = 1,6
           DWORK(J) = '          -- '
   201   CONTINUE
         J = IPLIST(I)
@@ -2111,7 +2116,7 @@ C             update specs
 C
 C             write inputs to echo file
               CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
-     I                        HISTPD,ISKUOP,GENSKU,RMSEGS,QLWOUT,
+     I                        ISKUOP,GENSKU,RMSEGS,QLWOUT,LOTYPE,
      I                        QHIOUT,GAGEB,IKROPT,FLAT,FLONG)
 C
               NOHIST = HISTPD.LE.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
@@ -3899,7 +3904,7 @@ C     init arrays
         PET(I)= MISSING
         PEX(I)= MISSING
         THR(I)= MISSING
-        DTYPE(I)= 'Othr'
+        DTYPE(I)= 'Cens'
  15   CONTINUE
 C
 C     N.B. If gage base discharge is greater than zero, this provides a lower
@@ -4048,7 +4053,7 @@ C       Weighted, set to root mean square
         REGMSE = RMSEGS**2
       END IF
       GBTYPE = LOTYPE
-      GBTHRSH = LOG10(MAX(MISSNG,GAGEB))
+      GBTHRSH = LOG10(MAX(MISSNG,QLWOUT))
 
       write(99,*)
       write(99,*) 'calling EMAFIT with the following input Args:'
@@ -5037,7 +5042,7 @@ C
 C
       SUBROUTINE   ECHOINPUT 
      I                       (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
-     I                        HISTPD,SKUOPT,GENSKU,RMSEGS,QLWOUT,
+     I                        SKUOPT,GENSKU,RMSEGS,QLWOUT,LOTYPE,
      I                        QHIOUT,GAGEB,URBOPT,FLAT,FLONG)
 C
 C     + + + PURPOSE + + +
@@ -5045,7 +5050,8 @@ C     write input parameters to echo file
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER ECHFUN,EMAOPT,BEGYR,ENDYR,SKUOPT,URBOPT
-      REAL    HISTPD,GENSKU,RMSEGS,QLWOUT,QHIOUT,GAGEB,FLAT,FLONG
+      REAL    GENSKU,RMSEGS,QLWOUT,QHIOUT,GAGEB,FLAT,FLONG
+      CHARACTER*4  LOTYPE
       CHARACTER*18 CURSTA
 C
 C     + + + LOCAL VARIABLES + + +
@@ -5055,8 +5061,8 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*11 CHSKUOPT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT (A18,A,A4,A,I4,A,I4,A,F5.0,A,A11,A,3(F6.3,A),
-     $        3(F8.0,A),A3,A,F8.3,A,F8.3)
+ 2000 FORMAT (A18,A,A4,A,I4,A,I4,A,A11,A,3(F6.3,A),
+     $        F8.0,A,A4,A,2(F8.0,A),A3,A,F8.3,A,F8.3)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -5080,10 +5086,10 @@ C
         CHURBOPT = 'NO'
       END IF
       WRITE(ECHFUN,2000) CURSTA,LTAB,CHEMAOPT,LTAB,BEGYR,LTAB,
-     $                   ENDYR,LTAB,HISTPD,LTAB,CHSKUOPT,LTAB,
+     $                   ENDYR,LTAB,CHSKUOPT,LTAB,
      $                   GENSKU,LTAB,RMSEGS,LTAB,RMSEGS**2,LTAB,
-     $                   QLWOUT,LTAB,QHIOUT,LTAB,GAGEB,LTAB,
-     $                   CHURBOPT,LTAB,FLAT,LTAB,FLONG
+     $                   QLWOUT,LTAB,LOTYPE,LTAB,QHIOUT,LTAB,
+     $                   GAGEB,LTAB,CHURBOPT,LTAB,FLAT,LTAB,FLONG
 C
       RETURN
       END
