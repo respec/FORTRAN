@@ -1084,7 +1084,7 @@ C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number for input WDM file
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   JLINE,         I, NB, J, ILINE, LYR, K
+      INTEGER   JLINE, I, NB, J, ILINE, LYR, K, LWROTEINT
       REAL    EPSILN, LTHR, UTHR, INTVAL(500)
       CHARACTER*9 LTHRCHR(2)
       CHARACTER*12 LINTVLSTR
@@ -1120,7 +1120,7 @@ C     + + + FORMATS + + +
      $          '  LOW         HIGH   REMARKS')
  1013 FORMAT(I9,F11.1,A7,A)
  2013 FORMAT(I9,F11.1,A7,24X,A)
- 2014 FORMAT(I9,18X,F12.1,A12,2X,A)
+ 2014 FORMAT(I9,F11.1,A7,F12.1,A12,2X,A)
  2015 FORMAT(F12.1)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
@@ -1141,6 +1141,7 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
  2023 FORMAT( I8,F11.1,F11.4,2x,2A9,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
  2024 FORMAT( I8,F11.1,F11.4,2x,2A9,F10.1,A)
+ 2025 FORMAT( I8,5X,'------',F11.4,2x,2A9,F10.1,A)
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1159,7 +1160,26 @@ C     write table of observed data
       END IF
       DO 210 I = 1,NPKS
         IF (EMAOPT .EQ. 1) THEN
-          WRITE(MSG,2013) IPKSEQ(I), PKS(I), XQUAL(I)
+          K = 0
+          J = 1
+          DO WHILE (J.LE.NINTERVAL)
+            IF (INTERVAL(J)%INTRVLYR .EQ. IPKSEQ(I)) THEN
+              IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
+                LINTVLSTR = '        INF '
+              ELSE
+                WRITE(LINTVLSTR,2015) INTERVAL(J)%INTRVLUPR
+              END IF
+              WRITE(MSG,2014) IPKSEQ(I),PKS(I),XQUAL(I),
+     $                        INTERVAL(J)%INTRVLLWR,
+     $                        LINTVLSTR,INTERVAL(J)%INTRVLCOM
+              K = 1
+            END IF
+            J = J + 1  
+          END DO
+          IF (K.EQ.0) THEN
+C           still need to print record
+            WRITE(MSG,2013) IPKSEQ(I), PKS(I), XQUAL(I)
+          END IF
         ELSE
           WRITE(MSG,1013) IPKSEQ(I), PKS(I), XQUAL(I)
         END IF
@@ -1168,13 +1188,13 @@ C     write table of observed data
       IF (EMAOPT.EQ.1 .AND. NINTERVAL.GT.0) THEN
 C       output interval data
         DO 220 I = 1, NINTERVAL
-          IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
-            LINTVLSTR = '        INF '
-          ELSE
-            WRITE(LINTVLSTR,2015) INTERVAL(I)%INTRVLUPR
-          END IF
-          WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
-     $                    LINTVLSTR,INTERVAL(I)%INTRVLCOM
+C          IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
+C            LINTVLSTR = '        INF '
+C          ELSE
+C            WRITE(LINTVLSTR,2015) INTERVAL(I)%INTRVLUPR
+C          END IF
+C          WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
+C     $                    LINTVLSTR,INTERVAL(I)%INTRVLCOM
           IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
 C           upper Interval is infinity, just use lower Interval value
             INTVAL(I) = INTERVAL(I)%INTRVLLWR
@@ -1220,6 +1240,7 @@ C       IF(NLINES.GT.50)JLINE = ILINE+39
           IF(PKS(IPKPTR(I)) .LE. GAGEB )  NB = 3
           IF (EMAOPT .EQ. 1) THEN
 C           include thresholds and intervals
+            LWROTEINT = 0
             IF (NINTERVAL .GT. 0) THEN
               DO 308 J = 1,NINTERVAL
                 LYR = 0
@@ -1257,33 +1278,42 @@ C                 need to print interval record
                   ELSE
                     WRITE(LINTVLSTR,'(F10.1)') INTERVAL(J)%INTRVLUPR
                   END IF
-                  WRITE(MSG,2024) LYR,INTVAL(J),INTERVAL(J)%INTRVLPP,
-     $                  LTHRCHR(1),LTHRCHR(2),
-     $                  INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                  IF (INTVAL(J) .GT. 0.0) THEN
+                    WRITE(MSG,2024) LYR,INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $                    LTHRCHR(1),LTHRCHR(2),
+     $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                  ELSE
+                    WRITE(MSG,2025) LYR,INTERVAL(J)%INTRVLPP,
+     $                    LTHRCHR(1),LTHRCHR(2),
+     $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                  END IF
+                  LWROTEINT = LYR
                 END IF
  308          CONTINUE
             END IF
-            LYR = ABS(IPKSEQ(IPKPTR(I)))
-            LTHR = 0.0
-            UTHR = 1.0E20
-            IF (NTHRESH .GT. 0) THEN
-              DO 309 J = 1, NTHRESH
-                IF (LYR .GE. THRESH(J)%THRBYR .AND. 
-     $              LYR .LE. THRESH(J)%THREYR) THEN
-                  LTHR = THRESH(J)%THRLWR
-                  UTHR = THRESH(J)%THRUPR
-                END IF
- 309          CONTINUE  
+            IF (LWROTEINT .NE. ABS(IPKSEQ(IPKPTR(I)))) THEN
+              LYR = ABS(IPKSEQ(IPKPTR(I)))
+              LTHR = 0.0
+              UTHR = 1.0E20
+              IF (NTHRESH .GT. 0) THEN
+                DO 309 J = 1, NTHRESH
+                  IF (LYR .GE. THRESH(J)%THRBYR .AND. 
+     $                LYR .LE. THRESH(J)%THREYR) THEN
+                    LTHR = THRESH(J)%THRLWR
+                    UTHR = THRESH(J)%THRUPR
+                  END IF
+ 309            CONTINUE  
+              END IF
+              WRITE(LTHRCHR(1),'(F9.0)') LTHR
+              IF (UTHR .GT. 1.0E10) THEN
+                WRITE(LTHRCHR(2),'(A9)') '      inf'
+              ELSE
+                WRITE(LTHRCHR(2),'(F9.0)') UTHR
+              END IF
+              WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
+     $                      WRCPP(I) , LTHRCHR(1), LTHRCHR(2)
+C     $                      (' ',J=1,NB)
             END IF
-            WRITE(LTHRCHR(1),'(F9.0)') LTHR
-            IF (UTHR .GT. 1.0E10) THEN
-              WRITE(LTHRCHR(2),'(A9)') '      inf'
-            ELSE
-              WRITE(LTHRCHR(2),'(F9.0)') UTHR
-            END IF
-            WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     $                    WRCPP(I) , LTHRCHR(1), LTHRCHR(2)
-C     $                    (' ',J=1,NB)
           ELSE
 C           no thresholds or intervals
             WRITE(MSG,1023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
@@ -4017,7 +4047,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,NB(MXPK),IPKPTR(MXPK)
+      INTEGER    I,J,NB(MXPK),IPKPTR(MXPK)
       REAL       LQ(MXPK)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
@@ -4113,15 +4143,32 @@ c      WRCSKW = WRCMOM(3)
         write(99,*)
 
         DO 18 I = 1,NOBS
-          LQ(I) = Q(I)
+          LQ(i) = Q(I)
+          PKLOG(I) = Q(I)
+          PKS(I) = 10**PKLOG(I)
+          IF (PKS(I) .LT. TL(I)) THEN
+C           peak below threshold, use threshold's Plot Pos
+            IF (NT .GT. 1) THEN
+              DO 16 J = 1, NT
+                IF (TL(I) .EQ. THR(J)) THEN
+                  PEX(I) = PET(J)
+                END IF
+ 16           CONTINUE              
+            END IF
+          END IF
  18     CONTINUE
         CALL SORTM(LQ, IPKPTR, 1, -1, NOBS )
         write(99,*) 'Plotting Positions of peaks'
         write(99,*) 'Plot Pos      Obs. Q'
         DO 20 I = 1,NOBS
-          write(99,*) PEX(I),Q(I)
-C         store Hirsch-Stedinger plotting positions from EMA
-          WRCPP(I) = PEX(IPKPTR(I))
+C          if (Q(I).GT.0) THEN
+            write(99,*) PEX(I),Q(I)
+C           store Hirsch-Stedinger plotting positions from EMA
+            WRCPP(I) = PEX(IPKPTR(I))
+C          ELSE
+C            write(99,*) 'Not storing PlotPos for Q of ',Q(I),' Index ',I
+C            WRCPP(I) = -99
+C          ENDIF
  20     CONTINUE
 
         IF (NINTERVAL.GT.0) THEN
