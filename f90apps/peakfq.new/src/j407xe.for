@@ -257,7 +257,7 @@ C
           write(99,*)'Running EMA for station ',STAID
           write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
      $                                NPKS,NSYS,GENSKU,RMSEGS
-          CALL RUNEMA
+          CALL RUNEMA(NPKS)
           IF (LOTYPE .EQ. 'MGBT') THEN
 C           report Multiple GB LO messges
             IF (NLOW .GT. 0) THEN
@@ -1243,18 +1243,19 @@ C           include thresholds and intervals
             LWROTEINT = 0
             IF (NINTERVAL .GT. 0) THEN
               DO 308 J = 1,NINTERVAL
-                LYR = 0
-                IF (I .EQ. ILINE) THEN
-C                 see if any intervals bigger than 1st peak
-                  IF (INTVAL(J) .GE. PKS(IPKPTR(I))) THEN
-                    LYR = INTERVAL(J)%INTRVLYR
-                  END IF
-                ELSEIF (INTVAL(J) .GE. PKS(IPKPTR(I)) .AND.
-     $                  INTVAL(J) .LT. PKS(IPKPTR(I-1))) THEN
-C                 interval is between current and previous peak
-                  LYR = INTERVAL(J)%INTRVLYR
-                END IF
-                IF (LYR .GT. 0) THEN
+C                LYR = 0
+C                IF (I .EQ. ILINE) THEN
+CC                 see if any intervals bigger than 1st peak
+C                  IF (INTVAL(J) .GE. PKS(IPKPTR(I))) THEN
+C                    LYR = INTERVAL(J)%INTRVLYR
+C                  END IF
+C                ELSEIF (INTVAL(J) .GE. PKS(IPKPTR(I)) .AND.
+C     $                  INTVAL(J) .LT. PKS(IPKPTR(I-1))) THEN
+CC                 interval is between current and previous peak
+C                  LYR = INTERVAL(J)%INTRVLYR
+C                END IF
+C                IF (LYR .GT. 0) THEN
+                IF (INTERVAL(J)%INTRVLYR .EQ. IPKSEQ(IPKPTR(I))) THEN
 C                 need to print interval record
                   LTHR = 0.0
                   UTHR = 1.0E20
@@ -1279,19 +1280,21 @@ C                 need to print interval record
                     WRITE(LINTVLSTR,'(F10.1)') INTERVAL(J)%INTRVLUPR
                   END IF
                   IF (INTVAL(J) .GT. 0.0) THEN
-                    WRITE(MSG,2024) LYR,INTVAL(J),INTERVAL(J)%INTRVLPP,
-     $                    LTHRCHR(1),LTHRCHR(2),
-     $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                    WRITE(MSG,2024) INTERVAL(J)%INTRVLYR,
+     $                    INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $                    LTHRCHR(1),LTHRCHR(2),INTERVAL(J)%INTRVLLWR,
+     $                    LINTVLSTR(1:10)
                   ELSE
-                    WRITE(MSG,2025) LYR,INTERVAL(J)%INTRVLPP,
-     $                    LTHRCHR(1),LTHRCHR(2),
+                    WRITE(MSG,2025) INTERVAL(J)%INTRVLYR,
+     $                    INTERVAL(J)%INTRVLPP,LTHRCHR(1),LTHRCHR(2),
      $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
                   END IF
-                  LWROTEINT = LYR
+                  LWROTEINT = INTERVAL(J)%INTRVLYR
                 END IF
  308          CONTINUE
             END IF
-            IF (LWROTEINT .NE. ABS(IPKSEQ(IPKPTR(I)))) THEN
+            IF (LWROTEINT .NE. ABS(IPKSEQ(IPKPTR(I))) .AND.
+     $          PKS(IPKPTR(I)) .GT. 0.0) THEN
               LYR = ABS(IPKSEQ(IPKPTR(I)))
               LTHR = 0.0
               UTHR = 1.0E20
@@ -4019,6 +4022,7 @@ C
 C
 C
       SUBROUTINE   RUNEMA
+     I                   (NPKS)
 C
 C     + + + HISTORY + + +
 C     Created 11/2003 by Paul Hummel, AQUA TERRA Consultants
@@ -4036,6 +4040,9 @@ C
 C     EMAThresh contains Threshold specs and EMA data arrays
       USE EMAThresh
 C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER NPKS
+C
 C     + + + PARAMETERS + + +
       INCLUDE 'PMXPK.INC'
       INCLUDE 'PMXINT.INC'
@@ -4047,8 +4054,8 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,J,NB(MXPK),IPKPTR(MXPK)
-      REAL       LQ(MXPK)
+      INTEGER    I,J,NB(MXPK),IPKPTR(MXPK),LYR,LNPKS,EMAYR
+      REAL       LQ(MXPK),LPEX(MXPK)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
@@ -4142,29 +4149,54 @@ c      WRCSKW = WRCMOM(3)
         write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
         write(99,*)
 
-        DO 18 I = 1,NOBS
-          LQ(i) = Q(I)
-          PKLOG(I) = Q(I)
-          PKS(I) = 10**PKLOG(I)
-          IF (PKS(I) .LT. TL(I)) THEN
-C           peak below threshold, use threshold's Plot Pos
-            IF (NT .GT. 1) THEN
-              DO 16 J = 1, NT
-                IF (TL(I) .EQ. THR(J)) THEN
-                  PEX(I) = PET(J)
-                END IF
- 16           CONTINUE              
+        LNPKS = 0
+        LYR = 1
+C        DO 18 I = 1,NOBS
+        DO WHILE (LYR .LE. NPKS)
+          I = 1
+          DO WHILE (ABS(IPKSEQ(LYR)) .NE. OPKSEQ(I) 
+     $              .AND. I .LT. NOBS)
+            I = I + 1
+          END DO
+C          IF (ABS(IPKSEQ(LYR)) .EQ. OPKSEQ(I)) THEN
+
+          IF (I .LE. NOBS) THEN
+C           original and EMA years match, save this Plot Pos
+            LQ(LYR) = Q(I)
+C          PKLOG(I) = Q(I)
+C          PKS(I) = 10**PKLOG(I)
+            IF (10**LQ(LYR) .LT. TL(I)) THEN
+C             peak below threshold, use threshold's Plot Pos
+              IF (NT .GT. 1) THEN
+                DO 16 J = 1, NT
+                  IF (ABS(TL(I)-THR(J)) .LT. 0.0001) THEN
+                    LPEX(LYR) = PET(J)
+                    IF (PKS(LYR) .GT. 0.0) THEN
+C                     restore original Q value so sorting works
+                      LQ(LYR) = LOG10(PKS(LYR))
+                    ELSE
+C                     unused peak
+                      LQ(LYR) = 0.0
+                    END IF
+                  END IF
+ 16             CONTINUE              
+              END IF
+            ELSE
+              LPEX(LYR) = PEX(I)
             END IF
+            LNPKS = LNPKS + 1
           END IF
- 18     CONTINUE
-        CALL SORTM(LQ, IPKPTR, 1, -1, NOBS )
+          LYR = LYR + 1
+        END DO
+C 18     CONTINUE
+        CALL SORTM(LQ, IPKPTR, 1, -1, LNPKS)
         write(99,*) 'Plotting Positions of peaks'
         write(99,*) 'Plot Pos      Obs. Q'
-        DO 20 I = 1,NOBS
+        DO 20 I = 1,LNPKS
 C          if (Q(I).GT.0) THEN
-            write(99,*) PEX(I),Q(I)
+            write(99,*) LPEX(I),PKS(I)
 C           store Hirsch-Stedinger plotting positions from EMA
-            WRCPP(I) = PEX(IPKPTR(I))
+            WRCPP(I) = LPEX(IPKPTR(I))
 C          ELSE
 C            write(99,*) 'Not storing PlotPos for Q of ',Q(I),' Index ',I
 C            WRCPP(I) = -99
@@ -4176,7 +4208,7 @@ C          ENDIF
             DO 25 J = 1,NOBS
               IF (OPKSEQ(J) .EQ. INTERVAL(I)%INTRVLYR) THEN
 C               assign plotting position for this interval
-                INTERVAL(I)%INTRVLPP = PEX(J)
+                INTERVAL(I)%INTRVLPP = LPEX(J)
               END IF
  25         CONTINUE
  30       CONTINUE
