@@ -1163,7 +1163,7 @@ C     write table of observed data
           K = 0
           J = 1
           DO WHILE (J.LE.NINTERVAL)
-            IF (INTERVAL(J)%INTRVLYR .EQ. IPKSEQ(I)) THEN
+            IF (INTERVAL(J)%INTRVLYR .EQ. ABS(IPKSEQ(I))) THEN
               IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
                 LINTVLSTR = '        INF '
               ELSE
@@ -1255,7 +1255,7 @@ CC                 interval is between current and previous peak
 C                  LYR = INTERVAL(J)%INTRVLYR
 C                END IF
 C                IF (LYR .GT. 0) THEN
-                IF (INTERVAL(J)%INTRVLYR .EQ. IPKSEQ(IPKPTR(I))) THEN
+                IF (INTERVAL(J)%INTRVLYR.EQ.ABS(IPKSEQ(IPKPTR(I)))) THEN
 C                 need to print interval record
                   LTHR = 0.0
                   UTHR = 1.0E20
@@ -4054,7 +4054,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf2.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,J,NB(MXPK),IPKPTR(MXPK),LYR,LNPKS,EMAYR
+      INTEGER    I,J,NB(MXPK),IPKPTR(MXPK),LYR,EMAYR
       REAL       LQ(MXPK),LPEX(MXPK)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
@@ -4149,7 +4149,6 @@ c      WRCSKW = WRCMOM(3)
         write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
         write(99,*)
 
-        LNPKS = 0
         LYR = 1
 C        DO 18 I = 1,NOBS
         DO WHILE (LYR .LE. NPKS)
@@ -4184,15 +4183,14 @@ C                     unused peak
             ELSE
               LPEX(LYR) = PEX(I)
             END IF
-            LNPKS = LNPKS + 1
           END IF
           LYR = LYR + 1
         END DO
 C 18     CONTINUE
-        CALL SORTM(LQ, IPKPTR, 1, -1, LNPKS)
+        CALL SORTM(LQ, IPKPTR, 1, -1, NPKS)
         write(99,*) 'Plotting Positions of peaks'
         write(99,*) 'Plot Pos      Obs. Q'
-        DO 20 I = 1,LNPKS
+        DO 20 I = 1,NPKS
 C          if (Q(I).GT.0) THEN
             write(99,*) LPEX(I),PKS(I)
 C           store Hirsch-Stedinger plotting positions from EMA
@@ -4205,8 +4203,8 @@ C          ENDIF
 
         IF (NINTERVAL.GT.0) THEN
           DO 30 I = 1,NINTERVAL
-            DO 25 J = 1,NOBS
-              IF (OPKSEQ(J) .EQ. INTERVAL(I)%INTRVLYR) THEN
+            DO 25 J = 1,NPKS
+              IF (ABS(IPKSEQ(J)) .EQ. INTERVAL(I)%INTRVLYR) THEN
 C               assign plotting position for this interval
                 INTERVAL(I)%INTRVLPP = LPEX(J)
               END IF
