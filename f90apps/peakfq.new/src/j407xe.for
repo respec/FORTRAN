@@ -4114,6 +4114,12 @@ C
      O              WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
       
 C       get plotting positions for all peaks and thresholds
+        DO 16 I = 1, NOBS
+C         check for interval with INF as upper limit
+          IF (QL(I).GT.0 .AND. QU(I).GT.12) THEN
+            QU(I) = QL(I)
+          END IF
+ 16     CONTINUE
         CALL plotposHS(NOBS,QL,QU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
 
 c      write(99,*) 'After EMAFIT'
@@ -4167,7 +4173,7 @@ C          PKS(I) = 10**PKLOG(I)
             IF (10**LQ(LYR) .LT. TL(I)) THEN
 C             peak below threshold, use threshold's Plot Pos
               IF (NT .GT. 1) THEN
-                DO 16 J = 1, NT
+                DO 18 J = 1, NT
                   IF (ABS(TL(I)-THR(J)) .LT. 0.0001) THEN
                     LPEX(LYR) = PET(J)
                     IF (PKS(LYR) .GT. 0.0) THEN
@@ -4178,10 +4184,14 @@ C                     unused peak
                       LQ(LYR) = 0.0
                     END IF
                   END IF
- 16             CONTINUE              
+ 18             CONTINUE              
               END IF
             ELSE
               LPEX(LYR) = PEX(I)
+            END IF
+            IF (PKLOG(LYR) .LT. 0) THEN
+C             coded peak not in use, save its negative value for sorting
+              LQ(LYR) = PKLOG(LYR)
             END IF
           END IF
           LYR = LYR + 1
