@@ -1,0 +1,178 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          201    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HSPFXX
+  END LABEL
+  DATA   CLU   201
+#GROUP    1  TYPE TEXT
+$TEXT
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+
+   Developed for:                Modified and Maintained by
+ 
+     U.S. Environmental            Aqua Terra Consultants 
+       Protection Agency           (650)962-1864
+     Office of Research            email: hspf@aquaterra.com
+       and Development           
+     Center for Exposure
+       Assessment Modeling         
+     Athens, Georgia 
+     (706)355-8400                      
+     email: ceam@epamail.epa.gov
+                                  
+   In cooperation with:
+
+     U.S. Geological Survey                Release 12.3
+     Water Resources Discipline            July 2011
+     Office of Surface Water
+     Reston, Virginia             
+     email: h2osoft@usgs.gov     
+
+#GROUP    2  TYPE TEXT
+$TEXT
+
+ Start of Job
+#GROUP    3  TYPE TEXT
+$TEXT
+
+ PREPROCESSING USERS CONTROL INPUT.
+
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+
+#GROUP    4  TYPE TEXT
+$TEXT
+
+ End of Job
+#GROUP    5  TYPE TEXT
+$TEXT
+
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+
+#GROUP   10  TYPE TEXT
+$TEXT
+
+ ====================================================================================================================================
+ PROCESSING FORMATS BLOCK
+#GROUP   11  TYPE TEXT
+$TEXT
+
+ FINISHED PROCESSING FORMATS BLOCK
+ ====================================================================================================================================
+#GROUP   12  TYPE TEXT
+$TEXT
+
+ INTERPRETATION OF RUN DATA SET COMPLETE
+
+#GROUP   13  TYPE TEXT
+$TEXT
+
+ EXECUTION WILL NOT BE ATTEMPTED BECAUSE ONE OR MORE ERRORS HAVE BEEN DETECTED.
+
+#GROUP   14  TYPE TEXT
+$TEXT
+
+ EXECUTION WILL NOT BE ATTEMPTED BECAUSE RUN=0 WAS SPECIFIED IN GLOBAL BLOCK.
+
+#GROUP   21  TYPE TEXT
+$TEXT
+RUN            1   1
+#GROUP   22  TYPE TEXT
+$TEXT
+GLOBAL         1   2
+OPN SEQUENCE   1   3
+FTABLES        1   4
+EXT SOURCES    1   5
+FORMATS        1   6
+NETWORK        1   7
+EXT TARGETS    1   8
+SPEC-ACTIONS   1   9
+SCHEMATIC      1  10
+MASS-LINK      1  11
+PERLND         1 100
+IMPLND         1 100
+RCHRES         1 100
+COPY           1 100
+PLTGEN         1 100
+DISPLY         1 100
+DURANL         1 100
+GENER          1 100
+MUTSIN         1 100
+BMPRAC         1 100
+REPORT         1 100
+FILES          1  12
+CATEGORY       1  13
+MONTH-DATA     1  14
+PATHNAMES      1  15
+#GROUP   24  TYPE TEXT
+$TEXT
+   1   2   3   4   5   6  10  12  15  20  30  60 120 180 240 360 480 7201440
+#GROUP   41  TYPE TEXT
+$TEXT
+
+ ====================================================================================================================================
+ PROCESSING & BLOCK
+#GROUP   42  TYPE TEXT
+$TEXT
+
+ FINISHED PROCESSING & BLOCK
+ ====================================================================================================================================
+#GROUP   43  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The OPN-SEQUENCE block refers to operation &CCCCCCC &I   , but no input block
+ was provided for this operation type.  This input block must be present.
+#GROUP   50  TYPE TEXT
+$TEXT
+ Beginning HSPF simulation.
+
+
+ Looking for FILES block in file:
+      &
+#GROUP   51  TYPE TEXT
+$TEXT
+ Reading user's control input file.
+#GROUP   52  TYPE TEXT
+$TEXT
+ HSPF simulation completed.
+#GROUP   53  TYPE TEXT
+$TEXT
+ Processing RUN data set complete - RUNFG=0 in GLOBAL
+#GROUP   54  TYPE TEXT
+$TEXT
+ Processing RUN data set complete - ERRORS in input
+#GROUP   55  TYPE TEXT
+$TEXT
+ No RUN data set found - review UCI file.
+#GROUP   56  TYPE TEXT
+$TEXT
+ Error in FILES block - Return code &
+#GROUP   57  TYPE TEXT
+$TEXT
+ Error opening UCI file - Return code &
+#GROUP   58  TYPE TEXT
+$TEXT
+ Processing a RUN data set from user's input file.
+#GROUP   59  TYPE TEXT
+$TEXT
+ Operations supervisor calling operating modules.
+#GROUP   60  TYPE TEXT
+$TEXT
+ Found end of FILES block but never found start of FILES block
+#GROUP   61  TYPE TEXT
+$TEXT
+ FILES block not found
+#GROUP   62  TYPE TEXT
+$TEXT
+ End of FILES block not found
+  END DATA
+END CLU
+                                                                                
+                                                                                

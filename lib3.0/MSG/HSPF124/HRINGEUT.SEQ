@@ -1,0 +1,82 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          212    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRINGEUT
+  END LABEL
+  DATA   CLU   212
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+The heading '&CCCCCCCCCCC' has been found, but the delimiter
+'&CCCCCCCCCCC' was expected.
+$HELP
+Subroutine LOCBLK searches for self-contained "blocks" of text,
+i.e. a group of lines commencing with a valid heading <HEADING>
+and ending with a corresponding delimiter END <HEADING>.  Once a
+valid heading has been found, the code expects to find the corresponding
+delimiter before another heading is found.
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+The heading '&CCCCCCCCCCC' has occurred too many times.  The maximum
+number of times this heading can occur is &I  .
+$HELP
+Subroutine LOCBLK expects the no. of occurrences of each heading (and its
+corresponding delimiter) not to exceed the "dimension" specified for it.
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+The first non-comment line in a run data set, or after a delimiter
+(eg. END <HEADING>), must be a valid heading.  Instead, '&CCCCCCCCCCC'
+was found.  Possibly it was not recognized because of mis-spelling or
+incorrect column position.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+The delimiter '&CCCCCCCCCCC' has been found but is not valid.
+(Has it been misspelled or placed in the wrong columns?)
+$HELP
+A delimiter has the form END <HEADING> where <HEADING> must be a
+valid heading.
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+The delimiter '&CCCCCCCCCCC' was found but not expected because an open
+heading did not precede it.
+$HELP
+A heading is considered "open" when it is found, and "closed" when
+the corresponding delimiter is found.  A delimiter is only expected
+if one heading is open.
+#GROUP    6  TYPE TEXT
+$TEXT
+   20    1    1    5
+The delimiter '&CCCCCCCCCCC' was found but does not match the currently
+open heading '&CCCCCCCCCCC'.  (Is it mis-spelled or placed in the wrong
+columns?)
+#GROUP    7  TYPE TEXT
+$TEXT
+   20    1    1    5
+The end of the range of text was reached before a delimiter for the
+heading '&CCCCCCCCCCC' was found.  (Was the delimiter mis-spelled or
+placed in the wrong columns?)
+$HELP
+Subroutine LOCBLK does not expect the range of text which it is searching
+to end with a partial block of text (ie. without an END <HEADING>).
+#GROUP    8  TYPE TEXT
+$TEXT
+   20    1    1    5
+A value of &I    was found for the value of TOPFST.  The TOPFST field
+in the ext sources, network or spec-actions blocks must contain a
+positive value.
+#GROUP    9  TYPE TEXT
+$TEXT
+   20    1    1    5
+A value of &I    was found for the value of TOPLST.  The TOPLST field in
+the ext sources, network or spec-actions blocks may not contain a value
+smaller than    &I, the value of TOPFST (except zero).
+  END DATA
+END CLU
