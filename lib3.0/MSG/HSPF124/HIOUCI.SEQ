@@ -1,0 +1,55 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          210    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HIOUCI
+  END LABEL
+  DATA   CLU   210
+#GROUP    1  TYPE TEXT
+$TEXT
+END
+#GROUP    2  TYPE TEXT
+$TEXT
+    1    1    1    5
+ Keyword &CCCCCCCCCCC was found before keyword &CCCCCCCCCCC was ENDed.
+
+#GROUP    3  TYPE TEXT
+$TEXT
+    1    1    1    5
+ Keyword &CCCCCCCCCCC has appeared too many times.
+
+ It may only appear &IIII times.
+
+#GROUP    5  TYPE TEXT
+$TEXT
+    1    1    1    5
+ Keyword &CCCCCCCCCCC was ENDed without ever being started.
+
+#GROUP    6  TYPE TEXT
+$TEXT
+    1    1    1    5
+ Keyword &CCCCCCCCCCC was ENDed without keyword &CCCCCCCCCCC ever being ended.
+
+#GROUP    7  TYPE TEXT
+$TEXT
+    1    1    1    5
+ End of input was found before keyword &CCCCCCCCCCC was ENDed.
+
+#GROUP    8  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Characters were lost at the end of line &I   .  A line must be only 80
+ characters long.  (In the SPEC-ACTIONS block, this limit applies after
+ any indentation is accounted for.)  The lost characters were:
+
+           &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+#GROUP   10  TYPE TEXT
+$TEXT
+
+ USERS CONTROL INPUT IS:
+  END DATA
+END CLU
