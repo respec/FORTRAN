@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "SWMM5_DLL_Driver", "SWMM5_DLL_Driver\SWMM5_DLL_Driver.vfproj", "{7E410CD3-85A8-4D21-A4B1-C0426A2C2FAD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{354E81BC-6611-454D-863E-F985991AA107} = {354E81BC-6611-454D-863E-F985991AA107}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VC2008-DLL", "..\SWMM5\VC2008_DLL\VC2008-DLL.vcproj", "{354E81BC-6611-454D-863E-F985991AA107}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E410CD3-85A8-4D21-A4B1-C0426A2C2FAD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E410CD3-85A8-4D21-A4B1-C0426A2C2FAD}.Debug|Win32.Build.0 = Debug|Win32
+		{7E410CD3-85A8-4D21-A4B1-C0426A2C2FAD}.Release|Win32.ActiveCfg = Release|Win32
+		{7E410CD3-85A8-4D21-A4B1-C0426A2C2FAD}.Release|Win32.Build.0 = Release|Win32
+		{354E81BC-6611-454D-863E-F985991AA107}.Debug|Win32.ActiveCfg = Debug|Win32
+		{354E81BC-6611-454D-863E-F985991AA107}.Debug|Win32.Build.0 = Debug|Win32
+		{354E81BC-6611-454D-863E-F985991AA107}.Release|Win32.ActiveCfg = Release|Win32
+		{354E81BC-6611-454D-863E-F985991AA107}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

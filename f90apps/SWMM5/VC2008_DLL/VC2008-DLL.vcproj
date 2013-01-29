@@ -167,10 +167,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\consts.h"
-				>
-			</File>
-			<File
 				RelativePath="..\controls.c"
 				>
 			</File>
@@ -183,15 +179,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\datetime.h"
-				>
-			</File>
-			<File
 				RelativePath="..\dynwave.c"
-				>
-			</File>
-			<File
-				RelativePath="..\enums.h"
 				>
 			</File>
 			<File
@@ -199,15 +187,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\error.h"
-				>
-			</File>
-			<File
 				RelativePath="..\findroot.c"
-				>
-			</File>
-			<File
-				RelativePath="..\findroot.h"
 				>
 			</File>
 			<File
@@ -219,15 +199,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\funcs.h"
-				>
-			</File>
-			<File
 				RelativePath="..\gage.c"
-				>
-			</File>
-			<File
-				RelativePath="..\globals.h"
 				>
 			</File>
 			<File
@@ -236,14 +208,6 @@
 			</File>
 			<File
 				RelativePath="..\hash.c"
-				>
-			</File>
-			<File
-				RelativePath="..\hash.h"
-				>
-			</File>
-			<File
-				RelativePath="..\headers.h"
 				>
 			</File>
 			<File
@@ -275,10 +239,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\keywords.h"
-				>
-			</File>
-			<File
 				RelativePath="..\kinwave.c"
 				>
 			</File>
@@ -291,15 +251,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\lid.h"
-				>
-			</File>
-			<File
 				RelativePath="..\link.c"
-				>
-			</File>
-			<File
-				RelativePath="..\macros.h"
 				>
 			</File>
 			<File
@@ -319,23 +271,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\mempool.h"
-				>
-			</File>
-			<File
 				RelativePath="..\node.c"
 				>
 			</File>
 			<File
-				RelativePath="..\objects.h"
-				>
-			</File>
-			<File
 				RelativePath="..\odesolve.c"
-				>
-			</File>
-			<File
-				RelativePath="..\odesolve.h"
 				>
 			</File>
 			<File
@@ -391,10 +331,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\swmm5.c"
-				>
-			</File>
-			<File
 				RelativePath="..\swmm5.h"
 				>
 			</File>
@@ -428,6 +364,70 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\consts.h"
+				>
+			</File>
+			<File
+				RelativePath="..\datetime.h"
+				>
+			</File>
+			<File
+				RelativePath="..\enums.h"
+				>
+			</File>
+			<File
+				RelativePath="..\error.h"
+				>
+			</File>
+			<File
+				RelativePath="..\findroot.h"
+				>
+			</File>
+			<File
+				RelativePath="..\funcs.h"
+				>
+			</File>
+			<File
+				RelativePath="..\globals.h"
+				>
+			</File>
+			<File
+				RelativePath="..\hash.h"
+				>
+			</File>
+			<File
+				RelativePath="..\headers.h"
+				>
+			</File>
+			<File
+				RelativePath="..\keywords.h"
+				>
+			</File>
+			<File
+				RelativePath="..\lid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\macros.h"
+				>
+			</File>
+			<File
+				RelativePath="..\mempool.h"
+				>
+			</File>
+			<File
+				RelativePath="..\objects.h"
+				>
+			</File>
+			<File
+				RelativePath="..\odesolve.h"
+				>
+			</File>
+			<File
+				RelativePath="..\swmm5.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
