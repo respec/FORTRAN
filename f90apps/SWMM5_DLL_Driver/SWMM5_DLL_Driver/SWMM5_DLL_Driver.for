@@ -1,9 +1,14 @@
        Program SWMM5_DLL_Driver
 
-!DEC$ ATTRIBUTES DECORATE,ALIAS:'swmm_getVersion' :: swmm_getVersion
-        
-       Integer swmm_getVersion
-       External swmm_getVersion
+       Implicit None
+
+       Interface
+           Integer Function swmm_getVersion() 
+     1                     Bind(C,Name='swmm_getVersion@0')
+           End Function swmm_getVersion
+       End Interface
+
+       Integer i 
        
        Write(*,*) "Entry SWMM5_DLL_Driver"
        

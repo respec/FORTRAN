@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="VC2008-DLL"
+	Name="SWMM5"
 	ProjectGUID="{354E81BC-6611-454D-863E-F985991AA107}"
 	RootNamespace="VC2008-DLL"
 	TargetFrameworkVersion="131072"
@@ -50,6 +50,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				ShowProgress="1"
+				GenerateMapFile="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -331,7 +333,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\swmm5.h"
+				RelativePath="..\swmm5.c"
 				>
 			</File>
 			<File
@@ -425,7 +427,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\swmm5.c"
+				RelativePath="..\swmm5.h"
 				>
 			</File>
 		</Filter>
@@ -434,6 +436,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\swmm5.def"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
