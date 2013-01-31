@@ -38,6 +38,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				ProgramDataBaseFileName="$(SolutionDir)$(ConfigurationName)\swmm5.pdb"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -51,6 +53,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				ShowProgress="1"
+				GenerateDebugInformation="true"
 				GenerateMapFile="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
