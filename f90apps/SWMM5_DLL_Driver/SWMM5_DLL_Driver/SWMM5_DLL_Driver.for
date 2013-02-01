@@ -13,6 +13,10 @@
      1                     Bind(C,Name='swmm_open@12')
               Character C1,C2(*),C3(*)
            End Function swmm_open
+           Integer Function swmm_run(C1,C2,C3)
+     1                     Bind(C,Name='swmm_run@12')
+              Character C1,C2(*),C3(*)
+           End Function swmm_run
        End Interface
 
        Integer       i
@@ -30,14 +34,15 @@
        i= swmm_getVersion()
        Write(*,*) 'SWMM Version ', i
        
-       BaseFileName = 'FandM_Base'
+       BaseFileName = 'Example3'
        InputFileName= trim(BaseFileName) // '.inp' // Char(0)
        OutputFileName = trim(BaseFileName) // '.out' // Char(0)
        BinaryFileName = trim(BaseFileName) // '.bin' // Char(0)
 
-       Write(*,*) 'SWMM Open Input "' // Trim(InputFileName) // '"'
-       i= swmm_open(InputFileName, OutputFileName, BinaryFileName)
-       Write(*,*) 'SWMM Open Done, Return Code ',i
+       Write(*,*) 'SWMM Run Input "' // Trim(InputFileName) // '"'
+       i= swmm_run(InputFileName, OutputFileName, BinaryFileName)
+       Write(*,*) 'SWMM Run Done, Return Code ',i
+       
        
        Stop
        End
