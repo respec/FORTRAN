@@ -38,13 +38,13 @@ C     RETCOD - return code from wdm retrieval, standard codes
 C              except -321 means table templete names didn't match
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      I,J,K,I1,I80,GRP,QNU,XFLDS,XSPA,XLEN(12),
-     &             XCOL(12),XNUM(4),AGRP,AQNU,AFLDS,ALEN(12),ACOL(12),
+      INTEGER      I,J,K,I1,I80,GRP,QNU,XFLDS,XSPA,XLEN(30),
+     &             XCOL(30),XNUM(4),AGRP,AQNU,AFLDS,ALEN(30),ACOL(30),
      &             ASPA,ANUM(12),TABID,DATFLG,MXTBTL,IMO(200),
-     &             FROW,FSPA,CHGFG,MINYR,MAXYR,STEMP,ETEMP,
+     &             FROW,FSPA,CHGFG,MINYR,MAXYR,STEMP(1),ETEMP(1),
      &             SALEN,SAIND,ERRCOD,ECOL,LMESFL,LCLU,LGRP
       REAL         TBRBUF(4000)
-      CHARACTER*1  TBCBUF(80,200),XTYP(12),ATYP(12)
+      CHARACTER*1  TBCBUF(80,200),XTYP(30),ATYP(30)
       CHARACTER*5  FMTI
       CHARACTER*7  FMTR
       CHARACTER*16 MNAME
@@ -127,16 +127,16 @@ C               get begining and ending year as attributes and check
                 SAIND = 278
                 SALEN = 1
                 CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,STEMP,ERRCOD)
-                IF (ERRCOD.EQ.0 .AND. STEMP.GT.MINYR .AND.
-     1                                STEMP.LT.MAXYR) THEN
-                  MINYR = STEMP
+                IF (ERRCOD.EQ.0 .AND. STEMP(1).GT.MINYR .AND.
+     1                                STEMP(1).LT.MAXYR) THEN
+                  MINYR = STEMP(1)
                   CHGFG = 1
                 END IF
                 SAIND = 279
                 CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,ETEMP,ERRCOD)
-                IF (ERRCOD.EQ.0 .AND. ETEMP.GT.MINYR .AND.
-     1                                ETEMP.LT.MAXYR) THEN
-                  MAXYR = ETEMP
+                IF (ERRCOD.EQ.0 .AND. ETEMP(1).GT.MINYR .AND.
+     1                                ETEMP(1).LT.MAXYR) THEN
+                  MAXYR = ETEMP(1)
                   CHGFG = 1
                 END IF
                 IF (CHGFG .EQ. 1) THEN
@@ -194,8 +194,8 @@ C     NREC   - number of annual peaks
 C     MREC   - maximum number of peaks
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   GPFLG, TDSFRC, SYR(6), EYR(6), RETCOD, TUNITS, STEMP,
-     &          DTRAN, DELT, NVAL, FLG, JYR, J, L12, ERRCOD, ETEMP,
+      INTEGER   GPFLG, TDSFRC, SYR(6), EYR(6), RETCOD, TUNITS, STEMP(1),
+     &          DTRAN, DELT, NVAL, FLG, JYR, J, L12, ERRCOD, ETEMP(1),
      &          SALEN, SAIND
       REAL      VAL(200)
       CHARACTER*1 BLK
@@ -217,12 +217,12 @@ C     get begining and ending year as attributes and check
       SAIND = 278
       SALEN = 1
       CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,STEMP,ERRCOD)
-      IF (ERRCOD.EQ.0 .AND. STEMP.GT.SYR(1) .AND. STEMP.LT.EYR(1))
-     &   SYR(1) = STEMP
+      IF (ERRCOD.EQ.0 .AND. STEMP(1).GT.SYR(1) .AND. STEMP(1).LT.EYR(1))
+     &   SYR(1) = STEMP(1)
       SAIND = 279
       CALL WDBSGI (WDMSFL,DSN,SAIND,SALEN,ETEMP,ERRCOD)
-      IF (ERRCOD.EQ.0 .AND. ETEMP.GT.SYR(1) .AND. ETEMP.LT.EYR(1))
-     &   EYR(1) = ETEMP
+      IF (ERRCOD.EQ.0 .AND. ETEMP(1).GT.SYR(1) .AND. ETEMP(1).LT.EYR(1))
+     &   EYR(1) = ETEMP(1)
 C
       IF(RETCOD.EQ.0) THEN
         TUNITS=6

@@ -937,6 +937,111 @@ C===============================================================================
       GO TO 10
       END
 C****       
+      SUBROUTINE ISVRGN(N,RB,RA)
+C===============================================================================
+C
+C       HEAP SORT
+C         NOTE:  RB AND RA CAN BE THE SAME ARRAY
+C         INTEGER VERSION WRITTEN 08 JULY 2011 (TAC)
+C
+C===============================================================================
+      IMPLICIT INTEGER (A-Z)
+      SAVE
+
+      DIMENSION RA(N),RB(N)
+      
+      IF(N .LE. 0) RETURN   ! TAC 10JUN2011
+      DO 5 I=1,N
+        RA(I)  =  RB(I)
+ 5    CONTINUE
+ 
+        L=N/2+1
+        IR=N
+10    CONTINUE
+        IF(L.GT.1)THEN
+          L=L-1
+          RRA=RA(L)
+        ELSE
+          RRA=RA(IR)
+          RA(IR)=RA(1)
+          IR=IR-1
+          IF(IR.EQ.1)THEN
+            RA(1)=RRA
+            RETURN
+          ENDIF
+        ENDIF
+        I=L
+        J=L+L
+20      IF(J.LE.IR)THEN
+          IF(J.LT.IR)THEN
+            IF(RA(J).LT.RA(J+1))J=J+1
+          ENDIF
+          IF(RRA.LT.RA(J))THEN
+            RA(I)=RA(J)
+            I=J
+            J=J+J
+          ELSE
+            J=IR+1
+          ENDIF
+        GO TO 20
+        ENDIF
+        RA(I)=RRA
+      GO TO 10
+      END
+C****       
+      SUBROUTINE RSVRGN(N,RB,RA)
+C===============================================================================
+C
+C       HEAP SORT
+C         NOTE:  RB AND RA CAN BE THE SAME ARRAY
+C         REAL*4 VERSION WRITTEN 08 JULY 2011 (TAC)
+C
+C===============================================================================
+      IMPLICIT INTEGER (A-Z)
+      SAVE
+
+      REAL*4 RA,RB,RRA
+      DIMENSION RA(N),RB(N)
+      
+      IF(N .LE. 0) RETURN   ! TAC 10JUN2011
+      DO 5 I=1,N
+        RA(I)  =  RB(I)
+ 5    CONTINUE
+ 
+        L=N/2+1
+        IR=N
+10    CONTINUE
+        IF(L.GT.1)THEN
+          L=L-1
+          RRA=RA(L)
+        ELSE
+          RRA=RA(IR)
+          RA(IR)=RA(1)
+          IR=IR-1
+          IF(IR.EQ.1)THEN
+            RA(1)=RRA
+            RETURN
+          ENDIF
+        ENDIF
+        I=L
+        J=L+L
+20      IF(J.LE.IR)THEN
+          IF(J.LT.IR)THEN
+            IF(RA(J).LT.RA(J+1))J=J+1
+          ENDIF
+          IF(RRA.LT.RA(J))THEN
+            RA(I)=RA(J)
+            I=J
+            J=J+J
+          ELSE
+            J=IR+1
+          ENDIF
+        GO TO 20
+        ENDIF
+        RA(I)=RRA
+      GO TO 10
+      END
+C****       
       INTEGER FUNCTION NDAYS(IDAY, IMONTH, IYEAR)
 C===============================================================================
 C

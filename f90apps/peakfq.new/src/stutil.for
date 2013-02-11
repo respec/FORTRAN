@@ -78,9 +78,9 @@ C         default to 0.0
         RETC = 0
       ELSE
 C       no data present
-        CALL COPYI ( LEN6, ZERO, DATBGN )
-        CALL COPYI ( LEN6, ZERO, DATEND )
-        RETC = RET
+        DATBGN= 0
+        DATEND= 0
+        RETC  = RET
       END IF
 C
       RETURN
@@ -113,7 +113,7 @@ C     LEN    - length of character string
 C     TEXT   - character string to be filled
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   SAIND, SALEN, ISTAID, I8, RETCOD, I80, I16, IPOS,
+      INTEGER   SAIND, SALEN, ISTAID(1), I8, RETCOD, I80, I16, IPOS,
      $          I6, OLEN, I0
       CHARACTER*1  STAID(16), STANAM(48), TSTYPE(4), CDSN(16),BLNK
 C
@@ -152,7 +152,7 @@ C       try integer station id
      O               ISTAID,RETCOD)
         IF (RETCOD .EQ. 0 .AND. 8.LT.LEN) THEN
 C         station id found
-          CALL INTCHR (ISTAID,I8,I0,OLEN,TEXT(1))
+          CALL INTCHR (ISTAID(1),I8,I0,OLEN,TEXT(1))
         END IF
       END IF
 C     find current length
@@ -217,7 +217,7 @@ C     LEN    - length of character string
 C     TEXT   - character string to be filled
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      SAIND, SALEN, ISTAID, I8, RETCOD, I0, OLEN
+      INTEGER      SAIND, SALEN, ISTAID(1), I8, RETCOD, I0, OLEN
       CHARACTER*1  STAID(16), BLNK, STAR
 C
 C     + + + EXTERNALS + + +
@@ -249,10 +249,10 @@ C       not enough room, try integer station id
 C       no character station id, integer will fit, try to get it
         SAIND= 51
         SALEN= 1
-        CALL WDBSGI (WDMFL,DSN,SAIND,SALEN,   ISTAID,RETCOD)
+        CALL WDBSGI (WDMFL,DSN,SAIND,SALEN,ISTAID,RETCOD)
         IF (RETCOD .EQ. 0) THEN
 C         found station id
-          CALL INTCHR (ISTAID,I8,I0,OLEN,TEXT)
+          CALL INTCHR (ISTAID(1),I8,I0,OLEN,TEXT)
         ELSE
 C         no information, fill with *
           CALL ZIPC ( LEN, STAR, TEXT )
@@ -292,7 +292,7 @@ C              else left blank
 C     PERIOD - period of record
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   SAIND, SALEN, ISTAID, RETCOD,
+      INTEGER   SAIND, SALEN, ISTAID(1), RETCOD,
      $          OLEN, LOC, JUSTR, FOUND, I4, I5, I8, I15
       CHARACTER*1  STAID(16), STANAM(48), TSTYPE(4)
       CHARACTER*4  CTYPE
@@ -353,12 +353,12 @@ C       character station id not found, try integer
 C         integer station id found
           IF (FOUND .EQ. 0) THEN
 C           put in first title since still empty
-            WRITE(C8,2005) ISTAID
+            WRITE(C8,2005) ISTAID(1)
             CALL CVARAR (I8,C8,I8,TITLE1)
             FOUND = 1
           ELSE
 C           put station id in second title
-            CALL INTCHR (ISTAID,I8,JUSTR,OLEN,TITLE2)
+            CALL INTCHR (ISTAID(1),I8,JUSTR,OLEN,TITLE2)
           END IF
         END IF
       END IF
@@ -413,7 +413,7 @@ C              characters)
 C     TSTYPE - tstype
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      SAIND, SALEN, ISTAID,  RETCOD, LEN, JUSTL, OLEN
+      INTEGER      SAIND, SALEN, ISTAID(1),  RETCOD, LEN, JUSTL, OLEN
       CHARACTER*1  DESCRP(80), BLNK
 C
 C     + + + EXTERNALS + + +
@@ -438,7 +438,7 @@ C       try integer station id
         IF (RETCOD .EQ. 0) THEN
 C         station id found
           LEN = 16
-          CALL INTCHR ( ISTAID, LEN, JUSTL, OLEN, STAID )
+          CALL INTCHR ( ISTAID(1), LEN, JUSTL, OLEN, STAID )
         ELSE
 C         nothing, make sure it is blank
           LEN = 16

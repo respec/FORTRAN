@@ -1261,8 +1261,8 @@ C                 need to print interval record
                   UTHR = 1.0E20
                   IF (NTHRESH .GT. 0) THEN
                     DO 303 K = 1, NTHRESH
-                      IF (LYR .GE. THRESH(K)%THRBYR .AND. 
-     $                    LYR .LE. THRESH(K)%THREYR) THEN
+                      IF (INTERVAL(J)%INTRVLYR.GE.THRESH(K)%THRBYR .AND.
+     $                    INTERVAL(J)%INTRVLYR.LE.THRESH(K)%THREYR) THEN
                         LTHR = THRESH(K)%THRLWR
                         UTHR = THRESH(K)%THRUPR
                       END IF
@@ -4055,7 +4055,8 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,J,NB(MXPK),IPKPTR(MXPK),LYR,EMAYR
-      REAL       LQ(MXPK),LPEX(MXPK)
+      REAL, ALLOCATABLE :: LQ(:),LPEX(:)
+      DOUBLE PRECISION, ALLOCATABLE:: LQU(:)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
      $                 REGSKEW,REGMSE,WRCYP(MXINT),MISSNG,
      $                 CILOW(MXINT),CIHIGH(MXINT),GBTHRSH,
@@ -4109,6 +4110,10 @@ C       Weighted, set to root mean square
       write(99,*) 'GBTHRSH',GBTHRSH
 C
       IF (NOBS.GT.0) THEN
+        ALLOCATE (LQ(NOBS))
+        ALLOCATE (LPEX(NOBS))
+        ALLOCATE (LQU(NOBS))
+
         CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
      I              REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
      O              WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
@@ -4117,10 +4122,12 @@ C       get plotting positions for all peaks and thresholds
         DO 16 I = 1, NOBS
 C         check for interval with INF as upper limit
           IF (QL(I).GT.0 .AND. QU(I).GT.12) THEN
-            QU(I) = QL(I)
+            LQU(I) = QL(I)
+          ELSE
+            LQU(I) = QU(I)
           END IF
  16     CONTINUE
-        CALL plotposHS(NOBS,QL,QU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
+        CALL plotposHS(NOBS,QL,LQU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
 
 c      write(99,*) 'After EMAFIT'
 c      write(99,*) 'NOBS:',NOBS
