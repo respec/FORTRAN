@@ -1365,13 +1365,13 @@ c     $       //,'  WATER <----- OBSERVED-----><-------- EMA ------->',
 c     $          '<---- THRESHOLDS ---->  DATA',
 c     $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
 c     $          '      LOWER      UPPER  TYPE')
- 2010 FORMAT(//,20X,'EMA REPRESENTATION OF DATA',
+ 2010 FORMAT(//,25X,'EMA REPRESENTATION OF DATA',
      $       //,'  WATER <----- OBSERVED-----><-------- EMA ------->',
-     $          '<---- THRESHOLDS ---->',
+     $          '<-PERCEPTION THRESHOLDS->',
      $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
-     $          '      LOWER      UPPER')
+     $          '        LOWER       UPPER')
  2015 FORMAT(F11.1)
- 2020 FORMAT(1X,I6,2(F11.1,A11),2A11,A6)
+ 2020 FORMAT(1X,I6,2(F11.1,A11),1X,2(1X,A11)) !,A6)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1473,6 +1473,13 @@ C     + + + FORMATS + + +
      $'               STANDARD          '/
      $'                   DISCHARGE PROBABILITY',
      $'     MEAN     DEVIATION     SKEW '/18X,55('-'))      
+   18 FORMAT(//1X,10X,  'ANNUAL FREQUENCY CURVE PARAMETERS -- ',
+     $       21HLOG-PEARSON TYPE III    // 
+     $'                                    LOGARITHMIC         '/
+     $'                         -------------------------------'/
+     $'                                      STANDARD          '/
+     $'                            MEAN     DEVIATION     SKEW '/
+     $'                         -------------------------------')
 C   9 FORMAT(     5X,32HSYSTEMATIC PEAKS ABOVE BASE  --    ,
 C    $  10X,2H--,2X,2F15.4,F15.3/
 C    $       6X,32HWRC-ADJUSTED PKS ABOVE BASE  --  ,
@@ -1492,10 +1499,13 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
    10 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
-   11 FORMAT(    ' EMA W/O REG. INFO',F10.1,F11.4,F11.4,F12.4,F11.3
-     $         /,' EMA W/REG. INFO  ',F10.1,F11.4,F11.4,F12.4,F11.3
-     $        //,' EMA ESTIMATE OF MSE OF SKEW W/O REG. INFO (AT-SITE)',
-     $           F8.4)
+   11 FORMAT(' EMA W/O REG. INFO    ',F11.4,F12.4,F11.3
+     $     /,' EMA W/REG. INFO      ',F11.4,F12.4,F11.3
+     $     /,' EMA W/SYSTEMATIC ONLY',F11.4,F12.4,F11.3
+     $    //,' EMA ESTIMATE OF MSE OF SKEW W/O REG. INFO (AT-SITE)    ',
+     $       F8.4,/
+     $       ' EMA ESTIMATE OF MSE OF SKEW W/SYSTEMATIC ONLY (AT-SITE)',
+     $       F8.4)
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL                      ',
@@ -1528,7 +1538,11 @@ C     PRINT FITTED LOG-PEARSON TYPE III FREQUENCY CURVES PARAMETERS
 C     AND ORDINATES
       WRITE(MSG,1010)
       CALL PRTPHD ( 2001, -999, EMAOPT, WDMSFL )
-      WRITE(MSG,8)
+      IF(EMAOPT.EQ.0) THEN
+        WRITE(MSG,8)
+      ELSE
+        WRITE(MSG,18)
+      END IF
       IF(IDEBUG.GT.0) THEN
         IF(EMAOPT.EQ.0) THEN
           WRITE(MSG,9) SYSAAV, SYSASD, SYSASK,
@@ -1548,8 +1562,10 @@ C       original B-17 estimates
         WRITE(MSG,15) INT( CLSIZE*100. + .5)
       ELSE
 C       new EMA estimates
-        WRITE(MSG,11)SYSBAS,SYSPAB,SYSUAV,SYSUSD,SYSSKW,
-     $               WRCBAS,WRCPAB,WRCUAV,WRCUSD,WRCSKW,as_G_mse
+        WRITE(MSG,11)SYSUAV,SYSUSD,SYSSKW,
+     $               WRCUAV,WRCUSD,WRCSKW,
+     $               SYSAAV,SYSASD,SYSASK,
+     $               as_G_mse
         WRITE(MSG,16) INT( CLSIZE*100. + .5)
       END IF
 C
@@ -4052,6 +4068,10 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf0.inc'
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
+C     from Tim Cohn's EMA code; to set CI percentage
+      integer neps
+      double precision eps
+      common /tacci1/eps,neps
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,J,NB(MXPK),IPKPTR(MXPK),LYR,EMAYR
@@ -4113,6 +4133,7 @@ C
         ALLOCATE (LQ(NOBS))
         ALLOCATE (LPEX(NOBS))
         ALLOCATE (LQU(NOBS))
+        eps = CLSIZE
 
         CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
      I              REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
@@ -4158,6 +4179,9 @@ c      WRCSKW = WRCMOM(3)
       WRCUAV = WRCMOM(1,1)
       WRCUSD = SQRT(WRCMOM(2,1))
       WRCSKW = WRCMOM(3,1)
+      SYSAAV = WRCMOM(1,3)
+      SYSASD = WRCMOM(2,3)
+      SYSASK = WRCMOM(3,3)
 
         write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
         write(99,*)
@@ -4232,10 +4256,10 @@ C               assign plotting position for this interval
         write(99,*)
         write(99,*) 'Threshold positions'
         write(99,*) 'Plot Pos     Threshold    NumPeaks'
-        DO 40 I = 1,NT
+        DO 40 J = 1,NTHRESH
           write(99,*) PET(I),THR(I),NB(I)
 C         set plotting position data for retrieval by PKFQWin
-          DO 35 J = 1,NTHRESH
+          DO 35 I = 1,NT
             IF (ABS((10**THR(I))-THRESH(J)%THRLWR) .LT. 0.001) THEN
 C             assume matching threshold value means matching thresholds
               THRESH(J)%THPP = PET(I)
