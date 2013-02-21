@@ -846,9 +846,9 @@ C    $         '     USER-SET OUTLIER CRITERIA   '         /
 C    $        '     HIGH OUTLIER   LOW OUTLIER  '        /
 C    $   6X, 2A )
  7    FORMAT(16X,'Perception Thresholds:',
-     $      /16X,'     Begin     End     Low     High     Comment')
+     $      /16X,'     Begin     End       Low     High     Comment')
  8    FORMAT(16X,'Perception Thresholds (defaults set by PeakFQ):',
-     $      /16X,'     Begin     End     Low     High     Comment')
+     $      /16X,'     Begin     End       Low     High     Comment')
  10   FORMAT(18X,2I8,2A10,5X,A)
  11   FORMAT(16X,'Perception Thresholds            =   None Specified')
  15   FORMAT(16X,'Interval Data:',
@@ -900,13 +900,17 @@ C       historic adjustment applied
           DO 110 I= 1, NTHRESH
             IF (THRESH(I)%THRLWR .LT. 1.0E9) THEN
               WRITE(LWRSTR,2030) THRESH(I)%THRLWR
-            ELSE
+            ELSEIF (THRESH(I)%THRLWR .LT. 1.0E19) THEN
               WRITE(LWRSTR,2040) THRESH(I)%THRLWR
+            ELSE
+              LWRSTR = '       INF'
             END IF
             IF (THRESH(I)%THRUPR .LT. 1.0E9) THEN
               WRITE(UPRSTR,2030) THRESH(I)%THRUPR
-            ELSE
+            ELSEIF (THRESH(I)%THRUPR .LT. 1.0E19) THEN
               WRITE(UPRSTR,2040) THRESH(I)%THRUPR
+            ELSE
+              UPRSTR = '       INF'
             END IF
             WRITE(MSG,10) THRESH(I)%THRBYR,THRESH(I)%THREYR,
      $                    LWRSTR,UPRSTR,THRESH(I)%THRCOM
@@ -4130,8 +4134,6 @@ C       Weighted, set to root mean square
       write(99,*) 'GBTHRSH',GBTHRSH
 C
       IF (NOBS.GT.0) THEN
-        ALLOCATE (LQ(NOBS))
-        ALLOCATE (LPEX(NOBS))
         ALLOCATE (LQU(NOBS))
         eps = CLSIZE
 
@@ -4185,6 +4187,9 @@ c      WRCSKW = WRCMOM(3)
 
         write(99,*) 'Moments:',WRCUAV,WRCUSD,WRCSKW
         write(99,*)
+
+        ALLOCATE (LQ(NPKS))
+        ALLOCATE (LPEX(NPKS))
 
         LYR = 1
 C        DO 18 I = 1,NOBS
@@ -4256,10 +4261,10 @@ C               assign plotting position for this interval
         write(99,*)
         write(99,*) 'Threshold positions'
         write(99,*) 'Plot Pos     Threshold    NumPeaks'
-        DO 40 J = 1,NTHRESH
+        DO 40 I = 1,NT
           write(99,*) PET(I),THR(I),NB(I)
 C         set plotting position data for retrieval by PKFQWin
-          DO 35 I = 1,NT
+          DO 35 J = 1,NTHRESH
             IF (ABS((10**THR(I))-THRESH(J)%THRLWR) .LT. 0.001) THEN
 C             assume matching threshold value means matching thresholds
               THRESH(J)%THPP = PET(I)
