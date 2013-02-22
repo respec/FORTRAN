@@ -273,6 +273,7 @@ C           report Multiple GB LO messges
         END IF
        END IF
 
+        LASGMSE = as_G_mse
         IF(IER .GE. 3)  THEN
           NERR=NERR+1
           IF(MSL .LT. 4) CALL PRTIN2 ( 1 ,MSG, NPKS, IPKSEQ,PKS,XQUAL,
@@ -281,7 +282,6 @@ C           sort input peak logs and correlate with plotting positions
             CALL SORTM( PKLOG, IPKPTR, 1, -1, NPKS )
             IF(NHIST.GT.0) CALL ALIGNP(IPKPTR,IPKSEQ,NPKS,NHIST,SYSPP)
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
-            LASGMSE = as_G_mse
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
@@ -342,11 +342,12 @@ C
 C
             IF (EXPFUN .GT. 0) THEN
 C             output export file
+              IF (EMAOPT .EQ. 1) ASMSEG = LASGMSE
               CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
      I                     SYSSKW,GENSKU,RMSEGS,ASMSEG,KENTAU,KENPVL,
      I                     KENSLP,NFCXPG,WRCFC(INDX1),TXPROB(INDX1),
      I                     CLIML(INDX1),CLIMU(INDX1),VAREST(INDX1),
-     I                     JSEQNO,HEADNG(9),EMAOPT,IGSOPT)
+     I                     JSEQNO,HEADNG(9),EMAOPT,IGSOPT,BEGYR,ENDYR)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
@@ -363,7 +364,6 @@ C             do plot historic adjusted peaks
               HSTFLG = 0
             END IF
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
-            LASGMSE = as_G_mse
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
@@ -4849,13 +4849,14 @@ C
      I                      (EXPFUN,NSYS,NHIST,WRCSKW,WRCMN,WRCSD,
      I                       SYSSKW,GENSKU,RMSEGS,ASMSEG,KENTAU,KENPVL,
      I                       KENSLP,NPLOT,WRCFC,TXPROB,CLIML,CLIMU,
-     I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT)
+     I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT,
+     I                       BEGYR,ENDYR)
 C
 C     + + + PURPOSE + + +
 C     Output analysis results to PeakFQ export file
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT
+      INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT,BEGYR,ENDYR
       REAL          WRCSKW,WRCMN,WRCSD,SYSSKW,GENSKU,RMSEGS,
      $              ASMSEG,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
      $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT)
@@ -4879,25 +4880,30 @@ C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER I
+      INTEGER I,LEN,SIGDIG,DECPLA
       DOUBLE PRECISION KVALS(MXINT)
       CHARACTER*1 LTAB
       CHARACTER*4 LCHTYPE
       CHARACTER*8 LLABEL
+      CHARACTER*10 VALSTR(MXINT)
       CHARACTER*11 CHSKUOPT
+      CHARACTER*120 LHEADER,LSTNID
 C
 C     + + + FUNCTIONS + + +
       DOUBLE PRECISION KFXX
+      CHARACTER*120 STRRETREM
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL KFXX
+      EXTERNAL KFXX, DECCHX, STRRETREM
 C
 C     + + + INTRINSICS + + +
       INTRINSIC DBLE, REAL
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A80)
- 2010 FORMAT (4X,'Analysis',A,A4,/,4X,'Skew Option',2A,/,
+ 2010 FORMAT (4X,'Station',2A,/,4X,'Station Name',2A,/,
+     $        4X,'Analysis',A,A4,/,4X,'BegYear ',A,I4,/,
+     $        4X,'EndYear ',A,I4,/,4X,'Skew Option',2A,/,
      $        4X,'Skew    ',A,F8.3,/,4X,'Mean    ',A,F8.3,/,
      $        4X,'StandDev',A,F8.3,/,4X,'AtSiteSkew',A,F8.3,/,
      $        4X,'AtSiteMSEG',A,F8.3,/,
@@ -4907,12 +4913,14 @@ C     + + + OUTPUT FORMATS + + +
      $        4X,'KENSLP  ',A,F8.3)
  2020 FORMAT (4X,A8,32(A,F8.4))
  2030 FORMAT (4X,A8,32(A,F8.0))
- 2040 FORMAT (4X,A8,32(A,A8))
+ 2040 FORMAT (4X,A8,32(A,A10))
 C
 C     + + + END SPECIFICATIONS + + +
 C
       LTAB = CHAR(9)
       WRITE(EXPFUN,2000) HEADER
+      LHEADER = HEADER(11:80)
+      LSTNID = STRRETREM(LHEADER)
       IF (EMAOPT.EQ.1) THEN
         LCHTYPE = 'EMA '
       ELSE
@@ -4925,29 +4933,48 @@ C
       ELSE
         CHSKUOPT = 'Weighted'
       END IF
-      WRITE(EXPFUN,2010) LTAB,LCHTYPE,LTAB,CHSKUOPT,LTAB,WRCSKW,LTAB,
-     $                   WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,LTAB,
-     $                   GENSKU,LTAB,RMSEGS,LTAB,NSYS,LTAB,
+      WRITE(EXPFUN,2010) LTAB,LSTNID,LTAB,LHEADER,LTAB,LCHTYPE,LTAB,
+     $                   BEGYR,LTAB,ENDYR,LTAB,CHSKUOPT,LTAB,WRCSKW,
+     $                   LTAB,WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,
+     $                   LTAB,GENSKU,LTAB,RMSEGS**2,LTAB,NSYS,LTAB,
      $                   NHIST,LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
+
+      LEN = 10
+      SIGDIG = 4
+      DECPLA = 1
+
       LLABEL = 'EXC_Prob'
       WRITE(EXPFUN,2020) LLABEL,(LTAB,TXPROB(I),I=1,NPLOT)
       LLABEL = 'Estimate'
-      WRITE(EXPFUN,2030) LLABEL,(LTAB,10**WRCFC(I),I=1,NPLOT)
+      DO 10 I = 1,NPLOT
+        CALL DECCHX (10**WRCFC(I),LEN,SIGDIG,DECPLA,VALSTR(I))
+ 10   CONTINUE
+      WRITE(EXPFUN,2040) LLABEL,(LTAB,VALSTR(I),I=1,NPLOT)
       LLABEL = 'Variance'
       IF (EMAOPT .EQ. 1) THEN
-        WRITE(EXPFUN,2020)LLABEL,(LTAB,REAL(10**VAREST(I)),I=1,NPLOT)
+        DO 20 I = 1,NPLOT
+          CALL DECCHX (REAL(VAREST(I)),LEN,SIGDIG,DECPLA+3,VALSTR(I))
+ 20     CONTINUE
+        WRITE(EXPFUN,2040)LLABEL,(LTAB,VALSTR(I),I=1,NPLOT)
       ELSE
         WRITE(EXPFUN,2040) LLABEL,(LTAB,'    ----',I=1,NPLOT)
       END IF
       LLABEL = 'Conf_Low'
-      WRITE(EXPFUN,2030) LLABEL,(LTAB,10**CLIML(I),I=1,NPLOT)
+      DO 30 I = 1,NPLOT
+        CALL DECCHX (10**CLIML(I),LEN,SIGDIG,DECPLA,VALSTR(I))
+ 30   CONTINUE
+      WRITE(EXPFUN,2040) LLABEL,(LTAB,VALSTR(I),I=1,NPLOT)
       LLABEL = 'Conf_Up '
-      WRITE(EXPFUN,2030) LLABEL,(LTAB,10**CLIMU(I),I=1,NPLOT)
+      DO 40 I = 1,NPLOT
+        CALL DECCHX (10**CLIMU(I),LEN,SIGDIG,DECPLA,VALSTR(I))
+ 40   CONTINUE
+      WRITE(EXPFUN,2040) LLABEL,(LTAB,VALSTR(I),I=1,NPLOT)
       LLABEL = 'K-Value'
-      DO 10 I= 1,NPLOT
+      DO 50 I= 1,NPLOT
         KVALS(I) = KFXX(DBLE(WRCSKW),DBLE(TXPROB(I)))
- 10   CONTINUE
-      WRITE(EXPFUN,2020) LLABEL,(LTAB,REAL(KVALS(I)),I=1,NPLOT)
+        CALL DECCHX (REAL(KVALS(I)),LEN,SIGDIG,DECPLA+3,VALSTR(I))
+ 50   CONTINUE
+      WRITE(EXPFUN,2040) LLABEL,(LTAB,VALSTR(I),I=1,NPLOT)
 C
       RETURN
       END
