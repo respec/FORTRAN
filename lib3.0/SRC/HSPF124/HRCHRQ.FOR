@@ -76,26 +76,26 @@ C
       IF (OUTLEV.GT.1) THEN
         WRITE (MESSU,2020)
       END IF
-      OSVREC= MAX(OSVREC,33)
+      OSVREC= MAX(OSVREC,34)
 C
       IF (NUTFG.EQ.1) THEN
         CALL PNUTRX
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,35)
+        OSVREC= MAX(OSVREC,36)
         IF (PLKFG.EQ.1) THEN
           CALL PPLANK
           IF (OUTLEV.GT.1) THEN
             WRITE (MESSU,2020)
           END IF
-          OSVREC= MAX(OSVREC,37)
+          OSVREC= MAX(OSVREC,38)
           IF (PHFG.EQ.1) THEN
             CALL PPHCAR
             IF (OUTLEV.GT.1) THEN
               WRITE (MESSU,2020)
             END IF
-            OSVREC= MAX(OSVREC,37)
+            OSVREC= MAX(OSVREC,38)
           END IF
         END IF
       END IF

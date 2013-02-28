@@ -182,7 +182,7 @@ $TEXT
  The layout of an FTABLE must satisfy all of the following conditions:
    1. NROWS >=1
    2. 3 <= NCOLS <= 8
-   3. (NROWS*NCOLS) <= 500
+   3. (NROWS*NCOLS) <= 1000
 
  One or more of these conditions is not true for the following FTABLE:
      FTABNO     NROWS     NCOLS
@@ -362,5 +362,17 @@ $TEXT
     5    1    1    5
  In table HYDR-CEVAP, the specified fractions for priority level &I   
  sum to &R         .  They must either sum to unity or all be zero.
+#GROUP   45  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The layout of an Extended FTABLE must satisfy all of the following 
+ conditions:
+   1. NROWS >=1
+   2. 3 <= NCOLS <= 5
+   3. (NROWS*NCOLS) <= 1000
+
+ One or more of these conditions is not true for the following FTABLE:
+     FTABNO     NROWS     NCOLS
+      &I        &I        &I
   END DATA
 END CLU

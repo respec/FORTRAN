@@ -727,7 +727,7 @@ C         section sedtrn not active
         END IF
       END IF
 C
-      IF (HYDRFG.EQ.1) THEN
+      IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
 C       check that required options in section hydr have been selected
         IF (GQALFG(3).EQ.1.AND.AUX1FG.EQ.0) THEN
 C         error-simulation of photolysis requires aux1fg to be on to
@@ -762,18 +762,18 @@ C             aux1fg on to calculate average depth
       END IF
 C
 C     determine how many records the osv requires
-      OSVREC= MAX(OSVREC,32)
+      OSVREC= MAX(OSVREC,33)
 C
       IF (GQALFG(4).EQ.1) THEN
 C       need some variables in section oxrx, so osv
 C       must include it
-        OSVREC= MAX(OSVREC,33)
+        OSVREC= MAX(OSVREC,34)
       END IF
 C
       IF (GQALFG(3).EQ.1.AND.PHYTFG.EQ.1) THEN
 C       will need variables phyto and pyfp, so include
 C       section plank in osv
-        OSVREC= MAX(OSVREC,37)
+        OSVREC= MAX(OSVREC,38)
       END IF
 C
       IF (OUTLEV.GT.1) THEN
@@ -1252,7 +1252,7 @@ C       precipitation is input
 C       no precipitation
         PREC= 0.0
       END IF
-      IF (HYDRFG .NE. 1) THEN
+      IF (HYDRFG .EQ. 0) THEN
 C       section hydr is inactive, so sarea must be on the pad
 CTHJ        SAREA= PAD(SAFP+IVL1)
         REQFG= 3

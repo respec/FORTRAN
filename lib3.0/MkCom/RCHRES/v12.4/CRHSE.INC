@@ -42,10 +42,10 @@ C
      $              TSED(3),BEDDEP,SDCF1(4,5),SDCF2(4,5),
      $              SDCF3(MXEXIT,4,5)
       DOUBLE PRECISION  VOL,VOLS,SDST(3,5)
-      INTEGER       DUM1(2239),DUM2(504),DUM3(503),DUM4,DUM5(13),
+      INTEGER       DUM1(2239),DUM2(504),DUM3(1003),DUM4,DUM5(13),
      $              DUM6(712),DUM7,DUM8(2),DUM9(102),DUM10(602),DUM11,
      $              DUM12(2),DUM13(4776),DUM14(1375),DUM15,DUM16(87),
-     $              DUMRCH(38634)
+     $              DUMRCH(38134)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(ISED,SDIF(1,1)),(SDGPM,BEDWID),

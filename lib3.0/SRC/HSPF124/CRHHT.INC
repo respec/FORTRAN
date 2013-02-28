@@ -42,9 +42,9 @@ C
      $              TW,AIRTMP,SHDFAC,HTCF2(2,5),HTCF3(MXEXIT,5),
      $              HTCF4(7,5)
       DOUBLE PRECISION  VOL,VOLS,HTST(5)
-      INTEGER       DUM1(505),DUM2(207),DUM3(2551),DUM4(712),
+      INTEGER       DUM1(505),DUM2(207),DUM3(3051),DUM4(712),
      $              DUM5(110),DUM6(602),DUM7(4784),DUM8(1091),
-     $              DUMRCH(38932)
+     $              DUMRCH(38432)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IHEAT,HTIF(1)),(HTPM,ELEV),

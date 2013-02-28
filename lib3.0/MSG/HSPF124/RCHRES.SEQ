@@ -1291,10 +1291,12 @@ _WIDTH   5
 _COLUMN 11
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
-Value  of 1 indicates section HYDR is active.
+Value of 1 indicates section HYDR is active.
+Value of 2 indicates reach will be simulated using 
+alternative dynamic wave routing algorithm.
 _PNAME  HYDRFG
 $FIELD  FIELD4
 _WIDTH   5
