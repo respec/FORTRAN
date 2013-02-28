@@ -38,8 +38,8 @@ C
      $              DENR(MXSP,MXPL),LATRAD,SO(MXSP),TSAL(MXSP),
      $              TSAR(MXSP),SKOP(MXSP),VSAL(MXSP),VSAR(MXSP),DLT1,
      $              DEC,HFDLT,DF
-      INTEGER       DUM1(3982),DUM2(6605),DUM3(4),DUM4(277),
-     $              DUM5(7796),DUMRCH(1209)
+      INTEGER       DUM1(4482),DUM2(6605),DUM3(4),DUM4(277),
+     $              DUM5(7796),DUMRCH(709)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR)

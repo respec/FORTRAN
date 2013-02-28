@@ -81,12 +81,12 @@ C       - not implemented in this release of hspf
       END IF
 C
 C     input for section hydr
-      IF (HYDRFG.EQ.1) THEN
+      IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
         CALL PHYDR
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,20)
+        OSVREC= MAX(OSVREC,21)
       END IF
 C
 C     adcalc
@@ -95,7 +95,7 @@ C     adcalc
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,20)
+        OSVREC= MAX(OSVREC,21)
       END IF
 C
 C     cons
@@ -104,7 +104,7 @@ C     cons
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,22)
+        OSVREC= MAX(OSVREC,23)
       END IF
 C
 C     htrch
@@ -122,7 +122,7 @@ C     sedtrn
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,23)
+        OSVREC= MAX(OSVREC,24)
       END IF
 C
 C     gqual
@@ -149,7 +149,7 @@ C     acidph
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,38)
+        OSVREC= MAX(OSVREC,39)
       END IF
 C
 C     set flux accumulators to zero
@@ -522,7 +522,7 @@ C         special actions are being taken and there is at least one left
         END IF
 C
 C       perform the simulation
-        IF (HYDRFG .EQ. 1) THEN
+        IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
           CALL HYDR
         END IF
 C
@@ -564,7 +564,7 @@ C       handle flux accumulation, printout
           CALL RPRINT
         END IF
 C
-        IF (HYDRFG .EQ. 1) THEN
+        IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
 C         reset current irrigation values if used
           CALL HYIRST
         END IF
@@ -595,7 +595,7 @@ C     + + + EXTERNALS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (HYDRFG .EQ. 1) THEN
+      IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
         CALL HYDRRB
       END IF
 C
@@ -665,7 +665,7 @@ C     + + + EXTERNALS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (HYDRFG .EQ. 1) THEN 
+      IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN 
 C       section hydr is active
         CALL HYDACC
      I             (FRMROW,TOROW)
@@ -765,7 +765,7 @@ C     + + + DATA INITIALIZATIONS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (HYDRFG .EQ. 1) THEN
+      IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
 C       section hydr is active
         IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
           LPRTU = PRINTU
@@ -1014,7 +1014,7 @@ C     + + + EXTERNALS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (HYDRFG .EQ. 1) THEN
+      IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
 C       section hydr is active 
         CALL HYDRST
      I             (LEV)
@@ -1248,7 +1248,7 @@ C     + + + EXTERNALS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (HYDRFG .EQ. 1) THEN
+      IF (HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) THEN
         CALL HYDRRP
       END IF
 C

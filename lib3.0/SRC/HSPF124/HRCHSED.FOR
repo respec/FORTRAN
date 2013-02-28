@@ -58,7 +58,7 @@ C
       SANDFG= IVAL(1)
 C
 C     check that aux3fg in section hydr is on
-      IF (HYDRFG.EQ.1.AND.AUX3FG.EQ.0) THEN
+      IF ((HYDRFG.EQ.1 .OR. HYDRFG.EQ.2) .AND. AUX3FG.EQ.0) THEN
 C       error- sediment transport requires aux3fg to be on
         SGRP = 4
         CALL OMSG (MESSU,MSGFL,SCLU,SGRP,

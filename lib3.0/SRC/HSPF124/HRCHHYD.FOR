@@ -1264,7 +1264,7 @@ C     of the RCHRES module
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER    FTABNO,NCOLS,NROWS,VZERPT,RETCOD
-      REAL       AFACT,RCHTAB(500),VFACT
+      REAL       AFACT,RCHTAB(1000),VFACT
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     FTABNO - ftable number
@@ -1281,8 +1281,9 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION INTERP1 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      DUMMY,ERRFG,IBASE,KEY,KEYND,KEYST,I,
-     $             MESSU,NC,NO,NR,SCLU,SGRP,MSGFL,I0,VALSET
+     $             MESSU,NC,NO,NR,SCLU,SGRP,MSGFL,I0,VALSET,EXTFG
       REAL         PDEPTH,PVOL,RVAL(8)
+      CHARACTER*1  CEXTFG
       CHARACTER*80 UCIBF
 C
 C     + + + EQUIVALENCES + + +
@@ -1297,7 +1298,9 @@ C     + + + EXTERNALS + + +
 C
 C     + + + INPUT FORMATS + + +
  1010 FORMAT (2I5)
+ 1015 FORMAT (14X,A1)
  1020 FORMAT (8F10.0)
+ 1030 FORMAT (5F15.0)
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING FTABLE NO. ',I3)
@@ -1352,6 +1355,16 @@ C         error - invalid numeric input
      M               ECOUNT)
           RETCOD= 2
  20     CONTINUE
+C
+C       check to see if this is the new extended format ftable
+        EXTFG = 0
+        READ (UCIBF,1015,ERR=25)  CEXTFG
+        IF (CEXTFG .EQ. 'E') THEN
+C         this is the extended format ftable
+          EXTFG  = 1
+        END IF
+ 25     CONTINUE
+C
 C       check values from heading
         IF (NROWS.LE.0) THEN
 C         no rows
@@ -1361,7 +1374,7 @@ C         not enough or too many columns
           ERRFG= 1
         ELSE
           DUMMY= NCOLS*NROWS
-          IF (DUMMY.GT.500) THEN
+          IF (DUMMY.GT.1000) THEN
 C           too much space required
             ERRFG= 1
           ELSE
@@ -1369,14 +1382,28 @@ C           heading values ok
             ERRFG= 0
           END IF
         END IF
+        IF (EXTFG.EQ.1 .AND. NCOLS.GT.5) THEN
+C         too many columns for extended format version
+          ERRFG= 2
+        END IF 
 C
         IF (ERRFG.EQ.1) THEN
 C         error - ftable must have one or more rows, between three
-C         and eight columns and not more than 500 values
+C         and eight columns and not more than 1000 values
           CALL OMSTI (FTABNO)
           CALL OMSTI (NROWS)
           CALL OMSTI (NCOLS)
           SGRP= 15
+          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M               ECOUNT)
+          RETCOD= 2
+        ELSEIF (ERRFG.EQ.2) THEN
+C         error for extended format - ftable must have one or more rows, 
+C         between three and five columns and not more than 1000 values
+          CALL OMSTI (FTABNO)
+          CALL OMSTI (NROWS)
+          CALL OMSTI (NCOLS)
+          SGRP= 45
           CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
      M               ECOUNT)
           RETCOD= 2
@@ -1417,22 +1444,44 @@ C               see if this record needs updating
 C               no pest supplemental file in use
                 VALSET = 0
               END IF
-              IF (VALSET .EQ. 0) THEN
-C               no values from pest sup file
-                READ (UCIBF,1020,ERR=40)  RVAL
-              END IF
-                GO TO 45
- 40           CONTINUE
-C               error - invalid numeric input
-                CALL OMSTI (NR)
-                CALL OMSTI (FTABNO)
-                I= 80
-                CALL OMSTC (I,UCIBF1)
-                SGRP= 29
-                CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M                     ECOUNT)
-                RETCOD= 4
- 45           CONTINUE
+C
+              IF (EXTFG.EQ.0) THEN
+C               normal ftable format
+                IF (VALSET .EQ. 0) THEN
+C                 no values from pest sup file
+                  READ (UCIBF,1020,ERR=40)  RVAL
+                END IF
+                  GO TO 45
+ 40             CONTINUE
+C                 error - invalid numeric input
+                  CALL OMSTI (NR)
+                  CALL OMSTI (FTABNO)
+                  I= 80
+                  CALL OMSTC (I,UCIBF1)
+                  SGRP= 29
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                  RETCOD= 4
+ 45             CONTINUE
+              ELSE
+C               extended format ftable
+                IF (VALSET .EQ. 0) THEN
+C                 no values from pest sup file
+                  READ (UCIBF,1030,ERR=400)  RVAL
+                END IF
+                  GO TO 450
+ 400            CONTINUE
+C                 error - invalid numeric input
+                  CALL OMSTI (NR)
+                  CALL OMSTI (FTABNO)
+                  I= 80
+                  CALL OMSTC (I,UCIBF1)
+                  SGRP= 29
+                  CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                       ECOUNT)
+                  RETCOD= 4
+ 450            CONTINUE
+              END IF 
 C
 C             check values are not negative
               ERRFG= 0
@@ -1521,7 +1570,7 @@ C     of the rchres module
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      FTABNO,FTBDSN,NCOLS,NROWS,VZERPT,UUNITS,RETCOD
-      REAL         AFACT,RCHTAB(500),VFACT
+      REAL         AFACT,RCHTAB(1000),VFACT
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     FTABNO - ftable number
@@ -1721,7 +1770,7 @@ C               not enough or too many columns
                 ERRFG= 1
               ELSE
                 DUMMY= NCOLS*NROWS
-                IF (DUMMY.GT.500) THEN
+                IF (DUMMY.GT.1000) THEN
 C                 too much space required
                   ERRFG= 1
                 ELSE
@@ -1732,7 +1781,7 @@ C                 heading values ok
 C
               IF (ERRFG.EQ.1) THEN
 C               error - ftable must have one or more rows, between three
-C               and eight columns and not more than 500 values
+C               and eight columns and not more than 1000 values
                 CALL OMSTI (FTBDSN)
                 CALL OMSTI (FTABNO)
                 CALL OMSTI (NROWS)
@@ -2822,7 +2871,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          NROWS,NCOLS,RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
      $                 ROWPT,HYWCNT(2)
-      REAL             RCHTAB(500)
+      REAL             RCHTAB(1000)
       DOUBLE PRECISION VOL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -2918,7 +2967,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 NCOGT,COGTC(NCOGT),COGTE(NCOGT),IREXIT,ROWPT,
      $                 HYWCNT(2)
       REAL             KS,COKS,OS(NEXITS),ROS,DELTS,OUTDGT(NEXITS),
-     $                 COTDGT(MAXEX,NCATS),RCHTAB(500),IRRDEM,
+     $                 COTDGT(MAXEX,NCATS),RCHTAB(1000),IRRDEM,
      $                 CIRRWD(NCATS),CORELS(MAXEX,NCATS),O(NEXITS),RO,
      $                 OVOL(NEXITS),ROVOL,COREL(MAXEX,NCATS),
      $                 CO(MAXEX,NCATS),CRO(NCATS),COVOL(MAXEX,NCATS),
@@ -3153,7 +3202,8 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 CFVOLC(MXCUSR,NEXITS),CFVOLP(MXCUSR,NEXITS),
      $                 IREXIT,ROWPT,HYECNT(5),HYWCNT(2)
       REAL             CONVFM(12),DELTS,KS,COKS,OS(NEXITS),ROS,
-     $                 RCHTAB(500),FACTA1,COLIND(NEXITS),OUTDGT(NEXITS),
+     $                 RCHTAB(1000),FACTA1,COLIND(NEXITS),
+     $                 OUTDGT(NEXITS),
      $                 COTDGT(MAXEX,MXCAT),CFVOLF(MXCUSR,NEXITS),
      $                 IRRDEM,CIRRWD(NCATS),CORELS(MAXEX,MXCAT),CONVF,
      $                 O(NEXITS),RO,OVOL(NEXITS),ROVOL,
@@ -3407,7 +3457,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER          NROWS,NCOLS,NEXITS,ODFVFG(NEXITS),ODGTFG(NEXITS),
      $                 FUNCT(NEXITS),NCATS,MAXEX,RCHNO,MESSU,MSGFL,SCLU,
      $                 DATIM(5),ROWPT,HYECNT(5),HYWCNT(2),MXCAT
-      REAL             RCHTAB(500),FACTA1,CONVF,COLIND(NEXITS),
+      REAL             RCHTAB(1000),FACTA1,CONVF,COLIND(NEXITS),
      $                 OUTDGT(NEXITS),COREL(MAXEX,MXCAT),DELTS,
      $                 O(NEXITS),RO
       DOUBLE PRECISION OINT,VOLT,VOL
@@ -3621,7 +3671,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          MSGFL,HYECNT(5),MESSU,NCOLS,RCHNO,ROWADD,
      $                 DATIM(5),SCLU,AUX1FG
-      REAL             AVDEP,DEP,HRAD,LEN,RCHTAB(500),SAREA,STAGE,
+      REAL             AVDEP,DEP,HRAD,LEN,RCHTAB(1000),SAREA,STAGE,
      $                 STCOR,TWID
       DOUBLE PRECISION VOL
 C

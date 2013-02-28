@@ -161,7 +161,7 @@ C       no precipitation
         PREC= 0.0
       END IF
 C
-      IF (HYDRFG .NE. 1) THEN
+      IF (HYDRFG .EQ. 0) THEN
 C       section hydr is inactive, so sarea must be on the pad if needed
 CTHJ        SAREA= PAD(SAFP+IVL1)
         REQFG= 3

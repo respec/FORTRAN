@@ -174,10 +174,10 @@ C     assume tmud= tw and tmuddt is small + negative (at midnight)
 C
       IF (SHADFG .EQ. 1) THEN
 C       need SHADE module OSV
-        OSVREC= MAX (OSVREC,98)
+        OSVREC= MAX (OSVREC,99)
       ELSE
 C       only need HTRCH OSV
-        OSVREC = MAX (OSVREC,23)
+        OSVREC = MAX (OSVREC,24)
       END IF
 C
       IF (OUTLEV.GT.1) THEN
