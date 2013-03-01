@@ -658,6 +658,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{EA639514-9F4B-4DD3-9737-6625C7A1076D}"
         }
+        "project.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{3B4DA557-772E-4067-8FB9-78A8C945B66A}"
+        }
         "routing.f95"
         {
         "ProjRelPath" = "T"

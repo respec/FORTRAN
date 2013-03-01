@@ -1,10 +1,9 @@
 include 'DataSizeSpecs.f95'
-
 module enums
 use DataSizeSpecs
 implicit none
 !-----------------------------------------------------------------------------
-!   enums.h
+!   enums.h !TZ: should be combined with const.f95
 !
 !   Project: EPA SWMM5
 !   Version: 5.0
