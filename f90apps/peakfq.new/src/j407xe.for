@@ -852,7 +852,7 @@ C    $   6X, 2A )
  10   FORMAT(18X,2I8,2A10,5X,A)
  11   FORMAT(16X,'Perception Thresholds            =   None Specified')
  15   FORMAT(16X,'Interval Data:',
-     $      /16X,'               Year     Low     High     Comment')
+     $      /16X,'              Year       Low     High     Comment')
  20   FORMAT(26X,I8,2A10,5X,A)
  21   FORMAT(16X,'Interval Data                    =   None Specified')
  30   FORMAT(16X,'Perception Thresholds            =   Not Applicable',
@@ -929,8 +929,10 @@ C         no thresholds (don't think this is possible with SETTHRESH)
             END IF
             IF (INTERVAL(I)%INTRVLUPR .LT. 1.0E9) THEN
               WRITE(UPRSTR,2030) INTERVAL(I)%INTRVLUPR
+            ELSEIF (INTERVAL(I)%INTRVLUPR .LT. 1.0E19) THEN
+              WRITE(UPRSTR,2040) THRESH(I)%THRUPR
             ELSE
-              WRITE(UPRSTR,2040) INTERVAL(I)%INTRVLUPR
+              UPRSTR = '       INF'
             END IF
             WRITE(MSG,20) INTERVAL(I)%INTRVLYR,LWRSTR,UPRSTR,
      $                    INTERVAL(I)%INTRVLCOM
@@ -1274,7 +1276,7 @@ C                 need to print interval record
                   END IF
                   WRITE(LTHRCHR(1),'(F9.0)') LTHR
                   IF (UTHR .GT. 1.0E10) THEN
-                    WRITE(LTHRCHR(2),'(A9)') '      inf'
+                    WRITE(LTHRCHR(2),'(A9)') '      INF'
                   ELSE
                     WRITE(LTHRCHR(2),'(F9.0)') UTHR
                   END IF
@@ -1313,7 +1315,7 @@ C                 need to print interval record
               END IF
               WRITE(LTHRCHR(1),'(F9.0)') LTHR
               IF (UTHR .GT. 1.0E10) THEN
-                WRITE(LTHRCHR(2),'(A9)') '      inf'
+                WRITE(LTHRCHR(2),'(A9)') '      INF'
               ELSE
                 WRITE(LTHRCHR(2),'(F9.0)') UTHR
               END IF
@@ -4971,7 +4973,7 @@ C
       WRITE(EXPFUN,2040) LLABEL,(LTAB,VALSTR(I),I=1,NPLOT)
       LLABEL = 'K-Value'
       DO 50 I= 1,NPLOT
-        KVALS(I) = KFXX(DBLE(WRCSKW),DBLE(TXPROB(I)))
+        KVALS(I) = KFXX(DBLE(WRCSKW),DBLE(1.0-TXPROB(I)))
         CALL DECCHX (REAL(KVALS(I)),LEN,SIGDIG,DECPLA+3,VALSTR(I))
  50   CONTINUE
       WRITE(EXPFUN,2040) LLABEL,(LTAB,VALSTR(I),I=1,NPLOT)
@@ -5125,7 +5127,7 @@ C                 need to print interval record
                   END IF
                   WRITE(LTHRCHR(1),'(F9.0)') LTHR
                   IF (UTHR .GT. 1.0E10) THEN
-                    WRITE(LTHRCHR(2),'(A9)') '      inf'
+                    WRITE(LTHRCHR(2),'(A9)') '      INF'
                   ELSE
                     WRITE(LTHRCHR(2),'(F9.0)') UTHR
                   END IF
@@ -5151,7 +5153,7 @@ C                 need to print interval record
             END IF
             WRITE(LTHRCHR(1),'(F9.0)') LTHR
             IF (UTHR .GT. 1.0E10) THEN
-              WRITE(LTHRCHR(2),'(A9)') '      inf'
+              WRITE(LTHRCHR(2),'(A9)') '      INF'
             ELSE
               WRITE(LTHRCHR(2),'(F9.0)') UTHR
             END IF

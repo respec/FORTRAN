@@ -1586,7 +1586,8 @@ C     used by Tim's EMA code
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
-      DOUBLE PRECISION MISSNG,GBTHRSH,REGSKEW,REGMSE
+      REAL    LGBCRIT
+      DOUBLE PRECISION MISSNG,GBTHRSH,REGSKEW,REGMSE,Z
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA MISSNG /1.0D-99/
@@ -1627,9 +1628,10 @@ C           Weighted, set to root mean square
           CALL GBTEST(NOBS,QL,QU,TL,TU,DTYPE,GBTHRSH,
      M                QL,QU,TL,TU)
 
+          LGBCRIT = REAL(gbcrit)
 C         report Multiple GB LO messges
           IF (NLOW .GT. 0) THEN
-            WRITE(MSG,2000) nlow-nzero,10**gbcrit
+            WRITE(MSG,2000) nlow-nzero,10**LGBCRIT
             DO 10 I = 1,NLOW
               IF (qs(I).GT.1.0D-99) THEN
                 WRITE(MSG,2010)qs(I),pvaluew(I)
@@ -1637,6 +1639,17 @@ C         report Multiple GB LO messges
  10         CONTINUE
           END IF
         END IF
+
+C       update B17 computational variables        
+        NLWOUT = NLOW - NBGB
+        DO 20 I=1,NSYS1
+          IF (SYSLOG(I).LT.LGBCRIT .AND. SYSLOG(I).GT.SYSBAS) THEN
+            Z = SYSLOG(I)
+            SUMS(1)=SUMS(1)-Z
+            SUMS(2)=SUMS(2)-Z**2
+            SUMS(3)=SUMS(3)-Z**3
+          END IF
+ 20     CONTINUE
 
       ELSE
 C       perform traditional B17B LO test
