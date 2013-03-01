@@ -1282,7 +1282,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      DUMMY,ERRFG,IBASE,KEY,KEYND,KEYST,I,
      $             MESSU,NC,NO,NR,SCLU,SGRP,MSGFL,I0,VALSET,EXTFG
-      REAL         PDEPTH,PVOL,RVAL(8)
+      REAL         PDEPTH,PVOL,RVAL(8),RVAL5(5)
       CHARACTER*1  CEXTFG
       CHARACTER*80 UCIBF
 C
@@ -1467,7 +1467,15 @@ C                 error - invalid numeric input
 C               extended format ftable
                 IF (VALSET .EQ. 0) THEN
 C                 no values from pest sup file
-                  READ (UCIBF,1030,ERR=400)  RVAL
+                  READ (UCIBF,1030,ERR=400)  RVAL5
+                  RVAL(1) = RVAL5(1)
+                  RVAL(2) = RVAL5(2)
+                  RVAL(3) = RVAL5(3)
+                  RVAL(4) = RVAL5(4)
+                  RVAL(5) = RVAL5(5)
+                  RVAL(6) = 0.0
+                  RVAL(7) = 0.0
+                  RVAL(8) = 0.0
                 END IF
                   GO TO 450
  400            CONTINUE
