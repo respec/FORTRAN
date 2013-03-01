@@ -1,8 +1,7 @@
 module consts
 implicit none
 !  --------------------------------------------------
-!  Silverfrost FTN95 for Microsoft Visual Studio
-!  Free Format FTN95 Source File
+!  Should be combined with enums.f95
 !  --------------------------------------------------
 
 !-----------------------------------------------------------------------------

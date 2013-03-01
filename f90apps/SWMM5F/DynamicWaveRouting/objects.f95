@@ -50,10 +50,10 @@ implicit none
 !-----------------
 type TFile
    character(len=MAXFNAME+1) :: name     ! file name
-   character*1 :: mode                 ! NO_FILE, SCRATCH, USE, or SAVE
-   character*1 :: state                ! current state (OPENED, CLOSED)
+   integer(kind=K2) :: mode              ! NO_FILE, SCRATCH, USE, or SAVE
+   integer(kind=K2) :: state             ! current state (OPENED, CLOSED)
    !FILE*         file                 ! FILE structure pointer
-   integer(kind=K4) :: fileHandle                 ! FILE structure pointer
+   integer(kind=K4) :: fileHandle        ! FILE structure pointer
 end type TFile
 
 !-----------------------------------------
