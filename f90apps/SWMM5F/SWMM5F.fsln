@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Silverfrost FTN95 Express Solution File, Format Version 10.00
+Project("{9AE66E24-D2D9-4FF2-AB7F-CE79F20F2B8B}") = "DynamicWaveRouting", "DynamicWaveRouting\DynamicWaveRouting.ftn95p", "{25102E54-011B-41F7-9941-00648C04D1FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CheckMate|.NET = CheckMate|.NET
+		CheckMate|Win32 = CheckMate|Win32
+		Debug|.NET = Debug|.NET
+		Debug|Win32 = Debug|Win32
+		Release|.NET = Release|.NET
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25102E54-011B-41F7-9941-00648C04D1FA}.CheckMate|.NET.ActiveCfg = CheckMate|.NET
+		{25102E54-011B-41F7-9941-00648C04D1FA}.CheckMate|.NET.Build.0 = CheckMate|.NET
+		{25102E54-011B-41F7-9941-00648C04D1FA}.CheckMate|Win32.ActiveCfg = CheckMate|Win32
+		{25102E54-011B-41F7-9941-00648C04D1FA}.CheckMate|Win32.Build.0 = CheckMate|Win32
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Debug|.NET.ActiveCfg = Debug|.NET
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Debug|.NET.Build.0 = Debug|.NET
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Debug|Win32.Build.0 = Debug|Win32
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Release|.NET.ActiveCfg = Release|.NET
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Release|.NET.Build.0 = Release|.NET
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Release|Win32.ActiveCfg = Release|Win32
+		{25102E54-011B-41F7-9941-00648C04D1FA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
