@@ -658,6 +658,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{EA639514-9F4B-4DD3-9737-6625C7A1076D}"
         }
+        "link.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{B38DD9C4-C7AB-4C4C-856F-32CB362BD554}"
+        }
         "project.f95"
         {
         "ProjRelPath" = "T"
@@ -681,6 +689,14 @@
         "CustomSwitches" = ""
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{F72882C3-ADB4-4282-B1D7-6E0F1C132AAA}"
+        }
+        "xsect.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{CAD75452-BD13-4C25-A282-1F4137A12F52}"
         }
     }
 }

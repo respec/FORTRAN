@@ -157,11 +157,11 @@ type TSnow
     double precision ::        snotmp          ! temp. dividing rain from snow (deg F)
     double precision ::        tipm            ! antecedent temp. index parameter
     double precision ::        rnm             ! ratio of neg. melt to melt coeff.
-    double precision, dimension(2:10) :: adc      ! areal depletion curves (pervious & 
+    double precision, dimension(2,10) :: adc      ! areal depletion curves (pervious & 
                                   ! imperv. area curves w/ 10 pts.each)
     double precision ::        season          ! snowmelt season
     double precision ::        removed         ! total snow plowed out of system (ft3)
-   end type TSnow
+end type TSnow
 
 
 !-------------------
@@ -421,7 +421,7 @@ end type TTreatment
 !------------
 type TNode
    character(len=20) ::         ID              ! node ID
-   integer(kind=K4) ::           Datatype            ! node type code
+   integer(kind=K2) ::           datatype            ! node type code
    integer(kind=K4) ::           subIndex        ! index of node's sub-category
    character*1 ::          rptFlag         ! reporting flag
    double precision ::        invertElev      ! invert elevation (ft)
@@ -471,7 +471,6 @@ end type TNode
 !---------------
 type TOutfall
    integer(kind=K4) ::        datatype               ! outfall type code
-   !character*1 ::       hasFlapGate        ! true if contains flap gate
    logical(kind=K2) ::       hasFlapGate        ! true if contains flap gate
    double precision ::     fixedStage         ! fixed outfall stage (ft)
    integer(kind=K4) ::        tideCurve          ! index of tidal stage curve
@@ -515,7 +514,7 @@ end type TDivider
 ! CROSS SECTION DATA STRUCTURE
 !-----------------------------
 type TXsect
-   integer(kind=K4) ::           datatype            ! type code of cross section shape
+   integer(kind=K2) ::           datatype            ! type code of cross section shape
    integer(kind=K4) ::           culvertCode     ! type of culvert (if any)                  !(5.0.014 - LR)
    integer(kind=K4) ::           transect        ! index of transect/shape (if applicable)   !(5.0.010 - LR)
    double precision ::        yFull           ! depth when full (ft)
@@ -612,7 +611,7 @@ type TLink
    double precision ::        dqdh            ! change in flow w.r.t. head (ft2/sec)
    !signed char   direction       ! flow direction flag
    integer(kind=K4) ::   direction       ! flow direction flag
-   character*1 ::          isClosed        ! flap gate closed flag
+   logical ::          isClosed        ! flap gate closed flag
 end type TLink
 
 
