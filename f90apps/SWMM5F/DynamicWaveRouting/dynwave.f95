@@ -1,3 +1,7 @@
+include 'headers.f95'
+include 'xsect.f95'
+include 'link.f95'
+module dynwave
 ! -----------------------------------------------------------------------------
 !    dynwave.c
 ! 
@@ -27,20 +31,20 @@
 ! -----------------------------------------------------------------------------
 
 ! -----------------------------------------------------------------------------
-!      Constants 
+!      Constants for dynwave
 ! -----------------------------------------------------------------------------
-double precision :: MINSURFAREA =  12.566  !  min. nodal surface area (~4 ft diam.)
-double precision :: MAXVELOCITY =  50.     !  max. allowable velocity (ft/sec)
-double precision ::  MINTIMESTEP =  0.5     !  min. time step (sec)
-double precision ::  POMEGA       =  0.5     !  under-relaxation parameter
-double precision ::  STOP_TOL    =  0.005   !  Picard iteration stop criterion
-integer :: MAXSTEPS    =  8       !  max. number of Picard iterations (5.0.019 - LR)
+double precision, parameter :: MINSURFAREA =  12.566  !  min. nodal surface area (~4 ft diam.)
+double precision, parameter :: MAXVELOCITY =  50.     !  max. allowable velocity (ft/sec)
+double precision, parameter ::  MINTIMESTEP =  0.5     !  min. time step (sec)
+double precision, parameter ::  POMEGA       =  0.5     !  under-relaxation parameter
+double precision, parameter ::  STOP_TOL    =  0.005   !  Picard iteration stop criterion
+integer, parameter :: MAXSTEPS    =  8       !  max. number of Picard iterations (5.0.019 - LR)
 
 ! -----------------------------------------------------------------------------
 !   Data Structures
 ! -----------------------------------------------------------------------------
 type TXnode 
-    character*1 :: converged                 !  TRUE if iterations for a node done
+    logical*1 :: converged                 !  TRUE if iterations for a node done
     double precision :: newSurfArea               !  current surface area (ft2)
     double precision :: oldSurfArea               !  previous surface area (ft2)
     double precision :: sumdqdh                   !  sum of dqdh from adjoining links
@@ -48,7 +52,7 @@ type TXnode
 end type TXnode
 
 type TXlink
-    character*1 bypassed                  !  TRUE if can bypass calcs. for a link
+    logical*1 bypassed                  !  TRUE if can bypass calcs. for a link
     double precision :: surfArea1                 !  surf. area at upstrm end of link (ft2)
     double precision :: surfArea2                 !  surf. area at dnstrm end of link (ft2)
 end type TXlink
@@ -62,12 +66,12 @@ double precision ::  Omega                  !  actual under-relaxation parameter
 double precision ::  CriticalDepth          !  critical flow depth (ft)
 double precision ::  NormalDepth            !  normal flow depth (ft)
 double precision ::  Fasnh                  !  fraction between norm. & crit. depth
-integer ::     Converged              !  TRUE if Picard iterations converged
+logical ::     Converged              !  TRUE if Picard iterations converged
 integer ::    Steps                  !  number of Picard iterations
 type(TXnode) :: Xnode
 allocatable Xnode(:)
 type(TXlink) :: Xlink
-allocatable Xline(:)
+allocatable Xlink(:)
 
 ! -----------------------------------------------------------------------------
 !   External functions (declared in funcs.h)
@@ -120,6 +124,7 @@ subroutine dynwave_init()
 !   Output:  none
 !   Purpose: initializes dynamic wave routing method.
 ! 
+    use headers
     integer :: i
 
     VariableStep = 0.0
@@ -128,11 +133,11 @@ subroutine dynwave_init()
     else 
        MinSurfAreaFt2 = MinSurfArea / UCF(LENGTH) / UCF(LENGTH)
     end if
-    allocate (Xnode(Nobjects(NODE)))
-    allocate (Xline(Nobjects(LINK)))
+    allocate (Xnode(Nobjects(E_NODE)))
+    allocate (Xlink(Nobjects(LINK)))
 
     !  --- initialize node surface areas
-    do i = 1, Nobjects(NODE)
+    do i = 1, Nobjects(E_NODE)
         Xnode(i)%newSurfArea = 0.0
         Xnode(i)%oldSurfArea = 0.0
     end do
@@ -163,20 +168,29 @@ double precision function dynwave_getRoutingStep(fixedStep)
     double precision, intent (in) :: fixedStep
     !  --- use user-supplied fixed step if variable step option turned off
     !      or if its smaller than the min. allowable variable time step
-    if ( CourantFactor .eq. 0.0 ) return fixedStep
-    if ( fixedStep .lt. MINTIMESTEP ) return fixedStep
+    if ( CourantFactor .eq. 0.0 ) then
+       dynwave_getRoutingStep = fixedStep
+       return
+    end if
+    if ( fixedStep .lt. MINTIMESTEP ) then
+      dynwave_getRoutingStep = fixedStep
+      return
+    end if
 
     !  --- at start of simulation (when current variable step is zero)
     !      use the minimum allowable time step
     if ( VariableStep == 0.0 ) then
         VariableStep = MINTIMESTEP
     !  --- otherwise compute variable step based on current flow solution
-    else VariableStep = getVariableStep(fixedStep)
+    else 
+        VariableStep = getVariableStep(fixedStep)
     end if
 
     !  --- adjust step to be a multiple of a millisecond
     VariableStep = floor(1000.0 * VariableStep) / 1000.0
-    return VariableStep
+    
+    dynwave_getRoutingStep = VariableStep
+    return
 end function dynwave_getRoutingStep
 
 ! =============================================================================
@@ -189,55 +203,61 @@ integer function dynwave_execute(links, tStep)
 !   Purpose: routes flows through drainage network over current time step.
 ! 
 
+    use headers
     integer, intent (in) :: links(:)
     double precision, intent (in) :: tStep
     
     integer :: i
 
     !  --- initialize
-    if ( ErrorCode ) return 0
+    if ( ErrorCode /= 0 ) then
+       dynwave_execute = 0
+       return
+    end if
+    
     Steps = 0
-    Converged = FALSE
+    Converged = .FALSE.
     Omega = POMEGA
-    do i=1, Nobjects(NODE)
-        Xnode(i)%converged = FALSE
+    do i=1, Nobjects(E_NODE)
+        Xnode(i)%converged = .FALSE.
         Xnode(i)%dYdT = 0.0
     end do
     do i=1, Nobjects(LINK)
-        Xlink(i)%bypassed = FALSE
+        Xlink(i)%bypassed = .FALSE.
         Xlink(i)%surfArea1 = 0.0
         Xlink(i)%surfArea2 = 0.0
     end do
 
     !  --- a2 preserves conduit area from solution at last time step
-    do i=1, Nlinks(CONDUIT)
+    do i=1, Nlinks(E_CONDUIT)
       Conduit(i)%a2 = Conduit(i)%a1
     end do
     !  --- keep iterating until convergence 
-    while ( Steps < MAXSTEPS )
+    do while ( Steps < MAXSTEPS )
         !  --- execute a routing step & check for nodal convergence
-        execRoutingStep(links, tStep)
+        call execRoutingStep(links, tStep)
         Steps = Steps + 1
         if ( Steps > 1 ) then
-            if ( Converged ) break
+            if ( Converged ) exit !break
 
             !  --- check if link calculations can be skipped in next step
             do i=1, Nobjects(LINK)
-                if ( Xnode(arrLink(i)%node1).converged .and.
-                     Xnode(arrLink(i)%node2).converged ) then
+                if ( Xnode(arrLink(i)%node1)%converged .and. &
+                    &Xnode(arrLink(i)%node2)%converged ) then
                   Xlink(i)%bypassed = .true.
                 else
                   Xlink(i)%bypassed = .false.
                 end if
             end do
         end if
-    end while
+    end do
 
     !   --- identify any capacity-limited conduits
     do i=1, Nobjects(LINK)
-      checkCapacity(i)
+      call checkCapacity(i)
     end do
-    return Steps
+    dynwave_execute = Steps
+    return
 end function dynwave_execute
 
 ! =============================================================================
@@ -250,39 +270,40 @@ subroutine execRoutingStep(links, dt)
 !   Purpose: solves momentum eq. in links and continuity eq. at nodes
 !            over specified time step.
 ! 
+    use headers
     integer, intent(in) :: links(:)
     double precision, intent (in) :: dt
     integer ::    i                          !  node or link index
     double precision :: yOld                       !  old node depth (ft)
 
     !  --- re-initialize state of each node
-    do i = 1, Nobjects(NODE)
-       initNodeState(i)
+    do i = 1, Nobjects(E_NODE)
+       call initNodeState(i)
     end do
     Converged = .true.
 
     !  --- find new flows in conduit links and non-conduit links
     do i=1, Nobjects(LINK)
-      findConduitFlow(links(i), dt)
+      call findConduitFlow(links(i), dt)
     end do
     do i=1, Nobjects(LINK)
-      findNonConduitFlow(links(i), dt)
+      call findNonConduitFlow(links(i), dt)
     end do
 
     !  --- compute outfall depths based on flow in connecting link
     do i=1, Nobjects(LINK)
-      link_setOutfallDepth(i)
+      call link_setOutfallDepth(i)
     end do
 
     !  --- compute new depth for all non-outfall nodes and determine if
     !      depth change from previous iteration is below tolerance
-    do i=1, Nobjects(NODE)
-        if ( Node(i)%type .eq. OUTFALL ) continue
+    do i=1, Nobjects(E_NODE)
+        if ( Node(i)%datatype .eq. E_OUTFALL ) cycle !continue
         yOld = Node(i)%newDepth
-        setNodeDepth(i, dt)
-        Xnode(i).converged = .true.
+        call setNodeDepth(i, dt)
+        Xnode(i)%converged = .true.
         if ( fabs(yOld - Node(i)%newDepth) .gt. STOP_TOL ) then
-            Converged = FALSE
+            Converged = .FALSE.
             Xnode(i)%converged = .false.
         end if
     end do
@@ -296,6 +317,7 @@ subroutine initNodeState(i)
 !   Output:  none
 !   Purpose: initializes node's surface area, inflow & outflow
 ! 
+    use headers
     integer, intent(in) :: i
     !  --- initialize nodal surface area
     if ( AllowPonding ) then
@@ -322,6 +344,7 @@ subroutine findConduitFlow(i, dt)
 !   Output:  none
 !   Purpose: finds new flow in a conduit-type link
 ! 
+    use headers
     integer, intent(in) :: i
     double precision, intent(in) :: dt
     
@@ -329,7 +352,7 @@ subroutine findConduitFlow(i, dt)
     double precision :: barrels                    !  number of barrels in conduit
 
     !  --- do nothing if link not a conduit
-    if ( arrLink(i)%type /= CONDUIT .or. arrLink(i)%xsect.type == DUMMY) return
+    if ( arrLink(i)%datatype /= E_CONDUIT .or. arrLink(i)%xsect%datatype == DUMMY) return
 
     !  --- get link flow from last "full" time step
     qOld = arrLink(i)%oldFlow
@@ -343,16 +366,16 @@ subroutine findConduitFlow(i, dt)
     !        from the previous iteration will still be valid.
 
     !  --- add surf. area contributions to upstream/downstream nodes
-    barrels = Conduit(arrLink(i)%subIndex).barrels
-    Xnode(arrLink(i)%node1)%newSurfArea += Xlink(i)%surfArea1 * barrels
-    Xnode(arrLink(i)%node2)%newSurfArea += Xlink(i)%surfArea2 * barrels
+    barrels = Conduit(arrLink(i)%subIndex)%barrels
+    Xnode(arrLink(i)%node1)%newSurfArea = Xnode(arrLink(i)%node1)%newSurfArea + Xlink(i)%surfArea1 * barrels
+    Xnode(arrLink(i)%node2)%newSurfArea = Xnode(arrLink(i)%node2)%newSurfArea + Xlink(i)%surfArea2 * barrels
 
     !  --- update summed value of dqdh at each end node
-    Xnode(arrLink(i)%node1)%sumdqdh += arrLink(i)%dqdh
-    Xnode(arrLink(i)%node2)%sumdqdh += arrLink(i)%dqdh
+    Xnode(arrLink(i)%node1)%sumdqdh = Xnode(arrLink(i)%node1)%sumdqdh + arrLink(i)%dqdh
+    Xnode(arrLink(i)%node2)%sumdqdh = Xnode(arrLink(i)%node2)%sumdqdh + arrLink(i)%dqdh
 
     !  --- update outflow/inflow at upstream/downstream nodes
-    updateNodeFlows(i, arrLink(i)%newFlow)
+    call updateNodeFlows(i, arrLink(i)%newFlow)
 end subroutine findConduitFlow
 
 ! =============================================================================
@@ -364,6 +387,7 @@ subroutine findNonConduitFlow(i, dt)
 !   Output:  none
 !   Purpose: finds new flow in a non-conduit-type link
 ! 
+    use headers
     integer, intent(in) :: i
     double precision, intent(in) :: dt
 
@@ -372,7 +396,7 @@ subroutine findNonConduitFlow(i, dt)
     integer ::  k, m
 
     !  --- ignore non-dummy conduit links
-    if ( arrLink(i)%type == CONDUIT .and. arrLink(i)%xsect%type /= DUMMY ) return
+    if ( arrLink(i)%datatype == E_CONDUIT .and. arrLink(i)%xsect%datatype /= DUMMY ) return
 
     !  --- update flow in link if not bypassed
     if ( .not.Xlink(i)%bypassed ) then
@@ -383,14 +407,14 @@ subroutine findNonConduitFlow(i, dt)
         !  --- get new inflow to link from its upstream node
         !      (link_getInflow returns 0 if flap gate closed or pump is offline)
         qNew = link_getInflow(i)
-        if ( arrLink(i)%type == PUMP ) qNew = getModPumpFlow(i, qNew, dt)
+        if ( arrLink(i)%datatype == E_PUMP ) qNew = getModPumpFlow(i, qNew, dt)
 
         !  --- find surface area at each end of link
-        findNonConduitSurfArea(i)
+        call findNonConduitSurfArea(i)
 
         !  --- apply under-relaxation with flow from previous iteration
         !  --- do not allow flow to change direction without first being 0
-        if ( Steps > 0 .and. arrLink(i)%type /= PUMP ) then                              ! (5.0.014 - LR)
+        if ( Steps > 0 .and. arrLink(i)%datatype /= E_PUMP ) then                              ! (5.0.014 - LR)
             qNew = (1.0 - Omega) * qLast + Omega * qNew
             if ( qNew * qLast < 0.0 ) qNew = 0.001 * SGN(qNew)
         end if
@@ -398,22 +422,24 @@ subroutine findNonConduitFlow(i, dt)
     end if
 
     !  --- add surf. area contributions to upstream/downstream nodes
-    Xnode(arrLink(i)%node1)%newSurfArea += Xlink(i)%surfArea1
-    Xnode(arrLink(i)%node2)%newSurfArea += Xlink(i)%surfArea2
+    Xnode(arrLink(i)%node1)%newSurfArea = Xnode(arrLink(i)%node1)%newSurfArea + Xlink(i)%surfArea1
+    Xnode(arrLink(i)%node2)%newSurfArea = Xnode(arrLink(i)%node2)%newSurfArea + Xlink(i)%surfArea2
 
     !  --- update summed value of dqdh at each end node
     !      (but not for discharge node of Type 4 pumps)
-    Xnode(arrLink(i)%node1)%sumdqdh += arrLink(i)%dqdh
-    if ( arrLink(i)%type == PUMP ) then
+    Xnode(arrLink(i)%node1)%sumdqdh = Xnode(arrLink(i)%node1)%sumdqdh + arrLink(i)%dqdh
+    if ( arrLink(i)%datatype == E_PUMP ) then
         k = arrLink(i)%subIndex
         m = Pump(k)%pumpCurve
-        if ( Curve(m)%curveType /= PUMP4_CURVE ) Xnode(arrLink(i)%node2)%sumdqdh += arrLink(i)%dqdh
+        if ( Curve(m)%curveType /= PUMP4_CURVE ) then 
+            Xnode(arrLink(i)%node2)%sumdqdh = Xnode(arrLink(i)%node2)%sumdqdh + arrLink(i)%dqdh
+        end if
     else 
-        Xnode(arrLink(i)%node2)%sumdqdh += arrLink(i)%dqdh
+        Xnode(arrLink(i)%node2)%sumdqdh = Xnode(arrLink(i)%node2)%sumdqdh + arrLink(i)%dqdh
     end if
 
     !  --- update outflow/inflow at upstream/downstream nodes
-    updateNodeFlows(i, arrLink(i)%newFlow)
+    call updateNodeFlows(i, arrLink(i)%newFlow)
 end subroutine findNonConduitFlow
 
 ! =============================================================================
@@ -427,6 +453,7 @@ double precision function getModPumpFlow(i, q, dt)
 !   Purpose: modifies pump curve pumping rate depending on amount of water
 !            available at pump's inlet node.
 ! 
+    use headers
     integer, intent(in) :: i
     double precision, intent(inout) :: q
     double precision, intent(in) :: dt
@@ -448,24 +475,24 @@ double precision function getModPumpFlow(i, q, dt)
 
     !  --- case where inlet node is a storage node: 
     !      prevent node volume from going negative
-    if ( Node(j)%type == STORAGE ) then 
+    if ( Node(j)%datatype == E_STORAGE ) then 
         getModPumpFlow = node_getMaxOutflow(j, q, dt) 
         return
     end if
 
     !  --- case where inlet is a non-storage node
-    select case ( Pump(k)%type )
+    select case ( Pump(k)%datatype )
       !  --- for Type1 pump, a volume is computed for inlet node,
       !      so make sure it doesn't go negative
-      case TYPE1_PUMP
+      case (TYPE1_PUMP)
         getModPumpFlow = node_getMaxOutflow(j, q, dt)
         return
 
       !  --- for other types of pumps, if pumping rate would make depth
       !      at upstream node negative, then set pumping rate = inflow
-      case TYPE2_PUMP
-      case TYPE4_PUMP
-      case TYPE3_PUMP
+      case (TYPE2_PUMP)
+      case (TYPE4_PUMP)
+      case (TYPE3_PUMP)
          newNetInflow = Node(j)%inflow - Node(j)%outflow - q
          netFlowVolume = 0.5 * (Node(j)%oldNetInflow + newNetInflow ) * dt
          y = Node(j)%oldDepth + netFlowVolume / Xnode(j)%newSurfArea
@@ -488,11 +515,12 @@ subroutine  findNonConduitSurfArea(i)
 !   Purpose: finds the surface area contributed by a non-conduit
 !            link to its upstream and downstream nodes.
 ! 
+    use headers
     integer, intent(in) :: i
-    if ( arrLink(i)%type == ORIFICE ) then
+    if ( arrLink(i)%datatype == E_ORIFICE ) then
         Xlink(i)%surfArea1 = Orifice(arrLink(i)%subIndex)%surfArea / 2.
 	!  --- no surface area for weirs to maintain SWMM 4 compatibility
-!    else if ( arrLink(i)%type == WEIR )
+!    else if ( arrLink(i)%datatype == E_WEIR )
 !    {
 !        Xlink(i)%surfArea1 = Weir(arrLink(i)%subIndex)%surfArea / 2.
 !    }
@@ -502,10 +530,10 @@ subroutine  findNonConduitSurfArea(i)
 
 ! !   Following segment modified for release 5.0.019.  ! !                     ! (5.0.019 - LR)
     Xlink(i)%surfArea2 = Xlink(i)%surfArea1
-    if ( arrLink(i)%flowClass == UP_CRITICAL .or.
-        Node(arrLink(i)%node1).type == STORAGE ) Xlink(i)%surfArea1 = 0.0
-    if ( arrLink(i)%flowClass == DN_CRITICAL .or.
-        Node(arrLink(i)%node2)%type == STORAGE ) Xlink(i)%surfArea2 = 0.0
+    if ( arrLink(i)%flowClass == UP_CRITICAL .or. &
+       &Node(arrLink(i)%node1)%datatype == E_STORAGE ) Xlink(i)%surfArea1 = 0.0
+    if ( arrLink(i)%flowClass == DN_CRITICAL .or. &
+       &Node(arrLink(i)%node2)%datatype == E_STORAGE ) Xlink(i)%surfArea2 = 0.0
 end subroutine findNonConduitSurfArea
 
 ! =============================================================================
@@ -517,14 +545,15 @@ subroutine updateNodeFlows( i,  q)
 !   Output:  none
 !   Purpose: updates cumulative inflow & outflow at link's end nodes.
 ! 
+    use headers
     integer, intent(in) :: i
     double precision, intent(in) :: q
     if ( q >= 0.0 ) then
-        Node(arrLink(i)%node1)%outflow += q
-        Node(arrLink(i)%node2)%inflow  += q
+        Node(arrLink(i)%node1)%outflow = Node(arrLink(i)%node1)%outflow + q
+        Node(arrLink(i)%node2)%inflow  = Node(arrLink(i)%node2)%inflow + q
     else
-        Node(arrLink(i)%node1)%inflow   -= q
-        Node(arrLink(i)%node2)%outflow  -= q
+        Node(arrLink(i)%node1)%inflow   = Node(arrLink(i)%node1)%inflow - q
+        Node(arrLink(i)%node2)%outflow  = Node(arrLink(i)%node2)%outflow - q
     end if
 end subroutine updateNodeFlows
 
@@ -539,6 +568,9 @@ double precision function  getConduitFlow(j, qOld, dt)
 !   Purpose: updates flow in conduit link by solving finite difference
 !            form of continuity and momentum equations.
 ! 
+    use headers
+    use modXsect
+    use modLink
     integer, intent(in) :: j
     double precision, intent(in) :: qOld, dt
     
@@ -556,17 +588,18 @@ double precision function  getConduitFlow(j, qOld, dt)
     double precision ::  v                          !  velocity (ft/sec)
     double precision ::  rho                        !  upstream weighting factor
     double precision ::  sigma                      !  inertial damping factor
-    double precision ::  length                     !  effective conduit length (ft)
+    double precision ::  mlength                     !  effective conduit mlength (ft)
     double precision ::  dq1, dq2, dq3, dq4, dq5    !  terms in momentum eqn.
     double precision ::  denom                      !  denominator of flow update formula
     double precision ::  q                          !  new flow value (cfs)
     double precision ::  barrels                    !  number of barrels in conduit
     !TXsect* xsect = &arrLink(j).xsect    !  ptr. to conduit's cross section data
-    TXsect :: xsect 
-    character*1 :: isFull             
+    type(TXsect), pointer :: xsect !use pointer as to not recreate a local copy
+    logical :: isFull
+    double precision :: qOldB
 
-    isFull = False !  TRUE if conduit flowing full
-    xsect = arrLink(j).xsect !  ptr. to conduit's cross section data
+    isFull = .false. !  TRUE if conduit flowing full
+    xsect => arrLink(j)%xsect !  ptr. to conduit's cross section data
     
     !  --- get most current heads at upstream and downstream ends of conduit
     k =  arrLink(j)%subIndex
@@ -587,25 +620,26 @@ double precision function  getConduitFlow(j, qOld, dt)
     y2 = MAX(y2, FUDGE)
 
     !  --- flow depths can't exceed full depth of conduit
-    y1 = MIN(y1, xsect->yFull)
-    y2 = MIN(y2, xsect->yFull)
+    y1 = MIN(y1, xsect%yFull)
+    y2 = MIN(y2, xsect%yFull)
 
     !  --- get flow from last time step & previous iteration 
-    barrels = Conduit(k).barrels
-    qOld /= barrels
-    qLast = Conduit(k).q1
+    barrels = Conduit(k)%barrels
+    qOldB = qOld / barrels
+    qLast = Conduit(k)%q1
 
     !  -- get area from solution at previous time step
     aOld = Conduit(k)%a2
     aOld = MAX(aOld, FUDGE)
 
-    !  --- use Courant-modified length instead of conduit's actual length
-    length = Conduit(k)%modLength
+    !  --- use Courant-modified mlength instead of conduit's actual mlength
+    mlength = Conduit(k)%modLength
 
     !  --- find flow classification & corresponding surface area
     !      contributions to upstream and downstream nodes
     arrLink(j)%flowClass = getFlowClass(j, qLast, h1, h2, y1, y2)
-    findSurfArea(j, length, &h1, &h2, &y1, &y2)
+    !call findSurfArea(j, mlength, &h1, &h2, &y1, &y2)
+    call findSurfArea(j, mlength, h1, h2, y1, y2)
 
     !  --- compute area at each end of conduit & hyd. radius at upstream end
     a1 = getArea(xsect, y1)
@@ -623,23 +657,23 @@ double precision function  getConduitFlow(j, qOld, dt)
     ! rMid = (r1+getHydRad(xsect,y2))/2.0
 
     !  --- check if conduit is flowing full
-    if ( y1 >= xsect->yFull .and.
-         y2 >= xsect->yFull) isFull = .true.
+    if ( y1 >= xsect%yFull .and. y2 >= xsect%yFull) isFull = .true.
 
     !  --- set new flow to zero if conduit is dry or if flap gate is closed
-    if ( arrLink(j)%flowClass == DRY .or.
-         arrLink(j)%flowClass == UP_DRY .or.
-         arrLink(j)%flowClass == DN_DRY .or.
-         arrLink(j)%isClosed .or.
-         aMid <= FUDGE ) then
+    if ( arrLink(j)%flowClass == DRY .or. &
+        &arrLink(j)%flowClass == UP_DRY .or. &
+        &arrLink(j)%flowClass == DN_DRY .or. &
+        &arrLink(j)%isClosed .or. &
+        &aMid <= FUDGE ) then
         Conduit(k)%a1 = 0.5 * (a1 + a2)
         Conduit(k)%q1 = 0.0
-        Conduit(k).q2 = 0.0
-        arrLink(j)%dqdh  = GRAVITY * dt * aMid / length * barrels
+        Conduit(k)%q2 = 0.0
+        arrLink(j)%dqdh  = GRAVITY * dt * aMid / mlength * barrels
         arrLink(j)%froude = 0.0
         arrLink(j)%newDepth = MIN(yMid, arrLink(j)%xsect%yFull)
         arrLink(j)%newVolume = Conduit(k)%a1 * link_getLength(j) * barrels       ! (5.0.015 - LR)
-        return 0.0
+        getConduitFlow = 0
+        return
     end if
 
     !  --- compute velocity from last flow estimate
@@ -648,8 +682,8 @@ double precision function  getConduitFlow(j, qOld, dt)
 
     !  --- compute Froude No.
     arrLink(j)%froude = link_getFroude(j, v, yMid)
-    if ( arrLink(j)%flowClass == SUBCRITICAL .and.
-         arrLink(j)%froude > 1.0 ) then
+    if ( arrLink(j)%flowClass == SUBCRITICAL .and. &
+        &arrLink(j)%froude > 1.0 ) then
          arrLink(j)%flowClass = SUPCRITICAL
     end if
 
@@ -677,56 +711,56 @@ double precision function  getConduitFlow(j, qOld, dt)
     end if
 
     !  --- use full inertial damping if closed conduit is surcharged
-    if ( isFull .and. .not.xsect_isOpen(xsect->type) ) sigma = 0.0
+    if ( isFull .and. .not.xsect_isOpen(xsect%datatype) ) sigma = 0.0
 
     !  --- compute terms of momentum eqn.:
     !  --- 1. friction slope term
-    if ( xsect->type == FORCE_MAIN .and. isFull ) then
+    if ( xsect%datatype == FORCE_MAIN .and. isFull ) then
          dq1 = dt * forcemain_getFricSlope(j, fabs(v), rMid)
     else
          dq1 = dt * Conduit(k)%roughFactor / pow(rWtd, 1.33333) * fabs(v)
     end if
 
     !  --- 2. energy slope term
-    dq2 = dt * GRAVITY * aWtd * (h2 - h1) / length
+    dq2 = dt * GRAVITY * aWtd * (h2 - h1) / mlength
 
     !  --- 3 & 4. inertial terms
     dq3 = 0.0
     dq4 = 0.0
     if ( sigma > 0.0 ) then
         dq3 = 2.0 * v * (aMid - aOld) * sigma
-        dq4 = dt * v * v * (a2 - a1) / length * sigma
+        dq4 = dt * v * v * (a2 - a1) / mlength * sigma
     end if
 
     !  --- 5. local losses term
     dq5 = 0.0
     if ( Conduit(k)%hasLosses ) then
-        dq5 = findLocalLosses(j, a1, a2, aMid, qLast) / 2.0 / length * dt
+        dq5 = findLocalLosses(j, a1, a2, aMid, qLast) / 2.0 / mlength * dt
     end if
 
     !  --- combine terms to find new conduit flow
     denom = 1.0 + dq1 + dq5
-    q = (qOld - dq2 + dq3 + dq4) / denom
+    q = (qOldB - dq2 + dq3 + dq4) / denom
 
     !  --- compute derivative of flow w.r.t. head
-    arrLink(j)%dqdh = 1.0 / denom  * GRAVITY * dt * aWtd / length * barrels      ! (5.0.014 - LR)
+    arrLink(j)%dqdh = 1.0 / denom  * GRAVITY * dt * aWtd / mlength * barrels      ! (5.0.014 - LR)
 
     !  --- check if any flow limitation applies
     if ( q > 0.0 ) then
         !  --- open channels can't have more than full normal flow
         if ( isFull ) then
-            if ( xsect_isOpen(xsect->type) ) q = MIN(q, arrLink(j).qFull)
+            if ( xsect_isOpen(xsect%datatype) ) q = MIN(q, arrLink(j)%qFull)
         end if
 
         !  --- check for inlet controlled culvert flow                         ! (5.0.014 - LR)
-        if ( xsect->culvertCode > 0 .and. .not.isFull ) then                            ! (5.0.014 - LR)
+        if ( xsect%culvertCode > 0 .and. .not.isFull ) then                            ! (5.0.014 - LR)
             q = culvert_getInflow(j, q, h1)                                   ! (5.0.014 - LR)
 
         !  --- check for normal flow limitation based on surface slope & Fr
         else                                                                   ! (5.0.014 - LR)
-            if ( y1 < arrLink(j)%xsect%yFull .and.
-                   ( arrLink(j)%flowClass == SUBCRITICAL .or.
-                     arrLink(j)%flowClass == SUPCRITICAL)) then
+            if ( y1 < arrLink(j)%xsect%yFull .and. &
+                  &( arrLink(j)%flowClass == SUBCRITICAL .or. &
+                    &arrLink(j)%flowClass == SUPCRITICAL)) then
                 q = checkNormalFlow(j, q, y1, y2, a1, r1)                        ! (5.0.019 - LR)
             end if
         end if
@@ -756,11 +790,13 @@ double precision function  getConduitFlow(j, qOld, dt)
     Conduit(k)%a1 = aMid
     Conduit(k)%q1 = q
     Conduit(k)%q2 = q
-    arrLink(j)%newDepth  = MIN(yMid, xsect->yFull)
+    arrLink(j)%newDepth  = MIN(yMid, xsect%yFull)
     aMid = (a1 + a2) / 2.0
-    aMid = MIN(aMid, xsect->aFull)
+    aMid = MIN(aMid, xsect%aFull)
     arrLink(j)%newVolume = aMid * link_getLength(j) * barrels                    ! (5.0.015 - LR)
     getConduitFlow =  q * barrels
+    
+    nullify(xsect) !TODO: I think we need to do it here
     return
 end function getConduitFlow
 
@@ -777,6 +813,7 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
 !   Output:  returns flow classification code
 !   Purpose: determines flow class for a conduit based on depths at each end.
 ! 
+    use headers
     integer, intent(in) :: j
     double precision, intent(in) :: q, h1, h2, y1, y2
 
@@ -794,8 +831,8 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
     z2 = arrLink(j)%offset2
 
     !  --- base offset of an outfall conduit on outfall's depth
-    if ( Node(n1)%type == OUTFALL ) z1 = MAX(0.0, (z1 - Node(n1)%newDepth))
-    if ( Node(n2)%type == OUTFALL ) z2 = MAX(0.0, (z2 - Node(n2)%newDepth))
+    if ( Node(n1)%datatype == E_OUTFALL ) z1 = MAX(0.0, (z1 - Node(n1)%newDepth))
+    if ( Node(n2)%datatype == E_OUTFALL ) z2 = MAX(0.0, (z2 - Node(n2)%newDepth))
 
     !  --- default class is SUBCRITICAL
     flowClass = SUBCRITICAL
@@ -841,7 +878,7 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
     else if ( y2 > FUDGE ) then
         !  --- flow classification is UP_DRY if downstream head <
         !      invert of upstream end of conduit
-        if ( h2 < Node(n1).invertElev + arrLink(j).offset1 ) then
+        if ( h2 < Node(n1)%invertElev + arrLink(j)%offset1 ) then
             flowClass = UP_DRY
         !  --- otherwise, the downstream head will be >= upstream
         !      conduit invert creating a flow reversal and upstream end
@@ -873,7 +910,7 @@ end function getFlowClass
 
 ! =============================================================================
 
-subroutine findSurfArea(j, length, h1, h2, y1, y2)
+subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
 ! 
 !   Input:   j  = conduit link index
 !            q  = current conduit flow (cfs)
@@ -885,32 +922,36 @@ subroutine findSurfArea(j, length, h1, h2, y1, y2)
 !   Output:  updated values of h1, h2, y1, & y2
 !   Purpose: assigns surface area of conduit to its up and downstream nodes.
 ! 
+    use headers
     integer, intent(in) :: j
     double precision, intent(inout) :: h1, h2, y1, y2
-    double precision, intent(in) :: length
+    double precision, intent(in) :: aLength
     
     integer ::     n1, n2                    !  indexes of upstrm/downstrm nodes
-    double preceision :: flowDepth1                !  flow depth at upstrm end (ft)
-    double preceision :: flowDepth2                !  flow depth at downstrm end (ft)
-    double preceision :: flowDepthMid              !  flow depth at midpt. (ft)
-    double preceision :: width1                    !  top width at upstrm end (ft)
-    double preceision :: width2                    !  top width at downstrm end (ft)
-    double preceision :: widthMid                  !  top width at midpt. (ft)
-    double preceision :: surfArea1 = 0.0           !  surface area at upstream node (ft2)
-    double preceision :: surfArea2 = 0.0           !  surface area st downstrm node (ft2)
+    double precision :: flowDepth1                !  flow depth at upstrm end (ft)
+    double precision :: flowDepth2                !  flow depth at downstrm end (ft)
+    double precision :: flowDepthMid              !  flow depth at midpt. (ft)
+    double precision :: width1                    !  top width at upstrm end (ft)
+    double precision :: width2                    !  top width at downstrm end (ft)
+    double precision :: widthMid                  !  top width at midpt. (ft)
+    double precision :: surfArea1            !  surface area at upstream node (ft2)
+    double precision :: surfArea2            !  surface area st downstrm node (ft2)
 !   TXsect* xsect = &arrLink(j).xsect
-    type(TXsect) :: xsect
-    xsect = arrLink(j)%xsect
+    type(TXsect), pointer :: xsect
+    xsect => arrLink(j)%xsect
+    
+    surfArea1 = 0.0
+    surfArea2 = 0.0
     
     !  --- get node indexes & current flow depths
-    n1 = arrLink(j).node1
-    n2 = arrLink(j).node2
+    n1 = arrLink(j)%node1
+    n2 = arrLink(j)%node2
     flowDepth1 = y1
     flowDepth2 = y2
 
     !  --- add conduit's surface area to its end nodes depending on flow class
     select case ( arrLink(j)%flowClass )
-      case SUBCRITICAL
+      case (SUBCRITICAL)
         flowDepthMid = 0.5 * (flowDepth1 + flowDepth2)
         if ( flowDepthMid < FUDGE ) flowDepthMid = FUDGE
         width1 =   getWidth(xsect, flowDepth1)
@@ -918,9 +959,9 @@ subroutine findSurfArea(j, length, h1, h2, y1, y2)
         widthMid = getWidth(xsect, flowDepthMid)
         surfArea1 = (width1 + widthMid) * length / 4.
         surfArea2 = (widthMid + width2) * length / 4. * Fasnh
-        break
+        !break
 
-      case UP_CRITICAL
+      case (UP_CRITICAL)
         flowDepth1 = CriticalDepth
         if ( NormalDepth < CriticalDepth ) flowDepth1 = NormalDepth
         flowDepth1 = MAX(flowDepth1, FUDGE)                                   ! (5.0.022 - LR)
@@ -930,9 +971,9 @@ subroutine findSurfArea(j, length, h1, h2, y1, y2)
         width2   = getWidth(xsect, flowDepth2)
         widthMid = getWidth(xsect, flowDepthMid)
         surfArea2 = (widthMid + width2) * length * 0.5
-        break
+        !break
 
-      case DN_CRITICAL
+      case (DN_CRITICAL)
         flowDepth2 = CriticalDepth
         if ( NormalDepth < CriticalDepth ) flowDepth2 = NormalDepth
         flowDepth2 = MAX(flowDepth2, FUDGE)                                   ! (5.0.022 - LR)
@@ -942,9 +983,9 @@ subroutine findSurfArea(j, length, h1, h2, y1, y2)
         if ( flowDepthMid < FUDGE ) flowDepthMid = FUDGE
         widthMid = getWidth(xsect, flowDepthMid)
         surfArea1 = (width1 + widthMid) * length * 0.5
-        break
+        !break
 
-      case UP_DRY:
+      case (UP_DRY)
         flowDepth1 = FUDGE
         flowDepthMid = 0.5 * (flowDepth1 + flowDepth2)
         if ( flowDepthMid < FUDGE ) flowDepthMid = FUDGE
@@ -961,9 +1002,9 @@ subroutine findSurfArea(j, length, h1, h2, y1, y2)
         if ( arrLink(j)%offset1 <= 0.0 ) then
             surfArea1 = (width1 + widthMid) * length / 4.
         end if
-        break
+        !break
 
-      case DN_DRY
+      case (DN_DRY)
         flowDepth2 = FUDGE
         flowDepthMid = 0.5 * (flowDepth1 + flowDepth2)
         if ( flowDepthMid < FUDGE ) flowDepthMid = FUDGE
@@ -980,12 +1021,12 @@ subroutine findSurfArea(j, length, h1, h2, y1, y2)
         if ( arrLink(j)%offset2 <= 0.0 ) then
             surfArea2 = (width2 + widthMid) * length / 4.
         end if
-        break
+        !break
 
-      case DRY
+      case (DRY)
         surfArea1 = FUDGE * length / 2.0
         surfArea2 = surfArea1
-        break
+        !break
     end select
     Xlink(j)%surfArea1 = surfArea1
     Xlink(j)%surfArea2 = surfArea2
@@ -1005,13 +1046,15 @@ double precision function findLocalLosses(j, a1, a2, aMid, q)
 !   Output:  returns local losses (ft/sec)
 !   Purpose: computes local losses term of momentum equation.
 ! 
+    use headers
     integer, intent(in) :: j
     double precision, intent(in) :: a1, a2, aMid, q
-    double precision :: losses = 0.0
-    q = fabs(q)
-    if ( a1 > FUDGE ) losses += arrLink(j)%cLossInlet  * (q/a1)
-    if ( a2 > FUDGE ) losses += arrLink(j)%cLossOutlet * (q/a2)
-    if ( aMid  > FUDGE ) losses += arrLink(j)%cLossAvg * (q/aMid)
+    double precision :: losses, mq
+    losses = 0.0
+    mq = fabs(q)
+    if ( a1 > FUDGE ) losses = losses + arrLink(j)%cLossInlet  * (mq/a1)
+    if ( a2 > FUDGE ) losses = losses + arrLink(j)%cLossOutlet * (mq/a2)
+    if ( aMid  > FUDGE ) losses = losses + arrLink(j)%cLossAvg * (mq/aMid)
     findLocalLosses = losses
     return
 end function findLocalLosses
@@ -1025,13 +1068,16 @@ double precision function getWidth(xsect, y)
 !   Output:  returns top width (ft)
 !   Purpose: computes top width of flow surface in conduit.
 ! 
+    use headers
+    use modXsect
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
-    double precision :: yNorm = y/xsect->yFull
-    yNorm = y/xsect->yFull
+    double precision :: yNorm
+    double precision :: ym
+    yNorm = y/xsect%yFull
 !   if ( yNorm < 0.04 ) y = 0.04*xsect->yFull                                 ! (5.0.015 - LR)
-    if ( yNorm > 0.96 .and. .not.xsect_isOpen(xsect->type) ) y = 0.96*xsect->yFull
-    getWidth = xsect_getWofY(xsect, y)
+    if ( yNorm > 0.96 .and. .not.xsect_isOpen(xsect%datatype) ) ym = 0.96*xsect%yFull
+    getWidth = xsect_getWofY(xsect, ym)
     return
 end function getWidth
 
@@ -1044,25 +1090,29 @@ double precision function getArea(xsect, y)
 !   Output:  returns flow area (ft2)
 !   Purpose: computes area of flow cross-section in a conduit.
 ! 
+    use headers
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
-    y = MIN(y, xsect->yFull)
-    getArea = xsect_getAofY(xsect, y)
-    return area
+    double precision :: ym
+    ym = MIN(y, xsect%yFull)
+    getArea = xsect_getAofY(xsect, ym)
+    return
 end function getArea
 ! =============================================================================
 
-double precision function getHydRad(TXsect* xsect, double y)
+double precision function getHydRad(xsect, y)
 ! 
 !   Input:   xsect = ptr. to conduit cross section
 !            y     = flow depth (ft)
 !   Output:  returns hydraulic radius (ft)
 !   Purpose: computes hydraulic radius of flow cross-section in a conduit.
 ! 
+    use headers
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
-    y = MIN(y, xsect->yFull)
-    getHydRad = xsect_getRofY(xsect, y)
+    double precision :: ym
+    ym = MIN(y, xsect%yFull)
+    getHydRad = xsect_getRofY(xsect, ym)
     return
 end function getHydRad
 
@@ -1086,20 +1136,26 @@ double precision function checkNormalFlow(j, q, y1, y2, a1, r1)
 !   Output:  returns modifed flow in link (cfs)
 !   Purpose: checks if flow in link should be replaced by normal flow.
 ! 
+    use headers
     double precision, intent(in) :: q, y1, y2, a1, r1
     integer, intent(in) :: j
     logical ::    check
     integer ::    k, n1, n2
-    logical ::    hasOutfall = (Node(n1).type == OUTFALL || Node(n2).type == OUTFALL)
-    double qNorm
-    double f1
+    logical ::    hasOutfall
+    double precision :: qNorm
+    double precision :: f1
 
-    check  = FALSE
+    if (Node(n1)%datatype == E_OUTFALL .or. Node(n2)%datatype == E_OUTFALL) then
+       hasOutfall = .true.
+    else
+       hasOutfall = .false.
+    end if
+    check  = .FALSE.
     k = arrLink(j)%subIndex
     n1 = arrLink(j)%node1
     n2 = arrLink(j)%node2
 
-    if (Node(n1)%type == OUTFALL .or. Node(n2)%type == OUTFALL) then
+    if (Node(n1)%datatype == E_OUTFALL .or. Node(n2)%datatype == E_OUTFALL) then
             hasOutfall = .true.
     else
             hasOutfall = .false.
@@ -1137,6 +1193,7 @@ subroutine setNodeDepth(i, dt)
 !   Output:  none
 !   Purpose: sets depth at non-outfall node after current time step.
 ! 
+    use headers
     integer, intent(in) :: i
     double precision, intent(in) :: dt
     logical ::     canPond                   !  TRUE if node can pond overflows
@@ -1178,7 +1235,7 @@ subroutine setNodeDepth(i, dt)
     dV = 0.5 * (Node(i)%oldNetInflow + dQ) * dt - node_getLosses(i, dt)       ! (5.0.019 - LR)
 
     !  --- if node not surcharged, base depth change on surface area        
-    if ( yLast <= yCrown .or. Node(i)%type == STORAGE .or. isPonded ) then              ! (5.0.016 - LR)
+    if ( yLast <= yCrown .or. Node(i)%datatype == E_STORAGE .or. isPonded ) then              ! (5.0.016 - LR)
         dy = dV / surfArea
         Xnode(i)%oldSurfArea = Xnode(i)%newSurfArea
         if ( .not.isPonded ) Xnode(i)%oldSurfArea = Xnode(i)%newSurfArea          ! (5.0.019 - LR)
@@ -1205,9 +1262,9 @@ subroutine setNodeDepth(i, dt)
         !  --- allow surface area from last non-surcharged condition
         !      to influence dqdh if depth close to crown depth
         denom = Xnode(i)%sumdqdh
-        if ( yLast < 1.25 * yCrown )
+        if ( yLast < 1.25 * yCrown ) then
             f = (yLast - yCrown) / yCrown
-            denom += (Xnode(i)%oldSurfArea/dt - Xnode(i)%sumdqdh) * exp(-15.0 * f)
+            denom = denom + (Xnode(i)%oldSurfArea/dt - Xnode(i)%sumdqdh) * exp(-15.0 * f)
         end if
 
         !  --- compute new estimate of node depth
@@ -1230,7 +1287,7 @@ subroutine setNodeDepth(i, dt)
 
     !  --- determine max. non-flooded depth
     yMax = Node(i)%fullDepth
-    if ( .not.canPond) yMax += Node(i)%surDepth
+    if ( .not.canPond) yMax = yMax + Node(i)%surDepth
 
     !  --- find flooded depth & volume
     if ( yNew > yMax ) then                                                         ! (5.0.019 - LR)
@@ -1263,22 +1320,24 @@ double precision function getFloodedDepth(i, canPond, dV, yNew, yMax, dt)
 !   Output:  returns depth at node when flooded (ft)
 !   Purpose: computes depth, volume and overflow for a flooded node.
 ! 
-    integer, intent(in) :: i, 
+    use headers
+    integer, intent(in) :: i
     logical, intent(in) :: canPond
     double precision, intent(in) :: dV, yNew, yMax, dt
+    double precision :: myNew
 
     if ( .not.canPond ) then
         Node(i)%overflow = dV / dt
         Node(i)%newVolume = Node(i)%fullVolume
-        yNew = yMax
+        myNew = yMax
     else
         Node(i)%newVolume = MAX((Node(i)%oldVolume+dV), Node(i)%fullVolume)
-        Node(i)%overflow = (Node(i)%newVolume - 
-            MAX(Node(i)%oldVolume, Node(i)%fullVolume)) / dt
+        Node(i)%overflow = (Node(i)%newVolume - &
+            &MAX(Node(i)%oldVolume, Node(i)%fullVolume)) / dt
     end if
     if ( Node(i)%overflow < FUDGE ) Node(i)%overflow = 0.0
 
-    getFloodedDepth = yNew
+    getFloodedDepth = myNew
     return
 end function getFloodedDepth
 
@@ -1301,8 +1360,8 @@ double precision function getVariableStep(maxStep)
 
     !  --- find stable time step for links & then nodes
     tMin = maxStep
-    tMinLink = getLinkStep(tMin, &minLink)
-    tMinNode = getNodeStep(tMinLink, &minNode)
+    tMinLink = getLinkStep(tMin, minLink)
+    tMinNode = getNodeStep(tMinLink, minNode)
 
     !  --- use smaller of the link and node time step
     tMin = tMinLink
@@ -1312,7 +1371,7 @@ double precision function getVariableStep(maxStep)
     end if
 
     !  --- update count of times the minimum node or link was critical
-    stats_updateCriticalTimeCount(minNode, minLink)
+    call stats_updateCriticalTimeCount(minNode, minLink)
 
     !  --- don't let time step go below an absolute minimum
     if ( tMin < MINTIMESTEP ) tMin = MINTIMESTEP
@@ -1330,6 +1389,7 @@ double precision function getLinkStep(tMin, minLink)
 !            returns critical time step (sec)
 !   Purpose: finds critical time step for conduits based on Courant criterion.
 ! 
+    use headers
     double precision, intent(in) :: tMin
     integer, intent(inout) :: minLink
 
@@ -1337,17 +1397,18 @@ double precision function getLinkStep(tMin, minLink)
     integer ::    k                           !  conduit index
     double precision :: q                           !  conduit flow (cfs)
     double precision :: t                           !  time step (sec)
-    double precision :: tLink = tMin                !  critical link time step (sec)
+    double precision :: mtLink
 
+    mtLink = tMin                !  critical link time step (sec)
     !  --- examine each conduit link
     do i = 1, Nobjects(LINK)
-        if ( arrLink(i)%type == CONDUIT ) then
+        if ( arrLink(i)%datatype == E_CONDUIT ) then
            !  --- skip conduits with negligible flow, area or Fr
             k = arrLink(i)%subIndex
             q = fabs(arrLink(i)%newFlow) / Conduit(k)%barrels
-            if ( q <= 0.05 * arrLink(i)%qFull
-            .or.   Conduit(k)%a1 <= FUDGE
-            .or.   arrLink(i)%froude <= 0.01) cycle
+            if ( q <= 0.05 * arrLink(i)%qFull &
+            &.or.   Conduit(k)%a1 <= FUDGE &
+            &.or.   arrLink(i)%froude <= 0.01) cycle
 
             !  --- compute time step to satisfy Courant condition
             t = arrLink(i)%newVolume / Conduit(k)%barrels / q
@@ -1355,15 +1416,14 @@ double precision function getLinkStep(tMin, minLink)
             t = t * arrLink(i)%froude / (1.0 + arrLink(i)%froude) * CourantFactor
 
             !  --- update critical link time step
-            if ( t < tLink )
-            {
-                tLink = t
+            if ( t < mtLink ) then
+                mtLink = t
                 minLink = i
-            }
+            end if
         end if
     end do
 
-    getLinkStep = tLink
+    getLinkStep = mtLink
     return
 end function getLinkStep
 
@@ -1378,20 +1438,21 @@ double precision function getNodeStep(tMin, minNode)
 !            projected change in depth.
 ! 
 
+    use headers
     double precision, intent(in) :: tMin
     integer, intent(inout) :: minNode
     integer ::    i                           !  node index
     double precision :: maxDepth                    !  max. depth allowed at node (ft)
     double precision :: dYdT                        !  change in depth per unit time (ft/sec)
     double precision :: t1                          !  time needed to reach depth limit (sec)
-    double precision :: tNode                !  critical node time step (sec)
-    tNode = tMin
+    double precision :: mtNode                !  critical node time step (sec)
+    mtNode = tMin
 
     !  --- find smallest time so that estimated change in nodal depth
     !      does not exceed safety factor * maxdepth
-    do i = 0, Nobjects(NODE)
+    do i = 0, Nobjects(E_NODE)
         !  --- see if node can be skipped
-        if ( Node(i)%type == OUTFALL ) cycle
+        if ( Node(i)%datatype == E_OUTFALL ) cycle
         if ( Node(i)%newDepth <= FUDGE) cycle
         if ( Node(i)%newDepth  + FUDGE >= Node(i)%crownElev - Node(i)%invertElev ) cycle
 
@@ -1403,12 +1464,12 @@ double precision function getNodeStep(tMin, minNode)
 
         !  --- compute time to reach max. depth & compare with critical time
         t1 = maxDepth / dYdT
-        if ( t1 < tNode ) then
-            tNode = t1
+        if ( t1 < mtNode ) then
+            mtNode = t1
             minNode = i
         end if
     end do
-    getNodeStep = tNode
+    getNodeStep = mtNode
     return
 end function getNodeStep
 
@@ -1420,16 +1481,17 @@ subroutine checkCapacity(j)
 !   Output:  none
 !   Purpose: determines if a conduit link is capacity limited.
 ! 
+    use headers
     integer, intent(in) :: j
     integer ::    n1, n2, k
     double precision :: h1, h2
 
     !  ---- check only conduit links
-    if ( arrLink(j)%type /= CONDUIT ) return
+    if ( arrLink(j)%datatype /= E_CONDUIT ) return
 
     !  --- check that upstream end is full
     k = arrLink(j)%subIndex
-    Conduit(k)%capacityLimited = FALSE
+    Conduit(k)%capacityLimited = .FALSE.
     if ( Conduit(k)%a1 >= arrLink(j)%xsect%aFull ) then
         !  --- check if HGL slope > conduit slope
         n1 = arrLink(j)%node1
@@ -1437,7 +1499,9 @@ subroutine checkCapacity(j)
         h1 = Node(n1)%newDepth + Node(n1)%invertElev
         h2 = Node(n2)%newDepth + Node(n2)%invertElev
         if ( (h1 - h2) > fabs(Conduit(k)%slope) * Conduit(k)%length ) then          ! (5.0.018 - LR)
-            Conduit(k)%capacityLimited = TRUE
+            Conduit(k)%capacityLimited = .TRUE.
         end if
     end if
 end subroutine checkCapacity
+
+end module

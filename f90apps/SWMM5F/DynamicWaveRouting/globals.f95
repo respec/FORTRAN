@@ -48,17 +48,17 @@ integer :: InfilModel               ! Infiltration method
 integer :: RouteModel               ! Flow routing method
 integer :: ForceMainEqn             ! Flow equation for force mains   !(5.0.010 - LR)
 integer :: LinkOffsets              ! Link offset convention          !(5.0.012 - LR)
-integer :: AllowPonding             ! Allow water to pond at nodes
+logical :: AllowPonding             ! Allow water to pond at nodes
 integer :: InertDamping             ! Degree of inertial damping
 integer :: NormalFlowLtd            ! Normal flow limited
-integer :: SlopeWeighting           ! Use slope weighting
-!integer :: Compatibility            ! SWMM 5/3/4 compatibility
-integer :: SkipSteadyState          ! Skip over steady state periods
-integer :: IgnoreRainfall           ! Ignore rainfall/runoff
-integer :: IgnoreSnowmelt           ! Ignore snowmelt                 !(5.0.014 - LR)
-integer :: IgnoreGwater             ! Ignore groundwater              !(5.0.014 - LR)
-integer :: IgnoreRouting            ! Ignore flow routing             !(5.0.014 - LR)
-integer :: IgnoreQuality            ! Ignore water quality            !(5.0.014 - LR)
+logical :: SlopeWeighting           ! Use slope weighting
+integer :: Compatibility            ! SWMM 5/3/4 compatibility
+logical :: SkipSteadyState          ! Skip over steady state periods
+logical :: IgnoreRainfall           ! Ignore rainfall/runoff
+logical :: IgnoreSnowmelt           ! Ignore snowmelt                 !(5.0.014 - LR)
+logical :: IgnoreGwater             ! Ignore groundwater              !(5.0.014 - LR)
+logical :: IgnoreRouting            ! Ignore flow routing             !(5.0.014 - LR)
+logical :: IgnoreQuality            ! Ignore water quality            !(5.0.014 - LR)
 integer :: ErrorCode                ! Error code number
 integer :: WarningCode              ! Warning code number
 integer :: WetStep                  ! Runoff wet time step (sec)
