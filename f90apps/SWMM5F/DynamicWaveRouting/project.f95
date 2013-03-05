@@ -165,7 +165,8 @@ subroutine setDefaults
      !TODO: double check this assignment
      !adc is actually a 2d array (2, 10)
      !but failed to initialize using a sub loop j = 1,10
-     Snow%adc(i) = 1.0 
+     !jlk - no subscripts means whole array
+     Snow%adc = 1.0 
    end do
 
    ! Evaporation rates
