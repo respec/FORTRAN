@@ -110,7 +110,7 @@ type(TNode), dimension(:), allocatable ::      Node                     ! Array 
 type(TOutfall), dimension(:), allocatable ::   Outfall                  ! Array of outfall nodes
 type(TDivider), dimension(:), allocatable ::   Divider                  ! Array of divider nodes
 type(TStorage), dimension(:), allocatable ::   Storage                  ! Array of storage nodes
-type(TLink), dimension(:), allocatable ::      arrLink                  ! Array of links
+type(TLink), dimension(:), allocatable, target ::      arrLink          ! Array of links
 type(TConduit), dimension(:), allocatable ::   Conduit                  ! Array of conduit links
 type(TPump), dimension(:), allocatable ::      Pump                     ! Array of pump links
 type(TOrifice), dimension(:), allocatable ::   Orifice                  ! Array of orifice links
