@@ -106,400 +106,440 @@ logical function xsect_isOpen(xtype)
     return
 end function xsect_isOpen
 
-!//=============================================================================
+!=============================================================================
+
+logical function xsect_setParams(xsect, datatype, p, ucf)
 !
-!int xsect_setParams(TXsect *xsect, int type, double p[], double ucf)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//           type = xsection shape type
-!//           p[] = vector or xsection parameters
-!//           ucf = units correction factor
-!//  Output:  returns TRUE if successful, FALSE if not
-!//  Purpose: assigns parameters to a cross section's data structure.
-!//
-!{
-!    int    index;
-!    double aMax, theta;
+!  Input:   xsect = ptr. to a cross section data structure
+!           type = xsection shape type
+!           p() = vector or xsection parameters
+!           ucf = units correction factor
+!  Output:  returns .true. if successful, .false. if not
+!  Purpose: assigns parameters to a cross section's data structure.
 !
-!    if ( type != DUMMY && p[0] <= 0.0 ) return FALSE;
-!    xsect->type  = type;
-!    switch ( xsect->type )
-!    {
-!    case DUMMY:
-!        xsect->yFull = TINY;
-!        xsect->wMax  = TINY;
-!        xsect->aFull = TINY;
-!        xsect->rFull = TINY;
-!        xsect->sFull = TINY;
-!        xsect->sMax  = TINY;
-!        break;
-!
-!    case CIRCULAR:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = xsect->yFull;
-!        xsect->aFull = PI / 4.0 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.2500 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.08 * xsect->sFull;
-!        break;
-!
-!    case FORCE_MAIN:                                                           //(5.0.010 - LR)
-!        xsect->yFull = p[0]/ucf;                                               //(5.0.010 - LR)
-!        xsect->wMax  = xsect->yFull;                                           //(5.0.010 - LR)
-!        xsect->aFull = PI / 4.0 * xsect->yFull * xsect->yFull;                 //(5.0.010 - LR)
-!        xsect->rFull = 0.2500 * xsect->yFull;                                  //(5.0.010 - LR)
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 0.63);                 //(5.0.010 - LR)
-!        xsect->sMax  = 1.06949 * xsect->sFull;                                 //(5.0.010 - LR)
-!
-!        // --- save C-factor or roughness in rBot position                     //(5.0.010 - LR)
-!        xsect->rBot  = p[1];                                                   //(5.0.010 - LR)
-!        break;                                                                 //(5.0.010 - LR)
-!
-!    case FILLED_CIRCULAR:
-!        if ( p[1] >= p[0] ) return FALSE;
-!
-!        // --- initially compute full values for unfilled pipe
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = xsect->yFull;
-!        xsect->aFull = PI / 4.0 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.2500 * xsect->yFull;
-!        
-!        // --- find:
-!        //     yBot = depth of filled bottom
-!        //     aBot = area of filled bottom
-!        //     sBot = width of filled bottom
-!        //     rBot = wetted perimeter of filled bottom
-!        xsect->yBot  = p[1]/ucf;
-!        xsect->aBot  = circ_getAofY(xsect, xsect->yBot);
-!        xsect->sBot  = xsect_getWofY(xsect, xsect->yBot);
-!        xsect->rBot  = xsect->aBot / (xsect->rFull *
-!                       lookup(xsect->yBot/xsect->yFull, R_Circ, N_R_Circ));
-!
-!        // --- revise full values for filled bottom
-!        xsect->aFull -= xsect->aBot;
-!        xsect->rFull = xsect->aFull /
-!                       (PI*xsect->yFull - xsect->rBot + xsect->sBot);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.08 * xsect->sFull;
-!        xsect->yFull -= xsect->yBot;
-!        break;
-!
-!    case EGGSHAPED:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->aFull = 0.5105 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.1931 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.065 * xsect->sFull;
-!        xsect->wMax  = 2./3. * xsect->yFull;
-!        break;
-!
-!    case HORSESHOE:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->aFull = 0.8293 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.2538 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.077 * xsect->sFull;
-!        xsect->wMax  = 1.0 * xsect->yFull;
-!        break;
-!
-!    case GOTHIC:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->aFull = 0.6554 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.2269 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.065 * xsect->sFull;
-!        xsect->wMax  = 0.84 * xsect->yFull;
-!        break;
-!
-!    case CATENARY:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->aFull = 0.70277 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.23172 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.05 * xsect->sFull;
-!        xsect->wMax  = 0.9 * xsect->yFull;
-!        break;
-!
-!    case SEMIELLIPTICAL:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->aFull = 0.785 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.242 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.045 * xsect->sFull;
-!        xsect->wMax  = 1.0 * xsect->yFull;
-!        break;
-!
-!    case BASKETHANDLE:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->aFull = 0.7862 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.2464 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.06078 * xsect->sFull;
-!        xsect->wMax  = 0.944 * xsect->yFull;
-!        break;
-!
-!    case SEMICIRCULAR:
-!        xsect->yFull = p[0]/ucf;
-!        xsect->aFull = 1.2697 * xsect->yFull * xsect->yFull;
-!        xsect->rFull = 0.2946 * xsect->yFull;
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = 1.06637 * xsect->sFull;
-!        xsect->wMax  = 1.64 * xsect->yFull;
-!        break;
-!
-!    case RECT_CLOSED:
-!        if ( p[1] <= 0.0 ) return FALSE;
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!        xsect->aFull = xsect->yFull * xsect->wMax;
-!        xsect->rFull = xsect->aFull / (2.0 * (xsect->yFull + xsect->wMax));
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        aMax = RECT_ALFMAX * xsect->aFull;
-!        xsect->sMax = aMax * pow(rect_closed_getRofA(xsect, aMax), 2./3.);
-!        break;
-!
-!    case RECT_OPEN:
-!        if ( p[1] <= 0.0 ) return FALSE;
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!        xsect->aFull = xsect->yFull * xsect->wMax;
-!        xsect->rFull = xsect->aFull / (2.0 * xsect->yFull + xsect->wMax);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!
-!    case RECT_TRIANG:
-!        if ( p[1] <= 0.0 || p[2] <= 0.0 ) return FALSE;
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!        xsect->yBot  = p[2]/ucf;
-!
-!        // --- area of bottom triangle
-!        xsect->aBot  = xsect->yBot * xsect->wMax / 2.0;
-!
-!        // --- slope of bottom side wall
-!        xsect->sBot  = xsect->wMax / xsect->yBot / 2.0;
-!
-!        // --- length of side wall per unit of depth
-!        xsect->rBot  = sqrt( 1. + xsect->sBot * xsect->sBot );   
-!
-!        xsect->aFull = xsect->wMax * (xsect->yFull - xsect->yBot / 2.0);
-!        xsect->rFull = xsect->aFull / (2.0 * xsect->yBot * xsect->rBot + 2.0 *
-!                        (xsect->yFull - xsect->yBot) + xsect->wMax);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        aMax = RECT_TRIANG_ALFMAX * xsect->aFull;
-!        xsect->sMax  = aMax * pow(rect_triang_getRofA(xsect, aMax), 2./3.);
-!        break;
-!
-!    case RECT_ROUND:
-!        if ( p[1] <= 0.0 ) return FALSE;                                       //(5.0.014 - LR)
-!        if ( p[2] < p[1]/2.0 ) p[2] = p[1]/2.0;                                //(5.0.014 - LR)
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!        xsect->rBot  = p[2]/ucf;
-!
-!        // --- angle of circular arc
-!        theta = 2.0 * asin(xsect->wMax / 2.0 / xsect->rBot);
-!
-!        // --- area of circular bottom
-!        xsect->aBot  = xsect->rBot * xsect->rBot /
-!                       2.0 * (theta - sin(theta)); 
-!
-!        // --- section factor for circular bottom
-!        xsect->sBot  = PI * xsect->rBot * xsect->rBot *
-!                       pow(xsect->rBot/2.0, 2./3.);
-!
-!        // --- depth of circular bottom
-!        xsect->yBot  = xsect->rBot * (1.0 - cos(theta/2.0));
-!
-!        xsect->aFull = xsect->wMax * (xsect->yFull - xsect->yBot) + xsect->aBot;
-!        xsect->rFull = xsect->aFull / (xsect->rBot * theta + 2.0 *
-!                        (xsect->yFull - xsect->yBot) + xsect->wMax);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        aMax = RECT_ROUND_ALFMAX * xsect->aFull;
-!        xsect->sMax = aMax * pow(rect_round_getRofA(xsect, aMax), 2./3.);
-!        break;
-!
-!    case MOD_BASKET:
-!
-!//// --- The code below was modified to accommodate a more                     //(5.0.014 - LR)
-!////     general type of modified baskethandle cross-section. 
-!
-!        if ( p[1] <= 0.0 ) return FALSE;
-!        if ( p[2] < p[1]/2.0 ) p[2] = p[1]/2.0;
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!
-!        // --- radius of circular arc
-!        xsect->rBot = p[2]/ucf;
-!
-!        // --- angle of circular arc
-!        theta = 2.0 * asin(xsect->wMax / 2.0 / xsect->rBot);
-!        xsect->sBot = theta;
-!
-!        // --- height of circular arc
-!        xsect->yBot = xsect->rBot * (1.0 - cos(theta/2.0));
-!
-!        // --- area of circular arc
-!        xsect->aBot = xsect->rBot * xsect->rBot /
-!                      2.0 * (theta - sin(theta)); 
-!
-!        // --- full area
-!        xsect->aFull = (xsect->yFull - xsect->yBot) * xsect->wMax +
-!                       xsect->aBot;
-!
-!        // --- full hydraulic radius & section factor
-!        xsect->rFull = xsect->aFull / (xsect->rBot * theta + 2.0 *
-!                        (xsect->yFull - xsect->yBot) + xsect->wMax);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!
-!        // --- area corresponding to max. section factor
-!        xsect->sMax = xsect_getSofA(xsect, Amax[MOD_BASKET]*xsect->aFull);
-!        break;
-!       
-!    case TRAPEZOIDAL:
-!        if ( p[1] < 0.0 || p[2] < 0.0 || p[3] < 0.0 ) return FALSE;
-!        xsect->yFull = p[0]/ucf;
-!
-!        // --- bottom width
-!        xsect->yBot = p[1]/ucf;
-!
-!        // --- avg. slope of side walls
-!        xsect->sBot  = ( p[2] + p[3] )/2.0;
-!
-!        // --- length of side walls per unit of depth
-!        xsect->rBot  = sqrt( 1.0 + p[2]*p[2] ) + sqrt( 1.0 + p[3]*p[3] );
-!
-!        // --- top width
-!        xsect->wMax = xsect->yBot + xsect->yFull * (p[2] + p[3]);
-!
-!        xsect->aFull = ( xsect->yBot + xsect->sBot * xsect->yFull ) * xsect->yFull;
-!        xsect->rFull = xsect->aFull / (xsect->yBot + xsect->yFull * xsect->rBot);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!
-!    case TRIANGULAR:
-!        if ( p[1] <= 0.0 ) return FALSE;
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!
-!        // --- slope of side walls
-!        xsect->sBot  = xsect->wMax / xsect->yFull / 2.;
-!
-!        // --- length of side wall per unit of depth
-!        xsect->rBot  = sqrt( 1. + xsect->sBot * xsect->sBot );  
-!
-!        xsect->aFull = xsect->yFull * xsect->yFull * xsect->sBot;
-!        xsect->rFull = xsect->aFull / (2.0 * xsect->yFull * xsect->rBot);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!
-!    case PARABOLIC:
-!        if ( p[1] <= 0.0 ) return FALSE;
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!
-!        // --- rBot :: 1/c^.5, where y = c*x^2 is eqn. of parabolic shape
-!        xsect->rBot  = xsect->wMax / 2.0 / sqrt(xsect->yFull);
-!
-!        xsect->aFull = (2./3.) * xsect->yFull * xsect->wMax;
-!        xsect->rFull = xsect_getRofY(xsect, xsect->yFull);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!
-!    case POWERFUNC:
-!        if ( p[1] <= 0.0 || p[2] <= 0.0 ) return FALSE;
-!        xsect->yFull = p[0]/ucf;
-!        xsect->wMax  = p[1]/ucf;
-!        xsect->sBot  = 1.0 / p[2];
-!        xsect->rBot  = xsect->wMax / (xsect->sBot + 1) /
-!                       pow(xsect->yFull, xsect->sBot);
-!        xsect->aFull = xsect->yFull * xsect->wMax / (xsect->sBot+1);
-!        xsect->rFull = xsect_getRofY(xsect, xsect->yFull);
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!
-!    case HORIZ_ELLIPSE:
-!        if ( p[1] == 0.0 )                       // std. ellipse pipe
-!        {
-!            index = (int)floor(p[0]) - 1;        // size code
-!            if ( index < 0 ||
-!                 index >= NumCodesEllipse ) return FALSE;
-!            xsect->yFull = MinorAxis_Ellipse[index]/12.;
-!            xsect->wMax  = MajorAxis_Ellipse[index]/12.;
-!            xsect->aFull = Afull_Ellipse[index];
-!            xsect->rFull = Rfull_Ellipse[index];
-!        }
-!        else
-!        {
-!            // --- length of minor axis
-!            xsect->yFull = p[0]/ucf;
-!
-!            // --- length of major axis
-!            if ( p[1] < 0.0 ) return FALSE;
-!            xsect->wMax = p[1]/ucf;
-!            xsect->aFull = 1.2692 * xsect->yFull * xsect->yFull;
-!            xsect->rFull = 0.3061 * xsect->yFull;
-!        }
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!
-!    case VERT_ELLIPSE:
-!        if ( p[1] == 0.0 )                       // std. ellipse pipe
-!        {
-!            index = (int)floor(p[0]) - 1;        // size code
-!            if ( index < 0 ||
-!                 index >= NumCodesEllipse ) return FALSE;
-!            xsect->yFull = MajorAxis_Ellipse[index]/12.;
-!            xsect->wMax  = MinorAxis_Ellipse[index]/12.;
-!            xsect->aFull = Afull_Ellipse[index];
-!            xsect->rFull = Rfull_Ellipse[index];
-!        }
-!        else
-!        {
-!            // --- length of major axis
-!            if ( p[1] < 0.0 ) return FALSE;
-!
-!            // --- length of minor axis
-!            xsect->yFull = p[0]/ucf;
-!            xsect->wMax = p[1]/ucf;
-!            xsect->aFull = 1.2692 * xsect->wMax * xsect->wMax;
-!            xsect->rFull = 0.3061 * xsect->wMax;
-!        }
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!
-!    case ARCH:
-!        if ( p[1] == 0.0 )                       // std. arch pipe
-!        {
-!            index = (int)floor(p[0]) - 1;        // size code
-!            if ( index < 0 ||
-!                 index >= NumCodesArch ) return FALSE;
-!            xsect->yFull = Yfull_Arch[index]/12.;     // Yfull units are inches
-!            xsect->wMax  = Wmax_Arch[index]/12.;      // Wmax units are inches
-!            xsect->aFull = Afull_Arch[index];
-!            xsect->rFull = Rfull_Arch[index];
-!        }
-!        else                                     // non-std. arch pipe
-!        {
-!            if ( p[1] < 0.0 ) return FALSE;
-!            xsect->yFull = p[0]/ucf;
-!            xsect->wMax  = p[1]/ucf;
-!            xsect->aFull = 0.7879 * xsect->yFull * xsect->wMax;
-!            xsect->rFull = 0.2991 * xsect->yFull;
-!        }
-!        xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!        xsect->sMax  = xsect->sFull;
-!        break;
-!    }
-!    return TRUE;
-!}
+    use headers
+    
+    type(TXsect), intent(in) :: xsect
+    integer, intent(in) :: datatype
+    double precision, dimension(:), intent(in) :: p
+    double precision, intent(in) :: ucf
+    
+    integer :: index
+    double precision :: aMax, theta
+
+    if ( datatype /= DUMMY .and. p(0) <= 0.0 ) then
+        xsect_setParams = .false.
+        return
+    end if
+    xsect%datatype  = datatype
+    select case ( xsect%datatype )
+    case (DUMMY)
+        xsect%yFull = TINY
+        xsect%wMax  = TINY
+        xsect%aFull = TINY
+        xsect%rFull = TINY
+        xsect%sFull = TINY
+        xsect%sMax  = TINY
+        !break
+
+    case (CIRCULAR)
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = xsect%yFull
+        xsect%aFull = PI / 4.0 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.2500 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.08 * xsect%sFull
+        !break
+
+    case (FORCE_MAIN)                                                           !(5.0.010 - LR)
+        xsect%yFull = p(0)/ucf                                               !(5.0.010 - LR)
+        xsect%wMax  = xsect%yFull                                           !(5.0.010 - LR)
+        xsect%aFull = PI / 4.0 * xsect%yFull * xsect%yFull                 !(5.0.010 - LR)
+        xsect%rFull = 0.2500 * xsect%yFull                                  !(5.0.010 - LR)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 0.63)                 !(5.0.010 - LR)
+        xsect%sMax  = 1.06949 * xsect%sFull                                 !(5.0.010 - LR)
+
+        ! --- save C-factor or roughness in rBot position                     !(5.0.010 - LR)
+        xsect%rBot  = p(1)                                                   !(5.0.010 - LR)
+        !break                                                                 !(5.0.010 - LR)
+
+    case (FILLED_CIRCULAR)
+        if ( p(1) >= p(0) ) then
+            xsect_setParams = .false.
+            return
+        end if
+
+        ! --- initially compute full values for unfilled pipe
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = xsect%yFull
+        xsect%aFull = PI / 4.0 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.2500 * xsect%yFull
+        
+        ! --- find:
+        !     yBot = depth of filled bottom
+        !     aBot = area of filled bottom
+        !     sBot = width of filled bottom
+        !     rBot = wetted perimeter of filled bottom
+        xsect%yBot  = p(1)/ucf
+        xsect%aBot  = circ_getAofY(xsect, xsect%yBot)
+        xsect%sBot  = xsect_getWofY(xsect, xsect%yBot)
+        xsect%rBot  = xsect%aBot / (xsect%rFull * lookup(xsect%yBot/xsect%yFull, R_Circ, N_R_Circ))
+
+        ! --- revise full values for filled bottom
+        xsect%aFull -= xsect%aBot
+        xsect%rFull = xsect%aFull / (PI*xsect%yFull - xsect%rBot + xsect%sBot)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.08 * xsect%sFull
+        xsect%yFull -= xsect%yBot
+        !break
+
+    case (EGGSHAPED)
+        xsect%yFull = p(0)/ucf
+        xsect%aFull = 0.5105 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.1931 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.065 * xsect%sFull
+        xsect%wMax  = 2./3. * xsect%yFull
+        !break
+
+    case (HORSESHOE)
+        xsect%yFull = p(0)/ucf
+        xsect%aFull = 0.8293 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.2538 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.077 * xsect%sFull
+        xsect%wMax  = 1.0 * xsect%yFull
+        !break
+
+    case (GOTHIC)
+        xsect%yFull = p(0)/ucf
+        xsect%aFull = 0.6554 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.2269 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.065 * xsect%sFull
+        xsect%wMax  = 0.84 * xsect%yFull
+        !break
+
+    case (CATENARY)
+        xsect%yFull = p(0)/ucf
+        xsect%aFull = 0.70277 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.23172 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.05 * xsect%sFull
+        xsect%wMax  = 0.9 * xsect%yFull
+        !break
+
+    case (SEMIELLIPTICAL)
+        xsect%yFull = p(0)/ucf
+        xsect%aFull = 0.785 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.242 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.045 * xsect%sFull
+        xsect%wMax  = 1.0 * xsect%yFull
+        !break
+
+    case (BASKETHANDLE)
+        xsect%yFull = p(0)/ucf
+        xsect%aFull = 0.7862 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.2464 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.06078 * xsect%sFull
+        xsect%wMax  = 0.944 * xsect%yFull
+        !break
+
+    case (SEMICIRCULAR)
+        xsect%yFull = p(0)/ucf
+        xsect%aFull = 1.2697 * xsect%yFull * xsect%yFull
+        xsect%rFull = 0.2946 * xsect%yFull
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = 1.06637 * xsect%sFull
+        xsect%wMax  = 1.64 * xsect%yFull
+        !break
+
+    case (RECT_CLOSED)
+        if ( p(1) <= 0.0 ) then
+           xsect_setParams = .false.
+           return
+        end if
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+        xsect%aFull = xsect%yFull * xsect%wMax
+        xsect%rFull = xsect%aFull / (2.0 * (xsect%yFull + xsect%wMax))
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        aMax = RECT_ALFMAX * xsect%aFull
+        xsect%sMax = aMax * pow(rect_closed_getRofA(xsect, aMax), 2./3.)
+        !break
+
+    case (RECT_OPEN)
+        if ( p(1) <= 0.0 ) then
+            xsect_setParams = .false.
+            return
+        end if
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+        xsect%aFull = xsect%yFull * xsect%wMax
+        xsect%rFull = xsect%aFull / (2.0 * xsect%yFull + xsect%wMax)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+
+    case (RECT_TRIANG)
+        if ( p(1) <= 0.0 .or. p(2) <= 0.0 ) then
+            xsect_setParams = .false.
+            return
+        end if
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+        xsect%yBot  = p(2)/ucf
+
+        ! --- area of bottom triangle
+        xsect%aBot  = xsect%yBot * xsect%wMax / 2.0
+
+        ! --- slope of bottom side wall
+        xsect%sBot  = xsect%wMax / xsect%yBot / 2.0
+
+        ! --- length of side wall per unit of depth
+        xsect%rBot  = sqrt( 1. + xsect%sBot * xsect%sBot )   
+
+        xsect%aFull = xsect%wMax * (xsect%yFull - xsect%yBot / 2.0)
+        xsect%rFull = xsect%aFull / (2.0 * xsect%yBot * xsect%rBot + 2.0 * &
+                       &(xsect%yFull - xsect%yBot) + xsect%wMax)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        aMax = RECT_TRIANG_ALFMAX * xsect%aFull
+        xsect%sMax  = aMax * pow(rect_triang_getRofA(xsect, aMax), 2./3.)
+        !break
+
+    case (RECT_ROUND)
+        if ( p(1) <= 0.0 ) then
+           xsect_setParams = .false. !(5.0.014 -LR)
+           return
+        end if
+        if ( p(2) < p(1)/2.0 ) p(2) = p(1)/2.0                                !(5.0.014 - LR)
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+        xsect%rBot  = p(2)/ucf
+
+        ! --- angle of circular arc
+        theta = 2.0 * asin(xsect%wMax / 2.0 / xsect%rBot)
+
+        ! --- area of circular bottom
+        xsect%aBot  = xsect%rBot * xsect%rBot / 2.0 * (theta - sin(theta)) 
+
+        ! --- section factor for circular bottom
+        xsect%sBot  = PI * xsect%rBot * xsect%rBot * pow(xsect%rBot/2.0, 2./3.)
+
+        ! --- depth of circular bottom
+        xsect%yBot  = xsect%rBot * (1.0 - cos(theta/2.0))
+
+        xsect%aFull = xsect%wMax * (xsect%yFull - xsect%yBot) + xsect%aBot
+        xsect%rFull = xsect%aFull / (xsect%rBot * theta + 2.0 * &
+                       &(xsect%yFull - xsect%yBot) + xsect%wMax)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        aMax = RECT_ROUND_ALFMAX * xsect%aFull
+        xsect%sMax = aMax * pow(rect_round_getRofA(xsect, aMax), 2./3.)
+        !break
+
+    case (MOD_BASKET)
+
+!! --- The code below was modified to accommodate a more                     !(5.0.014 - LR)
+!!     general type of modified baskethandle cross-section. 
+
+        if ( p(1) <= 0.0 ) then
+           xsect_setParams = .false.
+           return
+        end if
+        if ( p(2) < p(1)/2.0 ) p(2) = p(1)/2.0
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+
+        ! --- radius of circular arc
+        xsect%rBot = p(2)/ucf
+
+        ! --- angle of circular arc
+        theta = 2.0 * asin(xsect%wMax / 2.0 / xsect%rBot)
+        xsect%sBot = theta
+
+        ! --- height of circular arc
+        xsect%yBot = xsect%rBot * (1.0 - cos(theta/2.0))
+
+        ! --- area of circular arc
+        xsect%aBot = xsect%rBot * xsect%rBot /
+                      2.0 * (theta - sin(theta)) 
+
+        ! --- full area
+        xsect%aFull = (xsect%yFull - xsect%yBot) * xsect%wMax + xsect%aBot
+
+        ! --- full hydraulic radius & section factor
+        xsect%rFull = xsect%aFull / (xsect%rBot * theta + 2.0 * &
+                       &(xsect%yFull - xsect%yBot) + xsect%wMax)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+
+        ! --- area corresponding to max. section factor
+        xsect%sMax = xsect_getSofA(xsect, Amax(MOD_BASKET)*xsect%aFull)
+        !break
+       
+    case (TRAPEZOIDAL)
+        if ( p(1) < 0.0 .or. p(2) < 0.0 .or. p(3) < 0.0 ) then
+            xsect_setParams = .false.
+            return
+        end if 
+        xsect%yFull = p(0)/ucf
+
+        ! --- bottom width
+        xsect%yBot = p(1)/ucf
+
+        ! --- avg. slope of side walls
+        xsect%sBot  = ( p(2) + p(3) )/2.0
+
+        ! --- length of side walls per unit of depth
+        xsect%rBot  = sqrt( 1.0 + p(2)*p(2) ) + sqrt( 1.0 + p(3)*p(3) )
+
+        ! --- top width
+        xsect%wMax = xsect%yBot + xsect%yFull * (p(2) + p(3))
+
+        xsect%aFull = ( xsect%yBot + xsect%sBot * xsect%yFull ) * xsect%yFull
+        xsect%rFull = xsect%aFull / (xsect%yBot + xsect%yFull * xsect%rBot)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+
+    case (TRIANGULAR)
+        if ( p(1) <= 0.0 ) then
+           xsect_setParams  = .false.
+           return
+        end if
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+
+        ! --- slope of side walls
+        xsect%sBot  = xsect%wMax / xsect%yFull / 2.
+
+        ! --- length of side wall per unit of depth
+        xsect%rBot  = sqrt( 1. + xsect%sBot * xsect%sBot )  
+
+        xsect%aFull = xsect%yFull * xsect%yFull * xsect%sBot
+        xsect%rFull = xsect%aFull / (2.0 * xsect%yFull * xsect%rBot)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+
+    case (PARABOLIC)
+        if ( p(1) <= 0.0 ) then
+            xsect_setParams = .false.
+            return
+        end if
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+
+        ! --- rBot :: 1/c^.5, where y = c*x^2 is eqn. of parabolic shape
+        xsect%rBot  = xsect%wMax / 2.0 / sqrt(xsect%yFull)
+
+        xsect%aFull = (2./3.) * xsect%yFull * xsect%wMax
+        xsect%rFull = xsect_getRofY(xsect, xsect%yFull)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+
+    case (POWERFUNC)
+        if ( p(1) <= 0.0 .or. p(2) <= 0.0 ) then
+            xsect_setParams = .false.
+            return
+        end if
+        xsect%yFull = p(0)/ucf
+        xsect%wMax  = p(1)/ucf
+        xsect%sBot  = 1.0 / p(2)
+        xsect%rBot  = xsect%wMax / (xsect%sBot + 1) / pow(xsect%yFull, xsect%sBot)
+        xsect%aFull = xsect%yFull * xsect%wMax / (xsect%sBot+1)
+        xsect%rFull = xsect_getRofY(xsect, xsect%yFull)
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+
+    case (HORIZ_ELLIPSE)
+        if ( p(1) == 0.0 ) then                       ! std. ellipse pipe
+            index = int(floor(p(0))) - 1        ! size code
+            if ( index < 0 .or. index >= NumCodesEllipse ) then
+               xsect_setParams  = .false.
+               return
+            end if
+            xsect%yFull = MinorAxis_Ellipse(index)/12.
+            xsect%wMax  = MajorAxis_Ellipse(index)/12.
+            xsect%aFull = Afull_Ellipse(index)
+            xsect%rFull = Rfull_Ellipse(index)
+        else
+            ! --- length of minor axis
+            xsect%yFull = p(0)/ucf
+
+            ! --- length of major axis
+            if ( p(1) < 0.0 ) then
+               xsect_setParams = .false.
+               return
+            end if
+            xsect%wMax = p(1)/ucf
+            xsect%aFull = 1.2692 * xsect%yFull * xsect%yFull
+            xsect%rFull = 0.3061 * xsect%yFull
+        end if
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+
+    case (VERT_ELLIPSE)
+        if ( p(1) == 0.0 ) then                       ! std. ellipse pipe
+            index = int(floor(p(0))) - 1        ! size code
+            if ( index < 0 .or. index >= NumCodesEllipse ) then
+               xsect_setParams = .false.
+               return
+            end if
+            xsect%yFull = MajorAxis_Ellipse(index)/12.
+            xsect%wMax  = MinorAxis_Ellipse(index)/12.
+            xsect%aFull = Afull_Ellipse(index)
+            xsect%rFull = Rfull_Ellipse(index)
+        else
+            ! --- length of major axis
+            if ( p(1) < 0.0 ) then
+               xsect_setParams = .false.
+               return
+            end if
+
+            ! --- length of minor axis
+            xsect%yFull = p(0)/ucf
+            xsect%wMax = p(1)/ucf
+            xsect%aFull = 1.2692 * xsect%wMax * xsect%wMax
+            xsect%rFull = 0.3061 * xsect%wMax
+        end if
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+
+    case (ARCH)
+        if ( p(1) == 0.0 ) then                      ! std. arch pipe
+            index = int(floor(p(0))) - 1        ! size code
+            if ( index < 0 .or. index >= NumCodesArch ) then
+                xsect_setParams = .false.
+                return
+            end if
+            xsect%yFull = Yfull_Arch(index)/12.     ! Yfull units are inches
+            xsect%wMax  = Wmax_Arch(index)/12.      ! Wmax units are inches
+            xsect%aFull = Afull_Arch(index)
+            xsect%rFull = Rfull_Arch(index)
+        else                                     ! non-std. arch pipe
+            if ( p(1) < 0.0 ) then
+                xsect_setParams = .false.
+                return
+            end if
+            xsect%yFull = p(0)/ucf
+            xsect%wMax  = p(1)/ucf
+            xsect%aFull = 0.7879 * xsect%yFull * xsect%wMax
+            xsect%rFull = 0.2991 * xsect%yFull
+        end if
+        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sMax  = xsect%sFull
+        !break
+    end select
+
+    xsect_setParams = .true.
+    return
+end function xsect_setParams
 !
 !//=============================================================================
 !
