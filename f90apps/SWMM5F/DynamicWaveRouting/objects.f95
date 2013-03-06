@@ -34,7 +34,7 @@ module objects
 !   NOTE: in many structure definitions, a blank line separates the set of
 !         input properties from the set of computed output properties.
 ! ISSUES
-! -DateTime data type replacement
+! -DateTime data type replacement, it is just a double number
 ! -Array in a derived type must be fixed size !TODO: dim fixed
 ! -commented out the use of MathExpr and TGrnAmpt type
 !-----------------------------------------------------------------------------
@@ -96,8 +96,8 @@ type tGage
    integer(kind=K4) :: tSeries         ! rainfall data time series index
    character(len=MAXFNAME +1) :: fname ! name of rainfall data file
    character(len=MAXMSG +1) :: staID ! station number
-!   DateTime      startFileDate   ! starting date of data read from file
-!   DateTime      endFileDate     ! ending date of data read from file
+   double precision :: startFileDate   ! starting date of data read from file
+   double precision :: endFileDate     ! ending date of data read from file
    integer(kind=K4) :: rainType        ! intensity, volume, cumulative
    integer(kind=K4) :: rainInterval    ! recording time interval (seconds)
    integer(kind=K4) :: rainUnits       ! rain depth units (US or SI)
@@ -108,9 +108,9 @@ type tGage
    integer(kind=K8) :: currentFilePos  ! current byte position in Rain file
    double precision :: rainAccum       ! cumulative rainfall
    double precision :: unitsFactor     ! units conversion factor (to inches or mm)
-   !DateTime      startDate       ! start date of current rainfall
-!   DateTime      endDate         ! end date of current rainfall
-!   DateTime      nextDate        ! next date with recorded rainfall
+   double precision :: startDate       ! start date of current rainfall
+   double precision :: endDate         ! end date of current rainfall
+   double precision :: nextDate        ! next date with recorded rainfall
    double precision :: rainfall        ! current rainfall (in/hr or mm/hr)
    double precision :: nextRainfall    ! next rainfall (in/hr or mm/hr)
    double precision :: reportRainfall  ! rainfall value used for reported results
@@ -127,7 +127,7 @@ end type  TGage
 type TTemp
    integer(kind=K4) ::           dataSource      ! data from time series or file 
    integer(kind=K4) ::           tSeries         ! temperature data time series index
-!   DateTime      fileStartDate   ! starting date of data read from file
+   double precision :: fileStartDate   ! starting date of data read from file
    double precision ::        elev            ! elev. of study area (ft)
    double precision ::        anglat          ! latitude (degrees)
    double precision ::        dtlong          ! longitude correction (hours)
@@ -294,7 +294,7 @@ type TLandFactor
    !double*       buildup         ! array of buildups for each pollutant
    !double precision, dimension(:) :: buildup         ! array of buildups for each pollutant
    double precision, dimension(12) :: buildup         ! array of buildups for each pollutant, TODO:dim fixed
-!   DateTime      lastSwept       ! date/time of last street sweeping
+   double precision :: lastSwept       ! date/time of last street sweeping
    end type TLandFactor
 
 
@@ -871,8 +871,8 @@ end type TSysStats
 ! RAINFALL STATISTICS
 !--------------------
 type TRainStats
-   !DateTime    startDate
-!   DateTime    endDate
+   double precision :: startDate
+   double precision :: endDate
    integer(kind=K8) ::        periodsRain
    integer(kind=K8) ::        periodsMissing
    integer(kind=K8) ::        periodsMalfunc
@@ -897,7 +897,7 @@ end type TSubcatchStats
 type TNodeStats
    double precision ::        avgDepth
    double precision ::        maxDepth
-   !DateTime      maxDepthDate
+   double precision :: maxDepthDate
    double precision ::        maxDepthChange                                               !(5.0.012 - LR)
    double precision ::        volFlooded
    double precision ::        timeFlooded
@@ -908,8 +908,8 @@ type TNodeStats
    double precision ::        maxInflow
    double precision ::        maxOverflow
    double precision ::        maxPondedVol                                                 !(5.0.012 - LR)
-   !DateTime      maxInflowDate
-!   DateTime      maxOverflowDate
+   double precision :: maxInflowDate
+   double precision :: maxOverflowDate
 end type TNodeStats
 
 
@@ -921,7 +921,7 @@ type TStorageStats
    double precision ::        maxVol
    double precision ::        maxFlow
    double precision ::        losses                                                       !(5.0.018 - LR)
-   !DateTime      maxVolDate
+   double precision :: maxVolDate
 end type TStorageStats
 
 
@@ -959,9 +959,9 @@ end type TPumpStats
 !----------------
 type TLinkStats
    double precision :: maxFlow
-   !DateTime      maxFlowDate
+   double precision :: maxFlowDate
    double precision :: maxVeloc
-   !DateTime      maxVelocDate
+   double precision :: maxVelocDate
    double precision :: maxDepth
    double precision :: avgFlowChange
    double precision :: avgFroude

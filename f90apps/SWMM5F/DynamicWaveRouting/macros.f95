@@ -58,7 +58,7 @@ character*1 function UCHAR(x)
    character*1, intent(in) :: x
    integer :: j
    j = iachar(x)
-   if (j>= iachar("a") .and. j<=iachar("z") ) then
+   if (j>= iachar('a') .and. j<=iachar('z') ) then
         UCHAR = achar(iachar(x)-32)
    else
         UCHAR = x

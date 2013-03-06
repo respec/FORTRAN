@@ -36,7 +36,7 @@ module dynwave
 double precision, parameter :: MINSURFAREA =  12.566  !  min. nodal surface area (~4 ft diam.)
 double precision, parameter :: MAXVELOCITY =  50.     !  max. allowable velocity (ft/sec)
 double precision, parameter ::  MINTIMESTEP =  0.5     !  min. time step (sec)
-double precision, parameter ::  POMEGA       =  0.5     !  under-relaxation parameter
+double precision, parameter ::  OMEGA_DW    =  0.5     !  under-relaxation parameter
 double precision, parameter ::  STOP_TOL    =  0.005   !  Picard iteration stop criterion
 integer, parameter :: MAXSTEPS    =  8       !  max. number of Picard iterations (5.0.019 - LR)
 
@@ -128,7 +128,7 @@ subroutine dynwave_init()
     integer :: i
 
     VariableStep = 0.0
-    if ( MinSurfArea == 0.0 ) then
+    if ( abs(MinSurfArea - 0.0) < tiny(1.0) ) then
        MinSurfAreaFt2 = MINSURFAREA
     else 
        MinSurfAreaFt2 = MinSurfArea / UCF(LENGTH) / UCF(LENGTH)
@@ -168,7 +168,7 @@ double precision function dynwave_getRoutingStep(fixedStep)
     double precision, intent (in) :: fixedStep
     !  --- use user-supplied fixed step if variable step option turned off
     !      or if its smaller than the min. allowable variable time step
-    if ( CourantFactor .eq. 0.0 ) then
+    if ( abs(CourantFactor - 0.0) < tiny(1.0) ) then
        dynwave_getRoutingStep = fixedStep
        return
     end if
@@ -179,7 +179,7 @@ double precision function dynwave_getRoutingStep(fixedStep)
 
     !  --- at start of simulation (when current variable step is zero)
     !      use the minimum allowable time step
-    if ( VariableStep == 0.0 ) then
+    if ( abs(VariableStep - 0.0) < tiny(1.0) ) then
         VariableStep = MINTIMESTEP
     !  --- otherwise compute variable step based on current flow solution
     else 
@@ -217,7 +217,7 @@ integer function dynwave_execute(links, tStep)
     
     Steps = 0
     Converged = .FALSE.
-    Omega = POMEGA
+    Omega = OMEGA_DW
     do i=1, Nobjects(E_NODE)
         Xnode(i)%converged = .FALSE.
         Xnode(i)%dYdT = 0.0
@@ -468,7 +468,7 @@ double precision function getModPumpFlow(i, q, dt)
     j = arrLink(i)%node1   
     k = arrLink(i)%subIndex
 
-    if ( q == 0.0 ) then
+    if ( abs(q - 0.0) < tiny(1.0) ) then
        getModPumpFlow = q
        return
     end if
@@ -914,7 +914,7 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
 ! 
 !   Input:   j  = conduit link index
 !            q  = current conduit flow (cfs)
-!            length = conduit length (ft)
+!            aLength = conduit aLength (ft)
 !            h1 = head at upstream end of conduit (ft)
 !            h2 = head at downstream end of conduit (ft)
 !            y1 = upstream flow depth (ft)
@@ -957,8 +957,8 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
         width1 =   getWidth(xsect, flowDepth1)
         width2 =   getWidth(xsect, flowDepth2)
         widthMid = getWidth(xsect, flowDepthMid)
-        surfArea1 = (width1 + widthMid) * length / 4.
-        surfArea2 = (widthMid + width2) * length / 4. * Fasnh
+        surfArea1 = (width1 + widthMid) * aLength / 4.
+        surfArea2 = (widthMid + width2) * aLength / 4. * Fasnh
         !break
 
       case (UP_CRITICAL)
@@ -970,7 +970,7 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
         if ( flowDepthMid < FUDGE ) flowDepthMid = FUDGE
         width2   = getWidth(xsect, flowDepth2)
         widthMid = getWidth(xsect, flowDepthMid)
-        surfArea2 = (widthMid + width2) * length * 0.5
+        surfArea2 = (widthMid + width2) * aLength * 0.5
         !break
 
       case (DN_CRITICAL)
@@ -982,7 +982,7 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
         flowDepthMid = 0.5 * (flowDepth1 + flowDepth2)
         if ( flowDepthMid < FUDGE ) flowDepthMid = FUDGE
         widthMid = getWidth(xsect, flowDepthMid)
-        surfArea1 = (width1 + widthMid) * length * 0.5
+        surfArea1 = (width1 + widthMid) * aLength * 0.5
         !break
 
       case (UP_DRY)
@@ -995,12 +995,12 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
 
         !  --- assign avg. surface area of downstream half of conduit
         !      to the downstream node
-        surfArea2 = (widthMid + width2) * length / 4.
+        surfArea2 = (widthMid + width2) * aLength / 4.
 
         !  --- if there is no free-fall at upstream end, assign the
         !      upstream node the avg. surface area of the upstream half
         if ( arrLink(j)%offset1 <= 0.0 ) then
-            surfArea1 = (width1 + widthMid) * length / 4.
+            surfArea1 = (width1 + widthMid) * aLength / 4.
         end if
         !break
 
@@ -1014,17 +1014,17 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
 
         !  --- assign avg. surface area of upstream half of conduit
         !      to the upstream node
-        surfArea1 = (widthMid + width1) * length / 4.
+        surfArea1 = (widthMid + width1) * aLength / 4.
 
         !  --- if there is no free-fall at downstream end, assign the
         !      downstream node the avg. surface area of the downstream half
         if ( arrLink(j)%offset2 <= 0.0 ) then
-            surfArea2 = (width2 + widthMid) * length / 4.
+            surfArea2 = (width2 + widthMid) * aLength / 4.
         end if
         !break
 
       case (DRY)
-        surfArea1 = FUDGE * length / 2.0
+        surfArea1 = FUDGE * aLength / 2.0
         surfArea2 = surfArea1
         !break
     end select
@@ -1074,7 +1074,8 @@ double precision function getWidth(xsect, y)
     double precision, intent(in) :: y
     double precision :: yNorm
     double precision :: ym
-    yNorm = y/xsect%yFull
+    ym = y
+    yNorm = ym/xsect%yFull
 !   if ( yNorm < 0.04 ) y = 0.04*xsect->yFull                                 ! (5.0.015 - LR)
     if ( yNorm > 0.96 .and. .not.xsect_isOpen(xsect%datatype) ) ym = 0.96*xsect%yFull
     getWidth = xsect_getWofY(xsect, ym)
@@ -1094,7 +1095,8 @@ double precision function getArea(xsect, y)
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
     double precision :: ym
-    ym = MIN(y, xsect%yFull)
+    ym = y
+    ym = MIN(ym, xsect%yFull)
     getArea = xsect_getAofY(xsect, ym)
     return
 end function getArea
@@ -1111,7 +1113,8 @@ double precision function getHydRad(xsect, y)
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
     double precision :: ym
-    ym = MIN(y, xsect%yFull)
+    ym = y
+    ym = MIN(ym, xsect%yFull)
     getHydRad = xsect_getRofY(xsect, ym)
     return
 end function getHydRad
@@ -1268,7 +1271,7 @@ subroutine setNodeDepth(i, dt)
         end if
 
         !  --- compute new estimate of node depth
-        if ( denom == 0.0 )  then
+        if ( abs(denom - 0.0) < tiny(1.0) )  then
             dy = 0.0
         else 
             dy = corr * dQ / denom
@@ -1325,6 +1328,7 @@ double precision function getFloodedDepth(i, canPond, dV, yNew, yMax, dt)
     logical, intent(in) :: canPond
     double precision, intent(in) :: dV, yNew, yMax, dt
     double precision :: myNew
+    myNew = yNew
 
     if ( .not.canPond ) then
         Node(i)%overflow = dV / dt

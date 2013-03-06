@@ -642,6 +642,22 @@
     "Source Files"
     {
     "Folder" = "T"
+        "datetime.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{62C11DD9-5BA1-4E63-940E-B470D9370E24}"
+        }
+        "driver.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{1302B7BB-0FD0-46B1-8333-3E49290575A7}"
+        }
         "dynwave.f95"
         {
         "ProjRelPath" = "T"
@@ -665,6 +681,14 @@
         "CustomSwitches" = ""
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{B38DD9C4-C7AB-4C4C-856F-32CB362BD554}"
+        }
+        "node.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{1BEE3E7F-8C85-47C7-A183-628BF1842BFE}"
         }
         "project.f95"
         {
