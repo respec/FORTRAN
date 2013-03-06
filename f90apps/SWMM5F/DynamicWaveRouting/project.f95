@@ -59,10 +59,7 @@ subroutine setDefaults
 !  Output:  none
 !  Purpose: assigns default values to project variables.
 !
-   use enums
-   use objects
-   use globals
-   
+   use headers
    integer :: i, j
 
    ! Project title & temp. file path
@@ -162,11 +159,9 @@ subroutine setDefaults
 
    ! Snow areal depletion curves for pervious and impervious surfaces
    do i=1, 2
-     !TODO: double check this assignment
-     !adc is actually a 2d array (2, 10)
-     !but failed to initialize using a sub loop j = 1,10
-     !jlk - no subscripts means whole array
-     Snow%adc = 1.0 
+     do j= 1, 10
+         Snow%adc(i, j) = 1.0 
+     end do
    end do
 
    ! Evaporation rates

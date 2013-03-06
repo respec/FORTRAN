@@ -79,15 +79,15 @@ double precision :: FlowError                ! Flow routing error
 double precision :: QualError                ! Quality routing error
 
 !EXTERN DateTime !TODO: need to deal with this DateTime with HSPF's
-!                  StartDate,                ! Starting date
-!                  StartTime,                ! Starting time
-!                  StartDateTime,            ! Starting Date+Time
-!                  EndDate,                  ! Ending date
-!                  EndTime,                  ! Ending time
-!                  EndDateTime,              ! Ending Date+Time
-!                  ReportStartDate,          ! Report start date
-!                  ReportStartTime,          ! Report start time
-!                  ReportStart;              ! Report start Date+Time
+double precision :: StartDate                ! Starting date
+double precision :: StartTime                ! Starting time
+double precision :: StartDateTime            ! Starting Date+Time
+double precision :: EndDate                  ! Ending date
+double precision :: EndTime                  ! Ending time
+double precision :: EndDateTime              ! Ending Date+Time
+double precision :: ReportStartDate          ! Report start date
+double precision :: ReportStartTime          ! Report start time
+double precision :: ReportStart              ! Report start Date+Time
 !
 double precision :: ReportTime               ! Current reporting time (msec)
 double precision :: OldRunoffTime            ! Previous runoff time (msec)
@@ -127,5 +127,11 @@ type(TShape), dimension(:), allocatable ::     Shape                    ! Array 
 !EXTERN THorton*   HortInfil;              ! Horton infiltration data        !(5.0.019 - LR)
 !EXTERN TGrnAmpt*  GAInfil;                ! Green-Ampt infiltration data    !(5.0.019 - LR)
 !EXTERN TCurveNum* CNInfil;                ! Curve No. infiltration data     !(5.0.019 - LR)
+
+!-----------------------------------------------------------------------------                  
+!  Shared variables used only in node.f95
+!-----------------------------------------------------------------------------                  
+integer ::  Kstar                  ! storage unit index
+double precision :: Vstar                  ! storage unit volume (ft3)
 
 end module
