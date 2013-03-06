@@ -56,6 +56,7 @@ program main
       use headers
        
       integer, parameter :: NNODE = 3
+      integer, parameter :: NCOND = 2
       integer :: J, LTYPE
       real, dimension(NNODE) :: XN
       real, dimension(NNODE) :: NDINIT = (/0.05, 0.05, 0.016/)
@@ -63,6 +64,12 @@ program main
       real, dimension(NNODE) :: NDMAX = (/11.14, 11.14, 10.23/)
       real, dimension(NNODE) :: NDSURC = (/12.14, 12.14, 11.23/)
       real, dimension(NNODE) :: NPONDA = (/0, 0, 0/)
+
+      real, dimension(NCOND) :: CLEN = (/10.14, 9.23/)
+      real, dimension(NCOND) :: CMANN = (/0.05, 0.016/)
+      real, dimension(NCOND) :: COFF1 = (/0.0, 0.0/)
+      real, dimension(NCOND) :: COFF2 = (/0.0, 0.0/)
+      real, dimension(NCOND) :: CQ0 = (/0.01, 0.01/)
       
       DO 10 J= 1,NNODE
         LTYPE = 0
