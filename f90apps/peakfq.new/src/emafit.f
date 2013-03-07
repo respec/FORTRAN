@@ -1,8 +1,8 @@
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c****|subroutine emafit
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c     REVISED VERSION FROM 2011
+c 
+c     REVISED VERSION FROM 2013
 c    
 c    this routine fits the pearson type iii distribution to 
 c      a data set using the ema algorithm 
@@ -12,6 +12,8 @@ c      development of an operational version of peakfq (bulletin 17b
 c      implementation) which would include the expected moments
 c      algorithm (ema; cohn et al. 1997; 2001)
 c       
+c     *** do not modify without author''s consent ***
+c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c    development history
@@ -52,6 +54,11 @@ c       modified            26 sep 2011  added regional estimate for M
 c                                          this is analogous to region S2, G 
 c       modified            24 oct 2011  simplified calls to p3est; results same 
 c       modified            08 feb 2012  added return for var_est in  
+c       modified            10 oct 2012  added redefined computation method for
+c                                          mn2m_var using inverse modified 
+c                                          Cholesky Gaussian Quadrature
+c       modified            14 feb 2013  added effective record length for skew
+c                                          returned in /tac005/...,as_G_ERL             
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -61,6 +68,10 @@ c                                          2) Regional standard deviation
 c
 c       modified            08 apr 2011  fixed MGBT to deal with more than 
 c                                          50% zero flows
+c
+c       NEW VERSION         05 Mar 2013  employs 
+c                                          1) Inverse Gaussian Quadrature CI
+c
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -147,6 +158,7 @@ c                             (,3) using B17B formula for at-site MSE(G)
 c                              mc = {mean, variance, coeff. skew}
 c            pq(32)     r*8  quantiles estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
+c            nq         i*4  number of quantiles estimated (32)
 c            yp(32)     r*8  estimated pq-th quantile of fitted p3 distribution
 c            ci_low(32) r*8  left end of 95% confidence interval for pq-th 
 c                              quantile
@@ -165,11 +177,20 @@ c                                    'B17B' => Bulletin 17B MSE formula
 c                                    'EMA'  => First-order EMA MSE
 c                                    'ADJE' => Adjusted first-order (Default)
 c
-c       /tacmg1/alph01       r*8   alpha level for MGBT check for low outliers
+c       /MGB001/Alpha(3)     r*8   alpha level for MGBT check for low outliers
 c                                    Default value is 0.01  [corr. 1% test]
+c     Step 1. Outward sweep from median (always done).
+c             alpha level of test = Alphaout  Alpha(1)
+c             number of outliers = J1
 c
-c       /tacmg1/alph10       r*8   alpha level for MGBT check for low outliers
-c                                    Default value is 0.10 [corr. 10% test]
+c     Step 2. Inward sweep from largest low outlier identified in Step 1.
+c             alpha level of test = Alphain  Alpha(2)
+c             number of outliers = J2
+c
+c     Step 3. Inward sweep from smallest observation
+c             alpha level of test = Alphazeroin  Alpha(3)
+c             number of outliers = J3
+c
 c
 c       /tac002/sk141        r*8   minimum value of skew 
 c                                    Default value is -1.41
@@ -196,39 +217,31 @@ c                                              and MSE[S^2_{regional}]
 c                                    'S1'   => inversely to MSE[S_{at-site}]
 c                                              and MSE[S_{reg.}] (NOT AVAIL.)
 c
+c       /tacci1/eps          r*8   nominal confidence interval coverage (90% default)
+c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
       subroutine emafit(n,ql,qu,tl,tu,dtype,
      1               reg_SD,reg_SD_mse,r_G,r_G_mse,gbtype,gbthrsh0,
-     1                  cmoms,pq,yp,ci_low,ci_high,var_est)
+     1                  cmoms,pq,nq,yp,ci_low,ci_high,var_est)
 
       implicit none
 
       integer
-     1  i,n,                                                ! input variables
-     2  neps,nq
+     1  i,n,nq,nqd                                             ! input variables
      
-C      parameter (nq=15)
-C     use full set of probabilities found in PeakFQ
-      parameter (nq=32)
-
       double precision
      1  ql(*),qu(*),tl(*),tu(*),reg_SD,reg_SD_mse,r_G,r_G_mse, ! input variables
-     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),! output variables
-     3  pqd(nq),eps(1),gbthrsh0,
+     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),! output vars
+     3  pqd,eps,gbthrsh0,
      4  r_M,r_M_mse,r_S2,r_S2_mse
      
       character*4
      1  dtype(*),gbtype
 
-      data neps/1/,eps/0.95d0/
-      
-Cprh      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
-Cprh     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
-      data pqd/0.0001,0.0005,0.001 ,0.002 ,0.005 ,0.010 ,0.020 ,0.025 ,
-     1         0.040 ,0.050 ,0.100 ,0.200 ,0.300 ,0.33329,0.400 ,0.4296,
-     2         0.5   ,0.5708,0.600 ,0.700 ,0.800 ,0.900 ,0.950 ,0.960 ,
-     3         0.975 ,0.980 ,0.990 ,0.995 ,0.998 ,0.999 ,0.9995,0.9999/
+      common /tacpq1/pqd(100),nqd
+
+      common /tacci1/eps
      
 c    
 c     set regional information for mean equal to zero
@@ -241,14 +254,14 @@ c
       r_S2      = reg_SD**2
       r_S2_mse  = 4.d0 * r_S2 * reg_SD_mse  !  first order approximation
       
+          nq = nqd
       do 10 i=1,nq
           pq(i) = pqd(i)
+10    continue
         call emafitb(n,ql,qu,tl,tu,dtype,
      1                  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
-     1                  neps,eps,
-     1                  gbtype,gbthrsh0,pq(i),
-     1                  cmoms,yp(i),ci_low(i),ci_high(i),var_est(i))
-10    continue
+     1                  eps,gbtype,gbthrsh0,pq,nq,
+     1                  cmoms,yp,ci_low,ci_high,var_est)
 c
 c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)
 c
@@ -354,6 +367,7 @@ c                             (,3) using B17B formula for at-site MSE(G)
 c                              mc = {mean, variance, coeff. skew}
 c            pq(32)     r*8  quantiles estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
+c            nq         i*4  number of quantiles estimated (32)
 c            yp(32)     r*8  estimated pq-th quantile of fitted p3 distribution
 c            ci_low(32) r*8  left end of 95% confidence interval for pq-th 
 c                              quantile
@@ -365,34 +379,27 @@ c
       subroutine emafitpr(n,ql,qu,tl,tu,dtype,
      1               reg_M,reg_M_mse,reg_SD,reg_SD_mse,r_G,r_G_mse,
      2               gbtype,gbthrsh0,
-     2               cmoms,pq,yp,ci_low,ci_high,var_est)
+     2               cmoms,pq,nq,yp,ci_low,ci_high,var_est)
 
       implicit none
 
       integer
-     1  i,n,                                                ! input variables
-     2  neps,nq
+     1  i,n,nq,nqd                                               ! input variables
      
-      parameter (nq=32)
-
       double precision
-     1  ql(*),qu(*),tl(*),tu(*),reg_SD,reg_SD_mse,r_G,r_G_mse, ! input variables
-     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),! output variables
-     3  pqd(nq),eps(1),gbthrsh0,
+     1  ql(*),qu(*),tl(*),tu(*),reg_SD,reg_SD_mse,r_G,r_G_mse, ! input vars
+     2  cmoms(3,3),pq(*),yp(*),ci_low(*),ci_high(*),var_est(*),! output vars
+     3  pqd,eps,gbthrsh0,
      4  reg_M,reg_M_mse,r_M,r_M_mse,r_S2,r_S2_mse
      
       character*4
      1  dtype(*),gbtype
 
-      data neps/1/,eps/0.95d0/
+ctac      data eps/0.90d0/,nqd/32/
       
-Cprh      data pqd/0.005,0.010,0.050,0.100,0.200,0.3333,0.500,
-Cprh     1         0.5708,0.800,0.900,0.960,0.980,0.990,0.995,0.998/
-      data pqd/0.0001,0.0005,0.001 ,0.002 ,0.005 ,0.010 ,0.020 ,0.025 ,
-     1         0.040 ,0.050 ,0.100 ,0.200 ,0.300 ,0.3333,0.400 ,0.4296,
-     2         0.5   ,0.5708,0.600 ,0.700 ,0.800 ,0.900 ,0.950 ,0.960 ,
-     3         0.975 ,0.980 ,0.990 ,0.995 ,0.998 ,0.999 ,0.9995,0.9999/
-     
+      common /tacpq1/pqd(100),nqd
+      common /tacci1/eps
+
 c     1.  bring in regional information for M, S, and g
 
 c     1a. set regional information for mean
@@ -419,14 +426,14 @@ c
 
 c     1c. regional information for skew must be supplied by user as argument
       
+        nq = nqd
       do 10 i=1,nq
           pq(i) = pqd(i)
+10    continue
         call emafitb(n,ql,qu,tl,tu,dtype,
      1                  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
-     1                  neps,eps,
-     1                  gbtype,gbthrsh0,pq(i),
-     1                  cmoms,yp(i),ci_low(i),ci_high(i),var_est(i))
-10    continue
+     1                  eps,gbtype,gbthrsh0,pq,nq,
+     1                  cmoms,yp,ci_low,ci_high,var_est)
 c
 c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)
 c
@@ -464,7 +471,7 @@ c                              dtype(i) = "Hist" => historic data
 c                              dtype(i) = "Othr" => other
 c            r_M        r*8  regional mean
 c            r_M_mse    r*8  mean square error of regional mean
-c                            1) r_M_mse = 0 ("GENERALIZED S2, NO ERROR")
+c                            1) r_M_mse = 0 ("GENERALIZED MEAN, NO ERROR")
 c                                use fixed M = r_M w/ mse = 0.0
 c                            2) -999 < r_M_mse < 0 ("AT-SITE MEAN")
 c                                use at-site estimated mean (M)
@@ -472,6 +479,11 @@ c                            3) 0 < r_M_mse < 1.d10 ("WEIGHTED MEAN")
 c                                use M = weighted average of at-site and 
 c                                regional variance
 c            r_S2       r*8  regional variance (std.dev^2)
+c                              N.B.	 Needed because var. of regional S2 scales
+c                                    with (E[S2])^2; weights for S2 is based 
+c                                    on degrees of freedom in Chi-square dstn
+c                                    corresponding to each estimator where
+c                                      df = (1/2) S2^2/\hat{Var[S^2]}
 c            r_S2_mse   r*8  mean square error of regional variance
 c                            1) r_S2_mse = 0 ("GENERALIZED S2, NO ERROR")
 c                                use fixed sd = reg_SD w/ mse = 0.0
@@ -494,9 +506,8 @@ c                            4) 1.d10 < r_G_mse  ("STATION SKEW")
 c                                use g = at-site skew
 c            pq         r*8  quantile to be estimated 
 c                            --pq=0.99 corresponds to "100-year flood"
-c            neps       i*4  number of confidence interval coverages 
-c                              (usually equal to neps = 1)
-c            eps        r*8  vector of ci coverages (usually just 0.95)
+c            nq         i*4  number of quantiles estimated (32)
+c            eps        r*8  vector of ci coverages (usually just 0.90)
 c            gbthrsh0   r*8  critical value for Grubbs-Beck test
 c                              (values < -6 result in computed low outlier
 c                               test criterion)
@@ -509,9 +520,9 @@ c
 c            cmoms(3,3) r*8  first 3 central moments 
 c                              mc = {mean, variance, coeff. skew}
 c            yp         r*8  estimated pq-th quantile of fitted p3 distribution
-c            ci_low     r*8  left end of 95% confidence interval for pq-th 
+c            ci_low     r*8  left end of 90% confidence interval for pq-th 
 c                              quantile
-c            ci_high    r*8  right end of 95% confidence interval for pq-th 
+c            ci_high    r*8  right end of 90% confidence interval for pq-th 
 c                              quantile
 cprh (09/2009)
 c            var_est    r*8  variance of estimate for each quantile
@@ -520,8 +531,8 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 
       subroutine emafitb(n,ql_in,qu_in,tl_in,tu_in,dtype_in,
-     1                   r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse  ,
-     1                   neps,eps,gbtype_in,gbthrsh0,pq,
+     1                   r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
+     1                   eps,gbtype_in,gbthrsh0,pq,nq,
      2                   cmoms,yp,ci_low,ci_high,var_est)
       
       implicit none
@@ -532,18 +543,18 @@ c
       parameter (ntmax=100,nn=100,nx=25000)
       
       integer
-     1  n,i,nt,neps,nlow,nzero,nGBiter,nlow_V,it_max
+     1  n,i,nt,ns,nlow,nzero,nGBiter,nlow_V,it_max,nq
      
       double precision
      1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),
-     1  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,pq,                   ! input
-     2  cmoms(3,3),yp,ci_low(neps),ci_high(neps),var_est(neps),     ! output
-     3  yp1,yp2,ci_low1(nn),ci_low2(nn),ci_high1(nn),ci_high2(nn),
-     4  skewmin,qP3,parms(3),
+     1  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,pq(*),                 ! input
+     2  cmoms(3,3),yp(nn),ci_low(nn),ci_high(nn),var_est(nn),     ! output
+     3  yp1(nn),yp2(nn),ci_low1(nn),ci_low2(nn),ci_high1(nn),
+     4  ci_high2(nn),skewmin,qP3,parms(3),
      5  ql,qu,tl,tu,qs,
-     6  cv_yp_syp(2,2),eps(1),tl2(ntmax),tu2(ntmax),nobs(ntmax),
-     7  skew,wt,as_M_mse,as_S2_mse,as_G_mse,gbthrsh0,gbcrit,gbthresh,
-     8  gbcrit_V,gbthresh_V,pvaluew
+     6  cv_yp_syp(2,2,nn),eps,tl2(ntmax),tu2(ntmax),nobs(ntmax),
+     7  skew,wt,as_M_mse,as_S2_mse,as_G_mse,as_G_mse_Syst,as_G_ERL,
+     8  eff_n,gbthrsh0,gbcrit,gbthresh,gbcrit_V,gbthresh_V,pvaluew
      
       parameter (skewmin=0.06324555)
       
@@ -557,12 +568,12 @@ c
       logical cirun
       
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
-     1               nlow,nzero,gbtype
+     1               ns,nlow,nzero,gbtype
       common /tacg02/ql(nx),qu(nx),tl(nx),tu(nx),dtype(nx)
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
       common /tacg04/at_site_option,at_site_default,at_site_std
       common /tacdgb/cirun
-      common /tac005/as_M_mse,as_S2_mse,as_G_mse
+      common /tac005/as_M_mse,as_S2_mse,as_G_mse,as_G_mse_Syst,as_G_ERL
       common /tacR01/VarS2opt
       
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -647,11 +658,17 @@ c  1) Get at-site skews
      3      -99.d0, -99.d0,  -99.d0,  ! set all regional MSEs to Infinity
      4      cmoms(1,2))               ! return moments (only skew is needed)
 
+
 c  2) EMA computation using weighted regional information/B17B MSEs
         at_site_option = "B17B"
         as_M_mse  = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),1) ! compute true a-s
         as_S2_mse = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),2) ! MSEs based on at-
         as_G_mse  = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))  ! site skew cmoms(1,3)
+c
+          eff_n = dble(max(ns,10))    ! use a reasonable sample size if ns=0
+        as_G_mse_Syst = mseg_all(1,eff_n,-99.d0,99.d0,cmoms(1,2)) ! ERL Computation
+        as_G_ERL    = dble(eff_n)*(as_G_mse_Syst/as_G_mse)
+
       call p3est_ema(n,ql,qu,
      1      as_M_mse,as_S2_mse,as_G_mse,
      2      r_M,     r_S2,     r_G, 
@@ -674,8 +691,6 @@ c  3) final computation using weighted regional info
          cmoms(2,1) = cmoms(2,3)
          cmoms(3,1) = cmoms(3,3)
        endif
-         yp       = qP3(pq,cmoms)
-         call m2p(cmoms,parms)
 
       if(.not. cirun) return
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -688,13 +703,9 @@ c
 c   4.1  for skews far from zero
 c
 
-        call var_ema(nt,nobs,tl2,tu2,cmoms,pq,
-     1         r_S2,
-     2         r_M_mse, r_S2_mse, r_G_mse,
-     3         yp1,cv_yp_syp)
-
-        call ci_ema_m3 
-     1    (yp,cv_yp_syp,neps,eps,ci_low,ci_high)
+        call var_emab(nt,nobs,tl2,tu2,cmoms,pq,nq,eps,
+     1         r_s2, r_m_mse, r_s2_mse, r_g_mse,
+     3         yp,cv_yp_syp,ci_low,ci_high)
      
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -704,35 +715,32 @@ c
           skew       =  cmoms(3,1)
           cmoms(3,1) = -skewmin  
         call m2p(cmoms,parms)
-        call var_ema(nt,nobs,tl2,tu2,cmoms,pq,
-     1         r_S2,
-     2         r_M_mse, r_S2_mse, r_G_mse,
-     3         yp1,cv_yp_syp)
-
-        call ci_ema_m3
-     1    (yp1,cv_yp_syp,neps,eps,ci_low1,ci_high1)
+        call var_emab(nt,nobs,tl2,tu2,cmoms,pq,nq,eps,
+     1         r_s2,
+     2         r_m_mse, r_s2_mse, r_g_mse,
+     3         yp1,cv_yp_syp,ci_low1,ci_high1)
 
           cmoms(3,1) =  skewmin  
         call m2p(cmoms,parms)
-        call var_ema(nt,nobs,tl2,tu2,cmoms,pq,
-     1         r_S2,
-     2         r_M_mse, r_S2_mse, r_G_mse,
-     3         yp2,cv_yp_syp)
+        call var_emab(nt,nobs,tl2,tu2,cmoms,pq,nq,eps,
+     1         r_s2,
+     2         r_m_mse, r_s2_mse, r_g_mse,
+     3         yp2,cv_yp_syp,ci_low2,ci_high2)
 
-        call ci_ema_m3
-     1    (yp2,cv_yp_syp,neps,eps,ci_low2,ci_high2)
+        wt = (skew+skewmin)/(2.d0 * skewmin) ! weight to attach to positive skew
 
-            wt = (skew+skewmin)/(2.d0 * skewmin) ! weight to attach to positive skew
-c          yp        = (1.d0-wt) * yp1  +  wt * yp2
-          cmoms(3,1) = skew
-
-        do 20 i=1,neps
+        cmoms(3,1) = skew
+c  compute weighted average of results (assume approx. linear)
+        do 20 i=1,nq
+          yp(i)      = (1.d0-wt) * yp1(i)  +  wt * yp2(i)
           ci_low(i)  = (1.d0-wt) * ci_low1(i)  +  wt * ci_low2(i)
           ci_high(i) = (1.d0-wt) * ci_high1(i) +  wt * ci_high2(i)
 20      continue
       endif
-cprh  return variance of estimate (assumes neps=1)
-      var_est(1) = cv_yp_syp(1,1)
+c  return estimate of log-quantile variance for each quantile      
+        do 30 i=1,nq
+          var_est(i) = cv_yp_syp(1,1,i)
+30      continue
      
       return
       end
@@ -741,13 +749,16 @@ c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine gbtest
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-c   grubbs-beck test for single low outliers
+c   grubbs-beck test (now includes tests for multiple low outliers)
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c    development history
 c
 c    timothy a. cohn        07 feb 2007
+c       modified            .. ... 2011  New MGBT procedure added
+c       modified            .. ... 2012  New JLaM/JRS MGBT procedure added
+c       modified            13 feb 2013  ns put into common block
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -783,9 +794,11 @@ c            qu(n)      r*8  vector of upper bounds on (log) floods
 c            tl(n)      r*8  vector of lower bounds on (log) flood threshold
 c            tu(n)      r*8  vector of upper bounds on (log) flood threshold
 c
-c    n.b. routine also returns info on low outliers through common block
+c    n.b. routine also returns info (used by PeakfqSA) on number of 
+c            systematic observations, low outliers, etc. through common block
 c
-c      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),nlow,nzero,gbtype
+c      common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
+c                          ns,nlow,nzero,gbtype
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -805,7 +818,7 @@ c
      1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),
      2  ql(*),qu(*),tl(*),tu(*),gbcrit,gbthresh,gbthrsh0,qs,
      3  x(p_nq),xm,s,t,cmoms(3),gbtmin,pvaluew,
-     5  lmissing
+     5  lmissing,qmin
      
       integer MGBTP
       
@@ -813,11 +826,44 @@ c
      1  gbtype,dtype(*)
 
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
-     1               nlow,nzero,gbtype
+     1               ns,nlow,nzero,gbtype
       
       data gbtmin/-6.d0/,lmissing/-80.d0/
 !     allows very small positive log(q) values
       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c  compute number of systematic flows (ns) and count zero flows (nzero)
+c  note that zero flows are automatically treated as low outliers in MGBT
+        ns      = 0
+        nzero   = 0
+        qmin    = 99.d99      ! identify the smallest 'Syst'
+      do 10 i=1,n
+        if(ql_in(i) .eq. qu_in(i) .and. dtype(i) .eq. 'Syst') then ! N.B. Criterion
+          ns = ns + 1
+          x(ns) = ql_in(i)
+          qmin  = min(qmin,x(ns))
+          qs(ns)= 10**x(ns)
+          if(qu_in(i) .le. lmissing) nzero = nzero + 1
+        endif
+10    continue
+c===
+c
+c  determine if there is a 'less-than' value known to be smaller than smallest 
+c    point value; these are also treated as systematic observations
+      if(qmin .lt. 99.d99) then
+        do 15 i=1,n
+          if( (ql_in(i) .ne. qu_in(i)) .and. 
+     1        (dtype(i) .eq. 'Syst') .and. 
+     2        (qu_in(i) .le. qmin) ) THEN
+            ns = ns + 1
+            x(ns) = ql_in(i)
+            qs(ns)= 10**x(ns)
+          endif
+15      continue        
+      endif
+c
+c===      
 c no low outlier test
       if(gbtype .eq. "NONE") then
         gbthresh  = -99.d0        
@@ -832,18 +878,6 @@ c specified low outlier threshold?
         goto 25
       endif
       
-c  computed low outlier threshold and count zero flows
-c  note that zero flows are automatically treated as low outliers in MGBT
-        ns      = 0
-        nzero   = 0
-      do 10 i=1,n
-        if(ql_in(i) .eq. qu_in(i) .and. dtype(i) .eq. 'Syst') then ! N.B. Criterion
-          ns = ns + 1
-          x(ns) = ql_in(i)
-          qs(ns)= 10**x(ns)
-          if(qu_in(i) .le. lmissing) nzero = nzero + 1
-        endif
-10    continue
           call dsvrgn(ns,x,x)
           call dsvrgn(ns,qs,qs)
       if( (ns-nzero) .le. 5) then    ! not enough data>0 to apply low-outlier test
@@ -855,7 +889,7 @@ c  note that zero flows are automatically treated as low outliers in MGBT
         goto 25
       endif
 c
-c  Limit of use of MGBT Test; substitute BG when over half zeros
+c  Limit of use of MGBT Test; substitute GB when over half zeros
 c
       if( (gbtype .eq. 'MGBT') .and. (nzero .ge. ns/2) ) then
         gbtype = 'GBT'
@@ -1472,18 +1506,18 @@ c   begin by pseudo-orthogalizing the parameters
       if(abs(mc2(3)) .gt. skewmin) then !  straight computation
         call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
         call m2mn(mc2,mn)
-        call mn2m_var(mn,s_mn,mc2,s_mc)
+        call mn2mvarb(mn,s_mn,mc2,s_mc)
         mse_ema = s_mc(kmom,kmom)
       else  !  use weighted sum for skew = skewmin, -skewmin
         mc2(3) = -skewmin
         call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
         call m2mn(mc2,mn)
-        call mn2m_var(mn,s_mn,mc2,s_mc)
+        call mn2mvarb(mn,s_mn,mc2,s_mc)
         tneg = s_mc(kmom,kmom)
         mc2(3) = skewmin
         call var_mom(nthresh,nobs,tl2,tu2,mc2,s_mn)
         call m2mn(mc2,mn)
-        call mn2m_var(mn,s_mn,mc2,s_mc)
+        call mn2mvarb(mn,s_mn,mc2,s_mc)
         tpos = s_mc(kmom,kmom)
         w    = (mc(3)-skewmin)/(2.d0*skewmin)
         mse_ema = w*tneg + (1.d0-w)*tpos
@@ -1543,7 +1577,7 @@ c
       end
       
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|subroutine ci_ema_m3
+c****|subroutine ci_ema_m3b
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c    m03 is like m02 but uses students t distribution in 
@@ -1561,36 +1595,35 @@ c            yp         r*8  estimated p-th quantile
 c            cv_yp_syp  r*8  estimated cov[yp,syp] (2x2 matrix)
 c                              n.b. syp is sqrt(cvypsyp(1,1))
 c                                   s_syp is sqrt(cvypsyp(2,2))
-c            neps       i    number of quantile pairs to compute
-c            eps(*)     r*8  vector of ci coverages (usually 0.90,0.99,0.999)
+c            eps        r*8  ci coverages (usually 0.90,0.99,0.999)
 c
 c
 c       output variables:
 c       ------------------------------------------------------------------------
-c            ci_low(*)  r*8  estimated lower critical point of confidence 
+c            ci_low     r*8  estimated lower critical point of confidence 
 c                              interval
-c            ci_high(*) r*8  estimated upper critical point of confidence 
+c            ci_high    r*8  estimated upper critical point of confidence 
 c                              interval
-c
+c 
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-        subroutine ci_ema_m3
-     1    (yp,cv_yp_syp,neps,eps,ci_low,ci_high)
+        subroutine ci_ema_m3b
+     1    (yp,cv_yp_syp,eps,ci_low,ci_high)
      
         implicit none
           save
 
         integer 
-     1     i,neps
+     1     i
      
         double precision
-     1    yp,cv_yp_syp(2,2),eps(*),ci_high(*),ci_low(*),
+     1    yp,cv_yp_syp(2,2),eps,ci_high,ci_low,
      4    beta1,c_min,nu,nu_min,p_high,t,var_xsi_d
 
         double precision
      1    fp_tnc_icdf
      
-        data nu_min/0.5d0/,c_min/0.5d0/
+        data nu_min/1.0d0/,c_min/0.5d0/  !CTAC 0.5
 
 c
 c    beta1 is coefficient of regression of syp on yp
@@ -1617,156 +1650,231 @@ c    compute confidence intervals
 c    n.b.  sign on t means that low t corresponds to high yp
 c
 
-      do 10 i=1,neps
-         p_high   =  (1.d0+eps(i))/2.d0
+         p_high   =  (1.d0+eps)/2.d0
          t        =  fp_tnc_icdf(p_high,nu,0.d0)
-       ci_high(i) =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
+       ci_high =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
          t        =  -t
-       ci_low(i)  =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
-10      continue
+       ci_low  =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
+
         return
       end
       
-c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|subroutine var_ema
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c       given estimated parameters (tau, alpha, beta) based on 
-c         censored pearson type 3 data, this program will:
-c
-c          1.   yp    -- the estimated pth quantile of a pearson type 3 variate
-c          2.   syp   -- the estimated standard deviation of yp
-c          3.   s_syp -- the standard deviation of the standard deviation of yp
-c          4.   cv    -- a (1-epsilon) confidence interval for yp
-c
-c       n.b.  these are all asymptotic results, but seem to be excellent 
-c             approximations in small samples. 
-c
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c    development history
-c
-c    timothy a. cohn        1 july 2000
-c       modified            07 feb 2007  (major rewrite)
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c       input variables:
-c       ------------------------------------------------------------------------
-c            nthresh      i*4  number of distinct censoring thresholds 
-c                                ( (a,b) pairs)
-c            nobs(*)      r*8  vector of number of observations corresponding 
-c                                to threshold
-c                                pair (a(i),b(i)
-c            tl_in(*)     r*8  vector of lower bounds (a)
-c            tu_in(*)     r*8  vector of upper bounds (b)
-c            mc_in(3)     r*8  vector of estimated lp3 moments
-c            pq           r*8  quantile to be estimated
-c            r_G_mse      r*8  mse of g_r (b17) ; 
-c                            this variable encodes four distinct cases:
-c                            1) r_G_mse = 0 ("GENERALIZED SKEW, NO ERROR")
-c                                use fixed g = r_G w/ mse = 0.0
-c                            2) -98 < r_G_mse < 0 ("GENERALIZED SKEW, MSE > 0")
-c                                use fixed g = r_G w/ mse = -r_G_mse  
-c                            3) 0 < r_G_mse < 1.d10 ("WEIGHTED SKEW")
-c                                use g = weighted average of at-site and 
-c                                regional skew (b17b recommendation)
-c                            4) 1.d10 < r_G_mse ("STATION SKEW")
-c                                use g = at-site skew
-c            r_S2       r*8  regional variance (std.dev^2)
-c            r_S2_mse   r*8  mean square error of regional variance
-c
-c            n.b.:  g_r, the regional skewness, 
-c                          is set = sign(2,parms(3))/sqrt(parms(2))
-c
-c       output variables:
-c       ------------------------------------------------------------------------
-c            yp         r*8  estimated p-th quantile
-c            cv_yp_syp  r*8  estimated cov[yp,syp]
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-        subroutine var_ema
-     1    (nthresh,nobs,tl_in,tu_in,mc_in,pq,
-     2         r_S2, r_M_mse, r_S2_mse, r_G_mse,
-     4         yp,cv_yp_syp)
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C****|SUBROUTINE VAR_EMAB
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       GIVEN ESTIMATED PARAMETERS (TAU, ALPHA, BETA) CORR. TO 
+C         CENSORED PEARSON TYPE 3 DATA, THIS PROGRAM COMPUTES EMA
+C         CONFIDENCE INTERVALS AND OTHER RELEVANT INFO. USING
+C         COHN''S [2012] METHOD OF INVERSE GAUSSIAN QUADRATURE.
+C
+C       N.B.  THESE ARE ALL ASYMPTOTIC RESULTS, BUT SEEM TO PROVIDE 
+C             EXCELLENT RESULTS EVEN IN VERY SMALL SAMPLES. (TAC)
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C    DEVELOPMENT HISTORY
+C
+C    TIMOTHY A. COHN        12 OCT 2012
+C       MODIFIED            27 FEB 2013 (MAJOR REWRITE)
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       INPUT VARIABLES:
+C       ------------------------------------------------------------------------
+C            NTH          I*4  NUMBER OF DISTINCT CENSORING THRESHOLDS 
+C                                ( (A,B) PAIRS)
+C            NOBS(*)      R*8  VECTOR OF NUMBER OF OBSERVATIONS CORRESPONDING 
+C                                TO THRESHOLD
+C                                PAIR (A(I),B(I)
+C            TL(*)        R*8  VECTOR OF LOWER BOUNDS (A)
+C            TU(*)        R*8  VECTOR OF UPPER BOUNDS (B)
+C            MC(3)        R*8  VECTOR OF ESTIMATED LP3 MOMENTS
+C            PQ(*)        R*8  VECTOR OF QUANTILES TO BE ESTIMATED
+C            NQ           I*R  THE NUMBER OF QUANTILES TO BE ESTIMATED
+C            EPS          R*8  CI COVERAGE TO EMPLOY
+C            R_S2         R*8  REGIONAL VARIANCE (STD.DEV^2)
+C                              (SEE COHN 2011 NOTEBOOK 2 FOR WHY NEEDED)
+C            R_M_MSE      R*8  MEAN SQUARE ERROR OF REGIONAL MEAN
+C            R_S2         R*8  REGIONAL VARIANCE (STD.DEV^2); (SEE NOTES)
+C            R_G_MSE      R*8  MSE OF G_R (B17) ; 
+C                            THIS VARIABLE ENCODES FOUR DISTINCT CASES:
+C                            1) R_G_MSE = 0 ("GENERALIZED SKEW, NO ERROR")
+C                                USE FIXED G = R_G W/ MSE = 0.0
+C                            2) -98 < R_G_MSE < 0 ("GENERALIZED SKEW, MSE > 0")
+C                                USE FIXED G = R_G W/ MSE = -R_G_MSE  
+C                            3) 0 < R_G_MSE < 1.D10 ("WEIGHTED SKEW")
+C                                USE G = WEIGHTED AVERAGE OF AT-SITE AND 
+C                                REGIONAL SKEW (B17B RECOMMENDATION)
+C                            4) 1.D10 < R_G_MSE ("STATION SKEW")
+C                                USE G = AT-SITE SKEW
+C            R_S2_MSE   R*8  MEAN SQUARE ERROR OF REGIONAL VARIANCE
+C
+C            N.B.:  G_R, THE REGIONAL SKEWNESS, 
+C                          IS SET = SIGN(2,PARMS(3))/SQRT(PARMS(2))
+C
+C       OUTPUT VARIABLES:
+C       ------------------------------------------------------------------------
+C            YP(*)      R*8  ESTIMATED P-TH QUANTILE
+C            CV_YP_SYP  R*8  3-D MATRIX OF ESTIMATED COV[YP,SYP]
+C            CIL(*)     R*8  VECTOR OF LOWER CONFIDENCE INTS FOR YP
+C            CIH(*)     R*8  VECTOR OF UPPER CONFIDENCE INTS FOR YP
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+        SUBROUTINE VAR_EMAB
+     1    (NTH,NOBS,TL,TU,MC,PQ,NQ,EPS,
+     2         R_S2, R_M_MSE, R_S2_MSE, R_G_MSE,
+     4         YP,CV_YP_SYP,CIL,CIH)
      
-        implicit none
-          save
+        IMPLICIT NONE
+          SAVE
 
-        integer 
-     1     nthresh,
-     2     i,n,nth_p
-     
-        parameter (nth_p=100)
-     
-        double precision
-     1    nobs(nth_p),tl_in(nth_p),tu_in(nth_p),pq,
-     2    yp,cv_yp_syp(2,2),
-     3    mc(3),mc_in(3),parms(3),
-     4    tl(nth_p),tu(nth_p),
-     5    skewmin,s_mc(3,3),
-     6    tmp(2,3),jac(3,2),
-     7    r_S2, r_M_mse, r_S2_mse, r_G_mse
-     
-        double precision
-     1    qP3
-     
-        data skewmin/0.01d0/
+        INTEGER 
+     1    PNTH,PNQ,PNNDSUM,PNND1,PNND2,PNND3
+          
+        PARAMETER (PNTH=4)
+        PARAMETER (PNND1=2,PNND2=2,PNND3=2)
+        PARAMETER (PNNDSUM=PNND1*PNND2*PNND3)
 
-        yp       =   qP3(pq,mc_in)
-  
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c    orthogonalize (sort of) the first three moments
-c      n.b.  note 4-th parameter:  generalized skew (!)
-c      why not?  the matrix algebra works, and everything is linear
-c
-        
-        mc(1) = 0.d0
-        mc(2) = mc_in(2)
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c    check to make sure that alpha not too large
-c
-        if(abs(mc_in(3)) .gt. skewmin) then
-          mc(3) = mc_in(3)
-        else
-          mc(3) = sign(1.d0,mc_in(3))*skewmin
-        endif
-                
-        call m2p(mc,parms)
+        INTEGER 
+     1    I,J,K,N,NND(3),NQ,NTH
+     
+        DOUBLE PRECISION
+     1    NOBS(*),TL(*),TU(*),PQ(*),EPS,
+     2    YP(*),CV_YP_SYP(2,2,*),CIL(*),CIH(*),
+     3    MC(3),S_MC(3,3),
+     7    R_S2, R_M_MSE, R_S2_MSE, R_G_MSE,
+     8    GR_MC1(3,PNNDSUM),GR_MC2(3,PNNDSUM,PNNDSUM),
+     1    W1(PNNDSUM),W2(PNNDSUM,PNNDSUM),
+     2    QP1(PNNDSUM),QP2(PNNDSUM,PNNDSUM),VP1(PNNDSUM),SP1(PNNDSUM),
+     3    QP3,COVW
+    
+        DATA NND/PNND1,PNND2,PNND3/
 
-          n      =   0
-        do 20 i=1,nthresh
-          n      =   n + nobs(i)
-          tl(i)  =   tl_in(i) - mc_in(1)
-          tu(i)  =   tu_in(i) - mc_in(1)
-20      continue
-          nobs(nthresh+1) = n
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C    COMPUTE COVARIANCE MATRIX; GRID1; GRID2; RESULTS
+C
+      CALL REGMOMS(NTH,NOBS,TL,TU,MC,
+     1                    R_G_MSE,R_M_MSE,R_S2,R_S2_MSE,S_MC)     
+      CALL GRIDMAKE(MC,S_MC,NND,W1,GR_MC1)
+      DO 40 I=1,PNNDSUM
+          CALL REGMOMS(NTH,NOBS,TL,TU,GR_MC1(1,I),
+     1                    R_G_MSE,R_M_MSE,R_S2,R_S2_MSE,S_MC)    
+          CALL GRIDMAKE(GR_MC1(1,I),S_MC,NND,W2(1,I),GR_MC2(1,1,I))
+40    CONTINUE
+C
+      DO 50 K=1,NQ
+        DO 60 I=1,PNNDSUM
+            QP1(I) = QP3(PQ(K),GR_MC1(1,I))
+          DO 70 J=1,PNNDSUM
+            QP2(J,I) = QP3(PQ(K),GR_MC2(1,J,I))
+70        CONTINUE
+            VP1(I) = COVW(PNNDSUM,QP2(1,I),QP2(1,I),W2(1,I))
+            SP1(I) = SQRT(VP1(I))
+60      CONTINUE
+          YP(K)            = QP3(PQ(K),MC)
+          CV_YP_SYP(1,1,K) = COVW(PNNDSUM,QP1,QP1,W1)
+          CV_YP_SYP(1,2,K) = COVW(PNNDSUM,QP1,SP1,W1)
+          CV_YP_SYP(2,1,K) = CV_YP_SYP(1,2,K) 
+          CV_YP_SYP(2,2,K) = COVW(PNNDSUM,SP1,SP1,W1)
+          CALL CI_EMA_M3B(YP(K),CV_YP_SYP(1,1,K),EPS,CIL(K),CIH(K))
+50    CONTINUE    
+      RETURN
+      END
+       SUBROUTINE GRIDMAKE(MC,S_MC,NND,W,GR_MC)
+C===============================================================================
+C
+C        SUBROUTINE GRIDMAKE COMPUTES A GRID OF PARAMATER TRIPLETS 
+C          GIVEN THE MEAN AND COVARIANCE OF THE PARAMETERS SO THAT 
+C          GAUSSIAN QUADRATURE CAN BE PERFORMED AND THE EXPECTATION
+C          AND COVARIANCE OF AN ESTIMATOR CAN BE CALCULATED
+C              FITTED PARAMETERS (M,S2,G), COVARIANCE S_MC
+C          
+C        FOR THE ALGEBRA, SEE COHN [2013] (NOTEBOOK 3)
+C          
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        INPUT VARIABLES:
+C        -----------------------------------------------------------------------
+C            MC(3)      R*8  PARAMETERS OF LP3 DISTRIBUTION {M1,M2,M3}
+C            S_MC(3,3)  R*8  COVARIANCE OF NON-CENTRAL MOMENTS
+C            NND(3)     I*4  NUMBER OF NODES IN QUADRATURE ALONG EACH DIMENSION
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       OUTPUT
+C       ------------------------------------------------------------------------
+C            W(3)       R*8  WEIGHTS TO APPLY TO QUADRATURE SETS
+C            GR_MC(3,*) R*8  MATRIX OF QUADRATURE TRIPLETS
+C
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        AUTHOR....TIM COHN
+C        DATE......25 FEBRUARY 2013
+C
+C===============================================================================
+C
+      IMPLICIT NONE
 
-       
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c    compute covariance matrix
-c
-      call regmoms(nthresh,nobs,tl,tu,mc,
-     1                    r_G_mse,r_M_mse,r_S2,r_S2_mse,s_mc)
+      INTEGER PDIM
+      PARAMETER (PDIM=512)
       
-      call jacq2(pq,mc,jac(1,1))
+      DOUBLE PRECISION 
+     1  MC(3),S_MC(3,3),
+     2  T1(PDIM),W1(PDIM),T2(PDIM),W2(PDIM),T3(PDIM),W3(PDIM),
+     3  GR_MC(3,PDIM),W(PDIM),
+     4  ALPHA,BETA,Z(3),Z2(3),P(3,3)
 
-      call jacs2(
-     1 nthresh,nobs,tl,tu,mc,r_G_mse,r_M_mse,r_S2,r_S2_mse,pq,jac(1,2))
+      INTEGER 
+     1  NND(3),I,J,K,L,IFLAG
+     
+C  CHECK ARRAY BOUNDS
+      IF(NND(1)*NND(2)*NND(3) .GT. PDIM) THEN
+        WRITE(*,*) ' NEED TO INCREASE ARRAY SIZES (PDIM) IN MC2MNVB'
+        STOP
+      ENDIF
+      
+C  INITIALIZE QUADRATURE MODELS; ORTHOGONAL M=0, V=1 QUAD PTS
+      CALL NORMQUAD(NND(1),T1,W1)
+        ALPHA = MC(2)**2/S_MC(2,2)
+        BETA  = 1/SQRT(ALPHA)
+      CALL GAMMAQUAD(NND(2),ALPHA,BETA,T2,W2)
+        CALL DMADD(-ALPHA*BETA,NND(2),1,T2,NND(2),NND(2),1,T2,NND(2))
+      CALL NORMQUAD(NND(3),T3,W3)
 
-      call dmxtyf(3,2,jac,3,3,3,s_mc,3,2,3,tmp,2)
+C  CHOLESKY DECOMPOSITION (USED TO INTRODUCE PROPER COVARIANCE)
+      CALL CHOL33(S_MC,P,IFLAG)
 
-      call dmrrrr(2,3,tmp,2,3,2,jac,3,2,2,cv_yp_syp,2) 
+C  COMPUTE QUADRATURE VECTOR-SETS AND CORR. WEIGHTS
+           L   = 0
+      DO 10 K=1,NND(3)
+        DO 10 J=1,NND(2)
+          DO 10 I=1,NND(1)
+           L      = L+1
 
-      return
-      end
+C   COMPUTE UNIVARIATE-TRIPLET ORTHOGONAL QUADRATURE POINTS
+             Z(1) = T1(I)
+             Z(2) = T2(J)
+             Z(3) = T3(K)
 
+C   USE CHOLESKY P TO PRESERVE TRIPLET VARIANCE/COVARIANCE
+           CALL DMXTYF(3,3,P,3,3,1,Z,3,3,1,Z2,3)
+
+C   ADD MEANS TO PRESERVE CENTRAL MOMENT MEANS
+           CALL DMSUM(3,1,MC,3,3,1,Z2,3,3,1,GR_MC(1,L),3)
+C   COMPUTE CORRESPONDING WEIGHTS
+           W(L) = W1(I)*W2(J)*W3(K)           
+10    CONTINUE
+
+      RETURN
+      END
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine regmoms(nthresh,nobs,tl,tu,mc,r_G_mse,r_S2,r_S2_mse,s_mc)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1796,7 +1904,7 @@ c                              3) -98< mse <0 => generalized skew (mse = -mse)
 c                              4) mse < -98 => station skew 
 c                                   (using r_G_mse = 1.d10 is equivalent)
 c            r_M_mse    r*8  estimated MSE of M
-c            r_S2       r*8  regional estimate of variance (S^2)
+c            r_S2       r*8  regional estimate of variance (S^2) (see notes)
 c            r_S2_mse   r*8  estimated MSE of r_S2
 c
 c       output variables:
@@ -1807,32 +1915,40 @@ c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       subroutine regmoms(
-     1  nthresh,nobs,tl,tu,mc,r_G_mse,r_M_mse,r_S2,r_S2_mse,s_mc)
+     1  nthresh,nobs,tl_in,tu_in,mc_in,
+     2          r_G_mse,r_M_mse,r_S2,r_S2_mse,s_mc)
       
       implicit none
       
       integer
      1  nthresh
-      
+
       double precision
-     1  nobs(*),tl(*),tu(*),mc(3),r_G_mse,s_mc(3,3),
-     2  s_mn(3,3),mn(3),wG,r_M,r_M_mse,wM,r_S2,r_S2_mse,rS2mse,wS2
+     1  nobs(*),tl_in(*),tu_in(*),mc_in(3),r_G_mse,s_mc(3,3),
+     2  tl(100),tu(100),
+     2  mc(3),s_mn(3,3),mn(3),wG,r_M,r_M_mse,wM,r_S2,r_S2_mse,rS2mse,wS2
      
       double precision mseg_all
 
       character*4 VarS2opt
       
       common /tacR01/VarS2opt
-     
-     
+
+c  set mc(1)=0 to avoid numerical problems (var invariant to loc)     
+      mc(1) = 0.d0
+      call dmadd(-mc_in(1),nthresh,1,tl_in,nthresh,nthresh,1,tl,nthresh)
+      call dmadd(-mc_in(1),nthresh,1,tu_in,nthresh,nthresh,1,tu,nthresh)
+      mc(2) = mc_in(2)
+      mc(3) = max(-1.5d0,min(1.5d0,mc_in(3)))
+      
       call var_mom(nthresh,nobs,tl,tu,mc,s_mn)
       
       call m2mn(mc,mn)
       
-      call mn2m_var(mn,s_mn,mc,s_mc)
+      call mn2mvarb(mn,s_mn,mc,s_mc) ! new approach
 
 c
-c  compute variance of regional skew
+c  compute variance of skew; adjust for regional info
 c
         if(r_G_mse .gt. 0.d0) then   ! "WEIGHTED"
            wG = r_G_mse/(mseg_all(nthresh,nobs,tl,tu,mc) + r_G_mse)
@@ -1851,7 +1967,7 @@ c
         s_mc(3,3) = wG**2*s_mc(3,3) + (1.d0-wG)**2*abs(r_G_mse)
 
 c
-c  variance of mean (M)
+c  variance of mean (M); adjust for regional info
 c
 
       if(r_M_mse .lt. 1.d10 .and. r_M_mse .ge. 0.d0) then    ! do nothing?
@@ -1869,7 +1985,7 @@ c
       endif
 
 c
-c  variance of variance (standard deviation)
+c  variance of variance (standard deviation^2); adjust for regional info
 c
         if(r_S2_mse .gt. 1.d10) return   ! most likely case -- do nothing
                
@@ -1903,239 +2019,6 @@ c                                             !
       end
       
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|subroutine jacq2(q,mc,jac)
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c     *** do not modify without authors consent ***
-c
-c           author.......tim cohn
-c           date.........10 feb 2007
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c       input variables:
-c       ----------------------------------------------------------------
-c            q          r*8  quantile to be estimated (in range (0-1)
-c            mc         r*8  vector of parameters (first 3 central 
-c                              moments of lp3 distribution
-c
-c       output variables:
-c       ---------------------------------------------------------------
-c            ja(3)      r*8  jacobian of quantile wrt mc 
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-      subroutine jacq2(q,mc,jac)
-
-      implicit none
-        
-      integer 
-     1  ifail,ind
-      
-      double precision
-     1  q,mc(3),jac(3),
-     2  mc2,q2,error,qP3,
-     3  xmin,xmax
-     
-      external fjac
-
-      common /fjac01/mc2(3),q2,ind
-
-c  derivative of quantile wrt location parameter      
-        jac(1)= 1.d0
-c  derivative of quantile wrt scale parameter is ks     
-       mc2(1) = 0.d0
-       mc2(2) = 1.d0
-       mc2(3) = mc(3)
-        jac(2)= qP3(q,mc2)/(2.d0*sqrt(mc(2)))
-c  derivative of quantile wrt shape parameter is computed numerically     
-       mc2(1) = mc(1)
-       mc2(2) = mc(2)
-        q2    = q      
-c  indx=3 involves partial deriv wrt skew; ind=1,2 would be m, s
-      do 10 ind=3,3
-ctac  ensure skews within range of reliable computation (tac 06/18/08)
-        if(mc2(3) .gt. 0.d0) then
-          xmin = max(-0.1d0,-mc2(3)/2.d0)
-          xmax = 0.1d0
-        else
-          xmin = -0.1d0
-          xmax = min(0.1d0,-mc2(3)/2.d0)
-        endif
-ctac
-      call diff(1,0.d0,xmin,xmax,fjac,0.d0,0.d0,jac(ind),error,ifail)
-10    continue
-      return
-      end
-c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-      double precision function fjac(x)
-      implicit none
-      integer ind
-      double precision x,mc,mc2(3),q,qP3
-      common /fjac01/mc(3),q,ind
-        mc2(1) = mc(1)
-        mc2(2) = mc(2)
-        mc2(3) = mc(3)
-        mc2(ind) = mc2(ind)+x
-      fjac = qP3(q,mc2)
-      return
-      end
-      
-c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|double precision function sypf(nt,nobs,tl,tu,mc,
-c                                      r_M_mse,r_G_mse,r_S2,r_S2_mse,q)
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c     *** do not modify without author''s consent ***
-c
-c           author.......tim cohn
-c           date.........10 feb 2007
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c       input variables:
-c       ---------------------------------------------------------------
-c            nthresh    i*4  number of distinct censoring thresholds
-c            nobs       r*8  number of observations corresponding to 
-c                              each threshold 
-c            tl(*)      r*8  vector of lower bounds (a) of censoring
-c            tu(*)      r*8  vector of upper bounds (b) of censoring
-c            mc         r*8  vector of parameters (first 3 central 
-c                              moments of lp3 distribution
-c            r_G_mse    r*8  scalar mse of regional skewness estimator 
-c                              (see comments above)
-c            r_S2       r*8  regional variance (std.dev^2)
-c            r_S2_mse   r*8  mean square error of regional variance
-c            q          r*8  quantile to be estimated (in range (0-1)
-c
-c       output variables:
-c       ---------------------------------------------------------------
-c            result     r*8  estimated standard deviation of y-hat-q
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-      double precision function sypf(
-     1    nthresh,nobs,tl,tu,mc,
-     2       r_G_mse,r_M_mse,r_S2,r_S2_mse,q)
-      
-      implicit none
-      
-      integer
-     1  nthresh
-      
-      double precision
-     1  nobs(*),tl(*),tu(*),mc(3),r_G_mse,q,s_mc(3,3),
-     2  jac(3),tmp(3),result,r_M_mse,r_S2,r_S2_mse
-          
-      call regmoms(nthresh,nobs,tl,tu,mc,
-     1               r_G_mse,r_M_mse,r_S2,r_S2_mse,s_mc)
-      
-      call jacq2(q,mc,jac)
-      
-      call dmxtyf(3,1,jac,3,3,3,s_mc,3,1,3,tmp,1)
-      call dmrrrr(1,3,tmp,1,3,1,jac,3,1,1,result,1) 
-        sypf = sqrt(result)
-ctac*
-        if(result .le. 0.d0) then
-          write(*,*) '============'
-          write(*,*) 'sypf:', result,sqrt(result)
-          write(*,*) 'mc',mc
-          write(*,*) 'tl',tl(1),tl(2)
-          write(*,*) 'tu',tu(1),tu(2)
-          write(*,*) 'rGmse',r_G_mse
-          write(*,*) 'q',q
-          write(*,*) 'jacq2',jac
-          write(*,*) 's_mc ',s_mc(1,1),s_mc(1,2),s_mc(1,3)
-          write(*,*) 's_mc ',s_mc(2,1),s_mc(2,2),s_mc(2,3)
-          write(*,*) 's_mc ',s_mc(3,1),s_mc(3,2),s_mc(3,3)
-          write(*,*) '============'
-        endif
-ctac*
-        
-      return
-      end
-        
-c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-c****|subroutine jacs2
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c     *** do not modify without author''s consent ***
-c
-c           author.......tim cohn
-c           date.........10 feb 2007
-c              modified..28 sep 2011 (tac)
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-c       input variables:
-c       ---------------------------------------------------------------
-c            nthresh    i*4  number of distinct censoring thresholds
-c            nobs(*)    r*8  number of observations corresponding to 
-c                              each threshold 
-c            tl(*)      r*8  vector of lower bounds (a) of censoring
-c            tu(*)      r*8  vector of upper bounds (b) of censoring
-c            mc(*)      r*8  vector of parameters (first 3 central 
-c                              moments of lp3 distribution
-c            r_G_mse    r*8  scalar mse of regional skewness estimator 
-c            r_M_mse    r*8  mean square error of regional mean
-c            r_S2       r*8  regional variance (std.dev^2)
-c            r_S2_mse   r*8  mean square error of regional variance
-c            q          r*8  quantile to be estimated (in range (0-1)
-c
-c       output variables:
-c       ---------------------------------------------------------------
-c            jacss(3)   r*8  jacobian of syp wrt (m,s^2,g)
-c
-c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-c
-      subroutine jacs2(
-     1  nthresh,nobs,tl,tu,mc,r_G_mse,r_M_mse,r_S2,r_S2_mse,q,jacss)
-
-      implicit none
-      
-      integer
-     1  nthresh,i
-      
-      double precision
-     1  nobs(*),tl(*),tu(*),mc(3),r_G_mse,q,jacss(3),
-     3  sypf,dgv(3),delta,mc_l(3),mc_u(3),d,r_M_mse,r_S2,r_S2_mse
-     
-      data dgv/1.d0,2.d0,6.d0/,d/0.05d0/
-      
-      
-      do 10 i=1,3
-        delta = d*sqrt(dgv(i)*mc(2)/nobs(nthresh+1))
-        call mcadj(mc,i,delta,mc_l,mc_u)
-        jacss(i) = 
-     1     (sypf(nthresh,nobs,tl,tu,mc_u,
-     2               r_G_mse,r_M_mse,r_S2,r_S2_mse,q) -
-     1      sypf(nthresh,nobs,tl,tu,mc_l,
-     2               r_G_mse,r_M_mse,r_S2,r_S2_mse,q) )/
-     1              (2.d0*delta)
-10    continue
-c
-c   The following only works if FORTRAN compiler allows re-entrant code
-c     i.e. arguments must be passed in the stack (value or addresses)
-c
-      return
-      end
-c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
-      subroutine mcadj(m,i,d,mcl,mcu)
-      integer i,j
-      double precision m(3),mcl(3),mcu(3),d
-      do 10 j=1,3
-        if(i .eq. j) then
-          mcu(j) = m(j)+d
-          mcl(j) = m(j)-d
-        else
-          mcu(j) = m(j)
-          mcl(j) = m(j)
-        endif
-10    continue
-      return
-      end
-          
-c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine var_mom
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c 
@@ -2143,12 +2026,13 @@ c     program to compute variance of ema estimator
 c
 c     author.....tim cohn
 c     date.......4 april 1999
-c      modified..7 june 2000 (tac) --regional skew added
+c
+c     N.B. Regional info now introduced in REGMOMS (TAC...note 10/16/2012)
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
         subroutine var_mom
-     1    (nthresh,n_in,tl_in,tu_in,mc,varm)
+     1    (nthresh,n_in,tl_in,tu_in,mc_in,varm)
 
         implicit none
           save
@@ -2160,17 +2044,26 @@ c
         parameter (nth_p=100)
 
         double precision 
-     1    tl_in(nth_p),tu_in(nth_p),mc(3),
+     1    tl_in(nth_p),tu_in(nth_p),mc_in(3),mc(3),
      2    mnouta(6),mnoutb(6),mnoutc(6),n_in(nth_p),
      3    varm(3,3),a(3,3),ainv(3,3),bc_t(3,3),d(3,3),d_t(3,3),e_x(6),
      4    xinf,mu_x(3,3),nh,n_t,t1(3,3),tl,tu,p1,p2,p3,pa,pb,
-     5    vb(3,3),vb_t(3,3),vc(3,3),vc_t(3,3)
+     5    vb(3,3),vb_t(3,3),vc(3,3),vc_t(3,3),
+     6    skewmin,skewmax
      
         double precision
      1    pP3
      
         data xinf/999.d0/
      
+        data skewmin/0.06324555/,skewmax/1.41d0/
+
+c  limit the mc(1) to avoid potential numerical problems     
+        mc(1) = 0.d0
+        mc(2) = mc_in(2)
+        mc(3) = sign(max(skewmin,dabs(mc_in(3))),mc_in(3)) ! limit alpha
+        mc(3) = sign(min(skewmax,dabs(mc(3))),mc(3)) ! limit skew
+
             call dset(9,0.d0,vb_t,1)
             call dset(9,0.d0,vc_t,1)
             call dset(9,0.d0,d_t,1)
@@ -2183,12 +2076,15 @@ c
             nh  = n_in(it)
             n_t = n_t + nh
 c
+c     shift thresholds to reflect using a mean=0
+c
+            tl = tl_in(it) - mc_in(1)
+            tu = tu_in(it) - mc_in(1)
+
+c
 c     pa, pb are non-exceedance probabilities
 c     p1,p2,p3 are probabilities that x<a, a<x<b, x>b
 c
-            tl = tl_in(it)
-            tu = tu_in(it)
-
             pa = pP3(tl,mc)
             pb = pP3(tu,mc)
           
@@ -2229,7 +2125,7 @@ c
                 ainv(i,j) = -d_t(i,j)/n_t
             endif
 30      continue
-        call dlinrg(3,ainv,3,a,3)
+        call dlginv(3,ainv,3,a,3)
       
         call dmsum(3,3,vb_t,3,3,3,vc_t,3,3,3,bc_t,3)
         call dmrrrr(3,3,a,3,3,3,bc_t,3,3,3,t1,3)
@@ -2340,7 +2236,302 @@ c
 
         return
         end
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       SUBROUTINE MN2MVARB(MN,S_MN,MC,S_MC)
+C===============================================================================
+C
+C        SUBROUTINE MN2MVARB COMPUTES THE COVARIANCE MATRIX OF THE FITTED 
+C          PARAMETERS (M,S2,G) OF AN LP3 DISTRIBUTION BASED ON THE COVARIANCE 
+C          OF THE NON-CENTRAL MOMENTS (M1,M2,M3) WHERE Mk=E[X**k]
+C          
+C        FOR THE ALGEBRA, SEE COHN [2012] (NOTEBOOK 3)
+C          
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        INPUT VARIABLES:
+C        -----------------------------------------------------------------------
+C            MN(3)         R*8  PARAMETERS OF LP3 DISTRIBUTION {M1,M2,M3}
+C            S_MN(3,3)     R*8  COVARIANCE OF NON-CENTRAL MOMENTS
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       OUTPUT
+C       ------------------------------------------------------------------------
+C            MC(3)      R*8  PARAMETERS OF LP3 DISTRIBUTION {M,S2,G}
+C            S_MN(3,3)  R*8  COVARIANCE OF NON-CENTRAL MOMENTS
+C
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        AUTHOR....TIM COHN
+C        DATE......10 OCTOBER 2012
+C
+C===============================================================================
+C
+      IMPLICIT NONE
 
+      DOUBLE PRECISION 
+     1  MN_IN(3),S_MN_IN(3,3),MC(3),S_MC(3,3),S_MC2(3,3),
+     2  MN(3),S_MN(3,3),
+     3  V(3,3),JAC(6,6),JAC_I(6,6),S_MN2(3,3),S_MND(3,3),XDIFF(6),
+     4  D(6),X(6),X2(6),ERR,TOL
+
+      INTEGER 
+     1  NND(3),ITER,I,P_ITMX,IFLAG
+     
+      PARAMETER (P_ITMX=100)
+      
+      DATA TOL/1.D-08/,NND/2,2,2/
+     
+C  INITIALIZE USING A ROUGH ESTIMATE OF S_MC     
+        CALL MN2M_VAR(MN,S_MN,MC,S_MC)
+      DO 10 ITER=1,P_ITMX  
+        CALL MC2MNVB(MC,S_MC,NND,S_MN2)
+        CALL JMC2MNVB(MC,S_MC,NND,JAC)
+          CALL DLGINV(6,JAC,6,JAC_I,6)
+          CALL DMDIFF(3,3,S_MN,3,3,3,S_MN2,3,3,3,S_MND,3)
+          CALL TRI_IN(S_MND,XDIFF)
+          CALL DMRRRR(6,6,JAC_I,6,6,1,XDIFF,6,6,1,D,6)
+C
+            CALL TRI_IN(S_MC,X)
+          DO 20 I=1,P_ITMX
+            CALL DMSUM(6,1,X,6,6,1,D,6,6,1,X2,6)
+            CALL TRI_OUT(X2,S_MC2)
+            CALL CHOL33(S_MC2,V,IFLAG) ! Step too big?
+            IF(IFLAG .EQ. 0) THEN      ! No -> iterate
+              GOTO 30
+            ELSE                       ! Yes
+              CALL DMMULT(0.5D0,6,1,D,6,6,1,D,6) ! Try smaller step
+            ENDIF
+20        CONTINUE
+            WRITE(*,*) 'ERROR IN MN2MVARB'
+            STOP
+30        CONTINUE
+            CALL DMCOPY(3,3,S_MC2,3,3,3,S_MC,3)
+            ERR = D(6)**2
+          IF(I .EQ. 1 .AND. ERR .LE. TOL) THEN   ! test convergence wrt skew
+            GOTO 40  ! exit iff converged and last step was full step (I==1)
+          ENDIF
+10      CONTINUE
+40    CONTINUE
+      RETURN
+      END
+          
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       SUBROUTINE MC2MNVB(MC,S_MC,NND,S_MN)
+C===============================================================================
+C
+C        SUBROUTINE MC2MNVB COMPUTES THE COVARIANCE MATRIX OF THE 
+C          NON-CENTRAL MOMENTS (M1,M2,M3) WHERE Mk=E[X**k]
+C          OF AN LP3 DISTRIBUTION BASED ON THE COVARIANCE 
+C          OF THE FITTED PARAMETERS (M,S2,G) 
+C          
+C        FOR THE ALGEBRA, SEE COHN [2012] (NOTEBOOK 3)
+C          
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        INPUT VARIABLES:
+C        -----------------------------------------------------------------------
+C            MC(3)      R*8  PARAMETERS OF LP3 DISTRIBUTION {M1,M2,M3}
+C            S_MC(3,3)  R*8  COVARIANCE OF NON-CENTRAL MOMENTS
+C            NND(3)     I*4  NUMBER OF NODES IN QUADRATURE ALONG EACH DIMENSION
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       OUTPUT
+C       ------------------------------------------------------------------------
+C            S_MN(3,3)  R*8  COVARIANCE OF NON-CENTRAL MOMENTS
+C
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        AUTHOR....TIM COHN
+C        DATE......10 OCTOBER 2012
+C
+C===============================================================================
+C
+      IMPLICIT NONE
+
+      INTEGER PDIM
+      PARAMETER (PDIM=512)
+      
+      DOUBLE PRECISION 
+     1  MC(3),S_MC(3,3),S_MN(3,3),
+     2  MC_P(3,PDIM),W(PDIM),MN_P(3,PDIM),mn_pt(pdim,3),
+     3  MN_W(3),MN_WT(3),TMP(3),V_WT(3,3),covw
+
+      INTEGER 
+     1  NND(3),I,J,K
+     
+        CALL GRIDMAKE(MC,S_MC,NND,W,MC_P)
+      DO 10 K=1,NND(1)*NND(2)*NND(3)
+		CALL M2MN(MC_P(1,K),MN_P(1,K))
+	    DO 10 I=1,3
+		  MN_PT(K,I) = MN_P(I,K)
+10    CONTINUE
+      DO 20 I=1,3
+       DO 20 J=1,3
+        S_MN(I,J) = COVW(NND(1)*NND(2)*NND(3),MN_PT(1,I),MN_PT(1,J),W)
+20    CONTINUE
+      RETURN
+      END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       SUBROUTINE JMC2MNVB(MC,S_MC,NND,JAC)
+C===============================================================================
+C
+C        SUBROUTINE JMC2MNVB COMPUTES THE MATRIX OF THE 
+C          NON-CENTRAL VARIANCES (S_MN) AS A FUNCTION OF THE "TRIANGULAR"
+C          CENTRAL MOMENTS (S_MC) 
+C
+C          N.B. THE INPUT MATRICES ARE IN FULL; THE RESULT IS EXPRESSED
+C               IN A VECTOR/TRIANGULAR FORM (6 DISTINCT ELEMENTS)
+C          
+C        FOR THE ALGEBRA, SEE COHN [2012] (NOTEBOOK 3)
+C          
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        INPUT VARIABLES:
+C        -----------------------------------------------------------------------
+C            MC(3)      R*8  PARAMETERS OF LP3 DISTRIBUTION {M1,M2,M3}
+C            S_MC(3,3)  R*8  COVARIANCE OF NON-CENTRAL MOMENTS
+C            NND(3)     I*4  NUMBER OF NODES IN QUADRATURE ALONG EACH DIMENSION
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       OUTPUT
+C       ------------------------------------------------------------------------
+C            JAC(6,6)   R*8  JACOBIAN
+C
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        AUTHOR....TIM COHN
+C        DATE......10 OCTOBER 2012
+C
+C===============================================================================
+C
+      IMPLICIT NONE
+
+      DOUBLE PRECISION 
+     1  MC(3),S_MC(3,3),JAC(6,6),ERROR,ACC,EPS,DELTA,
+     2  XMIN,XMAX,MCT,S_MCT,S
+     
+      INTEGER
+     1  I,J,IFAIL,NND(3),NND_OUT,STERM(6)
+     
+      EXTERNAL FJTACD
+      
+      COMMON /TACJ012/MCT(3),S_MCT(3,3),I,J,NND_OUT(3)
+      
+      DATA EPS/0.D0/,ACC/0.D0/,DELTA/0.0001D0/,STERM/2,3,1,4,2,0/
+
+        CALL IMCOPY(3,1,NND,3,3,1,NND_OUT,3)
+        CALL DMCOPY(3,1,MC,3,3,1,MCT,3)
+        CALL DMCOPY(3,3,S_MC,3,3,3,S_MCT,3)
+          S = SQRT(MC(2))
+      DO 10 I=1,6    !  I INDEXES PC VAR WRT DERIV OF PN COMPUTED
+        DO 10 J=1,6  !  J INDEXES PN VAR WHOSE CHANGE IS TO BE COMPUTED
+            XMAX = DELTA * S**STERM(I) ! Covariance ~ S^I
+            XMIN = -XMAX
+       CALL DIFF2(1,0.D0,XMIN,XMAX,FJTACD,EPS,ACC,JAC(J,I),ERROR,IFAIL) !q&d
+c       CALL DIFFRE(1,0.D0,XMIN,XMAX,FJTACD,EPS,ACC,JAC(J,I),ERROR,IFAIL) ! 
+10    CONTINUE
+
+      RETURN
+      END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       DOUBLE PRECISION FUNCTION FJTACD(X)
+C===============================================================================
+C
+C        FJTACD COMPUTES JACOBIAN OF SIGMA(M1,M2,M3) WRT SIGMA(M,S2,G)
+C          
+C        FOR ALGEBRA, SEE COHN [2012] (NOTEBOOK 3)
+C          
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        INPUT VARIABLES:
+C        -----------------------------------------------------------------------
+C            X          R*8  INPUT ARGUMENT
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+      IMPLICIT NONE
+
+      INTEGER I,J,NND
+      
+      DOUBLE PRECISION 
+     1  X,MC,S_MC,S_MCT(3,3),S_MN(3,3),PC(6),PN(6)
+
+      COMMON /TACJ012/MC(3),S_MC(3,3),I,J,NND(3)
+
+      CALL TRI_IN(S_MC,PC)
+        PC(I) = PC(I) + X
+      CALL TRI_OUT(PC,S_MCT)
+      
+      CALL MC2MNVB(MC,S_MCT,NND,S_MN)
+      
+      CALL TRI_IN(S_MN,PN)
+      
+      FJTACD = PN(J)
+
+      RETURN
+      END
+      
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       SUBROUTINE TRI_IN(S,T)
+C===============================================================================
+C
+C        SUBROUTINE TRI_IN EXTRACTS THE UNIQUE ELEMENTS FROM A SYMMETRIC
+C          3X3 MATRIX AND PUTS THEM INTO A VECTOR
+C
+C        SUBROUTINE TRI_OUT REVERSES THE TRANSFORMATION
+C          
+C        FOR THE ALGEBRA, SEE COHN [2012] (NOTEBOOK 3)
+C          
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        INPUT VARIABLES:
+C        -----------------------------------------------------------------------
+C            S(3,3)     R*8  COVARIANCE OF NON-CENTRAL MOMENTS
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       OUTPUT
+C       ------------------------------------------------------------------------
+C            T(6)       R*8  VECTOR OF ELEMENTS
+C
+C
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C        AUTHOR....TIM COHN
+C        DATE......10 OCTOBER 2012
+C
+C===============================================================================
+
+      IMPLICIT NONE      
+      DOUBLE PRECISION S(3,3),T(6)      
+        T(1) = S(1,1)
+        T(2) = S(2,1)
+        T(3) = S(3,1)
+        T(4) = S(2,2)
+        T(5) = S(2,3)
+        T(6) = S(3,3)      
+      RETURN
+      END
+C===============================================================================
+      SUBROUTINE TRI_OUT(T,S)
+      DOUBLE PRECISION S(3,3),T(6)      
+        S(1,1) = T(1)
+        S(2,1) = T(2)
+        S(3,1) = T(3)
+        S(1,2) = S(2,1)
+        S(2,2) = T(4)
+        S(3,2) = T(5)
+        S(1,3) = S(3,1)
+        S(2,3) = S(3,2)
+        S(3,3) = T(6)      
+      RETURN
+      END
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine mn2m_var(mn,s_mn,mc,s_mc)
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -3069,7 +3260,7 @@ c            n          i*4  number of observations (censored, uncensored, or ot
 c            moms(3)    r*8  fitted parameters of lp3 distribution
 c            pq         r*8  flood probability (usually 0.99)
 c            peps       r*8  confidence interval coverage for two-sided ci
-c                            (peps = 0.95 corresponds to a two-sided coverage of 0.95)
+c                            (peps = 0.90 corresponds to a two-sided coverage of 0.90)
 c            cil        r*8  left-hand end of log-space ci
 c            ciu        r*8  right-hand end of log-space ci
 c
@@ -3108,7 +3299,7 @@ c            n          i*4  number of observations (censored, uncensored, or ot
 c            skew       r*8  skewness of fitted lp3 distribution
 c            p          r*8  flood non-exceedance probability (usually 0.99)
 c            c          r*8  confidence interval coverage for one-sided ci
-c                            (c = 0.95 corresponds to a two-sided coverage of 0.90)
+c                            (c = 0.90 corresponds to a two-sided coverage of 0.90)
 c            klpc       r*8  left-hand factor for ci
 c            kupc       r*8  right-hand factor for ci
 c
@@ -3116,7 +3307,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c        note that a 90% ci will be constructed by calling:
 c
-c            call b17ci(n,g,0.99d0,0.95d0,klpc,kupc)
+c            call b17ci(n,g,0.99d0,0.90d0,klpc,kupc)
 c
 c        then the log-space ci is
 c            (xbar + s * klpc, xbar + s * kupc)
@@ -3198,7 +3389,7 @@ c
         call m2p(moms,parms)
         n       = 50
         p       = 0.99d0
-        c       = 0.95d0
+        c       = 0.90d0
       call b17ci(n,moms(3),p,c,klpc,kupc)
 
       write(*,'(a,2f10.3)') 'klpc, kupc',klpc,kupc
@@ -3226,10 +3417,10 @@ c
       
       double precision
      1  gbcrit,gbthresh,alph01,alph10,pvaluew,qs,
-     2  sk0,sk141,skxmax
+     2  sk0,sk141,skxmax,pqd,eps
      
       integer
-     1  nlow,nzero,bcf
+     1  ns,nlow,nzero,bcf,nqd
       
       character*4 
      1  at_site_option,at_site_default,at_site_std,gbtype,VarS2opt
@@ -3241,9 +3432,11 @@ c
       common /tac002/sk0,sk141,skxmax,lskewXmax,bcf
       common /tacg04/at_site_option,at_site_default,at_site_std
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
-     1               nlow,nzero,gbtype
+     1               ns,nlow,nzero,gbtype
       common /tacmg1/alph01,alph10
       common /tacdgb/cirun
+      common /tacpq1/pqd(100),nqd
+      common /tacci1/eps
       common /tacR01/VarS2opt
       
       data at_site_option/'ADJE'/
@@ -3259,5 +3452,16 @@ c
       data bcf/2004/
 
       data VarS2opt/'DF'/
+
+      data nqd/32/
+      
+      data pqd/0.0001,0.0005,0.001 ,0.002 ,0.005 ,0.010 ,0.020 ,0.025 ,
+     1         0.040 ,0.050 ,0.100 ,0.200 ,0.300 ,0.3333,0.400 ,0.4296,
+     2         0.5   ,0.5708,0.600 ,0.700 ,0.800 ,0.900 ,0.950 ,0.960 ,
+     3         0.975 ,0.980 ,0.990 ,0.995 ,0.998 ,0.999 ,0.9995,0.9999,
+     4         68*99.000/
+
+      data eps/0.90d0/
+     
       end
       
