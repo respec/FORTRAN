@@ -1,4 +1,4 @@
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       SUBROUTINE LIBRARY IMITATIVE OF IMSL
 C       AUTHOR....TIM COHN (SHAME, SHAME)
@@ -6,16 +6,16 @@ C         DATE.......1980S?
 C         MODIFIED...09 FEB 2007 (GAMDF; TAC)
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
 C****       
         SUBROUTINE DMRRRR(NRA,NCA,A,LDA,NRB,NCB,B,LDB,NRC,NCC,C,LDC)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       SIMPLE MATRIX MULTIPLICATION
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -40,12 +40,12 @@ C===============================================================================
         END
 C****       
         SUBROUTINE DMXTYF(NRA,NCA,A,LDA,NRB,NCB,B,LDB,NRC,NCC,C,LDC)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       MATRIX MULTIPLICATION TRANS(A)*B
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -70,12 +70,12 @@ C===============================================================================
         END
 C****       
         SUBROUTINE DMXYTF(NRA,NCA,A,LDA,NRB,NCB,B,LDB,NRC,NCC,C,LDC)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       MATRIX MULTIPLICATION A*TRANS(B)
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -92,8 +92,64 @@ C===============================================================================
         DO 10 I=1,NRC
         DO 10 J=1,NCC
             C(I,J)  =  0.D0
-          DO 10 K=1,NRA
+          DO 10 K=1,NCA
             C(I,J) = C(I,J) + A(I,K)*B(J,K)
+   10   CONTINUE
+   
+        RETURN
+        END
+C****       
+        SUBROUTINE IMCOPY(NRA,NCA,A,LDA,NRB,NCB,B,LDB)
+
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       MATRIX COPY B = A
+C
+C
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+        IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+        SAVE
+
+        INTEGER A(LDA,NCA),B(LDB,NCB)
+
+        IF( 
+     1     ( NRA .NE. NRB ) .OR.
+     2     ( NCA .NE. NCB ) ) THEN
+           WRITE(*,*) ' NON-CONFORMING MATRICES (IMSUM)'
+           STOP
+        ENDIF
+        
+        DO 10 I=1,NRA
+        DO 10 J=1,NCA
+            B(I,J) = A(I,J)
+   10   CONTINUE
+   
+        RETURN
+        END
+C****       
+        SUBROUTINE DMCOPY(NRA,NCA,A,LDA,NRB,NCB,B,LDB)
+
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       MATRIX COPY B = A
+C
+C
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+        IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+        SAVE
+
+        DIMENSION A(LDA,NCA),B(LDB,NCB)
+
+        IF( 
+     1     ( NRA .NE. NRB ) .OR.
+     2     ( NCA .NE. NCB ) ) THEN
+           WRITE(*,*) ' NON-CONFORMING MATRICES (DMCOPY)'
+           STOP
+        ENDIF
+        
+        DO 10 I=1,NRA
+        DO 10 J=1,NCA
+            B(I,J) = A(I,J)
    10   CONTINUE
    
         RETURN
@@ -101,12 +157,12 @@ C===============================================================================
 C****       
         SUBROUTINE DMSUM(NRA,NCA,A,LDA,NRB,NCB,B,LDB,NRC,NCC,C,LDC)
 
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       MATRIX ADDITION C = A + B
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -129,14 +185,44 @@ C===============================================================================
         RETURN
         END
 C****       
+        SUBROUTINE DMDIFF(NRA,NCA,A,LDA,NRB,NCB,B,LDB,NRC,NCC,C,LDC)
+
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       MATRIX SUBTRACTION C = A - B
+C
+C
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+        IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+        SAVE
+
+        DIMENSION A(LDA,NCA),B(LDB,NCB),C(LDC,NCC)
+
+        IF( 
+     1     ( NRA .NE. NRB ) .OR.
+     2     ( NCA .NE. NCB ) .OR.
+     3     ( NRB .NE. NRC ) .OR.
+     3     ( NCB .NE. NCC ) ) THEN
+           WRITE(*,*) ' NON-CONFORMING MATRICES (DMSUM)'
+           STOP
+        ENDIF
+        
+        DO 10 I=1,NRC
+        DO 10 J=1,NCC
+            C(I,J) = A(I,J) - B(I,J)
+   10   CONTINUE
+   
+        RETURN
+        END
+C****       
         SUBROUTINE DMMULT(VAL,NRA,NCA,A,LDA,NRC,NCC,C,LDC)
 
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
-C       MATRIX ADDITION C = VAL * A
+C       MATRIX MULTIPLICATION BY SCALAR C = VAL * A
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -157,14 +243,42 @@ C===============================================================================
         RETURN
         END
 C****       
+        SUBROUTINE DMADD(VAL,NRA,NCA,A,LDA,NRC,NCC,C,LDC)
+
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       ADD A SCALAR TO AN ARRAY C = VAL + A
+C
+C
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+        IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+        SAVE
+
+        DIMENSION A(LDA,NCA),C(LDC,NCC)
+
+        IF( 
+     1     ( NRA .NE. NRC ) .OR.
+     2     ( NCA .NE. NCC ) ) THEN
+           WRITE(*,*) ' NON-CONFORMING MATRICES (DMADD)'
+           STOP
+        ENDIF
+        
+        DO 10 I=1,NRC
+        DO 10 J=1,NCC
+            C(I,J) = VAL + A(I,J)
+   10   CONTINUE
+   
+        RETURN
+        END
+C****       
         SUBROUTINE DAXPY(N,DA,DX,INCX,DY,INCY)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       LET Y(I)  = DA * X(I) + Y(I)
 C 
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -192,14 +306,14 @@ C===============================================================================
         END
 C****       
       FUNCTION DLNGAM(XX)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       LOGARITHM OF THE GAMMA FUNCTION
 C
 C       N.B.  VALID ONLY FOR XX>0
 C             THIS IS DIFFERENT FROM IMSL ROUTINE
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -223,16 +337,16 @@ C===============================================================================
       END
 C****       
         SUBROUTINE DLINRG(N,A,LDA,AINV,LDAINV)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       SIMPLE MATRIX INVERSION
 C
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
-        DIMENSION A(LDA,LDA),AINV(LDAINV,N)
+        DIMENSION A(LDA,LDA),AINV(LDAINV,N),B(100)
 
         DO 10 I=1,N
         DO 10 J=1,N
@@ -260,6 +374,10 @@ C
 
       PARAMETER (NMAX=50)
       DIMENSION A(NP,NP),B(NP,MP),IPIV(NMAX),INDXR(NMAX),INDXC(NMAX)
+c                DO 55 I1=1,N!ctac
+c                  WRITE(*,'(1P,10E12.3)') (A(I1,I2),I2=1,N) !ctac
+c55              CONTINUE !ctac
+c                read(*,*)!ctac
       DO 11 J=1,N
         IPIV(J)=0
 11    CONTINUE
@@ -276,6 +394,10 @@ C
                 ENDIF
               ELSE IF (IPIV(K).GT.1) THEN
                 WRITE(*,*) 'SINGULAR MATRIX (DLINRG)'
+                DO 50 I1=1,N
+                  WRITE(*,'(1P,10E12.3)') (A(I1,I2),I2=1,N)
+50              CONTINUE
+                READ(*,*)
               ENDIF
 12          CONTINUE
           ENDIF
@@ -331,12 +453,172 @@ C
       RETURN
       END
 C****       
-        SUBROUTINE ISET(N,IVALUE,IVAR,ISPACE)
-C===============================================================================
+        SUBROUTINE DLGINV(N,A,LDA,AINV,LDAINV)
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
-C       SIMPLE MATRIX INVERSION
+C       GENERALIZED MATRIX INVERSION FOR SQUARE MATRIX
 C
-C===============================================================================
+C
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+        IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+        SAVE
+        
+        PARAMETER (LDU=100)
+        DIMENSION A(LDA,LDA),AINV(LDAINV,N),B(100),
+     1            U(LDU,LDU),AFLAG(LDU),ATEMP(LDU)
+     
+        IF(N .GT. LDU) THEN
+          WRITE(*,*) N,'*** EXCEEDS ARRAY LIMIT ***',LDU
+          RETURN
+        ENDIF
+
+        DO 10 I=1,N
+        DO 10 J=1,N
+          AINV(I,J)  =  A(J,I)  ! note ginv2 produces transpose of inverse
+   10   CONTINUE
+   
+        CALL GINV2(AINV,LDAINV,U,LDU,AFLAG,ATEMP,N,N)
+        
+        RETURN
+        END
+C****       
+      SUBROUTINE GINV2 (A,LDA,U,LDU,AFLAG,ATEMP,NR,NC)
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       GENERALIZED MATRIX MULTIPLICATION INVERSION
+C
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C A SIMPLE ALGORITHM FOR COMPUTING THE GENERALIZED INVERSE OF A MATRIX
+C  BY B. RUST, W. R. BURRUS AND C. SCHNEEBERGER
+C  CACM 9(5):381-387 (MAY, 1966)
+C
+C THIS ROUTINE CALCULSTES THE GENERALIZED INVERSE OF INPUT MATRIX, A,
+C AND STORES THE TRANSPOSE OF IT IN MATRIX, A.
+C NR -> NUMBER OF ROWS OF MATRIX,  A
+C NC -> NUMBER OF COLUMNS OF MATRIX,  A
+C U  -> A BOOKKEEPING MATRIX.
+C AFLAG AND ATEMP ARE TEMPORARY WORKING VECTORS
+C
+C NOTES: IF THE COLUMNS OF A ARE INDEPENDENT, THEN THE GENERALIZED
+C        INVERSE OF A IS THE LEAST SQUARES INVERSE OF A. THAT IS,
+C        GINV CAN BE USED TO COMPUTE LEAST SQUARES REGRESSION
+C        COEFFICIENTS.
+C
+C        IF THE MATRIX A IS SQUARE WITH INDEPENDENT COLUMNS, THEN
+C        THE GENERALIZED INVERSE OF A IS THE INVERSE OF A.
+C
+C
+      INTEGER LDA,LDU
+      DOUBLE PRECISION A(LDA,NC)
+      DOUBLE PRECISION U(LDU,NC)
+      DOUBLE PRECISION AFLAG(LDU), ATEMP(LDU)
+      DOUBLE PRECISION FAC, TOL, DOT1, DOT2
+      DOUBLE PRECISION DOT
+      INTEGER NR,NC
+      INTEGER I,J,K,L,JM1
+
+      DO  I = 1,NC
+        DO J = 1,NC
+         U(I,J) = 0.0
+        END DO
+        U(I,I) = 1.0
+      END DO
+      FAC = DOT(NR,A,LDA,1,1)
+      FAC= 1.D0/SQRT(FAC)
+      DO I = 1,NR
+        A(I,1) = A(I,1) * FAC
+      END DO
+      DO I = 1,NC
+        U(I,1) = U(I,1)*FAC
+      END DO
+       AFLAG(1) = 1.D0
+C
+C DEPENDENT COLUMN TOLERANCE, TOL
+C
+       N = 27
+       TOL = (10.0 * 0.5**N)**2
+C      TOL=10.0*EPSILON(FAC)
+      DO J = 2,NC
+        DOT1 = DOT(NR,A,LDA,J,J)
+        JM1=J-1
+         DO L=1,2
+          DO K=1,JM1
+            ATEMP(K) = DOT(NR,A,LDA,J,K)
+         END DO
+         DO K=1,JM1
+            DO I = 1,NR
+              A(I,J) = A(I,J)-ATEMP(K)*A(I,K)*AFLAG(K)
+            END DO
+            DO I = 1,NC
+              U(I,J) = U(I,J)-ATEMP(K)*U(I,K)
+            END DO
+         END DO
+         END DO
+        DOT2 = DOT(NR,A,LDA,J,J)
+        IF((DOT2/DOT1) <= TOL) THEN
+          DO I=1,JM1
+            ATEMP (I)=0.0
+            DO  K=1,I
+             ATEMP(I) = ATEMP(I) + U(K,I)*U(K,J)
+            END DO
+          END DO
+          DO I = 1,NR
+            A(I,J)=0.D0
+            DO K=I,JM1
+              A(I,J) = A(I,J) - A(I,K)*ATEMP(K)*AFLAG(K)
+            END DO
+          END DO
+          AFLAG(J) = 0.D0
+          FAC = DOT(NC,U,LDU,J,J)
+          FAC= 1.D0/SQRT(FAC)
+        ELSE
+          AFLAG(J) = 1.0
+          FAC=1.D0/SQRT(DOT2)
+        ENDIF
+        DO I = 1,NR
+          A(I,J) = A(I,J)*FAC
+        END DO
+        DO I = 1,NC
+          U(I,J) = U(I,J)*FAC
+        END DO
+      END DO
+      DO J=1,NC
+        DO I=1,NR
+        FAC = 0.0
+        DO K = J,NC
+          FAC=FAC+A(I,K)*U(J,K)
+        END DO
+          A(I,J) = FAC
+        END DO
+      END DO
+      RETURN
+      END
+C
+C****
+      DOUBLE PRECISION FUNCTION DOT (NR,A,LDA,JC,KC)
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C  COMPUTES THE INNER PRODUCT OF COLUMNS JC AND KC
+C  OF MATRIX, A.
+	  INTEGER LDA
+	  DOUBLE PRECISION A(LDA,*)
+	  DOUBLE PRECISION PROD
+	  INTEGER I, NR, JC, KC
+		  PROD=0.0
+		  DO I = 1,NR
+			PROD = PROD + A(I,JC)*A(I,KC)
+		  END DO
+			DOT = PROD
+		  RETURN
+	  END
+C****
+      SUBROUTINE ISET(N,IVALUE,IVAR,ISPACE)
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       SET VECTOR TO CONSTANT
+C
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -350,11 +632,11 @@ C===============================================================================
         END
 C****       
         SUBROUTINE DSET(N,FVALUE,FVAR,ISPACE)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
-C       SIMPLE MATRIX INVERSION
+C       SET VECTOR TO CONSTANT
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -368,11 +650,11 @@ C===============================================================================
         END
 C****       
         SUBROUTINE RSET(N,RVALUE,RVAR,ISPACE)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
-C       SIMPLE MATRIX INVERSION
+C       SETTING VECTOR TO CONSTANT
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -386,11 +668,11 @@ C===============================================================================
         END
 C****       
         DOUBLE PRECISION FUNCTION DNORDF(X)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       NORMAL DISTRIBUTION CDF
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -403,11 +685,11 @@ C===============================================================================
 
 C****       
         DOUBLE PRECISION FUNCTION ERFCC(X)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       ERROR FUNCTION FOUND IN NUMERICAL RECIPES
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -429,11 +711,11 @@ C===============================================================================
       END
 C****       
         DOUBLE PRECISION FUNCTION DNORIN(P)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       NORMAL DISTRIBUTION CDF
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         SAVE
 
@@ -575,53 +857,53 @@ C
       END 
 C****       
       DOUBLE PRECISION FUNCTION DGAMDF(X,A)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       GAMMA DISTRIBUTION CDF
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
-	
-	  DOUBLE PRECISION ALIM(2)
-	  DATA ALIM/1.D6,1.1D6/
-	  
-	     X2  = MAX(0.D0,X)
-	   IF(A .LE. 0.D0) THEN
-	     WRITE(*,*) 'DGAMDF:  A = ',A
-	     DGAMDF = 1.D0
-	     RETURN
-	   ENDIF
-	   IF(X .GT. A+20.D0*SQRT(A)) THEN
-C	     WRITE(*,*) 'DGAMDF:  A = ',A,' X = ',X
-	     DGAMDF = 1.D0
-	     RETURN
-	   ENDIF
+    
+      DOUBLE PRECISION ALIM(2)
+      DATA ALIM/1.D6,1.1D6/
+      
+         X2  = MAX(0.D0,X)
+       IF(A .LE. 0.D0) THEN
+         WRITE(*,*) 'DGAMDF:  A = ',A
+         DGAMDF = 1.D0
+         RETURN
+       ENDIF
+       IF(X .GT. A+20.D0*SQRT(A)) THEN
+C         WRITE(*,*) 'DGAMDF:  A = ',A,' X = ',X
+         DGAMDF = 1.D0
+         RETURN
+       ENDIF
         IF (A .LE. ALIM(2)) THEN
            ARG1  =  GAMMP(A,X2)
-	ENDIF
-	
-	IF (A .GE. ALIM(1)) THEN
+      ENDIF
+    
+      IF (A .GE. ALIM(1)) THEN
 C
 C  THIS IS A WILSON-HILFERTY SOLUTION
 C
-	     Z = -(-1.D0 + 9.D0*A - 9.D0*A**(2.D0/3.D0)*X2**(1.D0/3.D0))
+         Z = -(-1.D0 + 9.D0*A - 9.D0*A**(2.D0/3.D0)*X2**(1.D0/3.D0))
      1            /(3.D0*SQRT(A))
            ARG2 = DNORDF(Z)
-	ENDIF
-	   W = MAX(0.D0,MIN((A-ALIM(1))/(ALIM(2)-ALIM(1)),1.D0))
-	DGAMDF = (1.D0-W)*ARG1 + W*ARG2
+      ENDIF
+         W = MAX(0.D0,MIN((A-ALIM(1))/(ALIM(2)-ALIM(1)),1.D0))
+      DGAMDF = (1.D0-W)*ARG1 + W*ARG2
       
       RETURN
       END
       
 C****       
       DOUBLE PRECISION FUNCTION DCHIDF(X,D)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       CHI-SQUARE DISTRIBUTION CDF
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -633,27 +915,27 @@ C===============================================================================
       
 C****       
       DOUBLE PRECISION FUNCTION DCHIIN(P,NU)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       INVERSE CHI-SQUARED DISTRIBUTION CDF
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
       DOUBLE PRECISION P,NU,X
       REAL*4 GAMMA,P2
       
-	IF( (P .GT. 0.0) .AND. (P .LT. 1.D0) ) THEN
-        	P2    =  P
-        	GAMMA =  NU/2.0
-		CALL MGAMINV(NU/2.D0,P,X1,IER)
-		X     =  2.D0*X1
-	ELSE IF (P .LE. 0.D0) THEN
-		X = 0.0
-	ELSE 
-	        X = 1.D99
-	ENDIF
+      IF( (P .GT. 0.0) .AND. (P .LT. 1.D0) ) THEN
+            P2    =  P
+            GAMMA =  NU/2.0
+        CALL MGAMINV(NU/2.D0,P,X1,IER)
+        X     =  2.D0*X1
+      ELSE IF (P .LE. 0.D0) THEN
+        X = 0.0
+      ELSE 
+            X = 1.D99
+      ENDIF
       
       DCHIIN  =  X
       
@@ -662,11 +944,11 @@ C===============================================================================
       
 C****       
       SUBROUTINE DRNGAM(N,ALPHA,X)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       GENERATES RANDOM 1P GAMMA VARIATES
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -689,11 +971,11 @@ C****  NORRAN(N,ISEED,X)
 
 C****       
       DOUBLE PRECISION FUNCTION DRNORMS()
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       GENERATES STANDARD NORMAL VARIATE
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -711,11 +993,11 @@ C
 C****       
 
       SUBROUTINE RNSET(ISEED2)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       INITIALIZED RANDOM NUMBER GENERATOR
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       INTEGER ISEED, ISEED2
       COMMON /ZZZ889/ISEED
       
@@ -887,12 +1169,12 @@ C
       END 
 C****       
       SUBROUTINE DSVRGN(N,RB,RA)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       HEAP SORT
 C         NOTE:  RB AND RA CAN BE THE SAME ARRAY
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -938,13 +1220,13 @@ C===============================================================================
       END
 C****       
       SUBROUTINE ISVRGN(N,RB,RA)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       HEAP SORT
 C         NOTE:  RB AND RA CAN BE THE SAME ARRAY
 C         INTEGER VERSION WRITTEN 08 JULY 2011 (TAC)
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT INTEGER (A-Z)
       SAVE
 
@@ -990,13 +1272,13 @@ C===============================================================================
       END
 C****       
       SUBROUTINE RSVRGN(N,RB,RA)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       HEAP SORT
 C         NOTE:  RB AND RA CAN BE THE SAME ARRAY
 C         REAL*4 VERSION WRITTEN 08 JULY 2011 (TAC)
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT INTEGER (A-Z)
       SAVE
 
@@ -1043,11 +1325,11 @@ C===============================================================================
       END
 C****       
       INTEGER FUNCTION NDAYS(IDAY, IMONTH, IYEAR)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       COMPUTE THE NUMBER OF DAYS SINCE 1 JAN 1900 (=0)
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -1061,11 +1343,11 @@ C     NDAYS0(1,1,1900) = 693961
       END
 C****       
       INTEGER FUNCTION NDAYS0(IDAY, IMONTH, IYEAR)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       COMPUTE THE NUMBER OF DAYS SINCE 1 JAN 0000 (=0)
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       SAVE
 
@@ -1099,11 +1381,11 @@ C
       RETURN
       END
 C****      
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C       DUMMY GRAPHICS ROUTINES, OUTPUT, ETC.  
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       SUBROUTINE UMACH
         RETURN
         END
@@ -1117,7 +1399,7 @@ C===============================================================================
         RETURN
         END
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
 * ======================================================================
 * NIST Guide to Available Math Software.
@@ -1346,6 +1628,7 @@ C
 * NIST Guide to Available Math Software.
 * Fullsource for module DGAMMA from package CMLIB.
 * Retrieved from CAMSUN on Thu Jul  9 21:57:50 1998.
+C  RENAMED DGAMMA SO IT NO LONGER CONFLICTS WITH INTRINSIC DGAMMA
 * ======================================================================
       DOUBLE PRECISION FUNCTION DGAMMA(X)
 C***BEGIN PROLOGUE  DGAMMA
@@ -3571,7 +3854,7 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
         DO 10 I=1,170
           FACT(I) = I*FACT(I-1)
 10      CONTINUE
-	  ISET=2
+      ISET=2
         ENDIF
 
         DFAC = FACT(N)
@@ -3626,12 +3909,12 @@ c            write(*,*) 'mg ',i, x(i),f(i)
                RETURN
             ENDIF
           X(I+1) = X(I)-F(I)*(X(I)-X(I-1))/(F(I)-F(I-1))
-	  X(I+1) = MAX(X(I+1),X(I)/10.D0)
+      X(I+1) = MAX(X(I+1),X(I)/10.D0)
    10   CONTINUE
 
    99   CONTINUE
           XT   =  PROB*1.D99
-	  WRITE(*,*) 'ERROR IN MGAMINV: P = ',PROB
+      WRITE(*,*) 'ERROR IN MGAMINV: P = ',PROB
           IER  =  129
         RETURN
        END
@@ -3642,7 +3925,7 @@ C     MODIFIED BY TIM COHN, AUGUST 31, 1998,
 C     FOR DOUBLE PRECISION
 C
       DOUBLE PRECISION FUNCTION GAMMP(A,X)
-	  IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       IF(X.LT.0.) THEN
          WRITE(*,*) 'GAMMP: X < 0'
          GAMMP = 0.D0
@@ -3660,7 +3943,7 @@ C
       END
 c
       SUBROUTINE GCF(GAMMCF,A,X,GLN)
-	  IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       PARAMETER (ITMAX=100000,EPS=3.E-12)
       GLN=GAMMLN(A)
       GOLD=0.
@@ -3691,7 +3974,7 @@ c
       END
 C
       SUBROUTINE GSER(GAMSER,A,X,GLN)
-	  IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       PARAMETER (ITMAX=10000,EPS=3.E-12)
       GLN=GAMMLN(A)
       IF(X.LE.0.)THEN
@@ -3715,7 +3998,7 @@ C      PAUSE 'A too large, ITMAX too small'
       END
 C
       DOUBLE PRECISION FUNCTION GAMMLN(XX)
-	  IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       REAL*8 COF(6),STP,HALF,ONE,FPF,X,TMP,SER
       DATA COF,STP/76.18009173D0,-86.50532033D0,24.01409822D0,
      *    -1.231739516D0,.120858003D-2,-.536382D-5,2.50662827465D0/
@@ -4806,6 +5089,680 @@ C                 CURRENT POINT
       IF(EPS.NE.0. .AND. ERROR.GT.S) IFAIL = 1
       RETURN
       END 
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C       REPLACEMENT FOR DIFF SUBROUTINE
+C       USES A SIMPLE DIFFERENCE EQUATION FOR DERIVATIVE
+C       
+C       Timothy A. Cohn  10 Oct 2012
+C
+         SUBROUTINE DIFF2(ND,X0,D1,D2,F,EPS,ACC,
+     1                   DERIV,ERROR,IFAIL)
+        
+       IMPLICIT NONE
+          SAVE
+     
+       INTEGER
+     1     IFAIL,ND
+     
+         DOUBLE PRECISION 
+     1     X0,D1,D2,F,EPS,ACC,DERIV,DERIV1,DERIV2,ERROR,UP,DOWN,
+     2     FX,TEST
+     
+         EXTERNAL F
+         
+       IF(ND. NE. 1) THEN
+         WRITE(*,*) '*** ERROR: COMPUTES ONLY FIRST DERIVATIVES (DIFF2)'
+         WRITE(*,*) '*** IORD = ',ND
+         STOP
+       ENDIF
+     
+       FX    =  F(X0)
+         IF(FX .EQ. -1.D99) THEN
+           IFAIL = 1
+           RETURN
+         ENDIF
+       UP    =  F(D2)
+       DOWN  =  F(D1)
+       DERIV1 = (FX-DOWN)/(X0-D1)
+       DERIV2 = (UP-FX)/(D2-X0)
+       DERIV = (UP-DOWN)/(D2-D1)
+         IF(EPS .GT. 0.D0) THEN
+        TEST = 4.D0*EPS**2
+      ELSE
+        TEST = 4.D0*EPS**2*(1.D0+DERIV**2)
+      ENDIF
+C
+        IF((DERIV1-DERIV2)**2 .LE. TEST) THEN
+          IFAIL = 0
+        ELSE
+          IFAIL = 1
+        ENDIF
+      RETURN
+      END
+c  modified by tac 2/5/99 to use double precision
+c  modified by tac 10/11/12 to provide second entry point
+c  
+      subroutine diffRE(iord,x0,xmin,xmax,f,eps,acc,deriv,error,ifail)
+c
+c             numerical differentiation of user defined function
+c
+c                         david kahaner, nbs (gaithersburg) 
+c
+c  the procedure differentiate calculates the first, second or
+c   third order derivative of a function by using neville's process to
+c   extrapolate from a sequence of simple polynomial approximations based on
+c   interpolating points distributed symmetrically about x0 (or lying only on
+c   one side of x0 should this be necessary).  if the specified tolerance is
+c   non-zero then the procedure attempts to satisfy this absolute or relative
+c   accuracy requirement, while if it is unsuccessful or if the tolerance is
+c   set to zero then the result having the minimum achievable estimated error
+c   is returned instead.
+c
+c input parameters:
+c iord = 1, 2 or 3 specifies that the first, second or third order
+c   derivative,respectively, is required.
+c x0 is the point at which the derivative of the function is to be calculated.
+c xmin, xmax restrict the interpolating points to lie in [xmin, xmax], which
+c   should be the largest interval including x0 in which the function is
+c   calculable and continuous.
+c f, a real procedure supplied by the user, must yield the value of the
+c   function at x for any x in [xmin, xmax] when called by f(x).
+c eps denotes the tolerance, either absolute or relative.  eps=0 specifies that 
+c   the error is to be minimised, while eps>0 or eps<0 specifies that the
+c   absolute or relative error, respectively, must not exceed abs(eps) if
+c   possible.  the accuracy requirement should not be made stricter than
+c   necessary, since the amount of computation tends to increase as
+c   the magnitude of eps decreases, and is particularly high when eps=0.
+c acc denotes that the absolute (acc>0) or relative (acc<0) errors in the
+c   computed values of the function are most unlikely to exceed abs(acc), which 
+c   should be as small as possible.  if the user cannot estimate acc with
+c   complete confidence, then it should be set to zero.
+c
+c output parameters:
+c deriv is the calculated value of the derivative.
+c error is an estimated upper bound on the magnitude of the absolute error in
+c   the calculated result.  it should always be examined, since in extreme case 
+c   may indicate that there are no correct significant digits in the value
+c   returned for derivative.
+c ifail will have one of the following values on exit:
+c   0   the procedure was successful.
+c   1   the estimated error in the result exceeds the (non-zero) requested
+c          error, but the most accurate result possible has been returned.
+c   2   input data incorrect (derivative and error will be undefined).
+c   3   the interval [xmin, xmax] is too small (derivative and error will be
+c          undefined);
+c
+      implicit double precision (a-h,o-z)
+      save
+
+      external f
+      double precision
+     + x0,xmin,xmax,acc,deriv,error,beta,beta4,h,h0,h1,h2,
+     +newh1,newh2,heval,hprev,baseh,hacc1,hacc2,nhacc1,
+     +nhacc2,minh,maxh,maxh1,maxh2,tderiv,f0,twof0,f1,f2,f3,f4,fmax,
+     +maxfun,pmaxf,df1,deltaf,pdelta,z,zpower,c0f0,c1,c2,c3,dnew,dprev,
+     +re,te,newerr,temerr,newacc,pacc1,pacc2,facc1,facc2,acc0,
+     +acc1,acc2,relacc,twoinf,twosup,s, 
+     +d(10),denom(10),e(10),minerr(10),maxf(0:10),save(0:13),
+     +storef(-45:45),factor
+c
+      integer iord,ifail,eta,inf,sup,i,j,k,n,nmax,method,signh,fcount,
+     +init
+      logical ignore(10),contin,saved
+c
+c
+c eta is the minimum number of significant binary digits (apart from the
+c sign digit) used to represent the mantissa of real numbers. it should
+c be devreased by one if the computer truncates rather than rounds.
+c inf, sup are the largest possible positive integers subject to
+c 2**(-inf), -2**(-inf), 2**sup, and -2**sup all being representable real
+c numbers.
+      eta=i1mach(14) - 1
+      inf=-i1mach(12) - 2
+      sup=i1mach(13)-1
+      if(iord.lt.1 .or. iord.gt.3 .or. xmax.le.xmin .or.
+     +  x0.gt.xmax .or. x0.lt.xmin) then
+          ifail = 2 
+          return
+      endif
+c
+      twoinf = 2.**(-inf)
+      twosup = 2.**sup
+      factor = 2**(float((inf+sup))/30.)
+      if(factor.lt.256.)factor=256.
+      maxh1 = xmax - x0
+      signh = 1
+      if(x0-xmin .le. maxh1)then
+          maxh2 = x0 - xmin
+      else
+          maxh2 = maxh1
+          maxh1 = x0 - xmin
+          signh = -1
+      endif
+      relacc = 2.**(1-eta)
+      maxh1 = (1.-relacc)*maxh1
+      maxh2 = (1.-relacc)*maxh2
+      s=128.*twoinf 
+      if(abs(x0).gt.128.*twoinf*2.**eta) s = abs(x0)*2.**(-eta)
+      if(maxh1.lt.s)then
+c         interval too small
+          ifail =3
+          return
+      endif
+      if(acc.lt.0.) then
+          if(-acc.gt.relacc)relacc = -acc
+          acc = 0.
+      endif
+c
+c     determine the smallest spacing at which the calculated
+c     function values are unequal near x0.
+c
+      f0 = f(x0)
+      twof0 = f0 + f0
+      if(abs(x0) .gt. twoinf*2.**eta) then
+          h = abs(x0)*2.**(-eta)
+          z = 2.
+      else
+          h = twoinf
+          z = 64.
+      endif
+      df1 = f(x0+signh*h) - f0
+   80 if(df1 .ne. 0. .or. z*h .gt. maxh1) goto 100
+      h = z*h
+      df1 = f(x0+signh*h) - f0
+      if(z .ne.2.) then
+          if(df1 .ne. 0.) then
+              h = h/z
+              z = 2.
+              df1 = 0.
+          else
+              if(z*h .gt. maxh1) z = 2. 
+          endif
+      endif
+      goto 80
+  100 continue
+c
+      if(df1 .eq. 0.) then
+c         constant function
+          deriv = 0.
+          error = 0.
+          ifail = 0 
+          return
+      endif
+      if(h .gt. maxh1/128.) then
+c         minimum h too large 
+          ifail = 3 
+          return
+      endif
+c
+      h = 8.*h
+      h1 = signh*h
+      h0 = h1
+      h2 = -h1
+      minh = 2.**(-min(inf,sup)/iord)
+      if(minh.lt.h) minh = h
+      if(iord.eq.1) s = 8.
+      if(iord.eq.2) s = 9.*sqrt(3.)
+      if(iord.eq.3) s = 27.
+      if(minh.gt.maxh1/s) then
+          ifail = 3 
+          return
+      endif
+      if(minh.gt.maxh2/s .or. maxh2.lt.128.*twoinf) then
+          method = 1
+      else
+          method = 2
+      endif
+c
+c     method 1 uses 1-sided formulae, and method 2 symmetric.
+c         now estimate accuracy of calculated function values.
+c
+      if(method.ne.2 .or. iord.eq.2) then
+          if(x0.ne.0.) then
+              call faccur(0.d0,-h1,acc0,x0,f,twoinf,f0,f1)
+          else
+              acc0 = 0.
+          endif
+      endif
+c
+      if(abs(h1) .gt. twosup/128.) then 
+          hacc1 = twosup
+      else
+          hacc1 = 128.*h1
+      endif
+c
+      if(abs(hacc1)/4. .lt. minh) then
+          hacc1 = 4.*signh*minh
+      elseif(abs(hacc1) .gt. maxh1) then
+          hacc1 = signh*maxh1 
+      endif
+      f1 = f(x0+hacc1)
+      call faccur(hacc1,h1,acc1,x0,f,twoinf,f0,f1)
+      if(method.eq.2) then
+          hacc2 = -hacc1
+          if(abs(hacc2) .gt. maxh2) hacc2 = -signh * maxh2
+          f1 = f(x0 + hacc2)
+          call faccur(hacc2,h2,acc2,x0,f,twoinf,f0,f1)
+      endif
+      nmax = 8
+      if(eta.gt.36) nmax = 10 
+      n = -1
+      fcount = 0
+      deriv = 0.
+      error = twosup
+      init = 3
+      contin = .true.
+c
+  130 n = n+1
+      if(.not. contin) goto 800
+c
+      if(init.eq.3) then
+c         calculate coefficients for differentiation formulae
+c             and neville extrapolation algorithm 
+          if(iord.eq.1) then
+              beta=2.
+          elseif(method.eq.2)then
+              beta = sqrt(2.) 
+          else
+              beta = sqrt(3.) 
+          endif
+          beta4 = beta**4.
+          z = beta
+          if(method.eq.2) z = z**2
+          zpower = 1.
+          do 150 k = 1,nmax
+              zpower = z*zpower
+              denom(k) = zpower-1
+  150     continue
+          if(method.eq.2 .and. iord.eq.1) then
+              e(1) = 5.
+              e(2) = 6.3
+              do 160 i = 3,nmax
+  160             e(i) = 6.81 
+        elseif((method.ne.2.and.iord.eq.1) .or. (method.eq.2.and.
+     +            iord.eq.2)) then
+              e(1) = 10.
+              e(2) = 16.
+              e(3) = 20.36
+              e(4) = 23.
+              e(5) = 24.46
+              do 165 i = 6,nmax
+  165             e(i) = 26.
+              if(method.eq.2.and.iord.eq.2) then
+                  do 170 i = 1,nmax
+  170                  e(i)=2*e(i)
+              endif 
+          elseif(method.ne.2.and.iord.eq.2) then
+              e(1) = 17.78
+              e(2) = 30.06
+              e(3) = 39.66
+              e(4) = 46.16
+              e(5) = 50.26
+              do 175 i = 6,nmax
+  175             e(i) = 55.
+          elseif(method.eq.2.and.iord.eq.3) then
+              e(1) = 25.97
+              e(2) = 41.22
+              e(3) = 50.95
+              e(4) = 56.4
+              e(5) = 59.3
+              do 180 i = 6,nmax
+  180             e(i) = 62.
+          else
+              e(1) = 24.5
+              e(2) = 40.4
+              e(3) = 52.78
+              e(4) = 61.2
+              e(5) = 66.55
+              do 185 i = 6,nmax
+  185             e(i) = 73.
+              c0f0 = -twof0/(3.*beta)
+              c1 = 3./(3.*beta-1.)
+              c2 = -1./(3.*(beta-1.))
+              c3 = 1./(3.*beta*(5.-2.*beta))
+          endif
+      endif
+c
+c
+      if(init.ge.2) then
+c         initialization of steplengths, accuracy and other 
+c             parameters
+c
+          heval = signh*minh
+          h = heval 
+          baseh = heval
+          maxh = maxh2
+          if(method.eq.1)maxh = maxh1
+          do 300 k = 1,nmax
+              minerr(k) = twosup
+              ignore(k) = .false.
+  300     continue
+          if(method.eq.1) newacc = acc1 
+          if(method.eq.-1) newacc = acc2
+          if(method.eq.2) newacc = (acc1+acc2)/2. 
+          if(newacc.lt.acc) newacc = acc
+          if((method.ne.2 .or. iord.eq.2) .and. newacc.lt.acc0)
+     +            newacc = acc0
+          if(method.ne.-1) then
+              facc1 = acc1
+              nhacc1 = hacc1
+              newh1 = h1
+          endif
+          if(method.ne.1) then
+              facc2 = acc2
+              nhacc2 = hacc2
+              newh2 = h2
+          else
+              facc2 = 0.
+              nhacc2 = 0.
+          endif
+          init = 1
+          j = 0
+          saved = .false.
+      endif
+c
+c     calculate new or initial function values
+c
+      if(init.eq.1 .and. (n.eq.0 .or. iord.eq.1) .and.
+     +        .not.(method.eq.2 .and. fcount.ge.45)) then
+          if(method.eq.2) then
+              fcount = fcount + 1
+              f1 = f(x0+heval)
+              storef(fcount) = f1
+              f2 = f(x0-heval)
+              storef(-fcount) = f2
+          else
+              j = j+1
+              if(j.le.fcount) then
+                  f1 = storef(j*method) 
+              else
+                  f1 = f(x0+heval)
+              endif 
+          endif
+      else
+          f1 = f(x0+heval)
+          if(method.eq.2) f2 = f(x0-heval)
+      endif
+      if(n.eq.0) then
+          if(method.eq.2 .and. iord.eq.3) then
+              pdelta = f1-f2
+              pmaxf = (abs(f1)+abs(f2))/2.
+              heval = beta*heval
+              f1 = f(x0+heval)
+              f2 = f(x0-heval)
+              deltaf = f1-f2
+              maxfun = (abs(f1)+abs(f2))/2.
+              heval = beta*heval
+              f1 = f(x0+heval)
+              f2 = f(x0-heval)
+          elseif(method.ne.2 .and. iord.ge.2) then
+              if(iord.eq.2) then
+                  f3 = f1
+              else
+                  f4 = f1
+                  heval = beta*heval
+                  f3 = f(x0+heval)
+              endif 
+              heval = beta*heval
+              f2 = f(x0+heval)
+              heval = beta*heval
+              f1 = f(x0+heval)
+          endif
+      endif
+c
+c     evaluate a new approximation dnew to the derivative
+c
+      if(n.gt.nmax) then
+          n = nmax
+          do 400 i = 1,n
+  400         maxf(i-1) = maxf(i)
+      endif
+      if(method.eq.2) then
+          maxf(n) = (abs(f1)+abs(f2))/2.
+          if(iord.eq.1) then
+              dnew = (f1-f2)/2.
+          elseif(iord.eq.2) then
+              dnew = f1+f2-twof0
+          else
+              dnew = -pdelta
+              pdelta = deltaf 
+              deltaf = f1-f2
+              dnew = dnew + .5*deltaf
+              if(maxf(n).lt.pmaxf) maxf(n) = pmaxf
+              pmaxf = maxfun
+              maxfun = (abs(f1)+abs(f2))/2.
+          endif
+      else
+          maxf(n) = abs(f1)
+          if(iord.eq.1) then
+              dnew = f1-f0
+          elseif(iord.eq.2) then
+              dnew = (twof0-3*f3+f1)/3. 
+              if(maxf(n).lt.abs(f3)) maxf(n) = abs(f3)
+              f3 = f2
+              f2 = f1
+          else
+              dnew = c3*f1+c2*f2+c1*f4+c0f0
+              if(maxf(n).lt.abs(f2)) maxf(n) = abs(f2)
+              if(maxf(n).lt.abs(f4)) maxf(n) = abs(f4)
+              f4 = f3
+              f3 = f2
+              f2 = f1
+          endif
+      endif
+      if(abs(h).gt.1) then
+          dnew = dnew/h**iord 
+      else
+          if(128.*abs(dnew).gt.twosup*abs(h)**iord) then
+              dnew = twosup/128.
+          else
+              dnew = dnew/h**iord
+          endif
+      endif
+c
+      if(init.eq.0) then
+c         update estimated accuracy of function values
+          newacc = acc
+          if((method.ne.2 .or. iord.eq.2) .and. newacc.lt.acc0)
+     +        newacc = acc0
+          if(method.ne.-1 .and. abs(nhacc1).le.1.125*abs(heval)/beta4)
+     +               then
+              nhacc1 = heval
+              pacc1 = facc1
+              call faccur(nhacc1,newh1,facc1,x0,f,twoinf,f0,f1)
+              if(facc1.lt.pacc1) facc1=(3*facc1+pacc1)/4.
+          endif
+          if(method.ne.1 .and. abs(nhacc2).le.1.125*abs(heval)/beta4) 
+     +            then
+              if(method.eq.2) then
+                  f1 = f2
+                  nhacc2 = -heval
+              else
+                  nhacc2 = heval
+              endif 
+              pacc2 = facc2
+              call faccur(nhacc2,newh2,facc2,x0,f,twoinf,f0,f1)
+              if(facc2.lt.pacc2) facc2 = (3*facc2+pacc2)/4. 
+          endif
+          if(method.eq.1 .and. newacc.lt.facc1) newacc = facc1
+          if(method.eq.-1 .and. newacc.lt.facc2) newacc = facc2
+          if(method.eq.2 .and. newacc.lt.(facc1+facc2)/2.)
+     +            newacc = (facc1+facc2)/2.
+      endif
+c
+c     evaluate successive elements of the current row in the neville
+c     array, estimating and examining the truncation and rounding
+c     errors in each
+c
+      contin = n.lt.nmax
+      hprev = abs(h)
+      fmax = maxf(n)
+      if((method.ne.2 .or. iord.eq.2) .and. fmax.lt.abs(f0))
+     +        fmax = abs(f0)
+c
+      do 500 k = 1,n
+          dprev = d(k)
+          d(k) = dnew
+          dnew = dprev+(dprev-dnew)/denom(k)
+          te = abs(dnew-d(k)) 
+          if(fmax.lt.maxf(n-k)) fmax = maxf(n-k)
+          hprev = hprev/beta
+          if(newacc.ge.relacc*fmax) then
+              re = newacc*e(k)
+          else
+              re = relacc*fmax*e(k)
+          endif
+          if(re.ne.0.) then
+              if(hprev.gt.1) then
+                  re = re/hprev**iord
+              elseif(2*re.gt.twosup*hprev**iord) then
+                  re = twosup/2.
+              else
+                  re = re/hprev**iord
+              endif 
+          endif
+          newerr = te+re
+          if(te.gt.re) newerr = 1.25*newerr
+          if(.not. ignore(k)) then
+              if((init.eq.0 .or. (k.eq.2 .and. .not.ignore(1)))
+     +                .and. newerr.lt.error) then 
+                  deriv = d(k)
+                  error = newerr
+              endif 
+              if(init.eq.1 .and. n.eq.1) then
+              tderiv = d(1)
+                  temerr = newerr
+              endif 
+              if(minerr(k).lt.twosup/4) then
+                  s = 4*minerr(k)
+              else
+                  s = twosup
+              endif 
+              if(te.gt.re .or. newerr.gt.s) then
+                  ignore(k) = .true.
+              else
+                  contin = .true.
+              endif 
+              if(newerr.lt.minerr(k)) minerr(k) = newerr
+              if(init.eq.1 .and. n.eq.2 .and. k.eq.1 .and.
+     +                .not.ignore(1)) then
+                  if(newerr.lt.temerr) then
+                      tderiv = d(1)
+                      temerr = newerr
+                  endif
+                  if(temerr.lt.error) then
+                      deriv = tderiv
+                      error = temerr
+                  endif
+              endif 
+          endif
+  500 continue
+c
+      if(n.lt.nmax) d(n+1) = dnew
+                 if(eps.lt.0.) then
+          s = abs(eps*deriv)
+      else
+          s = eps
+      endif
+      if(error.le.s) then
+          contin = .false.
+      elseif(init.eq.1 .and. (n.eq.2 .or. ignore(1))) then
+          if((ignore(1) .or. ignore(2)) .and. saved) then
+              saved = .false. 
+              n = 2 
+              h = beta * save(0)
+              heval = beta*save(1)
+              maxf(0) = save(2)
+              maxf(1) = save(3)
+              maxf(2) = save(4)
+              d(1) = save(5)
+              d(2) = save(6)
+              d(3) = save(7)
+              minerr(1) = save(8)
+              minerr(2) = save(9)
+              if(method.eq.2 .and. iord.eq.3) then
+                  pdelta = save(10)
+                  deltaf = save(11)
+                  pmaxf = save(12)
+                  maxfun = save(13)
+              elseif(method.ne.2 .and. iord.ge.2) then
+                  f2 = save(10)
+                  f3 = save(11)
+                  if(iord.eq.3) f4 = save(12)
+              endif 
+              init = 0
+              ignore(1) = .false.
+              ignore(2) = .false.
+          elseif(.not. (ignore(1) .or. ignore(2)) .and. n.eq.2
+     +            .and. beta4*factor*abs(heval).le.maxh) then
+c             save all current values in case of return to
+c                 current point
+              saved = .true.
+              save(0) = h
+              save(1) = heval 
+              save(2) = maxf(0)
+              save(3) = maxf(1)
+              save(4) = maxf(2)
+              save(5) = d(1)
+              save(6) = d(2)
+              save(7) = d(3)
+              save(8) = minerr(1)
+              save(9) = minerr (2)
+              if(method.eq.2 .and. iord.eq.3) then
+                  save(10) = pdelta
+                  save(11) = deltaf
+                  save(12) = pmaxf
+                  save(13) = maxfun
+              elseif(method.ne.2 .and. iord.ge.2) then
+                  save(10) = f2
+                  save(11) = f3
+                  if(iord.eq.3) save(12) = f4
+              endif 
+              h = factor*baseh
+              heval = h
+              baseh = h
+              n = -1
+          else
+              init = 0
+              h = beta*h
+              heval = beta*heval
+          endif
+      elseif(contin .and. beta*abs(heval).le.maxh) then
+          h = beta*h
+          heval = beta*heval
+      elseif(method.ne.1) then
+          contin = .true.
+          if(method.eq.2) then
+              init = 3
+              method = -1
+              if(iord.ne.2) then
+                  if(x0.ne.0.) then
+                      call faccur(0.d0,-h0,acc0,x0,f,twoinf,f0,f1)
+                  else
+                      acc0 = 0.
+                  endif
+              endif 
+          else
+              init = 2
+              method = 1
+          endif
+          n = -1
+          signh = -signh
+      else
+          contin = .false.
+      endif
+      goto 130
+  800 if(eps.lt.0.) then
+          s = abs(eps*deriv)
+      else
+          s = eps
+      endif
+      ifail = 0
+      if(eps.ne.0. .and. error.gt.s) ifail = 1
+      return
+      end 
 C*DECK FACCUR
       SUBROUTINE FACCUR(H0,H1,FACC,X0,F,TWOINF,F0,F1)
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
@@ -7925,8 +8882,8 @@ C     ALNORM (X, UPPER)                  - AS 66
 C
       DOUBLE PRECISION
      *  A, ALBETA, ALNRPI, B, DEL, DELTA, DF, EN, ERRBD, ERRMAX,
-     *	GEVEN, GODD, HALF, ITRMAX, LAMBDA, ONE, P, Q, R2PI, RXB, S, T,
-     *	TT, TWO, X, XEVEN, XODD, ZERO
+     *    GEVEN, GODD, HALF, ITRMAX, LAMBDA, ONE, P, Q, R2PI, RXB, S, T,
+     *    TT, TWO, X, XEVEN, XODD, ZERO
       LOGICAL NEGDEL
       
       DOUBLE PRECISION ALNORM,ALNGAM,BETAIN
@@ -7939,7 +8896,7 @@ C     CONSTANTS - R2PI = 1/ {GAMMA(1.5) * SQRT(2)} = SQRT(2 / PI)
 C                 ALNRPI = LN(SQRT(PI))
 C
       DATA ZERO/0.D0/, HALF/0.5D0/, ONE/1.D0/, TWO/2.D0/,
-     *	R2PI/0.79788 45608 02865 35588/,
+     *      R2PI/0.79788 45608 02865 35588/,
      *  ALNRPI/0.57236 49429 24700 08707/
 C
       TNC = ZERO
@@ -8021,16 +8978,16 @@ C     CALCULATION OF THE LOGARITHM OF THE GAMMA FUNCTION
 C
       INTEGER IFAULT
       DOUBLE PRECISION ALR2PI, FOUR, HALF, ONE, ONEP5, R1(9), R2(9),
-     +		R3(9), R4(5), TWELVE, X, X1, X2, XLGE, XLGST, XVALUE,
-     +		Y, ZERO
+     +        R3(9), R4(5), TWELVE, X, X1, X2, XLGE, XLGST, XVALUE,
+     +        Y, ZERO
 C
 C     COEFFICIENTS OF RATIONAL FUNCTIONS
 C
       DATA R1/-2.66685 51149 5D0, -2.44387 53423 7D1,
      +        -2.19698 95892 8D1,  1.11667 54126 2D1,
-     +	       3.13060 54762 3D0,  6.07771 38777 1D-1,
-     +	       1.19400 90572 1D1,  3.14690 11574 9D1,
-     +	       1.52346 87407 0D1/
+     +           3.13060 54762 3D0,  6.07771 38777 1D-1,
+     +           1.19400 90572 1D1,  3.14690 11574 9D1,
+     +           1.52346 87407 0D1/
       DATA R2/-7.83359 29944 9D1, -1.42046 29668 8D2,
      +         1.37519 41641 6D2,  7.86994 92415 4D1,
      +         4.16438 92222 8D0,  4.70668 76606 0D1,
@@ -8071,40 +9028,40 @@ C
 C     CALCULATION FOR 0 < X < 0.5 AND 0.5 <= X < 1.5 COMBINED
 C
       IF (X .LT. ONEP5) THEN
-	IF (X .LT. HALF) THEN
-	  ALNGAM = -LOG(X)
-	  Y = X + ONE
+      IF (X .LT. HALF) THEN
+        ALNGAM = -LOG(X)
+        Y = X + ONE
 C
-C     TEST WHETHER X < MACHINE EPSILON
+C       TEST WHETHER X < MACHINE EPSILON
 C
-	  IF (Y .EQ. ONE) RETURN
-	ELSE
-	  ALNGAM = ZERO
-	  Y = X
-	  X = (X - HALF) - HALF
-	END IF
-	ALNGAM = ALNGAM + X * ((((R1(5)*Y + R1(4))*Y + R1(3))*Y
+        IF (Y .EQ. ONE) RETURN
+      ELSE
+        ALNGAM = ZERO
+        Y = X
+        X = (X - HALF) - HALF
+      END IF
+        ALNGAM = ALNGAM + X * ((((R1(5)*Y + R1(4))*Y + R1(3))*Y
      +                + R1(2))*Y + R1(1)) / ((((Y + R1(9))*Y + R1(8))*Y
      +                + R1(7))*Y + R1(6))
-	RETURN
+      RETURN
       END IF
 C
 C     CALCULATION FOR 1.5 <= X < 4.0
 C
       IF (X .LT. FOUR) THEN
-	Y = (X - ONE) - ONE
-	ALNGAM = Y * ((((R2(5)*X + R2(4))*X + R2(3))*X + R2(2))*X
+      Y = (X - ONE) - ONE
+      ALNGAM = Y * ((((R2(5)*X + R2(4))*X + R2(3))*X + R2(2))*X
      +              + R2(1)) / ((((X + R2(9))*X + R2(8))*X + R2(7))*X
      +              + R2(6))
-	RETURN
+      RETURN
       END IF
 C
 C     CALCULATION FOR 4.0 <= X < 12.0
 C
       IF (X .LT. TWELVE) THEN
-	ALNGAM = ((((R3(5)*X + R3(4))*X + R3(3))*X + R3(2))*X + R3(1)) /
+      ALNGAM = ((((R3(5)*X + R3(4))*X + R3(3))*X + R3(2))*X + R3(1)) /
      +            ((((X + R3(9))*X + R3(8))*X + R3(7))*X + R3(6))
-	RETURN
+      RETURN
       END IF
 C
 C     CALCULATION FOR X >= 12.0
@@ -8122,7 +9079,7 @@ C
 C
 C
 C
-	DOUBLE PRECISION FUNCTION LNGAMMA(Z, IER)
+      DOUBLE PRECISION FUNCTION LNGAMMA(Z, IER)
 C
 C       USES LANCZOS-TYPE APPROXIMATION TO LN(GAMMA) FOR Z > 0.
 C       REFERENCE:
@@ -8134,40 +9091,40 @@ C
 C       PROGRAMMER: ALAN MILLER
 C                   CSIRO DIVISION OF MATHEMATICS & STATISTICS
 C
-C	N.B. IT IS ASSUMED THAT THE FORTRAN COMPILER SUPPORTS LONG
-C	     VARIABLE NAMES, INCLUDING THE UNDERLINE CHARACTER.   SOME
-C	     COMPILERS WILL NOT ACCEPT THE 'IMPLICIT NONE' STATEMENT
-C	     BELOW.
+C      N.B. IT IS ASSUMED THAT THE FORTRAN COMPILER SUPPORTS LONG
+C           VARIABLE NAMES, INCLUDING THE UNDERLINE CHARACTER.   SOME
+C           COMPILERS WILL NOT ACCEPT THE 'IMPLICIT NONE' STATEMENT
+C           BELOW.
 C
 C       LATEST REVISION - 17 APRIL 1988
 C
-	IMPLICIT NONE
-	DOUBLE PRECISION A(9), Z, LNSQRT2PI, TMP
-	INTEGER IER, J
-	DATA A/0.9999999999995183D0, 676.5203681218835D0,
+      IMPLICIT NONE
+      DOUBLE PRECISION A(9), Z, LNSQRT2PI, TMP
+      INTEGER IER, J
+      DATA A/0.9999999999995183D0, 676.5203681218835D0,
      +         -1259.139216722289D0, 771.3234287757674D0,
      +         -176.6150291498386D0, 12.50734324009056D0,
      +         -0.1385710331296526D0, 0.9934937113930748D-05,
      +         0.1659470187408462D-06/
 C
-	DATA LNSQRT2PI/0.91893 85332 04672 7D0/
+      DATA LNSQRT2PI/0.91893 85332 04672 7D0/
 C
-	IF (Z .LE. 0.D0) THEN
-	  IER = 1
-	  RETURN
-	END IF
-	IER = 0
+      IF (Z .LE. 0.D0) THEN
+        IER = 1
+        RETURN
+      END IF
+      IER = 0
 C
-	LNGAMMA = 0.D0
-	TMP = Z + 7.D0
-	DO 10 J = 9, 2, -1
-	  LNGAMMA = LNGAMMA + A(J)/TMP
-	  TMP = TMP - 1.D0
+      LNGAMMA = 0.D0
+      TMP = Z + 7.D0
+      DO 10 J = 9, 2, -1
+        LNGAMMA = LNGAMMA + A(J)/TMP
+        TMP = TMP - 1.D0
    10   CONTINUE
-	LNGAMMA = LNGAMMA + A(1)
-	LNGAMMA = LOG(LNGAMMA) + LNSQRT2PI - (Z+6.5D0) +
+      LNGAMMA = LNGAMMA + A(1)
+      LNGAMMA = LOG(LNGAMMA) + LNSQRT2PI - (Z+6.5D0) +
      +                               (Z-0.5D0)*LOG(Z+6.5D0)
-	END
+      END
       DOUBLE PRECISION FUNCTION BETAIN(X, P, Q, BETA, IFAULT)
       IMPLICIT DOUBLE PRECISION (A-H, O-Z)
 C
@@ -8289,11 +9246,11 @@ C
 C
 C
 C
-	SUBROUTINE NORMP(Z, P, Q, PDF)
+      SUBROUTINE NORMP(Z, P, Q, PDF)
 C
-C	NORMAL DISTRIBUTION PROBABILITIES ACCURATE TO 1.E-15.
-C	Z = NO. OF STANDARD DEVIATIONS FROM THE MEAN.
-C	P, Q = PROBABILITIES TO THE LEFT & RIGHT OF Z.   P + Q = 1.
+C      NORMAL DISTRIBUTION PROBABILITIES ACCURATE TO 1.E-15.
+C      Z = NO. OF STANDARD DEVIATIONS FROM THE MEAN.
+C      P, Q = PROBABILITIES TO THE LEFT & RIGHT OF Z.   P + Q = 1.
 C       PDF = THE PROBABILITY DENSITY.
 C
 C       BASED UPON ALGORITHM 5666 FOR THE ERROR FUNCTION, FROM:
@@ -8301,64 +9258,64 @@ C       HART, J.F. ET AL, 'COMPUTER APPROXIMATIONS', WILEY 1968
 C
 C       PROGRAMMER: ALAN MILLER
 C
-C	LATEST REVISION - 30 MARCH 1986
+C      LATEST REVISION - 30 MARCH 1986
 C
-	IMPLICIT DOUBLE PRECISION (A-H, O-Z)
-	DATA P0, P1, P2, P3, P4, P5, P6/220.20 68679 12376 1D0,
-     *	  221.21 35961 69931 1D0, 112.07 92914 97870 9D0,
-     *	  33.912 86607 83830 0D0, 6.3739 62203 53165 0D0,
-     *	  .70038 30644 43688 1D0, .35262 49659 98910 9D-01/,
-     *	  Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7/440.41 37358 24752 2D0,
-     *	  793.82 65125 19948 4D0, 637.33 36333 78831 1D0,
-     *	  296.56 42487 79673 7D0, 86.780 73220 29460 8D0,
-     *	  16.064 17757 92069 5D0, 1.7556 67163 18264 2D0,
-     *	  .88388 34764 83184 4D-1/,
-     *	  CUTOFF/7.071D0/, ROOT2PI/2.5066 28274 63100 1D0/
+      IMPLICIT DOUBLE PRECISION (A-H, O-Z)
+      DATA P0, P1, P2, P3, P4, P5, P6/220.20 68679 12376 1D0,
+     *        221.21 35961 69931 1D0, 112.07 92914 97870 9D0,
+     *        33.912 86607 83830 0D0, 6.3739 62203 53165 0D0,
+     *        .70038 30644 43688 1D0, .35262 49659 98910 9D-01/,
+     *        Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7/440.41 37358 24752 2D0,
+     *        793.82 65125 19948 4D0, 637.33 36333 78831 1D0,
+     *        296.56 42487 79673 7D0, 86.780 73220 29460 8D0,
+     *        16.064 17757 92069 5D0, 1.7556 67163 18264 2D0,
+     *        .88388 34764 83184 4D-1/,
+     *        CUTOFF/7.071D0/, ROOT2PI/2.5066 28274 63100 1D0/
 C
-	ZABS = ABS(Z)
+      ZABS = ABS(Z)
 C
-C	|Z| > 37.
+C      |Z| > 37.
 C
-	IF (ZABS .GT. 37.D0) THEN
-	  PDF = 0.D0
-	  IF (Z .GT. 0.D0) THEN
-	    P = 1.D0
-	    Q = 0.D0
-	  ELSE
-	    P = 0.D0
-	    Q = 1.D0
-	  END IF
-	  RETURN
-	END IF
+      IF (ZABS .GT. 37.D0) THEN
+        PDF = 0.D0
+        IF (Z .GT. 0.D0) THEN
+          P = 1.D0
+          Q = 0.D0
+        ELSE
+          P = 0.D0
+          Q = 1.D0
+        END IF
+        RETURN
+      END IF
 C
-C	|Z| <= 37.
+C      |Z| <= 37.
 C
-	EXPNTL = EXP(-0.5D0*ZABS**2)
-	PDF = EXPNTL/ROOT2PI
+      EXPNTL = EXP(-0.5D0*ZABS**2)
+      PDF = EXPNTL/ROOT2PI
 C
-C	|Z| < CUTOFF = 10/SQRT(2).
+C      |Z| < CUTOFF = 10/SQRT(2).
 C
-	IF (ZABS .LT. CUTOFF) THEN
-	  P = EXPNTL*((((((P6*ZABS + P5)*ZABS + P4)*ZABS + P3)*ZABS +
-     *		P2)*ZABS + P1)*ZABS + P0)/(((((((Q7*ZABS + Q6)*ZABS +
-     *		Q5)*ZABS + Q4)*ZABS + Q3)*ZABS + Q2)*ZABS + Q1)*ZABS +
-     *		Q0)
+      IF (ZABS .LT. CUTOFF) THEN
+        P = EXPNTL*((((((P6*ZABS + P5)*ZABS + P4)*ZABS + P3)*ZABS +
+     *            P2)*ZABS + P1)*ZABS + P0)/(((((((Q7*ZABS + Q6)*ZABS +
+     *            Q5)*ZABS + Q4)*ZABS + Q3)*ZABS + Q2)*ZABS + Q1)*ZABS +
+     *            Q0)
 C
-C	|Z| >= CUTOFF.
+C      |Z| >= CUTOFF.
 C
-	ELSE
-	  P = PDF/(ZABS + 1.D0/(ZABS + 2.D0/(ZABS + 3.D0/(ZABS + 4.D0/
-     *		(ZABS + 0.65D0)))))
-	END IF
+      ELSE
+        P = PDF/(ZABS + 1.D0/(ZABS + 2.D0/(ZABS + 3.D0/(ZABS + 4.D0/
+     *            (ZABS + 0.65D0)))))
+      END IF
 C
-	IF (Z .LT. 0.D0) THEN
-	  Q = 1.D0 - P
-	ELSE
-	  Q = P
-	  P = 1.D0 - Q
-	END IF
-	RETURN
-	END
+      IF (Z .LT. 0.D0) THEN
+        Q = 1.D0 - P
+      ELSE
+        Q = P
+        P = 1.D0 - Q
+      END IF
+      RETURN
+      END
 C
 C
 C
@@ -8428,7 +9385,7 @@ C
 C
 C     DUMMY ROUTINES
 C
-      SUBROUTINE DCOPY(N,DX,INCX,DY,INCY)
+      SUBROUTINE DDS(N,DX,INCX,DY,INCY)
 C
       DOUBLE PRECISION DX(*),DY(*)
       IF(N.LE.0) RETURN
@@ -8479,7 +9436,7 @@ C
       END
 C====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
          SUBROUTINE DPORDER(X,N,IX)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C        SUBROUTINE DPORDER GIVES THE PERMUTATION OF A USER-SUPPLIED
 C        VECTOR.  TREE-SORT ALGORITHM IS EMPLOYED (WHY NOT?)
@@ -8500,7 +9457,7 @@ C         --DOUBLE PRECISION
 C        MODIFIED......15 APRIL 2003 (TAC)
 C         --RENAMED TO DPORDER FROM PORDER
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
@@ -8508,7 +9465,7 @@ C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C        X(N)      R*8       INPUT VECTOR OF UNORDERED DATA
 C        N         I*4       INPUT NUMBER OF OBSERVATIONS IN X
@@ -8517,12 +9474,12 @@ C                               X(IX(1)) IS THE SMALLEST VALUE OF X
 C                                 . . . 
 C                               X(IX(N)) IS THE LARGEST VALUE OF X
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
          IMPLICIT NONE
          
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
+         INTEGER N_PTS
+         PARAMETER (N_PTS=10000)
 
          DOUBLE PRECISION X(*)
          
@@ -8530,7 +9487,7 @@ C===============================================================================
      1     L(0:N_PTS),R(0:N_PTS),P(0:N_PTS),
      2     IX(*),I2,I,INDX,N,ICT
 
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C    FIRST CHECK TO SEE IF WE HAVE AN ORDERED DATA VECTOR TO BEGIN WITH
 C
@@ -8592,7 +9549,7 @@ C
          END
 C====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
          SUBROUTINE DSVRGP(N,X,Y,IORD)
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C        SUBROUTINE DSVRGP SORTS AN ARRAY AND RETURNS 
 C        THE PERMUTATION OF A USER-SUPPLIED
@@ -8608,7 +9565,7 @@ C
 C        AUTHOR....TIM COHN
 C        DATE......APRIL 15 2003 (TAC)
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
@@ -8616,7 +9573,7 @@ C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C        N         I*4       INPUT NUMBER OF OBSERVATIONS IN X
 C        X(N)      R*8       INPUT VECTOR OF UNORDERED DATA
@@ -8626,7 +9583,7 @@ C                               X(IX(1)) IS THE SMALLEST VALUE OF X
 C                                 . . . 
 C                               X(IX(N)) IS THE LARGEST VALUE OF X
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
          IMPLICIT NONE
          
@@ -8648,14 +9605,14 @@ C===============================================================================
          RETURN
          END
 C====*===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C        DOUBLE PRECISION FUNCTION VMIN COMPUTES THE MINIMUM OF A VECTOR
 C
 C        AUTHOR....TIM COHN
 C        DATE......24 MAY 2007 (TAC)
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
 C
@@ -8663,12 +9620,12 @@ C     *** DO NOT MODIFY WITHOUT AUTHOR'S CONSENT ***
 C
 C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C        N         I*4       INPUT NUMBER OF OBSERVATIONS IN X
 C        X(N)      R*8       INPUT VECTOR OF UNORDERED DATA
 C
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
          DOUBLE PRECISION FUNCTION VMIN(N,X)
          IMPLICIT NONE
@@ -8687,7 +9644,7 @@ C
 10       CONTINUE
          RETURN
          END
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
          DOUBLE PRECISION FUNCTION VMAX(N,X)
          IMPLICIT NONE
@@ -8706,7 +9663,7 @@ C
 10       CONTINUE
          RETURN
          END
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
          INTEGER FUNCTION IVMIN(N,X)
          IMPLICIT NONE
@@ -8725,7 +9682,7 @@ C
 10       CONTINUE
          RETURN
          END
-C===============================================================================
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
          INTEGER FUNCTION IVMAX(N,X)
          IMPLICIT NONE
@@ -9046,3 +10003,399 @@ C
    14 IFLAG = 5
       RETURN
       END
+c  To get dgamma,  "send dgamma from fnlib".
+c  To get d1mach, mail netlib
+c       send d1mach from core
+c
+      subroutine gaussq(kind, n, alpha, beta, kpts, endpts, b, t, w)
+c
+c           this set of routines computes the nodes t(j) and weights
+c        w(j) for gaussian-type quadrature rules with pre-assigned
+c        nodes.  these are used when one wishes to approximate
+c
+c                 integral (from a to b)  f(x) w(x) dx
+c
+c                              n
+c        by                   sum w  f(t )
+c                             j=1  j    j
+c
+c        (note w(x) and w(j) have no connection with each other.)
+c        here w(x) is one of six possible non-negative weight
+c        functions (listed below), and f(x) is the
+c        function to be integrated.  gaussian quadrature is particularly
+c        useful on infinite intervals (with appropriate weight
+c        functions), since then other techniques often fail.
+c
+c           associated with each weight function w(x) is a set of
+c        orthogonal polynomials.  the nodes t(j) are just the zeroes
+c        of the proper n-th degree polynomial.
+c
+c     input parameters (all real numbers are in double precision)
+c
+c        kind     an integer between 1 and 6 giving the type of
+c                 quadrature rule:
+c
+c        kind = 1:  legendre quadrature, w(x) = 1 on (-1, 1)
+c        kind = 2:  chebyshev quadrature of the first kind
+c                   w(x) = 1/sqrt(1 - x*x) on (-1, +1)
+c        kind = 3:  chebyshev quadrature of the second kind
+c                   w(x) = sqrt(1 - x*x) on (-1, 1)
+c        kind = 4:  hermite quadrature, w(x) = exp(-x*x) on
+c                   (-infinity, +infinity)
+c        kind = 5:  jacobi quadrature, w(x) = (1-x)**alpha * (1+x)**
+c                   beta on (-1, 1), alpha, beta .gt. -1.
+c                   note: kind=2 and 3 are a special case of this.
+c        kind = 6:  generalized laguerre quadrature, w(x) = exp(-x)*
+c                   x**alpha on (0, +infinity), alpha .gt. -1
+c
+c        n        the number of points used for the quadrature rule
+c        alpha    real parameter used only for gauss-jacobi and gauss-
+c                 laguerre quadrature (otherwise use 0.d0).
+c        beta     real parameter used only for gauss-jacobi quadrature--
+c                 (otherwise use 0.d0)
+c        kpts     (integer) normally 0, unless the left or right end-
+c                 point (or both) of the interval is required to be a
+c                 node (this is called gauss-radau or gauss-lobatto
+c                 quadrature).  then kpts is the number of fixed
+c                 endpoints (1 or 2).
+c        endpts   real array of length 2.  contains the values of
+c                 any fixed endpoints, if kpts = 1 or 2.
+c        b        real scratch array of length n
+c
+c     output parameters (both double precision arrays of length n)
+c
+c        t        will contain the desired nodes.
+c        w        will contain the desired weights w(j).
+c
+c     underflow may sometimes occur, but is harmless.
+c
+c     references
+c        1.  golub, g. h., and welsch, j. h., "calculation of gaussian
+c            quadrature rules," mathematics of computation 23 (april,
+c            1969), pp. 221-230.
+c        2.  golub, g. h., "some modified matrix eigenvalue problems,"
+c            siam review 15 (april, 1973), pp. 318-334 (section 7).
+c        3.  stroud and secrest, gaussian quadrature formulas, prentice-
+c            hall, englewood cliffs, n.j., 1966.
+c
+c        original version 20 jan 1975 from stanford
+c        modified 21 dec 1983 by eric grosse
+c          imtql2 => gausq2
+c          hex constant => d1mach (from core library)
+c          compute pi using datan
+c          removed accuracy claims, description of method
+c          added single precision version
+c
+      double precision b(n), t(n), w(n), endpts(2), muzero, t1,
+     x gam, solve, dsqrt, alpha, beta
+c
+      call class (kind, n, alpha, beta, b, t, muzero)
+c
+c           the matrix of coefficients is assumed to be symmetric.
+c           the array t contains the diagonal elements, the array
+c           b the off-diagonal elements.
+c           make appropriate changes in the lower right 2 by 2
+c           submatrix.
+c
+      if (kpts.eq.0)  go to 100
+      if (kpts.eq.2)  go to  50
+c
+c           if kpts=1, only t(n) must be changed
+c
+      t(n) = solve(endpts(1), n, t, b)*b(n-1)**2 + endpts(1)
+      go to 100
+c
+c           if kpts=2, t(n) and b(n-1) must be recomputed
+c
+   50 gam = solve(endpts(1), n, t, b)
+      t1 = ((endpts(1) - endpts(2))/(solve(endpts(2), n, t, b) - gam))
+      b(n-1) = dsqrt(t1)
+      t(n) = endpts(1) + gam*t1
+c
+c           note that the indices of the elements of b run from 1 to n-1
+c           and thus the value of b(n) is arbitrary.
+c           now compute the eigenvalues of the symmetric tridiagonal
+c           matrix, which has been modified as necessary.
+c           the method used is a ql-type method with origin shifting
+c
+  100 w(1) = 1.0d0
+      do 105 i = 2, n
+  105    w(i) = 0.0d0
+c
+      call gausq2 (n, t, b, w, ierr)
+      do 110 i = 1, n
+  110    w(i) = muzero * w(i) * w(i)
+c
+      return
+      end
+c
+c
+c
+      double precision function solve(shift, n, a, b)
+c
+c       this procedure performs elimination to solve for the
+c       n-th component of the solution delta to the equation
+c
+c             (jn - shift*identity) * delta  = en,
+c
+c       where en is the vector of all zeroes except for 1 in
+c       the n-th position.
+c
+c       the matrix jn is symmetric tridiagonal, with diagonal
+c       elements a(i), off-diagonal elements b(i).  this equation
+c       must be solved to obtain the appropriate changes in the lower
+c       2 by 2 submatrix of coefficients for orthogonal polynomials.
+c
+c
+      double precision shift, a(n), b(n), alpha
+c
+      alpha = a(1) - shift
+      nm1 = n - 1
+      do 10 i = 2, nm1
+   10    alpha = a(i) - shift - b(i-1)**2/alpha
+      solve = 1.0d0/alpha
+      return
+      end
+c
+c
+c
+      subroutine class(kind, n, alpha, beta, b, a, muzero)
+c
+c           this procedure supplies the coefficients a(j), b(j) of the
+c        recurrence relation
+c
+c             b p (x) = (x - a ) p   (x) - b   p   (x)
+c              j j            j   j-1       j-1 j-2
+c
+c        for the various classical (normalized) orthogonal polynomials,
+c        and the zero-th moment
+c
+c             muzero = integral w(x) dx
+c
+c        of the given polynomial's weight function w(x).  since the
+c        polynomials are orthonormalized, the tridiagonal matrix is
+c        guaranteed to be symmetric.
+c
+c           the input parameter alpha is used only for laguerre and
+c        jacobi polynomials, and the parameter beta is used only for
+c        jacobi polynomials.  the laguerre and jacobi polynomials
+c        require the gamma function.
+c
+      double precision a(n), b(n), muzero, alpha, beta
+      double precision abi, a2b2, dgamma, pi, dsqrt, ab
+c
+      pi = 4.0d0 * datan(1.0d0)
+      nm1 = n - 1
+      go to (10, 20, 30, 40, 50, 60), kind
+c
+c              kind = 1:  legendre polynomials p(x)
+c              on (-1, +1), w(x) = 1.
+c
+   10 muzero = 2.0d0
+      do 11 i = 1, nm1
+         a(i) = 0.0d0
+         abi = i
+   11    b(i) = abi/dsqrt(4*abi*abi - 1.0d0)
+      a(n) = 0.0d0
+      return
+c
+c              kind = 2:  chebyshev polynomials of the first kind t(x)
+c              on (-1, +1), w(x) = 1 / sqrt(1 - x*x)
+c
+   20 muzero = pi
+      do 21 i = 1, nm1
+         a(i) = 0.0d0
+   21    b(i) = 0.5d0
+      b(1) = dsqrt(0.5d0)
+      a(n) = 0.0d0
+      return
+c
+c              kind = 3:  chebyshev polynomials of the second kind u(x)
+c              on (-1, +1), w(x) = sqrt(1 - x*x)
+c
+   30 muzero = pi/2.0d0
+      do 31 i = 1, nm1
+         a(i) = 0.0d0
+   31    b(i) = 0.5d0
+      a(n) = 0.0d0
+      return
+c
+c              kind = 4:  hermite polynomials h(x) on (-infinity,
+c              +infinity), w(x) = exp(-x**2)
+c
+   40 muzero = dsqrt(pi)
+      do 41 i = 1, nm1
+         a(i) = 0.0d0
+   41    b(i) = dsqrt(i/2.0d0)
+      a(n) = 0.0d0
+      return
+c
+c              kind = 5:  jacobi polynomials p(alpha, beta)(x) on
+c              (-1, +1), w(x) = (1-x)**alpha + (1+x)**beta, alpha and
+c              beta greater than -1
+c
+   50 ab = alpha + beta
+      abi = 2.0d0 + ab
+      muzero = 2.0d0 ** (ab + 1.0d0) * dgamma(alpha + 1.0d0) * dgamma(
+     x beta + 1.0d0) / dgamma(abi)
+      a(1) = (beta - alpha)/abi
+      b(1) = dsqrt(4.0d0*(1.0d0 + alpha)*(1.0d0 + beta)/((abi + 1.0d0)*
+     1  abi*abi))
+      a2b2 = beta*beta - alpha*alpha
+      do 51 i = 2, nm1
+         abi = 2.0d0*i + ab
+         a(i) = a2b2/((abi - 2.0d0)*abi)
+   51    b(i) = dsqrt (4.0d0*i*(i + alpha)*(i + beta)*(i + ab)/
+     1   ((abi*abi - 1)*abi*abi))
+      abi = 2.0d0*n + ab
+      a(n) = a2b2/((abi - 2.0d0)*abi)
+      return
+c
+c              kind = 6:  laguerre polynomials l(alpha)(x) on
+c              (0, +infinity), w(x) = exp(-x) * x**alpha, alpha greater
+c              than -1.
+c
+   60 muzero = dgamma(alpha + 1.0d0)
+      do 61 i = 1, nm1
+         a(i) = 2.0d0*i - 1.0d0 + alpha
+   61    b(i) = dsqrt(i*(i + alpha))
+      a(n) = 2.0d0*n - 1 + alpha
+      return
+      end
+c
+c
+      subroutine gausq2(n, d, e, z, ierr)
+c
+c     this subroutine is a translation of an algol procedure,
+c     num. math. 12, 377-383(1968) by martin and wilkinson,
+c     as modified in num. math. 15, 450(1970) by dubrulle.
+c     handbook for auto. comp., vol.ii-linear algebra, 241-248(1971).
+c     this is a modified version of the 'eispack' routine imtql2.
+c
+c     this subroutine finds the eigenvalues and first components of the
+c     eigenvectors of a symmetric tridiagonal matrix by the implicit ql
+c     method.
+c
+c     on input:
+c
+c        n is the order of the matrix;
+c
+c        d contains the diagonal elements of the input matrix;
+c
+c        e contains the subdiagonal elements of the input matrix
+c          in its first n-1 positions.  e(n) is arbitrary;
+c
+c        z contains the first row of the identity matrix.
+c
+c      on output:
+c
+c        d contains the eigenvalues in ascending order.  if an
+c          error exit is made, the eigenvalues are correct but
+c          unordered for indices 1, 2, ..., ierr-1;
+c
+c        e has been destroyed;
+c
+c        z contains the first components of the orthonormal eigenvectors
+c          of the symmetric tridiagonal matrix.  if an error exit is
+c          made, z contains the eigenvectors associated with the stored
+c          eigenvalues;
+c
+c        ierr is set to
+c          zero       for normal return,
+c          j          if the j-th eigenvalue has not been
+c                     determined after 30 iterations.
+c
+c     ------------------------------------------------------------------
+c
+      integer i, j, k, l, m, n, ii, mml, ierr
+      real*8 d(n), e(n), z(n), b, c, f, g, p, r, s, machep
+      real*8 dsqrt, dabs, dsign, d1mach
+c
+      machep=d1mach(4)
+c
+      ierr = 0
+      if (n .eq. 1) go to 1001
+c
+      e(n) = 0.0d0
+      do 240 l = 1, n
+         j = 0
+c     :::::::::: look for small sub-diagonal element ::::::::::
+  105    do 110 m = l, n
+            if (m .eq. n) go to 120
+            if (dabs(e(m)) .le. machep * (dabs(d(m)) + dabs(d(m+1))))
+     x         go to 120
+  110    continue
+c
+  120    p = d(l)
+         if (m .eq. l) go to 240
+         if (j .eq. 30) go to 1000
+         j = j + 1
+c     :::::::::: form shift ::::::::::
+         g = (d(l+1) - p) / (2.0d0 * e(l))
+         r = dsqrt(g*g+1.0d0)
+         g = d(m) - p + e(l) / (g + dsign(r, g))
+         s = 1.0d0
+         c = 1.0d0
+         p = 0.0d0
+         mml = m - l
+c
+c     :::::::::: for i=m-1 step -1 until l do -- ::::::::::
+         do 200 ii = 1, mml
+            i = m - ii
+            f = s * e(i)
+            b = c * e(i)
+            if (dabs(f) .lt. dabs(g)) go to 150
+            c = g / f
+            r = dsqrt(c*c+1.0d0)
+            e(i+1) = f * r
+            s = 1.0d0 / r
+            c = c * s
+            go to 160
+  150       s = f / g
+            r = dsqrt(s*s+1.0d0)
+            e(i+1) = g * r
+            c = 1.0d0 / r
+            s = s * c
+  160       g = d(i+1) - p
+            r = (d(i) - g) * s + 2.0d0 * c * b
+            p = s * r
+            d(i+1) = g + p
+            g = c * r - b
+c     :::::::::: form first component of vector ::::::::::
+            f = z(i+1)
+            z(i+1) = s * z(i) + c * f
+  200       z(i) = c * z(i) - s * f
+c
+         d(l) = d(l) - p
+         e(l) = g
+         e(m) = 0.0d0
+         go to 105
+  240 continue
+c
+c     :::::::::: order eigenvalues and eigenvectors ::::::::::
+      do 300 ii = 2, n
+         i = ii - 1
+         k = i
+         p = d(i)
+c
+         do 260 j = ii, n
+            if (d(j) .ge. p) go to 260
+            k = j
+            p = d(j)
+  260    continue
+c
+         if (k .eq. i) go to 300
+         d(k) = d(i)
+         d(i) = p
+         p = z(i)
+         z(i) = z(k)
+         z(k) = p
+  300 continue
+c
+      go to 1001
+c     :::::::::: set error -- no convergence to an
+c                eigenvalue after 30 iterations ::::::::::
+ 1000 ierr = l
+ 1001 return
+c     :::::::::: last card of gausq2 ::::::::::
+      end

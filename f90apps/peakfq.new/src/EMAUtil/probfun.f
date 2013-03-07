@@ -897,14 +897,31 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
 C      SAVE
-      INTEGER N,K
+      INTEGER N,K,TAB1(0:12,0:12)
       
-      IF(N .LT. MAX(0,K)) THEN
+      DATA TAB1/
+     * 1,  12*0,
+     * 1,1,  11*0,
+     * 1,2,1,  10*0,
+     * 1,3,3,1,  9*0,
+     * 1,4,6,4,1,  8*0,
+     * 1,5,10,10,5,1,  7*0,
+     * 1,6,15,20,15,6,1,  6*0,
+     * 1,7,21,35,35,21,7,1,  5*0,
+     * 1,8,28,56,70,56,28,8,1,  4*0,
+     * 1,9,36,84,126,126,84,36,9,1,  3*0,
+     * 1,10,45,120,210,252,210,120,45,10,1,  2*0,
+     * 1,11,55,165,330,462,462,330,165,55,11,1,  1*0,
+     * 1,12,66,220,495,792,924,792,495,220,66,12,1 /
+      
+      IF(N .LT. MAX(0,K) .OR. K .LT. 0) THEN
             WRITE(*,*) ' ERROR IN CHOOSE: (N,K) ',N,K
             STOP
       ENDIF
-
-      IF(N .LT. 170.D0) THEN
+      
+      IF(N .LE. 12) THEN
+            CHOOSE      =     TAB1(K,N)
+      ELSE IF(N .LT. 170.D0) THEN
             CHOOSE      =     DFAC(N)/(DFAC(N-K)*DFAC(K))
       ELSE
             ARG         =     DLNGAM(N+1.D0)-DLNGAM(N-K+1.D0)- 
@@ -1745,10 +1762,10 @@ C      SAVE
       
       DOUBLE PRECISION 
      1   P_IN,NU_IN,DELTA_IN,
-     2   P,NU,DELTA,PARMS(2),
-     3   AE,RE,X1,X2,B,C
+     2   P,NU,DELTA,
+     3   AE,RE,B,C
      
-      DOUBLE PRECISION FTNCINV,FP_Z_ICDF,FP_G2_ICDF
+      DOUBLE PRECISION FTNCINV
       
       EXTERNAL FTNCINV
       
@@ -1824,7 +1841,7 @@ C
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       DOUBLE PRECISION
-     1  P,Q,X,Y,A,B,BOUND
+     1  P,Q,X,A,B,BOUND
       
       INTEGER
      1  WHICH,STATUS
@@ -1851,7 +1868,7 @@ C
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       DOUBLE PRECISION
-     1  P,Q,X,Y,A,B,BOUND
+     1  P,X,Y,A,B,BOUND
       
       INTEGER
      1  WHICH,STATUS
@@ -1912,7 +1929,7 @@ C
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       DOUBLE PRECISION
-     1  DF,P,Q,T,BOUND
+     1  DF,P,T,BOUND
       
       INTEGER
      1  WHICH,STATUS
@@ -1928,7 +1945,7 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       END
 !****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       INTEGER FUNCTION MGBTP(X,N,PVALUEW)
-!*** REVISION 2011.01
+!*** REVISION 2012.09
 !****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 ! 
 !       IDENTIFIES THE NUMBER OF LOW OUTLIERS USING THE 
@@ -1943,65 +1960,145 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 !                                  FOR E[S] REPLACED WITH GAMMA FUNCTION
 !               MODIFIED.......5 JAN 2011 (TAC)
 !               MODIFIED.......16 FEB 2011 (TAC) RETURNS PVALUEW
+!                 MODIFICATIONS FOR MGBT TESTING
+!                  John England, Bureau of Reclamation, 17-SEP-2012                     
+!               MODIFIED.......26 SEP 2012 (TAC) REWORKED CODE TO CLARIFY LOGIC
+!                                                AND AVOID STDOUT CALLS
+!
+!c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!       calling routine: gbtest
+!
+!       input variables (from subroutine gbtest):
+!       ------------------------------------------------------------------------
+!            n          i*4  number of observations (uncensored, with ql=qu)
+!            x(n)       r*8  vector of floods in real space (qs from gbtest)
+!
+!                       note: see subroutine gbtest for input and call
+!                       input is systematic 'Syst' records where ql_in=qu_in
+!                       and tl_in <= gage_base from peakfqSA
+!
+!****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!       output variables:
+!       ------------------------------------------------------------------------
+!           pvaluew(n)  r*8  vector of MGB p-values
+!                           (function of n,k,w) returned from ggbcritp
+!
+!****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!       controlling parameters:
+!       ------------------------------------------------------------------------
+!           Alphaout    r*8  significance level for outward sweep from median
+!                            valid value range: >0
+!
+!           Alphain     r*8  significance level for inward sweep from smallest obs
+!                            valid value range: any; controlled by tiny
+!
+!           Alphazeroin r*8  significance level for inward sweep from smallest obs
+!                            valid value range: >0
+!
+!       default parameter values stored in block data
+!         data Alphaout/0.005d0/,Alphain/0.d0/,Alphazeroin/0.1d0/      
 !
 !****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 !
       IMPLICIT NONE
       
-      INTEGER DIM1
+      INTEGER DIM1,N
       PARAMETER (DIM1=10000)
       
       DOUBLE PRECISION 
-     * X(N),PVALUEW(DIM1),W(DIM1),ALPH01,ALPH10,ZT(DIM1),S1,S2,XM,XV,
-     1 GGBCRITP
+     * X(N),PVALUEW(DIM1),W(DIM1),ZT(DIM1),S1,S2,XM,XV,
+     1 GGBCRITP,Alphaout,Alphain,Alphazeroin
 
       INTEGER 
-     * I,J2,N,N2,NC
-     
-      DATA ALPH01,ALPH10/0.01D0,0.1D0/     
-      
+     * I,J1,J2,J3,N2,NC
+
+      common /MGB001/Alphaout,Alphain,Alphazeroin
+
       DO 10 I=1,N
-        ZT(I) = LOG10(MAX(1D-88,X(I)))
-        PVALUEW(I) = -99.D0 ! MISSING VALUES
-10    CONTINUE
-        CALL DSVRGN(N,ZT,ZT)
+         ZT(I) = LOG10(MAX(1D-88,X(I)))
+         PVALUEW(I) = -99.D0    ! MISSING VALUES
+ 10   CONTINUE
+
+!     sort log flows from smallest to largest
+      CALL DSVRGN(N,ZT,ZT)
         
+!     set starting point for MGBT search at approximate median position (1/2 N)
       N2    = N/2
 
-        S1 = 0.D0
-        S2 = 0.D0
+      S1 = 0.D0
+      S2 = 0.D0
+
       DO 20 I=N,N2+2,-1
-        S1 = S1 + ZT(I)
-        S2 = S2 + ZT(I)**2
-20    CONTINUE
+         S1 = S1 + ZT(I)
+         S2 = S2 + ZT(I)**2
+ 20   CONTINUE
 
       DO 30 I=N2,1,-1
-        S1  = S1 + ZT(I+1)
-        S2  = S2 + ZT(I+1)**2
-        NC  = N-I
-        XM  = S1/DBLE(NC)
-        XV  = (S2-NC*XM**2)/(NC-1.D0)
-        W(I)       = (ZT(I)-XM)/SQRT(XV)
-        PVALUEW(I) = GGBCRITP(N,I,W(I))
-30    CONTINUE
-C
-C  FIRST CHECK TO SEE IF WE HAVE ANY 1% LOW OUTLIERS
-C  --ONCE YOU FIND LARGEST SIGNIFICANT LOW OUTLIER AT ALPHA=1% LEVEL,
-C      (POSSIBLY THE 0-TH OBSERVATION), THEN WALK FORWARD CHECKING 
-C       FOR LARGER LOW OUTLIERS AT ALPHA=10% LEVEL.
-        J2 = 0
-      DO 40 I=1,N2
-        IF(PVALUEW(I) .LT. ALPH01) THEN
-          J2 = I
-        ENDIF
-        IF((PVALUEW(I) .LT. ALPH10) .AND. (J2 .EQ. I-1)) THEN
-         J2 = I
-        ENDIF
-40     CONTINUE
+         S1  = S1 + ZT(I+1)
+         S2  = S2 + ZT(I+1)**2
+         NC  = N-I
+         XM  = S1/DBLE(NC)
+         XV  = (S2-NC*XM**2)/(NC-1.D0)
+         W(I)       = (ZT(I)-XM)/SQRT(XV)
+         PVALUEW(I) = GGBCRITP(N,I,W(I))
+ 30   CONTINUE
+!
+!     Determine number of low outliers in 2 or 3 steps.
+!     Based on TAC original code and JRS recommendations.
+!
+!     Step 1. Outward sweep from median (always done).
+!             alpha level of test = Alphaout
+!             number of outliers = J1
+!
+!     Step 2. Inward sweep from largest low outlier identified in Step 1.
+!             alpha level of test = Alphain
+!             number of outliers = J2
+!
+!     Step 3. Inward sweep from smallest observation
+!             alpha level of test = Alphazeroin
+!             number of outliers = J3
+!
+!     Initialize counters
+      J1 = 0  ! Outward sweep number of low outliers
+      J2 = 0  ! Inward sweep number of low outliers
+      J3 = 0  ! Oth Inward sweep number of low outliers
 
-        MGBTP = J2
+!     1) Outward sweep check: Loop over low flows up to median
+      DO 110 I=N2,1,-1
+         IF(PVALUEW(I) .LT. Alphaout) GOTO 111
+110   CONTINUE
+111   CONTINUE
+        J1=I
+
+!     2) Inward sweep check with Alphain
+           J2 = J1
+      DO 120 I=J1+1,N2  
+        IF( (PVALUEW(I) .GE. Alphain)) GOTO 121
+120   CONTINUE
+121   CONTINUE
+        J2 = I-1
+
+!     3) Inward sweep check with Alphazeroin
+      DO 130 I=1,N2
+        IF( (PVALUEW(I) .GE. Alphazeroin)) GOTO 131
+130   CONTINUE
+131   CONTINUE
+        J3=I-1
+        
+!     Set  number of low outliers as max of 3 sweeps
+      MGBTP = MAX(J1,J2,J3)
       RETURN
       END
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+      blockdata MGBblk
+      implicit none
+      double precision Alphaout,Alphain,Alphazeroin     
+      common /MGB001/Alphaout,Alphain,Alphazeroin      
+      data Alphaout/0.005d0/,Alphain/0.d0/,Alphazeroin/0.1d0/      
+      end
 !****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       INTEGER FUNCTION MGBT(X,N)
 !*** REVISION 2011.01
@@ -2009,7 +2106,7 @@ C       FOR LARGER LOW OUTLIERS AT ALPHA=10% LEVEL.
       IMPLICIT NONE
       INTEGER DIM1,N,MGBTP
       PARAMETER (DIM1=10000)
-      DOUBLE PRECISION X(*),PVALUEW(10000)
+      DOUBLE PRECISION X(*),PVALUEW(DIM1)
       MGBT = MGBTP(X,N,PVALUEW)
       RETURN
       END
@@ -2043,12 +2140,12 @@ C       FOR LARGER LOW OUTLIERS AT ALPHA=10% LEVEL.
       INTEGER
      * N,R,N_IN,R_IN,
      1 NEVAL,IER,LENW,LAST,IWORK(LIMIT),
-     2 IFAULT,KEY
+     2 KEY
      
       DOUBLE PRECISION 
      * ETA,ETA_IN,
-     1 FGGB,BOUND,EPSABS,EPSREL,RESULT,ABSERR,WORK(4*LIMIT),
-     2 DF,DELTA
+     1 FGGB,EPSABS,EPSREL,RESULT,ABSERR,WORK(4*LIMIT)
+     
 
       EXTERNAL FGGB
       
@@ -2085,14 +2182,14 @@ C       FOR LARGER LOW OUTLIERS AT ALPHA=10% LEVEL.
       IMPLICIT NONE
       
       INTEGER
-     * N,R,IFAULT
+     * N,R
      
       DOUBLE PRECISION 
-     * PZR,ETA,DF,DELTA,MuM, MuS2,VarM,VarS2,CovMS2,EX1,EX2,EX3,EX4,
-     2 ES,CovMS,VarS,alpha,beta,dlngam,
+     * PZR,ETA,DF,MuM, MuS2,VarM,VarS2,CovMS2,EX1,EX2,EX3,EX4,
+     2 CovMS,VarS,alpha,beta,dlngam,
      3 MuMP,EtaP,H,Lambda,MuS,ncp,q,VarMP,PR,ZR,N2,
-     4 FP_B_ICDF,FP_Z_ICDF,FP_Z_CDF,FP_Z_PDF,TNC,FP_T_CDF,FP_NCT_CDF,
-     5 FP_TNC_CDF,FP_NonCentral_T_CDF
+     4 FP_B_ICDF,FP_Z_ICDF,FP_Z_PDF,
+     5 FP_TNC_CDF
 
       COMMON /GGB001/ETA,N,R
 !
@@ -2157,11 +2254,11 @@ c        FGGB = 1.d0 - FP_NonCentral_T_CDF(q,df,ncp)
 !
       IMPLICIT NONE
       
-      INTEGER
-     1 LIMIT
-     
-      PARAMETER
-     1 (LIMIT=40000)
+CTAC      INTEGER
+CTAC     1 LIMIT
+CTAC     
+CTAC      PARAMETER
+CTAC     1 (LIMIT=40000)
      
       INTEGER
      * N,R,N_IN,R_IN,IFLAG,NCALLS
@@ -2239,17 +2336,17 @@ C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
      1 (LIMIT=40000)
      
       INTEGER
-     * N,R,N_IN,R_IN,
-     1 NEVAL,IER,LENW,LAST,IWORK(LIMIT),
-     2 IFAULT,KEY
-     
-      DOUBLE PRECISION 
-     * ETA,ETA_IN,
-     1 FGGB,BOUND,EPSABS,EPSREL,RESULT,ABSERR,WORK(4*LIMIT),
-     2 DELTA,NCP,W
+     1 NEVAL,IER,LENW,LAST,IWORK(LIMIT),KEY
+CTAC
+CTAC
 
+      DOUBLE PRECISION 
+     1 BOUND,EPSABS,EPSREL,RESULT,ABSERR,WORK(4*LIMIT),
+     2 NCP,W
+
+CTAC
       DOUBLE PRECISION
-     1  DF_IN,NCP_IN,X,DF,P,Q
+     1  DF_IN,NCP_IN,X,DF
       
       INTEGER
      1  INF
@@ -2538,7 +2635,7 @@ C===============================================================================
       DOUBLE PRECISION
      1     X(*),XD(*),MU,SIGMA,PPALL(*),XSYNTH(*),MOMS(2),
      2     P(5),QUANTS(5),
-     3     XS,XSS,XM,XV,XSD
+     3     XS,XSS
      
       INTEGER
      1     N,I,NP
@@ -2567,17 +2664,17 @@ C
 C     DUMMY ROUTINE TO REPRODUCE RESULTS FROM PREVIOUS VERSIONS OF PPFIT
 C
       
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
+         INTEGER N_T
+         PARAMETER (N_T=10000)
 
          DOUBLE PRECISION
      1     X(*),XD(*),MU,SIGMA,PPALL(*),XSYNTH(*),PE(N_T),THR(N_T)
      
          INTEGER 
-     1     N,NT,ND(N_T),NBT(N_T)
+     1     N,NT,NBT(N_T)
          
          CALL PPFIT2(N,X,XD,MU,SIGMA,PPALL,XSYNTH,
-     1     0.D0,NT,THR,PE,ND,NBT)
+     1     0.D0,NT,THR,PE,NBT)
          
          RETURN
          END
@@ -2661,7 +2758,7 @@ C===============================================================================
      4     THR(N_T),PE(0:N_T),PE_OFF(N_T)
      
          INTEGER
-     1     N,ND(N_T),NBT(N_T),NB(N_T),NT,NVAL,I,J
+     1     N,ND(N_T),NBT(N_T),NB(N_T),NT,NVAL,I
 
          CALL ARRANGE2(X,XD,N,NT,ND,NB,NVAL,Y,THR,NBT)
 
@@ -2821,8 +2918,8 @@ C===============================================================================
 
          IMPLICIT NONE
 
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
+         INTEGER N_T
+         PARAMETER (N_T=10000)
 
          DOUBLE PRECISION
      1     PP(*),PE(0:N_T),ALPHA,PD,PPT,PPC(*)
@@ -2900,8 +2997,8 @@ C===============================================================================
 
          IMPLICIT NONE
 
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
+         INTEGER N_PTS
+         PARAMETER (N_PTS=10000)
 
          DOUBLE PRECISION
      1     Y(*),PP(*),MU,SIGMA,
@@ -2978,8 +3075,8 @@ C===============================================================================
 
          IMPLICIT NONE
          
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
+         INTEGER N_PTS
+         PARAMETER (N_PTS=10000)
 
          DOUBLE PRECISION 
      1     X(*),XD(*),MU,SIGMA,PPALL(*),PP(*),PPC(*),XSYNTH(*),
@@ -3050,8 +3147,8 @@ C===============================================================================
 
          IMPLICIT NONE
          
-         INTEGER N_PTS,N_T
-         PARAMETER (N_T=10000,N_PTS=10000)
+         INTEGER N_PTS
+         PARAMETER (N_PTS=10000)
 
          DOUBLE PRECISION X(*)
          
@@ -3263,3 +3360,579 @@ c
       filext=fname(max(1,(ichar-3)):ichar)
       return
       end
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|subroutine EDFinit
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     Program to estimate probabilities and quantiles of distributions
+c       based on finite samples
+c    
+c       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    development history
+c
+c    timothy a. cohn        15 jul 2011 
+c       modified            18 jul 2011
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            n          i*4  number of observations (censored, uncensored, or 
+c                              other)
+c            x(n)       r*8  vector of edf data
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       output variables:
+c       ------------------------------------------------------------------------
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      subroutine EDFinit(n,x)
+
+      implicit none
+
+      integer
+     1  n,                                                ! input variables
+     2  pn,i,no
+     
+      logical initc
+
+      parameter (pn=1000000)
+      
+      double precision 
+     1  x(*),xc,pc,pnep
+     
+      save
+     
+      common /EDF001/no,initc,xc(0:pn),pc(0:pn),pnep(0:pn)
+      
+c  initiate arrays for work
+
+      if(n .lt. 1) then
+        write(*,*) 'EDFinit: Need more than 0 observations'
+        stop
+      else if(n .lt. 1) then
+        write(*,*) 'EDFinit: Maximum Number of Datapoints: ',n
+        stop
+      endif
+      
+      no    = n
+      call dsvrgn(no,x,xc(1))
+      
+      do 10 i=1,no
+          pc(i)  = dble(i)/dble(no) ! pc
+10    continue
+
+      do 20 i=no-1,1,-1
+        if( xc(i) .lt. xc(i+1) ) then
+          pnep(i) = pc(i)        ! pnep(i) = non-exceedance prob of xc(i)
+        else
+          pnep(i) = pnep(i+1)   ! dealing with ties
+        endif
+20    continue
+        pnep(no) = 1.d0
+      
+      call srand(123457)      ! initialize random number generator with new seed
+      initc = .TRUE.
+      
+      return
+      end
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+      blockdata EDFblk
+      implicit none
+
+      integer pn,no
+     
+      parameter (pn=1000000)
+      
+      double precision xc,pc,pnep
+     
+      logical initc
+     
+      common /EDF001/no,initc,xc(0:pn),pc(0:pn),pnep(0:pn)
+      
+      data initc/.FALSE./,xc(0)/-1.d99/,pc(0)/0.d0/,pnep(0)/0.d0/
+      
+      end
+      
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|double precision function pEDF
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     Program to estimate probabilities of distributions
+c       based on finite samples
+c    
+c       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    development history
+c
+c    timothy a. cohn        15 jul 2011 
+c       modified            18 jul 2011
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            x0         r*8  x value for which F(x0) is to be computed
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       output
+c       ------------------------------------------------------------------------
+c            pEDF    r*8  F(x0)
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      double precision function pEDF(x0)
+      
+      implicit none
+
+      logical initc
+     
+      integer
+     1  pn,i,no,itop,ibot,iguess
+     
+      parameter (pn=1000000)
+      
+      double precision 
+     1  x0,xc,result,pc,pnep
+     
+      save
+     
+      common /EDF001/no,initc,xc(0:pn),pc(0:pn),pnep(0:pn)
+      
+      if(.not. initc) then
+        write(*,*) 'pEDF: EDF needs to be initiated before use'
+        stop
+      endif
+      
+        ibot = 0
+        itop = no
+      do 10 i=1,1000
+        if(itop-ibot .le. 1) then
+          result = pc(itop)
+          goto 99
+        endif
+          iguess = (ibot+itop)/2
+        if(x0 .gt. xc(iguess)) then
+          ibot = iguess
+        else if(x0 .lt. xc(iguess)) then
+          itop = iguess
+        else
+          result = pnep(iguess)
+          goto 99
+        endif
+10        continue
+99    continue
+        pEDF = result
+      return
+      end
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|double precision function qEDF
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     Program to estimate quantiles of distributions
+c       based on finite samples
+c    
+c       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    development history
+c
+c    timothy a. cohn        15 jul 2011 
+c       modified            18 jul 2011
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            p0         r*8  x value for which F(x0) is to be computed
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       output
+c       ------------------------------------------------------------------------
+c            qEDF   r*8  F(x0)
+c
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c   N.B. Quantile function corresponds to R quantile function
+c                  quantile(xc,p0,type=4)
+c        The quantiles are interpolated between datapoints 
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      double precision function qEDF(p0)
+      
+      implicit none
+
+      integer
+     1  pn,i,no,itop,ibot,iguess
+     
+      logical initc
+     
+      parameter (pn=1000000)
+      
+      double precision 
+     1  p0,xc,pc,pnep,result
+     
+      save
+     
+      common /EDF001/no,initc,xc(0:pn),pc(0:pn),pnep(0:pn)
+      
+      if(.not. initc) then
+        write(*,*) 'qEDF: EDF needs to be initiated before use'
+        stop
+      endif
+      
+        ibot = 0
+        itop = no
+      do 10 i=1,1000
+        if(itop-ibot .le. 1) then
+          if(pc(itop) .ne. pc(ibot)) then
+            result = ((p0-pc(ibot))*xc(itop)+(pc(itop)-p0)*xc(ibot))/
+     1                          (pc(itop)-pc(ibot))
+          else
+            result = pc(ibot)
+          endif
+          goto 99
+        endif
+          iguess = (ibot+itop)/2
+        if(p0 .gt. pc(iguess)) then
+          ibot = iguess
+        else if(p0 .lt. pc(iguess)) then
+          itop = iguess
+        else
+          result = xc(iguess)
+          goto 99
+        endif
+10        continue
+99    continue
+        qEDF = result
+      return
+      end
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|double precision function rEDF
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     Program to generate random samples (sampled with replacement)
+c       from EDF  
+c       
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c    development history
+c
+c    timothy a. cohn        15 jul 2011 
+c       modified            18 jul 2011
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      double precision function rEDF()
+      
+      implicit none
+
+      integer
+     1  no,pn,indx
+     
+      logical initc
+     
+      parameter (pn=1000000)
+      
+      double precision 
+     1  xc,pc,pnep
+     
+      real*4 rand
+     
+      save
+     
+      common /EDF001/no,initc,xc(0:pn),pc(0:pn),pnep(0:pn)
+
+      if(.not. initc) then
+        write(*,*) 'rEDF: EDF needs to be initiated before use'
+        stop
+      endif
+
+        indx = no*rand() + 1
+        rEDF = xc(indx)
+      return
+      end
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       SUBROUTINE NORMQUAD(N,T,W)
+C===============================================================================
+C
+C        SUBROUTINE NORMQUAD COMPUTES QUADRATURE NODES AND WEIGHTS 
+C          CORRESPONDING TO THE STANDARD NORMAL DISTRIBUTION
+C
+C          INT(-INF,INF) g(z)f(z)dz = sum(i=1,n) w(i)*g(t(i))
+C
+C
+C        AUTHOR....TIM COHN
+C        DATE......05 OCTOBER 2012
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        N         I*4       INPUT NUMBER OF NODES/ORDER OF OTHOGONAL POLYNOMIAL
+C        T(N)      R*8       OUTPUT VECTOR OF NODES
+C        W(N)      R*8       OUTPUT VECTOR OF WEIGHTS
+C
+C===============================================================================
+C           THIS SET OF ROUTINES COMPUTES THE NODES T(J) AND WEIGHTS
+C        W(J) FOR GAUSSIAN-TYPE QUADRATURE RULES WITH PRE-ASSIGNED
+C        NODES.  THESE ARE USED WHEN ONE WISHES TO APPROXIMATE
+C
+C                 INTEGRAL (FROM A TO B)  F(X) W(X) DX
+C
+C                              N
+C        BY                   SUM W  F(T )
+C                             J=1  J    J
+C
+C        (NOTE W(X) AND W(J) HAVE NO CONNECTION WITH EACH OTHER.)
+C        HERE W(X) IS ONE OF SIX POSSIBLE NON-NEGATIVE WEIGHT
+C        FUNCTIONS (LISTED BELOW), AND F(X) IS THE
+C        FUNCTION TO BE INTEGRATED.  GAUSSIAN QUADRATURE IS PARTICULARLY
+C        USEFUL ON INFINITE INTERVALS (WITH APPROPRIATE WEIGHT
+C        FUNCTIONS), SINCE THEN OTHER TECHNIQUES OFTEN FAIL.
+C
+C           ASSOCIATED WITH EACH WEIGHT FUNCTION W(X) IS A SET OF
+C        ORTHOGONAL POLYNOMIALS.  THE NODES T(J) ARE JUST THE ZEROES
+C        OF THE PROPER N-TH DEGREE POLYNOMIAL.
+C
+C     INPUT PARAMETERS (ALL REAL NUMBERS ARE IN DOUBLE PRECISION)
+C
+C        KIND     AN INTEGER BETWEEN 1 AND 6 GIVING THE TYPE OF
+C                 QUADRATURE RULE:
+C
+C        KIND = 1:  LEGENDRE QUADRATURE, W(X) = 1 ON (-1, 1)
+C        KIND = 2:  CHEBYSHEV QUADRATURE OF THE FIRST KIND
+C                   W(X) = 1/SQRT(1 - X*X) ON (-1, +1)
+C        KIND = 3:  CHEBYSHEV QUADRATURE OF THE SECOND KIND
+C                   W(X) = SQRT(1 - X*X) ON (-1, 1)
+C        KIND = 4:  HERMITE QUADRATURE, W(X) = EXP(-X*X) ON
+C                   (-INFINITY, +INFINITY)
+C        KIND = 5:  JACOBI QUADRATURE, W(X) = (1-X)**ALPHA * (1+X)**
+C                   BETA ON (-1, 1), ALPHA, BETA .GT. -1.
+C                   NOTE: KIND=2 AND 3 ARE A SPECIAL CASE OF THIS.
+C        KIND = 6:  GENERALIZED LAGUERRE QUADRATURE, W(X) = EXP(-X)*
+C                   X**ALPHA ON (0, +INFINITY), ALPHA .GT. -1
+C===============================================================================
+C       
+       IMPLICIT NONE
+       
+       DOUBLE PRECISION T(*),W(*),ENDPTS(2),B(1000),SQ2,SQPI
+       INTEGER I,KIND,KPTS,N
+       
+       DATA KPTS/0/,ENDPTS/2*0.D0/
+       DATA SQ2/1.41421356237/,SQPI/0.56418958354/
+       
+         KIND=4
+       CALL GAUSSQ(KIND, N, 0.D0, 0.D0, KPTS, ENDPTS, B, T, W)
+       DO 10 I=1,N
+         T(I) = T(I)*SQ2
+         W(I) = W(I)*SQPI
+10     CONTINUE
+       
+       RETURN
+       END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       SUBROUTINE GAMMAQUAD(N,ALPHA,BETA,T,W)
+C===============================================================================
+C
+C        SUBROUTINE GAMMAQUAD COMPUTES QUADRATURE NODES AND WEIGHTS 
+C          CORRESPONDING TO A GAMMA DISTRIBUTION WITH PARAMETERS
+C          ALPHA, BETA
+C
+C          INT(0,INF) g(y)f(y)dy = sum(i=1,n) w(i)*g(t(i))
+C
+C
+C        AUTHOR....TIM COHN
+C        DATE......05 OCTOBER 2012
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        N         I*4       INPUT NUMBER OF NODES/ORDER OF OTHOGONAL POLYNOMIAL
+C        ALPHA     R*8       SHAPE PARAMETER OF GAMMA DISTRIBUTION
+C        BETA      R*8       SCALE PARAMETER OF GAMMA DISTRIBUTION
+C        T(N)      R*8       OUTPUT VECTOR OF NODES
+C        W(N)      R*8       OUTPUT VECTOR OF WEIGHTS
+C
+C===============================================================================
+C       
+       IMPLICIT NONE
+       
+       DOUBLE PRECISION 
+     1   T(*),W(*),ALPHA,BETA,ENDPTS(2),B2(1000),SQ2,SQPI,DGI,DGAMMA,
+     2   ALPHAMAX,A,B,C
+       INTEGER I,KIND,KPTS,N
+       DATA ALPHAMAX/160.D0/
+       
+       DATA KPTS/0/,ENDPTS/2*0.D0/
+       DATA SQ2/1.41421356237/,SQPI/0.56418958354/
+       
+       IF(ALPHA .LE. ALPHAMAX) THEN
+         A = ALPHA
+         B = BETA
+         C = 0.D0
+       ELSE
+         A = ALPHAMAX
+         B = BETA*SQRT(ALPHA/A)
+         C = ALPHA*BETA-A*B
+       ENDIF
+           KIND=6
+         CALL GAUSSQ(KIND, N, A-1.D0, 0.D0, KPTS, ENDPTS, B2, T, W)
+           DGI = 1.D0/DGAMMA(A)
+         DO 10 I=1,N
+           T(I) = C + T(I)*B
+           W(I) = W(I)*DGI
+10       CONTINUE
+       
+       RETURN
+       END
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+       SUBROUTINE CHOL33(S,V,IFLAG)
+C===============================================================================
+C
+C        SUBROUTINE CHOL33 COMPUTES A SORT-OF CHOLESKY DECOMPOSITION (NOT LU)
+C          OF A SYMMETRIC POSITIVE-DEFINITE 3x3 MATRIX WITH THE FOLLOWING
+C          PROPERTIES:
+C            
+C          ASSUME WE START WITH A (Nx3) VARIABLE X (THINK {M,S2,G})
+C          X HAS 3x3 COVARIANCE MATRIX S AND P=CHOL33(S,P)
+C            --THE COLUMNS OF XxP ARE ORTHOGONAL
+c            --THE SECOND COLUMN OF P HAS TWO ZEROES (CHOLESKY ITS COL 1)
+C
+C        N.B. THIS ROUTINE IS USEFUL FOR ONLY ONE PURPOSE: GENERATING
+C             SAMPLES USING QUADRATURE POINTS WHERE THE MIDDLE VARIABLE
+C             IS GAMMA AND THE TWO OUTER ONES ARE BOTH NORMAL
+C             NO CHECK IS DONE TO VERIFY THAT MATRIX HAS NON-ZERO
+C             MAIN DIAGONAL OR ANYTHING ELSE...
+C
+C        FOR THE ALGEBRA, SEE COHN [2012] (NOTEBOOK 3)
+C          
+C        AUTHOR....TIM COHN
+C        DATE......05 OCTOBER 2012
+C
+C===============================================================================
+C
+C     PROPERTY OF US GOVERNMENT, U.S. GEOLOGICAL SURVEY
+C
+C     *** DO NOT MODIFY WITHOUT AUTHOR''S CONSENT ***
+C
+C     AUTHOR CAN BE CONTACTED AT:  TACOHN@USGS.GOV (703/648-5711)     
+C
+C===============================================================================
+C
+C        S(3,3)    R*8       INPUT MATRIX
+C        V(3,3)    R*8       OUTPUT MATRIX, MODIFIED CHOLESKY DECOMPOSITION OF S
+C        IFLAG     I*4       OUTPUT FLAG; 0 IF OK; 1 IF S NOT PSD
+C
+C  THE OUTPUT IS NOT UPPER TRIANGULAR, BUT RATHER UT ONCE COLUMNS 1 AND 2 ARE 
+C  SWAPPED AND ROWS 1 AND 2 ARE SWAPPED. 
+C
+C		> chol(var(x))
+C				 [,1]      [,2]        [,3]
+C		[1,] 0.938117 0.1361061 -0.04404994
+C		[2,] 0.000000 0.9575892 -0.07947178
+C		[3,] 0.000000 0.0000000  0.84128956
+C		> chol33(var(x))
+C				  [,1]      [,2]        [,3]
+C		[1,] 0.9287822 0.0000000 -0.03242836
+C		[2,] 0.1320116 0.9672135 -0.08487969
+C		[3,] 0.0000000 0.0000000  0.84128956
+C
+C===============================================================================
+C
+      IMPLICIT NONE
+      DOUBLE PRECISION S(3,3),V(3,3),T1
+      INTEGER IFLAG
+      
+      IF(S(1,1).LE.0.D0 .OR. S(2,2).LE.0.D0 .OR. S(3,3).LE.0.D0) GOTO 99
+      
+      V(1,2)=0.D0
+      V(3,2)=0.D0
+      V(3,1)=0.D0
+      V(2,2)=SQRT(S(2,2))
+      V(2,1)=S(2,1)/V(2,2)
+      V(2,3)=S(2,3)/V(2,2)
+        T1=S(1,1)-V(2,1)**2
+        IF(T1 .LT. 0.D0) GOTO 99
+      V(1,1)=SQRT(T1)
+      V(1,3)=(S(3,1)-V(2,3)*V(2,1))/V(1,1)
+        T1=S(3,3)-V(2,3)**2-V(1,3)**2
+        IF(T1 .LT. 0.D0) GOTO 99
+      V(3,3)=SQRT(T1)
+        IFLAG=0
+      RETURN
+99    CONTINUE
+C       WRITE(*,*) 'MATRIX S NOT POS-SEMI-D; (CHOL33)'
+        IFLAG=1 
+        RETURN
+      END
+C****
+      DOUBLE PRECISION FUNCTION MEANW (N,X,W)
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C  COMPUTES THE WEIGHTED MEAN OF A VECTOR X
+C
+      IMPLICIT NONE
+	  INTEGER N,I
+	  DOUBLE PRECISION X(*),W(*),WSUM,XSUM
+
+        WSUM = 0.D0
+        XSUM = 0.D0
+      DO 10 I=1,N
+        WSUM = WSUM+W(I)
+        XSUM = XSUM+W(I)*X(I)
+10    CONTINUE
+        MEANW=XSUM/WSUM
+      RETURN
+	  END
+C****
+      DOUBLE PRECISION FUNCTION COVW (N,X,Y,W)
+C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+C
+C  COMPUTES THE WEIGHTED MEAN OF A VECTOR X
+C
+      IMPLICIT NONE
+	  INTEGER N,I
+	  DOUBLE PRECISION X(*),Y(*),W(*),WSUM,XSUM,MEANW,MX,MY
+
+        MX  = MEANW(N,X,W)
+        MY  = MEANW(N,Y,W)      
+        WSUM = 0.D0
+        XSUM = 0.D0
+      DO 10 I=1,N
+        WSUM = WSUM+W(I)
+        XSUM = XSUM+W(I)*(X(I)-MX)*(Y(I)-MY)
+10    CONTINUE
+        COVW = XSUM/WSUM
+      RETURN
+	  END
+     
+      
