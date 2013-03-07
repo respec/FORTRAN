@@ -622,6 +622,43 @@ C         sort by exit, then by priority
 C     end of category parameters
       END IF
 C
+C     new section for dynamic wave routing 
+C
+C     variables to pass in (need to be added to the osv):
+C     DTS           -- integer, dynamic wave time step
+C
+C     note: assume last one in list is the outfall, type is free
+C     NNODE         -- integer, number of nodes
+C     NODEX(NNODE)  -- integer, node index
+C     NELEV(NNODE)  -- real, invert elevation
+C     NDMAX(NNODE)  -- real, max depth for this node
+C     NDINIT(NNODE) -- real, initial node depth
+C     NDSURC(NNODE) -- real, surcharge depth for this node
+C     NPONDA(NNODE) -- real, ponded area for this node
+C     NLOCIN(NNODE) -- real, local inflow percentage to this node
+C
+C     NCOND         -- integer, number of conduits
+C     CNODE1(NCOND) -- integer, upstream conduit node index 
+C     CNODE2(NCOND) -- integer, downstream conduit node index
+C     CLEN(NCOND)   -- real, conduit length
+C     CMANN(NCOND)  -- real, conduit mannings n
+C     COFF1(NCOND)  -- real, inlet offset
+C     COFF2(NCOND)  -- real, outlet offset
+C     CQ0(NCOND)    -- real, initial flow
+C     CSHAPE(NCOND) -- integer, conduit shape type
+C     CGEOM1(NCOND) -- real, first item of shape geometry
+C     CGEOM2(NCOND) -- real, second item of shape geometry
+C     CGEOM3(NCOND) -- real, third item of shape geometry
+C     CGEOM4(NCOND) -- real, fourth item of shape geometry
+C
+C     process values in table-type DYNAMIC-TIME
+      TBNO= 20
+      TBSB= 1
+      NVAL= 1
+      CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
+     M             IVAL)
+C      DTS = IVAL(1)
+C
 C     compute initial conditions
 C
       IF (RETCOD .EQ. 0) THEN
@@ -1917,10 +1954,11 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL         CATSRT,CATFRC,ROUTE,NOROUT,OMSTD,OMSTI,OMSTR
-      EXTERNAL         OMSG,AUXIL,SHEAR
+      EXTERNAL         OMSG,AUXIL,SHEAR,DWROUT
 C
 C     + + + HISTORY + + +
 C     2005  BRB added potential et to output summaries
+C     2013  PBD added dynamic wave routing algorithm
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -2205,28 +2243,56 @@ C
 C     find the state of the reach or reservoir at the end of
 C     the time interval and the outflows during the interval
 C
-      IF (NODFV .GT. 0) THEN
-C       at least one outflow demand depends on volume
-C       thus, hydraulic routing is required
-        CALL ROUTE (DAYFG,VCONFG,NEXITS,MXEXIT,CONVFM,DELTS,KS,COKS,OS,
-     I              ROS,VOLT,NROWS,NCOLS,RCHTAB,VZERPT,FACTA1,FUNCT,MON,
-     I              NXTMON,DAY,NDAYS,ODFVFG,ODGTFG,COLIND,OUTDGT,COTDGT,
-     I              RCHNO,MESSU,MSGFL,SCLU,DATIM,MXCAT,NCATS,MXCUSR,
-     I              NCOGT,COGTC,COGTE,CFVOL,CFVOLC,CFVOLP,CFVOLF,IREXIT,
-     I              IRRDEM,CIRRWD,
-     M              CORELS,CVOLT,CFRAC,CONVF,ROWPT,HYECNT,HYWCNT,
-     O              VOL,O,RO,OVOL,ROVOL,COREL,CVOL,CO,CRO,COVOL,
-     O              CROVOL)
-      ELSE
-C       no outflow demands depend on vol
-        CALL NOROUT (VOLT,KS,COKS,OS,ROS,DELTS,NEXITS,MXEXIT,ODGTFG,
-     I               OUTDGT,COTDGT,VZERPT,AUX1FG,NROWS,NCOLS,
-     I               RCHTAB,RCHNO,MESSU,MSGFL,SCLU,DATIM,NCATS,NCOGT,
-     I               COGTC,COGTE,IREXIT,IRRDEM,CIRRWD,
-     M               CORELS,CVOLT,CFRAC,ROWPT,HYWCNT,
-     O               VOL,O,RO,OVOL,ROVOL,COREL,CVOL,CO,CRO,COVOL,
-     O               CROVOL)
-      END IF
+      IF (HYDRFG.EQ.1) THEN
+        IF (NODFV .GT. 0) THEN
+C         at least one outflow demand depends on volume
+C         thus, hydraulic routing is required
+          CALL ROUTE (DAYFG,VCONFG,NEXITS,MXEXIT,CONVFM,DELTS,KS,COKS,
+     I                OS,ROS,VOLT,NROWS,NCOLS,RCHTAB,VZERPT,FACTA1,
+     I                FUNCT,MON,NXTMON,DAY,NDAYS,ODFVFG,ODGTFG,COLIND,
+     I                OUTDGT,COTDGT,RCHNO,MESSU,MSGFL,SCLU,DATIM,
+     I                MXCAT,NCATS,MXCUSR,NCOGT,COGTC,COGTE,CFVOL,
+     I                CFVOLC,CFVOLP,CFVOLF,IREXIT,IRRDEM,CIRRWD,
+     M                CORELS,CVOLT,CFRAC,CONVF,ROWPT,HYECNT,HYWCNT,
+     O                VOL,O,RO,OVOL,ROVOL,COREL,CVOL,CO,CRO,COVOL,
+     O                CROVOL)
+        ELSE
+C         no outflow demands depend on vol
+          CALL NOROUT (VOLT,KS,COKS,OS,ROS,DELTS,NEXITS,MXEXIT,ODGTFG,
+     I                 OUTDGT,COTDGT,VZERPT,AUX1FG,NROWS,NCOLS,
+     I                 RCHTAB,RCHNO,MESSU,MSGFL,SCLU,DATIM,NCATS,NCOGT,
+     I                 COGTC,COGTE,IREXIT,IRRDEM,CIRRWD,
+     M                 CORELS,CVOLT,CFRAC,ROWPT,HYWCNT,
+     O                 VOL,O,RO,OVOL,ROVOL,COREL,CVOL,CO,CRO,COVOL,
+     O                 CROVOL)
+        END IF
+      ELSE IF (HYDRFG.EQ.2) THEN
+C       use new dynamic wave routing algorithm
+        INVOL = IVOL + PRSUPY - VOLEV  
+C        CALL DWROUT (DELTS,
+C     I               NNODE,NCOND,DTS,
+C     I               OS(1),ROS,VOLT,INVOL,
+C     I               MON,NXTMON,DAY,NDAYS,
+C     I               RCHNO,MESSU,MSGFL,SCLU,
+C     I               DATIM,
+C     I               CNODE1,CNODE2,CSHAPE,
+C     I               NELEV,NDMAX,NDINIT,
+C     I               NDSURC,NPONDA,NLOCIN,
+C     I               CLEN,CMANN,COFF1,
+C     $               COFF2,CQ0,CGEOM1,
+C     $               CGEOM2,CGEOM3,CGEOM4,
+C     M               HYECNT,HYWCNT,
+C     O               VOL,O(1),RO,OVOL(1),ROVOL)
+C       only uses the first exit, ignore the rest
+        O(2) = 0.0
+        O(3) = 0.0
+        O(4) = 0.0
+        O(5) = 0.0
+        OVOL(2) = 0.0
+        OVOL(3) = 0.0
+        OVOL(4) = 0.0
+        OVOL(5) = 0.0
+      END IF 
 C
       IF (NCATS .GE. 1) THEN
 C       do category checks
@@ -3442,6 +3508,209 @@ C         an irrigation demand was made before routing
  120      CONTINUE
         END IF
       END IF
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   DWROUT
+     I                   (DELTS,
+     I                    NNODE,NCOND,DTS,
+     I                    OS,ROS,VOLT,INVOL,
+     I                    MON,NXTMON,DAY,NDAYS,
+     I                    RCHNO,MESSU,MSGFL,SCLU,
+     I                    DATIM,
+     I                    CNODE1,CNODE2,CSHAPE,
+     I                    NELEV,NDMAX,NDINIT,
+     I                    NDSURC,NPONDA,NLOCIN,
+     I                    CLEN,CMANN,COFF1,
+     $                    COFF2,CQ0,CGEOM1,
+     $                    CGEOM2,CGEOM3,CGEOM4,
+     M                    HYECNT,HYWCNT,
+     O                    VOL,O,RO,OVOL,ROVOL)
+C
+C     + + + PURPOSE + + +
+C     Use dynamic wave routing algorithm to 
+C     find the state of the reach or reservoir at the end of
+C     the time interval and the outflows from it
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER          NNODE,NCOND,DTS,MON,NXTMON,DAY,NDAYS,
+     $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
+     $                 HYECNT(5),HYWCNT(2),
+     $                 CNODE1(NCOND),CNODE2(NCOND),
+     $                 CSHAPE(NCOND) 
+      REAL             DELTS,OS,ROS,
+     $                 O,RO,OVOL,ROVOL,
+     $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
+     $                 NDSURC(NNODE),NPONDA(NNODE),NLOCIN(NNODE),
+     $                 CLEN(NCOND),CMANN(NCOND),COFF1(NCOND),
+     $                 COFF2(NCOND),CQ0(NCOND),CGEOM1(NCOND),
+     $                 CGEOM2(NCOND),CGEOM3(NCOND),CGEOM4(NCOND) 
+      DOUBLE PRECISION VOLT,VOL,INVOL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DELTS  - simulation interval in seconds
+C     NNODE  - number of nodes in dw simulated network
+C     NCOND  - number of conduits in dw simulated network
+C     DTS    - dynamic wave time step in seconds
+C     OS     - rate of outflow from each exit of reach at start of interval
+C     ROS    - total rate of outflow from reach at start of interval
+C     VOLT   - volume in the reach after inflow, precip and evap
+C     INVOL  - inflow volume to this reach at this time step, incl inflow, precip and evap
+C     MON    - calendar month
+C     NXTMON - next calendar month
+C     DAY    - day of month
+C     NDAYS  - no. of days in this month
+C     RCHNO  - reach number
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     SCLU   - cluster containing error and warning message details
+C     DATIM  - date and time
+C     CNODE1 - upstream conduit node index 
+C     CNODE2 - downstream conduit node index
+C     CSHAPE - conduit shape type
+C     NELEV  - invert elevation for each node
+C     NDMAX  - max depth for each node
+C     NDINIT - initial node depth for each node
+C     NDSURC - surcharge depth for each node
+C     NPONDA - ponded area for each node
+C     NLOCIN - local inflow percentage to each node
+C     CLEN   - length for each conduit
+C     CMANN  - mannings n for each conduit
+C     COFF1  - inlet offset for each conduit
+C     COFF2  - outlet offset for each conduit
+C     CQ0    - initial flow for each conduit
+C     CGEOM1 - first item of shape geometry for each conduit
+C     CGEOM2 - second item of shape geometry for each conduit
+C     CGEOM3 - third item of shape geometry for each conduit
+C     CGEOM4 - fourth item of shape geometry for each conduit
+C     HYECNT - count of error messages for section HYDR
+C     HYWCNT - count of warning messages for section HYDR
+C     VOL    - volume of water in reach above bed
+C     O      - rate of outflow from each reach exit at end of interval
+C     RO     - total rate of outflow from reach at end of interval
+C     OVOL   - volume of water leaving reach in an interval by exit
+C     ROVOL  - total volume of water leaving reach in an interval
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER          I1,LTYPE,NTS,ITS,J
+      REAL             R0,XN(5),XC(6),XX(4)
+C
+C     + + + FUNCTIONS + + +
+      REAL             DAYVAL
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC        ABS
+C
+C     + + + EXTERNALS + + +
+C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
+C     1                 xsect_setParams
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA R0/0.0/
+      DATA I1/1/
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     variables to pass in (need to be added to the osv):
+C     DTS           -- integer, dynamic wave time step
+C
+C     note: assume last one in list is the outfall, type is free
+C     NNODE         -- integer, number of nodes
+C     NODEX(NNODE)  -- integer, node index
+C     NELEV(NNODE)  -- real, invert elevation
+C     NDMAX(NNODE)  -- real, max depth for this node
+C     NDINIT(NNODE) -- real, initial node depth
+C     NDSURC(NNODE) -- real, surcharge depth for this node
+C     NPONDA(NNODE) -- real, ponded area for this node
+C     NLOCIN(NNODE) -- real, local inflow percentage to this node
+C
+C     NCOND         -- integer, number of conduits
+C     CNODE1(NCOND) -- integer, upstream conduit node index 
+C     CNODE2(NCOND) -- integer, downstream conduit node index
+C     CLEN(NCOND)   -- real, conduit length
+C     CMANN(NCOND)  -- real, conduit mannings n
+C     COFF1(NCOND)  -- real, inlet offset
+C     COFF2(NCOND)  -- real, outlet offset
+C     CQ0(NCOND)    -- real, initial flow
+C     CSHAPE(NCOND) -- integer, conduit shape type
+C     CGEOM1(NCOND) -- real, first item of shape geometry
+C     CGEOM2(NCOND) -- real, second item of shape geometry
+C     CGEOM3(NCOND) -- real, third item of shape geometry
+C     CGEOM4(NCOND) -- real, fourth item of shape geometry
+C
+C     conduit types
+C     DUMMY: 0
+C     CIRCULAR: 1
+C     FORCE_MAIN: 2                                                          
+C     FILLED_CIRCULAR: 3
+C     EGGSHAPED: 4
+C     HORSESHOE: 5
+C     GOTHIC: 6
+C     CATENARY: 7
+C     SEMIELLIPTICAL: 8
+C     BASKETHANDLE: 9
+C     SEMICIRCULAR: 10
+C     RECT_CLOSED: 11
+C     RECT_OPEN: 12
+C     RECT_TRIANG: 13
+C     RECT_ROUND: 14
+C     MOD_BASKET: 15
+C     TRAPEZOIDAL: 16
+C     TRIANGULAR: 17
+C     PARABOLIC: 18
+C     POWERFUNC: 19
+C     HORIZ_ELLIPSE: 20
+C     VERT_ELLIPSE: 21
+C     ARCH: 22
+C
+      DO 10 J= 1,NNODE
+        LTYPE = 0
+        IF (J.EQ.NNODE) THEN
+C         this is the outfall
+          LTYPE = 1
+        END IF 
+        XN(1) = NELEV(J)
+        XN(2) = NDMAX(J)
+        XN(3) = NDINIT(J)
+        XN(4) = NDSURC(J)
+        XN(5) = NPONDA(J)
+C        node_setParams(J, LTYPE, 0, XN)
+C       also need way to set local inflow volumes to this node
+C       input volume to this reach = NLOCIN * INVOL
+ 10   CONTINUE
+C
+      LTYPE = 0
+      DO 20 J= 1,NCOND 
+        XC(1) = CLEN(J)
+        XC(2) = CMANN(J)
+        XC(3) = COFF1(J)
+        XC(4) = COFF2(J)
+        XC(5) = CQ0(J)
+        XC(6) = 0.0
+C        link_setParams(J, LTYPE, CNODE1, CNODE2, J, XC)
+        XX(1) = CGEOM1(J)
+        XX(2) = CGEOM2(J)
+        XX(3) = CGEOM3(J)
+        XX(4) = CGEOM4(J)
+C        xsect_setParams(J, CSHAPE(J), 1, X, 0.0)   !haven't quite understood this yet
+ 20   CONTINUE
+C
+      NTS = DELTS/DTS
+      DO 100 ITS = 1,NTS
+C        dynwave_execute(links,DTS)
+ 100  CONTINUE
+C
+C     have to figure out how to get the output back here
+C      node_getSystemOutflow   
+C
+      O = OS
+      RO = ROS
+      VOL = VOLT
+      OVOL = 0.0
+      ROVOL = OVOL
 C
       RETURN
       END
