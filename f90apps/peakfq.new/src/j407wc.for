@@ -1576,13 +1576,13 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf0.inc'
       INCLUDE 'cwcf1.inc'
 
-      integer nlow,nzero
+      integer ns,nlow,nzero
       double precision  gbcrit,gbthresh,pvaluew,qs
       character*4 gbtype
 
 C     used by Tim's EMA code
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
-     1               nlow,nzero,gbtype
+     1               ns,nlow,nzero,gbtype
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I

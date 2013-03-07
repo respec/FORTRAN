@@ -61,16 +61,18 @@ C
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
 
-      integer nlow,nzero
+      integer ns,nlow,nzero
       double precision  gbcrit,gbthresh,pvaluew,qs
       character*4 gbtype
 
 C     used by Tim's EMA code
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
-     1               nlow,nzero,gbtype
+     1               ns,nlow,nzero,gbtype
 C     from Tim Cohn's code, for output of EMA at-site MSE of G
-      double precision as_M_mse,as_S2_mse,as_G_mse
-      common /tac005/as_M_mse,as_S2_mse,as_G_mse
+      double precision as_M_mse,as_S2_mse,as_G_mse,
+     1                 as_G_mse_Syst,as_G_ERL
+      common /tac005/as_M_mse,as_S2_mse,as_G_mse,
+     1               as_G_mse_Syst,as_G_ERL
 C
 C
 C      + + + LOCAL VARIABLES + + +
@@ -1139,15 +1141,15 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
  1022 FORMAT('   WATER     RANKED   SYSTEMATIC     B17B' / 
      $       '    YEAR   DISCHARGE    RECORD     ESTIMATE')
  2022 FORMAT('   WATER     RANKED ',5X,
-     $       'EMA',10X,'THRESHOLDS',7X,'INTERVALS' / 
+     $       'EMA',9X,'INTERVALS' / 
      $       '    YEAR   DISCHARGE   ',
-     $       'ESTIMATE',5X,'LOWER    UPPER    LOW      HIGH')
+     $       'ESTIMATE',5X,' LOW      HIGH')
  1023 FORMAT( I8,F11.1,F11.4,F12.4,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2023 FORMAT( I8,F11.1,F11.4,2x,2A9,
+ 2023 FORMAT( I8,F11.1,F11.4,2x,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2024 FORMAT( I8,F11.1,F11.4,2x,2A9,F10.1,A)
- 2025 FORMAT( I8,5X,'------',F11.4,2x,2A9,F10.1,A)
+ 2024 FORMAT( I8,F11.1,F11.4,2x,F10.1,A)
+ 2025 FORMAT( I8,5X,'------',F11.4,2x,F10.1,A)
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1263,23 +1265,23 @@ C                END IF
 C                IF (LYR .GT. 0) THEN
                 IF (INTERVAL(J)%INTRVLYR.EQ.ABS(IPKSEQ(IPKPTR(I)))) THEN
 C                 need to print interval record
-                  LTHR = 0.0
-                  UTHR = 1.0E20
-                  IF (NTHRESH .GT. 0) THEN
-                    DO 303 K = 1, NTHRESH
-                      IF (INTERVAL(J)%INTRVLYR.GE.THRESH(K)%THRBYR .AND.
-     $                    INTERVAL(J)%INTRVLYR.LE.THRESH(K)%THREYR) THEN
-                        LTHR = THRESH(K)%THRLWR
-                        UTHR = THRESH(K)%THRUPR
-                      END IF
- 303                CONTINUE  
-                  END IF
-                  WRITE(LTHRCHR(1),'(F9.0)') LTHR
-                  IF (UTHR .GT. 1.0E10) THEN
-                    WRITE(LTHRCHR(2),'(A9)') '      INF'
-                  ELSE
-                    WRITE(LTHRCHR(2),'(F9.0)') UTHR
-                  END IF
+c                  LTHR = 0.0
+c                  UTHR = 1.0E20
+c                  IF (NTHRESH .GT. 0) THEN
+c                    DO 303 K = 1, NTHRESH
+c                      IF (INTERVAL(J)%INTRVLYR.GE.THRESH(K)%THRBYR .AND.
+c     $                    INTERVAL(J)%INTRVLYR.LE.THRESH(K)%THREYR) THEN
+c                        LTHR = THRESH(K)%THRLWR
+c                        UTHR = THRESH(K)%THRUPR
+c                      END IF
+c 303                CONTINUE  
+c                  END IF
+c                  WRITE(LTHRCHR(1),'(F9.0)') LTHR
+c                  IF (UTHR .GT. 1.0E10) THEN
+c                    WRITE(LTHRCHR(2),'(A9)') '      INF'
+c                  ELSE
+c                    WRITE(LTHRCHR(2),'(F9.0)') UTHR
+c                  END IF
                   IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
                     LINTVLSTR = '     INF    '
                   ELSE
@@ -1288,11 +1290,10 @@ C                 need to print interval record
                   IF (INTVAL(J) .GT. 0.0) THEN
                     WRITE(MSG,2024) INTERVAL(J)%INTRVLYR,
      $                    INTVAL(J),INTERVAL(J)%INTRVLPP,
-     $                    LTHRCHR(1),LTHRCHR(2),INTERVAL(J)%INTRVLLWR,
-     $                    LINTVLSTR(1:10)
+     $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
                   ELSE
                     WRITE(MSG,2025) INTERVAL(J)%INTRVLYR,
-     $                    INTERVAL(J)%INTRVLPP,LTHRCHR(1),LTHRCHR(2),
+     $                    INTERVAL(J)%INTRVLPP,
      $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
                   END IF
                   LWROTEINT = INTERVAL(J)%INTRVLYR
@@ -1301,26 +1302,26 @@ C                 need to print interval record
             END IF
             IF (LWROTEINT .NE. ABS(IPKSEQ(IPKPTR(I))) .AND.
      $          PKS(IPKPTR(I)) .GT. 0.0) THEN
-              LYR = ABS(IPKSEQ(IPKPTR(I)))
-              LTHR = 0.0
-              UTHR = 1.0E20
-              IF (NTHRESH .GT. 0) THEN
-                DO 309 J = 1, NTHRESH
-                  IF (LYR .GE. THRESH(J)%THRBYR .AND. 
-     $                LYR .LE. THRESH(J)%THREYR) THEN
-                    LTHR = THRESH(J)%THRLWR
-                    UTHR = THRESH(J)%THRUPR
-                  END IF
- 309            CONTINUE  
-              END IF
-              WRITE(LTHRCHR(1),'(F9.0)') LTHR
-              IF (UTHR .GT. 1.0E10) THEN
-                WRITE(LTHRCHR(2),'(A9)') '      INF'
-              ELSE
-                WRITE(LTHRCHR(2),'(F9.0)') UTHR
-              END IF
-              WRITE(MSG,2023) IPKSEQ(IPKPTR(I)), PKS(IPKPTR(I)), 
-     $                      WRCPP(I) , LTHRCHR(1), LTHRCHR(2)
+c              LYR = ABS(IPKSEQ(IPKPTR(I)))
+c              LTHR = 0.0
+c              UTHR = 1.0E20
+c              IF (NTHRESH .GT. 0) THEN
+c                DO 309 J = 1, NTHRESH
+c                  IF (LYR .GE. THRESH(J)%THRBYR .AND. 
+c     $                LYR .LE. THRESH(J)%THREYR) THEN
+c                    LTHR = THRESH(J)%THRLWR
+c                    UTHR = THRESH(J)%THRUPR
+c                  END IF
+c 309            CONTINUE  
+c              END IF
+c              WRITE(LTHRCHR(1),'(F9.0)') LTHR
+c              IF (UTHR .GT. 1.0E10) THEN
+c                WRITE(LTHRCHR(2),'(A9)') '      INF'
+c              ELSE
+c                WRITE(LTHRCHR(2),'(F9.0)') UTHR
+c              END IF
+              WRITE(MSG,2023) IPKSEQ(IPKPTR(I)),PKS(IPKPTR(I)),WRCPP(I)
+C     $                      WRCPP(I) , LTHRCHR(1), LTHRCHR(2)
 C     $                      (' ',J=1,NB)
             END IF
           ELSE
@@ -1444,8 +1445,10 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
 C     from Tim Cohn's code, for output of EMA at-site MSE of G
-      double precision as_M_mse,as_S2_mse,as_G_mse
-      common /tac005/as_M_mse,as_S2_mse,as_G_mse
+      double precision as_M_mse,as_S2_mse,as_G_mse,
+     1                 as_G_mse_Syst,as_G_ERL
+      common /tac005/as_M_mse,as_S2_mse,as_G_mse,
+     1               as_G_mse_Syst,as_G_ERL
 C
 C     + + + LOCAL VARIABLES + + +
       CHARACTER*13  DWORK(6)
@@ -1571,7 +1574,7 @@ C       new EMA estimates
         WRITE(MSG,11)SYSUAV,SYSUSD,SYSSKW,
      $               WRCUAV,WRCUSD,WRCSKW,
      $               SYSAAV,SYSASD,SYSASK,
-     $               as_G_mse
+     $               as_G_mse,as_G_mse_Syst
         WRITE(MSG,16) INT( CLSIZE*100. + .5)
       END IF
 C
@@ -4075,12 +4078,11 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
 C     from Tim Cohn's EMA code; to set CI percentage
-      integer neps
       double precision eps
-      common /tacci1/eps,neps
+      common /tacci1/eps
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,J,NB(MXPK),IPKPTR(MXPK),LYR,EMAYR
+      INTEGER    I,J,NB(MXPK),IPKPTR(MXPK),LYR,EMAYR,LMXINT
       REAL, ALLOCATABLE :: LQ(:),LPEX(:)
       DOUBLE PRECISION, ALLOCATABLE:: LQU(:)
       DOUBLE PRECISION WRCMOM(3,3),PR(MXINT),       !SKWWGT,
@@ -4138,10 +4140,11 @@ C
       IF (NOBS.GT.0) THEN
         ALLOCATE (LQU(NOBS))
         eps = CLSIZE
+        LMXINT = MXINT
 
         CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
      I              REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
-     O              WRCMOM,PR,WRCYP,CILOW,CIHIGH,VAREST)
+     O              WRCMOM,PR,LMXINT,WRCYP,CILOW,CIHIGH,VAREST)
       
 C       get plotting positions for all peaks and thresholds
         DO 16 I = 1, NOBS
@@ -4352,14 +4355,14 @@ C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
 C
 C     + + + COMMON BLOCKS + + +
-      integer nlow_V,nlow,nzero,nGBiter
+      integer nlow_V,ns,nlow,nzero,nGBiter
       double precision  gbcrit,gbthresh,gbcrit_V,gbthresh_V,
      $                  pvaluew,qs,as_mse
       character*4 gbtype,at_site_option,at_site_default,at_site_std
 
 C     used by Tim's EMA code
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
-     1               nlow,nzero,gbtype
+     1               ns,nlow,nzero,gbtype
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
       common /tacg04/at_site_option,at_site_default,at_site_std
       common /jfe001/as_mse
