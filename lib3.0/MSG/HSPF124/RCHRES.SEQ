@@ -29,7 +29,7 @@ $TEXT
   1  1 1NCONS             116    116    316    316   17    4
  20  1 1CONS-AD-FLAGS     117    117    317    317   18    4
  11 10 2CONS-DATA         118    118    318    318   19    4
-  0  0 0CCCCCCCCCCCC        0      0      0      0   20
+  1  1 1DYNAMIC-TIME      220    220    420    420   20    2
   3  1 1HT-BED-FLAGS      119    119    319    319   21    5
   6  1 2HEAT-PARM         120    235    320    435   22    5
   4  1 2HT-BED-PARM       121    236    321    436   23    5
@@ -45,8 +45,8 @@ $TEXT
   3  1 2SSED-INIT         131    131    331    331   33    6
   4  1 2BED-INIT          132    245    332    445   34    6
   7  1 2SHADE-PARM        258    258    458    458   35    5
-  0  0 0EEEEEEEEEEEE        0      0      0      0   36
-  0  0 0FFFFFFFFFFFF        0      0      0      0   37
+700  1 2CONDUIT-PARM      221    222    421    422   36    2
+900  1 2CONDUIT-XS        223    223    423    423   37    2
   8  1 1GQ-GENDATA        133    133    333    333   38    7
  14  1 1GQ-AD-FLAGS       134    134    334    334   39    7
  10  7 2GQ-QALDATA        135    135    335    335   40   71
@@ -75,7 +75,7 @@ $TEXT
  12  1 2MON-SEDCONC       158    158    358    358   63    7
  12  1 2MON-PHYTO         159    159    359    359   64    7
   7  6 2GQ-DAUGHTER       160    160    360    360   65    7
-  0  0 0GGGGGGGGGGGG        0      0      0      0   66
+500  1 2NODE-PARM         224    225    424    425   66    2
   0  0 0HHHHHHHHHHHH        0      0      0      0   67
   0  0 0IIIIIIIIIIII        0      0      0      0   68
   1  1 1BENTH-FLAG        161    161    361    361   69    8
@@ -3694,6 +3694,411 @@ $TEXT
        Cat        Ex          Priority      COTDGT       Cat        Ex          Priority      COTDGT
                              YYYY MM DD     (m3/s)                             YYYY MM DD     (m3/s)
 <------------------------------------------------><------------------------------------------------>
+#GROUP  220  TYPE PRM2
+$HEADER
+    RCHRES  TIMESTEP 
+    x -  x     (sec)
+$TNAME  DYNAMIC-TIME
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+RCHRES to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 :600
+_DEFAULT  3
+_HELP
+DTS is the time step of the dynamic wave routing in seconds.
+_PNAME  DTS
+$HELP
+Time step of the dynamic wave routing in RCHRES.
+#GROUP  420  TYPE TEXT
+$TEXT
+(1X,I10)
+  TIMESTEP
+#GROUP  221  TYPE PRM2
+$HEADER
+           FROM   TO       LEN      MANN     INLET    OUTLET      INIT  
+    RCHRES NODE NODE                        OFFSET    OFFSET      FLOW   
+    x -  x                (ft)                (ft)      (ft)     (cfs)
+$TNAME  CONDUIT-PARM
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+RCHRES to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   4
+_COLUMN 11
+_TYPE CHARACTER
+_HELP
+ Starting node id for this conduit.
+_PNAME  FNODE
+$FIELD  FIELD4
+_WIDTH   4
+_COLUMN  16
+_TYPE CHARACTER
+_HELP
+ Ending node id for this conduit.
+_PNAME  TNODE
+$FIELD  FIELD5
+_WIDTH   10
+_COLUMN  21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Length of this conduit.
+_PNAME  CLEN
+$FIELD  FIELD6
+_WIDTH   10
+_COLUMN  31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.001 : 1.0
+_DEFAULT  0.1
+_HELP
+ Manning's n for this conduit.
+_PNAME  CMANN
+$FIELD  FIELD7
+_WIDTH   10
+_COLUMN  41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Inlet offset for this conduit.
+_PNAME  COFF1
+$FIELD  FIELD8
+_WIDTH   10
+_COLUMN  51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Outlet offset for this conduit.
+_PNAME  COFF2
+$FIELD  FIELD9
+_WIDTH   10
+_COLUMN  61
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Initial flow for this conduit.
+_PNAME  CINIT
+#GROUP  222  TYPE PRM2
+$HEADER
+           FROM   TO       LEN      MANN     INLET    OUTLET      INIT  
+    RCHRES NODE NODE                        OFFSET    OFFSET      FLOW   
+    x -  x                 (m)                 (m)       (m)     (cms)
+$TNAME  CONDUIT-PARM
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+RCHRES to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   4
+_COLUMN 11
+_TYPE CHARACTER
+_HELP
+ Starting node id for this conduit.
+_PNAME  FNODE
+$FIELD  FIELD4
+_WIDTH   4
+_COLUMN  16
+_TYPE CHARACTER
+_HELP
+ Ending node id for this conduit.
+_PNAME  TNODE
+$FIELD  FIELD5
+_WIDTH   10
+_COLUMN  21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Length of this conduit.
+_PNAME  CLEN
+$FIELD  FIELD6
+_WIDTH   10
+_COLUMN  31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.001 : 1.0
+_DEFAULT  0.1
+_HELP
+ Manning's n for this conduit.
+_PNAME  CMANN
+$FIELD  FIELD7
+_WIDTH   10
+_COLUMN  41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Inlet offset for this conduit.
+_PNAME  COFF1
+$FIELD  FIELD8
+_WIDTH   10
+_COLUMN  51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Outlet offset for this conduit.
+_PNAME  COFF2
+$FIELD  FIELD9
+_WIDTH   10
+_COLUMN  61
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Initial flow for this conduit.
+_PNAME  CINIT
+#GROUP  421  TYPE TEXT
+$TEXT
+(2X,A4,1X,A4,5PE10.3)
+      Conduit Parameters
+ FROM   TO       LEN      MANN     INLET    OUTLET      INIT  
+ NODE NODE                        OFFSET    OFFSET      FLOW   
+                (ft)                (ft)      (ft)     (cfs)
+<---><---><--------><--------><--------><--------><-------->
+#GROUP  422  TYPE TEXT
+$TEXT
+(2X,A4,1X,A4,5PE10.3)
+      Conduit Parameters
+ FROM   TO       LEN      MANN     INLET    OUTLET      INIT  
+ NODE NODE                        OFFSET    OFFSET      FLOW   
+                 (m)                 (m)       (m)     (cms)
+<---><---><--------><--------><--------><--------><-------->
+#GROUP  223  TYPE PRM2
+$HEADER
+    RCHRES                         
+    x -  x                TYPE     GEOM1     GEOM2     GEOM3     GEOM4      
+$TNAME  CONDUIT-XS
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+RCHRES to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  20
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+Type of cross-section.  Valid values include:
+_PNAME  CTYPE
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0. : -999.
+_DEFAULT  0.
+_HELP
+GEOM1 is the first geometry parameter.
+_PNAME  GEOM1
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0. : -999.
+_DEFAULT  0.
+_HELP
+GEOM2 is the first geometry parameter.
+_PNAME  GEOM21
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0. : -999.
+_DEFAULT  0.
+_HELP
+GEOM3 is the first geometry parameter.
+_PNAME  GEOM3
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0. : -999.
+_DEFAULT  0.
+_HELP
+GEOM4 is the first geometry parameter.
+_PNAME  GEOM4
+$HELP
+Cross-section data for a conduit segment.
+#GROUP  423  TYPE TEXT
+$TEXT
+(1X,5A4,4(1PE10.3))
+        conduit type     GEOM1     GEOM2     GEOM3     GEOM4
+<------------------><--------><--------><--------><-------->
+#GROUP  224  TYPE PRM2
+$HEADER
+    RCHRES              INVERT      INIT    PONDED     LOCAL
+    x -  x      NODE      ELEV     DEPTH      AREA    INFLOW
+                          (ft)      (ft)     (ft2)       (%)
+$TNAME  NODE-PARM
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+RCHRES to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   4
+_COLUMN 16
+_TYPE CHARACTER
+_HELP
+ Node id.
+_PNAME  NODE
+$FIELD  FIELD4
+_WIDTH   10
+_COLUMN  21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Invert elevation for this node.
+_PNAME NELEV
+$FIELD  FIELD5
+_WIDTH   10
+_COLUMN  31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999
+_DEFAULT  0.0
+_HELP
+ Initial depth for this node.
+_PNAME  NDEP
+$FIELD  FIELD6
+_WIDTH   10
+_COLUMN  41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999
+_DEFAULT  0.0
+_HELP
+ Ponded area for this node.
+_PNAME  NPOND
+$FIELD  FIELD7
+_WIDTH   10
+_COLUMN  51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : 100.0
+_DEFAULT  0.0
+_HELP
+ Local inflow percentage for this node.
+_PNAME  NLOC
+#GROUP  225  TYPE PRM2
+$HEADER
+    RCHRES              INVERT      INIT    PONDED     LOCAL
+    x -  x      NODE      ELEV     DEPTH      AREA    INFLOW
+                           (m)       (m)      (m2)       (%)
+$TNAME  NODE-PARM
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+RCHRES to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   4
+_COLUMN 16
+_TYPE CHARACTER
+_HELP
+ Node id.
+_PNAME  NODE
+$FIELD  FIELD4
+_WIDTH   10
+_COLUMN  21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999.
+_DEFAULT  0.0
+_HELP
+ Invert elevation for this node.
+_PNAME NELEV
+$FIELD  FIELD5
+_WIDTH   10
+_COLUMN  31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999
+_DEFAULT  0.0
+_HELP
+ Initial depth for this node.
+_PNAME  NDEP
+$FIELD  FIELD6
+_WIDTH   10
+_COLUMN  41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999
+_DEFAULT  0.0
+_HELP
+ Ponded area for this node.
+_PNAME  NPOND
+$FIELD  FIELD7
+_WIDTH   10
+_COLUMN  51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : 100.0
+_DEFAULT  0.0
+_HELP
+ Local inflow percentage for this node.
+_PNAME  NLOC
+#GROUP  424  TYPE TEXT
+$TEXT
+(6X,A4,4(1PE10.3))
+              invert      init    ponded     local
+      node      elev     depth      area    inflow
+                (ft)      (ft)     (ft2)       (%)
+<--------><--------><--------><--------><-------->
+#GROUP  425  TYPE TEXT
+$TEXT
+(6X,A4,4(1PE10.3))
+              invert      init    ponded     local
+      node      elev     depth      area    inflow
+                 (m)       (m)      (m2)       (%)
+<--------><--------><--------><--------><-------->
 #GROUP  115  TYPE PRM2
 $HEADER
     RCHRES  Data for section ADCALC
