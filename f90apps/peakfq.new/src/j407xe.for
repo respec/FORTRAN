@@ -3910,7 +3910,7 @@ C     IPKSEQ  - array of peak value water years
 C     GAGEB   - gage base discharge
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,J,K,WYMIN,WYMAX
+      INTEGER    I,J,K,WYMIN,WYMAX,LYR,LNINT
       DOUBLE PRECISION MISSING,QMIN
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -4000,13 +4000,17 @@ C     fill in measured peaks
 C
       IF (NINTERVAL.GT.0) THEN
 C       fill in interval data
+        LNINT = 0
         DO 45 J=1,NINTERVAL
-          IF (INTERVAL(J)%INTRVLYR.GT.0) THEN
+          LYR = INTERVAL(J)%INTRVLYR
+          IF (LYR.GT.0 .AND. LYR.GE.WYMIN .AND. LYR.LE.WYMAX) THEN
             I = INTERVAL(J)%INTRVLYR - WYMIN + 1
             QL(I) = INTERVAL(J)%INTRVLLWR
             QU(I) = INTERVAL(J)%INTRVLUPR
+            LNINT = LNINT + 1
           END IF
  45     CONTINUE
+        NINTERVAL = LNINT
       END IF
 C
 C     For years without peaks, assume peak is less than threshold tl
