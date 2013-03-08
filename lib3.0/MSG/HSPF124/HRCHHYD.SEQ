@@ -374,5 +374,23 @@ $TEXT
  One or more of these conditions is not true for the following FTABLE:
      FTABNO     NROWS     NCOLS
       &I        &I        &I
+#GROUP   51  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown node name &CCC was specified as the 'From Node' in the
+ CONDUIT-PARM table.  All node names in this table must be present 
+ in the NODE-PARM block.
+#GROUP   52  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown node name &CCC was specified as the 'To Node' in the
+ CONDUIT-PARM table.  All node names in this table must be present 
+ in the NODE-PARM block.
+#GROUP   53  TYPE TEXT
+$TEXT
+    5    1    1    5
+ Unknown conduit shape &CCCCCCCCCCCCCCCCCCC was specified as a 
+ cross-section in the CONDUIT-XS table.  All cross-section names 
+ in this table must be one of the recognized types.
   END DATA
 END CLU

@@ -15,16 +15,18 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I,N,IX,IC,IG,FG,I1,I2,YY,MM,DD,FTBDSN,FTABNO,ROWADD,
      $             RETCOD,SCLU,SGRP,TBNO,TBSB,NVAL,ICAT,IVAL(MXCUSR),
-     $             OECNT,CINIT(MXCAT),CATPOS(MXCUSR),BGRP,LEVST,LEVND
+     $             OECNT,CINIT(MXCAT),CATPOS(MXCUSR),BGRP,LEVST,LEVND,
+     $             I4,I20
       REAL         AFACT,PSAREA,RVAL(MXCUSR*6),VFACT,RTMP,PCVOL,SUMFRC,
-     $             EQVOL
+     $             EQVOL,RVALD(100*9)
       DOUBLE PRECISION DTMP
-      CHARACTER*4  CTAG4
+      CHARACTER*4  CTAG4,CNNAME1(100),CNNAME2(100),NNAME(100)
       CHARACTER*12 CPRIOR
+      CHARACTER*20 CTAG20,CSC(100)
 C
 C     + + + EQUIVALENCES + + +
-      EQUIVALENCE (CPRIOR,CPRIO1),(CTAG1,CTAG4)
-      CHARACTER*1  CPRIO1(12),CTAG1(4)
+      EQUIVALENCE (CPRIOR,CPRIO1),(CTAG1,CTAG4),(CTAG2,CTAG20)
+      CHARACTER*1  CPRIO1(12),CTAG1(4),CTAG2(20)
 C
 C     + + + FUNCTIONS + + +
       REAL       DAYVAL
@@ -38,7 +40,7 @@ C     + + + EXTERNALS + + +
       EXTERNAL   SHEAR
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA I1,I2/1,2/,BGRP/12/
+      DATA I1,I2,I4,I20/1,2,4,20/,BGRP/12/
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (F12.0)
@@ -47,6 +49,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING INPUT FOR SECTION HYDR')
  2010 FORMAT (A4)
+ 2012 FORMAT (5A4)
  2020 FORMAT (/,' INITIAL STORAGES BY CATEGORY',/,' CATEGORY NAME   ',
      $          '          CVOL')
  2030 FORMAT (25X,'AC-FT')
@@ -651,13 +654,213 @@ C     CGEOM2(NCOND) -- real, second item of shape geometry
 C     CGEOM3(NCOND) -- real, third item of shape geometry
 C     CGEOM4(NCOND) -- real, fourth item of shape geometry
 C
-C     process values in table-type DYNAMIC-TIME
-      TBNO= 20
-      TBSB= 1
-      NVAL= 1
-      CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
-     M             IVAL)
-C      DTS = IVAL(1)
+      IF (HYDRFG .EQ. 2) THEN
+C       process values in table-type DYNAMIC-WAVE
+        TBNO= 20
+        TBSB= 1
+        NVAL= 3
+        CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
+     M               IVAL)
+C        DTS  = IVAL(1)
+C        NCOND= IVAL(2)
+C        NNODE= IVAL(3)
+C
+C       process values in table-type CONDUIT-PARM
+        TBNO= 36
+        TBSB= 1
+        NVAL= NCOND * 7
+        CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M               RVALD(1))
+        IC = 0
+        DO 210 I= 1, NCOND
+          IC = IC + 1
+          WRITE (CTAG4,2010) RVALD(IC)
+          CNNAME1(I) = CTAG4
+          IC = IC + 1
+          WRITE (CTAG4,2010) RVALD(IC)
+          CNNAME2(I) = CTAG4
+          IC = IC + 1
+C          CLEN(I)  = RVALD(IC) 
+          IC = IC + 1
+C          CMANN(I) = RVALD(IC) 
+          IC = IC + 1
+C          COFF1(I) = RVALD(IC) 
+          IC = IC + 1
+C          COFF2(I) = RVALD(IC) 
+          IC = IC + 1
+C          CQ0(I)   = RVALD(IC)
+ 210    CONTINUE
+C
+C       process values in table-type CONDUIT-XS
+        TBNO= 37
+        TBSB= 1
+        NVAL= NCOND * 9
+        CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M               RVALD(1))
+        IC = 0
+        DO 220 I= 1, NCOND
+          IC = IC + 1
+          WRITE (CTAG20,2012) (RVALD(J),J=IC,IC+4)
+          CSC(I) = CTAG20
+          IC = IC + 5
+C          CGEOM1(I) = RVALD(IC) 
+          IC = IC + 1
+C          CGEOM2(I) = RVALD(IC) 
+          IC = IC + 1
+C          CGEOM3(I) = RVALD(IC) 
+          IC = IC + 1
+C          CGEOM4(I) = RVALD(IC)          
+ 220    CONTINUE
+C
+C       process values in table-type NODE-PARM
+        TBNO= 66
+        TBSB= 1
+        NVAL= NNODE * 5
+        CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M               RVALD(1))
+        IC = 0
+        DO 230 I= 1, NNODE
+          IC = IC + 1
+          WRITE (CTAG4,2010) RVALD(IC)
+          NNAME(I) = CTAG4
+C          NODEX(I) = I
+          IC = IC + 1
+C          NELEV(I) = RVALD(IC) 
+          IC = IC + 1
+C          NDINIT(I) = RVALD(IC) 
+          IC = IC + 1
+C          NPONDA(I) = RVALD(IC) 
+          IC = IC + 1
+C          NLOCIN(I) = RVALD(IC) 
+C          NDMAX(I)  = 0.0
+C          NDSURC(I) = 0.0
+ 230    CONTINUE
+C
+C       match each conduit node name to the corresp node        
+        DO 240 I= 1, NCOND
+          IFOUND = 0
+          DO 250 J= 1, NNODE
+            IF (NNAME(J) .EQ. CNNAME1(I)) THEN
+C              CNODE1(I) = J
+              IFOUND = 1
+            END IF 
+ 250      CONTINUE
+          IF (IFOUND.NE.1) THEN
+C           did not find this node, report error
+            SGRP= 51
+            CTAG4 = CNNAME1(I)
+            CALL OMSTC (I4,CTAG1(1))
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+          IFOUND = 0
+          DO 260 J= 1, NNODE
+            IF (NNAME(J) .EQ. CNNAME2(I)) THEN
+C              CNODE2(I) = J
+              IFOUND = 1
+            END IF 
+ 260      CONTINUE
+          IF (IFOUND.NE.1) THEN
+C           did not find this node, report error
+            SGRP= 52
+            CTAG4 = CNNAME2(I)
+            CALL OMSTC (I4,CTAG1(1))
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+ 240    CONTINUE
+C
+C       convert each conduit name string into int equiv
+        IFOUND = 0
+        DO 270 I= 1, NCOND
+          IF (CSC(I) .EQ. '               DUMMY') THEN
+C            CSHAPE(I) = 0
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '            CIRCULAR') THEN
+C            CSHAPE(I) = 1
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '     FILLED_CIRCULAR') THEN
+C            CSHAPE(I) = 2
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '         RECT_CLOSED') THEN
+C            CSHAPE(I) = 3
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '           RECT_OPEN') THEN
+C            CSHAPE(I) = 4
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '         TRAPEZOIDAL') THEN
+C            CSHAPE(I) = 5
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '          TRIANGULAR') THEN
+C            CSHAPE(I) = 6
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '           PARABOLIC') THEN
+C            CSHAPE(I) = 7
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '           POWERFUNC') THEN
+C            CSHAPE(I) = 8
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '         RECT_TRIANG') THEN
+C            CSHAPE(I) = 9
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '          RECT_ROUND') THEN
+C            CSHAPE(I) = 10
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '          MOD_BASKET') THEN
+C            CSHAPE(I) = 11
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '       HORIZ_ELLIPSE') THEN
+C            CSHAPE(I) = 12
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '        VERT_ELLIPSE') THEN
+C            CSHAPE(I) = 13
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '                ARCH') THEN
+C            CSHAPE(I) = 14
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '           EGGSHAPED') THEN
+C            CSHAPE(I) = 15
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '           HORSESHOE') THEN
+C            CSHAPE(I) = 16
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '              GOTHIC') THEN
+C            CSHAPE(I) = 17
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '            CATENARY') THEN
+C            CSHAPE(I) = 18
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '      SEMIELLIPTICAL') THEN
+C            CSHAPE(I) = 19
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '        BASKETHANDLE') THEN
+C            CSHAPE(I) = 20
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '        SEMICIRCULAR') THEN
+C            CSHAPE(I) = 21
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '           IRREGULAR') THEN
+C            CSHAPE(I) = 22
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '              CUSTOM') THEN
+C            CSHAPE(I) = 23
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '          FORCE_MAIN') THEN
+C            CSHAPE(I) = 24
+            IFOUND = 1
+          END IF
+          IF (IFOUND.NE.1) THEN
+C           did not find this conduit shape, report error
+            SGRP= 53
+            CTAG20 = CSC(I)
+            CALL OMSTC (I20,CTAG2(1))
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 ECOUNT)
+          END IF
+ 270    CONTINUE
+C
+C     end of dynamic wave routing section
+      END IF 
 C
 C     compute initial conditions
 C
@@ -680,10 +883,10 @@ C           echo initial storage for single category category
             WRITE (MESSU,2050) CATNAM(ICAT),PCVOL
           ELSE IF (ICAT .LT. 0) THEN
 C           echo initial storage for each listed category
-            DO 210 I= 1, -ICAT
+            DO 310 I= 1, -ICAT
               PCVOL= CVOL(CINIT(I))/VFACT
               WRITE (MESSU,2050) CATNAM(CINIT(I)),PCVOL
- 210        CONTINUE
+ 310        CONTINUE
           ELSE
 C           echo equal initial storage for all categories
             PCVOL= EQVOL/VFACT  
