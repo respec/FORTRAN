@@ -643,7 +643,7 @@ C
 C     NCOND         -- integer, number of conduits
 C     CNODE1(NCOND) -- integer, upstream conduit node index 
 C     CNODE2(NCOND) -- integer, downstream conduit node index
-C     CLEN(NCOND)   -- real, conduit length
+C     CLENTH(NCOND) -- real, conduit length
 C     CMANN(NCOND)  -- real, conduit mannings n
 C     COFF1(NCOND)  -- real, inlet offset
 C     COFF2(NCOND)  -- real, outlet offset
@@ -661,9 +661,9 @@ C       process values in table-type DYNAMIC-WAVE
         NVAL= 3
         CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M               IVAL)
-C        DTS  = IVAL(1)
-C        NCOND= IVAL(2)
-C        NNODE= IVAL(3)
+        DTS  = IVAL(1)
+        NCOND= IVAL(2)
+        NNODE= IVAL(3)
 C
 C       process values in table-type CONDUIT-PARM
         TBNO= 36
@@ -680,15 +680,15 @@ C       process values in table-type CONDUIT-PARM
           WRITE (CTAG4,2010) RVALD(IC)
           CNNAME2(I) = CTAG4
           IC = IC + 1
-C          CLEN(I)  = RVALD(IC) 
+          CLENTH(I) = RVALD(IC) 
           IC = IC + 1
-C          CMANN(I) = RVALD(IC) 
+          CMANN(I) = RVALD(IC) 
           IC = IC + 1
-C          COFF1(I) = RVALD(IC) 
+          COFF1(I) = RVALD(IC) 
           IC = IC + 1
-C          COFF2(I) = RVALD(IC) 
+          COFF2(I) = RVALD(IC) 
           IC = IC + 1
-C          CQ0(I)   = RVALD(IC)
+          CQ0(I)   = RVALD(IC)
  210    CONTINUE
 C
 C       process values in table-type CONDUIT-XS
@@ -703,13 +703,13 @@ C       process values in table-type CONDUIT-XS
           WRITE (CTAG20,2012) (RVALD(J),J=IC,IC+4)
           CSC(I) = CTAG20
           IC = IC + 5
-C          CGEOM1(I) = RVALD(IC) 
+          CGEOM1(I) = RVALD(IC) 
           IC = IC + 1
-C          CGEOM2(I) = RVALD(IC) 
+          CGEOM2(I) = RVALD(IC) 
           IC = IC + 1
-C          CGEOM3(I) = RVALD(IC) 
+          CGEOM3(I) = RVALD(IC) 
           IC = IC + 1
-C          CGEOM4(I) = RVALD(IC)          
+          CGEOM4(I) = RVALD(IC)          
  220    CONTINUE
 C
 C       process values in table-type NODE-PARM
@@ -723,17 +723,17 @@ C       process values in table-type NODE-PARM
           IC = IC + 1
           WRITE (CTAG4,2010) RVALD(IC)
           NNAME(I) = CTAG4
-C          NODEX(I) = I
+          NODEX(I) = I
           IC = IC + 1
-C          NELEV(I) = RVALD(IC) 
+          NELEV(I) = RVALD(IC) 
           IC = IC + 1
-C          NDINIT(I) = RVALD(IC) 
+          NDINIT(I) = RVALD(IC) 
           IC = IC + 1
-C          NPONDA(I) = RVALD(IC) 
+          NPONDA(I) = RVALD(IC) 
           IC = IC + 1
-C          NLOCIN(I) = RVALD(IC) 
-C          NDMAX(I)  = 0.0
-C          NDSURC(I) = 0.0
+          NLOCIN(I) = RVALD(IC) 
+          NDMAX(I)  = 0.0
+          NDSURC(I) = 0.0
  230    CONTINUE
 C
 C       match each conduit node name to the corresp node        
@@ -741,7 +741,7 @@ C       match each conduit node name to the corresp node
           IFOUND = 0
           DO 250 J= 1, NNODE
             IF (NNAME(J) .EQ. CNNAME1(I)) THEN
-C              CNODE1(I) = J
+              CNODE1(I) = J
               IFOUND = 1
             END IF 
  250      CONTINUE
@@ -774,79 +774,79 @@ C       convert each conduit name string into int equiv
         IFOUND = 0
         DO 270 I= 1, NCOND
           IF (CSC(I) .EQ. '               DUMMY') THEN
-C            CSHAPE(I) = 0
+            CSHAPE(I) = 0
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '            CIRCULAR') THEN
-C            CSHAPE(I) = 1
+            CSHAPE(I) = 1
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '     FILLED_CIRCULAR') THEN
-C            CSHAPE(I) = 2
+            CSHAPE(I) = 2
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '         RECT_CLOSED') THEN
-C            CSHAPE(I) = 3
+            CSHAPE(I) = 3
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '           RECT_OPEN') THEN
-C            CSHAPE(I) = 4
+            CSHAPE(I) = 4
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '         TRAPEZOIDAL') THEN
-C            CSHAPE(I) = 5
+            CSHAPE(I) = 5
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '          TRIANGULAR') THEN
-C            CSHAPE(I) = 6
+            CSHAPE(I) = 6
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '           PARABOLIC') THEN
-C            CSHAPE(I) = 7
+            CSHAPE(I) = 7
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '           POWERFUNC') THEN
-C            CSHAPE(I) = 8
+            CSHAPE(I) = 8
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '         RECT_TRIANG') THEN
-C            CSHAPE(I) = 9
+            CSHAPE(I) = 9
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '          RECT_ROUND') THEN
-C            CSHAPE(I) = 10
+            CSHAPE(I) = 10
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '          MOD_BASKET') THEN
-C            CSHAPE(I) = 11
+            CSHAPE(I) = 11
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '       HORIZ_ELLIPSE') THEN
-C            CSHAPE(I) = 12
+            CSHAPE(I) = 12
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '        VERT_ELLIPSE') THEN
-C            CSHAPE(I) = 13
+            CSHAPE(I) = 13
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '                ARCH') THEN
-C            CSHAPE(I) = 14
+            CSHAPE(I) = 14
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '           EGGSHAPED') THEN
-C            CSHAPE(I) = 15
+            CSHAPE(I) = 15
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '           HORSESHOE') THEN
-C            CSHAPE(I) = 16
+            CSHAPE(I) = 16
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '              GOTHIC') THEN
-C            CSHAPE(I) = 17
+            CSHAPE(I) = 17
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '            CATENARY') THEN
-C            CSHAPE(I) = 18
+            CSHAPE(I) = 18
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '      SEMIELLIPTICAL') THEN
-C            CSHAPE(I) = 19
+            CSHAPE(I) = 19
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '        BASKETHANDLE') THEN
-C            CSHAPE(I) = 20
+            CSHAPE(I) = 20
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '        SEMICIRCULAR') THEN
-C            CSHAPE(I) = 21
+            CSHAPE(I) = 21
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '           IRREGULAR') THEN
-C            CSHAPE(I) = 22
+            CSHAPE(I) = 22
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '              CUSTOM') THEN
-C            CSHAPE(I) = 23
+            CSHAPE(I) = 23
             IFOUND = 1
           ELSEIF (CSC(I) .EQ. '          FORCE_MAIN') THEN
-C            CSHAPE(I) = 24
+            CSHAPE(I) = 24
             IFOUND = 1
           END IF
           IF (IFOUND.NE.1) THEN
@@ -2150,7 +2150,8 @@ C     + + + LOCAL VARIABLES + + +
       REAL             SAS,VOLPEV,CORELS(MXEXIT,MXCAT),RTMP,IRRDEM,
      $                 COTDGS(MXEXIT,MXCAT),CVOLEV(MXCAT),DEMVOL,
      $                 CIRRWD(MXCAT)
-      DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR
+      DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR,
+     $                 INVOL
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -2472,20 +2473,20 @@ C         no outflow demands depend on vol
       ELSE IF (HYDRFG.EQ.2) THEN
 C       use new dynamic wave routing algorithm
         INVOL = IVOL + PRSUPY - VOLEV  
-C        CALL DWROUT (DELTS,
-C     I               NNODE,NCOND,DTS,
-C     I               OS(1),ROS,VOLT,INVOL,
-C     I               MON,NXTMON,DAY,NDAYS,
-C     I               RCHNO,MESSU,MSGFL,SCLU,
-C     I               DATIM,
-C     I               CNODE1,CNODE2,CSHAPE,
-C     I               NELEV,NDMAX,NDINIT,
-C     I               NDSURC,NPONDA,NLOCIN,
-C     I               CLEN,CMANN,COFF1,
-C     $               COFF2,CQ0,CGEOM1,
-C     $               CGEOM2,CGEOM3,CGEOM4,
-C     M               HYECNT,HYWCNT,
-C     O               VOL,O(1),RO,OVOL(1),ROVOL)
+        CALL DWROUT (DELTS,
+     I               NNODE,NCOND,DTS,
+     I               OS(1),ROS,VOLT,INVOL,
+     I               MON,NXTMON,DAY,NDAYS,
+     I               RCHNO,MESSU,MSGFL,SCLU,
+     I               DATIM,
+     I               CNODE1,CNODE2,CSHAPE,
+     I               NELEV,NDMAX,NDINIT,
+     I               NDSURC,NPONDA,NLOCIN,
+     I               CLENTH,CMANN,COFF1,
+     I               COFF2,CQ0,CGEOM1,
+     I               CGEOM2,CGEOM3,CGEOM4,
+     M               HYECNT,HYWCNT,
+     O               VOL,O(1),RO,OVOL(1),ROVOL)
 C       only uses the first exit, ignore the rest
         O(2) = 0.0
         O(3) = 0.0
@@ -3727,7 +3728,7 @@ C
      I                    CNODE1,CNODE2,CSHAPE,
      I                    NELEV,NDMAX,NDINIT,
      I                    NDSURC,NPONDA,NLOCIN,
-     I                    CLEN,CMANN,COFF1,
+     I                    CLENTH,CMANN,COFF1,
      $                    COFF2,CQ0,CGEOM1,
      $                    CGEOM2,CGEOM3,CGEOM4,
      M                    HYECNT,HYWCNT,
@@ -3748,7 +3749,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 O,RO,OVOL,ROVOL,
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
      $                 NDSURC(NNODE),NPONDA(NNODE),NLOCIN(NNODE),
-     $                 CLEN(NCOND),CMANN(NCOND),COFF1(NCOND),
+     $                 CLENTH(NCOND),CMANN(NCOND),COFF1(NCOND),
      $                 COFF2(NCOND),CQ0(NCOND),CGEOM1(NCOND),
      $                 CGEOM2(NCOND),CGEOM3(NCOND),CGEOM4(NCOND) 
       DOUBLE PRECISION VOLT,VOL,INVOL
@@ -3780,7 +3781,7 @@ C     NDINIT - initial node depth for each node
 C     NDSURC - surcharge depth for each node
 C     NPONDA - ponded area for each node
 C     NLOCIN - local inflow percentage to each node
-C     CLEN   - length for each conduit
+C     CLENTH - length for each conduit
 C     CMANN  - mannings n for each conduit
 C     COFF1  - inlet offset for each conduit
 C     COFF2  - outlet offset for each conduit
@@ -3798,11 +3799,8 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER          I1,LTYPE,NTS,ITS,J
-      REAL             R0,XN(5),XC(6),XX(4)
-C
-C     + + + FUNCTIONS + + +
-      REAL             DAYVAL
+      INTEGER          LTYPE,NTS,ITS,J
+      REAL             XN(5),XC(6),XX(4)
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -3810,10 +3808,6 @@ C
 C     + + + EXTERNALS + + +
 C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
 C     1                 xsect_setParams
-C
-C     + + + DATA INITIALIZATIONS + + +
-      DATA R0/0.0/
-      DATA I1/1/
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -3833,7 +3827,7 @@ C
 C     NCOND         -- integer, number of conduits
 C     CNODE1(NCOND) -- integer, upstream conduit node index 
 C     CNODE2(NCOND) -- integer, downstream conduit node index
-C     CLEN(NCOND)   -- real, conduit length
+C     CLENTH(NCOND) -- real, conduit length
 C     CMANN(NCOND)  -- real, conduit mannings n
 C     COFF1(NCOND)  -- real, inlet offset
 C     COFF2(NCOND)  -- real, outlet offset
@@ -3887,7 +3881,7 @@ C       input volume to this reach = NLOCIN * INVOL
 C
       LTYPE = 0
       DO 20 J= 1,NCOND 
-        XC(1) = CLEN(J)
+        XC(1) = CLENTH(J)
         XC(2) = CMANN(J)
         XC(3) = COFF1(J)
         XC(4) = COFF2(J)
