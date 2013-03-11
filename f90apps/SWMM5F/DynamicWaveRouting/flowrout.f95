@@ -62,6 +62,8 @@ subroutine flowrout_init(routingModel)
 !  Output:  none
 !  Purpose: initializes flow routing system.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: routingModel
     ! --- initialize for dynamic wave routing 
@@ -91,6 +93,8 @@ subroutine flowrout_close(routingModel)
 !  Output:  none
 !  Purpose: closes down routing method used.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: routingModel
     if ( routingModel == DW ) call dynwave_close()
@@ -105,6 +109,8 @@ double precision function flowrout_getRoutingStep( routingModel,  fixedStep)
 !  Output:  returns adjusted value of routing time step (sec)
 !  Purpose: finds variable time step for dynamic wave routing.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: routingModel
     double precision, intent(in) :: fixedStep
@@ -125,6 +131,8 @@ integer function flowrout_execute(links, routingModel, tStep)
 !  Output:  returns number of computational steps taken
 !  Purpose: routes flow through conveyance network over current time step.
 !
+    use consts
+    use enums
     use headers
     integer, dimension(:), intent(in) :: links
     integer, intent(in) :: routingModel
@@ -202,6 +210,8 @@ subroutine validateTreeLayout()
 !  Purpose: validates tree-like conveyance system layout used for Steady
 !           and Kinematic Wave flow routing
 !
+    use consts
+    use enums
     use headers
     integer ::   j, node1, node2
     double precision :: elev1, elev2
@@ -267,6 +277,8 @@ subroutine validateGeneralLayout()
 !  Output:  nonw
 !  Purpose: validates general conveyance system layout.
 !
+    use consts
+    use enums
     use headers
     integer :: i, j
     integer :: outletCount
@@ -326,6 +338,8 @@ subroutine initNodeDepths()
 !  Output:  none
 !  Purpose: sets initial depth at nodes for Dyn. Wave flow routing.
 !
+    use consts
+    use enums
     use headers
     integer ::   i                           ! link or node index
     integer ::   n                           ! node index
@@ -379,6 +393,8 @@ subroutine initLinkDepths()
 !  Output:  none
 !  Purpose: sets initial flow depths in conduits under Dyn. Wave routing.
 !
+    use consts
+    use enums
     use headers
     integer ::    i                          ! link index
     double precision :: y, y1, y2                  ! depths (ft)
@@ -414,6 +430,8 @@ subroutine initNodes()
 !  Output:  none
 !  Purpose: sets initial inflow/outflow and volume for each node
 !
+    use consts
+    use enums
     use headers
     integer :: i
 
@@ -467,6 +485,8 @@ subroutine initLinks()
 !  Note: initNodes() must have been called first to properly
 !        initialize each node's crown elevation.
 !
+    use consts
+    use enums
     use headers
     integer ::    i                          ! link index
     integer ::    j                          ! node index
@@ -618,6 +638,8 @@ double precision function getStorageOutflow( i,  j,  links,  dt)
 !  Output:  returns total outflow from storage node (cfs)
 !  Purpose: computes total flow released from a storage node.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i, j
     integer, dimension(:), intent(in) :: links
@@ -723,6 +745,8 @@ subroutine updateNodeDepth( i,  y)
 !  Output:  none
 !  Purpose: updates water depth at a node with a possibly higher value.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     double precision, intent(in) :: y
@@ -760,6 +784,8 @@ integer function steadyflow_execute(j, qin, qout)
 !           returns 1 if successful
 !  Purpose: performs steady flow routing through a single link.
 !
+    use consts
+    use enums
     use headers
     
     integer, intent(in) :: j

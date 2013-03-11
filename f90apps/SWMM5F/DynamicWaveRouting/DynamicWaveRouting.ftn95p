@@ -638,6 +638,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{229930E5-BF58-4827-AD95-2F27919FA76A}"
         }
+        "XsectDat.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{E49CA452-82C4-43C5-916F-3CEAD1CD8F62}"
+        }
     }
     "Source Files"
     {
@@ -712,7 +720,7 @@
         "CustomCompilerOptions" = "0"
         "CustomSwitches" = ""
         "ExcludeFromBuild" = "F"
-        "FileGUID" = "{F72882C3-ADB4-4282-B1D7-6E0F1C132AAA}"
+        "FileGUID" = "{01A1EA19-1459-454A-B953-3A5F3F624B3F}"
         }
         "xsect.f95"
         {

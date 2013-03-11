@@ -94,19 +94,22 @@
 subroutine node_setParams( j,  nodetype,  k,  x)
 !
 !  Input:   j = node index
-!           type = node type code
+!           nodetype = node type code
 !           k = index of node type
 !           x() = array of property values
 !  Output:  none
 !  Purpose: assigns property values to a node.
 !
+    use consts
+    use enums
     use headers
+    use swmm5f
     integer, intent(in) :: j, nodetype, k
     real, dimension(:), intent(in) :: x
     
-    Node(j)%datatype       = nodetype
+    Node(j)%datatype   = nodetype
     Node(j)%subIndex   = k
-    !Node(j).invertElev = x(0) / UCF(LENGTH)
+    Node(j)%invertElev = x(1) / UCF(LENGTH)
     Node(j)%crownElev  = Node(j)%invertElev
     Node(j)%initDepth  = 0.0
     Node(j)%newVolume  = 0.0
@@ -131,29 +134,29 @@ subroutine node_setParams( j,  nodetype,  k,  x)
         Outfall(k)%hasFlapGate = .false. !ichar(x(5))
         !break
 
-!      case (E_STORAGE)
-!        Node(j).fullDepth  = x(1) / UCF(LENGTH)
-!        Node(j).initDepth  = x(2) / UCF(LENGTH)
-!        Storage(k).aCoeff  = x(3)
-!        Storage(k).aExpon  = x(4)
-!        Storage(k).aConst  = x(5)
-!        Storage(k).aCurve  = (int)x(6)
-!        Node(j).pondedArea = x(7) / (UCF(LENGTH)*UCF(LENGTH))
-!        Storage(k).fEvap   = x(8)
-!        !break
-!
-!      case (DIVIDER)
-!        Divider(k).link      = (int)x(1)
-!        Divider(k)%datatype      = (int)x(2)
-!        Divider(k).flowCurve = (int)x(3)
-!        Divider(k).qMin      = x(4) / UCF(FLOW)
-!        Divider(k).dhMax     = x(5)
-!        Divider(k).cWeir     = x(6)
-!        Node(j).fullDepth    = x(7) / UCF(LENGTH)
-!        Node(j).initDepth    = x(8) / UCF(LENGTH)
-!        Node(j).surDepth     = x(9) / UCF(LENGTH)
-!        Node(j).pondedArea   = x(10) / (UCF(LENGTH)*UCF(LENGTH))
-!        !break
+      case (E_STORAGE)
+        Node(j)%fullDepth  = x(1) / UCF(LENGTH)
+        Node(j)%initDepth  = x(2) / UCF(LENGTH)
+        Storage(k)%aCoeff  = x(3)
+        Storage(k)%aExpon  = x(4)
+        Storage(k)%aConst  = x(5)
+        Storage(k)%aCurve  = int(x(6))
+        Node(j)%pondedArea = x(7) / (UCF(LENGTH)*UCF(LENGTH))
+        Storage(k)%fEvap   = x(8)
+        !break
+
+      case (E_DIVIDER)
+        Divider(k)%link      = int(x(1))
+        Divider(k)%datatype  = int(x(2))
+        Divider(k)%flowCurve = int(x(3))
+        Divider(k)%qMin      = x(4) / UCF(FLOW)
+        Divider(k)%dhMax     = x(5)
+        Divider(k)%cWeir     = x(6)
+        Node(j)%fullDepth    = x(7) / UCF(LENGTH)
+        Node(j)%initDepth    = x(8) / UCF(LENGTH)
+        Node(j)%surDepth     = x(9) / UCF(LENGTH)
+        Node(j)%pondedArea   = x(10) / (UCF(LENGTH)*UCF(LENGTH))
+        !break
     end select
 end subroutine node_setParams
 !
@@ -547,6 +550,8 @@ double precision function node_getLosses( j,  tStep)                            
 !  Output:  returns evaporation rate at node (ft3)
 !  Purpose: computes node's volume lost to evaporation over a given time step.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: j
     double precision, intent(in) :: tStep

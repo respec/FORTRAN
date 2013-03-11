@@ -1,4 +1,4 @@
-include 'macros.f95'
+!include 'macros.f95'
 module modDateTime
 !-----------------------------------------------------------------------------
 !   datetime.c
