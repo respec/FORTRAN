@@ -54,11 +54,24 @@ program main
 !     ARCH: 22
 !
       use headers
+      use consts
+      use enums
+      use swmm5f
+      use modXsect
+      implicit none
        
       integer, parameter :: NNODE = 3
       integer, parameter :: NCOND = 2
-      integer :: J, LTYPE
-      real, dimension(NNODE) :: XN
+      integer :: J, LTYPE, ITS, NTS, DTS, DELTS
+      integer :: k !subindex for each node type
+      integer :: CNODE1, CNODE2
+      logical :: isOK
+      
+      real :: ROVOL, OVOL, VOLT, VOL, ROS, OS, RO, O
+      
+      real, dimension(5) :: XN
+      real, dimension(6) :: XC
+      double precision, dimension(4) :: XX
       real, dimension(NNODE) :: NDINIT = (/0.05, 0.05, 0.016/)
       real, dimension(NNODE) :: NELEV = (/10.14, 10.14, 9.23/)
       real, dimension(NNODE) :: NDMAX = (/11.14, 11.14, 10.23/)
@@ -71,48 +84,84 @@ program main
       real, dimension(NCOND) :: COFF2 = (/0.0, 0.0/)
       real, dimension(NCOND) :: CQ0 = (/0.01, 0.01/)
       
+      integer, dimension(NCOND) :: CSHAPE = (/TRAPEZOIDAL, CIRCULAR/)
+      real, dimension(NCOND) :: CGEOM1 = (/3.0, 2.25/)
+      real, dimension(NCOND) :: CGEOM2 = (/5.0, 0.0/)
+      real, dimension(NCOND) :: CGEOM3 = (/5.0, 0.0/)
+      real, dimension(NCOND) :: CGEOM4 = (/5.0, 0.0/)
+      
+      UnitSystem = US
+      
+      call initPointers() !project
+      
+      Nobjects(E_GAGE) = 1
+      Nobjects(E_NODE) = 3
+      Nnodes(E_OUTFALL) = 1
+      Nobjects(LINK) = 2
+    
+      call createObjects() !project
+      call setDefaults() !project
+      
+      k = 0
       DO 10 J= 1,NNODE
-        LTYPE = 0
+        LTYPE = JUNCTION ! junction
         IF (J.EQ.NNODE) THEN
 !         this is the outfall
-          LTYPE = 1
-        END IF 
+          LTYPE = E_OUTFALL ! outfall
+        END IF
+        !hard-code node counters
+        if (lTYPE == JUNCTION) then
+           k = k + 1
+        else if (LTYPE == E_OUTFALL) then
+           k = 1 ! only one outfall
+        end if
         XN(1) = NELEV(J)
         XN(2) = NDMAX(J)
         XN(3) = NDINIT(J)
         XN(4) = NDSURC(J)
         XN(5) = NPONDA(J)
-        node_setParams(J, LTYPE, 0, XN)
+        call node_setParams(J, LTYPE, k, XN)
  10   CONTINUE
-!
-      LTYPE = 0
-      DO 20 J= 1,NCOND 
+
+      !TODO: both conduits or first conduit and second: weir or outlet???
+      LTYPE = E_CONDUIT
+      DO 20 J= 1,NCOND
         XC(1) = CLEN(J)
         XC(2) = CMANN(J)
         XC(3) = COFF1(J)
         XC(4) = COFF2(J)
         XC(5) = CQ0(J)
         XC(6) = 0.0
-        link_setParams(J, LTYPE, CNODE1, CNODE2, J, XC)
+        
+        !hard code nodal schema
+        if (J == 1) then
+           CNODE1 = 1
+           CNODE2 = 2
+        else
+           CNODE1 = 2
+           CNODE2 = 3
+        end if
+        call link_setParams(J, LTYPE, CNODE1, CNODE2, J, XC)
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
         XX(3) = CGEOM3(J)
         XX(4) = CGEOM4(J)
-        xsect_setParams(J, CSHAPE(J), 1, X, 0.0)   !haven't quite understood this yet
+        !call xsect_setParams(J, CSHAPE(J), 1, XX, 0.0)   !haven't quite understood this yet, this is for outlet link
+        isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), XX, UCF(LENGTH))   !for normal conduit
  20   CONTINUE
 !
-      NTS = DELTS/DTS
-      DO 100 ITS = 1,NTS
-         dynwave_execute(links,DTS)
- 100  CONTINUE
+!      NTS = DELTS/DTS
+!      DO 100 ITS = 1,NTS
+!         call dynwave_execute(links,DTS)
+! 100  CONTINUE
+!!
+!!     have to figure out how to get the output back here
+!      O = OS
+!      RO = ROS
+!      VOL = VOLT
+!      OVOL = 0.0
+!      ROVOL = OVOL
+      
+      
 !
-!     have to figure out how to get the output back here
-      O = OS
-      RO = ROS
-      VOL = VOLT
-      OVOL = 0.0
-      ROVOL = OVOL
-!
-      RETURN
-      END
 end program

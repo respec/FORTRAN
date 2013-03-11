@@ -1,4 +1,4 @@
-include 'text.f95'
+!include 'text.f95'
 module keywords
 !-----------------------------------------------------------------------------
 !   keywords.c

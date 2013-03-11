@@ -21,6 +21,8 @@ subroutine initPointers()
 !  Output:  none
 !  Purpose: assigns NULL to all dynamic arrays for a new project.
 !
+    use consts
+    use enums
     use headers
     integer :: stat
     deallocate(Gage,stat=stat)
@@ -59,7 +61,10 @@ subroutine setDefaults
 !  Output:  none
 !  Purpose: assigns default values to project variables.
 !
+    use consts
+    use enums
    use headers
+   use modDateTime
    integer :: i, j
 
    ! Project title & temp. file path
@@ -185,6 +190,8 @@ subroutine openFiles(f1, f2, f3)
 !  Output:  none
 !  Purpose: opens a project's input and report files.
 !
+    use consts
+    use enums
     use headers
     character(len=MAXFNAME), intent(in) :: f1, f2, f3
     integer :: errcode
@@ -221,3 +228,409 @@ subroutine openFiles(f1, f2, f3)
        return
     end if
 end subroutine openFiles
+
+!=============================================================================
+
+subroutine project_readInput()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: retrieves project data from input file.
+!
+
+    use consts
+    use enums
+    use headers
+    ! --- create hash tables for fast retrieval of objects by ID names
+!    createHashTables()
+
+    ! --- count number of objects in input file and create them
+!    input_countObjects()
+!    createObjects()
+
+    ! --- read project data from input file
+!    input_readData()
+!    if ( ErrorCode ) return
+
+    ! --- establish starting & ending date/time
+    StartDateTime = StartDate + StartTime
+    EndDateTime   = EndDate + EndTime
+    ReportStart   = ReportStartDate + ReportStartTime
+    ReportStart   = MAX(ReportStart, StartDateTime)
+
+    ! --- check for valid starting & ending date/times
+    if ( EndDateTime <= StartDateTime ) then
+!        report_writeErrorMsg(ERR_START_DATE, "")
+    else if ( EndDateTime <= ReportStart ) then
+!        report_writeErrorMsg(ERR_REPORT_DATE, "")
+    else
+        ! --- compute total duration of simulation in milliseconds
+        !     (add on 1 msec to account for any roundoff)
+        TotalDuration = (EndDateTime - StartDateTime) * MSECperDAY
+        TotalDuration = TotalDuration + 1.0
+
+        ! --- reporting step must be <= total duration
+        if ( ReportStep * 1.0 > TotalDuration/1000.0 ) then
+            ReportStep = int(TotalDuration/1000.0)
+        end if
+        if ( ReportStep * 1.0 < RouteStep ) then
+!           report_writeErrorMsg(ERR_REPORT_STEP, "")
+        end if
+    end if
+end subroutine project_readInput
+
+!=============================================================================
+
+integer function project_addObject(objtype, id, n)
+!
+!  Input:   objtype = object type
+!           id   = object ID string
+!           n    = object index
+!  Output:  returns 0 if object already added, 1 if not, -1 if hashing fails
+!  Purpose: adds an object ID to a hash table
+!
+
+    integer, intent(in) :: objtype, n
+    character(*), intent(in) :: id
+    integer ::  mresult
+    integer ::  strlen
+    character(20) :: newID
+
+    ! --- do nothing if object already placed in hash table
+    if ( project_findObject(objtype, id) >= 0 ) then
+        project_addObject = 0
+        return
+    end if
+
+    ! --- use memory from the hash tables' common memory pool to store
+    !     a copy of the object's ID string
+    strlen = len(id) + 1
+    newID = id
+
+    ! --- insert object's ID into the hash table for that type of object
+    mresult = HTinsert(Htable(objtype), newID, n)
+    if ( mresult == 0 ) mresult = -1
+    project_addObject = mresult
+end function project_addObject
+
+!=============================================================================
+
+subroutine createObjects()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: allocates memory for project's objects.
+!
+!  NOTE: number of each type of object has already been determined in
+!        project_readInput().
+!
+    use consts
+    use enums
+    use headers
+    integer :: j, k
+
+    ! --- allocate memory for each category of object
+    if ( ErrorCode /= 0 ) return
+    allocate(Gage(Nobjects(E_GAGE)))
+!   allocate(Subcatch(Nobjects(SUBCATCH)))
+    allocate(Node(Nobjects(E_NODE)))
+    allocate(Outfall(Nnodes(E_OUTFALL)))
+!   allocate(Divider(Nnodes(DIVIDER)))
+!   allocate(Storage(Nnodes(STORAGE)))
+    allocate(arrLink(Nobjects(LINK)))
+!   allocate(Conduit(Nlinks(CONDUIT)))
+!   allocate(Pump(Nlinks(PUMP)))
+!   allocate(Orifice(Nlinks(ORIFICE)))
+!   allocate(Weir(Nlinks(WEIR)))
+!   allocate(Outlet(Nlinks(OUTLET)))
+!   allocate(Pollut(Nobjects(POLLUT)))
+!   allocate(Landuse(Nobjects(LANDUSE)))
+!   allocate(Pattern(Nobjects(TIMEPATTERN)))
+!   allocate(Curve(Nobjects(CURVE)))
+!   allocate(Tseries(Nobjects(TSERIES)))
+!   allocate(Aquifer(Nobjects(AQUIFER)))
+!   allocate(UnitHyd(Nobjects(UNITHYD)))
+!   allocate(Snowmelt(Nobjects(SNOWMELT)))
+!   allocate(Shape(Nobjects(SHAPE)))
+
+    ! --- create LID objects                                                  !(5.0.019 - LR)
+    !lid_create(Nobjects(LID), Nobjects(SUBCATCH))                             !(5.0.019 - LR)
+
+    ! --- create control rules
+    !ErrorCode = controls_create(Nobjects(CONTROL))
+    !if ( ErrorCode ) return
+
+    ! --- create cross section transects
+!   ErrorCode = transect_create(Nobjects(TRANSECT))
+!   if ( ErrorCode ) return
+
+    ! --- allocate memory for infiltration data
+    !infil_create(Nobjects(SUBCATCH), InfilModel)                              !(5.0.019 - LR)
+
+    ! --- allocate memory for water quality state variables
+!   for (j = 0 j < Nobjects(SUBCATCH) j++)
+!   {
+!       Subcatch(j).initBuildup = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!       Subcatch(j).oldQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!       Subcatch(j).newQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!       Subcatch(j).pondedQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!       Subcatch(j).totalLoad  = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!   }
+!   for (j = 0 j < Nobjects(NODE) j++)
+!   {
+!       Node(j).oldQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!       Node(j).newQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+
+!       !Node(j).wStored = (double *) calloc(Nobjects(POLLUT), sizeof(double)) !(5.0.018 - LR)
+
+!       Node(j).extInflow = NULL
+!       Node(j).dwfInflow = NULL
+!       Node(j).rdiiInflow = NULL
+!       Node(j).treatment = NULL
+!   }
+!   for (j = 0 j < Nobjects(LINK) j++)
+!   {
+!       Link(j).oldQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!       Link(j).newQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!   }
+
+!   ! --- allocate memory for land use buildup/washoff functions
+!   for (j = 0 j < Nobjects(LANDUSE) j++)
+!   {
+!       Landuse(j).buildupFunc =
+!           (TBuildup *) calloc(Nobjects(POLLUT), sizeof(TBuildup))
+!       Landuse(j).washoffFunc =
+!           (TWashoff *) calloc(Nobjects(POLLUT), sizeof(TWashoff))
+!   }
+
+    ! --- allocate memory for subcatchment landuse factors
+!   for (j = 0 j < Nobjects(SUBCATCH) j++)
+!   {
+!       Subcatch(j).landFactor =
+!           (TLandFactor *) calloc(Nobjects(LANDUSE), sizeof(TLandFactor))
+!       for (k = 0 k < Nobjects(LANDUSE) k++)
+!       {
+!           Subcatch(j).landFactor(k).buildup =
+!               (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!       }
+!   }
+
+    ! --- initialize buildup & washoff functions
+!   for (j = 0 j < Nobjects(LANDUSE) j++)
+!   {
+!       for (k = 0 k < Nobjects(POLLUT) k++)
+!       {
+!           Landuse(j).buildupFunc(k).funcType = NO_BUILDUP
+!           Landuse(j).buildupFunc(k).normalizer = PER_AREA
+!           Landuse(j).washoffFunc(k).funcType = NO_WASHOFF
+!       }
+!   }
+
+    ! --- initialize rain gage properties
+    do j = 1, Nobjects(E_GAGE)
+        Gage(j)%tSeries = -1
+        Gage(j)%fname = ''
+    end do
+
+    ! --- initialize subcatchment properties
+!   for (j = 0 j < Nobjects(SUBCATCH) j++)
+!   {
+!       Subcatch(j).outSubcatch = -1
+!       Subcatch(j).outNode     = -1
+!       Subcatch(j).infil       = -1
+!       Subcatch(j).groundwater = NULL
+!       Subcatch(j).snowpack    = NULL
+!       Subcatch(j).lidArea     = 0.0                                         !(5.0.019 - LR)
+!       for (k = 0 k < Nobjects(POLLUT) k++)
+!       {
+!           Subcatch(j).initBuildup(k) = 0.0
+!       }
+!   }
+
+    ! --- initialize RDII unit hydrograph properties
+!   for ( j = 0 j < Nobjects(UNITHYD) j++ ) rdii_initUnitHyd(j)
+
+    ! --- initialize snowmelt properties
+!   for ( j = 0 j < Nobjects(SNOWMELT) j++ ) snow_initSnowmelt(j)
+
+    ! --- initialize storage node properties                                  !(5.0.015 - LR)
+!   for (j = 0 j < Nnodes(STORAGE) j++) Storage(j).infil = NULL             !(5.0.015 - LR)
+
+    ! --- initialize link properties
+    do j = 1, Nobjects(LINK)
+        arrLink(j)%xsect%datatype   = -1
+        arrLink(j)%cLossInlet   = 0.0
+        arrLink(j)%cLossOutlet  = 0.0
+        arrLink(j)%cLossAvg     = 0.0
+        arrLink(j)%hasFlapGate  = .FALSE.
+    end do
+!   for (j = 0 j < Nlinks(PUMP) j++) Pump(j).pumpCurve  = -1
+
+    ! --- initialize reporting flags
+!   for (j = 0 j < Nobjects(SUBCATCH) j++) Subcatch(j).rptFlag = .FALSE.
+    do j = 1, Nobjects(E_NODE)
+       Node(j)%rptFlag = .FALSE.
+    end do
+    do j = 1, Nobjects(LINK)
+       arrLink(j)%rptFlag = .FALSE.
+    end do
+
+    !  --- initialize curves, time series, and time patterns
+!   for (j = 0 j < Nobjects(CURVE) j++)   table_init(&Curve(j))
+!   for (j = 0 j < Nobjects(TSERIES) j++) table_init(&Tseries(j))
+!   for (j = 0 j < Nobjects(TIMEPATTERN) j++) inflow_initDwfPattern(j)
+end subroutine createObjects
+
+!=============================================================================
+
+subroutine deleteObjects()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: frees memory allocated for a project's objects.
+!
+!  NOTE: care is taken to first free objects that are properties of another
+!        object before the latter is freed (e.g., we must free a
+!        subcatchment's land use factors before freeing the subcatchment).
+!
+
+    use consts
+    use enums
+    use headers
+    integer :: j, k
+
+    ! --- free memory for landuse factors & groundwater
+!   if ( Subcatch ) for (j = 0 j < Nobjects(SUBCATCH) j++)
+!   {
+!       for (k = 0 k < Nobjects(LANDUSE) k++)
+!       {
+!           FREE(Subcatch(j).landFactor(k).buildup)
+!       }
+!       FREE(Subcatch(j).landFactor)
+!       FREE(Subcatch(j).groundwater)
+!       FREE(Subcatch(j).snowpack)                                            !(5.0.015 - LR)
+!   }
+
+    ! --- free memory for buildup/washoff functions
+!   if ( Landuse ) for (j = 0 j < Nobjects(LANDUSE) j++)
+!   {
+!       FREE(Landuse(j).buildupFunc)
+!       FREE(Landuse(j).washoffFunc)
+!   }
+
+    ! --- free memory for water quality state variables
+!   if ( Subcatch ) for (j = 0 j < Nobjects(SUBCATCH) j++)
+!   {
+!       FREE(Subcatch(j).initBuildup)
+!       FREE(Subcatch(j).oldQual)
+!       FREE(Subcatch(j).newQual)
+!       FREE(Subcatch(j).pondedQual)
+!       FREE(Subcatch(j).totalLoad)
+!   }
+!   if ( Node ) for (j = 0 j < Nobjects(NODE) j++)
+!   {
+!       FREE(Node(j).oldQual)
+!       FREE(Node(j).newQual)
+!   }
+!   if ( Link ) for (j = 0 j < Nobjects(LINK) j++)
+!   {
+!       FREE(Link(j).oldQual)
+!       FREE(Link(j).newQual)
+!   }
+
+    ! --- free memory used for infiltration                                   !(5.0.019 - LR)
+!   infil_delete()                                                            !(5.0.019 - LR)
+!   if ( Node ) for (j = 0 j < Nnodes(STORAGE) j++) FREE(Storage(j).infil)  !(5.0.015 - LR)
+
+    ! --- free memory used for nodal inflows & treatment functions
+!   if ( Node ) for (j = 0 j < Nobjects(NODE) j++)
+!   {
+!       inflow_deleteExtInflows(j)
+!       inflow_deleteDwfInflows(j)
+!       rdii_deleteRdiiInflow(j)
+!       treatmnt_delete(j)
+!   }
+
+    ! --- delete table entries for curves and time series
+!   if ( Tseries ) for (j = 0 j < Nobjects(TSERIES) j++)
+!       table_deleteEntries(&Tseries(j))
+!   if ( Curve ) for (j = 0 j < Nobjects(CURVE) j++)
+!       table_deleteEntries(&Curve(j))
+
+    ! --- delete cross section transects
+!   transect_delete()
+
+    ! --- delete control rules
+!   controls_delete()
+
+    ! --- delete LIDs                                                         !(5.0.019 - LR)
+!   lid_delete()                                                              !(5.0.019 - LR)
+
+    ! --- now free each major category of object
+    deallocate(Gage)
+    deallocate(Subcatch)
+    deallocate(Node)
+    deallocate(Outfall)
+    deallocate(Divider)
+    deallocate(Storage)
+    deallocate(Link)
+    deallocate(Conduit)
+    deallocate(Pump)
+    deallocate(Orifice)
+    deallocate(Weir)
+    deallocate(Outlet)
+    deallocate(Pollut)
+    deallocate(Landuse)
+    deallocate(Pattern)
+    deallocate(Curve)
+    deallocate(Tseries)
+
+!    deallocate(HortInfil)                                                         !(5.0.019 - LR)
+!    deallocate(GAInfil)                                                           !(5.0.019 - LR)
+!    deallocate(CNInfil)                                                           !(5.0.019 - LR)
+
+    deallocate(Aquifer)
+    deallocate(UnitHyd)
+    deallocate(Snowmelt)
+    deallocate(Shape)                                                               !(5.0.010 - LR)
+end subroutine deleteObjects
+
+!!=============================================================================
+!void createHashTables()
+!!
+!!  Input:   none
+!!  Output:  returns error code
+!!  Purpose: allocates memory for object ID hash tables
+!!
+!{   int j
+!    MemPoolAllocated = .FALSE.
+!    for (j = 0 j < MAX_OBJ_TYPES  j++)
+!    {
+!         Htable(j) = HTcreate()
+!         if ( Htable(j) == NULL ) report_writeErrorMsg(ERR_MEMORY, "")
+!    }
+!
+!    ! --- initialize memory pool used to store object ID's
+!    if ( AllocInit() == NULL ) report_writeErrorMsg(ERR_MEMORY, "")
+!    else MemPoolAllocated = .TRUE.
+!}
+!
+!!=============================================================================
+!void deleteHashTables()
+!!
+!!  Input:   none
+!!  Output:  none
+!!  Purpose: frees memory allocated for object ID hash tables
+!!
+!{
+!    int j
+!    for (j = 0 j < MAX_OBJ_TYPES j++)
+!    {
+!        if ( Htable(j) != NULL ) HTfree(Htable(j))
+!    }
+!
+!    ! --- free object ID memory pool
+!    if ( MemPoolAllocated ) AllocFreePool()
+!}
+!
+!!=============================================================================

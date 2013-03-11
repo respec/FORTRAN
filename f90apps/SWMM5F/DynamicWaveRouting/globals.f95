@@ -1,4 +1,4 @@
-include 'objects.f95'
+!include 'objects.f95'
 module globals
 !-----------------------------------------------------------------------------
 !   globals.h
@@ -13,8 +13,22 @@ module globals
 !
 !   Global Variables
 !-----------------------------------------------------------------------------
-
+use DataSizeSpecs
+use consts
 use objects
+
+!private MAXFNAME,MAXMSG, MAXTITLE,MAX_NODE_TYPES,MAX_LINK_TYPES,MAX_OBJ_TYPES
+!integer, parameter :: K2 = selected_int_kind(2) !kind= 1
+!integer, parameter :: K4 = selected_int_kind(4) !kind= 2
+!integer, parameter :: K8 = selected_int_kind(8) !kind =4
+!integer, parameter :: MAXFNAME = 259            ! Max. # characters in file name
+!integer, parameter :: MAXMSG = 1024           ! Max. # characters in message text
+!integer, parameter :: MAXTITLE = 3              ! Max. # title lines
+!integer(kind=K2), parameter :: MAX_NODE_TYPES = 4
+!integer(kind=K2), parameter :: MAX_LINK_TYPES = 5
+!integer(kind=K2), parameter :: MAX_OBJ_TYPES = 17  !(5.0.019 - LR)
+
+public
 
 type(TFile) :: Finp                     ! Input file
 type(TFile) :: Fout                     ! Output file

@@ -1,6 +1,6 @@
-include 'headers.f95'
-include 'xsect.f95'
-include 'link.f95'
+!include 'headers.f95'
+!include 'xsect.f95'
+!include 'link.f95'
 module dynwave
 ! -----------------------------------------------------------------------------
 !    dynwave.c
@@ -124,6 +124,8 @@ subroutine dynwave_init()
 !   Output:  none
 !   Purpose: initializes dynamic wave routing method.
 ! 
+    use consts
+    use enums
     use headers
     integer :: i
 
@@ -203,6 +205,8 @@ integer function dynwave_execute(links, tStep)
 !   Purpose: routes flows through drainage network over current time step.
 ! 
 
+    use consts
+    use enums
     use headers
     integer, intent (in) :: links(:)
     double precision, intent (in) :: tStep
@@ -270,6 +274,8 @@ subroutine execRoutingStep(links, dt)
 !   Purpose: solves momentum eq. in links and continuity eq. at nodes
 !            over specified time step.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: links(:)
     double precision, intent (in) :: dt
@@ -317,6 +323,8 @@ subroutine initNodeState(i)
 !   Output:  none
 !   Purpose: initializes node's surface area, inflow & outflow
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     !  --- initialize nodal surface area
@@ -344,6 +352,8 @@ subroutine findConduitFlow(i, dt)
 !   Output:  none
 !   Purpose: finds new flow in a conduit-type link
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     double precision, intent(in) :: dt
@@ -387,6 +397,8 @@ subroutine findNonConduitFlow(i, dt)
 !   Output:  none
 !   Purpose: finds new flow in a non-conduit-type link
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     double precision, intent(in) :: dt
@@ -453,6 +465,8 @@ double precision function getModPumpFlow(i, q, dt)
 !   Purpose: modifies pump curve pumping rate depending on amount of water
 !            available at pump's inlet node.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     double precision, intent(inout) :: q
@@ -515,6 +529,8 @@ subroutine  findNonConduitSurfArea(i)
 !   Purpose: finds the surface area contributed by a non-conduit
 !            link to its upstream and downstream nodes.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     if ( arrLink(i)%datatype == E_ORIFICE ) then
@@ -545,6 +561,8 @@ subroutine updateNodeFlows( i,  q)
 !   Output:  none
 !   Purpose: updates cumulative inflow & outflow at link's end nodes.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     double precision, intent(in) :: q
@@ -568,6 +586,8 @@ double precision function  getConduitFlow(j, qOld, dt)
 !   Purpose: updates flow in conduit link by solving finite difference
 !            form of continuity and momentum equations.
 ! 
+    use consts
+    use enums
     use headers
     use modXsect
     use modLink
@@ -594,12 +614,14 @@ double precision function  getConduitFlow(j, qOld, dt)
     double precision ::  q                          !  new flow value (cfs)
     double precision ::  barrels                    !  number of barrels in conduit
     !TXsect* xsect = &arrLink(j).xsect    !  ptr. to conduit's cross section data
-    type(TXsect), pointer :: xsect !use pointer as to not recreate a local copy
+    !type(TXsect), pointer :: xsect !use pointer as to not recreate a local copy
     logical :: isFull
     double precision :: qOldB
-
+    type(TXsect) :: xsect
+    !xsect => arrLink(j)%xsect !  ptr. to conduit's cross section data
+    xsect = arrLink(j)%xsect
     isFull = .false. !  TRUE if conduit flowing full
-    xsect => arrLink(j)%xsect !  ptr. to conduit's cross section data
+    
     
     !  --- get most current heads at upstream and downstream ends of conduit
     k =  arrLink(j)%subIndex
@@ -796,7 +818,7 @@ double precision function  getConduitFlow(j, qOld, dt)
     arrLink(j)%newVolume = aMid * link_getLength(j) * barrels                    ! (5.0.015 - LR)
     getConduitFlow =  q * barrels
     
-    nullify(xsect) !TODO: I think we need to do it here
+    !nullify(xsect) !TODO: I think we need to do it here
     return
 end function getConduitFlow
 
@@ -813,6 +835,8 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
 !   Output:  returns flow classification code
 !   Purpose: determines flow class for a conduit based on depths at each end.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: j
     double precision, intent(in) :: q, h1, h2, y1, y2
@@ -922,6 +946,8 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
 !   Output:  updated values of h1, h2, y1, & y2
 !   Purpose: assigns surface area of conduit to its up and downstream nodes.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: j
     double precision, intent(inout) :: h1, h2, y1, y2
@@ -1046,6 +1072,8 @@ double precision function findLocalLosses(j, a1, a2, aMid, q)
 !   Output:  returns local losses (ft/sec)
 !   Purpose: computes local losses term of momentum equation.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: j
     double precision, intent(in) :: a1, a2, aMid, q
@@ -1068,6 +1096,8 @@ double precision function getWidth(xsect, y)
 !   Output:  returns top width (ft)
 !   Purpose: computes top width of flow surface in conduit.
 ! 
+    use consts
+    use enums
     use headers
     use modXsect
     type(TXsect), intent(in) :: xsect
@@ -1091,6 +1121,8 @@ double precision function getArea(xsect, y)
 !   Output:  returns flow area (ft2)
 !   Purpose: computes area of flow cross-section in a conduit.
 ! 
+    use consts
+    use enums
     use headers
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
@@ -1109,6 +1141,8 @@ double precision function getHydRad(xsect, y)
 !   Output:  returns hydraulic radius (ft)
 !   Purpose: computes hydraulic radius of flow cross-section in a conduit.
 ! 
+    use consts
+    use enums
     use headers
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
@@ -1139,6 +1173,8 @@ double precision function checkNormalFlow(j, q, y1, y2, a1, r1)
 !   Output:  returns modifed flow in link (cfs)
 !   Purpose: checks if flow in link should be replaced by normal flow.
 ! 
+    use consts
+    use enums
     use headers
     double precision, intent(in) :: q, y1, y2, a1, r1
     integer, intent(in) :: j
@@ -1196,6 +1232,8 @@ subroutine setNodeDepth(i, dt)
 !   Output:  none
 !   Purpose: sets depth at non-outfall node after current time step.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     double precision, intent(in) :: dt
@@ -1323,6 +1361,8 @@ double precision function getFloodedDepth(i, canPond, dV, yNew, yMax, dt)
 !   Output:  returns depth at node when flooded (ft)
 !   Purpose: computes depth, volume and overflow for a flooded node.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: i
     logical, intent(in) :: canPond
@@ -1393,6 +1433,8 @@ double precision function getLinkStep(tMin, minLink)
 !            returns critical time step (sec)
 !   Purpose: finds critical time step for conduits based on Courant criterion.
 ! 
+    use consts
+    use enums
     use headers
     double precision, intent(in) :: tMin
     integer, intent(inout) :: minLink
@@ -1442,6 +1484,8 @@ double precision function getNodeStep(tMin, minNode)
 !            projected change in depth.
 ! 
 
+    use consts
+    use enums
     use headers
     double precision, intent(in) :: tMin
     integer, intent(inout) :: minNode
@@ -1485,6 +1529,8 @@ subroutine checkCapacity(j)
 !   Output:  none
 !   Purpose: determines if a conduit link is capacity limited.
 ! 
+    use consts
+    use enums
     use headers
     integer, intent(in) :: j
     integer ::    n1, n2, k

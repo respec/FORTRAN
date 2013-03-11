@@ -1,6 +1,3 @@
-module modLink
-
-contains
 !=============================================================================
 !!  This function was re-named and re-written for release 5.0.014.  !!     !(5.0.014 - LR)
 logical function link_setFlapGate( j,  n1,  n2,  q)
@@ -14,6 +11,8 @@ logical function link_setFlapGate( j,  n1,  n2,  q)
 !  Purpose: based on the sign of the flow, determines if a flap gate
 !           associated with the link should close or not.
 !
+    use enums
+    use consts
     use headers
     integer, intent(in) :: j, n1, n2
     double precision, intent(in) :: q
@@ -51,6 +50,8 @@ double precision function link_getYcrit(j, q)
 !  Output:  returns critical depth (ft)
 !  Purpose: computes critical depth for given flow rate.
 !
+    use enums
+    use consts
     use headers
     integer, intent(in) :: j
     double precision, intent(in) :: q
@@ -67,6 +68,8 @@ double precision function link_getYnorm(j, q)
 !  Output:  returns normal depth (ft)
 !  Purpose: computes normal depth for given flow rate.
 !
+    use enums
+    use consts
     use headers
     integer, intent(in) :: j
     double precision, intent(in) :: q
@@ -107,6 +110,8 @@ subroutine link_setOutfallDepth(j)
 !  Output:  none
 !  Purpose: sets depth at outfall node connected to link j.
 !
+    use enums
+    use consts
     use headers
     integer, intent(in) :: j
     integer ::     k                         ! conduit index
@@ -155,6 +160,8 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
 !  Output:  none
 !  Purpose: sets parameters for a arrLink.
 !
+    use consts
+    use enums
     use headers
     
     integer, intent(in) :: j, n1, n2, k, datatype
@@ -176,73 +183,73 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
 
     select case (datatype)
       case (E_CONDUIT)
-        Conduit(k)%length    = x(0) / UCF(LENGTH)
+        Conduit(k)%length    = x(1) / UCF(LENGTH)
         Conduit(k)%modLength = Conduit(k)%length
-        Conduit(k)%roughness = x(1)
-        arrLink(j)%offset1      = x(2) / UCF(LENGTH)
-        arrLink(j)%offset2      = x(3) / UCF(LENGTH)
-        arrLink(j)%q0           = x(4) / UCF(FLOW)
-        arrLink(j)%qLimit       = x(5) / UCF(FLOW)
+        Conduit(k)%roughness = x(2)
+        arrLink(j)%offset1      = x(3) / UCF(LENGTH)
+        arrLink(j)%offset2      = x(4) / UCF(LENGTH)
+        arrLink(j)%q0           = x(6) / UCF(FLOW)
+        arrLink(j)%qLimit       = x(6) / UCF(FLOW)
         !break
 
-      case (PUMP)
-        Pump(k)%pumpCurve    = int(x(0))
+      case (E_PUMP)
+        Pump(k)%pumpCurve    = int(x(1))
         arrLink(j)%hasFlapGate  = .FALSE.
-        Pump(k)%initSetting  = x(1)                                           !(5.0.010 - LR)
-        Pump(k)%yOn          = x(2) / UCF(LENGTH)                             !(5.0.012 - LR)
-        Pump(k)%yOff         = x(3) / UCF(LENGTH)                             !(5.0.012 - LR)
+        Pump(k)%initSetting  = x(2)                                           !(5.0.010 - LR)
+        Pump(k)%yOn          = x(3) / UCF(LENGTH)                             !(5.0.012 - LR)
+        Pump(k)%yOff         = x(4) / UCF(LENGTH)                             !(5.0.012 - LR)
         Pump(k)%xMin         = 0.0                                            !(5.0.014 - LR)
         Pump(k)%xMax         = 0.0                                            !(5.0.014 - LR)
         !break
 
-      case (ORIFICE)
-        Orifice(k)%datatype      = int(x(0))
-        arrLink(j)%offset1      = x(1) / UCF(LENGTH)
+      case (E_ORIFICE)
+        Orifice(k)%datatype      = int(x(1))
+        arrLink(j)%offset1      = x(2) / UCF(LENGTH)
         arrLink(j)%offset2      = arrLink(j)%offset1
-        Orifice(k)%cDisch    = x(2)
+        Orifice(k)%cDisch    = x(3)
         
         !arrLink(j)%hasFlapGate  = (x(3) > 0.0) ? 1 : 0
-        if (x(3) >0.0) then
+        if (x(4) >0.0) then
            arrLink(j)%hasFlapGate  = .true.
         else
            arrLink(j)%hasFlapGate  = .false.
         end if
         
-        Orifice(k)%orate     = x(4) * 3600.0                                  !(5.0.010 - LR) 
+        Orifice(k)%orate     = x(5) * 3600.0                                  !(5.0.010 - LR) 
         !break
 
-      case (WEIR)
-        Weir(k)%datatype         = int(x(0))
-        arrLink(j)%offset1      = x(1) / UCF(LENGTH)
+      case (E_WEIR)
+        Weir(k)%datatype         = int(x(1))
+        arrLink(j)%offset1      = x(2) / UCF(LENGTH)
         arrLink(j)%offset2      = arrLink(j)%offset1
-        Weir(k)%cDisch1      = x(2)
+        Weir(k)%cDisch1      = x(3)
         !arrLink(j)%hasFlapGate  = (x(3) > 0.0) ? 1 : 0
-        if (x(3) > 0.0) then
-           arrLink(j)%hasFlapGate  = .true.
-        else
-           arrLink(j)%hasFlapGate  = .false.
-        end if
-        Weir(k)%endCon       = x(4)
-        Weir(k)%cDisch2      = x(5)
-        !break
-
-      case (OUTLET)
-        arrLink(j)%offset1      = x(0) / UCF(LENGTH)
-        arrLink(j)%offset2      = arrLink(j).offset1
-        Outlet(k)%qCoeff     = x(1)
-        Outlet(k)%qExpon     = x(2)
-        Outlet(k)%qCurve     = (int)x(3)
-        !arrLink(j)%hasFlapGate  = (x(4) > 0.0) ? 1 : 0
         if (x(4) > 0.0) then
            arrLink(j)%hasFlapGate  = .true.
         else
            arrLink(j)%hasFlapGate  = .false.
         end if
-        Outlet(k)%curveType  = (int)x(5)                                      !(5.0.014 - LR)
+        Weir(k)%endCon       = x(5)
+        Weir(k)%cDisch2      = x(6)
+        !break
 
-        call xsect_setParams(&arrLink(j)%xsect, DUMMY, NULL, 0.0)
+      case (E_OUTLET)
+        arrLink(j)%offset1      = x(1) / UCF(LENGTH)
+        arrLink(j)%offset2      = arrLink(j)%offset1
+        Outlet(k)%qCoeff     = x(2)
+        Outlet(k)%qExpon     = x(3)
+        Outlet(k)%qCurve     = int(x(4))
+        !arrLink(j)%hasFlapGate  = (x(4) > 0.0) ? 1 : 0
+        if (x(5) > 0.0) then
+           arrLink(j)%hasFlapGate  = .true.
+        else
+           arrLink(j)%hasFlapGate  = .false.
+        end if
+        Outlet(k)%curveType  = int(x(6))                                      !(5.0.014 - LR)
+
+        call xsect_setParams(arrLink(j)%xsect, DUMMY, NULL, 0.0)
         !break
 
     end select
 end subroutine link_setParams
-end module
+

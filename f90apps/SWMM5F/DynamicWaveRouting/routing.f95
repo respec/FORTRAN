@@ -21,6 +21,8 @@ integer function routing_open(routingModel)
 !  Output:  returns an error code
 !  Purpose: initializes the routing analyzer.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: routingModel
     integer :: mstat
@@ -57,14 +59,14 @@ integer function routing_open(routingModel)
     end if
 
     ! --- open hot start files
-    if ( .not. openHotstartFile1() ) then
-       routing_open = ErrorCode
-       return
-    end if
-    if ( .not.openHotstartFile2() ) then
-        routing_open = ErrorCode
-        return
-    end if
+!    if ( .not. openHotstartFile1() ) then
+!       routing_open = ErrorCode
+!       return
+!    end if
+!    if ( .not.openHotstartFile2() ) then
+!        routing_open = ErrorCode
+!        return
+!    end if
 
     ! --- initialize the flow routing model
     call flowrout_init(routingModel)
@@ -79,6 +81,8 @@ subroutine routing_execute(routingModel, routingStep)
 !  Output:  none
 !  Purpose: executes the routing process at the current time period.
 !
+    use consts
+    use enums
     use headers
     
     integer, intent(in) :: routingModel
@@ -204,6 +208,8 @@ logical function systemHasChanged(routingModel)
 !  Purpose: checks if the hydraulic state of the system has changed from
 !           the previous time step.
 !
+    use consts
+    use enums
     use headers
     integer, intent(in) :: routingModel
     integer ::    j                                                                  !(5.0.012 - LR)

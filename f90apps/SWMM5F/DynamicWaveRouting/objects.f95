@@ -1,6 +1,5 @@
-include 'consts.f95'
-include 'enums.f95'
-
+!include 'consts.f95'
+!include 'enums.f95'
 module objects
 !  --------------------------------------------------
 !  Silverfrost FTN95 for Microsoft Visual Studio
@@ -45,6 +44,17 @@ use consts
 use enums
 implicit none
 
+!private K2, K4, K8, MAXFNAME,MAXMSG, MAX_FLOW_CLASSES
+!integer, parameter :: K2 = selected_int_kind(2) !kind= 1
+!integer, parameter :: K4 = selected_int_kind(4) !kind= 2
+!integer, parameter :: K8 = selected_int_kind(8) !kind =4
+!integer, parameter :: MAXFNAME = 259            ! Max. # characters in file name
+!integer, parameter :: MAXMSG = 1024           ! Max. # characters in message text
+!integer(kind=K2), parameter :: MAX_FLOW_CLASSES = 7
+!
+
+
+public
 !-----------------
 ! FILE INFORMATION
 !-----------------
@@ -423,7 +433,7 @@ type TNode
    character(len=20) ::         ID              ! node ID
    integer(kind=K2) ::           datatype            ! node type code
    integer(kind=K4) ::           subIndex        ! index of node's sub-category
-   character*1 ::          rptFlag         ! reporting flag
+   logical(kind=K2) :: rptFlag         ! reporting flag
    double precision ::        invertElev      ! invert elevation (ft)
    double precision ::        initDepth       ! initial storage level (ft)
    double precision ::        fullDepth       ! dist. from invert to surface (ft)
