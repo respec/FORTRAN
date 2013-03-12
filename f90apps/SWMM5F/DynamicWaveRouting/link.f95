@@ -120,6 +120,7 @@ subroutine link_setOutfallDepth(j)
     double precision :: q                         ! flow rate (cfs)
     double precision :: yCrit               ! critical flow depth (ft)
     double precision :: yNorm               ! normal flow depth (ft)
+    double precision :: link_getYnorm, link_getYcrit
 
     yCrit = 0.0
     yNorm = 0.0

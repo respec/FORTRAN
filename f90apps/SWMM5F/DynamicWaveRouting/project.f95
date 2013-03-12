@@ -15,7 +15,7 @@ subroutine project_open(f1, f2, f3)
 end subroutine project_open
 
 !=============================================================================
-subroutine initPointers()
+subroutine initPointers 
 !
 !  Input:   none
 !  Output:  none

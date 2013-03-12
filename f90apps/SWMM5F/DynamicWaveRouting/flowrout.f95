@@ -142,6 +142,8 @@ integer function flowrout_execute(links, routingModel, tStep)
     double precision :: qin                        ! link inflow (cfs)
     double precision :: qout                       ! link outflow (cfs)
     double precision :: steps                      ! computational step count
+        
+    integer :: steadyflow_execute
 
 !!  The code below was modified to initialize overflows.  !!               !(5.0.012 - LR)
     ! --- set overflows to drain any ponded water
