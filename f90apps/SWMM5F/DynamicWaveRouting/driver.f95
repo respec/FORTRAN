@@ -92,7 +92,7 @@ program main
       
       UnitSystem = US
       
-      call initPointers() !project
+      call initPointers  !project
       
       Nobjects(E_GAGE) = 1
       Nobjects(E_NODE) = 3
