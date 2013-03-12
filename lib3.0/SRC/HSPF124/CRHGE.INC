@@ -18,9 +18,9 @@ C            GENERAL section
      $              MON,DAY,HR,MIN,IVL,IVL1,PIVLNO,BIVLNO,NXTMON,
      $              SPAFP,SPAKND,SPIVL,SPOPNO,SPOUT,SPNUND,DUMGEN(13)
       REAL          DELT,DELT60,DELTS
-      INTEGER       DUMRCH(49889)
+      INTEGER       DUMRCH(51889)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR)
       INTEGER       ASVEC(11),UNIT(7),TIMFG(6),DATIM(5)
-C     end byte: 200000 word:50000
+C     end byte: 208000 word:52000

@@ -45,7 +45,7 @@ C
      $              DUM5(370),DUM6(100),DUM7(553),DUM8(230),DUM9,
      $              DUM10(4800),DUM11(4),DUM12(33),DUM13(12),
      $              DUM14(14),DUM15(351),DUM16(707),DUM17(258),
-     $              DUM18(793),DUM19(107),DUMRCH(29380)
+     $              DUM18(793),DUM19(107),DUMRCH(31380)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(OXST,DOX),(OXSTX,DOFP),
@@ -67,4 +67,4 @@ C
       REAL          OXST(2),ITIC,ICO2,PHPM2(3),PHST(3),ROTIC,ROCO2,
      $              OTIC(MXEXIT),OCO2(MXEXIT),BODCO2,PHYCO2,ZOOCO2,
      $              BALCO2,BENCO2,INVCO2,TOTCO2
-C     end byte: 200000 word:50000
+C     end byte: 208000 word:52000

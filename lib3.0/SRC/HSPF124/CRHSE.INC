@@ -45,7 +45,7 @@ C
       INTEGER       DUM1(2239),DUM2(504),DUM3(1003),DUM4,DUM5(13),
      $              DUM6(712),DUM7,DUM8(2),DUM9(102),DUM10(602),DUM11,
      $              DUM12(2),DUM13(6680),DUM14(1375),DUM15,DUM16(87),
-     $              DUMRCH(36230)
+     $              DUMRCH(38230)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(ISED,SDIF(1,1)),(SDGPM,BEDWID),
@@ -55,4 +55,4 @@ C
       REAL          ISED(4),SDGPM(3),DEPSCR(4),ROSED(4),
      $              OSED(MXEXIT,4)
       DOUBLE PRECISION  RSSED(3)
-C     end byte: 200000 word:50000
+C     end byte: 208000 word:52000

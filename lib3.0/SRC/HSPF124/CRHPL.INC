@@ -104,7 +104,7 @@ C
      $              DUM19(22),DUM20(14),DUM21(4),DUM22(10),DUM23(16),
      $              DUM24(42),DUM25(2),DUM26(72),DUM27(7),DUM28(25),
      $              DUM29(12),DUM30(66),DUM31(40),DUM32(40),DUM33(31),
-     $              DUM34(143),DUM35(21),DUM36(78),DUMRCH(29387)
+     $              DUM34(143),DUM35(21),DUM36(78),DUMRCH(31387)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IBOD,OXIF(2,1)),(OXST,DOX),
@@ -226,4 +226,4 @@ C
      $              SNKORP,PHYORP,ZOOORP,BALORP,TOTORP,SNKORC,PHYORC,
      $              ZOOORC,BALORC,TOTORC,PHST(3),BODCO2,PHYCO2,ZOOCO2,
      $              BALCO2,BENCO2,INVCO2,TOTCO2
-C     end byte: 200000 word:50000
+C     end byte: 208000 word:52000

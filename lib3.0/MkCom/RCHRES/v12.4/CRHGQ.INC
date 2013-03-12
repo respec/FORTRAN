@@ -97,7 +97,7 @@ C
      $              DUM19(230),DUM20,DUM21(181),DUM22(14),DUM23(4),
      $              DUM24(8),DUM25(20),DUM26(23),DUM27(4),DUM28(6),
      $              DUM29(29),DUM30(1313),DUM31(226),DUM32(33),
-     $              DUM33(670),DUMRCH(29499)
+     $              DUM33(670),DUMRCH(31499)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(DEPSCR,SDCF1(1,1)),(ROSED,SDCF2(1,1)),
@@ -118,4 +118,4 @@ C
      $              SQDEC(7,MXGQAL),ADQAL(7,MXGQAL),
      $              ODQAL(MXEXIT,MXGQAL),OSQAL(MXEXIT,3,MXGQAL),
      $              GQADDR(MXGQAL),GQADWT(MXGQAL),OXPM4(4)
-C     end byte: 200000 word:50000
+C     end byte: 208000 word:52000
