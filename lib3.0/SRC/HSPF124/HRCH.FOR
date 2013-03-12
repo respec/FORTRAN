@@ -86,7 +86,7 @@ C     input for section hydr
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,21)
+        OSVREC= MAX(OSVREC,24)
       END IF
 C
 C     adcalc
@@ -95,7 +95,7 @@ C     adcalc
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,21)
+        OSVREC= MAX(OSVREC,25)
       END IF
 C
 C     cons
@@ -104,7 +104,7 @@ C     cons
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,23)
+        OSVREC= MAX(OSVREC,27)
       END IF
 C
 C     htrch
@@ -122,7 +122,7 @@ C     sedtrn
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,24)
+        OSVREC= MAX(OSVREC,28)
       END IF
 C
 C     gqual
@@ -149,7 +149,7 @@ C     acidph
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,39)
+        OSVREC= MAX(OSVREC,43)
       END IF
 C
 C     set flux accumulators to zero

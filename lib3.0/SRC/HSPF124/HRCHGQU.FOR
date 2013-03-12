@@ -762,18 +762,18 @@ C             aux1fg on to calculate average depth
       END IF
 C
 C     determine how many records the osv requires
-      OSVREC= MAX(OSVREC,33)
+      OSVREC= MAX(OSVREC,37)
 C
       IF (GQALFG(4).EQ.1) THEN
 C       need some variables in section oxrx, so osv
 C       must include it
-        OSVREC= MAX(OSVREC,34)
+        OSVREC= MAX(OSVREC,37)
       END IF
 C
       IF (GQALFG(3).EQ.1.AND.PHYTFG.EQ.1) THEN
 C       will need variables phyto and pyfp, so include
 C       section plank in osv
-        OSVREC= MAX(OSVREC,38)
+        OSVREC= MAX(OSVREC,41)
       END IF
 C
       IF (OUTLEV.GT.1) THEN

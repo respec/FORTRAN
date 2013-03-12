@@ -219,6 +219,29 @@ EQ 1 RIRDEM   0   0   0   0 R   HYIRCF(1,1)             01000000000000
 EQ 1 RIRSHT   0   0   0   0 R   HYIRCF(2,1)             01000000000000
 VA   RIRDMX   0   0   0   0 I T HYDR             RIRDEM 01000000000000
 VA   RIRSHX   0   0   0   0 I T HYDR             RIRSHT 01000000000000
+VA   DUMDW    0   0   0   0 I R                         01000000000000
+VA   DTS      0   0   0   0 I P                         01000000000000
+VA   NNODE    0   0   0   0 I P                         01000000000000
+VA   NCOND    0   0   0   0 I P                         01000000000000
+VA   NODEX  100   0   0   0 I P                         01000000000000 
+VA   NELEV  100   0   0   0 R P                         01000000000000
+VA   NDMAX  100   0   0   0 R P                         01000000000000
+VA   NDINIT 100   0   0   0 R P                         01000000000000
+VA   NDSURC 100   0   0   0 R P                         01000000000000
+VA   NPONDA 100   0   0   0 R P                         01000000000000
+VA   NLOCIN 100   0   0   0 R P                         01000000000000
+VA   CNODE1 100   0   0   0 I P                         01000000000000
+VA   CNODE2 100   0   0   0 I P                         01000000000000
+VA   CLENTH 100   0   0   0 R P                         01000000000000
+VA   CMANN  100   0   0   0 R P                         01000000000000
+VA   COFF1  100   0   0   0 R P                         01000000000000
+VA   COFF2  100   0   0   0 R P                         01000000000000
+VA   CQ0    100   0   0   0 R P                         01000000000000
+VA   CSHAPE 100   0   0   0 I P                         01000000000000
+VA   CGEOM1 100   0   0   0 R P                         01000000000000
+VA   CGEOM2 100   0   0   0 R P                         01000000000000
+VA   CGEOM3 100   0   0   0 R P                         01000000000000
+VA   CGEOM4 100   0   0   0 R P                         01000000000000
 
 SE   CRHAD.INC
 HE 3        ADCALC section
