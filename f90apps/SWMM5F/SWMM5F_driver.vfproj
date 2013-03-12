@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectType="typeDynamicLibrary" ProjectCreator="Intel Fortran" Keyword="Dll" Version="11.0" ProjectIdGuid="{74D7CA6A-FF0F-46C2-A594-06C75BE64284}">
+	<Platforms>
+		<Platform Name="Win32"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Header Files" Filter="fi;fd"/>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath=".\DynamicWaveRouting\consts.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\DataSizeSpecs.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\datetime.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\driver.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\dynwave.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\enums.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\error.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\globals.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\headers.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\keywords.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\link.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\macros.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\node.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\objects.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\project.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\swmm5f.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\text.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\xsect.f95"/>
+		<File RelativePath=".\DynamicWaveRouting\XsectDat.f95"/></Filter></Files>
+	<Globals/></VisualStudioProject>
