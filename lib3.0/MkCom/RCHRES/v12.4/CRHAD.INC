@@ -31,10 +31,10 @@ C
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(505),DUM2(207),DUM3(2015),DUM4(1035),
      $              DUM5(720),DUM6(101),DUM7(711),DUM8(500),
-     $              DUM9(6064),DUMRCH(37993)
+     $              DUM9(6064),DUMRCH(39993)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(AROVOL,SROVOL),(AOVOL,SOVOL(1))
       INTEGER       ASVEC(11),UNIT(7),TIMFG(6),DATIM(5)
       REAL          AROVOL(2),AOVOL(MXEXIT,2)
-C     end byte: 200000 word:50000
+C     end byte: 208000 word:52000
