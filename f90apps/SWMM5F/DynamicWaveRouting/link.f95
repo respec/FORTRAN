@@ -163,7 +163,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
     use consts
     use enums
     use headers
-    
+    use swmm5f
     integer, intent(in) :: j, n1, n2, k, datatype
     double precision, dimension(:), intent(in) :: x
 
@@ -176,7 +176,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
     arrLink(j)%q0          = 0.0
     arrLink(j)%qFull       = 0.0
     arrLink(j)%setting     = 1.0
-    arrLink(j)%targetSetting = 1.0                                               !(5.0.010 - LR)
+    arrLink(j)%targetSetting = 1.0       !(5.0.010 - LR)
     arrLink(j)%hasFlapGate = .false. !0
     arrLink(j)%qLimit      = 0.0         ! 0 means that no limit is defined
     arrLink(j)%direction   = 1
@@ -252,4 +252,3 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
 
     end select
 end subroutine link_setParams
-

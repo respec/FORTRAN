@@ -1,0 +1,17 @@
+modXsect;C:\f90apps\SWMM5F\DynamicWaveRouting\xsect.f95;1
+swmm5f;C:\f90apps\SWMM5F\DynamicWaveRouting\swmm5f.f95;1
+modRouting;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95;1
+modLink;C:\f90apps\SWMM5F\DynamicWaveRouting\link.f95;1
+dynwave;C:\f90apps\SWMM5F\DynamicWaveRouting\dynwave.f95;4
+modDateTime;C:\f90apps\SWMM5F\DynamicWaveRouting\datetime.f95;2
+xsectdat;C:\f90apps\SWMM5F\DynamicWaveRouting\XsectDat.f95;1
+text;C:\f90apps\SWMM5F\DynamicWaveRouting\text.f95;1
+objects;C:\f90apps\SWMM5F\DynamicWaveRouting\objects.f95;3
+macros;C:\f90apps\SWMM5F\DynamicWaveRouting\macros.f95;1
+keywords;C:\f90apps\SWMM5F\DynamicWaveRouting\keywords.f95;2
+headers;C:\f90apps\SWMM5F\DynamicWaveRouting\headers.f95;9
+globals;C:\f90apps\SWMM5F\DynamicWaveRouting\globals.f95;2
+error;C:\f90apps\SWMM5F\DynamicWaveRouting\error.f95;1
+enums;C:\f90apps\SWMM5F\DynamicWaveRouting\enums.f95;1
+DataSizeSpecs;C:\f90apps\SWMM5F\DynamicWaveRouting\DataSizeSpecs.f95;1
+consts;C:\f90apps\SWMM5F\DynamicWaveRouting\consts.f95;1
