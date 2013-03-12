@@ -19,7 +19,6 @@ C
      $              DISL,DISR,WIDL,WIDR,HABSL,HABSR,HDEML,HDEMR,
      $              LATDEG,LONDEG,LONSTD,DENL,DENR,NVPL,NVPR,JDAY,
      $              LATRAD,SO,TSAL,TSAR,SKOP,VSAL,VSAR,DLT1,DEC,HFDLT,
-     $              DF,DUMRCH
       INTEGER       HYDRFG,ADFG,CONSFG,HTFG,SEDFG,GQFG,OXFG,NUTFG,
      $              PLKFG,PHFG,ACIDFG,DUMZ(2),PFLAG(11),BFLAG(11),
      $              DUMY(1),PIVL,BIVL,PYREND,BYREND,RCHPFG,RCHBFG,
@@ -38,8 +37,8 @@ C
      $              DENR(MXSP,MXPL),LATRAD,SO(MXSP),TSAL(MXSP),
      $              TSAR(MXSP),SKOP(MXSP),VSAL(MXSP),VSAR(MXSP),DLT1,
      $              DEC,HFDLT,DF
-      INTEGER       DUM1(4482),DUM2(6605),DUM3(4),DUM4(277),
-     $              DUM5(7796),DUMRCH(709)
+      INTEGER       DUM1(4482),DUM2(8509),DUM3(4),DUM4(277),
+     $              DUM5(7796)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR)
