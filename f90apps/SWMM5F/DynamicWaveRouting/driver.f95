@@ -70,7 +70,7 @@ program main
       real :: ROVOL, OVOL, VOLT, VOL, ROS, OS, RO, O
       
       real, dimension(5) :: XN
-      real, dimension(6) :: XC
+      double precision, dimension(6) :: XC
       double precision, dimension(4) :: XX
       real, dimension(NNODE) :: NDINIT = (/0.05, 0.05, 0.016/)
       real, dimension(NNODE) :: NELEV = (/10.14, 10.14, 9.23/)

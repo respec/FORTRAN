@@ -590,10 +590,10 @@ double precision function  getConduitFlow(j, qOld, dt)
     use enums
     use headers
     use modXsect
-    use modLink
     integer, intent(in) :: j
     double precision, intent(in) :: qOld, dt
     
+    logical :: tf, link_setFlapGate
     integer :: k                          !  index of conduit
     integer :: n1, n2                     !  indexes of end nodes
     double precision :: z1, z2                     !  upstream/downstream invert elev. (ft)
@@ -800,8 +800,9 @@ double precision function  getConduitFlow(j, qOld, dt)
          if ( fabs(q) > arrLink(j)%qLimit ) q = SGN(q) * arrLink(j)%qLimit
     end if
 
+    tf = link_setFlapGate(j, n1, n2, q)
     !  --- check for reverse flow with closed flap gate
-    if ( link_setFlapGate(j, n1, n2, q) ) q = 0.0                             ! (5.0.014 - LR)
+    if ( tf ) q = 0.0                             ! (5.0.014 - LR)
 
     !  --- do not allow flow out of a dry node
     !      (as suggested by R. Dickinson)
