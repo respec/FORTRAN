@@ -219,7 +219,7 @@ EQ 1 RIRDEM   0   0   0   0 R   HYIRCF(1,1)             01000000000000
 EQ 1 RIRSHT   0   0   0   0 R   HYIRCF(2,1)             01000000000000
 VA   RIRDMX   0   0   0   0 I T HYDR             RIRDEM 01000000000000
 VA   RIRSHX   0   0   0   0 I T HYDR             RIRSHT 01000000000000
-VA   DUMDW    0   0   0   0 I R                         01000000000000
+VA   DUMDW    0   0   0   0 I D                         01000000000000
 VA   DTS      0   0   0   0 I P                         01000000000000
 VA   NNODE    0   0   0   0 I P                         01000000000000
 VA   NCOND    0   0   0   0 I P                         01000000000000
