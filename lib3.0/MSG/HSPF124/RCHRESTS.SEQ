@@ -298,7 +298,7 @@ ICON   10  1-12098     1 2   0 2    0 12058 ENG qty/iv     0       1   0       1
   Inflow of conservative constits.          MET qty/iv     0       1   0       1
 #GROUP   29  TYPE TEXT
 $TEXT
-COADFX 10  1-12098     1 2   0 2    0 12068 ENG qty/aciv   02.296E-5   09.291E-6
+COADFX 10  1-12098     1 2   0 2    0 12078 ENG qty/aciv   02.296E-5   09.291E-6
   Atmospheric deposition of CONS to RCHRES  MET qty/haiv   02.471E-4   0  1.0E-4
 #GROUP   30  TYPE TEXT
 $TEXT
@@ -1014,7 +1014,7 @@ CIVOL 100  1 -2347     1 2   0 2    0   625 ENG acft/iv    0  43560.   0 35.31E6
   Inflow of water to the RCHRES by comp.    MET Mm3/iv     0  1233.6   0  1.00E6
 #GROUP  253  TYPE TEXT
 $TEXT
-ICON   10  1-21098     1 2   3 2    0 12058 ENG qty/iv     0       1   0       1
+ICON   10  1-12098     1 2   3 2    0 12058 ENG qty/iv     0       1   0       1
   Inflow of conservative constits.          MET qty/iv     0       1   0       1
 #GROUP  254  TYPE TEXT
 $TEXT
@@ -1090,7 +1090,7 @@ OXCF2   5  2   -75     2 2   7      0 18307 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of DO and BOD thru indiv exits   MET kg/iv      0 4.537E2   0   1000.
 #GROUP  279  TYPE TEXT
 $TEXT
-NUCF9   5  4   -75     4 2   8      0 19353 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF9   5  4   -75     4 2   8      0 19403 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of dissolved nutrients via exits MET kg/iv      0 4.537E2   0   1000.
 #GROUP  280  TYPE TEXT
 $TEXT
