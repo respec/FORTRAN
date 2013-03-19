@@ -7,6 +7,7 @@ subroutine project_open(f1, f2, f3)
 !  Output:  none
 !  Purpose: opens a new SWMM project.
 !
+   implicit none
    character(*), intent(in) :: f1, f2, f3
 
     call initPointers
@@ -24,6 +25,7 @@ subroutine initPointers
     use consts
     use enums
     use headers
+    implicit none
     integer :: stat
     deallocate(Gage,stat=stat)
     
@@ -61,10 +63,11 @@ subroutine setDefaults
 !  Output:  none
 !  Purpose: assigns default values to project variables.
 !
-    use consts
-    use enums
+   use consts
+   use enums
    use headers
    use modDateTime
+   implicit none
    integer :: i, j
 
    ! Project title & temp. file path
@@ -138,9 +141,9 @@ subroutine setDefaults
    RptFlags%continuity    = .TRUE.
    RptFlags%flowStats     = .TRUE.
    RptFlags%controls      = .FALSE.
-   RptFlags%subcatchments = .FALSE.
-   RptFlags%nodes         = .FALSE.
-   RptFlags%links         = .FALSE.
+   RptFlags%subcatchments = 0 !.FALSE.
+   RptFlags%nodes         = 0 !.FALSE.
+   RptFlags%links         = 0 !.FALSE.
    RptFlags%nodeStats     = .FALSE.
 
    ! Temperature data
@@ -193,6 +196,7 @@ subroutine openFiles(f1, f2, f3)
     use consts
     use enums
     use headers
+    implicit none
     character(len=MAXFNAME), intent(in) :: f1, f2, f3
     integer :: errcode
     
@@ -241,6 +245,7 @@ subroutine project_readInput()
     use consts
     use enums
     use headers
+    implicit none
     ! --- create hash tables for fast retrieval of objects by ID names
 !    createHashTables()
 
@@ -260,9 +265,9 @@ subroutine project_readInput()
 
     ! --- check for valid starting & ending date/times
     if ( EndDateTime <= StartDateTime ) then
-!        report_writeErrorMsg(ERR_START_DATE, "")
+        call report_writeErrorMsg(ERR_START_DATE, '')
     else if ( EndDateTime <= ReportStart ) then
-!        report_writeErrorMsg(ERR_REPORT_DATE, "")
+        call report_writeErrorMsg(ERR_REPORT_DATE, '')
     else
         ! --- compute total duration of simulation in milliseconds
         !     (add on 1 msec to account for any roundoff)
@@ -274,10 +279,107 @@ subroutine project_readInput()
             ReportStep = int(TotalDuration/1000.0)
         end if
         if ( ReportStep * 1.0 < RouteStep ) then
-!           report_writeErrorMsg(ERR_REPORT_STEP, "")
+           call report_writeErrorMsg(ERR_REPORT_STEP, "")
         end if
     end if
 end subroutine project_readInput
+
+!=============================================================================
+
+!!  This function was significantly modified for release 5.0.018.  !!      !(5.0.018 - LR)
+
+subroutine project_validate()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: checks validity of project data.
+!
+
+    use headers
+    use modLink
+    implicit none
+    integer :: i, j, err
+    double precision :: table_validate
+    ! --- validate Curves and TimeSeries
+    do i=1, Nobjects(E_CURVE)
+         err = table_validate(Curve(i))
+         if ( err /= 0 ) call report_writeErrorMsg(ERR_CURVE_SEQUENCE, Curve(i)%ID)
+    end do
+    do i=1, Nobjects(E_TSERIES)
+        err = table_validate(Tseries(i))
+        if ( err /= 0 ) call report_writeTseriesErrorMsg(Tseries(i))
+    end do
+
+    ! --- validate hydrology objects
+    !     (NOTE: order is important !!!!)                                     !(5.0.019 - LR)
+    !climate_validate()
+    !lid_validate()                                                            !(5.0.019 - LR)
+    if ( Nobjects(E_SNOWMELT) == 0 ) IgnoreSnowmelt = .TRUE.                      !(5.0.019 - LR)
+    if ( Nobjects(E_AQUIFER)  == 0 ) IgnoreGwater   = .TRUE.                      !(5.0.019 - LR)
+    do i=1, Nobjects(E_GAGE)
+       call gage_validate(i)
+    end do
+    do i=1, Nobjects(E_AQUIFER)
+       call gwater_validateAquifer(i)
+    end do
+    do i=1, Nobjects(E_SUBCATCH)
+       call subcatch_validate(i)
+    end do
+    do i=1, Nobjects(E_SNOWMELT)
+       call snow_validateSnowmelt(i)
+    end do
+
+    ! --- compute geometry tables for each shape curve
+    j = 0
+    do i=1, Nobjects(E_CURVE)
+        if ( Curve(i)%curveType == SHAPE_CURVE ) then
+            Curve(i)%refersTo = j
+            Shape(j)%curve = i
+!            if ( .not. shape_validate(Shape(j), Curve(i))) &
+!               &call report_writeErrorMsg(ERR_CURVE_SEQUENCE, Curve(i)%ID)
+            j = j + 1
+        end if
+    end do
+
+    ! --- validate links before nodes, since the latter can
+    !     result in adjustment of node depths
+    do i=1, Nobjects(E_NODE)
+       Node(i)%oldDepth = Node(i)%fullDepth
+    end do
+    do i=1, Nobjects(LINK)
+       call link_validate(i)
+    end do
+    do i=1, Nobjects(E_NODE)
+       call node_validate(i)
+    end do
+
+    ! --- adjust time steps if necessary
+    if ( DryStep < WetStep ) then
+        call report_writeWarningMsg(WARN06, '')
+        DryStep = WetStep
+    end if
+    if ( RouteStep > WetStep ) then
+        call report_writeWarningMsg(WARN07, '')
+        RouteStep = WetStep
+    end if
+
+    ! --- adjust individual reporting flags to match global reporting flag
+    if ( RptFlags%subcatchments == E_ALL ) then
+        do i=1, Nobjects(E_SUBCATCH)
+           Subcatch(i)%rptFlag = .TRUE.
+        end do
+    end if
+    if ( RptFlags%nodes == E_ALL ) then
+        do i=1, Nobjects(E_NODE)
+           Node(i)%rptFlag = .TRUE.
+        end do
+    end if
+    if ( RptFlags%links == E_ALL ) then
+        do i=1, Nobjects(LINK)
+           arrLink(i)%rptFlag = .TRUE.
+        end do
+    end if
+end subroutine project_validate
 
 !=============================================================================
 
@@ -290,27 +392,29 @@ integer function project_addObject(objtype, id, n)
 !  Purpose: adds an object ID to a hash table
 !
 
+    implicit none
     integer, intent(in) :: objtype, n
     character(*), intent(in) :: id
     integer ::  mresult
     integer ::  strlen
     character(20) :: newID
-
-    ! --- do nothing if object already placed in hash table
-    if ( project_findObject(objtype, id) >= 0 ) then
-        project_addObject = 0
-        return
-    end if
-
-    ! --- use memory from the hash tables' common memory pool to store
-    !     a copy of the object's ID string
-    strlen = len(id) + 1
-    newID = id
-
-    ! --- insert object's ID into the hash table for that type of object
-    mresult = HTinsert(Htable(objtype), newID, n)
-    if ( mresult == 0 ) mresult = -1
-    project_addObject = mresult
+!    integer :: HTinsert
+!    type(HTtable) :: Htable
+!    ! --- do nothing if object already placed in hash table
+!    if ( project_findObject(objtype, id) >= 0 ) then
+!        project_addObject = 0
+!        return
+!    end if
+!
+!    ! --- use memory from the hash tables' common memory pool to store
+!    !     a copy of the object's ID string
+!    strlen = len(id) + 1
+!    newID = id
+!
+!    ! --- insert object's ID into the hash table for that type of object
+!    mresult = HTinsert(Htable(objtype), newID, n)
+!    if ( mresult == 0 ) mresult = -1
+!    project_addObject = mresult
 end function project_addObject
 
 !=============================================================================
@@ -327,6 +431,7 @@ subroutine createObjects()
     use consts
     use enums
     use headers
+    implicit none
     integer :: j, k
 
     ! --- allocate memory for each category of object
@@ -338,12 +443,12 @@ subroutine createObjects()
 !   allocate(Divider(Nnodes(DIVIDER)))
 !   allocate(Storage(Nnodes(STORAGE)))
     allocate(arrLink(Nobjects(LINK)))
-!   allocate(Conduit(Nlinks(CONDUIT)))
+    allocate(Conduit(Nlinks(E_CONDUIT)))
 !   allocate(Pump(Nlinks(PUMP)))
 !   allocate(Orifice(Nlinks(ORIFICE)))
 !   allocate(Weir(Nlinks(WEIR)))
 !   allocate(Outlet(Nlinks(OUTLET)))
-!   allocate(Pollut(Nobjects(POLLUT)))
+!   allocate(Pollut(Nobjects(E_POLLUT)))
 !   allocate(Landuse(Nobjects(LANDUSE)))
 !   allocate(Pattern(Nobjects(TIMEPATTERN)))
 !   allocate(Curve(Nobjects(CURVE)))
@@ -368,39 +473,45 @@ subroutine createObjects()
     !infil_create(Nobjects(SUBCATCH), InfilModel)                              !(5.0.019 - LR)
 
     ! --- allocate memory for water quality state variables
-!   for (j = 0 j < Nobjects(SUBCATCH) j++)
-!   {
-!       Subcatch(j).initBuildup = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!       Subcatch(j).oldQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!       Subcatch(j).newQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!       Subcatch(j).pondedQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!       Subcatch(j).totalLoad  = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!   }
-!   for (j = 0 j < Nobjects(NODE) j++)
-!   {
-!       Node(j).oldQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!       Node(j).newQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
+    !in fortran, it is not standard conforming to have allocatable in a derived type
+    !so, just assume there are 6 pollutants, which is probably enough
+    !so, the following is not needed
+!    if (Nobjects(E_POLLUT) > 0) then
+!       do j = 1, Nobjects(E_SUBCATCH)
+!           allocate(Subcatch(j)%initBuildup(Nobjects(E_POLLUT)))
+!           allocate(Subcatch(j)%oldQual(Nobjects(E_POLLUT)))
+!           allocate(Subcatch(j)%newQual(Nobjects(E_POLLUT)))
+!           allocate(Subcatch(j)%pondedQual(Nobjects(E_POLLUT)))
+!           allocate(Subcatch(j)%totalLoad(Nobjects(E_POLLUT)))
+!       end do
+!   end if
+   do j =1, Nobjects(E_NODE)
+!       if (Nobjects(E_POLLUT) > 0) then
+!           allocate(Node(j)%oldQual(Nobjects(E_POLLUT)))
+!           allocate(Node(j)%newQual(Nobjects(E_POLLUT)))
+!       end if
 
-!       !Node(j).wStored = (double *) calloc(Nobjects(POLLUT), sizeof(double)) !(5.0.018 - LR)
+       !Node(j).wStored = (double *) calloc(Nobjects(E_POLLUT), sizeof(double)) !(5.0.018 - LR)
 
-!       Node(j).extInflow = NULL
-!       Node(j).dwfInflow = NULL
-!       Node(j).rdiiInflow = NULL
-!       Node(j).treatment = NULL
-!   }
-!   for (j = 0 j < Nobjects(LINK) j++)
-!   {
-!       Link(j).oldQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!       Link(j).newQual = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!   }
+       nullify(Node(j)%extInflow)
+       nullify(Node(j)%dwfInflow)
+       nullify(Node(j)%rdiiInflow)
+       nullify(Node(j)%treatment)
+   end do
+!   if (Nobjects(E_POLLUT) > 0) then
+!       do j =1, Nobjects(LINK)
+!           allocate(arrLink(j)%oldQual(Nobjects(E_POLLUT)))
+!           allocate(arrLink(j)%newQual(Nobjects(E_POLLUT)))
+!       end do
+!   end if
 
 !   ! --- allocate memory for land use buildup/washoff functions
 !   for (j = 0 j < Nobjects(LANDUSE) j++)
 !   {
 !       Landuse(j).buildupFunc =
-!           (TBuildup *) calloc(Nobjects(POLLUT), sizeof(TBuildup))
+!           (TBuildup *) calloc(Nobjects(E_POLLUT), sizeof(TBuildup))
 !       Landuse(j).washoffFunc =
-!           (TWashoff *) calloc(Nobjects(POLLUT), sizeof(TWashoff))
+!           (TWashoff *) calloc(Nobjects(E_POLLUT), sizeof(TWashoff))
 !   }
 
     ! --- allocate memory for subcatchment landuse factors
@@ -411,14 +522,14 @@ subroutine createObjects()
 !       for (k = 0 k < Nobjects(LANDUSE) k++)
 !       {
 !           Subcatch(j).landFactor(k).buildup =
-!               (double *) calloc(Nobjects(POLLUT), sizeof(double))
+!               (double *) calloc(Nobjects(E_POLLUT), sizeof(double))
 !       }
 !   }
 
     ! --- initialize buildup & washoff functions
 !   for (j = 0 j < Nobjects(LANDUSE) j++)
 !   {
-!       for (k = 0 k < Nobjects(POLLUT) k++)
+!       for (k = 0 k < Nobjects(E_POLLUT) k++)
 !       {
 !           Landuse(j).buildupFunc(k).funcType = NO_BUILDUP
 !           Landuse(j).buildupFunc(k).normalizer = PER_AREA
@@ -441,7 +552,7 @@ subroutine createObjects()
 !       Subcatch(j).groundwater = NULL
 !       Subcatch(j).snowpack    = NULL
 !       Subcatch(j).lidArea     = 0.0                                         !(5.0.019 - LR)
-!       for (k = 0 k < Nobjects(POLLUT) k++)
+!       for (k = 0 k < Nobjects(E_POLLUT) k++)
 !       {
 !           Subcatch(j).initBuildup(k) = 0.0
 !       }
@@ -497,6 +608,7 @@ subroutine deleteObjects()
     use consts
     use enums
     use headers
+    implicit none
     integer :: j, k
 
     ! --- free memory for landuse factors & groundwater
@@ -634,3 +746,37 @@ end subroutine deleteObjects
 !}
 !
 !!=============================================================================
+
+!=============================================================================
+
+integer function project_init()
+!
+!  Input:   none
+!  Output:  returns an error code
+!  Purpose: initializes the internal state of all objects.
+! 
+    use headers
+    use modLink
+    use modClimate
+    implicit none
+    
+    integer :: j
+    call climate_initState()
+    !call lid_initState()                                  !(5.0.019 - LR)
+    do j=1, Nobjects(E_TSERIES)
+       call table_tseriesInit(Tseries(j))
+    end do
+    do j=1, Nobjects(E_GAGE)
+       call gage_initState(j)
+    end do
+    do j=1, Nobjects(E_SUBCATCH)
+       call subcatch_initState(j)
+    end do
+    do j=1, Nobjects(E_NODE)
+       call node_initState(j)
+    end do
+    do j=1, Nobjects(LINK)
+       call link_initState(j)
+    end do
+    project_init = ErrorCode
+end function project_init

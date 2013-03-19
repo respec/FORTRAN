@@ -528,8 +528,8 @@ integer(kind=K2), parameter :: NO = 1
 integer(kind=K2), parameter :: YES = 2
 
 !enum  NoneAllType {
-integer(kind=K2), parameter :: pNONE = 1
-integer(kind=K2), parameter :: pALL = 2
+integer(kind=K2), parameter :: E_NONE = 1
+integer(kind=K2), parameter :: E_ALL = 2
 integer(kind=K2), parameter :: SOME = 3
 end module
 

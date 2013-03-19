@@ -42,6 +42,7 @@ module objects
 !#include "infil.h"
 use consts
 use enums
+use infil
 implicit none
 
 !private K2, K4, K8, MAXFNAME,MAXMSG, MAX_FLOW_CLASSES
@@ -100,7 +101,7 @@ end type TTable
 !-----------------
 ! RAIN GAGE OBJECT
 !-----------------
-type tGage
+type TGage
    character(len=20) :: ID              ! raingage name
    integer(kind=K4) :: dataSource      ! data from time series or file 
    integer(kind=K4) :: tSeries         ! rainfall data time series index
@@ -313,7 +314,7 @@ type TLandFactor
 !--------------------
 type TSubcatch
    character(len=20) ::         ID              ! subcatchment name
-   character*1 ::          rptFlag         ! reporting flag
+   logical ::          rptFlag         ! reporting flag
    integer(kind=K4) ::           gage            ! raingage index
    integer(kind=K4) ::           outNode         ! outlet node index
    integer(kind=K4) ::           outSubcatch     ! outlet subcatchment index
@@ -325,7 +326,7 @@ type TSubcatch
    double precision ::        slope           ! slope (ft/ft)
    double precision ::        curbLength      ! total curb length (ft)
    !double*       initBuildup     ! initial pollutant buildup (mass/ft2)
-   double precision ::       initBuildup     ! initial pollutant buildup (mass/ft2)
+   double precision, dimension(MAX_NUM_POLLUTANTS) ::       initBuildup     ! initial pollutant buildup (mass/ft2)
 
    !TLandFactor*  landFactor      ! array of land use factors
    !TGroundwater* groundwater     ! associated groundwater data
@@ -343,14 +344,14 @@ type TSubcatch
    double precision ::        oldSnowDepth    ! previous snow depth (ft)
    double precision ::        newSnowDepth    ! current snow depth (ft)
 
-   !double*       oldQual         ! previous runoff quality (mass/L)
-   !double*       newQual         ! current runoff quality (mass/L)
-   !double*       pondedQual      ! ponded surface water quality (mass/ft3)
-   !double*       totalLoad       ! total washoff load (lbs or kg)
-   double precision :: oldQual         ! previous runoff quality (mass/L)
-   double precision :: newQual         ! current runoff quality (mass/L)
-   double precision :: pondedQual      ! ponded surface water quality (mass/ft3)
-   double precision :: totalLoad       ! total washoff load (lbs or kg)
+   !double*  oldQual         ! previous runoff quality (mass/L)
+   !double*  newQual         ! current runoff quality (mass/L)
+   !double*  pondedQual      ! ponded surface water quality (mass/ft3)
+   !double*  totalLoad       ! total washoff load (lbs or kg)
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: oldQual         ! previous runoff quality (mass/L)
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: newQual         ! current runoff quality (mass/L)
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: pondedQual      ! ponded surface water quality (mass/ft3)
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: totalLoad       ! total washoff load (lbs or kg)
 
 end type  TSubcatch
 
@@ -466,8 +467,8 @@ type TNode
 
    !double*       oldQual         ! previous quality state
    !double*       newQual         ! current quality state
-   double precision ::       oldQual         ! previous quality state
-   double precision ::       newQual         ! current quality state
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: oldQual         ! previous quality state
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: newQual         ! current quality state
 
    !double*       wStored  originally commented out    !(5.0.018 - LR)
 
@@ -498,8 +499,7 @@ type TStorage
    double precision ::      aExpon            ! exponent of area v. height curve
    integer(kind=K4) ::         aCurve            ! index of tabulated area v. height curve
    !TGrnAmpt*   infil             ! ptr. to infiltration object               !(5.0.015 - LR)
-   !type(TGrnAmpt) :: infil        ! ptr. to infiltration object               !(5.0.015 - LR) !TODO: add this later
-
+   type(TGrnAmpt) :: infil        ! ptr. to infiltration object               !(5.0.015 - LR) !TODO: add this later
    double precision ::      hrt               ! hydraulic residence time (sec)
    double precision ::      evapLoss          ! evaporation loss (ft3)                    !(5.0.019 - LR)
    double precision ::      losses            ! evap + infil losses (ft3)                 !(5.0.018 - LR)
@@ -615,8 +615,8 @@ type TLink
    double precision :: froude          ! Froude number
    !double*       oldQual         ! previous quality state
    !double*       newQual         ! current quality state
-   double precision :: oldQual         ! previous quality state
-   double precision :: newQual         ! current quality state
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: oldQual         ! previous quality state
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: newQual         ! current quality state
    integer(kind=K4) :: flowClass       ! flow classification
    double precision ::        dqdh            ! change in flow w.r.t. head (ft2/sec)
    !signed char   direction       ! flow direction flag
@@ -629,7 +629,7 @@ end type TLink
 ! CONDUIT OBJECT
 !---------------
 type TConduit
-   double precision ::        length          ! conduit length (ft)
+   double precision ::        clength          ! conduit length (ft)
    double precision ::        roughness       ! Manning's n
    !char          barrels         ! number of barrels
    integer(kind=K4) :: barrels         ! number of barrels !kind = 1
@@ -785,9 +785,9 @@ type TRptFlags
 
    logical(kind=K2) :: report          ! TRUE if results report generated
    logical(kind=K2) :: input           ! TRUE if input summary included
-   logical(kind=K2) :: subcatchments   ! TRUE if subcatchment results reported
-   logical(kind=K2) :: nodes           ! TRUE if node results reported
-   logical(kind=K2) :: links           ! TRUE if link results reported
+   integer(kind=K2) :: subcatchments   ! TRUE if subcatchment results reported
+   integer(kind=K2) :: nodes           ! TRUE if node results reported
+   integer(kind=K2) :: links           ! TRUE if link results reported
    logical(kind=K2) :: continuity      ! TRUE if continuity errors reported
    logical(kind=K2) :: flowStats       ! TRUE if routing link flow stats. reported
    logical(kind=K2) :: nodeStats       ! TRUE if routing node depth stats. reported
@@ -941,8 +941,7 @@ end type TStorageStats
 type TOutfallStats
    double precision ::       avgFlow
    double precision ::       maxFlow
-   !double*      totalLoad   
-   double precision ::      totalLoad   
+   double precision, dimension(MAX_NUM_POLLUTANTS) :: totalLoad !allocatable
    integer(kind=K4) ::          totalPeriods
 end type TOutfallStats
 

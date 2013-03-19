@@ -50,7 +50,7 @@ integer function SGN(x)
            SGN = 1
    end if
 end function SGN
-!#define SIGN(x,y) ((y) >= 0.0 ? fabs(x) : -fabs(x))
+!#define SIGN(x,y) ((y) >= 0.0 ? abs(x) : -abs(x))
 
 !* uppercase char of x   *!
 !#define UCHAR(x) (((x) >= 'a' && (x) <= 'z') ? ((x)&~32) : (x))

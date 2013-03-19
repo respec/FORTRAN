@@ -104,8 +104,10 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     use enums
     use headers
     use swmm5f
+    implicit none
     integer, intent(in) :: j, nodetype, k
     real, dimension(:), intent(in) :: x
+    
     
     Node(j)%datatype   = nodetype
     Node(j)%subIndex   = k
@@ -120,109 +122,118 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     Node(j)%degree     = 0
     select case (nodetype)
       case (JUNCTION)
-        Node(j)%fullDepth = x(1) / UCF(LENGTH)
-        Node(j)%initDepth = x(2) / UCF(LENGTH)
-        Node(j)%surDepth  = x(3) / UCF(LENGTH)
-        Node(j)%pondedArea = x(4) / (UCF(LENGTH)*UCF(LENGTH))
+        Node(j)%fullDepth = x(2) / UCF(LENGTH)
+        Node(j)%initDepth = x(3) / UCF(LENGTH)
+        Node(j)%surDepth  = x(4) / UCF(LENGTH)
+        Node(j)%pondedArea = x(5) / (UCF(LENGTH)*UCF(LENGTH))
         !break
 
       case (E_OUTFALL)
-        Outfall(k)%datatype        = int(x(1))
-        Outfall(k)%fixedStage  = x(2) / UCF(LENGTH)
-        Outfall(k)%tideCurve   = int(x(3))
-        Outfall(k)%stageSeries = int(x(4))
-        Outfall(k)%hasFlapGate = .false. !ichar(x(5))
+        Outfall(k)%datatype        = int(x(2))
+        Outfall(k)%fixedStage  = x(3) / UCF(LENGTH)
+        Outfall(k)%tideCurve   = int(x(4))
+        Outfall(k)%stageSeries = int(x(5))
+        if (x(6) == 1) then
+          Outfall(k)%hasFlapGate = .true. !ichar(x(6))
+        else if (x(6) == 0) then
+          Outfall(k)%hasFlapGate = .false. !ichar(x(6))
+        end if
         !break
 
       case (E_STORAGE)
-        Node(j)%fullDepth  = x(1) / UCF(LENGTH)
-        Node(j)%initDepth  = x(2) / UCF(LENGTH)
-        Storage(k)%aCoeff  = x(3)
-        Storage(k)%aExpon  = x(4)
-        Storage(k)%aConst  = x(5)
-        Storage(k)%aCurve  = int(x(6))
-        Node(j)%pondedArea = x(7) / (UCF(LENGTH)*UCF(LENGTH))
-        Storage(k)%fEvap   = x(8)
+        Node(j)%fullDepth  = x(2) / UCF(LENGTH)
+        Node(j)%initDepth  = x(3) / UCF(LENGTH)
+        Storage(k)%aCoeff  = x(4)
+        Storage(k)%aExpon  = x(5)
+        Storage(k)%aConst  = x(6)
+        Storage(k)%aCurve  = int(x(7))
+        Node(j)%pondedArea = x(8) / (UCF(LENGTH)*UCF(LENGTH))
+        Storage(k)%fEvap   = x(9)
         !break
 
       case (E_DIVIDER)
-        Divider(k)%link      = int(x(1))
-        Divider(k)%datatype  = int(x(2))
-        Divider(k)%flowCurve = int(x(3))
-        Divider(k)%qMin      = x(4) / UCF(FLOW)
-        Divider(k)%dhMax     = x(5)
-        Divider(k)%cWeir     = x(6)
-        Node(j)%fullDepth    = x(7) / UCF(LENGTH)
-        Node(j)%initDepth    = x(8) / UCF(LENGTH)
-        Node(j)%surDepth     = x(9) / UCF(LENGTH)
-        Node(j)%pondedArea   = x(10) / (UCF(LENGTH)*UCF(LENGTH))
+        Divider(k)%link      = int(x(2))
+        Divider(k)%datatype  = int(x(3))
+        Divider(k)%flowCurve = int(x(4))
+        Divider(k)%qMin      = x(5) / UCF(FLOW)
+        Divider(k)%dhMax     = x(6)
+        Divider(k)%cWeir     = x(7)
+        Node(j)%fullDepth    = x(8) / UCF(LENGTH)
+        Node(j)%initDepth    = x(9) / UCF(LENGTH)
+        Node(j)%surDepth     = x(10) / UCF(LENGTH)
+        Node(j)%pondedArea   = x(11) / (UCF(LENGTH)*UCF(LENGTH))
         !break
     end select
 end subroutine node_setParams
 !
-!!=============================================================================
+!=============================================================================
+
+subroutine node_validate(j)
 !
-!void  node_validate(int j)
-!!
-!!  Input:   j = node index
-!!  Output:  none
-!!  Purpose: validates a node's properties.
-!!
-!{
-!    ! --- see if full depth was increased to accommodate conduit crown        !(5.0.014 - LR)
-!    if ( Node(j).fullDepth > Node(j).oldDepth && Node(j).oldDepth > 0.0 )      !(5.0.014 - LR)
-!    {                                                                          !(5.0.014 - LR)
-!        report_writeWarningMsg(WARN02, Node(j).ID)                            !(5.0.015 - LR)
-!    }                                                                          !(5.0.014 - LR)
+!  Input:   j = node index
+!  Output:  none
+!  Purpose: validates a node's properties.
 !
-!    ! --- check that initial depth does not exceed max. depth
-!    if ( Node(j).initDepth > Node(j).fullDepth + Node(j).surDepth )
-!        report_writeErrorMsg(ERR_NODE_DEPTH, Node(j).ID)
+
+    use headers
+    use report
+    implicit none
+    integer, intent(in) :: j
+    ! --- see if full depth was increased to accommodate conduit crown        !(5.0.014 - LR)
+    if ( Node(j)%fullDepth > Node(j)%oldDepth .and. Node(j)%oldDepth > 0.0 ) then !(5.0.014 - LR)
+        call report_writeWarningMsg(WARN02, Node(j)%ID)                            !(5.0.015 - LR)
+    end if                                                                          !(5.0.014 - LR)
+
+    ! --- check that initial depth does not exceed max. depth
+    if ( Node(j)%initDepth > Node(j)%fullDepth + Node(j)%surDepth ) &
+       &call report_writeErrorMsg(ERR_NODE_DEPTH, Node(j)%ID)
+
+    if ( Node(j)%datatype == E_DIVIDER ) call divider_validate(j)
+end subroutine node_validate
 !
-!    if ( Node(j)%datatype == DIVIDER ) divider_validate(j)
-!}
+!=============================================================================
+
+subroutine node_initState(j)
 !
-!!=============================================================================
+!  Input:   j = node index
+!  Output:  none
+!  Purpose: initializes a node's state variables at start of simulation.
 !
-!void node_initState(int j)
-!!
-!!  Input:   j = node index
-!!  Output:  none
-!!  Purpose: initializes a node's state variables at start of simulation.
-!!
-!{
-!    int p
-!
-!    ! --- initialize depth
-!    Node(j).oldDepth = Node(j).initDepth
-!    Node(j).newDepth = Node(j).oldDepth
-!    Node(j).crownElev = Node(j).invertElev
-!
-!    ! --- initialize volume
-!!  Node(j).fullVolume = 0.0                                                  !(5.0.014 - LR)
-!!  Node(j).newVolume = 0.0                                                   !(5.0.014 - LR)
-!    Node(j).fullVolume = node_getVolume(j, Node(j).fullDepth)
-!    Node(j).oldVolume = node_getVolume(j, Node(j).oldDepth)
-!    Node(j).newVolume = Node(j).oldVolume
-!
-!    ! --- initialize water quality state
-!    for (p = 0 p < Nobjects(POLLUT) p++)
-!    {
-!        Node(j).oldQual(p)  = 0.0
-!        Node(j).newQual(p)  = 0.0
-!    }
-!
-!    ! --- initialize any inflow
-!    Node(j).oldLatFlow = 0.0
-!    Node(j).newLatFlow = 0.0
-!
-!    ! --- initialize HRT in storage nodes
-!    if ( Node(j)%datatype == STORAGE )
-!    {
-!        Storage(Node(j).subIndex).hrt = 0.0
-!        grnampt_initState(Storage(Node(j).subIndex).infil)                    !(5.0.015 - LR)
-!    }
-!}
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    integer :: p
+
+    double precision :: node_getvolume !TODO: this is for .NET compile
+    
+    ! --- initialize depth
+    Node(j)%oldDepth = Node(j)%initDepth
+    Node(j)%newDepth = Node(j)%oldDepth
+    Node(j)%crownElev = Node(j)%invertElev
+
+    ! --- initialize volume
+!  Node(j).fullVolume = 0.0                                                  !(5.0.014 - LR)
+!  Node(j).newVolume = 0.0                                                   !(5.0.014 - LR)
+    Node(j)%fullVolume = node_getVolume(j, Node(j)%fullDepth)
+    Node(j)%oldVolume = node_getVolume(j, Node(j)%oldDepth)
+    Node(j)%newVolume = Node(j)%oldVolume
+
+    ! --- initialize water quality state
+    do p = 1, Nobjects(E_POLLUT)
+        Node(j)%oldQual(p)  = 0.0
+        Node(j)%newQual(p)  = 0.0
+    end do
+
+    ! --- initialize any inflow
+    Node(j)%oldLatFlow = 0.0
+    Node(j)%newLatFlow = 0.0
+
+    ! --- initialize HRT in storage nodes
+    if ( Node(j)%datatype == E_STORAGE ) then
+        Storage(Node(j)%subIndex)%hrt = 0.0
+        call grnampt_initState(Storage(Node(j)%subIndex)%infil)                    !(5.0.015 - LR)
+    end if
+end subroutine node_initState
 !
 !!=============================================================================
 !
@@ -294,26 +305,33 @@ end subroutine node_setParams
 !    }
 !}
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function node_getVolume(j, d)
 !
-!double node_getVolume(int j, double d)
-!!
-!!  Input:   j = node index
-!!           d = water depth (ft)
-!!  Output:  returns volume of water at a node (ft3)
-!!  Purpose: computes volume stored at a node from its water depth.
-!!
-!{
-!    switch ( Node(j)%datatype )
-!    {
-!      case STORAGE: return storage_getVolume(j, d)
+!  Input:   j = node index
+!           d = water depth (ft)
+!  Output:  returns volume of water at a node (ft3)
+!  Purpose: computes volume stored at a node from its water depth.
 !
-!      default:
-!        if ( Node(j).fullDepth > 0.0 )                                         !(5.0.014 - LR)
-!            return Node(j).fullVolume * (d / Node(j).fullDepth)               !(5.0.014 - LR)
-!        else return 0.0
-!    }
-!}
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: d
+    double precision :: storage_getVolume
+    select case ( Node(j)%datatype )
+      case (E_STORAGE)
+         node_getVolume = storage_getVolume(j, d)
+         return
+      case default
+        if ( Node(j)%fullDepth > 0.0 ) then                                   !(5.0.014 - LR)
+            node_getVolume = Node(j)%fullVolume * (d / Node(j)%fullDepth)               !(5.0.014 - LR)
+        else 
+            node_getVolume = 0.0
+        end if
+        return
+    end select
+end function node_getVolume
 !
 !!=============================================================================
 !
@@ -332,23 +350,31 @@ end subroutine node_setParams
 !    }
 !}
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function node_getOutflow(j, k)
 !
-!double node_getOutflow(int j, int k)
-!!
-!!  Input:   j = node index
-!!           k = link index
-!!  Output:  returns flow rate (cfs)
-!!  Purpose: computes outflow from node available for inflow into a link.
-!!
-!{
-!    switch ( Node(j)%datatype )
-!    {
-!      case DIVIDER: return divider_getOutflow(j, k)
-!      case STORAGE: return storage_getOutflow(j, k)
-!      default:      return Node(j).inflow + Node(j).overflow
-!    }
-!}
+!  Input:   j = node index
+!           k = link index
+!  Output:  returns flow rate (cfs)
+!  Purpose: computes outflow from node available for inflow into a link.
+!
+    use headers
+    implicit none
+    
+    integer, intent(in) :: j, k
+    double precision :: lVal
+    double precision :: divider_getOutflow, storage_getOutflow
+    select case ( Node(j)%datatype )
+      case (E_DIVIDER) 
+         lVal = divider_getOutflow(j, k)
+      case (E_STORAGE) 
+         lVal = storage_getOutflow(j, k)
+      case default      
+         lVal = Node(j)%inflow + Node(j)%overflow
+    end select
+    node_getOutflow = lVal
+end function node_getOutflow
 !
 !!=============================================================================
 !
@@ -396,7 +422,7 @@ end subroutine node_setParams
 !        else
 !        {                                                                      !(5.0.015 - LR)
 !            outflow = -Node(j).outflow                      
-!            Node(j).inflow = fabs(outflow)                                    !(5.0.015 - LR)
+!            Node(j).inflow = abs(outflow)                                    !(5.0.015 - LR)
 !        }                                                                      !(5.0.015 - LR)
 !
 !        ! --- set overflow and volume to 0
@@ -462,33 +488,40 @@ end subroutine node_setParams
 !
 !!=============================================================================
 !
-!void   node_setOutletDepth(int j, double yNorm, double yCrit, double z)
-!!
-!!  Input:   j = node index
-!!           yNorm = normal flow depth (ft)
-!!           yCrit = critical flow depth (ft)
-!!           z = offset of connecting outfall link from node invert (ft)
-!!  Output:  none
-!!  Purpose: sets water depth at a node that serves as an outlet point.
-!!
-!{
-!    switch (Node(j)%datatype)
-!    {
-!      ! --- do nothing if outlet is a storage unit
-!      case STORAGE:
-!        return
+subroutine node_setOutletDepth(j, yNorm, yCrit, z)
 !
-!      ! --- if outlet is a designated outfall then use outfall's specs
-!      case OUTFALL:
-!        outfall_setOutletDepth(j, yNorm, yCrit, z)
-!        break
+!  Input:   j = node index
+!           yNorm = normal flow depth (ft)
+!           yCrit = critical flow depth (ft)
+!           z = offset of connecting outfall link from node invert (ft)
+!  Output:  none
+!  Purpose: sets water depth at a node that serves as an outlet point.
 !
-!      ! --- for all other nodes, use min. of critical & normal depths
-!      default:
-!        if ( z > 0.0 ) Node(j).newDepth = 0.0
-!        else Node(j).newDepth = MIN(yNorm, yCrit)
-!    }
-!}
+
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: yNorm, yCrit, z
+    
+    select case (Node(j)%datatype)
+      ! --- do nothing if outlet is a storage unit
+      case (E_STORAGE)
+        return
+
+      ! --- if outlet is a designated outfall then use outfall's specs
+      case (E_OUTFALL)
+        call outfall_setOutletDepth(j, yNorm, yCrit, z)
+        !break
+
+      ! --- for all other nodes, use min. of critical & normal depths
+      case default
+        if ( z > 0.0 ) then
+            Node(j)%newDepth = 0.0
+        else 
+            Node(j)%newDepth = MIN(yNorm, yCrit)
+        end if
+    end select
+end subroutine node_setOutletDepth
 !
 !!=============================================================================
 !
@@ -553,14 +586,39 @@ double precision function node_getLosses( j,  tStep)                            
     use consts
     use enums
     use headers
+    implicit none
     integer, intent(in) :: j
     double precision, intent(in) :: tStep
+    double precision :: storage_getLosses
     if ( Node(j)%datatype == E_STORAGE ) then
         node_getLosses = storage_getLosses(j, tStep)         !(5.0.019 - LR)
     else 
         node_getLosses = 0.0
     end if
 end function node_getLosses
+
+!=============================================================================
+
+double precision function node_getMaxOutflow(j, q, tStep)
+!
+!  Input:   j = node index
+!           q = original outflow rate (cfs)
+!           tStep = time step (sec)
+!  Output:  returns modified flow rate (cfs)
+!  Purpose: limits outflow rate from a node with storage volume.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: q, tStep
+    double precision :: qMax, mq
+    mq = q
+    if ( Node(j)%fullVolume > 0.0 ) then
+        qMax = Node(j)%inflow + Node(j)%oldVolume / tStep    !(5.0.014 - LR)
+        if ( mq > qMax ) mq = qMax
+    end if
+    node_getMaxOutflow = MAX(0.0, mq)
+end function node_getMaxOutflow
 
 !!=============================================================================
 !!                   J U N C T I O N   M E T H O D S
@@ -1271,86 +1329,92 @@ end function node_getLosses
 !
 !!=============================================================================
 !
-!void outfall_setOutletDepth(int j, double yNorm, double yCrit, double z)
-!!
-!!  Input:   j = node index
-!!           yNorm = normal flow depth in outfall conduit (ft)
-!!           yCrit = critical flow depth in outfall conduit (ft)
-!!           z = height to outfall conduit invert (ft)
-!!  Output:  none
-!!  Purpose: sets water depth at an outfall node.
-!!
-!{
-!    double   x, y                     ! x,y values in table
-!    double   yNew                     ! new depth above invert elev. (ft)
-!    double   stage                    ! water elevation at outfall (ft)
-!    int      k                        ! table index
-!    int      i = Node(j).subIndex     ! outfall index
-!    DateTime currentDate              ! current date/time in days
+subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
 !
-!    switch ( Outfall(i)%datatype )
-!    {
-!      case FREE_OUTFALL:
-!        if ( z > 0.0 ) Node(j).newDepth = 0.0
-!        else Node(j).newDepth = MIN(yNorm, yCrit)
-!        return
-!
-!      case NORMAL_OUTFALL:
-!        if ( z > 0.0 ) Node(j).newDepth = 0.0
-!        else Node(j).newDepth = yNorm
-!        return
-!
-!      case FIXED_OUTFALL:
-!        stage = Outfall(i).fixedStage
-!        break
-!
-!      case TIDAL_OUTFALL:
-!        k = Outfall(i).tideCurve
-!        table_getFirstEntry(&Curve(k), &x, &y)
-!        currentDate = NewRoutingTime / MSECperDAY
-!        x += ( currentDate - floor(currentDate) ) * 24.0
-!        stage = table_lookup(&Curve(k), x) / UCF(LENGTH)                      !(5.0.012 - LR)
-!        break
-!
-!      case TIMESERIES_OUTFALL:
-!        k = Outfall(i).stageSeries
-!        currentDate = StartDateTime + NewRoutingTime / MSECperDAY
-!        stage = table_tseriesLookup(&Tseries(k), currentDate, TRUE) /          !(5.0.012 - LR)
-!                UCF(LENGTH)
-!        break
-!      default: stage = Node(j).invertElev
-!    }
-!
-!    ! --- now determine depth at node given outfall stage elev.
-! 
-!    ! --- let critical flow depth be min. of critical & normal depth
-!    yCrit = MIN(yCrit, yNorm)
-!
-!    ! --- if elev. of critical depth is below outfall stage elev. then
-!    !     the outfall stage determines node depth
-!    if ( yCrit + z + Node(j).invertElev < stage )
-!    {
-!        yNew = stage - Node(j).invertElev
-!    }
-!
-!    ! --- otherwise if the outfall conduit lies above the outfall invert
-!    else if ( z > 0.0 )
-!    {
-!        ! --- if the outfall stage lies below the bottom of the outfall
-!        !     conduit then the result is distance from node invert to stage
-!        if ( stage < Node(j).invertElev + z )
-!            yNew = MAX(0.0, (stage - Node(j).invertElev))
-!
-!        ! --- otherwise stage lies between bottom of conduit and critical
-!        !     depth in conduit so result is elev. of critical depth
-!        else
-!            yNew = z + yCrit
-!    }
-!
-!    ! --- and for case where there is no conduit offset and outfall stage
-!    !     lies below critical depth, then node depth = critical depth 
-!    else yNew = yCrit
-!    Node(j).newDepth = yNew
-!}
+!  Input:   j = node index
+!           yNorm = normal flow depth in outfall conduit (ft)
+!           yCrit = critical flow depth in outfall conduit (ft)
+!           z = height to outfall conduit invert (ft)
+!  Output:  none
+!  Purpose: sets water depth at an outfall node.
+   
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: yNorm, yCrit, z
+    
+    double precision ::   x, y                     ! x,y values in table
+    double precision ::   yNew                     ! new depth above invert elev. (ft)
+    double precision ::   stage                    ! water elevation at outfall (ft)
+    double precision :: myCrit
+    integer ::      k      ! table index
+    integer ::      i      ! outfall index
+    double precision :: currentDate              ! current date/time in days
+    double precision :: table_tseriesLookup, UCF, table_lookup
+    myCrit = yCrit
+    i = Node(j)%subIndex
+    select case ( Outfall(i)%datatype )
+      case (FREE_OUTFALL)
+        if ( z > 0.0 ) then 
+           Node(j)%newDepth = 0.0
+        else 
+           Node(j)%newDepth = MIN(yNorm, myCrit)
+        end if
+        return
+
+      case (NORMAL_OUTFALL)
+        if ( z > 0.0 ) then
+           Node(j)%newDepth = 0.0
+        else 
+           Node(j)%newDepth = yNorm
+        end if
+        return
+
+      case (FIXED_OUTFALL)
+        stage = Outfall(i)%fixedStage
+        !break
+      case (TIDAL_OUTFALL)
+        k = Outfall(i)%tideCurve
+        call table_getFirstEntry(Curve(k), x, y) !all 3 args are inout
+        currentDate = NewRoutingTime / MSECperDAY
+        x = x + ( currentDate - floor(currentDate) ) * 24.0
+        stage = table_lookup(Curve(k), x) / UCF(LENGTH)  !Curve(k) inout   !(5.0.012 - LR)
+        !break
+      case (TIMESERIES_OUTFALL)
+        k = Outfall(i)%stageSeries
+        currentDate = StartDateTime + NewRoutingTime / MSECperDAY
+        stage = table_tseriesLookup(Tseries(k), currentDate, .TRUE.) / UCF(LENGTH)  !(5.0.012 - LR)
+        !break
+      case default
+        stage = Node(j)%invertElev
+    end select
+
+    ! --- now determine depth at node given outfall stage elev.
+ 
+    ! --- let critical flow depth be min. of critical & normal depth
+    myCrit = MIN(myCrit, yNorm)
+
+    ! --- if elev. of critical depth is below outfall stage elev. then
+    !     the outfall stage determines node depth
+    if ( myCrit + z + Node(j)%invertElev < stage ) then
+        yNew = stage - Node(j)%invertElev
+    ! --- otherwise if the outfall conduit lies above the outfall invert
+    else if ( z > 0.0 ) then
+        ! --- if the outfall stage lies below the bottom of the outfall
+        !     conduit then the result is distance from node invert to stage
+        if ( stage < Node(j)%invertElev + z ) then
+            yNew = MAX(0.0, (stage - Node(j)%invertElev))
+        ! --- otherwise stage lies between bottom of conduit and critical
+        !     depth in conduit so result is elev. of critical depth
+        else
+            yNew = z + myCrit
+        end if
+    ! --- and for case where there is no conduit offset and outfall stage
+    !     lies below critical depth, then node depth = critical depth 
+    else 
+        yNew = myCrit
+    end if
+    Node(j)%newDepth = yNew
+end subroutine outfall_setOutletDepth
 !
 !!=============================================================================

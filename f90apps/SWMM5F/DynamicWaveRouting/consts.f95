@@ -100,4 +100,7 @@ double precision, parameter :: MMperINCH = 25.40
 ! Token separator characters
 !--------------------------- 
 character(len=8), parameter :: SEPSTR = ' \t\n\r'
+
+!newly added
+integer, parameter :: MAX_NUM_POLLUTANTS = 6
 end module
