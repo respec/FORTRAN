@@ -65,6 +65,8 @@ subroutine flowrout_init(routingModel)
     use consts
     use enums
     use headers
+    use dynwave
+    implicit none
     integer, intent(in) :: routingModel
     ! --- initialize for dynamic wave routing 
     if ( routingModel == DW ) then
@@ -96,6 +98,7 @@ subroutine flowrout_close(routingModel)
     use consts
     use enums
     use headers
+    implicit none
     integer, intent(in) :: routingModel
     if ( routingModel == DW ) call dynwave_close()
 end subroutine flowrout_close
@@ -112,6 +115,9 @@ double precision function flowrout_getRoutingStep( routingModel,  fixedStep)
     use consts
     use enums
     use headers
+    use dynwave
+    implicit none
+    
     integer, intent(in) :: routingModel
     double precision, intent(in) :: fixedStep
     if ( routingModel == DW ) then
@@ -134,6 +140,8 @@ integer function flowrout_execute(links, routingModel, tStep)
     use consts
     use enums
     use headers
+    !use dynwave
+    implicit none
     integer, dimension(:), intent(in) :: links
     integer, intent(in) :: routingModel
     double precision, intent(in) :: tStep
@@ -143,7 +151,7 @@ integer function flowrout_execute(links, routingModel, tStep)
     double precision :: qout                       ! link outflow (cfs)
     double precision :: steps                      ! computational step count
         
-    integer :: steadyflow_execute
+    integer :: steadyflow_execute, kinwave_execute, getLinkInflow, dynwave_execute
 
 !!  The code below was modified to initialize overflows.  !!               !(5.0.012 - LR)
     ! --- set overflows to drain any ponded water
@@ -205,6 +213,36 @@ integer function flowrout_execute(links, routingModel, tStep)
 end function flowrout_execute
 
 !=============================================================================
+
+double precision function getLinkInflow(j, dt)
+!
+!  Input:   j  = link index
+!           dt = routing time step (sec)
+!  Output:  returns link inflow (cfs)
+!  Purpose: finds flow into upstream end of link at current time step under
+!           Steady or Kin. Wave routing.
+!
+    use headers
+    use modLink
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: dt
+    double precision :: q
+    integer ::   n1
+    double precision :: node_getMaxOutflow
+    n1 = arrLink(j)%node1
+    
+    if ( arrLink(j)%datatype == E_CONDUIT .or. &
+        &arrLink(j)%datatype == E_PUMP .or. &
+        &Node(n1)%datatype == E_STORAGE ) then
+         q = link_getInflow(j)
+    else 
+         q = 0.0
+    end if
+    getLinkInflow = node_getMaxOutflow(n1, q, dt)
+end function getLinkInflow
+
+!=============================================================================
 subroutine validateTreeLayout()
 !
 !  Input:   none
@@ -215,6 +253,7 @@ subroutine validateTreeLayout()
     use consts
     use enums
     use headers
+    implicit none
     integer ::   j, node1, node2
     double precision :: elev1, elev2
 
@@ -282,6 +321,7 @@ subroutine validateGeneralLayout()
     use consts
     use enums
     use headers
+    implicit none
     integer :: i, j
     integer :: outletCount
     outletCount = 0
@@ -343,6 +383,8 @@ subroutine initNodeDepths()
     use consts
     use enums
     use headers
+    use modLink
+    implicit none
     integer ::   i                           ! link or node index
     integer ::   n                           ! node index
     double precision :: y                          ! node water depth (ft)
@@ -398,6 +440,7 @@ subroutine initLinkDepths()
     use consts
     use enums
     use headers
+    implicit none
     integer ::    i                          ! link index
     double precision :: y, y1, y2                  ! depths (ft)
 
@@ -435,8 +478,11 @@ subroutine initNodes()
     use consts
     use enums
     use headers
+    implicit none
     integer :: i
-
+    
+    double precision :: node_getvolume !TODO: this is for .NET compile
+    
     do i = 1,Nobjects(E_NODE)
         ! --- set default crown elevations here
         Node(i)%crownElev = Node(i)%invertElev
@@ -450,16 +496,15 @@ subroutine initNodes()
         Node(i)%outflow = 0.0
         ! Node(i).newVolume = node_getVolume(i, Node(i).newDepth)            !(5.0.010 - LR)
 
-        ! --- initialize node volume
-        Node(i)%newVolume = 0.0                                               !(5.0.010 - LR)
-        if ( AllowPonding .and. &                                                   !(5.0.010 - LR)
-            &Node(i)%pondedArea > 0.0 .and. &                                       !(5.0.010 - LR)
-            &Node(i)%newDepth > Node(i)%fullDepth ) then                       !(5.0.010 - LR)
-            Node(i)%newVolume = Node(i)%fullVolume + &                          !(5.0.010 - LR)
-                               &(Node(i)%newDepth - Node(i)%fullDepth) * &      !(5.0.010 - LR)
-                               &Node(i)%pondedArea                            !(5.0.010 - LR)
-        else 
-            Node(i)%newVolume = node_getVolume(i, Node(i)%newDepth)          !(5.0.010 - LR)
+        ! --- initialize node volume !(5.0.010 - LR)
+        Node(i)%newVolume = 0.0
+        if ( AllowPonding .and. Node(i)%pondedArea > 0.0 .and. &
+            &Node(i)%newDepth > Node(i)%fullDepth ) then
+            Node(i)%newVolume = Node(i)%fullVolume + &
+                               &(Node(i)%newDepth - Node(i)%fullDepth) * &
+                               &Node(i)%pondedArea
+        else
+            Node(i)%newVolume = node_getVolume(i, Node(i)%newDepth)
         end if
     end do
 
@@ -490,6 +535,9 @@ subroutine initLinks()
     use consts
     use enums
     use headers
+    use modXsect
+    use modLink
+    implicit none
     integer ::    i                          ! link index
     integer ::    j                          ! node index
     integer ::    k                          ! conduit or pump index
@@ -617,7 +665,7 @@ end subroutine initLinks
 !        ! --- use under-relaxation to estimate new depth value
 !        !     and stop if close enough to previous value
 !        d2 = (1.0 - OMEGA)*d1 + OMEGA*d2;
-!        if ( fabs(d2 - d1) <= STOPTOL ) stopped = TRUE;
+!        if ( abs(d2 - d1) <= STOPTOL ) stopped = TRUE;
 !
 !        ! --- update old depth with new value and continue to iterate
 !        Node[i].newDepth = d2;
@@ -643,12 +691,14 @@ double precision function getStorageOutflow( i,  j,  links,  dt)
     use consts
     use enums
     use headers
+    implicit none
     integer, intent(in) :: i, j
     integer, dimension(:), intent(in) :: links
     double precision, intent(in) :: dt
     
     integer ::   k, m
     double precision :: outflow
+    double precision :: getlinkinflow
     outflow = 0.0
 
     do k = j, Nobjects(LINK)
@@ -750,6 +800,7 @@ subroutine updateNodeDepth( i,  y)
     use consts
     use enums
     use headers
+    implicit none
     integer, intent(in) :: i
     double precision, intent(in) :: y
     
@@ -789,6 +840,8 @@ integer function steadyflow_execute(j, qin, qout)
     use consts
     use enums
     use headers
+    use modXsect
+    implicit none
     
     integer, intent(in) :: j
     double precision, intent(inout) :: qin

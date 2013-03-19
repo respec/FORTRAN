@@ -5,7 +5,7 @@ integer, parameter :: MAX_EXCEPTIONS = 100            ! max. number of exception
 !-----------------------------------------------------------------------------
 !  Unit conversion factors
 !-----------------------------------------------------------------------------
-double precision, dimension(10,2), parameter :: arrUcf = &                !(5.0.010 - LR)
+double precision, dimension(2, 10), parameter :: arrUcf = &                !(5.0.010 - LR)
     &reshape((/43200.0,   1097280.0 , &         ! RAINFALL (in/hr, mm/hr --> ft/sec)
       &12.0,      304.8     , &         ! RAINDEPTH (in, mm --> ft)
       &1036800.0, 26334720.0, &         ! EVAPRATE (in/day, mm/day --> ft/sec)
@@ -15,8 +15,10 @@ double precision, dimension(10,2), parameter :: arrUcf = &                !(5.0.
       &1.0,       1.608     , &         ! WINDSPEED (mph, km/hr --> mph)
       &1.0,       1.8       , &         ! TEMPERATURE (deg F, deg C --> deg F)
       &2.203e-6,  1.0e-6    , &         ! MASS (lb, kg --> mg)
-      &43560.0,   3048.0   /), &        ! GWFLOW (cfs/ac, cms/ha --> ft/sec)   !(5.0.010 - LR)
-      &(/10, 2/))
+      &43560.0,   3048.0  /), &        ! GWFLOW (cfs/ac, cms/ha --> ft/sec)   !(5.0.010 - LR)
+      &(/2, 10/))
+
+
 
 !      {!  US      SI
 !      {43200.0,   1097280.0 },         ! RAINFALL (in/hr, mm/hr --> ft/sec)
@@ -102,6 +104,74 @@ logical :: DoRouting            ! TRUE if flow routing is computed          !(5.
 
 contains
 
+!=============================================================================
+
+integer function swmm_open(f1, f2, f3)
+!
+!  Input:   f1 = name of input file
+!           f2 = name of report file
+!           f3 = name of binary output file
+!  Output:  returns error code
+!  Purpose: opens a SWMM project.
+!
+
+!#ifdef DLL
+!   _fpreset()              
+!#endif
+!
+!#ifdef WINDOWS
+!    ! --- begin exception handling here
+!    __try
+!#endif
+!    {
+        use headers
+        use modDateTime
+        implicit none
+        character(*), intent(in) :: f1, f2, f3
+        ! --- initialize error & warning codes
+        call datetime_setDateFormat(M_D_Y)
+        ErrorCode = 0
+        WarningCode = 0
+        IsOpenFlag = .FALSE.
+        IsStartedFlag = .FALSE.
+        ExceptionCount = 0
+
+        ! --- open a SWMM project
+!        project_open(f1, f2, f3) !this is done in the main driver
+!        if ( ErrorCode /= 0 ) then
+!           swmm_open = ErrorCode
+!           return
+!        end if
+        IsOpenFlag = .TRUE.
+!        report_writeLogo()
+!        writecon(FMT06)
+
+        ! --- retrieve project data from input file
+        call project_readInput() !simulation durations are set
+        if ( ErrorCode /= 0 ) then
+           swmm_open = ErrorCode
+           return
+        end if
+
+        ! --- write project title to report file & validate data
+!        report_writeTitle()
+        call project_validate()
+
+        ! --- write input summary to report file if requested
+!        if ( RptFlags.input ) inputrpt_writeInput()                           !(5.0.012 - LR)
+
+!    }
+!
+!#ifdef WINDOWS
+!    ! --- end of try loop handle exception here
+!    __except(xfilter(GetExceptionCode(), 0.0, 0))
+!    {
+!        ErrorCode = ERR_SYSTEM
+!    }
+!#endif
+    swmm_open = ErrorCode
+end function swmm_open
+
 integer function swmm_run(f1, f2, f3)
 !
 !  Input:   f1 = name of input file
@@ -111,6 +181,7 @@ integer function swmm_run(f1, f2, f3)
 !  Purpose: runs a SWMM simulation.
 !
     use headers
+    implicit none
     character(*), intent(in) :: f1, f2, f3
     integer(kind=K4) :: newHour, oldHour
     integer(kind=K4) :: theDay, theHour
@@ -121,7 +192,8 @@ integer function swmm_run(f1, f2, f3)
     elapsedTime = 0.0
     ! --- open the files & read input data
     ErrorCode = 0
-    !swmm_open(f1, f2, f3)
+    ErrorCode = swmm_open(f1, f2, f3) !durations, settings etc
+    if (ErrorCode == 0) IsOpenFlag = .true.
 
     ! --- run the simulation if input data OK
     if ( ErrorCode == 0 ) then
@@ -170,7 +242,17 @@ integer function swmm_start(saveResults)
 !
     use globals
     use enums
+    use rain
+    use modRouting
+    use modMassbal
+    use modStats
+    
+    implicit none
+    
     logical, intent(in) :: saveResults
+    integer :: lstat
+    integer :: project_init !TODO: this is for .NET compile
+    
     ! --- check that a project is open & no run started
     if ( ErrorCode /= 0 ) then
        swmm_start = ErrorCode
@@ -204,7 +286,7 @@ integer function swmm_start(saveResults)
        return
     end if
     ! --- initialize state of each major system component
-    call project_init()
+    lstat = project_init()
 
     !!  Following code segment was moved to here for release 5.0.018.  !!      !(5.0.018 - LR)
     ! --- see if runoff & routing needs to be computed
@@ -221,14 +303,14 @@ integer function swmm_start(saveResults)
     end if
 
     ! --- open all computing systems (order is important!)
-    call output_open()
+    !call output_open()
     if ( DoRunoff ) call runoff_open()                                         !(5.0.018 - LR)
-    if ( DoRouting ) call routing_open(RouteModel)                             !(5.0.018 - LR)
-    call massbal_open()
-    call stats_open()
+    if ( DoRouting ) ErrorCode = routing_open(RouteModel)                             !(5.0.018 - LR)
+    lstat = massbal_open()
+    lstat = stats_open()
 
     ! --- write Control Actions heading to report file
-    if ( RptFlags%controls ) call report_writeControlActionsHeading()
+    !if ( RptFlags%controls ) call report_writeControlActionsHeading()
 
     ! --- save saveResults flag to global variable
     SaveResultsFlag = saveResults
@@ -243,6 +325,8 @@ integer function swmm_step(elapsedTime)
 !           returns error code
 !  Purpose: advances the simulation by one routing time step.
 !
+    use headers
+    implicit none
     double precision, intent(inout) :: elapsedTime
     ! --- check that simulation can proceed
     if ( ErrorCode /=0 ) then
@@ -286,10 +370,13 @@ subroutine execRouting(elapsedTime)
 !  Output:  none
 !  Purpose: routes flow & WQ through drainage system over a single time step.
 !
+    use headers
+    use modRouting
+    implicit none
     double precision, intent(in) :: elapsedTime
     double precision ::  nextRoutingTime          ! updated elapsed routing time (msec)
     double precision ::  routingStep              ! routing time step (sec)
-
+    
 !#ifdef WINDOWS
 !    ! --- begin exception handling loop here
 !    __try
@@ -297,7 +384,7 @@ subroutine execRouting(elapsedTime)
 !    {
         ! --- determine when next routing time occurs
         StepCount = StepCount + 1
-        if ( .not.DoRouting ) then
+        if ( .not. DoRouting ) then
            routingStep = MIN(WetStep, ReportStep)             !(5.0.019 - LR)
         else 
            routingStep = routing_getRoutingStep(RouteModel, RouteStep)
@@ -309,11 +396,12 @@ subroutine execRouting(elapsedTime)
         nextRoutingTime = NewRoutingTime + 1000.0 * routingStep
 
         ! --- compute runoff until next routing time reached or exceeded
-!        if ( DoRunoff ) while ( NewRunoffTime < nextRoutingTime )              !(5.0.018 - LR)
-!        {
-!            runoff_execute();
-!            if ( ErrorCode ) return;
-!        }
+        if ( DoRunoff ) then
+           do while ( NewRunoffTime < nextRoutingTime )              !(5.0.018 - LR)
+              call runoff_execute()
+              if ( ErrorCode /= 0 ) return
+           end do
+        end if
   
         ! --- route flows through drainage system over current time step
         if ( DoRouting ) then 
@@ -346,12 +434,18 @@ double precision function UCF(u)
 !
     use DataSizeSpecs
     use globals
+    implicit none
     integer(kind=K2), intent(in) :: u
+    double precision :: lUCF
+    
     if ( u < FLOW ) then
-        UCF = arrUcf(u, UnitSystem)
+        !lUCF = arrUcf(u, UnitSystem)
+        lUCF = arrUcf(UnitSystem, u)
     else            
-        UCF = Qcf(FlowUnits)
+        lUCF = Qcf(FlowUnits)
     end if
+    UCF = lUCF
+    return
 end function UCF
 
 end module swmm5f

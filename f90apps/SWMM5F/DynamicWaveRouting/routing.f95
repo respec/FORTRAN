@@ -8,10 +8,33 @@ double precision, parameter :: FLOW_ERR_TOL = 0.05     ! for steady state       
 !-----------------------------------------------------------------------------
 ! Shared variables
 !-----------------------------------------------------------------------------
-integer, dimension(:), allocatable :: SortedLinks
-logical ::  InSteadyState
+integer, save, dimension(:), allocatable :: SortedLinks
+logical, save ::  InSteadyState
 
 contains
+
+!=============================================================================
+
+double precision function routing_getRoutingStep(routingModel, fixedStep)
+!
+!  Input:   routingModel = routing method code
+!           fixedStep = user-supplied time step (sec)
+!  Output:  returns a routing time step (sec)
+!  Purpose: determines time step used for flow routing at current time period.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: routingModel
+    double precision, intent(in) :: fixedStep
+    
+    double precision :: flowrout_getRoutingStep
+    
+    if ( Nobjects(LINK) == 0 ) then
+        routing_getRoutingStep = fixedStep
+    else 
+        routing_getRoutingStep = flowrout_getRoutingStep(routingModel, fixedStep)
+    end if
+end function routing_getRoutingStep
 
 !=============================================================================
 
@@ -24,6 +47,8 @@ integer function routing_open(routingModel)
     use consts
     use enums
     use headers
+    use modToposort
+    implicit none
     integer, intent(in) :: routingModel
     integer :: mstat
     !  --- initialize steady state indicator
@@ -52,7 +77,7 @@ integer function routing_open(routingModel)
     end if
 
     ! --- open any routing interface files
-    call iface_openRoutingFiles()
+    !call iface_openRoutingFiles() !TODO: later
     if ( ErrorCode /=0 ) then
         routing_open = ErrorCode
         return
@@ -84,6 +109,9 @@ subroutine routing_execute(routingModel, routingStep)
     use consts
     use enums
     use headers
+    use modDateTime
+    use modMassbal
+    implicit none
     
     integer, intent(in) :: routingModel
     double precision, intent(in) :: routingStep
@@ -92,7 +120,9 @@ subroutine routing_execute(routingModel, routingStep)
     integer ::      actionCount
     double precision :: currentDate
     double precision :: stepFlowError                                                    !(5.0.012 - LR)
-
+    
+    integer :: flowrout_execute !TODO: this is for .NET compile
+    double precision :: getDateTime
     mstepCount = 1
     actionCount = 0
  
@@ -150,9 +180,9 @@ subroutine routing_execute(routingModel, routingStep)
 
     ! --- check if can skip steady state periods
     if ( SkipSteadyState ) then
-        if ( fabs(OldRoutingTime - 0.0) < tiny(1.0) .or. &
+        if ( abs(OldRoutingTime - 0.0) < tiny(1.0) .or. &
             &actionCount > 0 .or. &
-            &fabs(stepFlowError) > FLOW_ERR_TOL .or. &       !(5.0.012 - LR)
+            &abs(stepFlowError) > FLOW_ERR_TOL .or. &       !(5.0.012 - LR)
             &systemHasChanged(routingModel) ) then
             InSteadyState = .FALSE.
         else
@@ -211,6 +241,7 @@ logical function systemHasChanged(routingModel)
     use consts
     use enums
     use headers
+    implicit none
     integer, intent(in) :: routingModel
     integer ::    j                                                                  !(5.0.012 - LR)
     double precision :: diff
@@ -218,13 +249,13 @@ logical function systemHasChanged(routingModel)
     ! --- check if external inflows or outflows have changed                  !(5.0.012 - LR)
     do j=1,Nobjects(E_NODE)
         diff = Node(j)%oldLatFlow - Node(j)%newLatFlow
-        if ( fabs(diff) > LATERAL_FLOW_TOL ) then
+        if ( abs(diff) > LATERAL_FLOW_TOL ) then
            systemHasChanged = .true. !(5.0.012 - LR)
            return                      
         end if
         if ( Node(j)%datatype == E_OUTFALL .or. Node(j)%degree == 0 ) then              !(5.0.012 - LR)
             diff = Node(j)%oldFlowInflow - Node(j)%inflow                     !(5.0.012 - LR)
-            if ( fabs(diff) > LATERAL_FLOW_TOL ) then
+            if ( abs(diff) > LATERAL_FLOW_TOL ) then
                 systemHasChanged = .true. !(5.0.012 - LR)
                 return
             end if

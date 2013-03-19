@@ -32,8 +32,6 @@
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\consts.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\DataSizeSpecs.f95"/>
-		<File RelativePath=".\DynamicWaveRouting\datetime.f95"/>
-		<File RelativePath=".\DynamicWaveRouting\driver.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\dynwave.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\enums.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\error.f95"/>
@@ -42,11 +40,8 @@
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\keywords.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\link.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\macros.f95"/>
-		<File RelativePath=".\DynamicWaveRouting\node.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\objects.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\project.f95"/>
-		<File RelativePath=".\DynamicWaveRouting\swmm5f.f95"/>
 		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\text.f95"/>
-		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\xsect.f95"/>
-		<File RelativePath=".\DynamicWaveRouting\XsectDat.f95"/></Filter></Files>
+		<File RelativePath="..\..\..\..\..\..\f90apps\SWMM5F\DynamicWaveRouting\xsect.f95"/></Filter></Files>
 	<Globals/></VisualStudioProject>

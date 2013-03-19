@@ -27,10 +27,10 @@ character(len=3), dimension(12), parameter :: MonthTxt = &
     &(/ 'JAN', 'FEB', 'MAR', 'APR', &
     &'MAY', 'JUN', 'JUL', 'AUG', &
     &'SEP', 'OCT', 'NOV', 'DEC' /)
-integer, dimension(2, 12), parameter :: DaysPerMonth = &     ! days per month
+integer, dimension(12, 2), parameter :: DaysPerMonth = &     ! days per month
    &reshape((/31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, &             ! normal years
              &31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31/), &             ! leap years
-             & (/2, 12/))
+             & (/12, 2/))
 integer, parameter :: DateDelta = 693594        ! days since 01/01/00
 double precision, parameter :: SecsPerDay = 86400.    ! seconds per day
 
@@ -38,7 +38,7 @@ double precision, parameter :: SecsPerDay = 86400.    ! seconds per day
 !  Shared variables
 !-----------------------------------------------------------------------------
 integer :: DateFormat
-
+save
 contains
 !=============================================================================
 ! Macro to convert charcter x to upper case
@@ -52,6 +52,7 @@ subroutine divMod( n,  d,  aResult,  remainder)
 !           remainder = remainder of n/d
 !  Purpose: finds integer part and remainder of n/d.
 
+    implicit none
     integer, intent(in) :: n, d
     integer, intent(inout) :: aResult, remainder
     
@@ -72,6 +73,7 @@ integer function isLeapYear(year)
 !  Output:  returns 1 if year is a leap year, 0 if not
 !  Purpose: determines if year is a leap year.
 
+    implicit none
     integer, intent(in) :: year
     if ((mod(year, 4)   == 0) .and. &
       &((mod(year, 100) /= 0) .or. &
@@ -91,6 +93,7 @@ integer function datetime_findMonth(month)
 !  Purpose: finds number (1-12) of month.
 
     use macros
+    implicit none
     character(*), intent(in) :: month
     integer :: i
     do i = 1, 12
@@ -115,6 +118,7 @@ double precision function datetime_encodeDate( year,  month,  day)
 !  Output:  returns encoded value of year-month-day
 !  Purpose: encodes year-month-day to a double precision value.
 
+    implicit none
     integer, intent(in) :: year, month, day
     integer :: i, j, mday
     mday = day
@@ -125,9 +129,9 @@ double precision function datetime_encodeDate( year,  month,  day)
     & (month >= 1) .and. &
     & (month <= 12) .and. &
     & (mday >= 1) .and. &
-    & (mday <= DaysPerMonth(i, month))) then
+    & (mday <= DaysPerMonth(month, i))) then
         do j = 1, month
-           mday = mday + DaysPerMonth(i, j)
+           mday = mday + DaysPerMonth(j, i)
         end do
         i = year - 1
         datetime_encodeDate = i*365 + i/4 - i/100 + i/400 + mday - DateDelta
@@ -147,6 +151,7 @@ double precision function datetime_encodeTime( hour,  minute,  second)
 !  Output:  returns time encoded as fractional part of a day
 !  Purpose: encodes hour:minute:second to a double precision value
 
+    implicit none
     integer, intent(in) :: hour, minute, second
     integer :: s
     if ((hour >= 0) .and. &
@@ -169,6 +174,7 @@ subroutine datetime_decodeDate(date, year, month, day)
 !           day   = day of month
 !  Purpose: decodes double precision value to year-month-day.
 
+    implicit none
     double precision, intent(in) :: date
     integer, intent(inout) :: year, month, day
     
@@ -210,7 +216,7 @@ subroutine datetime_decodeDate(date, year, month, day)
         k = k + 1 !fortran array subscript starts from 1
         m = 1
         do while (.true.)
-            i = DaysPerMonth(k, m)
+            i = DaysPerMonth(m, k)
             if (d < i) exit !break
             d = d - i
             m = m + 1
@@ -231,6 +237,7 @@ subroutine datetime_decodeTime(time, h, m, s)
 !           s = second of minute (0-60)
 !  Purpose: decodes double precision value to hour:minute:second.
 
+    implicit none
     double precision, intent(in) :: time
     integer, intent(inout) :: h, m, s
     integer :: secs
@@ -248,6 +255,7 @@ subroutine datetime_dateToStr(date, s)
 !  Output:  s = formatted date string
 !  Purpose: represents double precision date value as a formatted string.
 
+    implicit none
     double precision, intent(in) :: date
     character(*), intent(inout) :: s
     integer ::  y, m, d
@@ -289,6 +297,7 @@ subroutine datetime_timeToStr(time, s)
 !  Output:  s = time in hr:min:sec format
 !  Purpose: represents double precision time value as a formatted string.
 
+    implicit none
     double precision, intent(in) :: time
     character(*), intent(inout) :: s
     integer ::  hr, min, sec
@@ -331,6 +340,7 @@ integer function datetime_strToDate(s, d)
 !           returns 1 if conversion successful, 0 if not
 !  Purpose: converts string date s to double precision value.
 !
+    implicit none
     character(*), intent(in) :: s
     double precision, intent(inout) :: d
     
@@ -411,6 +421,7 @@ integer function datetime_strToTime(s, t)
 !           returns 1 if conversion successful, 0 if not
 !  Purpose: converts a string time to a double precision value.
 
+    implicit none
     character(*), intent(in) :: s
     double precision, intent(inout) :: t
     
@@ -444,6 +455,7 @@ subroutine datetime_setDateFormat(fmt)
 !  Output:  none
 !  Purpose: sets date format
 
+    implicit none
     integer, intent(in) :: fmt
     if ( fmt >= Y_M_D .and. fmt <= M_D_Y) DateFormat = fmt
 end subroutine datetime_setDateFormat
@@ -457,6 +469,7 @@ double precision function datetime_addSeconds(date1, seconds)
 !  Output:  returns updated value of date1
 !  Purpose: adds a given number of seconds to a date/time.
 
+    implicit none
     double precision, intent(in) :: date1, seconds
     integer :: h, m, s
     double precision :: d
@@ -475,6 +488,7 @@ double precision function datetime_addDays(date1, date2)
 !  Output:  returns date1 + date2
 !  Purpose: adds a given number of decimal days to a date/time.
 
+    implicit none
     double precision, intent(in) :: date1, date2
     double precision :: d1, d2
     integer :: h1, m1, s1
@@ -491,17 +505,18 @@ end function datetime_addDays
 
 !=============================================================================
 
-integer(kind=4) function datetime_timeDiff( date1, date2)
+integer(kind=SELECTED_INT_KIND(18)) function datetime_timeDiff( date1, date2)
 
 !  Input:   date1 = an encoded date/time value
 !           date2 = an encoded date/time value
 !  Output:  returns date1 - date2 in seconds
 !  Purpose: finds number of seconds between two dates.
 
+    implicit none
     double precision, intent(in) :: date1, date2
     double precision :: d1, d2
     integer ::    h, m, s
-    integer(kind=4) ::   s1, s2, secs
+    integer(kind=SELECTED_INT_KIND(18)) ::   s1, s2, secs
     d1 = floor(date1)
     d2 = floor(date2)
 
@@ -523,6 +538,7 @@ integer function datetime_monthOfYear(date)
 !  Output:  returns index of month of year (1..12)
 !  Purpose: finds month of year (Jan = 1 ...) for a given date.
 
+    implicit none
     double precision, intent(in) :: date
     integer :: year, month, day
     call datetime_decodeDate(date, year, month, day)
@@ -537,6 +553,7 @@ integer function datetime_dayOfYear(date)
 !  Output:  returns day of year (1..365)
 !  Purpose: finds day of year (Jan 1 = 1) for a given date.
 
+    implicit none
     double precision, intent(in) :: date
     integer :: year, month, day
     double precision :: startOfYear
@@ -553,6 +570,7 @@ integer function datetime_dayOfWeek(date)
 !  Output:  returns index of day of week (1..7)
 !  Purpose: finds day of week (Sun = 1, ... Sat = 7) for a given date.
 
+    implicit none
     double precision, intent(in) :: date
     integer :: t
     t = int(floor(date)) + DateDelta
@@ -567,6 +585,7 @@ integer function datetime_hourOfDay(date)
 !  Output:  returns hour of day (0..23)
 !  Purpose: finds hour of day (0 = 12 AM, ..., 23 = 11 PM) for a given date.
 
+    implicit none
     double precision, intent(in) :: date
     integer :: hour, min, sec
     call datetime_decodeTime(date, hour, min, sec)
@@ -582,6 +601,7 @@ integer function datetime_daysPerMonth( year,  month)
 !  Output:  returns number of days in the month
 !  Purpose: finds number of days in a given month of a specified year.
 
+    implicit none
     integer, intent(in) :: year, month
     integer :: i
     if ( month < 1 .or. month > 12 ) then
@@ -589,7 +609,7 @@ integer function datetime_daysPerMonth( year,  month)
     else
        i = isLeapYear(year)
        i = i + 1
-       datetime_daysPerMonth = DaysPerMonth(i, month)
+       datetime_daysPerMonth = DaysPerMonth(month, i)
     end if
 end function datetime_daysPerMonth
 

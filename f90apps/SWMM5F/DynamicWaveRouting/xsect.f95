@@ -27,7 +27,8 @@ module modXsect
 !      R = hyd. radius
 !      S = section factor = A*R^(2/3)
 !-----------------------------------------------------------------------------
-use DataSizeSpecs
+!use DataSizeSpecs
+use headers
 !private K2, K4, K8
 !integer, parameter :: K2 = selected_int_kind(2) !kind= 1
 !integer, parameter :: K4 = selected_int_kind(4) !kind= 2
@@ -72,9 +73,9 @@ double precision, dimension(25) ::  Amax = (/ &
 !-----------------------------------------------------------------------------
 !  Shared variables
 !-----------------------------------------------------------------------------
-!static double  Sstar;                ! section factor 
-!static TXsect* Xstar;                ! pointer to a cross section object        
-!static double  Qcritical;            ! critical flow
+double precision, save ::  Sstar                 ! section factor 
+type(TXsect), save :: Xstar                ! pointer to a cross section object        
+double precision, save ::  Qcritical            ! critical flow
 
 !-----------------------------------------------------------------------------
 !  External functions (declared in funcs.h)
@@ -102,6 +103,7 @@ logical function xsect_isOpen(xtype)
 !  Purpose: determines if a xsection type is open or closed.
 !
     use headers
+    implicit none
     integer(kind=K2), intent(in) :: xtype
     if (Amax(xtype) >= 1.0) then
        xsect_isOpen = .true.
@@ -113,12 +115,12 @@ end function xsect_isOpen
 
 !=============================================================================
 
-logical function xsect_setParams(xsect, datatype, p, ucf)
+logical function xsect_setParams(xsect, datatype, p, aUcf)
 !
 !  Input:   xsect = ptr. to a cross section data structure
 !           type = xsection shape type
 !           p() = vector or xsection parameters
-!           ucf = units correction factor
+!           aUcf = units correction factor
 !  Output:  returns .true. if successful, .false. if not
 !  Purpose: assigns parameters to a cross section's data structure.
 !
@@ -126,14 +128,18 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
     use enums
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(inout) :: xsect
     integer, intent(in) :: datatype
     double precision, dimension(:), intent(inout) :: p
-    double precision, intent(in) :: ucf
+    double precision, intent(in) :: aUcf
     
     integer :: index
     double precision :: maMax, theta
 
+    double precision :: Rfull_Arch, Afull_Arch, Wmax_Arch, Yfull_Arch
+    double precision :: MinorAxis_Ellipse, MajorAxis_Ellipse, Afull_Ellipse, Rfull_Ellipse
+    
     if ( datatype /= DUMMY .and. p(1) <= 0.0 ) then
         xsect_setParams = .false.
         return
@@ -150,20 +156,20 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         !break
 
     case (CIRCULAR)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%wMax  = xsect%yFull
         xsect%aFull = PI / 4.0 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.2500 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.08 * xsect%sFull
         !break
 
     case (FORCE_MAIN)                                                           !(5.0.010 - LR)
-        xsect%yFull = p(1)/ucf                                               !(5.0.010 - LR)
+        xsect%yFull = p(1)/aUcf                                               !(5.0.010 - LR)
         xsect%wMax  = xsect%yFull                                           !(5.0.010 - LR)
         xsect%aFull = PI / 4.0 * xsect%yFull * xsect%yFull                 !(5.0.010 - LR)
         xsect%rFull = 0.2500 * xsect%yFull                                  !(5.0.010 - LR)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 0.63)                 !(5.0.010 - LR)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (0.63))                 !(5.0.010 - LR)
         xsect%sMax  = 1.06949 * xsect%sFull                                 !(5.0.010 - LR)
 
         ! --- save C-factor or roughness in rBot position                     !(5.0.010 - LR)
@@ -177,7 +183,7 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         end if
 
         ! --- initially compute full values for unfilled pipe
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%wMax  = xsect%yFull
         xsect%aFull = PI / 4.0 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.2500 * xsect%yFull
@@ -187,7 +193,7 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         !     aBot = area of filled bottom
         !     sBot = width of filled bottom
         !     rBot = wetted perimeter of filled bottom
-        xsect%yBot  = p(2)/ucf
+        xsect%yBot  = p(2)/aUcf
         xsect%aBot  = circ_getAofY(xsect, xsect%yBot)
         xsect%sBot  = xsect_getWofY(xsect, xsect%yBot)
         xsect%rBot  = xsect%aBot / (xsect%rFull * lookup(xsect%yBot/xsect%yFull, xs_R_Circ, N_R_Circ))
@@ -195,70 +201,70 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         ! --- revise full values for filled bottom
         xsect%aFull = xsect%aFull - xsect%aBot
         xsect%rFull = xsect%aFull / (PI*xsect%yFull - xsect%rBot + xsect%sBot)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.08 * xsect%sFull
         xsect%yFull = xsect%yFull - xsect%yBot
         !break
 
     case (EGGSHAPED)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%aFull = 0.5105 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.1931 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.065 * xsect%sFull
         xsect%wMax  = 2./3. * xsect%yFull
         !break
 
     case (HORSESHOE)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%aFull = 0.8293 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.2538 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.077 * xsect%sFull
         xsect%wMax  = 1.0 * xsect%yFull
         !break
 
     case (GOTHIC)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%aFull = 0.6554 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.2269 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** ( 2./3.))
         xsect%sMax  = 1.065 * xsect%sFull
         xsect%wMax  = 0.84 * xsect%yFull
         !break
 
     case (CATENARY)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%aFull = 0.70277 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.23172 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.05 * xsect%sFull
         xsect%wMax  = 0.9 * xsect%yFull
         !break
 
     case (SEMIELLIPTICAL)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%aFull = 0.785 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.242 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.045 * xsect%sFull
         xsect%wMax  = 1.0 * xsect%yFull
         !break
 
     case (BASKETHANDLE)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%aFull = 0.7862 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.2464 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.06078 * xsect%sFull
         xsect%wMax  = 0.944 * xsect%yFull
         !break
 
     case (SEMICIRCULAR)
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
         xsect%aFull = 1.2697 * xsect%yFull * xsect%yFull
         xsect%rFull = 0.2946 * xsect%yFull
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = 1.06637 * xsect%sFull
         xsect%wMax  = 1.64 * xsect%yFull
         !break
@@ -268,13 +274,13 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
            xsect_setParams = .false.
            return
         end if
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
         xsect%aFull = xsect%yFull * xsect%wMax
         xsect%rFull = xsect%aFull / (2.0 * (xsect%yFull + xsect%wMax))
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** ( 2./3.))
         maMax = RECT_ALFMAX * xsect%aFull
-        xsect%sMax = maMax * pow(rect_closed_getRofA(xsect, maMax), 2./3.)
+        xsect%sMax = maMax * (rect_closed_getRofA(xsect, maMax) ** ( 2./3.))
         !break
 
     case (RECT_OPEN)
@@ -282,11 +288,11 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
             xsect_setParams = .false.
             return
         end if
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
         xsect%aFull = xsect%yFull * xsect%wMax
         xsect%rFull = xsect%aFull / (2.0 * xsect%yFull + xsect%wMax)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
 
@@ -295,9 +301,9 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
             xsect_setParams = .false.
             return
         end if
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
-        xsect%yBot  = p(3)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
+        xsect%yBot  = p(3)/aUcf
 
         ! --- area of bottom triangle
         xsect%aBot  = xsect%yBot * xsect%wMax / 2.0
@@ -311,9 +317,9 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         xsect%aFull = xsect%wMax * (xsect%yFull - xsect%yBot / 2.0)
         xsect%rFull = xsect%aFull / (2.0 * xsect%yBot * xsect%rBot + 2.0 * &
                        &(xsect%yFull - xsect%yBot) + xsect%wMax)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         maMax = RECT_TRIANG_ALFMAX * xsect%aFull
-        xsect%sMax  = maMax * pow(rect_triang_getRofA(xsect, maMax), 2./3.)
+        xsect%sMax  = maMax * (rect_triang_getRofA(xsect, maMax) ** (2./3.))
         !break
 
     case (RECT_ROUND)
@@ -322,9 +328,9 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
            return
         end if
         if ( p(3) < p(2)/2.0 ) p(3) = p(2)/2.0                                !(5.0.014 - LR)
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
-        xsect%rBot  = p(3)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
+        xsect%rBot  = p(3)/aUcf
 
         ! --- angle of circular arc
         theta = 2.0 * asin(xsect%wMax / 2.0 / xsect%rBot)
@@ -333,7 +339,7 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         xsect%aBot  = xsect%rBot * xsect%rBot / 2.0 * (theta - sin(theta)) 
 
         ! --- section factor for circular bottom
-        xsect%sBot  = PI * xsect%rBot * xsect%rBot * pow(xsect%rBot/2.0, 2./3.)
+        xsect%sBot  = PI * xsect%rBot * xsect%rBot * ((xsect%rBot/2.0) ** (2./3.))
 
         ! --- depth of circular bottom
         xsect%yBot  = xsect%rBot * (1.0 - cos(theta/2.0))
@@ -341,9 +347,9 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         xsect%aFull = xsect%wMax * (xsect%yFull - xsect%yBot) + xsect%aBot
         xsect%rFull = xsect%aFull / (xsect%rBot * theta + 2.0 * &
                        &(xsect%yFull - xsect%yBot) + xsect%wMax)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         maMax = RECT_ROUND_ALFMAX * xsect%aFull
-        xsect%sMax = maMax * pow(rect_round_getRofA(xsect, maMax), 2./3.)
+        xsect%sMax = maMax * (rect_round_getRofA(xsect, maMax) ** (2./3.))
         !break
 
     case (MOD_BASKET)
@@ -356,11 +362,11 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
            return
         end if
         if ( p(3) < p(2)/2.0 ) p(3) = p(2)/2.0
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
 
         ! --- radius of circular arc
-        xsect%rBot = p(3)/ucf
+        xsect%rBot = p(3)/aUcf
 
         ! --- angle of circular arc
         theta = 2.0 * asin(xsect%wMax / 2.0 / xsect%rBot)
@@ -378,7 +384,7 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
         ! --- full hydraulic radius & section factor
         xsect%rFull = xsect%aFull / (xsect%rBot * theta + 2.0 * &
                        &(xsect%yFull - xsect%yBot) + xsect%wMax)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
 
         ! --- area corresponding to max. section factor
         xsect%sMax = xsect_getSofA(xsect, Amax(MOD_BASKET)*xsect%aFull)
@@ -389,10 +395,10 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
             xsect_setParams = .false.
             return
         end if 
-        xsect%yFull = p(1)/ucf
+        xsect%yFull = p(1)/aUcf
 
         ! --- bottom width
-        xsect%yBot = p(2)/ucf
+        xsect%yBot = p(2)/aUcf
 
         ! --- avg. slope of side walls
         xsect%sBot  = ( p(3) + p(4) )/2.0
@@ -405,7 +411,7 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
 
         xsect%aFull = ( xsect%yBot + xsect%sBot * xsect%yFull ) * xsect%yFull
         xsect%rFull = xsect%aFull / (xsect%yBot + xsect%yFull * xsect%rBot)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
 
@@ -414,8 +420,8 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
            xsect_setParams  = .false.
            return
         end if
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
 
         ! --- slope of side walls
         xsect%sBot  = xsect%wMax / xsect%yFull / 2.
@@ -425,7 +431,7 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
 
         xsect%aFull = xsect%yFull * xsect%yFull * xsect%sBot
         xsect%rFull = xsect%aFull / (2.0 * xsect%yFull * xsect%rBot)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
 
@@ -434,15 +440,15 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
             xsect_setParams = .false.
             return
         end if
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
 
         ! --- rBot :: 1/c^.5, where y = c*x^2 is eqn. of parabolic shape
         xsect%rBot  = xsect%wMax / 2.0 / sqrt(xsect%yFull)
 
         xsect%aFull = (2./3.) * xsect%yFull * xsect%wMax
         xsect%rFull = xsect_getRofY(xsect, xsect%yFull)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
 
@@ -451,13 +457,13 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
             xsect_setParams = .false.
             return
         end if
-        xsect%yFull = p(1)/ucf
-        xsect%wMax  = p(2)/ucf
+        xsect%yFull = p(1)/aUcf
+        xsect%wMax  = p(2)/aUcf
         xsect%sBot  = 1.0 / p(3)
-        xsect%rBot  = xsect%wMax / (xsect%sBot + 1) / pow(xsect%yFull, xsect%sBot)
+        xsect%rBot  = xsect%wMax / (xsect%sBot + 1) / (xsect%yFull ** xsect%sBot)
         xsect%aFull = xsect%yFull * xsect%wMax / (xsect%sBot+1)
         xsect%rFull = xsect_getRofY(xsect, xsect%yFull)
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
 
@@ -474,18 +480,18 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
             xsect%rFull = Rfull_Ellipse(index)
         else
             ! --- length of minor axis
-            xsect%yFull = p(1)/ucf
+            xsect%yFull = p(1)/aUcf
 
             ! --- length of major axis
             if ( p(2) < 0.0 ) then
                xsect_setParams = .false.
                return
             end if
-            xsect%wMax = p(2)/ucf
+            xsect%wMax = p(2)/aUcf
             xsect%aFull = 1.2692 * xsect%yFull * xsect%yFull
             xsect%rFull = 0.3061 * xsect%yFull
         end if
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
 
@@ -508,12 +514,12 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
             end if
 
             ! --- length of minor axis
-            xsect%yFull = p(1)/ucf
-            xsect%wMax = p(2)/ucf
+            xsect%yFull = p(1)/aUcf
+            xsect%wMax = p(2)/aUcf
             xsect%aFull = 1.2692 * xsect%wMax * xsect%wMax
             xsect%rFull = 0.3061 * xsect%wMax
         end if
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
 
@@ -533,12 +539,12 @@ logical function xsect_setParams(xsect, datatype, p, ucf)
                 xsect_setParams = .false.
                 return
             end if
-            xsect%yFull = p(1)/ucf
-            xsect%wMax  = p(2)/ucf
+            xsect%yFull = p(1)/aUcf
+            xsect%wMax  = p(2)/aUcf
             xsect%aFull = 0.7879 * xsect%yFull * xsect%wMax
             xsect%rFull = 0.2991 * xsect%yFull
         end if
-        xsect%sFull = xsect%aFull * pow(xsect%rFull, 2./3.)
+        xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
         xsect%sMax  = xsect%sFull
         !break
     end select
@@ -619,9 +625,15 @@ double precision function xsect_getSofA(xsect, a)
     use consts
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     double precision :: alpha, r
+    
+    double precision :: xsect_getRofA
+    double precision :: rect_triang_getSofA, rect_round_getSofA, rect_open_getSofA, rect_closed_getSofA
+        
+    
     alpha = a / xsect%aFull
     
     select case ( xsect%datatype )
@@ -685,169 +697,180 @@ double precision function xsect_getSofA(xsect, a)
            return
         end if
         
-        xsect_getSofA = a * pow(r, 2./3.)
+        xsect_getSofA = a * (r ** (2./3.))
     end select
 end function xsect_getSofA
 !
+!=============================================================================
+
+double precision function xsect_getYofA(xsect, a)
+!
+!  Input)   xsect = ptr. to a cross section data structure
+!           a = area (ft2)
+!  Output)  returns depth (ft)
+!  Purpose) computes xsection's depth at a given area.
+!
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    
+    double precision :: alpha
+    alpha = a / xsect%aFull
+    
+!    select case ( xsect%datatype )
+!      case (FORCE_MAIN, CIRCULAR)                                     !(5.0.010 - LR)
+!           xsect_getYofA = circ_getYofA(xsect, a)
+!
+!      case (FILLED_CIRCULAR)
+!        xsect_getYofA = filled_circ_getYofA(xsect, a)
+!  
+!      case (EGGSHAPED)
+!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Egg, N_Y_Egg)
+!  
+!      case (HORSESHOE)
+!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Horseshoe, N_Y_Horseshoe)
+!
+!      case (GOTHIC)
+!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Gothic, N_Y_Gothic)
+!
+!      case (CATENARY)
+!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Catenary, N_Y_Catenary)
+!
+!      case (SEMIELLIPTICAL)
+!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_SemiEllip, N_Y_SemiEllip)
+!
+!      case (BASKETHANDLE)
+!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_BasketHandle, N_Y_BasketHandle)
+!
+!      case (SEMICIRCULAR)
+!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_SemiCirc, N_Y_SemiCirc)
+!
+!      case (HORIZ_ELLIPSE)
+!        xsect_getYofA = xsect%yFull * invLookup(alpha, xs_A_HorizEllipse, N_A_HorizEllipse)
+!
+!      case (VERT_ELLIPSE)
+!        xsect_getYofA = xsect%yFull * invLookup(alpha, xs_A_VertEllipse, N_A_VertEllipse)
+!
+!      case (IRREGULAR)
+!        xsect_getYofA = xsect%yFull * invLookup(alpha, &
+!           &Transect(xsect%transect)%areaTbl, N_TRANSECT_TBL)
+!
+!      case (CUSTOM)                                                             !(5.0.010 - LR)
+!        xsect_getYofA = xsect%yFull * invLookup(alpha, &                               !(5.0.010 - LR)
+!           &Shape(Curve(xsect%transect)%refersTo)%areaTbl, N_SHAPE_TBL)      !(5.0.010 - LR)
+!
+!      case (ARCH)
+!        xsect_getYofA = xsect%yFull * invLookup(alpha, xs_A_Arch, N_A_Arch)
+!
+!      case (RECT_CLOSED) 
+!              xsect_getYofA = a / xsect%wMax
+!
+!      case (RECT_TRIANG) 
+!              xsect_getYofA = rect_triang_getYofA(xsect, a)
+!
+!      case (RECT_ROUND)  
+!              xsect_getYofA = rect_round_getYofA(xsect, a)
+!
+!      case (RECT_OPEN)   
+!              xsect_getYofA = a / xsect%wMax
+!
+!      case (MOD_BASKET)  
+!              xsect_getYofA = mod_basket_getYofA(xsect, a)
+!
+!      case (TRAPEZOIDAL) 
+!              xsect_getYofA = trapez_getYofA(xsect, a)
+!
+!      case (TRIANGULAR)  
+!              xsect_getYofA = triang_getYofA(xsect, a)
+!
+!      case (PARABOLIC)   
+!              xsect_getYofA = parab_getYofA(xsect, a)
+!
+!      case (POWERFUNC)   
+!              xsect_getYofA = powerfunc_getYofA(xsect, a)
+!
+!      case default
+!          xsect_getYofA = 0.0
+!    end select
+end function xsect_getYofA
+!
 !//=============================================================================
 !
-!double xsect_getYofA(TXsect *xsect, double a)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//           a = area (ft2)
-!//  Output:  returns depth (ft)
-!//  Purpose: computes xsection's depth at a given area.
-!//
-!{
-!    double alpha = a / xsect->aFull;
-!    switch ( xsect->type )
-!    {
-!      case FORCE_MAIN:                                                         //(5.0.010 - LR)
-!      case CIRCULAR: return circ_getYofA(xsect, a);
+double precision function xsect_getAofY(xsect, y)
 !
-!      case FILLED_CIRCULAR:
-!        return filled_circ_getYofA(xsect, a);
-!  
-!      case EGGSHAPED:
-!        return xsect->yFull * lookup(alpha, Y_Egg, N_Y_Egg);
-!  
-!      case HORSESHOE:
-!        return xsect->yFull * lookup(alpha, Y_Horseshoe, N_Y_Horseshoe);
+!  Input:   xsect = ptr. to a cross section data structure
+!           y = depth (ft)
+!  Output:  returns area (ft2)
+!  Purpose: computes xsection's area at a given depth.
 !
-!      case GOTHIC:
-!        return xsect->yFull * lookup(alpha, Y_Gothic, N_Y_Gothic);
-!
-!      case CATENARY:
-!        return xsect->yFull * lookup(alpha, Y_Catenary, N_Y_Catenary);
-!
-!      case SEMIELLIPTICAL:
-!        return xsect->yFull * lookup(alpha, Y_SemiEllip, N_Y_SemiEllip);
-!
-!      case BASKETHANDLE:
-!        return xsect->yFull * lookup(alpha, Y_BasketHandle, N_Y_BasketHandle);
-!
-!      case SEMICIRCULAR:
-!        return xsect->yFull * lookup(alpha, Y_SemiCirc, N_Y_SemiCirc);
-!
-!      case HORIZ_ELLIPSE:
-!        return xsect->yFull * invLookup(alpha, A_HorizEllipse, N_A_HorizEllipse);
-!
-!      case VERT_ELLIPSE:
-!        return xsect->yFull * invLookup(alpha, A_VertEllipse, N_A_VertEllipse);
-!
-!      case IRREGULAR:
-!        return xsect->yFull * invLookup(alpha,
-!            Transect[xsect->transect].areaTbl, N_TRANSECT_TBL);
-!
-!      case CUSTOM:                                                             //(5.0.010 - LR)
-!        return xsect->yFull * invLookup(alpha,                                 //(5.0.010 - LR)
-!            Shape[Curve[xsect->transect].refersTo].areaTbl, N_SHAPE_TBL);      //(5.0.010 - LR)
-!
-!      case ARCH:
-!        return xsect->yFull * invLookup(alpha, A_Arch, N_A_Arch);
-!
-!      case RECT_CLOSED: return a / xsect->wMax;
-!
-!      case RECT_TRIANG: return rect_triang_getYofA(xsect, a);
-!
-!      case RECT_ROUND:  return rect_round_getYofA(xsect, a);
-!
-!      case RECT_OPEN:   return a / xsect->wMax;
-!
-!      case MOD_BASKET:  return mod_basket_getYofA(xsect, a);
-!
-!      case TRAPEZOIDAL: return trapez_getYofA(xsect, a);
-!
-!      case TRIANGULAR:  return triang_getYofA(xsect, a);
-!
-!      case PARABOLIC:   return parab_getYofA(xsect, a);
-!
-!      case POWERFUNC:   return powerfunc_getYofA(xsect, a);
-!
-!      default:          return 0.0;
-!    }
-!}
-!
-!//=============================================================================
-!
-!double xsect_getAofY(TXsect *xsect, double y)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//           y = depth (ft)
-!//  Output:  returns area (ft2)
-!//  Purpose: computes xsection's area at a given depth.
-!//
-!{
-!    double yNorm = y / xsect->yFull;
-!    if ( y <= 0.0 ) return 0.0;
-!    switch ( xsect->type )
-!    {
-!      case FORCE_MAIN:                                                         //(5.0.010 - LR)
-!      case CIRCULAR:
-!        return xsect->aFull * lookup(yNorm, A_Circ, N_A_Circ);
-!
-!      case FILLED_CIRCULAR:
-!        return filled_circ_getAofY(xsect, y);
-!  
-!      case EGGSHAPED:
-!        return xsect->aFull * lookup(yNorm, A_Egg, N_A_Egg);
-!  
-!      case HORSESHOE:
-!        return xsect->aFull * lookup(yNorm, A_Horseshoe, N_A_Horseshoe);
-!
-!      case GOTHIC:
-!        return xsect->aFull * invLookup(yNorm, Y_Gothic, N_Y_Gothic);
-!
-!      case CATENARY:
-!        return xsect->aFull * invLookup(yNorm, Y_Catenary, N_Y_Catenary);
-!
-!      case SEMIELLIPTICAL:
-!        return xsect->aFull * invLookup(yNorm, Y_SemiEllip, N_Y_SemiEllip);
-!
-!      case BASKETHANDLE:
-!        return xsect->aFull * lookup(yNorm, A_Baskethandle, N_A_Baskethandle);
-!
-!      case SEMICIRCULAR:
-!        return xsect->aFull * invLookup(yNorm, Y_SemiCirc, N_Y_SemiCirc);
-!
-!      case HORIZ_ELLIPSE:
-!        return xsect->aFull * lookup(yNorm, A_HorizEllipse, N_A_HorizEllipse);
-!
-!      case VERT_ELLIPSE:
-!        return xsect->aFull * lookup(yNorm, A_VertEllipse, N_A_VertEllipse);
-!
-!      case ARCH:
-!        return xsect->aFull * lookup(yNorm, A_Arch, N_A_Arch);
-! 
-!      case IRREGULAR:
-!        return xsect->aFull * lookup(yNorm,
-!            Transect[xsect->transect].areaTbl, N_TRANSECT_TBL);
-! 
-!      case CUSTOM:                                                             //(5.0.010 - LR)
-!        return xsect->aFull * lookup(yNorm,                                    //(5.0.010 - LR)
-!            Shape[Curve[xsect->transect].refersTo].areaTbl, N_SHAPE_TBL);      //(5.0.010 - LR)
-!
-!     case RECT_CLOSED: return y * xsect->wMax;
-!
-!      case RECT_TRIANG: return rect_triang_getAofY(xsect, y);
-!
-!      case RECT_ROUND:  return rect_round_getAofY(xsect, y);
-!
-!      case RECT_OPEN:   return y * xsect->wMax;
-!
-!      case MOD_BASKET:  return mod_basket_getAofY(xsect, y);
-!
-!      case TRAPEZOIDAL: return trapez_getAofY(xsect, y);
-!
-!      case TRIANGULAR:  return triang_getAofY(xsect, y);
-!
-!      case PARABOLIC:   return parab_getAofY(xsect, y);
-!
-!      case POWERFUNC:   return powerfunc_getAofY(xsect, y);
-!
-!      default:          return 0.0;
-!    }
-!}
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+    double precision :: Val
+    double precision :: yNorm
+    double precision :: powerfunc_getAofY, parab_getAofY, triang_getAofY, trapez_getAofY
+    double precision :: mod_basket_getAofY, rect_round_getAofY, rect_triang_getAofY, filled_circ_getAofY
+    yNorm = y / xsect%yFull
+    
+    if ( y <= 0.0 ) then
+      xsect_getAofY = 0.0
+      return
+    end if
+    select case ( xsect%datatype )
+      case (FORCE_MAIN, CIRCULAR)                                 !(5.0.010 - LR)
+        Val = xsect%aFull * lookup(yNorm, xs_A_Circ, N_A_Circ)
+      case (FILLED_CIRCULAR)
+        Val = filled_circ_getAofY(xsect, y)
+      case (EGGSHAPED)
+        Val = xsect%aFull * lookup(yNorm, xs_A_Egg, N_A_Egg)
+      case (HORSESHOE)
+        Val = xsect%aFull * lookup(yNorm, xs_A_Horseshoe, N_A_Horseshoe)
+      case (GOTHIC)
+        Val = xsect%aFull * invLookup(yNorm, xs_Y_Gothic, N_Y_Gothic)
+      case (CATENARY)
+        Val = xsect%aFull * invLookup(yNorm, xs_Y_Catenary, N_Y_Catenary)
+      case (SEMIELLIPTICAL)
+        Val = xsect%aFull * invLookup(yNorm, xs_Y_SemiEllip, N_Y_SemiEllip)
+      case (BASKETHANDLE)
+        Val = xsect%aFull * lookup(yNorm, xs_A_Baskethandle, N_A_Baskethandle)
+      case (SEMICIRCULAR)
+        Val = xsect%aFull * invLookup(yNorm, xs_Y_SemiCirc, N_Y_SemiCirc)
+      case (HORIZ_ELLIPSE)
+        Val = xsect%aFull * lookup(yNorm, xs_A_HorizEllipse, N_A_HorizEllipse)
+      case (VERT_ELLIPSE)
+        Val = xsect%aFull * lookup(yNorm, xs_A_VertEllipse, N_A_VertEllipse)
+      case (ARCH)
+        Val = xsect%aFull * lookup(yNorm, xs_A_Arch, N_A_Arch)
+      case (IRREGULAR)
+        Val = xsect%aFull * lookup(yNorm, Transect(xsect%transect)%areaTbl, N_TRANSECT_TBL)
+      case (CUSTOM)                                                             !(5.0.010 - LR)
+        Val = xsect%aFull * lookup(yNorm, Shape(Curve(xsect%transect)%refersTo)%areaTbl, N_SHAPE_TBL)      !(5.0.010 - LR)
+      case (RECT_CLOSED) 
+        Val = y * xsect%wMax
+      case (RECT_TRIANG) 
+        Val = rect_triang_getAofY(xsect, y)
+      case (RECT_ROUND)  
+        Val = rect_round_getAofY(xsect, y)
+      case (RECT_OPEN)   
+        Val = y * xsect%wMax
+      case (MOD_BASKET)  
+        Val = mod_basket_getAofY(xsect, y)
+      case (TRAPEZOIDAL) 
+        Val = trapez_getAofY(xsect, y)
+      case (TRIANGULAR)  
+        Val = triang_getAofY(xsect, y)
+      case (PARABOLIC)   
+        Val = parab_getAofY(xsect, y)
+      case (POWERFUNC)   
+        Val = powerfunc_getAofY(xsect, y)
+      case default
+        Val = 0.0
+    end select
+    xsect_getAofY = Val
+end function xsect_getAofY
 !
 !//=============================================================================
 !
@@ -862,112 +885,66 @@ double precision function xsect_getWofY(xsect, y)
     use enums
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
-    
+    double precision :: val 
     double precision :: yNorm
     yNorm = y / xsect%yFull
     
     select case ( xsect%datatype )
       case (FORCE_MAIN,CIRCULAR)                                                        !(5.0.010 - LR)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_Circ, N_W_Circ)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_Circ, N_W_Circ)
       case (FILLED_CIRCULAR)
         yNorm = (y + xsect%yBot) / (xsect%yFull + xsect%yBot)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_Circ, N_W_Circ)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_Circ, N_W_Circ)
       case (EGGSHAPED)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_Egg, N_W_Egg)
-        return
-  
+        val = xsect%wMax * lookup(yNorm, xs_W_Egg, N_W_Egg)
       case (HORSESHOE)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_Horseshoe, N_W_Horseshoe)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_Horseshoe, N_W_Horseshoe)
       case (GOTHIC)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_Gothic, N_W_Gothic)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_Gothic, N_W_Gothic)
       case (CATENARY)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_Catenary, N_W_Catenary)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_Catenary, N_W_Catenary)
       case (SEMIELLIPTICAL)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_SemiEllip, N_W_SemiEllip)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_SemiEllip, N_W_SemiEllip)
       case (BASKETHANDLE)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_BasketHandle, N_W_BasketHandle)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_BasketHandle, N_W_BasketHandle)
       case (SEMICIRCULAR)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_SemiCirc, N_W_SemiCirc)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_SemiCirc, N_W_SemiCirc)
       case (HORIZ_ELLIPSE)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_HorizEllipse, N_W_HorizEllipse)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_HorizEllipse, N_W_HorizEllipse)
       case (VERT_ELLIPSE)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_VertEllipse, N_W_VertEllipse)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_VertEllipse, N_W_VertEllipse)
       case (ARCH)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, xs_W_Arch, N_W_Arch)
-        return
-
+        val = xsect%wMax * lookup(yNorm, xs_W_Arch, N_W_Arch)
       case (IRREGULAR)
-        xsect_getWofY = xsect%wMax * lookup(yNorm, &
-           &Transect(xsect%transect)%widthTbl, N_TRANSECT_TBL)
-        return
-
+        val = xsect%wMax * lookup(yNorm, Transect(xsect%transect)%widthTbl, N_TRANSECT_TBL)
       case (CUSTOM) !(5.0.010 - LR)
-        xsect_getWofY = xsect%wMax * lookup(yNorm,&                                    !(5.0.010 - LR)
+        val = xsect%wMax * lookup(yNorm,&                                    !(5.0.010 - LR)
            &Shape(Curve(xsect%transect)%refersTo)%widthTbl, N_SHAPE_TBL)     !(5.0.010 - LR) 
-        return
-
       case (RECT_CLOSED)
-         xsect_getWofY = xsect%wMax
-         return
-
+         val = xsect%wMax
       case (RECT_TRIANG)
-         xsect_getWofY = rect_triang_getWofY(xsect, y)
-         return
-
+         val = rect_triang_getWofY(xsect, y)
       case (RECT_ROUND)
-         xsect_getWofY = rect_round_getWofY(xsect, y)
-         return
-
+         val = rect_round_getWofY(xsect, y)
       case (RECT_OPEN)
-         xsect_getWofY = xsect%wMax
-         return
-
+         val = xsect%wMax
       case (MOD_BASKET)
-         xsect_getWofY = mod_basket_getWofY(xsect, y)
-         return
-
+         val = mod_basket_getWofY(xsect, y)
       case (TRAPEZOIDAL)
-         xsect_getWofY = trapez_getWofY(xsect, y)
-         return
-
+         val = trapez_getWofY(xsect, y)
       case (TRIANGULAR)
-         xsect_getWofY = triang_getWofY(xsect, y)
-         return
-
+         val = triang_getWofY(xsect, y)
       case (PARABOLIC)
-         xsect_getWofY = parab_getWofY(xsect, y)
-         return
-
+         val = parab_getWofY(xsect, y)
       case (POWERFUNC)
-         xsect_getWofY = powerfunc_getWofY(xsect, y)
-         return
-
+         val = powerfunc_getWofY(xsect, y)
       case default
-         xsect_getWofY = 0.0
-         return
+         val = 0.0
     end select
+    xsect_getWofY = val
 end function xsect_getWofY
 !
 !//=============================================================================
@@ -983,9 +960,13 @@ double precision function xsect_getRofY(xsect, y)
     use enums
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: y
     double precision :: yNorm
+    
+    double precision :: xsect_getRofA, powerfunc_getRofY, parab_getRofY, triang_getRofY, trapez_getRofY
+    double precision :: rect_round_getRofY, rect_triang_getRofY
     yNorm = y / xsect%yFull
     
     select case ( xsect%datatype )
@@ -1106,10 +1087,13 @@ double precision function xsect_getAofS(xsect, s)
     use enums
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: s
     
     double precision :: psi
+    
+    double precision :: generic_getAofS, circ_getAofS
     psi = s / xsect%sFull
     
     if ( s <= 0.0 ) then 
@@ -1213,71 +1197,80 @@ end function xsect_getAofS
 !    }
 !}
 !
-!//=============================================================================
+!=============================================================================
+
+double precision function xsect_getYcrit(xsect, q)
 !
-!double xsect_getYcrit(TXsect* xsect, double q)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//           q = flow rate (cfs)
-!//  Output:  returns critical depth (ft)
-!//  Purpose: computes critical depth at a specific flow rate.
-!//
-!{
-!    double q2g = SQR(q) / GRAVITY;
-!    double y, r;
+!  Input:   xsect = ptr. to a cross section data structure
+!           q = flow rate (cfs)
+!  Output:  returns critical depth (ft)
+!  Purpose: computes critical depth at a specific flow rate.
 !
-!    if ( q2g == 0.0 ) return 0.0;
-!    switch ( xsect->type )
-!    {
-!      case DUMMY:
-!        return 0.0;
-!
-!      case RECT_OPEN:
-!      case RECT_CLOSED:
-!        // --- analytical expression for yCritical is
-!        //     y = (q2g / w^2)^(1/3) where w = width
-!        y = pow(q2g / SQR(xsect->wMax), 1./3.);
-!        break;
-!
-!      case TRIANGULAR:
-!        // --- analytical expression for yCritical is
-!        //     y = (2 * q2g / s^2)^(1/5) where s = side slope
-!        y = pow(2.0 * q2g / SQR(xsect->sBot), 1./5.);
-!        break;
-!
-!      case PARABOLIC:
-!        // --- analytical expression for yCritical is
-!        //     y = (27/32 * q2g * c)^(1/4) where y = c*x^2
-!        //     is eqn. for parabola and 1/sqrt(c) = rBot
-!        y = pow(27./32. * q2g / SQR(xsect->rBot), 1./4.);
-!        break;
-!
-!      case POWERFUNC:
-!        y = 1. / (2.0 * xsect->sBot + 3.0);
-!        y = pow( q2g * (xsect->sBot + 1.0) / SQR(xsect->rBot), y);
-!        break;
-!
-!      default:
-!        // --- first estimate yCritical for an equivalent circular conduit
-!        //     using 1.01 * (q2g / yFull)^(1/4)
-!        y = 1.01 * pow(q2g / xsect->yFull, 1./4.);
-!        if (y >= xsect->yFull) y = 0.97 * xsect->yFull;
-!
-!        // --- then find ratio of conduit area to equiv. circular area
-!        r = xsect->aFull / (PI / 4.0 * SQR(xsect->yFull));
-!
-!        // --- use interval enumeration method to find yCritical if 
-!        //     area ratio not too far from 1.0
-!        if ( r >= 0.5 && r <= 2.0 )
-!            y = getYcritEnum(xsect, q, y);
-!
-!        // --- otherwise use Ridder's root finding method
-!        else y = getYcritRidder(xsect, q, y);
-!    }
-!
-!    // --- do not allow yCritical to be > yFull
-!    return MIN(y, xsect->yFull);
-!}
+    use headers
+    implicit none
+
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: q
+    
+    double precision :: q2g, y, r
+
+    q2g = SQR(q) / GRAVITY
+    
+    if ( abs(q2g - 0.0) < P_TINY ) then
+      xsect_getYcrit = 0.0
+      return
+    end if
+    select case ( xsect%datatype )
+      case (DUMMY)
+        xsect_getYcrit = 0.0
+        return
+
+      case (RECT_OPEN, RECT_CLOSED)
+        ! --- analytical expression for yCritical is
+        !     y = (q2g / w^2)^(1/3) where w = width
+        y = (q2g / SQR(xsect%wMax)) ** (1./3.)
+        !break
+
+      case (TRIANGULAR)
+        ! --- analytical expression for yCritical is
+        !     y = (2 * q2g / s^2)^(1/5) where s = side slope
+        y = (2.0 * q2g / SQR(xsect%sBot)) ** (1./5.)
+        !break
+
+      case (PARABOLIC)
+        ! --- analytical expression for yCritical is
+        !     y = (27/32 * q2g * c)^(1/4) where y = c*x^2
+        !     is eqn. for parabola and 1/sqrt(c) = rBot
+        y = (27./32. * q2g / SQR(xsect%rBot)) ** (1./4.)
+        !break
+
+      case (POWERFUNC)
+        y = 1. / (2.0 * xsect%sBot + 3.0)
+        y = ( q2g * (xsect%sBot + 1.0) / SQR(xsect%rBot)) ** y
+        !break
+
+      case default
+        ! --- first estimate yCritical for an equivalent circular conduit
+        !     using 1.01 * (q2g / yFull)^(1/4)
+        y = 1.01 * (q2g / xsect%yFull) ** (1./4.)
+        if (y >= xsect%yFull) y = 0.97 * xsect%yFull
+
+        ! --- then find ratio of conduit area to equiv. circular area
+        r = xsect%aFull / (PI / 4.0 * SQR(xsect%yFull))
+
+        ! --- use interval enumeration method to find yCritical if 
+        !     area ratio not too far from 1.0
+        if ( r >= 0.5 .and. r <= 2.0 ) then
+            y = getYcritEnum(xsect, q, y)
+        ! --- otherwise use Ridder's root finding method
+        else 
+            y = getYcritRidder(xsect, q, y)
+        end if
+    end select
+
+    ! --- do not allow yCritical to be > yFull
+    xsect_getYcrit = MIN(y, xsect%yFull)
+end function xsect_getYcrit
 !
 !//=============================================================================
 !
@@ -1400,6 +1393,7 @@ double precision function lookup(x, table, nItems)
 !  Purpose: looks up a value in a geometry table (i.e., finds y given x).
 !
 
+    implicit none
     double precision, intent(in) :: x
     integer, intent(in) :: nItems
     double precision, dimension(:), intent(in) :: table
@@ -1443,13 +1437,14 @@ double precision function invLookup(y, table, nItems)
 !  Purpose: performs inverse lookup in a geometry table (i.e., finds
 !           x given y).
 !
+    implicit none
     double precision, intent(in) :: y
     double precision, dimension(:), intent(in) :: table
     integer, intent(in) :: nItems
     
     double precision :: delta, x, x0, x1
     integer ::    i
-
+    integer :: locate
     ! --- locate table segment that contains y
     i = locate(y, table, nItems)
     if ( i >= nItems - 1 ) then
@@ -1494,138 +1489,148 @@ end function invLookup
 !
 !//=============================================================================
 !
-!double getQcritical(double yc)
-!//
-!//  Input:   yc = critical depth (ft)
-!//  Output:  returns flow difference value (cfs)
-!//  Purpose: finds difference between critical flow at depth yc and 
-!//           target value Qcritical
-!//
-!{
-!    double a = xsect_getAofY(Xstar, yc);
-!    double w = xsect_getWofY(Xstar, yc);
-!    double qc = -Qcritical;
-!    if ( w > 0.0 )  qc = a * sqrt(GRAVITY * a / w) - Qcritical;
-!    return qc;
-!}
+double precision function getQcritical(yc)
+!
+!  Input:   yc = critical depth (ft)
+!  Output:  returns flow difference value (cfs)
+!  Purpose: finds difference between critical flow at depth yc and 
+!           target value Qcritical
+!
+    use headers
+    implicit none
+    double precision, intent(in) :: yc
+    double precision :: a, w, qc
+    a = xsect_getAofY(Xstar, yc)
+    w = xsect_getWofY(Xstar, yc)
+    qc = -Qcritical
+    
+    if ( w > 0.0 )  qc = a * sqrt(GRAVITY * a / w) - Qcritical
+    getQcritical = qc
+end function getQcritical
+!
+!=============================================================================
+ 
+double precision function getYcritEnum(xsect, q, y0)
+!
+!  Input:   xsect = ptr. to cross section data structure
+!           q = critical flow rate (cfs)
+!           y0 = estimate of critical depth (ft)
+!  Output:  returns true critical depth (ft)
+!  Purpose: solves a * sqrt(a(y)*g / w(y)) - q for y using interval
+!           enumeration with starting guess of y0.
+!
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: q, y0
+    
+    double precision ::  q0, dy, qc, yc
+    integer ::     i1, i
+
+    ! --- store reference to cross section in global pointer
+    Xstar = xsect
+
+    ! --- divide cross section depth into 25 increments and
+    !     locate increment corresponding to initial guess y0
+    dy = xsect%yFull / 25.
+    i1 = int(y0 / dy)
+
+    ! --- evaluate critical flow at this increment
+    Qcritical = 0.0
+    q0 = getQcritical(i1*dy)
+
+    ! --- initial flow lies below target flow 
+    if ( q0 < q ) then
+        ! --- search each successive higher depth increment
+        yc = xsect%yFull
+        do i=i1+1, 25
+            ! --- if critical flow at current depth is above target
+            !     then use linear interpolation to compute critical depth
+            qc = getQcritical(i*dy)
+            if ( qc >= q ) then
+                yc = ( (q-q0) / (qc - q0) + (i-1)*1.0 ) * dy
+                !break
+                exit
+            end if
+            q0 = qc
+        end do
+    ! --- initial flow lies above target flow
+    else
+        ! --- search each successively lower depth increment
+        yc = 0.0
+        do i=i1-1, 0, -1
+            ! --- if critical flow at current depth is below target
+            !     then use linear interpolation to compute critical depth
+            qc = getQcritical(i*dy)
+            if ( qc < q ) then
+                yc = ( (q-qc) / (q0-qc) + i*1.0 ) * dy
+                !break
+                exit
+            end if
+            q0 = qc
+        end do
+    end if
+    getYcritEnum = yc
+end function getYcritEnum
 !
 !//=============================================================================
-! 
-!double getYcritEnum(TXsect* xsect, double q, double y0)
-!//
-!//  Input:   xsect = ptr. to cross section data structure
-!//           q = critical flow rate (cfs)
-!//           y0 = estimate of critical depth (ft)
-!//  Output:  returns true critical depth (ft)
-!//  Purpose: solves a * sqrt(a(y)*g / w(y)) - q for y using interval
-!//           enumeration with starting guess of y0.
-!//
-!{
-!    double  q0, dy, qc, yc;
-!    int     i1, i;
+
+double precision function getYcritRidder(xsect, q, y0)
 !
-!    // --- store reference to cross section in global pointer
-!    Xstar = xsect;
+!  Input:   xsect = ptr. to cross section data structure
+!           q = critical flow rate (cfs)
+!           y0 = estimate of critical depth (ft)
+!  Output:  returns true critical depth (ft)
+!  Purpose: solves a * sqrt(a(y)*g / w(y)) - q for y using Ridder's
+!           root finding method with starting guess of y0.
 !
-!    // --- divide cross section depth into 25 increments and
-!    //     locate increment corresponding to initial guess y0
-!    dy = xsect->yFull / 25.;
-!    i1 = (int)(y0 / dy);
-!
-!    // --- evaluate critical flow at this increment
-!    Qcritical = 0.0;
-!    q0 = getQcritical(i1*dy);
-!
-!    // --- initial flow lies below target flow 
-!    if ( q0 < q )
-!    {
-!        // --- search each successive higher depth increment
-!        yc = xsect->yFull;
-!        for ( i=i1+1; i<=25; i++)
-!        {
-!            // --- if critical flow at current depth is above target
-!            //     then use linear interpolation to compute critical depth
-!            qc = getQcritical(i*dy);
-!            if ( qc >= q )
-!            {
-!                yc = ( (q-q0) / (qc - q0) + (double)(i-1) ) * dy;
-!                break;
-!            }
-!            q0 = qc;
-!        }
-!    }
-!
-!    // --- initial flow lies above target flow
-!    else
-!    {
-!        // --- search each successively lower depth increment
-!        yc = 0.0;
-!        for ( i=i1-1; i>=0; i--)
-!        {
-!            // --- if critical flow at current depth is below target
-!            //     then use linear interpolation to compute critical depth
-!            qc = getQcritical(i*dy);
-!            if ( qc < q )
-!            {
-!                yc = ( (q-qc) / (q0-qc) + (double)i ) * dy;
-!                break;
-!            }
-!            q0 = qc;
-!        }
-!    }
-!    return yc;
-!}
-!
-!//=============================================================================
-!
-!double getYcritRidder(TXsect* xsect, double q, double y0)
-!//
-!//  Input:   xsect = ptr. to cross section data structure
-!//           q = critical flow rate (cfs)
-!//           y0 = estimate of critical depth (ft)
-!//  Output:  returns true critical depth (ft)
-!//  Purpose: solves a * sqrt(a(y)*g / w(y)) - q for y using Ridder's
-!//           root finding method with starting guess of y0.
-!//
-!{
-!    double  y1 = 0.0;
-!    double  y2 = 0.99 * xsect->yFull;
-!    double  yc;
-!    double q0, q1, q2;
-!
-!    // --- store reference to cross section in global pointer
-!    Xstar = xsect;
-!
-!    // --- check if critical flow at (nearly) full depth < target flow
-!    Qcritical = 0.0;
-!    q2 = getQcritical(y2);
-!    if (q2 < q ) return xsect->yFull;
-!
-!    // --- evaluate critical flow at initial depth guess y0
-!    //     and at 1/2 of full depth
-!    q0 = getQcritical(y0);
-!    q1 = getQcritical(0.5*xsect->yFull);
-!
-!    // --- adjust search interval on depth so it contains flow q
-!    if ( q0 > q )
-!    {
-!        y2 = y0;
-!        if ( q1 < q ) y1 = 0.5*xsect->yFull;
-!    }
-!    else
-!    {
-!        y1 = y0;
-!        if ( q1 > q ) y2 = 0.5*xsect->yFull;
-!    }
-!
-!    // --- save value of target critical flow in global variable
-!    Qcritical = q;
-!
-!    // --- call Ridder root finding procedure with error tolerance
-!    //     of 0.001 ft. to find critical depth yc
-!    yc = findroot_Ridder(y1, y2, 0.001, getQcritical);
-!    return yc;
-!}
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: q, y0
+    double precision ::  y1
+    double precision ::  y2
+    double precision :: yc
+    double precision :: q0, q1, q2
+    
+    double precision :: findroot_ridder !TODO: this is for .NET compile
+    
+    y1 = 0.0
+    y2 = 0.99 * xsect%yFull
+
+    ! --- store reference to cross section in global pointer
+    Xstar = xsect
+
+    ! --- check if critical flow at (nearly) full depth < target flow
+    Qcritical = 0.0
+    q2 = getQcritical(y2)
+    if (q2 < q ) then
+       getYcritRidder = xsect%yFull
+       return
+    end if
+
+    ! --- evaluate critical flow at initial depth guess y0
+    !     and at 1/2 of full depth
+    q0 = getQcritical(y0)
+    q1 = getQcritical(0.5*xsect%yFull)
+
+    ! --- adjust search interval on depth so it contains flow q
+    if ( q0 > q ) then
+        y2 = y0
+        if ( q1 < q ) y1 = 0.5*xsect%yFull
+    else
+        y1 = y0
+        if ( q1 > q ) y2 = 0.5*xsect%yFull
+    end if
+
+    ! --- save value of target critical flow in global variable
+    Qcritical = q
+
+    ! --- call Ridder root finding procedure with error tolerance
+    !     of 0.001 ft. to find critical depth yc
+    yc = findroot_Ridder(y1, y2, 0.001d00, getQcritical)
+    getYcritRidder = yc
+end function getYcritRidder
 !
 !
 !//=============================================================================
@@ -1672,6 +1677,7 @@ end function invLookup
 !
 double precision function rect_closed_getRofA(xsect, a)
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     double precision :: p
@@ -1723,6 +1729,7 @@ end function rect_closed_getRofA
 double precision function rect_triang_getYofA(xsect, a)
     !TXsect* xsect, double a
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     ! below upper section
@@ -1737,6 +1744,7 @@ end function rect_triang_getYofA
 double precision function rect_triang_getRofA(xsect, a)
     !TXsect* xsect, double a
     use headers
+    implicit none
     
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
@@ -1823,6 +1831,7 @@ end function rect_triang_getRofA
 !
 double precision function rect_triang_getWofY(xsect, y)
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
     if ( y <= xsect%yBot ) then
@@ -1845,9 +1854,11 @@ double precision function rect_round_getYofA(xsect, a)
     !TXsect* xsect, double a
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     double precision :: alpha
+    double precision :: getYcircular
 
     ! --- if above circular bottom:
     if ( a > xsect%aBot ) then
@@ -1869,6 +1880,7 @@ end function rect_round_getYofA
 double precision function rect_round_getRofA(xsect, a)
     !TXsect* xsect, double a
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     double precision :: y1, theta1, p, arg
@@ -1988,6 +2000,7 @@ end function rect_round_getRofA
 !
 double precision function rect_round_getWofY(xsect, y)
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
     ! --- return width if depth above circular bottom section
@@ -2095,6 +2108,7 @@ end function rect_round_getWofY
 double precision function mod_basket_getWofY(xsect,  y)
 
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
     double precision :: y1
@@ -2162,6 +2176,7 @@ end function mod_basket_getWofY
 !
 double precision function trapez_getWofY(xsect, y)
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
     trapez_getWofY = xsect%yBot + 2.0 * y * xsect%sBot
@@ -2206,9 +2221,10 @@ end function trapez_getWofY
 !
 double precision function triang_getWofY(xsect, y)
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
-    triang_getWofY = 2.0 * xsect%sBot * y;
+    triang_getWofY = 2.0 * xsect%sBot * y
 end function triang_getWofY
 !
 !
@@ -2247,6 +2263,7 @@ end function triang_getWofY
 !
 double precision function parab_getWofY(xsect, y)
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
 
@@ -2305,10 +2322,11 @@ end function parab_getWofY
 !
 double precision function powerfunc_getWofY(xsect, y)
     use headers
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
 
-    powerfunc_getWofY = (xsect%sBot + 1.0) * xsect%rBot * pow(y, xsect%sBot)
+    powerfunc_getWofY = (xsect%sBot + 1.0) * xsect%rBot * (y ** xsect%sBot)
 end function powerfunc_getWofY
 !
 !
@@ -2344,6 +2362,7 @@ double precision function circ_getSofA(xsect, a)
 
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     double precision :: alpha
@@ -2408,6 +2427,7 @@ end function circ_getSofA
 double precision function circ_getAofY(xsect, y)
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
     double precision :: yNorm
@@ -2463,6 +2483,7 @@ double precision function filled_circ_getRofY(xsect, y)
 !TXsect* xsect, double y
     use headers
     use xsectdat
+    implicit none
     type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: y
     double precision :: a, r, p, ym
@@ -2514,6 +2535,7 @@ end function filled_circ_getRofY
 double precision function getScircular(alpha)
     use consts
     use headers
+    implicit none
     double precision, intent(in) :: alpha
     double precision :: theta
     if ( alpha >= 1.0 ) then 
@@ -2525,12 +2547,12 @@ double precision function getScircular(alpha)
        return
     end if
     if ( alpha <= 1.0e-5 ) then
-        theta = pow(37.6911*alpha, 1./3.)
-        getScircular = pow(theta, 13./3.) / 124.4797
+        theta = (37.6911*alpha) ** (1./3.)
+        getScircular = (theta ** (13./3.)) / 124.4797
         return
     end if
     theta = getThetaOfAlpha(alpha)
-    getScircular = pow((theta - sin(theta)), 5./3.) / (2.0 * PI) / pow(theta, 2./3.)
+    getScircular = ((theta - sin(theta)) ** (5./3.)) / (2.0 * PI) / (theta ** (2./3.))
 end function getScircular
 
 !double getAcircular(double psi)
@@ -2549,6 +2571,7 @@ end function getScircular
 !
 double precision function getThetaOfAlpha(alpha)
     use headers
+    implicit none
     double precision, intent(in) :: alpha
     integer :: k
     double precision :: theta, theta1, ap, d
@@ -2565,7 +2588,7 @@ double precision function getThetaOfAlpha(alpha)
         ! --- modification to improve convergence for large theta
         if ( d > 1.0 ) d = SIGN( 1.0, d )
         theta = theta - d
-        if ( fabs(d) <= 0.0001 ) then 
+        if ( abs(d) <= 0.0001 ) then 
            getThetaOfAlpha = theta
            return
         end if
@@ -2589,14 +2612,14 @@ end function getThetaOfAlpha
 !
 !    for (k = 1; k <= 40; k++)
 !    {
-!        theta    = fabs(theta);
+!        theta    = abs(theta);
 !        tt       = theta - sin(theta);
 !        tt23     = pow(tt, 2./3.);
 !        t3       = pow(theta, 1./3.);
 !        d        = ap * theta / t3 - tt * tt23;
 !        d        = d / ( ap*(2./3.)/t3 - (5./3.)*tt23*(1.0-cos(theta)) );
 !        theta    = theta - d;
-!        if ( fabs(d) <= 0.0001 ) return theta;
+!        if ( abs(d) <= 0.0001 ) return theta;
 !    }
 !    return theta1;
 !}

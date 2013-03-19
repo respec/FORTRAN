@@ -606,6 +606,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{E53F86A7-7D49-4340-87F4-BEB7D65FFF1F}"
         }
+        "infil.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{8EC76AFD-C219-41EF-B103-F8B46786A2C1}"
+        }
         "keywords.f95"
         {
         "ProjRelPath" = "T"
@@ -650,6 +658,14 @@
     "Source Files"
     {
     "Folder" = "T"
+        "climate.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{65BB7856-6B1F-4E60-B276-65D039906F73}"
+        }
         "datetime.f95"
         {
         "ProjRelPath" = "T"
@@ -674,6 +690,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{DC5143AD-A39C-43E8-B1E8-EF04343B210D}"
         }
+        "findroot.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{1251F1F2-6BC8-4D51-9D6E-84901C085D78}"
+        }
         "flowrout.f95"
         {
         "ProjRelPath" = "T"
@@ -682,6 +706,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{EA639514-9F4B-4DD3-9737-6625C7A1076D}"
         }
+        "forcemain.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{D11754BC-891E-492D-A9E0-5DF974674EC9}"
+        }
         "link.f95"
         {
         "ProjRelPath" = "T"
@@ -689,6 +721,14 @@
         "CustomSwitches" = ""
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{B38DD9C4-C7AB-4C4C-856F-32CB362BD554}"
+        }
+        "massbal.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{EE939CC0-4998-4671-A4FB-700079B3CF4D}"
         }
         "node.f95"
         {
@@ -706,6 +746,22 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{3B4DA557-772E-4067-8FB9-78A8C945B66A}"
         }
+        "rain.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{6124DB76-2A11-400C-BB49-DD18AE96B23C}"
+        }
+        "report.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{B809279E-0A4F-414E-A6A4-9288D19441AB}"
+        }
         "routing.f95"
         {
         "ProjRelPath" = "T"
@@ -714,6 +770,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{A4E2043A-2102-4B0B-B68B-B2738555A82F}"
         }
+        "stats.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{E5A481EF-EC99-46D0-A763-35A9E8BFBDA4}"
+        }
         "swmm5f.f95"
         {
         "ProjRelPath" = "T"
@@ -721,6 +785,14 @@
         "CustomSwitches" = ""
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{01A1EA19-1459-454A-B953-3A5F3F624B3F}"
+        }
+        "toposort.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{7FF57606-D93C-4AC6-801B-B97767092715}"
         }
         "xsect.f95"
         {
