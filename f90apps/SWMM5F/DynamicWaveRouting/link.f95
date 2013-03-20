@@ -422,7 +422,63 @@ double precision function link_getLength(j)
     end if
 end function link_getLength
 
+!=============================================================================
 
+!!  New function added to compute power consumption !!                     !(5.0.012 - LR)
+double precision function link_getPower(j)
+!
+!  Input:   j = link index
+!  Output:  returns power consumed by link in kwatts
+!  Purpose: computes power consumed by head loss (or head gain) of
+!           water flowing through a link
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    integer :: n1, n2
+    double precision :: dh, q, lVal
+
+    n1 = arrLink(j)%node1
+    n2 = arrLink(j)%node2
+    dh = (Node(n1)%invertElev + Node(n1)%newDepth) - &
+        &(Node(n2)%invertElev + Node(n2)%newDepth)
+    q =  abs(arrLink(j)%newFlow)
+    
+    lVal = abs(dh) * q / 8.814 * KWperHP
+    link_getPower = lVal
+end function link_getPower
+
+!=============================================================================
+
+double precision function link_getVelocity(j, aFlow, depth)
+!
+!  Input:   j     = link index
+!           flow  = link flow rate (cfs)
+!           depth = link flow depth (ft)
+!  Output:  returns flow velocity (fps)
+!  Purpose: finds flow velocity given flow and depth.
+!
+    use headers
+    use modXsect
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: aFlow, depth
+    double precision :: area, veloc, mflow
+    integer :: k
+    veloc = 0.0
+    mflow = aFlow
+    if ( depth <= 0.01 ) then
+       link_getVelocity = 0.0
+       return
+    end if
+    if ( arrLink(j)%datatype == E_CONDUIT ) then
+        k = arrLink(j)%subIndex
+        if (Conduit(k)%barrels > 0) mflow = mflow / Conduit(k)%barrels
+        area = xsect_getAofY(arrLink(j)%xsect, depth)
+        if (area > FUDGE ) veloc = mflow / area
+    end if
+    link_getVelocity = veloc
+end function link_getVelocity
 !=============================================================================
 
 subroutine link_validate(j)
@@ -511,7 +567,7 @@ integer function link_readXsectParams(tok, ntoks)
 !!           line of input data.
 !!
 !    use headers
-!    use swmm5f
+!    use swmm5futil
 !    use modXsect
 !    implicit none
 !    integer, intent(in) :: ntoks
@@ -779,7 +835,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
     use consts
     use enums
     use headers
-    use swmm5f
+    use swmm5futil !, only : UCF
     implicit none
     integer, intent(in) :: j, n1, n2, k, datatype
     double precision, dimension(:), intent(in) :: x
@@ -1181,6 +1237,53 @@ double precision function outlet_getInflow(j)
     arrLink(j)%flowClass = SUBCRITICAL
     outlet_getInflow = dir * arrLink(j)%setting * outlet_getFlow(k, head)
 end function outlet_getInflow
+
+!=============================================================================
+
+subroutine link_setOldHydState(j)
+!
+!  Input:   j = link index
+!  Output:  none
+!  Purpose: replaces link's old hydraulic state values with current ones.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    integer :: k
+    arrLink(j)%oldDepth  = arrLink(j)%newDepth
+    arrLink(j)%oldFlow   = arrLink(j)%newFlow
+    arrLink(j)%oldVolume = arrLink(j)%newVolume
+    if ( arrLink(j)%datatype == E_CONDUIT ) then
+        k = arrLink(j)%subIndex
+        Conduit(k)%q1Old = Conduit(k)%q1
+        Conduit(k)%q2Old = Conduit(k)%q2
+    end if
+end subroutine link_setOldHydState
+
+!=============================================================================
+
+subroutine link_setTargetSetting(j)                                              !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+!  Input:   j = link index                                                    !(5.0.010 - LR)
+!  Output:  none                                                              !(5.0.010 - LR)
+!  Purpose: updates a link's target setting.                                  !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+    use headers
+    implicit none
+    integer, intent(in) :: j                                                                              !(5.0.010 - LR)
+    integer :: k, n1                                                                 !(5.0.010 - LR)
+    if ( arrLink(j)%datatype == E_PUMP )  then                                          !(5.0.010 - LR)
+        k = arrLink(j)%subIndex                                                  !(5.0.010 - LR)
+        n1 = arrLink(j)%node1                                                    !(5.0.010 - LR)
+        arrLink(j)%targetSetting = arrLink(j)%setting                               !(5.0.010 - LR)
+        if ( Pump(k)%yOff > 0.0 .and. &                                           !(5.0.010 - LR)
+            &arrLink(j)%setting > 0.0 .and. &                                         !(5.0.010 - LR)
+            &Node(n1)%newDepth < Pump(k)%yOff ) arrLink(j)%targetSetting = 0.0   !(5.0.010 - LR)
+        if ( Pump(k)%yOn > 0.0 .and. &                                            !(5.0.010 - LR)
+            &arrLink(j)%setting == 0.0 .and. &                                       !(5.0.010 - LR)
+            &Node(n1)%newDepth > Pump(k)%yOn )  arrLink(j)%targetSetting = 1.0   !(5.0.010 - LR)
+    end if                                                                          !(5.0.010 - LR)
+end subroutine link_setTargetSetting
 
 !=============================================================================
 

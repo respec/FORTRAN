@@ -336,49 +336,53 @@ end subroutine stats_close
 !    MaxRunoffFlow = MAX(MaxRunoffFlow, sysRunoff)
 !}    
 !
-!!=============================================================================
+!=============================================================================
+
+subroutine stats_updateFlowStats(tStep, aDate, aStepCount, steadyState)
 !
-!void   stats_updateFlowStats(double tStep, DateTime aDate, int stepCount,
-!                             int steadyState)
-!!
-!!  Input:   tStep = routing time step (sec)
-!!           aDate = current date/time
-!!           stepCount = # steps required to solve routing at current time period
-!!           steadyState = TRUE if steady flow conditions exist
-!!  Output:  none
-!!  Purpose: updates various flow routing statistics at current time period.
-!!
-!{
-!    int   j
+!  Input:   tStep = routing time step (sec)
+!           aDate = current date/time
+!           aStepCount = # steps required to solve routing at current time period
+!           steadyState = TRUE if steady flow conditions exist
+!  Output:  none
+!  Purpose: updates various flow routing statistics at current time period.
 !
-!    ! --- update stats only after reporting period begins
-!    if ( aDate < ReportStart ) return
-!    SysOutfallFlow = 0.0
-!
-!    ! --- update node & link stats
-!    for ( j=0 j<Nobjects(E_NODE) j++ )
-!        stats_updateNodeStats(j, tStep, aDate)
-!    for ( j=0 j<Nobjects(LINK) j++ )
-!        stats_updateLinkStats(j, tStep, aDate)
-!
-!    ! --- update time step stats
-!    !     (skip initial time step for min. value)
-!    if ( StepCount > 1 )
-!    {
-!        SysStats.minTimeStep = MIN(SysStats.minTimeStep, tStep)
-!    }
-!    SysStats.avgTimeStep += tStep
-!    SysStats.maxTimeStep = MAX(SysStats.maxTimeStep, tStep)
-!
-!    ! --- update iteration step count stats
-!    SysStats.avgStepCount += stepCount
-!
-!    ! --- update count of times in steady state
-!    SysStats.steadyStateCount += steadyState
-!
-!    ! --- update max. system outfall flow
-!    MaxOutfallFlow = MAX(MaxOutfallFlow, SysOutfallFlow)
-!}
+    use headers
+    implicit none
+    double precision, intent(in) :: tStep, aDate
+    integer, intent(in) :: aStepCount
+    logical, intent(in) :: steadyState
+    integer :: j
+
+    ! --- update stats only after reporting period begins
+    if ( aDate < ReportStart ) return
+    SysOutfallFlow = 0.0
+
+    ! --- update node & link stats
+    do j=1, Nobjects(E_NODE)
+        call stats_updateNodeStats(j, tStep, aDate)
+    end do
+    do j=1, Nobjects(LINK)
+        call stats_updateLinkStats(j, tStep, aDate)
+    end do
+
+    ! --- update time step stats
+    !     (skip initial time step for min. value)
+    if ( StepCount > 1 ) then
+        SysStats%minTimeStep = MIN(SysStats%minTimeStep, tStep)
+    end if
+    SysStats%avgTimeStep = SysStats%avgTimeStep + tStep
+    SysStats%maxTimeStep = MAX(SysStats%maxTimeStep, tStep)
+
+    ! --- update iteration step count stats
+    SysStats%avgStepCount = SysStats%avgStepCount + aStepCount
+
+    ! --- update count of times in steady state
+    if (steadyState) SysStats%steadyStateCount = SysStats%steadyStateCount + 1
+
+    ! --- update max. system outfall flow
+    MaxOutfallFlow = MAX(MaxOutfallFlow, SysOutfallFlow)
+end subroutine stats_updateFlowStats
 !
 !!=============================================================================
 !   
@@ -394,201 +398,195 @@ end subroutine stats_close
 !    else if ( link >= 0 ) LinkStats(link).timeCourantCritical += 1.0
 !}
 !
-!!=============================================================================
+!=============================================================================
+
+subroutine stats_updateNodeStats(j, tStep, aDate)
 !
-!void stats_updateNodeStats(int j, double tStep, DateTime aDate)
-!!
-!!  Input:   j = node index
-!!           tStep = routing time step (sec)
-!!           aDate = current date/time
-!!  Output:  none
-!!  Purpose: updates flow statistics for a node.
-!!
-!{
-!    int    k, p
-!    double newVolume = Node(j).newVolume
-!    double newDepth = Node(j).newDepth
-!    double delta                                                              !(5.0.012 - LR)
-!    int    canPond = (AllowPonding .and. Node(j).pondedArea > 0.0)               !(5.0.019 - LR)
+!  Input:   j = node index
+!           tStep = routing time step (sec)
+!           aDate = current date/time
+!  Output:  none
+!  Purpose: updates flow statistics for a node.
 !
-!    ! --- update depth statistics                                             !(5.0.019 - LR)
-!    NodeStats(j).avgDepth += newDepth
-!    if ( newDepth > NodeStats(j).maxDepth )
-!    {
-!        NodeStats(j).maxDepth = newDepth
-!        NodeStats(j).maxDepthDate = aDate
-!    }
-!    delta = fabs(newDepth - Node(j).oldDepth)                                 !(5.0.012 - LR)
-!    if ( delta > NodeStats(j).maxDepthChange )                                 !(5.0.012 - LR)
-!        NodeStats(j).maxDepthChange = delta                                   !(5.0.012 - LR)
-!    
-!!!  Following code segment was modified for release 5.0.019.  !!           !(5.0.019 - LR)
-!    ! --- update flooding, ponding, and surcharge statistics
-!    if ( Node(j)%datatype != OUTFALL )
-!    {
-!        if ( newVolume > Node(j).fullVolume .or. Node(j).overflow > 0.0 )
-!        {
-!            NodeStats(j).timeFlooded += tStep
-!            NodeStats(j).volFlooded += Node(j).overflow * tStep
-!            if ( canPond ) NodeStats(j).maxPondedVol =
-!                MAX(NodeStats(j).maxPondedVol,
-!                    (newVolume - Node(j).fullVolume))
-!        }
-!        if ( newDepth + Node(j).invertElev + FUDGE >= Node(j).crownElev )
-!        {
-!                NodeStats(j).timeSurcharged += tStep                          !(5.0.022 - LR)
-!        }
-!    }
-!!!  End of modified code segment.  !!                                      !(5.0.019 - LR)
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: tStep, aDate
+    integer :: k, p
+    double precision :: newVolume, newDepth, delta
+    logical :: canPond !(5.0.019 - LR)
+    if (AllowPonding .and. Node(j)%pondedArea > 0.0) Then
+       canPond = .true.
+    else
+       canPond = .false.
+    end if
+    !canPond = (AllowPonding .and. Node(j).pondedArea > 0.0)               !(5.0.019 - LR)
+    newVolume = Node(j)%newVolume
+    newDepth = Node(j)%newDepth
+
+    ! --- update depth statistics                                             !(5.0.019 - LR)
+    NodeStats(j)%avgDepth = NodeStats(j)%avgDepth + newDepth
+    if ( newDepth > NodeStats(j)%maxDepth ) then
+        NodeStats(j)%maxDepth = newDepth
+        NodeStats(j)%maxDepthDate = aDate
+    end if
+    delta = abs(newDepth - Node(j)%oldDepth)                                 !(5.0.012 - LR)
+    if ( delta > NodeStats(j)%maxDepthChange ) NodeStats(j)%maxDepthChange = delta !(5.0.012 - LR)
+    
+!!  Following code segment was modified for release 5.0.019.  !!           !(5.0.019 - LR)
+    ! --- update flooding, ponding, and surcharge statistics
+    if ( Node(j)%datatype /= E_OUTFALL ) then
+        if ( newVolume > Node(j)%fullVolume .or. Node(j)%overflow > 0.0 ) then
+            NodeStats(j)%timeFlooded =NodeStats(j)%timeFlooded + tStep
+            NodeStats(j)%volFlooded =NodeStats(j)%volFlooded + Node(j)%overflow * tStep
+            if ( canPond ) NodeStats(j)%maxPondedVol = MAX(NodeStats(j)%maxPondedVol, &
+                                                         &(newVolume - Node(j)%fullVolume))
+        end if
+        if ( newDepth + Node(j)%invertElev + FUDGE >= Node(j)%crownElev ) then
+                NodeStats(j)%timeSurcharged = NodeStats(j)%timeSurcharged + tStep                          !(5.0.022 - LR)
+        end if
+    end if
+!!  End of modified code segment.  !!                                      !(5.0.019 - LR)
+
+    ! --- update storage statistics
+    if ( Node(j)%datatype == E_STORAGE ) then
+        k = Node(j)%subIndex
+        StorageStats(k)%avgVol = StorageStats(k)%avgVol + newVolume
+        StorageStats(k)%losses = StorageStats(k)%losses + Storage(Node(j)%subIndex)%losses            !(5.0.018-LR)
+        newVolume = MIN(newVolume, Node(j)%fullVolume)                        !(5.0.019 - LR)
+        if ( newVolume > StorageStats(k)%maxVol ) then
+            StorageStats(k)%maxVol = newVolume
+            StorageStats(k)%maxVolDate = aDate
+        end if
+        StorageStats(k)%maxFlow = MAX(StorageStats(k)%maxFlow, Node(j)%outflow)
+    end if
+
+    ! --- update outfall statistics
+    if ( Node(j)%datatype == E_OUTFALL .and. Node(j)%inflow >= MIN_RUNOFF_FLOW ) then
+        k = Node(j)%subIndex
+        OutfallStats(k)%avgFlow = OutfallStats(k)%avgFlow + Node(j)%inflow
+        OutfallStats(k)%maxFlow = MAX(OutfallStats(k)%maxFlow, Node(j)%inflow)
+        OutfallStats(k)%totalPeriods = OutfallStats(k)%totalPeriods + 1
+        do p=1, Nobjects(E_POLLUT)
+            OutfallStats(k)%totalLoad(p) = OutfallStats(k)%totalLoad(p) + Node(j)%inflow * &
+               &Node(j)%newQual(p) * LperFT3 * tStep * Pollut(p)%mcf
+        end do
+        SysOutfallFlow =SysOutfallFlow + Node(j)%inflow
+    end if
+
+    ! --- update inflow statistics                                            !(5.0.019 - LR)
+    NodeStats(j)%totLatFlow =NodeStats(j)%totLatFlow + ( (Node(j)%oldLatFlow + Node(j)%newLatFlow) * &  !(5.0.012 - LR)
+                                &0.5 * tStep )                                !(5.0.012 - LR)
+
+    NodeStats(j)%maxLatFlow = MAX(Node(j)%newLatFlow, NodeStats(j)%maxLatFlow)
+    if ( Node(j)%inflow > NodeStats(j)%maxInflow ) then
+        NodeStats(j)%maxInflow = Node(j)%inflow
+        NodeStats(j)%maxInflowDate = aDate
+    end if
+
+    ! --- update overflow statistics                                          !(5.0.019 - LR)
+    if ( Node(j)%overflow > NodeStats(j)%maxOverflow ) then
+        NodeStats(j)%maxOverflow = Node(j)%overflow
+        NodeStats(j)%maxOverflowDate = aDate
+    end if
+end subroutine stats_updateNodeStats
 !
-!    ! --- update storage statistics
-!    if ( Node(j)%datatype == STORAGE )
-!    {
-!        k = Node(j).subIndex
-!        StorageStats(k).avgVol += newVolume
-!        StorageStats(k).losses += Storage(Node(j).subIndex).losses            !(5.0.018-LR)
-!        newVolume = MIN(newVolume, Node(j).fullVolume)                        !(5.0.019 - LR)
-!        if ( newVolume > StorageStats(k).maxVol )
-!        {
-!            StorageStats(k).maxVol = newVolume
-!            StorageStats(k).maxVolDate = aDate
-!        }
-!        StorageStats(k).maxFlow = MAX(StorageStats(k).maxFlow, Node(j).outflow)
-!    }
+!=============================================================================
+
+subroutine stats_updateLinkStats(j, tStep, aDate)
 !
-!    ! --- update outfall statistics
-!    if ( Node(j)%datatype == OUTFALL .and. Node(j).inflow >= MIN_RUNOFF_FLOW )
-!    {
-!        k = Node(j).subIndex
-!        OutfallStats(k).avgFlow += Node(j).inflow
-!        OutfallStats(k).maxFlow = MAX(OutfallStats(k).maxFlow, Node(j).inflow)
-!        OutfallStats(k).totalPeriods++
-!        for (p=0 p<Nobjects(POLLUT) p++)
-!        {
-!            OutfallStats(k).totalLoad(p) += Node(j).inflow *
-!                Node(j).newQual(p) * LperFT3 * tStep * Pollut(p).mcf
-!        }
-!        SysOutfallFlow += Node(j).inflow
-!    }
+!  Input:   j = link index
+!           tStep = routing time step (sec)
+!           aDate = current date/time
+!  Output:  none
+!  Purpose: updates flow statistics for a link.
 !
-!    ! --- update inflow statistics                                            !(5.0.019 - LR)
-!    NodeStats(j).totLatFlow += ( (Node(j).oldLatFlow + Node(j).newLatFlow) *   !(5.0.012 - LR)
-!                                 0.5 * tStep )                                !(5.0.012 - LR)
-!
-!    NodeStats(j).maxLatFlow = MAX(Node(j).newLatFlow, NodeStats(j).maxLatFlow)
-!    if ( Node(j).inflow > NodeStats(j).maxInflow )
-!    {
-!        NodeStats(j).maxInflow = Node(j).inflow
-!        NodeStats(j).maxInflowDate = aDate
-!    }
-!
-!    ! --- update overflow statistics                                          !(5.0.019 - LR)
-!    if ( Node(j).overflow > NodeStats(j).maxOverflow )
-!    {
-!        NodeStats(j).maxOverflow = Node(j).overflow
-!        NodeStats(j).maxOverflowDate = aDate
-!    }
-!}
-!
-!!=============================================================================
-!
-!void  stats_updateLinkStats(int j, double tStep, DateTime aDate)
-!!
-!!  Input:   j = link index
-!!           tStep = routing time step (sec)
-!!           aDate = current date/time
-!!  Output:  none
-!!  Purpose: updates flow statistics for a link.
-!!
-!{
-!    int    k
-!    double q, v
-!    double dq                                                                 !(5.0.010 - LR)
-!
-!    ! --- update max. flow
-!    dq = arrLink(j).newFlow - arrLink(j).oldFlow                                    !(5.0.010 - LR)
-!    q = fabs(arrLink(j).newFlow)
-!    if ( q > LinkStats(j).maxFlow )
-!    {
-!        LinkStats(j).maxFlow = q
-!        LinkStats(j).maxFlowDate = aDate
-!    }
-!
-!    ! --- update max. velocity
-!    v = link_getVelocity(j, q, arrLink(j).newDepth)
-!    if ( v > LinkStats(j).maxVeloc )
-!    {
-!        LinkStats(j).maxVeloc = v
-!        LinkStats(j).maxVelocDate = aDate
-!    }
-!
-!    ! --- update max. depth
-!    if ( arrLink(j).newDepth > LinkStats(j).maxDepth )
-!    {
-!        LinkStats(j).maxDepth = arrLink(j).newDepth
-!    }
-!
-!    if ( arrLink(j)%datatype == PUMP )
-!    {
-!        if ( q >= arrLink(j).qFull )
-!            LinkStats(j).timeFullFlow += tStep                                !(5.0.012 - LR)
-!        if ( q > MIN_RUNOFF_FLOW )                                             !(5.0.012 - LR)
-!        {                                                                      !(5.0.012 - LR)
-!            k = arrLink(j).subIndex                                              !(5.0.012 - LR)
-!            PumpStats(k).minFlow = MIN(PumpStats(k).minFlow, q)               !(5.0.022 - LR)
-!            PumpStats(k).maxFlow = LinkStats(j).maxFlow                       !(5.0.012 - LR)
-!            PumpStats(k).avgFlow += q                                         !(5.0.012 - LR)
-!            PumpStats(k).volume += q*tStep                                    !(5.0.012 - LR)
-!            PumpStats(k).utilized += tStep                                    !(5.0.012 - LR)
-!            PumpStats(k).energy += link_getPower(j)*tStep/3600.0              !(5.0.012 - LR)
-!            if ( arrLink(j).flowClass == DN_DRY )                                 !(5.0.022 - LR)
-!                PumpStats(k).offCurveLow += tStep                             !(5.0.022 - LR)
-!            if ( arrLink(j).flowClass == UP_DRY )                                 !(5.0.022 - LR)
-!                PumpStats(k).offCurveHigh += tStep                            !(5.0.022 - LR)
-!            if ( arrLink(j).oldFlow < MIN_RUNOFF_FLOW )                           !(5.0.022 - LR)
-!                PumpStats(k).startUps++                                       !(5.0.022 - LR)
-!            PumpStats(k).totalPeriods++                                       !(5.0.012 - LR)
-!            LinkStats(j).timeSurcharged += tStep                              !(5.0.012 - LR)
-!            LinkStats(j).timeFullUpstream += tStep                            !(5.0.012 - LR)
-!            LinkStats(j).timeFullDnstream += tStep                            !(5.0.012 - LR)
-!        }                                                                      !(5.0.012 - LR) 
-!    }
-!    else if ( arrLink(j)%datatype == CONDUIT )
-!    {
-!        ! --- update sums used to compute avg. Fr and flow change
-!        LinkStats(j).avgFroude += arrLink(j).froude 
-!        LinkStats(j).avgFlowChange += fabs(dq)
-!    
-!        ! --- update flow classification distribution
-!        k = arrLink(j).flowClass
-!        if ( k >= 0 .and. k < MAX_FLOW_CLASSES )
-!        {
-!            ++LinkStats(j).timeInFlowClass(k)
-!        }
-!
-!        ! --- update time conduit is full
-!        k = arrLink(j).subIndex
-!        if ( q >= arrLink(j).qFull ) LinkStats(j).timeFullFlow += tStep          !(5.0.012 - LR) )
-!        if ( Conduit(k).capacityLimited )                                      !(5.0.012 - LR)
-!            LinkStats(j).timeCapacityLimited += tStep                         !(5.0.012 - LR)
-!        if ( arrLink(j).newDepth >= arrLink(j).xsect.yFull )                         !(5.0.012 - LR)
-!        {
-!            LinkStats(j).timeSurcharged += tStep
-!            LinkStats(j).timeFullUpstream += tStep                            !(5.0.012 - LR)
-!            LinkStats(j).timeFullDnstream += tStep                            !(5.0.012 - LR)
-!        }
-!        else if ( Conduit(k).a1 >= arrLink(j).xsect.aFull )                       !(5.0.012 - LR)
-!            LinkStats(j).timeFullUpstream += tStep                            !(5.0.012 - LR)
-!        else if ( Conduit(k).a2 >= arrLink(j).xsect.aFull )                       !(5.0.012 - LR)
-!            LinkStats(j).timeFullDnstream += tStep                            !(5.0.012 - LR)
-!    }
-!
-!    ! --- update flow turn count                                              !(5.0.010 - LR)
-!    k = LinkStats(j).flowTurnSign                                             !(5.0.010 - LR)
-!    LinkStats(j).flowTurnSign = SGN(dq)                                       !(5.0.010 - LR)
-!    if ( fabs(dq) > 0.001 .and.  k * LinkStats(j).flowTurnSign < 0 )              !(5.0.010 - LR)
-!            LinkStats(j).flowTurns++                                          !(5.0.010 - LR)
-!}
+    use headers
+    use modLink
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: tStep, aDate
+    integer ::    k
+    double precision :: q, v
+    double precision :: dq       !(5.0.010 - LR)
+
+    ! --- update max. flow
+    dq = arrLink(j)%newFlow - arrLink(j)%oldFlow                                    !(5.0.010 - LR)
+    q = abs(arrLink(j)%newFlow)
+    if ( q > LinkStats(j)%maxFlow ) then
+        LinkStats(j)%maxFlow = q
+        LinkStats(j)%maxFlowDate = aDate
+    end if
+
+    ! --- update max. velocity
+    v = link_getVelocity(j, q, arrLink(j)%newDepth)
+    if ( v > LinkStats(j)%maxVeloc ) then
+        LinkStats(j)%maxVeloc = v
+        LinkStats(j)%maxVelocDate = aDate
+    end if
+
+    ! --- update max. depth
+    if ( arrLink(j)%newDepth > LinkStats(j)%maxDepth ) then
+        LinkStats(j)%maxDepth = arrLink(j)%newDepth
+    end if
+
+    if ( arrLink(j)%datatype == E_PUMP ) then
+        if ( q >= arrLink(j)%qFull ) LinkStats(j)%timeFullFlow =LinkStats(j)%timeFullFlow + tStep  !(5.0.012 - LR)
+        if ( q > MIN_RUNOFF_FLOW ) then                                        !(5.0.012 - LR)
+            k = arrLink(j)%subIndex                                              !(5.0.012 - LR)
+            PumpStats(k)%minFlow = MIN(PumpStats(k)%minFlow, q)               !(5.0.022 - LR)
+            PumpStats(k)%maxFlow = LinkStats(j)%maxFlow                       !(5.0.012 - LR)
+            PumpStats(k)%avgFlow =PumpStats(k)%avgFlow + q                    !(5.0.012 - LR)
+            PumpStats(k)%volume = PumpStats(k)%volume + q*tStep               !(5.0.012 - LR)
+            PumpStats(k)%utilized =PumpStats(k)%utilized + tStep              !(5.0.012 - LR)
+            PumpStats(k)%energy =PumpStats(k)%energy + link_getPower(j)*tStep/3600.0  !(5.0.012 - LR)
+            if ( arrLink(j)%flowClass == DN_DRY ) then                            !(5.0.022 - LR)
+                PumpStats(k)%offCurveLow =PumpStats(k)%offCurveLow + tStep        !(5.0.022 - LR)
+            end if
+            if ( arrLink(j)%flowClass == UP_DRY ) then                           !(5.0.022 - LR)
+                PumpStats(k)%offCurveHigh =PumpStats(k)%offCurveHigh + tStep     !(5.0.022 - LR)
+            end if
+            if ( arrLink(j)%oldFlow < MIN_RUNOFF_FLOW ) then                    !(5.0.022 - LR)
+                PumpStats(k)%startUps = PumpStats(k)%startUps + 1               !(5.0.022 - LR)
+            end if
+            PumpStats(k)%totalPeriods = PumpStats(k)%totalPeriods + 1         !(5.0.012 - LR)
+            LinkStats(j)%timeSurcharged =LinkStats(j)%timeSurcharged + tStep      !(5.0.012 - LR)
+            LinkStats(j)%timeFullUpstream =LinkStats(j)%timeFullUpstream + tStep  !(5.0.012 - LR)
+            LinkStats(j)%timeFullDnstream =LinkStats(j)%timeFullDnstream + tStep  !(5.0.012 - LR)
+        end if                                                                !(5.0.012 - LR) 
+    else if ( arrLink(j)%datatype == E_CONDUIT ) then
+        ! --- update sums used to compute avg. Fr and flow change
+        LinkStats(j)%avgFroude =LinkStats(j)%avgFroude + arrLink(j)%froude 
+        LinkStats(j)%avgFlowChange =LinkStats(j)%avgFlowChange + abs(dq)
+    
+        ! --- update flow classification distribution
+        k = arrLink(j)%flowClass
+        if ( k >= 0 .and. k < MAX_FLOW_CLASSES ) then
+            LinkStats(j)%timeInFlowClass(k) = LinkStats(j)%timeInFlowClass(k) + 1
+        end if
+
+        ! --- update time conduit is full
+        k = arrLink(j)%subIndex
+        if ( q >= arrLink(j)%qFull ) LinkStats(j)%timeFullFlow =LinkStats(j)%timeFullFlow + tStep  !(5.0.012 - LR) )
+        if ( Conduit(k)%capacityLimited ) &                                    !(5.0.012 - LR)
+           &LinkStats(j)%timeCapacityLimited =LinkStats(j)%timeCapacityLimited + tStep  !(5.0.012 - LR)
+        if ( arrLink(j)%newDepth >= arrLink(j)%xsect%yFull ) then                   !(5.0.012 - LR)
+            LinkStats(j)%timeSurcharged =LinkStats(j)%timeSurcharged + tStep
+            LinkStats(j)%timeFullUpstream = LinkStats(j)%timeFullUpstream + tStep  !(5.0.012 - LR)
+            LinkStats(j)%timeFullDnstream = LinkStats(j)%timeFullDnstream + tStep  !(5.0.012 - LR)
+        else if ( Conduit(k)%a1 >= arrLink(j)%xsect%aFull ) then                  !(5.0.012 - LR)
+            LinkStats(j)%timeFullUpstream =LinkStats(j)%timeFullUpstream + tStep  !(5.0.012 - LR)
+        else if ( Conduit(k)%a2 >= arrLink(j)%xsect%aFull ) then                  !(5.0.012 - LR)
+            LinkStats(j)%timeFullDnstream =LinkStats(j)%timeFullDnstream + tStep  !(5.0.012 - LR)
+        end if
+    end if
+
+    ! --- update flow turn count                                              !(5.0.010 - LR)
+    k = LinkStats(j)%flowTurnSign                                             !(5.0.010 - LR)
+    LinkStats(j)%flowTurnSign = SGN(dq)                                       !(5.0.010 - LR)
+    if ( abs(dq) > 0.001 .and.  k * LinkStats(j)%flowTurnSign < 0 ) &            !(5.0.010 - LR)
+           &LinkStats(j)%flowTurns = LinkStats(j)%flowTurns + 1               !(5.0.010 - LR)
+end subroutine stats_updateLinkStats
 !
 !!=============================================================================
 !

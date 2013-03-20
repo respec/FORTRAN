@@ -786,6 +786,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{01A1EA19-1459-454A-B953-3A5F3F624B3F}"
         }
+        "swmm5futil.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{1073D907-0C00-47E4-8E90-CD24AAF32416}"
+        }
         "toposort.f95"
         {
         "ProjRelPath" = "T"

@@ -285,6 +285,7 @@ subroutine execRoutingStep(links, dt)
     use consts
     use enums
     use headers
+    use modLink
     implicit none
     integer, intent(in) :: links(:)
     double precision, intent (in) :: dt
@@ -1160,7 +1161,7 @@ double precision function getArea(xsect, y)
     use headers
     use modXsect
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: y
     double precision :: ym
     ym = y
