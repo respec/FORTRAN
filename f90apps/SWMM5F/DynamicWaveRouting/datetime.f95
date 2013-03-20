@@ -614,4 +614,17 @@ integer function datetime_daysPerMonth( year,  month)
 end function datetime_daysPerMonth
 
 !=============================================================================
+!this is to replace the getDateTime routine in the swmm5f.f95
+!aStartDateTime is the StartDateTime global
+!  Input:   elapsedSec = elapsed seconds
+!  Output:  returns date/time value
+!  Purpose: finds calendar date/time value for elapsed milliseconds of
+!           simulation time.
+
+double precision function getDateTime(aStartDateTime, elapsedSec)
+     implicit none
+     double precision, intent(in) :: aStartDateTime, elapsedSec
+     getDateTime = datetime_addSeconds(aStartDateTime, elapsedSec/1000.0)
+end function getDateTime
+
 end module modDateTime

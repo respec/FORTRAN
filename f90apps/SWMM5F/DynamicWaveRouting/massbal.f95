@@ -236,57 +236,48 @@ end subroutine massbal_close
 
 !!=============================================================================
 !
-!void massbal_report()
-!!
-!!  Input:   none
-!!  Output:  none
-!!  Purpose: reports mass balance results.
-!!
-!{
-!    int    j
-!    double gwArea = 0.0
+subroutine massbal_report()
 !
-!    if ( Nobjects(SUBCATCH) > 0 )
-!    {
-!        if ( massbal_getRunoffError() > MAX_RUNOFF_BALANCE_ERR ||
-!             RptFlags.continuity == TRUE
-!           ) report_writeRunoffError(&RunoffTotals, TotalArea)
+!  Input:   none
+!  Output:  none
+!  Purpose: reports mass balance results.
 !
-!        if ( Nobjects(POLLUT) > 0 && !IgnoreQuality )                          !(5.0.018 - LR)
-!        {
-!            if ( massbal_getLoadingError() > MAX_RUNOFF_BALANCE_ERR ||
-!                 RptFlags.continuity == TRUE
-!               ) report_writeLoadingError(LoadingTotals)
-!        }
-!    }
+    use headers
+    implicit none
+    integer ::    j
+    double precision :: gwArea
+    gwArea = 0.0
+
+!    if ( Nobjects(E_SUBCATCH) > 0 ) then
+!        if ( massbal_getRunoffError() > MAX_RUNOFF_BALANCE_ERR .or. &
+!            &RptFlags%continuity) call report_writeRunoffError(RunoffTotals, TotalArea)
 !
-!    if ( Nobjects(AQUIFER) > 0  && !IgnoreGwater )                             !(5.0.018 - LR)
-!    {
-!        if ( massbal_getGwaterError() > MAX_RUNOFF_BALANCE_ERR ||
-!             RptFlags.continuity == TRUE )
-!        {
-!            for ( j = 0 j < Nobjects(SUBCATCH) j++ )
-!            {
-!                if ( Subcatch(j).groundwater ) gwArea += Subcatch(j).area
-!            }
-!            if ( gwArea > 0.0 ) report_writeGwaterError(&GwaterTotals, gwArea)
-!       }
-!    }
+!        if ( Nobjects(E_POLLUT) > 0 .and. .not. IgnoreQuality ) then                    !(5.0.018 - LR)
+!            if ( massbal_getLoadingError() > MAX_RUNOFF_BALANCE_ERR .or. &
+!                &RptFlags%continuity) call report_writeLoadingError(LoadingTotals)
+!        end if
+!    end if
 !
-!    if ( Nobjects(NODE) > 0 && !IgnoreRouting )                                !(5.0.018 - LR)
-!    {
-!        if ( massbal_getFlowError() > MAX_FLOW_BALANCE_ERR ||
-!             RptFlags.continuity == TRUE
-!           ) report_writeFlowError(&FlowTotals)
-!    
-!        if ( Nobjects(POLLUT) > 0 && !IgnoreQuality )                          !(5.0.018 - LR)
-!        {
-!            if ( massbal_getQualError() > MAX_FLOW_BALANCE_ERR ||
-!                 RptFlags.continuity == TRUE
-!               ) report_writeQualError(QualTotals)
-!        }
-!    }
-!}
+!    if ( Nobjects(E_AQUIFER) > 0  .and. .not. IgnoreGwater ) then                        !(5.0.018 - LR)
+!        if ( massbal_getGwaterError() > MAX_RUNOFF_BALANCE_ERR .or. &
+!            &RptFlags%continuity) then
+!            do j =1, Nobjects(E_SUBCATCH)
+!                if ( Subcatch(j)%groundwater ) gwArea =gwArea + Subcatch(j)%area
+!            end do
+!            if ( gwArea > 0.0 ) call report_writeGwaterError(GwaterTotals, gwArea)
+!        end if
+!    end if
+
+    if ( Nobjects(E_NODE) > 0 .and. .not. IgnoreRouting ) then                           !(5.0.018 - LR)
+        if ( massbal_getFlowError() > MAX_FLOW_BALANCE_ERR .or. &
+            &RptFlags%continuity) call report_writeFlowError(FlowTotals)
+    
+        if ( Nobjects(E_POLLUT) > 0 .and. .not. IgnoreQuality ) then                     !(5.0.018 - LR)
+            if ( massbal_getQualError() > MAX_FLOW_BALANCE_ERR .or. &
+                &RptFlags%continuity) call report_writeQualError(QualTotals)
+        end if
+    end if
+end subroutine massbal_report
 !
 !=============================================================================
 
@@ -560,37 +551,40 @@ subroutine massbal_updateRoutingTotals(tStep)
     end do
 end subroutine massbal_updateRoutingTotals
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function massbal_getStorage(isFinalStorage)
 !
-!double massbal_getStorage(char isFinalStorage)
-!!
-!!  Input:   isFinalStorage = TRUE if at final time period
-!!  Output:  returns storage volume used (ft3)
-!!  Purpose: computes total system storage (nodes + links) filled
-!!
-!{
-!    int    j
-!    double totalStorage = 0.0
-!    double nodeStorage
+!  Input:   isFinalStorage = TRUE if at final time period
+!  Output:  returns storage volume used (ft3)
+!  Purpose: computes total system storage (nodes + links) filled
 !
-!    ! --- get volume in nodes                                                 !(5.0.017 - LR)
-!    for (j = 0 j < Nobjects(NODE) j++)
-!    {
-!        nodeStorage = Node(j).newVolume
-!        if ( isFinalStorage ) NodeOutflow(j) += nodeStorage
-!        totalStorage += nodeStorage
-!    }
-!
-!    ! --- skip final link storage for Steady Flow routing                     !(5.0.017 - LR)
-!    if ( isFinalStorage && RouteModel == SF ) return totalStorage             !(5.0.017 - LR)
-!
-!    ! --- add on volume stored in links                                       !(5.0.017 - LR)
-!    for (j = 0 j < Nobjects(LINK) j++)
-!    {
-!        totalStorage += arrLink(j).newVolume
-!    }
-!    return totalStorage
-!}
+    use headers
+    implicit none
+    logical, intent(in) :: isFinalStorage
+    integer ::    j
+    double precision :: totalStorage
+    double precision :: nodeStorage
+    totalStorage = 0.0
+    ! --- get volume in nodes                                                 !(5.0.017 - LR)
+    do j =1, Nobjects(E_NODE)
+        nodeStorage = Node(j)%newVolume
+        if ( isFinalStorage ) NodeOutflow(j) =NodeOutflow(j) + nodeStorage
+        totalStorage =totalStorage + nodeStorage
+    end do
+
+    ! --- skip final link storage for Steady Flow routing                     !(5.0.017 - LR)
+    if ( isFinalStorage .and. RouteModel == SF ) then
+        massbal_getStorage = totalStorage             !(5.0.017 - LR)
+        return
+    end if
+
+    ! --- add on volume stored in links                                       !(5.0.017 - LR)
+    do j =1, Nobjects(LINK)
+        totalStorage =totalStorage + arrLink(j)%newVolume
+    end do
+    massbal_getStorage = totalStorage
+end function massbal_getStorage
 !
 !!=============================================================================
 !
@@ -781,134 +775,122 @@ end subroutine massbal_updateRoutingTotals
 !
 !!=============================================================================
 !
-!double massbal_getFlowError()
-!!
-!!  Input:   none
-!!  Output:  none
-!!  Purpose: computes flow routing mass balance error.
-!!
-!{
-!    double totalInflow
-!    double totalOutflow
+double precision function massbal_getFlowError()
 !
-!    ! --- get final volume of nodes and links
-!    FlowTotals.finalStorage = massbal_getStorage(TRUE)
+!  Input:   none
+!  Output:  none
+!  Purpose: computes flow routing mass balance error.
 !
-!    ! --- compute % difference between total inflow and outflow
-!    totalInflow  = FlowTotals.dwInflow +
-!                   FlowTotals.wwInflow +
-!                   FlowTotals.gwInflow +
-!                   FlowTotals.iiInflow +
-!                   FlowTotals.exInflow +
-!                   FlowTotals.initStorage
-!    totalOutflow = FlowTotals.flooding +
-!                   FlowTotals.outflow +
-!                   FlowTotals.reacted + 
-!                   FlowTotals.finalStorage
-!    FlowTotals.pctError = 0.0
-!    if ( fabs(totalInflow - totalOutflow) < 1.0 )
-!    {
-!        FlowTotals.pctError = TINY
-!    }
-!    else if ( totalInflow > 0.0 )
-!    {
-!        FlowTotals.pctError = 100.0 * (1.0 - totalOutflow / totalInflow)
-!    }
-!    else if ( totalOutflow > 0.0 )
-!    {
-!        FlowTotals.pctError = 100.0 * (totalInflow / totalOutflow - 1.0)
-!    }
-!    FlowError = FlowTotals.pctError
-!    return FlowTotals.pctError
-!}
+    use headers
+    implicit none
+    double precision :: totalInflow
+    double precision :: totalOutflow
+
+    ! --- get final volume of nodes and links
+    FlowTotals%finalStorage = massbal_getStorage(.TRUE.)
+
+    ! --- compute % difference between total inflow and outflow
+    totalInflow  = FlowTotals%dwInflow + &
+                  &FlowTotals%wwInflow + &
+                  &FlowTotals%gwInflow + &
+                  &FlowTotals%iiInflow + &
+                  &FlowTotals%exInflow + &
+                  &FlowTotals%initStorage
+    totalOutflow = FlowTotals%flooding + &
+                  &FlowTotals%outflow + &
+                  &FlowTotals%reacted + &
+                  &FlowTotals%finalStorage
+    FlowTotals%pctError = 0.0
+    if ( abs(totalInflow - totalOutflow) < 1.0 ) then
+        FlowTotals%pctError = P_TINY
+    else if ( totalInflow > 0.0 ) then
+        FlowTotals%pctError = 100.0 * (1.0 - totalOutflow / totalInflow)
+    else if ( totalOutflow > 0.0 ) then
+        FlowTotals%pctError = 100.0 * (totalInflow / totalOutflow - 1.0)
+    end if
+    FlowError = FlowTotals%pctError
+    massbal_getFlowError = FlowTotals%pctError
+end function massbal_getFlowError
 !
 !!=============================================================================
 !
-!double massbal_getQualError()
-!!
-!!  Input:   none
-!!  Output:  none
-!!  Purpose: computes water quality routing mass balance error.
-!!
-!{
-!    int    p                                                                  !(5.0.019 - LR)
-!    double maxQualError = 0.0
-!    !double finalStorage                                                     !(5.0.019 - LR)
-!    double totalInflow
-!    double totalOutflow
-!    double cf
+double precision function massbal_getQualError()
 !
-!    ! --- analyze each pollutant
-!    for (p = 0 p < Nobjects(POLLUT) p++)
-!    {
-!        ! --- get final mass stored in nodes and links
-!        QualTotals(p).finalStorage = massbal_getStoredMass(p)                 !(5.0.019 - LR)
+!  Input:   none
+!  Output:  none
+!  Purpose: computes water quality routing mass balance error.
 !
-!        ! --- compute % difference between total inflow and outflow
-!        totalInflow  = QualTotals(p).dwInflow +
-!                       QualTotals(p).wwInflow +
-!                       QualTotals(p).gwInflow +
-!                       QualTotals(p).iiInflow +
-!                       QualTotals(p).exInflow +
-!                       QualTotals(p).initStorage
-!        totalOutflow = QualTotals(p).flooding +
-!                       QualTotals(p).outflow +
-!                       QualTotals(p).reacted +
-!                       QualTotals(p).finalStorage                             !(5.0.019 - LR)
-!        QualTotals(p).pctError = 0.0
-!        if ( fabs(totalInflow - totalOutflow) < 0.001 )
-!        {
-!            QualTotals(p).pctError = TINY
-!        }
-!        else if ( totalInflow > 0.0 )
-!        {
-!            QualTotals(p).pctError = 100.0 * (1.0 - totalOutflow / totalInflow)
-!        }
-!        else if ( totalOutflow > 0.0 )
-!        {
-!            QualTotals(p).pctError = 100.0 * (totalInflow / totalOutflow - 1.0)
-!        }
-!
-!        ! --- update max. error among all pollutants
-!        if ( fabs(QualTotals(p).pctError) > fabs(maxQualError) )
-!        {
-!            maxQualError = QualTotals(p).pctError
-!        }
-!
-!        ! --- convert totals to reporting units (lbs, kg, or Log(Count))
-!        cf = LperFT3
-!        if ( Pollut(p).units == COUNT )
-!        {
-!            QualTotals(p).dwInflow     = LOG10(cf * QualTotals(p).dwInflow)
-!            QualTotals(p).wwInflow     = LOG10(cf * QualTotals(p).wwInflow)
-!            QualTotals(p).gwInflow     = LOG10(cf * QualTotals(p).gwInflow)
-!            QualTotals(p).iiInflow     = LOG10(cf * QualTotals(p).iiInflow)
-!            QualTotals(p).exInflow     = LOG10(cf * QualTotals(p).exInflow)
-!            QualTotals(p).flooding     = LOG10(cf * QualTotals(p).flooding)
-!            QualTotals(p).outflow      = LOG10(cf * QualTotals(p).outflow)
-!            QualTotals(p).reacted      = LOG10(cf * QualTotals(p).reacted)
-!            QualTotals(p).initStorage  = LOG10(cf * QualTotals(p).initStorage)
-!            QualTotals(p).finalStorage = LOG10(cf * QualTotals(p).finalStorage)
-!        }
-!        else
-!        {
-!            cf = cf * UCF(MASS)
-!            if ( Pollut(p).units == UG ) cf /= 1000.0
-!            QualTotals(p).dwInflow     *= cf
-!            QualTotals(p).wwInflow     *= cf 
-!            QualTotals(p).gwInflow     *= cf 
-!            QualTotals(p).iiInflow     *= cf 
-!            QualTotals(p).exInflow     *= cf 
-!            QualTotals(p).flooding     *= cf 
-!            QualTotals(p).outflow      *= cf 
-!            QualTotals(p).reacted      *= cf 
-!            QualTotals(p).initStorage  *= cf 
-!            QualTotals(p).finalStorage *= cf 
-!        }
-!    }
-!    QualError = maxQualError
-!    return maxQualError
-!}
+    use headers
+    use swmm5futil
+    implicit none
+    integer :: p                                                                  !(5.0.019 - LR)
+    double precision :: maxQualError
+    !double finalStorage                                                     !(5.0.019 - LR)
+    double precision :: totalInflow
+    double precision :: totalOutflow
+    double precision :: cf
+    maxQualError = 0.0
+    ! --- analyze each pollutant
+    do p =1, Nobjects(E_POLLUT)
+        ! --- get final mass stored in nodes and links
+        QualTotals(p)%finalStorage = massbal_getStoredMass(p)                 !(5.0.019 - LR)
+
+        ! --- compute % difference between total inflow and outflow
+        totalInflow  = QualTotals(p)%dwInflow + &
+                      &QualTotals(p)%wwInflow + &
+                      &QualTotals(p)%gwInflow + &
+                      &QualTotals(p)%iiInflow + &
+                      &QualTotals(p)%exInflow + &
+                      &QualTotals(p)%initStorage
+        totalOutflow = QualTotals(p)%flooding + &
+                      &QualTotals(p)%outflow + &
+                      &QualTotals(p)%reacted + &
+                      &QualTotals(p)%finalStorage                             !(5.0.019 - LR)
+        QualTotals(p)%pctError = 0.0
+        if ( abs(totalInflow - totalOutflow) < 0.001 ) then
+            QualTotals(p)%pctError = P_TINY
+        else if ( totalInflow > 0.0 ) then
+            QualTotals(p)%pctError = 100.0 * (1.0 - totalOutflow / totalInflow)
+        else if ( totalOutflow > 0.0 ) then
+            QualTotals(p)%pctError = 100.0 * (totalInflow / totalOutflow - 1.0)
+        end if
+
+        ! --- update max. error among all pollutants
+        if ( abs(QualTotals(p)%pctError) > abs(maxQualError) ) then
+            maxQualError = QualTotals(p)%pctError
+        end if
+
+        ! --- convert totals to reporting units (lbs, kg, or Log(Count))
+        cf = LperFT3
+        if ( Pollut(p)%units == E_COUNT ) then
+            QualTotals(p)%dwInflow     = LOG10(cf * QualTotals(p)%dwInflow)
+            QualTotals(p)%wwInflow     = LOG10(cf * QualTotals(p)%wwInflow)
+            QualTotals(p)%gwInflow     = LOG10(cf * QualTotals(p)%gwInflow)
+            QualTotals(p)%iiInflow     = LOG10(cf * QualTotals(p)%iiInflow)
+            QualTotals(p)%exInflow     = LOG10(cf * QualTotals(p)%exInflow)
+            QualTotals(p)%flooding     = LOG10(cf * QualTotals(p)%flooding)
+            QualTotals(p)%outflow      = LOG10(cf * QualTotals(p)%outflow)
+            QualTotals(p)%reacted      = LOG10(cf * QualTotals(p)%reacted)
+            QualTotals(p)%initStorage  = LOG10(cf * QualTotals(p)%initStorage)
+            QualTotals(p)%finalStorage = LOG10(cf * QualTotals(p)%finalStorage)
+        else
+            cf = cf * UCF(MASS)
+            if ( Pollut(p)%units == UG ) cf = cf / 1000.0
+            QualTotals(p)%dwInflow     = QualTotals(p)%dwInflow     * cf
+            QualTotals(p)%wwInflow     = QualTotals(p)%wwInflow     * cf 
+            QualTotals(p)%gwInflow     = QualTotals(p)%gwInflow     * cf 
+            QualTotals(p)%iiInflow     = QualTotals(p)%iiInflow     * cf 
+            QualTotals(p)%exInflow     = QualTotals(p)%exInflow     * cf 
+            QualTotals(p)%flooding     = QualTotals(p)%flooding     * cf 
+            QualTotals(p)%outflow      = QualTotals(p)%outflow      * cf 
+            QualTotals(p)%reacted      = QualTotals(p)%reacted      * cf 
+            QualTotals(p)%initStorage  = QualTotals(p)%initStorage  * cf 
+            QualTotals(p)%finalStorage = QualTotals(p)%finalStorage * cf 
+        end if
+    end do
+    QualError = maxQualError
+    massbal_getQualError = maxQualError
+end function massbal_getQualError
 !!=============================================================================
 !
 !!!  New function added.  !!                                                !(5.0.012 - LR)
@@ -997,7 +979,6 @@ double precision function massbal_getStepFlowError()
         massbal_getStepFlowError = 0.0
     end if
 end function massbal_getStepFlowError
-
 
 !=============================================================================
 end module

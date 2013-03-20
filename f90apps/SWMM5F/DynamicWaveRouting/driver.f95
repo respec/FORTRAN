@@ -57,6 +57,7 @@ program main
       use consts
       use enums
       use swmm5f
+      use swmm5futil
       use modXsect
       use modLink
       implicit none

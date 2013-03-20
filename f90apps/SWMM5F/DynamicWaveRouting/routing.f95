@@ -111,6 +111,8 @@ subroutine routing_execute(routingModel, routingStep)
     use headers
     use modDateTime
     use modMassbal
+    use modLink
+    use modStats
     implicit none
     
     integer, intent(in) :: routingModel
@@ -122,7 +124,6 @@ subroutine routing_execute(routingModel, routingStep)
     double precision :: stepFlowError                                                    !(5.0.012 - LR)
     
     integer :: flowrout_execute !TODO: this is for .NET compile
-    double precision :: getDateTime
     mstepCount = 1
     actionCount = 0
  
@@ -132,13 +133,13 @@ subroutine routing_execute(routingModel, routingStep)
     call massbal_updateRoutingTotals(routingStep/2.)
 
     ! --- evaluate control rules at current date and elapsed time
-    currentDate = getDateTime(NewRoutingTime)
+    currentDate = getDateTime(StartDateTime, NewRoutingTime)
     do j=1, Nobjects(LINK)
        call link_setTargetSetting(j)                 !(5.0.010 - LR)
     end do
     
-    call controls_evaluate(currentDate, currentDate - StartDateTime, &        !(5.0.010 - LR)
-                     &routingStep/SECperDAY)                                  !(5.0.010 - LR)
+!    call controls_evaluate(currentDate, currentDate - StartDateTime, &        !(5.0.010 - LR)
+!                     &routingStep/SECperDAY)                                  !(5.0.010 - LR)
     
     do j=1, Nobjects(LINK)
         if ( arrLink(j)%targetSetting /= arrLink(j)%setting ) then  !(5.0.010 - LR)         
@@ -150,7 +151,7 @@ subroutine routing_execute(routingModel, routingStep)
     ! --- update value of elapsed routing time (in milliseconds)
     OldRoutingTime = NewRoutingTime
     NewRoutingTime = NewRoutingTime + 1000.0 * routingStep
-    currentDate = getDateTime(NewRoutingTime)
+    currentDate = getDateTime(StartDateTime, NewRoutingTime)
 
     ! --- initialize mass balance totals for time step
     stepFlowError = massbal_getStepFlowError()                                !(5.0.012 - LR)
@@ -171,12 +172,12 @@ subroutine routing_execute(routingModel, routingStep)
         Node(j)%oldLatFlow  = Node(j)%newLatFlow
         Node(j)%newLatFlow  = 0.0
     end do
-    call addExternalInflows(currentDate)
-    call addDryWeatherInflows(currentDate)
-    call addWetWeatherInflows(NewRoutingTime)
-    call addGroundwaterInflows(NewRoutingTime)
-    call addRdiiInflows(currentDate)
-    call addIfaceInflows(currentDate)
+!    call addExternalInflows(currentDate)
+!    call addDryWeatherInflows(currentDate)
+!    call addWetWeatherInflows(NewRoutingTime)
+!    call addGroundwaterInflows(NewRoutingTime)
+!    call addRdiiInflows(currentDate)
+!    call addIfaceInflows(currentDate)
 
     ! --- check if can skip steady state periods
     if ( SkipSteadyState ) then
@@ -214,8 +215,8 @@ subroutine routing_execute(routingModel, routingStep)
     end if
 
     ! --- remove evaporation, infiltration & system outflows from nodes       !(5.0.015 - LR)
-    call removeStorageLosses()                                                     !(5.0.019 - LR)
-    call removeOutflows()
+!    call removeStorageLosses()                                                     !(5.0.019 - LR)
+!    call removeOutflows()
 	
     ! --- update continuity with new totals
     !     applied over 1/2 of routing step

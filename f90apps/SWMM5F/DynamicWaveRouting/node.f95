@@ -103,7 +103,7 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     use consts
     use enums
     use headers
-    use swmm5f
+    use swmm5futil
     implicit none
     integer, intent(in) :: j, nodetype, k
     real, dimension(:), intent(in) :: x
@@ -191,6 +191,34 @@ subroutine node_validate(j)
     if ( Node(j)%datatype == E_DIVIDER ) call divider_validate(j)
 end subroutine node_validate
 !
+
+!=============================================================================
+
+subroutine node_initInflow(j, tStep)
+!
+!  Input:   j = node index
+!           tStep = time step (sec)
+!  Output:  none
+!  Purpose: initializes a node's inflow at start of next time step.
+!
+   use headers
+   implicit none
+   integer, intent(in) :: j
+   double precision, intent(in) :: tStep
+    ! --- initialize inflow & outflow
+    Node(j)%oldFlowInflow = Node(j)%inflow
+    Node(j)%oldNetInflow  = Node(j)%inflow - Node(j)%outflow
+    Node(j)%inflow = Node(j)%newLatFlow
+    Node(j)%outflow = 0.0
+
+    ! --- set overflow to any excess stored volume
+    if ( Node(j)%newVolume > Node(j)%fullVolume ) then
+        Node(j)%overflow = (Node(j)%newVolume - Node(j)%fullVolume) / tStep
+    else 
+        Node(j)%overflow = 0.0
+    end if
+end subroutine node_initInflow
+
 !=============================================================================
 
 subroutine node_initState(j)
@@ -333,23 +361,28 @@ double precision function node_getVolume(j, d)
     end select
 end function node_getVolume
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function node_getSurfArea(j, d)
 !
-!double  node_getSurfArea(int j, double d)
-!!
-!!  Input:   j = node index
-!!           d = water depth (ft)
-!!  Output:  returns surface area of water at a node (ft2)
-!!  Purpose: computes surface area of water stored at a node from water depth.
-!!
-!{
-!    switch (Node(j)%datatype)
-!    {
-!      case STORAGE: return storage_getSurfArea(j, d)
-!      default:      return 0.0        
-!    }
-!}
+!  Input:   j = node index
+!           d = water depth (ft)
+!  Output:  returns surface area of water at a node (ft2)
+!  Purpose: computes surface area of water stored at a node from water depth.
 !
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: d
+    double precision :: storage_getSurfArea
+    select case (Node(j)%datatype)
+      case (E_STORAGE)
+         node_getSurfArea = storage_getSurfArea(j, d)
+      case default
+         node_getSurfArea = 0.0
+    end select
+end function node_getSurfArea
+
 !=============================================================================
 
 double precision function node_getOutflow(j, k)
@@ -486,6 +519,23 @@ end function node_getOutflow
 !    }
 !}
 !
+
+!=============================================================================
+
+subroutine node_setOldHydState(j)
+!
+!  Input:   j = node index
+!  Output:  none
+!  Purpose: replaces a node's old hydraulic state values with new ones.
+!
+   use headers
+   implicit none
+   integer, intent(in) :: j
+    Node(j)%oldDepth    = Node(j)%newDepth
+    Node(j)%oldLatFlow  = Node(j)%newLatFlow
+    Node(j)%oldVolume   = Node(j)%newVolume
+end subroutine node_setOldHydState
+
 !!=============================================================================
 !
 subroutine node_setOutletDepth(j, yNorm, yCrit, z)
@@ -547,32 +597,38 @@ end subroutine node_setOutletDepth
 !    return y
 !}
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function node_getPondedArea(j, d)
 !
-!double node_getPondedArea(int j, double d)
-!!
-!!  Input:   j = node index
-!!           d = water depth (ft)
-!!  Output:  returns surface area of water at a node (ft2)
-!!  Purpose: computes surface area of water at a node based on depth.
-!!
-!{
-!    double a
+!  Input:   j = node index
+!           d = water depth (ft)
+!  Output:  returns surface area of water at a node (ft2)
+!  Purpose: computes surface area of water at a node based on depth.
 !
-!    ! --- use regular getSurfArea function if node not flooded
-!    if ( d <= Node(j).fullDepth || Node(j).pondedArea == 0.0 )
-!    {
-!        return node_getSurfArea(j, d)
-!    }
-!
-!    ! --- compute ponded depth
-!    d = d - Node(j).fullDepth
-!
-!    ! --- use ponded area for flooded node                                    !(5.0.019 - LR)
-!    a = Node(j).pondedArea                                                    !(5.0.019 - LR)
-!    if ( a <= 0.0 ) a = node_getSurfArea(j, Node(j).fullDepth)
-!    return a
-!}
+  use headers
+  implicit none
+  integer, intent(in) :: j
+  double precision, intent(in) :: d
+    double precision :: a, lD
+    double precision :: node_getSurfArea
+    
+    lD = d
+
+    ! --- use regular getSurfArea function if node not flooded
+    if ( lD <= Node(j)%fullDepth .or. Node(j)%pondedArea == 0.0 ) then
+        node_getPondedArea = node_getSurfArea(j, lD)
+        return
+    end if
+
+    ! --- compute ponded depth
+    lD = lD - Node(j)%fullDepth
+
+    ! --- use ponded area for flooded node                                    !(5.0.019 - LR)
+    a = Node(j)%pondedArea                                                    !(5.0.019 - LR)
+    if ( a <= 0.0 ) a = node_getSurfArea(j, Node(j)%fullDepth)
+    node_getPondedArea = a
+end function node_getPondedArea
 !
 !=============================================================================
 
@@ -904,30 +960,36 @@ end function node_getMaxOutflow
 !    }
 !}
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function storage_getSurfArea(j, d)
 !
-!double storage_getSurfArea(int j, double d)
-!!
-!!  Input:   j = node index
-!!           d = depth (ft)
-!!  Output:  returns surface area (ft2)
-!!  Purpose: computes a storage node's surface area from its water depth.
-!!
-!{
-!    double area
-!    int k = Node(j).subIndex
-!    int i = Storage(k).aCurve
-!    if ( i >= 0 )
-!        area = table_lookupEx(&Curve(i), d*UCF(LENGTH))
-!    else
-!    {
-!        if ( Storage(k).aExpon == 0.0 )
-!            area = Storage(k).aConst + Storage(k).aCoeff
-!        else area = Storage(k).aConst + Storage(k).aCoeff *
-!                    pow(Node(j).newDepth*UCF(LENGTH), Storage(k).aExpon)
-!    }
-!    return area / UCF(LENGTH) / UCF(LENGTH)
-!}
+!  Input:   j = node index
+!           d = depth (ft)
+!  Output:  returns surface area (ft2)
+!  Purpose: computes a storage node's surface area from its water depth.
+!
+    use headers
+    use swmm5futil
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: d
+    double precision :: area
+    integer :: k, i
+    k = Node(j)%subIndex
+    i = Storage(k)%aCurve
+    if ( i >= 0 ) then
+        !area = table_lookupEx(Curve(i), d*UCF(LENGTH))
+    else
+        if ( Storage(k)%aExpon == 0.0 ) then
+            area = Storage(k)%aConst + Storage(k)%aCoeff
+        else 
+            area = Storage(k)%aConst + Storage(k)%aCoeff * &
+                   &((Node(j)%newDepth*UCF(LENGTH)) ** Storage(k)%aExpon)
+        end if
+    end if
+    storage_getSurfArea = area / UCF(LENGTH) / UCF(LENGTH)
+end function storage_getSurfArea
 !
 !!=============================================================================
 !

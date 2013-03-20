@@ -553,64 +553,77 @@ logical function xsect_setParams(xsect, datatype, p, aUcf)
     return
 end function xsect_setParams
 !
-!//=============================================================================
+!=============================================================================
+
+subroutine xsect_setIrregXsectParams(xsect)
 !
-!void xsect_setIrregXsectParams(TXsect *xsect)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//  Output:  none
-!//  Purpose: assigns transect parameters to an irregular shaped cross section.
-!//
-!{
-!    int index = xsect->transect;
-!    xsect->yFull = Transect[index].yFull;
-!    xsect->wMax  = Transect[index].wMax;
-!    xsect->aFull = Transect[index].aFull;
-!    xsect->rFull = Transect[index].rFull;
-!    xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);
-!    xsect->sMax = Transect[index].sMax;
-!    xsect->aBot = Transect[index].aMax;
-!}
-!//=============================================================================
+!  Input:   xsect = ptr. to a cross section data structure
+!  Output:  none
+!  Purpose: assigns transect parameters to an irregular shaped cross section.
 !
-!void xsect_setCustomXsectParams(TXsect *xsect)                                 //(5.0.010 - LR)
-!//                                                                             //(5.0.010 - LR)
-!//  Input:   xsect = ptr. to a cross section data structure                    //(5.0.010 - LR)
-!//  Output:  none                                                              //(5.0.010 - LR)
-!//  Purpose: assigns parameters to a custom-shaped cross section.              //(5.0.010 - LR)
-!//                                                                             //(5.0.010 - LR)
-!{                                                                              //(5.0.010 - LR)
-!    int    index = Curve[xsect->transect].refersTo;                            //(5.0.010 - LR)
-!    double yFull = xsect->yFull;                                               //(5.0.010 - LR)
-!    xsect->wMax  = Shape[index].wMax * yFull;                                  //(5.0.010 - LR)
-!    xsect->aFull = Shape[index].aFull * yFull * yFull;                         //(5.0.010 - LR)
-!    xsect->rFull = Shape[index].rFull * yFull;                                 //(5.0.010 - LR)
-!    xsect->sFull = xsect->aFull * pow(xsect->rFull, 2./3.);                    //(5.0.010 - LR)
-!    xsect->sMax  = Shape[index].sMax * yFull * yFull * pow(yFull, 2./3.);      //(5.0.010 - LR)
-!    xsect->aBot  = Shape[index].aMax * yFull * yFull;                          //(5.0.010 - LR)
-!}                                                                              //(5.0.010 - LR)
+   use headers
+   implicit none
+   type(TXsect), intent(inout) :: xsect
+    integer :: index
+    index = xsect%transect
+    xsect%yFull = Transect(index)%yFull
+    xsect%wMax  = Transect(index)%wMax
+    xsect%aFull = Transect(index)%aFull
+    xsect%rFull = Transect(index)%rFull
+    xsect%sFull = xsect%aFull * (xsect%rFull ** (2./3.))
+    xsect%sMax = Transect(index)%sMax
+    xsect%aBot = Transect(index)%aMax
+end subroutine xsect_setIrregXsectParams
+!=============================================================================
 !
-!//=============================================================================
+subroutine xsect_setCustomXsectParams(xsect)                                 !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+!  Input:   xsect = ptr. to a cross section data structure                    !(5.0.010 - LR)
+!  Output:  none                                                              !(5.0.010 - LR)
+!  Purpose: assigns parameters to a custom-shaped cross section.              !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+   use headers
+   implicit none
+   type(TXsect), intent(inout) :: xsect                                                                            !(5.0.010 - LR)
+    integer ::    index                            !(5.0.010 - LR)
+    double precision :: yFull                                             !(5.0.010 - LR)
+    index = Curve(xsect%transect)%refersTo                            !(5.0.010 - LR)
+    yFull = xsect%yFull                                               !(5.0.010 - LR)
+    xsect%wMax  = Shape(index)%wMax * yFull                                  !(5.0.010 - LR)
+    xsect%aFull = Shape(index)%aFull * yFull * yFull                         !(5.0.010 - LR)
+    xsect%rFull = Shape(index)%rFull * yFull                                 !(5.0.010 - LR)
+    xsect%sFull = xsect%aFull * ((xsect%rFull) ** (2./3.))                    !(5.0.010 - LR)
+    xsect%sMax  = Shape(index)%sMax * yFull * yFull * (yFull ** (2./3.))      !(5.0.010 - LR)
+    xsect%aBot  = Shape(index)%aMax * yFull * yFull                          !(5.0.010 - LR)
+end subroutine xsect_setCustomXsectParams                                                                              !(5.0.010 - LR)
 !
-!double xsect_getAmax(TXsect* xsect)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//  Output:  returns area (ft2)
-!//  Purpose: finds xsection area at maximum flow depth.
-!//
-!{
+!!=============================================================================
+!
+double precision function xsect_getAmax(xsect)
+!
+!  Input:   xsect = ptr. to a cross section data structure
+!  Output:  returns area (ft2)
+!  Purpose: finds xsection area at maximum flow depth.
+!
+   use headers
+   implicit none
+   type(TXsect), intent(inout) :: xsect
 !/*
-!    if ( xsect->type == MOD_BASKET )
+!    if ( xsect%type == MOD_BASKET )
 !    {
-!        return xsect->yBot*xsect->wMax +
-!            PI / 4.0 * xsect->wMax * xsect->wMax * (0.96-0.5);
+!        return xsect%yBot*xsect%wMax +
+!            PI / 4.0 * xsect%wMax * xsect%wMax * (0.96-0.5)
 !    }
 !    else
 !*/
-!    if ( xsect->type == IRREGULAR ) return xsect->aBot;
-!    else if ( xsect->type == CUSTOM ) return xsect->aBot;                      //(5.0.010 - LR)
-!    else return Amax[xsect->type] * xsect->aFull;
-!}
+    if ( xsect%datatype == IRREGULAR ) then
+       xsect_getAmax = xsect%aBot
+    else if ( xsect%datatype == CUSTOM ) then
+       xsect_getAmax = xsect%aBot                      !(5.0.010 - LR)
+    else 
+       xsect_getAmax = Amax(xsect%datatype) * xsect%aFull
+    end if
+end function xsect_getAmax
 !
 !=============================================================================
 
@@ -711,91 +724,94 @@ double precision function xsect_getYofA(xsect, a)
 !  Purpose) computes xsection's depth at a given area.
 !
     use headers
+    use xsectdat
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
-    
+    double precision :: lVal
     double precision :: alpha
     alpha = a / xsect%aFull
     
-!    select case ( xsect%datatype )
-!      case (FORCE_MAIN, CIRCULAR)                                     !(5.0.010 - LR)
-!           xsect_getYofA = circ_getYofA(xsect, a)
-!
-!      case (FILLED_CIRCULAR)
-!        xsect_getYofA = filled_circ_getYofA(xsect, a)
-!  
-!      case (EGGSHAPED)
-!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Egg, N_Y_Egg)
-!  
-!      case (HORSESHOE)
-!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Horseshoe, N_Y_Horseshoe)
-!
-!      case (GOTHIC)
-!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Gothic, N_Y_Gothic)
-!
-!      case (CATENARY)
-!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_Catenary, N_Y_Catenary)
-!
-!      case (SEMIELLIPTICAL)
-!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_SemiEllip, N_Y_SemiEllip)
-!
-!      case (BASKETHANDLE)
-!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_BasketHandle, N_Y_BasketHandle)
-!
-!      case (SEMICIRCULAR)
-!        xsect_getYofA = xsect%yFull * lookup(alpha, xs_Y_SemiCirc, N_Y_SemiCirc)
-!
-!      case (HORIZ_ELLIPSE)
-!        xsect_getYofA = xsect%yFull * invLookup(alpha, xs_A_HorizEllipse, N_A_HorizEllipse)
-!
-!      case (VERT_ELLIPSE)
-!        xsect_getYofA = xsect%yFull * invLookup(alpha, xs_A_VertEllipse, N_A_VertEllipse)
-!
-!      case (IRREGULAR)
-!        xsect_getYofA = xsect%yFull * invLookup(alpha, &
-!           &Transect(xsect%transect)%areaTbl, N_TRANSECT_TBL)
-!
-!      case (CUSTOM)                                                             !(5.0.010 - LR)
-!        xsect_getYofA = xsect%yFull * invLookup(alpha, &                               !(5.0.010 - LR)
-!           &Shape(Curve(xsect%transect)%refersTo)%areaTbl, N_SHAPE_TBL)      !(5.0.010 - LR)
-!
-!      case (ARCH)
-!        xsect_getYofA = xsect%yFull * invLookup(alpha, xs_A_Arch, N_A_Arch)
-!
-!      case (RECT_CLOSED) 
-!              xsect_getYofA = a / xsect%wMax
-!
-!      case (RECT_TRIANG) 
-!              xsect_getYofA = rect_triang_getYofA(xsect, a)
-!
-!      case (RECT_ROUND)  
-!              xsect_getYofA = rect_round_getYofA(xsect, a)
-!
-!      case (RECT_OPEN)   
-!              xsect_getYofA = a / xsect%wMax
-!
-!      case (MOD_BASKET)  
-!              xsect_getYofA = mod_basket_getYofA(xsect, a)
-!
-!      case (TRAPEZOIDAL) 
-!              xsect_getYofA = trapez_getYofA(xsect, a)
-!
-!      case (TRIANGULAR)  
-!              xsect_getYofA = triang_getYofA(xsect, a)
-!
-!      case (PARABOLIC)   
-!              xsect_getYofA = parab_getYofA(xsect, a)
-!
-!      case (POWERFUNC)   
-!              xsect_getYofA = powerfunc_getYofA(xsect, a)
-!
-!      case default
-!          xsect_getYofA = 0.0
-!    end select
+    select case ( xsect%datatype )
+      case (FORCE_MAIN, CIRCULAR)                                     !(5.0.010 - LR)
+          lVal = circ_getYofA(xsect, a)
+
+      case (FILLED_CIRCULAR)
+        lVal = filled_circ_getYofA(xsect, a)
+  
+      case (EGGSHAPED)
+        lVal = xsect%yFull * lookup(alpha, xs_Y_Egg, N_Y_Egg)
+  
+      case (HORSESHOE)
+        lVal = xsect%yFull * lookup(alpha, xs_Y_Horseshoe, N_Y_Horseshoe)
+
+      case (GOTHIC)
+        lVal = xsect%yFull * lookup(alpha, xs_Y_Gothic, N_Y_Gothic)
+
+      case (CATENARY)
+        lVal = xsect%yFull * lookup(alpha, xs_Y_Catenary, N_Y_Catenary)
+
+      case (SEMIELLIPTICAL)
+        lVal = xsect%yFull * lookup(alpha, xs_Y_SemiEllip, N_Y_SemiEllip)
+
+      case (BASKETHANDLE)
+        lVal = xsect%yFull * lookup(alpha, xs_Y_BasketHandle, N_Y_BasketHandle)
+
+      case (SEMICIRCULAR)
+        lVal = xsect%yFull * lookup(alpha, xs_Y_SemiCirc, N_Y_SemiCirc)
+
+      case (HORIZ_ELLIPSE)
+        lVal = xsect%yFull * invLookup(alpha, xs_A_HorizEllipse, N_A_HorizEllipse)
+
+      case (VERT_ELLIPSE)
+        lVal = xsect%yFull * invLookup(alpha, xs_A_VertEllipse, N_A_VertEllipse)
+
+      case (IRREGULAR)
+        lVal = xsect%yFull * invLookup(alpha, &
+           &Transect(xsect%transect)%areaTbl, N_TRANSECT_TBL)
+
+      case (CUSTOM)                                                             !(5.0.010 - LR)
+        lVal = xsect%yFull * invLookup(alpha, &                               !(5.0.010 - LR)
+           &Shape(Curve(xsect%transect)%refersTo)%areaTbl, N_SHAPE_TBL)      !(5.0.010 - LR)
+
+      case (ARCH)
+        lVal = xsect%yFull * invLookup(alpha, xs_A_Arch, N_A_Arch)
+
+      case (RECT_CLOSED) 
+              lVal = a / xsect%wMax
+
+      case (RECT_TRIANG) 
+              lVal = rect_triang_getYofA(xsect, a)
+
+      case (RECT_ROUND)  
+              lVal = rect_round_getYofA(xsect, a)
+
+      case (RECT_OPEN)   
+              lVal = a / xsect%wMax
+
+      case (MOD_BASKET)  
+              lVal = mod_basket_getYofA(xsect, a)
+
+      case (TRAPEZOIDAL) 
+              lVal = trapez_getYofA(xsect, a)
+
+      case (TRIANGULAR)  
+              lVal = triang_getYofA(xsect, a)
+
+      case (PARABOLIC)   
+              lVal = parab_getYofA(xsect, a)
+
+      case (POWERFUNC)   
+              lVal = powerfunc_getYofA(xsect, a)
+
+      case default
+          lVal = 0.0
+    end select
+    
+    xsect_getYofA = lVal
 end function xsect_getYofA
 !
-!//=============================================================================
+!!=============================================================================
 !
 double precision function xsect_getAofY(xsect, y)
 !
@@ -807,12 +823,12 @@ double precision function xsect_getAofY(xsect, y)
     use headers
     use xsectdat
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: y
     double precision :: Val
     double precision :: yNorm
-    double precision :: powerfunc_getAofY, parab_getAofY, triang_getAofY, trapez_getAofY
-    double precision :: mod_basket_getAofY, rect_round_getAofY, rect_triang_getAofY, filled_circ_getAofY
+!    double precision :: powerfunc_getAofY, parab_getAofY, triang_getAofY
+!    double precision :: mod_basket_getAofY, rect_round_getAofY, rect_triang_getAofY, filled_circ_getAofY
     yNorm = y / xsect%yFull
     
     if ( y <= 0.0 ) then
@@ -872,7 +888,7 @@ double precision function xsect_getAofY(xsect, y)
     xsect_getAofY = Val
 end function xsect_getAofY
 !
-!//=============================================================================
+!!=============================================================================
 !
 double precision function xsect_getWofY(xsect, y)
 !
@@ -947,7 +963,7 @@ double precision function xsect_getWofY(xsect, y)
     xsect_getWofY = val
 end function xsect_getWofY
 !
-!//=============================================================================
+!!=============================================================================
 !
 double precision function xsect_getRofY(xsect, y)
 !
@@ -963,117 +979,114 @@ double precision function xsect_getRofY(xsect, y)
     implicit none
     type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: y
-    double precision :: yNorm
+    double precision :: yNorm, lVal
     
-    double precision :: xsect_getRofA, powerfunc_getRofY, parab_getRofY, triang_getRofY, trapez_getRofY
-    double precision :: rect_round_getRofY, rect_triang_getRofY
     yNorm = y / xsect%yFull
     
     select case ( xsect%datatype )
       case (FORCE_MAIN, CIRCULAR)
-         xsect_getRofY =  xsect%rFull * lookup(yNorm, xs_R_Circ, N_R_Circ) !(5.0.010 - LR)
-         return
+         lVal =  xsect%rFull * lookup(yNorm, xs_R_Circ, N_R_Circ) !(5.0.010 - LR)
       case (FILLED_CIRCULAR)
         if ( abs(xsect%yBot-0.0) < P_TINY ) then                                  !(5.0.022 - LR)
-            xsect_getRofY = xsect%rFull * lookup(yNorm, xs_R_Circ, N_R_Circ)             !(5.0.022 - LR)
+            lVal = xsect%rFull * lookup(yNorm, xs_R_Circ, N_R_Circ)             !(5.0.022 - LR)
         else
-            xsect_getRofY = filled_circ_getRofY(xsect, y)
+            lVal = filled_circ_getRofY(xsect, y)
         end if
-        return
       case (EGGSHAPED)
-        xsect_getRofY = xsect%rFull * lookup(yNorm, xs_R_Egg, N_R_Egg)
-        return
+        lVal = xsect%rFull * lookup(yNorm, xs_R_Egg, N_R_Egg)
       case (HORSESHOE)
-        xsect_getRofY = xsect%rFull * lookup(yNorm, xs_R_Horseshoe, N_R_Horseshoe)
+        lVal = xsect%rFull * lookup(yNorm, xs_R_Horseshoe, N_R_Horseshoe)
         return
       case (BASKETHANDLE)
-         xsect_getRofY = xsect%rFull * lookup(yNorm, xs_R_Baskethandle, N_R_Baskethandle)
-        return
+         lVal = xsect%rFull * lookup(yNorm, xs_R_Baskethandle, N_R_Baskethandle)
       case (HORIZ_ELLIPSE)
         xsect_getRofY = xsect%rFull * lookup(yNorm, xs_R_HorizEllipse, N_R_HorizEllipse)
-        return
       case (VERT_ELLIPSE)
-         xsect_getRofY = xsect%rFull * lookup(yNorm, xs_R_VertEllipse, N_R_VertEllipse)
-        return
+         lVal = xsect%rFull * lookup(yNorm, xs_R_VertEllipse, N_R_VertEllipse)
       case (ARCH)
-        xsect_getRofY = xsect%rFull * lookup(yNorm, xs_R_Arch, N_R_Arch)
-        return
+        lVal = xsect%rFull * lookup(yNorm, xs_R_Arch, N_R_Arch)
       case (IRREGULAR)
-        xsect_getRofY = xsect%rFull * lookup(yNorm, Transect(xsect%transect)%hradTbl, N_TRANSECT_TBL)
-        return
+        lVal = xsect%rFull * lookup(yNorm, Transect(xsect%transect)%hradTbl, N_TRANSECT_TBL)
       case (CUSTOM) !(5.0.010 - LR)
-        xsect_getRofY = xsect%rFull * lookup(yNorm,Shape(Curve(xsect%transect)%refersTo)%hradTbl, N_SHAPE_TBL) 
-        return
+        lVal = xsect%rFull * lookup(yNorm,Shape(Curve(xsect%transect)%refersTo)%hradTbl, N_SHAPE_TBL) 
       case (RECT_TRIANG)
-        xsect_getRofY = rect_triang_getRofY(xsect, y)
-        return
+        lVal = rect_triang_getRofY(xsect, y)
       case (RECT_ROUND)
-         xsect_getRofY = rect_round_getRofY(xsect, y)
-         return
+         lVal = rect_round_getRofY(xsect, y)
       case (TRAPEZOIDAL)
-        xsect_getRofY = trapez_getRofY(xsect, y)
-        return
+        lVal = trapez_getRofY(xsect, y)
       case (TRIANGULAR)
-         xsect_getRofY = triang_getRofY(xsect, y)
-         return
+         lVal = triang_getRofY(xsect, y)
       case (PARABOLIC)
-         xsect_getRofY = parab_getRofY(xsect, y)
-          return
+         lVal = parab_getRofY(xsect, y)
       case (POWERFUNC)
-         xsect_getRofY = powerfunc_getRofY(xsect, y)
-          return
+         lVal = powerfunc_getRofY(xsect, y)
       case default
-         xsect_getRofY = xsect_getRofA( xsect, xsect_getAofY(xsect, y) )
-         return 
+         lVal = xsect_getRofA( xsect, xsect_getAofY(xsect, y) )
     end select
+    xsect_getRofY = lVal
 end function xsect_getRofY
 !
-!//=============================================================================
+!!=============================================================================
 !
-!double xsect_getRofA(TXsect *xsect, double a)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//           a = area (ft2)
-!//  Output:  returns hydraulic radius (ft)
-!//  Purpose: computes xsection's hydraulic radius at a given area.
-!//
-!{
-!    double cathy;
-!    if ( a <= 0.0 ) return 0.0;
-!    switch ( xsect->type )
-!    {
-!      case HORIZ_ELLIPSE:
-!      case VERT_ELLIPSE:
-!      case ARCH:
-!      case IRREGULAR:
-!      case FILLED_CIRCULAR:
-!      case CUSTOM:                                                             //(5.0.010 - LR)
-!        return xsect_getRofY( xsect, xsect_getYofA(xsect, a) );
+double precision function xsect_getRofA(xsect, a)
 !
-!      case RECT_CLOSED:  return rect_closed_getRofA(xsect, a);
+!  Input:   xsect = ptr. to a cross section data structure
+!           a = area (ft2)
+!  Output:  returns hydraulic radius (ft)
+!  Purpose: computes xsection's hydraulic radius at a given area.
 !
-!      case RECT_OPEN:    return a / (xsect->wMax + 2. * a / xsect->wMax);
-!
-!      case RECT_TRIANG:  return rect_triang_getRofA(xsect, a);
-!
-!      case RECT_ROUND:   return rect_round_getRofA(xsect, a);
-!
-!      case MOD_BASKET:   return mod_basket_getRofA(xsect, a);
-!
-!      case TRAPEZOIDAL:  return trapez_getRofA(xsect, a);
-!
-!      case TRIANGULAR:   return triang_getRofA(xsect, a);
-!
-!      case PARABOLIC:    return parab_getRofA(xsect, a);
-!
-!      case POWERFUNC:    return powerfunc_getRofA(xsect, a);
-!
-!      default:
-!        cathy = xsect_getSofA(xsect, a);
-!        if ( cathy < TINY || a < TINY ) return 0.0;
-!        return pow(cathy/a, 3./2.);
-!    }
-!}
+    use headers
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: a
+    double precision :: lVal
+    double precision :: cathy
+    if ( a <= 0.0 ) then
+       xsect_getRofA = 0.0
+       return
+    end if
+    select case ( xsect%datatype )
+      case (HORIZ_ELLIPSE,VERT_ELLIPSE,ARCH,IRREGULAR,FILLED_CIRCULAR,CUSTOM) !(5.0.010 - LR)
+        lVal = xsect_getRofY( xsect, xsect_getYofA(xsect, a) )
+
+      case (RECT_CLOSED)  
+        lVal = rect_closed_getRofA(xsect, a)
+
+      case (RECT_OPEN)  
+        lVal = a / (xsect%wMax + 2. * a / xsect%wMax)
+
+      case (RECT_TRIANG) 
+       lVal = rect_triang_getRofA(xsect, a)
+
+      case (RECT_ROUND) 
+        lVal = rect_round_getRofA(xsect, a)
+
+      case (MOD_BASKET) 
+        lVal = mod_basket_getRofA(xsect, a)
+
+      case (TRAPEZOIDAL) 
+       lVal = trapez_getRofA(xsect, a)
+
+      case (TRIANGULAR)  
+       lVal = triang_getRofA(xsect, a)
+
+      case (PARABOLIC)  
+        lVal = parab_getRofA(xsect, a)
+
+      case (POWERFUNC)  
+        lVal = powerfunc_getRofA(xsect, a)
+
+      case default
+        cathy = xsect_getSofA(xsect, a)
+        if ( cathy < P_TINY .or. a < P_TINY ) then
+           lVal = 0.0
+        else
+           lVal = (cathy/a) ** (3./2.)
+        end if
+    end select
+    xsect_getRofA = lVal
+end function xsect_getRofA
 !
 !=============================================================================
 
@@ -1134,68 +1147,73 @@ double precision function xsect_getAofS(xsect, s)
     end select
 end function xsect_getAofS
 !
-!//=============================================================================
+!=============================================================================
+
+double precision function xsect_getdSdA(xsect, a)
 !
-!double xsect_getdSdA(TXsect* xsect, double a)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//           a = area (ft2)
-!//  Output:  returns derivative of section factor w.r.t. area (ft^2/3)
-!//  Purpose: computes xsection's derivative of its section factor with 
-!//           respect to area at a given area.
-!//
-!{
-!    switch ( xsect->type )
-!    {
-!      case FORCE_MAIN:                                                         //(5.0.010 - LR)
-!      case CIRCULAR:
-!        return circ_getdSdA(xsect, a);
+!  Input:   xsect = ptr. to a cross section data structure
+!           a = area (ft2)
+!  Output:  returns derivative of section factor w.r.t. area (ft^2/3)
+!  Purpose: computes xsection's derivative of its section factor with 
+!           respect to area at a given area.
 !
-!      case EGGSHAPED:
-!        return tabular_getdSdA(xsect, a, S_Egg, N_S_Egg);
-!  
-!      case HORSESHOE:
-!        return tabular_getdSdA(xsect, a, S_Horseshoe, N_S_Horseshoe);
-!
-!      case GOTHIC:
-!        return tabular_getdSdA(xsect, a, S_Gothic, N_S_Gothic);
-!
-!      case CATENARY:
-!        return tabular_getdSdA(xsect, a, S_Catenary, N_S_Catenary);
-!
-!      case SEMIELLIPTICAL:
-!        return  tabular_getdSdA(xsect, a, S_SemiEllip, N_S_SemiEllip);
-!
-!      case BASKETHANDLE:
-!        return  tabular_getdSdA(xsect, a, S_BasketHandle, N_S_BasketHandle);
-!
-!      case SEMICIRCULAR:
-!        return  tabular_getdSdA(xsect, a, S_SemiCirc, N_S_SemiCirc);
-!
-!      case RECT_CLOSED:
-!        return rect_closed_getdSdA(xsect, a);
-!
-!      case RECT_OPEN:
-!        return rect_open_getdSdA(xsect, a);
-!
-!	  case RECT_TRIANG:
-!		return rect_triang_getdSdA(xsect, a);
-!
-!	  case RECT_ROUND:
-!		return rect_round_getdSdA(xsect, a);
-!
-!	  case MOD_BASKET:
-!		return mod_basket_getdSdA(xsect, a);
-!
-!	  case TRAPEZOIDAL:
-!		return trapez_getdSdA(xsect, a);
-!
-!	  case TRIANGULAR:
-!		return triang_getdSdA(xsect, a);
-!
-!      default: return generic_getdSdA(xsect, a);
-!    }
-!}
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: a
+    double precision :: lVal
+    select case ( xsect%datatype )
+      case (FORCE_MAIN, CIRCULAR)          !(5.0.010 - LR)
+        lVal = circ_getdSdA(xsect, a)
+
+      case (EGGSHAPED)
+        lVal = tabular_getdSdA(xsect, a, xs_S_Egg, N_S_Egg)
+  
+      case (HORSESHOE)
+        lVal = tabular_getdSdA(xsect, a, xs_S_Horseshoe, N_S_Horseshoe)
+
+      case (GOTHIC)
+        lVal = tabular_getdSdA(xsect, a, xs_S_Gothic, N_S_Gothic)
+
+      case (CATENARY)
+        lVal = tabular_getdSdA(xsect, a, xs_S_Catenary, N_S_Catenary)
+
+      case (SEMIELLIPTICAL)
+        lVal =  tabular_getdSdA(xsect, a, xs_S_SemiEllip, N_S_SemiEllip)
+
+      case (BASKETHANDLE)
+        lVal =  tabular_getdSdA(xsect, a, xs_S_BasketHandle, N_S_BasketHandle)
+
+      case (SEMICIRCULAR)
+        lVal =  tabular_getdSdA(xsect, a, xs_S_SemiCirc, N_S_SemiCirc)
+
+      case (RECT_CLOSED)
+        lVal = rect_closed_getdSdA(xsect, a)
+
+      case (RECT_OPEN)
+        lVal = rect_open_getdSdA(xsect, a)
+
+	  case (RECT_TRIANG)
+		lVal = rect_triang_getdSdA(xsect, a)
+
+	  case (RECT_ROUND)
+		lVal = rect_round_getdSdA(xsect, a)
+
+	  case (MOD_BASKET)
+		lVal = mod_basket_getdSdA(xsect, a)
+
+	  case (TRAPEZOIDAL)
+		lVal = trapez_getdSdA(xsect, a)
+
+	  case (TRIANGULAR)
+		lVal = triang_getdSdA(xsect, a)
+
+      case default
+        lVal = generic_getdSdA(xsect, a)
+    end select
+    xsect_getdSdA = lVal
+end function xsect_getdSdA
 !
 !=============================================================================
 
@@ -1272,115 +1290,131 @@ double precision function xsect_getYcrit(xsect, q)
     xsect_getYcrit = MIN(y, xsect%yFull)
 end function xsect_getYcrit
 !
-!//=============================================================================
+!=============================================================================
+
+double precision function generic_getAofS(xsect, s)
 !
-!double generic_getAofS(TXsect* xsect, double s)
-!//
-!//  Input:   xsect = ptr. to a cross section data structure
-!//           s = section factor (ft^8/3)
-!//  Output:  returns area (ft2)
-!//  Purpose: finds area given section factor by
-!//           solving S = A*(A/P(A))^(2/3) using Newton-Raphson iterations.
-!//
-!{
-!    double a, a1, a2, tol;
+!  Input:   xsect = ptr. to a cross section data structure
+!           s = section factor (ft^8/3)
+!  Output:  returns area (ft2)
+!  Purpose: finds area given section factor by
+!           solving S = A*(A/P(A))^(2/3) using Newton-Raphson iterations.
 !
-!    if (s <= 0.0) return 0.0;
+    use headers
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: s
+    double precision :: a, a1, a2, tol
+
+    if (s <= 0.0) then
+       generic_getAofS = 0.0
+       return
+    end if
+
+    ! --- if S is between sMax and sFull then
+    !     bracket A between aFull and aMax
+    if ( (s <= xsect%sMax .and. s >= xsect%sFull) .and. xsect%sMax /= xsect%sFull ) then
+        a1 = xsect%aFull          ! do this because sFull < sMax
+        a2 = xsect_getAmax(xsect)
+    ! --- otherwise bracket A between 0 and aMax
+    else
+        a1 = 0.0
+        a2 = xsect_getAmax(xsect)
+    end if
+
+    ! --- save S & xsect in global variables for access by evalSofA function
+    Xstar = xsect
+    Sstar = s
+
+    ! --- compute starting guess for A
+    a = 0.5 * (a1 + a2)
+
+    ! use the Newton-Raphson root finder function to find A
+    tol = 0.0001 * xsect%aFull
+    call findroot_Newton(a1, a2, a, tol, evalSofA)
+    generic_getAofS = a
+end function generic_getAofS
 !
-!    // --- if S is between sMax and sFull then
-!    //     bracket A between aFull and aMax
-!    if ( (s <= xsect->sMax && s >= xsect->sFull)
-!    &&   xsect->sMax != xsect->sFull )
-!    {
-!        a1 = xsect->aFull;          // do this because sFull < sMax
-!        a2 = xsect_getAmax(xsect);
-!    }
+!=============================================================================
+
+subroutine evalSofA(a, f, df)
 !
-!    // --- otherwise bracket A between 0 and aMax
-!    else
-!    {
-!        a1 = 0.0;
-!        a2 = xsect_getAmax(xsect);
-!    }
+!  Input:   a = area
+!  Output:  f = root finding function
+!           df = derivative of root finding function
+!  Purpose: function used in conjunction with getAofS() that evaluates 
+!           f = S(a) - s and df = dS(a)/dA.
 !
-!    // --- save S & xsect in global variables for access by evalSofA function
-!    Xstar = xsect;
-!    Sstar = s;
+    implicit none
+    double precision, intent(in) :: a
+    double precision, intent(inout) :: f, df
+    double precision :: s
+    s = xsect_getSofA(Xstar, a)
+    f = s - Sstar
+    df = xsect_getdSdA(Xstar, a)
+end subroutine evalSofA
 !
-!    // --- compute starting guess for A
-!    a = 0.5 * (a1 + a2);
+!=============================================================================
+
+double precision function tabular_getdSdA(xsect, a, table, nItems)
 !
-!    // use the Newton-Raphson root finder function to find A
-!    tol = 0.0001 * xsect->aFull;
-!    findroot_Newton(a1, a2, &a, tol, evalSofA);
-!    return a;
-!}
+!  Input:   xsect = ptr. to cross section data structure
+!           a = area (ft2)
+!           table = ptr. to table of section factor v. normalized area
+!           nItems = number of equally spaced items in table
+!  Output:  returns derivative of section factor w.r.t. area (ft^2/3)
+!  Purpose: computes derivative of section factor w.r.t area 
+!           using geometry tables.
 !
-!//=============================================================================
+
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    double precision, dimension(:), intent(in) :: table
+    integer, intent(in) :: nItems
+
+    integer ::    i
+    double precision :: alpha, delta, dSdA
+    alpha = a / xsect%aFull
+    delta = 1.0 / (nItems-1)
+
+    ! --- find which segment of table contains alpha
+    i = int(alpha / delta)
+    if ( i >= nItems - 1 ) i = nItems - 2
+
+    ! --- compute slope from this interval of table
+    dSdA = (table(i+1) - table(i)) / delta
+
+    ! --- convert slope to un-normalized value
+    tabular_getdSdA = dSdA * xsect%sFull / xsect%aFull
+end function tabular_getdSdA
 !
-!void evalSofA(double a, double* f, double* df)
-!//
-!//  Input:   a = area
-!//  Output:  f = root finding function
-!//           df = derivative of root finding function
-!//  Purpose: function used in conjunction with getAofS() that evaluates 
-!//           f = S(a) - s and df = dS(a)/dA.
-!//
-!{
-!    double s = xsect_getSofA(Xstar, a);
-!    *f = s - Sstar;
-!    *df = xsect_getdSdA(Xstar, a);
-!}
+!!=============================================================================
 !
-!//=============================================================================
+double precision function generic_getdSdA(xsect, a)
 !
-!double tabular_getdSdA(TXsect* xsect, double a, double *table, int nItems)
-!//
-!//  Input:   xsect = ptr. to cross section data structure
-!//           a = area (ft2)
-!//           table = ptr. to table of section factor v. normalized area
-!//           nItems = number of equally spaced items in table
-!//  Output:  returns derivative of section factor w.r.t. area (ft^2/3)
-!//  Purpose: computes derivative of section factor w.r.t area 
-!//           using geometry tables.
-!//
-!{
-!    int    i;
-!    double alpha = a / xsect->aFull;
-!    double delta = 1.0 / (nItems-1);
-!    double dSdA;
+!  Input:   xsect = ptr. to cross section data structure
+!           a = area (ft2)
+!  Output:  returns derivative of section factor w.r.t. area (ft^2/3)
+!  Purpose: computes derivative of section factor w.r.t area 
+!           using central difference approximation.
 !
-!    // --- find which segment of table contains alpha
-!    i = (int)(alpha / delta);
-!    if ( i >= nItems - 1 ) i = nItems - 2;
-!
-!    // --- compute slope from this interval of table
-!    dSdA = (table[i+1] - table[i]) / delta;
-!
-!    // --- convert slope to un-normalized value
-!    return dSdA * xsect->sFull / xsect->aFull;
-!}
-!
-!//=============================================================================
-!
-!double generic_getdSdA(TXsect* xsect, double a)
-!//
-!//  Input:   xsect = ptr. to cross section data structure
-!//           a = area (ft2)
-!//  Output:  returns derivative of section factor w.r.t. area (ft^2/3)
-!//  Purpose: computes derivative of section factor w.r.t area 
-!//           using central difference approximation.
-!//
-!{
-!    double a1, a2;
-!    double alpha = a / xsect->aFull;
-!    double alpha1 = alpha - 0.001;
-!    double alpha2 = alpha + 0.001;
-!    if ( alpha1 < 0.0 ) alpha1 = 0.0;
-!    a1 = alpha1 * xsect->aFull;
-!    a2 = alpha2 * xsect->aFull;
-!    return (xsect_getSofA(xsect, a2) - xsect_getSofA(xsect, a1)) / (a2 - a1);
-!}
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    
+    double precision :: a1, a2, alpha, alpha1, alpha2
+
+    alpha = a / xsect%aFull
+    alpha1 = alpha - 0.001
+    alpha2 = alpha + 0.001
+    if ( alpha1 < 0.0 ) alpha1 = 0.0
+    a1 = alpha1 * xsect%aFull
+    a2 = alpha2 * xsect%aFull
+    generic_getdSdA = (xsect_getSofA(xsect, a2) - xsect_getSofA(xsect, a1)) / (a2 - a1)
+end function generic_getdSdA
 !
 !=============================================================================
 
@@ -1404,6 +1438,8 @@ double precision function lookup(x, table, nItems)
     ! --- find which segment of table contains x
     delta = 1.0 / (nItems-1)
     i = int(x / delta)
+    !i = i + 1 !TODO: verify this is the correction needed from C
+    if (i == 0) i = i + 1
     if ( i >= nItems - 1 ) then
        lookup = table(nItems-1) 
        return
@@ -1463,31 +1499,52 @@ double precision function invLookup(y, table, nItems)
     return
 end function invLookup
 !
-!//=============================================================================
+!!=============================================================================
 !
-!int locate(double y, double *table, int nItems)
-!//
-!//  Input:   y = value of dependent variable in a geometry table
-!//           table = ptr. to geometry table
-!//           nItems = number of equally spaced items in table
-!//  Output:  returns index j of table such that table[j-1] <= y <= table[j]
-!//  Purpose: uses bisection method to locate the lowest table index whose
-!//           value does not exceed a given value.
-!//
-!{
-!    int j = 1;
-!    int j1 = 0;
-!    int j2 = nItems;
-!    while ( j2 - j1 > 1)
-!    {
-!        j = (j1 + j2) >> 1;
-!        if ( y > table[j] ) j1 = j;
-!        else                j2 = j;
-!    }
-!    return j - 1;
-!}
+integer function locate(y, table, nItems)
 !
-!//=============================================================================
+!  Input:   y = value of dependent variable in a geometry table
+!           table = ptr. to geometry table
+!           nItems = number of equally spaced items in table
+!  Output:  returns index j of table such that table(j-1) <= y <= table(j)
+!  Purpose: uses bisection method to locate the lowest table index whose
+!           value does not exceed a given value.
+!
+    use headers
+    implicit none
+    double precision, intent(in) :: y
+    integer, intent(in) :: nItems
+    double precision, dimension(:), intent(in) :: table
+    integer :: j, j1, j2
+
+    j = 1
+    j1 = 0
+    j2 = nItems
+    
+    do j = 1, size(table, 1)
+       if (y >= table(j - 1) .and. y <= table(j)) then
+           locate = j
+           return
+       end if
+    end do
+    if (j -1 == 0) then
+       locate = 1
+    else
+       locate = j - 1
+    end if
+    
+!    do while ( j2 - j1 > 1)
+!        j = (j1 + j2) >> 1
+!        if ( y > table(j) ) then
+!           j1 = j
+!        else
+!           j2 = j
+!        end if
+!    end do
+!    locate = j - 1
+end function locate
+!
+!!=============================================================================
 !
 double precision function getQcritical(yc)
 !
@@ -1573,7 +1630,7 @@ double precision function getYcritEnum(xsect, q, y0)
     getYcritEnum = yc
 end function getYcritEnum
 !
-!//=============================================================================
+!!=============================================================================
 
 double precision function getYcritRidder(xsect, q, y0)
 !
@@ -1633,47 +1690,57 @@ double precision function getYcritRidder(xsect, q, y0)
 end function getYcritRidder
 !
 !
-!//=============================================================================
-!//  RECT_CLOSED fuctions
-!//=============================================================================
+!!=============================================================================
+!!  RECT_CLOSED fuctions
+!!=============================================================================
 !
-!double rect_closed_getSofA(TXsect* xsect, double a)
-!{
-!    // --- if a > area corresponding to Smax then
-!    //     interpolate between sMax and Sfull
-!    double alfMax = RECT_ALFMAX;
-!    if ( a / xsect->aFull > alfMax )
-!    {
-!        return xsect->sMax + (xsect->sFull - xsect->sMax) *
-!               (a/xsect->aFull - alfMax) / (1.0 - alfMax);
-!    }
+double precision function rect_closed_getSofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: a
+    
+    ! --- if a > area corresponding to Smax then
+    !     interpolate between sMax and Sfull
+    double precision :: alfMax
+    alfMax = RECT_ALFMAX
+    if ( a / xsect%aFull > alfMax ) then
+        rect_closed_getSofA = xsect%sMax + (xsect%sFull - xsect%sMax) * &
+              &(a/xsect%aFull - alfMax) / (1.0 - alfMax)
+    else
+    ! --- otherwise use regular formula
+        rect_closed_getSofA = a * (xsect_getRofA(xsect, a) ** (2./3.))
+    end if
+end function rect_closed_getSofA
 !
-!    // --- otherwise use regular formula
-!    return a * pow(xsect_getRofA(xsect, a), 2./3.);
-!}
-!
-!double rect_closed_getdSdA(TXsect* xsect, double a)
-!{
-!    double alpha, alfMax, r;
-!
-!    // --- if above level corresponding to sMax, then
-!    //     use slope between sFull & sMax
-!    alfMax = RECT_ALFMAX;
-!    alpha = a / xsect->aFull;
-!    if ( alpha > alfMax )
-!    {
-!        return (xsect->sFull - xsect->sMax) /
-!               ((1.0 - alfMax) * xsect->aFull);
-!    }
-!
-!    // --- for small a/aFull use generic central difference formula
-!    if ( alpha <= 1.0e-30 ) return generic_getdSdA(xsect, a);
-!
-!    // --- otherwise evaluate dSdA = [5/3 - (2/3)(dP/dA)R]R^(2/3)
-!    //     (where P = wetted perimeter & dPdA = 2/width)
-!    r = xsect_getRofA(xsect, a);
-!    return  (5./3. - (2./3.) * (2.0/xsect->wMax) * r) * pow(r, 2./3.);
-!}
+double precision function rect_closed_getdSdA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: a
+    
+    double precision :: alpha, alfMax, r
+
+    ! --- if above level corresponding to sMax, then
+    !     use slope between sFull & sMax
+    alfMax = RECT_ALFMAX
+    alpha = a / xsect%aFull
+    if ( alpha > alfMax ) then
+        rect_closed_getdSdA = (xsect%sFull - xsect%sMax) / ((1.0 - alfMax) * xsect%aFull)
+        return
+    end if
+
+    ! --- for small a/aFull use generic central difference formula
+    if ( alpha <= 1.0e-30 ) then
+        rect_closed_getdSdA = generic_getdSdA(xsect, a)
+        return
+    end if
+
+    ! --- otherwise evaluate dSdA = (5/3 - (2/3)(dP/dA)R)R^(2/3)
+    !     (where P = wetted perimeter & dPdA = 2/width)
+    r = xsect_getRofA(xsect, a)
+    rect_closed_getdSdA =  (5./3. - (2./3.) * (2.0/xsect%wMax) * r) * (r ** (2./3.))
+end function rect_closed_getdSdA
 !
 double precision function rect_closed_getRofA(xsect, a)
     use headers
@@ -1695,36 +1762,49 @@ double precision function rect_closed_getRofA(xsect, a)
 end function rect_closed_getRofA
 !
 !
-!//=============================================================================
-!//  RECT_OPEN fuctions
-!//=============================================================================
+!!=============================================================================
+!!  RECT_OPEN fuctions
+!!=============================================================================
 !
-!double rect_open_getSofA(TXsect* xsect, double a)
-!{
-!    double y = a / xsect->wMax;
-!    double r = a / (2.0*y + xsect->wMax);
-!    return a * pow(r, 2./3.);
-!}
+double precision function rect_open_getSofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision :: a
+    
+    double precision :: y, r
+    y = a / xsect%wMax
+    r = a / (2.0*y + xsect%wMax)
+    
+    rect_open_getSofA = a * (r ** (2./3.))
+end function rect_open_getSofA
+!
+
+double precision function rect_open_getdSdA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision :: a
+
+    double precision :: r, dPdA
+
+    ! --- for small a/aFull use generic central difference formula
+    if ( a / xsect%aFull <= 1.0e-30 )  then
+       rect_open_getdSdA = generic_getdSdA(xsect, a)
+       return
+    end if
+
+    ! --- otherwise evaluate dSdA = (5/3 - (2/3)(dP/dA)R)R^(2/3)
+    !     (where P = wetted perimeter)
+    r = xsect_getRofA(xsect, a)
+    dPdA = 2.0 / xsect%wMax      ! since P = geom2 + 2a/geom2
+    rect_open_getdSdA =  (5./3. - (2./3.) * dPdA * r) * (r ** (2./3.))
+end function rect_open_getdSdA
 !
 !
-!double rect_open_getdSdA(TXsect* xsect, double a)
-!{
-!    double r, dPdA;
-!
-!    // --- for small a/aFull use generic central difference formula
-!    if ( a / xsect->aFull <= 1.0e-30 ) return generic_getdSdA(xsect, a);
-!
-!    // --- otherwise evaluate dSdA = [5/3 - (2/3)(dP/dA)R]R^(2/3)
-!    //     (where P = wetted perimeter)
-!    r = xsect_getRofA(xsect, a);
-!    dPdA = 2.0 / xsect->wMax;      // since P = geom2 + 2a/geom2
-!    return  (5./3. - (2./3.) * dPdA * r) * pow(r, 2./3.);
-!}
-!
-!
-!//=============================================================================
-!//  RECT_TRIANG fuctions
-!//=============================================================================
+!!=============================================================================
+!!  RECT_TRIANG fuctions
+!!=============================================================================
 !
 double precision function rect_triang_getYofA(xsect, a)
     !TXsect* xsect, double a
@@ -1773,62 +1853,90 @@ double precision function rect_triang_getRofA(xsect, a)
     return
 end function rect_triang_getRofA
 
-!double rect_triang_getSofA(TXsect* xsect, double a)
-!{
-!    // --- if a > area corresponding to sMax, then
-!    //     interpolate between sMax and Sfull
-!    double alfMax = RECT_TRIANG_ALFMAX;
-!    if ( a / xsect->aFull > alfMax )
-!        return xsect->sMax + (xsect->sFull - xsect->sMax) *
-!               (a/xsect->aFull - alfMax) / (1.0 - alfMax);
+double precision function rect_triang_getSofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: a
+    
+    ! --- if a > area corresponding to sMax, then
+    !     interpolate between sMax and Sfull
+    double precision :: alfMax
+    alfMax = RECT_TRIANG_ALFMAX
+    if ( a / xsect%aFull > alfMax ) then
+      rect_triang_getSofA = xsect%sMax + (xsect%sFull - xsect%sMax) * &
+              &(a/xsect%aFull - alfMax) / (1.0 - alfMax)
+    ! --- otherwise use regular formula
+    else 
+      rect_triang_getSofA = a * (rect_triang_getRofA(xsect, a) **(2./3.))
+    end if
+end function rect_triang_getSofA
 !
-!    // --- otherwise use regular formula
-!    else return a * pow(rect_triang_getRofA(xsect, a), 2./3.);
-!}
+double precision function rect_triang_getdSdA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: alpha, alfMax, dPdA, r
+
+    ! --- if a > area corresponding to sMax, then
+    !     use slope between sFull & sMax
+    alfMax = RECT_TRIANG_ALFMAX
+    alpha = a / xsect%aFull
+    if ( alpha > alfMax ) then
+        rect_triang_getdSdA = (xsect%sFull - xsect%sMax) / ((1.0 - alfMax) * xsect%aFull)
+        return
+    end if
+
+    ! --- use generic central difference method for very small a
+    if ( alpha <= 1.0e-30 ) then
+       rect_triang_getdSdA = generic_getdSdA(xsect, a)
+       return
+    end if
+
+    ! --- find deriv. of wetted perimeter
+    if ( a > xsect%aBot ) then
+        dPdA = 2.0 / xsect%wMax  ! for upper rectangle
+    else 
+        dPdA = xsect%rBot / sqrt(a * xsect%sBot)  ! for triang. bottom
+    end if
+
+    ! --- get hyd. radius & evaluate section factor derivative formula
+    r = rect_triang_getRofA(xsect, a)
+    rect_triang_getdSdA =  (5./3. - (2./3.) * dPdA * r) * (r ** (2./3.))
+end function rect_triang_getdSdA
 !
-!double rect_triang_getdSdA(TXsect* xsect, double a)
-!{
-!    double alpha, alfMax, dPdA, r;
-!
-!    // --- if a > area corresponding to sMax, then
-!    //     use slope between sFull & sMax
-!    alfMax = RECT_TRIANG_ALFMAX;
-!    alpha = a / xsect->aFull;
-!    if ( alpha > alfMax )
-!        return (xsect->sFull - xsect->sMax) / ((1.0 - alfMax) * xsect->aFull);
-!
-!    // --- use generic central difference method for very small a
-!    if ( alpha <= 1.0e-30 ) return generic_getdSdA(xsect, a);
-!
-!    // --- find deriv. of wetted perimeter
-!    if ( a > xsect->aBot ) dPdA = 2.0 / xsect->wMax;  // for upper rectangle
-!    else dPdA = xsect->rBot / sqrt(a * xsect->sBot);  // for triang. bottom
-!
-!    // --- get hyd. radius & evaluate section factor derivative formula
-!    r = rect_triang_getRofA(xsect, a);
-!    return  (5./3. - (2./3.) * dPdA * r) * pow(r, 2./3.);
-!}
-!
-!double rect_triang_getAofY(TXsect* xsect, double y)
-!{
-!    if ( y <= xsect->yBot ) return y * y * xsect->sBot;         // below upper section
-!    else return xsect->aBot + (y - xsect->yBot) * xsect->wMax;  // above bottom section
-!}
-!
-!double rect_triang_getRofY(TXsect* xsect, double y)
-!{
-!    double y1, p;
-!    y1 = y - xsect->yBot;
-!    if ( y1 <= 0.0 )                             // below upper section
-!        return xsect->sBot / (2. * xsect->rBot);
-!    else                                         // above bottom section
-!    {
-!        p = (2. * xsect->yBot * xsect->rBot) + (2. * y1);
-!        if ( y >= xsect->yFull ) p += xsect->wMax;
-!        return (xsect->aBot + y1 * xsect->wMax) / p;
-!    }
-!}
-!
+double precision function rect_triang_getAofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+
+    if ( y <= xsect%yBot ) then
+       rect_triang_getAofY = y * y * xsect%sBot         ! below upper section
+    else 
+       rect_triang_getAofY = xsect%aBot + (y - xsect%yBot) * xsect%wMax  ! above bottom section
+    end if
+end function rect_triang_getAofY
+
+double precision function rect_triang_getRofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+
+    double precision :: y1, p
+    y1 = y - xsect%yBot
+    if ( y1 <= 0.0 ) then                             ! below upper section
+        rect_triang_getRofY = xsect%sBot / (2. * xsect%rBot)
+    else                                         ! above bottom section
+        p = (2. * xsect%yBot * xsect%rBot) + (2. * y1)
+        if ( y >= xsect%yFull ) p = p + xsect%wMax
+        rect_triang_getRofY = (xsect%aBot + y1 * xsect%wMax) / p
+    end if
+end function rect_triang_getRofY
+
 double precision function rect_triang_getWofY(xsect, y)
     use headers
     implicit none
@@ -1842,13 +1950,13 @@ double precision function rect_triang_getWofY(xsect, y)
 end function rect_triang_getWofY
 !
 !
-!//=============================================================================
-!//  RECT_ROUND fuctions
-!//=============================================================================
+!!=============================================================================
+!!  RECT_ROUND fuctions
+!!=============================================================================
 !
-!//// --- The functions below were re-written to correctly account              //(5.0.014 - LR)
-!////     for the case where the bottom curvature is less than that
-!////     of a half circle.
+!!! --- The functions below were re-written to correctly account              !(5.0.014 - LR)
+!!!     for the case where the bottom curvature is less than that
+!!!     of a half circle.
 !
 double precision function rect_round_getYofA(xsect, a)
     !TXsect* xsect, double a
@@ -1911,98 +2019,116 @@ double precision function rect_round_getRofA(xsect, a)
     return
 end function rect_round_getRofA
 !
-!double rect_round_getSofA(TXsect* xsect, double a)
-!{
-!    double alpha, aFull, sFull;
+double precision function rect_round_getSofA(xsect, a)
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: alpha, aFull, sFull
+
+    ! --- if a > area corresponding to sMax,
+    !     interpolate between sMax and sFull
+    double precision :: alfMax
+    alfMax = RECT_ROUND_ALFMAX
+
+    if ( a / xsect%aFull > alfMax ) then
+        rect_round_getSofA = xsect%sMax + (xsect%sFull - xsect%sMax) * &
+              &(a / xsect%aFull - alfMax) / (1.0 - alfMax)
+    ! --- if above circular invert, use generic function
+    else if ( a > xsect%aBot ) then
+        rect_round_getSofA = a * (xsect_getRofA(xsect, a) ** (2./3.))
+    ! --- otherwise use circular xsection function applied
+    !     to full circular shape of bottom section
+    else
+        aFull = PI * xsect%rBot * xsect%rBot
+        alpha = a / aFull
+        sFull = xsect%sBot
+
+        ! --- use special function for small a/aFull
+        if ( alpha < 0.04 ) then
+            rect_round_getSofA = sFull * getScircular(alpha)
+        ! --- otherwise use table
+        else 
+            rect_round_getSofA = sFull * lookup(alpha, xs_S_Circ, N_S_Circ)
+        end if
+    end if
+end function rect_round_getSofA
 !
-!    // --- if a > area corresponding to sMax,
-!    //     interpolate between sMax and sFull
-!    double alfMax = RECT_ROUND_ALFMAX;
-!    if ( a / xsect->aFull > alfMax )
-!    {
-!        return xsect->sMax + (xsect->sFull - xsect->sMax) *
-!               (a / xsect->aFull - alfMax) / (1.0 - alfMax);
-!    }
+double precision function rect_round_getdSdA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: alfMax, r, dPdA, lVal
+
+    ! --- if a > area corresponding to sMax, then
+    !     use slope between sFull & sMax
+    alfMax = RECT_ROUND_ALFMAX
+    if ( a / xsect%aFull > alfMax ) then
+        lVal = (xsect%sFull - xsect%sMax) /((1.0 - alfMax) * xsect%aFull)
+    ! --- if above circular invert, use analytical function for dS/dA
+    else if ( a > xsect%aBot ) then
+        r = rect_round_getRofA(xsect, a)
+        dPdA = 2.0 / xsect%wMax       ! d(wet perim)/dA for rect.
+        lVal =  (5./3. - (2./3.) * dPdA * r) * (r ** (2./3.))
+    ! --- otherwise use generic finite difference function
+    else 
+        lVal = generic_getdSdA(xsect, a)
+    end if
+    rect_round_getdSdA = lVal
+end function rect_round_getdSdA
 !
-!    // --- if above circular invert, use generic function
-!    else if ( a > xsect->aBot )
-!    {
-!        return a * pow(xsect_getRofA(xsect, a), 2./3.);
-!    }
+double precision function rect_round_getAofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+
+    double precision :: theta1
+
+    ! --- if above circular invert...
+    if ( y > xsect%yBot ) then
+        rect_round_getAofY = xsect%aBot + (y - xsect%yBot) * xsect%wMax
+        return
+    end if
+
+    ! --- find area of circular section
+    theta1 = 2.0*acos(1.0 - y/xsect%rBot)
+    rect_round_getAofY = 0.5 * xsect%rBot * xsect%rBot * (theta1 - sin(theta1))
+end function rect_round_getAofY
 !
-!    // --- otherwise use circular xsection function applied
-!    //     to full circular shape of bottom section
-!    else
-!    {
-!        aFull = PI * xsect->rBot * xsect->rBot;
-!        alpha = a / aFull;
-!        sFull = xsect->sBot;
-!
-!        // --- use special function for small a/aFull
-!        if ( alpha < 0.04 ) return sFull * getScircular(alpha);
-!
-!        // --- otherwise use table
-!        else return sFull * lookup(alpha, S_Circ, N_S_Circ);
-!    }
-!}
-!
-!double rect_round_getdSdA(TXsect* xsect, double a)
-!{
-!    double alfMax, r, dPdA;
-!
-!    // --- if a > area corresponding to sMax, then
-!    //     use slope between sFull & sMax
-!    alfMax = RECT_ROUND_ALFMAX;
-!    if ( a / xsect->aFull > alfMax )
-!    {
-!        return (xsect->sFull - xsect->sMax) /
-!               ((1.0 - alfMax) * xsect->aFull);
-!    }
-!
-!    // --- if above circular invert, use analytical function for dS/dA
-!    else if ( a > xsect->aBot )
-!    {
-!        r = rect_round_getRofA(xsect, a);
-!        dPdA = 2.0 / xsect->wMax;       // d(wet perim)/dA for rect.
-!        return  (5./3. - (2./3.) * dPdA * r) * pow(r, 2./3.);
-!    }
-!
-!    // --- otherwise use generic finite difference function
-!    else return generic_getdSdA(xsect, a);
-!}
-!
-!double rect_round_getAofY(TXsect* xsect, double y)
-!{
-!    double theta1;
-!
-!    // --- if above circular invert...
-!    if ( y > xsect->yBot )
-!        return xsect->aBot + (y - xsect->yBot) * xsect->wMax;
-!
-!    // --- find area of circular section
-!    theta1 = 2.0*acos(1.0 - y/xsect->rBot);
-!    return 0.5 * xsect->rBot * xsect->rBot * (theta1 - sin(theta1));
-!}
-!
-!double rect_round_getRofY(TXsect* xsect, double y)
-!{
-!    double theta1;
-!
-!    // --- if above top of circular bottom, use RofA formula
-!    if ( y <= 0.0 ) return 0.0;
-!    if ( y > xsect->yBot )
-!        return rect_round_getRofA( xsect, rect_round_getAofY(xsect, y) );
-!
-!    // --- find hyd. radius of circular section
-!    theta1 = 2.0*acos(1.0 - y/xsect->rBot);
-!    return 0.5 * xsect->rBot * (1.0 - sin(theta1)) / theta1;
-!}
-!
+double precision function rect_round_getRofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+
+    double precision :: theta1
+
+    ! --- if above top of circular bottom, use RofA formula
+    if ( y <= 0.0 ) then
+       rect_round_getRofY = 0.0
+       return
+    end if
+    if ( y > xsect%yBot ) then
+        rect_round_getRofY = rect_round_getRofA( xsect, rect_round_getAofY(xsect, y) )
+        return
+    end if
+
+    ! --- find hyd. radius of circular section
+    theta1 = 2.0*acos(1.0 - y/xsect%rBot)
+    rect_round_getRofY = 0.5 * xsect%rBot * (1.0 - sin(theta1)) / theta1
+end function rect_round_getRofY
+
 double precision function rect_round_getWofY(xsect, y)
     use headers
     implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
+    
     ! --- return width if depth above circular bottom section
     if ( y > xsect%yBot ) then
         rect_round_getWofY = xsect%wMax
@@ -2013,98 +2139,126 @@ double precision function rect_round_getWofY(xsect, y)
 end function rect_round_getWofY
 !
 !
-!//=============================================================================
-!//  MOD_BASKETHANDLE fuctions
-!//=============================================================================
+!!=============================================================================
+!!  MOD_BASKETHANDLE fuctions
+!!=============================================================================
 !
-!//// --- The functions below were modified to accommodate a more               //(5.0.014 - LR)
-!////     general type of modified baskethandle cross section
-!////     that is the same as an upside down round rectangular shape.
+!!! --- The functions below were modified to accommodate a more               !(5.0.014 - LR)
+!!!     general type of modified baskethandle cross section
+!!!     that is the same as an upside down round rectangular shape.
 !
 !
-!// Note: the variables rBot, yBot, and aBot refer to properties of the
-!//       circular top portion of the cross-section (not the bottom)
+!! Note: the variables rBot, yBot, and aBot refer to properties of the
+!!       circular top portion of the cross-section (not the bottom)
 !
-!double mod_basket_getYofA(TXsect* xsect, double a)
-!{
-!    double alpha, y1;
+double precision function mod_basket_getYofA(xsect, a)
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    
+    double precision :: alpha, y1
+
+    ! --- water level below top of rectangular bottom
+    if ( a <= xsect%aFull - xsect%aBot ) then
+       mod_basket_getYofA = a / xsect%wMax
+       return
+    end if
+
+    ! --- find unfilled top area / area of full circular top
+    alpha = (xsect%aFull - a) / (PI * xsect%rBot * xsect%rBot)
+
+    ! --- find unfilled height
+    if ( alpha < 0.04 ) then
+        y1 = getYcircular(alpha)
+    else
+        y1 = lookup(alpha, xs_Y_Circ, N_Y_Circ)
+    end if
+    
+    y1 = 2.0 * xsect%rBot * y1
+
+    ! --- return difference between full height & unfilled height
+    mod_basket_getYofA = xsect%yFull - y1
+end function mod_basket_getYofA
 !
-!    // --- water level below top of rectangular bottom
-!    if ( a <= xsect->aFull - xsect->aBot ) return a / xsect->wMax;
+double precision function mod_basket_getRofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    
+    double precision :: y1, p, theta1
+
+    ! --- water level is below top of rectangular bottom
+    !     return hyd. radius of rectangle
+    if ( a <= xsect%aFull - xsect%aBot ) then
+        mod_basket_getRofA = a / (xsect%wMax + 2.0 * a / xsect%wMax)
+        return
+    end if
+
+    ! --- find height of empty area
+    y1 = xsect%yFull - mod_basket_getYofA(xsect, a)
+
+    ! --- find angle of circular arc corresponding to this height
+    theta1 = 2.0 * acos(1.0 - y1 / xsect%rBot)
+
+    ! --- find perimeter of wetted portion of circular arc
+    !     (angle of full circular opening was stored in sBot)
+    p = (xsect%sBot - theta1) * xsect%rBot
+
+    ! --- add on wetted perimeter of bottom rectangular area
+    y1 = xsect%yFull - xsect%yBot
+    p =  p + 2.0*y1 + xsect%wMax
+
+    ! --- return area / wetted perimeter
+    mod_basket_getRofA = a / p
+end function mod_basket_getRofA
 !
-!    // --- find unfilled top area / area of full circular top
-!    alpha = (xsect->aFull - a) / (PI * xsect->rBot * xsect->rBot);
+double precision function mod_basket_getdSdA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    
+    double precision :: r, dPdA
+
+    ! --- if water level below top of rectangular bottom but not
+    !     empty then use same code as for rectangular xsection
+    if ( a <= xsect%aFull - xsect%aBot .and. a/xsect%aFull > 1.0e-30 ) then
+        r = a / (xsect%wMax + 2.0 * a / xsect%wMax)
+        dPdA = 2.0 / xsect%wMax
+        mod_basket_getdSdA = (5./3. - (2./3.) * dPdA * r) * (r **(2./3.))
+    ! --- otherwise use generic function
+    else 
+        mod_basket_getdSdA = generic_getdSdA(xsect, a)
+    end if
+end function mod_basket_getdSdA
 !
-!    // --- find unfilled height
-!    if ( alpha < 0.04 ) y1 = getYcircular(alpha);
-!    else                y1 = lookup(alpha, Y_Circ, N_Y_Circ);
-!    y1 = 2.0 * xsect->rBot * y1;
-!
-!    // --- return difference between full height & unfilled height
-!    return xsect->yFull - y1;
-!}
-!
-!double mod_basket_getRofA(TXsect* xsect, double a)
-!{
-!    double y1, p, theta1;
-!
-!    // --- water level is below top of rectangular bottom;
-!    //     return hyd. radius of rectangle
-!    if ( a <= xsect->aFull - xsect->aBot )
-!        return a / (xsect->wMax + 2.0 * a / xsect->wMax);
-!
-!    // --- find height of empty area
-!    y1 = xsect->yFull - mod_basket_getYofA(xsect, a);
-!
-!    // --- find angle of circular arc corresponding to this height
-!    theta1 = 2.0 * acos(1.0 - y1 / xsect->rBot);
-!
-!    // --- find perimeter of wetted portion of circular arc
-!    //     (angle of full circular opening was stored in sBot)
-!    p = (xsect->sBot - theta1) * xsect->rBot;
-!
-!    // --- add on wetted perimeter of bottom rectangular area
-!    y1 = xsect->yFull - xsect->yBot;
-!    p =  p + 2.0*y1 + xsect->wMax;
-!
-!    // --- return area / wetted perimeter
-!    return a / p;
-!}
-!
-!double mod_basket_getdSdA(TXsect* xsect, double a)
-!{
-!    double r, dPdA;
-!
-!    // --- if water level below top of rectangular bottom but not
-!    //     empty then use same code as for rectangular xsection
-!    if ( a <= xsect->aFull - xsect->aBot && a/xsect->aFull > 1.0e-30 )
-!    {
-!        r = a / (xsect->wMax + 2.0 * a / xsect->wMax);
-!        dPdA = 2.0 / xsect->wMax;
-!        return  (5./3. - (2./3.) * dPdA * r) * pow(r, 2./3.);
-!    }
-!
-!    // --- otherwise use generic function
-!    else return generic_getdSdA(xsect, a);
-!}
-!
-!double mod_basket_getAofY(TXsect* xsect, double y)
-!{
-!    double a1, theta1, y1;
-!
-!    // --- if water level is below top of rectangular bottom
-!    //     return depth * width
-!    if ( y <= xsect->yFull - xsect->yBot ) return y * xsect->wMax;
-!
-!    // --- find empty top circular area
-!    y1 = xsect->yFull - y;
-!    theta1 = 2.0*acos(1.0 - y1/xsect->rBot);
-!    a1 = 0.5 * xsect->rBot * xsect->rBot * (theta1 - sin(theta1));
-!
-!    // --- return difference between full and empty areas
-!    return xsect->aFull - a1;
-!}
-!
+double precision function mod_basket_getAofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+    
+    double precision :: a1, theta1, y1
+
+    ! --- if water level is below top of rectangular bottom
+    !     return depth * width
+    if ( y <= xsect%yFull - xsect%yBot ) then
+       mod_basket_getAofY = y * xsect%wMax
+       return
+    end if
+
+    ! --- find empty top circular area
+    y1 = xsect%yFull - y
+    theta1 = 2.0*acos(1.0 - y1/xsect%rBot)
+    a1 = 0.5 * xsect%rBot * xsect%rBot * (theta1 - sin(theta1))
+
+    ! --- return difference between full and empty areas
+    mod_basket_getAofY = xsect%aFull - a1
+end function mod_basket_getAofY
+
 double precision function mod_basket_getWofY(xsect,  y)
 
     use headers
@@ -2129,50 +2283,76 @@ double precision function mod_basket_getWofY(xsect,  y)
 end function mod_basket_getWofY
 !
 !
-!//=============================================================================
-!//  TRAPEZOIDAL fuctions
-!//
-!//  Note: yBot = width of bottom
-!//        sBot = avg. of side slopes
-!//        rBot = length of sides per unit of depth
-!//=============================================================================
+!!=============================================================================
+!!  TRAPEZOIDAL fuctions
+!!
+!!  Note: yBot = width of bottom
+!!        sBot = avg. of side slopes
+!!        rBot = length of sides per unit of depth
+!!=============================================================================
 !
-!double trapez_getYofA(TXsect* xsect, double a)
-!{
-!    if ( xsect->sBot == 0.0 ) return a / xsect->yBot;                          //(5.0.012 - LR)
-!    return ( sqrt( xsect->yBot*xsect->yBot + 4.*xsect->sBot*a )
-!             - xsect->yBot )/(2. * xsect->sBot);
-!}
-!
-!double trapez_getRofA(TXsect* xsect, double a)
-!{
-!    return a / (xsect->yBot + trapez_getYofA(xsect, a) * xsect->rBot);
-!}
-!
-!double trapez_getdSdA(TXsect* xsect, double a)
-!{
-!    double r, dPdA;
-!    // --- use generic central difference method for very small a
-!    if ( a/xsect->aFull <= 1.0e-30 ) return generic_getdSdA(xsect, a);
-!
-!    // --- otherwise use analytical formula:
-!    //     dSdA = [5/3 - (2/3)(dP/dA)R]R^(2/3)
-!    r = trapez_getRofA(xsect, a);
-!    dPdA = xsect->rBot /
-!           sqrt( xsect->yBot * xsect->yBot + 4. * xsect->sBot * a );
-!    return  (5./3. - (2./3.) * dPdA * r) * pow(r, 2./3.);
-!}
-!
-!double trapez_getAofY(TXsect* xsect, double y)
-!{
-!    return ( xsect->yBot + xsect->sBot * y ) * y;
-!}
-!
-!double trapez_getRofY(TXsect* xsect, double y)
-!{
-!    if ( y == 0.0 ) return 0.0;                                                //(5.0.022 - LR)
-!    return trapez_getAofY(xsect, y) / (xsect->yBot + y * xsect->rBot);
-!}
+double precision function trapez_getYofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    if ( abs(xsect%sBot - 0.0) < P_TINY ) then
+        trapez_getYofA = a / xsect%yBot                          !(5.0.012 - LR)
+    else
+        trapez_getYofA = ( sqrt( xsect%yBot*xsect%yBot + 4.*xsect%sBot*a )- xsect%yBot )/(2. * xsect%sBot)
+    end if
+end function trapez_getYofA
+
+double precision function trapez_getRofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    trapez_getRofA = a / (xsect%yBot + trapez_getYofA(xsect, a) * xsect%rBot)
+end function trapez_getRofA
+
+double precision function trapez_getdSdA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: r, dPdA
+    ! --- use generic central difference method for very small a
+    if ( a/xsect%aFull <= 1.0e-30 ) then
+       trapez_getdSdA = generic_getdSdA(xsect, a)
+       return
+    end if
+
+    ! --- otherwise use analytical formula:
+    !     dSdA = (5/3 - (2/3)(dP/dA)R)R^(2/3)
+    r = trapez_getRofA(xsect, a)
+    dPdA = xsect%rBot /sqrt( xsect%yBot * xsect%yBot + 4. * xsect%sBot * a )
+    trapez_getdSdA =  (5./3. - (2./3.) * dPdA * r) * (r ** (2./3.))
+end function trapez_getdSdA
+
+double precision function trapez_getAofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+    trapez_getAofY = ( xsect%yBot + xsect%sBot * y ) * y
+end function trapez_getAofY
+
+double precision function trapez_getRofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+
+    if ( abs(y -0.0) < P_TINY ) then
+       trapez_getRofY = 0.0     !(5.0.022 - LR)
+    else
+       trapez_getRofY = trapez_getAofY(xsect, y) / (xsect%yBot + y * xsect%rBot)
+    end if
+end function trapez_getRofY
 !
 double precision function trapez_getWofY(xsect, y)
     use headers
@@ -2183,41 +2363,64 @@ double precision function trapez_getWofY(xsect, y)
 end function trapez_getWofY
 !
 !
-!//=============================================================================
-!//  TRIANGULAR fuctions
-!//=============================================================================
+!!=============================================================================
+!!  TRIANGULAR fuctions
+!!=============================================================================
 !
-!double triang_getYofA(TXsect* xsect, double a)
-!{
-!    return sqrt(a / xsect->sBot);
-!}
-!
-!double triang_getRofA(TXsect* xsect, double a)
-!{
-!    return a / (2. * triang_getYofA(xsect, a) * xsect->rBot);
-!}
-!
-!double triang_getdSdA(TXsect* xsect, double a)
-!{
-!    double r, dPdA;
-!    // --- use generic finite difference method for very small a
-!    if ( a/xsect->aFull <= 1.0e-30 ) return generic_getdSdA(xsect, a);
-!
-!    // --- evaluate dSdA = [5/3 - (2/3)(dP/dA)R]R^(2/3)
-!    r = triang_getRofA(xsect, a);
-!    dPdA = xsect->rBot / sqrt(a * xsect->sBot);
-!    return  (5./3. - (2./3.) * dPdA * r) * pow(r, 2./3.);
-!}
-!
-!double triang_getAofY(TXsect* xsect, double y)
-!{
-!    return y * y * xsect->sBot;
-!}
-!
-!double triang_getRofY(TXsect* xsect, double y)
-!{
-!    return (y * xsect->sBot) / (2. * xsect->rBot);
-!}
+double precision function triang_getYofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    triang_getYofA = sqrt(a / xsect%sBot)
+end function triang_getYofA
+
+double precision function triang_getRofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    triang_getRofA = a / (2. * triang_getYofA(xsect, a) * xsect%rBot)
+end function triang_getRofA
+
+double precision function triang_getdSdA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: r, dPdA
+    ! --- use generic finite difference method for very small a
+    if ( a/xsect%aFull <= 1.0e-30 ) then
+       triang_getdSdA = generic_getdSdA(xsect, a)
+       return
+    end if
+
+    ! --- evaluate dSdA = (5/3 - (2/3)(dP/dA)R)R^(2/3)
+    r = triang_getRofA(xsect, a)
+    dPdA = xsect%rBot / sqrt(a * xsect%sBot)
+    triang_getdSdA =  (5./3. - (2./3.) * dPdA * r) * (r** (2./3.))
+end function triang_getdSdA
+
+double precision function triang_getAofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+
+    triang_getAofY = y * y * xsect%sBot
+end function triang_getAofY
+
+double precision function triang_getRofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+
+    triang_getRofY = (y * xsect%sBot) / (2. * xsect%rBot)
+end function triang_getRofY
 !
 double precision function triang_getWofY(xsect, y)
     use headers
@@ -2228,97 +2431,153 @@ double precision function triang_getWofY(xsect, y)
 end function triang_getWofY
 !
 !
-!//=============================================================================
-!//  PARABOLIC fuctions
-!//=============================================================================
+!!=============================================================================
+!!  PARABOLIC fuctions
+!!=============================================================================
 !
-!double parab_getYofA(TXsect* xsect, double a)
-!{
-!    return pow( (3./4.) * a / xsect->rBot, 2./3. );
-!}
-!
-!double parab_getRofA(TXsect* xsect, double a)
-!{
-!    if ( a <= 0.0 ) return 0.0;
-!    return a / parab_getPofY( xsect, parab_getYofA(xsect, a) );
-!}
-!
-!double parab_getPofY(TXsect* xsect, double y)
-!{
-!    double x = 2. * sqrt(y) / xsect->rBot;
-!    double t = sqrt(1.0 + x * x);
-!    return 0.5 * xsect->rBot * xsect->rBot * ( x * t + log(x + t) );
-!}
-!
-!double parab_getAofY(TXsect* xsect, double y)
-!{
-!    return (4./3. * xsect->rBot * y * sqrt(y));
-!}
-!
-!double parab_getRofY(TXsect* xsect, double y)
-!{
-!    if ( y <= 0.0 ) return 0.0;
-!    return parab_getAofY(xsect, y) / parab_getPofY(xsect, y);
-!}
-!
+double precision function parab_getYofA(xsect, a)
+   use headers
+   implicit none
+   type(TXsect), intent(in) :: xsect
+   double precision, intent(in) :: a
+    parab_getYofA = ((3./4.) * a / xsect%rBot) ** (2./3. )
+end function parab_getYofA
+
+double precision function parab_getRofA(xsect, a)
+   use headers
+   implicit none
+   type(TXsect), intent(in) :: xsect
+   double precision, intent(in) :: a
+    if ( a <= 0.0 ) then
+       parab_getRofA = 0.0
+    else
+       parab_getRofA = a / parab_getPofY( xsect, parab_getYofA(xsect, a) )
+    end if
+end function parab_getRofA
+
+double precision function parab_getPofY(xsect, y)
+   use headers
+   implicit none
+   type(TXsect), intent(in) :: xsect
+   double precision, intent(in) :: y
+
+    double precision :: x, t
+    x = 2. * sqrt(y) / xsect%rBot
+    t = sqrt(1.0 + x * x)
+    
+    parab_getPofY = 0.5 * xsect%rBot * xsect%rBot * ( x * t + log(x + t) )
+end function parab_getPofY
+
+double precision function parab_getAofY(xsect, y)
+   use headers
+   implicit none
+   type(TXsect), intent(in) :: xsect
+   double precision, intent(in) :: y
+    parab_getAofY = (4./3. * xsect%rBot * y * sqrt(y))
+end function parab_getAofY
+
+double precision function parab_getRofY(xsect, y)
+   use headers
+   implicit none
+   type(TXsect), intent(in) :: xsect
+   double precision, intent(in) :: y
+    if ( y <= 0.0 ) then
+       parab_getRofY = 0.0
+    else
+       parab_getRofY = parab_getAofY(xsect, y) / parab_getPofY(xsect, y)
+    end if
+end function parab_getRofY
+
 double precision function parab_getWofY(xsect, y)
     use headers
     implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: y
 
-    parab_getWofY = 2.0 * xsect%rBot * sqrt(y);
+    parab_getWofY = 2.0 * xsect%rBot * sqrt(y)
 end function parab_getWofY
 !
 !
-!//=============================================================================
-!//  POWERFUNC fuctions
-!//=============================================================================
+!!=============================================================================
+!!  POWERFUNC fuctions
+!!=============================================================================
 !
-!double powerfunc_getYofA(TXsect* xsect, double a)
-!{
-!    return pow(a / xsect->rBot, 1.0 / (xsect->sBot + 1.0));
-!}
+double precision function powerfunc_getYofA(xsect, a)
+
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    
+    powerfunc_getYofA = (a / xsect%rBot) ** (1.0 / (xsect%sBot + 1.0))
+end function powerfunc_getYofA
 !
-!double powerfunc_getRofA(TXsect* xsect, double a)
-!{
-!    if ( a <= 0.0 ) return 0.0;
-!    return a / powerfunc_getPofY(xsect, powerfunc_getYofA(xsect, a));
-!}
-!
-!double powerfunc_getPofY(TXsect* xsect, double y)
-!{
-!    double dy1 = 0.02 * xsect->yFull;
-!    double h = (xsect->sBot + 1.0) * xsect->rBot / 2.0;
-!    double m = xsect->sBot;
-!    double p = 0.0;
-!    double y1 = 0.0;
-!    double x1 = 0.0;
-!    double x2, y2, dx, dy;
-!    do
-!    {
-!        y2 = y1 + dy1;
-!        if ( y2 > y ) y2 = y;
-!        x2 = h * pow(y2, m);
-!        dx = x2 - x1;
-!        dy = y2 - y1;
-!        p += sqrt(dx*dx + dy*dy);
-!        x1 = x2;
-!        y1 = y2;
-!    } while ( y2 < y );
-!    return 2.0 * p;
-!}
-!
-!double powerfunc_getAofY(TXsect* xsect, double y)
-!{
-!    return xsect->rBot * pow(y, xsect->sBot + 1.0);
-!}
-!
-!double powerfunc_getRofY(TXsect* xsect, double y)
-!{
-!    if ( y <= 0.0 ) return 0.0;
-!    return powerfunc_getAofY(xsect, y) / powerfunc_getPofY(xsect, y);
-!}
+double precision function powerfunc_getRofA(xsect, a)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+    if ( a <= 0.0 ) then
+       powerfunc_getRofA = 0.0
+    else
+       powerfunc_getRofA = a / powerfunc_getPofY(xsect, powerfunc_getYofA(xsect, a))
+    end if
+end function powerfunc_getRofA
+
+double precision function powerfunc_getPofY(xsect, y)
+    use headers
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+    double precision :: dy1 , h , m , p , y1 , x1
+    double precision :: x2, y2, dx, dy
+
+    dy1 = 0.02 * xsect%yFull
+    h = (xsect%sBot + 1.0) * xsect%rBot / 2.0
+    m = xsect%sBot
+    p = 0.0
+    y1 = 0.0
+    x1 = 0.0
+
+    do while (.true.)
+        y2 = y1 + dy1
+        if ( y2 > y ) y2 = y
+        x2 = h * (y2 ** m)
+        dx = x2 - x1
+        dy = y2 - y1
+        p = p + sqrt(dx*dx + dy*dy)
+        x1 = x2
+        y1 = y2
+
+        if (y2 >= y) exit
+    !} !while ( y2 < y )
+    end do
+
+    powerfunc_getPofY = 2.0 * p
+end function powerfunc_getPofY
+
+double precision function powerfunc_getAofY(xsect, y)
+    use headers
+    implicit none
+    
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+    
+    powerfunc_getAofY = xsect%rBot * (y ** (xsect%sBot + 1.0))
+end function powerfunc_getAofY
+
+double precision function powerfunc_getRofY(xsect, y)
+    use headers
+    implicit none
+    
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: y
+    if ( y <= 0.0 ) then
+       powerfunc_getRofY = 0.0
+    else
+       powerfunc_getRofY = powerfunc_getAofY(xsect, y) / powerfunc_getPofY(xsect, y)
+    end if
+end function powerfunc_getRofY
 !
 double precision function powerfunc_getWofY(xsect, y)
     use headers
@@ -2330,34 +2589,56 @@ double precision function powerfunc_getWofY(xsect, y)
 end function powerfunc_getWofY
 !
 !
-!//=============================================================================
-!//  CIRCULAR functions 
-!//=============================================================================
+!!=============================================================================
+!!  CIRCULAR functions 
+!!=============================================================================
 !
-!double circ_getYofA(TXsect* xsect, double a)
-!{
-!    double alpha = a / xsect->aFull;
-!
-!    // --- use special function for small a/aFull
-!    if ( alpha < 0.04 )  return xsect->yFull * getYcircular(alpha);
-!
-!    // --- otherwise use table 
-!    else return xsect->yFull * lookup(alpha, Y_Circ, N_Y_Circ);
-!}
-!
-!double circ_getAofS(TXsect* xsect, double s)
-!{
-!    double psi = s / xsect->sFull;
-!    if (psi == 0.0) return 0.0;
-!    if (psi >= 1.0) return xsect->aFull;
-!
-!    // --- use special function for small s/sFull
-!    if (psi <= 0.015) return xsect->aFull * getAcircular(psi);
-!
-!    // --- otherwise use table
-!    else return xsect->aFull * invLookup(psi, S_Circ, N_S_Circ);
-!}
-!
+double precision function circ_getYofA(xsect, a)
+
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: alpha
+    alpha = a / xsect%aFull
+
+    ! --- use special function for small a/aFull
+    if ( alpha < 0.04 )  then
+         circ_getYofA = xsect%yFull * getYcircular(alpha)
+    ! --- otherwise use table 
+    else 
+         circ_getYofA = xsect%yFull * lookup(alpha, xs_Y_Circ, N_Y_Circ)
+    end if
+end function circ_getYofA
+
+double precision function circ_getAofS(xsect, s)
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: s
+    double precision :: psi
+    psi = s / xsect%sFull
+    if (abs(psi - 0.0) < P_TINY) then
+       circ_getAofS = 0.0
+       return
+    end if
+    if (psi >= 1.0) then
+       circ_getAofS = xsect%aFull
+       return
+    end if
+
+    ! --- use special function for small s/sFull
+    if (psi <= 0.015) then
+         circ_getAofS = xsect%aFull * getAcircular(psi)
+    ! --- otherwise use table
+    else 
+         circ_getAofS = xsect%aFull * invLookup(psi, xs_S_Circ, N_S_Circ)
+    end if
+end function circ_getAofS
+
 double precision function circ_getSofA(xsect, a)
 
     use headers
@@ -2377,50 +2658,55 @@ double precision function circ_getSofA(xsect, a)
     end if
 end function circ_getSofA
 
-!double circ_getdSdA(TXsect* xsect, double a)
-!{
-!    double alpha, theta, p, r, dPdA;
+double precision function circ_getdSdA(xsect, a)
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(in) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: alpha, theta, p, r, dPdA
+
+    ! --- for near-zero area, use generic central difference formula
+    alpha = a / xsect%aFull
+    if ( alpha <= 1.0e-30 ) then
+        circ_getdSdA = 1.0e-30  !generic_getdSdA(xsect, a)
+
+    ! --- for small a/aFull use analytical derivative
+    else if ( alpha < 0.04 ) then
+        theta = getThetaOfAlpha(alpha)
+        p = theta * xsect%yFull / 2.0
+        r = a / p
+        dPdA = 4.0 / xsect%yFull / (1. - cos(theta))
+        circ_getdSdA =  (5./3. - (2./3.) * dPdA * r) * (r ** (2./3.))
+    ! --- otherwise use generic tabular getdSdA
+    else 
+        circ_getdSdA = tabular_getdSdA(xsect, a, xs_S_Circ, N_S_Circ)
+    end if
+end function circ_getdSdA
 !
-!    // --- for near-zero area, use generic central difference formula
-!    alpha = a / xsect->aFull;
-!    if ( alpha <= 1.0e-30 ) return 1.0e-30;  //generic_getdSdA(xsect, a);
-!
-!	// --- for small a/aFull use analytical derivative
-!    else if ( alpha < 0.04 )
-!    {
-!        theta = getThetaOfAlpha(alpha);
-!        p = theta * xsect->yFull / 2.0;
-!        r = a / p;
-!        dPdA = 4.0 / xsect->yFull / (1. - cos(theta));
-!        return  (5./3. - (2./3.) * dPdA * r) * pow(r, 2./3.);
-!    }
-!
-!    // --- otherwise use generic tabular getdSdA
-!    else return tabular_getdSdA(xsect, a, S_Circ, N_S_Circ);
-!}
-!
-!////////////////////////////////////////////////
-!// This is an alternate method used in SWMM 4.4.
-!////////////////////////////////////////////////
+!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This is an alternate method used in SWMM 4.4.
+!!!!!!!!!!!!!!!!!!!!!!!!!
 !/*
 !double circ_getdSdA(TXsect* xsect, double a)
 !{
-!    double alpha, a1, a2, da, s1, s2, ds;
-!    alpha = a / xsect->aFull;
-!    if ( alpha <= 1.0e-30 ) return 1.0e-30;
-!    da = 0.002;
-!    a1 = alpha - 0.001;
-!    a2 = alpha + 0.001;
+!    double alpha, a1, a2, da, s1, s2, ds
+!    alpha = a / xsect%aFull
+!    if ( alpha <= 1.0e-30 ) return 1.0e-30
+!    da = 0.002
+!    a1 = alpha - 0.001
+!    a2 = alpha + 0.001
 !    if ( a1 < 0.0 )
 !    {
-!	    a1 = 0.0;
-!    	da = alpha + 0.001;
+!	    a1 = 0.0
+!    	da = alpha + 0.001
 !    }
-!    s1 = getScircular(a1);
-!    s2 = getScircular(a2);
-!    ds = (s2 - s1) / da;
-!    if ( ds <= 1.0e-30 ) ds = 1.0e-30;
-!    return xsect->sFull * ds / xsect->aFull;
+!    s1 = getScircular(a1)
+!    s2 = getScircular(a2)
+!    ds = (s2 - s1) / da
+!    if ( ds <= 1.0e-30 ) ds = 1.0e-30
+!    return xsect%sFull * ds / xsect%aFull
 !}
 !*/
 !
@@ -2432,52 +2718,63 @@ double precision function circ_getAofY(xsect, y)
     double precision, intent(in) :: y
     double precision :: yNorm
     yNorm = y / xsect%yFull
-    circ_getAofY = xsect%aFull * lookup(yNorm, xs_A_Circ, N_A_Circ);
+    circ_getAofY = xsect%aFull * lookup(yNorm, xs_A_Circ, N_A_Circ)
     return
 end function circ_getAofY
 !
 !
-!//=============================================================================
-!//  FILLED_CIRCULAR functions 
-!//=============================================================================
+!=============================================================================
+!  FILLED_CIRCULAR functions 
+!=============================================================================
+
+double precision function filled_circ_getYofA(xsect, a)
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: a
+
+    double precision :: y, ma
+    ma = a
+
+    ! --- temporarily remove filled portion of circle
+    xsect%yFull = xsect%yFull + xsect%yBot
+    xsect%aFull = xsect%aFull + xsect%aBot
+    ma = ma + xsect%aBot
+
+    ! --- find depth in unfilled circle
+    y = circ_getYofA(xsect, ma)
+
+    ! --- restore original values
+    y = y - xsect%yBot
+    xsect%yFull = xsect%yFull - xsect%yBot
+    xsect%aFull = xsect%aFull - xsect%aBot
+    filled_circ_getYofA = y
+end function filled_circ_getYofA
 !
-!double filled_circ_getYofA(TXsect* xsect, double a)
-!{
-!    double y;
-!
-!    // --- temporarily remove filled portion of circle
-!    xsect->yFull += xsect->yBot;
-!    xsect->aFull += xsect->aBot;
-!    a += xsect->aBot;
-!
-!    // --- find depth in unfilled circle
-!    y = circ_getYofA(xsect, a);
-!
-!    // --- restore original values
-!    y -= xsect->yBot;
-!    xsect->yFull -= xsect->yBot;
-!    xsect->aFull -= xsect->aBot;
-!    return y;
-!}
-!
-!double filled_circ_getAofY(TXsect* xsect, double y)
-!{
-!    double a;
-!
-!    // --- temporarily remove filled portion of circle
-!    xsect->yFull += xsect->yBot;
-!    xsect->aFull += xsect->aBot;
-!    y += xsect->yBot;
-!
-!    // --- find area of unfilled circle
-!    a = circ_getAofY(xsect, y);
-!
-!    // --- restore original values
-!    a -= xsect->aBot;
-!    xsect->yFull -= xsect->yBot;
-!    xsect->aFull -= xsect->aBot;
-!    return a;
-!}
+double precision function filled_circ_getAofY(xsect, y)
+    use headers
+    use xsectdat
+    implicit none
+    type(TXsect), intent(inout) :: xsect
+    double precision, intent(in) :: y
+
+    double precision :: a, ym
+
+    ! --- temporarily remove filled portion of circle
+    xsect%yFull = xsect%yFull + xsect%yBot
+    xsect%aFull = xsect%aFull + xsect%aBot
+    ym = ym + xsect%yBot
+
+    ! --- find area of unfilled circle
+    a = circ_getAofY(xsect, ym)
+
+    ! --- restore original values
+    a = a - xsect%aBot
+    xsect%yFull = xsect%yFull - xsect%yBot
+    xsect%aFull = xsect%aFull - xsect%aBot
+    filled_circ_getAofY = a
+end function filled_circ_getAofY
 !
 double precision function filled_circ_getRofY(xsect, y)
 !TXsect* xsect, double y
@@ -2514,23 +2811,29 @@ double precision function filled_circ_getRofY(xsect, y)
 end function filled_circ_getRofY
 !
 !
-!//=============================================================================
-!//  Special functions for circular cross sections
-!//=============================================================================
+!!=============================================================================
+!!  Special functions for circular cross sections
+!!=============================================================================
 !
-!double getYcircular(double alpha)
-!{
-!    double theta;
-!    if ( alpha >= 1.0 ) return 1.0;
-!    if ( alpha <= 0.0 ) return 0.0;
-!    if ( alpha <= 1.0e-5 )
-!    {
-!        theta = pow(37.6911*alpha, 1./3.);
-!        return theta * theta / 16.0;
-!    }
-!    theta = getThetaOfAlpha(alpha);
-!    return (1.0 - cos(theta/2.)) / 2.0;
-!}
+double precision function getYcircular(alpha)
+    implicit none
+    double precision, intent(in) :: alpha
+    double precision :: theta
+    if ( alpha >= 1.0 ) then
+       getYcircular = 1.0
+       return
+    end if
+    if ( alpha <= 0.0 ) then
+      getYcircular = 0.0
+      return
+    end if
+    if ( alpha <= 1.0e-5 ) then
+        theta = (37.6911*alpha) ** (1./3.)
+        getYcircular = theta * theta / 16.0
+    end if
+    theta = getThetaOfAlpha(alpha)
+    getYcircular = (1.0 - cos(theta/2.)) / 2.0
+end function getYcircular
 !
 double precision function getScircular(alpha)
     use consts
@@ -2555,20 +2858,26 @@ double precision function getScircular(alpha)
     getScircular = ((theta - sin(theta)) ** (5./3.)) / (2.0 * PI) / (theta ** (2./3.))
 end function getScircular
 
-!double getAcircular(double psi)
-!{
-!    double theta;
-!    if ( psi >= 1.0 ) return 1.0;
-!    if ( psi <= 0.0 ) return 0.0;
-!    if ( psi <= 1.0e-6 )
-!    {
-!        theta = pow(124.4797*psi, 3./13.);
-!        return theta*theta*theta / 37.6911;
-!    }
-!    theta = getThetaOfPsi(psi);
-!    return (theta - sin(theta)) / (2.0 * PI);
-!}
-!
+double precision function getAcircular( psi)
+    implicit none
+    double precision, intent(in) :: psi
+    double precision :: theta
+    if ( psi >= 1.0 ) then
+      getAcircular = 1.0
+      return
+    end if
+    if ( psi <= 0.0 ) then
+      getAcircular = 0.0
+      return
+    end if
+    if ( psi <= 1.0e-6 ) then
+        theta = (124.4797*psi) ** (3./13.)
+        getAcircular = theta*theta*theta / 37.6911
+    end if
+    theta = getThetaOfPsi(psi)
+    getAcircular = (theta - sin(theta)) / (2.0 * PI)
+end function getAcircular
+
 double precision function getThetaOfAlpha(alpha)
     use headers
     implicit none
@@ -2597,33 +2906,40 @@ double precision function getThetaOfAlpha(alpha)
     return
 end function getThetaOfAlpha
 !
-!double getThetaOfPsi(double psi)
-!{
-!    int    k;
-!    double theta, theta1, ap, tt, tt23, t3, d;
+double precision function getThetaOfPsi(psi)
+    implicit none
+    double precision, intent(in) :: psi
+    integer ::    k
+    double precision :: theta, theta1, ap, tt, tt23, t3, d
+
+    if      (psi > 0.90)  then
+       theta = 4.17 + 1.12 * (psi - 0.90) / 0.176
+    else if (psi > 0.5)   then
+       theta = 3.14 + 1.03 * (psi - 0.5) / 0.4
+    else if (psi > 0.015) then
+       theta = 1.2 + 1.94 * (psi - 0.015) / 0.485
+    else                  
+       theta = 0.12103 - 55.5075 * psi + 15.62254 * sqrt(psi)
+    end if
+    theta1 = theta
+    ap     = (2.0*PI) * psi
+
+    do k = 1, 40
+        theta    = abs(theta)
+        tt       = theta - sin(theta)
+        tt23     = tt ** (2./3.)
+        t3       = theta ** (1./3.)
+        d        = ap * theta / t3 - tt * tt23
+        d        = d / ( ap*(2./3.)/t3 - (5./3.)*tt23*(1.0-cos(theta)) )
+        theta    = theta - d
+        if ( abs(d) <= 0.0001 ) then
+           getThetaOfPsi = theta
+           return
+        end if
+    end do
+    getThetaOfPsi = theta1
+end function getThetaOfPsi
 !
-!    if      (psi > 0.90)  theta = 4.17 + 1.12 * (psi - 0.90) / 0.176;
-!    else if (psi > 0.5)   theta = 3.14 + 1.03 * (psi - 0.5) / 0.4;
-!    else if (psi > 0.015) theta = 1.2 + 1.94 * (psi - 0.015) / 0.485;
-!    else                  theta = 0.12103 - 55.5075 * psi +
-!                                  15.62254 * sqrt(psi);
-!    theta1 = theta;
-!    ap     = (2.0*PI) * psi;
-!
-!    for (k = 1; k <= 40; k++)
-!    {
-!        theta    = abs(theta);
-!        tt       = theta - sin(theta);
-!        tt23     = pow(tt, 2./3.);
-!        t3       = pow(theta, 1./3.);
-!        d        = ap * theta / t3 - tt * tt23;
-!        d        = d / ( ap*(2./3.)/t3 - (5./3.)*tt23*(1.0-cos(theta)) );
-!        theta    = theta - d;
-!        if ( abs(d) <= 0.0001 ) return theta;
-!    }
-!    return theta1;
-!}
-!
-!//=============================================================================
+!!=============================================================================
 
 end module

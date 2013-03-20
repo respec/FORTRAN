@@ -3,40 +3,6 @@ module swmm5f
 integer, parameter :: MAX_EXCEPTIONS = 100            ! max. number of exceptions handled
 
 !-----------------------------------------------------------------------------
-!  Unit conversion factors
-!-----------------------------------------------------------------------------
-double precision, dimension(2, 10), parameter :: arrUcf = &                !(5.0.010 - LR)
-    &reshape((/43200.0,   1097280.0 , &         ! RAINFALL (in/hr, mm/hr --> ft/sec)
-      &12.0,      304.8     , &         ! RAINDEPTH (in, mm --> ft)
-      &1036800.0, 26334720.0, &         ! EVAPRATE (in/day, mm/day --> ft/sec)
-      &1.0,       0.3048    , &         ! LENGTH (ft, m --> ft)
-      &2.2956e-5, 0.92903e-5, &         ! LANDAREA (ac, ha --> ft2)
-      &1.0,       0.02832   , &         ! VOLUME (ft3, m3 --> ft3)
-      &1.0,       1.608     , &         ! WINDSPEED (mph, km/hr --> mph)
-      &1.0,       1.8       , &         ! TEMPERATURE (deg F, deg C --> deg F)
-      &2.203e-6,  1.0e-6    , &         ! MASS (lb, kg --> mg)
-      &43560.0,   3048.0  /), &        ! GWFLOW (cfs/ac, cms/ha --> ft/sec)   !(5.0.010 - LR)
-      &(/2, 10/))
-
-
-
-!      {!  US      SI
-!      {43200.0,   1097280.0 },         ! RAINFALL (in/hr, mm/hr --> ft/sec)
-!      {12.0,      304.8     },         ! RAINDEPTH (in, mm --> ft)
-!      {1036800.0, 26334720.0},         ! EVAPRATE (in/day, mm/day --> ft/sec)
-!      {1.0,       0.3048    },         ! LENGTH (ft, m --> ft)
-!      {2.2956e-5, 0.92903e-5},         ! LANDAREA (ac, ha --> ft2)
-!      {1.0,       0.02832   },         ! VOLUME (ft3, m3 --> ft3)
-!      {1.0,       1.608     },         ! WINDSPEED (mph, km/hr --> mph)
-!      {1.0,       1.8       },         ! TEMPERATURE (deg F, deg C --> deg F)
-!      {2.203e-6,  1.0e-6    },         ! MASS (lb, kg --> mg)
-!      {43560.0,   3048.0    }          ! GWFLOW (cfs/ac, cms/ha --> ft/sec)   !(5.0.010 - LR)
-!      };
-double precision, dimension(6), parameter :: Qcf = &                 ! Flow Conversion Factors:
-     &(/ 1.0,     448.831, 0.64632, &     ! cfs, gpm, mgd --> cfs
-       &0.02832, 28.317,  2.4466/)    ! cms, lps, mld --> cfs
-
-!-----------------------------------------------------------------------------
 !  Shared variables
 !-----------------------------------------------------------------------------
 logical :: IsOpenFlag           ! TRUE if a project has been opened
@@ -103,6 +69,44 @@ logical :: DoRouting            ! TRUE if flow routing is computed          !(5.
 !end program main
 
 contains
+
+!=============================================================================
+
+integer function swmm_end()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: ends a SWMM simulation.
+!
+    use headers
+    implicit none
+    ! --- check that project opened and run started
+    if ( .not. IsOpenFlag ) then
+        call report_writeErrorMsg(ERR_NOT_OPEN, '')
+        swmm_end = ErrorCode
+        return
+    end if
+
+!    if ( IsStartedFlag ) then
+!        ! --- write ending records to binary output file
+!        !if ( Fout%fileHandle ) output_end()
+!
+!        ! --- report mass balance results and system statistics
+!        if ( ErrorCode == 0 ) then
+!            call massbal_report()
+!            call stats_report()
+!        end if
+!
+!        ! --- close all computing systems
+!        call stats_close()
+!        call massbal_close()
+!        if ( .not. IgnoreRainfall ) rain_close()
+!        if ( DoRunoff ) runoff_close()                                        !(5.0.018 - LR)
+!        if ( DoRouting ) routing_close(RouteModel)                            !(5.0.018 - LR)
+!        IsStartedFlag = .FALSE.
+!    end if
+    swmm_end = ErrorCode
+end function swmm_end
 
 !=============================================================================
 
@@ -223,7 +227,7 @@ integer function swmm_run(f1, f2, f3)
         end if
 
         ! --- clean up
-        call swmm_end()
+        ErrorCode = swmm_end()
     end if
 
     ! --- report results
@@ -424,28 +428,5 @@ end subroutine execRouting
 !=============================================================================
 !   General purpose functions
 !=============================================================================
-
-double precision function UCF(u)
-!
-!  Input:   u = integer code of quantity being converetd
-!  Output:  returns a units conversion factor
-!  Purpose: computes a conversion factor from SWMM's internal
-!           units to user's units
-!
-    use DataSizeSpecs
-    use globals
-    implicit none
-    integer(kind=K2), intent(in) :: u
-    double precision :: lUCF
-    
-    if ( u < FLOW ) then
-        !lUCF = arrUcf(u, UnitSystem)
-        lUCF = arrUcf(UnitSystem, u)
-    else            
-        lUCF = Qcf(FlowUnits)
-    end if
-    UCF = lUCF
-    return
-end function UCF
 
 end module swmm5f

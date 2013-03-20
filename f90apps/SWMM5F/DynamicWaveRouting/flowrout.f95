@@ -134,13 +134,13 @@ integer function flowrout_execute(links, routingModel, tStep)
 !  Input:   links = array of link indexes in topo-sorted order
 !           routingModel = type of routing method used
 !           tStep = routing time step (sec)
-!  Output:  returns number of computational steps taken
+!  Output:  returns number of computational mSteps taken
 !  Purpose: routes flow through conveyance network over current time step.
 !
     use consts
     use enums
     use headers
-    !use dynwave
+    use dynwave
     implicit none
     integer, dimension(:), intent(in) :: links
     integer, intent(in) :: routingModel
@@ -149,9 +149,9 @@ integer function flowrout_execute(links, routingModel, tStep)
     integer ::   n1                          ! upstream node of link
     double precision :: qin                        ! link inflow (cfs)
     double precision :: qout                       ! link outflow (cfs)
-    double precision :: steps                      ! computational step count
+    double precision :: mSteps                      ! computational step count
         
-    integer :: steadyflow_execute, kinwave_execute, getLinkInflow, dynwave_execute
+    integer :: steadyflow_execute, kinwave_execute, getLinkInflow
 
 !!  The code below was modified to initialize overflows.  !!               !(5.0.012 - LR)
     ! --- set overflows to drain any ponded water
@@ -171,13 +171,13 @@ integer function flowrout_execute(links, routingModel, tStep)
 
     ! --- execute dynamic wave routing if called for
     if ( routingModel == DW ) then
-        steps = dynwave_execute(links, tStep)
-        flowrout_execute = int(steps)
+        mSteps = dynwave_execute(links, tStep)
+        flowrout_execute = int(mSteps)
         return
     end if
 
     ! --- otherwise examine each link, moving from upstream to downstream
-    steps = 0.0
+    mSteps = 0.0
     do i = 1, Nobjects(LINK)
         ! --- see if upstream node is a storage unit whose state needs updating
         j = links(i)
@@ -189,9 +189,9 @@ integer function flowrout_execute(links, routingModel, tStep)
 
         ! route flow through link
         if ( routingModel == SF ) then
-                steps = steps + steadyflow_execute(j, qin, qout) !&qin, &qout)
+                mSteps = mSteps + steadyflow_execute(j, qin, qout) !&qin, &qout)
         else 
-                steps = steps + kinwave_execute(j, qin, qout, tStep) !&qin, &qout, tStep)
+                mSteps = mSteps + kinwave_execute(j, qin, qout, tStep) !&qin, &qout, tStep)
         end if
         arrLink(j)%newFlow = qout
 
@@ -199,7 +199,7 @@ integer function flowrout_execute(links, routingModel, tStep)
         Node( arrLink(j)%node1 )%outflow = Node( arrLink(j)%node1 )%outflow + qin
         Node( arrLink(j)%node2 )%inflow  = Node( arrLink(j)%node2 )%inflow + qout
     end do
-    if ( Nobjects(LINK) > 0 ) steps = steps/Nobjects(LINK)
+    if ( Nobjects(LINK) > 0 ) mSteps = mSteps/Nobjects(LINK)
 
     ! --- update state of each non-updated node and link
     do j=1, Nobjects(E_NODE)
@@ -208,8 +208,8 @@ integer function flowrout_execute(links, routingModel, tStep)
     do j=1, Nobjects(LINK)
       call setNewLinkState(j)
     end do
-    flowrout_execute = int(steps + 0.5)
-    !return (int)(steps+0.5)
+    flowrout_execute = int(mSteps + 0.5)
+    !return (int)(mSteps+0.5)
 end function flowrout_execute
 
 !=============================================================================

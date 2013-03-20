@@ -150,7 +150,7 @@ integer(kind=K2), parameter :: MLD = 6   ! million liters per day
 !enum ConcUnitsType {
 integer(kind=K2), parameter :: MG = 1      ! Milligrams / L
 integer(kind=K2), parameter :: UG = 2      ! Micrograms / L
-integer(kind=K2), parameter :: pCOUNT = 3  ! Counts / L
+integer(kind=K2), parameter :: E_COUNT = 3  ! Counts / L
 !     };
 
 !--------------------------------------
