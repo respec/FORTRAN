@@ -738,6 +738,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{1BEE3E7F-8C85-47C7-A183-628BF1842BFE}"
         }
+        "output.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{39380016-67E1-4C62-AAA7-AD7DBA8B92AF}"
+        }
         "project.f95"
         {
         "ProjRelPath" = "T"
@@ -777,6 +785,14 @@
         "CustomSwitches" = ""
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{E5A481EF-EC99-46D0-A763-35A9E8BFBDA4}"
+        }
+        "statsrpt.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{BC6248DE-2A9B-421D-A4DC-4834E78D9760}"
         }
         "swmm5f.f95"
         {

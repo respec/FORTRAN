@@ -79,6 +79,7 @@ integer function swmm_end()
 !  Purpose: ends a SWMM simulation.
 !
     use headers
+    use report
     implicit none
     ! --- check that project opened and run started
     if ( .not. IsOpenFlag ) then
@@ -185,6 +186,7 @@ integer function swmm_run(f1, f2, f3)
 !  Purpose: runs a SWMM simulation.
 !
     use headers
+    use output
     implicit none
     character(*), intent(in) :: f1, f2, f3
     integer(kind=K4) :: newHour, oldHour
@@ -219,7 +221,7 @@ integer function swmm_run(f1, f2, f3)
 !!                    call writecon(Msg)
                     oldHour = newHour
                 end if
-                if ( elapsedTime > 0.0 .and. ErrorCode==0 ) exit
+                if ((elapsedTime < 0.0 .or. abs(elapsedTime-0.0) < P_TINY) .or. ErrorCode /= 0 ) exit
             end do
 !            writecon("\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
 !                     "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
@@ -250,6 +252,7 @@ integer function swmm_start(saveResults)
     use modRouting
     use modMassbal
     use modStats
+    use output
     
     implicit none
     
@@ -307,9 +310,9 @@ integer function swmm_start(saveResults)
     end if
 
     ! --- open all computing systems (order is important!)
-    !call output_open()
-    if ( DoRunoff ) call runoff_open()                                         !(5.0.018 - LR)
-    if ( DoRouting ) ErrorCode = routing_open(RouteModel)                             !(5.0.018 - LR)
+    ErrorCode = output_open()
+    if ( DoRunoff ) call runoff_open()                     !(5.0.018 - LR)
+    if ( DoRouting ) ErrorCode = routing_open(RouteModel)  !(5.0.018 - LR)
     lstat = massbal_open()
     lstat = stats_open()
 
@@ -330,6 +333,7 @@ integer function swmm_step(elapsedTime)
 !  Purpose: advances the simulation by one routing time step.
 !
     use headers
+    use output
     implicit none
     double precision, intent(inout) :: elapsedTime
     ! --- check that simulation can proceed
