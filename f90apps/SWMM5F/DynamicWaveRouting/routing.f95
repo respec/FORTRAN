@@ -13,6 +13,68 @@ logical, save ::  InSteadyState
 
 contains
 
+!!=============================================================================
+!
+!subroutine addExternalInflows(currentDate)
+!!
+!!  Input:   currentDate = current date/time
+!!  Output:  none
+!!  Purpose: adds direct external inflows to nodes at current date.
+!!
+!    use headers
+!    implicit none
+!    
+!    double precision, intent(in) :: currentDate
+!    int     j, p
+!    double  q, w
+!    
+!    type(TExtInflow) :: inflow
+!
+!    ! --- for each node with a defined external inflow
+!    do j =1, Nobjects(E_NODE)
+!        inflow = Node(j)%extInflow
+!        if ( !inflow ) continue
+!
+!        ! --- get flow inflow
+!        q = 0.0
+!        while ( inflow )
+!        {
+!            if ( inflow->type == FLOW_INFLOW )
+!            {
+!                q = inflow_getExtInflow(inflow, currentDate)
+!                break
+!            }
+!            else inflow = inflow->next
+!        }
+!        if ( fabs(q) < FLOW_TOL ) q = 0.0
+!
+!        ! --- add flow inflow to node's lateral inflow
+!        Node(j).newLatFlow += q
+!        massbal_addInflowFlow(EXTERNAL_INFLOW, q)
+!
+!        ! --- add on any inflow (i.e., reverse flow) through an outfall       !(5.0.014 - LR)
+!        if ( Node(j).type == OUTFALL && Node(j).oldNetInflow < 0.0 )           !(5.0.014 - LR)
+!        {                                                                      !(5.0.014 - LR)
+!            q = q - Node(j).oldNetInflow                                      !(5.0.014 - LR)
+!        }                                                                      !(5.0.014 - LR)
+!
+!        ! --- get pollutant mass inflows
+!        inflow = Node(j).extInflow
+!        while ( inflow )
+!        {
+!            if ( inflow->type != FLOW_INFLOW )
+!            {
+!                p = inflow->param
+!                w = inflow_getExtInflow(inflow, currentDate)
+!                if ( inflow->type == CONCEN_INFLOW ) w *= q
+!                Node(j).newQual(p) += w
+!                massbal_addInflowQual(EXTERNAL_INFLOW, p, w)
+!            }
+!            inflow = inflow->next
+!        }
+!    end do
+!end subroutine addExternalInflows
+
 !=============================================================================
 
 double precision function routing_getRoutingStep(routingModel, fixedStep)
@@ -244,10 +306,10 @@ logical function systemHasChanged(routingModel)
     use headers
     implicit none
     integer, intent(in) :: routingModel
-    integer ::    j                                                                  !(5.0.012 - LR)
+    integer :: j                                                       !(5.0.012 - LR)
     double precision :: diff
 
-    ! --- check if external inflows or outflows have changed                  !(5.0.012 - LR)
+    ! --- check if external inflows or outflows have changed           !(5.0.012 - LR)
     do j=1,Nobjects(E_NODE)
         diff = Node(j)%oldLatFlow - Node(j)%newLatFlow
         if ( abs(diff) > LATERAL_FLOW_TOL ) then

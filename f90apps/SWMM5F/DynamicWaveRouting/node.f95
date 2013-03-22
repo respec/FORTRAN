@@ -108,7 +108,6 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     integer, intent(in) :: j, nodetype, k
     real, dimension(:), intent(in) :: x
     
-    
     Node(j)%datatype   = nodetype
     Node(j)%subIndex   = k
     Node(j)%invertElev = x(1) / UCF(LENGTH)
@@ -675,6 +674,45 @@ double precision function node_getMaxOutflow(j, q, tStep)
     end if
     node_getMaxOutflow = MAX(0.0, mq)
 end function node_getMaxOutflow
+
+!=============================================================================
+
+subroutine node_getResults(j, f, x)
+!
+!  Input:   j = node index, int
+!           f = weighting factor, double
+!           x() = array of nodal reporting variables, float
+!  Output:  none
+!  Purpose: computes weighted average of old and new results at a node.
+!
+    use headers
+    use swmm5futil
+    implicit none
+    
+    integer, intent(in) :: j
+    double precision, intent(in) :: f
+    double precision, dimension(:), intent(inout) :: x
+    integer :: p
+    double precision :: z, f1
+    f1 = 1.0 - f
+
+    z = (f1 * Node(j)%oldDepth + f * Node(j)%newDepth) * UCF(LENGTH)
+    x(NODE_DEPTH) = z * 1.0d00 !(float)z
+    z = Node(j)%invertElev * UCF(LENGTH)
+    x(NODE_HEAD) = x(NODE_DEPTH) + z * 1.0d00 !(float)z
+    z = (f1*Node(j)%oldVolume + f*Node(j)%newVolume) * UCF(VOLUME)
+    x(NODE_VOLUME)  = z * 1.0d00 !(float)z
+    z = (f1*Node(j)%oldLatFlow + f*Node(j)%newLatFlow) * UCF(FLOW) 
+    x(NODE_LATFLOW) = z * 1.0d00 !(float)z
+    z = (f1*Node(j)%oldFlowInflow + f*Node(j)%inflow) * UCF(FLOW)
+    x(NODE_INFLOW) = z * 1.0d00 !(float)z
+    z = Node(j)%overflow * UCF(FLOW)
+    x(NODE_OVERFLOW) = z * 1.0d00 !(float)z
+    do p =1, Nobjects(E_POLLUT)
+        z = f1*Node(j)%oldQual(p) + f*Node(j)%newQual(p)
+        x(NODE_QUAL+p) = z * 1.0d00 !(float)z
+    end do
+end subroutine node_getResults
 
 !!=============================================================================
 !!                   J U N C T I O N   M E T H O D S

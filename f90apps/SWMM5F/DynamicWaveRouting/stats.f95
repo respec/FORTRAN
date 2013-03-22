@@ -244,6 +244,30 @@ end function stats_open
 
 !=============================================================================
 
+!!  This function was completely re-written !/                              !(5.0.012 - LR)
+
+subroutine stats_report()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: reports simulation statistics.
+!
+   !use headers
+   implicit none
+
+    ! --- report flow routing accuracy statistics
+    if ( Nobjects(LINK) > 0 .and. RouteModel /= NO_ROUTING ) then
+        call stats_findMaxStats()
+        call report_writeMaxStats(MaxMassBalErrs, MaxCourantCrit, MAX_STATS)
+        call report_writeMaxFlowTurns(MaxFlowTurns, MAX_STATS)
+        call report_writeSysStats(SysStats) !&SysStats
+    end if
+
+    ! --- report summary statistics
+    call statsrpt_writeReport()
+end subroutine stats_report
+!=============================================================================
+
 subroutine stats_close()
 !
 !  Input:   none

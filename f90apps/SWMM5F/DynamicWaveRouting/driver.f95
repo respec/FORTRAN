@@ -60,6 +60,7 @@ program main
       use swmm5futil
       use modXsect
       use modLink
+      use output
       implicit none
        
       integer, parameter :: NNODE = 3
@@ -134,6 +135,7 @@ program main
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
         call node_setParams(J, LTYPE, k, XN)
+        Node(J)%rptFlag = .true. !this is was done in report_readoption
  10   CONTINUE
 
       !TODO: both conduits or first conduit and second: weir or outlet???
@@ -162,6 +164,7 @@ program main
         
         !call xsect_setParams(J, CSHAPE(J), 1, XX, 0.0)   !haven't quite understood this yet, this is for outlet link
         isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), XX, UCF(LENGTH))   !for normal conduit
+        arrLink(J)%rptFlag = .true. !this is was done in report_readoption
  20   CONTINUE
 
       !set options, ref: project.c->project_readOption()
@@ -237,7 +240,10 @@ program main
 
       lErrorCode = swmm_run('', '', '')
       
-      
+      do J=1, OutputSize
+         write(*,*) TSDateTime(J), ",", TSOutletVals(J)
+      end do
+      STOP
 !
 !     have to figure out how to get the output back here
 !      O = OS

@@ -22,6 +22,9 @@ module report
 !!#include <time.h>
 !!#include "headers.h"
 !!
+use headers
+implicit none
+
 !#define WRITE(x) (report_writeLine((x)))
 character(10), parameter :: LINE_10 = '----------'
 character(12), parameter :: LINE_12 = '------------'                                                 !(5.0.014 - LR)
@@ -145,15 +148,17 @@ contains
 !
 !!=============================================================================
 !
-!void report_writeLine(char *line)
-!!
-!!  Input:   line = line of text
-!!  Output:  none
-!!  Purpose: writes line of text to report file.
-!!
-!{
-!    if ( Frpt.file ) fprintf(Frpt.file, "\n  %s", line)
-!}
+subroutine report_writeLine(line)
+!
+!  Input:   line = line of text
+!  Output:  none
+!  Purpose: writes line of text to report file.
+!
+   character(*), intent(in) :: line
+   if ( Frpt%fileHandle > 0 ) then
+      write(Frpt%fileHandle, fmt='(/,(A))') line  !fprintf(Frpt.file, "\n  %s", line)
+   end if
+end subroutine report_writeLine
 !
 !!=============================================================================
 !
