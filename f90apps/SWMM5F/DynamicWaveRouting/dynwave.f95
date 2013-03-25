@@ -1224,15 +1224,15 @@ double precision function checkNormalFlow(j, q, y1, y2, a1, r1)
     logical ::    hasOutfall
     double precision :: qNorm
     double precision :: f1
+    check  = .FALSE.
+    k = arrLink(j)%subIndex
+    n1 = arrLink(j)%node1
+    n2 = arrLink(j)%node2
     if (Node(n1)%datatype == E_OUTFALL .or. Node(n2)%datatype == E_OUTFALL) then
        hasOutfall = .true.
     else
        hasOutfall = .false.
     end if
-    check  = .FALSE.
-    k = arrLink(j)%subIndex
-    n1 = arrLink(j)%node1
-    n2 = arrLink(j)%node2
 
     if (Node(n1)%datatype == E_OUTFALL .or. Node(n2)%datatype == E_OUTFALL) then
             hasOutfall = .true.

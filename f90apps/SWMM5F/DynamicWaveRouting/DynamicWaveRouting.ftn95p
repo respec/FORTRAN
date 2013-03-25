@@ -714,6 +714,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{D11754BC-891E-492D-A9E0-5DF974674EC9}"
         }
+        "inflow.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{73BE9567-17AC-4EC8-A94E-109B9D3501B3}"
+        }
         "link.f95"
         {
         "ProjRelPath" = "T"

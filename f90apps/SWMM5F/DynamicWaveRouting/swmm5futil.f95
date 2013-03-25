@@ -48,9 +48,9 @@ integer, parameter :: r15 = selected_real_kind(15)
 integer, parameter :: k6 = selected_int_kind(6) 
 integer, parameter :: k15 = selected_int_kind(15)
 
-real(kind=r6), dimension(:), allocatable :: SubcatchResults !REAL4
-real(kind=r6), dimension(:), allocatable :: NodeResults !REAL4
-real(kind=r6), dimension(:), allocatable :: LinkResults !REAL4
+real(kind=r6), dimension(:), allocatable, save :: SubcatchResults !REAL4
+real(kind=r6), dimension(:), allocatable, save :: NodeResults !REAL4
+real(kind=r6), dimension(:), allocatable, save :: LinkResults !REAL4
 
 contains
 double precision function UCF(u)
