@@ -677,7 +677,7 @@ end function node_getMaxOutflow
 
 !=============================================================================
 
-subroutine node_getResults(j, f, x)
+subroutine node_getResults(j, f) !, x)
 !
 !  Input:   j = node index, int
 !           f = weighting factor, double
@@ -691,26 +691,26 @@ subroutine node_getResults(j, f, x)
     
     integer, intent(in) :: j
     double precision, intent(in) :: f
-    double precision, dimension(:), intent(inout) :: x
+    !double precision, dimension(1:), intent(inout) :: x
     integer :: p
     double precision :: z, f1
     f1 = 1.0 - f
 
     z = (f1 * Node(j)%oldDepth + f * Node(j)%newDepth) * UCF(LENGTH)
-    x(NODE_DEPTH) = z * 1.0d00 !(float)z
+    NodeResults(NODE_DEPTH) = z * 1.0d00 !(float)z
     z = Node(j)%invertElev * UCF(LENGTH)
-    x(NODE_HEAD) = x(NODE_DEPTH) + z * 1.0d00 !(float)z
+    NodeResults(NODE_HEAD) = NodeResults(NODE_DEPTH) + z * 1.0d00 !(float)z
     z = (f1*Node(j)%oldVolume + f*Node(j)%newVolume) * UCF(VOLUME)
-    x(NODE_VOLUME)  = z * 1.0d00 !(float)z
+    NodeResults(NODE_VOLUME)  = z * 1.0d00 !(float)z
     z = (f1*Node(j)%oldLatFlow + f*Node(j)%newLatFlow) * UCF(FLOW) 
-    x(NODE_LATFLOW) = z * 1.0d00 !(float)z
+    NodeResults(NODE_LATFLOW) = z * 1.0d00 !(float)z
     z = (f1*Node(j)%oldFlowInflow + f*Node(j)%inflow) * UCF(FLOW)
-    x(NODE_INFLOW) = z * 1.0d00 !(float)z
+    NodeResults(NODE_INFLOW) = z * 1.0d00 !(float)z
     z = Node(j)%overflow * UCF(FLOW)
-    x(NODE_OVERFLOW) = z * 1.0d00 !(float)z
+    NodeResults(NODE_OVERFLOW) = z * 1.0d00 !(float)z
     do p =1, Nobjects(E_POLLUT)
         z = f1*Node(j)%oldQual(p) + f*Node(j)%newQual(p)
-        x(NODE_QUAL+p) = z * 1.0d00 !(float)z
+        NodeResults(NODE_QUAL+p) = z * 1.0d00 !(float)z
     end do
 end subroutine node_getResults
 

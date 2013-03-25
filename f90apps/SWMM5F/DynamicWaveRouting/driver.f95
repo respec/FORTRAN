@@ -95,6 +95,10 @@ program main
       real, dimension(NCOND) :: CGEOM3 = (/5.0, 0.0/)
       real, dimension(NCOND) :: CGEOM4 = (/5.0, 0.0/)
       
+      type(TExtInflow), dimension(NNODE-1), target :: inflows
+      double precision, dimension(NNODE-1) :: disFrac
+      real(kind=r15) :: INVOL
+      
       UnitSystem = US
       
       Nobjects(E_NODE) = 3
@@ -226,6 +230,28 @@ program main
          !--- assume link is not a culvert    !(5.0.014 - LR)
          arrLink(J)%xsect%culvertCode = 0
       end do
+      
+!
+! construct external inflow to each node in the network
+!
+    !distribute flow to all nodes except the outlet
+    !assume last node is always the outlet
+!    allocate(inflows(NNODE))
+!    if (allocated(inflows)) then
+!    end if
+    INVOL = 100.0 !cfs in flow in the first upstream node
+    disFrac = (/0.5, 0.5/)
+    do J = 1, NNODE - 1
+       inflows(J)%param = -1 !flow
+       inflows(J)%datatype = FLOW_INFLOW !or EXTERNAL_INFLOW, user-supplied external inflow
+       inflows(J)%tseries = J
+       inflows(J)%basePat = 1
+       inflows(J)%cFactor = 1.0
+       inflows(J)%sFactor = 1.0
+       inflows(J)%baseline = INVOL * disFrac(J)
+       nullify(inflows(J)%next)
+       Node(J)%extInflow => inflows(J)
+    end do
       
 !      NTS = DELTS/DTS
 !      DO 100 ITS = 1,NTS

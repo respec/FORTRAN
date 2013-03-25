@@ -160,6 +160,9 @@ headers;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95
 enums;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95
 consts;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95
+modMassbal;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95
+modInflow;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95
+headers;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\report.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\report.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\rain.f95
@@ -188,6 +191,7 @@ consts;C:\f90apps\SWMM5F\DynamicWaveRouting\project.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\project.f95
 enums;C:\f90apps\SWMM5F\DynamicWaveRouting\project.f95
 consts;C:\f90apps\SWMM5F\DynamicWaveRouting\project.f95
+swmm5futil;C:\f90apps\SWMM5F\DynamicWaveRouting\output.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\output.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\output.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\output.f95
@@ -222,6 +226,8 @@ consts;C:\f90apps\SWMM5F\DynamicWaveRouting\node.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
 swmm5futil;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
+headers;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
+headers;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95
@@ -276,6 +282,8 @@ modXsect;C:\f90apps\SWMM5F\DynamicWaveRouting\link.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\link.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\link.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\link.f95
+modDateTime;C:\f90apps\SWMM5F\DynamicWaveRouting\inflow.f95
+headers;C:\f90apps\SWMM5F\DynamicWaveRouting\inflow.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\forcemain.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\forcemain.f95
 headers;C:\f90apps\SWMM5F\DynamicWaveRouting\forcemain.f95

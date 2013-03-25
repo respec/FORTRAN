@@ -1101,12 +1101,11 @@ double precision function xsect_getAofS(xsect, s)
     use headers
     use xsectdat
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: s
     
     double precision :: psi
     
-    double precision :: generic_getAofS, circ_getAofS
     psi = s / xsect%sFull
     
     if ( s <= 0.0 ) then 
@@ -1480,7 +1479,6 @@ double precision function invLookup(y, table, nItems)
     
     double precision :: delta, x, x0, x1
     integer ::    i
-    integer :: locate
     ! --- locate table segment that contains y
     i = locate(y, table, nItems)
     if ( i >= nItems - 1 ) then

@@ -15,65 +15,73 @@ contains
 
 !!=============================================================================
 !
-!subroutine addExternalInflows(currentDate)
-!!
-!!  Input:   currentDate = current date/time
-!!  Output:  none
-!!  Purpose: adds direct external inflows to nodes at current date.
-!!
-!    use headers
-!    implicit none
-!    
-!    double precision, intent(in) :: currentDate
-!    int     j, p
-!    double  q, w
-!    
-!    type(TExtInflow) :: inflow
+subroutine addExternalInflows(currentDate)
 !
-!    ! --- for each node with a defined external inflow
-!    do j =1, Nobjects(E_NODE)
-!        inflow = Node(j)%extInflow
-!        if ( !inflow ) continue
+!  Input:   currentDate = current date/time
+!  Output:  none
+!  Purpose: adds direct external inflows to nodes at current date.
 !
-!        ! --- get flow inflow
-!        q = 0.0
-!        while ( inflow )
-!        {
-!            if ( inflow->type == FLOW_INFLOW )
-!            {
-!                q = inflow_getExtInflow(inflow, currentDate)
-!                break
-!            }
-!            else inflow = inflow->next
-!        }
-!        if ( fabs(q) < FLOW_TOL ) q = 0.0
-!
-!        ! --- add flow inflow to node's lateral inflow
-!        Node(j).newLatFlow += q
-!        massbal_addInflowFlow(EXTERNAL_INFLOW, q)
-!
-!        ! --- add on any inflow (i.e., reverse flow) through an outfall       !(5.0.014 - LR)
-!        if ( Node(j).type == OUTFALL && Node(j).oldNetInflow < 0.0 )           !(5.0.014 - LR)
-!        {                                                                      !(5.0.014 - LR)
-!            q = q - Node(j).oldNetInflow                                      !(5.0.014 - LR)
-!        }                                                                      !(5.0.014 - LR)
-!
-!        ! --- get pollutant mass inflows
-!        inflow = Node(j).extInflow
-!        while ( inflow )
-!        {
-!            if ( inflow->type != FLOW_INFLOW )
-!            {
-!                p = inflow->param
-!                w = inflow_getExtInflow(inflow, currentDate)
-!                if ( inflow->type == CONCEN_INFLOW ) w *= q
-!                Node(j).newQual(p) += w
-!                massbal_addInflowQual(EXTERNAL_INFLOW, p, w)
-!            }
-!            inflow = inflow->next
-!        }
-!    end do
-!end subroutine addExternalInflows
+    use headers
+    use modInflow
+    use modMassbal
+    implicit none
+    
+    double precision, intent(in) :: currentDate
+    integer :: j, p
+    double precision :: q, w
+    
+    type(TExtInflow), pointer :: inflow
+
+    ! --- for each node with a defined external inflow
+    do j =1, Nobjects(E_NODE)
+        inflow => Node(j)%extInflow
+        if ( .not. associated(inflow) ) cycle ! !inflow
+
+        ! --- get flow inflow
+        q = 0.0
+        do while(associated(inflow))
+            if ( inflow%datatype == FLOW_INFLOW ) then
+                q = inflow_getExtInflow(inflow, currentDate)
+                exit
+            else
+                if (associated(inflow%next)) then
+                   inflow => inflow%next
+                else
+                   nullify(inflow)
+                   exit
+                end if
+            end if
+        end do
+        if ( abs(q) < FLOW_TOL ) q = 0.0
+
+        ! --- add flow inflow to node's lateral inflow
+        Node(j)%newLatFlow = Node(j)%newLatFlow + q
+        call massbal_addInflowFlow(EXTERNAL_INFLOW, q)
+
+        ! --- add on any inflow (i.e., reverse flow) through an outfall       !(5.0.014 - LR)
+        if ( Node(j)%datatype == E_OUTFALL .and. Node(j)%oldNetInflow < 0.0 ) then       !(5.0.014 - LR)
+            q = q - Node(j)%oldNetInflow                                      !(5.0.014 - LR)
+        end if                                                                !(5.0.014 - LR)
+
+        ! --- get pollutant mass inflows
+        inflow => Node(j)%extInflow
+        do while ( associated(inflow) )
+            if ( inflow%datatype /= FLOW_INFLOW ) then
+                p = inflow%param
+                w = inflow_getExtInflow(inflow, currentDate)
+                if ( inflow%datatype == CONCEN_INFLOW ) w = w * q
+                Node(j)%newQual(p) = Node(j)%newQual(p) + w
+                call massbal_addInflowQual(EXTERNAL_INFLOW, p, w)
+            end if
+            if (associated(inflow%next)) then
+                inflow => inflow%next
+            else
+                nullify(inflow)
+                exit
+            end if
+        end do
+    end do
+end subroutine addExternalInflows
 
 !=============================================================================
 
@@ -234,7 +242,7 @@ subroutine routing_execute(routingModel, routingStep)
         Node(j)%oldLatFlow  = Node(j)%newLatFlow
         Node(j)%newLatFlow  = 0.0
     end do
-!    call addExternalInflows(currentDate)
+    call addExternalInflows(currentDate)
 !    call addDryWeatherInflows(currentDate)
 !    call addWetWeatherInflows(NewRoutingTime)
 !    call addGroundwaterInflows(NewRoutingTime)

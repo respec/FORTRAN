@@ -379,25 +379,32 @@ subroutine massbal_initTimeStepTotals()
     end do
 end subroutine massbal_initTimeStepTotals
 !
-!!=============================================================================
+!=============================================================================
+
+subroutine massbal_addInflowFlow(aType, q)
 !
-!void massbal_addInflowFlow(int type, double q)
-!!
-!!  Input:   type = type of inflow
-!!           q    = inflow rate (cfs)
-!!  Output:  none
-!!  Purpose: adds flow inflow to routing totals for current time step.
-!!
-!{
-!    switch (type)
-!    {
-!      case DRY_WEATHER_INFLOW: StepFlowTotals.dwInflow += q break
-!      case WET_WEATHER_INFLOW: StepFlowTotals.wwInflow += q break
-!      case GROUNDWATER_INFLOW: StepFlowTotals.gwInflow += q break
-!      case RDII_INFLOW:        StepFlowTotals.iiInflow += q break
-!      case EXTERNAL_INFLOW:    StepFlowTotals.exInflow += q break
-!    }
-!}
+!  Input:   type = type of inflow
+!           q    = inflow rate (cfs)
+!  Output:  none
+!  Purpose: adds flow inflow to routing totals for current time step.
+!
+    use headers
+    implicit none
+    integer(kind=k2), intent(in) :: aType
+    double precision, intent(in) :: q
+    select case (aType)
+      case (DRY_WEATHER_INFLOW)
+          StepFlowTotals%dwInflow = StepFlowTotals%dwInflow + q
+      case (WET_WEATHER_INFLOW)
+          StepFlowTotals%wwInflow = StepFlowTotals%wwInflow + q
+      case (GROUNDWATER_INFLOW)
+          StepFlowTotals%gwInflow = StepFlowTotals%gwInflow + q
+      case (RDII_INFLOW)
+          StepFlowTotals%iiInflow = StepFlowTotals%iiInflow + q
+      case (EXTERNAL_INFLOW)
+          StepFlowTotals%exInflow = StepFlowTotals%exInflow + q
+    end select
+end subroutine massbal_addInflowFlow
 !
 !!=============================================================================
 !
@@ -421,27 +428,36 @@ end subroutine massbal_initTimeStepTotals
 !    }
 !}
 !
-!!=============================================================================
+!=============================================================================
+
+subroutine massbal_addInflowQual(aType, p, w)
 !
-!void massbal_addInflowQual(int type, int p, double w)
-!!
-!!  Input:   type = type of inflow
-!!           p    = pollutant index
-!!           w    = mass flow rate (mass/sec)
-!!  Output:  none
-!!  Purpose: adds quality inflow to routing totals for current time step.
-!!
-!{
-!    if ( p < 0 || p >= Nobjects(POLLUT) ) return
-!    switch (type)
-!    {
-!      case DRY_WEATHER_INFLOW: StepQualTotals(p).dwInflow += w break
-!      case WET_WEATHER_INFLOW: StepQualTotals(p).wwInflow += w break
-!      case GROUNDWATER_INFLOW: StepQualTotals(p).gwInflow += w break
-!      case EXTERNAL_INFLOW:    StepQualTotals(p).exInflow += w break
-!      case RDII_INFLOW:        StepQualTotals(p).iiInflow += w break
-!   }
-!}
+!  Input:   type = type of inflow
+!           p    = pollutant index
+!           w    = mass flow rate (mass/sec)
+!  Output:  none
+!  Purpose: adds quality inflow to routing totals for current time step.
+!
+    use headers
+    implicit none
+    integer(kind=k2), intent(in) :: aType 
+    integer, intent(in) :: p
+    double precision, intent(in) :: w
+    
+    if ( p < 0 .or. p >= Nobjects(E_POLLUT) ) return
+    select case (aType)
+      case (DRY_WEATHER_INFLOW)
+          StepQualTotals(p)%dwInflow = StepQualTotals(p)%dwInflow + w
+      case (WET_WEATHER_INFLOW)
+          StepQualTotals(p)%wwInflow = StepQualTotals(p)%wwInflow + w
+      case (GROUNDWATER_INFLOW)
+          StepQualTotals(p)%gwInflow = StepQualTotals(p)%gwInflow + w
+      case (EXTERNAL_INFLOW)
+          StepQualTotals(p)%exInflow = StepQualTotals(p)%exInflow + w
+      case (RDII_INFLOW)
+          StepQualTotals(p)%iiInflow = StepQualTotals(p)%iiInflow + w
+    end select
+end subroutine massbal_addInflowQual
 !
 !!=============================================================================
 !
