@@ -2881,7 +2881,7 @@ double precision function getThetaOfAlpha(alpha)
     implicit none
     double precision, intent(in) :: alpha
     integer :: k
-    double precision :: theta, theta1, ap, d
+    real :: theta, theta1, ap, d
 
     if ( alpha > 0.04 ) then
        theta = 1.2 + 5.08 * (alpha - 0.04) / 0.96

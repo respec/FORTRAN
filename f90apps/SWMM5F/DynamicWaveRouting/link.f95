@@ -185,13 +185,14 @@ subroutine conduit_validate(j, k)
 !  Purpose: validates a conduit's properties.
 !
     use headers
+    use swmm5futil
     implicit none
     integer, intent(in) :: j
     integer(kind=K4), intent(in) :: k
     double precision :: aa
     double precision :: lengthFactor, roughness, mSlope                    !(5.0.018 - LR)
     
-    double precision :: forcemain_getRoughFactor, forcemain_getEquivN, UCF
+    double precision :: forcemain_getRoughFactor, forcemain_getEquivN
 
     ! --- if custom xsection, then set its parameters                         !(5.0.010 - LR)
     if ( arrLink(j)%xsect%datatype == CUSTOM ) &                                        !(5.0.010 - LR)
@@ -207,32 +208,32 @@ subroutine conduit_validate(j, k)
     if ( arrLink(j)%xsect%datatype == FORCE_MAIN ) then                       !(5.0.010 - LR)
         if ( ForceMainEqn == D_W ) &
           &arrLink(j)%xsect%rBot = arrLink(j)%xsect%rBot / UCF(RAINDEPTH)       !(5.0.010 - LR)
-        if ( arrLink(j)%xsect%rBot <= 0.0 ) &                                      !(5.0.010 - LR)
-          &call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)                       !(5.0.010 - LR)
+        !if ( arrLink(j)%xsect%rBot <= 0.0 ) &                                      !(5.0.010 - LR)
+        !  &call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)                       !(5.0.010 - LR)
     end if                                                                     !(5.0.010 - LR)
 
     ! --- check for valid length & roughness
-    if ( Conduit(k)%clength <= 0.0 ) call report_writeErrorMsg(ERR_LENGTH, arrLink(j)%ID)
-    if ( Conduit(k)%roughness <= 0.0 ) call report_writeErrorMsg(ERR_ROUGHNESS, arrLink(j)%ID)
-    if ( Conduit(k)%barrels <= 0 ) call report_writeErrorMsg(ERR_BARRELS, arrLink(j)%ID)
+    !if ( Conduit(k)%clength <= 0.0 ) call report_writeErrorMsg(ERR_LENGTH, arrLink(j)%ID)
+    !if ( Conduit(k)%roughness <= 0.0 ) call report_writeErrorMsg(ERR_ROUGHNESS, arrLink(j)%ID)
+    !if ( Conduit(k)%barrels <= 0 ) call report_writeErrorMsg(ERR_BARRELS, arrLink(j)%ID)
 
     ! --- check for valid xsection
     if ( arrLink(j)%xsect%datatype /= DUMMY ) then
         if ( arrLink(j)%xsect%datatype < 0 ) then
-           call report_writeErrorMsg(ERR_NO_XSECT, arrLink(j)%ID)
+           !call report_writeErrorMsg(ERR_NO_XSECT, arrLink(j)%ID)
         else if ( arrLink(j)%xsect%aFull <= 0.0 ) then
-           call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)
+           !call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)
         end if
     end if
     if ( ErrorCode /= 0 ) return
 
     ! --- check for negative offsets                                          !(5.0.012 - LR)
     if ( arrLink(j)%offset1 < 0.0 ) then
-        call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
+        !call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
         arrLink(j)%offset1 = 0.0                                                 !(5.0.012 - LR)
     end if
     if ( arrLink(j)%offset2 < 0.0 ) then
-        call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
+        !call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
         arrLink(j)%offset2 = 0.0                                                 !(5.0.012 - LR)
     end if
 
@@ -497,11 +498,11 @@ subroutine link_validate(j)
       case (E_CONDUIT)
          call conduit_validate(j, arrLink(j)%subIndex) !break
       case (E_PUMP)
-         call pump_validate(j, arrLink(j)%subIndex)    !break
+         !call pump_validate(j, arrLink(j)%subIndex)    !break
       case (E_ORIFICE)
-         call orifice_validate(j, arrLink(j)%subIndex) !break
+         !call orifice_validate(j, arrLink(j)%subIndex) !break
       case (E_WEIR)
-         call weir_validate(j, arrLink(j)%subIndex)    !break
+         !call weir_validate(j, arrLink(j)%subIndex)    !break
     end select
 
 !!  The following code segment was revised in release 5.0.019  !!          !(5.0.019 - LR)
@@ -547,7 +548,7 @@ subroutine link_initState(j)
     arrLink(j)%setting   = 1.0                                                   !(5.0.010 - LR)
     arrLink(j)%targetSetting = 1.0                                               !(5.0.010 - LR)
     if ( arrLink(j)%datatype == E_CONDUIT ) call conduit_initState(j, arrLink(j)%subIndex)
-    if ( arrLink(j)%datatype == E_PUMP    ) call pump_initState(j, arrLink(j)%subIndex)
+    !if ( arrLink(j)%datatype == E_PUMP    ) call pump_initState(j, arrLink(j)%subIndex)
     
     ! --- initialize water quality state
     do p =1, Nobjects(E_POLLUT)

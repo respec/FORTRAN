@@ -187,7 +187,7 @@ subroutine node_validate(j)
     if ( Node(j)%initDepth > Node(j)%fullDepth + Node(j)%surDepth ) &
        &call report_writeErrorMsg(ERR_NODE_DEPTH, Node(j)%ID)
 
-    if ( Node(j)%datatype == E_DIVIDER ) call divider_validate(j)
+    !if ( Node(j)%datatype == E_DIVIDER ) call divider_validate(j)
 end subroutine node_validate
 !
 
@@ -258,7 +258,7 @@ subroutine node_initState(j)
     ! --- initialize HRT in storage nodes
     if ( Node(j)%datatype == E_STORAGE ) then
         Storage(Node(j)%subIndex)%hrt = 0.0
-        call grnampt_initState(Storage(Node(j)%subIndex)%infil)                    !(5.0.015 - LR)
+        !call grnampt_initState(Storage(Node(j)%subIndex)%infil)                    !(5.0.015 - LR)
     end if
 end subroutine node_initState
 !
@@ -348,7 +348,7 @@ double precision function node_getVolume(j, d)
     double precision :: storage_getVolume
     select case ( Node(j)%datatype )
       case (E_STORAGE)
-         node_getVolume = storage_getVolume(j, d)
+         !node_getVolume = storage_getVolume(j, d)
          return
       case default
         if ( Node(j)%fullDepth > 0.0 ) then                                   !(5.0.014 - LR)
@@ -396,12 +396,12 @@ double precision function node_getOutflow(j, k)
     
     integer, intent(in) :: j, k
     double precision :: lVal
-    double precision :: divider_getOutflow, storage_getOutflow
+    !double precision :: divider_getOutflow, storage_getOutflow
     select case ( Node(j)%datatype )
       case (E_DIVIDER) 
-         lVal = divider_getOutflow(j, k)
+         !lVal = divider_getOutflow(j, k)
       case (E_STORAGE) 
-         lVal = storage_getOutflow(j, k)
+         !lVal = storage_getOutflow(j, k)
       case default      
          lVal = Node(j)%inflow + Node(j)%overflow
     end select
@@ -646,7 +646,7 @@ double precision function node_getLosses( j,  tStep)                            
     double precision, intent(in) :: tStep
     double precision :: storage_getLosses
     if ( Node(j)%datatype == E_STORAGE ) then
-        node_getLosses = storage_getLosses(j, tStep)         !(5.0.019 - LR)
+        !node_getLosses = storage_getLosses(j, tStep)         !(5.0.019 - LR)
     else 
         node_getLosses = 0.0
     end if
@@ -1475,15 +1475,15 @@ subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
         !break
       case (TIDAL_OUTFALL)
         k = Outfall(i)%tideCurve
-        call table_getFirstEntry(Curve(k), x, y) !all 3 args are inout
+        !call table_getFirstEntry(Curve(k), x, y) !all 3 args are inout
         currentDate = NewRoutingTime / MSECperDAY
         x = x + ( currentDate - floor(currentDate) ) * 24.0
-        stage = table_lookup(Curve(k), x) / UCF(LENGTH)  !Curve(k) inout   !(5.0.012 - LR)
+        !stage = table_lookup(Curve(k), x) / UCF(LENGTH)  !Curve(k) inout   !(5.0.012 - LR)
         !break
       case (TIMESERIES_OUTFALL)
         k = Outfall(i)%stageSeries
         currentDate = StartDateTime + NewRoutingTime / MSECperDAY
-        stage = table_tseriesLookup(Tseries(k), currentDate, .TRUE.) / UCF(LENGTH)  !(5.0.012 - LR)
+        !stage = table_tseriesLookup(Tseries(k), currentDate, .TRUE.) / UCF(LENGTH)  !(5.0.012 - LR)
         !break
       case default
         stage = Node(j)%invertElev
