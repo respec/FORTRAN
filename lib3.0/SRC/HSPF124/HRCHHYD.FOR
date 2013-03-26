@@ -2473,7 +2473,7 @@ C         no outflow demands depend on vol
       ELSE IF (HYDRFG.EQ.2) THEN
 C       use new dynamic wave routing algorithm
         INVOL = IVOL + PRSUPY - VOLEV  
-        CALL DWROUT (DELTS,
+        CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,
      I               OS(1),ROS,VOLT,INVOL,
      I               MON,NXTMON,DAY,NDAYS,
@@ -3719,7 +3719,7 @@ C
 C
 C
       SUBROUTINE   DWROUT
-     I                   (DELTS,
+     I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,
      I                    OS,ROS,VOLT,INVOL,
      I                    MON,NXTMON,DAY,NDAYS,
@@ -3739,10 +3739,21 @@ C     Use dynamic wave routing algorithm to
 C     find the state of the reach or reservoir at the end of
 C     the time interval and the outflows from it
 C
+C     + + + MODULES + + +
+      use headers
+      use consts
+      use enums
+      use swmm5f
+      use swmm5futil
+      use modXsect
+      use modLink
+      use output
+      implicit none
+C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          NNODE,NCOND,DTS,MON,NXTMON,DAY,NDAYS,
      $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
-     $                 HYECNT(5),HYWCNT(2),
+     $                 HYECNT(5),HYWCNT(2),UUNITS,
      $                 CNODE1(NCOND),CNODE2(NCOND),
      $                 CSHAPE(NCOND) 
       REAL             DELTS,OS,ROS,
@@ -3756,6 +3767,7 @@ C     + + + DUMMY ARGUMENTS + + +
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DELTS  - simulation interval in seconds
+C     UUNITS - units of simulation, 1-english, 2-si
 C     NNODE  - number of nodes in dw simulated network
 C     NCOND  - number of conduits in dw simulated network
 C     DTS    - dynamic wave time step in seconds
@@ -3799,8 +3811,14 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER          LTYPE,NTS,ITS,J
-      REAL             XN(5),XC(6),XX(4)
+      INTEGER          LTYPE,NTS,ITS,J,K,lErrorCode
+      REAL             XN(6)
+      DOUBLE PRECISION XC(6),XX(4),aUCF
+      LOGICAL          isOK
+      type(TExtInflow), dimension(NNODE-1), target :: inflows
+C
+C     + + + FUNCTIONS + + +
+C      LOGICAL          xsect_setParams
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -3811,7 +3829,7 @@ C     1                 xsect_setParams
 C
 C     + + + END SPECIFICATIONS + + +
 C
-C     variables to pass in (need to be added to the osv):
+C     variables to pass in (added to the osv):
 C     DTS           -- integer, dynamic wave time step
 C
 C     note: assume last one in list is the outfall, type is free
@@ -3863,23 +3881,56 @@ C     HORIZ_ELLIPSE: 20
 C     VERT_ELLIPSE: 21
 C     ARCH: 22
 C
+      IF (UUNITS .EQ. 1) THEN
+C       english 
+        UnitSystem = US
+      ELSE
+C       metric
+        UnitSystem = SI
+      END IF
+c      
+      Nobjects(E_NODE) = NNODE
+      Nnodes(E_OUTFALL) = 1
+      Nobjects(LINK) = NCOND
+      Nlinks(E_CONDUIT) = NCOND
+C      
+      Nobjects(E_GAGE) = 0 
+      Nobjects(E_POLLUT) = 0 
+      Nobjects(E_TSERIES) = 0
+C
+      call initPointers  !project
+      call createObjects !project
+      call setDefaults   !project
+C
+      K = 0
       DO 10 J= 1,NNODE
-        LTYPE = 0
+        LTYPE = JUNCTION ! junction
         IF (J.EQ.NNODE) THEN
 C         this is the outfall
-          LTYPE = 1
-        END IF 
-        XN(1) = NELEV(J)
-        XN(2) = NDMAX(J)
-        XN(3) = NDINIT(J)
-        XN(4) = NDSURC(J)
-        XN(5) = NPONDA(J)
-C        node_setParams(J, LTYPE, 0, XN)
-C       also need way to set local inflow volumes to this node
-C       input volume to this reach = NLOCIN * INVOL
+          LTYPE = E_OUTFALL ! outfall
+        END IF
+        !hard-code node counters 
+        if (lTYPE == JUNCTION) then
+           K = K + 1
+           XN(1) = NELEV(J)
+           XN(2) = NDMAX(J)
+           XN(3) = NDINIT(J)
+           XN(4) = NDSURC(J)
+           XN(5) = NPONDA(J)
+        else if (LTYPE == E_OUTFALL) then
+           K = 1 ! only one outfall
+           XN(1) = NELEV(J)
+           XN(2) = FIXED_OUTFALL !outfall type, the easiest at this point
+           XN(3) = NDINIT(J) + NELEV(J) !fixedStage
+           XN(4) = 0 !tideCurve, index of tidal stage curve
+           XN(5) = 0 !stageSeries, index of outfall stage time series
+           XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
+        end if
+        call node_setParams(J, LTYPE, K, XN)
+        Node(J)%rptFlag = .true. !this is was done in report_readoption
  10   CONTINUE
 C
-      LTYPE = 0
+      LTYPE = E_CONDUIT
       DO 20 J= 1,NCOND 
         XC(1) = CLENTH(J)
         XC(2) = CMANN(J)
@@ -3887,21 +3938,92 @@ C
         XC(4) = COFF2(J)
         XC(5) = CQ0(J)
         XC(6) = 0.0
-C        link_setParams(J, LTYPE, CNODE1, CNODE2, J, XC)
+        call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), J, XC)
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
         XX(3) = CGEOM3(J)
         XX(4) = CGEOM4(J)
-C        xsect_setParams(J, CSHAPE(J), 1, X, 0.0)   !haven't quite understood this yet
+        aUCF = UCF(LENGTH)
+        isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), XX, aUCF)   !for normal conduit
+        arrLink(J)%rptFlag = .true. !this is was done in report_readoption
  20   CONTINUE
+C
+C      
+      RouteModel = DW
+      StartDate = datetime_encodeDate(2013, 3, 12) !datetime_strToDate
+      StartTime = datetime_encodeTime(3, 0, 0) !datetime_strToTime
+C      
+      EndDate = datetime_encodeDate(2013, 3, 12) !datetime_strToDate
+      EndTime = datetime_encodeTime(4, 0, 0) !datetime_strToTime
+C         
+      StartDryDays = 0 !number of antecedent dry days
+C      
+      InertDamping = 0 !w_NONE !InertDampingWords, w_PARTIAL, w_FULL
+C      
+      AllowPonding    = .true.
+      SlopeWeighting  = .true.
+      SkipSteadyState = .true.
+      IgnoreRainfall  = .false.
+      IgnoreSnowmelt  = .true.
+      IgnoreGwater    = .true.
+      IgnoreRouting   = .false.
+      IgnoreQuality   = .true.
+C      
+      NormalFlowLtd = SLOPE !NormalFlowType
+C      
+      ForceMainEqn = D_W !ForceMainType
+C      
+      LinkOffsets = DEPTH_OFFSET !OffsetType
+C      
+      Compatibility = SWMM5
+      !RouteStep is set to 5 minutes in setDefault()
+      LengtheningStep = MAX(0.0, RouteStep) !if 0, then no lengthening of conduit for DW routing
+C
+      CourantFactor = 0.0 !variable time step option not used, needs to be >= 0.0 and <= 2.0
+C      
+      ! --- minimum surface area (ft2 or sq. meters) associated with nodes
+      !     under dynamic wave flow routing 
+      MinSurfArea = 0.0
+C      
+      !minimum conduit slope, needs to be >= 0.0 and < 1; SWMM input file enters %
+      MinSlope = 0.05
+C      
+      TmpDir = 'C:\Temp'
+C          
+      do J = 1, NCOND
+         !assume each conduit has only one barrels
+         Conduit(arrLink(J)%subIndex)%barrels = 1
+         !--- assume link is not a culvert   
+         arrLink(J)%xsect%culvertCode = 0
+      end do
+!
+!     construct external inflow to each node in the network
+!
+      do J = 1, NNODE
+C       input volume to this reach = NLOCIN * INVOL
+        inflows(J)%param = -1 !flow
+        inflows(J)%datatype = FLOW_INFLOW !or EXTERNAL_INFLOW, user-supplied external inflow
+        inflows(J)%tseries = J
+        inflows(J)%basePat = 1
+        inflows(J)%cFactor = 1.0
+        inflows(J)%sFactor = 1.0
+        inflows(J)%baseline = INVOL * NLOCIN(J)
+        nullify(inflows(J)%next)
+        Node(J)%extInflow => inflows(J)
+      end do
 C
       NTS = DELTS/DTS
       DO 100 ITS = 1,NTS
 C        dynwave_execute(links,DTS)
  100  CONTINUE
 C
-C     have to figure out how to get the output back here
-C      node_getSystemOutflow   
+      lErrorCode = swmm_run('', '', '')
+C
+C     get the output back here
+C     node_getSystemOutflow   
+      do J=1, OutputSize
+        write(*,*) TSDateTime(J), ",", TSOutletVals(J)
+      end do
 C
       O = OS
       RO = ROS
