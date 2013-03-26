@@ -182,7 +182,7 @@ integer function flowrout_execute(links, routingModel, tStep)
         ! --- see if upstream node is a storage unit whose state needs updating
         j = links(i)
         n1 = arrLink(j)%node1
-        if ( Node(n1)%datatype == E_STORAGE ) call updateStorageState(n1, i, links, tStep)
+        !if ( Node(n1)%datatype == E_STORAGE ) call updateStorageState(n1, i, links, tStep)
 
         ! --- retrieve inflow at upstream end of link
         qin  = getLinkInflow(j, tStep)
@@ -191,7 +191,7 @@ integer function flowrout_execute(links, routingModel, tStep)
         if ( routingModel == SF ) then
                 mSteps = mSteps + steadyflow_execute(j, qin, qout) !&qin, &qout)
         else 
-                mSteps = mSteps + kinwave_execute(j, qin, qout, tStep) !&qin, &qout, tStep)
+                !mSteps = mSteps + kinwave_execute(j, qin, qout, tStep) !&qin, &qout, tStep)
         end if
         arrLink(j)%newFlow = qout
 
@@ -203,10 +203,10 @@ integer function flowrout_execute(links, routingModel, tStep)
 
     ! --- update state of each non-updated node and link
     do j=1, Nobjects(E_NODE)
-      call setNewNodeState(j, tStep)
+      !call setNewNodeState(j, tStep)
     end do
     do j=1, Nobjects(LINK)
-      call setNewLinkState(j)
+      !call setNewLinkState(j)
     end do
     flowrout_execute = int(mSteps + 0.5)
     !return (int)(mSteps+0.5)
@@ -263,14 +263,14 @@ subroutine validateTreeLayout()
           ! --- dividers must have only 2 outlet links
           case (E_DIVIDER)
             if ( Node(j)%degree > 2 ) then
-                call report_writeErrorMsg(ERR_DIVIDER, Node(j)%ID)
+                !call report_writeErrorMsg(ERR_DIVIDER, Node(j)%ID)
             end if
             !break
 
           ! --- outfalls cannot have any outlet links
           case (E_OUTFALL)
             if ( Node(j)%degree > 0 ) then
-                call report_writeErrorMsg(ERR_OUTFALL, Node(j)%ID)
+                !call report_writeErrorMsg(ERR_OUTFALL, Node(j)%ID)
             end if
             !break
 
@@ -281,7 +281,7 @@ subroutine validateTreeLayout()
           ! --- all other nodes allowed only one outlet link
           case default
             if ( Node(j)%degree > 1 ) then
-                call report_writeErrorMsg(ERR_MULTI_OUTLET, Node(j)%ID)
+                !call report_writeErrorMsg(ERR_MULTI_OUTLET, Node(j)%ID)
             end if
         end select
     end do
@@ -296,7 +296,7 @@ subroutine validateTreeLayout()
             elev1 = arrLink(j)%offset1 + Node(node1)%invertElev
             elev2 = arrLink(j)%offset2 + Node(node2)%invertElev
             if ( elev1 < elev2 .and. arrLink(j)%xsect%datatype /= DUMMY ) then                !(5.0.014 - LR)
-                call report_writeErrorMsg(ERR_SLOPE, arrLink(j)%ID)
+                !call report_writeErrorMsg(ERR_SLOPE, arrLink(j)%ID)
             end if
             !break
 
@@ -305,7 +305,7 @@ subroutine validateTreeLayout()
           case (E_WEIR)
           case (E_OUTLET)
             if ( Node(node1)%datatype /= E_STORAGE ) then
-                call report_writeErrorMsg(ERR_REGULATOR, arrLink(j)%ID)
+                !call report_writeErrorMsg(ERR_REGULATOR, arrLink(j)%ID)
             end if
         end select
     end do
@@ -345,7 +345,7 @@ subroutine validateGeneralLayout()
             i = arrLink(j)%node1
             if ( arrLink(j)%direction < 0 ) i = arrLink(j)%node2                    !(5.0.014 - LR)
             if ( Node(i)%degree > 1 ) then
-                call report_writeErrorMsg(ERR_MULTI_DUMMY_LINK, Node(i)%ID)        !(5.0.014 - LR)
+                !call report_writeErrorMsg(ERR_MULTI_DUMMY_LINK, Node(i)%ID)        !(5.0.014 - LR)
             end if
         end if
     end do
@@ -357,13 +357,13 @@ subroutine validateGeneralLayout()
         !     connecting link (which can either be an outflow or inflow link)
         if ( Node(i)%datatype == E_OUTFALL ) then
             if ( Node(i)%degree + int(Node(i)%inflow) > 1 ) then
-                call report_writeErrorMsg(ERR_OUTFALL, Node(i)%ID)
+                !call report_writeErrorMsg(ERR_OUTFALL, Node(i)%ID)
             else 
                  outletCount = outletCount + 1
             end if
         end if
     end do
-    if ( outletCount == 0 ) call report_writeErrorMsg(ERR_NO_OUTLETS, "")
+    !if ( outletCount == 0 ) call report_writeErrorMsg(ERR_NO_OUTLETS, "")
 
     ! --- reset node inflows back to zero
     do i=1, Nobjects(E_NODE)

@@ -505,7 +505,7 @@ end function datetime_addDays
 
 !=============================================================================
 
-integer(kind=SELECTED_INT_KIND(18)) function datetime_timeDiff( date1, date2)
+integer(kind=SELECTED_INT_KIND(8)) function datetime_timeDiff( date1, date2)
 
 !  Input:   date1 = an encoded date/time value
 !           date2 = an encoded date/time value
@@ -516,7 +516,7 @@ integer(kind=SELECTED_INT_KIND(18)) function datetime_timeDiff( date1, date2)
     double precision, intent(in) :: date1, date2
     double precision :: d1, d2
     integer ::    h, m, s
-    integer(kind=SELECTED_INT_KIND(18)) ::   s1, s2, secs
+    integer(kind=SELECTED_INT_KIND(8)) ::   s1, s2, secs
     d1 = floor(date1)
     d2 = floor(date2)
 

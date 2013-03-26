@@ -124,13 +124,13 @@ subroutine toposort_sortLinks(sortedLinks)
 !         AdjList == NULL || Stack == NULL )
 !    {
     if (lStat1 /= 0 .or. lStat2 /= 0 .or. lStat3 /= 0 .or. lStat4 /= 0) then
-        call report_writeErrorMsg(ERR_MEMORY, '')
+        !call report_writeErrorMsg(ERR_MEMORY, '')
     else
         ! --- create a directed adjacency list of links leaving each node
-        call createAdjList(DIRECTED)
+        !call createAdjList(DIRECTED)
 
         ! --- adjust adjacency list for DIVIDER nodes
-        call adjustAdjList()
+        !call adjustAdjList()
 
         ! --- find number of links entering each node
         do i =1, Nobjects(E_NODE)
@@ -152,8 +152,8 @@ subroutine toposort_sortLinks(sortedLinks)
 
     ! --- check that all links are included in SortedLinks
     if ( ErrorCode /= 0 .and.  n /= Nobjects(LINK) ) then
-        call report_writeErrorMsg(ERR_LOOP, '')
-        call findCycles()
+        !call report_writeErrorMsg(ERR_LOOP, '')
+        !call findCycles()
     end if
 end subroutine toposort_sortLinks
 !
@@ -514,7 +514,7 @@ subroutine checkDummyLinks()
     !     (calloc initializes the array to 0)
     allocate(marked(Nobjects(E_NODE)), stat=lStat)
     if ( lStat /= 0 ) then
-        call report_writeErrorMsg(ERR_MEMORY, '')
+        !call report_writeErrorMsg(ERR_MEMORY, '')
         return
     end if
 
@@ -538,8 +538,8 @@ subroutine checkDummyLinks()
             &(arrLink(i)%datatype == E_PUMP .and. & 
             & Pump(arrLink(i)%subIndex)%datatype == IDEAL_PUMP) ) then
             j = arrLink(i)%node1
-            if ( marked(j) > 0 ) &
-              & call report_writeErrorMsg(ERR_MULTI_DUMMY_LINK, Node(j)%ID)
+            !if ( marked(j) > 0 ) &
+            !  & call report_writeErrorMsg(ERR_MULTI_DUMMY_LINK, Node(j)%ID)
         end if
     end do
     deallocate(marked)
