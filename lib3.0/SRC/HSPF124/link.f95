@@ -177,6 +177,47 @@ end subroutine conduit_initState
 
 !=============================================================================
 
+subroutine conduit_reverse(j, k)
+!
+!  Input:   j = link index
+!           k = conduit index
+!  Output:  none
+!  Purpose: reverses direction of a conduit
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    integer(kind=K4), intent(in) :: k
+    integer ::    i
+    double precision :: z
+    double precision :: cLoss
+
+    ! --- reverse end nodes
+    i = arrLink(j)%node1
+    arrLink(j)%node1 = arrLink(j)%node2
+    arrLink(j)%node2 = i
+
+    ! --- reverse node offsets
+    z = arrLink(j)%offset1
+    arrLink(j)%offset1 = arrLink(j)%offset2
+    arrLink(j)%offset2 = z
+
+    ! --- reverse loss coeffs.
+    cLoss = arrLink(j)%cLossInlet
+    arrLink(j)%cLossInlet = arrLink(j)%cLossOutlet
+    arrLink(j)%cLossOutlet = cLoss
+
+    ! --- reverse direction & slope
+    Conduit(k)%slope = (-1) * Conduit(k)%slope
+    !arrLink(j)%direction *= (signed char)-1
+    arrLink(j)%direction = arrLink(j)%direction * (-1)
+
+    ! --- reverse initial flow value
+    arrLink(j)%q0 = (-1) * arrLink(j)%q0
+end subroutine conduit_reverse
+
+!=============================================================================
+
 subroutine conduit_validate(j, k)
 !
 !  Input:   j = link index
@@ -185,22 +226,24 @@ subroutine conduit_validate(j, k)
 !  Purpose: validates a conduit's properties.
 !
     use headers
+    use forcemain
+    use modXsect
     use swmm5futil
+    use report
     implicit none
     integer, intent(in) :: j
     integer(kind=K4), intent(in) :: k
     double precision :: aa
     double precision :: lengthFactor, roughness, mSlope                    !(5.0.018 - LR)
-    
-    !double precision :: forcemain_getRoughFactor, forcemain_getEquivN
 
+    !double precision :: forcemain_getEquivN, forcemain_getRoughFactor
     ! --- if custom xsection, then set its parameters                         !(5.0.010 - LR)
-    !if ( arrLink(j)%xsect%datatype == CUSTOM ) &                                        !(5.0.010 - LR)
-    !   &call xsect_setCustomXsectParams(arrLink(j)%xsect)                            !(5.0.010 - LR)
+    if ( arrLink(j)%xsect%datatype == CUSTOM ) &                                        !(5.0.010 - LR)
+       &call xsect_setCustomXsectParams(arrLink(j)%xsect)                            !(5.0.010 - LR)
 
     ! --- if irreg. xsection, assign transect roughness to conduit
     if ( arrLink(j)%xsect%datatype == IRREGULAR ) then
-        !call xsect_setIrregXsectParams(arrLink(j)%xsect)
+        call xsect_setIrregXsectParams(arrLink(j)%xsect)
         Conduit(k)%roughness = Transect(arrLink(j)%xsect%transect)%roughness
     end if
 
@@ -208,32 +251,32 @@ subroutine conduit_validate(j, k)
     if ( arrLink(j)%xsect%datatype == FORCE_MAIN ) then                       !(5.0.010 - LR)
         if ( ForceMainEqn == D_W ) &
           &arrLink(j)%xsect%rBot = arrLink(j)%xsect%rBot / UCF(RAINDEPTH)       !(5.0.010 - LR)
-        !if ( arrLink(j)%xsect%rBot <= 0.0 ) &                                      !(5.0.010 - LR)
-        !  &call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)                       !(5.0.010 - LR)
+        if ( arrLink(j)%xsect%rBot <= 0.0 ) &                                      !(5.0.010 - LR)
+          &call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)                       !(5.0.010 - LR)
     end if                                                                     !(5.0.010 - LR)
 
     ! --- check for valid length & roughness
-    !if ( Conduit(k)%clength <= 0.0 ) call report_writeErrorMsg(ERR_LENGTH, arrLink(j)%ID)
-    !if ( Conduit(k)%roughness <= 0.0 ) call report_writeErrorMsg(ERR_ROUGHNESS, arrLink(j)%ID)
-    !if ( Conduit(k)%barrels <= 0 ) call report_writeErrorMsg(ERR_BARRELS, arrLink(j)%ID)
+    if ( Conduit(k)%clength <= 0.0 ) call report_writeErrorMsg(ERR_LENGTH, arrLink(j)%ID)
+    if ( Conduit(k)%roughness <= 0.0 ) call report_writeErrorMsg(ERR_ROUGHNESS, arrLink(j)%ID)
+    if ( Conduit(k)%barrels <= 0 ) call report_writeErrorMsg(ERR_BARRELS, arrLink(j)%ID)
 
     ! --- check for valid xsection
     if ( arrLink(j)%xsect%datatype /= DUMMY ) then
         if ( arrLink(j)%xsect%datatype < 0 ) then
-           !call report_writeErrorMsg(ERR_NO_XSECT, arrLink(j)%ID)
+           call report_writeErrorMsg(ERR_NO_XSECT, arrLink(j)%ID)
         else if ( arrLink(j)%xsect%aFull <= 0.0 ) then
-           !call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)
+           call report_writeErrorMsg(ERR_XSECT, arrLink(j)%ID)
         end if
     end if
     if ( ErrorCode /= 0 ) return
 
     ! --- check for negative offsets                                          !(5.0.012 - LR)
     if ( arrLink(j)%offset1 < 0.0 ) then
-        !call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
+        call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
         arrLink(j)%offset1 = 0.0                                                 !(5.0.012 - LR)
     end if
     if ( arrLink(j)%offset2 < 0.0 ) then
-        !call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
+        call report_writeWarningMsg(WARN03, arrLink(j)%ID)                            !(5.0.015 - LR)
         arrLink(j)%offset2 = 0.0                                                 !(5.0.012 - LR)
     end if
 
@@ -252,14 +295,14 @@ subroutine conduit_validate(j, k)
     if ( RouteModel == DW .and. &
         &mSlope < 0.0 .and. &                                                      !(5.0.018 - LR)
         &arrLink(j)%xsect%datatype /= DUMMY ) then
-        !call conduit_reverse(j, k)
+        call conduit_reverse(j, k)
     end if
 
     ! --- get equivalent Manning roughness for Force Mains                    !(5.0.010 - LR)
     !     for use when pipe is partly full                                    !(5.0.010 - LR)
     roughness = Conduit(k)%roughness                                          !(5.0.010 - LR)
     if ( RouteModel == DW .and. arrLink(j)%xsect%datatype == FORCE_MAIN ) then        !(5.0.010 - LR)
-        !roughness = forcemain_getEquivN(j, k)                                 !(5.0.010 - LR)
+        roughness = forcemain_getEquivN(j, k)                                 !(5.0.010 - LR)
     end if                                                                          !(5.0.010 - LR)
 
     ! --- adjust roughness for meandering natural channels                    !(5.0.015 - LR)
@@ -289,7 +332,7 @@ subroutine conduit_validate(j, k)
     ! --- special case for non-Manning Force Mains                            !(5.0.010 - LR)
     !     (roughness factor for full flow is saved in xsect.sBot)             !(5.0.010 - LR)     
     if ( RouteModel == DW .and. arrLink(j)%xsect%datatype == FORCE_MAIN ) then !(5.0.010 - LR)
-        !arrLink(j)%xsect%sBot = forcemain_getRoughFactor(j, lengthFactor)       !(5.0.010 - LR)
+        arrLink(j)%xsect%sBot = forcemain_getRoughFactor(j, lengthFactor)       !(5.0.010 - LR)
     end if                                                                 !(5.0.010 - LR)
     Conduit(k)%roughFactor = GRAVITY * SQR(roughness/PHI)                     !(5.0.010 - LR)
 
@@ -323,6 +366,32 @@ subroutine conduit_validate(j, k)
          Conduit(k)%hasLosses = .TRUE.
     end if
 end subroutine conduit_validate
+
+!=============================================================================
+
+!!  New function added  !!                                                 !(5.0.012 - LR)
+!!  Function modified   !!                                                 !(5.0.016 - LR)
+
+subroutine link_convertOffsets(j)
+!
+!  Input:   j = link index
+!  Output:  none
+!  Purpose: converts offset elevations to offset heights for a link.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision :: elev
+    
+    elev = Node(arrLink(j)%node1)%invertElev
+    arrLink(j)%offset1 = link_getOffsetHeight(j, arrLink(j)%offset1, elev)
+    if ( arrLink(j)%datatype == E_CONDUIT ) then
+        elev = Node(arrLink(j)%node2)%invertElev
+        arrLink(j)%offset2 = link_getOffsetHeight(j, arrLink(j)%offset2, elev)
+    else 
+        arrLink(j)%offset2 = arrLink(j)%offset1
+    end if
+end subroutine link_convertOffsets
 
 !=============================================================================
 
@@ -402,6 +471,43 @@ double precision function link_getInflow(j)
          link_getInflow = node_getOutflow(arrLink(j)%node1, j)
     end select
 end function link_getInflow
+
+!=============================================================================
+
+!!  New function added  !!                                                 !(5.0.012 - LR)
+
+double precision function link_getOffsetHeight(j, offset, elev)
+!
+!  Input:   j = link index
+!           offset = link elevation offset (ft)
+!           elev   = node invert elevation (ft)
+!  Output:  returns offset distance above node invert (ft)
+!  Purpose: finds offset height for one end of a link.
+!
+    use headers
+    use report
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: offset, elev
+    double precision :: moffset
+    moffset = offset
+    
+    if ( moffset == MISSING ) then
+       link_getOffsetHeight = 0.0
+       return
+    end if
+    moffset =moffset - elev
+    if ( moffset >= 0.0 ) then
+       link_getOffsetHeight = moffset
+       return
+    end if
+    if ( moffset >= -MIN_DELTA_Z ) then
+       link_getOffsetHeight = 0.0
+       return
+    end if
+    call report_writeWarningMsg(WARN03, arrLink(j)%ID)
+    link_getOffsetHeight = 0.0
+end function link_getOffsetHeight
 
 !=============================================================================
 
@@ -493,7 +599,7 @@ subroutine link_validate(j)
     integer, intent(in) :: j
     integer :: n
 
-    !if ( LinkOffsets == ELEV_OFFSET ) call link_convertOffsets(j)                  !(5.0.012 - LR)
+    if ( LinkOffsets == ELEV_OFFSET ) call link_convertOffsets(j)                  !(5.0.012 - LR)
     select case ( arrLink(j)%datatype )
       case (E_CONDUIT)
          call conduit_validate(j, arrLink(j)%subIndex) !break
@@ -837,11 +943,13 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
     use enums
     use headers
     use swmm5futil !, only : UCF
+    use modXsect
     implicit none
     integer, intent(in) :: j, n1, n2, k, datatype
     double precision, dimension(:), intent(in) :: x
     
     double precision, dimension(:), allocatable :: lp
+    logical :: lVal
 
     arrLink(j)%node1       = n1
     arrLink(j)%node2       = n2
@@ -924,7 +1032,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
         Outlet(k)%curveType  = int(x(6))                                      !(5.0.014 - LR)
 
         deallocate(lp)
-        !call xsect_setParams(arrLink(j)%xsect, DUMMY, lp, 0.0)
+        lVal = xsect_setParams(arrLink(j)%xsect, 0, lp, 0.0d00)
         !break
 
     end select
@@ -1144,6 +1252,97 @@ end function orifice_getInflow
 
 !=============================================================================
 
+!!  New function added for orifice acting as weir.  !!                     !(5.0.012 - LR)
+
+double precision function orifice_getWeirCoeff(j, k, h)
+!
+!  Input:   j = link index
+!           k = orifice index
+!           h = height of orifice opening (ft)
+!  Output:  returns a discharge coefficient (ft^1/2)
+!  Purpose: computes the discharge coefficient for an orifice
+!           at the critical depth where weir flow begins.
+!
+
+    use headers
+    implicit none
+    integer, intent(in) :: j, k
+    double precision, intent(in) :: h
+    double precision :: w, aOverL, hm
+    hm = h
+
+    ! --- this is for bottom orifices
+    if ( Orifice(k)%datatype == BOTTOM_ORIFICE ) then
+        ! --- find critical height above opening where orifice flow
+        !     turns into weir flow. It equals (Co/Cw)*(Area/Length)
+        !     where Co is the orifice coeff., Cw is the weir coeff/sqrt(2g),
+        !     Area is the area of the opening, and Length = circumference
+        !     of the opening. For a basic sharp crested weir, Cw = 0.414.
+        if (arrLink(j)%xsect%datatype == CIRCULAR) then
+            aOverL = hm / 4.0
+        else
+            w = arrLink(j)%xsect%wMax
+            aOverL = (hm*w) / (2.0*(hm+w))
+        end if
+        hm = Orifice(k)%cDisch / 0.414 * aOverL
+        Orifice(k)%hCrit = hm
+    ! --- this is for side orifices
+    else
+        ! --- critical height is simply height of opening
+        Orifice(k)%hCrit = hm
+
+        ! --- head on orifice is distance to center line
+        hm = hm / 2.0
+    end if
+
+    ! --- return a coefficient for the critical depth
+    orifice_getWeirCoeff = Orifice(k)%cDisch * sqrt(hm)
+end function orifice_getWeirCoeff
+
+!=============================================================================
+
+subroutine orifice_setSetting(j, tstep)                                  !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+!  Input:   j = link index                                                    !(5.0.010 - LR)
+!           tstep = time step over which setting is adjusted (sec)            !(5.0.010 - LR)
+!  Output:  none                                                              !(5.0.010 - LR)
+!  Purpose: updates an orifice's setting as a result of a control action.     !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+    use headers
+    use modXsect
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: tstep
+    
+    integer ::    k                                               !(5.0.010 - LR)
+    double precision :: delta, step                                                        !(5.0.010 - LR)
+    double precision :: h, f                                                               !(5.0.012 - LR)
+    k = arrLink(j)%subIndex
+    ! --- case where adjustment rate is instantaneous                         !(5.0.010 - LR)
+    if ( Orifice(k)%orate == 0.0 .or. tstep == 0.0) then                          !(5.0.013 - LR)
+        arrLink(j)%setting = arrLink(j)%targetSetting                               !(5.0.013 - LR)
+    ! --- case where orifice setting depends on time step                     !(5.0.010 - LR)
+    else                                                                       !(5.0.010 - LR)
+        delta = arrLink(j)%targetSetting - arrLink(j)%setting                       !(5.0.010 - LR)  
+        step = tstep / Orifice(k)%orate                                       !(5.0.010 - LR)
+        if ( step + 0.001 >= abs(delta) ) then                                !(5.0.010 - LR)
+            arrLink(j)%setting = arrLink(j)%targetSetting                     !(5.0.010 - LR)
+        else 
+            arrLink(j)%setting =arrLink(j)%setting + SGN(delta) * step         !(5.0.010 - LR)
+        end if
+    end if
+
+    ! --- find effective orifice discharge coeff.                             !(5.0.012 - LR)
+    h = arrLink(j)%setting * arrLink(j)%xsect%yFull                                 !(5.0.012 - LR)
+    f = xsect_getAofY(arrLink(j)%xsect, h) * sqrt(2.0 * GRAVITY)                !(5.0.012 - LR)
+    Orifice(k)%cOrif = Orifice(k)%cDisch * f                                  !(5.0.012 - LR)
+
+    ! --- find equiv. discharge coeff. for when weir flow occurs              !(5.0.012 - LR)
+    Orifice(k)%cWeir = orifice_getWeirCoeff(j, k, h) * f                      !(5.0.012 - LR)
+end subroutine orifice_setSetting
+
+!=============================================================================
+
 double precision function outlet_getFlow(k, head)
 !
 !  Input:   k    = outlet index
@@ -1263,6 +1462,32 @@ end subroutine link_setOldHydState
 
 !=============================================================================
 
+subroutine link_setSetting(j, tstep)                                      !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+!  Input:   j = link index                                                    !(5.0.010 - LR)
+!           tstep = time step over which setting is adjusted                  !(5.0.010 - LR)
+!  Output:  none                                                              !(5.0.010 - LR)
+!  Purpose: updates a link's setting as a result of a control action.         !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: tstep
+    
+    select case ( arrLink(j)%datatype )                            !(5.0.010 - LR)
+      case (E_PUMP)
+          arrLink(j)%setting = arrLink(j)%targetSetting            !(5.0.010 - LR)
+      case (E_ORIFICE)
+          call orifice_setSetting(j, tstep)                       !(5.0.011 - LR)
+      case (E_WEIR)
+          !call weir_setSetting(j)                                 !(5.0.011 - LR)
+      case default
+          arrLink(j)%setting = arrLink(j)%targetSetting            !(5.0.011 - LR)
+    end select                                                     !(5.0.010 - LR)
+end subroutine link_setSetting
+
+!=============================================================================
+
 subroutine link_setTargetSetting(j)                                              !(5.0.010 - LR)
 !                                                                             !(5.0.010 - LR)
 !  Input:   j = link index                                                    !(5.0.010 - LR)
@@ -1285,6 +1510,150 @@ subroutine link_setTargetSetting(j)                                             
             &Node(n1)%newDepth > Pump(k)%yOn )  arrLink(j)%targetSetting = 1.0   !(5.0.010 - LR)
     end if                                                                          !(5.0.010 - LR)
 end subroutine link_setTargetSetting
+!=============================================================================
+
+double precision function weir_getdqdh(k, dir, h, q1, q2)
+    use headers
+    implicit none
+    integer, intent(in) :: k
+    double precision, intent(in) :: dir, h, q1, q2
+    
+    double precision :: q1h
+    double precision :: q2h
+
+    if ( abs(h) < FUDGE ) then
+       weir_getdqdh = 0.0
+       return
+    end if
+    q1h = abs(q1/h)
+    q2h = abs(q2/h)
+
+    select case (Weir(k)%datatype)
+      case (TRANSVERSE_WEIR) 
+          weir_getdqdh = 1.5 * q1h
+          return
+
+      case (SIDEFLOW_WEIR)
+        ! --- weir behaves as a transverse weir under reverse flow
+        if ( dir < 0.0 ) then
+           weir_getdqdh = 1.5 * q1h
+        else 
+           weir_getdqdh = 5./3. * q1h
+        end if
+        return
+
+      case (VNOTCH_WEIR) 
+        if ( abs(q2h - 0.0) < P_TINY ) then 
+           weir_getdqdh = 2.5 * q1h  ! Fully open                     !(5.0.011 - LR)
+        else 
+           weir_getdqdh = 1.5 * q1h + 2.5 * q2h   ! Partly open                    !(5.0.011 - LR)
+        end if
+        return
+      case (TRAPEZOIDAL_WEIR) 
+        weir_getdqdh = 1.5 * q1h + 2.5 * q2h
+        return
+    end select
+    weir_getdqdh = 0.0
+end function weir_getdqdh
+
+!=============================================================================
+
+recursive subroutine weir_getFlow(j, k, head, dir, hasFlapGate, q1, q2)
+!
+!  Input:   j    = link index
+!           k    = weir index
+!           head = head across weir (ft)
+!           dir  = flow direction indicator
+!           hasFlapGate = flap gate indicator
+!  Output:  q1 = flow through central portion of weir (cfs)
+!           q2 = flow through end sections of weir (cfs)
+!  Purpose: computes flow over weir given head.
+!
+    use headers
+    use swmm5futil
+    use modXsect
+    implicit none
+    integer, intent(in) :: j, k
+    double precision, intent(in) :: head, dir
+    double precision, intent(inout) :: q1, q2
+    logical(kind=k2), intent(in) :: hasFlapGate
+    logical(kind=k2) :: lhasFlapGate
+    double precision :: mlength
+    double precision :: h, mhead
+    double precision :: y
+    double precision :: hLoss
+    double precision :: area
+    double precision :: veloc
+    integer :: wType                  !(5.0.011 - LR)
+    mhead = head
+
+    ! --- q1 = flow through central portion of weir,
+    !     q2 = flow through end sections of trapezoidal weir
+    q1 = 0.0
+    q2 = 0.0
+    arrLink(j)%dqdh = 0.0                                                        !(5.0.012 - LR)
+    if ( mhead <= 0.0 ) return                                                 !(5.0.012 - LR)
+
+    ! --- convert weir mlength & mhead to original units
+    mlength = arrLink(j)%xsect%wMax * UCF(LENGTH)
+    h = mhead * UCF(LENGTH)
+
+    ! --- reduce mlength when end contractions present
+    mlength = mlength - 0.1 * Weir(k)%endCon * h
+    mlength = MAX(mlength, 0.0)
+
+    ! --- use appropriate formula for weir flow
+    wType = Weir(k)%datatype                                                      !(5.0.011 - LR)
+    if ( wType == VNOTCH_WEIR .and. &                                             !(5.0.011 - LR)
+        &arrLink(j)%setting < 1.0 ) wType = TRAPEZOIDAL_WEIR                     !(5.0.011 - LR)
+    select case (wType)                                                             !(5.0.011 - LR)
+      case (TRANSVERSE_WEIR)
+        q1 = Weir(k)%cDisch1 * mlength * (h ** 1.5)
+
+      case (SIDEFLOW_WEIR)
+        ! --- weir behaves as a transverse weir under reverse flow
+        if ( dir < 0.0 ) then
+            q1 = Weir(k)%cDisch1 * mlength * (h ** 1.5)
+        else
+            q1 = Weir(k)%cDisch1 * mlength * (h ** (5./3.))
+        end if
+
+      case (VNOTCH_WEIR)
+        q1 = Weir(k)%cDisch1 * Weir(k)%slope * (h ** 2.5)
+
+      case (TRAPEZOIDAL_WEIR)
+        y = (1.0 - arrLink(j)%setting) * arrLink(j)%xsect%yFull
+        mlength = xsect_getWofY(arrLink(j)%xsect, y) * UCF(LENGTH)
+        mlength = mlength - 0.1 * Weir(k)%endCon * h                                    !(5.0.010 - LR)
+        mlength = MAX(mlength, 0.0)                                             !(5.0.010 - LR)
+        q1 = Weir(k)%cDisch1 * mlength * (h ** 1.5)
+        q2 = Weir(k)%cDisch2 * Weir(k)%slope * (h ** 2.5)
+    end select
+
+    ! --- convert CMS flows to CFS
+    if ( UnitSystem == SI ) then
+        q1 = q1 / M3perFT3
+        q2 = q2 / M3perFT3
+    end if
+
+    ! --- apply ARMCO adjustment for headloss from flap gate
+    if ( hasFlapGate ) then
+        ! --- compute flow area & velocity for current weir flow
+        area = weir_getOpenArea(j, mhead)                                      !(5.0.012 - LR)
+        veloc = (q1 + q2) / area
+
+        ! --- compute headloss and subtract from original mhead
+        hLoss = (4.0 / GRAVITY) * veloc * veloc * exp(-1.15 * veloc / sqrt(mhead) )
+        mhead = mhead - hLoss
+        if ( mhead < 0.0 ) mhead = 0.0
+
+        ! --- make recursive call to this function, with hasFlapGate
+        !     set to false, to find flow values at adjusted mhead value
+        lhasFlapGate = .false.
+        call weir_getFlow(j, k, mhead, dir, lhasFlapGate, q1, q2)
+    end if
+    arrLink(j)%dqdh = weir_getdqdh(k, dir, mhead, q1, q2)                       !(5.0.012 - LR)
+end subroutine weir_getFlow
 
 !=============================================================================
 
@@ -1390,7 +1759,7 @@ double precision function weir_getInflow(j)
 
     ! --- otherwise use weir eqn. to find flows through central (q1)
     !     and end sections (q2) of weir, q1 and q2 are inout
-    !call weir_getFlow(j, k, head, dir, arrLink(j)%hasFlapGate, q1, q2)              !(5.0.012 - LR)
+    call weir_getFlow(j, k, head, dir, arrLink(j)%hasFlapGate, q1, q2)              !(5.0.012 - LR)
 
     ! --- apply Villemonte eqn. to correct for submergence
     if ( h2 > hcrest ) then
@@ -1423,27 +1792,55 @@ double precision function weir_getOrificeFlow(j, head, y, cOrif)
     integer, intent(in) :: j
     double precision, intent(in) :: head, y, cOrif
     
-    double precision :: a, q, v, hloss
+    double precision :: a, q, v, hloss, mhead
+    mhead = head
 
-!    ! --- evaluate the orifice flow equation
-!    q = cOrif * sqrt(head)
-!
-!    ! --- apply Armco adjustment if weir has a flap gate
-!    if ( arrLink(j).hasFlapGate )
-!    {
-!        a = weir_getOpenArea(j, y)
-!        if ( a > 0.0 )
-!        {
-!            v = q / a
-!            hloss = (4.0 / GRAVITY) * v * v * exp(-1.15 * v / sqrt(y) )
-!            head -= hloss
-!            head = MAX(head, 0.0)
-!            q = cOrif * sqrt(head)
-!        }
-!    }
-!    if ( head > 0.0 ) arrLink(j).dqdh = q / (2.0 * head)
-!    else arrLink(j).dqdh = 0.0
-!    return q
+    ! --- evaluate the orifice flow equation
+    q = cOrif * sqrt(mhead)
+
+    ! --- apply Armco adjustment if weir has a flap gate
+    if ( arrLink(j)%hasFlapGate ) then
+        a = weir_getOpenArea(j, y)
+        if ( a > 0.0 ) then
+            v = q / a
+            hloss = (4.0 / GRAVITY) * v * v * exp(-1.15 * v / sqrt(y) )
+            mhead = mhead - hloss
+            mhead = MAX(mhead, 0.0)
+            q = cOrif * sqrt(mhead)
+        end if
+    end if
+    if ( mhead > 0.0 ) then
+       arrLink(j)%dqdh = q / (2.0 * mhead)
+    else 
+       arrLink(j)%dqdh = 0.0
+    end if
+    weir_getOrificeFlow = q
 end function weir_getOrificeFlow
 
+!=============================================================================
+
+!!  Function generalized to apply to all water depths.  !!                 !(5.0.012 - LR)
+
+double precision function weir_getOpenArea(j, y)
+!
+!  Input:   j = link index
+!           y = depth of water above weir crest (ft)
+!  Output:  returns area between weir crest and y (ft2)
+!  Purpose: finds flow area through a weir.
+!
+    use headers
+    use modXsect
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: y
+    double precision :: z, lVal
+
+    ! --- find offset of weir crest due to control setting
+    z = (1.0 - arrLink(j)%setting) * arrLink(j)%xsect%yFull
+
+    ! --- return difference between area of offset + water depth
+    !     and area of just the offset
+    lVal = xsect_getAofY(arrLink(j)%xsect, z+y) - xsect_getAofY(arrLink(j)%xsect, z)
+    weir_getOpenArea = lVal
+end function weir_getOpenArea
 end module modLink

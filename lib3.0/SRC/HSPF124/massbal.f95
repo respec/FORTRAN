@@ -86,11 +86,12 @@ integer function massbal_open()
 !  Purpose: opens and initializes mass balance continuity checking.
 !
     use headers
+    use report
     implicit none
     
     integer :: j, n, lStat1, lStat2
 
-    double precision :: gwater_getVolume, snow_getSnowCover, subcatch_getStorage
+    !double precision :: gwater_getVolume, snow_getSnowCover, subcatch_getStorage
 
     ! --- initialize global continuity errors
     RunoffError = 0.0
@@ -155,7 +156,7 @@ integer function massbal_open()
     if ( n > 0 ) then
         allocate(LoadingTotals(n), stat=lStat1)
         if ( lStat1 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
         end if
@@ -176,7 +177,7 @@ integer function massbal_open()
          allocate(QualTotals(n), stat=lStat1)
          allocate(StepQualTotals(n), stat=lStat2)
          if ( lStat1 /= 0 .or. lStat2 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
          end if
@@ -201,13 +202,13 @@ integer function massbal_open()
     if ( Nobjects(E_NODE) > 0 ) then
         allocate(NodeInflow(Nobjects(E_NODE)), stat=lStat1)
         if ( lStat1 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
         end if
         allocate(NodeOutflow(Nobjects(E_NODE)), stat=lStat2)
         if ( lStat2 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
         end if
@@ -243,6 +244,7 @@ subroutine massbal_report()
 !  Purpose: reports mass balance results.
 !
     use headers
+    use report
     implicit none
     integer ::    j
     double precision :: gwArea

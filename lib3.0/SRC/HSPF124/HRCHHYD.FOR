@@ -4013,11 +4013,6 @@ C       input volume to this reach = NLOCIN * INVOL
         Node(J)%extInflow => inflows(J)
       end do
 C
-      NTS = DELTS/DTS
-      DO 100 ITS = 1,NTS
-C        dynwave_execute(links,DTS)
- 100  CONTINUE
-C
       lErrorCode = swmm_run('', '', '')
 C
 C     get the output back here

@@ -345,7 +345,7 @@ double precision function node_getVolume(j, d)
     implicit none
     integer, intent(in) :: j
     double precision, intent(in) :: d
-    double precision :: storage_getVolume
+    !double precision :: storage_getVolume
     select case ( Node(j)%datatype )
       case (E_STORAGE)
          !node_getVolume = storage_getVolume(j, d)
@@ -396,7 +396,7 @@ double precision function node_getOutflow(j, k)
     
     integer, intent(in) :: j, k
     double precision :: lVal
-    !double precision :: divider_getOutflow, storage_getOutflow
+    double precision :: divider_getOutflow, storage_getOutflow
     select case ( Node(j)%datatype )
       case (E_DIVIDER) 
          !lVal = divider_getOutflow(j, k)
@@ -644,7 +644,7 @@ double precision function node_getLosses( j,  tStep)                            
     implicit none
     integer, intent(in) :: j
     double precision, intent(in) :: tStep
-    double precision :: storage_getLosses
+    !double precision :: storage_getLosses
     if ( Node(j)%datatype == E_STORAGE ) then
         !node_getLosses = storage_getLosses(j, tStep)         !(5.0.019 - LR)
     else 
@@ -1439,6 +1439,7 @@ subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
 !  Purpose: sets water depth at an outfall node.
    
     use headers
+    use swmm5futil
     implicit none
     integer, intent(in) :: j
     double precision, intent(in) :: yNorm, yCrit, z
@@ -1450,7 +1451,7 @@ subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
     integer ::      k      ! table index
     integer ::      i      ! outfall index
     double precision :: currentDate              ! current date/time in days
-    double precision :: table_tseriesLookup, UCF, table_lookup
+    double precision :: table_tseriesLookup, table_lookup
     myCrit = yCrit
     i = Node(j)%subIndex
     select case ( Outfall(i)%datatype )

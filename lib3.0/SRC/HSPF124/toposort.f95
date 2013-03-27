@@ -72,6 +72,7 @@ subroutine toposort_sortLinks(sortedLinks)
 !  Purpose: sorts links from upstream to downstream.
 !
     use headers
+    use report
     implicit none
     integer, dimension(:), intent(inout) :: sortedLinks
     integer :: i, n
@@ -124,7 +125,7 @@ subroutine toposort_sortLinks(sortedLinks)
 !         AdjList == NULL || Stack == NULL )
 !    {
     if (lStat1 /= 0 .or. lStat2 /= 0 .or. lStat3 /= 0 .or. lStat4 /= 0) then
-        !call report_writeErrorMsg(ERR_MEMORY, '')
+        call report_writeErrorMsg(ERR_MEMORY, '')
     else
         ! --- create a directed adjacency list of links leaving each node
         !call createAdjList(DIRECTED)
@@ -152,7 +153,7 @@ subroutine toposort_sortLinks(sortedLinks)
 
     ! --- check that all links are included in SortedLinks
     if ( ErrorCode /= 0 .and.  n /= Nobjects(LINK) ) then
-        !call report_writeErrorMsg(ERR_LOOP, '')
+        call report_writeErrorMsg(ERR_LOOP, '')
         !call findCycles()
     end if
 end subroutine toposort_sortLinks
@@ -506,6 +507,7 @@ subroutine checkDummyLinks()
 !  Purpose: checks for nodes that have both incoming and outgoing dummy links.
 !
     use headers
+    use report
     implicit none
     integer ::   i, j, lStat
     integer, dimension(:), allocatable :: marked
@@ -514,7 +516,7 @@ subroutine checkDummyLinks()
     !     (calloc initializes the array to 0)
     allocate(marked(Nobjects(E_NODE)), stat=lStat)
     if ( lStat /= 0 ) then
-        !call report_writeErrorMsg(ERR_MEMORY, '')
+        call report_writeErrorMsg(ERR_MEMORY, '')
         return
     end if
 
@@ -538,8 +540,8 @@ subroutine checkDummyLinks()
             &(arrLink(i)%datatype == E_PUMP .and. & 
             & Pump(arrLink(i)%subIndex)%datatype == IDEAL_PUMP) ) then
             j = arrLink(i)%node1
-            !if ( marked(j) > 0 ) &
-            !  & call report_writeErrorMsg(ERR_MULTI_DUMMY_LINK, Node(j)%ID)
+            if ( marked(j) > 0 ) &
+              & call report_writeErrorMsg(ERR_MULTI_DUMMY_LINK, Node(j)%ID)
         end if
     end do
     deallocate(marked)

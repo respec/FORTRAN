@@ -253,6 +253,7 @@ integer function swmm_start(saveResults)
     use modMassbal
     use modStats
     use output
+    use report
     
     implicit none
     
@@ -266,7 +267,7 @@ integer function swmm_start(saveResults)
        return
     end if
     if ( .not.IsOpenFlag .or. IsStartedFlag ) then
-        !call report_writeErrorMsg(ERR_NOT_OPEN, "")
+        call report_writeErrorMsg(ERR_NOT_OPEN, "")
         swmm_start = ErrorCode
         return
     end if
@@ -334,6 +335,7 @@ integer function swmm_step(elapsedTime)
 !
     use headers
     use output
+    use report
     implicit none
     double precision, intent(inout) :: elapsedTime
     ! --- check that simulation can proceed
@@ -342,7 +344,7 @@ integer function swmm_step(elapsedTime)
        return
     end if
     if ( .not.IsOpenFlag .or. .not.IsStartedFlag  ) then
-        !call report_writeErrorMsg(ERR_NOT_OPEN, "")
+        call report_writeErrorMsg(ERR_NOT_OPEN, "")
         swmm_step = ErrorCode
         return
     end if

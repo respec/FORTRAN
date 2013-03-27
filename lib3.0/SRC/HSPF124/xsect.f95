@@ -136,9 +136,6 @@ logical function xsect_setParams(xsect, datatype, p, aUcf)
     
     integer :: index
     double precision :: maMax, theta
-
-    !double precision :: Rfull_Arch, Afull_Arch, Wmax_Arch, Yfull_Arch
-    !double precision :: MinorAxis_Ellipse, MajorAxis_Ellipse, Afull_Ellipse, Rfull_Ellipse
     
     if ( datatype /= DUMMY .and. p(1) <= 0.0 ) then
         xsect_setParams = .false.
@@ -474,10 +471,10 @@ logical function xsect_setParams(xsect, datatype, p, aUcf)
                xsect_setParams  = .false.
                return
             end if
-            !xsect%yFull = MinorAxis_Ellipse(index)/12.
-            !xsect%wMax  = MajorAxis_Ellipse(index)/12.
-            !xsect%aFull = Afull_Ellipse(index)
-            !xsect%rFull = Rfull_Ellipse(index)
+            xsect%yFull = xs_MinorAxis_Ellipse(index)/12.
+            xsect%wMax  = xs_MajorAxis_Ellipse(index)/12.
+            xsect%aFull = xs_Afull_Ellipse(index)
+            xsect%rFull = xs_Rfull_Ellipse(index)
         else
             ! --- length of minor axis
             xsect%yFull = p(1)/aUcf
@@ -502,10 +499,10 @@ logical function xsect_setParams(xsect, datatype, p, aUcf)
                xsect_setParams = .false.
                return
             end if
-            !xsect%yFull = MajorAxis_Ellipse(index)/12.
-            !xsect%wMax  = MinorAxis_Ellipse(index)/12.
-            !xsect%aFull = Afull_Ellipse(index)
-            !xsect%rFull = Rfull_Ellipse(index)
+            xsect%yFull = xs_MajorAxis_Ellipse(index)/12.
+            xsect%wMax  = xs_MinorAxis_Ellipse(index)/12.
+            xsect%aFull = xs_Afull_Ellipse(index)
+            xsect%rFull = xs_Rfull_Ellipse(index)
         else
             ! --- length of major axis
             if ( p(2) < 0.0 ) then
@@ -530,10 +527,10 @@ logical function xsect_setParams(xsect, datatype, p, aUcf)
                 xsect_setParams = .false.
                 return
             end if
-            !xsect%yFull = Yfull_Arch(index)/12.     ! Yfull units are inches
-            !xsect%wMax  = Wmax_Arch(index)/12.      ! Wmax units are inches
-            !xsect%aFull = Afull_Arch(index)
-            !xsect%rFull = Rfull_Arch(index)
+            xsect%yFull = xs_Yfull_Arch(index)/12.     ! Yfull units are inches
+            xsect%wMax  = xs_Wmax_Arch(index)/12.      ! Wmax units are inches
+            xsect%aFull = xs_Afull_Arch(index)
+            xsect%rFull = xs_Rfull_Arch(index)
         else                                     ! non-std. arch pipe
             if ( p(2) < 0.0 ) then
                 xsect_setParams = .false.
@@ -639,13 +636,13 @@ double precision function xsect_getSofA(xsect, a)
     use headers
     use xsectdat
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
     double precision :: alpha, r
     
-    !double precision :: xsect_getRofA
-    !double precision :: rect_triang_getSofA, rect_round_getSofA, rect_open_getSofA, rect_closed_getSofA
-        
+!    double precision :: xsect_getRofA
+!    double precision :: rect_triang_getSofA, rect_round_getSofA, rect_open_getSofA, rect_closed_getSofA
+!        
     
     alpha = a / xsect%aFull
     
@@ -683,19 +680,19 @@ double precision function xsect_getSofA(xsect, a)
         return
 
       case (RECT_CLOSED)
-        !xsect_getSofA = rect_closed_getSofA(xsect, a)
+        xsect_getSofA = rect_closed_getSofA(xsect, a)
         return
 
       case (RECT_OPEN)
-        !xsect_getSofA = rect_open_getSofA(xsect, a)
+        xsect_getSofA = rect_open_getSofA(xsect, a)
         return
 
       case (RECT_TRIANG)
-        !xsect_getSofA = rect_triang_getSofA(xsect, a)
+        xsect_getSofA = rect_triang_getSofA(xsect, a)
         return
 
       case (RECT_ROUND)
-        !xsect_getSofA = rect_round_getSofA(xsect, a)
+        xsect_getSofA = rect_round_getSofA(xsect, a)
         return
 
       case default
@@ -704,7 +701,7 @@ double precision function xsect_getSofA(xsect, a)
            return
         end if
         
-        !r = xsect_getRofA(xsect, a)
+        r = xsect_getRofA(xsect, a)
         if ( r < P_TINY ) then
            xsect_getSofA = 0.0
            return
@@ -1300,10 +1297,12 @@ double precision function generic_getAofS(xsect, s)
 !           solving S = A*(A/P(A))^(2/3) using Newton-Raphson iterations.
 !
     use headers
+    use findroot
     implicit none
     type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: s
     double precision :: a, a1, a2, tol
+    integer :: lVal
 
     if (s <= 0.0) then
        generic_getAofS = 0.0
@@ -1330,7 +1329,7 @@ double precision function generic_getAofS(xsect, s)
 
     ! use the Newton-Raphson root finder function to find A
     tol = 0.0001 * xsect%aFull
-    !call findroot_Newton(a1, a2, a, tol, evalSofA)
+    lVal = findroot_Newton(a1, a2, a, tol, evalSofA)
     generic_getAofS = a
 end function generic_getAofS
 !
@@ -1401,7 +1400,7 @@ double precision function generic_getdSdA(xsect, a)
 !
     use headers
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
     
     double precision :: a1, a2, alpha, alpha1, alpha2
@@ -1640,6 +1639,7 @@ double precision function getYcritRidder(xsect, q, y0)
 !           root finding method with starting guess of y0.
 !
     use headers
+    use findroot
     implicit none
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: q, y0
@@ -1647,8 +1647,6 @@ double precision function getYcritRidder(xsect, q, y0)
     double precision ::  y2
     double precision :: yc
     double precision :: q0, q1, q2
-    
-    !double precision :: findroot_ridder !TODO: this is for .NET compile
     
     y1 = 0.0
     y2 = 0.99 * xsect%yFull
@@ -1683,7 +1681,7 @@ double precision function getYcritRidder(xsect, q, y0)
 
     ! --- call Ridder root finding procedure with error tolerance
     !     of 0.001 ft. to find critical depth yc
-    !yc = findroot_Ridder(y1, y2, 0.001d00, getQcritical)
+    yc = findroot_Ridder(y1, y2, 0.001d00, getQcritical)
     getYcritRidder = yc
 end function getYcritRidder
 !
@@ -1873,7 +1871,7 @@ end function rect_triang_getSofA
 double precision function rect_triang_getdSdA(xsect, a)
     use headers
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
 
     double precision :: alpha, alfMax, dPdA, r
@@ -1964,7 +1962,7 @@ double precision function rect_round_getYofA(xsect, a)
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     double precision :: alpha
-    !double precision :: getYcircular
+    double precision :: getYcircular
 
     ! --- if above circular bottom:
     if ( a > xsect%aBot ) then
@@ -2057,7 +2055,7 @@ end function rect_round_getSofA
 double precision function rect_round_getdSdA(xsect, a)
     use headers
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
 
     double precision :: alfMax, r, dPdA, lVal
@@ -2216,7 +2214,7 @@ end function mod_basket_getRofA
 double precision function mod_basket_getdSdA(xsect, a)
     use headers
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
     
     double precision :: r, dPdA
@@ -2314,7 +2312,7 @@ end function trapez_getRofA
 double precision function trapez_getdSdA(xsect, a)
     use headers
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
 
     double precision :: r, dPdA
@@ -2386,7 +2384,7 @@ end function triang_getRofA
 double precision function triang_getdSdA(xsect, a)
     use headers
     implicit none
-    type(TXsect), intent(in) :: xsect
+    type(TXsect), intent(inout) :: xsect
     double precision, intent(in) :: a
 
     double precision :: r, dPdA
