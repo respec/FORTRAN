@@ -330,6 +330,7 @@ subroutine climate_validate()
 !  Purpose: validates climatological variables
 !
     use headers
+    use report
     implicit none
     double precision :: a, z, pa
 
@@ -445,7 +446,7 @@ subroutine climate_initState
     use headers
     implicit none
     
-    double precision :: table_intervalLookup
+    !double precision :: table_intervalLookup
     LastDay = NO_DATE
     Temp%tmax = MISSING
     Snow%removed = 0.0

@@ -78,6 +78,7 @@ integer function stats_open()
 !  Purpose: opens the simulation statistics system.
 !
     use headers
+    use report
     implicit none
     integer :: j, k, lStat1, lStat2
 
@@ -93,7 +94,7 @@ integer function stats_open()
     if ( Nobjects(E_SUBCATCH) > 0 ) then
         allocate(SubcatchStats(Nobjects(E_SUBCATCH)), stat=lStat1)
         if ( lStat1 /= 0 ) then !SubcatchStats
-            !call report_writeErrorMsg(ERR_MEMORY, '')
+            call report_writeErrorMsg(ERR_MEMORY, '')
             stats_open = ErrorCode
             return
         end if
@@ -112,7 +113,7 @@ integer function stats_open()
         allocate(NodeStats(Nobjects(E_NODE)), stat=lStat1)
         allocate(LinkStats(Nobjects(LINK)), stat=lStat2)
         if ( lStat1 /= 0 .or. lStat2 /= 0 ) then !NodeStats .or. !LinkStats
-            !call report_writeErrorMsg(ERR_MEMORY, '')
+            call report_writeErrorMsg(ERR_MEMORY, '')
             stats_open = ErrorCode
             return
         end if
@@ -165,7 +166,7 @@ integer function stats_open()
     if ( Nnodes(E_STORAGE) > 0 ) then
         allocate(StorageStats(Nnodes(E_STORAGE)), stat=lStat1)
         if ( lStat1 /= 0 ) then
-            !call report_writeErrorMsg(ERR_MEMORY, '')
+            call report_writeErrorMsg(ERR_MEMORY, '')
             stats_open = ErrorCode
             return
         else 
@@ -183,7 +184,7 @@ integer function stats_open()
     if ( Nnodes(E_OUTFALL) > 0 ) then
         allocate(OutfallStats(Nnodes(E_OUTFALL)), stat=lStat1)
         if ( lStat1 /= 0 ) then
-            !call report_writeErrorMsg(ERR_MEMORY, '')
+            call report_writeErrorMsg(ERR_MEMORY, '')
             stats_open = ErrorCode
             return
         else 
@@ -212,7 +213,7 @@ integer function stats_open()
     if ( Nlinks(E_PUMP) > 0 ) then                                              !(5.0.012 - LR)
         allocate(PumpStats(Nlinks(E_PUMP)), stat=lStat1)   !(5.0.012 - LR)
         if ( lStat1 /= 0 ) then                                               !(5.0.012 - LR)
-            !call report_writeErrorMsg(ERR_MEMORY, '')                              !(5.0.012 - LR)
+            call report_writeErrorMsg(ERR_MEMORY, '')                              !(5.0.012 - LR)
             stats_open = ErrorCode                                                  !(5.0.012 - LR)
             return
         else 
@@ -253,6 +254,7 @@ subroutine stats_report()
 !  Purpose: reports simulation statistics.
 !
    !use headers
+   use report
    implicit none
 
     ! --- report flow routing accuracy statistics

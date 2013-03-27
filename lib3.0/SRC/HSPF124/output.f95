@@ -94,6 +94,7 @@ integer function output_open()
 !  Purpose: writes basic project data to binary output file.
 !
     use headers
+    use report
     implicit none
     integer ::   nPolluts, j, m
     integer ::  k
@@ -154,7 +155,7 @@ integer function output_open()
     allocate(TSOutletVals(OutputSize))
     allocate(TSDateTime(OutputSize))
     if ( .not. allocated(SubcatchResults) .or. .not. allocated(NodeResults) .or. .not. allocated(LinkResults )) then
-        !call report_writeErrorMsg(ERR_MEMORY, "")
+        call report_writeErrorMsg(ERR_MEMORY, "")
         output_open = ErrorCode
         return
     end if

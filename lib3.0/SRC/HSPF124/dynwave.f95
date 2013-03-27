@@ -416,6 +416,7 @@ subroutine findNonConduitFlow(i, dt)
     use consts
     use enums
     use headers
+    use modLink
     implicit none
     integer, intent(in) :: i
     double precision, intent(in) :: dt
@@ -424,8 +425,6 @@ subroutine findNonConduitFlow(i, dt)
     double precision :: qNew                       !  new link flow (cfs)
     integer ::  k, m
 
-    !double precision :: link_getInflow
-    
     !  --- ignore non-dummy conduit links
     if ( arrLink(i)%datatype == E_CONDUIT .and. arrLink(i)%xsect%datatype /= DUMMY ) return
 
@@ -437,7 +436,7 @@ subroutine findNonConduitFlow(i, dt)
 
         !  --- get new inflow to link from its upstream node
         !      (link_getInflow returns 0 if flap gate closed or pump is offline)
-        !qNew = link_getInflow(i)
+        qNew = link_getInflow(i)
         if ( arrLink(i)%datatype == E_PUMP ) qNew = getModPumpFlow(i, qNew, dt)
 
         !  --- find surface area at each end of link
@@ -615,6 +614,7 @@ double precision function  getConduitFlow(j, qOld, dt)
     use headers
     use modLink
     use modXsect
+    use forcemain
     implicit none
     integer, intent(in) :: j
     double precision, intent(in) :: qOld, dt
@@ -634,13 +634,11 @@ double precision function  getConduitFlow(j, qOld, dt)
     double precision ::  v                          !  velocity (ft/sec)
     double precision ::  rho                        !  upstream weighting factor
     double precision ::  sigma                      !  inertial damping factor
-    double precision ::  mlength                     !  effective conduit mlength (ft)
+    double precision ::  mlength                    !  effective conduit mlength (ft)
     double precision ::  dq1, dq2, dq3, dq4, dq5    !  terms in momentum eqn.
     double precision ::  denom                      !  denominator of flow update formula
     double precision ::  q                          !  new flow value (cfs)
     double precision ::  barrels                    !  number of barrels in conduit
-    
-    !double precision :: culvert_getInflow, forcemain_getFricSlope
     
     !TXsect* xsect = &arrLink(j).xsect    !  ptr. to conduit's cross section data
     !type(TXsect), pointer :: xsect !use pointer as to not recreate a local copy
@@ -767,7 +765,7 @@ double precision function  getConduitFlow(j, qOld, dt)
     !  --- compute terms of momentum eqn.:
     !  --- 1. friction slope term
     if ( xsect%datatype == FORCE_MAIN .and. isFull ) then
-         !dq1 = dt * forcemain_getFricSlope(j, abs(v), rMid)
+         dq1 = dt * forcemain_getFricSlope(j, abs(v), rMid)
     else
          dq1 = dt * Conduit(k)%roughFactor / (rWtd ** 1.33333) * abs(v)
     end if
@@ -805,8 +803,7 @@ double precision function  getConduitFlow(j, qOld, dt)
 
         !  --- check for inlet controlled culvert flow                         ! (5.0.014 - LR)
         if ( xsect%culvertCode > 0 .and. .not.isFull ) then                            ! (5.0.014 - LR)
-            !q = culvert_getInflow(j, q, h1)                                   ! (5.0.014 - LR)
-
+!           q = culvert_getInflow(j, q, h1)                                   ! (5.0.014 - LR)
         !  --- check for normal flow limitation based on surface slope & Fr
         else                                                                   ! (5.0.014 - LR)
             if ( y1 < arrLink(j)%xsect%yFull .and. &
@@ -868,6 +865,7 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
     use consts
     use enums
     use headers
+    use modLink
     implicit none
     integer, intent(in) :: j
     double precision, intent(in) :: q, h1, h2, y1, y2
@@ -876,8 +874,6 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
     integer ::    flowClass                  !  flow classification code
     double precision :: ycMin, ycMax               !  min/max critical depths (ft)
     double precision :: z1, z2                     !  offsets of conduit inverts (ft)
-
-    !double precision :: link_getycrit, link_getynorm
 
     !  --- get upstream & downstream node indexes
     n1 = arrLink(j)%node1
@@ -902,8 +898,8 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
             !      below conduit's critical depth and an upstream 
             !      conduit offset exists
             if ( z1 > 0.0 ) then
-                !NormalDepth   = link_getYnorm(j, abs(q))
-                !CriticalDepth = link_getYcrit(j, abs(q))
+                NormalDepth   = link_getYnorm(j, abs(q))
+                CriticalDepth = link_getYcrit(j, abs(q))
                 ycMin = MIN(NormalDepth, CriticalDepth)
                 if ( y1 < ycMin ) flowClass = UP_CRITICAL
             end if
@@ -913,8 +909,8 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
             !      if downstream flow depth below this and a downstream
             !      conduit offset exists
             if ( z2 > 0.0 ) then
-                !NormalDepth = link_getYnorm(j, abs(q))
-                !CriticalDepth = link_getYcrit(j, abs(q))
+                NormalDepth = link_getYnorm(j, abs(q))
+                CriticalDepth = link_getYcrit(j, abs(q))
                 ycMin = MIN(NormalDepth, CriticalDepth)
                 ycMax = MAX(NormalDepth, CriticalDepth)
                 if ( y2 < ycMin ) then
@@ -942,8 +938,8 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
         !      should be at critical depth, providing that an upstream
         !      offset exists (otherwise subcritical condition is maintained)
         else if ( z1 > 0.0 ) then
-            !NormalDepth   = link_getYnorm(j, abs(q))
-            !CriticalDepth = link_getYcrit(j, abs(q))
+            NormalDepth   = link_getYnorm(j, abs(q))
+            CriticalDepth = link_getYcrit(j, abs(q))
             flowClass = UP_CRITICAL
         end if
     !  --- case where upstream end of pipe is wet, downstream dry
@@ -956,8 +952,8 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
         !      providing that a downstream offset exists (otherwise
         !      subcritical condition is maintained)
         else if ( z2 > 0.0 ) then
-            !NormalDepth = link_getYnorm(j, abs(q))
-            !CriticalDepth = link_getYcrit(j, abs(q))
+            NormalDepth = link_getYnorm(j, abs(q))
+            CriticalDepth = link_getYcrit(j, abs(q))
             flowClass = DN_CRITICAL
         end if
     end if

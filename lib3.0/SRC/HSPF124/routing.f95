@@ -118,6 +118,7 @@ integer function routing_open(routingModel)
     use enums
     use headers
     use modToposort
+    use report
     implicit none
     integer, intent(in) :: routingModel
     integer :: mstat
@@ -135,7 +136,7 @@ integer function routing_open(routingModel)
     if ( Nobjects(LINK) > 0 ) then
         allocate(SortedLinks(Nobjects(LINK)), stat=mstat)
         if ( mstat /= 0 ) then
-            !call report_writeErrorMsg(ERR_MEMORY, '')
+            call report_writeErrorMsg(ERR_MEMORY, '')
             routing_open = ErrorCode
             return
         end if
@@ -213,7 +214,7 @@ subroutine routing_execute(routingModel, routingStep)
     
     do j=1, Nobjects(LINK)
         if ( arrLink(j)%targetSetting /= arrLink(j)%setting ) then  !(5.0.010 - LR)         
-            !call link_setSetting(j, routingStep)                    !(5.0.010 - LR)
+            call link_setSetting(j, routingStep)                    !(5.0.010 - LR)
             actionCount = actionCount + 1                           !(5.0.010 - LR)
         end if                                                      !(5.0.010 - LR)
     end do                                                          !(5.0.010 - LR)

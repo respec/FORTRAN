@@ -245,6 +245,7 @@ subroutine project_readInput()
     use consts
     use enums
     use headers
+    use report
     implicit none
     ! --- create hash tables for fast retrieval of objects by ID names
 !    createHashTables()
@@ -265,9 +266,9 @@ subroutine project_readInput()
 
     ! --- check for valid starting & ending date/times
     if ( EndDateTime <= StartDateTime ) then
-        !call report_writeErrorMsg(ERR_START_DATE, '')
+        call report_writeErrorMsg(ERR_START_DATE, '')
     else if ( EndDateTime <= ReportStart ) then
-        !call report_writeErrorMsg(ERR_REPORT_DATE, '')
+        call report_writeErrorMsg(ERR_REPORT_DATE, '')
     else
         ! --- compute total duration of simulation in milliseconds
         !     (add on 1 msec to account for any roundoff)
@@ -279,7 +280,7 @@ subroutine project_readInput()
             ReportStep = int(TotalDuration/1000.0)
         end if
         if ( ReportStep * 1.0 < RouteStep ) then
-           !call report_writeErrorMsg(ERR_REPORT_STEP, "")
+           call report_writeErrorMsg(ERR_REPORT_STEP, "")
         end if
     end if
 end subroutine project_readInput
@@ -297,13 +298,14 @@ subroutine project_validate()
 
     use headers
     use modLink
+    use report
     implicit none
     integer :: i, j, err
     !double precision :: table_validate
     ! --- validate Curves and TimeSeries
     do i=1, Nobjects(E_CURVE)
          !err = table_validate(Curve(i))
-         !if ( err /= 0 ) call report_writeErrorMsg(ERR_CURVE_SEQUENCE, Curve(i)%ID)
+         if ( err /= 0 ) call report_writeErrorMsg(ERR_CURVE_SEQUENCE, Curve(i)%ID)
     end do
     do i=1, Nobjects(E_TSERIES)
         !err = table_validate(Tseries(i))
@@ -355,11 +357,11 @@ subroutine project_validate()
 
     ! --- adjust time steps if necessary
     if ( DryStep < WetStep ) then
-        !call report_writeWarningMsg(WARN06, '')
+        call report_writeWarningMsg(WARN06, '')
         DryStep = WetStep
     end if
     if ( RouteStep > WetStep ) then
-        !call report_writeWarningMsg(WARN07, '')
+        call report_writeWarningMsg(WARN07, '')
         RouteStep = WetStep
     end if
 
