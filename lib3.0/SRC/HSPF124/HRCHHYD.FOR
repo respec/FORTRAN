@@ -2473,7 +2473,7 @@ C         no outflow demands depend on vol
       ELSE IF (HYDRFG.EQ.2) THEN
 C       use new dynamic wave routing algorithm
         INVOL = IVOL + PRSUPY - VOLEV  
-        CALL DWROUT (DELTS,UUNITS,
+        CALL DWROUT (MESSU,DELTS,UUNITS,
      I               NNODE,NCOND,DTS,
      I               OS(1),ROS,VOLT,INVOL,
      I               MON,NXTMON,DAY,NDAYS,
@@ -3719,7 +3719,7 @@ C
 C
 C
       SUBROUTINE   DWROUT
-     I                   (DELTS,UUNITS,
+     I                   (MESSU,DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,
      I                    OS,ROS,VOLT,INVOL,
      I                    MON,NXTMON,DAY,NDAYS,
@@ -3755,7 +3755,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
      $                 HYECNT(5),HYWCNT(2),UUNITS,
      $                 CNODE1(NCOND),CNODE2(NCOND),
-     $                 CSHAPE(NCOND) 
+     $                 CSHAPE(NCOND),MESSU 
       REAL             DELTS,OS,ROS,
      $                 O,RO,OVOL,ROVOL,
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
@@ -3766,6 +3766,7 @@ C     + + + DUMMY ARGUMENTS + + +
       DOUBLE PRECISION VOLT,VOL,INVOL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - run interpreter output file unit 
 C     DELTS  - simulation interval in seconds
 C     UUNITS - units of simulation, 1-english, 2-si
 C     NNODE  - number of nodes in dw simulated network
@@ -4025,6 +4026,15 @@ C     node_getSystemOutflow
         write(*,*) TSDateTime(J), ",", TSOutletVals(J)
       end do
 C
+C     need to set initial conditions for next time in
+C     NDINIT(NNODE) -- real, initial node depth
+C     CQ0(NCOND)    -- real, initial flow
+C
+C     VOL    - volume of water in reach above bed
+C     O      - rate of outflow from each reach exit at end of interval
+C     RO     - total rate of outflow from reach at end of interval
+C     OVOL   - volume of water leaving reach in an interval by exit
+C     ROVOL  - total volume of water leaving reach in an interval
       O = OS
       RO = ROS
       VOL = VOLT

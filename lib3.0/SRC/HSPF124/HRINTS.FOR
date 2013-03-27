@@ -1154,6 +1154,11 @@ C       section may not be active - check active sections vector
 C       section always on
         OFONFG= 2
       END IF
+C      
+      IF (OFONFG .EQ. 3) THEN
+C       can happen for hydr dynamic wave, set to 2   
+        OFONFG= 2     
+      END IF 
 C
       K1= MIO+ 1
       PROCFG= PROARR(K1,OFONFG,RWFG)
