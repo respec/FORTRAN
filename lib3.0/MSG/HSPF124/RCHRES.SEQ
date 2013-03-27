@@ -3761,14 +3761,14 @@ RCHRES to which these data apply.
 _PNAME  OPNID
 $FIELD  FIELD3
 _WIDTH   4
-_COLUMN 11
+_COLUMN 12
 _TYPE CHARACTER
 _HELP
  Starting node id for this conduit.
 _PNAME  FNODE
 $FIELD  FIELD4
 _WIDTH   4
-_COLUMN  16
+_COLUMN  17
 _TYPE CHARACTER
 _HELP
  Ending node id for this conduit.
@@ -3839,14 +3839,14 @@ RCHRES to which these data apply.
 _PNAME  OPNID
 $FIELD  FIELD3
 _WIDTH   4
-_COLUMN 11
+_COLUMN 12
 _TYPE CHARACTER
 _HELP
  Starting node id for this conduit.
 _PNAME  FNODE
 $FIELD  FIELD4
 _WIDTH   4
-_COLUMN  16
+_COLUMN  17
 _TYPE CHARACTER
 _HELP
  Ending node id for this conduit.
@@ -3905,18 +3905,18 @@ _PNAME  CINIT
 $TEXT
 (2X,A4,1X,A4,5PE10.3)
       Conduit Parameters
- FROM   TO       LEN      MANN     INLET    OUTLET      INIT  
- NODE NODE                        OFFSET    OFFSET      FLOW   
-                (ft)                (ft)      (ft)     (cfs)
-<---><---><--------><--------><--------><--------><-------->
+      FROM        TO       LEN      MANN     INLET    OUTLET      INIT      FROM        TO       LEN      MANN     INLET    OUTLET      INIT  
+      NODE      NODE                        OFFSET    OFFSET      FLOW      NODE      NODE                        OFFSET    OFFSET      FLOW   
+                          (ft)                (ft)      (ft)     (cfs)                          (ft)                (ft)      (ft)     (cfs)
+<--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><-------->
 #GROUP  422  TYPE TEXT
 $TEXT
 (2X,A4,1X,A4,5PE10.3)
       Conduit Parameters
- FROM   TO       LEN      MANN     INLET    OUTLET      INIT  
- NODE NODE                        OFFSET    OFFSET      FLOW   
-                 (m)                 (m)       (m)     (cms)
-<---><---><--------><--------><--------><--------><-------->
+      FROM        TO       LEN      MANN     INLET    OUTLET      INIT      FROM        TO       LEN      MANN     INLET    OUTLET      INIT  
+      NODE      NODE                        OFFSET    OFFSET      FLOW      NODE      NODE                        OFFSET    OFFSET      FLOW   
+                           (m)                 (m)       (m)     (cms)                           (m)                 (m)       (m)     (cms)
+<--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><-------->
 #GROUP  223  TYPE PRM2
 $HEADER
     RCHRES                         
@@ -3983,8 +3983,8 @@ Cross-section data for a conduit segment.
 #GROUP  423  TYPE TEXT
 $TEXT
 (1X,5A4,4(1PE10.3))
-        conduit type     GEOM1     GEOM2     GEOM3     GEOM4
-<------------------><--------><--------><--------><-------->
+        conduit type     GEOM1     GEOM2     GEOM3     GEOM4        conduit type     GEOM1     GEOM2     GEOM3     GEOM4
+<------------------><--------><--------><--------><--------><------------------><--------><--------><--------><-------->
 #GROUP  224  TYPE PRM2
 $HEADER
     RCHRES              INVERT      INIT    PONDED     LOCAL
@@ -4001,7 +4001,7 @@ RCHRES to which these data apply.
 _PNAME  OPNID
 $FIELD  FIELD3
 _WIDTH   4
-_COLUMN 16
+_COLUMN 17
 _TYPE CHARACTER
 _HELP
  Node id.
@@ -4062,7 +4062,7 @@ RCHRES to which these data apply.
 _PNAME  OPNID
 $FIELD  FIELD3
 _WIDTH   4
-_COLUMN 16
+_COLUMN 17
 _TYPE CHARACTER
 _HELP
  Node id.
@@ -4110,17 +4110,17 @@ _PNAME  NLOC
 #GROUP  424  TYPE TEXT
 $TEXT
 (6X,A4,4(1PE10.3))
-              invert      init    ponded     local
-      node      elev     depth      area    inflow
-                (ft)      (ft)     (ft2)       (%)
-<--------><--------><--------><--------><-------->
+              invert      init    ponded     local              invert      init    ponded     local              invert      init    ponded     local
+      node      elev     depth      area    inflow      node      elev     depth      area    inflow      node      elev     depth      area    inflow
+                (ft)      (ft)     (ft2)       (%)                (ft)      (ft)     (ft2)       (%)                (ft)      (ft)     (ft2)       (%)
+<--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><-------->
 #GROUP  425  TYPE TEXT
 $TEXT
 (6X,A4,4(1PE10.3))
-              invert      init    ponded     local
-      node      elev     depth      area    inflow
-                 (m)       (m)      (m2)       (%)
-<--------><--------><--------><--------><-------->
+              invert      init    ponded     local              invert      init    ponded     local              invert      init    ponded     local
+      node      elev     depth      area    inflow      node      elev     depth      area    inflow      node      elev     depth      area    inflow
+                 (m)       (m)      (m2)       (%)                 (m)       (m)      (m2)       (%)                 (m)       (m)      (m2)       (%)
+<--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><-------->
 #GROUP  115  TYPE PRM2
 $HEADER
     RCHRES  Data for section ADCALC
