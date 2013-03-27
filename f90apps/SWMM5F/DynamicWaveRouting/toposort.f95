@@ -72,6 +72,7 @@ subroutine toposort_sortLinks(sortedLinks)
 !  Purpose: sorts links from upstream to downstream.
 !
     use headers
+    use report
     implicit none
     integer, dimension(:), intent(inout) :: sortedLinks
     integer :: i, n
@@ -127,10 +128,10 @@ subroutine toposort_sortLinks(sortedLinks)
         call report_writeErrorMsg(ERR_MEMORY, '')
     else
         ! --- create a directed adjacency list of links leaving each node
-        call createAdjList(DIRECTED)
+        !call createAdjList(DIRECTED)
 
         ! --- adjust adjacency list for DIVIDER nodes
-        call adjustAdjList()
+        !call adjustAdjList()
 
         ! --- find number of links entering each node
         do i =1, Nobjects(E_NODE)
@@ -153,7 +154,7 @@ subroutine toposort_sortLinks(sortedLinks)
     ! --- check that all links are included in SortedLinks
     if ( ErrorCode /= 0 .and.  n /= Nobjects(LINK) ) then
         call report_writeErrorMsg(ERR_LOOP, '')
-        call findCycles()
+        !call findCycles()
     end if
 end subroutine toposort_sortLinks
 !
@@ -506,6 +507,7 @@ subroutine checkDummyLinks()
 !  Purpose: checks for nodes that have both incoming and outgoing dummy links.
 !
     use headers
+    use report
     implicit none
     integer ::   i, j, lStat
     integer, dimension(:), allocatable :: marked

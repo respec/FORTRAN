@@ -212,7 +212,7 @@ subroutine openFiles(f1, f2, f3)
 
     ! --- check that file names are not identical
     if (f1 .eq. f2 .or. f1 .eq. f3 .or. f2 .eq. f3) then
-        call writecon(FMT11)
+        !call writecon(FMT11)
         ErrorCode = ERR_FILE_NAME
         return
     end if
@@ -220,14 +220,14 @@ subroutine openFiles(f1, f2, f3)
     ! --- open input and report files
     open(8, file=f1, iostat=errcode)
     if (errcode > 0) then !opening error 
-        call writecon(FMT12)
-        call writecon(f1)
+        !call writecon(FMT12)
+        !call writecon(f1)
         ErrorCode = ERR_INP_FILE
         return
     end if
     open(9, file=f2, status='replace', iostat=errcode)
     if (errcode > 0) then
-       call writecon(FMT13)
+       !call writecon(FMT13)
        ErrorCode = ERR_RPT_FILE
        return
     end if
@@ -245,6 +245,7 @@ subroutine project_readInput()
     use consts
     use enums
     use headers
+    use report
     implicit none
     ! --- create hash tables for fast retrieval of objects by ID names
 !    createHashTables()
@@ -297,17 +298,18 @@ subroutine project_validate()
 
     use headers
     use modLink
+    use report
     implicit none
     integer :: i, j, err
-    double precision :: table_validate
+    !double precision :: table_validate
     ! --- validate Curves and TimeSeries
     do i=1, Nobjects(E_CURVE)
-         err = table_validate(Curve(i))
+         !err = table_validate(Curve(i))
          if ( err /= 0 ) call report_writeErrorMsg(ERR_CURVE_SEQUENCE, Curve(i)%ID)
     end do
     do i=1, Nobjects(E_TSERIES)
-        err = table_validate(Tseries(i))
-        if ( err /= 0 ) call report_writeTseriesErrorMsg(Tseries(i))
+        !err = table_validate(Tseries(i))
+        !if ( err /= 0 ) call report_writeTseriesErrorMsg(Tseries(i))
     end do
 
     ! --- validate hydrology objects
@@ -317,16 +319,16 @@ subroutine project_validate()
     if ( Nobjects(E_SNOWMELT) == 0 ) IgnoreSnowmelt = .TRUE.                      !(5.0.019 - LR)
     if ( Nobjects(E_AQUIFER)  == 0 ) IgnoreGwater   = .TRUE.                      !(5.0.019 - LR)
     do i=1, Nobjects(E_GAGE)
-       call gage_validate(i)
+       !call gage_validate(i)
     end do
     do i=1, Nobjects(E_AQUIFER)
-       call gwater_validateAquifer(i)
+       !call gwater_validateAquifer(i)
     end do
     do i=1, Nobjects(E_SUBCATCH)
-       call subcatch_validate(i)
+       !call subcatch_validate(i)
     end do
     do i=1, Nobjects(E_SNOWMELT)
-       call snow_validateSnowmelt(i)
+       !call snow_validateSnowmelt(i)
     end do
 
     ! --- compute geometry tables for each shape curve
@@ -764,13 +766,13 @@ integer function project_init()
     call climate_initState()
     !call lid_initState()                                  !(5.0.019 - LR)
     do j=1, Nobjects(E_TSERIES)
-       call table_tseriesInit(Tseries(j))
+       !call table_tseriesInit(Tseries(j))
     end do
     do j=1, Nobjects(E_GAGE)
-       call gage_initState(j)
+       !call gage_initState(j)
     end do
     do j=1, Nobjects(E_SUBCATCH)
-       call subcatch_initState(j)
+       !call subcatch_initState(j)
     end do
     do j=1, Nobjects(E_NODE)
        call node_initState(j)

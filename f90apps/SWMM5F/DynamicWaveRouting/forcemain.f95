@@ -48,7 +48,8 @@ double precision function forcemain_getEquivN(j, k)
 !
     use headers
     implicit none
-    integer, intent(in) :: j, k
+    integer, intent(in) :: j
+    integer(kind=K4), intent(in) :: k
     
     double precision :: lVal
     
@@ -160,7 +161,7 @@ double precision recursive function forcemain_getFricFactor(e, hrad, re) result(
     implicit none
     
     double precision, intent(in) :: e, hrad, re
-    double precision :: f, mre
+    double precision :: mre
     mre = re
     if ( mre < 10.0 ) mre = 10.0
     if ( mre <= 2000.0 ) then
