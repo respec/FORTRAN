@@ -89,7 +89,7 @@ program main
       real, dimension(NCOND) :: COFF2 = (/0.0, 0.0/)
       real, dimension(NCOND) :: CQ0 = (/0.01, 0.01/)
       
-      integer, dimension(NCOND) :: CSHAPE = (/TRAPEZOIDAL, CIRCULAR/)
+      integer(kind=K2), dimension(NCOND) :: CSHAPE = (/TRAPEZOIDAL, CIRCULAR/)
       real, dimension(NCOND) :: CGEOM1 = (/3.0, 2.25/)
       real, dimension(NCOND) :: CGEOM2 = (/5.0, 0.0/)
       real, dimension(NCOND) :: CGEOM3 = (/5.0, 0.0/)
@@ -277,7 +277,4 @@ program main
 !      VOL = VOLT
 !      OVOL = 0.0
 !      ROVOL = OVOL
-      
-      
-
 end program

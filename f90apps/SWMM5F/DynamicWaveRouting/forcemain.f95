@@ -1,3 +1,4 @@
+module forcemain
 !-----------------------------------------------------------------------------
 !   forcemain.c
 !
@@ -17,7 +18,7 @@
 !-----------------------------------------------------------------------------
 !  Constants
 !-----------------------------------------------------------------------------
-!static const double VISCOS = 1.1E-5   ! Kinematic viscosity of water
+double precision, parameter :: VISCOS = 1.1E-5   ! Kinematic viscosity of water
 !                                       ! @ 20 deg C (sq ft/sec)
 
 !-----------------------------------------------------------------------------
@@ -32,7 +33,7 @@
 !-----------------------------------------------------------------------------
 !static double forcemain_getFricFactor(double e, double hrad, double re)
 !static double forcemain_getReynolds(double v, double hrad)
-
+contains
 !=============================================================================
 
 double precision function forcemain_getEquivN(j, k)
@@ -49,16 +50,18 @@ double precision function forcemain_getEquivN(j, k)
     implicit none
     integer, intent(in) :: j, k
     
+    double precision :: lVal
+    
     !TXsect xsect = arrLink(j)%xsect
     double precision :: f, d
-    double precision :: forcemain_getFricFactor
     d = arrLink(j)%xsect%yFull
     select case ( ForceMainEqn )
       case (H_W)
         forcemain_getEquivN = 1.067 / arrLink(j)%xsect%rBot * ((d/Conduit(k)%slope) ** 0.04)
         return
       case (D_W)
-        f = forcemain_getFricFactor(arrLink(j)%xsect%rBot, d/4.0, 1.0e12)
+        lVal = 1.0e12
+        f = forcemain_getFricFactor(arrLink(j)%xsect%rBot, d/4.0, lVal)
         forcemain_getEquivN = sqrt(f/185.0) * (d ** (1./6.))
         return
     end select
@@ -93,49 +96,53 @@ double precision function forcemain_getRoughFactor(j, lengthFactor)
     forcemain_getRoughFactor = 0.0
 end function forcemain_getRoughFactor
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function forcemain_getFricSlope(j, v, hrad)
 !
-!double forcemain_getFricSlope(int j, double v, double hrad)
-!!
-!!  Input:   j = link index
-!!           v = flow velocity (ft/sec)
-!!           hrad = hydraulic radius (ft)
-!!  Output:  returns a force main pipe's friction slope 
-!!  Purpose: computes the headloss per unit length used in dynamic wave
-!!           flow routing for a pressurized force main using either the
-!!           Hazen-Williams or Darcy-Weisbach flow equations.
-!!  Note:    the pipe's roughness factor was saved in xsect.sBot in
-!!           conduit_validate() in LINK.C.
-!!
-!{
-!    double re, f
-!    TXsect xsect = arrLink(j).xsect
-!    switch ( ForceMainEqn )
-!    {
-!      case H_W:
-!        return xsect.sBot * pow(v, 0.852) / pow(hrad, 1.1667)                 !(5.0.012 - LR)
-!      case D_W:
-!        re = forcemain_getReynolds(v, hrad)
-!        f = forcemain_getFricFactor(xsect.rBot, hrad, re)
-!        return f * xsect.sBot * v / hrad
-!    }
-!    return 0.0
-!}
+!  Input:   j = link index
+!           v = flow velocity (ft/sec)
+!           hrad = hydraulic radius (ft)
+!  Output:  returns a force main pipe's friction slope 
+!  Purpose: computes the headloss per unit length used in dynamic wave
+!           flow routing for a pressurized force main using either the
+!           Hazen-Williams or Darcy-Weisbach flow equations.
+!  Note:    the pipe's roughness factor was saved in xsect.sBot in
+!           conduit_validate() in LINK.C.
 !
-!!=============================================================================
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: v, hrad
+    double precision :: re, f
+    !type(TXsect) :: xsect = arrLink(j)%xsect
+    select case ( ForceMainEqn )
+      case (H_W)
+        forcemain_getFricSlope = arrLink(j)%xsect%sBot * (v ** 0.852) / (hrad ** 1.1667)                 !(5.0.012 - LR)
+        return
+      case (D_W)
+        re = forcemain_getReynolds(v, hrad)
+        f = forcemain_getFricFactor(arrLink(j)%xsect%rBot, hrad, re)
+        forcemain_getFricSlope = f * arrLink(j)%xsect%sBot * v / hrad
+        return
+    end select
+    forcemain_getFricSlope = 0.0
+end function forcemain_getFricSlope
 !
-!double forcemain_getReynolds(double v, double hrad)
-!!
-!!  Input:   v = flow velocity (ft/sec)
-!!           hrad = hydraulic radius (ft)
-!!  Output:  returns a flow's Reynolds Number
-!!  Purpose: computes a flow's Reynolds Number
-!!
-!{
-!    double precision :: VISCOS
-!    VISCOS = 1.1E-5
-!    return 4.0 * hrad * v / VISCOS
-!}   
+!=============================================================================
+
+double precision function forcemain_getReynolds(v, hrad)
+!
+!  Input:   v = flow velocity (ft/sec)
+!           hrad = hydraulic radius (ft)
+!  Output:  returns a flow's Reynolds Number
+!  Purpose: computes a flow's Reynolds Number
+!
+    use headers
+    implicit none
+    double precision, intent(in) :: v, hrad
+    forcemain_getReynolds = 4.0 * hrad * v / VISCOS
+end function forcemain_getReynolds 
 !    
 !=============================================================================
 
@@ -159,7 +166,7 @@ double precision recursive function forcemain_getFricFactor(e, hrad, re) result(
     if ( mre <= 2000.0 ) then
        f = 64.0 / mre
     else if ( mre < 4000.0 ) then
-        f = forcemain_getFricFactor(e, hrad, 4000.0)
+        f = forcemain_getFricFactor(e, hrad, 4000.0d00)
         f = 0.032 + (f - 0.032) * ( mre - 2000.0) / 2000.0
     else
         f = e/3.7/(4.0*hrad)
@@ -169,3 +176,4 @@ double precision recursive function forcemain_getFricFactor(e, hrad, re) result(
     end if
 end function forcemain_getFricFactor
 !
+end module

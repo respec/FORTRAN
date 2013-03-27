@@ -135,7 +135,7 @@ integer function routing_open(routingModel)
     if ( Nobjects(LINK) > 0 ) then
         allocate(SortedLinks(Nobjects(LINK)), stat=mstat)
         if ( mstat /= 0 ) then
-            !call report_writeErrorMsg(ERR_MEMORY, '')
+            call report_writeErrorMsg(ERR_MEMORY, '')
             routing_open = ErrorCode
             return
         end if
@@ -230,10 +230,10 @@ subroutine routing_execute(routingModel, routingStep)
     ! --- replace old water quality state with new state
     if ( Nobjects(E_POLLUT) > 0 ) then
         do j=1, Nobjects(E_NODE)
-           !call node_setOldQualState(j)
+           call node_setOldQualState(j)
         end do
         do j=1, Nobjects(LINK)
-           !call link_setOldQualState(j)
+           call link_setOldQualState(j)
         end do
     end if
 
@@ -281,7 +281,7 @@ subroutine routing_execute(routingModel, routingStep)
 
     ! --- route quality through the drainage network
     if ( Nobjects(E_POLLUT) > 0 .and. .not.IgnoreQuality ) then                            !(5.0.014 - LR)
-        !call qualrout_execute(routingStep)
+        call qualrout_execute(routingStep)
     end if
 
     ! --- remove evaporation, infiltration & system outflows from nodes       !(5.0.015 - LR)
