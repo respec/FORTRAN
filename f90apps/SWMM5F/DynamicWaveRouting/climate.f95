@@ -330,6 +330,7 @@ subroutine climate_validate()
 !  Purpose: validates climatological variables
 !
     use headers
+    use report
     implicit none
     double precision :: a, z, pa
 
@@ -445,7 +446,7 @@ subroutine climate_initState
     use headers
     implicit none
     
-    double precision :: table_intervalLookup
+    !double precision :: table_intervalLookup
     LastDay = NO_DATE
     Temp%tmax = MISSING
     Snow%removed = 0.0
@@ -454,7 +455,7 @@ subroutine climate_initState
     NextEvapDate = StartDate
     NextEvapRate = 0.0
     if ( Evap%datatype == TIMESERIES_EVAP .and. Evap%tSeries >= 0  ) then
-        NextEvapRate = table_intervalLookup(Tseries(Evap%tSeries), StartDate-1.0)
+        !NextEvapRate = table_intervalLookup(Tseries(Evap%tSeries), StartDate-1.0)
     end if
 !!!!!!!!!!!!!!!!!!!!!!!!!!
 end subroutine climate_initState

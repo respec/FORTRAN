@@ -78,6 +78,7 @@ integer function stats_open()
 !  Purpose: opens the simulation statistics system.
 !
     use headers
+    use report
     implicit none
     integer :: j, k, lStat1, lStat2
 
@@ -253,6 +254,7 @@ subroutine stats_report()
 !  Purpose: reports simulation statistics.
 !
    !use headers
+   use report
    implicit none
 
     ! --- report flow routing accuracy statistics

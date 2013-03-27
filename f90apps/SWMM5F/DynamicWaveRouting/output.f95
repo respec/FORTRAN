@@ -39,22 +39,22 @@ integer, parameter :: INPUT_LENGTH = 6
 !-----------------------------------------------------------------------------
 !  Shared variables    
 !-----------------------------------------------------------------------------
-integer(kind=k6) :: IDStartPos           !static INT4 starting file position of ID names
-integer(kind=k6) :: OutputStartPos       !static INT4 starting file position of output data
-integer(kind=k6) :: BytesPerPeriod       !static INT4 bytes saved per simulation time period
-integer(kind=k6) :: NsubcatchResults     !static INT4 number of subcatchment output variables
-integer(kind=k6) :: NnodeResults         !static INT4 number of node output variables
-integer(kind=k6) :: NlinkResults         !static INT4 number of link output variables
-integer(kind=k6) :: NumSubcatch          !static INT4 number of subcatchments reported on  !(5.0.014 - LR)
-integer(kind=k6) :: NumNodes             !static INT4 number of nodes reported on          !(5.0.014 - LR)
-integer(kind=k6) :: NumLinks             !static INT4 number of links reported on          !(5.0.014 - LR)
-real(kind=r6) :: SysResults(MAX_SYS_RESULTS)    !static REAL4 values of system output vars.
+integer :: IDStartPos           !static INT4 starting file position of ID names
+integer :: OutputStartPos       !static INT4 starting file position of output data
+integer :: BytesPerPeriod       !static INT4 bytes saved per simulation time period
+integer :: NsubcatchResults     !static INT4 number of subcatchment output variables
+integer :: NnodeResults         !static INT4 number of node output variables
+integer :: NlinkResults         !static INT4 number of link output variables
+integer :: NumSubcatch          !static INT4 number of subcatchments reported on  !(5.0.014 - LR)
+integer :: NumNodes             !static INT4 number of nodes reported on          !(5.0.014 - LR)
+integer :: NumLinks             !static INT4 number of links reported on          !(5.0.014 - LR)
+real :: SysResults(MAX_SYS_RESULTS)    !static REAL4 values of system output vars.
 
 !time-value array holding outlet flow result
-real(kind=r15), dimension(:), pointer :: TSOutletVals
-real(kind=r15), dimension(:), pointer :: TSDateTime
-integer(kind=k8) :: OutputSize
-integer(kind=k8) :: OutputCount
+real, dimension(:), pointer :: TSOutletVals
+real, dimension(:), pointer :: TSDateTime
+integer :: OutputSize
+integer :: OutputCount
 
 !-----------------------------------------------------------------------------
 !  Exportable variables (shared with report.c), put in swmm5futil
@@ -94,10 +94,11 @@ integer function output_open()
 !  Purpose: writes basic project data to binary output file.
 !
     use headers
+    use report
     implicit none
     integer ::   nPolluts, j, m
-    integer(kind=k6) ::  k
-    real(kind=r6) :: x
+    integer ::  k
+    real :: x
     double precision :: z
     nPolluts = Nobjects(E_POLLUT)
     ! --- open binary output file
@@ -531,7 +532,7 @@ subroutine output_saveSubcatchResults(aReportTime, file)
     
     integer ::      j
     double precision ::   f, area
-    real(kind=r6) :: totalArea
+    real :: totalArea
     double precision :: reportDate
     
 !    totalArea = 0.0 !f

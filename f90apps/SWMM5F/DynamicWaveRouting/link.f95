@@ -226,15 +226,17 @@ subroutine conduit_validate(j, k)
 !  Purpose: validates a conduit's properties.
 !
     use headers
+    use forcemain
     use modXsect
     use swmm5futil
+    use report
     implicit none
     integer, intent(in) :: j
     integer(kind=K4), intent(in) :: k
     double precision :: aa
     double precision :: lengthFactor, roughness, mSlope                    !(5.0.018 - LR)
 
-    double precision :: forcemain_getEquivN, forcemain_getRoughFactor
+    !double precision :: forcemain_getEquivN, forcemain_getRoughFactor
     ! --- if custom xsection, then set its parameters                         !(5.0.010 - LR)
     if ( arrLink(j)%xsect%datatype == CUSTOM ) &                                        !(5.0.010 - LR)
        &call xsect_setCustomXsectParams(arrLink(j)%xsect)                            !(5.0.010 - LR)
@@ -602,11 +604,11 @@ subroutine link_validate(j)
       case (E_CONDUIT)
          call conduit_validate(j, arrLink(j)%subIndex) !break
       case (E_PUMP)
-         call pump_validate(j, arrLink(j)%subIndex)    !break
+         !call pump_validate(j, arrLink(j)%subIndex)    !break
       case (E_ORIFICE)
-         call orifice_validate(j, arrLink(j)%subIndex) !break
+         !call orifice_validate(j, arrLink(j)%subIndex) !break
       case (E_WEIR)
-         call weir_validate(j, arrLink(j)%subIndex)    !break
+         !call weir_validate(j, arrLink(j)%subIndex)    !break
     end select
 
 !!  The following code segment was revised in release 5.0.019  !!          !(5.0.019 - LR)
@@ -652,7 +654,7 @@ subroutine link_initState(j)
     arrLink(j)%setting   = 1.0                                                   !(5.0.010 - LR)
     arrLink(j)%targetSetting = 1.0                                               !(5.0.010 - LR)
     if ( arrLink(j)%datatype == E_CONDUIT ) call conduit_initState(j, arrLink(j)%subIndex)
-    if ( arrLink(j)%datatype == E_PUMP    ) call pump_initState(j, arrLink(j)%subIndex)
+    !if ( arrLink(j)%datatype == E_PUMP    ) call pump_initState(j, arrLink(j)%subIndex)
     
     ! --- initialize water quality state
     do p =1, Nobjects(E_POLLUT)
@@ -1030,7 +1032,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
         Outlet(k)%curveType  = int(x(6))                                      !(5.0.014 - LR)
 
         deallocate(lp)
-        lVal = xsect_setParams(arrLink(j)%xsect, DUMMY, lp, 0.0d00)
+        lVal = xsect_setParams(arrLink(j)%xsect, 0, lp, 0.0d00)
         !break
 
     end select
@@ -1478,7 +1480,7 @@ subroutine link_setSetting(j, tstep)                                      !(5.0.
       case (E_ORIFICE)
           call orifice_setSetting(j, tstep)                       !(5.0.011 - LR)
       case (E_WEIR)
-          call weir_setSetting(j)                                 !(5.0.011 - LR)
+          !call weir_setSetting(j)                                 !(5.0.011 - LR)
       case default
           arrLink(j)%setting = arrLink(j)%targetSetting            !(5.0.011 - LR)
     end select                                                     !(5.0.010 - LR)

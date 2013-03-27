@@ -86,11 +86,12 @@ integer function massbal_open()
 !  Purpose: opens and initializes mass balance continuity checking.
 !
     use headers
+    use report
     implicit none
     
     integer :: j, n, lStat1, lStat2
 
-    double precision :: gwater_getVolume, snow_getSnowCover, subcatch_getStorage
+    !double precision :: gwater_getVolume, snow_getSnowCover, subcatch_getStorage
 
     ! --- initialize global continuity errors
     RunoffError = 0.0
@@ -108,8 +109,8 @@ integer function massbal_open()
     RunoffTotals%initSnowCover = 0.0
     TotalArea = 0.0
     do j =1, Nobjects(E_SUBCATCH)
-        RunoffTotals%initStorage = RunoffTotals%initStorage + subcatch_getStorage(j)     !(5.0.019 - LR)
-        RunoffTotals%initSnowCover = RunoffTotals%initSnowCover + snow_getSnowCover(j)
+        !RunoffTotals%initStorage = RunoffTotals%initStorage + subcatch_getStorage(j)     !(5.0.019 - LR)
+        !RunoffTotals%initSnowCover = RunoffTotals%initSnowCover + snow_getSnowCover(j)
         TotalArea = TotalArea + Subcatch(j)%area
     end do
 
@@ -122,7 +123,7 @@ integer function massbal_open()
     GwaterTotals%initStorage  = 0.0
     GwaterTotals%finalStorage = 0.0
     do j =1, Nobjects(E_SUBCATCH)
-        GwaterTotals%initStorage = GwaterTotals%initStorage + gwater_getVolume(j) * Subcatch(j)%area
+        !GwaterTotals%initStorage = GwaterTotals%initStorage + gwater_getVolume(j) * Subcatch(j)%area
     end do
 
     ! --- initialize node flow & storage totals
@@ -243,6 +244,7 @@ subroutine massbal_report()
 !  Purpose: reports mass balance results.
 !
     use headers
+    use report
     implicit none
     integer ::    j
     double precision :: gwArea

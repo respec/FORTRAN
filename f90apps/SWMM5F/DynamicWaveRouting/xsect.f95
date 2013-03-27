@@ -130,7 +130,7 @@ logical function xsect_setParams(xsect, datatype, p, aUcf)
     use xsectdat
     implicit none
     type(TXsect), intent(inout) :: xsect
-    integer(kind=K2), intent(in) :: datatype
+    integer, intent(in) :: datatype
     double precision, dimension(:), intent(inout) :: p
     double precision, intent(in) :: aUcf
     
@@ -2879,7 +2879,7 @@ double precision function getThetaOfAlpha(alpha)
     implicit none
     double precision, intent(in) :: alpha
     integer :: k
-    double precision :: theta, theta1, ap, d
+    real :: theta, theta1, ap, d
 
     if ( alpha > 0.04 ) then
        theta = 1.2 + 5.08 * (alpha - 0.04) / 0.96

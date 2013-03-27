@@ -44,7 +44,7 @@ integer, parameter :: MAXSTEPS    =  8       !  max. number of Picard iterations
 !   Data Structures
 ! -----------------------------------------------------------------------------
 type TXnode 
-    logical*1 :: converged                 !  TRUE if iterations for a node done
+    logical :: converged                 !  TRUE if iterations for a node done
     double precision :: newSurfArea               !  current surface area (ft2)
     double precision :: oldSurfArea               !  previous surface area (ft2)
     double precision :: sumdqdh                   !  sum of dqdh from adjoining links
@@ -128,10 +128,11 @@ subroutine dynwave_init()
     use consts
     use enums
     use headers
+    use swmm5futil
     implicit none
     integer :: i
     
-    double precision :: UCF
+    !double precision :: UCF
 
     VariableStep = 0.0
     if ( abs(MinSurfArea - 0.0) < tiny(1.0) ) then
@@ -1457,7 +1458,7 @@ double precision function getVariableStep(maxStep)
     end if
 
     !  --- update count of times the minimum node or link was critical
-    call stats_updateCriticalTimeCount(minNode, minLink)
+    !call stats_updateCriticalTimeCount(minNode, minLink)
 
     !  --- don't let time step go below an absolute minimum
     if ( tMin < MINTIMESTEP ) tMin = MINTIMESTEP

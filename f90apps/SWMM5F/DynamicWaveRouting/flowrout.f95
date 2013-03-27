@@ -183,16 +183,16 @@ integer function flowrout_execute(links, routingModel, tStep)
         ! --- see if upstream node is a storage unit whose state needs updating
         j = links(i)
         n1 = arrLink(j)%node1
-        if ( Node(n1)%datatype == E_STORAGE ) call updateStorageState(n1, i, links, tStep)
+        !if ( Node(n1)%datatype == E_STORAGE ) call updateStorageState(n1, i, links, tStep)
 
         ! --- retrieve inflow at upstream end of link
         qin  = getLinkInflow(j, tStep)
 
         ! route flow through link
         if ( routingModel == SF ) then
-                mSteps = mSteps + steadyflow_execute(j, qin, qout) !&qin, &qout)
+                !mSteps = mSteps + steadyflow_execute(j, qin, qout) !&qin, &qout)
         else 
-                mSteps = mSteps + kinwave_execute(j, qin, qout, tStep) !&qin, &qout, tStep)
+                !mSteps = mSteps + kinwave_execute(j, qin, qout, tStep) !&qin, &qout, tStep)
         end if
         arrLink(j)%newFlow = qout
 
@@ -204,10 +204,10 @@ integer function flowrout_execute(links, routingModel, tStep)
 
     ! --- update state of each non-updated node and link
     do j=1, Nobjects(E_NODE)
-      call setNewNodeState(j, tStep)
+      !call setNewNodeState(j, tStep)
     end do
     do j=1, Nobjects(LINK)
-      call setNewLinkState(j)
+      !call setNewLinkState(j)
     end do
     flowrout_execute = int(mSteps + 0.5)
     !return (int)(mSteps+0.5)
@@ -254,6 +254,7 @@ subroutine validateTreeLayout()
     use consts
     use enums
     use headers
+    use report
     implicit none
     integer ::   j, node1, node2
     double precision :: elev1, elev2
@@ -322,6 +323,7 @@ subroutine validateGeneralLayout()
     use consts
     use enums
     use headers
+    use report
     implicit none
     integer :: i, j
     integer :: outletCount
