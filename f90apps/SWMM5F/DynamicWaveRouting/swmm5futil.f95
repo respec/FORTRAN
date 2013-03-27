@@ -42,15 +42,15 @@ double precision :: Vcf
 !For use in output and report
 !
 !--! specific precisions, usually same as real and double precision
-!integer, parameter :: r6 = selected_real_kind(6) 
-!integer, parameter :: r15 = selected_real_kind(15) 
+integer, parameter :: r6 = selected_real_kind(6) 
+integer, parameter :: r15 = selected_real_kind(15) 
 
-!integer, parameter :: k6 = selected_int_kind(6) 
-!integer, parameter :: k15 = selected_int_kind(15)
+integer, parameter :: k6 = selected_int_kind(6) 
+integer, parameter :: k15 = selected_int_kind(15)
 
-real, dimension(:), allocatable, save :: SubcatchResults !REAL4
-real, dimension(:), allocatable, save :: NodeResults !REAL4
-real, dimension(:), allocatable, save :: LinkResults !REAL4
+real(kind=r6), dimension(:), allocatable, save :: SubcatchResults !REAL4
+real(kind=r6), dimension(:), allocatable, save :: NodeResults !REAL4
+real(kind=r6), dimension(:), allocatable, save :: LinkResults !REAL4
 
 contains
 double precision function UCF(u)
@@ -80,9 +80,9 @@ end function UCF
 !
 INTEGER FUNCTION ReDim(array)
 IMPLICIT NONE
-REAL ,DIMENSION(:),POINTER :: array
+REAL(KIND=R15),DIMENSION(:),POINTER :: array
 
-REAL ,DIMENSION(:),ALLOCATABLE :: tmp_arr
+REAL(KIND=R15),DIMENSION(:),ALLOCATABLE :: tmp_arr
 INTEGER :: prevSize, lStat
 prevSize = SIZE(array, 1)
 

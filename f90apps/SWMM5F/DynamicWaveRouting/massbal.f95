@@ -108,8 +108,8 @@ integer function massbal_open()
     RunoffTotals%initSnowCover = 0.0
     TotalArea = 0.0
     do j =1, Nobjects(E_SUBCATCH)
-        !RunoffTotals%initStorage = RunoffTotals%initStorage + subcatch_getStorage(j)     !(5.0.019 - LR)
-        !RunoffTotals%initSnowCover = RunoffTotals%initSnowCover + snow_getSnowCover(j)
+        RunoffTotals%initStorage = RunoffTotals%initStorage + subcatch_getStorage(j)     !(5.0.019 - LR)
+        RunoffTotals%initSnowCover = RunoffTotals%initSnowCover + snow_getSnowCover(j)
         TotalArea = TotalArea + Subcatch(j)%area
     end do
 
@@ -122,7 +122,7 @@ integer function massbal_open()
     GwaterTotals%initStorage  = 0.0
     GwaterTotals%finalStorage = 0.0
     do j =1, Nobjects(E_SUBCATCH)
-        !GwaterTotals%initStorage = GwaterTotals%initStorage + gwater_getVolume(j) * Subcatch(j)%area
+        GwaterTotals%initStorage = GwaterTotals%initStorage + gwater_getVolume(j) * Subcatch(j)%area
     end do
 
     ! --- initialize node flow & storage totals
@@ -155,7 +155,7 @@ integer function massbal_open()
     if ( n > 0 ) then
         allocate(LoadingTotals(n), stat=lStat1)
         if ( lStat1 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
         end if
@@ -176,7 +176,7 @@ integer function massbal_open()
          allocate(QualTotals(n), stat=lStat1)
          allocate(StepQualTotals(n), stat=lStat2)
          if ( lStat1 /= 0 .or. lStat2 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
          end if
@@ -201,13 +201,13 @@ integer function massbal_open()
     if ( Nobjects(E_NODE) > 0 ) then
         allocate(NodeInflow(Nobjects(E_NODE)), stat=lStat1)
         if ( lStat1 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
         end if
         allocate(NodeOutflow(Nobjects(E_NODE)), stat=lStat2)
         if ( lStat2 /= 0 ) then
-             !call report_writeErrorMsg(ERR_MEMORY, '')
+             call report_writeErrorMsg(ERR_MEMORY, '')
              massbal_open = ErrorCode
              return
         end if

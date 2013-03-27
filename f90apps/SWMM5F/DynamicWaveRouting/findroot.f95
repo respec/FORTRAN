@@ -1,3 +1,4 @@
+module findroot
 !-----------------------------------------------------------------------------
 !   findroot.c
 !
@@ -16,8 +17,9 @@
 !#define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a)) !fortran has same function SIGN
 !#define MAXIT 60
 
+contains
 
-integer function findroot_Newton(x1, x2, rts, xacc, func)
+integer function findroot_Newton(x1, x2, rts, xacc, aFunc)
                      !void (*func) (double x, double* f, double* df)
 !
 !  Using a combination of Newton-Raphson and bisection, find the root of a
@@ -40,11 +42,10 @@ integer function findroot_Newton(x1, x2, rts, xacc, func)
     double precision, intent(inout) :: rts
     
     interface AFunc1
-      function func (x, f, df)
-         double precision :: func
+      subroutine aFunc (x, f, df)
          double precision, intent(in) :: x
          double precision, intent(inout) :: f, df
-      end function func
+      end subroutine aFunc
     end interface AFunc1
 
     integer, parameter :: MAXIT = 60
@@ -60,7 +61,7 @@ integer function findroot_Newton(x1, x2, rts, xacc, func)
     xhi = x2
     dxold = abs(x2-x1)
     dx = dxold
-    call func(x, f, df)
+    call aFunc(x, f, df)
     n = n + 1
 
     ! Loop over allowed iterations.
@@ -85,7 +86,7 @@ integer function findroot_Newton(x1, x2, rts, xacc, func)
         if ( abs(dx) < xacc ) exit
  
         ! Evaluate function. Maintain bracket on the root.
-        call func(x, f, df)
+        call aFunc(x, f, df)
         n = n + 1
         if ( f < 0.0 ) then 
            xlo = x
@@ -175,3 +176,5 @@ double precision function findroot_Ridder(x1, x2, xacc, func) !double (*func)(do
     end if
     findroot_Ridder = -1.e20
 end function findroot_Ridder
+
+end module

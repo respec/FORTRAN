@@ -266,7 +266,7 @@ integer function swmm_start(saveResults)
        return
     end if
     if ( .not.IsOpenFlag .or. IsStartedFlag ) then
-        !call report_writeErrorMsg(ERR_NOT_OPEN, "")
+        call report_writeErrorMsg(ERR_NOT_OPEN, "")
         swmm_start = ErrorCode
         return
     end if
@@ -311,7 +311,7 @@ integer function swmm_start(saveResults)
 
     ! --- open all computing systems (order is important!)
     ErrorCode = output_open()
-    !if ( DoRunoff ) call runoff_open()                     !(5.0.018 - LR)
+    if ( DoRunoff ) call runoff_open()                     !(5.0.018 - LR)
     if ( DoRouting ) ErrorCode = routing_open(RouteModel)  !(5.0.018 - LR)
     lstat = massbal_open()
     lstat = stats_open()
@@ -342,7 +342,7 @@ integer function swmm_step(elapsedTime)
        return
     end if
     if ( .not.IsOpenFlag .or. .not.IsStartedFlag  ) then
-        !call report_writeErrorMsg(ERR_NOT_OPEN, "")
+        call report_writeErrorMsg(ERR_NOT_OPEN, "")
         swmm_step = ErrorCode
         return
     end if
@@ -406,7 +406,7 @@ subroutine execRouting(elapsedTime)
         ! --- compute runoff until next routing time reached or exceeded
         if ( DoRunoff ) then
            do while ( NewRunoffTime < nextRoutingTime )              !(5.0.018 - LR)
-              !call runoff_execute()
+              call runoff_execute()
               if ( ErrorCode /= 0 ) return
            end do
         end if
