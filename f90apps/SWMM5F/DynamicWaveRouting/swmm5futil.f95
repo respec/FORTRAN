@@ -42,8 +42,8 @@ double precision :: Vcf
 !For use in output and report
 !
 !--! specific precisions, usually same as real and double precision
-integer, parameter :: r6 = selected_real_kind(6) 
-integer, parameter :: r15 = selected_real_kind(15) 
+!integer, parameter :: r6 = selected_real_kind(6) 
+!integer, parameter :: r15 = selected_real_kind(15) 
 
 !integer, parameter :: k6 = selected_int_kind(6) 
 !integer, parameter :: k15 = selected_int_kind(15)

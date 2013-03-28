@@ -132,7 +132,9 @@ integer function routing_open(routingModel)
 !    end if
 
     ! --- topologically sort the links
-    deallocate(SortedLinks)
+    if (allocated(SortedLinks)) then
+      deallocate(SortedLinks)
+    end if 
     if ( Nobjects(LINK) > 0 ) then
         allocate(SortedLinks(Nobjects(LINK)), stat=mstat)
         if ( mstat /= 0 ) then

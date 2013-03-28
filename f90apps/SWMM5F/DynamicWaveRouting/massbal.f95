@@ -145,11 +145,21 @@ integer function massbal_open()
     StepFlowTotals = FlowTotals
 
     ! --- initialize arrays to null
-    deallocate(LoadingTotals)
-    deallocate(QualTotals)
-    deallocate(StepQualTotals)
-    deallocate(NodeInflow)
-    deallocate(NodeOutflow)
+    if (allocated(LoadingTotals)) then
+      deallocate(LoadingTotals) 
+    end if 
+    if (allocated(QualTotals)) then
+      deallocate(QualTotals)
+    end if 
+    if (allocated(StepQualTotals)) then
+      deallocate(StepQualTotals)
+    end if 
+    if (allocated(NodeInflow)) then
+      deallocate(NodeInflow)
+    end if   
+    if (allocated(NodeOutflow)) then
+      deallocate(NodeOutflow)
+    end if
 
     ! --- allocate memory for WQ washoff continuity totals
     n = Nobjects(E_POLLUT)
