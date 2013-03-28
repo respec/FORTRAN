@@ -394,7 +394,8 @@ double precision function node_getOutflow(j, k)
     use headers
     implicit none
     
-    integer, intent(in) :: j, k
+    integer(kind=K4), intent(in) :: j
+    integer, intent(in) :: k
     double precision :: lVal
     double precision :: divider_getOutflow, storage_getOutflow
     select case ( Node(j)%datatype )
@@ -408,25 +409,28 @@ double precision function node_getOutflow(j, k)
     node_getOutflow = lVal
 end function node_getOutflow
 !
-!!=============================================================================
+!=============================================================================
+
+double precision function node_getMaxOutflow(j, q, tStep)
 !
-!double node_getMaxOutflow(int j, double q, double tStep)
-!!
-!!  Input:   j = node index
-!!           q = original outflow rate (cfs)
-!!           tStep = time step (sec)
-!!  Output:  returns modified flow rate (cfs)
-!!  Purpose: limits outflow rate from a node with storage volume.
-!!
-!{
-!    double qMax
-!    if ( Node(j).fullVolume > 0.0 )
-!    {
-!        qMax = Node(j).inflow + Node(j).oldVolume / tStep                     !(5.0.014 - LR)
-!        if ( q > qMax ) q = qMax
-!    }
-!    return MAX(0.0, q)
-!}
+!  Input:   j = node index
+!           q = original outflow rate (cfs)
+!           tStep = time step (sec)
+!  Output:  returns modified flow rate (cfs)
+!  Purpose: limits outflow rate from a node with storage volume.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: q, tStep
+    double precision :: qMax, mq
+    mq = q
+    if ( Node(j)%fullVolume > 0.0 ) then
+        qMax = Node(j)%inflow + Node(j)%oldVolume / tStep                     !(5.0.014 - LR)
+        if ( mq > qMax ) mq = qMax
+    end if
+    node_getMaxOutflow = MAX(0.0, mq)
+end function node_getMaxOutflow
 !
 !!=============================================================================
 !
@@ -484,39 +488,44 @@ end function node_getOutflow
 !    return outflow
 !}
 !
-!!=============================================================================
+!=============================================================================
+
+subroutine node_getResults(j, f) !, x)
 !
-!void node_getResults(int j, double f, float x())
-!!
-!!  Input:   j = node index
-!!           f = weighting factor
-!!           x() = array of nodal reporting variables
-!!  Output:  none
-!!  Purpose: computes weighted average of old and new results at a node.
-!!
-!{
-!    int    p
-!    double z
-!    double f1 = 1.0 - f
+!  Input:   j = node index, int
+!           f = weighting factor, double
+!           x() = array of nodal reporting variables, float
+!  Output:  none
+!  Purpose: computes weighted average of old and new results at a node.
 !
-!    z = (f1 * Node(j).oldDepth + f * Node(j).newDepth) * UCF(LENGTH)
-!    x(NODE_DEPTH) = (float)z
-!    z = Node(j).invertElev * UCF(LENGTH)
-!    x(NODE_HEAD) = x(NODE_DEPTH) + (float)z
-!    z = (f1*Node(j).oldVolume + f*Node(j).newVolume) * UCF(VOLUME)
-!    x(NODE_VOLUME)  = (float)z
-!    z = (f1*Node(j).oldLatFlow + f*Node(j).newLatFlow) * UCF(FLOW) 
-!    x(NODE_LATFLOW) = (float)z
-!    z = (f1*Node(j).oldFlowInflow + f*Node(j).inflow) * UCF(FLOW)
-!    x(NODE_INFLOW) = (float)z
-!    z = Node(j).overflow * UCF(FLOW)
-!    x(NODE_OVERFLOW) = (float)z
-!    for (p = 0 p < Nobjects(POLLUT) p++)
-!    {
-!        z = f1*Node(j).oldQual(p) + f*Node(j).newQual(p)
-!        x(NODE_QUAL+p) = (float)z
-!    }
-!}
+    use headers
+    use swmm5futil
+    implicit none
+    
+    integer, intent(in) :: j
+    double precision, intent(in) :: f
+    !double precision, dimension(1:), intent(inout) :: x
+    integer :: p
+    double precision :: z, f1
+    f1 = 1.0 - f
+
+    z = (f1 * Node(j)%oldDepth + f * Node(j)%newDepth) * UCF(LENGTH)
+    NodeResults(NODE_DEPTH) = z * 1.0d00 !(float)z
+    z = Node(j)%invertElev * UCF(LENGTH)
+    NodeResults(NODE_HEAD) = NodeResults(NODE_DEPTH) + z * 1.0d00 !(float)z
+    z = (f1*Node(j)%oldVolume + f*Node(j)%newVolume) * UCF(VOLUME)
+    NodeResults(NODE_VOLUME)  = z * 1.0d00 !(float)z
+    z = (f1*Node(j)%oldLatFlow + f*Node(j)%newLatFlow) * UCF(FLOW) 
+    NodeResults(NODE_LATFLOW) = z * 1.0d00 !(float)z
+    z = (f1*Node(j)%oldFlowInflow + f*Node(j)%inflow) * UCF(FLOW)
+    NodeResults(NODE_INFLOW) = z * 1.0d00 !(float)z
+    z = Node(j)%overflow * UCF(FLOW)
+    NodeResults(NODE_OVERFLOW) = z * 1.0d00 !(float)z
+    do p =1, Nobjects(E_POLLUT)
+        z = f1*Node(j)%oldQual(p) + f*Node(j)%newQual(p)
+        NodeResults(NODE_QUAL+p) = z * 1.0d00 !(float)z
+    end do
+end subroutine node_getResults
 !
 
 !=============================================================================
@@ -651,68 +660,6 @@ double precision function node_getLosses( j,  tStep)                            
         node_getLosses = 0.0
     end if
 end function node_getLosses
-
-!=============================================================================
-
-double precision function node_getMaxOutflow(j, q, tStep)
-!
-!  Input:   j = node index
-!           q = original outflow rate (cfs)
-!           tStep = time step (sec)
-!  Output:  returns modified flow rate (cfs)
-!  Purpose: limits outflow rate from a node with storage volume.
-!
-    use headers
-    implicit none
-    integer, intent(in) :: j
-    double precision, intent(in) :: q, tStep
-    double precision :: qMax, mq
-    mq = q
-    if ( Node(j)%fullVolume > 0.0 ) then
-        qMax = Node(j)%inflow + Node(j)%oldVolume / tStep    !(5.0.014 - LR)
-        if ( mq > qMax ) mq = qMax
-    end if
-    node_getMaxOutflow = MAX(0.0, mq)
-end function node_getMaxOutflow
-
-!=============================================================================
-
-subroutine node_getResults(j, f) !, x)
-!
-!  Input:   j = node index, int
-!           f = weighting factor, double
-!           x() = array of nodal reporting variables, float
-!  Output:  none
-!  Purpose: computes weighted average of old and new results at a node.
-!
-    use headers
-    use swmm5futil
-    implicit none
-    
-    integer, intent(in) :: j
-    double precision, intent(in) :: f
-    !double precision, dimension(1:), intent(inout) :: x
-    integer :: p
-    double precision :: z, f1
-    f1 = 1.0 - f
-
-    z = (f1 * Node(j)%oldDepth + f * Node(j)%newDepth) * UCF(LENGTH)
-    NodeResults(NODE_DEPTH) = z * 1.0d00 !(float)z
-    z = Node(j)%invertElev * UCF(LENGTH)
-    NodeResults(NODE_HEAD) = NodeResults(NODE_DEPTH) + z * 1.0d00 !(float)z
-    z = (f1*Node(j)%oldVolume + f*Node(j)%newVolume) * UCF(VOLUME)
-    NodeResults(NODE_VOLUME)  = z * 1.0d00 !(float)z
-    z = (f1*Node(j)%oldLatFlow + f*Node(j)%newLatFlow) * UCF(FLOW) 
-    NodeResults(NODE_LATFLOW) = z * 1.0d00 !(float)z
-    z = (f1*Node(j)%oldFlowInflow + f*Node(j)%inflow) * UCF(FLOW)
-    NodeResults(NODE_INFLOW) = z * 1.0d00 !(float)z
-    z = Node(j)%overflow * UCF(FLOW)
-    NodeResults(NODE_OVERFLOW) = z * 1.0d00 !(float)z
-    do p =1, Nobjects(E_POLLUT)
-        z = f1*Node(j)%oldQual(p) + f*Node(j)%newQual(p)
-        NodeResults(NODE_QUAL+p) = z * 1.0d00 !(float)z
-    end do
-end subroutine node_getResults
 
 !!=============================================================================
 !!                   J U N C T I O N   M E T H O D S

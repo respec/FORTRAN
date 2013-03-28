@@ -42,8 +42,8 @@ double precision :: Vcf
 !For use in output and report
 !
 !--! specific precisions, usually same as real and double precision
-!integer, parameter :: r6 = selected_real_kind(6) 
-!integer, parameter :: r15 = selected_real_kind(15) 
+integer, parameter :: r6 = selected_real_kind(6) 
+integer, parameter :: r15 = selected_real_kind(15) 
 
 !integer, parameter :: k6 = selected_int_kind(6) 
 !integer, parameter :: k15 = selected_int_kind(15)
@@ -51,6 +51,17 @@ double precision :: Vcf
 real, dimension(:), allocatable, save :: SubcatchResults !REAL4
 real, dimension(:), allocatable, save :: NodeResults !REAL4
 real, dimension(:), allocatable, save :: LinkResults !REAL4
+
+type myoutput
+  integer :: datatype
+  integer :: index
+  real, dimension(:), pointer :: oflow
+  real, dimension(:), pointer :: odepth
+  real, dimension(:), pointer :: ovolume
+end type myoutput
+
+type(myoutput), dimension(:), allocatable, save :: onodes
+type(myoutput), dimension(:), allocatable, save :: olinks
 
 contains
 double precision function UCF(u)

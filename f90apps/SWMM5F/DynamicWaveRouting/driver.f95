@@ -89,7 +89,7 @@ program main
       real, dimension(NCOND) :: COFF2 = (/0.0, 0.0/)
       real, dimension(NCOND) :: CQ0 = (/0.01, 0.01/)
       
-      integer(kind=K2), dimension(NCOND) :: CSHAPE = (/TRAPEZOIDAL, CIRCULAR/)
+      integer, dimension(NCOND) :: CSHAPE = (/TRAPEZOIDAL, CIRCULAR/)
       real, dimension(NCOND) :: CGEOM1 = (/3.0, 2.25/)
       real, dimension(NCOND) :: CGEOM2 = (/5.0, 0.0/)
       real, dimension(NCOND) :: CGEOM3 = (/5.0, 0.0/)
@@ -264,11 +264,25 @@ program main
 !      lErrorCode = swmm_start(.true.)
 !      if (ErrorCode /= 0) stop
 
+      !set routing step size in seconds
+      RouteStep       = 300.0 !<-- change here
       lErrorCode = swmm_run('', '', '')
       
+      !The resulting nodes' and links' flow, depth, and volume outputs are
+      !saved in the onodes array and olinks array. 
+      !Each element of the onodes or olinks array has 3 arrays, oflow, odepth, and ovolume
+      !that contain output values for each reporting steps in TSDateTime
+      !For example, if you want to see the depth of 2nd node at reporting step number 4, access it as below
+      !  onodes(2)%odepth(4)
+      !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
+      !  olinks(1)%oflow(3)
       do J=1, OutputSize
-         write(*,*) TSDateTime(J), ",", TSOutletVals(J)
+!         write(*,*) TSDateTime(J), ",", TSOutletVals(J)
+         write(*,*) TSDateTime(J), ",", onodes(1)%oflow(J), ",", onodes(2)%odepth(J), ",", onodes(3)%ovolume(J)
+         write(*,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",", olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
       end do
+      
+      call output_close
       STOP
 !
 !     have to figure out how to get the output back here
