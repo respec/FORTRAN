@@ -128,6 +128,7 @@ double precision function conduit_getSlope(j)                                   
     mlength = conduit_getLength(j)                                      !(5.0.015 - LR)
 
     ! --- check that elevation drop > minimum allowable drop
+    !write(24,*) 'in link.f95 conduit_getSlope, j, arrLink(j)%node1, arrLink(j)%node2 ', j, arrLink(j)%node1, arrLink(j)%node2
     elev1 = arrLink(j)%offset1 + Node(arrLink(j)%node1)%invertElev
     elev2 = arrLink(j)%offset2 + Node(arrLink(j)%node2)%invertElev
     delta = abs(elev1 - elev2)
@@ -554,6 +555,58 @@ double precision function link_getPower(j)
     lVal = abs(dh) * q / 8.814 * KWperHP
     link_getPower = lVal
 end function link_getPower
+
+!=============================================================================
+
+subroutine link_getResults(j, f, x)
+!
+!  Input:   j = link index
+!           f = time weighting factor
+!  Output:  x = array of weighted results
+!  Purpose: retrieves time-weighted average of old and new results for a link.
+!
+    use headers
+    use swmm5futil
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: f
+    real, dimension(:), intent(inout) :: x
+    
+    integer :: p              ! pollutant index
+    double precision :: y, &  ! depth
+          &q, &               ! flow
+          &v, &               ! velocity
+          &fr,&               ! Froude no.
+          &c                  ! capacity or concentration
+    double precision :: f1
+    f1 = 1.0 - f
+
+    y = f1*arrLink(j)%oldDepth + f*arrLink(j)%newDepth
+    q = f1*arrLink(j)%oldFlow + f*arrLink(j)%newFlow
+    v = link_getVelocity(j, q, y)
+    fr = link_getFroude(j, v, y)
+    c = 0.0
+    if ( arrLink(j)%datatype /= E_PUMP .and. arrLink(j)%xsect%datatype /= DUMMY) then    !(5.0.022 - LR)
+         if (arrLink(j)%setting == 0.0 ) then
+             y = 0.0                                 !(5.0.022 - LR)
+         else 
+             c = y / (arrLink(j)%xsect%yFull * arrLink(j)%setting)                 !(5.0.022 - LR)
+         end if
+    end if                                                                      !(5.0.022 - LR)
+
+    y =y * UCF(LENGTH)
+    q =q * UCF(FLOW) * arrLink(j)%direction !(double)
+    v =v * UCF(LENGTH) * arrLink(j)%direction !(double)
+    x(LINK_DEPTH)    = y  !(float)
+    x(LINK_FLOW)     = q  !(float)
+    x(LINK_VELOCITY) = v  !(float)
+    x(LINK_FROUDE)   = fr !(float)
+    x(LINK_CAPACITY) = c  !(float)
+    do p =1, Nobjects(E_POLLUT)
+        c = f1*arrLink(j)%oldQual(p) + f*arrLink(j)%newQual(p)
+        x(LINK_QUAL+p) = c !(float)
+    end do
+end subroutine link_getResults
 
 !=============================================================================
 

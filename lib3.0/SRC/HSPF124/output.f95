@@ -51,7 +51,7 @@ integer :: NumLinks             !static INT4 number of links reported on        
 real :: SysResults(MAX_SYS_RESULTS)    !static REAL4 values of system output vars.
 
 !time-value array holding outlet flow result
-real, dimension(:), pointer :: TSOutletVals
+!real, dimension(:), pointer :: TSOutletVals
 real, dimension(:), pointer :: TSDateTime
 integer :: OutputSize
 integer :: OutputCount
@@ -94,6 +94,7 @@ integer function output_open()
 !  Purpose: writes basic project data to binary output file.
 !
     use headers
+    use swmm5futil
     use report
     implicit none
     integer ::   nPolluts, j, m
@@ -142,23 +143,48 @@ integer function output_open()
 !        + MAX_SYS_RESULTS * sizeof(REAL4)
         
     Nperiods = 0
-    OutputSize = 500 !initial size, will expand as needed
+    OutputSize = 100 !initial size, will expand as needed
     OutputCount = 0
-    deallocate(SubcatchResults)
-    deallocate(NodeResults)
-    deallocate(LinkResults)
-    deallocate(TSOutletVals)
-    deallocate(TSDateTime)
+    if (allocated(SubcatchResults)) then
+      deallocate(SubcatchResults)
+    end if 
+    if (allocated(NodeResults)) then
+      deallocate(NodeResults)
+    end if 
+    if (allocated(LinkResults)) then
+      deallocate(LinkResults)
+    end if 
+!    deallocate(TSOutletVals)
+    !if (allocated(TSDateTime)) then
+      !deallocate(TSDateTime)
+    !end if 
     allocate(SubcatchResults(NsubcatchResults))
     allocate(NodeResults(NnodeResults))
     allocate(LinkResults(NlinkResults))
-    allocate(TSOutletVals(OutputSize))
+!    allocate(TSOutletVals(OutputSize))
     allocate(TSDateTime(OutputSize))
     if ( .not. allocated(SubcatchResults) .or. .not. allocated(NodeResults) .or. .not. allocated(LinkResults )) then
         call report_writeErrorMsg(ERR_MEMORY, "")
         output_open = ErrorCode
         return
     end if
+
+    allocate(onodes(Nobjects(E_NODE)))
+    allocate(olinks(Nobjects(LINK)))
+    do j= 1,Nobjects(E_NODE)
+      onodes%datatype = E_NODE
+      onodes%index = j
+      allocate(onodes(j)%oflow(OutputSize))
+      allocate(onodes(j)%odepth(OutputSize))
+      allocate(onodes(j)%ovolume(OutputSize))
+    end do
+    do j= 1,Nobjects(LINK)
+      olinks%datatype = LINK
+      olinks%index = j
+      allocate(olinks(j)%oflow(OutputSize))
+      allocate(olinks(j)%odepth(OutputSize))
+      allocate(olinks(j)%ovolume(OutputSize))
+    end do
 
 !    fseek(Fout.file, 0, SEEK_SET)
 !    k = MAGICNUMBER
@@ -451,8 +477,9 @@ subroutine output_saveResults(aReportTime)
         OutputCount = OutputCount + 1
         call output_saveNodeResults(aReportTime, Fout%fileHandle)
     end if
-!    if (Nobjects(LINK) > 0)
-!        call output_saveLinkResults(aReportTime, Fout.file)
+    if (Nobjects(LINK) > 0) then
+        call output_saveLinkResults(aReportTime, Fout%fileHandle)
+    end if
 !    fwrite(SysResults, sizeof(REAL4), MAX_SYS_RESULTS, Fout.file)
 !    if ( Foutflows.mode == SAVE_FILE .and. RouteModel /= NO_ROUTING ) &           !(5.0.014 - LR)
 !       &iface_saveOutletResults(reportDate, Foutflows.file)
@@ -493,10 +520,46 @@ subroutine output_close()
 !  Output:  none
 !  Purpose: frees memory used for accessing the binary file.
 !
+    use swmm5futil
     implicit none
-!    FREE(SubcatchResults)
-!    FREE(NodeResults)
-!    FREE(LinkResults)
+    integer :: i
+    deallocate(SubcatchResults)
+    deallocate(NodeResults)
+    deallocate(LinkResults)
+    
+    deallocate(TSDateTime)
+    do i=1, Nobjects(E_NODE)
+       if (associated(onodes(i)%oflow)) then
+          deallocate(onodes(i)%oflow)
+          nullify(onodes(i)%oflow)
+       end if
+       if (associated(onodes(i)%odepth)) then
+          deallocate(onodes(i)%odepth)
+          nullify(onodes(i)%odepth)
+       end if
+       if (associated(onodes(i)%ovolume)) then
+          deallocate(onodes(i)%ovolume)
+          nullify(onodes(i)%ovolume)
+       end if
+    end do
+    deallocate(onodes)
+    
+    do i=1, Nobjects(LINK)
+       if (associated(olinks(i)%oflow)) then
+          deallocate(olinks(i)%oflow)
+          nullify(olinks(i)%oflow)
+       end if
+       if (associated(olinks(i)%odepth)) then
+          deallocate(olinks(i)%odepth)
+          nullify(olinks(i)%odepth)
+       end if
+       if (associated(olinks(i)%ovolume)) then
+          deallocate(olinks(i)%ovolume)
+          nullify(olinks(i)%ovolume)
+       end if
+    end do
+    deallocate(olinks)
+    
 end subroutine output_close
 !
 !!=============================================================================
@@ -600,19 +663,25 @@ subroutine output_saveNodeResults(aReportTime, file)
     f = (aReportTime - OldRoutingTime) / (NewRoutingTime - OldRoutingTime)
     datatime = getDateTime(StartDateTime, aReportTime)
     do j=1, Nobjects(E_NODE)
-       if (Node(j)%datatype == E_OUTFALL) then
-           call node_getResults(j, f) !, NodeResults)
-           if (OutputCount > SIZE(TSOutletVals, 1)) then
-              lStat = ReDim(TSOutletVals)
-              if (lStat /= 0) exit
-              lStat = ReDim(TSDateTime)
-              if (lStat /= 0) exit
-           else
-              TSOutletVals(OutputCount) = NodeResults(NODE_INFLOW)
-              TSDateTime(OutputCount) = datatime
-           end if
-           exit !assume there is only one outlet
+!       if (Node(j)%datatype == E_OUTFALL) then
+!           exit !assume there is only one outlet
+!       end if
+       call node_getResults(j, f) !, NodeResults)
+       if (OutputCount > SIZE(TSDateTime, 1)) then
+!          lStat = ReDim(TSOutletVals)
+!          if (lStat /= 0) exit
+          lStat = ReDim(onodes(j)%oflow)
+          lStat = ReDim(onodes(j)%odepth)
+          lStat = ReDim(onodes(j)%ovolume)
+          lStat = ReDim(TSDateTime)
+          if (lStat /= 0) exit
        end if
+       
+       !TSOutletVals(OutputCount) = NodeResults(NODE_INFLOW)
+       TSDateTime(OutputCount) = datatime
+       onodes(j)%oflow(OutputCount) = NodeResults(NODE_INFLOW)
+       onodes(j)%odepth(OutputCount) = NodeResults(NODE_DEPTH)
+       onodes(j)%ovolume(OutputCount) = NodeResults(NODE_VOLUME)
     end do
 !
 !    ! --- write node results to file
@@ -655,29 +724,46 @@ subroutine output_saveLinkResults(aReportTime, file)
 !  Output:  none
 !  Purpose: writes computed link results to binary file.
 !
+    use headers
+    use swmm5futil
+    use modLink
     implicit none
-    double precision, intent(In) :: aReportTime
-    integer, intent(in) :: file
+    double precision, intent(in) :: aReportTime
+    integer(kind=K4), intent(in) :: file
 
-!    int j
-!    double f
-!    double z
-!
-!    ! --- find where current reporting time lies between latest routing times
-!    f = (aReportTime - OldRoutingTime) / (NewRoutingTime - OldRoutingTime)
-!
-!    ! --- write link results to file
-!    for (j=0 j<Nobjects(LINK) j++)
-!    {
-!        ! --- retrieve interpolated results for reporting time & write to file
-!        link_getResults(j, f, LinkResults)
-!        if ( arrLink(j).rptFlag )                                                 !(5.0.014 - LR)
-!            fwrite(LinkResults, sizeof(REAL4), NlinkResults, file)            !(5.0.014 - LR)
-!
-!        ! --- update system-wide results
-!        z = ((1.0-f)*arrLink(j).oldVolume + f*arrLink(j).newVolume) * UCF(VOLUME)
-!        SysResults(SYS_STORAGE) += (REAL4)z
-!    }
+    integer :: j, lStat
+    double precision :: f
+    double precision :: z, datatime
+
+    ! --- find where current reporting time lies between latest routing times
+    f = (aReportTime - OldRoutingTime) / (NewRoutingTime - OldRoutingTime)
+    datatime = getDateTime(StartDateTime, aReportTime)
+    ! --- write link results to file
+    do j=1, Nobjects(LINK)
+        ! --- retrieve interpolated results for reporting time & write to file
+        call link_getResults(j, f, LinkResults)
+!        if ( arrLink(j)%rptFlag ) &                                      !(5.0.014 - LR)
+!           &fwrite(LinkResults, sizeof(REAL4), NlinkResults, file)       !(5.0.014 - LR)
+        if (OutputCount > SIZE(TSDateTime, 1)) then
+!          lStat = ReDim(TSOutletVals)
+!          if (lStat /= 0) exit
+          lStat = ReDim(olinks(j)%oflow)
+          lStat = ReDim(olinks(j)%odepth)
+          lStat = ReDim(olinks(j)%ovolume)
+          lStat = ReDim(TSDateTime)
+          if (lStat /= 0) exit
+       end if
+       
+       !TSOutletVals(OutputCount) = NodeResults(NODE_INFLOW)
+       TSDateTime(OutputCount) = datatime
+       olinks(j)%oflow(OutputCount) = LinkResults(LINK_FLOW)
+       olinks(j)%odepth(OutputCount) = LinkResults(LINK_DEPTH)
+       olinks(j)%ovolume(OutputCount) = arrLink(j)%newVolume
+
+        ! --- update system-wide results
+        z = ((1.0-f)*arrLink(j)%oldVolume + f*arrLink(j)%newVolume) * UCF(VOLUME)
+        SysResults(SYS_STORAGE) = SysResults(SYS_STORAGE) + z !(REAL4)
+    end do
 end subroutine output_saveLinkResults
 !
 !!=============================================================================

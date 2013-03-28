@@ -83,14 +83,27 @@ integer function stats_open()
     integer :: j, k, lStat1, lStat2
 
     ! --- set all pointers to NULL
-    deallocate(NodeStats)
-    deallocate(LinkStats)
-    deallocate(StorageStats)
-    deallocate(OutfallStats)
-    deallocate(PumpStats)    !(5.0.012 - LR)
+    if (allocated(NodeStats)) then
+      deallocate(NodeStats)
+    end if 
+    if (allocated(LinkStats)) then
+      deallocate(LinkStats)
+    end if
+    if (allocated(StorageStats)) then
+      deallocate(StorageStats)
+    end if
+    if (allocated(OutfallStats)) then
+      deallocate(OutfallStats)
+    end if
+    if (allocated(PumpStats)) then
+      deallocate(PumpStats)    !(5.0.012 - LR)
+    end if
 
     ! --- allocate memory for & initialize subcatchment statistics
-    deallocate(SubcatchStats)
+    if (allocated(SubcatchStats)) then
+      deallocate(SubcatchStats)
+    end if 
+    !write(24,*) 'in stats'
     if ( Nobjects(E_SUBCATCH) > 0 ) then
         allocate(SubcatchStats(Nobjects(E_SUBCATCH)), stat=lStat1)
         if ( lStat1 /= 0 ) then !SubcatchStats

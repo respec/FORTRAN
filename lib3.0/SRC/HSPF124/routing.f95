@@ -132,15 +132,20 @@ integer function routing_open(routingModel)
 !    end if
 
     ! --- topologically sort the links
-    deallocate(SortedLinks)
+    if (allocated(SortedLinks)) then
+      deallocate(SortedLinks)
+    end if 
     if ( Nobjects(LINK) > 0 ) then
+        !write(24,*) 'about to allocate sorted links'
         allocate(SortedLinks(Nobjects(LINK)), stat=mstat)
         if ( mstat /= 0 ) then
             call report_writeErrorMsg(ERR_MEMORY, '')
             routing_open = ErrorCode
             return
         end if
+        !write(24,*) 'about to toposort'
         call toposort_sortLinks(SortedLinks)
+        !write(24,*) 'finished with toposort',sortedlinks
         if ( ErrorCode /= 0 ) then
             routing_open = ErrorCode
             return
@@ -197,12 +202,14 @@ subroutine routing_execute(routingModel, routingStep)
     integer :: flowrout_execute !TODO: this is for .NET compile
     mstepCount = 1
     actionCount = 0
+    !write(24,*) 'in routing_execute 1'
  
     ! --- update continuity with current state
     !     applied over 1/2 of time step
     if ( ErrorCode /= 0 ) return !has error
     call massbal_updateRoutingTotals(routingStep/2.)
 
+    !write(24,*) 'in routing_execute 2'
     ! --- evaluate control rules at current date and elapsed time
     currentDate = getDateTime(StartDateTime, NewRoutingTime)
     do j=1, Nobjects(LINK)
@@ -212,6 +219,7 @@ subroutine routing_execute(routingModel, routingStep)
 !    call controls_evaluate(currentDate, currentDate - StartDateTime, &        !(5.0.010 - LR)
 !                     &routingStep/SECperDAY)                                  !(5.0.010 - LR)
     
+    !write(24,*) 'in routing_execute 3'
     do j=1, Nobjects(LINK)
         if ( arrLink(j)%targetSetting /= arrLink(j)%setting ) then  !(5.0.010 - LR)         
             call link_setSetting(j, routingStep)                    !(5.0.010 - LR)
@@ -224,6 +232,7 @@ subroutine routing_execute(routingModel, routingStep)
     NewRoutingTime = NewRoutingTime + 1000.0 * routingStep
     currentDate = getDateTime(StartDateTime, NewRoutingTime)
 
+    !write(24,*) 'in routing_execute 4'
     ! --- initialize mass balance totals for time step
     stepFlowError = massbal_getStepFlowError()                                !(5.0.012 - LR)
     call massbal_initTimeStepTotals()
@@ -250,6 +259,7 @@ subroutine routing_execute(routingModel, routingStep)
 !    call addRdiiInflows(currentDate)
 !    call addIfaceInflows(currentDate)
 
+    !write(24,*) 'in routing_execute 5'
     ! --- check if can skip steady state periods
     if ( SkipSteadyState ) then
         if ( abs(OldRoutingTime - 0.0) < tiny(1.0) .or. &
@@ -262,6 +272,7 @@ subroutine routing_execute(routingModel, routingStep)
         end if
     end if
 
+    !write(24,*) 'in routing_execute 6'
     ! --- find new hydraulic state if system has changed
     if ( .not.InSteadyState ) then
         ! --- replace old hydraulic state values with current ones
@@ -276,7 +287,11 @@ subroutine routing_execute(routingModel, routingStep)
 
         ! --- route flow through the drainage network
         if ( Nobjects(LINK) > 0 ) then
-            stepCount = flowrout_execute(SortedLinks, routingModel, routingStep)
+            !write(24,*) 'in routing_execute 7',sortedlinks
+            !write(24,*) 'in routing_execute 7',routingmodel
+            !write(24,*) 'in routing_execute 7',routingstep
+            stepCount = flowrout_execute(Nobjects(LINK), SortedLinks, routingModel, routingStep)
+            !write(24,*) 'in routing_execute 8'
         end if
     end if
 
@@ -289,6 +304,7 @@ subroutine routing_execute(routingModel, routingStep)
 !    call removeStorageLosses()                                                     !(5.0.019 - LR)
 !    call removeOutflows()
 	
+    !write(24,*) 'in routing_execute 6'
     ! --- update continuity with new totals
     !     applied over 1/2 of routing step
     call massbal_updateRoutingTotals(routingStep/2.)
@@ -297,6 +313,7 @@ subroutine routing_execute(routingModel, routingStep)
     if ( RptFlags%flowStats .and. Nobjects(LINK) > 0 ) then
         call stats_updateFlowStats(routingStep, currentDate, stepCount, InSteadyState)
     end if
+    !write(24,*) 'end of routing_execute'
 end subroutine routing_execute
 
 

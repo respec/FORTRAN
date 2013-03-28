@@ -84,6 +84,7 @@ subroutine toposort_sortLinks(sortedLinks)
     do i=1, Nobjects(LINK)
        sortedLinks(i) = i
     end do
+    !write(24,*) 'toposort links ',sortedlinks
     if ( RouteModel == DW ) then
 
         ! --- check for nodes with both incoming and outgoing                 !(5.0.014 - LR)
@@ -156,6 +157,7 @@ subroutine toposort_sortLinks(sortedLinks)
         call report_writeErrorMsg(ERR_LOOP, '')
         !call findCycles()
     end if
+    !write(24,*) 'end toposort links ',sortedlinks
 end subroutine toposort_sortLinks
 !
 !!=============================================================================
