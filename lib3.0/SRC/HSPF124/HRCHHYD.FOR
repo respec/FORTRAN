@@ -756,7 +756,7 @@ C           did not find this node, report error
           IFOUND = 0
           DO 260 J= 1, NNODE
             IF (NNAME(J) .EQ. CNNAME2(I)) THEN
-C              CNODE2(I) = J
+              CNODE2(I) = J
               IFOUND = 1
             END IF 
  260      CONTINUE
@@ -2473,7 +2473,7 @@ C         no outflow demands depend on vol
       ELSE IF (HYDRFG.EQ.2) THEN
 C       use new dynamic wave routing algorithm
         INVOL = IVOL + PRSUPY - VOLEV  
-        CALL DWROUT (MESSU,DELTS,UUNITS,
+        CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,
      I               OS(1),ROS,VOLT,INVOL,
      I               MON,NXTMON,DAY,NDAYS,
@@ -3719,7 +3719,7 @@ C
 C
 C
       SUBROUTINE   DWROUT
-     I                   (MESSU,DELTS,UUNITS,
+     I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,
      I                    OS,ROS,VOLT,INVOL,
      I                    MON,NXTMON,DAY,NDAYS,
@@ -3755,7 +3755,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
      $                 HYECNT(5),HYWCNT(2),UUNITS,
      $                 CNODE1(NCOND),CNODE2(NCOND),
-     $                 CSHAPE(NCOND),MESSU 
+     $                 CSHAPE(NCOND)
       REAL             DELTS,OS,ROS,
      $                 O,RO,OVOL,ROVOL,
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
@@ -3766,7 +3766,6 @@ C     + + + DUMMY ARGUMENTS + + +
       DOUBLE PRECISION VOLT,VOL,INVOL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     MESSU  - run interpreter output file unit 
 C     DELTS  - simulation interval in seconds
 C     UUNITS - units of simulation, 1-english, 2-si
 C     NNODE  - number of nodes in dw simulated network
@@ -3927,6 +3926,7 @@ C         this is the outfall
            XN(5) = 0 !stageSeries, index of outfall stage time series
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
+        write(messu,*) 'in dwrout, setting node ',j,ltype,k,xn
         call node_setParams(J, LTYPE, K, XN)
         Node(J)%rptFlag = .true. !this is was done in report_readoption
  10   CONTINUE
@@ -3939,6 +3939,8 @@ C
         XC(4) = COFF2(J)
         XC(5) = CQ0(J)
         XC(6) = 0.0
+        write(messu,*) 'in dwrout, setting link ',j,ltype, 
+     1                 CNODE1(J),CNODE2(J),xc
         call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), J, XC)
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
@@ -4000,7 +4002,7 @@ C
 !
 !     construct external inflow to each node in the network
 !
-      do J = 1, NNODE
+      do J = 1, NNODE-1
 C       input volume to this reach = NLOCIN * INVOL
         inflows(J)%param = -1 !flow
         inflows(J)%datatype = FLOW_INFLOW !or EXTERNAL_INFLOW, user-supplied external inflow
@@ -4013,13 +4015,28 @@ C       input volume to this reach = NLOCIN * INVOL
         Node(J)%extInflow => inflows(J)
       end do
 C
+      !set routing step size in seconds
+      RouteStep       = 300  !DTS 
+C
+      write(messu,*) 'in dwrout, about to call swmm_run'
       lErrorCode = swmm_run('', '', '')
 C
-C     get the output back here
-C     node_getSystemOutflow   
-      do J=1, OutputSize
-        write(*,*) TSDateTime(J), ",", TSOutletVals(J)
+      !The resulting nodes' and links' flow, depth, and volume outputs are
+      !saved in the onodes array and olinks array. 
+      !Each element of the onodes or olinks array has 3 arrays, oflow, odepth, and ovolume
+      !that contain output values for each reporting steps in TSDateTime
+      !For example, if you want to see the depth of 2nd node at reporting step number 4, access it as below
+      !  onodes(2)%odepth(4)
+      !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
+      !  olinks(1)%oflow(3)
+      do J=1, 5 !OutputSize
+         write(messu,*) TSDateTime(J), ",", onodes(1)%oflow(J), ",", 
+     1                onodes(2)%odepth(J), ",", onodes(3)%ovolume(J)
+         write(messu,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",", 
+     1                olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
       end do
+C
+      call output_close
 C
 C     need to set initial conditions for next time in
 C     NDINIT(NNODE) -- real, initial node depth

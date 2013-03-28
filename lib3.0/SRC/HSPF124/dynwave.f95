@@ -140,6 +140,13 @@ subroutine dynwave_init()
     else 
        MinSurfAreaFt2 = MinSurfArea / UCF(LENGTH) / UCF(LENGTH)
     end if
+    
+    if (allocated(Xnode)) then
+      deallocate(Xnode)
+    end if 
+    if (allocated(Xlink)) then
+      deallocate(Xlink)
+    end if 
     allocate (Xnode(Nobjects(E_NODE)))
     allocate (Xlink(Nobjects(LINK)))
 
@@ -222,6 +229,7 @@ integer function dynwave_execute(links, tStep)
     
     integer :: i
 
+    !write(24,*) 'in dynwave_execute 1',links
     !  --- initialize
     if ( ErrorCode /= 0 ) then
        dynwave_execute = 0
@@ -248,7 +256,9 @@ integer function dynwave_execute(links, tStep)
     !  --- keep iterating until convergence 
     do while ( Steps < MAXSTEPS )
         !  --- execute a routing step & check for nodal convergence
+        !write(24,*) 'about to call execRoutingStep',links
         call execRoutingStep(links, tStep)
+        !write(24,*) 'back from execRoutingStep'
         Steps = Steps + 1
         if ( Steps > 1 ) then
             if ( Converged ) exit !break
@@ -293,23 +303,32 @@ subroutine execRoutingStep(links, dt)
     integer ::    i                          !  node or link index
     double precision :: yOld                       !  old node depth (ft)
 
+    !write(24,*) 'about to initnodestatex'
     !  --- re-initialize state of each node
     do i = 1, Nobjects(E_NODE)
+       !write(24,*) 'about to initnodestate'
        call initNodeState(i)
+       !write(24,*) 'finished initnodestate'
     end do
     Converged = .true.
 
     !  --- find new flows in conduit links and non-conduit links
     do i=1, Nobjects(LINK)
+      !write(24,*) 'about to findconduitflow, i, dt ',i,dt,links(i)
       call findConduitFlow(links(i), dt)
+      !write(24,*) 'finished findconduitflow'
     end do
     do i=1, Nobjects(LINK)
+      !write(24,*) 'about to findnonconduitflow'
       call findNonConduitFlow(links(i), dt)
+      !write(24,*) 'finished findnonconduitflow'
     end do
 
     !  --- compute outfall depths based on flow in connecting link
     do i=1, Nobjects(LINK)
+      !write(24,*) 'about to link_setoutfalldepth'
       call link_setOutfallDepth(i)
+      !write(24,*) 'finished link_setoutfalldepth'
     end do
 
     !  --- compute new depth for all non-outfall nodes and determine if
@@ -317,7 +336,9 @@ subroutine execRoutingStep(links, dt)
     do i=1, Nobjects(E_NODE)
         if ( Node(i)%datatype .eq. E_OUTFALL ) cycle !continue
         yOld = Node(i)%newDepth
+        !write(24,*) 'about to setnodedepth'
         call setNodeDepth(i, dt)
+        !write(24,*) 'finished setnodedepth'
         Xnode(i)%converged = .true.
         if ( abs(yOld - Node(i)%newDepth) .gt. STOP_TOL ) then
             Converged = .FALSE.
@@ -377,20 +398,26 @@ subroutine findConduitFlow(i, dt)
     double precision :: qOld                       !  old link flow (cfs)
     double precision :: barrels                    !  number of barrels in conduit
 
+    !write(24,*) 'in findconduitflow, i, dt', i, dt
     !  --- do nothing if link not a conduit
     if ( arrLink(i)%datatype /= E_CONDUIT .or. arrLink(i)%xsect%datatype == DUMMY) return
+    !write(24,*) 'in findconduitflow, i, dt', i, dt
 
     !  --- get link flow from last "full" time step
     qOld = arrLink(i)%oldFlow
 
+    !write(24,*) 'in findconduitflow 1a'
     !  --- solve momentum eqn. to update conduit flow
     if ( .not.Xlink(i)%bypassed ) then
         arrLink(i)%dqdh = 0.0
+        !write(24,*) 'in findconduitflow 1b'
         arrLink(i)%newFlow = getConduitFlow(i, qOld, dt)
+        !write(24,*) 'in findconduitflow 2'
     end if
     !  NOTE: if link was bypassed, then its flow and surface area values
     !        from the previous iteration will still be valid.
 
+    !write(24,*) 'in findconduitflow 3'
     !  --- add surf. area contributions to upstream/downstream nodes
     barrels = Conduit(arrLink(i)%subIndex)%barrels
     Xnode(arrLink(i)%node1)%newSurfArea = Xnode(arrLink(i)%node1)%newSurfArea + Xlink(i)%surfArea1 * barrels
@@ -401,7 +428,9 @@ subroutine findConduitFlow(i, dt)
     Xnode(arrLink(i)%node2)%sumdqdh = Xnode(arrLink(i)%node2)%sumdqdh + arrLink(i)%dqdh
 
     !  --- update outflow/inflow at upstream/downstream nodes
+    !write(24,*) 'in findconduitflow 4'
     call updateNodeFlows(i, arrLink(i)%newFlow)
+    !write(24,*) 'in findconduitflow 5'
 end subroutine findConduitFlow
 
 ! =============================================================================
@@ -684,6 +713,7 @@ double precision function  getConduitFlow(j, qOld, dt)
     !  --- use Courant-modified mlength instead of conduit's actual mlength
     mlength = Conduit(k)%modLength
 
+    !write(24,*) 'in getconduitflow'
     !  --- find flow classification & corresponding surface area
     !      contributions to upstream and downstream nodes
     arrLink(j)%flowClass = getFlowClass(j, qLast, h1, h2, y1, y2)
@@ -846,6 +876,7 @@ double precision function  getConduitFlow(j, qOld, dt)
     getConduitFlow =  q * barrels
     
     !nullify(xsect) !TODO: I think we need to do it here
+    !write(24,*) 'end of getconduitflow'
     return
 end function getConduitFlow
 

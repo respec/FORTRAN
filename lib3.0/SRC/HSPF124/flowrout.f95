@@ -130,7 +130,7 @@ end function flowrout_getRoutingStep
 
 !=============================================================================
 
-integer function flowrout_execute(links, routingModel, tStep)
+integer function flowrout_execute(nl, links, routingModel, tStep)
 !
 !  Input:   links = array of link indexes in topo-sorted order
 !           routingModel = type of routing method used
@@ -143,7 +143,8 @@ integer function flowrout_execute(links, routingModel, tStep)
     use headers
     use dynwave
     implicit none
-    integer, dimension(:), intent(in) :: links
+    integer, intent(in) :: nl
+    integer, dimension(nl), intent(in) :: links
     integer, intent(in) :: routingModel
     double precision, intent(in) :: tStep
     integer ::   i, j
@@ -152,8 +153,12 @@ integer function flowrout_execute(links, routingModel, tStep)
     double precision :: qout                       ! link outflow (cfs)
     double precision :: mSteps                      ! computational step count
         
-    integer :: steadyflow_execute, kinwave_execute, getLinkInflow
+    integer :: steadyflow_execute, kinwave_execute
+    double precision :: getLinkInflow
 
+    !write(24,*) 'in flowrout_execute 1',links
+    !write(24,*) 'in flowrout_execute 1',routingModel
+    !write(24,*) 'in flowrout_execute 1',tStep
 !!  The code below was modified to initialize overflows.  !!               !(5.0.012 - LR)
     ! --- set overflows to drain any ponded water
     if ( ErrorCode /= 0 ) then
@@ -170,9 +175,12 @@ integer function flowrout_execute(links, routingModel, tStep)
     end do
 !!  End of modified code.  !!                                              !(5.0.012 - LR)
 
+    !write(24,*) 'in flowrout_execute 2',links
     ! --- execute dynamic wave routing if called for
     if ( routingModel == DW ) then
+        !write(24,*) 'in flowrout_execute 3',links
         mSteps = dynwave_execute(links, tStep)
+        !write(24,*) 'in flowrout_execute 4',links
         flowrout_execute = int(mSteps)
         return
     end if
@@ -212,36 +220,6 @@ integer function flowrout_execute(links, routingModel, tStep)
     flowrout_execute = int(mSteps + 0.5)
     !return (int)(mSteps+0.5)
 end function flowrout_execute
-
-!=============================================================================
-
-double precision function getLinkInflow(j, dt)
-!
-!  Input:   j  = link index
-!           dt = routing time step (sec)
-!  Output:  returns link inflow (cfs)
-!  Purpose: finds flow into upstream end of link at current time step under
-!           Steady or Kin. Wave routing.
-!
-    use headers
-    use modLink
-    implicit none
-    integer, intent(in) :: j
-    double precision, intent(in) :: dt
-    double precision :: q
-    integer ::   n1
-    double precision :: node_getMaxOutflow
-    n1 = arrLink(j)%node1
-    
-    if ( arrLink(j)%datatype == E_CONDUIT .or. &
-        &arrLink(j)%datatype == E_PUMP .or. &
-        &Node(n1)%datatype == E_STORAGE ) then
-         q = link_getInflow(j)
-    else 
-         q = 0.0
-    end if
-    getLinkInflow = node_getMaxOutflow(n1, q, dt)
-end function getLinkInflow
 
 !=============================================================================
 subroutine validateTreeLayout()
@@ -582,22 +560,34 @@ subroutine initLinks()
 end subroutine initLinks
 
 !=============================================================================
-!double precision function getLinkInflow(int j, double dt)
-!!
-!!  Input:   j  = link index
-!!           dt = routing time step (sec)
-!!  Output:  returns link inflow (cfs)
-!!  Purpose: finds flow into upstream end of link at current time step under
-!!           Steady or Kin. Wave routing.
-!!
-!    int   n1 = Link[j].node1;
-!    double q;
-!    if ( Link[j].type == CONDUIT ||
-!         Link[j].type == PUMP ||
-!         Node[n1].type == STORAGE ) q = link_getInflow(j);
-!    else q = 0.0;
-!    return node_getMaxOutflow(n1, q, dt);
-!end function getLinkInflow
+
+double precision function getLinkInflow(j, dt)
+!
+!  Input:   j  = link index
+!           dt = routing time step (sec)
+!  Output:  returns link inflow (cfs)
+!  Purpose: finds flow into upstream end of link at current time step under
+!           Steady or Kin. Wave routing.
+!
+    use headers
+    use modLink
+    implicit none
+    integer, intent(in) :: j
+    double precision, intent(in) :: dt
+    double precision :: q
+    integer ::   n1
+    double precision :: node_getMaxOutflow
+    n1 = arrLink(j)%node1
+    
+    if ( arrLink(j)%datatype == E_CONDUIT .or. &
+        &arrLink(j)%datatype == E_PUMP .or. &
+        &Node(n1)%datatype == E_STORAGE ) then
+         q = link_getInflow(j)
+    else 
+         q = 0.0
+    end if
+    getLinkInflow = node_getMaxOutflow(n1, q, dt)
+end function getLinkInflow
 !!
 !!=============================================================================
 !
