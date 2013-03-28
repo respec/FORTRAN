@@ -140,6 +140,13 @@ subroutine dynwave_init()
     else 
        MinSurfAreaFt2 = MinSurfArea / UCF(LENGTH) / UCF(LENGTH)
     end if
+    
+    if (allocated(Xnode)) then
+      deallocate(Xnode)
+    end if 
+    if (allocated(Xlink)) then
+      deallocate(Xlink)
+    end if 
     allocate (Xnode(Nobjects(E_NODE)))
     allocate (Xlink(Nobjects(LINK)))
 

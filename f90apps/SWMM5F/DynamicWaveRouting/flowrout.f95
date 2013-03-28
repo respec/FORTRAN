@@ -130,7 +130,7 @@ end function flowrout_getRoutingStep
 
 !=============================================================================
 
-integer function flowrout_execute(links, routingModel, tStep)
+integer function flowrout_execute(nl, links, routingModel, tStep)
 !
 !  Input:   links = array of link indexes in topo-sorted order
 !           routingModel = type of routing method used
@@ -143,7 +143,8 @@ integer function flowrout_execute(links, routingModel, tStep)
     use headers
     use dynwave
     implicit none
-    integer, dimension(:), intent(in) :: links
+    integer, intent(in) :: nl
+    integer, dimension(nl), intent(in) :: links
     integer, intent(in) :: routingModel
     double precision, intent(in) :: tStep
     integer ::   i, j
