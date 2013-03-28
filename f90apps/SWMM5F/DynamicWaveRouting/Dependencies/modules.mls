@@ -10,6 +10,8 @@ output;C:\f90apps\SWMM5F\DynamicWaveRouting\output.f95;1
 modMassbal;C:\f90apps\SWMM5F\DynamicWaveRouting\massbal.f95;1
 modLink;C:\f90apps\SWMM5F\DynamicWaveRouting\link.f95;1
 modInflow;C:\f90apps\SWMM5F\DynamicWaveRouting\inflow.f95;1
+forcemain;C:\f90apps\SWMM5F\DynamicWaveRouting\forcemain.f95;1
+findroot;C:\f90apps\SWMM5F\DynamicWaveRouting\findroot.f95;1
 dynwave;C:\f90apps\SWMM5F\DynamicWaveRouting\dynwave.f95;4
 modDateTime;C:\f90apps\SWMM5F\DynamicWaveRouting\datetime.f95;2
 modClimate;C:\f90apps\SWMM5F\DynamicWaveRouting\climate.f95;1
