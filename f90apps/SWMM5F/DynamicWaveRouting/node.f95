@@ -106,7 +106,7 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     use swmm5futil
     implicit none
     integer, intent(in) :: j, nodetype, k
-    real, dimension(:), intent(in) :: x
+    real, dimension(11), intent(in) :: x
     
     Node(j)%datatype   = nodetype
     Node(j)%subIndex   = k

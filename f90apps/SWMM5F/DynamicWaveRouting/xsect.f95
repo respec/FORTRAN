@@ -1962,7 +1962,7 @@ double precision function rect_round_getYofA(xsect, a)
     type(TXsect), intent(in) :: xsect
     double precision, intent(in) :: a
     double precision :: alpha
-    double precision :: getYcircular
+    !double precision :: getYcircular
 
     ! --- if above circular bottom:
     if ( a > xsect%aBot ) then

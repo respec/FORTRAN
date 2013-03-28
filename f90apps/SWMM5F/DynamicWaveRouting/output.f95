@@ -145,11 +145,19 @@ integer function output_open()
     Nperiods = 0
     OutputSize = 100 !initial size, will expand as needed
     OutputCount = 0
-    deallocate(SubcatchResults)
-    deallocate(NodeResults)
-    deallocate(LinkResults)
+    if (allocated(SubcatchResults)) then
+      deallocate(SubcatchResults)
+    end if 
+    if (allocated(NodeResults)) then
+      deallocate(NodeResults)
+    end if 
+    if (allocated(LinkResults)) then
+      deallocate(LinkResults)
+    end if 
 !    deallocate(TSOutletVals)
-    deallocate(TSDateTime)
+    !if (allocated(TSDateTime)) then
+      !deallocate(TSDateTime)
+    !end if 
     allocate(SubcatchResults(NsubcatchResults))
     allocate(NodeResults(NnodeResults))
     allocate(LinkResults(NlinkResults))
