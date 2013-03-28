@@ -97,7 +97,7 @@ program main
       
       type(TExtInflow), dimension(NNODE-1), target :: inflows
       double precision, dimension(NNODE-1) :: disFrac
-      real(kind=r15) :: INVOL
+      real :: INVOL
       
       UnitSystem = US
       
