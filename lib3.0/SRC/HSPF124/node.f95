@@ -518,6 +518,12 @@ subroutine node_getResults(j, f) !, x)
     z = (f1*Node(j)%oldLatFlow + f*Node(j)%newLatFlow) * UCF(FLOW) 
     NodeResults(NODE_LATFLOW) = z * 1.0d00 !(float)z
     z = (f1*Node(j)%oldFlowInflow + f*Node(j)%inflow) * UCF(FLOW)
+    !if (j.eq.3) then
+      !write(24,*) 'in node_getresults, nodeinflow ',z
+      !write(24,*) 'in node_getresults, nodeinflow ',UCF(FLOW)
+      !write(24,*) 'in node_getresults, nodeinflow ',f1*Node(j)%oldFlowInflow
+      !write(24,*) 'in node_getresults, nodeinflow ',f*Node(j)%inflow
+    !end if 
     NodeResults(NODE_INFLOW) = z * 1.0d00 !(float)z
     z = Node(j)%overflow * UCF(FLOW)
     NodeResults(NODE_OVERFLOW) = z * 1.0d00 !(float)z

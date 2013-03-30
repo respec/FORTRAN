@@ -374,6 +374,9 @@ subroutine initNodeState(i)
     end if
 
     !  --- initialize nodal inflow & outflow
+    !if (i.eq.3) then  
+      !write(24,*) 'in initNodeState ',Node(i)%newLatFlow
+    !end if
     Node(i)%inflow = Node(i)%newLatFlow
     Node(i)%outflow = 0.0
     Xnode(i)%sumdqdh = 0.0
@@ -400,7 +403,12 @@ subroutine findConduitFlow(i, dt)
 
     !write(24,*) 'in findconduitflow, i, dt', i, dt
     !  --- do nothing if link not a conduit
-    if ( arrLink(i)%datatype /= E_CONDUIT .or. arrLink(i)%xsect%datatype == DUMMY) return
+    if ( arrLink(i)%datatype /= E_CONDUIT .or. arrLink(i)%xsect%datatype == DUMMY) then
+      !write(24,*) 'going to return because not conduit'
+      !write(24,*) arrLink(i)%datatype
+      !write(24,*) arrLink(i)%xsect%datatype
+      return
+    end if 
     !write(24,*) 'in findconduitflow, i, dt', i, dt
 
     !  --- get link flow from last "full" time step
@@ -428,7 +436,7 @@ subroutine findConduitFlow(i, dt)
     Xnode(arrLink(i)%node2)%sumdqdh = Xnode(arrLink(i)%node2)%sumdqdh + arrLink(i)%dqdh
 
     !  --- update outflow/inflow at upstream/downstream nodes
-    !write(24,*) 'in findconduitflow 4'
+    !write(24,*) 'in findconduitflow ',i,arrLink(i)%newFlow
     call updateNodeFlows(i, arrLink(i)%newFlow)
     !write(24,*) 'in findconduitflow 5'
 end subroutine findConduitFlow
@@ -618,6 +626,9 @@ subroutine updateNodeFlows( i,  q)
     implicit none
     integer, intent(in) :: i
     double precision, intent(in) :: q
+    !write(24,*) 'updatenodeflows, ', q
+    !write(24,*) 'updatenodeflows, ', Node(arrLink(i)%node2)%inflow
+    !write(24,*) 'updatenodeflows, ', Node(arrLink(i)%node1)%inflow
     if ( q >= 0.0 ) then
         Node(arrLink(i)%node1)%outflow = Node(arrLink(i)%node1)%outflow + q
         Node(arrLink(i)%node2)%inflow  = Node(arrLink(i)%node2)%inflow + q
@@ -1345,6 +1356,9 @@ subroutine setNodeDepth(i, dt)
 
     !  --- determine average net flow volume into node over the time step
     dQ = Node(i)%inflow - Node(i)%outflow
+    !if (i.eq.3) then  
+      !write(24,*) 'in setNodeDepth ',dQ
+    !end if
     dV = 0.5 * (Node(i)%oldNetInflow + dQ) * dt - node_getLosses(i, dt)       ! (5.0.019 - LR)
 
     !  --- if node not surcharged, base depth change on surface area        
