@@ -1518,8 +1518,8 @@ integer function locate(y, table, nItems)
     j1 = 0
     j2 = nItems
     
-    do j = 1, size(table, 1)
-       if (y >= table(j - 1) .and. y <= table(j)) then
+    do j = 1, size(table, 1)-1
+       if (y >= table(j) .and. y <= table(j+1)) then
            locate = j
            return
        end if
