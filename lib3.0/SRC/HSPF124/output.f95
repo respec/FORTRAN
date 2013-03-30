@@ -682,6 +682,9 @@ subroutine output_saveNodeResults(aReportTime, file)
        onodes(j)%oflow(OutputCount) = NodeResults(NODE_INFLOW)
        onodes(j)%odepth(OutputCount) = NodeResults(NODE_DEPTH)
        onodes(j)%ovolume(OutputCount) = NodeResults(NODE_VOLUME)
+       !if (j.eq.3) then
+         !write(24,*) 'in saveNodeResults ',NodeResults(NODE_INFLOW)
+       !end if
     end do
 !
 !    ! --- write node results to file

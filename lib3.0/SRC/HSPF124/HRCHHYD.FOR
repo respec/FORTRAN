@@ -774,79 +774,79 @@ C       convert each conduit name string into int equiv
         IFOUND = 0
         DO 270 I= 1, NCOND
           IF (CSC(I) .EQ. '               DUMMY') THEN
-            CSHAPE(I) = 0
-            IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '            CIRCULAR') THEN
             CSHAPE(I) = 1
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '     FILLED_CIRCULAR') THEN
+          ELSEIF (CSC(I) .EQ. '            CIRCULAR') THEN
             CSHAPE(I) = 2
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '         RECT_CLOSED') THEN
+          ELSEIF (CSC(I) .EQ. '     FILLED_CIRCULAR') THEN
             CSHAPE(I) = 3
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           RECT_OPEN') THEN
+          ELSEIF (CSC(I) .EQ. '         RECT_CLOSED') THEN
             CSHAPE(I) = 4
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '         TRAPEZOIDAL') THEN
+          ELSEIF (CSC(I) .EQ. '           RECT_OPEN') THEN
             CSHAPE(I) = 5
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          TRIANGULAR') THEN
+          ELSEIF (CSC(I) .EQ. '         TRAPEZOIDAL') THEN
             CSHAPE(I) = 6
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           PARABOLIC') THEN
+          ELSEIF (CSC(I) .EQ. '          TRIANGULAR') THEN
             CSHAPE(I) = 7
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           POWERFUNC') THEN
+          ELSEIF (CSC(I) .EQ. '           PARABOLIC') THEN
             CSHAPE(I) = 8
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '         RECT_TRIANG') THEN
+          ELSEIF (CSC(I) .EQ. '           POWERFUNC') THEN
             CSHAPE(I) = 9
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          RECT_ROUND') THEN
+          ELSEIF (CSC(I) .EQ. '         RECT_TRIANG') THEN
             CSHAPE(I) = 10
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          MOD_BASKET') THEN
+          ELSEIF (CSC(I) .EQ. '          RECT_ROUND') THEN
             CSHAPE(I) = 11
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '       HORIZ_ELLIPSE') THEN
+          ELSEIF (CSC(I) .EQ. '          MOD_BASKET') THEN
             CSHAPE(I) = 12
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '        VERT_ELLIPSE') THEN
+          ELSEIF (CSC(I) .EQ. '       HORIZ_ELLIPSE') THEN
             CSHAPE(I) = 13
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '                ARCH') THEN
+          ELSEIF (CSC(I) .EQ. '        VERT_ELLIPSE') THEN
             CSHAPE(I) = 14
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           EGGSHAPED') THEN
+          ELSEIF (CSC(I) .EQ. '                ARCH') THEN
             CSHAPE(I) = 15
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           HORSESHOE') THEN
+          ELSEIF (CSC(I) .EQ. '           EGGSHAPED') THEN
             CSHAPE(I) = 16
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '              GOTHIC') THEN
+          ELSEIF (CSC(I) .EQ. '           HORSESHOE') THEN
             CSHAPE(I) = 17
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '            CATENARY') THEN
+          ELSEIF (CSC(I) .EQ. '              GOTHIC') THEN
             CSHAPE(I) = 18
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '      SEMIELLIPTICAL') THEN
+          ELSEIF (CSC(I) .EQ. '            CATENARY') THEN
             CSHAPE(I) = 19
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '        BASKETHANDLE') THEN
+          ELSEIF (CSC(I) .EQ. '      SEMIELLIPTICAL') THEN
             CSHAPE(I) = 20
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '        SEMICIRCULAR') THEN
+          ELSEIF (CSC(I) .EQ. '        BASKETHANDLE') THEN
             CSHAPE(I) = 21
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           IRREGULAR') THEN
+          ELSEIF (CSC(I) .EQ. '        SEMICIRCULAR') THEN
             CSHAPE(I) = 22
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '              CUSTOM') THEN
+          ELSEIF (CSC(I) .EQ. '           IRREGULAR') THEN
             CSHAPE(I) = 23
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          FORCE_MAIN') THEN
+          ELSEIF (CSC(I) .EQ. '              CUSTOM') THEN
             CSHAPE(I) = 24
+            IFOUND = 1
+          ELSEIF (CSC(I) .EQ. '          FORCE_MAIN') THEN
+            CSHAPE(I) = 25
             IFOUND = 1
           END IF
           IF (IFOUND.NE.1) THEN
@@ -907,7 +907,7 @@ C           subroutine DISCH did not find current row
      M                   ROWPT,HYWCNT)
           END IF
           ROWADD= (ROWPT- 1)*NCOLS+ 1
-          CALL AUXIL (NCOLS,RCHTAB,ROWADD,VOL,STCOR,LEN,
+          CALL AUXIL (HYDRFG,NCOLS,RCHTAB,ROWADD,VOL,STCOR,LEN,
      I                RCHNO,MESSU,MSGFL,DATIM,SCLU,AUX1FG,
      M                HYECNT,
      O                DEP,STAGE,SAREA,AVDEP,TWID,HRAD)
@@ -2249,7 +2249,8 @@ C           recompute surface area and depth for later calculations
      I                   DATIM,
      M                   ROWPT,HYWCNT)
             ROWADD= (ROWPT- 1)*NCOLS+ 1
-            CALL AUXIL (NCOLS,RCHTAB,ROWADD,VOL,STCOR,LEN,RCHNO,MESSU,
+            CALL AUXIL (HYDRFG,NCOLS,RCHTAB,ROWADD,VOL,STCOR,
+     I                  LEN,RCHNO,MESSU,
      I                  MSGFL,DATIM,SCLU,AUX1FG,
      M                  HYECNT,
      O                  DEP,STAGE,SAREA,AVDEP,TWID,HRAD)
@@ -2472,7 +2473,9 @@ C         no outflow demands depend on vol
         END IF
       ELSE IF (HYDRFG.EQ.2) THEN
 C       use new dynamic wave routing algorithm
-        INVOL = IVOL + PRSUPY - VOLEV  
+        INVOL = IVOL + PRSUPY - VOLEV
+C        write(messu,*) 'about to call dwrout with ivol ',
+C     1                  IVOL,PRSUPY,VOLEV
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,
      I               OS(1),ROS,VOLT,INVOL,
@@ -2570,7 +2573,7 @@ C
 C       compute depth, surface area, average depth and topwidth
 C       get vol in single precision
         ROWADD= (ROWPT - 1)*NCOLS + 1
-        CALL AUXIL (NCOLS,RCHTAB,ROWADD,VOL,STCOR,LEN,
+        CALL AUXIL (HYDRFG,NCOLS,RCHTAB,ROWADD,VOL,STCOR,LEN,
      I              RCHNO,MESSU,MSGFL,DATIM,SCLU,AUX1FG,
      M              HYECNT,
      O              DEP,STAGE,SAREA,AVDEP,TWID,HRAD)
@@ -3888,7 +3891,9 @@ C       english
 C       metric
         UnitSystem = SI
       END IF
-c      
+C
+C      write(messu,*) 'in dwrout with ivol, os ',INVOL,OS
+C      
       Nobjects(E_NODE) = NNODE
       Nnodes(E_OUTFALL) = 1
       Nobjects(LINK) = NCOND
@@ -3926,7 +3931,7 @@ C         this is the outfall
            XN(5) = 0 !stageSeries, index of outfall stage time series
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
-        write(messu,*) 'in dwrout, setting node ',j,ltype,k,xn
+C        write(messu,*) 'in dwrout, setting node ',j,ltype,k,xn
         call node_setParams(J, LTYPE, K, XN)
         Node(J)%rptFlag = .true. !this is was done in report_readoption
  10   CONTINUE
@@ -3939,14 +3944,15 @@ C
         XC(4) = COFF2(J)
         XC(5) = CQ0(J)
         XC(6) = 0.0
-        write(messu,*) 'in dwrout, setting link ',j,ltype, 
-     1                 CNODE1(J),CNODE2(J),xc
+C        write(messu,*) 'in dwrout, setting link ',j,ltype, 
+C     1                 CNODE1(J),CNODE2(J),xc
         call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), J, XC)
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
         XX(3) = CGEOM3(J)
         XX(4) = CGEOM4(J)
         aUCF = UCF(LENGTH)
+C        write(messu,*) 'in dwrout, ucf ',length,aucf,CQ0(J)
         isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), XX, aUCF)   !for normal conduit
         arrLink(J)%rptFlag = .true. !this is was done in report_readoption
  20   CONTINUE
@@ -4002,6 +4008,7 @@ C
 !
 !     construct external inflow to each node in the network
 !
+C      write(messu,*) 'in dwrout, invol ',invol
       do J = 1, NNODE-1
 C       input volume to this reach = NLOCIN * INVOL
         inflows(J)%param = -1 !flow
@@ -4010,16 +4017,18 @@ C       input volume to this reach = NLOCIN * INVOL
         inflows(J)%basePat = 1
         inflows(J)%cFactor = 1.0
         inflows(J)%sFactor = 1.0
-        inflows(J)%baseline = INVOL * NLOCIN(J)
+        inflows(J)%baseline = INVOL * NLOCIN(J) / 100.0 / DELTS  !conv inflow in vol/hr to vol/s
         nullify(inflows(J)%next)
         Node(J)%extInflow => inflows(J)
       end do
 C
       !set routing step size in seconds
-      RouteStep       = 300  !DTS 
+      RouteStep       = DTS    !300  
 C
-      write(messu,*) 'in dwrout, about to call swmm_run'
+C      write(messu,*) 'in dwrout, about to call swmm_run'
       lErrorCode = swmm_run('', '', '')
+C
+C      write(messu,*) 'swmm error code ',lerrorcode
 C
       !The resulting nodes' and links' flow, depth, and volume outputs are
       !saved in the onodes array and olinks array. 
@@ -4029,29 +4038,96 @@ C
       !  onodes(2)%odepth(4)
       !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
       !  olinks(1)%oflow(3)
-      do J=1, 5 !OutputSize
-         write(messu,*) TSDateTime(J), ",", onodes(1)%oflow(J), ",", 
-     1                onodes(2)%odepth(J), ",", onodes(3)%ovolume(J)
-         write(messu,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",", 
-     1                olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
+C      do J=1, 5 !OutputSize
+C         write(messu,*) TSDateTime(J), ",", onodes(3)%oflow(J), ",", 
+C     1                onodes(3)%odepth(J), ",", onodes(3)%ovolume(J)
+C         write(messu,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",", 
+C     1                olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
+C      end do
+C
+C      do J=1, 4
+C        write(messu,*) 'flow out node 1 ',  onodes(1)%oflow(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'volume node 1 ',onodes(1)%ovolume(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'flow out node 2 ',  onodes(2)%oflow(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'volume node 2 ',onodes(2)%ovolume(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'flow out node 3 ',  onodes(3)%oflow(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'volume node 3 ',onodes(3)%ovolume(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'flow out link 1 ',  olinks(1)%oflow(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'volume link 1 ',olinks(1)%ovolume(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'flow out link 2 ',  olinks(2)%oflow(j)
+C      end do
+C      do J=1, 4
+C        write(messu,*) 'volume link 2 ',olinks(2)%ovolume(j)
+C      end do
+C
+C     set initial conditions for next time in
+C
+C     NDINIT(NNODE) -- real, initial node depth, ft or m
+      do J = 1, NCOND
+C       set initial depth in each node
+        NDINIT(J) = onodes(j)%odepth(4)
       end do
 C
-      call output_close
-C
-C     need to set initial conditions for next time in
-C     NDINIT(NNODE) -- real, initial node depth
-C     CQ0(NCOND)    -- real, initial flow
+C     CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
+      do J = 1, NCOND
+C       set initial flow in each conduit
+        CQ0(J) = olinks(j)%oflow(4)
+      end do
 C
 C     VOL    - volume of water in reach above bed
 C     O      - rate of outflow from each reach exit at end of interval
 C     RO     - total rate of outflow from reach at end of interval
 C     OVOL   - volume of water leaving reach in an interval by exit
-C     ROVOL  - total volume of water leaving reach in an interval
-      O = OS
-      RO = ROS
-      VOL = VOLT
+C     ROVOL  - total volume of water leaving reach in an interval    
+C
+C     return volume of water coming out bottom node
       OVOL = 0.0
+      do J=1, 4
+        OVOL = OVOL + (onodes(NNODE)%oflow(j) * DELTS)
+      end do 
+      OVOL = OVOL / 4
+      OVOL = OVOL + (INVOL * NLOCIN(NNODE) / 100.0)
+C
+C     find volume in system at end of interval
+C      VOL = 0.0
+C      do J = 1, NNODE
+C       sum vol in each node
+C        VOL = VOL + (onodes(j)%ovolume(4))
+C      end do
+C      do J = 1, NCOND
+C       sum vol in each conduit
+C        VOL = VOL + (olinks(j)%ovolume(4))
+C      end do
+C     alternately, VOL = VOLT - OVOL
+      VOL = VOLT - OVOL
+C
+C     return flow rate out of bottom node
+      O = INVOL * NLOCIN(NNODE) / 100.0 / DELTS
+      O = O + onodes(NNODE)%oflow(4)
+C
+C     only 1 exit here
+      RO = O
       ROVOL = OVOL
+C
+      call output_close
+C      write(messu,*) 'in dwrout, vol ',vol
+C      write(messu,*) 'in dwrout, ovol ',ovol
 C
       RETURN
       END
@@ -4277,7 +4353,7 @@ C
 C
 C
       SUBROUTINE   AUXIL
-     I                  (NCOLS,RCHTAB,ROWADD,VOL,STCOR,LEN,
+     I                  (HYDRFG,NCOLS,RCHTAB,ROWADD,VOL,STCOR,LEN,
      I                   RCHNO,MESSU,MSGFL,DATIM,SCLU,AUX1FG,
      M                   HYECNT,
      O                   DEP,STAGE,SAREA,AVDEP,TWID,HRAD)
@@ -4288,12 +4364,13 @@ C     and hydraulic radius.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          MSGFL,HYECNT(5),MESSU,NCOLS,RCHNO,ROWADD,
-     $                 DATIM(5),SCLU,AUX1FG
+     $                 DATIM(5),SCLU,AUX1FG,HYDRFG
       REAL             AVDEP,DEP,HRAD,LEN,RCHTAB(1000),SAREA,STAGE,
      $                 STCOR,TWID
       DOUBLE PRECISION VOL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
+C     HYDRFG - flag indicating if using kinematic wave or dynamic
 C     NCOLS  - number of columns in ftable
 C     RCHTAB - ftable stored as a scaler
 C     ROWADD - address in scaler ftable of current row
@@ -4371,18 +4448,20 @@ C           error -- no convergence
 C       end dountil
 C
         IF (RDEP2 .GT. 1.0 .OR. RDEP2 .LT. 0.0) THEN
-C         error -- solution converged to point outside valid range
-          CALL OMSTD (DATIM)
-          CALL OMSTI (RCHNO)
-          CALL OMSTR (A)
-          CALL OMSTR (B)
-          CALL OMSTR (C)
-          CALL OMSTR (RDEP1)
-          CALL OMSTR (RDEP2)
-          CALL OMSTI (COUNT)
-          SGRP= 5
-          CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
-     M               HYECNT(5))
+          IF (HYDRFG.EQ.1) then
+C           error -- solution converged to point outside valid range
+            CALL OMSTD (DATIM)
+            CALL OMSTI (RCHNO)
+            CALL OMSTR (A)
+            CALL OMSTR (B)
+            CALL OMSTR (C)
+            CALL OMSTR (RDEP1)
+            CALL OMSTR (RDEP2)
+            CALL OMSTI (COUNT)
+            SGRP= 5
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 HYECNT(5))
+          END IF 
         END IF
 C
 C       depth, manual eq (36)
