@@ -445,7 +445,7 @@ c
         ci_low(i)  = max(ci_low(i),ci_low(i-1))
         ci_high(i) = max(ci_high(i),ci_high(i-1))
 30    continue
-     
+
       return
       end
 
@@ -897,10 +897,10 @@ c
         write(*,*) 'traditional Grubbs-Beck (GB) used instead'
       endif
 c
-c  Traditional Grubbs-Beck Test
+c  Traditional Grubbs-Beck Test (error noted on 3/24/2013; n where ns needed)
 c
       if(gbtype .eq. 'GBT') then     ! B17B Grubbs-Beck test for 1 outlier
-          call p3est_ema(n-nzero,x(nzero+1),x(nzero+1),
+          call p3est_ema(ns-nzero,x(nzero+1),x(nzero+1), ! changed to ns from n
      1                      1.d0,  1.d0,  1.d0,   ! At-site MSEs
      2                      0.d0,  1.d0,  0.d0,   ! Regional parameters (dumb)
      3                    -99.d0,-99.d0,-99.d0,   ! use no regional info
