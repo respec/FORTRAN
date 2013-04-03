@@ -77,7 +77,7 @@ C
 C
 C      + + + LOCAL VARIABLES + + +
       INTEGER   IPKPTR(MXPK),  IQUAL(MXPK)
-      REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP,LASGMSE
+      REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP,LASGMSE,LSKEW
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
      &          NSKIP1, NPKS, I, NPKPLT, 
      $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT, ECHFUN, DT(6)
@@ -249,6 +249,11 @@ C
        IF (.NOT.UPDATEFG) THEN
 C       CALL  PRTPHD(  2001 , -999 )
         CALL  PRTINP( IDEBUG, XPKS, EMAOPT, IA3 )
+        
+        nlow = 0
+        nzero= 0
+        gbcrit = -99.0
+        gbthresh = -99.0
 C
          write(99,*)'Debug Info for ',STAID
         CALL WCFAGB(PKS, PKLOG, WRCPP, SYSPP, NPKS, IER, EMAOPT)
@@ -275,7 +280,21 @@ C           report Multiple GB LO messges
         END IF
        END IF
 
-        LASGMSE = as_G_mse
+C       store Skew/MSE of Skew for display on windows interface plot
+        IF (IGSOPT.EQ.1) THEN
+C         Generalized skew
+          LSKEW   = GENSKU
+          LASGMSE = RMSEGS**2
+        ELSE IF (IGSOPT.EQ.-1) THEN
+C         Station skew, ignore regional skew
+          LSKEW   = SYSSKW
+          LASGMSE = as_G_mse
+        ELSE
+C         Weighted, set to root mean square
+          LSKEW   = WRCSKW
+          LASGMSE = 0.0
+        END IF
+
         IF(IER .GE. 3)  THEN
           NERR=NERR+1
           IF(MSL .LT. 4) CALL PRTIN2 ( 1 ,MSG, NPKS, IPKSEQ,PKS,XQUAL,
@@ -287,7 +306,7 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
-     I                      CLIML(INDX1),CLIMU(INDX1),SYSSKW,LASGMSE,
+     I                      CLIML(INDX1),CLIMU(INDX1),LSKEW,LASGMSE,
      I                      JSEQNO,HEADNG(9))
         ELSE
 
@@ -325,7 +344,7 @@ C               short output
 C               longer output
                 CALL PRTIN3 (MSG,NPKS,IPKSEQ,PKS,XQUAL,IQUAL,
      $                       GAGEB, IPKPTR, SYSPP, WRCPP, WEIBA,
-     $                       EMAOPT, IA3)
+     $                       EMAOPT, IA3, gbcrit)
               END IF
             END IF    
 
@@ -344,9 +363,10 @@ C
 C
             IF (EXPFUN .GT. 0) THEN
 C             output export file
-              IF (EMAOPT .EQ. 1) ASMSEG = LASGMSE
+              IF (EMAOPT .EQ. 1) ASMSEG = as_G_mse
               CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
-     I                     SYSSKW,GENSKU,RMSEGS,ASMSEG,KENTAU,KENPVL,
+     I                     SYSSKW,GENSKU,RMSEGS,ASMSEG,SYSASK,
+     I                     as_G_mse_Syst,KENTAU,KENPVL,
      I                     KENSLP,NFCXPG,WRCFC(INDX1),TXPROB(INDX1),
      I                     CLIML(INDX1),CLIMU(INDX1),VAREST(INDX1),
      I                     JSEQNO,HEADNG(9),EMAOPT,IGSOPT,BEGYR,ENDYR)
@@ -369,7 +389,7 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
      I                      WRCFC(INDX1),TXPROB(INDX1),HSTFLG,
-     I                      CLIML(INDX1),CLIMU(INDX1),SYSSKW,LASGMSE,
+     I                      CLIML(INDX1),CLIMU(INDX1),LSKEW,LASGMSE,
      I                      JSEQNO,HEADNG(9))
             IF(NSKIP1.NE.0 )  THEN
 c               JSEQNO = JSEQNO + 1
@@ -1054,7 +1074,7 @@ C
 C
       SUBROUTINE   PRTIN3
      #                 ( MSG,  NPKS, IPKSEQ,PKS, XQUAL, IQUAL,
-     $     GAGEB,  IPKPTR, SYSPP, WRCPP , WEIBA, EMAOPT, WDMSFL )
+     $     GAGEB, IPKPTR, SYSPP, WRCPP , WEIBA, EMAOPT, WDMSFL,GBCRIT)
 C
 C     + + + PURPOSE + + +
 C     PRINTS INPUT PEAKS IN INPUT ORDER AND IN RANKED ORDER
@@ -1072,6 +1092,7 @@ C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MSG, NPKS, EMAOPT, WDMSFL
       REAL    PKS(NPKS), SYSPP(NPKS), WRCPP(NPKS), WEIBA
       REAL    GAGEB
+      DOUBLE PRECISION GBCRIT
       INTEGER  IPKSEQ(NPKS), IQUAL(NPKS), IPKPTR(NPKS)
       CHARACTER*(*)  XQUAL(NPKS)
 C
@@ -1090,9 +1111,10 @@ C     EMAOPT - indicator flag for performing EMA analysis
 C              0 - no, just do traditional J407
 C              1 - yes, run EMA
 C     WDMSFL - FORTRAN unit number for input WDM file
+C     GBCRIT - low outlier threshold
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   JLINE, I, NB, J, ILINE, LYR, K, LWROTEINT
+      INTEGER   JLINE, I, NB, J, ILINE, LYR, K, LWROTEINT,LNLOW
       REAL    EPSILN, LTHR, UTHR, INTVAL(500)
       CHARACTER*9 LTHRCHR(2)
       CHARACTER*12 LINTVLSTR
@@ -1146,10 +1168,11 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
      $       'ESTIMATE',5X,' LOW      HIGH')
  1023 FORMAT( I8,F11.1,F11.4,F12.4,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2023 FORMAT( I8,F11.1,F11.4,2x,
+ 2023 FORMAT( 2X,A,I5,F11.1,F11.4,2x,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
  2024 FORMAT( I8,F11.1,F11.4,2x,F10.1,A)
  2025 FORMAT( I8,5X,'------',F11.4,2x,F10.1,A)
+ 2030 FORMAT(/,4X,'* DENOTES LOW OUTLIER',/)
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1220,6 +1243,7 @@ C
 C     write table of frequency curves
       WRITE(MSG,1010)
       CALL PRTPHD ( 2001, -999, EMAOPT, WDMSFL )
+      LNLOW = 0
       JLINE = 0
   302 CONTINUE
         ILINE = JLINE+1
@@ -1320,9 +1344,14 @@ c                WRITE(LTHRCHR(2),'(A9)') '      INF'
 c              ELSE
 c                WRITE(LTHRCHR(2),'(F9.0)') UTHR
 c              END IF
-              WRITE(MSG,2023) IPKSEQ(IPKPTR(I)),PKS(IPKPTR(I)),WRCPP(I)
-C     $                      WRCPP(I) , LTHRCHR(1), LTHRCHR(2)
-C     $                      (' ',J=1,NB)
+              IF (PKS(IPKPTR(I)) .LT. 10**GBCRIT) THEN
+                WRITE(MSG,2023) '*',IPKSEQ(IPKPTR(I)),PKS(IPKPTR(I)),
+     $                          WRCPP(I)
+                LNLOW = LNLOW + 1
+              ELSE
+                WRITE(MSG,2023) ' ',IPKSEQ(IPKPTR(I)),PKS(IPKPTR(I)),
+     $                          WRCPP(I)
+              END IF
             END IF
           ELSE
 C           no thresholds or intervals
@@ -1331,6 +1360,10 @@ C           no thresholds or intervals
           END IF
   310   CONTINUE
       IF(JLINE.LT.NPKS) GO TO 302
+
+      IF (LNLOW.GT.0) THEN
+        WRITE(MSG,2030)
+      END IF
 C
       RETURN
       END
@@ -4856,7 +4889,8 @@ C
 C
       SUBROUTINE   PRTEXP
      I                      (EXPFUN,NSYS,NHIST,WRCSKW,WRCMN,WRCSD,
-     I                       SYSSKW,GENSKU,RMSEGS,ASMSEG,KENTAU,KENPVL,
+     I                       SYSSKW,GENSKU,RMSEGS,ASMSEG,SYSASK,
+     I                       ASMSEGSYS,KENTAU,KENPVL,
      I                       KENSLP,NPLOT,WRCFC,TXPROB,CLIML,CLIMU,
      I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT,
      I                       BEGYR,ENDYR)
@@ -4867,9 +4901,9 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT,BEGYR,ENDYR
       REAL          WRCSKW,WRCMN,WRCSD,SYSSKW,GENSKU,RMSEGS,
-     $              ASMSEG,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
+     $              ASMSEG,SYSASK,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
      $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT)
-      DOUBLE PRECISION VAREST(NPLOT)
+      DOUBLE PRECISION ASMSEGSYS,VAREST(NPLOT)
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -4878,6 +4912,8 @@ C     NHIST  - number of historic peaks
 C     WRCFC  - log10 ordinates of fitted curve, WRC estimates
 C              (plot with solid line)
 C     ASMSEG - at-site MSE of skew
+C     SYSASK - at-site Skew, systematic only
+C     ASMSEGSYS - at-site MSE of Skew, systematic only
 C     TXPROB - tabular abscissa standard deviates for fitted curve
 C              (plot with dashed and solid line)
 C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
@@ -4910,14 +4946,15 @@ C     + + + INTRINSICS + + +
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A80)
- 2010 FORMAT (4X,'Station',2A,/,4X,'Station Name',2A,/,
+ 2010 FORMAT (4X,'Station',2A,/,4X,'StationName',2A,/,
      $        4X,'Analysis',A,A4,/,4X,'BegYear ',A,I4,/,
-     $        4X,'EndYear ',A,I4,/,4X,'Skew Option',2A,/,
+     $        4X,'EndYear ',A,I4,/,4X,'SkewOption',2A,/,
      $        4X,'Skew    ',A,F8.3,/,4X,'Mean    ',A,F8.3,/,
      $        4X,'StandDev',A,F8.3,/,4X,'AtSiteSkew',A,F8.3,/,
-     $        4X,'AtSiteMSEG',A,F8.3,/,
-     $        4X,'Reg Skew',A,F8.3,/,4X,'Reg MSEG',A,F8.3,/,
-     $        4X,'YRSPK   ',A,I8,/,4X,'YRSHPK  ',A,I8,/,
+     $        4X,'AtSiteMSEG',A,F8.3,/,4X,'Skew_SYS ',A,F8.3,/,
+     $        4X,'AtSiteMSEG_SYS',A,F8.3,/,
+     $        4X,'RegSkew',A,F8.3,/,4X,'RegMSEG',A,F8.3,/,
+     $        4X,'SysPeaks',A,I8,/,4X,'HisPeaks',A,I8,/,
      $        4X,'KENTAU  ',A,F8.3,/,4X,'KENPLV  ',A,F8.3,/,
      $        4X,'KENSLP  ',A,F8.3)
  2020 FORMAT (4X,A8,32(A,F8.4))
@@ -4945,7 +4982,8 @@ C
       WRITE(EXPFUN,2010) LTAB,LSTNID,LTAB,LHEADER,LTAB,LCHTYPE,LTAB,
      $                   BEGYR,LTAB,ENDYR,LTAB,CHSKUOPT,LTAB,WRCSKW,
      $                   LTAB,WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,
-     $                   LTAB,GENSKU,LTAB,RMSEGS**2,LTAB,NSYS,LTAB,
+     $                   LTAB,SYSASK,LTAB,ASMSEGSYS,LTAB,GENSKU,LTAB,
+     $                   RMSEGS**2,LTAB,NSYS,LTAB,
      $                   NHIST,LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
 
       LEN = 10

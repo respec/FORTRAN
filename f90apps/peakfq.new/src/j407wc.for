@@ -105,7 +105,7 @@ C
       ISYS=NHIST+1
       NSYS1=NPK-NHIST
 C
-      CALL WCFASP (PKLOG(ISYS),SYSPP(ISYS),NSYS1,IRC)
+      CALL WCFASP (PKLOG(ISYS),SYSPP(ISYS),NSYS1,IRC,EMAOPT)
       IF(IRC.GE.3)GOTO95
 C
       IF(WRCASK.GT.EPS2)GOTO50
@@ -116,7 +116,7 @@ C
 Ckmf  IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA (4H17B1, IRC)
       IF(NLWOUT.GT.0 .AND. IRC.LT.3)CALL WCFCSA ('17B1', IRC)
       IF(IRC.GE.3)GOTO95
-      CALL WCFDHH (PKLOG,NPK, IRC)
+      CALL WCFDHH (PKLOG,NPK, IRC,EMAOPT)
 Ckmf  IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B2,IRC)
       IF(NHISTN+NHIOUT.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B2',IRC)
       IF(IRC.GE.3)GOTO95
@@ -126,14 +126,14 @@ C
       CALL GBTESTX (PKLOG(ISYS),NSYS1,EMAOPT,
      O              IER)
       IF(IRC.GE.3)GOTO95
-      CALL WCFDHH (PKLOG,NPK,IRC)
+      CALL WCFDHH (PKLOG,NPK,IRC,EMAOPT)
       IF(IRC.GE.3)GOTO95
 Ckmf  IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA (4H17B3,IRC)
       IF(NHISTN+NHIOUT+NLWOUT.GT.0) CALL WCFCSA ('17B3',IRC)
       IF(IRC.GE.3)GOTO95
       GOTO70
 C
-   50 CALL WCFDHH (PKLOG,NPK,IRC)
+   50 CALL WCFDHH (PKLOG,NPK,IRC,EMAOPT)
 Ckmf  IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA (4H17B4,IRC)
       IF(NHIOUT+NHISTN.GT.0 .AND. IRC.LT.3) CALL WCFCSA ('17B4',IRC)
       IF(IRC.GE.3)GOTO95
@@ -146,9 +146,9 @@ C
    70 CONTINUE
 C
 C     IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, 4H17B ,NSYS+NHIST)
-C     CALL WCFFCA (WRCFC,4H17B ,IRC)
+C     CALL WCFFCA (WRCFC,4H17B,IRC,EMAOPT)
       IF(NOPPOS.NE.1) CALL WCFEPP (WRCPP, '17B ', NSYS+NHIST)
-      CALL WCFFCA (WRCFC, '17B ', IRC )
+      CALL WCFFCA (WRCFC, '17B ', IRC,EMAOPT)
       IF(IRC.GE.3)GOTO95
 C
       CALL WCFFCX (IRC)
@@ -321,7 +321,7 @@ C
 C
 C
       SUBROUTINE   WCFASP
-     #                    (SYSLOG,SYSPP,NSYS1,IER)
+     #                    (SYSLOG,SYSPP,NSYS1,IER,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     ANALYZE SYSTEMATIC PEAKS
@@ -329,7 +329,7 @@ C     (WRC Bulletin-17 Flood Frequency Analysis)
 C     REV 7/20/79 WK TO MAKE ADDENDS TO SUMS DOUBLE PRECISION
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER NSYS1,IER
+      INTEGER NSYS1,IER,EMAOPT
       REAL SYSLOG(NSYS1),SYSPP(NSYS1)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -337,6 +337,9 @@ C     SYSLOG - systematic peak logarithms
 C     SYSPP  - prob plot positions systematic record PKS
 C     NSYS1  - number of systematic peaks
 C     IER    - error return code
+C     EMAOPT - indicator flag for performing EMA analysis
+C              0 - no, just do traditional J407
+C              1 - yes, run EMA
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -390,13 +393,15 @@ C
       NBGB=NSYS-NAGB
 C
       IF(MSL.LT.2)GOTO40
-      T=10.**WRCBAS
-      IF(NBGB.GT.0)WRITE(MSG,133)NBGB,T
-      IF(NBGB.LE.0)WRITE(MSG,134)T
-133   FORMAT(56H    WCF133I-SYSTEMATIC PEAKS BELOW GAGE BASE WERE NOTED.
-     $       ,I10,1X,F8.1)
-134   FORMAT(53H    WCF134I-NO SYSTEMATIC PEAKS WERE BELOW GAGE BASE.,
-     $       14X,F8.1)
+      IF (EMAOPT .EQ. 0) THEN
+        T=10.**WRCBAS
+        IF(NBGB.GT.0)WRITE(MSG,133)NBGB,T
+        IF(NBGB.LE.0)WRITE(MSG,134)T
+133     FORMAT(56H    WCF133I-SYSTEMATIC PEAKS BELOW GAGE BASE WERE NOTED.
+     $         ,I10,1X,F8.1)
+134     FORMAT(53H    WCF134I-NO SYSTEMATIC PEAKS WERE BELOW GAGE BASE.,
+     $         14X,F8.1)
+      END IF
    40 CONTINUE
 C
 Ckmf  CALL WCFCSA (4HSYS , IER )
@@ -405,9 +410,9 @@ Ckmf  CALL WCFCSA (4HSYS , IER )
 C
       IF(NOSYS.EQ.1) RETURN
 Ckmf  IF(NOPPOS.NE.1) CALL WCFEPP (SYSPP, 4HSYS ,NSYS)
-Ckmf  CALL WCFFCA (SYSRFC,4HSYS , IER)
+Ckmf  CALL WCFFCA (SYSRFC,4HSYS,IER,EMAOPT)
       IF(NOPPOS.NE.1) CALL WCFEPP (SYSPP, 'SYS ', NSYS)
-      CALL WCFFCA (SYSRFC, 'SYS ', IER )
+      CALL WCFFCA (SYSRFC, 'SYS ',IER,EMAOPT)
 C     STATISTICS ARE REPORTED BY WCFFCA IF REQUIRED.
       DO 50 I=1,8
    50 SYSTAT(I)=WSTATS(I)
@@ -584,7 +589,7 @@ C
 C
 C
       SUBROUTINE   WCFDHH
-     #                    (PKLOG,NDIM,IER)
+     #                    (PKLOG,NDIM,IER,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     DETECT HISTORIC PEAKS AND HIGH OUTLIERS
@@ -595,13 +600,16 @@ C     REV 4/28/81 WK - TO USE NUMBER OF PEAKS ABOVE FLOOD BASE IN HI-OUT
 C       TEST.  ALSO PRINT HI-OUT TEST BEFORE SUPERSEDING WITH MIN HIST PEAK
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   NDIM, IER
+      INTEGER   NDIM, IER, EMAOPT
       REAL      PKLOG(NDIM)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     PKLOG  - peak flow LOG10 work-input vector
 C     NDIM   - size of PKLOG array
 C     IER    - error return code
+C     EMAOPT - indicator flag for performing EMA analysis
+C              0 - no, just do traditional J407
+C              1 - yes, run EMA
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -647,18 +655,22 @@ C  SET HIGH-OUTLIER BASE
       WRCHOT = WRCAAV + WRCASD*OUTKGB(SIGHOT, NSYS-NBGB-NLWOUT )
       IF(QHIOUT.LE.0.)GOTO60
       IF(MSL.LT.2) GO TO 44
-      T = 10.**WRCHOT
-      WRITE(MSG,161) QHIOUT, T
-161   FORMAT('   *WCF161I-USER HIGH OUTLIER CRITERION REPLACES 17B. ',
-     $   F10.1,1X,F10.1 )
+      IF (EMAOPT .EQ. 0) THEN
+        T = 10.**WRCHOT
+        WRITE(MSG,161) QHIOUT, T
+161     FORMAT('   *WCF161I-USER HIGH OUTLIER CRITERION REPLACES 17B. ',
+     $     F10.1,1X,F10.1 )
+      END IF
    44 IER = MAX0(1, IER)
       T=ALOG10(QHIOUT)
       IF(T.LE.HPMIN) GO TO 50
       IER=MAX0(IER,2)
-      U = 10.**HPMIN
-      IF(MSL.GT.0)WRITE(MSG,157)QHIOUT,U
-157   FORMAT(45H  **WCF157W-USER HIGH-OUTLIER CRIT LOWERED TO,
-     $       13H MIN HIST PK.,  2(1X,F9.1))
+      IF (EMAOPT .EQ. 0) THEN
+        U = 10.**HPMIN
+        IF(MSL.GT.0)WRITE(MSG,157)QHIOUT,U
+157     FORMAT(45H  **WCF157W-USER HIGH-OUTLIER CRIT LOWERED TO,
+     $         13H MIN HIST PK.,  2(1X,F9.1))
+      END IF
       T = HPMIN
    50 WRCHHB=T
       GO TO 66
@@ -666,20 +678,24 @@ C  SET HIGH-OUTLIER BASE
       WRCHHB = WRCHOT
       IF(WRCHHB.LE.HPMIN) GO TO 66
       IF(MSL.LT.2) GO TO 65
-      T = 10.**WRCHOT
-      WRITE(MSG,156) T
-156   FORMAT(4X,'WCF156I-17B HI-OUTLIER TEST SUPERSEDED BY MIN HIST PK',
-     $     1X,F9.1)
+      IF (EMAOPT .EQ. 0) THEN
+        T = 10.**WRCHOT
+        WRITE(MSG,156) T
+156     FORMAT(4X,'WCF156I-17B HI-OUTLIER TEST SUPERSEDED BY ',
+     $            'MIN HIST PK',1X,F9.1)
+      END IF
    65 WRCHHB = HPMIN
    66 CONTINUE
       IF(WRCHHB.GT.WRCBAS)GOTO70
       IER=3
       IF(MSL.LE.0)RETURN
-      U=10.**WRCHHB
-      T=10.**WRCBAS
-      WRITE(MSG,159)U,T
-159   FORMAT(39H ***WCF159E-HIGH-OUT/HIST-PK BASE BELOW ,
-     $        19H LOW-OUT/GAGE BASE.,  2(1X,F9.1))
+      IF (EMAOPT .EQ. 0) THEN
+        U=10.**WRCHHB
+        T=10.**WRCBAS
+        WRITE(MSG,159)U,T
+159     FORMAT(39H ***WCF159E-HIGH-OUT/HIST-PK BASE BELOW ,
+     $          19H LOW-OUT/GAGE BASE.,  2(1X,F9.1))
+      END IF
       RETURN
    70 CONTINUE
 C
@@ -706,8 +722,10 @@ C
 C  REPORT NO HIGH-HIST
       IF(NHIOUT+NHISTN.GT.0)GOTO110
       IF(MSL.LT.2) GO TO 16301
-      U = 10.**WRCHHB
-      WRITE(MSG,163) U
+      IF (EMAOPT .EQ. 0) THEN
+        U = 10.**WRCHHB
+        WRITE(MSG,163) U
+      END IF
 16301 CONTINUE
   163 FORMAT('    WCF163I-NO HIGH OUTLIERS OR HISTORIC PEAKS ',
      $       'EXCEEDED HHBASE.  ',F10.1)
@@ -722,13 +740,15 @@ C  REPORT HIGH-OUT-HIST COUNTS
   110 CONTINUE
       IF(HISTPD.LE.0) GO TO 210
       HISTPN = HISTPD
-      T=10.**WRCHHB
-      IF(MSL.GE.2)WRITE(MSG,165)NHIOUT,NHISTN,T
-165   FORMAT(44H    WCF165I-HIGH OUTLIERS AND HISTORIC PEAKS,
-     $       14H ABOVE HHBASE., 2(1X,I2),1X,F10.1)
+      IF (EMAOPT .EQ. 0) THEN
+        T=10.**WRCHHB
+        IF(MSL.GE.2)WRITE(MSG,165)NHIOUT,NHISTN,T
+165     FORMAT(44H    WCF165I-HIGH OUTLIERS AND HISTORIC PEAKS,
+     $         14H ABOVE HHBASE., 2(1X,I2),1X,F10.1)
+      END IF
       IF(HISTPN.GT.FLOAT(NHISTN+NSYS))GOTO120
       IER=3
-      IF(MSL.GT.0) WRITE(MSG,167) HISTPN, NSYS, NHISTN
+      IF(MSL.GT.0 .AND. EMAOPT.EQ.0) WRITE(MSG,167) HISTPN,NSYS,NHISTN
 167   FORMAT(54H ***WCF167E-HIST PERIOD NO LONGER THAN SYS + HIST PKS.,
      $        F9.1,2I5)
       RETURN
@@ -740,7 +760,7 @@ C  REPORT HIGH-OUT-HIST COUNTS
   130 I=NHISTN+NHIOUT
       IF(10*I.LE.NSYS .OR. I.LE.1) GO TO 140
       IER=MAX0(IER,2)
-      IF(MSL.GT.0)WRITE(MSG,171)I,NSYS
+      IF(MSL.GT.0 .AND. EMAOPT.EQ.0)WRITE(MSG,171)I,NSYS
 171   FORMAT(42H  **WCF171W-NUMBER HI-OUT/HIST PKS EXCEEDS,
      $       18H 10PCT OF SYS PKS. ,  2I7)
   140 CONTINUE
@@ -753,17 +773,19 @@ C  REPORT HIGH-OUT-HIST COUNTS
      $         F7.1/)
   215 CONTINUE
       IF(MSL.LT.2) RETURN
-      T = 10.**WRCHHB
-      WRITE(MSG,162) NHIOUT, T
-162   FORMAT('    WCF162I-SYSTEMATIC PEAKS EXCEEDED HIGH-',
-     $    'OUTLIER CRITERION. ',I3,1X,F9.1)
+      IF (EMAOPT .EQ. 0) THEN
+        T = 10.**WRCHHB
+        WRITE(MSG,162) NHIOUT, T
+162     FORMAT('    WCF162I-SYSTEMATIC PEAKS EXCEEDED HIGH-',
+     $      'OUTLIER CRITERION. ',I3,1X,F9.1)
+      END IF
       RETURN
       END
 C
 C
 C
       SUBROUTINE   WCFDLO
-     #                    (SYSLOG,NSYS1,IER)
+     #                    (SYSLOG,NSYS1,IER,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     DETECT LOW OUTLIERS
@@ -774,13 +796,16 @@ C     REV 4/28/81 WK - TO USE NUMBER OF PEAKS ABOVE GAGE BASE IN LOW-OUT
 C         TEST.  USES HIST WT .
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   NSYS1,IER
+      INTEGER   NSYS1,IER,EMAOPT
       REAL      SYSLOG(NSYS1)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     SYSLOG - systematic peak logarithms (input)
 C     NSYS1  - number of systematic peak logarithms
 C     IER    - error return code
+C     EMAOPT - indicator flag for performing EMA analysis
+C              0 - no, just do traditional J407
+C              1 - yes, run EMA
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -824,11 +849,13 @@ C
       IF(TEST.LT.WRCHHB)GOTO20
       IER=3
       IF(MSL.LE.0)     RETURN
-      WRCHHB=10.**WRCHHB
-      TEST=10.**TEST
-      WRITE(MSG,193)TEST,WRCHHB
-193   FORMAT(52H ***WCF193E-LOW-OUTLIER CRITERION EXCEEDS HIGH-HIST.,
-     $           2F11.1)
+      IF (EMAOPT .EQ. 0) THEN
+        WRCHHB=10.**WRCHHB
+        TEST=10.**TEST
+        WRITE(MSG,193)TEST,WRCHHB
+193     FORMAT(52H ***WCF193E-LOW-OUTLIER CRITERION EXCEEDS HIGH-HIST.,
+     $             2F11.1)
+      END IF
       RETURN
 C
    20 NLWOUT=0
@@ -859,10 +886,12 @@ C
       RETURN
 C
    50 IF(MSL.LT.2)  GO TO 60
-      T=10.**WRCBAS
-      WRITE(MSG,198)NLWOUT,T
-198   FORMAT(46H    WCF198I-LOW OUTLIERS BELOW FLOOD BASE WERE,
-     $          9H DROPPED.,  I8,4X,F8.1)
+      IF (EMAOPT .EQ. 0) THEN
+        T=10.**WRCBAS
+        WRITE(MSG,198)NLWOUT,T
+198     FORMAT(46H    WCF198I-LOW OUTLIERS BELOW FLOOD BASE WERE,
+     $            9H DROPPED.,  I8,4X,F8.1)
+      END IF
    60 CONTINUE
 C
 C  CHECK FOR TOO MANY BELOW-BASE PEAKS
@@ -872,10 +901,12 @@ C  CHECK FOR TOO MANY BELOW-BASE PEAKS
       IF(NBB.LE.NBBMAX) GO TO 70
       IER=MAX0(IER,2)
       IF(MSL.LE.0) GO TO 70
-      T = 10.**WRCBAS
-      WRITE(MSG,199)NBB,T,NBBMAX
-199   FORMAT(  '  **WCF199W-NUMBER OF PEAKS BELOW FLOOD BASE',
-     $         ' EXCEEDS 17B SPEC.', 1X,I3,1X,F8.1,1X,I3)
+      IF (EMAOPT .EQ. 0) THEN
+        T = 10.**WRCBAS
+        WRITE(MSG,199)NBB,T,NBBMAX
+199     FORMAT(  '  **WCF199W-NUMBER OF PEAKS BELOW FLOOD BASE',
+     $           ' EXCEEDS 17B SPEC.', 1X,I3,1X,F8.1,1X,I3)
+      END IF
    70 CONTINUE
       RETURN
       END
@@ -941,7 +972,7 @@ C
 C
 C
       SUBROUTINE   WCFFCA
-     #                    (FCQ,LABEL,IER)
+     #                    (FCQ,LABEL,IER,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     FREQUENCY CURVE PEARSON TYPE III ORDINATES,
@@ -963,7 +994,7 @@ C                        to character
 C
 C     + + + DUMMY ARGUMENTS + + +
 Ckmf  INTEGER LABEL,IER
-      INTEGER   IER
+      INTEGER   IER,EMAOPT
       REAL FCQ(*)
       CHARACTER*4  LABEL
 C
@@ -972,6 +1003,9 @@ C     FCQ    - output vector of frequency curve ordinates
 C     LABEL  - identifier printed in error message and used to
 C              identify systematic-records vs WRC calculations
 C     IER    - error return code
+C     EMAOPT - indicator flag for performing EMA analysis
+C              0 - no, just do traditional J407
+C              1 - yes, run EMA
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -1052,9 +1086,11 @@ C
    30 CONTINUE
       IER=3
       IF(MSL.LE.0) RETURN
-      WRITE(MSG,213)LABEL,PBB
-213   FORMAT(46H ***WCF213E-COND PROB ADJUST FAILED--EXCESSIVE,
-     $    1X,1A4, 18H PROB BELOW BASE. ,F8.4)
+      IF (EMAOPT .EQ. 0) THEN
+        WRITE(MSG,213)LABEL,PBB
+213     FORMAT(46H ***WCF213E-COND PROB ADJUST FAILED--EXCESSIVE,
+     $      1X,1A4, 18H PROB BELOW BASE. ,F8.4)
+      END IF
       RETURN
 C
    40 CONTINUE
@@ -1653,7 +1689,7 @@ C       update B17 computational variables
 
       ELSE
 C       perform traditional B17B LO test
-        CALL WCFDLO (SYSLOG,NSYS1,IER)
+        CALL WCFDLO (SYSLOG,NSYS1,IER,EMAOPT)
 C       low outlier info needs to be set here for later storage/use
 C       (GBTEST sets these in call for multiple GB)
         gbcrit = WRCBAS
