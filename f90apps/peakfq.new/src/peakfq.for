@@ -36,7 +36,8 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*12 APNAME
       CHARACTER*8  LGNAME
       CHARACTER*64 FNAME, VERSN
-      CHARACTER*120 S, KWD, SPCFNM, IOSTXT
+      CHARACTER*120 S, KWD, IOSTXT
+      CHARACTER*240 SPCFNM
       CHARACTER*120, ALLOCATABLE :: SPECS(:), LSPECS(:)
       LOGICAL      LFLAG, OPENED
 C
@@ -351,8 +352,8 @@ C       do the analysis
         CALL J407XE (MESSFL,WDMSFL,PAUSE,UPDATEFG,NSTA)
         IF (UPDATEFG) THEN !update spec file with verbose version
           CALL UPDATESPECFILE (SPCFUN,SPCFNM)
-        ELSE !just close spec file
-          CLOSE(SPCFUN)
+c        ELSE !just close spec file
+c          CLOSE(SPCFUN)
         END IF
       ELSE !major problem processing input data/specs
         WRITE (FE,*) "PeakFQ NOT RUN: Problem processing ",
@@ -383,6 +384,11 @@ C     don't see where output file is closed, try it here
       INQUIRE(FOUT,NAME=S)
       write(FE,*) "Closing output file " // TRIM(S)
       CLOSE(FOUT)
+
+C     always close spec file
+      CLOSE(SPCFUN)
+C     and error file
+      CLOSE(FE)      
 C
       IF (IPUNCH .EQ. 15) THEN
 C       need to close BCD output file
@@ -1459,7 +1465,7 @@ C     Replace existing spec file with updated verbose version.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER FUNIT
-      CHARACTER*120 SPCFIL
+      CHARACTER*240 SPCFIL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     FUNIT  - Fortran unit number of original spec file
