@@ -2258,7 +2258,9 @@ C                 examine quality codes
                   XQUAL(IPK) = LREG
 C
 C                 act on codes
-                  REJECT = PKSABG(IPK).LT.0. .OR. BIT(3) .OR. BIT( 8)
+C                 only act on code 'G' for traditional B17B analysis                  
+                  REJECT = PKSABG(IPK).LT.0. .OR. BIT(3) 
+     $                    .OR.(BIT(8) .AND. EMAOPT.EQ.0)
      $                    .OR.((BIT(6).OR.BIT(12)) .AND. IKROPT.LE.0)
                   REJECT = REJECT .OR. (BIT(7).AND.NOHIST)
                   REJECT = REJECT .OR. (BIT(7).AND.
@@ -4643,6 +4645,8 @@ C       determine default threshold value(s) to use
 C         historic period in use, will need 2 default thresholds
           NTHRESH = 2          
           ALLOCATE (THRESH(NTHRESH))
+          THRESH(1)%THRBYR= 9999
+          THRESH(1)%THREYR= 0
           THRESH(1)%THRLWR= 1.0D35
           THRESH(1)%THRUPR= 1.0D35
           THRESH(1)%THRCOM= 'Default Historic Threshold'
@@ -4653,6 +4657,12 @@ C         determine threshold specs for historic period
 C             historic peak
               IF (ABS(PKS(I)) .LT. THRESH(1)%THRLWR) THEN
                 THRESH(1)%THRLWR = ABS(PKS(I))
+              END IF
+              IF (ABS(IPKSEQ(I)) .LT. THRESH(1)%THRBYR) THEN
+                THRESH(1)%THRBYR= ABS(IPKSEQ(I))
+              END IF
+              IF (ABS(IPKSEQ(I)) .GT. THRESH(1)%THREYR) THEN
+                THRESH(1)%THREYR= ABS(IPKSEQ(I))
               END IF
             END IF
             I = I + 1
@@ -4681,10 +4691,16 @@ C       per phone call w/Tim C (6/2011), lower thresh default is as follows
         THRESH(NTHRESH)%THRLWR = MAX(0.0,GAGEB)
         THRESH(NTHRESH)%THRUPR = 1.0D35
         IF (NTHRESH .EQ. 2) THEN
-C         start of historic threshold based on end of sys and historic length
-          THRESH(1)%THRBYR = THRESH(2)%THREYR - HISTPD + 1
-C         end of historic threshold is year before systematic period
-          THRESH(1)%THREYR = THRESH(2)%THRBYR - 1
+C         see if start/end of historic threshold needs extending
+          IF (THRESH(1)%THREYR .LT. THRESH(2)%THRBYR) THEN
+C           historic period preceeds systematic peaks
+            THRESH(1)%THRBYR = THRESH(2)%THREYR - HISTPD + 1
+C           end of historic threshold is year before systematic period
+            THRESH(1)%THREYR = THRESH(2)%THRBYR - 1
+          ELSEIF (THRESH(1)%THRBYR .GT. THRESH(2)%THREYR) THEN
+C           historic period follows systematic, start it right after syst end
+            THRESH(1)%THRBYR = THRESH(2)%THREYR + 1
+          END IF
         END IF
       ELSE 
 C       user has defined thresholds
