@@ -217,7 +217,7 @@ c                                              and MSE[S^2_{regional}]
 c                                    'S1'   => inversely to MSE[S_{at-site}]
 c                                              and MSE[S_{reg.}] (NOT AVAIL.)
 c
-c       /tacci1/eps          r*8   nominal confidence interval coverage (90% default)
+c       /tacci1/eps          r*8   nominal conf. int. coverage (90% def.)
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -732,7 +732,7 @@ c
         cmoms(3,1) = skew
 c  compute weighted average of results (assume approx. linear)
         do 20 i=1,nq
-          yp(i)      = (1.d0-wt) * yp1(i)  +  wt * yp2(i)
+          yp(i)      = qP3(pq(i),cmoms)
           ci_low(i)  = (1.d0-wt) * ci_low1(i)  +  wt * ci_low2(i)
           ci_high(i) = (1.d0-wt) * ci_high1(i) +  wt * ci_high2(i)
 20      continue
@@ -857,7 +857,7 @@ c    point value; these are also treated as systematic observations
      1        (dtype(i) .eq. 'Syst') .and. 
      2        (qu_in(i) .le. qmin) ) THEN
             ns = ns + 1
-            x(ns) = ql_in(i)
+            x(ns) = qu_in(i)
             qs(ns)= 10**x(ns)
           endif
 15      continue        
@@ -1884,6 +1884,7 @@ c
 c           author.......tim cohn
 c           date.........10 feb 2007
 c             modified...16 jun 2011
+c             modified...04 apr 2013
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -1990,11 +1991,14 @@ c
         if(r_S2_mse .gt. 1.d10) return   ! most likely case -- do nothing
                
         if(r_S2_mse .ge. 1.d10) then     ! "At-Site/STATION"
-           wS2 = 1.D0
+           wS2    = 1.D0
+           rS2mse = 1.D10
         else if(r_S2_mse .eq. 0.d0) then ! "Regional/Generalized"
-           wS2 = 0.d0
+           wS2    = 0.D0
+           rS2mse = r_S2_mse
         else if(r_S2_mse .lt. 0.d0) then  ! "At-Site/STATION"
-           wS2 =  1.d0
+           wS2    = 1.D0
+           rS2mse = 1.D10
         else                             ! "WEIGHTED"
           if(VarS2opt .eq. 'DF') then
             rS2mse = r_S2_mse*(mc(2)/r_S2)**2 ! correct MSE[S] = f(\sigma)
