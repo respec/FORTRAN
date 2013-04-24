@@ -57,7 +57,7 @@
 !
 !#define WRITE(x) (report_writeLine((x))) !call report_writeLine directly
 !character(6) :: FlowFmt !moved to swmm5futil
-!double precision :: Vcf !moved to swmm5futil
+!real(kind=dp) :: Vcf !moved to swmm5futil
 !save
 !
 !contains
@@ -633,7 +633,7 @@ subroutine writeLinkFlows()
     implicit none
     
     integer :: j, k, days, hrs, mins
-    double precision :: v, fullDepth
+    real(kind=dp) :: v, fullDepth
 
     if ( Nobjects(LINK) == 0 ) return
     call WriteToRpt("")

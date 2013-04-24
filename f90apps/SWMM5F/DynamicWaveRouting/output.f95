@@ -52,7 +52,7 @@ real :: SysResults(MAX_SYS_RESULTS)    !static REAL4 values of system output var
 
 !time-value array holding outlet flow result
 !real, dimension(:), pointer :: TSOutletVals
-real, dimension(:), pointer :: TSDateTime
+real(kind=dp), dimension(:), pointer :: TSDateTime
 integer :: OutputSize
 integer :: OutputCount
 
@@ -100,7 +100,7 @@ integer function output_open()
     integer ::   nPolluts, j, m
     integer ::  k
     real :: x
-    double precision :: z
+    real(kind=dp) :: z
     nPolluts = Nobjects(E_POLLUT)
     ! --- open binary output file
 !    output_openOutFile()
@@ -460,9 +460,9 @@ subroutine output_saveResults(aReportTime)
     use headers
     
     implicit none
-    double precision, intent(in) :: aReportTime
+    real(kind=dp), intent(in) :: aReportTime
     integer :: i
-    double precision :: reportDate, date !REAL8 date
+    real(kind=dp) :: reportDate, date !REAL8 date
 
     reportDate = getDateTime(StartDateTime, aReportTime)
     if ( reportDate < ReportStart ) return
@@ -590,13 +590,13 @@ subroutine output_saveSubcatchResults(aReportTime, file)
 !  Purpose: writes computed subcatchment results to binary file.
 !
     implicit none
-    double precision, intent(In) :: aReportTime
+    real(kind=dp), intent(In) :: aReportTime
     integer, intent(in) :: file
     
     integer ::      j
-    double precision ::   f, area
+    real(kind=dp) ::   f, area
     real :: totalArea
-    double precision :: reportDate
+    real(kind=dp) :: reportDate
     
 !    totalArea = 0.0 !f
 !    reportDate = getDateTime(aReportTime)
@@ -652,16 +652,17 @@ subroutine output_saveNodeResults(aReportTime, file)
     use headers
     use swmm5futil
     implicit none
-    double precision, intent(In) :: aReportTime
+    real(kind=dp), intent(In) :: aReportTime
     integer(kind=k4), intent(in) :: file
 
 !    extern TRoutingTotals StepFlowTotals  ! defined in massbal.c
     integer :: j, lStat
 
     ! --- find where current reporting time lies between latest routing times
-    double precision :: f, datatime
+    real(kind=dp) :: f, datatime
     f = (aReportTime - OldRoutingTime) / (NewRoutingTime - OldRoutingTime)
     datatime = getDateTime(StartDateTime, aReportTime)
+    
     do j=1, Nobjects(E_NODE)
 !       if (Node(j)%datatype == E_OUTFALL) then
 !           exit !assume there is only one outlet
@@ -728,12 +729,12 @@ subroutine output_saveLinkResults(aReportTime, file)
     use swmm5futil
     use modLink
     implicit none
-    double precision, intent(in) :: aReportTime
+    real(kind=dp), intent(in) :: aReportTime
     integer(kind=K4), intent(in) :: file
 
     integer :: j, lStat
-    double precision :: f
-    double precision :: z, datatime
+    real(kind=dp) :: f
+    real(kind=dp) :: z, datatime
 
     ! --- find where current reporting time lies between latest routing times
     f = (aReportTime - OldRoutingTime) / (NewRoutingTime - OldRoutingTime)
@@ -777,7 +778,7 @@ subroutine output_readDateTime(period, days)
 !
     implicit none
     integer, intent(in) :: period
-    double precision, intent(inout) :: days
+    real(kind=dp), intent(inout) :: days
     
 !    INT4 bytePos = OutputStartPos + (period-1)*BytesPerPeriod
 !    fseek(Fout.file, bytePos, SEEK_SET)

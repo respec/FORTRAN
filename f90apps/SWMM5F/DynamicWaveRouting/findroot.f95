@@ -16,6 +16,7 @@ module findroot
 
 !#define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a)) !fortran has same function SIGN
 !#define MAXIT 60
+use DataSizeSpecs
 
 contains
 
@@ -38,19 +39,19 @@ integer function findroot_Newton(x1, x2, rts, xacc, aFunc)
     use headers
     implicit none
     
-    double precision, intent(in) :: x1, x2, xacc
-    double precision, intent(inout) :: rts
+    real(kind=dp), intent(in) :: x1, x2, xacc
+    real(kind=dp), intent(inout) :: rts
     
     interface AFunc1
       subroutine aFunc (x, f, df)
-         double precision, intent(in) :: x
-         double precision, intent(inout) :: f, df
+         real(kind=dp), intent(in) :: x
+         real(kind=dp), intent(inout) :: f, df
       end subroutine aFunc
     end interface AFunc1
 
     integer, parameter :: MAXIT = 60
-    double precision :: df, dx, dxold, f, x
-    double precision :: mTemp, xhi, xlo
+    real(kind=dp) :: df, dx, dxold, f, x
+    real(kind=dp) :: mTemp, xhi, xlo
     integer :: j, n
     j = 0
     n = 0
@@ -102,20 +103,20 @@ integer function findroot_Newton(x1, x2, rts, xacc, aFunc)
     end if
 end function findroot_Newton
 
-double precision function findroot_Ridder(x1, x2, xacc, func) !double (*func)(double)
+real(kind=dp) function findroot_Ridder(x1, x2, xacc, func) !double (*func)(double)
 
     use headers
     implicit none
-    double precision, intent(in) :: x1, x2, xacc
+    real(kind=dp), intent(in) :: x1, x2, xacc
     interface AFunc
       function func (y)
-         double precision :: func
-         double precision, intent(in) :: y
+         real(kind=dp) :: func
+         real(kind=dp), intent(in) :: y
       end function func
     end interface AFunc
     
     integer :: j, MAXIT
-    double precision :: ans, fhi, flo, fm, fnew, s, xhi, xlo, xm, xnew, lval
+    real(kind=dp) :: ans, fhi, flo, fm, fnew, s, xhi, xlo, xm, xnew, lval
     MAXIT = 60
 
     flo = func(x1)

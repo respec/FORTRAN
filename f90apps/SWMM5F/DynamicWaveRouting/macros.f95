@@ -7,7 +7,7 @@ module macros
 !   Date:    6/19/07   (Build 5.0.010)
 !   Author:  L. Rossman
 !-----------------------------------------------------------------------------
-
+use DataSizeSpecs
 contains
 !--------------------------------------------------
 ! Macro to test for successful allocation of memory
@@ -27,8 +27,8 @@ contains
 !#define MAX(x,y) (((x)>=(y)) ? (x) : (y))        /* maximum of x and y    */
 !#define MOD(x,y) ((x)%(y))                       /* x modulus y           */
 !#define LOG10(x) ((x) > 0.0 ? log10((x)) : (x))  /* safe log10 of x       */
-double precision function LOG10Safe(x)
-   double precision, intent(in) :: x
+real(kind=dp) function LOG10Safe(x)
+   real(kind=dp), intent(in) :: x
    if (x > 0.0) then
            LOG10Safe = log10(x)
    else
@@ -37,13 +37,13 @@ double precision function LOG10Safe(x)
    return
 end function LOG10Safe
 !#define SQR(x)   ((x)*(x))                       /* x-squared             */
-double precision function SQR(x)
-   double precision, intent(in) :: x
+real(kind=dp) function SQR(x)
+   real(kind=dp), intent(in) :: x
    SQR = x * x
 end function SQR
 !#define SGN(x)   (((x)<0) ? (-1) : (1))          /* sign of x             */
 integer function SGN(x)
-   double precision, intent(in) :: x
+   real(kind=dp), intent(in) :: x
    if (x < 0) then
            SGN = -1
    else

@@ -818,6 +818,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{1073D907-0C00-47E4-8E90-CD24AAF32416}"
         }
+        "table.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{6B02AB47-26A3-4180-850D-AE06587A05F7}"
+        }
         "toposort.f95"
         {
         "ProjRelPath" = "T"

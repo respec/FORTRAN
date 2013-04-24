@@ -191,7 +191,7 @@ integer function swmm_run(f1, f2, f3)
     character(*), intent(in) :: f1, f2, f3
     integer(kind=K4) :: newHour, oldHour
     integer(kind=K4) :: theDay, theHour
-    double precision :: elapsedTime
+    real(kind=dp) :: elapsedTime
     logical :: flag
 
     newHour = 0 ; oldHour = 0
@@ -337,7 +337,7 @@ integer function swmm_step(elapsedTime)
     use output
     use report
     implicit none
-    double precision, intent(inout) :: elapsedTime
+    real(kind=dp), intent(inout) :: elapsedTime
     ! --- check that simulation can proceed
     if ( ErrorCode /=0 ) then
        swmm_step = ErrorCode
@@ -383,9 +383,9 @@ subroutine execRouting(elapsedTime)
     use headers
     use modRouting
     implicit none
-    double precision, intent(in) :: elapsedTime
-    double precision ::  nextRoutingTime          ! updated elapsed routing time (msec)
-    double precision ::  routingStep              ! routing time step (sec)
+    real(kind=dp), intent(in) :: elapsedTime
+    real(kind=dp) ::  nextRoutingTime          ! updated elapsed routing time (msec)
+    real(kind=dp) ::  routingStep              ! routing time step (sec)
     
 !#ifdef WINDOWS
 !    ! --- begin exception handling loop here

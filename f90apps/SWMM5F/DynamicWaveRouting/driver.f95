@@ -63,48 +63,50 @@ program main
       use output
       implicit none
        
-      integer, parameter :: NNODE = 3
-      integer, parameter :: NCOND = 2
+      integer, parameter :: NNODE = 10
+      integer, parameter :: NCOND = 9
       integer :: J, LTYPE, ITS, NTS, DTS, DELTS
       integer :: k !subindex for each node type
       integer :: CNODE1, CNODE2
       logical :: isOK
       
-      integer :: lErrorCode
+      integer :: lErrorCode, lN
       
-      real :: ROVOL, OVOL, VOLT, VOL, ROS, OS, RO, O
+      real(kind=dp) :: ROVOL, OVOL, VOLT, VOL, ROS, OS, RO, O
       
-      real, dimension(6) :: XN
-      double precision, dimension(6) :: XC
-      double precision, dimension(4) :: XX
-      real, dimension(NNODE) :: NDINIT = (/0.05, 0.05, 0.016/)
-      real, dimension(NNODE) :: NELEV = (/10.14, 10.14, 9.23/)
-      real, dimension(NNODE) :: NDMAX = (/11.14, 11.14, 10.23/)
-      real, dimension(NNODE) :: NDSURC = (/12.14, 12.14, 11.23/)
-      real, dimension(NNODE) :: NPONDA = (/0, 0, 0/)
+      real(kind=dp), dimension(6) :: XN
+      real(kind=dp), dimension(6) :: XC
+      real(kind=dp), dimension(4) :: XX
+      real(kind=dp), dimension(NNODE) :: NDINIT = (/0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
+      real(kind=dp), dimension(NNODE) :: NELEV = (/124.6,118.3,128.2,117.5,112.3,101.6,111.5,102.0,102.8,89.9 /)
+      real(kind=dp), dimension(NNODE) :: NDMAX = (/ 13.4, 16.7,  8.8, 12.5, 42.7,  9.4, 13.5, 18.0, 22.2, 0.0 /) 
+     !real, dimension(NNODE) :: NDMAX = (/138.0,135.0,137.0,130.0,155.0,111.0,125.0,120.0,125.0,99.0 /) 
+      real(kind=dp), dimension(NNODE) :: NDSURC = (/0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
+      real(kind=dp), dimension(NNODE) :: NPONDA = (/0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
 
-      real, dimension(NCOND) :: CLEN = (/10.14, 9.23/)
-      real, dimension(NCOND) :: CMANN = (/0.05, 0.016/)
-      real, dimension(NCOND) :: COFF1 = (/0.0, 0.0/)
-      real, dimension(NCOND) :: COFF2 = (/0.0, 0.0/)
-      real, dimension(NCOND) :: CQ0 = (/0.01, 0.01/)
+      real(kind=dp), dimension(NCOND) :: CLEN = (/ 1800, 2075, 5100, 3500, 4500, 5000, 500, 300, 5000 /)
+      real(kind=dp), dimension(NCOND) :: CMANN = (/ 0.015, 0.015, 0.015, 0.015, 0.016, 0.0154, 0.015, 0.015, 0.034 /)
+      real(kind=dp), dimension(NCOND) :: COFF1 = (/0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
+      real(kind=dp), dimension(NCOND) :: COFF2 = (/0.0, 2.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
+      real(kind=dp), dimension(NCOND) :: CQ0 = (/0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
       
-      integer, dimension(NCOND) :: CSHAPE = (/TRAPEZOIDAL, CIRCULAR/)
-      real, dimension(NCOND) :: CGEOM1 = (/3.0, 2.25/)
-      real, dimension(NCOND) :: CGEOM2 = (/5.0, 0.0/)
-      real, dimension(NCOND) :: CGEOM3 = (/5.0, 0.0/)
-      real, dimension(NCOND) :: CGEOM4 = (/5.0, 0.0/)
+      integer, dimension(NCOND) :: CSHAPE = (/ CIRCULAR, CIRCULAR, CIRCULAR, CIRCULAR, &
+                                           &TRAPEZOIDAL, CIRCULAR, CIRCULAR, TRAPEZOIDAL, CIRCULAR /) 
+      real(kind=dp), dimension(NCOND) :: CGEOM1 = (/4.0, 4.0, 4.5, 4.5, 9.0, 5.5, 6.0, 9.0, 5.0 /) 
+      real(kind=dp), dimension(NCOND) :: CGEOM2 = (/0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
+      real(kind=dp), dimension(NCOND) :: CGEOM3 = (/0.0, 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 3.0, 0.0 /)
+      real(kind=dp), dimension(NCOND) :: CGEOM4 = (/0.0, 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 3.0, 0.0 /)
       
       type(TExtInflow), dimension(NNODE-1), target :: inflows
-      double precision, dimension(NNODE-1) :: disFrac
-      real :: INVOL
+      real(kind=dp), dimension(NNODE-1) :: disFrac
+      real(kind=dp) :: INVOL
       
       UnitSystem = US
       
-      Nobjects(E_NODE) = 3
+      Nobjects(E_NODE) = 10
       Nnodes(E_OUTFALL) = 1
-      Nobjects(LINK) = 2
-      Nlinks(E_CONDUIT) = 2
+      Nobjects(LINK) = 9
+      Nlinks(E_CONDUIT) = 9
       
       Nobjects(E_GAGE) = 0 !I think it will need some rain???
       Nobjects(E_POLLUT) = 0 !assume 6 pollutants maximum in objects.f95
@@ -132,14 +134,14 @@ program main
         else if (LTYPE == E_OUTFALL) then
            k = 1 ! only one outfall
            XN(1) = NELEV(J)
-           XN(2) = FIXED_OUTFALL !outfall type, the easiest at this point
+           XN(2) = FREE_OUTFALL !outfall type (could be problem)
            XN(3) = NDINIT(J) + NELEV(J) !fixedStage
            XN(4) = 0 !tideCurve, index of tidal stage curve
            XN(5) = 0 !stageSeries, index of outfall stage time series
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
         call node_setParams(J, LTYPE, k, XN)
-        Node(J)%rptFlag = .true. !this is was done in report_readoption
+        Node(J)%rptFlag = .true. !this is done in report_readoption
  10   CONTINUE
 
       !TODO: both conduits or first conduit and second: weir or outlet???
@@ -152,14 +154,36 @@ program main
         XC(5) = CQ0(J)
         XC(6) = 0.0
         
-        !hard code nodal schema
-        if (J == 1) then
-           CNODE1 = 1
-           CNODE2 = 2
-        else
-           CNODE1 = 2
-           CNODE2 = 3
-        end if
+        !hard code nodal-link schema
+        select case (J)
+          case (1)
+             CNODE1 = 1
+             CNODE2 = 2
+          case (2)
+             CNODE1 = 2
+             CNODE2 = 5
+          case (3)
+             CNODE1 = 3
+             CNODE2 = 4
+          case (4)
+             CNODE1 = 4
+             CNODE2 = 7
+          case (5)
+             CNODE1 = 6
+             CNODE2 = 10
+          case (6)
+             CNODE1 = 7
+             CNODE2 = 8
+          case (7)
+             CNODE1 = 9
+             CNODE2 = 8
+          case (8)
+             CNODE1 = 8
+             CNODE2 = 6
+          case (9)
+             CNODE1 = 5
+             CNODE2 = 9
+        end select
         call link_setParams(J, LTYPE, CNODE1, CNODE2, J, XC)
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
@@ -168,36 +192,43 @@ program main
         
         !call xsect_setParams(J, CSHAPE(J), 1, XX, 0.0)   !haven't quite understood this yet, this is for outlet link
         isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), XX, UCF(LENGTH))   !for normal conduit
-        arrLink(J)%rptFlag = .true. !this is was done in report_readoption
+        arrLink(J)%rptFlag = .true. !this is done in report_readoption
  20   CONTINUE
 
       !set options, ref: project.c->project_readOption()
       !the following could be incorporated into setDefaults() routine above
       
       RouteModel = DW
-      StartDate = datetime_encodeDate(2013, 3, 12) !datetime_strToDate
-      StartTime = datetime_encodeTime(3, 0, 0) !datetime_strToTime
+      StartDate = datetime_encodeDate(2002, 1, 1) !datetime_strToDate
+      StartTime = datetime_encodeTime(0, 0, 0) !datetime_strToTime
       
-      EndDate = datetime_encodeDate(2013, 3, 12) !datetime_strToDate
-      EndTime = datetime_encodeTime(4, 0, 0) !datetime_strToTime
+      EndDate = datetime_encodeDate(2002, 1, 1) !datetime_strToDate
+      EndTime = datetime_encodeTime(8, 0, 0) !datetime_strToTime
       
-      !ReportStartDate = datetime_encodeDate(ryr, rmon, rday)
+!      ReportStartDate = datetime_encodeDate(ryr, rmon, rday)
 !      ReportStartTime = datetime_encodeTime(rhr, rmin, rsec)
       
       StartDryDays = 0 !number of antecedent dry days
       
-      InertDamping = w_NONE !InertDampingWords, w_PARTIAL, w_FULL
-      
-      AllowPonding    = .true.
+      AllowPonding    = .false.
       SlopeWeighting  = .true.
-      SkipSteadyState = .true.
+      SkipSteadyState = .false. !could be problem
       IgnoreRainfall  = .false.
       IgnoreSnowmelt  = .true.
       IgnoreGwater    = .true.
       IgnoreRouting   = .false.
       IgnoreQuality   = .true.
+      InertDamping = NO_DAMPING !InertDampingWords, w_PARTIAL, w_FULL
+      NormalFlowLtd = SLOPE !NormalFlowType !0, means NO
+
+      !set routing step size in seconds
+      WetStep         = 900              ! Runoff wet time step (secs)
+      DryStep         = 3600             ! Runoff dry time step (secs)
+      !RouteStep       = 300.0            ! Routing time step (secs)
+      RouteStep       = 20.0 !<-- change here
+      ReportStep      = 900              ! Reporting time step (secs)
+      StartDryDays    = 0.0              ! Antecedent dry days, DRY_DAYS
       
-      NormalFlowLtd = SLOPE !NormalFlowType
       
       ForceMainEqn = D_W !ForceMainType
       
@@ -205,7 +236,7 @@ program main
       
       Compatibility = SWMM5
       !RouteStep is set to 5 minutes in setDefault()
-      LengtheningStep = MAX(0.0, RouteStep) !if 0, then no lengthening of conduit for DW routing
+      !LengtheningStep = MAX(0.0, RouteStep) !if 0, then no lengthening of conduit for DW routing
       
       ! --- safety factor applied to variable time step estimates under
       !     dynamic wave flow routing (value of 0 indicates that variable
@@ -217,7 +248,7 @@ program main
       MinSurfArea = 0.0
       
       !minimum conduit slope, needs to be >= 0.0 and < 1; SWMM input file enters %
-      MinSlope = 0.05
+      MinSlope = 0 !0.05
       
       TmpDir = 'C:\Temp'
       
@@ -239,18 +270,62 @@ program main
 !    allocate(inflows(NNODE))
 !    if (allocated(inflows)) then
 !    end if
-    INVOL = 100.0 !cfs in flow in the first upstream node
-    disFrac = (/0.5, 0.5/)
+!    INVOL = 100.0 !cfs in flow in the first upstream node
+!    disFrac = (/0.5, 0.5/)
+!    
+    allocate(oTsers(3))
+    do J=1, 3
+      oTsers(J)%datatype = E_TSERIES
+      allocate(oTsers(J)%odates(5))
+      allocate(oTsers(J)%ovalues(5))
+      if (associated(oTsers(J)%odates) .and. &
+         &associated(oTsers(J)%ovalues)) then
+         oTsers(J)%odates(1) = StartDate + StartTime
+         oTsers(J)%odates(2) = oTsers(J)%odates(1) + 0.25 / 24.0
+         oTsers(J)%odates(3) = oTsers(J)%odates(1) + 3.00 / 24.0
+         oTsers(J)%odates(4) = oTsers(J)%odates(1) + 3.25 / 24.0
+         oTsers(J)%odates(5) = oTsers(J)%odates(1) + 12.0 / 24.0
+         oTsers(J)%ovalues(1) = 0.0
+         oTsers(J)%ovalues(4) = 0.0
+         oTsers(J)%ovalues(5) = 0.0
+         select case (J)
+           case (1)
+             oTsers(J)%ovalues(2) = 40.0
+             oTsers(J)%ovalues(3) = 40.0
+           case (2)
+             oTsers(J)%ovalues(2) = 45.0
+             oTsers(J)%ovalues(3) = 45.0
+           case (3)
+             oTsers(J)%ovalues(2) = 50.0
+             oTsers(J)%ovalues(3) = 50.0
+         end select
+      end if
+    end do
+    
     do J = 1, NNODE - 1
        inflows(J)%param = -1 !flow
        inflows(J)%datatype = FLOW_INFLOW !or EXTERNAL_INFLOW, user-supplied external inflow
-       inflows(J)%tseries = J
+       !inflows(J)%tseries = J
+       select case (J)
+         case (1)
+           inflows(J)%tseries = 2
+         case (3)
+           inflows(J)%tseries = 3
+         case (5)
+           inflows(J)%tseries = 1
+         case default
+           inflows(J)%tseries = -1
+       end select
        inflows(J)%basePat = 1
        inflows(J)%cFactor = 1.0
        inflows(J)%sFactor = 1.0
-       inflows(J)%baseline = INVOL * disFrac(J)
+       inflows(J)%baseline = 0.0
        nullify(inflows(J)%next)
-       Node(J)%extInflow => inflows(J)
+       if (j.eq.1 .or. j.eq.3 .or. j.eq.5) then
+          Node(J)%extInflow => inflows(J)
+       else
+          Nullify(Node(J)%extInflow)
+       end if
     end do
       
 !      NTS = DELTS/DTS
@@ -264,8 +339,6 @@ program main
 !      lErrorCode = swmm_start(.true.)
 !      if (ErrorCode /= 0) stop
 
-      !set routing step size in seconds
-      RouteStep       = 300.0 !<-- change here
       lErrorCode = swmm_run('', '', '')
       
       !The resulting nodes' and links' flow, depth, and volume outputs are
@@ -276,12 +349,42 @@ program main
       !  onodes(2)%odepth(4)
       !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
       !  olinks(1)%oflow(3)
-      do J=1, OutputSize
+!      do J=1, OutputSize
 !         write(*,*) TSDateTime(J), ",", TSOutletVals(J)
-         write(*,*) TSDateTime(J), ",", onodes(1)%oflow(J), ",", onodes(2)%odepth(J), ",", onodes(3)%ovolume(J)
-         write(*,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",", olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
+!         write(*,*) TSDateTime(J), ",", onodes(1)%oflow(J), ",", onodes(2)%odepth(J), ",", onodes(3)%ovolume(J)
+!         write(*,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",", olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
+!      end do
+      open(8, file='swmm5fout.txt', status='replace')
+      write(8,*) '****************************'
+      write(8,*) '*      Node Outputs        *'
+      write(8,*) '****************************'
+      write(8,'(1A5,1A15,3A20)') 'Node', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      do lN=1, NNODE
+        do J=1, OutputSize
+          if (TSDateTime(J) > 0.0 .or. &
+             &onodes(lN)%oflow(J) > 0.0 .or. &
+             &onodes(lN)%odepth(J) > 0.0 .or. &
+             &onodes(lN)%ovolume(J) > 0.0) then
+             write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), onodes(lN)%oflow(J), onodes(lN)%odepth(J), onodes(lN)%ovolume(J)
+          end if
+        end do
       end do
-      
+      write(8,*) ''
+      write(8,*) '****************************'
+      write(8,*) '*      Link Outputs        *'
+      write(8,*) '****************************'
+      write(8,'(1A5,1A15,3A20)') 'Link', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      do lN=1, NCOND
+        do J=1, OutputSize
+          if (TSDateTime(J) > 0 .or. &
+             &olinks(lN)%oflow(J) > 0 .or. &
+             &olinks(lN)%odepth(J) > 0 .or. &
+             &olinks(lN)%ovolume(J) > 0) then
+             write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), olinks(lN)%oflow(J), olinks(lN)%odepth(J), olinks(lN)%ovolume(J)
+          end if
+        end do
+      end do
+      close(8)
       call output_close
       STOP
 !

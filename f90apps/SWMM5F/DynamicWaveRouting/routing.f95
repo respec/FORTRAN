@@ -1,9 +1,11 @@
 module modRouting
+use DataSizeSpecs
+
 !-----------------------------------------------------------------------------
 !     Constants 
 !-----------------------------------------------------------------------------
-double precision, parameter :: LATERAL_FLOW_TOL = 0.5  ! for steady state (cfs)         !(5.0.012 - LR)
-double precision, parameter :: FLOW_ERR_TOL = 0.05     ! for steady state               !(5.0.012 - LR)
+real(kind=dp), parameter :: LATERAL_FLOW_TOL = 0.5  ! for steady state (cfs)         !(5.0.012 - LR)
+real(kind=dp), parameter :: FLOW_ERR_TOL = 0.05     ! for steady state               !(5.0.012 - LR)
 
 !-----------------------------------------------------------------------------
 ! Shared variables
@@ -12,6 +14,37 @@ integer, save, dimension(:), allocatable :: SortedLinks
 logical, save ::  InSteadyState
 
 contains
+
+!=============================================================================
+
+subroutine removeOutflows()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: finds flows that leave the system and adds these to mass
+!           balance totals.
+!
+    use headers
+    use modMassbal
+    implicit none
+    integer :: i, p
+    integer :: isFlooded
+    real(kind=dp) :: q, w
+    
+    real(kind=dp) :: node_getSystemOutflow
+
+    do i =1, Nobjects(E_NODE)
+        ! --- determine flows leaving the system
+        q = node_getSystemOutflow(i, isFlooded)
+        if ( q /= 0.0 ) then
+            call massbal_addOutflowFlow(q, isFlooded)
+            do p =1, Nobjects(E_POLLUT)
+                w = q * Node(i)%newQual(p)
+                call massbal_addOutflowQual(p, w, isFlooded)
+            end do
+        end if
+    end do
+end subroutine removeOutflows
 
 !!=============================================================================
 !
@@ -26,9 +59,9 @@ subroutine addExternalInflows(currentDate)
     use modMassbal
     implicit none
     
-    double precision, intent(in) :: currentDate
+    real(kind=dp), intent(in) :: currentDate
     integer :: j, p
-    double precision :: q, w
+    real(kind=dp) :: q, w
     
     type(TExtInflow), pointer :: inflow
 
@@ -85,7 +118,7 @@ end subroutine addExternalInflows
 
 !=============================================================================
 
-double precision function routing_getRoutingStep(routingModel, fixedStep)
+real(kind=dp) function routing_getRoutingStep(routingModel, fixedStep)
 !
 !  Input:   routingModel = routing method code
 !           fixedStep = user-supplied time step (sec)
@@ -95,9 +128,9 @@ double precision function routing_getRoutingStep(routingModel, fixedStep)
     use headers
     implicit none
     integer, intent(in) :: routingModel
-    double precision, intent(in) :: fixedStep
+    real(kind=dp), intent(in) :: fixedStep
     
-    double precision :: flowrout_getRoutingStep
+    real(kind=dp) :: flowrout_getRoutingStep
     
     if ( Nobjects(LINK) == 0 ) then
         routing_getRoutingStep = fixedStep
@@ -189,12 +222,12 @@ subroutine routing_execute(routingModel, routingStep)
     implicit none
     
     integer, intent(in) :: routingModel
-    double precision, intent(in) :: routingStep
+    real(kind=dp), intent(in) :: routingStep
     integer ::      j
     integer ::      mstepCount
     integer ::      actionCount
-    double precision :: currentDate
-    double precision :: stepFlowError                                                    !(5.0.012 - LR)
+    real(kind=dp) :: currentDate
+    real(kind=dp) :: stepFlowError                                                    !(5.0.012 - LR)
     
     integer :: flowrout_execute !TODO: this is for .NET compile
     mstepCount = 1
@@ -278,7 +311,7 @@ subroutine routing_execute(routingModel, routingStep)
 
         ! --- route flow through the drainage network
         if ( Nobjects(LINK) > 0 ) then
-            stepCount = flowrout_execute(Nobjects(LINK), SortedLinks, routingModel, routingStep)
+            mstepCount = flowrout_execute(SortedLinks, routingModel, routingStep)
         end if
     end if
 
@@ -289,7 +322,7 @@ subroutine routing_execute(routingModel, routingStep)
 
     ! --- remove evaporation, infiltration & system outflows from nodes       !(5.0.015 - LR)
 !    call removeStorageLosses()                                                     !(5.0.019 - LR)
-!    call removeOutflows()
+    call removeOutflows()
 	
     ! --- update continuity with new totals
     !     applied over 1/2 of routing step
@@ -297,7 +330,7 @@ subroutine routing_execute(routingModel, routingStep)
 
     ! --- update summary statistics
     if ( RptFlags%flowStats .and. Nobjects(LINK) > 0 ) then
-        call stats_updateFlowStats(routingStep, currentDate, stepCount, InSteadyState)
+        call stats_updateFlowStats(routingStep, currentDate, mstepCount, InSteadyState)
     end if
 end subroutine routing_execute
 
@@ -318,7 +351,7 @@ logical function systemHasChanged(routingModel)
     implicit none
     integer, intent(in) :: routingModel
     integer :: j                                                       !(5.0.012 - LR)
-    double precision :: diff
+    real(kind=dp) :: diff
 
     ! --- check if external inflows or outflows have changed           !(5.0.012 - LR)
     do j=1,Nobjects(E_NODE)

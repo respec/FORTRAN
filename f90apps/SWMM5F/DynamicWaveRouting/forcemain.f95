@@ -14,11 +14,12 @@ module forcemain
 !
 !#include <math.h>
 !#include "headers.h"
+use DataSizeSpecs
 
 !-----------------------------------------------------------------------------
 !  Constants
 !-----------------------------------------------------------------------------
-double precision, parameter :: VISCOS = 1.1E-5   ! Kinematic viscosity of water
+real(kind=dp), parameter :: VISCOS = 1.1E-5   ! Kinematic viscosity of water
 !                                       ! @ 20 deg C (sq ft/sec)
 
 !-----------------------------------------------------------------------------
@@ -36,7 +37,7 @@ double precision, parameter :: VISCOS = 1.1E-5   ! Kinematic viscosity of water
 contains
 !=============================================================================
 
-double precision function forcemain_getEquivN(j, k)
+real(kind=dp) function forcemain_getEquivN(j, k)
 !
 !  Input:   j = link index
 !           k = conduit index
@@ -51,10 +52,10 @@ double precision function forcemain_getEquivN(j, k)
     integer, intent(in) :: j
     integer(kind=K4), intent(in) :: k
     
-    double precision :: lVal
+    real(kind=dp) :: lVal
     
     !TXsect xsect = arrLink(j)%xsect
-    double precision :: f, d
+    real(kind=dp) :: f, d
     d = arrLink(j)%xsect%yFull
     select case ( ForceMainEqn )
       case (H_W)
@@ -71,7 +72,7 @@ end function forcemain_getEquivN
 !
 !=============================================================================
 
-double precision function forcemain_getRoughFactor(j, lengthFactor)
+real(kind=dp) function forcemain_getRoughFactor(j, lengthFactor)
 !
 !  Input:   j = link index
 !           lengthFactor = factor by which a pipe will be artifically lengthened
@@ -82,9 +83,9 @@ double precision function forcemain_getRoughFactor(j, lengthFactor)
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: lengthFactor
+    real(kind=dp), intent(in) :: lengthFactor
     !TXsect xsect = arrLink(j)%xsect
-    double precision :: r
+    real(kind=dp) :: r
     select case ( ForceMainEqn )
       case (H_W)
         r = 1.318 * arrLink(j)%xsect%rBot * (lengthFactor ** 0.54)
@@ -99,7 +100,7 @@ end function forcemain_getRoughFactor
 !
 !=============================================================================
 
-double precision function forcemain_getFricSlope(j, v, hrad)
+real(kind=dp) function forcemain_getFricSlope(j, v, hrad)
 !
 !  Input:   j = link index
 !           v = flow velocity (ft/sec)
@@ -114,8 +115,8 @@ double precision function forcemain_getFricSlope(j, v, hrad)
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: v, hrad
-    double precision :: re, f
+    real(kind=dp), intent(in) :: v, hrad
+    real(kind=dp) :: re, f
     !type(TXsect) :: xsect = arrLink(j)%xsect
     select case ( ForceMainEqn )
       case (H_W)
@@ -132,7 +133,7 @@ end function forcemain_getFricSlope
 !
 !=============================================================================
 
-double precision function forcemain_getReynolds(v, hrad)
+real(kind=dp) function forcemain_getReynolds(v, hrad)
 !
 !  Input:   v = flow velocity (ft/sec)
 !           hrad = hydraulic radius (ft)
@@ -141,13 +142,13 @@ double precision function forcemain_getReynolds(v, hrad)
 !
     use headers
     implicit none
-    double precision, intent(in) :: v, hrad
+    real(kind=dp), intent(in) :: v, hrad
     forcemain_getReynolds = 4.0 * hrad * v / VISCOS
 end function forcemain_getReynolds 
 !    
 !=============================================================================
 
-double precision recursive function forcemain_getFricFactor(e, hrad, re) result(f)
+real(kind=dp) recursive function forcemain_getFricFactor(e, hrad, re) result(f)
 !
 !  Input:   e = roughness height (ft)
 !           hrad = hydraulic radius (ft)
@@ -160,8 +161,8 @@ double precision recursive function forcemain_getFricFactor(e, hrad, re) result(
     use headers
     implicit none
     
-    double precision, intent(in) :: e, hrad, re
-    double precision :: mre
+    real(kind=dp), intent(in) :: e, hrad, re
+    real(kind=dp) :: mre
     mre = re
     if ( mre < 10.0 ) mre = 10.0
     if ( mre <= 2000.0 ) then
