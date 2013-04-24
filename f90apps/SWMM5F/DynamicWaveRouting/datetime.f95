@@ -8,9 +8,9 @@ module modDateTime
 !   Date:     6/19/07   (Build 5.0.010)
 !   Author:   L. Rossman
 !
-!   double precision functions.
+!   real(kind=dp) functions.
 !-----------------------------------------------------------------------------
-
+use DataSizeSpecs
 !typedef double DateTime;
 
 integer, parameter :: Y_M_D = 0
@@ -32,7 +32,7 @@ integer, dimension(12, 2), parameter :: DaysPerMonth = &     ! days per month
              &31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31/), &             ! leap years
              & (/12, 2/))
 integer, parameter :: DateDelta = 693594        ! days since 01/01/00
-double precision, parameter :: SecsPerDay = 86400.    ! seconds per day
+real(kind=dp), parameter :: SecsPerDay = 86400.    ! seconds per day
 
 !-----------------------------------------------------------------------------
 !  Shared variables
@@ -110,13 +110,13 @@ end function datetime_findMonth
 
 !=============================================================================
 
-double precision function datetime_encodeDate( year,  month,  day)
+real(kind=dp) function datetime_encodeDate( year,  month,  day)
 
 !  Input:   year = a year
 !           month = a month (1 to 12)
 !           day = a day of month
 !  Output:  returns encoded value of year-month-day
-!  Purpose: encodes year-month-day to a double precision value.
+!  Purpose: encodes year-month-day to a real(kind=dp) value.
 
     implicit none
     integer, intent(in) :: year, month, day
@@ -130,7 +130,7 @@ double precision function datetime_encodeDate( year,  month,  day)
     & (month <= 12) .and. &
     & (mday >= 1) .and. &
     & (mday <= DaysPerMonth(month, i))) then
-        do j = 1, month
+        do j = 1, month - 2
            mday = mday + DaysPerMonth(j, i)
         end do
         i = year - 1
@@ -143,13 +143,13 @@ end function datetime_encodeDate
 
 !=============================================================================
 
-double precision function datetime_encodeTime( hour,  minute,  second)
+real(kind=dp) function datetime_encodeTime( hour,  minute,  second)
 
 !  Input:   hour = hour of day (0-24)
 !           minute = minute of hour (0-60)
 !           second = seconds of minute (0-60)
 !  Output:  returns time encoded as fractional part of a day
-!  Purpose: encodes hour:minute:second to a double precision value
+!  Purpose: encodes hour:minute:second to a real(kind=dp) value
 
     implicit none
     integer, intent(in) :: hour, minute, second
@@ -172,10 +172,10 @@ subroutine datetime_decodeDate(date, year, month, day)
 !  Output:  year = 4-digit year
 !           month = month of year (1-12)
 !           day   = day of month
-!  Purpose: decodes double precision value to year-month-day.
+!  Purpose: decodes real(kind=dp) value to year-month-day.
 
     implicit none
-    double precision, intent(in) :: date
+    real(kind=dp), intent(in) :: date
     integer, intent(inout) :: year, month, day
     
     integer ::  D1, D4, D100, D400
@@ -235,10 +235,10 @@ subroutine datetime_decodeTime(time, h, m, s)
 !  Output:  h = hour of day (0-24)
 !           m = minute of hour (0-60)
 !           s = second of minute (0-60)
-!  Purpose: decodes double precision value to hour:minute:second.
+!  Purpose: decodes real(kind=dp) value to hour:minute:second.
 
     implicit none
-    double precision, intent(in) :: time
+    real(kind=dp), intent(in) :: time
     integer, intent(inout) :: h, m, s
     integer :: secs
     integer :: mins
@@ -253,10 +253,10 @@ subroutine datetime_dateToStr(date, s)
 
 !  Input:   date = encoded date/time value
 !  Output:  s = formatted date string
-!  Purpose: represents double precision date value as a formatted string.
+!  Purpose: represents real(kind=dp) date value as a formatted string.
 
     implicit none
-    double precision, intent(in) :: date
+    real(kind=dp), intent(in) :: date
     character(*), intent(inout) :: s
     integer ::  y, m, d
     character(len=DATE_STR_SIZE) :: dateStr
@@ -295,10 +295,10 @@ subroutine datetime_timeToStr(time, s)
 
 !  Input:   time = decimal fraction of a day
 !  Output:  s = time in hr:min:sec format
-!  Purpose: represents double precision time value as a formatted string.
+!  Purpose: represents real(kind=dp) time value as a formatted string.
 
     implicit none
-    double precision, intent(in) :: time
+    real(kind=dp), intent(in) :: time
     character(*), intent(inout) :: s
     integer ::  hr, min, sec
     character(len=TIME_STR_SIZE) :: timeStr
@@ -338,11 +338,11 @@ integer function datetime_strToDate(s, d)
 !  Input:   s = date as string
 !  Output:  d = encoded date
 !           returns 1 if conversion successful, 0 if not
-!  Purpose: converts string date s to double precision value.
+!  Purpose: converts string date s to real(kind=dp) value.
 !
     implicit none
     character(*), intent(in) :: s
-    double precision, intent(inout) :: d
+    real(kind=dp), intent(inout) :: d
     
     integer ::  yr, mon, day, n, stat
     character(4) :: month
@@ -419,11 +419,11 @@ integer function datetime_strToTime(s, t)
 !  Input:   s = time as string
 !  Output:  t = encoded time,
 !           returns 1 if conversion successful, 0 if not
-!  Purpose: converts a string time to a double precision value.
+!  Purpose: converts a string time to a real(kind=dp) value.
 
     implicit none
     character(*), intent(in) :: s
-    double precision, intent(inout) :: t
+    real(kind=dp), intent(inout) :: t
     
     integer ::  n, hr, min, sec, stat
     min = 0
@@ -462,7 +462,7 @@ end subroutine datetime_setDateFormat
 
 !=============================================================================
 
-double precision function datetime_addSeconds(date1, seconds)
+real(kind=dp) function datetime_addSeconds(date1, seconds)
 
 !  Input:   date1 = an encoded date/time value
 !           seconds = number of seconds to add to date1
@@ -470,9 +470,9 @@ double precision function datetime_addSeconds(date1, seconds)
 !  Purpose: adds a given number of seconds to a date/time.
 
     implicit none
-    double precision, intent(in) :: date1, seconds
+    real(kind=dp), intent(in) :: date1, seconds
     integer :: h, m, s
-    double precision :: d
+    real(kind=dp) :: d
     d = floor(date1)
     call datetime_decodeTime(date1, h, m, s)
     datetime_addSeconds = d + (3600.0*h + 60.0*m + s + seconds)/SecsPerDay
@@ -481,7 +481,7 @@ end function datetime_addSeconds
 
 !=============================================================================
 
-double precision function datetime_addDays(date1, date2)
+real(kind=dp) function datetime_addDays(date1, date2)
 
 !  Input:   date1 = an encoded date/time value
 !           date2 = decimal days to be added to date1
@@ -489,8 +489,8 @@ double precision function datetime_addDays(date1, date2)
 !  Purpose: adds a given number of decimal days to a date/time.
 
     implicit none
-    double precision, intent(in) :: date1, date2
-    double precision :: d1, d2
+    real(kind=dp), intent(in) :: date1, date2
+    real(kind=dp) :: d1, d2
     integer :: h1, m1, s1
     integer :: h2, m2, s2
     
@@ -513,8 +513,8 @@ integer(kind=SELECTED_INT_KIND(8)) function datetime_timeDiff( date1, date2)
 !  Purpose: finds number of seconds between two dates.
 
     implicit none
-    double precision, intent(in) :: date1, date2
-    double precision :: d1, d2
+    real(kind=dp), intent(in) :: date1, date2
+    real(kind=dp) :: d1, d2
     integer ::    h, m, s
     integer(kind=SELECTED_INT_KIND(8)) ::   s1, s2, secs
     d1 = floor(date1)
@@ -539,7 +539,7 @@ integer function datetime_monthOfYear(date)
 !  Purpose: finds month of year (Jan = 1 ...) for a given date.
 
     implicit none
-    double precision, intent(in) :: date
+    real(kind=dp), intent(in) :: date
     integer :: year, month, day
     call datetime_decodeDate(date, year, month, day)
     datetime_monthOfYear = month
@@ -554,9 +554,9 @@ integer function datetime_dayOfYear(date)
 !  Purpose: finds day of year (Jan 1 = 1) for a given date.
 
     implicit none
-    double precision, intent(in) :: date
+    real(kind=dp), intent(in) :: date
     integer :: year, month, day
-    double precision :: startOfYear
+    real(kind=dp) :: startOfYear
     call datetime_decodeDate(date, year, month, day)
     startOfYear = datetime_encodeDate(year, 1, 1)
     datetime_dayOfYear = int(floor(date - startOfYear)) + 1
@@ -571,7 +571,7 @@ integer function datetime_dayOfWeek(date)
 !  Purpose: finds day of week (Sun = 1, ... Sat = 7) for a given date.
 
     implicit none
-    double precision, intent(in) :: date
+    real(kind=dp), intent(in) :: date
     integer :: t
     t = int(floor(date)) + DateDelta
     datetime_dayOfWeek = mod(t, 7) + 1
@@ -586,7 +586,7 @@ integer function datetime_hourOfDay(date)
 !  Purpose: finds hour of day (0 = 12 AM, ..., 23 = 11 PM) for a given date.
 
     implicit none
-    double precision, intent(in) :: date
+    real(kind=dp), intent(in) :: date
     integer :: hour, min, sec
     call datetime_decodeTime(date, hour, min, sec)
     datetime_hourOfDay = hour
@@ -621,9 +621,9 @@ end function datetime_daysPerMonth
 !  Purpose: finds calendar date/time value for elapsed milliseconds of
 !           simulation time.
 
-double precision function getDateTime(aStartDateTime, elapsedSec)
+real(kind=dp) function getDateTime(aStartDateTime, elapsedSec)
      implicit none
-     double precision, intent(in) :: aStartDateTime, elapsedSec
+     real(kind=dp), intent(in) :: aStartDateTime, elapsedSec
      getDateTime = datetime_addSeconds(aStartDateTime, elapsedSec/1000.0)
 end function getDateTime
 

@@ -1,5 +1,6 @@
 modXsect;C:\f90apps\SWMM5F\DynamicWaveRouting\xsect.f95;1
 modToposort;C:\f90apps\SWMM5F\DynamicWaveRouting\toposort.f95;1
+modTable;C:\f90apps\SWMM5F\DynamicWaveRouting\table.f95;1
 swmm5futil;C:\f90apps\SWMM5F\DynamicWaveRouting\swmm5futil.f95;1
 swmm5f;C:\f90apps\SWMM5F\DynamicWaveRouting\swmm5f.f95;1
 modStats;C:\f90apps\SWMM5F\DynamicWaveRouting\stats.f95;1

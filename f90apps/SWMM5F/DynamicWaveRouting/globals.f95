@@ -81,34 +81,34 @@ integer :: ReportStep               ! Reporting time step (sec)
 integer :: SweepStart               ! Day of year when sweeping starts
 integer :: SweepEnd                 ! Day of year when sweeping ends
 
-double precision :: RouteStep                ! Routing time step (sec)
-double precision :: LengtheningStep          ! Time step for lengthening (sec)
-double precision :: StartDryDays             ! Antecedent dry days
-double precision :: CourantFactor            ! Courant time step factor
-double precision :: MinSurfArea              ! Minimum nodal surface area
-double precision :: MinSlope                 ! Minimum conduit slope
-double precision :: RunoffError              ! Runoff continuity error
-double precision :: GwaterError              ! Groundwater continuity error
-double precision :: FlowError                ! Flow routing error
-double precision :: QualError                ! Quality routing error
+real(kind=dp) :: RouteStep                ! Routing time step (sec)
+real(kind=dp) :: LengtheningStep          ! Time step for lengthening (sec)
+real(kind=dp) :: StartDryDays             ! Antecedent dry days
+real(kind=dp) :: CourantFactor            ! Courant time step factor
+real(kind=dp) :: MinSurfArea              ! Minimum nodal surface area
+real(kind=dp) :: MinSlope                 ! Minimum conduit slope
+real(kind=dp) :: RunoffError              ! Runoff continuity error
+real(kind=dp) :: GwaterError              ! Groundwater continuity error
+real(kind=dp) :: FlowError                ! Flow routing error
+real(kind=dp) :: QualError                ! Quality routing error
 
 !EXTERN DateTime !TODO: need to deal with this DateTime with HSPF's
-double precision :: StartDate                ! Starting date
-double precision :: StartTime                ! Starting time
-double precision :: StartDateTime            ! Starting Date+Time
-double precision :: EndDate                  ! Ending date
-double precision :: EndTime                  ! Ending time
-double precision :: EndDateTime              ! Ending Date+Time
-double precision :: ReportStartDate          ! Report start date
-double precision :: ReportStartTime          ! Report start time
-double precision :: ReportStart              ! Report start Date+Time
+real(kind=dp) :: StartDate                ! Starting date
+real(kind=dp) :: StartTime                ! Starting time
+real(kind=dp) :: StartDateTime            ! Starting Date+Time
+real(kind=dp) :: EndDate                  ! Ending date
+real(kind=dp) :: EndTime                  ! Ending time
+real(kind=dp) :: EndDateTime              ! Ending Date+Time
+real(kind=dp) :: ReportStartDate          ! Report start date
+real(kind=dp) :: ReportStartTime          ! Report start time
+real(kind=dp) :: ReportStart              ! Report start Date+Time
 !
-double precision :: ReportTime               ! Current reporting time (msec)
-double precision :: OldRunoffTime            ! Previous runoff time (msec)
-double precision :: NewRunoffTime            ! Current runoff time (msec)
-double precision :: OldRoutingTime           ! Previous routing time (msec)
-double precision :: NewRoutingTime           ! Current routing time (msec)
-double precision :: TotalDuration            ! Simulation duration (msec)
+real(kind=dp) :: ReportTime               ! Current reporting time (msec)
+real(kind=dp) :: OldRunoffTime            ! Previous runoff time (msec)
+real(kind=dp) :: NewRunoffTime            ! Current runoff time (msec)
+real(kind=dp) :: OldRoutingTime           ! Previous routing time (msec)
+real(kind=dp) :: NewRoutingTime           ! Current routing time (msec)
+real(kind=dp) :: TotalDuration            ! Simulation duration (msec)
 
 type(TTemp) :: Temp                     ! Temperature data
 type(TEvap) :: Evap                     ! Evaporation data
@@ -146,6 +146,6 @@ type(TShape), dimension(:), allocatable ::     Shape                    ! Array 
 !  Shared variables used only in node.f95
 !-----------------------------------------------------------------------------                  
 integer ::  Kstar                  ! storage unit index
-double precision :: Vstar                  ! storage unit volume (ft3)
+real(kind=dp) :: Vstar                  ! storage unit volume (ft3)
 
 end module

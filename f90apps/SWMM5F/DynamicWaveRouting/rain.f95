@@ -73,11 +73,11 @@ integer ::        Condition                  ! rainfall condition code
 integer ::        TimeOffset                 ! time offset of rainfall reading (sec)
 integer ::        RainType                   ! rain measurement type code
 integer ::        Interval                   ! rain measurement interval (sec)
-double precision ::     UnitsFactor                ! units conversion factor
-double precision ::      RainAccum                  ! rainfall depth accumulation
+real(kind=dp) ::     UnitsFactor                ! units conversion factor
+real(kind=dp) ::      RainAccum                  ! rainfall depth accumulation
 character(30) ::       StationID                 ! station ID appearing in rain file
-double precision ::   AccumStartDate             ! date when accumulation begins        !(5.0.010 - LR)
-double precision ::   PreviousDate               ! date of previous rainfall record     !(5.0.022 - LR)
+real(kind=dp) ::   AccumStartDate             ! date when accumulation begins        !(5.0.010 - LR)
+real(kind=dp) ::   PreviousDate               ! date of previous rainfall record     !(5.0.022 - LR)
 integer ::        GageIndex                  ! index of rain gage analyzed          !(5.0.022 - LR)
 integer ::        hasStationName             ! true if data contains station name   !(5.0.015 - LR)
 

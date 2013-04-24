@@ -23,8 +23,8 @@ use headers
 !-----------------------------------------------------------------------------
 !  Constants   
 !-----------------------------------------------------------------------------
-double precision, parameter :: MAX_RUNOFF_BALANCE_ERR = 10.0
-double precision, parameter :: MAX_FLOW_BALANCE_ERR   = 10.0
+real(kind=dp), parameter :: MAX_RUNOFF_BALANCE_ERR = 10.0
+real(kind=dp), parameter :: MAX_FLOW_BALANCE_ERR   = 10.0
 
 !-----------------------------------------------------------------------------
 !  Shared variables   
@@ -41,9 +41,9 @@ type(TRoutingTotals), dimension(:), allocatable ::  StepQualTotals  ! routed WQ 
 !-----------------------------------------------------------------------------
 !  Exportable variables
 !-----------------------------------------------------------------------------
-double precision, dimension(:), allocatable ::  NodeInflow              ! total inflow volume to each node (ft3)
-double precision, dimension(:), allocatable ::  NodeOutflow             ! total outflow volume from each node (ft3)
-double precision ::   TotalArea               ! total drainage area (ft2)
+real(kind=dp), dimension(:), allocatable ::  NodeInflow              ! total inflow volume to each node (ft3)
+real(kind=dp), dimension(:), allocatable ::  NodeOutflow             ! total outflow volume from each node (ft3)
+real(kind=dp) ::   TotalArea               ! total drainage area (ft2)
 
 !-----------------------------------------------------------------------------
 !  External functions (declared in funcs.h)
@@ -91,7 +91,7 @@ integer function massbal_open()
     
     integer :: j, n, lStat1, lStat2
 
-    !double precision :: gwater_getVolume, snow_getSnowCover, subcatch_getStorage
+    !real(kind=dp) :: gwater_getVolume, snow_getSnowCover, subcatch_getStorage
 
     ! --- initialize global continuity errors
     RunoffError = 0.0
@@ -257,7 +257,7 @@ subroutine massbal_report()
     use report
     implicit none
     integer ::    j
-    double precision :: gwArea
+    real(kind=dp) :: gwArea
     gwArea = 0.0
 
 !    if ( Nobjects(E_SUBCATCH) > 0 ) then
@@ -293,7 +293,7 @@ end subroutine massbal_report
 !
 !=============================================================================
 
-double precision function massbal_getBuildup(p)
+real(kind=dp) function massbal_getBuildup(p)
 !
 !  Input:   p = pollutant index
 !  Output:  returns total pollutant buildup (lbs or kg)
@@ -304,7 +304,7 @@ double precision function massbal_getBuildup(p)
     
     integer, intent(in) :: p
     integer ::    i, j
-    double precision :: load
+    real(kind=dp) :: load
     load = 0.0
 !    for (j=0 j<Nobjects(SUBCATCH) j++)
 !    {
@@ -403,7 +403,7 @@ subroutine massbal_addInflowFlow(aType, q)
     use headers
     implicit none
     integer(kind=k2), intent(in) :: aType
-    double precision, intent(in) :: q
+    real(kind=dp), intent(in) :: q
     select case (aType)
       case (DRY_WEATHER_INFLOW)
           StepFlowTotals%dwInflow = StepFlowTotals%dwInflow + q
@@ -454,7 +454,7 @@ subroutine massbal_addInflowQual(aType, p, w)
     implicit none
     integer(kind=k2), intent(in) :: aType 
     integer, intent(in) :: p
-    double precision, intent(in) :: w
+    real(kind=dp), intent(in) :: w
     
     if ( p < 0 .or. p >= Nobjects(E_POLLUT) ) return
     select case (aType)
@@ -473,41 +473,55 @@ end subroutine massbal_addInflowQual
 !
 !!=============================================================================
 !
-!void massbal_addOutflowFlow(double q, int isFlooded)
-!!
-!!  Input:   q = outflow flow rate (cfs)
-!!           isFlooded = TRUE if outflow represents internal flooding
-!!  Output:  none
-!!  Purpose: adds flow outflow over current time step to routing totals.
-!!
-!{
-!    if ( q >= 0.0 )
-!    {
-!        if ( isFlooded ) StepFlowTotals.flooding += q
-!        else             StepFlowTotals.outflow += q
-!    }
-!    else StepFlowTotals.exInflow -= q
-!}
+subroutine massbal_addOutflowFlow(q, isFlooded)
+!
+!  Input:   q = outflow flow rate (cfs)
+!           isFlooded = TRUE if outflow represents internal flooding
+!  Output:  none
+!  Purpose: adds flow outflow over current time step to routing totals.
+!
+    use headers
+    implicit none
+    real(kind=dp), intent(in) :: q
+    integer, intent(in) :: isFlooded
+    
+    if ( q >= 0.0 ) then
+        if ( isFlooded > 0 ) then
+            StepFlowTotals%flooding = StepFlowTotals%flooding + q
+        else
+            StepFlowTotals%outflow = StepFlowTotals%outflow + q
+        end if
+    else 
+        StepFlowTotals%exInflow = StepFlowTotals%exInflow - q
+    end if
+end subroutine massbal_addOutflowFlow
 !
 !!=============================================================================
 !
-!void massbal_addOutflowQual(int p, double w, int isFlooded)
-!!
-!!  Input:   p = pollutant index
-!!           w = mass outflow rate (mass/sec)
-!!           isFlooded = TRUE if outflow represents internal flooding
-!!  Output:  none
-!!  Purpose: adds pollutant outflow over current time step to routing totals.
-!!
-!{
-!    if ( p < 0 || p >= Nobjects(POLLUT) ) return
-!    if ( w >= 0.0 )
-!    {
-!        if ( isFlooded ) StepQualTotals(p).flooding += w
-!        else             StepQualTotals(p).outflow += w
-!    }
-!    else StepQualTotals(p).exInflow -= w
-!}
+subroutine massbal_addOutflowQual(p, w, isFlooded)
+!
+!  Input:   p = pollutant index
+!           w = mass outflow rate (mass/sec)
+!           isFlooded = TRUE if outflow represents internal flooding
+!  Output:  none
+!  Purpose: adds pollutant outflow over current time step to routing totals.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: p, isFlooded
+    real(kind=dp), intent(in) :: w
+        
+    if ( p < 0 .or. p >= Nobjects(E_POLLUT) ) return
+    if ( w >= 0.0 ) then
+        if ( isFlooded > 0 ) then
+            StepQualTotals(p)%flooding = StepQualTotals(p)%flooding + w
+        else
+            StepQualTotals(p)%outflow = StepQualTotals(p)%outflow + w
+        end if
+    else 
+        StepQualTotals(p)%exInflow = StepQualTotals(p)%exInflow - w
+    end if
+end subroutine massbal_addOutflowQual
 !
 !!=============================================================================
 !
@@ -547,7 +561,7 @@ subroutine massbal_updateRoutingTotals(tStep)
     use headers
     implicit none
     
-    double precision, intent(in) :: tStep
+    real(kind=dp), intent(in) :: tStep
     integer :: j
     FlowTotals%dwInflow = FlowTotals%dwInflow + StepFlowTotals%dwInflow * tStep
     FlowTotals%wwInflow = FlowTotals%wwInflow + StepFlowTotals%wwInflow * tStep
@@ -581,7 +595,7 @@ end subroutine massbal_updateRoutingTotals
 !
 !=============================================================================
 
-double precision function massbal_getStorage(isFinalStorage)
+real(kind=dp) function massbal_getStorage(isFinalStorage)
 !
 !  Input:   isFinalStorage = TRUE if at final time period
 !  Output:  returns storage volume used (ft3)
@@ -591,8 +605,8 @@ double precision function massbal_getStorage(isFinalStorage)
     implicit none
     logical, intent(in) :: isFinalStorage
     integer ::    j
-    double precision :: totalStorage
-    double precision :: nodeStorage
+    real(kind=dp) :: totalStorage
+    real(kind=dp) :: nodeStorage
     totalStorage = 0.0
     ! --- get volume in nodes                                                 !(5.0.017 - LR)
     do j =1, Nobjects(E_NODE)
@@ -803,7 +817,7 @@ end function massbal_getStorage
 !
 !!=============================================================================
 !
-double precision function massbal_getFlowError()
+real(kind=dp) function massbal_getFlowError()
 !
 !  Input:   none
 !  Output:  none
@@ -811,8 +825,8 @@ double precision function massbal_getFlowError()
 !
     use headers
     implicit none
-    double precision :: totalInflow
-    double precision :: totalOutflow
+    real(kind=dp) :: totalInflow
+    real(kind=dp) :: totalOutflow
 
     ! --- get final volume of nodes and links
     FlowTotals%finalStorage = massbal_getStorage(.TRUE.)
@@ -842,7 +856,7 @@ end function massbal_getFlowError
 !
 !!=============================================================================
 !
-double precision function massbal_getQualError()
+real(kind=dp) function massbal_getQualError()
 !
 !  Input:   none
 !  Output:  none
@@ -852,11 +866,11 @@ double precision function massbal_getQualError()
     use swmm5futil
     implicit none
     integer :: p                                                                  !(5.0.019 - LR)
-    double precision :: maxQualError
+    real(kind=dp) :: maxQualError
     !double finalStorage                                                     !(5.0.019 - LR)
-    double precision :: totalInflow
-    double precision :: totalOutflow
-    double precision :: cf
+    real(kind=dp) :: totalInflow
+    real(kind=dp) :: totalOutflow
+    real(kind=dp) :: cf
     maxQualError = 0.0
     ! --- analyze each pollutant
     do p =1, Nobjects(E_POLLUT)
@@ -949,7 +963,7 @@ end function massbal_getQualError
 !=============================================================================
 
 !!  New function added (as suggested by RED)  !!                           !(5.0.019 - LR)
-double precision function massbal_getStoredMass(p)
+real(kind=dp) function massbal_getStoredMass(p)
 !
 !  Input:   p = pollutant index
 !  Output:  returns mass of pollutant.
@@ -960,7 +974,7 @@ double precision function massbal_getStoredMass(p)
     
     integer, intent(in) :: p
     integer :: j
-    double precision :: storedMass
+    real(kind=dp) :: storedMass
     storedMass = 0.0
 
 !    ! --- get mass stored in nodes
@@ -979,7 +993,7 @@ end function massbal_getStoredMass
 !=============================================================================
 
 !!  New function added.  !!                                                !(5.0.012 - LR)
-double precision function massbal_getStepFlowError()
+real(kind=dp) function massbal_getStepFlowError()
 !
 !  Input:   none
 !  Output:  returns fractional difference between total inflow and outflow.
@@ -987,8 +1001,8 @@ double precision function massbal_getStepFlowError()
 !
     use headers
     implicit none
-    double precision :: totalInflow
-    double precision :: totalOutflow
+    real(kind=dp) :: totalInflow
+    real(kind=dp) :: totalOutflow
 
     ! --- compute % difference between total inflow and outflow
     totalInflow  = StepFlowTotals%dwInflow + &

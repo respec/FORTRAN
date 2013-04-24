@@ -24,9 +24,9 @@
 !-----------------------------------------------------------------------------
 !  Constants
 !-----------------------------------------------------------------------------
-!double precision, parameter :: OMEGA_FLOW   = 0.55    ! under-relaxation parameter
+!real(kind=dp), parameter :: OMEGA_FLOW   = 0.55    ! under-relaxation parameter
 !integer, parameter ::  MAXITER = 10      ! max. iterations for storage updating
-!double precision, parameter :: STOPTOL = 0.005   ! storage updating stopping tolerance
+!real(kind=dp), parameter :: STOPTOL = 0.005   ! storage updating stopping tolerance
 
 !-----------------------------------------------------------------------------
 !  External functions (declared in funcs.h)
@@ -106,7 +106,7 @@ end subroutine flowrout_close
 
 !=============================================================================
 
-double precision function flowrout_getRoutingStep( routingModel,  fixedStep)
+real(kind=dp) function flowrout_getRoutingStep( routingModel,  fixedStep)
 !
 !  Input:   routingModel = type of routing method used
 !           fixedStep = user-assigned max. routing step (sec)
@@ -120,7 +120,7 @@ double precision function flowrout_getRoutingStep( routingModel,  fixedStep)
     implicit none
     
     integer, intent(in) :: routingModel
-    double precision, intent(in) :: fixedStep
+    real(kind=dp), intent(in) :: fixedStep
     if ( routingModel == DW ) then
          flowrout_getRoutingStep = dynwave_getRoutingStep(fixedStep)
     else
@@ -146,15 +146,15 @@ integer function flowrout_execute(nl, links, routingModel, tStep)
     integer, intent(in) :: nl
     integer, dimension(nl), intent(in) :: links
     integer, intent(in) :: routingModel
-    double precision, intent(in) :: tStep
+    real(kind=dp), intent(in) :: tStep
     integer ::   i, j
     integer ::   n1                          ! upstream node of link
-    double precision :: qin                        ! link inflow (cfs)
-    double precision :: qout                       ! link outflow (cfs)
-    double precision :: mSteps                      ! computational step count
+    real(kind=dp) :: qin                        ! link inflow (cfs)
+    real(kind=dp) :: qout                       ! link outflow (cfs)
+    real(kind=dp) :: mSteps                      ! computational step count
         
     integer :: steadyflow_execute, kinwave_execute
-    double precision :: getLinkInflow
+    real(kind=dp) :: getLinkInflow
 
 !!  The code below was modified to initialize overflows.  !!               !(5.0.012 - LR)
     ! --- set overflows to drain any ponded water
@@ -229,7 +229,7 @@ subroutine validateTreeLayout()
     use report
     implicit none
     integer ::   j, node1, node2
-    double precision :: elev1, elev2
+    real(kind=dp) :: elev1, elev2
 
     ! --- check nodes
     do j = 1, Nobjects(E_NODE)
@@ -362,7 +362,7 @@ subroutine initNodeDepths()
     implicit none
     integer ::   i                           ! link or node index
     integer ::   n                           ! node index
-    double precision :: y                          ! node water depth (ft)
+    real(kind=dp) :: y                          ! node water depth (ft)
 
     ! --- use Node().inflow as a temporary accumulator for depth in 
     !     connecting links and Node().outflow as a temporary counter
@@ -417,7 +417,7 @@ subroutine initLinkDepths()
     use headers
     implicit none
     integer ::    i                          ! link index
-    double precision :: y, y1, y2                  ! depths (ft)
+    real(kind=dp) :: y, y1, y2                  ! depths (ft)
 
     ! --- examine each link
     do i=1,Nobjects(LINK)
@@ -426,7 +426,7 @@ subroutine initLinkDepths()
             ! --- skip conduits with user-assigned initial flows
             !     (their depths have already been set to normal depth)
             !if ( arrLink(i)%q0 /= 0.0 ) cycle
-            if (abs(arrLink(i)%q0) - 0 < tiny(1.0)) cycle
+            if (abs(arrLink(i)%q0) - 0 > tiny(1.0)) cycle
 
             ! --- set depth to average of depths at end nodes
             y1 = Node(arrLink(i)%node1)%newDepth - arrLink(i)%offset1
@@ -456,7 +456,7 @@ subroutine initNodes()
     implicit none
     integer :: i
     
-    double precision :: node_getvolume !TODO: this is for .NET compile
+    real(kind=dp) :: node_getvolume !TODO: this is for .NET compile
     
     do i = 1,Nobjects(E_NODE)
         ! --- set default crown elevations here
@@ -516,7 +516,7 @@ subroutine initLinks()
     integer ::    i                          ! link index
     integer ::    j                          ! node index
     integer ::    k                          ! conduit or pump index
-    double precision :: z                          ! crown elev. (ft)
+    real(kind=dp) :: z                          ! crown elev. (ft)
 
     ! --- examine each link
     do i = 1, Nobjects(LINK)
@@ -555,7 +555,7 @@ end subroutine initLinks
 
 !=============================================================================
 
-double precision function getLinkInflow(j, dt)
+real(kind=dp) function getLinkInflow(j, dt)
 !
 !  Input:   j  = link index
 !           dt = routing time step (sec)
@@ -567,10 +567,10 @@ double precision function getLinkInflow(j, dt)
     use modLink
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: dt
-    double precision :: q
+    real(kind=dp), intent(in) :: dt
+    real(kind=dp) :: q
     integer ::   n1
-    double precision :: node_getMaxOutflow
+    real(kind=dp) :: node_getMaxOutflow
     n1 = arrLink(j)%node1
     
     if ( arrLink(j)%datatype == E_CONDUIT .or. &
@@ -666,7 +666,7 @@ end function getLinkInflow
 !
 !!=============================================================================
 
-double precision function getStorageOutflow( i,  j,  links,  dt)
+real(kind=dp) function getStorageOutflow( i,  j,  links,  dt)
 !
 !  Input:   i = index of storage node
 !           j = current position in links array
@@ -681,11 +681,11 @@ double precision function getStorageOutflow( i,  j,  links,  dt)
     implicit none
     integer, intent(in) :: i, j
     integer, dimension(:), intent(in) :: links
-    double precision, intent(in) :: dt
+    real(kind=dp), intent(in) :: dt
     
     integer ::   k, m
-    double precision :: outflow
-    double precision :: getlinkinflow
+    real(kind=dp) :: outflow
+    real(kind=dp) :: getlinkinflow
     outflow = 0.0
 
     do k = j, Nobjects(LINK)
@@ -789,9 +789,9 @@ subroutine updateNodeDepth( i,  y)
     use headers
     implicit none
     integer, intent(in) :: i
-    double precision, intent(in) :: y
+    real(kind=dp), intent(in) :: y
     
-    double precision :: ym
+    real(kind=dp) :: ym
     ym = y
     
     ! --- storage nodes were updated elsewhere
@@ -831,11 +831,11 @@ integer function steadyflow_execute(j, qin, qout)
     implicit none
     
     integer, intent(in) :: j
-    double precision, intent(inout) :: qin
-    double precision, intent(inout) :: qout
+    real(kind=dp), intent(inout) :: qin
+    real(kind=dp), intent(inout) :: qout
     integer ::   k
-    double precision :: s
-    double precision :: q
+    real(kind=dp) :: s
+    real(kind=dp) :: q
 
     ! --- use Manning eqn. to compute flow area for conduits
     if ( arrLink(j)%datatype == E_CONDUIT ) then

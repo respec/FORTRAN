@@ -30,7 +30,7 @@ type(TSysStats), save :: SysStats
 type(TMaxStats), dimension(MAX_STATS), save :: MaxMassBalErrs
 type(TMaxStats), dimension(MAX_STATS), save :: MaxCourantCrit
 type(TMaxStats), dimension(MAX_STATS), save :: MaxFlowTurns    !(5.0.010 - LR)
-double precision, save :: SysOutfallFlow
+real(kind=dp), save :: SysOutfallFlow
 
 !-----------------------------------------------------------------------------
 !  Exportable variables (shared with statsrpt.c)
@@ -41,14 +41,14 @@ type(TLinkStats), dimension(:), allocatable :: LinkStats
 type(TStorageStats), dimension(:), allocatable :: StorageStats
 type(TOutfallStats), dimension(:), allocatable :: OutfallStats
 type(TPumpStats), dimension(:), allocatable :: PumpStats
-double precision :: MaxOutfallFlow
-double precision :: MaxRunoffFlow
+real(kind=dp) :: MaxOutfallFlow
+real(kind=dp) :: MaxRunoffFlow
 
 !-----------------------------------------------------------------------------
 !  Imported variables
 !-----------------------------------------------------------------------------
-double precision, dimension(:), allocatable :: NodeInflow     ! defined in massbal.c
-double precision, dimension(:), allocatable :: NodeOutflow    ! defined in massbal.c
+real(kind=dp), dimension(:), allocatable :: NodeInflow     ! defined in massbal.c
+real(kind=dp), dimension(:), allocatable :: NodeOutflow    ! defined in massbal.c
 
 !-----------------------------------------------------------------------------
 !  External functions (declared in funcs.h)
@@ -387,7 +387,7 @@ subroutine stats_updateFlowStats(tStep, aDate, aStepCount, steadyState)
 !
     use headers
     implicit none
-    double precision, intent(in) :: tStep, aDate
+    real(kind=dp), intent(in) :: tStep, aDate
     integer, intent(in) :: aStepCount
     logical, intent(in) :: steadyState
     integer :: j
@@ -449,9 +449,9 @@ subroutine stats_updateNodeStats(j, tStep, aDate)
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: tStep, aDate
+    real(kind=dp), intent(in) :: tStep, aDate
     integer :: k, p
-    double precision :: newVolume, newDepth, delta
+    real(kind=dp) :: newVolume, newDepth, delta
     logical :: canPond !(5.0.019 - LR)
     if (AllowPonding .and. Node(j)%pondedArea > 0.0) Then
        canPond = .true.
@@ -543,10 +543,10 @@ subroutine stats_updateLinkStats(j, tStep, aDate)
     use modLink
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: tStep, aDate
+    real(kind=dp), intent(in) :: tStep, aDate
     integer ::    k
-    double precision :: q, v
-    double precision :: dq       !(5.0.010 - LR)
+    real(kind=dp) :: q, v
+    real(kind=dp) :: dq       !(5.0.010 - LR)
 
     ! --- update max. flow
     dq = arrLink(j)%newFlow - arrLink(j)%oldFlow                                    !(5.0.010 - LR)
