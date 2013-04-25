@@ -22,6 +22,7 @@ module modClimate
 !#include <math.h>
 !#include "headers.h"
 !
+use DataSizeSpecs
 !-----------------------------------------------------------------------------
 !  Constants
 !-----------------------------------------------------------------------------
@@ -47,21 +48,21 @@ character(4), dimension(4), parameter :: ClimateVarWords = (/'TMIN', 'TMAX', 'EV
 !  Shared variables
 !-----------------------------------------------------------------------------
 ! Temperature variables
-double precision, save ::    Tmin                 ! min. daily temperature (deg F)
-double precision, save ::    Tmax                 ! max. daily temperature (deg F)
-double precision, save ::    Trng                 ! 1/2 range of daily temperatures
-double precision, save ::    Trng1                ! prev. max - current min. temp.
-double precision, save ::    Tave                 ! average daily temperature (deg F)
-double precision, save ::    Hrsr                 ! time of min. temp. (hrs)
-double precision, save ::    Hrss                 ! time of max. temp (hrs) 
-double precision, save ::    Hrday                ! avg. of min/max temp times
-double precision, save ::    Dhrdy                ! hrs. between min. & max. temp. times
-double precision, save ::    Dydif                ! hrs. between max. & min. temp. times
-double precision, save ::  LastDay              ! date of last day with temp. data
+real(kind=dp), save ::    Tmin                 ! min. daily temperature (deg F)
+real(kind=dp), save ::    Tmax                 ! max. daily temperature (deg F)
+real(kind=dp), save ::    Trng                 ! 1/2 range of daily temperatures
+real(kind=dp), save ::    Trng1                ! prev. max - current min. temp.
+real(kind=dp), save ::    Tave                 ! average daily temperature (deg F)
+real(kind=dp), save ::    Hrsr                 ! time of min. temp. (hrs)
+real(kind=dp), save ::    Hrss                 ! time of max. temp (hrs) 
+real(kind=dp), save ::    Hrday                ! avg. of min/max temp times
+real(kind=dp), save ::    Dhrdy                ! hrs. between min. & max. temp. times
+real(kind=dp), save ::    Dydif                ! hrs. between max. & min. temp. times
+real(kind=dp), save ::  LastDay              ! date of last day with temp. data
 
 ! Evaporation variables                                                       !(5.0.019 - LR)
-double precision, save ::  NextEvapDate         ! next date when evap. rate changes    !(5.0.019 - LR)
-double precision, save ::  NextEvapRate         ! next evaporation rate (user units)   !(5.0.019 - LR)
+real(kind=dp), save ::  NextEvapDate         ! next date when evap. rate changes    !(5.0.019 - LR)
+real(kind=dp), save ::  NextEvapRate         ! next evaporation rate (user units)   !(5.0.019 - LR)
 !
 !! Climate file variables
 !static int      FileFormat            ! file format (see ClimateFileFormats)
@@ -332,7 +333,7 @@ subroutine climate_validate()
     use headers
     use report
     implicit none
-    double precision :: a, z, pa
+    real(kind=dp) :: a, z, pa
 
     ! --- check if climate file was specified when used 
     !     to supply wind speed or evap rates
@@ -446,7 +447,7 @@ subroutine climate_initState
     use headers
     implicit none
     
-    !double precision :: table_intervalLookup
+    !real(kind=dp) :: table_intervalLookup
     LastDay = NO_DATE
     Temp%tmax = MISSING
     Snow%removed = 0.0

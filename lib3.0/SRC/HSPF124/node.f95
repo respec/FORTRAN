@@ -106,7 +106,7 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     use swmm5futil
     implicit none
     integer, intent(in) :: j, nodetype, k
-    real, dimension(11), intent(in) :: x
+    real(kind=dp), dimension(11), intent(in) :: x
     
     Node(j)%datatype   = nodetype
     Node(j)%subIndex   = k
@@ -203,7 +203,7 @@ subroutine node_initInflow(j, tStep)
    use headers
    implicit none
    integer, intent(in) :: j
-   double precision, intent(in) :: tStep
+   real(kind=dp), intent(in) :: tStep
     ! --- initialize inflow & outflow
     Node(j)%oldFlowInflow = Node(j)%inflow
     Node(j)%oldNetInflow  = Node(j)%inflow - Node(j)%outflow
@@ -231,7 +231,7 @@ subroutine node_initState(j)
     integer, intent(in) :: j
     integer :: p
 
-    double precision :: node_getvolume !TODO: this is for .NET compile
+    real(kind=dp) :: node_getvolume !TODO: this is for .NET compile
     
     ! --- initialize depth
     Node(j)%oldDepth = Node(j)%initDepth
@@ -334,7 +334,7 @@ end subroutine node_initState
 !
 !=============================================================================
 
-double precision function node_getVolume(j, d)
+real(kind=dp) function node_getVolume(j, d)
 !
 !  Input:   j = node index
 !           d = water depth (ft)
@@ -344,8 +344,8 @@ double precision function node_getVolume(j, d)
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: d
-    !double precision :: storage_getVolume
+    real(kind=dp), intent(in) :: d
+    !real(kind=dp) :: storage_getVolume
     select case ( Node(j)%datatype )
       case (E_STORAGE)
          !node_getVolume = storage_getVolume(j, d)
@@ -362,7 +362,7 @@ end function node_getVolume
 !
 !=============================================================================
 
-double precision function node_getSurfArea(j, d)
+real(kind=dp) function node_getSurfArea(j, d)
 !
 !  Input:   j = node index
 !           d = water depth (ft)
@@ -372,8 +372,8 @@ double precision function node_getSurfArea(j, d)
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: d
-    double precision :: storage_getSurfArea
+    real(kind=dp), intent(in) :: d
+    real(kind=dp) :: storage_getSurfArea
     select case (Node(j)%datatype)
       case (E_STORAGE)
          node_getSurfArea = storage_getSurfArea(j, d)
@@ -384,7 +384,7 @@ end function node_getSurfArea
 
 !=============================================================================
 
-double precision function node_getOutflow(j, k)
+real(kind=dp) function node_getOutflow(j, k)
 !
 !  Input:   j = node index
 !           k = link index
@@ -396,8 +396,8 @@ double precision function node_getOutflow(j, k)
     
     integer(kind=K4), intent(in) :: j
     integer, intent(in) :: k
-    double precision :: lVal
-    double precision :: divider_getOutflow, storage_getOutflow
+    real(kind=dp) :: lVal
+    real(kind=dp) :: divider_getOutflow, storage_getOutflow
     select case ( Node(j)%datatype )
       case (E_DIVIDER) 
          !lVal = divider_getOutflow(j, k)
@@ -411,7 +411,7 @@ end function node_getOutflow
 !
 !=============================================================================
 
-double precision function node_getMaxOutflow(j, q, tStep)
+real(kind=dp) function node_getMaxOutflow(j, q, tStep)
 !
 !  Input:   j = node index
 !           q = original outflow rate (cfs)
@@ -422,8 +422,8 @@ double precision function node_getMaxOutflow(j, q, tStep)
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: q, tStep
-    double precision :: qMax, mq
+    real(kind=dp), intent(in) :: q, tStep
+    real(kind=dp) :: qMax, mq
     mq = q
     if ( Node(j)%fullVolume > 0.0 ) then
         qMax = Node(j)%inflow + Node(j)%oldVolume / tStep                     !(5.0.014 - LR)
@@ -432,61 +432,56 @@ double precision function node_getMaxOutflow(j, q, tStep)
     node_getMaxOutflow = MAX(0.0, mq)
 end function node_getMaxOutflow
 !
-!!=============================================================================
+!=============================================================================
+
+real(kind=dp) function node_getSystemOutflow(j, isFlooded)
 !
-!double node_getSystemOutflow(int j, int *isFlooded)
-!!
-!!  Input:   j = node index
-!!           isFlooded = TRUE if node becomes flooded
-!!  Output:  returns flow rate lost from system (cfs)
-!!  Purpose: computes flow rate at outfalls and flooded nodes.
-!!
-!{
-!    double outflow = 0.0
+!  Input:   j = node index
+!           isFlooded = TRUE if node becomes flooded
+!  Output:  returns flow rate lost from system (cfs)
+!  Purpose: computes flow rate at outfalls and flooded nodes.
 !
-!    ! --- assume there is no flooding
-!    *isFlooded = FALSE
-!
-!    ! --- if node is an outfall
-!    if ( Node(j)%datatype == OUTFALL )
-!    {
-!        ! --- node receives inflow from outfall conduit
-!        if ( Node(j).outflow == 0.0 ) outflow = Node(j).inflow
-!
-!        ! --- node sends flow into outfall conduit
-!        !     (therefore it has a negative outflow)
-!        else
-!        {                                                                      !(5.0.015 - LR)
-!            outflow = -Node(j).outflow                      
-!            Node(j).inflow = abs(outflow)                                    !(5.0.015 - LR)
-!        }                                                                      !(5.0.015 - LR)
-!
-!        ! --- set overflow and volume to 0
-!        Node(j).overflow = 0.0
-!        Node(j).newVolume = 0.0
-!    }
-!
-!    ! --- node is a terminal node under Steady or Kin. Wave routing
-!    else if ( RouteModel != DW &&
-!              Node(j).degree == 0 &&
-!              Node(j)%datatype != STORAGE
-!            )
-!    {
-!        if ( Node(j).outflow == 0.0 ) outflow = Node(j).inflow
-!        Node(j).overflow = 0.0
-!        Node(j).newVolume = 0.0
-!    }
-!
-!    ! --- otherwise node is an interior node and any
-!    !     overflow is considered as system outflow and flooding
-!    else 
-!    {
-!        if ( Node(j).newVolume <= Node(j).fullVolume)                          !(5.0.012 - LR)
-!            outflow = Node(j).overflow                                        !(5.0.012 - LR)
-!        if ( outflow > 0.0 ) *isFlooded = TRUE
-!    }
-!    return outflow
-!}
+    use headers
+    implicit none
+    
+    integer, intent(in) :: j
+    integer, intent(inout) :: isFlooded
+    real(kind=dp) :: outflow
+    outflow = 0.0
+
+    ! --- assume there is no flooding
+    isFlooded = 0 !FALSE
+
+    ! --- if node is an outfall
+    if ( Node(j)%datatype == E_OUTFALL ) then
+        ! --- node receives inflow from outfall conduit
+        if ( Node(j)%outflow == 0.0 ) then
+            outflow = Node(j)%inflow
+        ! --- node sends flow into outfall conduit
+        !     (therefore it has a negative outflow)
+        else
+            outflow = -1.0 * Node(j)%outflow                      
+            Node(j)%inflow = abs(outflow)                                    !(5.0.015 - LR)
+        end if                                                               !(5.0.015 - LR)
+        ! --- set overflow and volume to 0
+        Node(j)%overflow = 0.0
+        Node(j)%newVolume = 0.0
+    ! --- node is a terminal node under Steady or Kin. Wave routing
+    else if ( RouteModel /= DW .and. &
+             &Node(j)%degree == 0 .and. &
+             &Node(j)%datatype /= E_STORAGE ) then
+        if ( Node(j)%outflow == 0.0 ) outflow = Node(j)%inflow
+        Node(j)%overflow = 0.0
+        Node(j)%newVolume = 0.0
+    ! --- otherwise node is an interior node and any
+    !     overflow is considered as system outflow and flooding
+    else 
+        if ( Node(j)%newVolume <= Node(j)%fullVolume) &                        !(5.0.012 - LR)
+           &outflow = Node(j)%overflow                                        !(5.0.012 - LR)
+        if ( outflow > 0.0 ) isFlooded = 1 !TRUE
+    end if
+    node_getSystemOutflow = outflow
+end function node_getSystemOutflow
 !
 !=============================================================================
 
@@ -503,10 +498,10 @@ subroutine node_getResults(j, f) !, x)
     implicit none
     
     integer, intent(in) :: j
-    double precision, intent(in) :: f
-    !double precision, dimension(1:), intent(inout) :: x
+    real(kind=dp), intent(in) :: f
+    !real(kind=dp), dimension(1:), intent(inout) :: x
     integer :: p
-    double precision :: z, f1
+    real(kind=dp) :: z, f1
     f1 = 1.0 - f
 
     z = (f1 * Node(j)%oldDepth + f * Node(j)%newDepth) * UCF(LENGTH)
@@ -518,12 +513,6 @@ subroutine node_getResults(j, f) !, x)
     z = (f1*Node(j)%oldLatFlow + f*Node(j)%newLatFlow) * UCF(FLOW) 
     NodeResults(NODE_LATFLOW) = z * 1.0d00 !(float)z
     z = (f1*Node(j)%oldFlowInflow + f*Node(j)%inflow) * UCF(FLOW)
-    !if (j.eq.3) then
-      !write(24,*) 'in node_getresults, nodeinflow ',z
-      !write(24,*) 'in node_getresults, nodeinflow ',UCF(FLOW)
-      !write(24,*) 'in node_getresults, nodeinflow ',f1*Node(j)%oldFlowInflow
-      !write(24,*) 'in node_getresults, nodeinflow ',f*Node(j)%inflow
-    !end if 
     NodeResults(NODE_INFLOW) = z * 1.0d00 !(float)z
     z = Node(j)%overflow * UCF(FLOW)
     NodeResults(NODE_OVERFLOW) = z * 1.0d00 !(float)z
@@ -565,7 +554,7 @@ subroutine node_setOutletDepth(j, yNorm, yCrit, z)
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: yNorm, yCrit, z
+    real(kind=dp), intent(in) :: yNorm, yCrit, z
     
     select case (Node(j)%datatype)
       ! --- do nothing if outlet is a storage unit
@@ -613,7 +602,7 @@ end subroutine node_setOutletDepth
 !
 !=============================================================================
 
-double precision function node_getPondedArea(j, d)
+real(kind=dp) function node_getPondedArea(j, d)
 !
 !  Input:   j = node index
 !           d = water depth (ft)
@@ -623,9 +612,9 @@ double precision function node_getPondedArea(j, d)
   use headers
   implicit none
   integer, intent(in) :: j
-  double precision, intent(in) :: d
-    double precision :: a, lD
-    double precision :: node_getSurfArea
+  real(kind=dp), intent(in) :: d
+    real(kind=dp) :: a, lD
+    real(kind=dp) :: node_getSurfArea
     
     lD = d
 
@@ -646,7 +635,7 @@ end function node_getPondedArea
 !
 !=============================================================================
 
-double precision function node_getLosses( j,  tStep)                                     !(5.0.019 - LR)
+real(kind=dp) function node_getLosses( j,  tStep)                                     !(5.0.019 - LR)
 !
 !  Input:   j = node index
 !           evap = system evaporation rate (ft/sec)
@@ -658,8 +647,8 @@ double precision function node_getLosses( j,  tStep)                            
     use headers
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: tStep
-    !double precision :: storage_getLosses
+    real(kind=dp), intent(in) :: tStep
+    !real(kind=dp) :: storage_getLosses
     if ( Node(j)%datatype == E_STORAGE ) then
         !node_getLosses = storage_getLosses(j, tStep)         !(5.0.019 - LR)
     else 
@@ -953,7 +942,7 @@ end function node_getLosses
 !
 !=============================================================================
 
-double precision function storage_getSurfArea(j, d)
+real(kind=dp) function storage_getSurfArea(j, d)
 !
 !  Input:   j = node index
 !           d = depth (ft)
@@ -964,8 +953,8 @@ double precision function storage_getSurfArea(j, d)
     use swmm5futil
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: d
-    double precision :: area
+    real(kind=dp), intent(in) :: d
+    real(kind=dp) :: area
     integer :: k, i
     k = Node(j)%subIndex
     i = Storage(k)%aCurve
@@ -1016,7 +1005,7 @@ end function storage_getSurfArea
 
 !  This function was re-written for release 5.0.019.  !!                    (5.0.019 - LR)
 
-!double precision function storage_getLosses(int j, double tStep)
+!real(kind=dp) function storage_getLosses(int j, double tStep)
 !!
 !!  Input:   j = node index
 !!           tStep = time step (sec)
@@ -1025,15 +1014,15 @@ end function storage_getSurfArea
 !!           node over a given time step.
 !!
 !    integer, intent(in) :: j
-!    double precision, intent(in) :: tStep
-!    double precision :: depth
-!    double precision ::  area = 0.0
-!    double precision ::  area0 = 0.0
-!    double precision ::  evapRate
-!    double precision ::  evapLoss = 0.0
-!    double precision ::  infilLoss = 0.0
-!    double precision ::  totalLoss = 0.0
-!    double precision ::  maxLoss
+!    real(kind=dp), intent(in) :: tStep
+!    real(kind=dp) :: depth
+!    real(kind=dp) ::  area = 0.0
+!    real(kind=dp) ::  area0 = 0.0
+!    real(kind=dp) ::  evapRate
+!    real(kind=dp) ::  evapLoss = 0.0
+!    real(kind=dp) ::  infilLoss = 0.0
+!    real(kind=dp) ::  totalLoss = 0.0
+!    real(kind=dp) ::  maxLoss
 !    TGrnAmpt* infil
 !
 !    ! --- adjust evaporation rate for storage unit's evaporation potential
@@ -1395,16 +1384,16 @@ subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
     use swmm5futil
     implicit none
     integer, intent(in) :: j
-    double precision, intent(in) :: yNorm, yCrit, z
+    real(kind=dp), intent(in) :: yNorm, yCrit, z
     
-    double precision ::   x, y                     ! x,y values in table
-    double precision ::   yNew                     ! new depth above invert elev. (ft)
-    double precision ::   stage                    ! water elevation at outfall (ft)
-    double precision :: myCrit
+    real(kind=dp) ::   x, y                     ! x,y values in table
+    real(kind=dp) ::   yNew                     ! new depth above invert elev. (ft)
+    real(kind=dp) ::   stage                    ! water elevation at outfall (ft)
+    real(kind=dp) :: myCrit
     integer ::      k      ! table index
     integer ::      i      ! outfall index
-    double precision :: currentDate              ! current date/time in days
-    double precision :: table_tseriesLookup, table_lookup
+    real(kind=dp) :: currentDate              ! current date/time in days
+    real(kind=dp) :: table_tseriesLookup, table_lookup
     myCrit = yCrit
     i = Node(j)%subIndex
     select case ( Outfall(i)%datatype )

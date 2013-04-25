@@ -10,7 +10,7 @@ module infil
 !
 !   Public interface for infiltration functions.
 !-----------------------------------------------------------------------------
-
+use DataSizeSpecs
 !---------------------
 ! Enumerated Constants
 !---------------------
@@ -23,13 +23,13 @@ integer, parameter :: CURVE_NUMBER = 3               ! SCS Curve Number infiltra
 ! Horton Infiltration
 !---------------------
 type THorton
-   double precision :: fmin            ! minimum infil. rate (ft/sec)
-   double precision :: Fmax            ! maximum total infiltration (ft)
-   double precision :: decay           ! decay coeff. of infil. rate (1/sec)
-   double precision :: regen           ! regeneration coeff. of infil. rate (1/sec)
+   real(kind=dp) :: fmin            ! minimum infil. rate (ft/sec)
+   real(kind=dp) :: Fmax            ! maximum total infiltration (ft)
+   real(kind=dp) :: decay           ! decay coeff. of infil. rate (1/sec)
+   real(kind=dp) :: regen           ! regeneration coeff. of infil. rate (1/sec)
    !-----------------------------
-   double precision :: tp              ! present time on infiltration curve (sec)
-   double precision :: f0              ! initial infil. rate (ft/sec)
+   real(kind=dp) :: tp              ! present time on infiltration curve (sec)
+   real(kind=dp) :: f0              ! initial infil. rate (ft/sec)
 end type THorton
 
 
@@ -38,16 +38,16 @@ end type THorton
 !-------------------------
 type TGrnAmpt
 
-   double precision :: S               ! avg. capillary suction (ft)
-   double precision :: Ks              ! saturated conductivity (ft/sec)
-   double precision :: IMDmax          ! max. soil moisture deficit (ft/ft)
+   real(kind=dp) :: S               ! avg. capillary suction (ft)
+   real(kind=dp) :: Ks              ! saturated conductivity (ft/sec)
+   real(kind=dp) :: IMDmax          ! max. soil moisture deficit (ft/ft)
    !-----------------------------
-   double precision :: IMD             ! current soil moisture deficit
-   double precision :: F               ! current cumulative infiltration (ft)
-   double precision :: T               ! time needed to drain upper zone (sec)
-   double precision :: L               ! depth of upper soil zone (ft)
-   double precision :: FU              ! current moisture content of upper zone (ft)
-   double precision :: FUmax           ! saturated moisture content of upper zone (ft)
+   real(kind=dp) :: IMD             ! current soil moisture deficit
+   real(kind=dp) :: F               ! current cumulative infiltration (ft)
+   real(kind=dp) :: T               ! time needed to drain upper zone (sec)
+   real(kind=dp) :: L               ! depth of upper soil zone (ft)
+   real(kind=dp) :: FU              ! current moisture content of upper zone (ft)
+   real(kind=dp) :: FUmax           ! saturated moisture content of upper zone (ft)
    !char          Sat             ! saturation flag
    logical :: Sat             ! saturation flag
 end type TGrnAmpt
@@ -57,16 +57,16 @@ end type TGrnAmpt
 ! Curve Number Infiltration
 !--------------------------
 type TCurveNum
-   double precision :: Smax            ! max. infiltration capacity (ft)
-   double precision :: regen           ! infil. capacity regeneration constant (1/sec)
-   double precision :: Tmax            ! maximum inter-event time (sec)
+   real(kind=dp) :: Smax            ! max. infiltration capacity (ft)
+   real(kind=dp) :: regen           ! infil. capacity regeneration constant (1/sec)
+   real(kind=dp) :: Tmax            ! maximum inter-event time (sec)
    !-----------------------------
-   double precision :: S               ! current infiltration capacity (ft)
-   double precision :: Fcinfil         ! current cumulative infiltration (ft) !F
-   double precision :: P               ! current cumulative precipitation (ft)
-   double precision :: T               ! current inter-event time (sec)
-   double precision :: Se              ! current event infiltration capacity (ft)
-   double precision :: fprevinfil      ! previous infiltration rate (ft/sec) !f
+   real(kind=dp) :: S               ! current infiltration capacity (ft)
+   real(kind=dp) :: Fcinfil         ! current cumulative infiltration (ft) !F
+   real(kind=dp) :: P               ! current cumulative precipitation (ft)
+   real(kind=dp) :: T               ! current inter-event time (sec)
+   real(kind=dp) :: Se              ! current event infiltration capacity (ft)
+   real(kind=dp) :: fprevinfil      ! previous infiltration rate (ft/sec) !f
 end type TCurveNum
 
 !-----------------------------------------------------------------------------

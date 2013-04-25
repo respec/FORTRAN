@@ -1,9 +1,11 @@
 module modRouting
+use DataSizeSpecs
+
 !-----------------------------------------------------------------------------
 !     Constants 
 !-----------------------------------------------------------------------------
-double precision, parameter :: LATERAL_FLOW_TOL = 0.5  ! for steady state (cfs)         !(5.0.012 - LR)
-double precision, parameter :: FLOW_ERR_TOL = 0.05     ! for steady state               !(5.0.012 - LR)
+real(kind=dp), parameter :: LATERAL_FLOW_TOL = 0.5  ! for steady state (cfs)         !(5.0.012 - LR)
+real(kind=dp), parameter :: FLOW_ERR_TOL = 0.05     ! for steady state               !(5.0.012 - LR)
 
 !-----------------------------------------------------------------------------
 ! Shared variables
@@ -12,6 +14,37 @@ integer, save, dimension(:), allocatable :: SortedLinks
 logical, save ::  InSteadyState
 
 contains
+
+!=============================================================================
+
+subroutine removeOutflows()
+!
+!  Input:   none
+!  Output:  none
+!  Purpose: finds flows that leave the system and adds these to mass
+!           balance totals.
+!
+    use headers
+    use modMassbal
+    implicit none
+    integer :: i, p
+    integer :: isFlooded
+    real(kind=dp) :: q, w
+    
+    real(kind=dp) :: node_getSystemOutflow
+
+    do i =1, Nobjects(E_NODE)
+        ! --- determine flows leaving the system
+        q = node_getSystemOutflow(i, isFlooded)
+        if ( q /= 0.0 ) then
+            call massbal_addOutflowFlow(q, isFlooded)
+            do p =1, Nobjects(E_POLLUT)
+                w = q * Node(i)%newQual(p)
+                call massbal_addOutflowQual(p, w, isFlooded)
+            end do
+        end if
+    end do
+end subroutine removeOutflows
 
 !!=============================================================================
 !
@@ -26,9 +59,9 @@ subroutine addExternalInflows(currentDate)
     use modMassbal
     implicit none
     
-    double precision, intent(in) :: currentDate
+    real(kind=dp), intent(in) :: currentDate
     integer :: j, p
-    double precision :: q, w
+    real(kind=dp) :: q, w
     
     type(TExtInflow), pointer :: inflow
 
@@ -85,7 +118,7 @@ end subroutine addExternalInflows
 
 !=============================================================================
 
-double precision function routing_getRoutingStep(routingModel, fixedStep)
+real(kind=dp) function routing_getRoutingStep(routingModel, fixedStep)
 !
 !  Input:   routingModel = routing method code
 !           fixedStep = user-supplied time step (sec)
@@ -95,9 +128,9 @@ double precision function routing_getRoutingStep(routingModel, fixedStep)
     use headers
     implicit none
     integer, intent(in) :: routingModel
-    double precision, intent(in) :: fixedStep
+    real(kind=dp), intent(in) :: fixedStep
     
-    double precision :: flowrout_getRoutingStep
+    real(kind=dp) :: flowrout_getRoutingStep
     
     if ( Nobjects(LINK) == 0 ) then
         routing_getRoutingStep = fixedStep
@@ -136,16 +169,13 @@ integer function routing_open(routingModel)
       deallocate(SortedLinks)
     end if 
     if ( Nobjects(LINK) > 0 ) then
-        !write(24,*) 'about to allocate sorted links'
         allocate(SortedLinks(Nobjects(LINK)), stat=mstat)
         if ( mstat /= 0 ) then
             call report_writeErrorMsg(ERR_MEMORY, '')
             routing_open = ErrorCode
             return
         end if
-        !write(24,*) 'about to toposort'
         call toposort_sortLinks(SortedLinks)
-        !write(24,*) 'finished with toposort',sortedlinks
         if ( ErrorCode /= 0 ) then
             routing_open = ErrorCode
             return
@@ -192,24 +222,22 @@ subroutine routing_execute(routingModel, routingStep)
     implicit none
     
     integer, intent(in) :: routingModel
-    double precision, intent(in) :: routingStep
+    real(kind=dp), intent(in) :: routingStep
     integer ::      j
     integer ::      mstepCount
     integer ::      actionCount
-    double precision :: currentDate
-    double precision :: stepFlowError                                                    !(5.0.012 - LR)
+    real(kind=dp) :: currentDate
+    real(kind=dp) :: stepFlowError                                                    !(5.0.012 - LR)
     
     integer :: flowrout_execute !TODO: this is for .NET compile
     mstepCount = 1
     actionCount = 0
-    !write(24,*) 'in routing_execute 1'
  
     ! --- update continuity with current state
     !     applied over 1/2 of time step
     if ( ErrorCode /= 0 ) return !has error
     call massbal_updateRoutingTotals(routingStep/2.)
 
-    !write(24,*) 'in routing_execute 2'
     ! --- evaluate control rules at current date and elapsed time
     currentDate = getDateTime(StartDateTime, NewRoutingTime)
     do j=1, Nobjects(LINK)
@@ -219,7 +247,6 @@ subroutine routing_execute(routingModel, routingStep)
 !    call controls_evaluate(currentDate, currentDate - StartDateTime, &        !(5.0.010 - LR)
 !                     &routingStep/SECperDAY)                                  !(5.0.010 - LR)
     
-    !write(24,*) 'in routing_execute 3'
     do j=1, Nobjects(LINK)
         if ( arrLink(j)%targetSetting /= arrLink(j)%setting ) then  !(5.0.010 - LR)         
             call link_setSetting(j, routingStep)                    !(5.0.010 - LR)
@@ -232,7 +259,6 @@ subroutine routing_execute(routingModel, routingStep)
     NewRoutingTime = NewRoutingTime + 1000.0 * routingStep
     currentDate = getDateTime(StartDateTime, NewRoutingTime)
 
-    !write(24,*) 'in routing_execute 4'
     ! --- initialize mass balance totals for time step
     stepFlowError = massbal_getStepFlowError()                                !(5.0.012 - LR)
     call massbal_initTimeStepTotals()
@@ -259,7 +285,6 @@ subroutine routing_execute(routingModel, routingStep)
 !    call addRdiiInflows(currentDate)
 !    call addIfaceInflows(currentDate)
 
-    !write(24,*) 'in routing_execute 5'
     ! --- check if can skip steady state periods
     if ( SkipSteadyState ) then
         if ( abs(OldRoutingTime - 0.0) < tiny(1.0) .or. &
@@ -272,7 +297,6 @@ subroutine routing_execute(routingModel, routingStep)
         end if
     end if
 
-    !write(24,*) 'in routing_execute 6'
     ! --- find new hydraulic state if system has changed
     if ( .not.InSteadyState ) then
         ! --- replace old hydraulic state values with current ones
@@ -287,11 +311,7 @@ subroutine routing_execute(routingModel, routingStep)
 
         ! --- route flow through the drainage network
         if ( Nobjects(LINK) > 0 ) then
-            !write(24,*) 'in routing_execute 7',sortedlinks
-            !write(24,*) 'in routing_execute 7',routingmodel
-            !write(24,*) 'in routing_execute 7',routingstep
-            stepCount = flowrout_execute(Nobjects(LINK), SortedLinks, routingModel, routingStep)
-            !write(24,*) 'in routing_execute 8'
+            mstepCount = flowrout_execute(SortedLinks, routingModel, routingStep)
         end if
     end if
 
@@ -302,18 +322,16 @@ subroutine routing_execute(routingModel, routingStep)
 
     ! --- remove evaporation, infiltration & system outflows from nodes       !(5.0.015 - LR)
 !    call removeStorageLosses()                                                     !(5.0.019 - LR)
-!    call removeOutflows()
+    call removeOutflows()
 	
-    !write(24,*) 'in routing_execute 6'
     ! --- update continuity with new totals
     !     applied over 1/2 of routing step
     call massbal_updateRoutingTotals(routingStep/2.)
 
     ! --- update summary statistics
     if ( RptFlags%flowStats .and. Nobjects(LINK) > 0 ) then
-        call stats_updateFlowStats(routingStep, currentDate, stepCount, InSteadyState)
+        call stats_updateFlowStats(routingStep, currentDate, mstepCount, InSteadyState)
     end if
-    !write(24,*) 'end of routing_execute'
 end subroutine routing_execute
 
 
@@ -333,7 +351,7 @@ logical function systemHasChanged(routingModel)
     implicit none
     integer, intent(in) :: routingModel
     integer :: j                                                       !(5.0.012 - LR)
-    double precision :: diff
+    real(kind=dp) :: diff
 
     ! --- check if external inflows or outflows have changed           !(5.0.012 - LR)
     do j=1,Nobjects(E_NODE)
