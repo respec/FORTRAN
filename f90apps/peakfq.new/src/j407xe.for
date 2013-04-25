@@ -1543,7 +1543,6 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
    11 FORMAT(' EMA W/O REG. INFO    ',F11.4,F12.4,F11.3
      $     /,' EMA W/REG. INFO      ',F11.4,F12.4,F11.3
-     $     /,' EMA W/SYSTEMATIC ONLY',F11.4,F12.4,F11.3
      $    //,' EMA ESTIMATE OF MSE OF SKEW W/O REG. INFO (AT-SITE)    ',
      $       F8.4,/
      $       ' EMA ESTIMATE OF MSE OF SKEW W/SYSTEMATIC ONLY (AT-SITE)',
@@ -1606,7 +1605,6 @@ C       original B-17 estimates
 C       new EMA estimates
         WRITE(MSG,11)SYSUAV,SYSUSD,SYSSKW,
      $               WRCUAV,WRCUSD,WRCSKW,
-     $               SYSAAV,SYSASD,SYSASK,
      $               as_G_mse,as_G_mse_Syst
         WRITE(MSG,16) INT( CLSIZE*100. + .5)
       END IF
