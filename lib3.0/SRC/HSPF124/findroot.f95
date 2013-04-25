@@ -1,4 +1,5 @@
 module findroot
+integer, parameter :: dpf = kind(1.d0)
 !-----------------------------------------------------------------------------
 !   findroot.c
 !
@@ -16,7 +17,6 @@ module findroot
 
 !#define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a)) !fortran has same function SIGN
 !#define MAXIT 60
-use DataSizeSpecs
 
 contains
 
@@ -39,19 +39,20 @@ integer function findroot_Newton(x1, x2, rts, xacc, aFunc)
     use headers
     implicit none
     
-    real(kind=dp), intent(in) :: x1, x2, xacc
-    real(kind=dp), intent(inout) :: rts
+    real(kind=dpf), intent(in) :: x1, x2, xacc
+    real(kind=dpf), intent(inout) :: rts
     
     interface AFunc1
       subroutine aFunc (x, f, df)
-         real(kind=dp), intent(in) :: x
-         real(kind=dp), intent(inout) :: f, df
+         integer, parameter :: dpff = kind(1.d0)
+         real(kind=dpff), intent(in) :: x
+         real(kind=dpff), intent(inout) :: f, df
       end subroutine aFunc
     end interface AFunc1
 
     integer, parameter :: MAXIT = 60
-    real(kind=dp) :: df, dx, dxold, f, x
-    real(kind=dp) :: mTemp, xhi, xlo
+    real(kind=dpf) :: df, dx, dxold, f, x
+    real(kind=dpf) :: mTemp, xhi, xlo
     integer :: j, n
     j = 0
     n = 0
@@ -103,20 +104,21 @@ integer function findroot_Newton(x1, x2, rts, xacc, aFunc)
     end if
 end function findroot_Newton
 
-real(kind=dp) function findroot_Ridder(x1, x2, xacc, func) !double (*func)(double)
+real(kind=dpf) function findroot_Ridder(x1, x2, xacc, func) !double (*func)(double)
 
     use headers
     implicit none
-    real(kind=dp), intent(in) :: x1, x2, xacc
+    real(kind=dpf), intent(in) :: x1, x2, xacc
     interface AFunc
       function func (y)
-         real(kind=dp) :: func
-         real(kind=dp), intent(in) :: y
+         integer, parameter :: dpff = kind(1.d0)
+         real(kind=dpff) :: func
+         real(kind=dpff), intent(in) :: y
       end function func
     end interface AFunc
     
     integer :: j, MAXIT
-    real(kind=dp) :: ans, fhi, flo, fm, fnew, s, xhi, xlo, xm, xnew, lval
+    real(kind=dpf) :: ans, fhi, flo, fm, fnew, s, xhi, xlo, xm, xnew, lval
     MAXIT = 60
 
     flo = func(x1)

@@ -22,7 +22,7 @@ module modClimate
 !#include <math.h>
 !#include "headers.h"
 !
-use DataSizeSpecs
+integer, parameter :: dp = kind(1.d0)
 !-----------------------------------------------------------------------------
 !  Constants
 !-----------------------------------------------------------------------------

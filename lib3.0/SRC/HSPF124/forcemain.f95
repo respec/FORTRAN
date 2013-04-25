@@ -14,7 +14,8 @@ module forcemain
 !
 !#include <math.h>
 !#include "headers.h"
-use DataSizeSpecs
+integer, parameter :: dp = kind(1.d0)
+integer, parameter :: K4 = selected_int_kind(4) !kind= 2
 
 !-----------------------------------------------------------------------------
 !  Constants

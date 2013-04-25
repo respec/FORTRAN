@@ -1,5 +1,6 @@
 module rain
 use headers
+integer, parameter :: dp = kind(1.d0)
 !!-----------------------------------------------------------------------------
 !!   rain.c
 !!

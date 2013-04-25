@@ -27,8 +27,9 @@ module modXsect
 !      R = hyd. radius
 !      S = section factor = A*R^(2/3)
 !-----------------------------------------------------------------------------
-use DataSizeSpecs
 use headers
+integer, parameter :: dp = kind(1.d0)
+integer, parameter :: K2 = selected_int_kind(2) !kind= 1
 !private K2, K4, K8
 !integer, parameter :: K2 = selected_int_kind(2) !kind= 1
 !integer, parameter :: K4 = selected_int_kind(4) !kind= 2

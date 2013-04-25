@@ -21,6 +21,7 @@ module modStats
 !#include <math.h>
 !#include "headers.h"
 use headers
+integer, parameter :: dp = kind(1.d0)
 
 !-----------------------------------------------------------------------------
 !  Shared variables

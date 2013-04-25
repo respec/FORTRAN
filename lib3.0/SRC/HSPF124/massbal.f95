@@ -20,6 +20,8 @@ module modMassbal
 !#include <math.h>
 !#include "headers.h"
 use headers
+integer, parameter :: dp = kind(1.d0)
+integer, parameter :: K2 = selected_int_kind(2) !kind= 1
 !-----------------------------------------------------------------------------
 !  Constants   
 !-----------------------------------------------------------------------------

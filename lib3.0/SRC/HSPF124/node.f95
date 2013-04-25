@@ -1,3 +1,6 @@
+module modNode
+integer, parameter :: dp = kind(1.d0)
+integer, parameter :: K4 = selected_int_kind(4) !kind= 2
 !-----------------------------------------------------------------------------
 !   node.c
 !
@@ -65,6 +68,7 @@
 !static void   divider_validate(int j)
 !static double divider_getOutflow(int j, int link)
 
+contains
 
 !!=============================================================================
 !
@@ -1461,3 +1465,4 @@ subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
 end subroutine outfall_setOutletDepth
 !
 !!=============================================================================
+end module modNode
