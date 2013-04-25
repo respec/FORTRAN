@@ -191,7 +191,7 @@ integer function swmm_run(f1, f2, f3)
     character(*), intent(in) :: f1, f2, f3
     integer(kind=K4) :: newHour, oldHour
     integer(kind=K4) :: theDay, theHour
-    double precision :: elapsedTime
+    real(kind=dp) :: elapsedTime
     logical :: flag
 
     newHour = 0 ; oldHour = 0
@@ -211,9 +211,7 @@ integer function swmm_run(f1, f2, f3)
         if ( ErrorCode == 0 ) then
 !            writecon("\n o  Simulating day: 0     hour:  0")
             do while(.true.)
-                !write(24,*) 'about to call swmm_step'
                 ErrorCode = swmm_step(elapsedTime)
-                !write(24,*) 'back from swmm_step'
                 newHour = elapsedTime * 24.0
                 if ( newHour > oldHour ) then
                     theDay = elapsedTime
@@ -231,7 +229,6 @@ integer function swmm_run(f1, f2, f3)
         end if
 
         ! --- clean up
-        !write(24,*) 'about to call swmm_end'
         ErrorCode = swmm_end()
     end if
 
@@ -327,7 +324,6 @@ integer function swmm_start(saveResults)
     SaveResultsFlag = saveResults
     
     swmm_start = ErrorCode
-    !write(24,*) 'end of function swmm_start'
 end function swmm_start
 
 integer function swmm_step(elapsedTime)
@@ -341,10 +337,7 @@ integer function swmm_step(elapsedTime)
     use output
     use report
     implicit none
-    double precision, intent(inout) :: elapsedTime
-
-    !write(24,*) 'in swmm_step'
-
+    real(kind=dp), intent(inout) :: elapsedTime
     ! --- check that simulation can proceed
     if ( ErrorCode /=0 ) then
        swmm_step = ErrorCode
@@ -355,7 +348,6 @@ integer function swmm_step(elapsedTime)
         swmm_step = ErrorCode
         return
     end if
-    !write(24,*) 'in swmm_step 2'
 
     !below was inside a Try-Catch block
     ! --- if routing time has not exceeded total duration
@@ -363,9 +355,7 @@ integer function swmm_step(elapsedTime)
         ! --- route flow & WQ through drainage system
         !     (runoff will be calculated as needed)
         !     (NewRoutingTime is updated)
-        !write(24,*) 'about to call execRouting'
         call execRouting(elapsedTime)
-        !write(24,*) 'back from execRouting'
     end if
 
     ! --- save results at next reporting time
@@ -393,9 +383,9 @@ subroutine execRouting(elapsedTime)
     use headers
     use modRouting
     implicit none
-    double precision, intent(in) :: elapsedTime
-    double precision ::  nextRoutingTime          ! updated elapsed routing time (msec)
-    double precision ::  routingStep              ! routing time step (sec)
+    real(kind=dp), intent(in) :: elapsedTime
+    real(kind=dp) ::  nextRoutingTime          ! updated elapsed routing time (msec)
+    real(kind=dp) ::  routingStep              ! routing time step (sec)
     
 !#ifdef WINDOWS
 !    ! --- begin exception handling loop here
@@ -425,9 +415,7 @@ subroutine execRouting(elapsedTime)
   
         ! --- route flows through drainage system over current time step
         if ( DoRouting ) then 
-           !write(24,*) 'about to call routing_execute'
            call routing_execute(RouteModel, routingStep)             !(5.0.010 - LR)
-           !write(24,*) 'back from routing_execute'
         else 
            NewRoutingTime = nextRoutingTime       !(5.0.010 - LR)
         end if

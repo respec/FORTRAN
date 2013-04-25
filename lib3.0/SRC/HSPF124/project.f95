@@ -301,7 +301,7 @@ subroutine project_validate()
     use report
     implicit none
     integer :: i, j, err
-    !double precision :: table_validate
+    !real(kind=dp) :: table_validate
     ! --- validate Curves and TimeSeries
     do i=1, Nobjects(E_CURVE)
          !err = table_validate(Curve(i))
