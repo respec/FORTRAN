@@ -29,16 +29,16 @@ module dynwave
 !    to improve readability.
 ! 
 ! -----------------------------------------------------------------------------
-use DataSizeSpecs
+integer, parameter :: dpw = kind(1.d0)
 
 ! -----------------------------------------------------------------------------
 !      Constants for dynwave
 ! -----------------------------------------------------------------------------
-real(kind=dp), parameter :: pMINSURFAREA =  12.566  !  min. nodal surface area (~4 ft diam.)
-real(kind=dp), parameter :: MAXVELOCITY =  50.     !  max. allowable velocity (ft/sec)
-real(kind=dp), parameter ::  MINTIMESTEP =  0.5     !  min. time step (sec)
-real(kind=dp), parameter ::  OMEGA_DW    =  0.5     !  under-relaxation parameter
-real(kind=dp), parameter ::  STOP_TOL    =  0.005   !  Picard iteration stop criterion
+real(kind=dpw), parameter :: pMINSURFAREA =  12.566  !  min. nodal surface area (~4 ft diam.)
+real(kind=dpw), parameter :: MAXVELOCITY =  50.     !  max. allowable velocity (ft/sec)
+real(kind=dpw), parameter ::  MINTIMESTEP =  0.5     !  min. time step (sec)
+real(kind=dpw), parameter ::  OMEGA_DW    =  0.5     !  under-relaxation parameter
+real(kind=dpw), parameter ::  STOP_TOL    =  0.005   !  Picard iteration stop criterion
 integer, parameter :: MAXSTEPS    =  8       !  max. number of Picard iterations (5.0.019 - LR)
 
 ! -----------------------------------------------------------------------------
@@ -46,27 +46,27 @@ integer, parameter :: MAXSTEPS    =  8       !  max. number of Picard iterations
 ! -----------------------------------------------------------------------------
 type TXnode 
     logical :: converged                 !  TRUE if iterations for a node done
-    real(kind=dp) :: newSurfArea               !  current surface area (ft2)
-    real(kind=dp) :: oldSurfArea               !  previous surface area (ft2)
-    real(kind=dp) :: sumdqdh                   !  sum of dqdh from adjoining links
-    real(kind=dp) :: dYdT                      !  change in depth w.r.t. time (ft/sec)
+    real(kind=dpw) :: newSurfArea               !  current surface area (ft2)
+    real(kind=dpw) :: oldSurfArea               !  previous surface area (ft2)
+    real(kind=dpw) :: sumdqdh                   !  sum of dqdh from adjoining links
+    real(kind=dpw) :: dYdT                      !  change in depth w.r.t. time (ft/sec)
 end type TXnode
 
 type TXlink
     logical*1 bypassed                  !  TRUE if can bypass calcs. for a link
-    real(kind=dp) :: surfArea1                 !  surf. area at upstrm end of link (ft2)
-    real(kind=dp) :: surfArea2                 !  surf. area at dnstrm end of link (ft2)
+    real(kind=dpw) :: surfArea1                 !  surf. area at upstrm end of link (ft2)
+    real(kind=dpw) :: surfArea2                 !  surf. area at dnstrm end of link (ft2)
 end type TXlink
 
 ! -----------------------------------------------------------------------------
 !   Shared Variables
 ! -----------------------------------------------------------------------------
-real(kind=dp) ::  MinSurfAreaFt2         !  actual min. nodal surface area (ft2)
-real(kind=dp) ::  VariableStep           !  size of variable time step (sec)
-real(kind=dp) ::  Omega                  !  actual under-relaxation parameter
-real(kind=dp) ::  CriticalDepth          !  critical flow depth (ft)
-real(kind=dp) ::  NormalDepth            !  normal flow depth (ft)
-real(kind=dp) ::  Fasnh                  !  fraction between norm. & crit. depth
+real(kind=dpw) ::  MinSurfAreaFt2         !  actual min. nodal surface area (ft2)
+real(kind=dpw) ::  VariableStep           !  size of variable time step (sec)
+real(kind=dpw) ::  Omega                  !  actual under-relaxation parameter
+real(kind=dpw) ::  CriticalDepth          !  critical flow depth (ft)
+real(kind=dpw) ::  NormalDepth            !  normal flow depth (ft)
+real(kind=dpw) ::  Fasnh                  !  fraction between norm. & crit. depth
 logical ::     Converged              !  TRUE if Picard iterations converged
 integer ::    Steps                  !  number of Picard iterations
 type(TXnode) :: Xnode
@@ -133,7 +133,7 @@ subroutine dynwave_init()
     implicit none
     integer :: i
     
-    !real(kind=dp) :: UCF
+    !real(kind=dpw) :: UCF
 
     VariableStep = 0.0
     if ( abs(MinSurfArea - 0.0) < tiny(1.0) ) then
@@ -175,7 +175,7 @@ subroutine  dynwave_close()
 end subroutine dynwave_close
 ! =============================================================================
 
-real(kind=dp) function dynwave_getRoutingStep(fixedStep)
+real(kind=dpw) function dynwave_getRoutingStep(fixedStep)
 ! 
 !   Input:   fixedStep = user-supplied fixed time step (sec)
 !   Output:  returns routing time step (sec)
@@ -183,7 +183,7 @@ real(kind=dp) function dynwave_getRoutingStep(fixedStep)
 ! 
     use headers
     implicit none
-    real(kind=dp), intent (in) :: fixedStep
+    real(kind=dpw), intent (in) :: fixedStep
     !  --- use user-supplied fixed step if variable step option turned off
     !      or if its smaller than the min. allowable variable time step
     if ( abs(CourantFactor - 0.0) < tiny(1.0) ) then
@@ -226,7 +226,7 @@ integer function dynwave_execute(links, tStep)
     use headers
     implicit none
     integer, intent (in) :: links(:)
-    real(kind=dp), intent (in) :: tStep
+    real(kind=dpw), intent (in) :: tStep
     
     integer :: i
 
@@ -297,9 +297,9 @@ subroutine execRoutingStep(links, dt)
     use modLink
     implicit none
     integer, intent(in) :: links(:)
-    real(kind=dp), intent (in) :: dt
+    real(kind=dpw), intent (in) :: dt
     integer ::    i                          !  node or link index
-    real(kind=dp) :: yOld                       !  old node depth (ft)
+    real(kind=dpw) :: yOld                       !  old node depth (ft)
 
     !  --- re-initialize state of each node
     do i = 1, Nobjects(E_NODE)
@@ -348,7 +348,7 @@ subroutine initNodeState(i)
     implicit none
     integer, intent(in) :: i
     
-    real(kind=dp) :: node_getSurfArea, node_getPondedArea
+    real(kind=dpw) :: node_getSurfArea, node_getPondedArea
     
     !  --- initialize nodal surface area
     if ( AllowPonding ) then
@@ -380,10 +380,10 @@ subroutine findConduitFlow(i, dt)
     use headers
     implicit none
     integer, intent(in) :: i
-    real(kind=dp), intent(in) :: dt
+    real(kind=dpw), intent(in) :: dt
     
-    real(kind=dp) :: qOld                       !  old link flow (cfs)
-    real(kind=dp) :: barrels                    !  number of barrels in conduit
+    real(kind=dpw) :: qOld                       !  old link flow (cfs)
+    real(kind=dpw) :: barrels                    !  number of barrels in conduit
 
     !  --- do nothing if link not a conduit
     if ( arrLink(i)%datatype /= E_CONDUIT .or. arrLink(i)%xsect%datatype == DUMMY) return
@@ -427,10 +427,10 @@ subroutine findNonConduitFlow(i, dt)
     use modLink
     implicit none
     integer, intent(in) :: i
-    real(kind=dp), intent(in) :: dt
+    real(kind=dpw), intent(in) :: dt
 
-    real(kind=dp) :: qLast                      !  previous link flow (cfs)
-    real(kind=dp) :: qNew                       !  new link flow (cfs)
+    real(kind=dpw) :: qLast                      !  previous link flow (cfs)
+    real(kind=dpw) :: qNew                       !  new link flow (cfs)
     integer ::  k, m
 
     !  --- ignore non-dummy conduit links
@@ -482,7 +482,7 @@ end subroutine findNonConduitFlow
 
 ! =============================================================================
 
-real(kind=dp) function getModPumpFlow(i, q, dt)
+real(kind=dpw) function getModPumpFlow(i, q, dt)
 ! 
 !   Input:   i = link index
 !            q = pump flow from pump curve (cfs)
@@ -496,17 +496,17 @@ real(kind=dp) function getModPumpFlow(i, q, dt)
     use headers
     implicit none
     integer, intent(in) :: i
-    real(kind=dp), intent(inout) :: q
-    real(kind=dp), intent(in) :: dt
+    real(kind=dpw), intent(inout) :: q
+    real(kind=dpw), intent(in) :: dt
 
     integer :: j           !  pump's inlet node index
     integer :: k           !  pump's index
     
-    real(kind=dp) :: newNetInflow               !  inflow - outflow rate (cfs)
-    real(kind=dp) :: netFlowVolume              !  inflow - outflow volume (ft3)
-    real(kind=dp) :: y                          !  node depth (ft)
+    real(kind=dpw) :: newNetInflow               !  inflow - outflow rate (cfs)
+    real(kind=dpw) :: netFlowVolume              !  inflow - outflow volume (ft3)
+    real(kind=dpw) :: y                          !  node depth (ft)
 
-    real(kind=dp) :: node_getMaxOutflow
+    real(kind=dpw) :: node_getMaxOutflow
     
     j = arrLink(i)%node1   
     k = arrLink(i)%subIndex
@@ -596,7 +596,7 @@ subroutine updateNodeFlows( i,  q)
     use headers
     implicit none
     integer, intent(in) :: i
-    real(kind=dp), intent(in) :: q
+    real(kind=dpw), intent(in) :: q
     if ( q >= 0.0 ) then
         Node(arrLink(i)%node1)%outflow = Node(arrLink(i)%node1)%outflow + q
         Node(arrLink(i)%node2)%inflow  = Node(arrLink(i)%node2)%inflow + q
@@ -608,7 +608,7 @@ end subroutine updateNodeFlows
 
 ! =============================================================================
 
-real(kind=dp) function  getConduitFlow(j, qOld, dt)
+real(kind=dpw) function  getConduitFlow(j, qOld, dt)
 ! 
 !   Input:   j        = link index
 !            qOld     = flow from previous iteration (cfs)
@@ -625,33 +625,33 @@ real(kind=dp) function  getConduitFlow(j, qOld, dt)
     use forcemain
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: qOld, dt
+    real(kind=dpw), intent(in) :: qOld, dt
     
     logical :: tf
     integer :: k                          !  index of conduit
     integer :: n1, n2                     !  indexes of end nodes
-    real(kind=dp) :: z1, z2                     !  upstream/downstream invert elev. (ft)
-    real(kind=dp) ::  h1, h2                     !  upstream/dounstream flow heads (ft)
-    real(kind=dp) ::  y1, y2                     !  upstream/downstream flow depths (ft)
-    real(kind=dp) ::  a1, a2                     !  upstream/downstream flow areas (ft2)
-    real(kind=dp) ::  r1                         !  upstream hyd. radius (ft)
-    real(kind=dp) ::  yMid, rMid, aMid           !  mid-stream or avg. values of y, r, & a
-    real(kind=dp) ::  aWtd, rWtd                 !  upstream weighted area & hyd. radius
-    real(kind=dp) ::  qLast                      !  flow from previous iteration (cfs)
-    real(kind=dp) ::  aOld                       !  area from previous time step (ft2)
-    real(kind=dp) ::  v                          !  velocity (ft/sec)
-    real(kind=dp) ::  rho                        !  upstream weighting factor
-    real(kind=dp) ::  sigma                      !  inertial damping factor
-    real(kind=dp) ::  mlength                    !  effective conduit mlength (ft)
-    real(kind=dp) ::  dq1, dq2, dq3, dq4, dq5    !  terms in momentum eqn.
-    real(kind=dp) ::  denom                      !  denominator of flow update formula
-    real(kind=dp) ::  q                          !  new flow value (cfs)
-    real(kind=dp) ::  barrels                    !  number of barrels in conduit
+    real(kind=dpw) :: z1, z2                     !  upstream/downstream invert elev. (ft)
+    real(kind=dpw) ::  h1, h2                     !  upstream/dounstream flow heads (ft)
+    real(kind=dpw) ::  y1, y2                     !  upstream/downstream flow depths (ft)
+    real(kind=dpw) ::  a1, a2                     !  upstream/downstream flow areas (ft2)
+    real(kind=dpw) ::  r1                         !  upstream hyd. radius (ft)
+    real(kind=dpw) ::  yMid, rMid, aMid           !  mid-stream or avg. values of y, r, & a
+    real(kind=dpw) ::  aWtd, rWtd                 !  upstream weighted area & hyd. radius
+    real(kind=dpw) ::  qLast                      !  flow from previous iteration (cfs)
+    real(kind=dpw) ::  aOld                       !  area from previous time step (ft2)
+    real(kind=dpw) ::  v                          !  velocity (ft/sec)
+    real(kind=dpw) ::  rho                        !  upstream weighting factor
+    real(kind=dpw) ::  sigma                      !  inertial damping factor
+    real(kind=dpw) ::  mlength                    !  effective conduit mlength (ft)
+    real(kind=dpw) ::  dq1, dq2, dq3, dq4, dq5    !  terms in momentum eqn.
+    real(kind=dpw) ::  denom                      !  denominator of flow update formula
+    real(kind=dpw) ::  q                          !  new flow value (cfs)
+    real(kind=dpw) ::  barrels                    !  number of barrels in conduit
     
     !TXsect* xsect = &arrLink(j).xsect    !  ptr. to conduit's cross section data
     !type(TXsect), pointer :: xsect !use pointer as to not recreate a local copy
     logical :: isFull
-    real(kind=dp) :: qOldB
+    real(kind=dpw) :: qOldB
     type(TXsect) :: xsect
     !xsect => arrLink(j)%xsect !  ptr. to conduit's cross section data
     xsect = arrLink(j)%xsect
@@ -876,12 +876,12 @@ integer function getFlowClass(j, q, h1, h2, y1, y2)
     use modLink
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: q, h1, h2, y1, y2
+    real(kind=dpw), intent(in) :: q, h1, h2, y1, y2
 
     integer ::    n1, n2                     !  indexes of upstrm/downstrm nodes
     integer ::    flowClass                  !  flow classification code
-    real(kind=dp) :: ycMin, ycMax               !  min/max critical depths (ft)
-    real(kind=dp) :: z1, z2                     !  offsets of conduit inverts (ft)
+    real(kind=dpw) :: ycMin, ycMax               !  min/max critical depths (ft)
+    real(kind=dpw) :: z1, z2                     !  offsets of conduit inverts (ft)
 
     !  --- get upstream & downstream node indexes
     n1 = arrLink(j)%node1
@@ -988,18 +988,18 @@ subroutine findSurfArea(j, aLength, h1, h2, y1, y2)
     use headers
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(inout) :: h1, h2, y1, y2
-    real(kind=dp), intent(in) :: aLength
+    real(kind=dpw), intent(inout) :: h1, h2, y1, y2
+    real(kind=dpw), intent(in) :: aLength
     
     integer ::     n1, n2                    !  indexes of upstrm/downstrm nodes
-    real(kind=dp) :: flowDepth1                !  flow depth at upstrm end (ft)
-    real(kind=dp) :: flowDepth2                !  flow depth at downstrm end (ft)
-    real(kind=dp) :: flowDepthMid              !  flow depth at midpt. (ft)
-    real(kind=dp) :: width1                    !  top width at upstrm end (ft)
-    real(kind=dp) :: width2                    !  top width at downstrm end (ft)
-    real(kind=dp) :: widthMid                  !  top width at midpt. (ft)
-    real(kind=dp) :: surfArea1            !  surface area at upstream node (ft2)
-    real(kind=dp) :: surfArea2            !  surface area st downstrm node (ft2)
+    real(kind=dpw) :: flowDepth1                !  flow depth at upstrm end (ft)
+    real(kind=dpw) :: flowDepth2                !  flow depth at downstrm end (ft)
+    real(kind=dpw) :: flowDepthMid              !  flow depth at midpt. (ft)
+    real(kind=dpw) :: width1                    !  top width at upstrm end (ft)
+    real(kind=dpw) :: width2                    !  top width at downstrm end (ft)
+    real(kind=dpw) :: widthMid                  !  top width at midpt. (ft)
+    real(kind=dpw) :: surfArea1            !  surface area at upstream node (ft2)
+    real(kind=dpw) :: surfArea2            !  surface area st downstrm node (ft2)
 !   TXsect* xsect = &arrLink(j).xsect
     type(TXsect), pointer :: xsect
     xsect => arrLink(j)%xsect
@@ -1100,7 +1100,7 @@ end subroutine findSurfArea
 
 ! =============================================================================
 
-real(kind=dp) function findLocalLosses(j, a1, a2, aMid, q)
+real(kind=dpw) function findLocalLosses(j, a1, a2, aMid, q)
 ! 
 !   Input:   j    = link index
 !            a1   = upstream area (ft2)
@@ -1115,8 +1115,8 @@ real(kind=dp) function findLocalLosses(j, a1, a2, aMid, q)
     use headers
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: a1, a2, aMid, q
-    real(kind=dp) :: losses, mq
+    real(kind=dpw), intent(in) :: a1, a2, aMid, q
+    real(kind=dpw) :: losses, mq
     losses = 0.0
     mq = abs(q)
     if ( a1 > FUDGE ) losses = losses + arrLink(j)%cLossInlet  * (mq/a1)
@@ -1128,7 +1128,7 @@ end function findLocalLosses
 
 ! =============================================================================
 
-real(kind=dp) function getWidth(xsect, y)
+real(kind=dpw) function getWidth(xsect, y)
 ! 
 !   Input:   xsect = ptr. to conduit cross section
 !            y     = flow depth (ft)
@@ -1141,9 +1141,9 @@ real(kind=dp) function getWidth(xsect, y)
     use modXsect
     implicit none
     type(TXsect), intent(in) :: xsect
-    real(kind=dp), intent(in) :: y
-    real(kind=dp) :: yNorm
-    real(kind=dp) :: ym
+    real(kind=dpw), intent(in) :: y
+    real(kind=dpw) :: yNorm
+    real(kind=dpw) :: ym
     ym = y
     yNorm = ym/xsect%yFull
 !   if ( yNorm < 0.04 ) y = 0.04*xsect->yFull                                 ! (5.0.015 - LR)
@@ -1154,7 +1154,7 @@ end function getWidth
 
 ! =============================================================================
 
-real(kind=dp) function getArea(xsect, y)
+real(kind=dpw) function getArea(xsect, y)
 ! 
 !   Input:   xsect = ptr. to conduit cross section
 !            y     = flow depth (ft)
@@ -1167,8 +1167,8 @@ real(kind=dp) function getArea(xsect, y)
     use modXsect
     implicit none
     type(TXsect), intent(inout) :: xsect
-    real(kind=dp), intent(in) :: y
-    real(kind=dp) :: ym
+    real(kind=dpw), intent(in) :: y
+    real(kind=dpw) :: ym
     ym = y
     ym = MIN(ym, xsect%yFull)
     getArea = xsect_getAofY(xsect, ym)
@@ -1176,7 +1176,7 @@ real(kind=dp) function getArea(xsect, y)
 end function getArea
 ! =============================================================================
 
-real(kind=dp) function getHydRad(xsect, y)
+real(kind=dpw) function getHydRad(xsect, y)
 ! 
 !   Input:   xsect = ptr. to conduit cross section
 !            y     = flow depth (ft)
@@ -1189,8 +1189,8 @@ real(kind=dp) function getHydRad(xsect, y)
     use modXsect
     implicit none
     type(TXsect), intent(inout) :: xsect
-    real(kind=dp), intent(in) :: y
-    real(kind=dp) :: ym
+    real(kind=dpw), intent(in) :: y
+    real(kind=dpw) :: ym
     ym = y
     ym = MIN(ym, xsect%yFull)
     getHydRad = xsect_getRofY(xsect, ym)
@@ -1206,7 +1206,7 @@ end function getHydRad
 
 !   =====  This function was completely re-written for release 5.0.019  =====  ! (5.0.019 - LR)
 
-real(kind=dp) function checkNormalFlow(j, q, y1, y2, a1, r1)
+real(kind=dpw) function checkNormalFlow(j, q, y1, y2, a1, r1)
 ! 
 !   Input:   j = link index
 !            q = link flow found from dynamic wave equations (cfs)
@@ -1222,13 +1222,13 @@ real(kind=dp) function checkNormalFlow(j, q, y1, y2, a1, r1)
     use headers
     use modLink
     implicit none
-    real(kind=dp), intent(in) :: q, y1, y2, a1, r1
+    real(kind=dpw), intent(in) :: q, y1, y2, a1, r1
     integer, intent(in) :: j
     logical ::    check
     integer ::    k, n1, n2
     logical ::    hasOutfall
-    real(kind=dp) :: qNorm
-    real(kind=dp) :: f1
+    real(kind=dpw) :: qNorm
+    real(kind=dpw) :: f1
     check  = .FALSE.
     k = arrLink(j)%subIndex
     n1 = arrLink(j)%node1
@@ -1282,24 +1282,24 @@ subroutine setNodeDepth(i, dt)
     use headers
     implicit none
     integer, intent(in) :: i
-    real(kind=dp), intent(in) :: dt
+    real(kind=dpw), intent(in) :: dt
     logical ::     canPond                   !  TRUE if node can pond overflows
     logical ::     isPonded                  !  TRUE if node is currently ponded     ! (5.0.016 - LR)
-    real(kind=dp) ::  dQ                        !  inflow minus outflow at node (cfs)
-    real(kind=dp) ::  dV                        !  change in node volume (ft3)
-    real(kind=dp) ::  dy                        !  change in node depth (ft)
-    real(kind=dp) ::  yMax                      !  max. depth at node (ft)
-    real(kind=dp) ::  yOld                      !  node depth at previous time step (ft)
-    real(kind=dp) ::  yLast                     !  previous node depth (ft)
-    real(kind=dp) ::  yNew                      !  new node depth (ft)
-    real(kind=dp) ::  yCrown                    !  depth to node crown (ft)
-    real(kind=dp) ::  surfArea                  !  node surface area (ft2)
-    real(kind=dp) ::  denom                     !  denominator term
-    real(kind=dp) ::  corr                      !  correction factor
-    real(kind=dp) ::  f                         !  relative surcharge depth
+    real(kind=dpw) ::  dQ                        !  inflow minus outflow at node (cfs)
+    real(kind=dpw) ::  dV                        !  change in node volume (ft3)
+    real(kind=dpw) ::  dy                        !  change in node depth (ft)
+    real(kind=dpw) ::  yMax                      !  max. depth at node (ft)
+    real(kind=dpw) ::  yOld                      !  node depth at previous time step (ft)
+    real(kind=dpw) ::  yLast                     !  previous node depth (ft)
+    real(kind=dpw) ::  yNew                      !  new node depth (ft)
+    real(kind=dpw) ::  yCrown                    !  depth to node crown (ft)
+    real(kind=dpw) ::  surfArea                  !  node surface area (ft2)
+    real(kind=dpw) ::  denom                     !  denominator term
+    real(kind=dpw) ::  corr                      !  correction factor
+    real(kind=dpw) ::  f                         !  relative surcharge depth
     
-    real(kind=dp) :: node_getLosses !TODO: this is for .NET compile
-    real(kind=dp) :: node_getvolume !TODO: this is for .NET compile
+    real(kind=dpw) :: node_getLosses !TODO: this is for .NET compile
+    real(kind=dpw) :: node_getvolume !TODO: this is for .NET compile
 
     !  --- see if node can pond water above it
     if (AllowPonding .and. Node(i)%pondedArea > 0.0) then
@@ -1398,7 +1398,7 @@ end subroutine setNodeDepth
 
 !   =====  This function was completely re-written for release 5.0.019  =====  ! (5.0.019 - LR)
 
-real(kind=dp) function getFloodedDepth(i, canPond, dV, yNew, yMax, dt)
+real(kind=dpw) function getFloodedDepth(i, canPond, dV, yNew, yMax, dt)
 ! 
 !   Input:   i  = node index
 !            canPond = TRUE if water can pond over node
@@ -1416,8 +1416,8 @@ real(kind=dp) function getFloodedDepth(i, canPond, dV, yNew, yMax, dt)
     implicit none
     integer, intent(in) :: i
     logical, intent(in) :: canPond
-    real(kind=dp), intent(in) :: dV, yNew, yMax, dt
-    real(kind=dp) :: myNew
+    real(kind=dpw), intent(in) :: dV, yNew, yMax, dt
+    real(kind=dpw) :: myNew
     myNew = yNew
 
     if ( .not.canPond ) then
@@ -1437,7 +1437,7 @@ end function getFloodedDepth
 
 ! =============================================================================
 
-real(kind=dp) function getVariableStep(maxStep)
+real(kind=dpw) function getVariableStep(maxStep)
 ! 
 !   Input:   maxStep = user-supplied max. time step (sec)
 !   Output:  returns time step (sec)
@@ -1446,12 +1446,12 @@ real(kind=dp) function getVariableStep(maxStep)
 ! 
 
     implicit none
-    real(kind=dp), intent(in) :: maxStep
+    real(kind=dpw), intent(in) :: maxStep
     integer ::    minLink = -1                !  index of link w/ min. time step
     integer ::    minNode = -1                !  index of node w/ min. time step
-    real(kind=dp) :: tMin                        !  allowable time step (sec)
-    real(kind=dp) :: tMinLink                    !  allowable time step for links (sec)
-    real(kind=dp) :: tMinNode                    !  allowable time step for nodes (sec)
+    real(kind=dpw) :: tMin                        !  allowable time step (sec)
+    real(kind=dpw) :: tMinLink                    !  allowable time step for links (sec)
+    real(kind=dpw) :: tMinNode                    !  allowable time step for nodes (sec)
 
     !  --- find stable time step for links & then nodes
     tMin = maxStep
@@ -1477,7 +1477,7 @@ end function getVariableStep
 
 ! =============================================================================
 
-real(kind=dp) function getLinkStep(tMin, minLink)
+real(kind=dpw) function getLinkStep(tMin, minLink)
 ! 
 !   Input:   tMin = critical time step found so far (sec)
 !   Output:  minLink = index of link with critical time step
@@ -1489,14 +1489,14 @@ real(kind=dp) function getLinkStep(tMin, minLink)
     use headers
     use modLink
     implicit none
-    real(kind=dp), intent(in) :: tMin
+    real(kind=dpw), intent(in) :: tMin
     integer, intent(inout) :: minLink
 
     integer ::    i                           !  link index
     integer ::    k                           !  conduit index
-    real(kind=dp) :: q                           !  conduit flow (cfs)
-    real(kind=dp) :: t                           !  time step (sec)
-    real(kind=dp) :: mtLink
+    real(kind=dpw) :: q                           !  conduit flow (cfs)
+    real(kind=dpw) :: t                           !  time step (sec)
+    real(kind=dpw) :: mtLink
     mtLink = tMin                !  critical link time step (sec)
     !  --- examine each conduit link
     do i = 1, Nobjects(LINK)
@@ -1527,7 +1527,7 @@ end function getLinkStep
 
 ! =============================================================================
 
-real(kind=dp) function getNodeStep(tMin, minNode)
+real(kind=dpw) function getNodeStep(tMin, minNode)
 ! 
 !   Input:   tMin = critical time step found so far (sec)
 !   Output:  minNode = index of node with critical time step
@@ -1540,13 +1540,13 @@ real(kind=dp) function getNodeStep(tMin, minNode)
     use enums
     use headers
     implicit none
-    real(kind=dp), intent(in) :: tMin
+    real(kind=dpw), intent(in) :: tMin
     integer, intent(inout) :: minNode
     integer ::    i                           !  node index
-    real(kind=dp) :: maxDepth                    !  max. depth allowed at node (ft)
-    real(kind=dp) :: dYdT                        !  change in depth per unit time (ft/sec)
-    real(kind=dp) :: t1                          !  time needed to reach depth limit (sec)
-    real(kind=dp) :: mtNode                !  critical node time step (sec)
+    real(kind=dpw) :: maxDepth                    !  max. depth allowed at node (ft)
+    real(kind=dpw) :: dYdT                        !  change in depth per unit time (ft/sec)
+    real(kind=dpw) :: t1                          !  time needed to reach depth limit (sec)
+    real(kind=dpw) :: mtNode                !  critical node time step (sec)
     mtNode = tMin
 
     !  --- find smallest time so that estimated change in nodal depth
@@ -1588,7 +1588,7 @@ subroutine checkCapacity(j)
     implicit none
     integer, intent(in) :: j
     integer ::    n1, n2, k
-    real(kind=dp) :: h1, h2
+    real(kind=dpw) :: h1, h2
 
     !  ---- check only conduit links
     if ( arrLink(j)%datatype /= E_CONDUIT ) return

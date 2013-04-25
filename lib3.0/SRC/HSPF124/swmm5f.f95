@@ -1,6 +1,7 @@
 module swmm5f
 
 integer, parameter :: MAX_EXCEPTIONS = 100            ! max. number of exceptions handled
+integer, parameter :: dp = kind(1.d0)
 
 !-----------------------------------------------------------------------------
 !  Shared variables

@@ -1,10 +1,11 @@
 module swmm5futil
-use DataSizeSpecs
+integer, parameter :: dps = kind(1.d0)
+integer, parameter :: K2 = selected_int_kind(2) !kind= 1
 
 !-----------------------------------------------------------------------------
 !  Unit conversion factors
 !-----------------------------------------------------------------------------
-real(kind=dp), dimension(2, 10), parameter :: arrUcf = &                !(5.0.010 - LR)
+real(kind=dps), dimension(2, 10), parameter :: arrUcf = &                !(5.0.010 - LR)
     &reshape((/43200.0,   1097280.0 , &         ! RAINFALL (in/hr, mm/hr --> ft/sec)
       &12.0,      304.8     , &         ! RAINDEPTH (in, mm --> ft)
       &1036800.0, 26334720.0, &         ! EVAPRATE (in/day, mm/day --> ft/sec)
@@ -30,7 +31,7 @@ real(kind=dp), dimension(2, 10), parameter :: arrUcf = &                !(5.0.01
 !      {43560.0,   3048.0    }          ! GWFLOW (cfs/ac, cms/ha --> ft/sec)   !(5.0.010 - LR)
 !      };
 
-real(kind=dp), dimension(6), parameter :: Qcf = &                 ! Flow Conversion Factors:
+real(kind=dps), dimension(6), parameter :: Qcf = &                 ! Flow Conversion Factors:
      &(/ 1.0,     448.831, 0.64632, &     ! cfs, gpm, mgd --> cfs
        &0.02832, 28.317,  2.4466/)    ! cms, lps, mld --> cfs
        
@@ -38,7 +39,7 @@ real(kind=dp), dimension(6), parameter :: Qcf = &                 ! Flow Convers
 !For use in 'statsrpt'
 !
 character(6) :: FlowFmt
-real(kind=dp) :: Vcf
+real(kind=dps) :: Vcf
 
 !
 !For use in output and report
@@ -50,23 +51,23 @@ real(kind=dp) :: Vcf
 !integer, parameter :: k6 = selected_int_kind(6) 
 !integer, parameter :: k15 = selected_int_kind(15)
 
-real(kind=dp), dimension(:), allocatable, save :: SubcatchResults !REAL8
-real(kind=dp), dimension(:), allocatable, save :: NodeResults !REAL8
-real(kind=dp), dimension(:), allocatable, save :: LinkResults !REAL8
+real(kind=dps), dimension(:), allocatable, save :: SubcatchResults !REAL8
+real(kind=dps), dimension(:), allocatable, save :: NodeResults !REAL8
+real(kind=dps), dimension(:), allocatable, save :: LinkResults !REAL8
 
 type myoutput
   integer :: datatype
   integer :: index
-  real(kind=dp), dimension(:), pointer :: oflow
-  real(kind=dp), dimension(:), pointer :: odepth
-  real(kind=dp), dimension(:), pointer :: ovolume
+  real(kind=dps), dimension(:), pointer :: oflow
+  real(kind=dps), dimension(:), pointer :: odepth
+  real(kind=dps), dimension(:), pointer :: ovolume
 end type myoutput
 
 type myTimeseries
   integer :: datatype
   integer :: tohere
-  real(kind=dp), dimension(:), pointer :: odates
-  real(kind=dp), dimension(:), pointer :: ovalues 
+  real(kind=dps), dimension(:), pointer :: odates
+  real(kind=dps), dimension(:), pointer :: ovalues 
 end type myTimeseries
 
 type(myoutput), dimension(:), allocatable, save :: onodes
@@ -75,18 +76,17 @@ type(myoutput), dimension(:), allocatable, save :: olinks
 type(myTimeseries), dimension(:), allocatable, save :: oTsers
 
 contains
-real(kind=dp) function UCF(u)
+real(kind=dps) function UCF(u)
 !
 !  Input:   u = integer code of quantity being converetd
 !  Output:  returns a units conversion factor
 !  Purpose: computes a conversion factor from SWMM's internal
 !           units to user's units
 !
-    use DataSizeSpecs
     use globals
     implicit none
     integer(kind=K2), intent(in) :: u
-    real(kind=dp) :: lUCF
+    real(kind=dps) :: lUCF
     
     if ( u < FLOW ) then
         !lUCF = arrUcf(u, UnitSystem)
@@ -102,8 +102,8 @@ end function UCF
 !
 INTEGER FUNCTION ReDim(array)
 IMPLICIT NONE
-REAL(KIND=dp), DIMENSION(:),POINTER :: array
-REAL(KIND=dp), DIMENSION(:),ALLOCATABLE :: tmp_arr
+REAL(KIND=dps), DIMENSION(:),POINTER :: array
+REAL(KIND=dps), DIMENSION(:),ALLOCATABLE :: tmp_arr
 INTEGER :: prevSize, lStat
 prevSize = SIZE(array, 1)
 

@@ -21,6 +21,8 @@ module output
 !
 use headers
 use swmm5futil
+integer, parameter :: dp = kind(1.d0)
+integer, parameter :: K4 = selected_int_kind(4) !kind= 2
 !
 ! Definition of 4-byte integer, 4-byte real and 8-byte real types             !(5.0.014 - LR)
 !#define INT4  int

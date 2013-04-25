@@ -1,3 +1,5 @@
+module modFlowRout
+integer, parameter :: dp = kind(1.d0)
 !-----------------------------------------------------------------------------
 !   flowrout.c
 !
@@ -53,6 +55,8 @@
 !static void   updateNodeDepth(int node, double y);
 !static int    steadyflow_execute(int link, double* qin, double* qout);
 !
+
+contains
 
 !=============================================================================
 
@@ -867,3 +871,4 @@ integer function steadyflow_execute(j, qin, qout)
     return
 end function steadyflow_execute
 !=============================================================================
+end module modFlowRout

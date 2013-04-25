@@ -1,16 +1,18 @@
 module modLink
-use DataSizeSpecs
+integer, parameter :: dpl = kind(1.d0)
+integer, parameter :: K2l = selected_int_kind(2) !kind= 1
+integer, parameter :: K4 = selected_int_kind(4) !kind= 2
 
 !-----------------------------------------------------------------------------
 !  Constants
 !-----------------------------------------------------------------------------
-real(kind=dp), parameter :: MIN_DELTA_Z = 0.001 ! minimum elevation change for conduit slopes (ft)
+real(kind=dpl), parameter :: MIN_DELTA_Z = 0.001 ! minimum elevation change for conduit slopes (ft)
 
 contains
 
 !=============================================================================
 
-real(kind=dp) function conduit_getInflow(j)
+real(kind=dpl) function conduit_getInflow(j)
 !
 !  Input:   j = link index
 !  Output:  returns flow in link (cfs)
@@ -20,7 +22,7 @@ real(kind=dp) function conduit_getInflow(j)
     implicit none
     integer, intent(in) :: j
     
-    real(kind=dp) :: qIn
+    real(kind=dpl) :: qIn
     
     if ( arrLink(j)%qLimit > 0.0 ) qIn = MIN(qIn, arrLink(j)%qLimit)                !(5.0.012 - LR)
     conduit_getInflow = qIn
@@ -30,7 +32,7 @@ end function conduit_getInflow
 
 !!  New function added to release 5.0.015  !!                              !(5.0.015 - LR)
 
-real(kind=dp) function conduit_getLength(j)
+real(kind=dpl) function conduit_getLength(j)
 !
 !  Input:   j = link index
 !  Output:  returns conduit's length (ft)
@@ -60,7 +62,7 @@ end function conduit_getLength
 
 !=============================================================================
 
-real(kind=dp) function conduit_getLengthFactor(j, k, roughness)                 !(5.0.010 - LR)
+real(kind=dpl) function conduit_getLengthFactor(j, k, roughness)                 !(5.0.010 - LR)
 !
 !  Input:   j = link index
 !           k = conduit index
@@ -80,11 +82,11 @@ real(kind=dp) function conduit_getLengthFactor(j, k, roughness)                 
     implicit none
     integer, intent(in) :: j
     integer(kind=K4), intent(in) :: k
-    real(kind=dp), intent(in) :: roughness
-    real(kind=dp) :: ratio
-    real(kind=dp) ::  yFull
-    real(kind=dp) ::  vFull
-    real(kind=dp) ::  tStep
+    real(kind=dpl), intent(in) :: roughness
+    real(kind=dpl) :: ratio
+    real(kind=dpl) ::  yFull
+    real(kind=dpl) ::  vFull
+    real(kind=dpl) ::  tStep
 
     ! --- evaluate flow depth and velocity at full normal flow condition
     yFull = arrLink(j)%xsect%yFull
@@ -114,7 +116,7 @@ end function conduit_getLengthFactor
 
 !=============================================================================
 !! --- New function added for release 5.0.014 --- !!                       !(5.0.014 - LR)
-real(kind=dp) function conduit_getSlope(j)                                                 !(5.0.015 - LR)
+real(kind=dpl) function conduit_getSlope(j)                                                 !(5.0.015 - LR)
 !
 !  Input:   j = link index
 !  Output:  returns conduit slope
@@ -124,8 +126,8 @@ real(kind=dp) function conduit_getSlope(j)                                      
     use report
     implicit none
     integer, intent(in) :: j
-    real(kind=dp) :: elev1, elev2, delta, mslope
-    real(kind=dp) :: mlength                                      !(5.0.015 - LR)
+    real(kind=dpl) :: elev1, elev2, delta, mslope
+    real(kind=dpl) :: mlength                                      !(5.0.015 - LR)
     mlength = conduit_getLength(j)                                      !(5.0.015 - LR)
 
     ! --- check that elevation drop > minimum allowable drop
@@ -190,8 +192,8 @@ subroutine conduit_reverse(j, k)
     integer, intent(in) :: j
     integer(kind=K4), intent(in) :: k
     integer ::    i
-    real(kind=dp) :: z
-    real(kind=dp) :: cLoss
+    real(kind=dpl) :: z
+    real(kind=dpl) :: cLoss
 
     ! --- reverse end nodes
     i = arrLink(j)%node1
@@ -234,10 +236,10 @@ subroutine conduit_validate(j, k)
     implicit none
     integer, intent(in) :: j
     integer(kind=K4), intent(in) :: k
-    real(kind=dp) :: aa
-    real(kind=dp) :: lengthFactor, roughness, mSlope                    !(5.0.018 - LR)
+    real(kind=dpl) :: aa
+    real(kind=dpl) :: lengthFactor, roughness, mSlope                    !(5.0.018 - LR)
 
-    !real(kind=dp) :: forcemain_getEquivN, forcemain_getRoughFactor
+    !real(kind=dpl) :: forcemain_getEquivN, forcemain_getRoughFactor
     ! --- if custom xsection, then set its parameters                         !(5.0.010 - LR)
     if ( arrLink(j)%xsect%datatype == CUSTOM ) &                                        !(5.0.010 - LR)
        &call xsect_setCustomXsectParams(arrLink(j)%xsect)                            !(5.0.010 - LR)
@@ -382,7 +384,7 @@ subroutine link_convertOffsets(j)
     use headers
     implicit none
     integer, intent(in) :: j
-    real(kind=dp) :: elev
+    real(kind=dpl) :: elev
     
     elev = Node(arrLink(j)%node1)%invertElev
     arrLink(j)%offset1 = link_getOffsetHeight(j, arrLink(j)%offset1, elev)
@@ -398,7 +400,7 @@ end subroutine link_convertOffsets
 
 !!  ------  This function was completely re-written.  ------  !!           !(5.0.014 - LR)
 
-real(kind=dp) function link_getFroude(j, v, y)
+real(kind=dpl) function link_getFroude(j, v, y)
 !
 !  Input:   j = link index
 !           v = flow velocity (fps)
@@ -411,8 +413,8 @@ real(kind=dp) function link_getFroude(j, v, y)
     use modXsect
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: v, y
-    real(kind=dp) :: ym
+    real(kind=dpl), intent(in) :: v, y
+    real(kind=dpl) :: ym
     ym = y
     
     !TXsect*  xsect = &arrLink(j)%xsect
@@ -443,7 +445,7 @@ end function link_getFroude
 
 !=============================================================================
 
-real(kind=dp) function link_getInflow(j)
+real(kind=dpl) function link_getInflow(j)
 !
 !  Input:   j = link index
 !  Output:  returns link flow rate (cfs)
@@ -452,7 +454,7 @@ real(kind=dp) function link_getInflow(j)
     use headers
     implicit none
     integer, intent(in) :: j
-    real(kind=dp) :: node_getOutflow
+    real(kind=dpl) :: node_getOutflow
     if ( arrLink(j)%setting == 0 .or. arrLink(j)%isClosed ) then
        link_getInflow = 0.0
        return
@@ -477,7 +479,7 @@ end function link_getInflow
 
 !!  New function added  !!                                                 !(5.0.012 - LR)
 
-real(kind=dp) function link_getOffsetHeight(j, offset, elev)
+real(kind=dpl) function link_getOffsetHeight(j, offset, elev)
 !
 !  Input:   j = link index
 !           offset = link elevation offset (ft)
@@ -489,8 +491,8 @@ real(kind=dp) function link_getOffsetHeight(j, offset, elev)
     use report
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: offset, elev
-    real(kind=dp) :: moffset
+    real(kind=dpl), intent(in) :: offset, elev
+    real(kind=dpl) :: moffset
     moffset = offset
     
     if ( moffset == MISSING ) then
@@ -514,7 +516,7 @@ end function link_getOffsetHeight
 
 !!  New function added to release 5.0.015  !!                              !(5.0.015 - LR)
 
-real(kind=dp) function link_getLength(j)
+real(kind=dpl) function link_getLength(j)
 !
 !  Input:   j = link index
 !  Output:  returns length (ft)
@@ -533,7 +535,7 @@ end function link_getLength
 !=============================================================================
 
 !!  New function added to compute power consumption !!                     !(5.0.012 - LR)
-real(kind=dp) function link_getPower(j)
+real(kind=dpl) function link_getPower(j)
 !
 !  Input:   j = link index
 !  Output:  returns power consumed by link in kwatts
@@ -544,7 +546,7 @@ real(kind=dp) function link_getPower(j)
     implicit none
     integer, intent(in) :: j
     integer :: n1, n2
-    real(kind=dp) :: dh, q, lVal
+    real(kind=dpl) :: dh, q, lVal
 
     n1 = arrLink(j)%node1
     n2 = arrLink(j)%node2
@@ -569,16 +571,16 @@ subroutine link_getResults(j, f, x)
     use swmm5futil
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: f
-    real(kind=dp), dimension(:), intent(inout) :: x
+    real(kind=dpl), intent(in) :: f
+    real(kind=dpl), dimension(:), intent(inout) :: x
     
     integer :: p              ! pollutant index
-    real(kind=dp) :: y, &  ! depth
+    real(kind=dpl) :: y, &  ! depth
           &q, &               ! flow
           &v, &               ! velocity
           &fr,&               ! Froude no.
           &c                  ! capacity or concentration
-    real(kind=dp) :: f1
+    real(kind=dpl) :: f1
     f1 = 1.0 - f
 
     y = f1*arrLink(j)%oldDepth + f*arrLink(j)%newDepth
@@ -610,7 +612,7 @@ end subroutine link_getResults
 
 !=============================================================================
 
-real(kind=dp) function link_getVelocity(j, aFlow, depth)
+real(kind=dpl) function link_getVelocity(j, aFlow, depth)
 !
 !  Input:   j     = link index
 !           flow  = link flow rate (cfs)
@@ -622,8 +624,8 @@ real(kind=dp) function link_getVelocity(j, aFlow, depth)
     use modXsect
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: aFlow, depth
-    real(kind=dp) :: area, veloc, mflow
+    real(kind=dpl), intent(in) :: aFlow, depth
+    real(kind=dpl) :: area, veloc, mflow
     integer :: k
     veloc = 0.0
     mflow = aFlow
@@ -734,7 +736,7 @@ integer function link_readXsectParams(tok, ntoks)
 !    character(*), dimension(:), intent(in) :: tok
 !    
 !    integer ::    i, j, k
-!    real(kind=dp) :: x(4)
+!    real(kind=dpl) :: x(4)
 !
 !    ! --- get index of link
 !    if ( ntoks < 6 ) then
@@ -841,7 +843,7 @@ logical function link_setFlapGate( j,  n1,  n2,  q)
     use headers
     implicit none
     integer, intent(in) :: j, n1, n2
-    real(kind=dp), intent(in) :: q
+    real(kind=dpl), intent(in) :: q
     
     integer :: n
      n = -1
@@ -869,7 +871,7 @@ end function link_setFlapGate
 
 !=============================================================================
 
-real(kind=dp) function link_getYcrit(j, q)
+real(kind=dpl) function link_getYcrit(j, q)
 !
 !  Input:   j = link index
 !           q = link flow rate (cfs)
@@ -882,14 +884,14 @@ real(kind=dp) function link_getYcrit(j, q)
     use modXsect
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: q
+    real(kind=dpl), intent(in) :: q
    !link_getYcrit = xsect_getYcrit(&arrLink(j)%xsect, q)
     link_getYcrit = xsect_getYcrit(arrLink(j)%xsect, q)
 end function link_getYcrit
 
 !=============================================================================
 
-real(kind=dp) function link_getYnorm(j, q)
+real(kind=dpl) function link_getYnorm(j, q)
 !
 !  Input:   j = link index
 !           q = link flow rate (cfs)
@@ -902,9 +904,9 @@ real(kind=dp) function link_getYnorm(j, q)
     use modXsect
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: q
+    real(kind=dpl), intent(in) :: q
     integer ::    k
-    real(kind=dp) :: s, a, y, mq
+    real(kind=dpl) :: s, a, y, mq
     mq = q
 
     if ( arrLink(j)%datatype /= E_CONDUIT ) then
@@ -947,11 +949,11 @@ subroutine link_setOutfallDepth(j)
     integer, intent(in) :: j
     integer ::     k                         ! conduit index
     integer ::     n                         ! outfall node index
-    real(kind=dp) ::  z                         ! invert offset height (ft)
-    real(kind=dp) :: q                         ! flow rate (cfs)
-    real(kind=dp) :: yCrit               ! critical flow depth (ft)
-    real(kind=dp) :: yNorm               ! normal flow depth (ft)
-    !real(kind=dp) :: link_getYnorm, link_getYcrit
+    real(kind=dpl) ::  z                         ! invert offset height (ft)
+    real(kind=dpl) :: q                         ! flow rate (cfs)
+    real(kind=dpl) :: yCrit               ! critical flow depth (ft)
+    real(kind=dpl) :: yNorm               ! normal flow depth (ft)
+    !real(kind=dpl) :: link_getYnorm, link_getYcrit
 
     yCrit = 0.0
     yNorm = 0.0
@@ -999,9 +1001,9 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
     use modXsect
     implicit none
     integer, intent(in) :: j, n1, n2, k, datatype
-    real(kind=dp), dimension(:), intent(in) :: x
+    real(kind=dpl), dimension(:), intent(in) :: x
     
-    real(kind=dp), dimension(:), allocatable :: lp
+    real(kind=dpl), dimension(:), allocatable :: lp
     logical :: lVal
 
     arrLink(j)%node1       = n1
@@ -1095,7 +1097,7 @@ end subroutine link_setParams
 
 !!  Function re-written to incorporate flap gate head loss.  !!            !(5.0.012 - LR)
 
-real(kind=dp) function orifice_getFlow(j, k,  head, f, hasFlapGate)
+real(kind=dpl) function orifice_getFlow(j, k,  head, f, hasFlapGate)
 !
 !  Input:   j = link index
 !           k = orifice index
@@ -1108,11 +1110,11 @@ real(kind=dp) function orifice_getFlow(j, k,  head, f, hasFlapGate)
     use headers
     implicit none
     integer, intent(in) :: j, k
-    real(kind=dp), intent(in) :: head, f
-    logical(kind=K2), intent(in) :: hasFlapGate
+    real(kind=dpl), intent(in) :: head, f
+    logical(kind=K2l), intent(in) :: hasFlapGate
     
-    real(kind=dp) :: area, q
-    real(kind=dp) :: veloc, hLoss
+    real(kind=dpl) :: area, q
+    real(kind=dpl) :: veloc, hLoss
 
 !    ! --- case where orifice is closed
 !    if ( head == 0.0 .or. f <= 0.0  )                                            !(5.0.013 - LR)
@@ -1172,7 +1174,7 @@ end function orifice_getFlow
 
 !!  Function re-written to better handle bottom orifices.  !!              !(5.0.012 - LR)
 
-real(kind=dp) function orifice_getInflow(j)
+real(kind=dpl) function orifice_getInflow(j)
 !
 !  Input:   j = link index
 !  Output:  returns orifice flow rate (cfs)
@@ -1183,12 +1185,12 @@ real(kind=dp) function orifice_getInflow(j)
     implicit none
     integer, intent(in) :: j
     integer ::    k, n1, n2
-    real(kind=dp) :: head, h1, h2, y1, dir
-    real(kind=dp) :: f
-	real(kind=dp) :: hcrest = 0.0
-	real(kind=dp) :: hcrown = 0.0
-    real(kind=dp) :: hmidpt
-    real(kind=dp) :: q, ratio                                                           !(5.0.019 - LR)
+    real(kind=dpl) :: head, h1, h2, y1, dir
+    real(kind=dpl) :: f
+	real(kind=dpl) :: hcrest = 0.0
+	real(kind=dpl) :: hcrown = 0.0
+    real(kind=dpl) :: hmidpt
+    real(kind=dpl) :: q, ratio                                                           !(5.0.019 - LR)
 
     ! --- get indexes of end nodes and link's orifice
     n1 = arrLink(j)%node1
@@ -1307,7 +1309,7 @@ end function orifice_getInflow
 
 !!  New function added for orifice acting as weir.  !!                     !(5.0.012 - LR)
 
-real(kind=dp) function orifice_getWeirCoeff(j, k, h)
+real(kind=dpl) function orifice_getWeirCoeff(j, k, h)
 !
 !  Input:   j = link index
 !           k = orifice index
@@ -1320,8 +1322,8 @@ real(kind=dp) function orifice_getWeirCoeff(j, k, h)
     use headers
     implicit none
     integer, intent(in) :: j, k
-    real(kind=dp), intent(in) :: h
-    real(kind=dp) :: w, aOverL, hm
+    real(kind=dpl), intent(in) :: h
+    real(kind=dpl) :: w, aOverL, hm
     hm = h
 
     ! --- this is for bottom orifices
@@ -1365,11 +1367,11 @@ subroutine orifice_setSetting(j, tstep)                                  !(5.0.0
     use modXsect
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: tstep
+    real(kind=dpl), intent(in) :: tstep
     
     integer ::    k                                               !(5.0.010 - LR)
-    real(kind=dp) :: delta, step                                                        !(5.0.010 - LR)
-    real(kind=dp) :: h, f                                                               !(5.0.012 - LR)
+    real(kind=dpl) :: delta, step                                                        !(5.0.010 - LR)
+    real(kind=dpl) :: h, f                                                               !(5.0.012 - LR)
     k = arrLink(j)%subIndex
     ! --- case where adjustment rate is instantaneous                         !(5.0.010 - LR)
     if ( Orifice(k)%orate == 0.0 .or. tstep == 0.0) then                          !(5.0.013 - LR)
@@ -1396,7 +1398,7 @@ end subroutine orifice_setSetting
 
 !=============================================================================
 
-real(kind=dp) function outlet_getFlow(k, head)
+real(kind=dpl) function outlet_getFlow(k, head)
 !
 !  Input:   k    = outlet index
 !           head = head across outlet (ft)
@@ -1407,9 +1409,9 @@ real(kind=dp) function outlet_getFlow(k, head)
     implicit none
     
     integer, intent(in) :: k
-    real(kind=dp), intent(in) :: head
+    real(kind=dpl), intent(in) :: head
     integer ::    m
-    real(kind=dp) :: h
+    real(kind=dpl) :: h
 
 !    ! --- convert head to original units
 !    h = head * UCF(LENGTH)
@@ -1426,7 +1428,7 @@ end function outlet_getFlow
 
 !=============================================================================
 
-real(kind=dp) function outlet_getInflow(j)
+real(kind=dpl) function outlet_getInflow(j)
 !
 !  Input:   j = link index
 !  Output:  outlet flow rate (cfs)
@@ -1436,7 +1438,7 @@ real(kind=dp) function outlet_getInflow(j)
     implicit none
     integer, intent(in) :: j
     integer ::    k, n1, n2
-    real(kind=dp) :: head, hcrest, h1, h2, y1, dir
+    real(kind=dpl) :: head, hcrest, h1, h2, y1, dir
 
     ! --- get indexes of end nodes
     n1 = arrLink(j)%node1
@@ -1525,7 +1527,7 @@ subroutine link_setSetting(j, tstep)                                      !(5.0.
     use headers
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: tstep
+    real(kind=dpl), intent(in) :: tstep
     
     select case ( arrLink(j)%datatype )                            !(5.0.010 - LR)
       case (E_PUMP)
@@ -1565,14 +1567,14 @@ subroutine link_setTargetSetting(j)                                             
 end subroutine link_setTargetSetting
 !=============================================================================
 
-real(kind=dp) function weir_getdqdh(k, dir, h, q1, q2)
+real(kind=dpl) function weir_getdqdh(k, dir, h, q1, q2)
     use headers
     implicit none
     integer, intent(in) :: k
-    real(kind=dp), intent(in) :: dir, h, q1, q2
+    real(kind=dpl), intent(in) :: dir, h, q1, q2
     
-    real(kind=dp) :: q1h
-    real(kind=dp) :: q2h
+    real(kind=dpl) :: q1h
+    real(kind=dpl) :: q2h
 
     if ( abs(h) < FUDGE ) then
        weir_getdqdh = 0.0
@@ -1627,16 +1629,16 @@ recursive subroutine weir_getFlow(j, k, head, dir, hasFlapGate, q1, q2)
     use modXsect
     implicit none
     integer, intent(in) :: j, k
-    real(kind=dp), intent(in) :: head, dir
-    real(kind=dp), intent(inout) :: q1, q2
-    logical(kind=k2), intent(in) :: hasFlapGate
-    logical(kind=k2) :: lhasFlapGate
-    real(kind=dp) :: mlength
-    real(kind=dp) :: h, mhead
-    real(kind=dp) :: y
-    real(kind=dp) :: hLoss
-    real(kind=dp) :: area
-    real(kind=dp) :: veloc
+    real(kind=dpl), intent(in) :: head, dir
+    real(kind=dpl), intent(inout) :: q1, q2
+    logical(kind=k2l), intent(in) :: hasFlapGate
+    logical(kind=k2l) :: lhasFlapGate
+    real(kind=dpl) :: mlength
+    real(kind=dpl) :: h, mhead
+    real(kind=dpl) :: y
+    real(kind=dpl) :: hLoss
+    real(kind=dpl) :: area
+    real(kind=dpl) :: veloc
     integer :: wType                  !(5.0.011 - LR)
     mhead = head
 
@@ -1710,7 +1712,7 @@ end subroutine weir_getFlow
 
 !=============================================================================
 
-real(kind=dp) function weir_getInflow(j)
+real(kind=dpl) function weir_getInflow(j)
 !
 !  Input:   j = link index
 !  Output:  returns weir flow rate (cfs)
@@ -1723,17 +1725,17 @@ real(kind=dp) function weir_getInflow(j)
     integer ::    n1          ! index of upstream node
     integer ::    n2          ! index of downstream node
     integer ::    k           ! index of weir
-    real(kind=dp) :: q1          ! flow through central part of weir (cfs)
-    real(kind=dp) :: q2          ! flow through end sections of weir (cfs)
-    real(kind=dp) :: head        ! head on weir (ft)
-    real(kind=dp) :: h1          ! upstrm nodal head (ft)
-    real(kind=dp) :: h2          ! downstrm nodal head (ft)
-    real(kind=dp) :: hcrest      ! head at weir crest (ft)
-    real(kind=dp) :: hcrown      ! head at weir crown (ft)
-    real(kind=dp) :: y           ! water depth in weir (ft)
-    real(kind=dp) :: dir         ! direction multiplier
-    real(kind=dp) :: ratio
-    real(kind=dp), dimension(4) :: weirPower = (/ 1.5,&      ! transverse weir
+    real(kind=dpl) :: q1          ! flow through central part of weir (cfs)
+    real(kind=dpl) :: q2          ! flow through end sections of weir (cfs)
+    real(kind=dpl) :: head        ! head on weir (ft)
+    real(kind=dpl) :: h1          ! upstrm nodal head (ft)
+    real(kind=dpl) :: h2          ! downstrm nodal head (ft)
+    real(kind=dpl) :: hcrest      ! head at weir crest (ft)
+    real(kind=dpl) :: hcrown      ! head at weir crown (ft)
+    real(kind=dpl) :: y           ! water depth in weir (ft)
+    real(kind=dpl) :: dir         ! direction multiplier
+    real(kind=dpl) :: ratio
+    real(kind=dpl), dimension(4) :: weirPower = (/ 1.5,&      ! transverse weir
                          &5./3.,&    ! side flow weir
                          &2.5,&      ! v-notch weir
                          &1.5 /)      ! trapezoidal weir
@@ -1831,7 +1833,7 @@ end function weir_getInflow
 
 !!  New function added to compute flow thru surcharged weir. !!            !(5.0.012 - LR)
 
-real(kind=dp) function weir_getOrificeFlow(j, head, y, cOrif)
+real(kind=dpl) function weir_getOrificeFlow(j, head, y, cOrif)
 !
 !  Input:   j = link index
 !           head = head across weir (ft)
@@ -1843,9 +1845,9 @@ real(kind=dp) function weir_getOrificeFlow(j, head, y, cOrif)
     use headers
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: head, y, cOrif
+    real(kind=dpl), intent(in) :: head, y, cOrif
     
-    real(kind=dp) :: a, q, v, hloss, mhead
+    real(kind=dpl) :: a, q, v, hloss, mhead
     mhead = head
 
     ! --- evaluate the orifice flow equation
@@ -1874,7 +1876,7 @@ end function weir_getOrificeFlow
 
 !!  Function generalized to apply to all water depths.  !!                 !(5.0.012 - LR)
 
-real(kind=dp) function weir_getOpenArea(j, y)
+real(kind=dpl) function weir_getOpenArea(j, y)
 !
 !  Input:   j = link index
 !           y = depth of water above weir crest (ft)
@@ -1885,8 +1887,8 @@ real(kind=dp) function weir_getOpenArea(j, y)
     use modXsect
     implicit none
     integer, intent(in) :: j
-    real(kind=dp), intent(in) :: y
-    real(kind=dp) :: z, lVal
+    real(kind=dpl), intent(in) :: y
+    real(kind=dpl) :: z, lVal
 
     ! --- find offset of weir crest due to control setting
     z = (1.0 - arrLink(j)%setting) * arrLink(j)%xsect%yFull

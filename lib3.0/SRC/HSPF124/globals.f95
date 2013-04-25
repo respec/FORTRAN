@@ -13,9 +13,9 @@ module globals
 !
 !   Global Variables
 !-----------------------------------------------------------------------------
-use DataSizeSpecs
 use consts
 use objects
+integer, parameter :: dpg = kind(1.d0)
 
 !private MAXFNAME,MAXMSG, MAXTITLE,MAX_NODE_TYPES,MAX_LINK_TYPES,MAX_OBJ_TYPES
 !integer, parameter :: K2 = selected_int_kind(2) !kind= 1
@@ -81,34 +81,34 @@ integer :: ReportStep               ! Reporting time step (sec)
 integer :: SweepStart               ! Day of year when sweeping starts
 integer :: SweepEnd                 ! Day of year when sweeping ends
 
-real(kind=dp) :: RouteStep                ! Routing time step (sec)
-real(kind=dp) :: LengtheningStep          ! Time step for lengthening (sec)
-real(kind=dp) :: StartDryDays             ! Antecedent dry days
-real(kind=dp) :: CourantFactor            ! Courant time step factor
-real(kind=dp) :: MinSurfArea              ! Minimum nodal surface area
-real(kind=dp) :: MinSlope                 ! Minimum conduit slope
-real(kind=dp) :: RunoffError              ! Runoff continuity error
-real(kind=dp) :: GwaterError              ! Groundwater continuity error
-real(kind=dp) :: FlowError                ! Flow routing error
-real(kind=dp) :: QualError                ! Quality routing error
+real(kind=dpg) :: RouteStep                ! Routing time step (sec)
+real(kind=dpg) :: LengtheningStep          ! Time step for lengthening (sec)
+real(kind=dpg) :: StartDryDays             ! Antecedent dry days
+real(kind=dpg) :: CourantFactor            ! Courant time step factor
+real(kind=dpg) :: MinSurfArea              ! Minimum nodal surface area
+real(kind=dpg) :: MinSlope                 ! Minimum conduit slope
+real(kind=dpg) :: RunoffError              ! Runoff continuity error
+real(kind=dpg) :: GwaterError              ! Groundwater continuity error
+real(kind=dpg) :: FlowError                ! Flow routing error
+real(kind=dpg) :: QualError                ! Quality routing error
 
 !EXTERN DateTime !TODO: need to deal with this DateTime with HSPF's
-real(kind=dp) :: StartDate                ! Starting date
-real(kind=dp) :: StartTime                ! Starting time
-real(kind=dp) :: StartDateTime            ! Starting Date+Time
-real(kind=dp) :: EndDate                  ! Ending date
-real(kind=dp) :: EndTime                  ! Ending time
-real(kind=dp) :: EndDateTime              ! Ending Date+Time
-real(kind=dp) :: ReportStartDate          ! Report start date
-real(kind=dp) :: ReportStartTime          ! Report start time
-real(kind=dp) :: ReportStart              ! Report start Date+Time
+real(kind=dpg) :: StartDate                ! Starting date
+real(kind=dpg) :: StartTime                ! Starting time
+real(kind=dpg) :: StartDateTime            ! Starting Date+Time
+real(kind=dpg) :: EndDate                  ! Ending date
+real(kind=dpg) :: EndTime                  ! Ending time
+real(kind=dpg) :: EndDateTime              ! Ending Date+Time
+real(kind=dpg) :: ReportStartDate          ! Report start date
+real(kind=dpg) :: ReportStartTime          ! Report start time
+real(kind=dpg) :: ReportStart              ! Report start Date+Time
 !
-real(kind=dp) :: ReportTime               ! Current reporting time (msec)
-real(kind=dp) :: OldRunoffTime            ! Previous runoff time (msec)
-real(kind=dp) :: NewRunoffTime            ! Current runoff time (msec)
-real(kind=dp) :: OldRoutingTime           ! Previous routing time (msec)
-real(kind=dp) :: NewRoutingTime           ! Current routing time (msec)
-real(kind=dp) :: TotalDuration            ! Simulation duration (msec)
+real(kind=dpg) :: ReportTime               ! Current reporting time (msec)
+real(kind=dpg) :: OldRunoffTime            ! Previous runoff time (msec)
+real(kind=dpg) :: NewRunoffTime            ! Current runoff time (msec)
+real(kind=dpg) :: OldRoutingTime           ! Previous routing time (msec)
+real(kind=dpg) :: NewRoutingTime           ! Current routing time (msec)
+real(kind=dpg) :: TotalDuration            ! Simulation duration (msec)
 
 type(TTemp) :: Temp                     ! Temperature data
 type(TEvap) :: Evap                     ! Evaporation data
@@ -146,6 +146,6 @@ type(TShape), dimension(:), allocatable ::     Shape                    ! Array 
 !  Shared variables used only in node.f95
 !-----------------------------------------------------------------------------                  
 integer ::  Kstar                  ! storage unit index
-real(kind=dp) :: Vstar                  ! storage unit volume (ft3)
+real(kind=dpg) :: Vstar                  ! storage unit volume (ft3)
 
 end module

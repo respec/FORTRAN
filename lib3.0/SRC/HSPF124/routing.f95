@@ -1,11 +1,11 @@
 module modRouting
-use DataSizeSpecs
+integer, parameter :: dpr = kind(1.d0)
 
 !-----------------------------------------------------------------------------
 !     Constants 
 !-----------------------------------------------------------------------------
-real(kind=dp), parameter :: LATERAL_FLOW_TOL = 0.5  ! for steady state (cfs)         !(5.0.012 - LR)
-real(kind=dp), parameter :: FLOW_ERR_TOL = 0.05     ! for steady state               !(5.0.012 - LR)
+real(kind=dpr), parameter :: LATERAL_FLOW_TOL = 0.5  ! for steady state (cfs)         !(5.0.012 - LR)
+real(kind=dpr), parameter :: FLOW_ERR_TOL = 0.05     ! for steady state               !(5.0.012 - LR)
 
 !-----------------------------------------------------------------------------
 ! Shared variables
@@ -29,9 +29,9 @@ subroutine removeOutflows()
     implicit none
     integer :: i, p
     integer :: isFlooded
-    real(kind=dp) :: q, w
+    real(kind=dpr) :: q, w
     
-    real(kind=dp) :: node_getSystemOutflow
+    real(kind=dpr) :: node_getSystemOutflow
 
     do i =1, Nobjects(E_NODE)
         ! --- determine flows leaving the system
@@ -59,9 +59,9 @@ subroutine addExternalInflows(currentDate)
     use modMassbal
     implicit none
     
-    real(kind=dp), intent(in) :: currentDate
+    real(kind=dpr), intent(in) :: currentDate
     integer :: j, p
-    real(kind=dp) :: q, w
+    real(kind=dpr) :: q, w
     
     type(TExtInflow), pointer :: inflow
 
@@ -118,7 +118,7 @@ end subroutine addExternalInflows
 
 !=============================================================================
 
-real(kind=dp) function routing_getRoutingStep(routingModel, fixedStep)
+real(kind=dpr) function routing_getRoutingStep(routingModel, fixedStep)
 !
 !  Input:   routingModel = routing method code
 !           fixedStep = user-supplied time step (sec)
@@ -128,9 +128,9 @@ real(kind=dp) function routing_getRoutingStep(routingModel, fixedStep)
     use headers
     implicit none
     integer, intent(in) :: routingModel
-    real(kind=dp), intent(in) :: fixedStep
+    real(kind=dpr), intent(in) :: fixedStep
     
-    real(kind=dp) :: flowrout_getRoutingStep
+    real(kind=dpr) :: flowrout_getRoutingStep
     
     if ( Nobjects(LINK) == 0 ) then
         routing_getRoutingStep = fixedStep
@@ -222,12 +222,12 @@ subroutine routing_execute(routingModel, routingStep)
     implicit none
     
     integer, intent(in) :: routingModel
-    real(kind=dp), intent(in) :: routingStep
+    real(kind=dpr), intent(in) :: routingStep
     integer ::      j
     integer ::      mstepCount
     integer ::      actionCount
-    real(kind=dp) :: currentDate
-    real(kind=dp) :: stepFlowError                                                    !(5.0.012 - LR)
+    real(kind=dpr) :: currentDate
+    real(kind=dpr) :: stepFlowError                                                    !(5.0.012 - LR)
     
     integer :: flowrout_execute !TODO: this is for .NET compile
     mstepCount = 1
@@ -351,7 +351,7 @@ logical function systemHasChanged(routingModel)
     implicit none
     integer, intent(in) :: routingModel
     integer :: j                                                       !(5.0.012 - LR)
-    real(kind=dp) :: diff
+    real(kind=dpr) :: diff
 
     ! --- check if external inflows or outflows have changed           !(5.0.012 - LR)
     do j=1,Nobjects(E_NODE)
