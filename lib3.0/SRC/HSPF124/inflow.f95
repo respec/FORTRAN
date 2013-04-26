@@ -186,7 +186,7 @@ real(kind=dp) function inflow_getExtInflow(inflow, aDate)
     use headers
     use modDateTime
     use swmm5futil
-    use modTable
+    !use modTable
     implicit none
     type(TExtInflow), intent(in) :: inflow
     real(kind=dp), intent(in) :: aDate
@@ -198,8 +198,6 @@ real(kind=dp) function inflow_getExtInflow(inflow, aDate)
     real(kind=dp) :: sfm    ! scaling factor
     real(kind=dp) :: blv   ! baseline value
     real(kind=dp) :: tsv   ! time series value
-    
-    !real(kind=dp) :: table_tseriesLookup1 !a function
 
     p = inflow%basePat
     k = inflow%tSeries
@@ -215,12 +213,8 @@ real(kind=dp) function inflow_getExtInflow(inflow, aDate)
 !        hour  = datetime_hourOfDay(aDate)                    !(5.0.014 - LR)
 !        blv   = blv * inflow_getPatternFactor(p, month, day, hour) !(5.0.019 - LR)
 !    }                                                                          !(5.0.014 - LR)
-
-!    if ( k >= 0 ) tsv = table_tseriesLookup1(Tseries(k), aDate, .FALSE.) * sfm
-    if ( k > 0 ) then
-      tsv = table_tseriesLookup1(oTsers(k)%odates, oTsers(k)%ovalues, &
-                                &size(oTsers(k)%odates, 1), aDate, .FALSE.)
-    end if
+!    if ( k >= 0 ) tsv = table_tseriesLookup(Tseries(k), aDate, .FALSE.) * sfm
+!    return cfm * (tsv + blv)
     inflow_getExtInflow = cfm * (tsv * sfm + blv)
 end function inflow_getExtInflow
 !

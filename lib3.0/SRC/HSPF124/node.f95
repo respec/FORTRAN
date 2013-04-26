@@ -1,6 +1,3 @@
-module modNode
-integer, parameter :: dp = kind(1.d0)
-integer, parameter :: K4 = selected_int_kind(4) !kind= 2
 !-----------------------------------------------------------------------------
 !   node.c
 !
@@ -68,7 +65,6 @@ integer, parameter :: K4 = selected_int_kind(4) !kind= 2
 !static void   divider_validate(int j)
 !static double divider_getOutflow(int j, int link)
 
-contains
 
 !!=============================================================================
 !
@@ -110,6 +106,7 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     use swmm5futil
     implicit none
     integer, intent(in) :: j, nodetype, k
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), dimension(11), intent(in) :: x
     
     Node(j)%datatype   = nodetype
@@ -207,6 +204,7 @@ subroutine node_initInflow(j, tStep)
    use headers
    implicit none
    integer, intent(in) :: j
+   integer, parameter :: dp = kind(1.d0)
    real(kind=dp), intent(in) :: tStep
     ! --- initialize inflow & outflow
     Node(j)%oldFlowInflow = Node(j)%inflow
@@ -235,6 +233,7 @@ subroutine node_initState(j)
     integer, intent(in) :: j
     integer :: p
 
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp) :: node_getvolume !TODO: this is for .NET compile
     
     ! --- initialize depth
@@ -338,7 +337,7 @@ end subroutine node_initState
 !
 !=============================================================================
 
-real(kind=dp) function node_getVolume(j, d)
+real(kind=kind(1.d0)) function node_getVolume(j, d)
 !
 !  Input:   j = node index
 !           d = water depth (ft)
@@ -348,6 +347,7 @@ real(kind=dp) function node_getVolume(j, d)
     use headers
     implicit none
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: d
     !real(kind=dp) :: storage_getVolume
     select case ( Node(j)%datatype )
@@ -366,7 +366,7 @@ end function node_getVolume
 !
 !=============================================================================
 
-real(kind=dp) function node_getSurfArea(j, d)
+real(kind=kind(1.d0)) function node_getSurfArea(j, d)
 !
 !  Input:   j = node index
 !           d = water depth (ft)
@@ -376,6 +376,7 @@ real(kind=dp) function node_getSurfArea(j, d)
     use headers
     implicit none
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: d
     real(kind=dp) :: storage_getSurfArea
     select case (Node(j)%datatype)
@@ -388,7 +389,7 @@ end function node_getSurfArea
 
 !=============================================================================
 
-real(kind=dp) function node_getOutflow(j, k)
+real(kind=kind(1.d0)) function node_getOutflow(j, k)
 !
 !  Input:   j = node index
 !           k = link index
@@ -398,8 +399,10 @@ real(kind=dp) function node_getOutflow(j, k)
     use headers
     implicit none
     
+    integer, parameter :: K4 = selected_int_kind(4) !kind= 2
     integer(kind=K4), intent(in) :: j
     integer, intent(in) :: k
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp) :: lVal
     real(kind=dp) :: divider_getOutflow, storage_getOutflow
     select case ( Node(j)%datatype )
@@ -415,7 +418,7 @@ end function node_getOutflow
 !
 !=============================================================================
 
-real(kind=dp) function node_getMaxOutflow(j, q, tStep)
+real(kind=kind(1.d0)) function node_getMaxOutflow(j, q, tStep)
 !
 !  Input:   j = node index
 !           q = original outflow rate (cfs)
@@ -426,6 +429,7 @@ real(kind=dp) function node_getMaxOutflow(j, q, tStep)
     use headers
     implicit none
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: q, tStep
     real(kind=dp) :: qMax, mq
     mq = q
@@ -438,7 +442,7 @@ end function node_getMaxOutflow
 !
 !=============================================================================
 
-real(kind=dp) function node_getSystemOutflow(j, isFlooded)
+real(kind=kind(1.d0)) function node_getSystemOutflow(j, isFlooded)
 !
 !  Input:   j = node index
 !           isFlooded = TRUE if node becomes flooded
@@ -450,6 +454,7 @@ real(kind=dp) function node_getSystemOutflow(j, isFlooded)
     
     integer, intent(in) :: j
     integer, intent(inout) :: isFlooded
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp) :: outflow
     outflow = 0.0
 
@@ -502,6 +507,7 @@ subroutine node_getResults(j, f) !, x)
     implicit none
     
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: f
     !real(kind=dp), dimension(1:), intent(inout) :: x
     integer :: p
@@ -558,6 +564,7 @@ subroutine node_setOutletDepth(j, yNorm, yCrit, z)
     use headers
     implicit none
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: yNorm, yCrit, z
     
     select case (Node(j)%datatype)
@@ -606,7 +613,7 @@ end subroutine node_setOutletDepth
 !
 !=============================================================================
 
-real(kind=dp) function node_getPondedArea(j, d)
+real(kind=kind(1.d0)) function node_getPondedArea(j, d)
 !
 !  Input:   j = node index
 !           d = water depth (ft)
@@ -616,6 +623,7 @@ real(kind=dp) function node_getPondedArea(j, d)
   use headers
   implicit none
   integer, intent(in) :: j
+  integer, parameter :: dp = kind(1.d0)
   real(kind=dp), intent(in) :: d
     real(kind=dp) :: a, lD
     real(kind=dp) :: node_getSurfArea
@@ -639,7 +647,7 @@ end function node_getPondedArea
 !
 !=============================================================================
 
-real(kind=dp) function node_getLosses( j,  tStep)                                     !(5.0.019 - LR)
+real(kind=kind(1.d0)) function node_getLosses( j,  tStep)                                     !(5.0.019 - LR)
 !
 !  Input:   j = node index
 !           evap = system evaporation rate (ft/sec)
@@ -651,6 +659,7 @@ real(kind=dp) function node_getLosses( j,  tStep)                               
     use headers
     implicit none
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: tStep
     !real(kind=dp) :: storage_getLosses
     if ( Node(j)%datatype == E_STORAGE ) then
@@ -946,7 +955,7 @@ end function node_getLosses
 !
 !=============================================================================
 
-real(kind=dp) function storage_getSurfArea(j, d)
+real(kind=kind(1.d0)) function storage_getSurfArea(j, d)
 !
 !  Input:   j = node index
 !           d = depth (ft)
@@ -957,6 +966,7 @@ real(kind=dp) function storage_getSurfArea(j, d)
     use swmm5futil
     implicit none
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: d
     real(kind=dp) :: area
     integer :: k, i
@@ -1009,7 +1019,7 @@ end function storage_getSurfArea
 
 !  This function was re-written for release 5.0.019.  !!                    (5.0.019 - LR)
 
-!real(kind=dp) function storage_getLosses(int j, double tStep)
+!real(kind=kind(1.d0)) function storage_getLosses(int j, double tStep)
 !!
 !!  Input:   j = node index
 !!           tStep = time step (sec)
@@ -1388,6 +1398,7 @@ subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
     use swmm5futil
     implicit none
     integer, intent(in) :: j
+    integer, parameter :: dp = kind(1.d0)
     real(kind=dp), intent(in) :: yNorm, yCrit, z
     
     real(kind=dp) ::   x, y                     ! x,y values in table
@@ -1465,4 +1476,3 @@ subroutine outfall_setOutletDepth(j, yNorm, yCrit, z)
 end subroutine outfall_setOutletDepth
 !
 !!=============================================================================
-end module modNode

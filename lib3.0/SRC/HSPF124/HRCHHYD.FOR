@@ -3925,7 +3925,7 @@ C         this is the outfall
         else if (LTYPE == E_OUTFALL) then
            K = 1 ! only one outfall
            XN(1) = NELEV(J)
-           XN(2) = FIXED_OUTFALL !outfall type, the easiest at this point
+           XN(2) = FREE_OUTFALL !outfall type (could be problem)
            XN(3) = NDINIT(J) + NELEV(J) !fixedStage
            XN(4) = 0 !tideCurve, index of tidal stage curve
            XN(5) = 0 !stageSeries, index of outfall stage time series
@@ -3966,19 +3966,23 @@ C
       EndTime = datetime_encodeTime(4, 0, 0) !datetime_strToTime
 C         
       StartDryDays = 0 !number of antecedent dry days
-C      
-      InertDamping = 0 !w_NONE !InertDampingWords, w_PARTIAL, w_FULL
-C      
-      AllowPonding    = .true.
+      
+      AllowPonding    = .false.
       SlopeWeighting  = .true.
-      SkipSteadyState = .true.
+      SkipSteadyState = .false. !could be problem
       IgnoreRainfall  = .false.
       IgnoreSnowmelt  = .true.
       IgnoreGwater    = .true.
       IgnoreRouting   = .false.
       IgnoreQuality   = .true.
-C      
-      NormalFlowLtd = SLOPE !NormalFlowType
+      InertDamping = NO_DAMPING !InertDampingWords, w_PARTIAL, w_FULL
+      NormalFlowLtd = SLOPE !NormalFlowType !0, means NO
+
+      !set routing step size in seconds
+      WetStep         = 900              ! Runoff wet time step (secs)
+      DryStep         = 3600             ! Runoff dry time step (secs)
+      ReportStep      = 900              ! Reporting time step (secs)
+      StartDryDays    = 0.0              ! Antecedent dry days, DRY_DAYS
 C      
       ForceMainEqn = D_W !ForceMainType
 C      
@@ -3986,7 +3990,7 @@ C
 C      
       Compatibility = SWMM5
       !RouteStep is set to 5 minutes in setDefault()
-      LengtheningStep = MAX(0.0, RouteStep) !if 0, then no lengthening of conduit for DW routing
+      !LengtheningStep = MAX(0.0, RouteStep) !if 0, then no lengthening of conduit for DW routing
 C
       CourantFactor = 0.0 !variable time step option not used, needs to be >= 0.0 and <= 2.0
 C      
@@ -3995,7 +3999,7 @@ C
       MinSurfArea = 0.0
 C      
       !minimum conduit slope, needs to be >= 0.0 and < 1; SWMM input file enters %
-      MinSlope = 0.05
+      MinSlope = 0 !0.05
 C      
       TmpDir = 'C:\Temp'
 C          

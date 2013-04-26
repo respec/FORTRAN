@@ -1,4 +1,3 @@
-module modTable
 !!-----------------------------------------------------------------------------
 !!   table.c
 !!
@@ -28,12 +27,9 @@ module modTable
 !int  table_parseFileLine(char* line, TTable* table, double* x, double* y);
 !
 !
-integer, parameter :: dpt = kind(1.d0)
-
-contains
 !!=============================================================================
 !
-real(kind=dpt) function table_interpolate(x, x1, y1, x2, y2)
+real(kind=kind(1.d0)) function table_interpolate(x, x1, y1, x2, y2)
 !
 !  Input:   x = x value being interpolated
 !           x1, x2 = x values on either side of x
@@ -42,6 +38,7 @@ real(kind=dpt) function table_interpolate(x, x1, y1, x2, y2)
 !  Purpose: interpolates a y value for a given x value.
 !
     implicit none
+    integer, parameter :: dpt = kind(1.d0)
     real(kind=dpt), intent(in) :: x, x1, y1, x2, y2
     real(kind=dpt) :: dx
     dx = x2 - x1
@@ -588,7 +585,7 @@ end function table_interpolate
 !
 !!=============================================================================
 !
-real(kind=dpt) function table_tseriesLookup1(tablex, tabley, nItems, x, extend)
+real(kind=kind(1.d0)) function table_tseriesLookup1(tablex, tabley, nItems, x, extend)
 !
 !  Input:   table = pointer to a TTable structure
 !           x = a date/time value
@@ -605,12 +602,14 @@ real(kind=dpt) function table_tseriesLookup1(tablex, tabley, nItems, x, extend)
 
     implicit none
 
+    integer, parameter :: dpt = kind(1.d0)
     real(kind=dpt), dimension(:), intent(inout) :: tablex, tabley
     real(kind=dpt), intent(in) :: x
     integer, intent(in) :: nItems
     logical, intent(in) :: extend
     real(kind=dpt) :: lyVal
     integer :: i
+    real(kind=dpt) :: table_interpolate  !a function
             
     if (x < tablex(1)) Then
       if (extend) then
@@ -852,4 +851,3 @@ end function table_tseriesLookup1
 !    return TRUE;
 !}
 !
-end module
