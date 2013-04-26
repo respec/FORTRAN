@@ -311,7 +311,7 @@ subroutine routing_execute(routingModel, routingStep)
 
         ! --- route flow through the drainage network
         if ( Nobjects(LINK) > 0 ) then
-            stepCount = flowrout_execute(Nobjects(LINK), SortedLinks, routingModel, routingStep)
+            mstepCount = flowrout_execute(Nobjects(LINK), SortedLinks, routingModel, routingStep)
         end if
     end if
 
