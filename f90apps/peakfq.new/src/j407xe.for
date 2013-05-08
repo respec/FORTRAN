@@ -1200,7 +1200,7 @@ C     write table of observed data
               ELSE
                 WRITE(LINTVLSTR,2015) INTERVAL(J)%INTRVLUPR
               END IF
-              WRITE(MSG,2014) IPKSEQ(I),PKS(I),XQUAL(I),
+              WRITE(MSG,2014) IPKSEQ(I),ABS(PKS(I)),XQUAL(I),
      $                        INTERVAL(J)%INTRVLLWR,
      $                        LINTVLSTR,INTERVAL(J)%INTRVLCOM
               K = 1
@@ -4263,6 +4263,8 @@ C                     unused peak
                     END IF
                   END IF
  18             CONTINUE              
+              ELSE
+                LPEX(LYR) = PET(1)
               END IF
             ELSE
               LPEX(LYR) = PEX(I)
