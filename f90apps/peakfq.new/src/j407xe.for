@@ -119,7 +119,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'version 6.1b dated 03/05/2012',/,
+     $       'Provisional version 7.0 dated 05/08/2013',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -603,9 +603,9 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   202 FORMAT( 2X,'Prov. Ver. 7.0',
      $        6X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
-  203 FORMAT( 2X,'07/04/2012',
+  203 FORMAT( 2X,'05/08/2013',
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
-  213 FORMAT( 2X,'07/04/2012',
+  213 FORMAT( 2X,'05/08/2013',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
   205 FORMAT(12X,'Preliminary release of PeakFQ for review and ',
      $           'testing only.')
@@ -5097,7 +5097,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Provisional Ver. 7.0 dated 09/06/2012',/,'#',/,
+     $       'Provisional Ver. 7.0 dated 05/08/2013',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
