@@ -300,6 +300,7 @@ subroutine execRoutingStep(links, dt)
     real(kind=dpw), intent (in) :: dt
     integer ::    i                          !  node or link index
     real(kind=dpw) :: yOld                       !  old node depth (ft)
+    !write(24,*) 'in execRoutingStep'
 
     !  --- re-initialize state of each node
     do i = 1, Nobjects(E_NODE)
@@ -361,6 +362,7 @@ subroutine initNodeState(i)
     end if
 
     !  --- initialize nodal inflow & outflow
+    !write(24,*) 'dynwave NODE INFLOW ',i,Node(i)%newLatFlow
     Node(i)%inflow = Node(i)%newLatFlow
     Node(i)%outflow = 0.0
     Xnode(i)%sumdqdh = 0.0
@@ -597,6 +599,7 @@ subroutine updateNodeFlows( i,  q)
     implicit none
     integer, intent(in) :: i
     real(kind=dpw), intent(in) :: q
+    !write(24,*) 'dynwave update node flows ',i,q
     if ( q >= 0.0 ) then
         Node(arrLink(i)%node1)%outflow = Node(arrLink(i)%node1)%outflow + q
         Node(arrLink(i)%node2)%inflow  = Node(arrLink(i)%node2)%inflow + q
@@ -662,10 +665,13 @@ real(kind=dpw) function  getConduitFlow(j, qOld, dt)
     k =  arrLink(j)%subIndex
     n1 = arrLink(j)%node1
     n2 = arrLink(j)%node2
+    !write(24,*) 'dynwave invert elev ',Node(n1)%invertElev,arrLink(j)%offset1
+    !write(24,*) 'dynwave invert elev ',Node(n1)%newDepth,Node(n1)%invertElev
     z1 = Node(n1)%invertElev + arrLink(j)%offset1
     z2 = Node(n2)%invertElev + arrLink(j)%offset2
     h1 = Node(n1)%newDepth + Node(n1)%invertElev
     h2 = Node(n2)%newDepth + Node(n2)%invertElev
+    !write(24,*) 'dynwave h1 h2 ',z1,z2,h1,h2
     h1 = MAX(h1, z1)
     h2 = MAX(h2, z2)
 
@@ -780,6 +786,7 @@ real(kind=dpw) function  getConduitFlow(j, qOld, dt)
 
     !  --- 2. energy slope term
     dq2 = dt * GRAVITY * aWtd * (h2 - h1) / mlength
+    !write(24,*) 'dynwave gravity ',dq2,GRAVITY,aWtd,h2,h1,mlength
 
     !  --- 3 & 4. inertial terms
     dq3 = 0.0
@@ -798,6 +805,7 @@ real(kind=dpw) function  getConduitFlow(j, qOld, dt)
     !  --- combine terms to find new conduit flow
     denom = 1.0 + dq1 + dq5
     q = (qOldB - dq2 + dq3 + dq4) / denom
+    !write(24,*) 'dynwave getconduitflow ',qOldB,dq2,dq3,dq4,dq1,dq5
 
     !  --- compute derivative of flow w.r.t. head
     arrLink(j)%dqdh = 1.0 / denom  * GRAVITY * dt * aWtd / mlength * barrels      ! (5.0.014 - LR)
@@ -852,6 +860,7 @@ real(kind=dpw) function  getConduitFlow(j, qOld, dt)
     aMid = MIN(aMid, xsect%aFull)
     arrLink(j)%newVolume = aMid * link_getLength(j) * barrels                    ! (5.0.015 - LR)
     getConduitFlow =  q * barrels
+    !write(24,*) 'dynwave getconduitflow ',q,barrels
     
     !nullify(xsect) !TODO: I think we need to do it here
     return

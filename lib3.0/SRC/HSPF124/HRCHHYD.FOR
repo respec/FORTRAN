@@ -3814,9 +3814,9 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER          LTYPE,NTS,ITS,J,K,lErrorCode
-      REAL             XN(6)
-      DOUBLE PRECISION XC(6),XX(4),aUCF
+      INTEGER          LTYPE,NTS,ITS,J,K,lErrorCode,DELTSI
+      INTEGER          CNODE1X, CNODE2X
+      DOUBLE PRECISION XN(6),XC(6),XX(4),aUCF
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
 C
@@ -3831,6 +3831,10 @@ C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
 C     1                 xsect_setParams
 C
 C     + + + END SPECIFICATIONS + + +
+C
+C      call TongMain 'for testing
+C      NDMAX = (/ 13.4, 16.7,  8.8, 12.5, 42.7,  9.4, 13.5, 18.0, 
+C     1           22.2, 0.0 /) 
 C
 C     variables to pass in (added to the osv):
 C     DTS           -- integer, dynamic wave time step
@@ -3884,15 +3888,7 @@ C     HORIZ_ELLIPSE: 20
 C     VERT_ELLIPSE: 21
 C     ARCH: 22
 C
-      IF (UUNITS .EQ. 1) THEN
-C       english 
-        UnitSystem = US
-      ELSE
-C       metric
-        UnitSystem = SI
-      END IF
-C
-C      write(messu,*) 'in dwrout with ivol, os ',INVOL,OS
+      !write(messu,*) 'DWROUT: invol, VOLT, os ',INVOL,VOLT,OS
 C      
       Nobjects(E_NODE) = NNODE
       Nnodes(E_OUTFALL) = 1
@@ -3905,7 +3901,15 @@ C
 C
       call initPointers  !project
       call createObjects !project
-      call setDefaults   !project
+      call setDefaults   !project  
+C
+      IF (UUNITS .EQ. 1) THEN
+C       english 
+        UnitSystem = US
+      ELSE
+C       metric
+        UnitSystem = SI
+      END IF
 C
       K = 0
       DO 10 J= 1,NNODE
@@ -3925,17 +3929,19 @@ C         this is the outfall
         else if (LTYPE == E_OUTFALL) then
            K = 1 ! only one outfall
            XN(1) = NELEV(J)
-           XN(2) = FREE_OUTFALL !outfall type (could be problem)
+           XN(2) = FREE_OUTFALL !outfall type 
            XN(3) = NDINIT(J) + NELEV(J) !fixedStage
            XN(4) = 0 !tideCurve, index of tidal stage curve
            XN(5) = 0 !stageSeries, index of outfall stage time series
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
-C        write(messu,*) 'in dwrout, setting node ',j,ltype,k,xn
+C        write(messu,*) 'DWROUT: setting node ',j,ltype,k,xn
         call node_setParams(J, LTYPE, K, XN)
         Node(J)%rptFlag = .true. !this is was done in report_readoption
  10   CONTINUE
 C
+      aUCF = UCF(LENGTH)
+C     write(messu,*) 'DWROUT: ucf for length ',aucf
       LTYPE = E_CONDUIT
       DO 20 J= 1,NCOND 
         XC(1) = CLENTH(J)
@@ -3944,32 +3950,32 @@ C
         XC(4) = COFF2(J)
         XC(5) = CQ0(J)
         XC(6) = 0.0
-C        write(messu,*) 'in dwrout, setting link ',j,ltype, 
+C        write(messu,*) 'DWROUT: setting link ',j,ltype, 
 C     1                 CNODE1(J),CNODE2(J),xc
         call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), J, XC)
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
         XX(3) = CGEOM3(J)
         XX(4) = CGEOM4(J)
-        aUCF = UCF(LENGTH)
-C        write(messu,*) 'in dwrout, ucf ',length,aucf,CQ0(J)
-        isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), XX, aUCF)   !for normal conduit
+        isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), 
+     1                         XX, UCF(LENGTH))   !for normal conduit
         arrLink(J)%rptFlag = .true. !this is was done in report_readoption
  20   CONTINUE
 C
 C      
       RouteModel = DW
-      StartDate = datetime_encodeDate(2013, 3, 12) !datetime_strToDate
-      StartTime = datetime_encodeTime(3, 0, 0) !datetime_strToTime
+      StartDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
+      StartTime = datetime_encodeTime(0, 0, 0) !datetime_strToTime
 C      
-      EndDate = datetime_encodeDate(2013, 3, 12) !datetime_strToDate
-      EndTime = datetime_encodeTime(4, 0, 0) !datetime_strToTime
+      DELTSI = DELTS
+      EndDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
+      EndTime = datetime_encodeTime(0, 0, DELTSI) !datetime_strToTime
 C         
       StartDryDays = 0 !number of antecedent dry days
       
       AllowPonding    = .false.
       SlopeWeighting  = .true.
-      SkipSteadyState = .false. !could be problem
+      SkipSteadyState = .false. 
       IgnoreRainfall  = .false.
       IgnoreSnowmelt  = .true.
       IgnoreGwater    = .true.
@@ -3981,7 +3987,8 @@ C
       !set routing step size in seconds
       WetStep         = 900              ! Runoff wet time step (secs)
       DryStep         = 3600             ! Runoff dry time step (secs)
-      ReportStep      = 900              ! Reporting time step (secs)
+      RouteStep       = DTS    !20
+      ReportStep      = DELTS            ! Reporting time step (secs)
       StartDryDays    = 0.0              ! Antecedent dry days, DRY_DAYS
 C      
       ForceMainEqn = D_W !ForceMainType
@@ -4024,10 +4031,10 @@ C       input volume to this reach = NLOCIN * INVOL
         inflows(J)%baseline = INVOL * NLOCIN(J) / 100.0 / DELTS  !conv inflow in vol/hr to vol/s
         nullify(inflows(J)%next)
         Node(J)%extInflow => inflows(J)
+C        write(messu,*) 'DWROUT: node ext inflow ',
+C     1                  j,inflows(J)%baseline
       end do
 C
-      !set routing step size in seconds
-      RouteStep       = DTS    !300  
 C
 C      write(messu,*) 'in dwrout, about to call swmm_run'
       lErrorCode = swmm_run('', '', '')
@@ -4049,49 +4056,22 @@ C         write(messu,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",",
 C     1                olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
 C      end do
 C
-C      do J=1, 4
-C        write(messu,*) 'flow out node 1 ',  onodes(1)%oflow(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'volume node 1 ',onodes(1)%ovolume(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'flow out node 2 ',  onodes(2)%oflow(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'volume node 2 ',onodes(2)%ovolume(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'flow out node 3 ',  onodes(3)%oflow(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'volume node 3 ',onodes(3)%ovolume(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'flow out link 1 ',  olinks(1)%oflow(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'volume link 1 ',olinks(1)%ovolume(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'flow out link 2 ',  olinks(2)%oflow(j)
-C      end do
-C      do J=1, 4
-C        write(messu,*) 'volume link 2 ',olinks(2)%ovolume(j)
-C      end do
-C
 C     set initial conditions for next time in
 C
 C     NDINIT(NNODE) -- real, initial node depth, ft or m
-      do J = 1, NCOND
+      do J = 1, NNODE
 C       set initial depth in each node
-        NDINIT(J) = onodes(j)%odepth(4)
+C        write(messu,*) 'DWROUT: reset node depth ',
+C     1                  j,NDINIT(j),onodes(j)%odepth(1)
+        NDINIT(J) = onodes(j)%odepth(1)
       end do
 C
 C     CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
       do J = 1, NCOND
 C       set initial flow in each conduit
-        CQ0(J) = olinks(j)%oflow(4)
+C        write(messu,*) 'DWROUT: reset conduit flow ',
+C     1                  j,CQ0(J),olinks(j)%oflow(1)
+        CQ0(J) = olinks(j)%oflow(1)
       end do
 C
 C     VOL    - volume of water in reach above bed
@@ -4101,11 +4081,7 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval    
 C
 C     return volume of water coming out bottom node
-      OVOL = 0.0
-      do J=1, 4
-        OVOL = OVOL + (onodes(NNODE)%oflow(j) * DELTS)
-      end do 
-      OVOL = OVOL / 4
+      OVOL = onodes(NNODE)%oflow(1) * DELTS
       OVOL = OVOL + (INVOL * NLOCIN(NNODE) / 100.0)
 C
 C     find volume in system at end of interval
@@ -4123,15 +4099,40 @@ C     alternately, VOL = VOLT - OVOL
 C
 C     return flow rate out of bottom node
       O = INVOL * NLOCIN(NNODE) / 100.0 / DELTS
-      O = O + onodes(NNODE)%oflow(4)
+      O = O + onodes(NNODE)%oflow(1)
 C
 C     only 1 exit here
       RO = O
       ROVOL = OVOL
 C
+C
+      write(messu,*) '****************************'
+      write(messu,*) '*      Node Outputs        *'
+      write(messu,*) '****************************'
+      write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cfs)', 
+     1                               'Depth(ft)', 'Volume(ft3)'
+      do j=1, NNODE
+             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
+     1             datim(1),datim(2),datim(3),datim(4),datim(5),
+     1             onodes(j)%oflow(1), onodes(j)%odepth(1), 
+     1             onodes(j)%ovolume(1)
+      end do
+      write(messu,*) ''
+      write(messu,*) '****************************'
+      write(messu,*) '*      Link Outputs        *'
+      write(messu,*) '****************************'
+      write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cfs)', 
+     1                               'Depth(ft)', 'Volume(ft3)'
+      do j=1, NCOND
+             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
+     1             datim(1),datim(2),datim(3),datim(4),datim(5),
+     1             olinks(j)%oflow(1), olinks(j)%odepth(1), 
+     1             olinks(j)%ovolume(1)
+      end do
+C
       call output_close
-C      write(messu,*) 'in dwrout, vol ',vol
-C      write(messu,*) 'in dwrout, ovol ',ovol
+      write(messu,*) 'DWROUT: vol ',vol
+      write(messu,*) 'DWROUT: ovol ',ovol
 C
       RETURN
       END

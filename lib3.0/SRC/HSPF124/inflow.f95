@@ -198,6 +198,8 @@ real(kind=dp) function inflow_getExtInflow(inflow, aDate)
     real(kind=dp) :: sfm    ! scaling factor
     real(kind=dp) :: blv   ! baseline value
     real(kind=dp) :: tsv   ! time series value
+    
+    !real(kind=dp) :: table_tseriesLookup2 !a function
 
     p = inflow%basePat
     k = inflow%tSeries
@@ -213,8 +215,12 @@ real(kind=dp) function inflow_getExtInflow(inflow, aDate)
 !        hour  = datetime_hourOfDay(aDate)                    !(5.0.014 - LR)
 !        blv   = blv * inflow_getPatternFactor(p, month, day, hour) !(5.0.019 - LR)
 !    }                                                                          !(5.0.014 - LR)
-!    if ( k >= 0 ) tsv = table_tseriesLookup(Tseries(k), aDate, .FALSE.) * sfm
-!    return cfm * (tsv + blv)
+
+!    if ( k >= 0 ) tsv = table_tseriesLookup2(Tseries(k), aDate, .FALSE.) * sfm
+    !if ( k > 0 ) then
+      !tsv = table_tserLookup2(oTsers(k)%odates, oTsers(k)%ovalues, &
+                                !&size(oTsers(k)%odates, 1), aDate, .FALSE.)
+    !end if
     inflow_getExtInflow = cfm * (tsv * sfm + blv)
 end function inflow_getExtInflow
 !
@@ -432,4 +438,75 @@ end function inflow_getExtInflow
 !
 !!=============================================================================
 !
+real(kind=kind(1.d0)) function table_interpolate(x, x1, y1, x2, y2)
+!
+!  Input:   x = x value being interpolated
+!           x1, x2 = x values on either side of x
+!           y1, y2 = y values corrresponding to x1 and x2, respectively
+!  Output:  returns the y value corresponding to x
+!  Purpose: interpolates a y value for a given x value.
+!
+    implicit none
+    integer, parameter :: dpt = kind(1.d0)
+    real(kind=dpt), intent(in) :: x, x1, y1, x2, y2
+    real(kind=dpt) :: dx
+    dx = x2 - x1
+    if ( abs(dx) < 1.0e-20 ) then
+       table_interpolate = (y1 + y2) / 2.
+    else
+       table_interpolate = y1 + (x - x1) * (y2 - y1) / dx
+    end if
+end function table_interpolate
+!
+real(kind=kind(1.d0)) function table_tserLookup2(tablex, tabley, nItems, x, extend)
+!
+!  Input:   table = pointer to a TTable structure
+!           x = a date/time value
+!           extend = TRUE if time series extended on either end
+!  Output:  returns a y-value
+!  Purpose: retrieves the y-value corresponding to a time series date,
+!           using interploation if necessary.
+!
+!  NOTE: if extend is FALSE and date x is outside the range of the table
+!        then 0 is returned; if TRUE then the first or last value is
+!        returned.
+!
+! my own version just for testing DW routing
+
+    implicit none
+
+    integer, parameter :: dpt = kind(1.d0)
+    real(kind=dpt), dimension(:), intent(inout) :: tablex, tabley
+    real(kind=dpt), intent(in) :: x
+    integer, intent(in) :: nItems
+    logical, intent(in) :: extend
+    real(kind=dpt) :: lyVal
+    integer :: i
+    real(kind=dpt) :: table_interpolate  !a function
+            
+    if (x < tablex(1)) Then
+      if (extend) then
+         lyVal = tabley(1)
+      else
+         lyVal = 0.0
+      end if
+    elseif (x > tablex(nItems)) then
+      if (extend) then
+         lyVal = tabley(nItems)
+      else
+         lyVal = 0.0
+      end if
+    else
+      do i=1, nItems -1
+         if ( abs(x-tablex(i)) < tiny(1.0)) then
+            lyVal = tabley(i)
+            exit
+         elseif (x > tablex(i) .and. x < tablex(i+1)) then
+            lyVal = table_interpolate(x, tablex(i), tabley(i), tablex(i+1), tabley(i+1))
+            exit
+         end if
+      end do
+    end if
+    table_tserLookup2 = lyVal 
+end function table_tserLookup2
 end module

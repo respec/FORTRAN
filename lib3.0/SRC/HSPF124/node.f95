@@ -112,6 +112,7 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     Node(j)%datatype   = nodetype
     Node(j)%subIndex   = k
     Node(j)%invertElev = x(1) / UCF(LENGTH)
+    !write(24,*) 'node set invert ',j,Node(j)%invertElev,x(1),UCF(LENGTH)
     Node(j)%crownElev  = Node(j)%invertElev
     Node(j)%initDepth  = 0.0
     Node(j)%newVolume  = 0.0
@@ -208,6 +209,7 @@ subroutine node_initInflow(j, tStep)
    real(kind=dp), intent(in) :: tStep
     ! --- initialize inflow & outflow
     Node(j)%oldFlowInflow = Node(j)%inflow
+    !write(24,*) 'INIT NODE INFLOW ',j,Node(j)%inflow
     Node(j)%oldNetInflow  = Node(j)%inflow - Node(j)%outflow
     Node(j)%inflow = Node(j)%newLatFlow
     Node(j)%outflow = 0.0
@@ -523,6 +525,7 @@ subroutine node_getResults(j, f) !, x)
     z = (f1*Node(j)%oldLatFlow + f*Node(j)%newLatFlow) * UCF(FLOW) 
     NodeResults(NODE_LATFLOW) = z * 1.0d00 !(float)z
     z = (f1*Node(j)%oldFlowInflow + f*Node(j)%inflow) * UCF(FLOW)
+    !write(24,*) 'NODE RESULTS ',j,z,Node(j)%oldFlowInflow,Node(j)%inflow
     NodeResults(NODE_INFLOW) = z * 1.0d00 !(float)z
     z = Node(j)%overflow * UCF(FLOW)
     NodeResults(NODE_OVERFLOW) = z * 1.0d00 !(float)z
