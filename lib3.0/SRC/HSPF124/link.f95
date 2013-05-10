@@ -1027,7 +1027,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
         Conduit(k)%roughness = x(2)
         arrLink(j)%offset1      = x(3) / UCF(LENGTH)
         arrLink(j)%offset2      = x(4) / UCF(LENGTH)
-        arrLink(j)%q0           = x(6) / UCF(FLOW)
+        arrLink(j)%q0           = x(5) / UCF(FLOW)
         arrLink(j)%qLimit       = x(6) / UCF(FLOW)
         !break
 

@@ -202,6 +202,7 @@ integer function flowrout_execute(nl, links, routingModel, tStep)
         ! adjust outflow at upstream node and inflow at downstream node
         Node( arrLink(j)%node1 )%outflow = Node( arrLink(j)%node1 )%outflow + qin
         Node( arrLink(j)%node2 )%inflow  = Node( arrLink(j)%node2 )%inflow + qout
+        !write(24,*) 'flowrout NODE INFLOW ',j,Node( arrLink(j)%node2 )%inflow,qout
     end do
     if ( Nobjects(LINK) > 0 ) mSteps = mSteps/Nobjects(LINK)
 
