@@ -217,11 +217,12 @@ real(kind=dp) function inflow_getExtInflow(inflow, aDate)
 !    }                                                                          !(5.0.014 - LR)
 
 !    if ( k >= 0 ) tsv = table_tseriesLookup2(Tseries(k), aDate, .FALSE.) * sfm
-    !if ( k > 0 ) then
-      !tsv = table_tserLookup2(oTsers(k)%odates, oTsers(k)%ovalues, &
-                                !&size(oTsers(k)%odates, 1), aDate, .FALSE.)
-    !end if
+    if ( k > 0 ) then
+      tsv = table_tserLookup2(oTsers(k)%odates, oTsers(k)%ovalues, &
+                                &size(oTsers(k)%odates, 1), aDate, .FALSE.)
+    end if
     inflow_getExtInflow = cfm * (tsv * sfm + blv)
+    !write(24,*) 'in inflow ',inflow_getExtInflow,cfm,tsv,sfm,blv
 end function inflow_getExtInflow
 !
 !!=============================================================================
