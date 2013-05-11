@@ -2151,7 +2151,7 @@ C     + + + LOCAL VARIABLES + + +
      $                 COTDGS(MXEXIT,MXCAT),CVOLEV(MXCAT),DEMVOL,
      $                 CIRRWD(MXCAT)
       DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR,
-     $                 INVOL
+     $                 INVOL,PREVIN
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -2474,11 +2474,27 @@ C         no outflow demands depend on vol
       ELSE IF (HYDRFG.EQ.2) THEN
 C       use new dynamic wave routing algorithm
         INVOL = IVOL + PRSUPY - VOLEV
+C
 C        write(messu,*) 'about to call dwrout with ivol ',
 C     1                  IVOL,PRSUPY,VOLEV
+C
+C       get volume of inflow from previous time step
+        PREVIN = 0.0
+        IF (IVOLFP .GT. 0 .AND. IVL1.GT.2) THEN
+          PREVIN= PREVIN + PAD(IVOLFP + IVL1-1)
+        END IF
+        IF (PRECFP .GT. 0 .AND. AUX1FG.NE.0 .AND. IVL1.GT.2) THEN
+          PREVIN= PREVIN + ((PAD(PRECFP + IVL1-1))*SAS)
+        END IF 
+        IF (PEVFP .GT. 0 .AND. AUX1FG.NE.0 .AND. IVL1.GT.2) THEN
+          PREVIN= PREVIN + ((PAD(PEVFP+ IVL1-1))*SAS)
+        END IF  
+C
+C        write(messu,*) 'DWROUT: previn,invol ',previn,invol,ivl1
+C
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,
-     I               OS(1),ROS,VOLT,INVOL,
+     I               OS(1),ROS,VOLT,INVOL,PREVIN,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
      I               DATIM,
@@ -3724,7 +3740,7 @@ C
       SUBROUTINE   DWROUT
      I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,
-     I                    OS,ROS,VOLT,INVOL,
+     I                    OS,ROS,VOLT,INVOL,PREVIN,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
      I                    DATIM,
@@ -3766,7 +3782,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 CLENTH(NCOND),CMANN(NCOND),COFF1(NCOND),
      $                 COFF2(NCOND),CQ0(NCOND),CGEOM1(NCOND),
      $                 CGEOM2(NCOND),CGEOM3(NCOND),CGEOM4(NCOND) 
-      DOUBLE PRECISION VOLT,VOL,INVOL
+      DOUBLE PRECISION VOLT,VOL,INVOL,PREVIN
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DELTS  - simulation interval in seconds
@@ -3778,6 +3794,7 @@ C     OS     - rate of outflow from each exit of reach at start of interval
 C     ROS    - total rate of outflow from reach at start of interval
 C     VOLT   - volume in the reach after inflow, precip and evap
 C     INVOL  - inflow volume to this reach at this time step, incl inflow, precip and evap
+C     PREVIN - inflow volume at previous time step
 C     MON    - calendar month
 C     NXTMON - next calendar month
 C     DAY    - day of month
@@ -4019,20 +4036,53 @@ C
 !
 !     construct external inflow to each node in the network
 !
-C      write(messu,*) 'in dwrout, invol ',invol
-      do J = 1, NNODE-1
-C       input volume to this reach = NLOCIN * INVOL
+CC      write(messu,*) 'in dwrout, invol ',invol
+C      do J = 1, NNODE-1
+CC       input volume to this reach = NLOCIN * INVOL
+C        inflows(J)%param = -1 !flow
+C        inflows(J)%datatype = FLOW_INFLOW !or EXTERNAL_INFLOW, user-supplied external inflow
+C        inflows(J)%tseries = J
+C        inflows(J)%basePat = 1
+C        inflows(J)%cFactor = 1.0
+C        inflows(J)%sFactor = 1.0
+C        inflows(J)%baseline = INVOL * NLOCIN(J) / 100.0 / DELTS  !conv inflow in vol/hr to vol/s
+C        nullify(inflows(J)%next)
+C        Node(J)%extInflow => inflows(J)
+CC        write(messu,*) 'DWROUT: node ext inflow ',
+CC     1                  j,inflows(J)%baseline
+C      end do
+C
+C     better way of setting node inflows
+      if (.not. allocated(oTsers)) then
+        allocate(oTsers(NNODE))
+      end if 
+      do J=1, NNODE
+        oTsers(J)%datatype = E_TSERIES
+        allocate(oTsers(J)%odates(3))
+        allocate(oTsers(J)%ovalues(3))
+        if (associated(oTsers(J)%odates) .and. 
+     1      associated(oTsers(J)%ovalues)) then
+           oTsers(J)%odates(1) = StartDate + StartTime
+           oTsers(J)%odates(2) = oTsers(J)%odates(1) + (DELTS / 86400.0)
+           oTsers(J)%odates(3) = oTsers(J)%odates(2) + (DELTS / 86400.0)
+           oTsers(J)%ovalues(1) = PREVIN * NLOCIN(J) / 100.0 / DELTS
+           oTsers(J)%ovalues(2) = INVOL * NLOCIN(J) / 100.0 / DELTS
+           oTsers(J)%ovalues(3) = INVOL * NLOCIN(J) / 100.0 / DELTS
+C           write(messu,*) 'DWROUT: oTsers ',oTsers(J)%ovalues(1),
+C     1                                      oTsers(J)%ovalues(2),
+C     1                                      oTsers(J)%ovalues(3)
+         end if
+      end do
+      do J = 1, NNODE - 1
         inflows(J)%param = -1 !flow
         inflows(J)%datatype = FLOW_INFLOW !or EXTERNAL_INFLOW, user-supplied external inflow
         inflows(J)%tseries = J
         inflows(J)%basePat = 1
         inflows(J)%cFactor = 1.0
         inflows(J)%sFactor = 1.0
-        inflows(J)%baseline = INVOL * NLOCIN(J) / 100.0 / DELTS  !conv inflow in vol/hr to vol/s
+        inflows(J)%baseline = 0.0
         nullify(inflows(J)%next)
         Node(J)%extInflow => inflows(J)
-C        write(messu,*) 'DWROUT: node ext inflow ',
-C     1                  j,inflows(J)%baseline
       end do
 C
 C
@@ -4106,6 +4156,7 @@ C     only 1 exit here
       ROVOL = OVOL
 C
 C
+      write(messu,*) ''
       write(messu,*) '****************************'
       write(messu,*) '*      Node Outputs        *'
       write(messu,*) '****************************'
@@ -4131,8 +4182,8 @@ C
       end do
 C
       call output_close
-      write(messu,*) 'DWROUT: vol ',vol
-      write(messu,*) 'DWROUT: ovol ',ovol
+C      write(messu,*) 'DWROUT: vol ',vol
+C      write(messu,*) 'DWROUT: ovol ',ovol
 C
       RETURN
       END
