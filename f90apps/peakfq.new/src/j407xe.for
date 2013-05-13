@@ -281,6 +281,7 @@ C           report Multiple GB LO messges
        END IF
 
 C       store Skew/MSE of Skew for display on windows interface plot
+        IF (EMAOPT .EQ. 1) ASMSEG = as_G_mse
         IF (IGSOPT.EQ.1) THEN
 C         Generalized skew
           LSKEW   = GENSKU
@@ -288,7 +289,7 @@ C         Generalized skew
         ELSE IF (IGSOPT.EQ.-1) THEN
 C         Station skew, ignore regional skew
           LSKEW   = SYSSKW
-          LASGMSE = as_G_mse
+          LASGMSE = ASMSEG
         ELSE
 C         Weighted, set to root mean square
           LSKEW   = WRCSKW
@@ -363,7 +364,6 @@ C
 C
             IF (EXPFUN .GT. 0) THEN
 C             output export file
-              IF (EMAOPT .EQ. 1) ASMSEG = as_G_mse
               CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
      I                     SYSSKW,GENSKU,RMSEGS,ASMSEG,SYSASK,
      I                     as_G_mse_Syst,KENTAU,KENPVL,
