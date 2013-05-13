@@ -178,11 +178,12 @@ integer function swmm_open(f1, f2, f3)
     swmm_open = ErrorCode
 end function swmm_open
 
-integer function swmm_run(f1, f2, f3)
+integer function swmm_run(f1, f2, f3, messu)
 !
 !  Input:   f1 = name of input file
 !           f2 = name of report file
 !           f3 = name of binary output file
+!           messu = hspf echo file unit number
 !  Output:  returns error code
 !  Purpose: runs a SWMM simulation.
 !
@@ -190,6 +191,7 @@ integer function swmm_run(f1, f2, f3)
     use output
     implicit none
     character(*), intent(in) :: f1, f2, f3
+    integer, intent(in) :: messu
     integer(kind=K4) :: newHour, oldHour
     integer(kind=K4) :: theDay, theHour
     real(kind=dp) :: elapsedTime
@@ -212,7 +214,7 @@ integer function swmm_run(f1, f2, f3)
         if ( ErrorCode == 0 ) then
 !            writecon("\n o  Simulating day: 0     hour:  0")
             do while(.true.)
-                ErrorCode = swmm_step(elapsedTime)
+                ErrorCode = swmm_step(elapsedTime, messu)
                 newHour = elapsedTime * 24.0
                 if ( newHour > oldHour ) then
                     theDay = elapsedTime
@@ -327,9 +329,10 @@ integer function swmm_start(saveResults)
     swmm_start = ErrorCode
 end function swmm_start
 
-integer function swmm_step(elapsedTime)
+integer function swmm_step(elapsedTime, messu)
 !
 !  Input:   elapsedTime = current elapsed time in decimal days
+!           messu = hspf echo file unit number
 !  Output:  updated value of elapsedTime,
 !           returns error code
 !  Purpose: advances the simulation by one routing time step.
@@ -338,6 +341,7 @@ integer function swmm_step(elapsedTime)
     use output
     use report
     implicit none
+    integer, intent(in) :: messu
     real(kind=dp), intent(inout) :: elapsedTime
     ! --- check that simulation can proceed
     if ( ErrorCode /=0 ) then
@@ -356,7 +360,7 @@ integer function swmm_step(elapsedTime)
         ! --- route flow & WQ through drainage system
         !     (runoff will be calculated as needed)
         !     (NewRoutingTime is updated)
-        call execRouting(elapsedTime)
+        call execRouting(elapsedTime, messu)
     end if
 
     ! --- save results at next reporting time
@@ -375,15 +379,17 @@ integer function swmm_step(elapsedTime)
     swmm_step = ErrorCode
 end function swmm_step
 
-subroutine execRouting(elapsedTime)
+subroutine execRouting(elapsedTime, messu)
 !
 !  Input:   elapsedTime = current elapsed time in decimal days
+!           messu = hspf echo file unit number
 !  Output:  none
 !  Purpose: routes flow & WQ through drainage system over a single time step.
 !
     use headers
     use modRouting
     implicit none
+    integer, intent(in) :: messu
     real(kind=dp), intent(in) :: elapsedTime
     real(kind=dp) ::  nextRoutingTime          ! updated elapsed routing time (msec)
     real(kind=dp) ::  routingStep              ! routing time step (sec)
@@ -416,7 +422,7 @@ subroutine execRouting(elapsedTime)
   
         ! --- route flows through drainage system over current time step
         if ( DoRouting ) then 
-           call routing_execute(RouteModel, routingStep)             !(5.0.010 - LR)
+           call routing_execute(RouteModel, routingStep, messu)             !(5.0.010 - LR)
         else 
            NewRoutingTime = nextRoutingTime       !(5.0.010 - LR)
         end if

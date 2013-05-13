@@ -205,10 +205,11 @@ integer function routing_open(routingModel)
     return
 end function routing_open
 
-subroutine routing_execute(routingModel, routingStep)
+subroutine routing_execute(routingModel, routingStep, messu)
 !
 !  Input:   routingModel = routing method code
 !           routingStep = routing time step (sec)
+!           messu = hspf echo file unit number
 !  Output:  none
 !  Purpose: executes the routing process at the current time period.
 !
@@ -222,11 +223,12 @@ subroutine routing_execute(routingModel, routingStep)
     implicit none
     
     integer, intent(in) :: routingModel
+    integer, intent(in) :: messu
     real(kind=dpr), intent(in) :: routingStep
     integer ::      j
     integer ::      mstepCount
     integer ::      actionCount
-    real(kind=dpr) :: currentDate
+    real(kind=dpr) :: currentDate,nSec
     real(kind=dpr) :: stepFlowError                                                    !(5.0.012 - LR)
     
     integer :: flowrout_execute !TODO: this is for .NET compile
@@ -312,6 +314,14 @@ subroutine routing_execute(routingModel, routingStep)
         ! --- route flow through the drainage network
         if ( Nobjects(LINK) > 0 ) then
             mstepCount = flowrout_execute(Nobjects(LINK), SortedLinks, routingModel, routingStep)
+        end if
+
+        nSec = (CurrentDate - 2.0) * 86400.0
+        if (nSec .LE. ReportStep) then
+          write(messu,*) ''
+          do j = 1, Nobjects(E_NODE)   
+              write(messu,'(1A5,1I5,1A8,1F7.1,1A10,1F10.3)') 'Node',j,' flow at',nSec,' seconds =',node(j)%inflow
+          end do
         end if
     end if
 

@@ -4087,7 +4087,7 @@ C     1                                      oTsers(J)%ovalues(3)
 C
 C
 C      write(messu,*) 'in dwrout, about to call swmm_run'
-      lErrorCode = swmm_run('', '', '')
+      lErrorCode = swmm_run('', '', '', messu)
 C
 C      write(messu,*) 'swmm error code ',lerrorcode
 C
@@ -4114,6 +4114,7 @@ C       set initial depth in each node
 C        write(messu,*) 'DWROUT: reset node depth ',
 C     1                  j,NDINIT(j),onodes(j)%odepth(1)
         NDINIT(J) = onodes(j)%odepth(1)
+C        write(messu,*) 'node depth ',ndinit(j)
       end do
 C
 C     CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
@@ -4122,6 +4123,7 @@ C       set initial flow in each conduit
 C        write(messu,*) 'DWROUT: reset conduit flow ',
 C     1                  j,CQ0(J),olinks(j)%oflow(1)
         CQ0(J) = olinks(j)%oflow(1)
+C        write(messu,*) 'conduit flow ',cq0(j)
       end do
 C
 C     VOL    - volume of water in reach above bed
@@ -4131,7 +4133,7 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval    
 C
 C     return volume of water coming out bottom node
-      OVOL = onodes(NNODE)%oflow(1) * DELTS
+      OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
       OVOL = OVOL + (INVOL * NLOCIN(NNODE) / 100.0)
 C
 C     find volume in system at end of interval
@@ -4160,8 +4162,13 @@ C
       write(messu,*) '****************************'
       write(messu,*) '*      Node Outputs        *'
       write(messu,*) '****************************'
-      write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cfs)', 
-     1                               'Depth(ft)', 'Volume(ft3)'
+      if (uunits.eq.1) then
+        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cfs)', 
+     1                                 'Depth(ft)', 'Volume(ft3)'
+      else
+        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cms)', 
+     1                                 'Depth(m)', 'Volume(m3)'
+      end if 
       do j=1, NNODE
              write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
      1             datim(1),datim(2),datim(3),datim(4),datim(5),
@@ -4172,8 +4179,13 @@ C
       write(messu,*) '****************************'
       write(messu,*) '*      Link Outputs        *'
       write(messu,*) '****************************'
-      write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cfs)', 
-     1                               'Depth(ft)', 'Volume(ft3)'
+      if (uunits.eq.1) then
+        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cfs)', 
+     1                                 'Depth(ft)', 'Volume(ft3)'
+      else
+        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cms)', 
+     1                                 'Depth(m)', 'Volume(m3)'
+      end if 
       do j=1, NCOND
              write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
      1             datim(1),datim(2),datim(3),datim(4),datim(5),
