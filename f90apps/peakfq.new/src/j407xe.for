@@ -119,7 +119,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Provisional version 7.0 dated 05/08/2013',/,
+     $       'Provisional version 7.1 dated 05/08/2013',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -276,7 +276,7 @@ C           report Multiple GB LO messges
  10           CONTINUE
             END IF
           END IF
-          CALL PRTEMAWARN(MSG,NSYS,HISTPD)
+          CALL PRTEMAWARN(MSG,NSYS,HISTPD,SYSSKW)
         END IF
        END IF
 
@@ -288,7 +288,7 @@ C         Generalized skew
           LASGMSE = RMSEGS**2
         ELSE IF (IGSOPT.EQ.-1) THEN
 C         Station skew, ignore regional skew
-          LSKEW   = SYSSKW
+          LSKEW   = WRCSKW
           LASGMSE = ASMSEG
         ELSE
 C         Weighted, set to root mean square
@@ -600,7 +600,7 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   200 FORMAT('  ')
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
-  202 FORMAT( 2X,'Prov. Ver. 7.0',
+  202 FORMAT( 2X,'Prov. Ver. 7.1',
      $        6X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
   203 FORMAT( 2X,'05/08/2013',
@@ -662,7 +662,7 @@ Cprh          WRITE(MSG1, *)
 Cprh          WRITE(MSG1,  205)
 Cprh          WRITE(MSG1,  206)
         END IF
-C       temporary warning message for Prov. beta 7.0
+C       temporary warning message for Prov. beta 7.1
         WRITE(MSG1,  205)
 Cprh       WRITE(MSG1,  206)
 Cprh    original version never set JOBTTL, leave out for new version
@@ -754,7 +754,7 @@ C          WRITE(MSG1, *)
 C          WRITE(MSG1,  205)
 C          WRITE(MSG1,  206)
         END IF
-C       temporary warning message for provisional beta 7.0
+C       temporary warning message for provisional beta 7.1
         WRITE(MSG1, *)
         WRITE(MSG1,  205)
 
@@ -1711,25 +1711,31 @@ C
 C
 C
       SUBROUTINE   PRTEMAWARN
-     I                   (MSG, NSYS, HISTPD)
+     I                   (MSG, NSYS, HISTPD, SYSSKW)
 C
 C     + + + PURPOSE + + +
 C     Print EMA warning messages
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER  MSG,NSYS
-      REAL     HISTPD
+      REAL     HISTPD,SYSSKW
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MSG    - Fortran unit number for output file
 C     NSYS   - number of systematic peaks 
 C     HISTPD - length of historic period
+C     SYSSKW - station skew
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC ABS
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(4X'EMA001W-VARIANCE OF ESTIMATE WARNING, ',
-     $         'HISTORIC PERIOD > 2* SYS')
- 2010 FORMAT(4X'EMA002W-CONFIDENCE INTERVALS ARE NOT EXACT ',
-     $         'IF HISTORIC PERIOD > 0')
+ 2000 FORMAT(4X,'EMA001W-VARIANCE OF ESTIMATE WARNING, ',
+     $          'HISTORIC PERIOD > 2* SYS')
+ 2010 FORMAT(4X,'EMA002W-CONFIDENCE INTERVALS ARE NOT EXACT ',
+     $          'IF HISTORIC PERIOD > 0')
+ 2020 FORMAT(4X,'EMA003W-SKEW VALUE OF ',F6.4,' IS OUTSIDE ',
+     $          'THE ACCEPTABLE RANGE (-1.4 - 1.4) FOR EMA ANALYSIS')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1738,6 +1744,10 @@ C
           WRITE(MSG,2000) 
         END IF
         WRITE(MSG,2010) 
+      END IF
+
+      IF (ABS(SYSSKW) .GT. 1.4) THEN
+        WRITE(MSG,2020) SYSSKW
       END IF
 C
       RETURN
@@ -5097,7 +5107,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Provisional Ver. 7.0 dated 05/08/2013',/,'#',/,
+     $       'Provisional Ver. 7.1 dated 05/08/2013',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
