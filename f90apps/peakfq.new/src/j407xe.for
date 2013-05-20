@@ -126,6 +126,7 @@ C     + + + FORMATS + + +
      $        'SKEWOPT',A,'GENSKEW',A,'SKEWSTD',A,'SKEWMSE',A,
      $        'LO OUT',A,'LO TEST',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
      $        'LATITUDE',A,'LONGITUDE')
+ 2015 FORMAT(8X,I8,' ZERO VALUES')
  2020 FORMAT('    EMA003I-LOW OUTLIERS WERE DETECTED USING ',
      $       'MULTIPLE GRUBBS-BECK TEST',I8,4X,F8.1,/
      $       '      THE FOLLOWING PEAKS (WITH CORRESPONDING P-VALUES)',
@@ -269,6 +270,7 @@ C
 C           report Multiple GB LO messges
             IF (NLOW .GT. 0) THEN
               WRITE(MSG,2020) nlow-nzero,10**gbcrit
+              IF (nzero .GT. 0) WRITE(MSG,2015) nzero
               DO 10 I = 1,NLOW
                 IF (qs(I).GT.1.0D-99) THEN
                   WRITE(MSG,2030)qs(I),pvaluew(I)
@@ -4197,7 +4199,17 @@ C       get plotting positions for all peaks and thresholds
         DO 16 I = 1, NOBS
 C         check for interval with INF as upper limit
           IF (QL(I).GT.0 .AND. QU(I).GT.12) THEN
+C           upper interval is really large/infinity, set to lower interval            
             LQU(I) = QL(I)
+C           try to find original peak value and use it as upper interval
+            DO 17 J = 1,NPKS
+              IF (ABS(IPKSEQ(J)) .EQ. OPKSEQ(I)) THEN
+                IF (LOG10(PKS(J)) .GE. QL(I)) THEN
+c                 original peak found > lower interval, set upper to it
+                  LQU(I) = LOG10(PKS(J))
+                END IF
+              END IF
+ 17         CONTINUE
           ELSE
             LQU(I) = QU(I)
           END IF
