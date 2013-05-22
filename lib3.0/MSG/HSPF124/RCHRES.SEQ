@@ -75,7 +75,7 @@ $TEXT
  12  1 2MON-SEDCONC       158    158    358    358   63    7
  12  1 2MON-PHYTO         159    159    359    359   64    7
   7  6 2GQ-DAUGHTER       160    160    360    360   65    7
-500  1 2NODE-PARM         224    225    424    425   66    2
+600  1 2NODE-PARM         224    225    424    425   66    2
   0  0 0HHHHHHHHHHHH        0      0      0      0   67
   0  0 0IIIIIIIIIIII        0      0      0      0   68
   1  1 1BENTH-FLAG        161    161    361    361   69    8
@@ -3957,7 +3957,7 @@ _RANGE  0. : -999.
 _DEFAULT  0.
 _HELP
 GEOM2 is the first geometry parameter.
-_PNAME  GEOM21
+_PNAME  GEOM2
 $FIELD  FIELD6
 _WIDTH  10
 _COLUMN 51
@@ -3987,9 +3987,9 @@ $TEXT
 <------------------><--------><--------><--------><--------><------------------><--------><--------><--------><-------->
 #GROUP  224  TYPE PRM2
 $HEADER
-    RCHRES              INVERT      INIT    PONDED     LOCAL
-    x -  x      NODE      ELEV     DEPTH      AREA    INFLOW
-                          (ft)      (ft)     (ft2)       (%)
+    RCHRES              INVERT       MAX      INIT    PONDED     LOCAL
+    x -  x      NODE      ELEV     DEPTH     DEPTH      AREA    INFLOW
+                          (ft)      (ft)      (ft)     (ft2)       (%)
 $TNAME  NODE-PARM
 $FIELD  FIELD1
 _WIDTH  10
@@ -4024,8 +4024,8 @@ _TYPE REAL
 _RANGE  0.0 : -999
 _DEFAULT  0.0
 _HELP
- Initial depth for this node.
-_PNAME  NDEP
+ Max depth for this node.
+_PNAME  NMAX
 $FIELD  FIELD6
 _WIDTH   10
 _COLUMN  41
@@ -4034,11 +4034,21 @@ _TYPE REAL
 _RANGE  0.0 : -999
 _DEFAULT  0.0
 _HELP
- Ponded area for this node.
-_PNAME  NPOND
+ Initial depth for this node.
+_PNAME  NDEP
 $FIELD  FIELD7
 _WIDTH   10
 _COLUMN  51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999
+_DEFAULT  0.0
+_HELP
+ Ponded area for this node.
+_PNAME  NPOND
+$FIELD  FIELD8
+_WIDTH   10
+_COLUMN  61
 _PROTECT CORRECT
 _TYPE REAL
 _RANGE  0.0 : 100.0
@@ -4048,9 +4058,9 @@ _HELP
 _PNAME  NLOC
 #GROUP  225  TYPE PRM2
 $HEADER
-    RCHRES              INVERT      INIT    PONDED     LOCAL
-    x -  x      NODE      ELEV     DEPTH      AREA    INFLOW
-                           (m)       (m)      (m2)       (%)
+    RCHRES              INVERT       MAX      INIT    PONDED     LOCAL
+    x -  x      NODE      ELEV     DEPTH     DEPTH      AREA    INFLOW
+                           (m)       (m)       (m)      (m2)       (%)
 $TNAME  NODE-PARM
 $FIELD  FIELD1
 _WIDTH  10
@@ -4085,8 +4095,8 @@ _TYPE REAL
 _RANGE  0.0 : -999
 _DEFAULT  0.0
 _HELP
- Initial depth for this node.
-_PNAME  NDEP
+ Max depth for this node.
+_PNAME  NMAX
 $FIELD  FIELD6
 _WIDTH   10
 _COLUMN  41
@@ -4095,11 +4105,21 @@ _TYPE REAL
 _RANGE  0.0 : -999
 _DEFAULT  0.0
 _HELP
- Ponded area for this node.
-_PNAME  NPOND
+ Initial depth for this node.
+_PNAME  NDEP
 $FIELD  FIELD7
 _WIDTH   10
 _COLUMN  51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  0.0 : -999
+_DEFAULT  0.0
+_HELP
+ Ponded area for this node.
+_PNAME  NPOND
+$FIELD  FIELD8
+_WIDTH   10
+_COLUMN  61
 _PROTECT CORRECT
 _TYPE REAL
 _RANGE  0.0 : 100.0
@@ -4109,18 +4129,18 @@ _HELP
 _PNAME  NLOC
 #GROUP  424  TYPE TEXT
 $TEXT
-(6X,A4,4(1PE10.3))
-              invert      init    ponded     local              invert      init    ponded     local              invert      init    ponded     local
-      node      elev     depth      area    inflow      node      elev     depth      area    inflow      node      elev     depth      area    inflow
-                (ft)      (ft)     (ft2)       (%)                (ft)      (ft)     (ft2)       (%)                (ft)      (ft)     (ft2)       (%)
-<--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><-------->
+(6X,A4,5(1PE10.3))
+              invert       max      init    ponded     local
+      node      elev     depth     depth      area    inflow
+                (ft)      (ft)      (ft)     (ft2)       (%)
+<--------><--------><--------><--------><--------><-------->
 #GROUP  425  TYPE TEXT
 $TEXT
-(6X,A4,4(1PE10.3))
-              invert      init    ponded     local              invert      init    ponded     local              invert      init    ponded     local
-      node      elev     depth      area    inflow      node      elev     depth      area    inflow      node      elev     depth      area    inflow
-                 (m)       (m)      (m2)       (%)                 (m)       (m)      (m2)       (%)                 (m)       (m)      (m2)       (%)
-<--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><--------><-------->
+(6X,A4,5(1PE10.3))
+              invert       max      init    ponded     local          
+      node      elev     depth     depth      area    inflow
+                 (m)       (m)       (m)      (m2)       (%)
+<--------><--------><--------><--------><--------><-------->
 #GROUP  115  TYPE PRM2
 $HEADER
     RCHRES  Data for section ADCALC
