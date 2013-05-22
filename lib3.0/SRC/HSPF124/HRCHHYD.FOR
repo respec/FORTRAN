@@ -715,7 +715,7 @@ C
 C       process values in table-type NODE-PARM
         TBNO= 66
         TBSB= 1
-        NVAL= NNODE * 5
+        NVAL= NNODE * 6
         CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
      M               RVALD(1))
         IC = 0
@@ -727,12 +727,13 @@ C       process values in table-type NODE-PARM
           IC = IC + 1
           NELEV(I) = RVALD(IC) 
           IC = IC + 1
+          NDMAX(I) = RVALD(IC) 
+          IC = IC + 1
           NDINIT(I) = RVALD(IC) 
           IC = IC + 1
           NPONDA(I) = RVALD(IC) 
           IC = IC + 1
           NLOCIN(I) = RVALD(IC) 
-          NDMAX(I)  = 0.0
           NDSURC(I) = 0.0
  230    CONTINUE
 C
@@ -3848,10 +3849,6 @@ C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
 C     1                 xsect_setParams
 C
 C     + + + END SPECIFICATIONS + + +
-C
-C      call TongMain 'for testing
-C      NDMAX = (/ 13.4, 16.7,  8.8, 12.5, 42.7,  9.4, 13.5, 18.0, 
-C     1           22.2, 0.0 /) 
 C
 C     variables to pass in (added to the osv):
 C     DTS           -- integer, dynamic wave time step
