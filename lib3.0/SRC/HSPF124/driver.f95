@@ -69,6 +69,7 @@ subroutine TongMain
       integer :: k !subindex for each node type
       integer :: CNODE1, CNODE2
       integer :: messu
+      integer :: datim(5)
       logical :: isOK
       
       integer :: lErrorCode, lN
@@ -341,7 +342,7 @@ subroutine TongMain
 !      lErrorCode = swmm_start(.true.)
 !      if (ErrorCode /= 0) stop
 
-      lErrorCode = swmm_run('', '', '', messu)
+      lErrorCode = swmm_run('', '', '', messu, datim)
       
       !The resulting nodes' and links' flow, depth, and volume outputs are
       !saved in the onodes array and olinks array. 
