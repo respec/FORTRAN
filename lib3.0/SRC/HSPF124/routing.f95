@@ -205,11 +205,12 @@ integer function routing_open(routingModel)
     return
 end function routing_open
 
-subroutine routing_execute(routingModel, routingStep, messu)
+subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
 !
 !  Input:   routingModel = routing method code
 !           routingStep = routing time step (sec)
-!           messu = hspf echo file unit number
+!           outfl = hspf output file unit number
+!           sdatim = starting date/time of hspf step
 !  Output:  none
 !  Purpose: executes the routing process at the current time period.
 !
@@ -223,13 +224,19 @@ subroutine routing_execute(routingModel, routingStep, messu)
     implicit none
     
     integer, intent(in) :: routingModel
-    integer, intent(in) :: messu
+    integer, intent(in) :: outfl
+    integer, intent(in) :: sdatim(5)
     real(kind=dpr), intent(in) :: routingStep
     integer ::      j
     integer ::      mstepCount
     integer ::      actionCount
+    integer ::      nSeci
     real(kind=dpr) :: currentDate,nSec
     real(kind=dpr) :: stepFlowError                                                    !(5.0.012 - LR)
+    character*30   :: t30
+    character*10, allocatable, dimension(:) :: t10
+    integer ::      sdat(6)
+    integer ::      newdat(6)
     
     integer :: flowrout_execute !TODO: this is for .NET compile
     mstepCount = 1
@@ -317,11 +324,24 @@ subroutine routing_execute(routingModel, routingStep, messu)
         end if
 
         nSec = (CurrentDate - 2.0) * 86400.0
-        if (nSec .LE. ReportStep) then
-          write(messu,*) ''
-          do j = 1, Nobjects(E_NODE)   
-              write(messu,'(1A5,1I5,1A8,1F7.1,1A10,1F10.3)') 'Node',j,' flow at',nSec,' seconds =',node(j)%inflow
+        nSeci = nint(nSec)
+        sdat(1) = sdatim(1)
+        sdat(2) = sdatim(2)
+        sdat(3) = sdatim(3)
+        sdat(4) = sdatim(4)
+        sdat(5) = sdatim(5)
+        sdat(6) = 0
+        call timadd(sdat,1,1,nSeci,newdat)
+
+        if (nSec .LE. ReportStep .AND. outfl.GT.0) then
+          !write(outfl,*) ' year  mon  day hour  min  sec'
+          write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
+          allocate(t10(Nobjects(E_NODE)))
+          do j = 1, Nobjects(E_NODE)
+            write(t10(j),'(F10.3)') node(j)%inflow
           end do
+          write(outfl,*) t30,t10
+          deallocate(t10)
         end if
     end if
 

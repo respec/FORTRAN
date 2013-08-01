@@ -57,7 +57,7 @@ C
      I                   APRINT)
 C
 C     + + + PURPOSE + + +
-C     Write a binary output header record for a section of an operation
+C     Write a binary output data record for a section of an operation
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER     BINU,OPNO,UNITFG,LEV,EXDAT(5),VCOUNT

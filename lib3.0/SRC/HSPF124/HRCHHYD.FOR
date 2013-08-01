@@ -3833,7 +3833,8 @@ C     ROVOL  - total volume of water leaving reach in an interval
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER          LTYPE,NTS,ITS,J,K,lErrorCode,DELTSI
-      INTEGER          CNODE1X, CNODE2X
+      INTEGER          CNODE1X, CNODE2X, outfl, headfg
+      INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5)
       DOUBLE PRECISION XN(6),XC(6),XX(4),aUCF
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
@@ -3847,6 +3848,9 @@ C
 C     + + + EXTERNALS + + +
 C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
 C     1                 xsect_setParams
+C
+C     + + + DATA INITIALIZATIONS + + +
+      DATA        headfg/0/
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4082,9 +4086,38 @@ C     1                                      oTsers(J)%ovalues(3)
         Node(J)%extInflow => inflows(J)
       end do
 C
+      outfl = 95
+      if (outfl.GT.0 .AND. headfg.eq.0) then
+C       write header to file        
+        IF (UUNITS .EQ. 1) THEN
+C         english 
+          write(outfl,*) ' year  mon  day hour  min  sec',
+     1                   ' -- node (1 to n) outflows in cfs'
+        ELSE
+C         metric
+          write(outfl,*) ' year  mon  day hour  min  sec',
+     1                   ' -- node (1 to n) outflows in cms'
+        END IF
+        headfg = 1
+      end if 
+C
+C     DATIM is the date/time at the end of the current HSPF interval, 
+C     we need to know when this interval began
+      sdatim(1) = datim(1)
+      sdatim(2) = datim(2)
+      sdatim(3) = datim(3)
+      sdatim(4) = datim(4)
+      sdatim(5) = datim(5)
+      sdatim(6) = 0
+      call timadd(sdatim,1,1,-1 * deltsi,newdat)
+      newd5(1) = newdat(1)
+      newd5(2) = newdat(2)
+      newd5(3) = newdat(3)
+      newd5(4) = newdat(4)
+      newd5(5) = newdat(5)
 C
 C      write(messu,*) 'in dwrout, about to call swmm_run'
-      lErrorCode = swmm_run('', '', '', messu)
+      lErrorCode = swmm_run('', '', '', outfl, newd5)
 C
 C      write(messu,*) 'swmm error code ',lerrorcode
 C
@@ -4155,40 +4188,40 @@ C     only 1 exit here
       ROVOL = OVOL
 C
 C
-      write(messu,*) ''
-      write(messu,*) '****************************'
-      write(messu,*) '*      Node Outputs        *'
-      write(messu,*) '****************************'
-      if (uunits.eq.1) then
-        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cfs)', 
-     1                                 'Depth(ft)', 'Volume(ft3)'
-      else
-        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cms)', 
-     1                                 'Depth(m)', 'Volume(m3)'
-      end if 
-      do j=1, NNODE
-             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
-     1             datim(1),datim(2),datim(3),datim(4),datim(5),
-     1             onodes(j)%oflow(1), onodes(j)%odepth(1), 
-     1             onodes(j)%ovolume(1)
-      end do
-      write(messu,*) ''
-      write(messu,*) '****************************'
-      write(messu,*) '*      Link Outputs        *'
-      write(messu,*) '****************************'
-      if (uunits.eq.1) then
-        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cfs)', 
-     1                                 'Depth(ft)', 'Volume(ft3)'
-      else
-        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cms)', 
-     1                                 'Depth(m)', 'Volume(m3)'
-      end if 
-      do j=1, NCOND
-             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
-     1             datim(1),datim(2),datim(3),datim(4),datim(5),
-     1             olinks(j)%oflow(1), olinks(j)%odepth(1), 
-     1             olinks(j)%ovolume(1)
-      end do
+C      write(messu,*) ''
+C      write(messu,*) '****************************'
+C      write(messu,*) '*      Node Outputs        *'
+C      write(messu,*) '****************************'
+C      if (uunits.eq.1) then
+C        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cfs)', 
+C     1                                 'Depth(ft)', 'Volume(ft3)'
+C      else
+C        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cms)', 
+C     1                                 'Depth(m)', 'Volume(m3)'
+C      end if 
+C      do j=1, NNODE
+C             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
+C     1             datim(1),datim(2),datim(3),datim(4),datim(5),
+C     1             onodes(j)%oflow(1), onodes(j)%odepth(1), 
+C     1             onodes(j)%ovolume(1)
+C      end do
+C      write(messu,*) ''
+C      write(messu,*) '****************************'
+C      write(messu,*) '*      Link Outputs        *'
+C      write(messu,*) '****************************'
+C      if (uunits.eq.1) then
+C        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cfs)', 
+C     1                                 'Depth(ft)', 'Volume(ft3)'
+C      else
+C        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cms)', 
+C     1                                 'Depth(m)', 'Volume(m3)'
+C      end if 
+C      do j=1, NCOND
+C             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
+C     1             datim(1),datim(2),datim(3),datim(4),datim(5),
+C     1             olinks(j)%oflow(1), olinks(j)%odepth(1), 
+C     1             olinks(j)%ovolume(1)
+C      end do
 C
       call output_close
 C      write(messu,*) 'DWROUT: vol ',vol
