@@ -658,12 +658,13 @@ C
 C       process values in table-type DYNAMIC-WAVE
         TBNO= 20
         TBSB= 1
-        NVAL= 3
+        NVAL= 4
         CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M               IVAL)
         DTS  = IVAL(1)
         NCOND= IVAL(2)
         NNODE= IVAL(3)
+        DWUNIT= IVAL(4)
 C
 C       process values in table-type CONDUIT-PARM
         TBNO= 36
@@ -2494,7 +2495,7 @@ C
 C        write(messu,*) 'DWROUT: previn,invol ',previn,invol,ivl1
 C
         CALL DWROUT (DELTS,UUNITS,
-     I               NNODE,NCOND,DTS,
+     I               NNODE,NCOND,DTS,DWUNIT,
      I               OS(1),ROS,VOLT,INVOL,PREVIN,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
@@ -3740,7 +3741,7 @@ C
 C
       SUBROUTINE   DWROUT
      I                   (DELTS,UUNITS,
-     I                    NNODE,NCOND,DTS,
+     I                    NNODE,NCOND,DTS,DWUNIT,
      I                    OS,ROS,VOLT,INVOL,PREVIN,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
@@ -3775,7 +3776,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
      $                 HYECNT(5),HYWCNT(2),UUNITS,
      $                 CNODE1(NCOND),CNODE2(NCOND),
-     $                 CSHAPE(NCOND)
+     $                 CSHAPE(NCOND),DWUNIT
       REAL             DELTS,OS,ROS,
      $                 O,RO,OVOL,ROVOL,
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
@@ -3791,6 +3792,7 @@ C     UUNITS - units of simulation, 1-english, 2-si
 C     NNODE  - number of nodes in dw simulated network
 C     NCOND  - number of conduits in dw simulated network
 C     DTS    - dynamic wave time step in seconds
+C     DWUNIT - fortran unit number of file for dw output
 C     OS     - rate of outflow from each exit of reach at start of interval
 C     ROS    - total rate of outflow from reach at start of interval
 C     VOLT   - volume in the reach after inflow, precip and evap
@@ -4086,16 +4088,15 @@ C     1                                      oTsers(J)%ovalues(3)
         Node(J)%extInflow => inflows(J)
       end do
 C
-      outfl = 95
-      if (outfl.GT.0 .AND. headfg.eq.0) then
+      if (dwunit.GT.0 .AND. headfg.eq.0) then
 C       write header to file        
         IF (UUNITS .EQ. 1) THEN
 C         english 
-          write(outfl,*) ' year  mon  day hour  min  sec',
+          write(dwunit,*) ' year  mon  day hour  min  sec',
      1                   ' -- node (1 to n) outflows in cfs'
         ELSE
 C         metric
-          write(outfl,*) ' year  mon  day hour  min  sec',
+          write(dwunit,*) ' year  mon  day hour  min  sec',
      1                   ' -- node (1 to n) outflows in cms'
         END IF
         headfg = 1
@@ -4117,7 +4118,7 @@ C     we need to know when this interval began
       newd5(5) = newdat(5)
 C
 C      write(messu,*) 'in dwrout, about to call swmm_run'
-      lErrorCode = swmm_run('', '', '', outfl, newd5)
+      lErrorCode = swmm_run('', '', '', dwunit, newd5)
 C
 C      write(messu,*) 'swmm error code ',lerrorcode
 C

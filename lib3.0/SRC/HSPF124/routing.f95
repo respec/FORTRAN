@@ -334,14 +334,8 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
         call timadd(sdat,1,1,nSeci,newdat)
 
         if (nSec .LE. ReportStep .AND. outfl.GT.0) then
-          !write(outfl,*) ' year  mon  day hour  min  sec'
           write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
-          allocate(t10(Nobjects(E_NODE)))
-          do j = 1, Nobjects(E_NODE)
-            write(t10(j),'(F10.3)') node(j)%inflow
-          end do
-          write(outfl,*) t30,t10
-          deallocate(t10)
+          WRITE(outfl,'(A30,100(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE))
         end if
     end if
 
