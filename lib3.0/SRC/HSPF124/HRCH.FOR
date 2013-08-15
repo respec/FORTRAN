@@ -86,7 +86,7 @@ C     input for section hydr
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,24)
+        OSVREC= MAX(OSVREC,25)
       END IF
 C
 C     adcalc

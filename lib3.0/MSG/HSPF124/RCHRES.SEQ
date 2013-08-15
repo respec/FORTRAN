@@ -3997,9 +3997,9 @@ $TEXT
 <------------------><--------><--------><--------><--------><------------------><--------><--------><--------><-------->
 #GROUP  224  TYPE PRM2
 $HEADER
-    RCHRES              INVERT       MAX      INIT    PONDED     LOCAL
-    x -  x      NODE      ELEV     DEPTH     DEPTH      AREA    INFLOW
-                          (ft)      (ft)      (ft)     (ft2)       (%)
+    RCHRES              INVERT       MAX      INIT    PONDED    INFLOW
+    x -  x      NODE      ELEV     DEPTH     DEPTH      AREA      FLAG
+                          (ft)      (ft)      (ft)     (ft2)       
 $TNAME  NODE-PARM
 $FIELD  FIELD1
 _WIDTH  10
@@ -4064,13 +4064,13 @@ _TYPE REAL
 _RANGE  0.0 : 100.0
 _DEFAULT  0.0
 _HELP
- Local inflow percentage for this node.
+ Local inflow timeseries subscript for this node.
 _PNAME  NLOC
 #GROUP  225  TYPE PRM2
 $HEADER
-    RCHRES              INVERT       MAX      INIT    PONDED     LOCAL
-    x -  x      NODE      ELEV     DEPTH     DEPTH      AREA    INFLOW
-                           (m)       (m)       (m)      (m2)       (%)
+    RCHRES              INVERT       MAX      INIT    PONDED    INFLOW
+    x -  x      NODE      ELEV     DEPTH     DEPTH      AREA      FLAG
+                           (m)       (m)       (m)      (m2)       
 $TNAME  NODE-PARM
 $FIELD  FIELD1
 _WIDTH  10
@@ -4135,21 +4135,21 @@ _TYPE REAL
 _RANGE  0.0 : 100.0
 _DEFAULT  0.0
 _HELP
- Local inflow percentage for this node.
+ Local inflow timeseries subscript for this node.
 _PNAME  NLOC
 #GROUP  424  TYPE TEXT
 $TEXT
 (6X,A4,5(1PE10.3))
-              invert       max      init    ponded     local
-      node      elev     depth     depth      area    inflow
-                (ft)      (ft)      (ft)     (ft2)       (%)
+              invert       max      init    ponded    inflow
+      node      elev     depth     depth      area      flag
+                (ft)      (ft)      (ft)     (ft2)       
 <--------><--------><--------><--------><--------><-------->
 #GROUP  425  TYPE TEXT
 $TEXT
 (6X,A4,5(1PE10.3))
-              invert       max      init    ponded     local          
-      node      elev     depth     depth      area    inflow
-                 (m)       (m)       (m)      (m2)       (%)
+              invert       max      init    ponded    inflow
+      node      elev     depth     depth      area      flag
+                 (m)       (m)       (m)      (m2)      
 <--------><--------><--------><--------><--------><-------->
 #GROUP  115  TYPE PRM2
 $HEADER

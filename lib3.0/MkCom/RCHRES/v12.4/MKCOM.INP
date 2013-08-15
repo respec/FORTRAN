@@ -230,6 +230,8 @@ VA   NDINIT 100   0   0   0 R P                         01000000000000
 VA   NDSURC 100   0   0   0 R P                         01000000000000
 VA   NPONDA 100   0   0   0 R P                         01000000000000
 VA   NLOCIN 100   0   0   0 R P                         01000000000000
+VA   IDWFP  100   0   0   0 I T EXTNL#INFLOW     IVOLDW 01000000000000
+VA   IVOLDW 100   0   0   0 R S                         01000000000000
 VA   CNODE1 100   0   0   0 I P                         01000000000000
 VA   CNODE2 100   0   0   0 I P                         01000000000000
 VA   CLENTH 100   0   0   0 R P                         01000000000000

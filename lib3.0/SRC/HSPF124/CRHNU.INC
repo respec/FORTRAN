@@ -71,12 +71,12 @@ C
      $              NUADEP(3),PH
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(505),DUM2(207),DUM3(3051),DUM4(715),
-     $              DUM5(107),DUM6(605),DUM7(6685),DUM8(1100),DUM9(7),
+     $              DUM5(107),DUM6(605),DUM7(6885),DUM8(1100),DUM9(7),
      $              DUM10(266),DUM11,DUM12(181),DUM13(14),DUM14(4),
      $              DUM15(8),DUM16(202),DUM17(78),DUM18(24),
      $              DUM19(395),DUM20(3721),DUM21(4),DUM22(33),
      $              DUM23(26),DUM24(60),DUM25(16),DUM26(1009),
-     $              DUMRCH(31499)
+     $              DUMRCH(31299)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(DEPSCR,SDCF1(1,1)),(ROSED,SDCF2(1,1)),

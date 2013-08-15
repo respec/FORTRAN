@@ -33,9 +33,9 @@ C            RQUAL section
      $              RSPO4(12),NUST(4,5)
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(3765),DUM2(712),DUM3(3),DUM4(106),DUM5(602),
-     $              DUM6(3),DUM7(8071),DUM8,DUM9(4800),DUM10(18),
+     $              DUM6(3),DUM7(8271),DUM8,DUM9(4800),DUM10(18),
      $              DUM11(13),DUM12(77),DUM13(158),DUM14(111),
-     $              DUM15(6),DUMRCH(33306)
+     $              DUM15(6),DUMRCH(33106)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(SCRPM,SCRVEL),(OXST,DOX),
