@@ -177,7 +177,7 @@ C       need SHADE module OSV
         OSVREC= MAX (OSVREC,103)
       ELSE
 C       only need HTRCH OSV
-        OSVREC = MAX (OSVREC,27)
+        OSVREC = MAX (OSVREC,28)
       END IF
 C
       IF (OUTLEV.GT.1) THEN

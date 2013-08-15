@@ -42,9 +42,9 @@ C
      $              OXCF2(MXEXIT,2,5),OXCF3(8,5),OXCF4(8,5)
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(2744),DUM2(1004),DUM3(15),DUM4(823),
-     $              DUM5(7291),DUM6(1100),DUM7(7),DUM8(5),DUM9(29),
+     $              DUM5(7491),DUM6(1100),DUM7(7),DUM8(5),DUM9(29),
      $              DUM10(230),DUM11,DUM12(809),DUM13(3984),DUM14(4),
-     $              DUMRCH(33588)
+     $              DUMRCH(33388)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IDOX,OXIF(1,1)),(IBOD,OXIF(2,1)),

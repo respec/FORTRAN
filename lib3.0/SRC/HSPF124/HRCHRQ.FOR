@@ -83,13 +83,13 @@ C
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
-        OSVREC= MAX(OSVREC,39)
+        OSVREC= MAX(OSVREC,40)
         IF (PLKFG.EQ.1) THEN
           CALL PPLANK
           IF (OUTLEV.GT.1) THEN
             WRITE (MESSU,2020)
           END IF
-          OSVREC= MAX(OSVREC,41)
+          OSVREC= MAX(OSVREC,42)
           IF (PHFG.EQ.1) THEN
             CALL PPHCAR
             IF (OUTLEV.GT.1) THEN

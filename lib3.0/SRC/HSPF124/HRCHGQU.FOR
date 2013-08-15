@@ -767,13 +767,13 @@ C
       IF (GQALFG(4).EQ.1) THEN
 C       need some variables in section oxrx, so osv
 C       must include it
-        OSVREC= MAX(OSVREC,37)
+        OSVREC= MAX(OSVREC,38)
       END IF
 C
       IF (GQALFG(3).EQ.1.AND.PHYTFG.EQ.1) THEN
 C       will need variables phyto and pyfp, so include
 C       section plank in osv
-        OSVREC= MAX(OSVREC,41)
+        OSVREC= MAX(OSVREC,42)
       END IF
 C
       IF (OUTLEV.GT.1) THEN
