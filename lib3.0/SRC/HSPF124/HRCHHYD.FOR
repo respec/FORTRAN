@@ -2318,6 +2318,22 @@ C           no inflow for this category
  30     CONTINUE
       END IF
 C
+      IF (HYDRFG.EQ.2) THEN
+C       using new dynamic wave routing algorithm
+C       set ivol to the sum of ivoldw at each node
+        IVOL= 0.0
+        DO 35 J= 1,NNODE
+C         get input volume at each node
+          I = INT(NLOCIN(J))
+          IF (I.GT.0 .AND. I.LE.NNODE) THEN
+            IF (IDWFP(I) .GT. 0) THEN
+C             increment total inflow volume
+              IVOL= IVOL+ PAD(IDWFP(I) + IVL1)
+            END IF
+          END IF 
+ 35     CONTINUE
+      END IF 
+C
 C     calculate volume of water in system after inflow only
       VOLT= VOLS+ IVOL
 C
@@ -3834,10 +3850,10 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER          LTYPE,NTS,ITS,J,K,lErrorCode,DELTSI
-      INTEGER          CNODE1X, CNODE2X, outfl, headfg
+      INTEGER          LTYPE,J,K,lErrorCode,DELTSI
+      INTEGER          headfg
       INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5)
-      DOUBLE PRECISION XN(6),XC(6),XX(4),aUCF
+      DOUBLE PRECISION XN(6),XC(6),XX(4)
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
 C
@@ -3960,8 +3976,6 @@ C        write(messu,*) 'DWROUT: setting node ',j,ltype,k,xn
         Node(J)%rptFlag = .true. !this is was done in report_readoption
  10   CONTINUE
 C
-      aUCF = UCF(LENGTH)
-C     write(messu,*) 'DWROUT: ucf for length ',aucf
       LTYPE = E_CONDUIT
       DO 20 J= 1,NCOND 
         XC(1) = CLENTH(J)
