@@ -632,7 +632,7 @@ C     DTS           -- integer, dynamic wave time step
 C
 C     note: assume last one in list is the outfall, type is free
 C     NNODE         -- integer, number of nodes
-C     NODEX(NNODE)  -- integer, node index
+C     NODEX(NNODE)  -- real, node name
 C     NELEV(NNODE)  -- real, invert elevation
 C     NDMAX(NNODE)  -- real, max depth for this node
 C     NDINIT(NNODE) -- real, initial node depth
@@ -723,8 +723,10 @@ C       process values in table-type NODE-PARM
         DO 230 I= 1, NNODE
           IC = IC + 1
           WRITE (CTAG4,2010) RVALD(IC)
+          NODEX(I) = RVALD(IC)
           NNAME(I) = CTAG4
-          NODEX(I) = I
+C          write(dwunit,*) RVALD(IC),NODEX(I),CTAG4
+C          write(dwunit,*) CTAG1(1),CTAG1(2),CTAG1(3),CTAG1(4)
           IC = IC + 1
           NELEV(I) = RVALD(IC) 
           IC = IC + 1
@@ -2515,7 +2517,7 @@ C
      I               OS(1),ROS,VOLT,INVOL,PREVIN,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
-     I               DATIM,
+     I               DATIM,NODEX,
      I               CNODE1,CNODE2,CSHAPE,
      I               NELEV,NDMAX,NDINIT,
      I               NDSURC,NPONDA,NLOCIN,
@@ -3761,7 +3763,7 @@ C
      I                    OS,ROS,VOLT,INVOL,PREVIN,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
-     I                    DATIM,
+     I                    DATIM,NODEX,
      I                    CNODE1,CNODE2,CSHAPE,
      I                    NELEV,NDMAX,NDINIT,
      I                    NDSURC,NPONDA,NLOCIN,
@@ -3793,7 +3795,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 HYECNT(5),HYWCNT(2),UUNITS,
      $                 CNODE1(NCOND),CNODE2(NCOND),
      $                 CSHAPE(NCOND),DWUNIT
-      REAL             DELTS,OS,ROS,
+      REAL             DELTS,OS,ROS,NODEX(NNODE),
      $                 O,RO,OVOL,ROVOL,
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
      $                 NDSURC(NNODE),NPONDA(NNODE),NLOCIN(NNODE),
@@ -3826,6 +3828,7 @@ C     DATIM  - date and time
 C     CNODE1 - upstream conduit node index 
 C     CNODE2 - downstream conduit node index
 C     CSHAPE - conduit shape type
+C     NODEX  - node name for each node
 C     NELEV  - invert elevation for each node
 C     NDMAX  - max depth for each node
 C     NDINIT - initial node depth for each node
@@ -3856,6 +3859,7 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION XN(6),XC(6),XX(4)
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
+      CHARACTER*10     CTAG10(NNODE)
 C
 C     + + + FUNCTIONS + + +
 C      LOGICAL          xsect_setParams
@@ -3877,7 +3881,7 @@ C     DTS           -- integer, dynamic wave time step
 C
 C     note: assume last one in list is the outfall, type is free
 C     NNODE         -- integer, number of nodes
-C     NODEX(NNODE)  -- integer, node index
+C     NODEX(NNODE)  -- real, node name
 C     NELEV(NNODE)  -- real, invert elevation
 C     NDMAX(NNODE)  -- real, max depth for this node
 C     NDINIT(NNODE) -- real, initial node depth
@@ -4086,10 +4090,16 @@ C     1                                      oTsers(J)%ovalues(3)
 C
       if (dwunit.GT.0 .AND. headfg.eq.0) then
 C       write header to file        
+        do J = 1, NNODE
+          write(CTAG10(J),"(6X,A4)") nodex(j)
+          !write(dwunit,*) ctag10(j)
+        end do
         IF (UUNITS .EQ. 1) THEN
 C         english 
-          write(dwunit,*) ' year  mon  day hour  min  sec',
-     1                   ' -- node (1 to n) outflows in cfs'
+          write(dwunit,*) 'node (1 to n) outflows in cfs'
+          write(dwunit,'(A30,100(A10))') 
+     1                 ' year  mon  day hour  min  sec',
+     1                 (ctag10(j),j=1,nnode)
         ELSE
 C         metric
           write(dwunit,*) ' year  mon  day hour  min  sec',
