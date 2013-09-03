@@ -335,7 +335,9 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
 
         if (nSec .LE. ReportStep .AND. outfl.GT.0) then
           write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
-          WRITE(outfl,'(A30,100(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE))
+          WRITE(outfl,'(A30,300(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE)), &
+                                              (node(j)%newDepth,j=1,Nobjects(E_NODE)), &
+                                              (node(j)%newVolume,j=1,Nobjects(E_NODE))
         end if
     end if
 

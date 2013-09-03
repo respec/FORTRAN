@@ -3859,7 +3859,8 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION XN(6),XC(6),XX(4)
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
-      CHARACTER*10     CTAG10(NNODE)
+      CHARACTER*10     CTAG10(NNODE),COUTFL,CDEPTH,CVOL
+      CHARACTER*10     CFUNIT,CDUNIT,CVUNIT
 C
 C     + + + FUNCTIONS + + +
 C      LOGICAL          xsect_setParams
@@ -4094,16 +4095,39 @@ C       write header to file
           write(CTAG10(J),"(6X,A4)") nodex(j)
           !write(dwunit,*) ctag10(j)
         end do
+        COUTFL = '   OUTFLOW'
+        CDEPTH = '     DEPTH'
+        CVOL   = '    VOLUME'
+        write(dwunit,'(A30,300(A10))') 
+     1               '                              ',
+     1               (ctag10(j),j=1,nnode),
+     1               (ctag10(j),j=1,nnode),
+     1               (ctag10(j),j=1,nnode)
+        write(dwunit,'(A30,300(A10))') 
+     1               '                              ',
+     1               (COUTFL,j=1,nnode),
+     1               (CDEPTH,j=1,nnode),
+     1               (CVOL,j=1,nnode)
         IF (UUNITS .EQ. 1) THEN
 C         english 
-          write(dwunit,*) 'node (1 to n) outflows in cfs'
-          write(dwunit,'(A30,100(A10))') 
+          CFUNIT = '     (cfs)'
+          CDUNIT = '      (ft)'
+          CVUNIT = '     (ft3)'
+          write(dwunit,'(A30,300(A10))') 
      1                 ' year  mon  day hour  min  sec',
-     1                 (ctag10(j),j=1,nnode)
+     1                 (CFUNIT,j=1,nnode),
+     1                 (CDUNIT,j=1,nnode),
+     1                 (CVUNIT,j=1,nnode)
         ELSE
 C         metric
-          write(dwunit,*) ' year  mon  day hour  min  sec',
-     1                   ' -- node (1 to n) outflows in cms'
+          CFUNIT = '     (cms)'
+          CDUNIT = '       (m)'
+          CVUNIT = '     ( m3)'
+          write(dwunit,'(A30,300(A10))') 
+     1                 ' year  mon  day hour  min  sec',
+     1                 (CFUNIT,j=1,nnode),
+     1                 (CDUNIT,j=1,nnode),
+     1                 (CVUNIT,j=1,nnode)
         END IF
         headfg = 1
       end if 
