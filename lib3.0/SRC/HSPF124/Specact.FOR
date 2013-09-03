@@ -32,10 +32,10 @@ C     CONDFG - flag indicating whether conditinal special actions are
 C              used - 1 if yes, 2 if no
 C
 C     + + + COMMON BLOCKS- SPEC + + +
-      INCLUDE     'cspec.inc'
+      INCLUDE     'CSPEC.INC'
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C
 C     + + + PARAMETERS + + +
       INTEGER      MXSPBF,MXVACC
@@ -327,22 +327,22 @@ C     SPBFR  - special action instruction buffer (real version)
 C     SPBDAT - special action instruction date
 C
 C     + + + COMMON BLOCKS- SPEC + + +
-      INCLUDE     'cspec.inc'
+      INCLUDE     'CSPEC.INC'
 C     special action distributions
-      INCLUDE     'pspdst.inc'
-      INCLUDE     'cspdst.inc'
+      INCLUDE     'PSPDST.INC'
+      INCLUDE     'CSPDST.INC'
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C     user defined variable names
-      INCLUDE     'pspuvr.inc'
-      INCLUDE     'cspuvr.inc'
+      INCLUDE     'PSPUVR.INC'
+      INCLUDE     'CSPUVR.INC'
 C     special action conditions
-      INCLUDE     'pspcnd.inc'
-      INCLUDE     'cspcnd.inc'
+      INCLUDE     'PSPCND.INC'
+      INCLUDE     'CSPCND.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + PARAMETERS + + +
       INTEGER      MXBKLV
@@ -569,13 +569,13 @@ C     SPOUT  - runtime Special Action output level
 C     SPBPOS - special action sorted position
 C
 C     + + + COMMON BLOCKS- SPEC + + +
-      INCLUDE     'cspec.inc'
+      INCLUDE     'CSPEC.INC'
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C     osv in scratch pad
-      INCLUDE     'cmosv.inc'
-      INCLUDE     'cmpad.inc'
+      INCLUDE     'CMOSV.INC'
+      INCLUDE     'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      SPAKEY,SORTOP,TOPTYP,SPAKST,OSVKEY,OSVSIZ,XPOS,IPOS,
@@ -817,13 +817,13 @@ C     RUNWID - maximum run span width allowed by user-defined variable
 C              quantities - 0 if no restrictions
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE     'cspec.inc'
+      INCLUDE     'CSPEC.INC'
 C     user-defined variable quantity
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C     osv in scratch pad
-      INCLUDE     'cmosv.inc'
-      INCLUDE     'cmpad.inc'
+      INCLUDE     'CMOSV.INC'
+      INCLUDE     'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER          LSTPTR,MINPIP,ERRFLG,EXTRA,SGRP,I,KEYST,KEYND,
@@ -1034,8 +1034,8 @@ C     ALLHDR - total number of header lines read so far
 C
 C     + + + COMMON BLOCKS + + +
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1077,8 +1077,8 @@ C     ALLFTR - total number of footer lines read so far
 C
 C     + + + COMMON BLOCKS + + +
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER POS
@@ -1141,8 +1141,8 @@ C              quantities - 0 if no restrictions
 C
 C     + + + COMMON BLOCKS + + +
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      TSTEP(2),I80,SGRP,ERRFLG,I1,TOPX,TCODE,TCMIN(4),I,
@@ -1504,14 +1504,14 @@ C              quantities - 0 if no restrictions
 C
 C     + + + COMMON BLOCKS + + +
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C     special action conditions
-      INCLUDE     'pspcnd.inc'
-      INCLUDE     'cspcnd.inc'
+      INCLUDE     'PSPCND.INC'
+      INCLUDE     'CSPCND.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER  PREPOS,PRECNT,I,J,NEWCHN,SGRP,STLINE,CHNFLG,LSTREF,
@@ -2058,8 +2058,8 @@ C     UCIBUF - buffer containing current record from uci file
 C
 C     + + + COMMON BLOCKS + + +
 C     user defined special actions
-      INCLUDE     'pspuvr.inc'
-      INCLUDE     'cspuvr.inc'
+      INCLUDE     'PSPUVR.INC'
+      INCLUDE     'CSPUVR.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      COUNT,UPOS,I,J,LOPTYP,ERRFLG,I6,I0,SGRP,BGRP,INDENT,
@@ -2337,16 +2337,16 @@ C     RUNWID - maximum run span width allowed by user-defined variable
 C              quantities - 0 if no restrictions
 C
 C     + + + COMMON BLOCK- SPEC + + +
-      INCLUDE     'cspec.inc'
+      INCLUDE     'CSPEC.INC'
 C     user defined variable names
-      INCLUDE     'pspuvr.inc'
-      INCLUDE     'cspuvr.inc'
+      INCLUDE     'PSPUVR.INC'
+      INCLUDE     'CSPUVR.INC'
 C     conditions
-      INCLUDE     'pspcnd.inc'
-      INCLUDE     'cspcnd.inc'
+      INCLUDE     'PSPCND.INC'
+      INCLUDE     'CSPCND.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER       ERRFLG,TOPFST,TOPLST,TSTEP(2),DATIM(5),DSIND,TYPCOD,
@@ -2570,7 +2570,7 @@ C       read value - format depends on type.
         IVAL=   0
         ACTUVQ= 0
         I= MXSPVQ* 6
-        CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,
+        CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,SPOUT,
      M               CACTVL,ERRFLG,ECOUNT,IVAL,RVAL,ACTUVQ)
         IF (SPOUT .GE. 10) THEN
 C         echo action info
@@ -2769,10 +2769,10 @@ C         need to determine address
           CALL MKADDR (LOCDIR,UCIBUF(43:57),MESSU,MSGFL,SCLU,BGRP,
      M                 TOPTYP,ERRFLG,
      O                 VNAME,NSUB,ADDR)
-        END IF
-        IF (SPOUT .GE. 10) THEN
-C         echo address of target variable
-          WRITE (MESSU,*) '  target address',ADDR
+          IF (SPOUT .GE. 10) THEN
+C           echo address of target variable
+            WRITE (MESSU,*) '  PSPACT target address',ADDR
+          END IF
         END IF
       END IF
 C
@@ -3026,7 +3026,8 @@ C                 target variable is in workspace
                     UVQ= UVQ+ 1
                     IF (UVQ .LE. NVQD) THEN
 C                     check this
-                      IF (ADDR .EQ. UVQADD(UVQ)) THEN
+                      IF ( (UVQOPX(UVQ) .EQ. 0) .AND. 
+     $                      (ADDR .EQ. UVQADD(UVQ)) ) THEN
 C                       put index into last subscript with negative value
                         NSUB(3)= -UVQ
                       END IF
@@ -3222,7 +3223,7 @@ C     NSUB   - subscripts associated with variable name
 C     ADDR   - address of location specified
 C
 C     + + + COMMON BLOCK- SPEC + + +
-      INCLUDE     'cspec.inc'
+      INCLUDE     'CSPEC.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I,SUBCN1,SUBCN2,SUBFG,IND,VKWDNO,LOPTYP,I0,
@@ -3710,8 +3711,8 @@ C     SPIVL  - interval of run
 C
 C     + + + COMMON BLOCKS + + +
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER          UVQ,PTR1,PTR2
@@ -3773,8 +3774,8 @@ C     DEFFRC - deferred fraction of action value
 C
 C     + + + COMMON BLOCKS + + +
 C     special action distributions
-      INCLUDE     'pspdst.inc'
-      INCLUDE     'cspdst.inc'
+      INCLUDE     'PSPDST.INC'
+      INCLUDE     'CSPDST.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       REAL         MVFRAC
@@ -3844,8 +3845,8 @@ C     PIPEFG - flag indicating whether to fill entire pipe, not just one value
 C
 C     + + + COMMON BLOCKS + + +
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I,N,UVQ,PTR
@@ -3938,8 +3939,8 @@ C     SPOUT  - runtime Special Action output level
 C
 C     + + + COMMON BLOCKS + + +
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER  I,J,LSPAFP,LAST,FLAG,LSPPTR
@@ -4388,14 +4389,14 @@ C     SPAFP  - current Special Action instruction record number
 C     SORTFG - flag indicating whether resort is needed
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE     'cmdum.inc'
-      INCLUDE     'cmpad.inc'
+      INCLUDE     'CMDUM.INC'
+      INCLUDE     'CMPAD.INC'
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C     special action distributions
-      INCLUDE     'pspdst.inc'
-      INCLUDE     'cspdst.inc'
+      INCLUDE     'PSPDST.INC'
+      INCLUDE     'CSPDST.INC'
 C
 C    + + + LOCAL VARIABLES + + +
       INTEGER          LSPAC(LENSPI),ADDR2,I,UVTYP,EXDAT(5),ICURVL,
@@ -4449,89 +4450,12 @@ C     make a local copy of current action to use equiv
  10   CONTINUE
       ADDR2= 0
 C
-      IF (ACTUVQ .GT. 0) THEN
-C       action value is a variable, so fetch current value
-        IF (SPOUT .GE. 9) THEN
-C         echo actuvq
-          WRITE (MESSU,*) 'fetching variable action value',ACTUVQ
-        END IF
-        CALL GTQUAN (ACTUVQ,SPIVL,SPOPNO,
-     O               I,R,UVTYP)
-        IF (UVTYP .EQ. 2) THEN
-C         quantity is integer
-          IF (SPOUT .GE. 9) THEN
-C           echo integer value
-            WRITE (MESSU,*) 'value is',I
-          END IF
-          IF (TYPCOD .EQ. 2) THEN
-C           use integer value
-            IVAL= I
-          ELSE
-C           convert integer value to real
-            RVAL= FLOAT (I)
-          END IF
-        ELSE
-C         quantity is real
-          IF (SPOUT .GE. 9) THEN
-C           echo real value
-            WRITE (MESSU,*) 'value is',R
-          END IF
-          IF (TYPCOD .EQ. 2) THEN
-C           convert real value to integer
-            IVAL= INT (R)
-          ELSE
-C           use real value
-            RVAL= R
-          END IF
-        END IF
-      END IF
-C
-      IF (DSIND .NE. 0) THEN
-C       a distribution is in use
-        CALL SPDIST (MESSU,SPOUT,DSIND,DSPOS,
-     M               RVAL,DEFFRC,
-     O               CFRAC)
-C       update instruction with new deferred fraction
-        SPINSR(17,LSPPTR)= DEFFRC
-      END IF
-C
-      IF (ADDR .LT. 0) THEN
-C       get current value from pipes
-        CALL GTQUAN (TARUVQ,SPIVL,SPOPNO,
-     O               ICURVL,RCURVL,UVTYP)
-        IF (TYPCOD .EQ. 4) THEN
-C         convert real to double
-          DCURVL= DBLE (RCURVL)
-        END IF
-      ELSE
-C       current value from pad
-        ICURVL= IPAD(ADDR)
-        IF (TYPCOD .EQ. 3) THEN
-C         real
-          IF (ICURVL .EQ. -999) THEN
-C           current value is undefined - set to zero
-            RCURVL= 0.0
-          ELSE
-C           current value is good
-            RCURVL= PAD(ADDR)
-          END IF
-        ELSE IF (TYPCOD .EQ. 4) THEN
-C         double prec
-          IF (ICURVL .EQ. -999) THEN
-C           current value is undefined - set to zero
-            DCURVL= 0.0
-          ELSE
-C           current value is good
-            DCURVL= DPPAD(DADDR (ADDR))
-          END IF
-        END IF
-      END IF
-C
       IF (SPOUT .GE. 2) THEN
 C       describe variable being acted on
         CALL SPONAM (LSPAC(10),LSPAC(12),LSPAC(7),LSPAC(6),
      O               CACTVA)
       END IF
+
 C
       IF (LOGBLK .EQ. 0) THEN
 C       no conditions to check
@@ -4554,6 +4478,84 @@ C
       IF (CONDCK .GE. 1) THEN
 C       take the special action
 C
+        IF (ACTUVQ .GT. 0) THEN
+C         action value is a variable, so fetch current value
+          IF (SPOUT .GE. 9) THEN
+C           echo actuvq
+            WRITE (MESSU,*) 'fetching variable action value',ACTUVQ
+          END IF
+          CALL GTQUAN (ACTUVQ,SPIVL,SPOPNO,SPOUT,MESSU,
+     O                 I,R,UVTYP)
+          IF (UVTYP .EQ. 2) THEN
+C           quantity is integer
+            IF (SPOUT .GE. 9) THEN
+C             echo integer value
+              WRITE (MESSU,*) 'value is',I
+            END IF
+            IF (TYPCOD .EQ. 2) THEN
+C             use integer value
+              IVAL= I
+            ELSE
+C             convert integer value to real
+              RVAL= FLOAT (I)
+            END IF
+          ELSE
+C           quantity is real
+            IF (SPOUT .GE. 9) THEN
+C             echo real value
+              WRITE (MESSU,*) 'value is',R
+            END IF
+            IF (TYPCOD .EQ. 2) THEN
+C             convert real value to integer
+              IVAL= INT (R)
+            ELSE
+C             use real value
+              RVAL= R
+            END IF
+          END IF
+        END IF
+C
+        IF (DSIND .NE. 0) THEN
+C         a distribution is in use
+          CALL SPDIST (MESSU,SPOUT,DSIND,DSPOS,
+     M                 RVAL,DEFFRC,
+     O                 CFRAC)
+C         update instruction with new deferred fraction
+          SPINSR(17,LSPPTR)= DEFFRC
+        END IF
+C
+        IF (ADDR .LT. 0) THEN
+C         get current value from pipes
+          CALL GTQUAN (TARUVQ,SPIVL,SPOPNO,SPOUT,MESSU,
+     O                 ICURVL,RCURVL,UVTYP)
+          IF (TYPCOD .EQ. 4) THEN
+C           convert real to double
+            DCURVL= DBLE (RCURVL)
+          END IF
+        ELSE
+C         current value from pad
+          ICURVL= IPAD(ADDR)
+          IF (TYPCOD .EQ. 3) THEN
+C           real
+            IF (ICURVL .EQ. -999) THEN
+C             current value is undefined - set to zero
+              RCURVL= 0.0
+            ELSE
+C             current value is good
+              RCURVL= PAD(ADDR)
+            END IF
+          ELSE IF (TYPCOD .EQ. 4) THEN
+C           double prec
+            IF (ICURVL .EQ. -999) THEN
+C             current value is undefined - set to zero
+              DCURVL= 0.0
+            ELSE
+C             current value is good
+              DCURVL= DPPAD(DADDR (ADDR))
+            END IF
+          END IF
+        END IF
+C
         IF (ACTCOD .GE. 14) THEN
 C         mix two locations up, need next action
           SPAFP= SPAFP+ 1
@@ -4561,7 +4563,7 @@ C         mix two locations up, need next action
           ADDR2= SPINS(7,LSPPTR)
           IF (ADDR2 .LT. 0) THEN
 C           get current value from pipes
-            CALL GTQUAN (SPINS(14,LSPPTR),SPIVL,SPOPNO,
+            CALL GTQUAN (SPINS(14,LSPPTR),SPIVL,SPOPNO,SPOUT,MESSU,
      O                   I,RCURV2,UVTYP)
           ELSE
 C           get current value from pad
@@ -4720,8 +4722,8 @@ C     SPAFP  - current special action instruction record number
 C
 C     + + + COMMON BLOCKS + + +
 C     special action file in memory
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C
 C    + + + LOCAL VARIABLES + + +
       INTEGER          ACTCNT,NUNREM,DLAST,DPTR,DPOS,UPTR,UPOS,DOITFG,
@@ -4944,11 +4946,11 @@ C     + + + PARAMETERS + + +
 C
 C     + + + COMMON BLOCKS + + +
 C     special action conditions
-      INCLUDE     'pspcnd.inc'
-      INCLUDE     'cspcnd.inc'
+      INCLUDE     'PSPCND.INC'
+      INCLUDE     'CSPCND.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I,IQUAN(2),TYPFG,IND,STACK(MXSTAK),POINTR,OPAND1,
@@ -5003,7 +5005,7 @@ C       begin do-until loop on chain references
 C
 C         get current value of chain
           CURCHN= ABS(BLKCHN(CURREF))
-          CALL GTQUAN (CHNUVQ(CURCHN),SPIVL,SPOPNO,
+          CALL GTQUAN (CHNUVQ(CURCHN),SPIVL,SPOPNO,SPOUT,MESSU,
      O                 CHVAL,R,I)
           IF (CHVAL .EQ. -1) THEN
 C           must compute value this interval
@@ -5052,7 +5054,7 @@ C                   get variable quantity
 C                     echo uvquan names
                       WRITE (ECHBUF(EPOS:EPOS+6),2010) UVQNAM(UVQ)
                     END IF
-                    CALL GTQUAN (UVQ,SPIVL,SPOPNO,
+                    CALL GTQUAN (UVQ,SPIVL,SPOPNO,SPOUT,MESSU,
      O                           IQUAN(I),QUAN(I),TYPFG)
                     IF (TYPFG .EQ. 2) THEN
 C                     convert integer to real
@@ -5225,6 +5227,7 @@ C
 C
       SUBROUTINE   MKQUAN
      I                    (MESSU,MSGFL,SCLU,MXSPV1,UVQNM1,NVQD,TYPCOD,
+     I                     SPOUT,
      M                     QUAN,ERRFLG,ECOUNT,IVAL,RVAL,UVQIDX)
 C
 C     + + + PURPOSE + + +
@@ -5233,7 +5236,7 @@ C     the value or a pointer as applicable.
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      MESSU,MSGFL,SCLU,MXSPV1,NVQD,TYPCOD,ERRFLG,ECOUNT,
-     $             IVAL,UVQIDX
+     $             IVAL,UVQIDX,SPOUT
       REAL         RVAL
       CHARACTER*1  UVQNM1(MXSPV1)
       CHARACTER*10 QUAN
@@ -5246,6 +5249,7 @@ C     MXSPV1 - maximum number of characters in variable quantity names
 C     UVQNM1 - library of variable quantity names
 C     NVQD   - number of active variable quantity names
 C     TYPCOD - type code: 2=integer, 3=real, 4=double precision
+C     SPOUT  - Special Action output level
 C     QUAN   - String containing either a real number or the name of
 C              a user-defined variable quantity
 C     ERRFLG - error flag
@@ -5257,10 +5261,10 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I,I6,I10,SGRP
       REAL         R
-      CHARACTER*6  NAME
+      CHARACTER*6  LNAME
 C
 C     + + + EQUIVALENCES + + +
-      EQUIVALENCE (NAME,NAME1)
+      EQUIVALENCE (LNAME,NAME1)
       CHARACTER*1  NAME1(6)
 C
 C     + + + FUNCTIONS + + +
@@ -5280,26 +5284,41 @@ C     + + + END SPECIFICATIONS + + +
 C
       UVQIDX= 0
 C
+      IF (SPOUT .GE. 10) THEN
+C       echo quantity string
+        WRITE (MESSU,'(A6,1X,I10)') 'ERRFLG',ERRFLG
+        WRITE (MESSU,'(A6,1X,I10)') 'TYPCOD',TYPCOD
+        WRITE (MESSU,'(A6,1X,A1,A10,A1)') 'QUAN  ','|',QUAN,'|'
+      END IF
+C
       IF (ERRFLG .EQ. 0) THEN
 C       try to read as a number
+        CALL LFTSTR (I10,
+     M               QUAN)
+        IF (SPOUT .GE. 10) THEN
+C         echo quantity string
+          WRITE (MESSU,'(A6,1X,A1,A10,A1)') 'QUAN  ','|',QUAN,'|'
+        END IF
         IF (TYPCOD .EQ. 2) THEN
 C         read as integer
           READ (QUAN,1000,ERR=10) I
           IVAL= I
+C         WRITE (MESSU,'(A6,1X,I10)') 'IVAL  ',IVAL
         ELSE
 C         read as real
           READ (QUAN,1010,ERR=10) R
           RVAL= R
+C         WRITE (MESSU,'(A6,1X,G10.3)') 'RVAL  ',RVAL
         END IF
         GO TO 20
  10     CONTINUE
 C         assume quan contains a user-defined name
           IF (NVQD .GT. 0) THEN
 C           compare against list of names
-            CALL LFTSTR (I10,
-     M                   QUAN)
-            NAME= QUAN(1:6)
+            LNAME= QUAN(1:6)
+C           WRITE (MESSU,'(A6,1X,A1,A6,A1)') 'LNAME ','|',LNAME,'|'
             UVQIDX= CHKSTR (I6,NVQD,NAME1,UVQNM1)
+C           WRITE (MESSU,'(A6,1X,I10)') 'UVQIDX',UVQIDX
           END IF
           IF (UVQIDX .EQ. 0) THEN
 C           invalid user-defined name given
@@ -5332,11 +5351,11 @@ C     SPOPNO - index of target operation
 C     SPIVL  - interval of run
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE     'cmdum.inc'
-      INCLUDE     'cmpad.inc'
+      INCLUDE     'CMDUM.INC'
+      INCLUDE     'CMPAD.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   UVQ,PTR
@@ -5380,14 +5399,14 @@ C
 C
 C
       SUBROUTINE   GTQUAN
-     I                    (UVQ,SPIVL,SPOPNO,
+     I                    (UVQ,SPIVL,SPOPNO,SPOUT,MESSU,
      O                     IVAL,RVAL,TYPFG)
 C
 C     + + + PURPOSE + + +
 C     Calculate a user-defined variable quantity
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER  UVQ,SPIVL,SPOPNO,IVAL,TYPFG
+      INTEGER  UVQ,SPIVL,SPOPNO,SPOUT,MESSU,IVAL,TYPFG
       REAL     RVAL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -5395,13 +5414,15 @@ C     UVQ    - index of quantity to calculate, if negative, then get
 C            - value of workspace slot
 C     SPIVL  - interval of run
 C     SPOPNO - index of target operation
+C     SPOUT  - runtime Special Action output level
+C     MESSU  - unit number to write messages on
 C     IVAL   - integer value of quantity, or left unaltered
 C     RVAL   - real value of quantity, or left unaltered
 C     TYPFG  - type of quantity: 2=integer, 3=real
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE 'pspvqd.inc'
-      INCLUDE 'cspvqd.inc'
+      INCLUDE 'PSPVQD.INC'
+      INCLUDE 'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER  CURRENT,FIRST,LAST,PTR,ENDPIP,LUVQ
@@ -5439,6 +5460,17 @@ C     make sure pointer is within range of pipe
       IF (LAST .LT. UVQPOS(LUVQ)) THEN
 C       wrap around
         LAST= LAST+ UVQLEN(LUVQ)
+      END IF
+      IF (SPOUT .GE. 10) THEN
+        WRITE(MESSU,*) ' GTQUAN UVQLEN,POS,LAG',
+     $                          UVQLEN(LUVQ),UVQPOS(LUVQ),UVQLAG(LUVQ)
+        WRITE(MESSU,*) ' GTQUAN CURRENT,LAST,UVQ,LUVQ',
+     $                          CURRENT,LAST,UVQ,LUVQ
+        IF (LUVQ .EQ. 119) THEN
+          WRITE(MESSU,*) 'GTQUAN UVQPIP(119)',UVQPIP(119)
+        ELSE IF (LUVQ .EQ. 142) THEN
+          WRITE(MESSU,*) 'GTQUAN UVQPIP(142)',UVQPIP(142)
+        END IF
       END IF
 C
       IF (UVQ .LT. 0) THEN
@@ -5694,11 +5726,11 @@ C     + + + PARAMETERS + + +
 C
 C     + + + COMMON BLOCKS + + +
 C     special action conditions
-      INCLUDE     'pspcnd.inc'
-      INCLUDE     'cspcnd.inc'
+      INCLUDE     'PSPCND.INC'
+      INCLUDE     'CSPCND.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      NITEM,PARLEV(MXITEM),ITMTYP(MXITEM),POS,CURLEV,
@@ -5903,7 +5935,7 @@ C             error - quantity not in proper position
 C             get quantity
               ERRFLG= 0
               MAX= MXSPVQ*6
-              CALL MKQUAN (MESSU,MSGFL,SCLU,MAX,UVQNM1,NVQD,I3,
+              CALL MKQUAN (MESSU,MSGFL,SCLU,MAX,UVQNM1,NVQD,I3,SPOUT,
      M                     CITEM,ERRFLG,ECOUNT,J,CNDVAL(I,NCOND),
      M                     CNDUVQ(I,NCOND))
               IF (ERRFLG .NE. 0) THEN
@@ -6318,11 +6350,11 @@ C     CURBLK - current logic block - 0 if unconditional, error if not
 C     ECOUNT - error count
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      ERRFLG,SGRP,I80,IVAL,MFUVQ,TYPCOD,I
@@ -6404,7 +6436,7 @@ C       read value - format depends on type.
         MFUVQ= 0
         I= MXSPVQ* 6
         TYPCOD= 3
-        CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,
+        CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,SPOUT,
      M               CMULVL,ERRFLG,ECOUNT,IVAL,RVAL,MFUVQ)
         SPUMIR(10,SPUMPT)= RVAL
         SPUMIN(26,SPUMPT)= MFUVQ
@@ -6459,8 +6491,8 @@ C     SDATIM - starting date/time
 C     NDAMON - no. of days in each month of calendar year
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I,SORTOP,SPUMDX(MXSPUM),MINDX
@@ -6548,11 +6580,11 @@ C     OSUPM  - osuper file
 C     MUPFG  - flag indicating if we just updated an mfactr
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C     user defined variable quantity definitions
-      INCLUDE     'pspvqd.inc'
-      INCLUDE     'cspvqd.inc'
+      INCLUDE     'PSPVQD.INC'
+      INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER       CHKNXT,I0,I1,I2,I5,I6,I,J,NVALS,IDELT,
@@ -6647,7 +6679,7 @@ C             fetch variable multiplier
 C             this gets minutes
 C             do we need to add one to SPIVL?
               IF (SPIVL .GT. 0) THEN
-                CALL GTQUAN (MFUVQ,SPIVL,I0,
+                CALL GTQUAN (MFUVQ,SPIVL,I0,SPOUT,MESSU,
      O                       I,MULT,J)
               END IF
             ELSE
@@ -7065,8 +7097,8 @@ C     NXTFG  - 0 if call before SPECLM, 1 if call after
 C     INSPAC - number of intervals to get to next mfact special action
 C
 C     + + + COMMON BLOCKS + + +
-      INCLUDE     'pspins.inc'
-      INCLUDE     'cspins.inc'
+      INCLUDE     'PSPINS.INC'
+      INCLUDE     'CSPINS.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I2,DATIM(6),SPUMPX
