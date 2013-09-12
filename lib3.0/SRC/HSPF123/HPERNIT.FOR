@@ -2288,11 +2288,11 @@ C         print application amount
       IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
         ACNT = ACNT + 1
         APRINT(ACNT) = PIFLX(2)
-        CHEAD(ACNT) = 'NITRATE APPLICATION'
+        CHEAD(ACNT) = 'AMMONIA APPLICATION'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PIFLX(1)
-        CHEAD(ACNT) = 'AMMONIA APPLICATION'
+        CHEAD(ACNT) = 'NITRATE APPLICATION'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ACNT = ACNT + 1
         APRINT(ACNT) = PIFLX(3)
