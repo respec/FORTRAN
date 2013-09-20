@@ -945,10 +945,10 @@ subroutine link_setOutfallDepth(j)
     use headers
     implicit none
     integer, intent(in) :: j
-    integer ::     k                         ! conduit index
-    integer ::     n                         ! outfall node index
-    real(kind=dp) ::  z                         ! invert offset height (ft)
-    real(kind=dp) :: q                         ! flow rate (cfs)
+    integer ::     k                     ! conduit index
+    integer ::     n                     ! outfall node index
+    real(kind=dp) ::  z                  ! invert offset height (ft)
+    real(kind=dp) :: q                   ! flow rate (cfs)
     real(kind=dp) :: yCrit               ! critical flow depth (ft)
     real(kind=dp) :: yNorm               ! normal flow depth (ft)
     !real(kind=dp) :: link_getYnorm, link_getYcrit
