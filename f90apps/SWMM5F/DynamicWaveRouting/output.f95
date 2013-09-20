@@ -177,6 +177,7 @@ integer function output_open()
       allocate(onodes(j)%oflow(OutputSize))
       allocate(onodes(j)%odepth(OutputSize))
       allocate(onodes(j)%ovolume(OutputSize))
+      allocate(onodes(j)%lastQual(Nobjects(E_POLLUT)))
     end do
     do j= 1,Nobjects(LINK)
       olinks%datatype = LINK
@@ -184,6 +185,7 @@ integer function output_open()
       allocate(olinks(j)%oflow(OutputSize))
       allocate(olinks(j)%odepth(OutputSize))
       allocate(olinks(j)%ovolume(OutputSize))
+      allocate(onodes(j)%lastQual(Nobjects(E_POLLUT)))
     end do
 
 !    fseek(Fout.file, 0, SEEK_SET)
@@ -683,6 +685,9 @@ subroutine output_saveNodeResults(aReportTime, file)
        onodes(j)%oflow(OutputCount) = NodeResults(NODE_INFLOW)
        onodes(j)%odepth(OutputCount) = NodeResults(NODE_DEPTH)
        onodes(j)%ovolume(OutputCount) = NodeResults(NODE_VOLUME)
+       onodes(j)%lastDepth = Node(j)%newDepth
+       onodes(j)%lastLatFlow = Node(j)%newLatFlow
+       onodes(j)%lastVolume = Node(j)%newVolume
     end do
 !
 !    ! --- write node results to file
@@ -759,7 +764,12 @@ subroutine output_saveLinkResults(aReportTime, file)
        TSDateTime(OutputCount) = datatime
        olinks(j)%oflow(OutputCount) = LinkResults(LINK_FLOW)
        olinks(j)%odepth(OutputCount) = LinkResults(LINK_DEPTH)
-       olinks(j)%ovolume(OutputCount) = arrLink(j)%newVolume
+       !olinks(j)%ovolume(OutputCount) = arrLink(j)%newVolume
+       olinks(j)%subIndex = arrLink(j)%subIndex
+       olinks(j)%lastFlow = arrLink(j)%newFlow
+       olinks(j)%lastDepth = arrLink(j)%newDepth
+       olinks(j)%lastVolume = arrLink(j)%newVolume
+       olinks(j)%lastSetting = arrLink(j)%setting
 
         ! --- update system-wide results
         z = ((1.0-f)*arrLink(j)%oldVolume + f*arrLink(j)%newVolume) * UCF(VOLUME)

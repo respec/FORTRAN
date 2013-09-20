@@ -57,9 +57,16 @@ real(kind=dp), dimension(:), allocatable, save :: LinkResults !REAL8
 type myoutput
   integer :: datatype
   integer :: index
+  integer :: subIndex !subscript for conduits, for links
   real(kind=dp), dimension(:), pointer :: oflow
   real(kind=dp), dimension(:), pointer :: odepth
   real(kind=dp), dimension(:), pointer :: ovolume
+  real(kind=dp) :: lastDepth !Node[i]. or !Link[i].newDepth
+  real(kind=dp) :: lastLatFlow !Node[i].newLatFlow
+  real(kind=dp) :: lastVolume !Node[i].newVolume
+  real(kind=dp) :: lastFlow !Link[i].newFlow
+  real(kind=dp) :: lastSetting !Link[i].setting
+  real(kind=dp), dimension(:), pointer :: lastQual !Node[i]. or Link[i].newQual[E_POLLUT]
 end type myoutput
 
 type myTimeseries

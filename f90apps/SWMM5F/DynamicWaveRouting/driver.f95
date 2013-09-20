@@ -370,6 +370,12 @@ program main
         end do
       end do
       write(8,*) ''
+      write(8,*) '***** More Node Output lastDepth(ft), lastLatFlow(cfs), lastVolume(ft3) *****'
+      write(8,'(1A5,3A15)') 'Link', 'lastDepth', 'lastLatFlow', 'lastVolume'
+      do lN=1, NNODE
+        write(8, '(1I5,3F15.5)') lN, onodes(lN)%lastDepth, onodes(lN)%lastLatFlow, onodes(lN)%lastVolume
+      end do
+      write(8,*) ''
       write(8,*) '****************************'
       write(8,*) '*      Link Outputs        *'
       write(8,*) '****************************'
@@ -384,6 +390,22 @@ program main
           end if
         end do
       end do
+      write(8,*) ''
+      write(8,*) '***** More Link Output lastDepth(ft), lastFlow(cfs), lastVolume(ft3), lastSetting *****'
+      write(8,'(1A5,3A15,1A15)') 'Link', 'lastDepth', 'lastFlow', 'lastVolume', 'lastSetting'
+      do lN=1, NCOND
+        write(8, '(1I5,3F15.5,1F15.0)') lN, olinks(lN)%lastDepth, olinks(lN)%lastFlow, olinks(lN)%lastVolume, olinks(lN)%lastSetting
+      end do
+      write(8,*) ''
+      write(8,*) '***** Conduits Output upstream (q1) & downstream (q2) flows per barrel (cfs) ******'
+      write(8,'(1A5,2A15)') 'Link', 'q1', 'q2'
+      do lN=1, NCOND
+        if ( arrLink(j)%datatype == E_CONDUIT ) then
+          k = arrLink(j)%subIndex
+          write(8, '(1I5,2F15.5)') lN, Conduit(k)%q1, Conduit(k)%q2
+        end if
+      end do
+
       close(8)
       call output_close
       STOP
