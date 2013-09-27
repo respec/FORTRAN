@@ -237,6 +237,8 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
     character*10, allocatable, dimension(:) :: t10
     integer ::      sdat(6)
     integer ::      newdat(6)
+    integer ::      lastwrite
+    integer ::      toutfl
     
     integer :: flowrout_execute !TODO: this is for .NET compile
     mstepCount = 1
@@ -333,11 +335,23 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
         sdat(6) = 0
         call timadd(sdat,1,1,nSeci,newdat)
 
-        if (nSec .LE. ReportStep .AND. outfl.GT.0) then
-          write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
-          WRITE(outfl,'(A30,300(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE)), &
-                                              (node(j)%newDepth,j=1,Nobjects(E_NODE)), &
-                                              (node(j)%newVolume,j=1,Nobjects(E_NODE))
+        !write(24,*) 'in routing_execute',outfl
+        if (outfl.LT.0) then
+          if (nSec .LE. ReportStep) then
+            toutfl = -1*outfl
+            write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
+            WRITE(toutfl,'(A30,300(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newDepth,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newVolume,j=1,Nobjects(E_NODE))
+          end if 
+        elseif (outfl.GT.0) then
+          lastwrite = (ReportStep*2) + 1
+          if (nSec .GT. ReportStep .AND. nSec .LE. lastwrite) then
+            write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
+            WRITE(outfl,'(A30,300(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newDepth,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newVolume,j=1,Nobjects(E_NODE))
+          end if 
         end if
     end if
 
