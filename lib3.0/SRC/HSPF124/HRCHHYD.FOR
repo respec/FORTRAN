@@ -2155,7 +2155,7 @@ C     + + + LOCAL VARIABLES + + +
      $                 COTDGS(MXEXIT,MXCAT),CVOLEV(MXCAT),DEMVOL,
      $                 CIRRWD(MXCAT)
       DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR,
-     $                 INVOL(100),PREVIN(100)
+     $                 INVOL(100),PREVIN(100),PREVIN2(100)
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -2499,6 +2499,7 @@ C         set input volume to each node
           I = INT(NLOCIN(J))
           INVOL(J) = 0.0
           PREVIN(J) = 0.0
+          PREVIN2(J) = 0.0
           IF (I.GT.0 .AND. I.LE.NNODE) THEN
             IF (IDWFP(I) .GT. 0) THEN
               INVOL(J) = PAD(IDWFP(I) + IVL1)
@@ -2507,6 +2508,10 @@ C           get volume of inflow from previous time step
             IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.2) THEN
               PREVIN(J)= PREVIN(J) + PAD(IDWFP(I) + IVL1-1)
             END IF
+C           get volume of inflow from 2 previous time step
+            IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.3) THEN
+              PREVIN2(J)= PREVIN2(J) + PAD(IDWFP(I) + IVL1-2)
+            END IF
           END IF 
 C          write(messu,*) 'DWROUT: node,previn,invol,idwfp,nlocin ',
 C     1                   j,previn(j),invol(j),IDWFP(J),int(NLOCIN(j))
@@ -2514,7 +2519,7 @@ C     1                   j,previn(j),invol(j),IDWFP(J),int(NLOCIN(j))
 C
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,DWUNIT,
-     I               OS(1),ROS,VOLT,INVOL,PREVIN,
+     I               OS(1),ROS,VOLT,INVOL,PREVIN,PREVIN2,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
      I               DATIM,NODEX,
@@ -3760,7 +3765,7 @@ C
       SUBROUTINE   DWROUT
      I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,DWUNIT,
-     I                    OS,ROS,VOLT,INVOL,PREVIN,
+     I                    OS,ROS,VOLT,INVOL,PREVIN,PREVIN2,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
      I                    DATIM,NODEX,
@@ -3802,7 +3807,8 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 CLENTH(NCOND),CMANN(NCOND),COFF1(NCOND),
      $                 COFF2(NCOND),CQ0(NCOND),CGEOM1(NCOND),
      $                 CGEOM2(NCOND),CGEOM3(NCOND),CGEOM4(NCOND) 
-      DOUBLE PRECISION VOLT,VOL,INVOL(NNODE),PREVIN(NNODE)
+      DOUBLE PRECISION VOLT,VOL,INVOL(NNODE),PREVIN(NNODE),
+     $                 PREVIN2(NNODE)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DELTS  - simulation interval in seconds
@@ -3816,6 +3822,7 @@ C     ROS    - total rate of outflow from reach at start of interval
 C     VOLT   - volume in the reach after inflow, precip and evap
 C     INVOL  - inflow volume to this node at this time step
 C     PREVIN - inflow volume at previous time step
+C     PREVIN2- inflow volume at 2 previous time step
 C     MON    - calendar month
 C     NXTMON - next calendar month
 C     DAY    - day of month
@@ -4006,7 +4013,11 @@ C
       StartDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
       StartTime = datetime_encodeTime(0, 0, 0) !datetime_strToTime
 C      
-      DELTSI = DELTS
+      if (headfg.eq.0) then
+        DELTSI = DELTS
+      else 
+        DELTSI = DELTS*2   !run for twice as long as needed to allow for spin up time
+      end if 
       EndDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
       EndTime = datetime_encodeTime(0, 0, DELTSI) !datetime_strToTime
 C         
@@ -4062,20 +4073,40 @@ C     construct external inflow to each node in the network
       end if 
       do J=1, NNODE
         oTsers(J)%datatype = E_TSERIES
-        allocate(oTsers(J)%odates(3))
-        allocate(oTsers(J)%ovalues(3))
-        if (associated(oTsers(J)%odates) .and. 
-     1      associated(oTsers(J)%ovalues)) then
-           oTsers(J)%odates(1) = StartDate + StartTime
-           oTsers(J)%odates(2) = oTsers(J)%odates(1) + (DELTS / 86400.0)
-           oTsers(J)%odates(3) = oTsers(J)%odates(2) + (DELTS / 86400.0)
-           oTsers(J)%ovalues(1) = PREVIN(J) / DELTS
-           oTsers(J)%ovalues(2) = INVOL(J) / DELTS
-           oTsers(J)%ovalues(3) = INVOL(J) / DELTS
-C           write(messu,*) 'DWROUT: oTsers ',oTsers(J)%ovalues(1),
-C     1                                      oTsers(J)%ovalues(2),
-C     1                                      oTsers(J)%ovalues(3)
-         end if
+        if (headfg.eq.0) then
+          allocate(oTsers(J)%odates(3))
+          allocate(oTsers(J)%ovalues(3))
+          if (associated(oTsers(J)%odates) .and. 
+     1        associated(oTsers(J)%ovalues)) then
+             oTsers(J)%odates(1) = StartDate + StartTime
+             oTsers(J)%odates(2) = oTsers(J)%odates(1) + (DELTS/86400.0)
+             oTsers(J)%odates(3) = oTsers(J)%odates(2) + (DELTS/86400.0)
+             oTsers(J)%ovalues(1) = PREVIN(J) / DELTS
+             oTsers(J)%ovalues(2) = INVOL(J) / DELTS
+             oTsers(J)%ovalues(3) = INVOL(J) / DELTS
+C             write(messu,*) 'DWROUT: oTsers ',oTsers(J)%ovalues(1),
+C     1                                        oTsers(J)%ovalues(2),
+C     1                                        oTsers(J)%ovalues(3)
+          end if
+        else
+!         when running 2 steps to deal with instability issue
+          allocate(oTsers(J)%odates(4))
+          allocate(oTsers(J)%ovalues(4))
+          if (associated(oTsers(J)%odates) .and. 
+     1        associated(oTsers(J)%ovalues)) then
+             oTsers(J)%odates(1) = StartDate + StartTime
+             oTsers(J)%odates(2) = oTsers(J)%odates(1) + (DELTS/86400.0)
+             oTsers(J)%odates(3) = oTsers(J)%odates(2) + (DELTS/86400.0)
+             oTsers(J)%odates(4) = oTsers(J)%odates(3) + (DELTS/86400.0)
+             oTsers(J)%ovalues(1) = PREVIN2(J) / DELTS
+             oTsers(J)%ovalues(2) = PREVIN(J) / DELTS
+             oTsers(J)%ovalues(3) = INVOL(J) / DELTS
+             oTsers(J)%ovalues(4) = INVOL(J) / DELTS
+C             write(messu,*) 'DWROUT: oTsers ',oTsers(J)%ovalues(1),
+C     1                                        oTsers(J)%ovalues(2),
+C     1                                        oTsers(J)%ovalues(3)
+          end if
+        end if 
       end do
       do J = 1, NNODE - 1
         inflows(J)%param = -1 !flow
@@ -4129,7 +4160,6 @@ C         metric
      1                 (CDUNIT,j=1,nnode),
      1                 (CVUNIT,j=1,nnode)
         END IF
-        headfg = 1
       end if 
 C
 C     DATIM is the date/time at the end of the current HSPF interval, 
@@ -4148,7 +4178,12 @@ C     we need to know when this interval began
       newd5(5) = newdat(5)
 C
 C      write(messu,*) 'in dwrout, about to call swmm_run'
-      lErrorCode = swmm_run('', '', '', dwunit, newd5)
+      if (headfg.eq.0) then   
+        !use -1 to indicate first time, need to write all
+        lErrorCode = swmm_run('', '', '', -1*dwunit, newd5)
+      else
+        lErrorCode = swmm_run('', '', '', dwunit, newd5)
+      end if 
 C
 C      write(messu,*) 'swmm error code ',lerrorcode
 C
@@ -4168,24 +4203,25 @@ C     1                olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
 C      end do
 C
 C     set initial conditions for next time in
+      if (headfg.eq.1) then
+C       NDINIT(NNODE) -- real, initial node depth, ft or m
+        do J = 1, NNODE
+C         set initial depth in each node
+C          write(messu,*) 'DWROUT: reset node depth ',
+C     1                    j,NDINIT(j),onodes(j)%odepth(1)
+          NDINIT(J) = onodes(j)%odepth(1)
+C          write(messu,*) 'node depth ',ndinit(j)
+        end do
 C
-C     NDINIT(NNODE) -- real, initial node depth, ft or m
-      do J = 1, NNODE
-C       set initial depth in each node
-C        write(messu,*) 'DWROUT: reset node depth ',
-C     1                  j,NDINIT(j),onodes(j)%odepth(1)
-        NDINIT(J) = onodes(j)%odepth(1)
-C        write(messu,*) 'node depth ',ndinit(j)
-      end do
-C
-C     CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
-      do J = 1, NCOND
-C       set initial flow in each conduit
-C        write(messu,*) 'DWROUT: reset conduit flow ',
-C     1                  j,CQ0(J),olinks(j)%oflow(1)
-        CQ0(J) = olinks(j)%oflow(1)
-C        write(messu,*) 'conduit flow ',cq0(j)
-      end do
+C       CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
+        do J = 1, NCOND
+C         set initial flow in each conduit
+C          write(messu,*) 'DWROUT: reset conduit flow ',
+C     1                    j,CQ0(J),olinks(j)%oflow(1)
+          CQ0(J) = olinks(j)%oflow(1)
+C          write(messu,*) 'conduit flow ',cq0(j)
+        end do
+      end if 
 C
 C     VOL    - volume of water in reach above bed
 C     O      - rate of outflow from each reach exit at end of interval
@@ -4254,6 +4290,7 @@ C     1             olinks(j)%oflow(1), olinks(j)%odepth(1),
 C     1             olinks(j)%ovolume(1)
 C      end do
 C
+      headfg = 1
       call output_close
 C      write(messu,*) 'DWROUT: vol ',vol
 C      write(messu,*) 'DWROUT: ovol ',ovol
