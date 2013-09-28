@@ -655,6 +655,9 @@ C     CGEOM3(NCOND) -- real, third item of shape geometry
 C     CGEOM4(NCOND) -- real, fourth item of shape geometry
 C
       IF (HYDRFG .EQ. 2) THEN
+C       initialize header flag to 0, for first time in 
+        DWHEAD = 0
+C
 C       process values in table-type DYNAMIC-WAVE
         TBNO= 20
         TBSB= 1
@@ -2519,7 +2522,8 @@ C     1                   j,previn(j),invol(j),IDWFP(J),int(NLOCIN(j))
 C
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,DWUNIT,
-     I               OS(1),ROS,VOLT,INVOL,PREVIN,PREVIN2,
+     I               OS(1),ROS,VOLT,INVOL,PREVIN,
+     I               PREVIN2,DWHEAD,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
      I               DATIM,NODEX,
@@ -3765,7 +3769,8 @@ C
       SUBROUTINE   DWROUT
      I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,DWUNIT,
-     I                    OS,ROS,VOLT,INVOL,PREVIN,PREVIN2,
+     I                    OS,ROS,VOLT,INVOL,PREVIN,
+     I                    PREVIN2,DWHEAD,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
      I                    DATIM,NODEX,
@@ -3799,7 +3804,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
      $                 HYECNT(5),HYWCNT(2),UUNITS,
      $                 CNODE1(NCOND),CNODE2(NCOND),
-     $                 CSHAPE(NCOND),DWUNIT
+     $                 CSHAPE(NCOND),DWUNIT,DWHEAD
       REAL             DELTS,OS,ROS,NODEX(NNODE),
      $                 O,RO,OVOL,ROVOL,
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
@@ -3817,6 +3822,7 @@ C     NNODE  - number of nodes in dw simulated network
 C     NCOND  - number of conduits in dw simulated network
 C     DTS    - dynamic wave time step in seconds
 C     DWUNIT - fortran unit number of file for dw output
+C     DWHEAD - flag indicating if header has been written for this oper
 C     OS     - rate of outflow from each exit of reach at start of interval
 C     ROS    - total rate of outflow from reach at start of interval
 C     VOLT   - volume in the reach after inflow, precip and evap
@@ -3861,7 +3867,6 @@ C     ROVOL  - total volume of water leaving reach in an interval
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER          LTYPE,J,K,lErrorCode,DELTSI
-      INTEGER          headfg
       INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5)
       DOUBLE PRECISION XN(6),XC(6),XX(4)
       LOGICAL          isOK
@@ -3878,9 +3883,6 @@ C
 C     + + + EXTERNALS + + +
 C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
 C     1                 xsect_setParams
-C
-C     + + + DATA INITIALIZATIONS + + +
-      DATA        headfg/0/
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4013,7 +4015,7 @@ C
       StartDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
       StartTime = datetime_encodeTime(0, 0, 0) !datetime_strToTime
 C      
-      if (headfg.eq.0) then
+      if (dwhead.eq.0) then
         DELTSI = DELTS
       else 
         DELTSI = DELTS*2   !run for twice as long as needed to allow for spin up time
@@ -4073,7 +4075,7 @@ C     construct external inflow to each node in the network
       end if 
       do J=1, NNODE
         oTsers(J)%datatype = E_TSERIES
-        if (headfg.eq.0) then
+        if (dwhead.eq.0) then
           allocate(oTsers(J)%odates(3))
           allocate(oTsers(J)%ovalues(3))
           if (associated(oTsers(J)%odates) .and. 
@@ -4120,7 +4122,7 @@ C     1                                        oTsers(J)%ovalues(3)
         Node(J)%extInflow => inflows(J)
       end do
 C
-      if (dwunit.GT.0 .AND. headfg.eq.0) then
+      if (dwunit.GT.0 .AND. dwhead.eq.0) then
 C       write header to file        
         do J = 1, NNODE
           write(CTAG10(J),"(6X,A4)") nodex(j)
@@ -4178,7 +4180,7 @@ C     we need to know when this interval began
       newd5(5) = newdat(5)
 C
 C      write(messu,*) 'in dwrout, about to call swmm_run'
-      if (headfg.eq.0) then   
+      if (dwhead.eq.0) then   
         !use -1 to indicate first time, need to write all
         lErrorCode = swmm_run('', '', '', -1*dwunit, newd5)
       else
@@ -4195,15 +4197,9 @@ C
       !  onodes(2)%odepth(4)
       !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
       !  olinks(1)%oflow(3)
-C      do J=1, 5 !OutputSize
-C         write(messu,*) TSDateTime(J), ",", onodes(3)%oflow(J), ",", 
-C     1                onodes(3)%odepth(J), ",", onodes(3)%ovolume(J)
-C         write(messu,*) TSDateTime(J), ",", olinks(1)%oflow(J), ",", 
-C     1                olinks(2)%odepth(J), ",", olinks(1)%ovolume(J)
-C      end do
 C
 C     set initial conditions for next time in
-      if (headfg.eq.1) then
+      if (dwhead.eq.1) then
 C       NDINIT(NNODE) -- real, initial node depth, ft or m
         do J = 1, NNODE
 C         set initial depth in each node
@@ -4230,67 +4226,29 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval    
 C
 C     return volume of water coming out bottom node
-      OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
+      if (dwhead.eq.0) then
+        OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
+      else
+        OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(2)))*DELTS
+      end if 
       OVOL = OVOL + INVOL(NNODE)
 C
 C     find volume in system at end of interval
-C      VOL = 0.0
-C      do J = 1, NNODE
-C       sum vol in each node
-C        VOL = VOL + (onodes(j)%ovolume(4))
-C      end do
-C      do J = 1, NCOND
-C       sum vol in each conduit
-C        VOL = VOL + (olinks(j)%ovolume(4))
-C      end do
-C     alternately, VOL = VOLT - OVOL
       VOL = VOLT - OVOL
 C
 C     return flow rate out of bottom node
       O = INVOL(NNODE) / DELTS
-      O = O + onodes(NNODE)%oflow(1)
+      if (dwhead.eq.0) then
+        O = O + onodes(NNODE)%oflow(1)
+      else
+        O = O + onodes(NNODE)%oflow(2)
+      end if 
 C
 C     only 1 exit here
       RO = O
       ROVOL = OVOL
 C
-C
-C      write(messu,*) ''
-C      write(messu,*) '****************************'
-C      write(messu,*) '*      Node Outputs        *'
-C      write(messu,*) '****************************'
-C      if (uunits.eq.1) then
-C        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cfs)', 
-C     1                                 'Depth(ft)', 'Volume(ft3)'
-C      else
-C        write(messu,'(1A5,1A18,3A20)') 'Node', 'Date', 'Flow(cms)', 
-C     1                                 'Depth(m)', 'Volume(m3)'
-C      end if 
-C      do j=1, NNODE
-C             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
-C     1             datim(1),datim(2),datim(3),datim(4),datim(5),
-C     1             onodes(j)%oflow(1), onodes(j)%odepth(1), 
-C     1             onodes(j)%ovolume(1)
-C      end do
-C      write(messu,*) ''
-C      write(messu,*) '****************************'
-C      write(messu,*) '*      Link Outputs        *'
-C      write(messu,*) '****************************'
-C      if (uunits.eq.1) then
-C        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cfs)', 
-C     1                                 'Depth(ft)', 'Volume(ft3)'
-C      else
-C        write(messu,'(1A5,1A18,3A20)') 'Link', 'Date', 'Flow(cms)', 
-C     1                                 'Depth(m)', 'Volume(m3)'
-C      end if 
-C      do j=1, NCOND
-C             write(messu,'(1I5,1I6,4I3,3F20.5)') j, 
-C     1             datim(1),datim(2),datim(3),datim(4),datim(5),
-C     1             olinks(j)%oflow(1), olinks(j)%odepth(1), 
-C     1             olinks(j)%ovolume(1)
-C      end do
-C
-      headfg = 1
+      dwhead = 1
       call output_close
 C      write(messu,*) 'DWROUT: vol ',vol
 C      write(messu,*) 'DWROUT: ovol ',ovol
