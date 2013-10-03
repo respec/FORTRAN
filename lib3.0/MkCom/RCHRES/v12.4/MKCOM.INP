@@ -151,7 +151,7 @@ VA 1 IRMINV   0   0   0   0 D P                         01000000000000
 VA 1 ROWPT    0   0   0   0 I S                         01000000000000
 VA   HYWCNT   2   0   0   0 I S                         01000000000000
 VA   HYECNT   6   0   0   0 I S                         01000000000000
-VA   DUMVOL   0   0   0   0 I D                         01000000000000
+VA   DWHEAD   0   0   0   0 I P                         01000000000000
 VA 1 VOL      0   0   0   0 D S                         01111111111110
 EQ   VOLUME   2   0   0   0 D   VOL                     01000000000000
 VA 1 VOLS     0   0   0   0 D S                         01111111111110
