@@ -4450,12 +4450,89 @@ C     make a local copy of current action to use equiv
  10   CONTINUE
       ADDR2= 0
 C
+      IF (ACTUVQ .GT. 0) THEN
+C       action value is a variable, so fetch current value
+        IF (SPOUT .GE. 9) THEN
+C         echo actuvq
+          WRITE (MESSU,*) 'fetching variable action value',ACTUVQ
+        END IF
+        CALL GTQUAN (ACTUVQ,SPIVL,SPOPNO,SPOUT,MESSU,
+     O               I,R,UVTYP)
+        IF (UVTYP .EQ. 2) THEN
+C         quantity is integer
+          IF (SPOUT .GE. 9) THEN
+C           echo integer value
+            WRITE (MESSU,*) 'value is',I
+          END IF
+          IF (TYPCOD .EQ. 2) THEN
+C           use integer value
+            IVAL= I
+          ELSE
+C           convert integer value to real
+            RVAL= FLOAT (I)
+          END IF
+        ELSE
+C         quantity is real
+          IF (SPOUT .GE. 9) THEN
+C           echo real value
+            WRITE (MESSU,*) 'value is',R
+          END IF
+          IF (TYPCOD .EQ. 2) THEN
+C           convert real value to integer
+            IVAL= INT (R)
+          ELSE
+C           use real value
+            RVAL= R
+          END IF
+        END IF
+      END IF
+C
+      IF (DSIND .NE. 0) THEN
+C       a distribution is in use
+        CALL SPDIST (MESSU,SPOUT,DSIND,DSPOS,
+     M               RVAL,DEFFRC,
+     O               CFRAC)
+C       update instruction with new deferred fraction
+        SPINSR(17,LSPPTR)= DEFFRC
+      END IF
+C
+      IF (ADDR .LT. 0) THEN
+C       get current value from pipes
+        CALL GTQUAN (TARUVQ,SPIVL,SPOPNO,SPOUT,MESSU,
+     O               ICURVL,RCURVL,UVTYP)
+        IF (TYPCOD .EQ. 4) THEN
+C         convert real to double
+          DCURVL= DBLE (RCURVL)
+        END IF
+      ELSE
+C       current value from pad
+        ICURVL= IPAD(ADDR)
+        IF (TYPCOD .EQ. 3) THEN
+C         real
+          IF (ICURVL .EQ. -999) THEN
+C           current value is undefined - set to zero
+            RCURVL= 0.0
+          ELSE
+C           current value is good
+            RCURVL= PAD(ADDR)
+          END IF
+        ELSE IF (TYPCOD .EQ. 4) THEN
+C         double prec
+          IF (ICURVL .EQ. -999) THEN
+C           current value is undefined - set to zero
+            DCURVL= 0.0
+          ELSE
+C           current value is good
+            DCURVL= DPPAD(DADDR (ADDR))
+          END IF
+        END IF
+      END IF
+C
       IF (SPOUT .GE. 2) THEN
 C       describe variable being acted on
         CALL SPONAM (LSPAC(10),LSPAC(12),LSPAC(7),LSPAC(6),
      O               CACTVA)
       END IF
-
 C
       IF (LOGBLK .EQ. 0) THEN
 C       no conditions to check
@@ -4477,84 +4554,6 @@ C       echo headers
 C
       IF (CONDCK .GE. 1) THEN
 C       take the special action
-C
-        IF (ACTUVQ .GT. 0) THEN
-C         action value is a variable, so fetch current value
-          IF (SPOUT .GE. 9) THEN
-C           echo actuvq
-            WRITE (MESSU,*) 'fetching variable action value',ACTUVQ
-          END IF
-          CALL GTQUAN (ACTUVQ,SPIVL,SPOPNO,SPOUT,MESSU,
-     O                 I,R,UVTYP)
-          IF (UVTYP .EQ. 2) THEN
-C           quantity is integer
-            IF (SPOUT .GE. 9) THEN
-C             echo integer value
-              WRITE (MESSU,*) 'value is',I
-            END IF
-            IF (TYPCOD .EQ. 2) THEN
-C             use integer value
-              IVAL= I
-            ELSE
-C             convert integer value to real
-              RVAL= FLOAT (I)
-            END IF
-          ELSE
-C           quantity is real
-            IF (SPOUT .GE. 9) THEN
-C             echo real value
-              WRITE (MESSU,*) 'value is',R
-            END IF
-            IF (TYPCOD .EQ. 2) THEN
-C             convert real value to integer
-              IVAL= INT (R)
-            ELSE
-C             use real value
-              RVAL= R
-            END IF
-          END IF
-        END IF
-C
-        IF (DSIND .NE. 0) THEN
-C         a distribution is in use
-          CALL SPDIST (MESSU,SPOUT,DSIND,DSPOS,
-     M                 RVAL,DEFFRC,
-     O                 CFRAC)
-C         update instruction with new deferred fraction
-          SPINSR(17,LSPPTR)= DEFFRC
-        END IF
-C
-        IF (ADDR .LT. 0) THEN
-C         get current value from pipes
-          CALL GTQUAN (TARUVQ,SPIVL,SPOPNO,SPOUT,MESSU,
-     O                 ICURVL,RCURVL,UVTYP)
-          IF (TYPCOD .EQ. 4) THEN
-C           convert real to double
-            DCURVL= DBLE (RCURVL)
-          END IF
-        ELSE
-C         current value from pad
-          ICURVL= IPAD(ADDR)
-          IF (TYPCOD .EQ. 3) THEN
-C           real
-            IF (ICURVL .EQ. -999) THEN
-C             current value is undefined - set to zero
-              RCURVL= 0.0
-            ELSE
-C             current value is good
-              RCURVL= PAD(ADDR)
-            END IF
-          ELSE IF (TYPCOD .EQ. 4) THEN
-C           double prec
-            IF (ICURVL .EQ. -999) THEN
-C             current value is undefined - set to zero
-              DCURVL= 0.0
-            ELSE
-C             current value is good
-              DCURVL= DPPAD(DADDR (ADDR))
-            END IF
-          END IF
-        END IF
 C
         IF (ACTCOD .GE. 14) THEN
 C         mix two locations up, need next action
