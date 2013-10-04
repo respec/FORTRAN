@@ -109,7 +109,7 @@ program main
       Nlinks(E_CONDUIT) = 9
       
       Nobjects(E_GAGE) = 0 !I think it will need some rain???
-      Nobjects(E_POLLUT) = 0 !assume 6 pollutants maximum in objects.f95
+      Nobjects(E_POLLUT) = 1 !assume 6 pollutants maximum in objects.f95
       Nobjects(E_TSERIES) = 0
 
       call initPointers  !project
@@ -142,6 +142,7 @@ program main
         end if
         call node_setParams(J, LTYPE, k, XN)
         Node(J)%rptFlag = .true. !this is done in report_readoption
+        Node(J)%treatment = .false. !this version no treatment
  10   CONTINUE
 
       !TODO: both conduits or first conduit and second: weir or outlet???
@@ -217,7 +218,7 @@ program main
       IgnoreSnowmelt  = .true.
       IgnoreGwater    = .true.
       IgnoreRouting   = .false.
-      IgnoreQuality   = .true.
+      IgnoreQuality   = .false.
       InertDamping = NO_DAMPING !InertDampingWords, w_PARTIAL, w_FULL
       NormalFlowLtd = SLOPE !NormalFlowType !0, means NO
 
@@ -261,6 +262,10 @@ program main
          !--- assume link is not a culvert    !(5.0.014 - LR)
          arrLink(J)%xsect%culvertCode = 0
       end do
+
+      !Turn on WQ flag
+      !Input concentration (1 number per node)
+      !no buildup and no washoff from land
       
 !
 ! construct external inflow to each node in the network

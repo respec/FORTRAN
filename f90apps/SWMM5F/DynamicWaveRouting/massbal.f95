@@ -525,31 +525,38 @@ end subroutine massbal_addOutflowQual
 !
 !!=============================================================================
 !
-!void massbal_addReactedMass(int p, double w)
-!!
-!!  Input:   p = pollutant index
-!!           w = rate of mass reacted (mass/sec)
-!!  Output:  none
-!!  Purpose: adds mass reacted during current time step to routing totals.
-!!
-!{
-!    if ( p < 0 || p >= Nobjects(POLLUT) ) return
-!    StepQualTotals(p).reacted += w
-!}
+subroutine massbal_addReactedMass(p, w)
+!
+!  Input:   p = pollutant index
+!           w = rate of mass reacted (mass/sec)
+!  Output:  none
+!  Purpose: adds mass reacted during current time step to routing totals.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: p
+    real(kind=dp), intent(in) :: w
+    if ( p < 0 .or. p >= Nobjects(E_POLLUT) ) 
+        return
+    end if
+    StepQualTotals(p)%reacted = StepQualTotals(p)%reacted + w
+end subroutine massbal_addReactedMass
 !
 !!=============================================================================
 !
-!void massbal_addNodeLosses(double losses)                                      !(5.0.015 - LR)
-!!
-!!  Input:   losses = evaporation + infiltration loss from all nodes (ft3)     !(5.0.015 - LR)
-!!  Output:  none
-!!  Purpose: adds node losses over current time step to routing totals.
-!!
-!{
-!    StepFlowTotals.reacted += losses                                          !(5.0.015 - LR)
-!    FlowTotals.reacted += losses                                              !(5.0.015 - LR)
-!}
+subroutine massbal_addNodeLosses(losses)                                      !(5.0.015 - LR)
 !
+!  Input:   losses = evaporation + infiltration loss from all nodes (ft3)     !(5.0.015 - LR)
+!  Output:  none
+!  Purpose: adds node losses over current time step to routing totals.
+!
+    use headers
+    implicit none
+    real(kind=dp), intent(in) :: losses
+    StepFlowTotals%reacted =StepFlowTotals%reacted + losses                                          !(5.0.015 - LR)
+    FlowTotals%reacted =FlowTotals%reacted + losses                                              !(5.0.015 - LR)
+end subroutine massbal_addNodeLosses
+
 !=============================================================================
 
 subroutine massbal_updateRoutingTotals(tStep)

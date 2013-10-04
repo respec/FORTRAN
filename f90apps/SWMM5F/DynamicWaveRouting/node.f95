@@ -278,42 +278,21 @@ end subroutine node_initState
 !
 !!=============================================================================
 !
-!void node_setOldQualState(int j)
-!!
-!!  Input:   j = node index
-!!  Output:  none
-!!  Purpose: replaces a node's old water quality state values with new ones.
-!!
-!{
-!    int p
-!    for (p = 0 p < Nobjects(POLLUT) p++)
-!    {
-!        Node(j).oldQual(p) = Node(j).newQual(p)
-!        Node(j).newQual(p) = 0.0
-!    }
-!}
+subroutine node_setOldQualState(j)
 !
-!!=============================================================================
+!  Input:   j = node index
+!  Output:  none
+!  Purpose: replaces a node's old water quality state values with new ones.
 !
-!void node_initInflow(int j, double tStep)
-!!
-!!  Input:   j = node index
-!!           tStep = time step (sec)
-!!  Output:  none
-!!  Purpose: initializes a node's inflow at start of next time step.
-!!
-!{
-!    ! --- initialize inflow & outflow
-!    Node(j).oldFlowInflow = Node(j).inflow
-!    Node(j).oldNetInflow  = Node(j).inflow - Node(j).outflow
-!    Node(j).inflow = Node(j).newLatFlow
-!    Node(j).outflow = 0.0
-!
-!    ! --- set overflow to any excess stored volume
-!    if ( Node(j).newVolume > Node(j).fullVolume )
-!        Node(j).overflow = (Node(j).newVolume - Node(j).fullVolume) / tStep
-!    else Node(j).overflow = 0.0
-!}
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    integer :: p
+    do p = 1, Nobjects(E_POLLUT)
+        Node(j)%oldQual(p) = Node(j)%newQual(p)
+        Node(j)%newQual(p) = 0.0
+    end do
+end subroutine node_setOldQualState
 !
 !!=============================================================================
 !

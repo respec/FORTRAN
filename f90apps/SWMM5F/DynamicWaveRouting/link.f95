@@ -1515,6 +1515,24 @@ end subroutine link_setOldHydState
 
 !=============================================================================
 
+!=============================================================================
+subroutine link_setOldQualState(int j)
+!
+!  Input:   j = link index
+!  Output:  none
+!  Purpose: replaces link's old water quality state values with current ones.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    integer :: p
+    do p = 1, Nobjects(E_POLLUT)
+        arrLink(j)%oldQual(p) = arrLink(j)%newQual(p)
+        arrLink(j)%newQual(p) = 0.0
+    end do
+end subroutine link_setOldQualState
+!=============================================================================
+
 subroutine link_setSetting(j, tstep)                                      !(5.0.010 - LR)
 !                                                                             !(5.0.010 - LR)
 !  Input:   j = link index                                                    !(5.0.010 - LR)

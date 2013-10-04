@@ -1,5 +1,0 @@
-output;C:\f90apps\SWMM5F\DynamicWaveRouting\output.f95;1
-swmm5futil;C:\f90apps\SWMM5F\DynamicWaveRouting\swmm5futil.f95;1
-swmm5f;C:\f90apps\SWMM5F\DynamicWaveRouting\swmm5f.f95;1
-modRouting;C:\f90apps\SWMM5F\DynamicWaveRouting\routing.f95;1
-modLink;C:\f90apps\SWMM5F\DynamicWaveRouting\link.f95;1
