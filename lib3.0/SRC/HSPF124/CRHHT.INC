@@ -43,8 +43,8 @@ C
      $              HTCF4(7,5)
       DOUBLE PRECISION  VOL,VOLS,HTST(5)
       INTEGER       DUM1(505),DUM2(207),DUM3(3051),DUM4(712),
-     $              DUM5(110),DUM6(602),DUM7(6888),DUM8(1091),
-     $              DUMRCH(38328)
+     $              DUM5(110),DUM6(602),DUM7(7488),DUM8(1091),
+     $              DUMRCH(37728)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IHEAT,HTIF(1)),(HTPM,ELEV),
