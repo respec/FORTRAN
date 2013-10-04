@@ -762,6 +762,14 @@
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{3B4DA557-772E-4067-8FB9-78A8C945B66A}"
         }
+        "qualrout.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{D41D1949-14B2-42D3-B49D-7F7FE1046672}"
+        }
         "rain.f95"
         {
         "ProjRelPath" = "T"
@@ -833,6 +841,14 @@
         "CustomSwitches" = ""
         "ExcludeFromBuild" = "F"
         "FileGUID" = "{7FF57606-D93C-4AC6-801B-B97767092715}"
+        }
+        "treatmnt.f95"
+        {
+        "ProjRelPath" = "T"
+        "CustomCompilerOptions" = "0"
+        "CustomSwitches" = ""
+        "ExcludeFromBuild" = "F"
+        "FileGUID" = "{45978E7E-F619-4D86-B8B2-9FAC348D6F1B}"
         }
         "xsect.f95"
         {

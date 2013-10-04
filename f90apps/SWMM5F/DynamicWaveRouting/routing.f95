@@ -17,6 +17,38 @@ contains
 
 !=============================================================================
 
+subroutine removeStorageLosses()
+!
+!  Input:   routingStep = routing time step (sec)
+!  Output:  none
+!  Purpose: adds mass lost from storage nodes to evaporation & infiltration
+!           over current time step to overall mass balance.
+!
+    use headers
+    use modMassbal
+    integer :: i, j, p
+    real(kind=dp) :: vRatio, losses
+    losses = 0.0
+
+    ! --- check each storage node
+    do i = 1, Nobjects(E_NODE)
+        if (Node(i)%datatype == E_STORAGE)
+            ! --- update total system storage losses
+            losses = losses + Storage(Node(i)%subIndex)%losses
+
+            ! --- adjust storage concentrations for any evaporation loss
+            if ( Nobjects(E_POLLUT) > 0 .and. Node(i)%newVolume > FUDGE )
+                j = Node(i)%subIndex
+                vRatio = 1.0 + (Storage(j)%evapLoss / Node(i)%newVolume)
+                do p =1, Nobjects(E_POLLUT)
+                    Node(i)%newQual(p) = Node(i)%newQual(p) * vRatio
+                end do
+            end if
+        end if
+    end do
+    call massbal_addNodeLosses(losses)
+end subroutine removeStorageLosses
+
 subroutine removeOutflows()
 !
 !  Input:   none
@@ -266,10 +298,10 @@ subroutine routing_execute(routingModel, routingStep)
     ! --- replace old water quality state with new state
     if ( Nobjects(E_POLLUT) > 0 ) then
         do j=1, Nobjects(E_NODE)
-           !call node_setOldQualState(j)
+           call node_setOldQualState(j)
         end do
         do j=1, Nobjects(LINK)
-           !call link_setOldQualState(j)
+           call link_setOldQualState(j)
         end do
     end if
 
@@ -317,7 +349,7 @@ subroutine routing_execute(routingModel, routingStep)
 
     ! --- route quality through the drainage network
     if ( Nobjects(E_POLLUT) > 0 .and. .not.IgnoreQuality ) then                            !(5.0.014 - LR)
-        !call qualrout_execute(routingStep)
+        call qualrout_execute(routingStep)
     end if
 
     ! --- remove evaporation, infiltration & system outflows from nodes       !(5.0.015 - LR)
