@@ -223,6 +223,8 @@ VA   DWUNIT   0   0   0   0 I P                         01000000000000
 VA   DTS      0   0   0   0 I P                         01000000000000
 VA   NNODE    0   0   0   0 I P                         01000000000000
 VA   NCOND    0   0   0   0 I P                         01000000000000
+VA   NWEIR    0   0   0   0 I P                         01000000000000
+VA   NORIF    0   0   0   0 I P                         01000000000000
 VA   NODEX  100   0   0   0 R P                         01000000000000 
 VA   NELEV  100   0   0   0 R P                         01000000000000
 VA   NDMAX  100   0   0   0 R P                         01000000000000
@@ -232,6 +234,10 @@ VA   NPONDA 100   0   0   0 R P                         01000000000000
 VA   NLOCIN 100   0   0   0 R P                         01000000000000
 VA   IDWFP  100   0   0   0 I T EXTNL#INFLOW     IVOLDW 01000000000000
 VA   IVOLDW 100   0   0   0 R S                         01000000000000
+VA   IDWQFP 100   0   0   0 I T EXTNL#INFLOW     IDWWQ  01000000000000
+VA   IDWWQ  100   0   0   0 R S                         01000000000000
+VA   ROWQFP   0   0   0   0 I T HYDR#ROFLOW      RODWWQ 01000000000000
+VA   RODWWQ   0   0   0   0 R S                         01000000000000
 VA   CNODE1 100   0   0   0 I P                         01000000000000
 VA   CNODE2 100   0   0   0 I P                         01000000000000
 VA   CLENTH 100   0   0   0 R P                         01000000000000
@@ -244,6 +250,39 @@ VA   CGEOM1 100   0   0   0 R P                         01000000000000
 VA   CGEOM2 100   0   0   0 R P                         01000000000000
 VA   CGEOM3 100   0   0   0 R P                         01000000000000
 VA   CGEOM4 100   0   0   0 R P                         01000000000000
+VA   WNODE1  10   0   0   0 I P                         01000000000000
+VA   WNODE2  10   0   0   0 I P                         01000000000000
+VA   WTYPE   10   0   0   0 I P                         01000000000000
+VA   WOFF    10   0   0   0 R P                         01000000000000
+VA   WCD     10   0   0   0 R P                         01000000000000
+VA   WFLAP   10   0   0   0 I P                         01000000000000
+VA   WEC     10   0   0   0 I P                         01000000000000
+VA   WCD2    10   0   0   0 R P                         01000000000000
+VA   WSHAPE  10   0   0   0 I P                         01000000000000
+VA   WGEOM1  10   0   0   0 R P                         01000000000000
+VA   WGEOM2  10   0   0   0 R P                         01000000000000
+VA   WGEOM3  10   0   0   0 R P                         01000000000000
+VA   WGEOM4  10   0   0   0 R P                         01000000000000
+VA   DUMDWW  20   0   0   0 I D                         01000000000000
+VA   ONODE1  10   0   0   0 I P                         01000000000000
+VA   ONODE2  10   0   0   0 I P                         01000000000000
+VA   OTYPE   10   0   0   0 I P                         01000000000000
+VA   OOFF    10   0   0   0 R P                         01000000000000
+VA   OCD     10   0   0   0 R P                         01000000000000
+VA   OFLAP   10   0   0   0 I P                         01000000000000
+VA   ORAT    10   0   0   0 R P                         01000000000000
+VA   OSHAPE  10   0   0   0 I P                         01000000000000
+VA   OGEOM1  10   0   0   0 R P                         01000000000000
+VA   OGEOM2  10   0   0   0 R P                         01000000000000
+VA   OGEOM3  10   0   0   0 R P                         01000000000000
+VA   OGEOM4  10   0   0   0 R P                         01000000000000
+VA   DUMDWO  20   0   0   0 I D                         01000000000000
+VA   DUMDWQ   0   0   0   0 I D                         01000000000000
+VA   DWWQFG   0   0   0   0 I P                         01000000000000
+VA   DWWQNM   2   0   0   0 R P                         01000000000000
+VA   DWWQUN   0   0   0   0 R P                         01000000000000
+VA   DWDECA   0   0   0   0 R P                         01000000000000
+VA   NDWQIN 100   0   0   0 R P                         01000000000000
 
 SE   CRHAD.INC
 HE 3        ADCALC section

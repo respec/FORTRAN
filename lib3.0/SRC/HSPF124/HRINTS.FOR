@@ -1249,6 +1249,7 @@ C           built output table
 C               enter this time series in the results table
                 NTS= NTS+ 1
 C               member name
+C               write(messu,*) 'in hrints with memn ',memn,nts
                 READ (MEMN,1010) (TABL(J,NTS),J=1,2)
 C               subscripts
                 TABL(3,NTS)= SUB1
