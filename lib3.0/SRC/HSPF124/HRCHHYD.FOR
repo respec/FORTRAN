@@ -21,6 +21,8 @@ C     + + + LOCAL VARIABLES + + +
      $             EQVOL,RVALD(100*9)
       DOUBLE PRECISION DTMP
       CHARACTER*4  CTAG4,CNNAME1(100),CNNAME2(100),NNAME(100)
+      CHARACTER*4  CWNAME1(10),CWNAME2(10),CONAME1(10),CONAME2(10)
+      CHARACTER*8  CTAG8
       CHARACTER*12 CPRIOR
       CHARACTER*20 CTAG20,CSC(100)
 C
@@ -49,6 +51,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING INPUT FOR SECTION HYDR')
  2010 FORMAT (A4)
+ 2011 FORMAT (2A4)
  2012 FORMAT (5A4)
  2020 FORMAT (/,' INITIAL STORAGES BY CATEGORY',/,' CATEGORY NAME   ',
      $          '          CVOL')
@@ -638,7 +641,8 @@ C     NDMAX(NNODE)  -- real, max depth for this node
 C     NDINIT(NNODE) -- real, initial node depth
 C     NDSURC(NNODE) -- real, surcharge depth for this node
 C     NPONDA(NNODE) -- real, ponded area for this node
-C     NLOCIN(NNODE) -- real, local inflow percentage to this node
+C     NLOCIN(NNODE) -- real, local inflow timeseries subscript
+C     NDWQIN(NNODE) -- real, local wq inflow timeseries subscript
 C
 C     NCOND         -- integer, number of conduits
 C     CNODE1(NCOND) -- integer, upstream conduit node index 
@@ -653,6 +657,41 @@ C     CGEOM1(NCOND) -- real, first item of shape geometry
 C     CGEOM2(NCOND) -- real, second item of shape geometry
 C     CGEOM3(NCOND) -- real, third item of shape geometry
 C     CGEOM4(NCOND) -- real, fourth item of shape geometry
+C  
+C     NWEIR         -- integer, number of weirs
+C     WNODE1(NWEIR) -- integer, upstream node index
+C     WNODE2(NWEIR) -- integer, downstream node index
+C     WTYPE(NWEIR)  -- integer, weir shape type
+C     WOFF(NWEIR)   -- real, weir offset
+C     WCD(NWEIR)    -- real, weir dicharge coefficient
+C     WFLAP(NWEIR)  -- integer, flap gate present: yes1 or no0
+C     WEC(NWEIR)    -- integer, number of end contractions for tranv or trapez weir
+C     WCD2(NWEIR)   -- real, discharge coeff for triangular ends of trapez weir
+C     WSHAPE(NWEIR) -- integer, weir shape type 
+C     WGEOM1(NWEIR) -- real, first item of shape geometry 
+C     WGEOM2(NWEIR) -- real, second item of shape geometry
+C     WGEOM3(NWEIR) -- real, third item of shape geometry
+C     WGEOM4(NWEIR) -- real, fourth item of shape geometry
+C
+C     NORIF         -- integer, number of orifices
+C     ONODE1(NORIF) -- integer, upstream node index
+C     ONODE2(NORIF) -- integer, downstream node index
+C     OTYPE(NORIF)  -- integer, orifice type code
+C     OOFF(NORIF)   -- real, amt o bottom is offset above the invert of inlet node
+C     OCD(NORIF)    -- real, orifice discharge coefficient
+C     OFLAP(NORIF)  -- integer, flap gate present: yes1 or no0
+C     ORAT(NORIF)   -- real, time in decimal hours to open orifice
+C     OSHAPE(NORIF) -- integer, orifice shape type
+C     OGEOM1(NORIF) -- real, first item of shape geometry
+C     OGEOM2(NORIF) -- real, second item of shape geometry
+C     OGEOM3(NORIF) -- real, third item of shape geometry
+C     OGEOM4(NORIF) -- real, fourth item of shape geometry
+C
+C     DWWQFG        -- integer, dw water quality flag  
+C     DWWQNM(2)     -- real, name of wq constituent
+C     DWWQUN        -- real, name of wq units
+C     DWDECA        -- real, wq decay rate
+C
 C
       IF (HYDRFG .EQ. 2) THEN
 C       initialize header flag to 0, for first time in 
@@ -661,13 +700,16 @@ C
 C       process values in table-type DYNAMIC-WAVE
         TBNO= 20
         TBSB= 1
-        NVAL= 4
+        NVAL= 7
         CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M               IVAL)
         DTS  = IVAL(1)
         NCOND= IVAL(2)
         NNODE= IVAL(3)
         DWUNIT= IVAL(4)
+        NWEIR = IVAL(5)
+        NORIF = IVAL(6)
+        DWWQFG= IVAL(7)
 C
 C       process values in table-type CONDUIT-PARM
         TBNO= 36
@@ -719,7 +761,7 @@ C
 C       process values in table-type NODE-PARM
         TBNO= 66
         TBSB= 1
-        NVAL= NNODE * 6
+        NVAL= NNODE * 7
         CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
      M               RVALD(1))
         IC = 0
@@ -739,6 +781,8 @@ C          write(dwunit,*) CTAG1(1),CTAG1(2),CTAG1(3),CTAG1(4)
           IC = IC + 1
           NPONDA(I) = RVALD(IC) 
           IC = IC + 1
+          NDWQIN(I) = RVALD(IC)
+          IC = IC + 1
           NLOCIN(I) = RVALD(IC) 
           NDSURC(I) = 0.0
  230    CONTINUE
@@ -747,6 +791,7 @@ C       match each conduit node name to the corresp node
         DO 240 I= 1, NCOND
           IFOUND = 0
           DO 250 J= 1, NNODE
+C            write(messu,*) 'matching node names ',nname(j),cnname1(i)
             IF (NNAME(J) .EQ. CNNAME1(I)) THEN
               CNODE1(I) = J
               IFOUND = 1
@@ -865,6 +910,224 @@ C           did not find this conduit shape, report error
      M                 ECOUNT)
           END IF
  270    CONTINUE
+C
+C       weir tables
+        IF (NWEIR.GT.0) THEN
+C         process values in table-type WEIR-PARM
+          TBNO= 125
+          TBSB= 1
+          NVAL= NWEIR * 9
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 RVALD(1))
+          IC = 0
+          DO 280 I= 1, NWEIR
+            IC = IC + 1
+            WRITE (CTAG4,2010) RVALD(IC)
+            CWNAME1(I) = CTAG4
+            IC = IC + 1
+            WRITE (CTAG4,2010) RVALD(IC)
+            CWNAME2(I) = CTAG4
+            IC = IC + 1
+            WRITE (CTAG8,2011) (RVALD(J),J=IC,IC+1)
+            WTYPE(I) = 1
+            IF (CTAG8 .EQ. 'TRANSVER') THEN
+              WTYPE(I) = 1
+            ELSEIF (CTAG8 .EQ. 'SIDEFLOW') THEN
+              WTYPE(I) = 2
+            ELSEIF (CTAG8 .EQ. ' V-NOTCH') THEN
+              WTYPE(I) = 3
+            ELSEIF (CTAG8 .EQ. '  TRAPEZ') THEN
+              WTYPE(I) = 4
+            END IF 
+            IC = IC + 1
+            WOFF(I) = RVALD(IC) 
+            IC = IC + 1
+            WCD(I) = RVALD(IC) 
+            IC = IC + 1
+            WRITE (CTAG4,2010) RVALD(IC)
+            WFLAP(I) = 0
+            IF (CTAG4 .EQ. ' YES') THEN
+              WFLAP(I) = 1
+            END IF 
+            IC = IC + 1
+            WEC(I) = RVALD(IC) 
+            IC = IC + 1
+            WCD2(I) = RVALD(IC) 
+ 280      CONTINUE
+C
+C         process values in table-type WEIR-XS
+          TBNO= 126
+          TBSB= 1
+          NVAL= NWEIR * 7
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 RVALD(1))
+          IC = 0
+          DO 290 I= 1, NWEIR
+            IC = IC + 1
+            WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
+            WSHAPE(I) = 1
+            IF (CPRIOR.EQ.'   RECT_OPEN') THEN
+              WSHAPE(I) = 1
+            ELSEIF (CPRIOR.EQ.'  TRIANGULAR') THEN
+              WSHAPE(I) = 2
+            ELSEIF (CPRIOR.EQ.' TRAPEZOIDAL') THEN
+              WSHAPE(I) = 3
+            END IF
+            IC = IC + 3
+            WGEOM1(I) = RVALD(IC) 
+            IC = IC + 1
+            WGEOM2(I) = RVALD(IC) 
+            IC = IC + 1
+            WGEOM3(I) = RVALD(IC) 
+            IC = IC + 1
+            WGEOM4(I) = RVALD(IC)          
+ 290      CONTINUE
+
+C         match each weir node name to the corresp node        
+          DO 330 I= 1, NWEIR
+            IFOUND = 0
+            DO 340 J= 1, NNODE
+C             write(messu,*) 'matching node names ',nname(j),cnname1(i)
+              IF (NNAME(J) .EQ. CwNAME1(I)) THEN
+                WNODE1(I) = J
+                IFOUND = 1
+              END IF 
+ 340        CONTINUE
+            IF (IFOUND.NE.1) THEN
+C             did not find this node, report error
+              SGRP= 51
+              CTAG4 = CwNAME1(I)
+              CALL OMSTC (I4,CTAG1(1))
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            END IF
+            IFOUND = 0
+            DO 350 J= 1, NNODE
+              IF (NNAME(J) .EQ. CwNAME2(I)) THEN
+                WNODE2(I) = J
+                IFOUND = 1
+              END IF 
+ 350        CONTINUE
+            IF (IFOUND.NE.1) THEN
+C             did not find this node, report error
+              SGRP= 52
+              CTAG4 = CWNAME2(I)
+              CALL OMSTC (I4,CTAG1(1))
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            END IF
+ 330      CONTINUE
+        END IF 
+C
+C       orifice tables
+        IF (NORIF.GT.0) THEN
+C         process values in table-type ORIFICE-PARM
+          TBNO= 127
+          TBSB= 1
+          NVAL= NORIF * 8
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 RVALD(1))
+          IC = 0
+          DO 300 I= 1, NORIF
+            IC = IC + 1
+            WRITE (CTAG4,2010) RVALD(IC)
+            CONAME1(I) = CTAG4
+            IC = IC + 1
+            WRITE (CTAG4,2010) RVALD(IC)
+            CONAME2(I) = CTAG4
+            IC = IC + 1
+            WRITE (CTAG8,2011) (RVALD(J),J=IC,IC+1)
+            OTYPE(I) = 1
+            IF (CTAG8 .EQ. '  BOTTOM') THEN
+              OTYPE(I) = 2
+            END IF 
+            IC = IC + 1
+            OOFF(I) = RVALD(IC) 
+            IC = IC + 1
+            OCD(I) = RVALD(IC) 
+            IC = IC + 1
+            WRITE (CTAG4,2010) RVALD(IC)
+            OFLAP(I) = 0
+            IF (CTAG4 .EQ. ' YES') THEN
+              OFLAP(I) = 1
+            END IF 
+            IC = IC + 1
+            ORAT(I) = RVALD(IC) 
+ 300      CONTINUE
+C
+C         process values in table-type ORIFICE-XS
+          TBNO= 128
+          TBSB= 1
+          NVAL= NORIF * 7
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 RVALD(1))
+          IC = 0
+          DO 320 I= 1, NORIF
+            IC = IC + 1
+            WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
+            OSHAPE(I) = 1
+            IF (CPRIOR.EQ.' RECT_CLOSED') THEN
+              OSHAPE(I) = 2
+            END IF
+            IC = IC + 3
+            OGEOM1(I) = RVALD(IC) 
+            IC = IC + 1
+            OGEOM2(I) = RVALD(IC) 
+            IC = IC + 1
+            OGEOM3(I) = RVALD(IC) 
+            IC = IC + 1
+            OGEOM4(I) = RVALD(IC)          
+ 320      CONTINUE
+
+C         match each orifice node name to the corresp node        
+          DO 360 I= 1, NORIF
+            IFOUND = 0
+            DO 370 J= 1, NNODE
+C             write(messu,*) 'matching node names ',nname(j),coname1(i)
+              IF (NNAME(J) .EQ. CONAME1(I)) THEN
+                ONODE1(I) = J
+                IFOUND = 1
+              END IF 
+ 370        CONTINUE
+            IF (IFOUND.NE.1) THEN
+C             did not find this node, report error
+              SGRP= 51
+              CTAG4 = CONAME1(I)
+              CALL OMSTC (I4,CTAG1(1))
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            END IF
+            IFOUND = 0
+            DO 380 J= 1, NNODE
+              IF (NNAME(J) .EQ. CONAME2(I)) THEN
+                ONODE2(I) = J
+                IFOUND = 1
+              END IF 
+ 380        CONTINUE
+            IF (IFOUND.NE.1) THEN
+C             did not find this node, report error
+              SGRP= 52
+              CTAG4 = CONAME2(I)
+              CALL OMSTC (I4,CTAG1(1))
+              CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                   ECOUNT)
+            END IF
+ 360      CONTINUE
+        END IF 
+C
+C       dw water quality tables        
+        IF (DWWQFG.GT.0) THEN 
+C         process values in table-type DW-POLLUTANT
+          TBNO= 129
+          TBSB= 1
+          NVAL= 4
+          CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
+     M                 RVALD(1))
+          DWWQNM(1)= RVALD(1)
+          DWWQNM(2)= RVALD(2)
+          DWWQUN   = RVALD(3)            
+          DWDECA   = RVALD(4) 
+        END IF 
 C
 C     end of dynamic wave routing section
       END IF 
