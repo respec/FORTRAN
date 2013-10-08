@@ -84,6 +84,7 @@ OVOL
 COVOL
 RIRDEM
 RIRSHT
+RODWWQ
 #GROUP    4  TYPE TEXT
 $TEXT
 ICON
@@ -492,6 +493,10 @@ RIRDEM  1  1     1     1 2   0      0 10089 ENG acft/iv    0  43560.   0 35.31E6
 $TEXT
 RIRSHT  1  1     1     1 2   0      0 10090 ENG acft/iv    0  43560.   0 35.31E6
   Irrigation shortage relative to demand    MET Mm3/iv     0  1233.6   0  1.00E6
+#GROUP   78  TYPE TEXT
+$TEXT
+RODWWQ  1  1     1     1 2   0      0 11197 ENG qty/iv     0       1   0       1
+  Outflow of dissolved dw qual from RCHRES  MET qty/iv     0       1   0       1
 #GROUP   81  TYPE TEXT
 $TEXT
 ICON   10  1-12898     1 2   3      0 12868 ENG qty/iv     0       1   0       1
@@ -1016,10 +1021,6 @@ PHCF1   2  1     2     1 2  10      0 21317 ENG lb/iv      0 1.602E4   0 3.531E4
 $TEXT
 ACFLX1  7  1-21442     1 2  11      0 21621 ENG lb/iv      0 1.602E1   0 3.531E1
   Total outflows  (Group ACIDPH)            MET kg/iv      0  0.4537   0      1.
-#GROUP  244  TYPE TEXT
-$TEXT
-RODWWQ  1  1     1     1 2   0      0 11197 ENG qty/iv     0       1   0       1
-  Outflow of dissolved dw qual from RCHRES  MET qty/iv     0       1   0       1
 #GROUP  251  TYPE TEXT
 $TEXT
 IVOL    1  1     1     1 2   1 2    0   623 ENG acft/iv    0  43560.   0 35.31E6

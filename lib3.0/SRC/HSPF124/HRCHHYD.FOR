@@ -914,7 +914,7 @@ C
 C       weir tables
         IF (NWEIR.GT.0) THEN
 C         process values in table-type WEIR-PARM
-          TBNO= 125
+          TBNO= 124
           TBSB= 1
           NVAL= NWEIR * 9
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -956,7 +956,7 @@ C         process values in table-type WEIR-PARM
  280      CONTINUE
 C
 C         process values in table-type WEIR-XS
-          TBNO= 126
+          TBNO= 125
           TBSB= 1
           NVAL= NWEIR * 7
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -1022,7 +1022,7 @@ C
 C       orifice tables
         IF (NORIF.GT.0) THEN
 C         process values in table-type ORIFICE-PARM
-          TBNO= 127
+          TBNO= 126
           TBSB= 1
           NVAL= NORIF * 8
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -1056,7 +1056,7 @@ C         process values in table-type ORIFICE-PARM
  300      CONTINUE
 C
 C         process values in table-type ORIFICE-XS
-          TBNO= 128
+          TBNO= 127
           TBSB= 1
           NVAL= NORIF * 7
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -1118,7 +1118,8 @@ C
 C       dw water quality tables        
         IF (DWWQFG.GT.0) THEN 
 C         process values in table-type DW-POLLUTANT
-          TBNO= 129
+C          write(messu,*) 'reading dw-pollutant'
+          TBNO= 128
           TBSB= 1
           NVAL= 4
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -1127,6 +1128,8 @@ C         process values in table-type DW-POLLUTANT
           DWWQNM(2)= RVALD(2)
           DWWQUN   = RVALD(3)            
           DWDECA   = RVALD(4) 
+C          write(messu,*) 'finished reading dw-pollutant'
+C          write(messu,*) DWWQNM(1),DWWQNM(2),DWWQUN,DWDECA 
         END IF 
 C
 C     end of dynamic wave routing section
@@ -2773,6 +2776,7 @@ C         set input volume to each node
 C           get volume of inflow from previous time step
             IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.2) THEN
               PREVIN(J)= PREVIN(J) + PAD(IDWFP(I) + IVL1-1)
+              write(messu,*) 'previn ',previn(j),IDWFP(I),ivl1
             END IF
 C           get volume of inflow from 2 previous time step
             IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.3) THEN
@@ -2786,17 +2790,23 @@ C
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,DWUNIT,
      I               OS(1),ROS,VOLT,INVOL,PREVIN,
-     I               PREVIN2,DWHEAD,
+     I               PREVIN2,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
      I               DATIM,NODEX,
      I               CNODE1,CNODE2,CSHAPE,
-     I               NELEV,NDMAX,NDINIT,
-     I               NDSURC,NPONDA,NLOCIN,
-     I               CLENTH,CMANN,COFF1,
-     I               COFF2,CQ0,CGEOM1,
-     I               CGEOM2,CGEOM3,CGEOM4,
-     M               HYECNT,HYWCNT,
+     I               NELEV,NDMAX,
+     I               NDSURC,NPONDA,NLOCIN,NDWQIN,
+     I               CLENTH,CMANN,COFF1,COFF2,
+     I               CGEOM1,CGEOM2,CGEOM3,CGEOM4,
+     I               NWEIR,WNODE1,WNODE2,WTYPE,
+     I               WOFF,WCD,WFLAP,WEC,WCD2,WSHAPE,
+     I               WGEOM1,WGEOM2,WGEOM3,WGEOM4,
+     I               NORIF,ONODE1,ONODE2,OTYPE,
+     I               OOFF,OCD,OFLAP,ORAT,OSHAPE,
+     I               OGEOM1,OGEOM2,OGEOM3,OGEOM4,
+     I               DWWQFG,DWWQNM,DWWQUN,DWDECA,
+     M               HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
      O               VOL,O(1),RO,OVOL(1),ROVOL)
 C       only uses the first exit, ignore the rest
         O(2) = 0.0
@@ -4033,17 +4043,23 @@ C
      I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,DWUNIT,
      I                    OS,ROS,VOLT,INVOL,PREVIN,
-     I                    PREVIN2,DWHEAD,
+     I                    PREVIN2,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
      I                    DATIM,NODEX,
      I                    CNODE1,CNODE2,CSHAPE,
-     I                    NELEV,NDMAX,NDINIT,
-     I                    NDSURC,NPONDA,NLOCIN,
-     I                    CLENTH,CMANN,COFF1,
-     $                    COFF2,CQ0,CGEOM1,
-     $                    CGEOM2,CGEOM3,CGEOM4,
-     M                    HYECNT,HYWCNT,
+     I                    NELEV,NDMAX,
+     I                    NDSURC,NPONDA,NLOCIN,NDWQIN,
+     I                    CLENTH,CMANN,COFF1,COFF2,
+     I                    CGEOM1,CGEOM2,CGEOM3,CGEOM4,
+     I                    NWEIR,WNODE1,WNODE2,WTYPE,
+     I                    WOFF,WCD,WFLAP,WEC,WCD2,WSHAPE,
+     I                    WGEOM1,WGEOM2,WGEOM3,WGEOM4,
+     I                    NORIF,ONODE1,ONODE2,OTYPE,
+     I                    OOFF,OCD,OFLAP,ORAT,OSHAPE,
+     I                    OGEOM1,OGEOM2,OGEOM3,OGEOM4,
+     I                    DWWQFG,DWWQNM,DWWQUN,DWDECA,
+     M                    HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
      O                    VOL,O,RO,OVOL,ROVOL)
 C
 C     + + + PURPOSE + + +
@@ -4065,16 +4081,28 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER          NNODE,NCOND,DTS,MON,NXTMON,DAY,NDAYS,
      $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
-     $                 HYECNT(5),HYWCNT(2),UUNITS,
+     $                 HYECNT(5),HYWCNT(2),UUNITS,DWWQFG,
      $                 CNODE1(NCOND),CNODE2(NCOND),
-     $                 CSHAPE(NCOND),DWUNIT,DWHEAD
+     $                 CSHAPE(NCOND),DWUNIT,DWHEAD,
+     $                 NWEIR,WNODE1(NWEIR),WNODE2(NWEIR), 
+     $                 WTYPE(NWEIR),WFLAP(NWEIR),  
+     $                 WEC(NWEIR),WSHAPE(NWEIR),
+     $                 NORIF,ONODE1(NORIF),ONODE2(NORIF),
+     $                 OTYPE(NORIF),OFLAP(NORIF),OSHAPE(NORIF) 
       REAL             DELTS,OS,ROS,NODEX(NNODE),
-     $                 O,RO,OVOL,ROVOL,
+     $                 O,RO,OVOL,ROVOL,DWWQNM(2),
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
      $                 NDSURC(NNODE),NPONDA(NNODE),NLOCIN(NNODE),
+     $                 NDWQIN(NNODE),DWWQUN,DWDECA,
      $                 CLENTH(NCOND),CMANN(NCOND),COFF1(NCOND),
      $                 COFF2(NCOND),CQ0(NCOND),CGEOM1(NCOND),
-     $                 CGEOM2(NCOND),CGEOM3(NCOND),CGEOM4(NCOND) 
+     $                 CGEOM2(NCOND),CGEOM3(NCOND),CGEOM4(NCOND),
+     $                 WCD2(NWEIR),WOFF(NWEIR),WCD(NWEIR),
+     $                 WGEOM1(NWEIR),WGEOM2(NWEIR),
+     $                 WGEOM3(NWEIR),WGEOM4(NWEIR),
+     $                 OOFF(NORIF),OCD(NORIF),ORAT(NORIF),
+     $                 OGEOM1(NORIF),OGEOM2(NORIF),
+     $                 OGEOM3(NORIF),OGEOM4(NORIF) 
       DOUBLE PRECISION VOLT,VOL,INVOL(NNODE),PREVIN(NNODE),
      $                 PREVIN2(NNODE)
 C
@@ -4111,6 +4139,7 @@ C     NDINIT - initial node depth for each node
 C     NDSURC - surcharge depth for each node
 C     NPONDA - ponded area for each node
 C     NLOCIN - inflow flag for each node, indicating which ivoldw timser 
+C     NDWQIN - local wq inflow timeseries subscript
 C     CLENTH - length for each conduit
 C     CMANN  - mannings n for each conduit
 C     COFF1  - inlet offset for each conduit
@@ -4120,6 +4149,37 @@ C     CGEOM1 - first item of shape geometry for each conduit
 C     CGEOM2 - second item of shape geometry for each conduit
 C     CGEOM3 - third item of shape geometry for each conduit
 C     CGEOM4 - fourth item of shape geometry for each conduit
+C     NWEIR  - number of weirs
+C     WNODE1 - upstream node index
+C     WNODE2 - downstream node index
+C     WTYPE  - weir shape type
+C     WOFF   - weir offset
+C     WCD    - weir dicharge coefficient
+C     WFLAP  - flap gate present: yes1 or no0
+C     WEC    - number of end contractions for tranv or trapez weir
+C     WCD2   - discharge coeff for triangular ends of trapez weir
+C     WSHAPE - weir shape type 
+C     WGEOM1 - first item of shape geometry 
+C     WGEOM2 - second item of shape geometry
+C     WGEOM3 - third item of shape geometry
+C     WGEOM4 - fourth item of shape geometry
+C     NORIF  - number of orifices
+C     ONODE1 - upstream node index
+C     ONODE2 - downstream node index
+C     OTYPE  - orifice type code
+C     OOFF   - amt o bottom is offset above the invert of inlet node
+C     OCD    - orifice discharge coefficient
+C     OFLAP  - flap gate present: yes1 or no0
+C     ORAT   - time in decimal hours to open orifice
+C     OSHAPE - orifice shape type
+C     OGEOM1 - first item of shape geometry
+C     OGEOM2 - second item of shape geometry
+C     OGEOM3 - third item of shape geometry
+C     OGEOM4 - fourth item of shape geometry
+C     DWWQFG - dw water quality flag  
+C     DWWQNM - name of wq constituent
+C     DWWQUN - name of wq units
+C     DWDECA - wq decay rate
 C     HYECNT - count of error messages for section HYDR
 C     HYWCNT - count of warning messages for section HYDR
 C     VOL    - volume of water in reach above bed
@@ -4161,6 +4221,7 @@ C     NDINIT(NNODE) -- real, initial node depth
 C     NDSURC(NNODE) -- real, surcharge depth for this node
 C     NPONDA(NNODE) -- real, ponded area for this node
 C     NLOCIN(NNODE) -- real, inflow flag for each node, indicating which ivoldw timser
+C     NDWQIN(NNODE) -- real, local wq inflow timeseries subscript
 C
 C     NCOND         -- integer, number of conduits
 C     CNODE1(NCOND) -- integer, upstream conduit node index 
@@ -4175,6 +4236,40 @@ C     CGEOM1(NCOND) -- real, first item of shape geometry
 C     CGEOM2(NCOND) -- real, second item of shape geometry
 C     CGEOM3(NCOND) -- real, third item of shape geometry
 C     CGEOM4(NCOND) -- real, fourth item of shape geometry
+C  
+C     NWEIR         -- integer, number of weirs
+C     WNODE1(NWEIR) -- integer, upstream node index
+C     WNODE2(NWEIR) -- integer, downstream node index
+C     WTYPE(NWEIR)  -- integer, weir shape type
+C     WOFF(NWEIR)   -- real, weir offset
+C     WCD(NWEIR)    -- real, weir dicharge coefficient
+C     WFLAP(NWEIR)  -- integer, flap gate present: yes1 or no0
+C     WEC(NWEIR)    -- integer, number of end contractions for tranv or trapez weir
+C     WCD2(NWEIR)   -- real, discharge coeff for triangular ends of trapez weir
+C     WSHAPE(NWEIR) -- integer, weir shape type 
+C     WGEOM1(NWEIR) -- real, first item of shape geometry 
+C     WGEOM2(NWEIR) -- real, second item of shape geometry
+C     WGEOM3(NWEIR) -- real, third item of shape geometry
+C     WGEOM4(NWEIR) -- real, fourth item of shape geometry
+C
+C     NORIF         -- integer, number of orifices
+C     ONODE1(NORIF) -- integer, upstream node index
+C     ONODE2(NORIF) -- integer, downstream node index
+C     OTYPE(NORIF)  -- integer, orifice type code
+C     OOFF(NORIF)   -- real, amt o bottom is offset above the invert of inlet node
+C     OCD(NORIF)    -- real, orifice discharge coefficient
+C     OFLAP(NORIF)  -- integer, flap gate present: yes1 or no0
+C     ORAT(NORIF)   -- real, time in decimal hours to open orifice
+C     OSHAPE(NORIF) -- integer, orifice shape type
+C     OGEOM1(NORIF) -- real, first item of shape geometry
+C     OGEOM2(NORIF) -- real, second item of shape geometry
+C     OGEOM3(NORIF) -- real, third item of shape geometry
+C     OGEOM4(NORIF) -- real, fourth item of shape geometry
+C
+C     DWWQFG        -- integer, dw water quality flag  
+C     DWWQNM(2)     -- real, name of wq constituent
+C     DWWQUN        -- real, name of wq units
+C     DWDECA        -- real, wq decay rate
 C
 C     conduit types
 C     DUMMY: 0
@@ -4273,6 +4368,21 @@ C     1                 CNODE1(J),CNODE2(J),xc
         arrLink(J)%rptFlag = .true. !this is was done in report_readoption
  20   CONTINUE
 C
+      IF (NWEIR.GT.0) THEN
+C       weirs not yet implemented
+      END IF 
+C
+      IF (NORIF.GT.0) THEN
+C       orifices not yet implemented
+      END IF
+C
+      IF (DWWQFG.GT.0) THEN
+C       dynamic wave water quality is on
+C       DWWQFG        -- integer, dw water quality flag  
+C       DWWQNM(2)     -- real, name of wq constituent
+C       DWWQUN        -- real, name of wq units
+C       DWDECA        -- real, wq decay rate
+      END IF
 C      
       RouteModel = DW
       StartDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
