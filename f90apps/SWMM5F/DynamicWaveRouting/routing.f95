@@ -32,12 +32,12 @@ subroutine removeStorageLosses()
 
     ! --- check each storage node
     do i = 1, Nobjects(E_NODE)
-        if (Node(i)%datatype == E_STORAGE)
+        if (Node(i)%datatype == E_STORAGE) then
             ! --- update total system storage losses
             losses = losses + Storage(Node(i)%subIndex)%losses
 
             ! --- adjust storage concentrations for any evaporation loss
-            if ( Nobjects(E_POLLUT) > 0 .and. Node(i)%newVolume > FUDGE )
+            if ( Nobjects(E_POLLUT) > 0 .and. Node(i)%newVolume > FUDGE ) then
                 j = Node(i)%subIndex
                 vRatio = 1.0 + (Storage(j)%evapLoss / Node(i)%newVolume)
                 do p =1, Nobjects(E_POLLUT)
@@ -184,6 +184,7 @@ integer function routing_open(routingModel)
     use headers
     use modToposort
     use report
+    use treatmnt
     implicit none
     integer, intent(in) :: routingModel
     integer :: mstat
@@ -191,10 +192,10 @@ integer function routing_open(routingModel)
     InSteadyState = .FALSE.
 
     ! --- open treatment system !NOTE: not doing this for this project
-!    if ( .not. treatmnt_open() ) then 
-!        routing_open = ErrorCode
-!        return
-!    end if
+    if ( .not. treatmnt_open() ) then 
+        routing_open = ErrorCode
+        return
+    end if
 
     ! --- topologically sort the links
     if (allocated(SortedLinks)) then

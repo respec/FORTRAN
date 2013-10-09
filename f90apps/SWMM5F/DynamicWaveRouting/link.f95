@@ -51,7 +51,7 @@ real(kind=dp) function conduit_getLength(j)
        return
     end if
     t = arrLink(j)%xsect%transect
-    if ( t < 0 .or. t >= Nobjects(E_TRANSECT) ) then
+    if ( t < 1 .or. t > Nobjects(E_TRANSECT) ) then
       conduit_getLength = Conduit(k)%clength
       return
     end if
@@ -604,7 +604,7 @@ subroutine link_getResults(j, f, x)
     x(LINK_CAPACITY) = c  !(float)
     do p =1, Nobjects(E_POLLUT)
         c = f1*arrLink(j)%oldQual(p) + f*arrLink(j)%newQual(p)
-        x(LINK_QUAL+p) = c !(float)
+        x(LINK_QUAL+p - 1) = c !(float)
     end do
 end subroutine link_getResults
 
@@ -1516,7 +1516,7 @@ end subroutine link_setOldHydState
 !=============================================================================
 
 !=============================================================================
-subroutine link_setOldQualState(int j)
+subroutine link_setOldQualState(j)
 !
 !  Input:   j = link index
 !  Output:  none

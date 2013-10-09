@@ -497,7 +497,7 @@ subroutine node_getResults(j, f) !, x)
     NodeResults(NODE_OVERFLOW) = z * 1.0d00 !(float)z
     do p =1, Nobjects(E_POLLUT)
         z = f1*Node(j)%oldQual(p) + f*Node(j)%newQual(p)
-        NodeResults(NODE_QUAL+p) = z * 1.0d00 !(float)z
+        NodeResults(NODE_QUAL+p - 1) = z * 1.0d00 !(float)z
     end do
 end subroutine node_getResults
 !
