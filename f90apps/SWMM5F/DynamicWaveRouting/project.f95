@@ -641,17 +641,18 @@ subroutine deleteObjects()
 !       FREE(Subcatch(j).pondedQual)
 !       FREE(Subcatch(j).totalLoad)
 !   }
-!   if ( Node ) for (j = 0 j < Nobjects(NODE) j++)
-!   {
+!   if ( Nobjects(E_NODE) > 0 ) then
+!   do j =1, Nobjects(NODE)
 !       FREE(Node(j).oldQual)
 !       FREE(Node(j).newQual)
-!   }
+!   end do
+!   end if
 !   if ( Link ) for (j = 0 j < Nobjects(LINK) j++)
 !   {
 !       FREE(Link(j).oldQual)
 !       FREE(Link(j).newQual)
 !   }
-
+!
     ! --- free memory used for infiltration                                   !(5.0.019 - LR)
 !   infil_delete()                                                            !(5.0.019 - LR)
 !   if ( Node ) for (j = 0 j < Nnodes(STORAGE) j++) FREE(Storage(j).infil)  !(5.0.015 - LR)
@@ -664,7 +665,7 @@ subroutine deleteObjects()
 !       rdii_deleteRdiiInflow(j)
 !       treatmnt_delete(j)
 !   }
-
+!
     ! --- delete table entries for curves and time series
 !   if ( Tseries ) for (j = 0 j < Nobjects(TSERIES) j++)
 !       table_deleteEntries(&Tseries(j))

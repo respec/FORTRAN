@@ -68,20 +68,20 @@ subroutine qualrout_execute(tStep)
         vAvg = (Node(j)%oldVolume + Node(j)%newVolume) / 2.0
         
         ! --- save inflow concentrations if treatment applied
-        if ( associated(Node(j)%treatment) )
+        if ( associated(Node(j)%treatment) ) then
             if ( qIn < ZERO ) qIn = 0.0
             call treatmnt_setInflow(qIn, Node(j)%newQual)
         end if
        
         ! --- find new quality at the node 
-        if ( Node(j)%datatype = E_STORAGE .or. Node(j)%oldVolume > FUDGE )
+        if ( Node(j)%datatype == E_STORAGE .or. Node(j)%oldVolume > FUDGE ) then
             call findStorageQual(j, tStep)
         else 
             call findNodeQual(j)
         end if
 
         ! --- apply treatment to new quality values
-        if ( associated(Node(j)%treatment) .and. Node(j)%newDepth > FUDGE )                   !(5.0.017 - LR)
+        if ( associated(Node(j)%treatment) .and. Node(j)%newDepth > FUDGE ) then                   !(5.0.017 - LR)
            !call treatmnt_treat(j, qIn, vAvg, tStep)
         end if
     end do
@@ -138,7 +138,7 @@ real(kind=dp) function getMixedQual(c, v1, wIn, qIn, tStep)
     myc = c
 
     ! --- compute concentration of any inflow
-    if ( qIn <= ZERO )
+    if ( qIn <= ZERO ) then
         getMixedQual= myc
     else
         vIn = qIn * tStep
@@ -181,7 +181,7 @@ subroutine findLinkMassFlow(i)
 
     ! --- identify index of downstream node
     j = arrLink(i)%node2
-    if ( qLink < 0.0 ) 
+    if ( qLink < 0.0 ) then 
        j = arrLink(i)%node1
     end if
     qLink = abs(qLink)
@@ -208,7 +208,7 @@ subroutine findNodeQual(j)
 
     ! --- if there is flow into node then concen. = mass inflow/node flow
     qNode = Node(j)%inflow
-    if ( qNode > ZERO )
+    if ( qNode > ZERO ) then
         do p=1, Nobjects(E_POLLUT)
             Node(j)%newQual(p) = Node(j)%newQual(p) / qNode
         end do
@@ -224,7 +224,7 @@ end subroutine findNodeQual
 !
 !!!  This function was significantly modified for release 5.0.017. !!       !(5.0.017 - LR)
 !
-subroutine findLinkQual(int i, double tStep)
+subroutine findLinkQual(i, tStep)
 !
 !  Input:   i = link index
 !           tStep = routing time step (sec)
@@ -245,16 +245,19 @@ subroutine findLinkQual(int i, double tStep)
     real(kind=dp) :: v2      ! link volume at end of time step (ft3)
     real(kind=dp) :: c1      ! current concentration within link (mass/ft3)
     real(kind=dp) :: c2      ! new concentration within link (mass/ft3)
+    
+    real(kind=dp) :: getMixedQual
+    real(kind=dp) :: getReactedQual
 
     ! --- identify index of upstream node
     j = arrLink(i)%node1
-    if ( arrLink(i)%newFlow < 0.0 )
+    if ( arrLink(i)%newFlow < 0.0 ) then
         j = arrLink(i)%node2
     end if
 
     ! --- link concentration equals that of upstream node when
     !     link is not a conduit or is a dummy link
-    if ( arrLink(i)%datatype /= E_CONDUIT .or. arrLink(i)%xsect%datatype == DUMMY )
+    if ( arrLink(i)%datatype /= E_CONDUIT .or. arrLink(i)%xsect%datatype == DUMMY ) then
         do p=1,Nobjects(E_POLLUT)
             arrLink(i)%newQual(p) = Node(j)%newQual(p)
         end do
@@ -262,7 +265,7 @@ subroutine findLinkQual(int i, double tStep)
     end if
 
     ! --- concentrations are zero in an empty conduit
-    if ( arrLink(i).newDepth <= FUDGE )
+    if ( arrLink(i)%newDepth <= FUDGE ) then
         do p=1,Nobjects(E_POLLUT)
             arrLink(i)%newQual(p) = 0.0
         end do
@@ -270,7 +273,7 @@ subroutine findLinkQual(int i, double tStep)
     end if
 
     ! --- Steady Flow routing requires special treatment
-    if ( RouteModel == SF )
+    if ( RouteModel == SF ) then
         call findSFLinkQual(i, tStep)
         return
     end if
@@ -285,7 +288,7 @@ subroutine findLinkQual(int i, double tStep)
     v2 = arrLink(i)%newVolume
 
     ! --- adjust inflow to compensate for volume change when inflow = outflow
-    if (qIn == qOut)                                        
+    if (qIn == qOut) then
         qIn = qIn + (v2 - v1) / tStep 
         qIn = MAX(qIn, 0.0)
     end if
@@ -331,7 +334,7 @@ subroutine findSFLinkQual(i, tStep)
     j = arrLink(i)%node1
     ! --- find time of travel through conduit
     u = link_getVelocity(i, arrLink(i)%newFlow, arrLink(i)%newDepth)
-    if ( u > ZERO ) 
+    if ( u > ZERO ) then
        t = link_getLength(i) / u
     else 
        t = tStep
@@ -344,7 +347,7 @@ subroutine findSFLinkQual(i, tStep)
         c2 = c1
 
         ! --- apply first-order decay over travel time
-        if ( Pollut(p)%kDecay > 0.0 )
+        if ( Pollut(p)%kDecay > 0.0 ) then
             c2 = c1 * exp(-Pollut(p)%kDecay * t)
             c2 = MAX(0.0, c2)
             lossRate = (c1 - c2) * arrLink(i)%newFlow
@@ -375,6 +378,10 @@ subroutine findStorageQual(j, tStep)
     real(kind=dp) :: v1    ! volume at start of time step (ft3)
     real(kind=dp) :: c1    ! initial pollutant concentration (mass/ft3)
     real(kind=dp) :: c2    ! final pollutant concentration (mass/ft3)
+    
+    real(kind=dp) :: getMixedQual
+    real(kind=dp) :: getReactedQual
+
 
     ! --- get inflow rate & initial volume
     qIn = Node(j)%inflow
@@ -382,7 +389,7 @@ subroutine findStorageQual(j, tStep)
 
     ! --- update hydraulic residence time for storage nodes
     !     (HRT can be used in treatment functions)
-    if ( Node(j)%datatype = E_STORAGE )
+    if ( Node(j)%datatype == E_STORAGE ) then
         call updateHRT(j, Node(j)%oldVolume, qIn, tStep)
     end if
 
@@ -392,7 +399,7 @@ subroutine findStorageQual(j, tStep)
         c1 = Node(j)%oldQual(p)
 
         ! --- apply first order decay only if no separate treatment function
-        if ( (.not. associated(Node(j)%treatment))) !.or. (.not.associated(Node(j)%treatment(p)%equation)) )
+        if ( (.not. associated(Node(j)%treatment))) then !.or. (.not.associated(Node(j)%treatment(p)%equation)) )
             c2 = getReactedQual(p, c1, v1, tStep)
         else 
             c2 = c1
@@ -428,9 +435,9 @@ subroutine updateHRT(j, v, q, tStep)
     real(kind=dp) :: hrt
     
     k = Node(j)%subIndex
-    hrt = Storage(k).hrt
+    hrt = Storage(k)%hrt
 
-    if ( v < ZERO )
+    if ( v < ZERO ) then
        hrt = 0.0
     else 
        hrt = (hrt + tStep) * v / (v + q*tStep)
@@ -460,7 +467,7 @@ real(kind=dp) function getReactedQual(p, c, v1, tStep)
     real(kind=dp) :: c2, lossRate, kDecay
     kDecay = Pollut(p)%kDecay
 
-    if ( abs(kDecay - 0.0) < P_TINY ) 
+    if ( abs(kDecay - 0.0) < P_TINY ) then
         getReactedQual = c
     else
         c2 = c * (1.0 - kDecay * tStep)

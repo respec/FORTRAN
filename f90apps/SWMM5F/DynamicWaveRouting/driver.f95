@@ -98,9 +98,17 @@ program main
       real(kind=dp), dimension(NCOND) :: CGEOM4 = (/0.0, 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 3.0, 0.0 /)
       
       type(TExtInflow), dimension(NNODE-1), target :: inflows
+      type(TExtInflow), dimension(NNODE-1), target :: inflowsWQ
       real(kind=dp), dimension(NNODE-1) :: disFrac
       real(kind=dp) :: INVOL
       
+      !***** WQ ******
+      integer :: lcoPollut
+      logical :: lSnowFlag
+      real(kind=dp) :: lcoFrac, lcDWF      !(5.0.017 - LR)
+      !character*20 :: lId !pollutant name
+      !***** WQ ******
+            
       UnitSystem = US
       
       Nobjects(E_NODE) = 10
@@ -142,7 +150,7 @@ program main
         end if
         call node_setParams(J, LTYPE, k, XN)
         Node(J)%rptFlag = .true. !this is done in report_readoption
-        Node(J)%treatment = .false. !this version no treatment
+        nullify(Node(J)%treatment) !this version no treatment
  10   CONTINUE
 
       !TODO: both conduits or first conduit and second: weir or outlet???
@@ -230,7 +238,6 @@ program main
       ReportStep      = 900              ! Reporting time step (secs)
       StartDryDays    = 0.0              ! Antecedent dry days, DRY_DAYS
       
-      
       ForceMainEqn = D_W !ForceMainType
       
       LinkOffsets = DEPTH_OFFSET !OffsetType
@@ -293,6 +300,7 @@ program main
          oTsers(J)%ovalues(1) = 0.0
          oTsers(J)%ovalues(4) = 0.0
          oTsers(J)%ovalues(5) = 0.0
+         
          select case (J)
            case (1)
              oTsers(J)%ovalues(2) = 40.0
@@ -332,6 +340,105 @@ program main
           Nullify(Node(J)%extInflow)
        end if
     end do
+    
+    !********* WQ **********
+    !--- extract pollutant name & units (landuse ->landuse_readPollutParams)
+    !--- set defaults for snow only flag & co-pollut. parameters
+    ! 
+    !  Data format is:
+    !   ID cUnits cRain cGW cRDII kDecay (snowOnly coPollut coFrac cDWF)         //(5.0.017 - LR)
+
+    lSnowFlag = .false. !0, NO; 1, YES (Snow Only)
+    lcoPollut = -1
+    lcoFrac = 0.0
+    lcDWF = 0.0     !(5.0.017 - LR)
+    
+    ! --- save values for pollutant object   
+    Pollut(1)%ID = "TSS" !id
+    Pollut(1)%units = 1 !k 1 MG, 2 UG, 3 COUNT
+    if      ( Pollut(1)%units == MG ) then
+        Pollut(1)%mcf = UCF(MASS)
+    else if ( Pollut(1)%units == UG ) then
+        Pollut(1)%mcf = UCF(MASS) / 1000.0
+    else  
+        Pollut(1)%mcf = 1.0
+    end if
+    Pollut(1)%pptConcen = 0.0 !x(0) Rain Concen.
+    Pollut(1)%gwConcen  = 0.0 !x(1) GW Concen.
+    Pollut(1)%rdiiConcen = 10.0 !x(2) I&I Concen.
+    Pollut(1)%kDecay = 0.0 / SECperDAY !x(3)/SECperDAY Decay Coeff.
+    Pollut(1)%snowOnly = lSnowFlag
+    Pollut(1)%coPollut = lcoPollut
+    Pollut(1)%coFraction = lcoFrac
+    Pollut(1)%dwfConcen = lcDWF   !(5.0.017 - LR)
+    
+    !Assign timeseries
+    allocate(oTsersWQ(3))
+    do J=1, 3
+      oTsersWQ(J)%datatype = E_TSERIES
+      allocate(oTsersWQ(J)%odates(5))
+      allocate(oTsersWQ(J)%ovalues(5))
+      if (associated(oTsersWQ(J)%odates) .and. &
+         &associated(oTsersWQ(J)%ovalues)) then
+         
+         oTsersWQ(J)%odates(1) = StartDate + StartTime
+         oTsersWQ(J)%odates(2) = oTsersWQ(J)%odates(1) + 0.25 / 24.0
+         oTsersWQ(J)%odates(3) = oTsersWQ(J)%odates(1) + 3.00 / 24.0
+         oTsersWQ(J)%odates(4) = oTsersWQ(J)%odates(1) + 3.25 / 24.0
+         oTsersWQ(J)%odates(5) = oTsersWQ(J)%odates(1) + 12.0 / 24.0
+         
+         oTsersWQ(J)%ovalues(4) = 0.0
+         oTsersWQ(J)%ovalues(5) = 0.0
+         
+         select case (J)
+           case (1) !TSS80408
+             oTsersWQ(J)%ovalues(1) = 10.0
+             oTsersWQ(J)%ovalues(2) = 50.0
+             oTsersWQ(J)%ovalues(3) = 50.0
+           case (2) !TSS82309
+             oTsersWQ(J)%ovalues(1) =  5.0
+             oTsersWQ(J)%ovalues(2) =  0.0
+             oTsersWQ(J)%ovalues(3) =  0.0
+           case (3) !TSS81009
+             oTsersWQ(J)%ovalues(1) = 15.0
+             oTsersWQ(J)%ovalues(2) =  0.0
+             oTsersWQ(J)%ovalues(3) =  0.0
+         end select
+      end if
+    end do
+    
+    do J = 1, NNODE - 1
+       inflowsWQ(J)%param = 1 !0 !-1 flow; >=0 for WQ constituent
+       inflowsWQ(J)%datatype = CONCEN_INFLOW !FLOW_INFLOW user-supplied external inflow
+       !inflowsWQ(J)%tseries = J
+       select case (J)
+         case (1)
+           inflowsWQ(J)%tseries = 1
+         case (3)
+           inflowsWQ(J)%tseries = 3
+         case (5)
+           inflowsWQ(J)%tseries = 2
+         case default
+           inflowsWQ(J)%tseries = -1
+       end select
+       inflowsWQ(J)%basePat = -1 !<0 no pattern
+       inflowsWQ(J)%cFactor = 1.0
+       inflowsWQ(J)%sFactor = 1.0
+       inflowsWQ(J)%baseline = 0.0
+       nullify(inflowsWQ(J)%next)
+       if (j.eq.1 .or. j.eq.3 .or. j.eq.5) then
+          if (associated(Node(J)%extInflow)) then
+             inflowsWQ(J)%next => Node(J)%extInflow
+             Node(J)%extInflow => inflowsWQ(J)
+          else
+             Node(J)%extInflow => inflowsWQ(J)   
+          end if
+       else
+          Nullify(Node(J)%extInflow)
+       end if
+    end do
+        
+    !********* WQ **********
       
 !      NTS = DELTS/DTS
 !      DO 100 ITS = 1,NTS
@@ -363,14 +470,27 @@ program main
       write(8,*) '****************************'
       write(8,*) '*      Node Outputs        *'
       write(8,*) '****************************'
-      write(8,'(1A5,1A15,3A20)') 'Node', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      if (Nobjects(E_POLLUT) == 0) then
+        write(8,'(1A5,1A15,3A20)') 'Node', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      else
+        write(8,'(1A5,1A15,4A20)') 'Node', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)', 'Qual(mg/l)'
+      end if
+      
       do lN=1, NNODE
         do J=1, OutputSize
           if (TSDateTime(J) > 0.0 .or. &
              &onodes(lN)%oflow(J) > 0.0 .or. &
              &onodes(lN)%odepth(J) > 0.0 .or. &
              &onodes(lN)%ovolume(J) > 0.0) then
-             write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), onodes(lN)%oflow(J), onodes(lN)%odepth(J), onodes(lN)%ovolume(J)
+             if (Nobjects(E_POLLUT) == 0) then
+               write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), onodes(lN)%oflow(J), onodes(lN)%odepth(J), onodes(lN)%ovolume(J)
+             else
+               write(8,'(1I5,1F15.5,4F20.5)') lN, TSDateTime(J), &
+                                             &onodes(lN)%oflow(J), &
+                                             &onodes(lN)%odepth(J), &
+                                             &onodes(lN)%ovolume(J), &
+                                             &onodes(lN)%oQual1(J)
+             end if
           end if
         end do
       end do
@@ -384,14 +504,24 @@ program main
       write(8,*) '****************************'
       write(8,*) '*      Link Outputs        *'
       write(8,*) '****************************'
-      write(8,'(1A5,1A15,3A20)') 'Link', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      if (Nobjects(E_POLLUT) ==0) then
+         write(8,'(1A5,1A15,3A20)') 'Link', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      else
+         write(8,'(1A5,1A15,4A20)') 'Link', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)', 'Qual(mg/l)'
+      end if
       do lN=1, NCOND
         do J=1, OutputSize
           if (TSDateTime(J) > 0 .or. &
              &olinks(lN)%oflow(J) > 0 .or. &
              &olinks(lN)%odepth(J) > 0 .or. &
              &olinks(lN)%ovolume(J) > 0) then
-             write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), olinks(lN)%oflow(J), olinks(lN)%odepth(J), olinks(lN)%ovolume(J)
+             if (Nobjects(E_POLLUT) ==0) then
+                write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), olinks(lN)%oflow(J), olinks(lN)%odepth(J), olinks(lN)%ovolume(J)
+             else
+                write(8,'(1I5,1F15.5,4F20.5)') lN, TSDateTime(J), &
+                                              &olinks(lN)%oflow(J), olinks(lN)%odepth(J), &
+                                              &olinks(lN)%ovolume(J), olinks(lN)%oQual1(J)
+             end if
           end if
         end do
       end do

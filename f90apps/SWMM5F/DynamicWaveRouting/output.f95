@@ -177,7 +177,13 @@ integer function output_open()
       allocate(onodes(j)%oflow(OutputSize))
       allocate(onodes(j)%odepth(OutputSize))
       allocate(onodes(j)%ovolume(OutputSize))
-      allocate(onodes(j)%lastQual(Nobjects(E_POLLUT)))
+      !allocate(onodes(j)%lastQual(Nobjects(E_POLLUT)))
+      allocate(onodes(j)%oQual1(OutputSize))
+      allocate(onodes(j)%oQual2(OutputSize))
+      allocate(onodes(j)%oQual3(OutputSize))
+      allocate(onodes(j)%oQual4(OutputSize))
+      allocate(onodes(j)%oQual5(OutputSize))
+      allocate(onodes(j)%oQual6(OutputSize))
     end do
     do j= 1,Nobjects(LINK)
       olinks%datatype = LINK
@@ -185,7 +191,13 @@ integer function output_open()
       allocate(olinks(j)%oflow(OutputSize))
       allocate(olinks(j)%odepth(OutputSize))
       allocate(olinks(j)%ovolume(OutputSize))
-      allocate(onodes(j)%lastQual(Nobjects(E_POLLUT)))
+      !allocate(olinks(j)%lastQual(Nobjects(E_POLLUT)))
+      allocate(olinks(j)%oQual1(OutputSize))
+      allocate(olinks(j)%oQual2(OutputSize))
+      allocate(olinks(j)%oQual3(OutputSize))
+      allocate(olinks(j)%oQual4(OutputSize))
+      allocate(olinks(j)%oQual5(OutputSize))
+      allocate(olinks(j)%oQual6(OutputSize))
     end do
 
 !    fseek(Fout.file, 0, SEEK_SET)
@@ -658,7 +670,7 @@ subroutine output_saveNodeResults(aReportTime, file)
     integer(kind=k4), intent(in) :: file
 
 !    extern TRoutingTotals StepFlowTotals  ! defined in massbal.c
-    integer :: j, lStat
+    integer :: j, p, lStat
 
     ! --- find where current reporting time lies between latest routing times
     real(kind=dp) :: f, datatime
@@ -676,6 +688,12 @@ subroutine output_saveNodeResults(aReportTime, file)
           lStat = ReDim(onodes(j)%oflow)
           lStat = ReDim(onodes(j)%odepth)
           lStat = ReDim(onodes(j)%ovolume)
+          lStat = ReDim(onodes(j)%oQual1)
+          lStat = ReDim(onodes(j)%oQual2)
+          lStat = ReDim(onodes(j)%oQual3)
+          lStat = ReDim(onodes(j)%oQual4)
+          lStat = ReDim(onodes(j)%oQual5)
+          lStat = ReDim(onodes(j)%oQual6)
           lStat = ReDim(TSDateTime)
           if (lStat /= 0) exit
        end if
@@ -685,6 +703,23 @@ subroutine output_saveNodeResults(aReportTime, file)
        onodes(j)%oflow(OutputCount) = NodeResults(NODE_INFLOW)
        onodes(j)%odepth(OutputCount) = NodeResults(NODE_DEPTH)
        onodes(j)%ovolume(OutputCount) = NodeResults(NODE_VOLUME)
+       do p=1, Nobjects(E_POLLUT)
+          select case (p)
+             case (1)
+                onodes(j)%oQual1(OutputCount) = NodeResults(NODE_QUAL + p -1)
+             case (2)
+                onodes(j)%oQual2(OutputCount) = NodeResults(NODE_QUAL + p -1)
+             case (3)
+                onodes(j)%oQual3(OutputCount) = NodeResults(NODE_QUAL + p -1)
+             case (4)
+                onodes(j)%oQual4(OutputCount) = NodeResults(NODE_QUAL + p -1)
+             case (5)
+                onodes(j)%oQual5(OutputCount) = NodeResults(NODE_QUAL + p -1)
+             case (6)
+                onodes(j)%oQual6(OutputCount) = NodeResults(NODE_QUAL + p -1)
+          end select
+       end do
+       
        onodes(j)%lastDepth = Node(j)%newDepth
        onodes(j)%lastLatFlow = Node(j)%newLatFlow
        onodes(j)%lastVolume = Node(j)%newVolume
@@ -737,7 +772,7 @@ subroutine output_saveLinkResults(aReportTime, file)
     real(kind=dp), intent(in) :: aReportTime
     integer(kind=K4), intent(in) :: file
 
-    integer :: j, lStat
+    integer :: j, p, lStat
     real(kind=dp) :: f
     real(kind=dp) :: z, datatime
 
@@ -756,6 +791,13 @@ subroutine output_saveLinkResults(aReportTime, file)
           lStat = ReDim(olinks(j)%oflow)
           lStat = ReDim(olinks(j)%odepth)
           lStat = ReDim(olinks(j)%ovolume)
+          lStat = ReDim(olinks(j)%oQual1)
+          lStat = ReDim(olinks(j)%oQual2)
+          lStat = ReDim(olinks(j)%oQual3)
+          lStat = ReDim(olinks(j)%oQual4)
+          lStat = ReDim(olinks(j)%oQual5)
+          lStat = ReDim(olinks(j)%oQual6)
+
           lStat = ReDim(TSDateTime)
           if (lStat /= 0) exit
        end if
@@ -765,6 +807,23 @@ subroutine output_saveLinkResults(aReportTime, file)
        olinks(j)%oflow(OutputCount) = LinkResults(LINK_FLOW)
        olinks(j)%odepth(OutputCount) = LinkResults(LINK_DEPTH)
        !olinks(j)%ovolume(OutputCount) = arrLink(j)%newVolume
+       
+       do p=1, Nobjects(E_POLLUT)
+          select case (p)
+             case (1)
+                olinks(j)%oQual1(OutputCount) = LinkResults(LINK_QUAL + p -1)
+             case (2)
+                olinks(j)%oQual2(OutputCount) = LinkResults(LINK_QUAL + p -1)
+             case (3)
+                olinks(j)%oQual3(OutputCount) = LinkResults(LINK_QUAL + p -1)
+             case (4)
+                olinks(j)%oQual4(OutputCount) = LinkResults(LINK_QUAL + p -1)
+             case (5)
+                olinks(j)%oQual5(OutputCount) = LinkResults(LINK_QUAL + p -1)
+             case (6)
+                olinks(j)%oQual6(OutputCount) = LinkResults(LINK_QUAL + p -1)
+          end select
+       end do
        olinks(j)%subIndex = arrLink(j)%subIndex
        olinks(j)%lastFlow = arrLink(j)%newFlow
        olinks(j)%lastDepth = arrLink(j)%newDepth

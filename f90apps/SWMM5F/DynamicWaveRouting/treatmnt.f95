@@ -33,15 +33,15 @@ integer(kind=K2), parameter :: pvAREA = 5  ! storage surface area
 !!-----------------------------------------------------------------------------
 !!  Shared variables
 !!-----------------------------------------------------------------------------
-integer, parameter ::     ErrCode                ! treatment error code
-integer, parameter ::     J                      ! index of node being analyzed
-real(kind=dp), parameter ::  Dt                     ! curent time step (sec)
-real(kind=dp), parameter ::  Q                      ! node inflow (cfs)
-real(kind=dp), parameter ::  V                      ! node volume (ft3)
+integer ::     ErrCode                ! treatment error code
+integer ::     JNode                      ! index of node being analyzed
+real(kind=dp) ::  Dt                     ! curent time step (sec)
+real(kind=dp) ::  Q                      ! node inflow (cfs)
+real(kind=dp) ::  V                      ! node volume (ft3)
 !double* R                      ! array of pollut. removals
 !double* Cin                    ! node inflow concentrations
 !static TTreatment* Treatment          ! pointer to Treatment object
-real(kind=dp), pointer :: R, Cin
+real(kind=dp), dimension(:), allocatable :: R, Cin
 type(TTreatment), pointer :: Treatment  ! pointer to Treatment object
 !
 !!-----------------------------------------------------------------------------
@@ -66,27 +66,32 @@ type(TTreatment), pointer :: Treatment  ! pointer to Treatment object
 contains
 !!=============================================================================
 !
-!int  treatmnt_open(void)
-!!
-!!  Input:   none
-!!  Output:  returns TRUE if successful, FALSE if not
-!!  Purpose: allocates memory for computing pollutant removals by treatment.
-!!
-!{
-!    R = NULL
-!    Cin = NULL
-!    if ( Nobjects(POLLUT) > 0 )
-!    {
-!        R = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!        Cin = (double *) calloc(Nobjects(POLLUT), sizeof(double))
-!        if ( R == NULL || Cin == NULL)
-!        {
-!            report_writeErrorMsg(ERR_MEMORY, "")
-!            return FALSE
-!        }
-!    }
-!    return TRUE
-!}
+logical function treatmnt_open()
+!
+!  Input:   none
+!  Output:  returns TRUE if successful, FALSE if not
+!  Purpose: allocates memory for computing pollutant removals by treatment.
+!
+    use headers
+    implicit none
+    logical :: lDone
+    integer :: lstatR, lstatCin
+    
+!    nullify(R) ! = NULL
+!    nullify(Cin) ! = NULL
+    lDone = .true.
+    
+    if ( Nobjects(E_POLLUT) > 0 ) then
+        allocate(R(Nobjects(E_POLLUT)), stat=lstatR)
+        allocate(Cin(Nobjects(E_POLLUT)), stat=lstatCin)
+        if ( lstatR /= 0 .or. lstatCin /= 0) then
+            call report_writeErrorMsg(ERR_MEMORY, "")
+            lDone = .FALSE.
+        end if
+    end if
+    treatmnt_open = lDone
+    return
+end function treatmnt_open
 !
 !!=============================================================================
 !
@@ -193,7 +198,7 @@ subroutine treatmnt_setInflow(qIn, wIn)
     real(kind=dp), intent(in) :: qIn
     real(kind=dp), dimension(:), intent(in) :: wIn
     integer ::    p
-    if ( qIn > 0.0 )                                                           !(5.0.014 - LR)
+    if ( qIn > 0.0 ) then      !(5.0.014 - LR) 
         do p=1, Nobjects(E_POLLUT)
            Cin(p) = wIn(p)/qIn
         end do
@@ -224,7 +229,7 @@ end subroutine treatmnt_setInflow
 !    ! --- set global variables for node j
 !    if ( Node(j).treatment == NULL ) return
 !    ErrCode = 0
-!    J  = j                            ! current node
+!    JNode  = j                            ! current node
 !    Dt = tStep                        ! current time step
 !    Q  = q                            ! current inflow rate
 !    V  = v                            ! current node volume
@@ -246,7 +251,7 @@ end subroutine treatmnt_setInflow
 !    ! --- check for error condition
 !    if ( ErrCode == ERR_CYCLIC_TREATMENT )
 !    {
-!         report_writeErrorMsg(ERR_CYCLIC_TREATMENT, Node(J).ID)
+!         report_writeErrorMsg(ERR_CYCLIC_TREATMENT, Node(JNode).ID)
 !    }
 !
 !    ! --- update nodal concentrations and mass balances
@@ -345,7 +350,7 @@ end subroutine treatmnt_setInflow
 !!  Output:  returns current value of variable
 !!  Purpose: finds current value of a process variable or pollutant concen.,
 !!           making reference to the node being evaluated which is stored in
-!!           shared variable J.
+!!           shared variable JNode.
 !!
 !{
 !    int    p
@@ -357,9 +362,9 @@ end subroutine treatmnt_setInflow
 !        switch ( varCode )
 !        {
 !          case pvHRT:                                 ! HRT in hours
-!            if ( Node(J).type == STORAGE )
+!            if ( Node(JNode).type == STORAGE )
 !            {
-!                return Storage(Node(J).subIndex).hrt / 3600.0
+!                return Storage(Node(JNode).subIndex).hrt / 3600.0
 !            }
 !            else return 0.0
 !
@@ -370,12 +375,12 @@ end subroutine treatmnt_setInflow
 !            return Q * UCF(FLOW)                     ! flow in user's units
 !
 !          case pvDEPTH:
-!            y = (Node(J).oldDepth + Node(J).newDepth) / 2.0
+!            y = (Node(JNode).oldDepth + Node(JNode).newDepth) / 2.0
 !            return y * UCF(LENGTH)                   ! depth in ft or m
 !
 !          case pvAREA:
-!            a1 = node_getSurfArea(J, Node(J).oldDepth)
-!            a2 = node_getSurfArea(J, Node(J).newDepth)
+!            a1 = node_getSurfArea(JNode, Node(JNode).oldDepth)
+!            a2 = node_getSurfArea(JNode, Node(JNode).newDepth)
 !            return (a1 + a2) / 2.0 * UCF(LENGTH) * UCF(LENGTH)
 !            
 !          default: return 0.0
@@ -387,7 +392,7 @@ end subroutine treatmnt_setInflow
 !    {
 !        p = varCode - PVMAX
 !        if ( Treatment->treatType == REMOVAL ) return Cin(p)
-!        return Node(J).newQual(p)
+!        return Node(JNode).newQual(p)
 !    }
 !
 !    ! --- variable is a pollutant removal
@@ -408,7 +413,7 @@ end subroutine treatmnt_setInflow
 !!  Purpose: computes removal of a specific pollutant
 !!
 !{
-!    double c0 = Node(J).newQual(p)    ! initial node concentration
+!    double c0 = Node(JNode).newQual(p)    ! initial node concentration
 !    double r                          ! removal value
 !
 !    ! --- case where removal already being computed for another pollutant
