@@ -3781,7 +3781,7 @@ _RANGE  0 :1
 _DEFAULT  0
 _HELP
 Water Quality Flag.
-_PNAME  DWUNIT
+_PNAME  DWWQFG
 $HELP
 Properties of the dynamic wave routing in RCHRES.
 #GROUP  420  TYPE TEXT

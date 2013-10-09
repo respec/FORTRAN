@@ -2424,7 +2424,8 @@ C     + + + LOCAL VARIABLES + + +
      $                 COTDGS(MXEXIT,MXCAT),CVOLEV(MXCAT),DEMVOL,
      $                 CIRRWD(MXCAT)
       DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR,
-     $                 INVOL(100),PREVIN(100),PREVIN2(100)
+     $                 INVOL(100),PREVIN(100),PREVIN2(100),
+     $                 INWQ(100),PREVWQ(100),PREVWQ2(100)
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -2776,7 +2777,7 @@ C         set input volume to each node
 C           get volume of inflow from previous time step
             IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.2) THEN
               PREVIN(J)= PREVIN(J) + PAD(IDWFP(I) + IVL1-1)
-              write(messu,*) 'previn ',previn(j),IDWFP(I),ivl1
+C             write(messu,*) 'previn ',previn(j),IDWFP(I),ivl1
             END IF
 C           get volume of inflow from 2 previous time step
             IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.3) THEN
@@ -2785,12 +2786,32 @@ C           get volume of inflow from 2 previous time step
           END IF 
 C          write(messu,*) 'DWROUT: node,previn,invol,idwfp,nlocin ',
 C     1                   j,previn(j),invol(j),IDWFP(J),int(NLOCIN(j))
+C
+C         set input concentration to each node
+          I = INT(NDWQIN(J))
+          INWQ(J) = 0.0
+          PREVWQ(J) = 0.0
+          PREVWQ2(J) = 0.0
+          IF (I.GT.0 .AND. I.LE.NNODE) THEN
+            IF (IDWQFP(I) .GT. 0) THEN
+              INWQ(J) = PAD(IDWQFP(I) + IVL1)
+            END IF
+C           get conc of inflow from previous time step
+            IF (IDWQFP(I) .GT. 0 .AND. IVL1.GT.2) THEN
+              PREVWQ(J)= PREVWQ(J) + PAD(IDWQFP(I) + IVL1-1)
+            END IF
+C           get conc of inflow from 2 previous time step
+            IF (IDWQFP(I) .GT. 0 .AND. IVL1.GT.3) THEN
+              PREVWQ2(J)= PREVWQ2(J) + PAD(IDWQFP(I) + IVL1-2)
+            END IF
+          END IF 
  125    CONTINUE
 C
+        write(messu,*) 'B4 DWROUT: RODWWQ',RODWWQ
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,DWUNIT,
      I               OS(1),ROS,VOLT,INVOL,PREVIN,
-     I               PREVIN2,
+     I               PREVIN2,INWQ,PREVWQ,PREVWQ2,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
      I               DATIM,NODEX,
@@ -2807,7 +2828,8 @@ C
      I               OGEOM1,OGEOM2,OGEOM3,OGEOM4,
      I               DWWQFG,DWWQNM,DWWQUN,DWDECA,
      M               HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
-     O               VOL,O(1),RO,OVOL(1),ROVOL)
+     O               VOL,O(1),RO,OVOL(1),ROVOL,RODWWQ)
+        write(messu,*) 'AF DWROUT: RODWWQ',RODWWQ,PAD(ROWQFP + IVL1)
 C       only uses the first exit, ignore the rest
         O(2) = 0.0
         O(3) = 0.0
@@ -4043,7 +4065,7 @@ C
      I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,DWUNIT,
      I                    OS,ROS,VOLT,INVOL,PREVIN,
-     I                    PREVIN2,
+     I                    PREVIN2,INWQ,PREVWQ,PREVWQ2,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
      I                    DATIM,NODEX,
@@ -4060,7 +4082,7 @@ C
      I                    OGEOM1,OGEOM2,OGEOM3,OGEOM4,
      I                    DWWQFG,DWWQNM,DWWQUN,DWDECA,
      M                    HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
-     O                    VOL,O,RO,OVOL,ROVOL)
+     O                    VOL,O,RO,OVOL,ROVOL,RODWWQ)
 C
 C     + + + PURPOSE + + +
 C     Use dynamic wave routing algorithm to 
@@ -4089,7 +4111,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 WEC(NWEIR),WSHAPE(NWEIR),
      $                 NORIF,ONODE1(NORIF),ONODE2(NORIF),
      $                 OTYPE(NORIF),OFLAP(NORIF),OSHAPE(NORIF) 
-      REAL             DELTS,OS,ROS,NODEX(NNODE),
+      REAL             DELTS,OS,ROS,NODEX(NNODE),RODWWQ,
      $                 O,RO,OVOL,ROVOL,DWWQNM(2),
      $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
      $                 NDSURC(NNODE),NPONDA(NNODE),NLOCIN(NNODE),
@@ -4104,7 +4126,8 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 OGEOM1(NORIF),OGEOM2(NORIF),
      $                 OGEOM3(NORIF),OGEOM4(NORIF) 
       DOUBLE PRECISION VOLT,VOL,INVOL(NNODE),PREVIN(NNODE),
-     $                 PREVIN2(NNODE)
+     $                 PREVIN2(NNODE),
+     $                 INWQ(NNODE),PREVWQ(NNODE),PREVWQ2(NNODE)
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DELTS  - simulation interval in seconds
@@ -4120,6 +4143,9 @@ C     VOLT   - volume in the reach after inflow, precip and evap
 C     INVOL  - inflow volume to this node at this time step
 C     PREVIN - inflow volume at previous time step
 C     PREVIN2- inflow volume at 2 previous time step
+C     INWQ   - inflow wq conc to this node at this time step
+C     PREVWQ - inflow wq conc at previous time step
+C     PREVWQ2- inflow wq conc at 2 previous time step
 C     MON    - calendar month
 C     NXTMON - next calendar month
 C     DAY    - day of month
@@ -4187,6 +4213,7 @@ C     O      - rate of outflow from each reach exit at end of interval
 C     RO     - total rate of outflow from reach at end of interval
 C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval
+C     RODWWQ - conc of wq constituent in water leaving the reach
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER          LTYPE,J,K,lErrorCode,DELTSI
@@ -4621,10 +4648,22 @@ C     only 1 exit here
       RO = O
       ROVOL = OVOL
 C
+      RODWWQ = 0.0
+      IF (DWWQFG.GT.0) THEN
+C       dw wq is on
+C       return conc of wq coming out bottom node
+        if (dwhead.eq.0) then
+C          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
+           RODWWQ = INWQ(NNODE)
+        else
+C          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(2)))*DELTS
+           RODWWQ = INWQ(NNODE)
+        end if 
+      end if
+C
       dwhead = 1
       call output_close
-C      write(messu,*) 'DWROUT: vol ',vol
-C      write(messu,*) 'DWROUT: ovol ',ovol
+      write(messu,*) 'DWROUT: rovol, rodwwq ',rovol,rodwwq
 C
       RETURN
       END

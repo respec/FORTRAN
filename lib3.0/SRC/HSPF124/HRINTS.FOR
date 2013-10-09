@@ -1731,7 +1731,7 @@ C     WKEY   - ???
 C
 C     + + + PARAMETERS + + +
       INTEGER    MAXCNX
-      PARAMETER (MAXCNX=150)
+      PARAMETER (MAXCNX=250)
 C
 C     + + + COMMON BLOCKS- INTERP3, OSV + + +
       INCLUDE    'crin3.inc'
