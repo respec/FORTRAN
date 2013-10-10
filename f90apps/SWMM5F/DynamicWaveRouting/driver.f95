@@ -455,12 +455,17 @@ program main
       
       !The resulting nodes' and links' flow, depth, and volume outputs are
       !saved in the onodes array and olinks array. 
-      !Each element of the onodes or olinks array has 3 arrays, oflow, odepth, and ovolume
+      !Each element of the onodes or olinks array has 4 arrays, oflow, odepth, ovolume, and oQual1
       !that contain output values for each reporting steps in TSDateTime
       !For example, if you want to see the depth of 2nd node at reporting step number 4, access it as below
       !  onodes(2)%odepth(4)
       !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
       !  olinks(1)%oflow(3)
+      !             if you want to see the pollutant of 4th node at reporting step number 5, access it as below
+      !  onodes(4)%oQual1(5)
+      !             if you want to see the pollutant of 3rd conduit at reporting step number 3, access it as below
+      !  olinks(3)%oQual1(3)
+
 !      do J=1, OutputSize
 !         write(*,*) TSDateTime(J), ",", TSOutletVals(J)
 !         write(*,*) TSDateTime(J), ",", onodes(1)%oflow(J), ",", onodes(2)%odepth(J), ",", onodes(3)%ovolume(J)
