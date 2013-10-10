@@ -101,9 +101,17 @@ subroutine TongMain
       real(kind=dpmain), dimension(NCOND) :: CGEOM4 = (/0.0, 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 3.0, 0.0 /)
       
       type(TExtInflow), dimension(NNODE-1), target :: inflows
+      type(TExtInflow), dimension(NNODE-1), target :: inflowsWQ
       real(kind=dpmain), dimension(NNODE-1) :: disFrac
       real(kind=dpmain) :: INVOL
       
+      !***** WQ ******
+      integer :: lcoPollut
+      logical :: lSnowFlag
+      real(kind=dpmain) :: lcoFrac, lcDWF      !(5.0.017 - LR)
+      !character*20 :: lId !pollutant name
+      !***** WQ ******
+            
       UnitSystem = US
       
       Nobjects(E_NODE) = 10
@@ -112,7 +120,7 @@ subroutine TongMain
       Nlinks(E_CONDUIT) = 9
       
       Nobjects(E_GAGE) = 0 !I think it will need some rain???
-      Nobjects(E_POLLUT) = 0 !assume 6 pollutants maximum in objects.f95
+      Nobjects(E_POLLUT) = 1 !assume 6 pollutants maximum in objects.f95
       Nobjects(E_TSERIES) = 0
 
       call initPointers  !project
@@ -145,6 +153,7 @@ subroutine TongMain
         end if
         call node_setParams(J, LTYPE, k, XN)
         Node(J)%rptFlag = .true. !this is done in report_readoption
+        nullify(Node(J)%treatment) !this version no treatment
  10   CONTINUE
 
       !TODO: both conduits or first conduit and second: weir or outlet???
@@ -220,7 +229,7 @@ subroutine TongMain
       IgnoreSnowmelt  = .true.
       IgnoreGwater    = .true.
       IgnoreRouting   = .false.
-      IgnoreQuality   = .true.
+      IgnoreQuality   = .false.
       InertDamping = NO_DAMPING !InertDampingWords, w_PARTIAL, w_FULL
       NormalFlowLtd = SLOPE !NormalFlowType !0, means NO
 
@@ -231,7 +240,6 @@ subroutine TongMain
       RouteStep       = 20.0 !<-- change here
       ReportStep      = 900              ! Reporting time step (secs)
       StartDryDays    = 0.0              ! Antecedent dry days, DRY_DAYS
-      
       
       ForceMainEqn = D_W !ForceMainType
       
@@ -264,6 +272,10 @@ subroutine TongMain
          !--- assume link is not a culvert    !(5.0.014 - LR)
          arrLink(J)%xsect%culvertCode = 0
       end do
+
+      !Turn on WQ flag
+      !Input concentration (1 number per node)
+      !no buildup and no washoff from land
       
 !
 ! construct external inflow to each node in the network
@@ -291,6 +303,7 @@ subroutine TongMain
          oTsers(J)%ovalues(1) = 0.0
          oTsers(J)%ovalues(4) = 0.0
          oTsers(J)%ovalues(5) = 0.0
+         
          select case (J)
            case (1)
              oTsers(J)%ovalues(2) = 40.0
@@ -330,6 +343,105 @@ subroutine TongMain
           Nullify(Node(J)%extInflow)
        end if
     end do
+    
+    !********* WQ **********
+    !--- extract pollutant name & units (landuse ->landuse_readPollutParams)
+    !--- set defaults for snow only flag & co-pollut. parameters
+    ! 
+    !  Data format is:
+    !   ID cUnits cRain cGW cRDII kDecay (snowOnly coPollut coFrac cDWF)         //(5.0.017 - LR)
+
+    lSnowFlag = .false. !0, NO; 1, YES (Snow Only)
+    lcoPollut = -1
+    lcoFrac = 0.0
+    lcDWF = 0.0     !(5.0.017 - LR)
+    
+    ! --- save values for pollutant object   
+    Pollut(1)%ID = "TSS" !id
+    Pollut(1)%units = 1 !k 1 MG, 2 UG, 3 COUNT
+    if      ( Pollut(1)%units == MG ) then
+        Pollut(1)%mcf = UCF(MASS)
+    else if ( Pollut(1)%units == UG ) then
+        Pollut(1)%mcf = UCF(MASS) / 1000.0
+    else  
+        Pollut(1)%mcf = 1.0
+    end if
+    Pollut(1)%pptConcen = 0.0 !x(0) Rain Concen.
+    Pollut(1)%gwConcen  = 0.0 !x(1) GW Concen.
+    Pollut(1)%rdiiConcen = 10.0 !x(2) I&I Concen.
+    Pollut(1)%kDecay = 0.0 / SECperDAY !x(3)/SECperDAY Decay Coeff.
+    Pollut(1)%snowOnly = lSnowFlag
+    Pollut(1)%coPollut = lcoPollut
+    Pollut(1)%coFraction = lcoFrac
+    Pollut(1)%dwfConcen = lcDWF   !(5.0.017 - LR)
+    
+    !Assign timeseries
+    allocate(oTsersWQ(3))
+    do J=1, 3
+      oTsersWQ(J)%datatype = E_TSERIES
+      allocate(oTsersWQ(J)%odates(5))
+      allocate(oTsersWQ(J)%ovalues(5))
+      if (associated(oTsersWQ(J)%odates) .and. &
+         &associated(oTsersWQ(J)%ovalues)) then
+         
+         oTsersWQ(J)%odates(1) = StartDate + StartTime
+         oTsersWQ(J)%odates(2) = oTsersWQ(J)%odates(1) + 0.25 / 24.0
+         oTsersWQ(J)%odates(3) = oTsersWQ(J)%odates(1) + 3.00 / 24.0
+         oTsersWQ(J)%odates(4) = oTsersWQ(J)%odates(1) + 3.25 / 24.0
+         oTsersWQ(J)%odates(5) = oTsersWQ(J)%odates(1) + 12.0 / 24.0
+         
+         oTsersWQ(J)%ovalues(4) = 0.0
+         oTsersWQ(J)%ovalues(5) = 0.0
+         
+         select case (J)
+           case (1) !TSS80408
+             oTsersWQ(J)%ovalues(1) = 10.0
+             oTsersWQ(J)%ovalues(2) = 50.0
+             oTsersWQ(J)%ovalues(3) = 50.0
+           case (2) !TSS82309
+             oTsersWQ(J)%ovalues(1) =  5.0
+             oTsersWQ(J)%ovalues(2) =  0.0
+             oTsersWQ(J)%ovalues(3) =  0.0
+           case (3) !TSS81009
+             oTsersWQ(J)%ovalues(1) = 15.0
+             oTsersWQ(J)%ovalues(2) =  0.0
+             oTsersWQ(J)%ovalues(3) =  0.0
+         end select
+      end if
+    end do
+    
+    do J = 1, NNODE - 1
+       inflowsWQ(J)%param = 1 !0 !-1 flow; >=0 for WQ constituent
+       inflowsWQ(J)%datatype = CONCEN_INFLOW !FLOW_INFLOW user-supplied external inflow
+       !inflowsWQ(J)%tseries = J
+       select case (J)
+         case (1)
+           inflowsWQ(J)%tseries = 1
+         case (3)
+           inflowsWQ(J)%tseries = 3
+         case (5)
+           inflowsWQ(J)%tseries = 2
+         case default
+           inflowsWQ(J)%tseries = -1
+       end select
+       inflowsWQ(J)%basePat = -1 !<0 no pattern
+       inflowsWQ(J)%cFactor = 1.0
+       inflowsWQ(J)%sFactor = 1.0
+       inflowsWQ(J)%baseline = 0.0
+       nullify(inflowsWQ(J)%next)
+       if (j.eq.1 .or. j.eq.3 .or. j.eq.5) then
+          if (associated(Node(J)%extInflow)) then
+             inflowsWQ(J)%next => Node(J)%extInflow
+             Node(J)%extInflow => inflowsWQ(J)
+          else
+             Node(J)%extInflow => inflowsWQ(J)   
+          end if
+       else
+          Nullify(Node(J)%extInflow)
+       end if
+    end do
+        
+    !********* WQ **********
       
 !      NTS = DELTS/DTS
 !      DO 100 ITS = 1,NTS
@@ -346,12 +458,17 @@ subroutine TongMain
       
       !The resulting nodes' and links' flow, depth, and volume outputs are
       !saved in the onodes array and olinks array. 
-      !Each element of the onodes or olinks array has 3 arrays, oflow, odepth, and ovolume
+      !Each element of the onodes or olinks array has 4 arrays, oflow, odepth, ovolume, and oQual1
       !that contain output values for each reporting steps in TSDateTime
       !For example, if you want to see the depth of 2nd node at reporting step number 4, access it as below
       !  onodes(2)%odepth(4)
       !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
       !  olinks(1)%oflow(3)
+      !             if you want to see the pollutant of 4th node at reporting step number 5, access it as below
+      !  onodes(4)%oQual1(5)
+      !             if you want to see the pollutant of 3rd conduit at reporting step number 3, access it as below
+      !  olinks(3)%oQual1(3)
+
 !      do J=1, OutputSize
 !         write(*,*) TSDateTime(J), ",", TSOutletVals(J)
 !         write(*,*) TSDateTime(J), ",", onodes(1)%oflow(J), ",", onodes(2)%odepth(J), ",", onodes(3)%ovolume(J)
@@ -361,32 +478,77 @@ subroutine TongMain
       write(8,*) '****************************'
       write(8,*) '*      Node Outputs        *'
       write(8,*) '****************************'
-      write(8,'(1A5,1A15,3A20)') 'Node', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      if (Nobjects(E_POLLUT) == 0) then
+        write(8,'(1A5,1A15,3A20)') 'Node', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      else
+        write(8,'(1A5,1A15,4A20)') 'Node', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)', 'Qual(mg/l)'
+      end if
+      
       do lN=1, NNODE
         do J=1, OutputSize
           if (TSDateTime(J) > 0.0 .or. &
              &onodes(lN)%oflow(J) > 0.0 .or. &
              &onodes(lN)%odepth(J) > 0.0 .or. &
              &onodes(lN)%ovolume(J) > 0.0) then
-             write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), onodes(lN)%oflow(J), onodes(lN)%odepth(J), onodes(lN)%ovolume(J)
+             if (Nobjects(E_POLLUT) == 0) then
+               write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), onodes(lN)%oflow(J), onodes(lN)%odepth(J), onodes(lN)%ovolume(J)
+             else
+               write(8,'(1I5,1F15.5,4F20.5)') lN, TSDateTime(J), &
+                                             &onodes(lN)%oflow(J), &
+                                             &onodes(lN)%odepth(J), &
+                                             &onodes(lN)%ovolume(J), &
+                                             &onodes(lN)%oQual1(J)
+             end if
           end if
         end do
+      end do
+      write(8,*) ''
+      write(8,*) '***** More Node Output lastDepth(ft), lastLatFlow(cfs), lastVolume(ft3) *****'
+      write(8,'(1A5,3A15)') 'Link', 'lastDepth', 'lastLatFlow', 'lastVolume'
+      do lN=1, NNODE
+        write(8, '(1I5,3F15.5)') lN, onodes(lN)%lastDepth, onodes(lN)%lastLatFlow, onodes(lN)%lastVolume
       end do
       write(8,*) ''
       write(8,*) '****************************'
       write(8,*) '*      Link Outputs        *'
       write(8,*) '****************************'
-      write(8,'(1A5,1A15,3A20)') 'Link', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      if (Nobjects(E_POLLUT) ==0) then
+         write(8,'(1A5,1A15,3A20)') 'Link', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)'
+      else
+         write(8,'(1A5,1A15,4A20)') 'Link', 'Date', 'Flow(cfs)', 'Depth(ft)', 'Volume(ft3)', 'Qual(mg/l)'
+      end if
       do lN=1, NCOND
         do J=1, OutputSize
           if (TSDateTime(J) > 0 .or. &
              &olinks(lN)%oflow(J) > 0 .or. &
              &olinks(lN)%odepth(J) > 0 .or. &
              &olinks(lN)%ovolume(J) > 0) then
-             write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), olinks(lN)%oflow(J), olinks(lN)%odepth(J), olinks(lN)%ovolume(J)
+             if (Nobjects(E_POLLUT) ==0) then
+                write(8,'(1I5,1F15.5,3F20.5)') lN, TSDateTime(J), olinks(lN)%oflow(J), olinks(lN)%odepth(J), olinks(lN)%ovolume(J)
+             else
+                write(8,'(1I5,1F15.5,4F20.5)') lN, TSDateTime(J), &
+                                              &olinks(lN)%oflow(J), olinks(lN)%odepth(J), &
+                                              &olinks(lN)%ovolume(J), olinks(lN)%oQual1(J)
+             end if
           end if
         end do
       end do
+      write(8,*) ''
+      write(8,*) '***** More Link Output lastDepth(ft), lastFlow(cfs), lastVolume(ft3), lastSetting *****'
+      write(8,'(1A5,3A15,1A15)') 'Link', 'lastDepth', 'lastFlow', 'lastVolume', 'lastSetting'
+      do lN=1, NCOND
+        write(8, '(1I5,3F15.5,1F15.0)') lN, olinks(lN)%lastDepth, olinks(lN)%lastFlow, olinks(lN)%lastVolume, olinks(lN)%lastSetting
+      end do
+      write(8,*) ''
+      write(8,*) '***** Conduits Output upstream (q1) & downstream (q2) flows per barrel (cfs) ******'
+      write(8,'(1A5,2A15)') 'Link', 'q1', 'q2'
+      do lN=1, NCOND
+        if ( arrLink(j)%datatype == E_CONDUIT ) then
+          k = arrLink(j)%subIndex
+          write(8, '(1I5,2F15.5)') lN, Conduit(k)%q1, Conduit(k)%q2
+        end if
+      end do
+
       close(8)
       call output_close
       STOP

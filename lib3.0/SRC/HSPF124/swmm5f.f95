@@ -208,15 +208,19 @@ integer function swmm_run(f1, f2, f3, outfl, sdatim)
 
     ! --- run the simulation if input data OK
     if ( ErrorCode == 0 ) then
+        !write(24,*) 'swmm open successful'
         ! --- initialize values
         flag = .true.
         ErrorCode = swmm_start(flag)
+        !write(24,*) 'after swmm start ', errorcode
 
         ! --- execute each time step until elapsed time is re-set to 0
         if ( ErrorCode == 0 ) then
 !            writecon("\n o  Simulating day: 0     hour:  0")
             do while(.true.)
+                !write(24,*) 'about to swmm step'
                 ErrorCode = swmm_step(elapsedTime, outfl, sdatim)
+                !write(24,*) 'after swmm step ', errorcode
                 newHour = elapsedTime * 24.0
                 if ( newHour > oldHour ) then
                     theDay = elapsedTime
@@ -266,6 +270,7 @@ integer function swmm_start(saveResults)
     integer :: lstat
     integer :: project_init !TODO: this is for .NET compile
     
+    !write(24,*) 'in swmm start'
     ! --- check that a project is open & no run started
     if ( ErrorCode /= 0 ) then
        swmm_start = ErrorCode
@@ -290,6 +295,7 @@ integer function swmm_start(saveResults)
     GwaterError = 0.0
     FlowError = 0.0
     QualError = 0.0
+    !write(24,*) ' got to 1 ',errorcode
 
     ! --- open rainfall processor (creates/opens a rainfall
     !     interface file and generates any RDII flows)
@@ -298,8 +304,10 @@ integer function swmm_start(saveResults)
        swmm_start = ErrorCode
        return
     end if
+    !write(24,*) ' got to 2 ',errorcode
     ! --- initialize state of each major system component
     lstat = project_init()
+    !write(24,*) ' got to 3 ',errorcode
 
     !!  Following code segment was moved to here for release 5.0.018.  !!      !(5.0.018 - LR)
     ! --- see if runoff & routing needs to be computed
@@ -315,12 +323,17 @@ integer function swmm_start(saveResults)
         DoRouting = .FALSE.
     end if
 
+    !write(24,*) ' got to 4 ',errorcode
     ! --- open all computing systems (order is important!)
     ErrorCode = output_open()
+    !write(24,*) ' got to 5 ',errorcode
     !if ( DoRunoff ) call runoff_open()                     !(5.0.018 - LR)
     if ( DoRouting ) ErrorCode = routing_open(RouteModel)  !(5.0.018 - LR)
+    !write(24,*) ' got to 6 ',errorcode
     lstat = massbal_open()
+    !write(24,*) ' got to 7 ',errorcode
     lstat = stats_open()
+    !write(24,*) ' got to 8 ',errorcode
 
     ! --- write Control Actions heading to report file
     !if ( RptFlags%controls ) call report_writeControlActionsHeading()
@@ -329,6 +342,7 @@ integer function swmm_start(saveResults)
     SaveResultsFlag = saveResults
     
     swmm_start = ErrorCode
+    !write(24,*) 'end of swmm start ',errorcode
 end function swmm_start
 
 integer function swmm_step(elapsedTime, outfl, sdatim)

@@ -17,6 +17,38 @@ contains
 
 !=============================================================================
 
+subroutine removeStorageLosses()
+!
+!  Input:   routingStep = routing time step (sec)
+!  Output:  none
+!  Purpose: adds mass lost from storage nodes to evaporation & infiltration
+!           over current time step to overall mass balance.
+!
+    use headers
+    use modMassbal
+    integer :: i, j, p
+    real(kind=dp) :: vRatio, losses
+    losses = 0.0
+
+    ! --- check each storage node
+    do i = 1, Nobjects(E_NODE)
+        if (Node(i)%datatype == E_STORAGE) then
+            ! --- update total system storage losses
+            losses = losses + Storage(Node(i)%subIndex)%losses
+
+            ! --- adjust storage concentrations for any evaporation loss
+            if ( Nobjects(E_POLLUT) > 0 .and. Node(i)%newVolume > FUDGE ) then
+                j = Node(i)%subIndex
+                vRatio = 1.0 + (Storage(j)%evapLoss / Node(i)%newVolume)
+                do p =1, Nobjects(E_POLLUT)
+                    Node(i)%newQual(p) = Node(i)%newQual(p) * vRatio
+                end do
+            end if
+        end if
+    end do
+    call massbal_addNodeLosses(losses)
+end subroutine removeStorageLosses
+
 subroutine removeOutflows()
 !
 !  Input:   none
@@ -152,11 +184,13 @@ integer function routing_open(routingModel)
     use headers
     use modToposort
     use report
+    use treatmnt
     implicit none
     integer, intent(in) :: routingModel
     integer :: mstat
     !  --- initialize steady state indicator
     InSteadyState = .FALSE.
+    !write(24,*) ' in routing_open'
 
     ! --- open treatment system !NOTE: not doing this for this project
 !    if ( .not. treatmnt_open() ) then 
@@ -164,6 +198,7 @@ integer function routing_open(routingModel)
 !        return
 !    end if
 
+    !write(24,*) ' in routing_open 2'
     ! --- topologically sort the links
     if (allocated(SortedLinks)) then
       deallocate(SortedLinks)
@@ -181,6 +216,7 @@ integer function routing_open(routingModel)
             return
         end if
     end if
+    !write(24,*) ' in routing_open 3'
 
     ! --- open any routing interface files
     !call iface_openRoutingFiles() !TODO: later
@@ -201,6 +237,7 @@ integer function routing_open(routingModel)
 
     ! --- initialize the flow routing model
     call flowrout_init(routingModel)
+    !write(24,*) ' in routing_open 4'
     routing_open = ErrorCode
     return
 end function routing_open
@@ -277,10 +314,10 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
     ! --- replace old water quality state with new state
     if ( Nobjects(E_POLLUT) > 0 ) then
         do j=1, Nobjects(E_NODE)
-           !call node_setOldQualState(j)
+           call node_setOldQualState(j)
         end do
         do j=1, Nobjects(LINK)
-           !call link_setOldQualState(j)
+           call link_setOldQualState(j)
         end do
     end if
 
@@ -357,7 +394,7 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
 
     ! --- route quality through the drainage network
     if ( Nobjects(E_POLLUT) > 0 .and. .not.IgnoreQuality ) then                            !(5.0.014 - LR)
-        !call qualrout_execute(routingStep)
+        call qualrout_execute(routingStep)
     end if
 
     ! --- remove evaporation, infiltration & system outflows from nodes       !(5.0.015 - LR)

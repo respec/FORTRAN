@@ -2807,7 +2807,7 @@ C           get conc of inflow from 2 previous time step
           END IF 
  125    CONTINUE
 C
-        write(messu,*) 'B4 DWROUT: RODWWQ',RODWWQ
+C        write(messu,*) 'B4 DWROUT: RODWWQ',RODWWQ,INWQ,PREVWQ,PREVWQ2
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,DWUNIT,
      I               OS(1),ROS,VOLT,INVOL,PREVIN,
@@ -2829,7 +2829,9 @@ C
      I               DWWQFG,DWWQNM,DWWQUN,DWDECA,
      M               HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
      O               VOL,O(1),RO,OVOL(1),ROVOL,RODWWQ)
-        write(messu,*) 'AF DWROUT: RODWWQ',RODWWQ,PAD(ROWQFP + IVL1)
+        IF (DWWQFG.GT.0) THEN
+          write(messu,*) 'AF DWROUT: RODWWQ',RODWWQ,PAD(ROWQFP + IVL1)
+        END IF 
 C       only uses the first exit, ignore the rest
         O(2) = 0.0
         O(3) = 0.0
@@ -4221,8 +4223,11 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION XN(6),XC(6),XX(4)
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
-      CHARACTER*10     CTAG10(NNODE),COUTFL,CDEPTH,CVOL
-      CHARACTER*10     CFUNIT,CDUNIT,CVUNIT
+      type(TExtInflow), dimension(NNODE-1), target :: inflowsWQ
+      CHARACTER*4      CTAG4
+      CHARACTER*8      CTAG8
+      CHARACTER*10     CTAG10(NNODE),COUTFL,CDEPTH,CVOL,CWQ
+      CHARACTER*10     CFUNIT,CDUNIT,CVUNIT,CWQUNIT
 C
 C     + + + FUNCTIONS + + +
 C      LOGICAL          xsect_setParams
@@ -4323,7 +4328,7 @@ C     HORIZ_ELLIPSE: 20
 C     VERT_ELLIPSE: 21
 C     ARCH: 22
 C
-      !write(messu,*) 'DWROUT: invol, VOLT, os ',INVOL,VOLT,OS
+      write(messu,*) 'DWROUT: invol, VOLT, os ',INVOL,VOLT,OS
 C      
       Nobjects(E_NODE) = NNODE
       Nnodes(E_OUTFALL) = 1
@@ -4332,6 +4337,10 @@ C
 C      
       Nobjects(E_GAGE) = 0 
       Nobjects(E_POLLUT) = 0 
+      IF (DWWQFG.GT.0) THEN
+C       dynamic wave water quality is on
+        Nobjects(E_POLLUT) = 1 
+      END IF 
       Nobjects(E_TSERIES) = 0
 C
       call initPointers  !project
@@ -4373,6 +4382,7 @@ C         this is the outfall
 C        write(messu,*) 'DWROUT: setting node ',j,ltype,k,xn
         call node_setParams(J, LTYPE, K, XN)
         Node(J)%rptFlag = .true. !this is was done in report_readoption
+        nullify(Node(J)%treatment) !this version no treatment
  10   CONTINUE
 C
       LTYPE = E_CONDUIT
@@ -4402,14 +4412,6 @@ C
       IF (NORIF.GT.0) THEN
 C       orifices not yet implemented
       END IF
-C
-      IF (DWWQFG.GT.0) THEN
-C       dynamic wave water quality is on
-C       DWWQFG        -- integer, dw water quality flag  
-C       DWWQNM(2)     -- real, name of wq constituent
-C       DWWQUN        -- real, name of wq units
-C       DWDECA        -- real, wq decay rate
-      END IF
 C      
       RouteModel = DW
       StartDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
@@ -4433,6 +4435,10 @@ C
       IgnoreGwater    = .true.
       IgnoreRouting   = .false.
       IgnoreQuality   = .true.
+      IF (DWWQFG.GT.0) THEN
+C       dynamic wave water quality is on
+        IgnoreQuality   = .false.
+      END IF
       InertDamping = NO_DAMPING !InertDampingWords, w_PARTIAL, w_FULL
       NormalFlowLtd = SLOPE !NormalFlowType !0, means NO
 
@@ -4522,6 +4528,101 @@ C     1                                        oTsers(J)%ovalues(3)
         Node(J)%extInflow => inflows(J)
       end do
 C
+      IF (DWWQFG.GT.0) THEN
+C       dynamic wave water quality is on
+        write(messu,*) 'in dwrout, setting wq timsers'
+C
+C       DWWQFG        -- integer, dw water quality flag  
+C       DWWQNM(2)     -- real, name of wq constituent
+C       DWWQUN        -- real, name of wq units
+C       DWDECA        -- real, wq decay rate
+   
+        ! --- save values for pollutant object   
+        write(CTAG8,"(2A4)") DWWQNM(1),DWWQNM(2)
+        Pollut(1)%ID = CTAG8
+
+        !MG/L, UG/L, or #/L
+        write(CTAG4,"(1A4)") DWWQUN
+        Pollut(1)%units = 1
+        Pollut(1)%mcf = UCF(MASS)
+        IF (CTAG4.EQ.'UG/L') THEN
+          Pollut(1)%units = 2
+          Pollut(1)%mcf = UCF(MASS) / 1000.0
+        ELSEIF (CTAG4.EQ.' #/L') THEN
+          Pollut(1)%units = 3
+          Pollut(1)%mcf = 1.0
+        END IF 
+
+        Pollut(1)%pptConcen = 0.0 !x(0) Rain Concen.
+        Pollut(1)%gwConcen  = 0.0 !x(1) GW Concen.
+        Pollut(1)%rdiiConcen = 10.0 !x(2) I&I Concen.
+        Pollut(1)%kDecay = DWDECA / 86400.0 ! Decay Coeff.
+        Pollut(1)%snowOnly = .false.
+        Pollut(1)%coPollut = -1
+        Pollut(1)%coFraction = 0.0
+        Pollut(1)%dwfConcen = 0.0   !(5.0.017 - LR)
+    
+        !Assign timeseries
+        if (.not. allocated(oTsersWQ)) then
+          allocate(oTsersWQ(NNODE))
+        end if 
+        do J=1, NNODE
+          oTsersWQ(J)%datatype = E_TSERIES
+          if (dwhead.eq.0) then
+            allocate(oTsersWQ(J)%odates(3))
+            allocate(oTsersWQ(J)%ovalues(3))
+            if (associated(oTsersWQ(J)%odates) .and. 
+     1          associated(oTsersWQ(J)%ovalues)) then
+               oTsersWQ(J)%odates(1) = StartDate + StartTime
+               oTsersWQ(J)%odates(2) = oTsersWQ(J)%odates(1) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%odates(3) = oTsersWQ(J)%odates(2) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%ovalues(1) = PREVWQ(J) 
+               oTsersWQ(J)%ovalues(2) = INWQ(J) 
+               oTsersWQ(J)%ovalues(3) = INWQ(J)
+            end if
+          else
+!           when running 2 steps to deal with instability issue
+            allocate(oTsersWQ(J)%odates(4))
+            allocate(oTsersWQ(J)%ovalues(4))
+            if (associated(oTsersWQ(J)%odates) .and. 
+     1          associated(oTsersWQ(J)%ovalues)) then
+               oTsersWQ(J)%odates(1) = StartDate + StartTime
+               oTsersWQ(J)%odates(2) = oTsersWQ(J)%odates(1) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%odates(3) = oTsersWQ(J)%odates(2) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%odates(4) = oTsersWQ(J)%odates(3) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%ovalues(1) = PREVWQ2(J)
+               oTsersWQ(J)%ovalues(2) = PREVWQ(J) 
+               oTsersWQ(J)%ovalues(3) = INWQ(J) 
+               oTsersWQ(J)%ovalues(4) = INWQ(J) 
+            end if
+          end if 
+        end do
+        do J = 1, NNODE - 1
+          inflowsWQ(J)%param = 1
+          inflowsWQ(J)%datatype = CONCEN_INFLOW
+          inflowsWQ(J)%tseries = J
+          inflowsWQ(J)%basePat = -1
+          inflowsWQ(J)%cFactor = 1.0
+          inflowsWQ(J)%sFactor = 1.0
+          inflowsWQ(J)%baseline = 0.0
+          nullify(inflowsWQ(J)%next)
+          Node(J)%extInflow => inflows(J)
+          if (associated(Node(J)%extInflow)) then
+             inflowsWQ(J)%next => Node(J)%extInflow
+             Node(J)%extInflow => inflowsWQ(J)
+          else
+             Node(J)%extInflow => inflowsWQ(J)   
+          end if
+        end do
+        write(messu,*) 'in dwrout, end setting wq timsers'
+      END IF
+C     end of water quality inputs
+C
       if (dwunit.GT.0 .AND. dwhead.eq.0) then
 C       write header to file        
         do J = 1, NNODE
@@ -4531,37 +4632,79 @@ C       write header to file
         COUTFL = '   OUTFLOW'
         CDEPTH = '     DEPTH'
         CVOL   = '    VOLUME'
-        write(dwunit,'(A30,300(A10))') 
-     1               '                              ',
-     1               (ctag10(j),j=1,nnode),
-     1               (ctag10(j),j=1,nnode),
-     1               (ctag10(j),j=1,nnode)
-        write(dwunit,'(A30,300(A10))') 
-     1               '                              ',
-     1               (COUTFL,j=1,nnode),
-     1               (CDEPTH,j=1,nnode),
-     1               (CVOL,j=1,nnode)
-        IF (UUNITS .EQ. 1) THEN
-C         english 
-          CFUNIT = '     (cfs)'
-          CDUNIT = '      (ft)'
-          CVUNIT = '     (ft3)'
+        CWQ    = '    WQCONC'
+        IF (DWWQFG.EQ.0) THEN
           write(dwunit,'(A30,300(A10))') 
-     1                 ' year  mon  day hour  min  sec',
-     1                 (CFUNIT,j=1,nnode),
-     1                 (CDUNIT,j=1,nnode),
-     1                 (CVUNIT,j=1,nnode)
+     1                 '                              ',
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode)
+          write(dwunit,'(A30,300(A10))') 
+     1                 '                              ',
+     1                 (COUTFL,j=1,nnode),
+     1                 (CDEPTH,j=1,nnode),
+     1                 (CVOL,j=1,nnode)
+          IF (UUNITS .EQ. 1) THEN
+C           english 
+            CFUNIT = '     (cfs)'
+            CDUNIT = '      (ft)'
+            CVUNIT = '     (ft3)'
+            write(dwunit,'(A30,300(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode)
+          ELSE 
+C           metric
+            CFUNIT = '     (cms)'
+            CDUNIT = '       (m)'
+            CVUNIT = '     ( m3)'
+            write(dwunit,'(A30,300(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode)
+          END IF
         ELSE
-C         metric
-          CFUNIT = '     (cms)'
-          CDUNIT = '       (m)'
-          CVUNIT = '     ( m3)'
-          write(dwunit,'(A30,300(A10))') 
-     1                 ' year  mon  day hour  min  sec',
-     1                 (CFUNIT,j=1,nnode),
-     1                 (CDUNIT,j=1,nnode),
-     1                 (CVUNIT,j=1,nnode)
-        END IF
+C         wq is on
+          write(dwunit,'(A30,400(A10))') 
+     1                 '                              ',
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode)
+          write(dwunit,'(A30,400(A10))') 
+     1                 '                              ',
+     1                 (COUTFL,j=1,nnode),
+     1                 (CDEPTH,j=1,nnode),
+     1                 (CVOL,j=1,nnode),
+     1                 (CWQ,j=1,nnode)
+          IF (UUNITS .EQ. 1) THEN
+C           english 
+            CFUNIT = '     (cfs)'
+            CDUNIT = '      (ft)'
+            CVUNIT = '     (ft3)'
+            CWQUNIT = '      ' // CTAG4
+            write(dwunit,'(A30,400(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode),
+     1                   (CWQUNIT,j=1,nnode)
+          ELSE 
+C           metric
+            CFUNIT = '     (cms)'
+            CDUNIT = '       (m)'
+            CVUNIT = '     ( m3)'
+            CWQUNIT = '      ' // CTAG4
+            write(dwunit,'(A30,400(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode),
+     1                   (CWQUNIT,j=1,nnode)
+          END IF
+        END IF 
       end if 
 C
 C     DATIM is the date/time at the end of the current HSPF interval, 
@@ -4579,7 +4722,7 @@ C     we need to know when this interval began
       newd5(4) = newdat(4)
       newd5(5) = newdat(5)
 C
-C      write(messu,*) 'in dwrout, about to call swmm_run'
+      write(messu,*) 'in dwrout, about to call swmm_run'
       if (dwhead.eq.0) then   
         !use -1 to indicate first time, need to write all
         lErrorCode = swmm_run('', '', '', -1*dwunit, newd5)
@@ -4587,7 +4730,7 @@ C      write(messu,*) 'in dwrout, about to call swmm_run'
         lErrorCode = swmm_run('', '', '', dwunit, newd5)
       end if 
 C
-C      write(messu,*) 'swmm error code ',lerrorcode
+      write(messu,*) 'swmm error code ',lerrorcode
 C
       !The resulting nodes' and links' flow, depth, and volume outputs are
       !saved in the onodes array and olinks array. 
@@ -4597,6 +4740,8 @@ C
       !  onodes(2)%odepth(4)
       !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
       !  olinks(1)%oflow(3)
+      !             if you want to see the pollutant of 4th node at reporting step number 5, access it as below
+      !  onodes(4)%oQual1(5)
 C
 C     set initial conditions for next time in
       if (dwhead.eq.1) then
@@ -4607,6 +4752,10 @@ C          write(messu,*) 'DWROUT: reset node depth ',
 C     1                    j,NDINIT(j),onodes(j)%odepth(1)
           NDINIT(J) = onodes(j)%odepth(1)
 C          write(messu,*) 'node depth ',ndinit(j)
+          IF (DWWQFG.GT.0) THEN
+C           wq flag is on
+            INWQ(J) = onodes(j)%oQual1(1)
+          END IF
         end do
 C
 C       CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
@@ -4626,6 +4775,7 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval    
 C
 C     return volume of water coming out bottom node
+      write(messu,*) 'in dwrout nnode ',nnode
       if (dwhead.eq.0) then
         OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
       else
@@ -4653,11 +4803,9 @@ C
 C       dw wq is on
 C       return conc of wq coming out bottom node
         if (dwhead.eq.0) then
-C          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
-           RODWWQ = INWQ(NNODE)
+           RODWWQ = onodes(NNODE)%oQual1(1)
         else
-C          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(2)))*DELTS
-           RODWWQ = INWQ(NNODE)
+           RODWWQ = onodes(NNODE)%oQual1(2)
         end if 
       end if
 C

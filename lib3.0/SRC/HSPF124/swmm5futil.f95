@@ -58,9 +58,21 @@ real(kind=dps), dimension(:), allocatable, save :: LinkResults !REAL8
 type myoutput
   integer :: datatype
   integer :: index
+  integer :: subIndex !subscript for conduits, for links
   real(kind=dps), dimension(:), pointer :: oflow
   real(kind=dps), dimension(:), pointer :: odepth
   real(kind=dps), dimension(:), pointer :: ovolume
+  real(kind=dps) :: lastDepth !Node[i]. or !Link[i].newDepth
+  real(kind=dps) :: lastLatFlow !Node[i].newLatFlow
+  real(kind=dps) :: lastVolume !Node[i].newVolume
+  real(kind=dps) :: lastFlow !Link[i].newFlow
+  real(kind=dps) :: lastSetting !Link[i].setting
+  real(kind=dps), dimension(:), pointer :: oQual1 !Node[i]. or Link[i].newQual[E_POLLUT]
+  real(kind=dps), dimension(:), pointer :: oQual2 
+  real(kind=dps), dimension(:), pointer :: oQual3 
+  real(kind=dps), dimension(:), pointer :: oQual4
+  real(kind=dps), dimension(:), pointer :: oQual5
+  real(kind=dps), dimension(:), pointer :: oQual6
 end type myoutput
 
 type myTimeseries
@@ -74,6 +86,7 @@ type(myoutput), dimension(:), allocatable, save :: onodes
 type(myoutput), dimension(:), allocatable, save :: olinks
 
 type(myTimeseries), dimension(:), allocatable, save :: oTsers
+type(myTimeseries), dimension(:), allocatable, save :: oTsersWQ
 
 contains
 real(kind=dps) function UCF(u)
