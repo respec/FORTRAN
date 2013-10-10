@@ -4328,7 +4328,7 @@ C     HORIZ_ELLIPSE: 20
 C     VERT_ELLIPSE: 21
 C     ARCH: 22
 C
-      write(messu,*) 'DWROUT: invol, VOLT, os ',INVOL,VOLT,OS
+C      write(messu,*) 'DWROUT: invol, VOLT, os ',INVOL,VOLT,OS
 C      
       Nobjects(E_NODE) = NNODE
       Nnodes(E_OUTFALL) = 1
@@ -4530,7 +4530,7 @@ C     1                                        oTsers(J)%ovalues(3)
 C
       IF (DWWQFG.GT.0) THEN
 C       dynamic wave water quality is on
-        write(messu,*) 'in dwrout, setting wq timsers'
+C        write(messu,*) 'in dwrout, setting wq timsers'
 C
 C       DWWQFG        -- integer, dw water quality flag  
 C       DWWQNM(2)     -- real, name of wq constituent
@@ -4619,7 +4619,7 @@ C       DWDECA        -- real, wq decay rate
              Node(J)%extInflow => inflowsWQ(J)   
           end if
         end do
-        write(messu,*) 'in dwrout, end setting wq timsers'
+C        write(messu,*) 'in dwrout, end setting wq timsers'
       END IF
 C     end of water quality inputs
 C
@@ -4722,7 +4722,7 @@ C     we need to know when this interval began
       newd5(4) = newdat(4)
       newd5(5) = newdat(5)
 C
-      write(messu,*) 'in dwrout, about to call swmm_run'
+C      write(messu,*) 'in dwrout, about to call swmm_run'
       if (dwhead.eq.0) then   
         !use -1 to indicate first time, need to write all
         lErrorCode = swmm_run('', '', '', -1*dwunit, newd5)
@@ -4730,7 +4730,7 @@ C
         lErrorCode = swmm_run('', '', '', dwunit, newd5)
       end if 
 C
-      write(messu,*) 'swmm error code ',lerrorcode
+C      write(messu,*) 'swmm error code ',lerrorcode
 C
       !The resulting nodes' and links' flow, depth, and volume outputs are
       !saved in the onodes array and olinks array. 
@@ -4775,7 +4775,7 @@ C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval    
 C
 C     return volume of water coming out bottom node
-      write(messu,*) 'in dwrout nnode ',nnode
+C      write(messu,*) 'in dwrout nnode ',nnode
       if (dwhead.eq.0) then
         OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
       else
