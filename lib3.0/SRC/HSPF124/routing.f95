@@ -361,18 +361,44 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
         if ( Nobjects(LINK) > 0 ) then
             mstepCount = flowrout_execute(Nobjects(LINK), SortedLinks, routingModel, routingStep)
         end if
+    end if
 
-        nSec = (CurrentDate - 2.0) * 86400.0
-        nSeci = nint(nSec)
-        sdat(1) = sdatim(1)
-        sdat(2) = sdatim(2)
-        sdat(3) = sdatim(3)
-        sdat(4) = sdatim(4)
-        sdat(5) = sdatim(5)
-        sdat(6) = 0
-        call timadd(sdat,1,1,nSeci,newdat)
+    ! --- route quality through the drainage network
+    if ( Nobjects(E_POLLUT) > 0 .and. .not.IgnoreQuality ) then                            !(5.0.014 - LR)
+        call qualrout_execute(routingStep)
+    end if
 
-        !write(24,*) 'in routing_execute',outfl
+    nSec = (CurrentDate - 2.0) * 86400.0
+    nSeci = nint(nSec)
+    sdat(1) = sdatim(1)
+    sdat(2) = sdatim(2)
+    sdat(3) = sdatim(3)
+    sdat(4) = sdatim(4)
+    sdat(5) = sdatim(5)
+    sdat(6) = 0
+    call timadd(sdat,1,1,nSeci,newdat)
+
+    if ( Nobjects(E_POLLUT) > 0 ) then
+        if (outfl.LT.0) then
+          if (nSec .LE. ReportStep) then
+            toutfl = -1*outfl
+            write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
+            WRITE(toutfl,'(A30,400(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newDepth,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newVolume,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newQual(1),j=1,Nobjects(E_NODE))
+          end if 
+        elseif (outfl.GT.0) then
+          lastwrite = (ReportStep*2) + 1
+          if (nSec .GT. ReportStep .AND. nSec .LE. lastwrite) then
+            write(t30,'(6I5)') newdat(1),newdat(2),newdat(3),newdat(4),newdat(5),newdat(6)
+            WRITE(outfl,'(A30,400(F10.3))') t30,(node(j)%inflow,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newDepth,j=1,Nobjects(E_NODE)), &
+                                                (node(j)%newVolume,j=1,Nobjects(E_NODE)), & 
+                                                (node(j)%newQual(1),j=1,Nobjects(E_NODE))
+          end if 
+        end if
+    else
         if (outfl.LT.0) then
           if (nSec .LE. ReportStep) then
             toutfl = -1*outfl
@@ -390,12 +416,7 @@ subroutine routing_execute(routingModel, routingStep, outfl, sdatim)
                                                 (node(j)%newVolume,j=1,Nobjects(E_NODE))
           end if 
         end if
-    end if
-
-    ! --- route quality through the drainage network
-    if ( Nobjects(E_POLLUT) > 0 .and. .not.IgnoreQuality ) then                            !(5.0.014 - LR)
-        call qualrout_execute(routingStep)
-    end if
+    end if 
 
     ! --- remove evaporation, infiltration & system outflows from nodes       !(5.0.015 - LR)
 !    call removeStorageLosses()                                                     !(5.0.019 - LR)
