@@ -606,7 +606,7 @@ subroutine link_getResults(j, f, x)
     x(LINK_CAPACITY) = c  !(float)
     do p =1, Nobjects(E_POLLUT)
         c = f1*arrLink(j)%oldQual(p) + f*arrLink(j)%newQual(p)
-        x(LINK_QUAL+p) = c !(float)
+        x(LINK_QUAL+p - 1) = c !(float)
     end do
 end subroutine link_getResults
 
@@ -1515,6 +1515,24 @@ subroutine link_setOldHydState(j)
     end if
 end subroutine link_setOldHydState
 
+!=============================================================================
+
+!=============================================================================
+subroutine link_setOldQualState(j)
+!
+!  Input:   j = link index
+!  Output:  none
+!  Purpose: replaces link's old water quality state values with current ones.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: j
+    integer :: p
+    do p = 1, Nobjects(E_POLLUT)
+        arrLink(j)%oldQual(p) = arrLink(j)%newQual(p)
+        arrLink(j)%newQual(p) = 0.0
+    end do
+end subroutine link_setOldQualState
 !=============================================================================
 
 subroutine link_setSetting(j, tstep)                                      !(5.0.010 - LR)

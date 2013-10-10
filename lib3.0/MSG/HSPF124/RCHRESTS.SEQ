@@ -379,11 +379,11 @@ BINV    1  1     1     1 2   0 2    0 20559 ENG mg/l       0       1   0       1
   Benthic invertebrate density for grazing  MET mg/l       0       1   0       1
 #GROUP   48  TYPE TEXT
 $TEXT
-IVOLDW100  1   100     1 2   1 2    0 10797 ENG acft/iv    0  43560.   0 35.31E6
+IVOLDW100  1   100     1 2   1 2    0 10897 ENG acft/iv    0  43560.   0 35.31E6
   Inflow of water to DW RCHRES by node      MET Mm3/iv     0  1233.6   0  1.00E6
 #GROUP   49  TYPE TEXT
 $TEXT
-IDWWQ 100  1   100     1 2   1 2    0 10997 ENG concu/l    0       1   0       1
+IDWWQ 100  1   100     1 2   1 2    0 11097 ENG concu/l    0       1   0       1
   Inflow conc of DW WQ const by node        MET concu/l    0       1   0       1
 #GROUP   51  TYPE TEXT
 $TEXT
@@ -495,7 +495,7 @@ RIRSHT  1  1     1     1 2   0      0 10090 ENG acft/iv    0  43560.   0 35.31E6
   Irrigation shortage relative to demand    MET Mm3/iv     0  1233.6   0  1.00E6
 #GROUP   78  TYPE TEXT
 $TEXT
-RODWWQ  1  1     1     1 2   0      0 11197 ENG qty/iv     0       1   0       1
+RODWWQ  1  1     1     1 1   1 1    0 11198 ENG qty/iv     0       1   0       1
   Outflow of dissolved dw qual from RCHRES  MET qty/iv     0       1   0       1
 #GROUP   81  TYPE TEXT
 $TEXT
@@ -1075,11 +1075,11 @@ ACINFL  7  1-21442     1 2  11 2    0 21572 ENG lb/iv      0 1.602E1   0 3.531E1
   Inflows of acid chemicals (Group ACIDPH)  MET kg/iv      0  0.4537   0      1.
 #GROUP  264  TYPE TEXT
 $TEXT
-IVOLDW100  1   100     1 2   1 2    0 10797 ENG acft/iv    0  43560.   0 35.31E6
+IVOLDW100  1   100     1 2   1 2    0 10897 ENG acft/iv    0  43560.   0 35.31E6
   Inflow of water to DW RCHRES by node      MET Mm3/iv     0  1233.6   0  1.00E6
 #GROUP  265  TYPE TEXT
 $TEXT
-IDWWQ 100  1   100     1 2   1 2    0 10997 ENG concu/l    0       1   0       1
+IDWWQ 100  1   100     1 2   1 2    0 11097 ENG concu/l    0       1   0       1
   Inflow conc of DW WQ const by node        MET concu/l    0       1   0       1
 #GROUP  271  TYPE TEXT
 $TEXT

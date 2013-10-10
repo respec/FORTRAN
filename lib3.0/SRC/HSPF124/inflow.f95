@@ -218,8 +218,13 @@ real(kind=dp) function inflow_getExtInflow(inflow, aDate)
 
 !    if ( k >= 0 ) tsv = table_tseriesLookup2(Tseries(k), aDate, .FALSE.) * sfm
     if ( k > 0 ) then
+      if (inflow%datatype == FLOW_INFLOW) then
       tsv = table_tserLookup2(oTsers(k)%odates, oTsers(k)%ovalues, &
                                 &size(oTsers(k)%odates, 1), aDate, .FALSE.)
+      else if (inflow%datatype == CONCEN_INFLOW) then
+            tsv = table_tserLookup2(oTsersWQ(k)%odates, oTsersWQ(k)%ovalues, &
+                                &size(oTsersWQ(k)%odates, 1), aDate, .FALSE.)
+      end if
     end if
     inflow_getExtInflow = cfm * (tsv * sfm + blv)
     !write(24,*) 'in inflow ',inflow_getExtInflow,cfm,tsv,sfm,blv

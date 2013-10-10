@@ -600,7 +600,7 @@ subroutine stats_updateLinkStats(j, tStep, aDate)
     
         ! --- update flow classification distribution
         k = arrLink(j)%flowClass
-        if ( k >= 0 .and. k < MAX_FLOW_CLASSES ) then
+        if ( k >= 1 .and. k <= MAX_FLOW_CLASSES ) then
             LinkStats(j)%timeInFlowClass(k) = LinkStats(j)%timeInFlowClass(k) + 1
         end if
 

@@ -317,7 +317,8 @@ real(kind=dp) function massbal_getBuildup(p)
 !        load += Subcatch(j).pondedQual(p) * subcatch_getDepth(j) *
 !                    Subcatch(j).area * Pollut(p).mcf
 !    }
-!    return load
+    massbal_getBuildup = load
+    return
 end function massbal_getBuildup
 !
 !!=============================================================================
@@ -458,7 +459,7 @@ subroutine massbal_addInflowQual(aType, p, w)
     integer, intent(in) :: p
     real(kind=dp), intent(in) :: w
     
-    if ( p < 0 .or. p >= Nobjects(E_POLLUT) ) return
+    if ( p < 0 .or. p > Nobjects(E_POLLUT) ) return
     select case (aType)
       case (DRY_WEATHER_INFLOW)
           StepQualTotals(p)%dwInflow = StepQualTotals(p)%dwInflow + w
@@ -513,7 +514,7 @@ subroutine massbal_addOutflowQual(p, w, isFlooded)
     integer, intent(in) :: p, isFlooded
     real(kind=dp), intent(in) :: w
         
-    if ( p < 0 .or. p >= Nobjects(E_POLLUT) ) return
+    if ( p < 1 .or. p > Nobjects(E_POLLUT) ) return
     if ( w >= 0.0 ) then
         if ( isFlooded > 0 ) then
             StepQualTotals(p)%flooding = StepQualTotals(p)%flooding + w
@@ -527,31 +528,38 @@ end subroutine massbal_addOutflowQual
 !
 !!=============================================================================
 !
-!void massbal_addReactedMass(int p, double w)
-!!
-!!  Input:   p = pollutant index
-!!           w = rate of mass reacted (mass/sec)
-!!  Output:  none
-!!  Purpose: adds mass reacted during current time step to routing totals.
-!!
-!{
-!    if ( p < 0 || p >= Nobjects(POLLUT) ) return
-!    StepQualTotals(p).reacted += w
-!}
+subroutine massbal_addReactedMass(p, w)
+!
+!  Input:   p = pollutant index
+!           w = rate of mass reacted (mass/sec)
+!  Output:  none
+!  Purpose: adds mass reacted during current time step to routing totals.
+!
+    use headers
+    implicit none
+    integer, intent(in) :: p
+    real(kind=dp), intent(in) :: w
+    if ( p < 1 .or. p > Nobjects(E_POLLUT) ) then
+        return
+    end if
+    StepQualTotals(p)%reacted = StepQualTotals(p)%reacted + w
+end subroutine massbal_addReactedMass
 !
 !!=============================================================================
 !
-!void massbal_addNodeLosses(double losses)                                      !(5.0.015 - LR)
-!!
-!!  Input:   losses = evaporation + infiltration loss from all nodes (ft3)     !(5.0.015 - LR)
-!!  Output:  none
-!!  Purpose: adds node losses over current time step to routing totals.
-!!
-!{
-!    StepFlowTotals.reacted += losses                                          !(5.0.015 - LR)
-!    FlowTotals.reacted += losses                                              !(5.0.015 - LR)
-!}
+subroutine massbal_addNodeLosses(losses)                                      !(5.0.015 - LR)
 !
+!  Input:   losses = evaporation + infiltration loss from all nodes (ft3)     !(5.0.015 - LR)
+!  Output:  none
+!  Purpose: adds node losses over current time step to routing totals.
+!
+    use headers
+    implicit none
+    real(kind=dp), intent(in) :: losses
+    StepFlowTotals%reacted =StepFlowTotals%reacted + losses                                          !(5.0.015 - LR)
+    FlowTotals%reacted =FlowTotals%reacted + losses                                              !(5.0.015 - LR)
+end subroutine massbal_addNodeLosses
+
 !=============================================================================
 
 subroutine massbal_updateRoutingTotals(tStep)
@@ -979,17 +987,19 @@ real(kind=dp) function massbal_getStoredMass(p)
     real(kind=dp) :: storedMass
     storedMass = 0.0
 
-!    ! --- get mass stored in nodes
-!    for (j = 0 j < Nobjects(NODE) j++)
-!        storedMass += Node(j).newVolume * Node(j).newQual(p)
-!
-!    ! --- get mass stored in links (except for Steady Flow routing)
-!    if ( RouteModel != SF )
-!    {
-!        for (j = 0 j < Nobjects(LINK) j++)
-!            storedMass += arrLink(j).newVolume * arrLink(j).newQual(p)
-!    }
-!    return storedMass
+    ! --- get mass stored in nodes
+    do j =1, Nobjects(E_NODE)
+        storedMass = storedMass + Node(j)%newVolume * Node(j)%newQual(p)
+    end do
+
+    ! --- get mass stored in links (except for Steady Flow routing)
+    if ( RouteModel /= SF ) then
+        do j = 1, Nobjects(LINK)
+            storedMass = storedMass + arrLink(j)%newVolume * arrLink(j)%newQual(p)
+        end do
+    end if
+    massbal_getStoredMass = storedMass
+    return
 end function massbal_getStoredMass
 
 !=============================================================================
