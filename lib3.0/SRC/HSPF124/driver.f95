@@ -151,7 +151,7 @@ subroutine TongMain
            XN(5) = 0 !stageSeries, index of outfall stage time series
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
-        call node_setParams(J, LTYPE, k, XN)
+        call node_setParams(J, LTYPE, k, XN, 100.)
         Node(J)%rptFlag = .true. !this is done in report_readoption
         nullify(Node(J)%treatment) !this version no treatment
  10   CONTINUE
@@ -196,7 +196,7 @@ subroutine TongMain
              CNODE1 = 5
              CNODE2 = 9
         end select
-        call link_setParams(J, LTYPE, CNODE1, CNODE2, J, XC)
+!        call link_setParams(J, LTYPE, CNODE1, CNODE2, J, XC, 100.)
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
         XX(3) = CGEOM3(J)

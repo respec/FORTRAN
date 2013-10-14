@@ -2808,7 +2808,7 @@ C           get conc of inflow from 2 previous time step
  125    CONTINUE
 C
         write(messu,*) 'B4 DWROUT: PREVIN',PREVIN,IDWFP,IVL1
-        write(messu,*) 'B4 DWROUT: NDINIT',NDINIT,CQO      
+        write(messu,*) 'B4 DWROUT: NDINIT',NDINIT   
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,DWUNIT,
      I               OS(1),ROS,VOLT,IVOLDW,PREVIN,
@@ -4222,7 +4222,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER          LTYPE,J,K,lErrorCode,DELTSI
       INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5)
-      DOUBLE PRECISION XN(6),XC(6),XX(4)
+      DOUBLE PRECISION XN(6),XC(6),XX(4),QIN(100),QIC(100)
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
       type(TExtInflow), dimension(NNODE-1), target :: inflowsWQ
@@ -4230,6 +4230,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*8      CTAG8
       CHARACTER*10     CTAG10(NNODE),COUTFL,CDEPTH,CVOL,CWQ
       CHARACTER*10     CFUNIT,CDUNIT,CVUNIT,CWQUNIT
+      SAVE             QIN,QIC
 C
 C     + + + FUNCTIONS + + +
 C      LOGICAL          xsect_setParams
@@ -4382,7 +4383,7 @@ C         this is the outfall
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
 C        write(messu,*) 'DWROUT: setting node ',j,ltype,k,xn
-        call node_setParams(J, LTYPE, K, XN)
+        call node_setParams(J, LTYPE, K, XN, QIN(J))
         Node(J)%rptFlag = .true. !this is was done in report_readoption
         nullify(Node(J)%treatment) !this version no treatment
  10   CONTINUE
@@ -4397,7 +4398,8 @@ C
         XC(6) = 0.0
 C        write(messu,*) 'DWROUT: setting link ',j,ltype, 
 C     1                 CNODE1(J),CNODE2(J),xc
-        call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), J, XC)
+        call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), 
+     1                      J, XC, QIC(J))
         XX(1) = CGEOM1(J)
         XX(2) = CGEOM2(J)
         XX(3) = CGEOM3(J)
@@ -4755,8 +4757,8 @@ C     1                    j,NDINIT(j),onodes(j)%odepth(1)
           NDINIT(J) = onodes(j)%odepth(1)
 C          write(messu,*) 'node depth ',ndinit(j)
           IF (DWWQFG.GT.0) THEN
-C           wq flag is on
-C            INWQ(J) = onodes(j)%oQual1(1)                           !NO INITIAL CONC???
+C           wq flag is on, save initial condition for next time    
+            QIN(J) = onodes(j)%oQual1(1)
           END IF
         end do
 C
@@ -4767,6 +4769,10 @@ C          write(messu,*) 'DWROUT: reset conduit flow ',
 C     1                    j,CQ0(J),olinks(j)%oflow(1)
           CQ0(J) = olinks(j)%oflow(1)
 C          write(messu,*) 'conduit flow ',cq0(j)
+          IF (DWWQFG.GT.0) THEN
+C           wq flag is on, save initial condition for next time  
+            QIC(J) = olinks(j)%oQual1(1)
+          END IF
         end do
       end if 
 C
@@ -6424,8 +6430,9 @@ C 60       CONTINUE
           IF (ROWQFP.GT.0) THEN
 C           dynamic wave water quality output
             PAD(ROWQFP+ IVL1)= RODWWQ
-            write(messu,*) 'to pad DWROUT: RODWWQ',RODWWQ,
-     1           ROWQFP,IVL1
+            write(messu,*) 'to pad DWROUT: RODWWQ',RODWWQ
+            write(messu,*) 'to pad DWROUT: ROWQFP',ROWQFP
+            write(messu,*) 'to pad DWROUT: IDWFP',IDWFP(1)
           END IF 
         END IF 
       END IF
