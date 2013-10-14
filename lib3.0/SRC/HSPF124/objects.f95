@@ -437,6 +437,7 @@ type TNode
    logical(kind=K2) :: rptFlag         ! reporting flag
    real (kind=dpo) ::        invertElev      ! invert elevation (ft)
    real(kind=dpo) ::        initDepth       ! initial storage level (ft)
+   real(kind=dpo) ::        qualInit        ! initial qual concentration
    real(kind=dpo) ::        fullDepth       ! dist. from invert to surface (ft)
    real(kind=dpo) ::        surDepth        ! added depth under surcharge (ft)
    real(kind=dpo) ::        pondedArea      ! area filled by ponded water (ft2)
@@ -596,6 +597,7 @@ type TLink
    real(kind=dpo) ::        offset2         ! ht. above end node invert (ft)            !(5.0.012 - LR)
    type(TXsect) ::        xsect           ! cross section data
    real(kind=dpo) ::        q0              ! initial flow (cfs)
+   real(kind=dpo) ::        qualInit        ! initial qual concentration
    real(kind=dpo) ::        qLimit          ! constraint on max. flow (cfs)
    real(kind=dpo) ::        cLossInlet      ! inlet loss coeff.
    real(kind=dpo) ::        cLossOutlet     ! outlet loss coeff.

@@ -713,8 +713,8 @@ subroutine link_initState(j)
     
     ! --- initialize water quality state
     do p =1, Nobjects(E_POLLUT)
-        arrLink(j)%oldQual(p) = 0.0
-        arrLink(j)%newQual(p) = 0.0
+        arrLink(j)%oldQual(p) = arrLink(j)%qualInit
+        arrLink(j)%newQual(p) = arrLink(j)%qualInit
     end do
 end subroutine link_initState
 
@@ -983,7 +983,7 @@ end subroutine link_setOutfallDepth
 
 !=============================================================================
 
-subroutine link_setParams(j, datatype, n1, n2, k, x)
+subroutine link_setParams(j, datatype, n1, n2, k, x, qi)
 !
 !  Input:   j   = arrLink index
 !           type = arrLink type code
@@ -1002,6 +1002,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
     implicit none
     integer, intent(in) :: j, n1, n2, k, datatype
     real(kind=dpl), dimension(:), intent(in) :: x
+    real(kind=dpl), intent(in) :: qi
     
     real(kind=dpl), dimension(:), allocatable :: lp
     logical :: lVal
@@ -1019,6 +1020,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x)
     arrLink(j)%hasFlapGate = .false. !0
     arrLink(j)%qLimit      = 0.0         ! 0 means that no limit is defined
     arrLink(j)%direction   = 1
+    arrLink(j)%qualInit    = qi
 
     select case (datatype)
       case (E_CONDUIT)

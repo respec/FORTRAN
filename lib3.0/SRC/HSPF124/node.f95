@@ -91,7 +91,7 @@
 !
 !=============================================================================
 
-subroutine node_setParams( j,  nodetype,  k,  x)
+subroutine node_setParams( j,  nodetype,  k,  x, qi)
 !
 !  Input:   j = node index
 !           nodetype = node type code
@@ -108,6 +108,7 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     integer, intent(in) :: j, nodetype, k
     integer, parameter :: dp = kind(1.d0)
     real(kind=dp), dimension(11), intent(in) :: x
+    real(kind=dp), intent(in) :: qi
     
     Node(j)%datatype   = nodetype
     Node(j)%subIndex   = k
@@ -121,6 +122,7 @@ subroutine node_setParams( j,  nodetype,  k,  x)
     Node(j)%surDepth   = 0.0
     Node(j)%pondedArea = 0.0
     Node(j)%degree     = 0
+    Node(j)%qualInit   = qi
     select case (nodetype)
       case (JUNCTION)
         Node(j)%fullDepth = x(2) / UCF(LENGTH)
@@ -252,8 +254,8 @@ subroutine node_initState(j)
 
     ! --- initialize water quality state
     do p = 1, Nobjects(E_POLLUT)
-        Node(j)%oldQual(p)  = 0.0
-        Node(j)%newQual(p)  = 0.0
+        Node(j)%oldQual(p)  = Node(j)%qualInit
+        Node(j)%newQual(p)  = Node(j)%qualInit
     end do
 
     ! --- initialize any inflow
