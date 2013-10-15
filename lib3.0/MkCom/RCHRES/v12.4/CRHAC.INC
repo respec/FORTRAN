@@ -94,9 +94,9 @@ C
      $              ACFLXG(MXGQAL,5),ACFLX3(7,5),ACPH,ACCONV(7)
       DOUBLE PRECISION  VOL,VOLS,CON(MXCONS),GQST(MXGQAL,5)
       INTEGER       DUM1(3765),DUM2(712),DUM3(110),DUM4(602),
-     $              DUM5(7488),DUM6(90),DUM7(370),DUM8(100),DUM9(553),
+     $              DUM5(8088),DUM6(90),DUM7(370),DUM8(100),DUM9(553),
      $              DUM10(230),DUM11,DUM12(181),DUM13(14),DUM14(4),
-     $              DUM15(8),DUM16(20),DUM17(2435),DUMRCH(30017)
+     $              DUM15(8),DUM16(20),DUM17(2435),DUMRCH(31417)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(DEPSCR,SDCF1(1,1)),(ROSED,SDCF2(1,1)),
@@ -115,4 +115,4 @@ C
      $              SQDEC(7,MXGQAL),ADQAL(7,MXGQAL),
      $              ODQAL(MXEXIT,MXGQAL),OSQAL(MXEXIT,3,MXGQAL),
      $              GQADDR(MXGQAL),GQADWT(MXGQAL)
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000

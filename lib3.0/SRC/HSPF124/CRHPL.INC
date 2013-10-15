@@ -98,13 +98,13 @@ C
      $              PHCF3(7,5)
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(505),DUM2(207),DUM3(3051),DUM4(715),DUM5(4),
-     $              DUM6(102),DUM7(605),DUM8(7485),DUM9(1096),
+     $              DUM6(102),DUM7(605),DUM8(8085),DUM9(1096),
      $              DUM10(7),DUM11(9),DUM12,DUM13(258),DUM14,
      $              DUM15(191),DUM16(14),DUM17(354),DUM18(4238),
      $              DUM19(22),DUM20(14),DUM21(4),DUM22(10),DUM23(16),
      $              DUM24(42),DUM25(2),DUM26(72),DUM27(7),DUM28(25),
      $              DUM29(12),DUM30(66),DUM31(40),DUM32(40),DUM33(31),
-     $              DUM34(143),DUM35(21),DUM36(78),DUMRCH(30587)
+     $              DUM34(143),DUM35(21),DUM36(78),DUMRCH(31987)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IBOD,OXIF(2,1)),(OXST,DOX),
@@ -226,4 +226,4 @@ C
      $              SNKORP,PHYORP,ZOOORP,BALORP,TOTORP,SNKORC,PHYORC,
      $              ZOOORC,BALORC,TOTORC,PHST(3),BODCO2,PHYCO2,ZOOCO2,
      $              BALCO2,BENCO2,INVCO2,TOTCO2
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000

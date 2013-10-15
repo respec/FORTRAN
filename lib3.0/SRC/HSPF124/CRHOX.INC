@@ -42,9 +42,9 @@ C
      $              OXCF2(MXEXIT,2,5),OXCF3(8,5),OXCF4(8,5)
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(2744),DUM2(1004),DUM3(15),DUM4(823),
-     $              DUM5(8091),DUM6(1100),DUM7(7),DUM8(5),DUM9(29),
+     $              DUM5(8691),DUM6(1100),DUM7(7),DUM8(5),DUM9(29),
      $              DUM10(230),DUM11,DUM12(809),DUM13(3984),DUM14(4),
-     $              DUMRCH(32788)
+     $              DUMRCH(34188)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IDOX,OXIF(1,1)),(IBOD,OXIF(2,1)),
@@ -72,4 +72,4 @@ C
      $              BODDOX,BENDOX,NITDOX,PHYDOX,ZOODOX,BALDOX,TOTDOX,
      $              DECBOD,BNRBOD,SNKBOD,DENBOD,PHYBOD,ZOOBOD,BALBOD,
      $              TOTBOD
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000

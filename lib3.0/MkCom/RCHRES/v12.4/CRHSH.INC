@@ -38,10 +38,10 @@ C
      $              DENR(MXSP,MXPL),LATRAD,SO(MXSP),TSAL(MXSP),
      $              TSAR(MXSP),SKOP(MXSP),VSAL(MXSP),VSAR(MXSP),DLT1,
      $              DEC,HFDLT,DF
-      INTEGER       DUM1(4482),DUM2(9309),DUM3(4),DUM4(277),
-     $              DUM5(7796),DUMRCH(5)
+      INTEGER       DUM1(4482),DUM2(9909),DUM3(4),DUM4(277),
+     $              DUM5(7796),DUMRCH(1405)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR)
       INTEGER       ASVEC(11),UNIT(7),TIMFG(6),DATIM(5)
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000

@@ -1002,7 +1002,7 @@ subroutine link_setParams(j, datatype, n1, n2, k, x, qi)
     implicit none
     integer, intent(in) :: j, n1, n2, k, datatype
     real(kind=dpl), dimension(:), intent(in) :: x
-    real(kind=dpl), intent(in) :: qi
+    real(kind=4), intent(in) :: qi
     
     real(kind=dpl), dimension(:), allocatable :: lp
     logical :: lVal

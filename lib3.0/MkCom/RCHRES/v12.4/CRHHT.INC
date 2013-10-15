@@ -43,8 +43,8 @@ C
      $              HTCF4(7,5)
       DOUBLE PRECISION  VOL,VOLS,HTST(5)
       INTEGER       DUM1(505),DUM2(207),DUM3(3051),DUM4(712),
-     $              DUM5(110),DUM6(602),DUM7(7488),DUM8(1091),
-     $              DUMRCH(37728)
+     $              DUM5(110),DUM6(602),DUM7(8088),DUM8(1091),
+     $              DUMRCH(39128)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IHEAT,HTIF(1)),(HTPM,ELEV),
@@ -59,4 +59,4 @@ C
      $              OHEAT(MXEXIT),QTOTAL,QSOLAR,QLONGW,QEVAP,QCON,
      $              QPREC,QBED
       DOUBLE PRECISION  RHEAT
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000

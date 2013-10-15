@@ -1,5 +1,5 @@
 MO   RCHRES
-SI        52000         0
+SI        54000         0
 CO   SCRTCH
 HE   RCHRES module common
 PF   pmxexi.inc
@@ -232,9 +232,14 @@ VA   NDINIT 100   0   0   0 R P                         01000000000000
 VA   NDSURC 100   0   0   0 R P                         01000000000000
 VA   NPONDA 100   0   0   0 R P                         01000000000000
 VA   NLOCIN 100   0   0   0 R P                         01000000000000
+VA   NQIN   100   0   0   0 R S                         01000000000000
 VA   IVOLDW 100   0   0   0 R S                         01000000000000
+VA   PREVIN 100   0   0   0 R S                         01000000000000
+VA   PREVI2 100   0   0   0 R S                         01000000000000
 VA   IDWFP  100   0   0   0 I T EXTNL#INFLOW     IVOLDW 01000000000000
 VA   IDWWQ  100   0   0   0 R S                         01000000000000
+VA   PREVWQ 100   0   0   0 R S                         01000000000000
+VA   PREVW2 100   0   0   0 R S                         01000000000000
 VA   IDWQFP 100   0   0   0 I T EXTNL#INFLOW     IDWWQ  01000000000000
 VA   RODWWQ   0   0   0   0 R S                         01000000000000
 VA   ROWQFP   0   0   0   0 I T HYDR             RODWWQ 01000000000000
@@ -250,6 +255,7 @@ VA   CGEOM1 100   0   0   0 R P                         01000000000000
 VA   CGEOM2 100   0   0   0 R P                         01000000000000
 VA   CGEOM3 100   0   0   0 R P                         01000000000000
 VA   CGEOM4 100   0   0   0 R P                         01000000000000
+VA   CQIC   100   0   0   0 R S                         01000000000000
 VA   WNODE1  10   0   0   0 I P                         01000000000000
 VA   WNODE2  10   0   0   0 I P                         01000000000000
 VA   WTYPE   10   0   0   0 I P                         01000000000000
