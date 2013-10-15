@@ -2423,9 +2423,7 @@ C     + + + LOCAL VARIABLES + + +
       REAL             SAS,VOLPEV,CORELS(MXEXIT,MXCAT),RTMP,IRRDEM,
      $                 COTDGS(MXEXIT,MXCAT),CVOLEV(MXCAT),DEMVOL,
      $                 CIRRWD(MXCAT)
-      DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR,
-     $                 PREVIN(100),PREVIN2(100),
-     $                 PREVWQ(100),PREVWQ2(100)
+      DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -2768,20 +2766,9 @@ C
 C         set input volume to each node
           I = INT(NLOCIN(J))
           IVOLDW(J) = 0.0
-          PREVIN(J) = 0.0
-          PREVIN2(J) = 0.0
           IF (I.GT.0 .AND. I.LE.NNODE) THEN
             IF (IDWFP(I) .GT. 0) THEN
               IVOLDW(J) = PAD(IDWFP(I) + IVL1)
-            END IF
-C           get volume of inflow from previous time step
-            IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.2) THEN
-              PREVIN(J)= PREVIN(J) + PAD(IDWFP(I) + IVL1-1)
-C             write(messu,*) 'previn ',previn(j),IDWFP(I),ivl1
-            END IF
-C           get volume of inflow from 2 previous time step
-            IF (IDWFP(I) .GT. 0 .AND. IVL1.GT.3) THEN
-              PREVIN2(J)= PREVIN2(J) + PAD(IDWFP(I) + IVL1-2)
             END IF
           END IF 
 C          write(messu,*) 'DWROUT: node,previn,invol,idwfp,nlocin ',
@@ -2790,29 +2777,18 @@ C
 C         set input concentration to each node
           I = INT(NDWQIN(J))
           IDWWQ(J) = 0.0
-          PREVWQ(J) = 0.0
-          PREVWQ2(J) = 0.0
           IF (I.GT.0 .AND. I.LE.NNODE) THEN
             IF (IDWQFP(I) .GT. 0) THEN
               IDWWQ(J) = PAD(IDWQFP(I) + IVL1)
             END IF
-C           get conc of inflow from previous time step
-            IF (IDWQFP(I) .GT. 0 .AND. IVL1.GT.2) THEN
-              PREVWQ(J)= PREVWQ(J) + PAD(IDWQFP(I) + IVL1-1)
-            END IF
-C           get conc of inflow from 2 previous time step
-            IF (IDWQFP(I) .GT. 0 .AND. IVL1.GT.3) THEN
-              PREVWQ2(J)= PREVWQ2(J) + PAD(IDWQFP(I) + IVL1-2)
-            END IF
           END IF 
  125    CONTINUE
 C
-        write(messu,*) 'B4 DWROUT: PREVIN',PREVIN,IDWFP,IVL1
-        write(messu,*) 'B4 DWROUT: NDINIT',NDINIT   
+C        write(messu,*) 'B4 DWROUT: PREVIN',PREVIN,IDWFP,IVL1
+C        write(messu,*) 'B4 DWROUT: NDINIT',NDINIT   
         CALL DWROUT (DELTS,UUNITS,
      I               NNODE,NCOND,DTS,DWUNIT,
-     I               OS(1),ROS,VOLT,IVOLDW,PREVIN,
-     I               PREVIN2,IDWWQ,PREVWQ,PREVWQ2,
+     I               OS(1),ROS,VOLT,IVOLDW,IDWWQ,
      I               MON,NXTMON,DAY,NDAYS,
      I               RCHNO,MESSU,MSGFL,SCLU,
      I               DATIM,NODEX,
@@ -2829,9 +2805,11 @@ C
      I               OGEOM1,OGEOM2,OGEOM3,OGEOM4,
      I               DWWQFG,DWWQNM,DWWQUN,DWDECA,
      M               HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
+     M               PREVIN,PREVI2,PREVWQ,PREVW2,
+     M               NQIN,CQIC,
      O               VOL,O(1),RO,OVOL(1),ROVOL,RODWWQ)
         IF (DWWQFG.GT.0) THEN
-          write(messu,*) 'AF DWROUT: RODWWQ',RODWWQ
+C          write(messu,*) 'AF DWROUT: RODWWQ',RODWWQ
         END IF 
 C       only uses the first exit, ignore the rest
         O(2) = 0.0
@@ -4067,8 +4045,7 @@ C
       SUBROUTINE   DWROUT
      I                   (DELTS,UUNITS,
      I                    NNODE,NCOND,DTS,DWUNIT,
-     I                    OS,ROS,VOLT,IVOLDW,PREVIN,
-     I                    PREVIN2,IDWWQ,PREVWQ,PREVWQ2,
+     I                    OS,ROS,VOLT,IVOLDW,IDWWQ,
      I                    MON,NXTMON,DAY,NDAYS,
      I                    RCHNO,MESSU,MSGFL,SCLU,
      I                    DATIM,NODEX,
@@ -4085,6 +4062,8 @@ C
      I                    OGEOM1,OGEOM2,OGEOM3,OGEOM4,
      I                    DWWQFG,DWWQNM,DWWQUN,DWDECA,
      M                    HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
+     M                    PREVIN,PREVIN2,PREVWQ,PREVWQ2,
+     M                    QIN,QIC,
      O                    VOL,O,RO,OVOL,ROVOL,RODWWQ)
 C
 C     + + + PURPOSE + + +
@@ -4128,10 +4107,10 @@ C     + + + DUMMY ARGUMENTS + + +
      $                 OOFF(NORIF),OCD(NORIF),ORAT(NORIF),
      $                 OGEOM1(NORIF),OGEOM2(NORIF),
      $                 OGEOM3(NORIF),OGEOM4(NORIF),
-     $                 IVOLDW(NNODE),IDWWQ(NNODE)
-      DOUBLE PRECISION VOLT,VOL,PREVIN(NNODE),
-     $                 PREVIN2(NNODE),
+     $                 IVOLDW(NNODE),IDWWQ(NNODE),PREVIN(NNODE),
+     $                 PREVIN2(NNODE),QIN(NNODE),QIC(NCOND),
      $                 PREVWQ(NNODE),PREVWQ2(NNODE)
+      DOUBLE PRECISION VOLT,VOL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     DELTS  - simulation interval in seconds
@@ -4218,11 +4197,13 @@ C     RO     - total rate of outflow from reach at end of interval
 C     OVOL   - volume of water leaving reach in an interval by exit
 C     ROVOL  - total volume of water leaving reach in an interval
 C     RODWWQ - conc of wq constituent in water leaving the reach
+C     QIN    - initial conc of wq constituent in each node
+C     QIC    - initial conc of wq constituent in each conduit
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER          LTYPE,J,K,lErrorCode,DELTSI
       INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5)
-      DOUBLE PRECISION XN(6),XC(6),XX(4),QIN(100),QIC(100)
+      DOUBLE PRECISION XN(6),XC(6),XX(4)
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
       type(TExtInflow), dimension(NNODE-1), target :: inflowsWQ
@@ -4230,7 +4211,6 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*8      CTAG8
       CHARACTER*10     CTAG10(NNODE),COUTFL,CDEPTH,CVOL,CWQ
       CHARACTER*10     CFUNIT,CDUNIT,CVUNIT,CWQUNIT
-      SAVE             QIN,QIC
 C
 C     + + + FUNCTIONS + + +
 C      LOGICAL          xsect_setParams
@@ -4383,6 +4363,9 @@ C         this is the outfall
            XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
         end if
 C        write(messu,*) 'DWROUT: setting node ',j,ltype,k,xn
+        if (dwhead.eq.0) then
+          QIN(J) = 0.0
+        end if
         call node_setParams(J, LTYPE, K, XN, QIN(J))
         Node(J)%rptFlag = .true. !this is was done in report_readoption
         nullify(Node(J)%treatment) !this version no treatment
@@ -4396,6 +4379,9 @@ C
         XC(4) = COFF2(J)
         XC(5) = CQ0(J)
         XC(6) = 0.0
+        if (dwhead.eq.0) then
+          QIC(J) = 0.0
+        end if
 C        write(messu,*) 'DWROUT: setting link ',j,ltype, 
 C     1                 CNODE1(J),CNODE2(J),xc
         call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), 
@@ -4486,6 +4472,8 @@ C     construct external inflow to each node in the network
       do J=1, NNODE
         oTsers(J)%datatype = E_TSERIES
         if (dwhead.eq.0) then
+          PREVIN(J) = 0.0
+          PREVIN2(J)= 0.0
           allocate(oTsers(J)%odates(3))
           allocate(oTsers(J)%ovalues(3))
           if (associated(oTsers(J)%odates) .and. 
@@ -4573,6 +4561,8 @@ C       DWDECA        -- real, wq decay rate
         do J=1, NNODE
           oTsersWQ(J)%datatype = E_TSERIES
           if (dwhead.eq.0) then
+            PREVWQ(J) = 0.0
+            PREVWQ2(J) = 0.0
             allocate(oTsersWQ(J)%odates(3))
             allocate(oTsersWQ(J)%ovalues(3))
             if (associated(oTsersWQ(J)%odates) .and. 
@@ -4759,7 +4749,7 @@ C          write(messu,*) 'node depth ',ndinit(j)
           IF (DWWQFG.GT.0) THEN
 C           wq flag is on, save initial condition for next time    
             QIN(J) = onodes(j)%oQual1(1)
-          END IF
+          END IF 
         end do
 C
 C       CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
@@ -4776,6 +4766,15 @@ C           wq flag is on, save initial condition for next time
         end do
       end if 
 C
+      do J = 1, NNODE
+        PREVIN2(J)= PREVIN(J)
+        PREVIN(J) = IVOLDW(J)
+        IF (DWWQFG.GT.0) THEN
+          PREVWQ2(J)= PREVWQ(J)
+          PREVWQ(J) = IDWWQ(J)
+        END IF
+      end do
+C
 C     VOL    - volume of water in reach above bed
 C     O      - rate of outflow from each reach exit at end of interval
 C     RO     - total rate of outflow from reach at end of interval
@@ -4789,7 +4788,7 @@ C      write(messu,*) 'in dwrout nnode ',nnode
       else
         OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(2)))*DELTS
       end if 
-      write(messu,*) 'DWROUT: ovol ',ovol,IVOLDW(NNODE)
+C      write(messu,*) 'DWROUT: ovol ',ovol,IVOLDW(NNODE)
       OVOL = OVOL + IVOLDW(NNODE)
 C
 C     find volume in system at end of interval
@@ -4820,7 +4819,7 @@ C       return conc of wq coming out bottom node
 C
       dwhead = 1
       call output_close
-      write(messu,*) 'DWROUT: rovol, rodwwq ',rovol,rodwwq
+C      write(messu,*) 'DWROUT: rovol, rodwwq ',rovol,rodwwq
 C
       RETURN
       END
@@ -6416,23 +6415,13 @@ C         irrigation shortfall
 C
       IF (HYDRFG.EQ.2) THEN
 C       dynamic wave routing is on
-C        DO 50 IX= 1, NNODE
-C          IF (IDWFP(IX) .GT. 0) THEN
-C            PAD(IDWFP(IX)+ IVL1)= IVOLDW(IX)
-C          END IF
-C 50     CONTINUE
         IF (DWWQFG.GT.0) THEN
-C          DO 60 IX= 1, NNODE
-C            IF (IDWQFP(IX) .GT. 0) THEN
-C              PAD(IDWQFP(IX)+ IVL1)= IDWWQ(IX)
-C            END IF
-C 60       CONTINUE
           IF (ROWQFP.GT.0) THEN
 C           dynamic wave water quality output
             PAD(ROWQFP+ IVL1)= RODWWQ
-            write(messu,*) 'to pad DWROUT: RODWWQ',RODWWQ
-            write(messu,*) 'to pad DWROUT: ROWQFP',ROWQFP
-            write(messu,*) 'to pad DWROUT: IDWFP',IDWFP(1)
+C            write(messu,*) 'to pad DWROUT: RODWWQ',RODWWQ
+C            write(messu,*) 'to pad DWROUT: ROWQFP',ROWQFP
+C            write(messu,*) 'to pad DWROUT: IDWFP',IDWFP(1)
           END IF 
         END IF 
       END IF

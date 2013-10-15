@@ -33,9 +33,9 @@ C            RQUAL section
      $              RSPO4(12),NUST(4,5)
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(3765),DUM2(712),DUM3(3),DUM4(106),DUM5(602),
-     $              DUM6(3),DUM7(8871),DUM8,DUM9(4800),DUM10(18),
+     $              DUM6(3),DUM7(9471),DUM8,DUM9(4800),DUM10(18),
      $              DUM11(13),DUM12(77),DUM13(158),DUM14(111),
-     $              DUM15(6),DUMRCH(32506)
+     $              DUM15(6),DUMRCH(33906)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(SCRPM,SCRVEL),(OXST,DOX),
@@ -51,4 +51,4 @@ C
       REAL          SCRPM(2),OXST(2),RDOX,RBOD,READOX,BODDOX,BENDOX,
      $              NITDOX,PHYDOX,ZOODOX,BALDOX,TOTDOX,DNUST(6),
      $              DNUST2(6),RRNO3,RRTAM,RRNO2,RRPO4
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000

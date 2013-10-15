@@ -41,11 +41,11 @@ C
      $              CFCINV,BRCO2(2),TIC,CO2,PH,SATCO2,PHCF1(2,5),
      $              PHCF2(MXEXIT,2,5),PHCF3(7,5)
       DOUBLE PRECISION  VOL,VOLS,CON(MXCONS)
-      INTEGER       DUM1(3765),DUM2(823),DUM3(8091),DUM4(90),
+      INTEGER       DUM1(3765),DUM2(823),DUM3(8691),DUM4(90),
      $              DUM5(370),DUM6(100),DUM7(553),DUM8(230),DUM9,
      $              DUM10(4800),DUM11(4),DUM12(33),DUM13(12),
      $              DUM14(14),DUM15(351),DUM16(707),DUM17(258),
-     $              DUM18(793),DUM19(107),DUMRCH(30580)
+     $              DUM18(793),DUM19(107),DUMRCH(31980)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(OXST,DOX),(OXSTX,DOFP),
@@ -67,4 +67,4 @@ C
       REAL          OXST(2),ITIC,ICO2,PHPM2(3),PHST(3),ROTIC,ROCO2,
      $              OTIC(MXEXIT),OCO2(MXEXIT),BODCO2,PHYCO2,ZOOCO2,
      $              BALCO2,BENCO2,INVCO2,TOTCO2
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000

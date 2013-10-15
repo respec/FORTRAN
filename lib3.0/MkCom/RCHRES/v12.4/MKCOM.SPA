@@ -89,592 +89,592 @@ OVOL     5          7049
 COVOL    5 100      7074
 RIRDEM             10079
 RIRSHT             10080
-CRRAT              12795
-SROVOL             12796
-AROVOL   2         12796
-EROVOL             12797
-SOVOL    5         12798
-AOVOL    5   2     12798
-EOVOL    5         12803
-ICON    10         12808
-COADFG  20         12899
-CCONCD   2  10     12989
-CCONV   10         13009
-COAFXM  12  10     13019
-COACNM  12  10     13139
-CON    -10         13269
-RCON   -10         13289
-ROCON   10         13399
-OCON     5  10     13459
-COADDR  10         13759
-COADWT  10         13809
-COADEP  10         13859
-IHEAT              13899
-SOLRAD             13904
-CLOUD              13905
-DEWTMP             13906
-GATMP              13907
-WIND               13908
-DSOLAR             13909
-BEDFLG             13918
-TGFLG              13919
-TSTOP              13920
-SHADFG             13921
-ELEV               13922
-HTPM     6         13922
-ELDAT              13923
-CFSAEX             13924
-KATRAD             13925
-KCOND              13926
-KEVAP              13927
-LAPSE   24         13928
-CFPRES             13952
-MUDDEP             13953
-KMUD               13954
-KGRND              13955
-TGRNDM  12         13956
-DELH   100         13968
-TGRND              14070
-DELTT  100         14071
-TMUD               14171
-TMUDDT             14172
-RHEAT   -1         14173
-TW                 14183
-HTST2    2         14183
-AIRTMP             14184
-SHDFAC             14187
-HTEXCH             14189
-ROHEAT             14190
-OHEAT    5         14201
-QTOTAL             14231
-QSOLAR             14232
-QLONGW             14233
-QEVAP              14234
-QCON               14235
-QPREC              14236
-QBED               14237
-ISED     4         14273
-SANDFG             14300
-SDPM     6   3     14301
-BEDWID             14319
-SDGPM    3         14319
-BEDWRN             14320
-POR                14321
-DB50E              14322
-DB50M              14323
-WSANDE             14324
-RSSED   -3         14337
-RSED    10         14367
-SSED     4         14377
-TSED     3         14381
-BEDDEP             14384
-DEPSCR   4         14403
-ROSED    4         14423
-OSED     5   4     14451
-IDQAL    7         14571
-ISQAL    4   7     14606
-TIQAL    7         14746
-PHVAL              14753
-ROC                14754
-BIO      7         14755
-TEMPFG             14856
-PHFLAG             14857
-ROXFG              14858
-CLDFG              14859
-SDFG               14860
-PHYTFG             14861
-LAT                14862
-GQADFG  14         14863
-GQPM2    7   7     14877
-DAUGFG   7         14926
-GDAUFG   6         14933
-QALFG    7   7     14939
-QALGFG   7         14988
-GQALFG   7         14995
-CONV     7         15059
-CINV     7         15066
-GQAFXM  12   7     15073
-GQACNM  12   7     15157
-TEMPM   12         15241
-PHVALM  12         15253
-HYDPM    4   7     15265
-ROCM    12         15293
-ROXPM    2   7     15305
-SDCNCM  12         15319
-PHYM    12         15331
-CLDM    12         15343
-ALPH    18         15355
-GAMM    18         15373
-DEL     18         15391
-LIT     18   4     15409
-PHOTPM  20   7     15481
-FACT1              15621
-KCLD    18         15622
-CFGAS    7         15640
-BIOM    12   7     15647
-BIOPM    2   7     15731
-GENPM    2   7     15745
-C        7   7   6 15759
-ADPM     6   3   7 16053
-ADDCPM   4   7     16179
-LITFG              16207
-LSET               16208
-TWAT               16224
-PHY                16225
-SDCNC              16226
-CLD                16227
-DQAL     7         16228
-SQAL     6   7     16235
-RDQAL    7         16277
-RSQAL   12   7     16284
-RRQAL    7         16368
-GQST    -7   5     16375
-PDQAL    7         16592
-DDQAL    7   7     16627
-RODQAL   7         16872
-DSQAL    4   7     16907
-ROSQAL   4   7     17047
-TROQAL   7         17187
-SQDEC    7   7     17194
-ADQAL    7   7     17439
-ODQAL    5   7     17684
-OSQAL    5   3   7 17859
-TOSQAL   5   7     18384
-TOQAL    5   7     18419
-GQADDR   7         18454
-GQADWT   7         18489
-GQADEP   7         18524
-BENRFG             18986
-SCRVEL             18987
-SCRPM    2         18987
-SCRMUL             18988
-SCRFAC             18991
-DEPCOR             18992
-AVDEPE             18993
-AVVELE             18994
-IDOX               18995
-IBOD               18996
-REAMFG             19009
-OXPM1              19009
-KBOD20             19010
-OXPM2    4         19010
-TCBOD              19011
-KODSET             19012
-SUPSAT             19013
-CFOREA             19014
-REAKT              19015
-BENOD              19016
-OXPM3    6         19016
-TCBEN              19017
-EXPOD              19018
-BRBOD    2         19019
-EXPREL             19021
-TCGINV             19022
-OXPM4    4         19022
-REAK               19023
-EXPRED             19024
-EXPREV             19025
-DOX                19027
-OXST     2         19027
-BOD                19028
-RDOX               19029
-RBOD               19030
-SATDO              19039
-RODOX              19043
-ROBOD              19044
-KOREA              19055
-BODOX              19056
-ODOX     5         19057
-OBOD     5         19062
-READOX             19117
-BODDOX             19118
-BENDOX             19119
-NITDOX             19120
-PHYDOX             19121
-ZOODOX             19122
-BALDOX             19123
-TOTDOX             19124
-DECBOD             19157
-BNRBOD             19158
-SNKBOD             19159
-DENBOD             19160
-PHYBOD             19161
-ZOOBOD             19162
-BALBOD             19163
-TOTBOD             19164
-INO3               19213
-ITAM               19214
-INO2               19215
-IPO4               19216
-ISNH4    4         19233
-ISPO4    4         19237
-TNUIF    4         19273
-NUADFG   6         19309
-TAMFG              19315
-NUPM1    7         19315
-NO2FG              19316
-PO4FG              19317
-AMVFG              19318
-DENFG              19319
-ADNHFG             19320
-ADPOFG             19321
-NUAFXM  12   3     19322
-NUACNM  12   3     19358
-CVBN               19394
-CVBO               19395
-CVBP               19396
-CVBPC              19397
-CVBPN              19398
-BPCNTC             19399
-CVOC               19400
-CVON               19401
-CVOP               19402
-BRTAM    2         19403
-NUPM2    5         19403
-BRPO4    2         19405
-ANAER              19407
-BNH4     3         19408
-NUPM3    6         19408
-BPO4     3         19411
-KTAM20             19414
-NUPM4    6         19414
-KNO220             19415
-TCNIT              19416
-KNO320             19417
-TCDEN              19418
-DENOXT             19419
-EXPNVG             19420
-NUPM5    2         19420
-EXPNVL             19421
-ADNHPM   3         19422
-NUADPM   6         19422
-ADPOPM   3         19425
-NO3                19433
-DNUST    6         19433
-TAM                19434
-NO2                19435
-PO4                19436
-NH4                19437
-NH3                19438
-SNH4     3         19439
-SPO4     3         19442
-RNO3               19445
-DNUST2   6         19445
-RTAM               19446
-RNO2               19447
-RPO4               19448
-RNH4               19449
-RNH3               19450
-RSNH4   12         19451
-RSPO4   12         19463
-RRNO3              19475
-RRTAM              19476
-RRNO2              19477
-RRPO4              19478
-RONO3              19541
-ROTAM              19542
-RONO2              19543
-ROPO4              19544
-ROSNH4   4         19561
-ROSPO4   4         19565
-TNUCF1   4         19601
-DSNH4    4         19605
-DSPO4    4         19609
-NITNO3             19645
-DENNO3             19646
-BODNO3             19647
-PHYNO3             19648
-ZOONO3             19649
-BALNO3             19650
-TOTNO3             19651
-NITTAM             19680
-VOLNH3             19681
-BNRTAM             19682
-BODTAM             19683
-PHYTAM             19684
-ZOOTAM             19685
-BALTAM             19686
-TOTTAM             19687
-NITNO2             19720
-BNRPO4             19725
-BODPO4             19726
-PHYPO4             19727
-ZOOPO4             19728
-BALPO4             19729
-TOTPO4             19730
-ADNH4    4         19755
-ADPO4    4         19759
-ONO3     5         19795
-OTAM     5         19800
-ONO2     5         19805
-OPO4     5         19810
-OSNH4    5   4     19895
-OSPO4    5   4     19915
-TNUCF2   5   4     20095
-DECCO2             20115
-NUADDR   3         20116
-NUADWT   3         20131
-NUADEP   3         20146
-IPHYTO             20292
-IZOO               20293
-IORN               20294
-IORP               20295
-IORC               20296
-ITORN              20327
-ITORP              20328
-ITORC              20329
-ITOTN              20330
-ITOTP              20331
-PLADFG   6         20363
-PHYFG              20369
-PKFG     9         20369
-ZOOFG              20370
-BALFG              20371
-SDLTFG             20372
-AMRFG              20373
-DECFG              20374
-NSFG               20375
-ZFOOD              20376
-BNPFG              20377
-BFIXFG   4         20379
-BINVFG             20383
-PLAFXM  12   3     20384
-PLACNM  12   3     20420
-CVBC               20456
-CVBCL              20457
-CVNRBO             20458
-CVPB               20459
-RATCLP             20460
-PKPM1    7         20460
-NONREF             20461
-LITSED             20462
-ALNPR              20463
-EXTB               20464
-MALGR              20465
-PARADF             20466
-CMMLT              20467
-PKPM2    7         20467
-CMMN               20468
-CMMNP              20469
-CMMP               20470
-TALGRH             20471
-TALGRL             20472
-TALGRM             20473
-ALR20              20474
-PKPM3    6         20474
-ALDH               20475
-ALDL               20476
-OXALD              20477
-NALDH              20478
-PALDH              20479
-NMINGR             20480
-PKPM12   5         20480
-PMINGR             20481
-CMINGR             20482
-LMINGR             20483
-NMINC              20484
-SEED               20485
-PKPM4    6         20485
-MXSTAY             20486
-OREF               20487
-CLALDH             20488
-PHYSET             20489
-REFSET             20490
-MZOEAT             20491
-PKPM5    5         20491
-ZFIL20             20492
-ZRES20             20493
-ZD                 20494
-OXZD               20495
-TCZFIL             20496
-PKPM6    4         20496
-TCZRES             20497
-ZEXDEL             20498
-ZOMASS             20499
-MBAL               20500
-PKPM7    7         20500
-CFBALR             20501
-CFBALG             20502
-MINBAL             20503
-CAMPR              20504
-FRAVL              20505
-NMAXFX             20506
-MBALGR   4         20507
-TCBALG   4         20511
-CMMNB    4         20515
-CMMPB    4         20519
-CMMD1    4         20523
-CMMD2    4         20527
-CSLIT    4         20531
-BALR20   4         20535
-TCBALR   4         20539
-CSLOF1   4         20543
-CSLOF2   4         20547
-GRORES   4         20551
-CREMVL             20555
-PKPM8    4         20555
-CMMBI              20556
-BINV               20557
-TCGRAZ             20558
-BINVM   12         20560
-CTRBQ1             20572
-PKPM9    4         20572
-CTRBQ2             20573
-CKTRB1             20574
-CKTRB2             20575
-FRRIF              20576
-PKPM10   5         20576
-CMMV               20577
-RIFCQ1             20578
-RIFCQ2             20579
-RIFCQ3             20580
-RIFVEL   4         20581
-PKPM11   8         20581
-RIFDEP   4         20585
-JDAT               20593
-BALDEP             20594
-BALVEL             20595
-PHYTO              20596
-PKST1    3         20596
-PHYCLA             20597
-LIMPHY             20598
-BENAL    4         20599
-PKST2    4   3     20599
-BALCLA   4         20603
-LIMBAL   4         20607
-TBENAL   2         20611
-ORN                20613
-PKST3    7         20613
-ORP                20614
-ORC                20615
-TORN               20616
-TORP               20617
-TORC               20618
-POTBOD             20619
-ZOO                20620
-TN                 20621
-PKST4    2         20621
-TP                 20622
-ROPHYT             20645
-ROZOO              20646
-ROORN              20647
-ROORP              20648
-ROORC              20649
-ROTORN             20670
-ROTORP             20671
-ROTORC             20672
-ROTOTN             20673
-ROTOTP             20674
-OPHYT    5         20695
-OZOO     5         20700
-OORN     5         20705
-OORP     5         20710
-OORC     5         20715
-OTORN    5         20820
-OTORP    5         20825
-OTORC    5         20830
-OTOTN    5         20835
-OTOTP    5         20840
-PLADDR   3         20945
-PLADWT   3         20960
-PLADEP   3         20975
-SNKPHY             20978
-ZOOPHY             20979
-DTHPHY             20980
-GROPHY             20981
-TOTPHY             20982
-GROZOO             21003
-DTHZOO             21004
-TOTZOO             21005
-FLXBAL   3   4     21018
-GROTBA             21078
-DTHTBA             21079
-TOTTBA             21080
-SNKORN             21093
-PHYORN             21094
-ZOOORN             21095
-BALORN             21096
-TOTORN             21097
-SNKORP             21118
-PHYORP             21119
-ZOOORP             21120
-BALORP             21121
-TOTORP             21122
-SNKORC             21143
-PHYORC             21144
-ZOOORC             21145
-BALORC             21146
-TOTORC             21147
-PYCO2              21168
-ZOCO2              21169
-BACO2              21170
-ITIC               21278
-ICO2               21279
-PHCNT              21292
-PHPM1    2         21292
-ALKCON             21293
-CFCINV             21294
-PHPM2    3         21294
-BRCO2    2         21295
-TIC                21299
-PHST     3         21299
-CO2                21300
-PH                 21301
-SATCO2             21305
-ROTIC              21307
-ROCO2              21308
-OTIC     5         21319
-OCO2     5         21324
-BODCO2             21379
-PHYCO2             21380
-ZOOCO2             21381
-BALCO2             21382
-BENCO2             21383
-INVCO2             21384
-TOTCO2             21385
-ACFLAG  14         21421
-ACPARM   7         21435
-NUMCON             21443
-NUMGQL             21444
-ACCONC   7         21481
-ACSTOR   7   5     21495
-ACINFL   7   5     21537
-ACFLX1   7   5     21586
-ACFLX2   5   7   5 21628
-ACFLXC  10   5     21838
-ACFLXG   7   5     21898
-ACFLX3   7   5     21940
-ACPH               21975
-ACCONV   7         21977
-TOPFL              21984
-VEGFL              21985
-NSSP               21986
-TSA    250  12     21987
-DISL   250  10     24987
-DISR   250  10     27487
-WIDL   250  10     29987
-WIDR   250  10     32487
-HABSL  250  10     34987
-HABSR  250  10     37487
-HDEML  250  10     39987
-HDEMR  250  10     42487
-LATDEG             44987
-LONDEG             44988
-LONSTD             44989
-DENL   250  10     44990
-DENR   250  10     47490
-NVPL   250         49990
-NVPR   250         50240
-JDAY               50490
-LATRAD             50491
-SO     250         50492
-TSAL   250         50742
-TSAR   250         50992
-SKOP   250         51242
-VSAL   250         51492
-VSAR   250         51742
-DLT1               51992
-DEC                51993
-HFDLT              51994
-DF                 51995
+CRRAT              13395
+SROVOL             13396
+AROVOL   2         13396
+EROVOL             13397
+SOVOL    5         13398
+AOVOL    5   2     13398
+EOVOL    5         13403
+ICON    10         13408
+COADFG  20         13499
+CCONCD   2  10     13589
+CCONV   10         13609
+COAFXM  12  10     13619
+COACNM  12  10     13739
+CON    -10         13869
+RCON   -10         13889
+ROCON   10         13999
+OCON     5  10     14059
+COADDR  10         14359
+COADWT  10         14409
+COADEP  10         14459
+IHEAT              14499
+SOLRAD             14504
+CLOUD              14505
+DEWTMP             14506
+GATMP              14507
+WIND               14508
+DSOLAR             14509
+BEDFLG             14518
+TGFLG              14519
+TSTOP              14520
+SHADFG             14521
+ELEV               14522
+HTPM     6         14522
+ELDAT              14523
+CFSAEX             14524
+KATRAD             14525
+KCOND              14526
+KEVAP              14527
+LAPSE   24         14528
+CFPRES             14552
+MUDDEP             14553
+KMUD               14554
+KGRND              14555
+TGRNDM  12         14556
+DELH   100         14568
+TGRND              14670
+DELTT  100         14671
+TMUD               14771
+TMUDDT             14772
+RHEAT   -1         14773
+TW                 14783
+HTST2    2         14783
+AIRTMP             14784
+SHDFAC             14787
+HTEXCH             14789
+ROHEAT             14790
+OHEAT    5         14801
+QTOTAL             14831
+QSOLAR             14832
+QLONGW             14833
+QEVAP              14834
+QCON               14835
+QPREC              14836
+QBED               14837
+ISED     4         14873
+SANDFG             14900
+SDPM     6   3     14901
+BEDWID             14919
+SDGPM    3         14919
+BEDWRN             14920
+POR                14921
+DB50E              14922
+DB50M              14923
+WSANDE             14924
+RSSED   -3         14937
+RSED    10         14967
+SSED     4         14977
+TSED     3         14981
+BEDDEP             14984
+DEPSCR   4         15003
+ROSED    4         15023
+OSED     5   4     15051
+IDQAL    7         15171
+ISQAL    4   7     15206
+TIQAL    7         15346
+PHVAL              15353
+ROC                15354
+BIO      7         15355
+TEMPFG             15456
+PHFLAG             15457
+ROXFG              15458
+CLDFG              15459
+SDFG               15460
+PHYTFG             15461
+LAT                15462
+GQADFG  14         15463
+GQPM2    7   7     15477
+DAUGFG   7         15526
+GDAUFG   6         15533
+QALFG    7   7     15539
+QALGFG   7         15588
+GQALFG   7         15595
+CONV     7         15659
+CINV     7         15666
+GQAFXM  12   7     15673
+GQACNM  12   7     15757
+TEMPM   12         15841
+PHVALM  12         15853
+HYDPM    4   7     15865
+ROCM    12         15893
+ROXPM    2   7     15905
+SDCNCM  12         15919
+PHYM    12         15931
+CLDM    12         15943
+ALPH    18         15955
+GAMM    18         15973
+DEL     18         15991
+LIT     18   4     16009
+PHOTPM  20   7     16081
+FACT1              16221
+KCLD    18         16222
+CFGAS    7         16240
+BIOM    12   7     16247
+BIOPM    2   7     16331
+GENPM    2   7     16345
+C        7   7   6 16359
+ADPM     6   3   7 16653
+ADDCPM   4   7     16779
+LITFG              16807
+LSET               16808
+TWAT               16824
+PHY                16825
+SDCNC              16826
+CLD                16827
+DQAL     7         16828
+SQAL     6   7     16835
+RDQAL    7         16877
+RSQAL   12   7     16884
+RRQAL    7         16968
+GQST    -7   5     16975
+PDQAL    7         17192
+DDQAL    7   7     17227
+RODQAL   7         17472
+DSQAL    4   7     17507
+ROSQAL   4   7     17647
+TROQAL   7         17787
+SQDEC    7   7     17794
+ADQAL    7   7     18039
+ODQAL    5   7     18284
+OSQAL    5   3   7 18459
+TOSQAL   5   7     18984
+TOQAL    5   7     19019
+GQADDR   7         19054
+GQADWT   7         19089
+GQADEP   7         19124
+BENRFG             19586
+SCRVEL             19587
+SCRPM    2         19587
+SCRMUL             19588
+SCRFAC             19591
+DEPCOR             19592
+AVDEPE             19593
+AVVELE             19594
+IDOX               19595
+IBOD               19596
+REAMFG             19609
+OXPM1              19609
+KBOD20             19610
+OXPM2    4         19610
+TCBOD              19611
+KODSET             19612
+SUPSAT             19613
+CFOREA             19614
+REAKT              19615
+BENOD              19616
+OXPM3    6         19616
+TCBEN              19617
+EXPOD              19618
+BRBOD    2         19619
+EXPREL             19621
+TCGINV             19622
+OXPM4    4         19622
+REAK               19623
+EXPRED             19624
+EXPREV             19625
+DOX                19627
+OXST     2         19627
+BOD                19628
+RDOX               19629
+RBOD               19630
+SATDO              19639
+RODOX              19643
+ROBOD              19644
+KOREA              19655
+BODOX              19656
+ODOX     5         19657
+OBOD     5         19662
+READOX             19717
+BODDOX             19718
+BENDOX             19719
+NITDOX             19720
+PHYDOX             19721
+ZOODOX             19722
+BALDOX             19723
+TOTDOX             19724
+DECBOD             19757
+BNRBOD             19758
+SNKBOD             19759
+DENBOD             19760
+PHYBOD             19761
+ZOOBOD             19762
+BALBOD             19763
+TOTBOD             19764
+INO3               19813
+ITAM               19814
+INO2               19815
+IPO4               19816
+ISNH4    4         19833
+ISPO4    4         19837
+TNUIF    4         19873
+NUADFG   6         19909
+TAMFG              19915
+NUPM1    7         19915
+NO2FG              19916
+PO4FG              19917
+AMVFG              19918
+DENFG              19919
+ADNHFG             19920
+ADPOFG             19921
+NUAFXM  12   3     19922
+NUACNM  12   3     19958
+CVBN               19994
+CVBO               19995
+CVBP               19996
+CVBPC              19997
+CVBPN              19998
+BPCNTC             19999
+CVOC               20000
+CVON               20001
+CVOP               20002
+BRTAM    2         20003
+NUPM2    5         20003
+BRPO4    2         20005
+ANAER              20007
+BNH4     3         20008
+NUPM3    6         20008
+BPO4     3         20011
+KTAM20             20014
+NUPM4    6         20014
+KNO220             20015
+TCNIT              20016
+KNO320             20017
+TCDEN              20018
+DENOXT             20019
+EXPNVG             20020
+NUPM5    2         20020
+EXPNVL             20021
+ADNHPM   3         20022
+NUADPM   6         20022
+ADPOPM   3         20025
+NO3                20033
+DNUST    6         20033
+TAM                20034
+NO2                20035
+PO4                20036
+NH4                20037
+NH3                20038
+SNH4     3         20039
+SPO4     3         20042
+RNO3               20045
+DNUST2   6         20045
+RTAM               20046
+RNO2               20047
+RPO4               20048
+RNH4               20049
+RNH3               20050
+RSNH4   12         20051
+RSPO4   12         20063
+RRNO3              20075
+RRTAM              20076
+RRNO2              20077
+RRPO4              20078
+RONO3              20141
+ROTAM              20142
+RONO2              20143
+ROPO4              20144
+ROSNH4   4         20161
+ROSPO4   4         20165
+TNUCF1   4         20201
+DSNH4    4         20205
+DSPO4    4         20209
+NITNO3             20245
+DENNO3             20246
+BODNO3             20247
+PHYNO3             20248
+ZOONO3             20249
+BALNO3             20250
+TOTNO3             20251
+NITTAM             20280
+VOLNH3             20281
+BNRTAM             20282
+BODTAM             20283
+PHYTAM             20284
+ZOOTAM             20285
+BALTAM             20286
+TOTTAM             20287
+NITNO2             20320
+BNRPO4             20325
+BODPO4             20326
+PHYPO4             20327
+ZOOPO4             20328
+BALPO4             20329
+TOTPO4             20330
+ADNH4    4         20355
+ADPO4    4         20359
+ONO3     5         20395
+OTAM     5         20400
+ONO2     5         20405
+OPO4     5         20410
+OSNH4    5   4     20495
+OSPO4    5   4     20515
+TNUCF2   5   4     20695
+DECCO2             20715
+NUADDR   3         20716
+NUADWT   3         20731
+NUADEP   3         20746
+IPHYTO             20892
+IZOO               20893
+IORN               20894
+IORP               20895
+IORC               20896
+ITORN              20927
+ITORP              20928
+ITORC              20929
+ITOTN              20930
+ITOTP              20931
+PLADFG   6         20963
+PHYFG              20969
+PKFG     9         20969
+ZOOFG              20970
+BALFG              20971
+SDLTFG             20972
+AMRFG              20973
+DECFG              20974
+NSFG               20975
+ZFOOD              20976
+BNPFG              20977
+BFIXFG   4         20979
+BINVFG             20983
+PLAFXM  12   3     20984
+PLACNM  12   3     21020
+CVBC               21056
+CVBCL              21057
+CVNRBO             21058
+CVPB               21059
+RATCLP             21060
+PKPM1    7         21060
+NONREF             21061
+LITSED             21062
+ALNPR              21063
+EXTB               21064
+MALGR              21065
+PARADF             21066
+CMMLT              21067
+PKPM2    7         21067
+CMMN               21068
+CMMNP              21069
+CMMP               21070
+TALGRH             21071
+TALGRL             21072
+TALGRM             21073
+ALR20              21074
+PKPM3    6         21074
+ALDH               21075
+ALDL               21076
+OXALD              21077
+NALDH              21078
+PALDH              21079
+NMINGR             21080
+PKPM12   5         21080
+PMINGR             21081
+CMINGR             21082
+LMINGR             21083
+NMINC              21084
+SEED               21085
+PKPM4    6         21085
+MXSTAY             21086
+OREF               21087
+CLALDH             21088
+PHYSET             21089
+REFSET             21090
+MZOEAT             21091
+PKPM5    5         21091
+ZFIL20             21092
+ZRES20             21093
+ZD                 21094
+OXZD               21095
+TCZFIL             21096
+PKPM6    4         21096
+TCZRES             21097
+ZEXDEL             21098
+ZOMASS             21099
+MBAL               21100
+PKPM7    7         21100
+CFBALR             21101
+CFBALG             21102
+MINBAL             21103
+CAMPR              21104
+FRAVL              21105
+NMAXFX             21106
+MBALGR   4         21107
+TCBALG   4         21111
+CMMNB    4         21115
+CMMPB    4         21119
+CMMD1    4         21123
+CMMD2    4         21127
+CSLIT    4         21131
+BALR20   4         21135
+TCBALR   4         21139
+CSLOF1   4         21143
+CSLOF2   4         21147
+GRORES   4         21151
+CREMVL             21155
+PKPM8    4         21155
+CMMBI              21156
+BINV               21157
+TCGRAZ             21158
+BINVM   12         21160
+CTRBQ1             21172
+PKPM9    4         21172
+CTRBQ2             21173
+CKTRB1             21174
+CKTRB2             21175
+FRRIF              21176
+PKPM10   5         21176
+CMMV               21177
+RIFCQ1             21178
+RIFCQ2             21179
+RIFCQ3             21180
+RIFVEL   4         21181
+PKPM11   8         21181
+RIFDEP   4         21185
+JDAT               21193
+BALDEP             21194
+BALVEL             21195
+PHYTO              21196
+PKST1    3         21196
+PHYCLA             21197
+LIMPHY             21198
+BENAL    4         21199
+PKST2    4   3     21199
+BALCLA   4         21203
+LIMBAL   4         21207
+TBENAL   2         21211
+ORN                21213
+PKST3    7         21213
+ORP                21214
+ORC                21215
+TORN               21216
+TORP               21217
+TORC               21218
+POTBOD             21219
+ZOO                21220
+TN                 21221
+PKST4    2         21221
+TP                 21222
+ROPHYT             21245
+ROZOO              21246
+ROORN              21247
+ROORP              21248
+ROORC              21249
+ROTORN             21270
+ROTORP             21271
+ROTORC             21272
+ROTOTN             21273
+ROTOTP             21274
+OPHYT    5         21295
+OZOO     5         21300
+OORN     5         21305
+OORP     5         21310
+OORC     5         21315
+OTORN    5         21420
+OTORP    5         21425
+OTORC    5         21430
+OTOTN    5         21435
+OTOTP    5         21440
+PLADDR   3         21545
+PLADWT   3         21560
+PLADEP   3         21575
+SNKPHY             21578
+ZOOPHY             21579
+DTHPHY             21580
+GROPHY             21581
+TOTPHY             21582
+GROZOO             21603
+DTHZOO             21604
+TOTZOO             21605
+FLXBAL   3   4     21618
+GROTBA             21678
+DTHTBA             21679
+TOTTBA             21680
+SNKORN             21693
+PHYORN             21694
+ZOOORN             21695
+BALORN             21696
+TOTORN             21697
+SNKORP             21718
+PHYORP             21719
+ZOOORP             21720
+BALORP             21721
+TOTORP             21722
+SNKORC             21743
+PHYORC             21744
+ZOOORC             21745
+BALORC             21746
+TOTORC             21747
+PYCO2              21768
+ZOCO2              21769
+BACO2              21770
+ITIC               21878
+ICO2               21879
+PHCNT              21892
+PHPM1    2         21892
+ALKCON             21893
+CFCINV             21894
+PHPM2    3         21894
+BRCO2    2         21895
+TIC                21899
+PHST     3         21899
+CO2                21900
+PH                 21901
+SATCO2             21905
+ROTIC              21907
+ROCO2              21908
+OTIC     5         21919
+OCO2     5         21924
+BODCO2             21979
+PHYCO2             21980
+ZOOCO2             21981
+BALCO2             21982
+BENCO2             21983
+INVCO2             21984
+TOTCO2             21985
+ACFLAG  14         22021
+ACPARM   7         22035
+NUMCON             22043
+NUMGQL             22044
+ACCONC   7         22081
+ACSTOR   7   5     22095
+ACINFL   7   5     22137
+ACFLX1   7   5     22186
+ACFLX2   5   7   5 22228
+ACFLXC  10   5     22438
+ACFLXG   7   5     22498
+ACFLX3   7   5     22540
+ACPH               22575
+ACCONV   7         22577
+TOPFL              22584
+VEGFL              22585
+NSSP               22586
+TSA    250  12     22587
+DISL   250  10     25587
+DISR   250  10     28087
+WIDL   250  10     30587
+WIDR   250  10     33087
+HABSL  250  10     35587
+HABSR  250  10     38087
+HDEML  250  10     40587
+HDEMR  250  10     43087
+LATDEG             45587
+LONDEG             45588
+LONSTD             45589
+DENL   250  10     45590
+DENR   250  10     48090
+NVPL   250         50590
+NVPR   250         50840
+JDAY               51090
+LATRAD             51091
+SO     250         51092
+TSAL   250         51342
+TSAR   250         51592
+SKOP   250         51842
+VSAL   250         52092
+VSAR   250         52342
+DLT1               52592
+DEC                52593
+HFDLT              52594
+DF                 52595
 

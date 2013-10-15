@@ -71,12 +71,12 @@ C
      $              NUADEP(3),PH
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(505),DUM2(207),DUM3(3051),DUM4(715),
-     $              DUM5(107),DUM6(605),DUM7(7485),DUM8(1100),DUM9(7),
+     $              DUM5(107),DUM6(605),DUM7(8085),DUM8(1100),DUM9(7),
      $              DUM10(266),DUM11,DUM12(181),DUM13(14),DUM14(4),
      $              DUM15(8),DUM16(202),DUM17(78),DUM18(24),
      $              DUM19(395),DUM20(3721),DUM21(4),DUM22(33),
      $              DUM23(26),DUM24(60),DUM25(16),DUM26(1009),
-     $              DUMRCH(30699)
+     $              DUMRCH(32099)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(DEPSCR,SDCF1(1,1)),(ROSED,SDCF2(1,1)),
@@ -136,4 +136,4 @@ C
      $              ONO3(MXEXIT),OTAM(MXEXIT),ONO2(MXEXIT),
      $              OPO4(MXEXIT),OSNH4(MXEXIT,4),OSPO4(MXEXIT,4),
      $              NUADDR(3),NUADWT(3)
-C     end byte: 208000 word:52000
+C     end byte: 216000 word:54000
