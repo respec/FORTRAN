@@ -794,18 +794,20 @@ C              1 - EMA
 C
 C     + + + LOCAL VARIABLES
       INTEGER      I,J,ISTA,NSPECS,IVAL
+      CHARACTER*1  S1(120)
+      CHARACTER*5  LCODE
       CHARACTER*120 S,KWD
       TYPE (ThreshSpec), ALLOCATABLE :: LTHRESH(:)
       TYPE (IntervalSpec), ALLOCATABLE :: LINTERVAL(:)
       TYPE (PeakSpec), ALLOCATABLE :: LPKS(:)
 C
 C     + + + FUNCTIONS + + +
-      INTEGER      CVRINT, IYESNO
+      INTEGER      CVRINT, IYESNO, STRFND
       REAL         CVRDEC
       CHARACTER*120 STRRETREM
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL     CVRINT, IYESNO, CVRDEC, STRRETREM, WRITESPECSTA
+      EXTERNAL   CVRINT, IYESNO, STRFND, CVRDEC, STRRETREM, WRITESPECSTA
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1043,27 +1045,21 @@ C           read 4 peak components
             ELSE
               WRITE(99,*) "No value found for Peak Value"
             END IF
-            KWD = STRRETREM(S)
-            J = LEN_TRIM(KWD)
-            IF (J.GT.5) THEN
-C             assume this is the comment and there is no quality code
-              NEWPKS(NNEWPKS)%PKCOM = KWD(1:J+1) // S
-              NEWPKS(NNEWPKS)%PKCODE = '     '
-            ELSE IF (LEN_TRIM(KWD).GT.0) THEN
-C             assume this is a quality code
-              NEWPKS(NNEWPKS)%PKCODE = KWD
-            ELSE
-              WRITE(99,*) "No value found for Peak Code"
-              NEWPKS(NNEWPKS)%PKCODE = '     '
-            END IF
-            KWD = STRRETREM(S)
-            J = LEN_TRIM(KWD)
-            IF (J.GT.0) THEN
-C             include remaining part of spec string
-              NEWPKS(NNEWPKS)%PKCOM = KWD(1:J+1) // S
-            ELSE
-              NEWPKS(NNEWPKS)%PKCOM = ' '
-              WRITE(99,*) "No value found for Peak Comment"
+C           assume no code or comment
+            NEWPKS(NNEWPKS)%PKCOM = ''
+            NEWPKS(NNEWPKS)%PKCODE = ''
+            CALL CVARAR(120,S,120,S1)
+            J = STRFND(120,S1,1,'''')
+            IF (J.GT.0) THEN 
+C             comment found
+              IF (J.GT.1) THEN
+C               but there is a code preceding it
+                NEWPKS(NNEWPKS)%PKCODE = S(1:J-1)
+              END IF  
+              NEWPKS(NNEWPKS)%PKCOM = S(J+1:120)
+            ELSEIF (LEN_TRIM(S).GT.0) THEN
+C             assume code is only thing left
+              NEWPKS(NNEWPKS)%PKCODE = S
             END IF
           END IF
  100    CONTINUE
@@ -1333,6 +1329,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER   I,J
       CHARACTER*12 LWRSTR, UPRSTR
       CHARACTER*15 OSTAID
+      CHARACTER*120 LCOMMENT
 C
 C     + + + FUNCTIONS + + +
       INTEGER   ZLNTXT
@@ -1411,14 +1408,13 @@ C     thresholds and intervals
 C     new/revised peaks
       IF (NNEWPKS.GT.0) THEN
         DO 30 I=1,NNEWPKS
+          LCOMMENT = '''' // TRIM(NEWPKS(I)%PKCOM)
           IF (NEWPKS(I)%PKVAL .LT. 100) THEN
             WRITE(92,2020) NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
-     $                               NEWPKS(I)%PKCODE,
-     $                               TRIM(NEWPKS(I)%PKCOM)
+     $                               NEWPKS(I)%PKCODE,LCOMMENT
           ELSE
             WRITE(92,2021) NEWPKS(I)%PKYR,NEWPKS(I)%PKVAL,
-     $                               NEWPKS(I)%PKCODE,
-     $                               TRIM(NEWPKS(I)%PKCOM)
+     $                               NEWPKS(I)%PKCODE,LCOMMENT
           END  IF
  30     CONTINUE  
       END IF
