@@ -832,6 +832,7 @@ C
 C       convert each conduit name string into int equiv
         IFOUND = 0
         DO 270 I= 1, NCOND
+          CSC(I) = ADJUSTL(CSC(I))
           IF (TRIM(CSC(I)) .EQ. 'DUMMY') THEN
             CSHAPE(I) = 1
             IFOUND = 1
@@ -937,6 +938,7 @@ C         process values in table-type WEIR-PARM
             IC = IC + 1
             WRITE (CTAG8,2011) (RVALD(J),J=IC,IC+1)
             WTYPE(I) = 1
+            CTAG8 = ADJUSTL(CTAG8)
             IF (CTAG8 .EQ. 'TRANSVER') THEN
               WTYPE(I) = 1
             ELSEIF (CTAG8 .EQ. 'SIDEFLOW') THEN
@@ -953,6 +955,7 @@ C         process values in table-type WEIR-PARM
             IC = IC + 1
             WRITE (CTAG4,2010) RVALD(IC)
             WFLAP(I) = 0
+            CTAG4 = ADJUSTL(CTAG4)
             IF (TRIM(CTAG4) .EQ. 'YES') THEN
               WFLAP(I) = 1
             END IF 
@@ -973,6 +976,7 @@ C         process values in table-type WEIR-XS
             IC = IC + 1
             WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
             WSHAPE(I) = 1
+            CPRIOR = ADJUSTL(CPRIOR)
             IF (TRIM(CPRIOR).EQ.'RECT_OPEN') THEN
               WSHAPE(I) = 1
             ELSEIF (TRIM(CPRIOR).EQ.'TRIANGULAR') THEN
@@ -1045,6 +1049,7 @@ C         process values in table-type ORIFICE-PARM
             IC = IC + 1
             WRITE (CTAG8,2011) (RVALD(J),J=IC,IC+1)
             OTYPE(I) = 1
+            CTAG8 = ADJUSTL(CTAG8)
             IF (TRIM(CTAG8) .EQ. 'BOTTOM') THEN
               OTYPE(I) = 2
             END IF 
@@ -1055,6 +1060,7 @@ C         process values in table-type ORIFICE-PARM
             IC = IC + 1
             WRITE (CTAG4,2010) RVALD(IC)
             OFLAP(I) = 0
+            CTAG4 = ADJUSTL(CTAG4)
             IF (TRIM(CTAG4) .EQ. 'YES') THEN
               OFLAP(I) = 1
             END IF 
@@ -1073,6 +1079,7 @@ C         process values in table-type ORIFICE-XS
             IC = IC + 1
             WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
             OSHAPE(I) = 1
+            CPRIOR = ADJUSTL(CPRIOR)
             IF (TRIM(CPRIOR).EQ.'RECT_CLOSED') THEN
               OSHAPE(I) = 2
             END IF
