@@ -221,6 +221,132 @@ end subroutine conduit_reverse
 
 !=============================================================================
 
+subroutine orifice_validate(j, k)
+!
+!  Input:   j = link index
+!           k = conduit index
+!  Output:  none
+!  Purpose: validates a conduit's properties.
+!
+    use headers
+    use forcemain
+    use modXsect
+    use swmm5futil
+    use report
+    implicit none
+    integer, intent(in) :: j
+    integer(kind=K4), intent(in) :: k
+    real(kind=dpl) :: aa, timestep
+    real(kind=dpl) :: lengthFactor, roughness, mSlope                    !(5.0.018 - LR)
+    integer       :: err = 0
+   
+
+
+    ! --- check for valid xsection
+    if ( arrLink(j)%xsect%datatype /= RECT_CLOSED .and. arrLink(j)%xsect%datatype /= CIRCULAR ) then
+    err = ERR_REGULATOR_SHAPE
+    end if
+   ! if ( err > 0 ) then
+    
+    !    report_writeErrorMsg(err, arrLink(j)%ID);
+   !     return
+  !  end if
+
+    ! --- check for negative offset                                           //(5.0.012 - LR)
+    if ( arrLink(j)%offset1 < 0.0 ) then
+    arrLink(j)%offset1 = 0.0;                        !//(5.0.012 - LR)
+    end if
+    ! --- compute partial flow adjustment
+    call orifice_setSetting(j, timestep);                                                !//(5.0.010 - LR)
+
+    ! --- compute an equivalent length
+    Orifice(k)%length = 2.0 * RouteStep * sqrt(GRAVITY * arrLink(j)%xsect%yFull);
+    Orifice(k)%length = MAX(200.0, Orifice(k)%length);
+    Orifice(k)%surfArea = 0.0;
+end subroutine orifice_validate
+
+subroutine weir_validate(j, k)
+!
+!  Input:   j = link index
+!           k = conduit index
+!  Output:  none
+!  Purpose: validates a conduit's properties.
+!
+    use headers
+    use forcemain
+    use modXsect
+    use swmm5futil
+    use report
+    implicit none
+    integer, intent(in) :: j
+    integer(kind=K4), intent(in) :: k
+    real(kind=dpl) :: q, q1, q2, head
+    
+    real(kind=dpl) ::  dire
+  
+    logical(kind=k2l) :: noFlapGate = .FALSE.
+    
+   ! real(kind=dp) :: lengthFactor, roughness, mSlope                    !(5.0.018 - LR)
+    integer       :: err = 0
+    
+    dire = 1.0
+   
+    select case (Weir(k)%datatype)
+      case (TRANSVERSE_WEIR) 
+          
+
+     case (SIDEFLOW_WEIR)
+        if ( arrLink(j)%xsect%datatype /= RECT_OPEN ) then 
+        err = ERR_REGULATOR_SHAPE
+        end if
+        Weir(k)%slope = 0.0
+
+      case (VNOTCH_WEIR) 
+        if ( arrLink(j)%xsect%datatype /= TRIANGULAR ) then
+        err = ERR_REGULATOR_SHAPE
+        else
+        
+            Weir(k)%slope = arrLink(j)%xsect%sBot                                !//(5.0.010 - LR)
+        end if
+      case (TRAPEZOIDAL_WEIR) 
+         if ( arrLink(j)%xsect%datatype /= TRAPEZOIDAL ) then
+         err = ERR_REGULATOR_SHAPE
+        else
+        
+            Weir(k)%slope = arrLink(j)%xsect%sBot                               ! //(5.0.010 - LR)
+        end if
+    end select
+
+    if ( err > 0 ) then
+    
+        call report_writeErrorMsg(err, arrLink(j)%ID);
+        return
+    end if
+    
+    if ( arrLink(j)%offset1 < 0.0 ) then
+    arrLink(j)%offset1 = 0.0                        !//(5.0.012 - LR)
+    end if
+   
+   ! // --- compute an equivalent length
+    Weir(k)%length = 2.0 * RouteStep * sqrt(GRAVITY * arrLink(j)%xsect%yFull)
+    !Weir(k)%length = MAX(200.0, Weir(k)%length);
+    if ( Weir(k)%length > 200 ) then
+    Weir(k)%length = 200                        !//(5.0.012 - LR)
+    end if
+    Weir(k)%surfArea = 0.0;
+
+    !--- find flow through weir when water level equals weir height
+    head = arrLink(j)%xsect%yFull
+    call weir_getFlow(j, k, head, dire, noFlapGate, q1, q2)
+    !weir_getFlow(j, k, head, 1.0, FALSE, &q1, &q2);                            //(5.0.012 - LR)
+    q = q1 + q2
+
+    ! --- compute equivalent orifice coeff. (for CFS flow units)
+    head = head / 2.0  
+    Weir(k)%cSurcharge = q / SQRT(head)   
+    
+end subroutine weir_validate
+
 subroutine conduit_validate(j, k)
 !
 !  Input:   j = link index
@@ -661,9 +787,9 @@ subroutine link_validate(j)
       case (E_PUMP)
          !call pump_validate(j, arrLink(j)%subIndex)    !break
       case (E_ORIFICE)
-         !call orifice_validate(j, arrLink(j)%subIndex) !break
+         call orifice_validate(j, arrLink(j)%subIndex) !break ! xy
       case (E_WEIR)
-         !call weir_validate(j, arrLink(j)%subIndex)    !break
+         call weir_validate(j, arrLink(j)%subIndex)    !break
     end select
 
 !!  The following code segment was revised in release 5.0.019  !!          !(5.0.019 - LR)
@@ -1099,7 +1225,7 @@ end subroutine link_setParams
 
 !!  Function re-written to incorporate flap gate head loss.  !!            !(5.0.012 - LR)
 
-real(kind=dpl) function orifice_getFlow(j, k,  head, f, hasFlapGate)
+real(kind=dpl) recursive function orifice_getFlow(j, k,  head, f, hasFlapGate)
 !
 !  Input:   j = link index
 !           k = orifice index
@@ -1110,66 +1236,78 @@ real(kind=dpl) function orifice_getFlow(j, k,  head, f, hasFlapGate)
 !  Purpose: computes flow through an orifice as a function of head.
 !
     use headers
+    use modXsect
     implicit none
     integer, intent(in) :: j, k
-    real(kind=dpl), intent(in) :: head, f
+    real(kind=dpl), intent(inout) :: head, f
     logical(kind=K2l), intent(in) :: hasFlapGate
     
-    real(kind=dpl) :: area, q
+    real(kind=dpl) :: area, q, tp, xmult
     real(kind=dpl) :: veloc, hLoss
 
+    q= 0.0_dpl
 !    ! --- case where orifice is closed
-!    if ( head == 0.0 .or. f <= 0.0  )                                            !(5.0.013 - LR)
-!    {
-!        arrLink(j).dqdh = 0.0
-!        return 0.0
-!    }
+    if ( head == 0.0 .or. f <= 0.0  )  then                                          !(5.0.013 - LR)
+  
+        arrLink(j)%dqdh = 0.0
+       ! xy return 0.0
+        return
 !
 !    ! --- case where inlet depth is below critical depth
 !    !     orifice behaves as a weir
-!    else if ( f < 1.0 )
-!    {
-!        q = Orifice(k).cWeir * pow(f, 1.5)
-!        arrLink(j).dqdh = 1.5 * q / (f * Orifice(k).hCrit)
-!    }
+    else if ( f < 1.0 )  then
+   
+      !  q = Orifice(k)%cWeir * Power(f, 1.5)
+      q = Orifice(k)%cWeir * f**1.5
+       arrLink(j)%dqdh = 1.5 * q / (f * Orifice(k)%hCrit)
+   
 !
 !    ! --- case where normal orifice flow applies
-!    else
-!    {
-!        q = Orifice(k).cOrif * sqrt(head)
-!        arrLink(j).dqdh = q / (2.0 * head)
-!    }
+    else
+   
+        q = Orifice(k)%cOrif * sqrt(head)
+        arrLink(j)%dqdh = q / (2.0 * head)
+    end if
 !
 !    ! --- apply ARMCO adjustment for headloss from flap gate
-!    if ( hasFlapGate )
-!    {
-!        ! --- compute velocity for current orifice flow
-!        area = xsect_getAofY(&arrLink(j).xsect,
-!                             arrLink(j).setting * arrLink(j).xsect.yFull)
-!        veloc = q / area
-!
-!        ! --- compute head loss from gate
-!        hLoss = (4.0 / GRAVITY) * veloc * veloc *
-!                 exp(-1.15 * veloc / sqrt(head) )
-!
-!        ! --- update head (for orifice flow) 
-!        !     or critical depth fraction (for weir flow)
-!        if ( f < 1.0 )
-!        {
-!            f = f - hLoss/Orifice(k).hCrit
-!            if ( f < 0.0 ) f = 0.0
-!        }
-!        else
-!        {
-!            head = head - hLoss
-!            if ( head < 0.0 ) head = 0.0
-!        }
-!
-!        ! --- make recursive call to this function, with hasFlapGate
-!        !     set to false, to find flow values at adjusted head value
+    if ( hasFlapGate ) then
+    
+ !      ! --- compute velocity for current orifice flow
+       xmult = arrLink(j)%setting * arrLink(j)%xsect%yFull
+       area = xsect_getAofY(arrLink(j)%xsect, xmult)
+                             
+        veloc = q / area
+
+      ! --- compute head loss from gate
+        hLoss = (4.0 / GRAVITY) * veloc * veloc *exp(-1.15 * veloc / sqrt(head) )
+                
+
+        ! --- update head (for orifice flow) 
+       !     or critical depth fraction (for weir flow)
+       if ( f < 1.0 ) then
+       
+           f = f - hLoss/(Orifice(k)%hCrit)
+
+             
+           if ( f < 0.0 )  then 
+           f = 0.0
+           end if
+        else
+       
+            head = head - hLoss
+           if ( head < 0.0 )  then 
+           head = 0.0
+           end if
+        
+        end if
+        ! --- make recursive call to this function, with hasFlapGate
+       !     set to false, to find flow values at adjusted head value
 !        q = orifice_getFlow(j, k, head, f, FALSE)
-!    }
-!    return q
+!           call orifice_getFlow(j, k, head, f, hasFlapGate)
+         q = orifice_getFlow(j, k, head, f, arrLink(j)%hasFlapGate)
+    end if
+    orifice_getFlow = q
+    return 
 end function orifice_getFlow
 
 !=============================================================================
@@ -1398,6 +1536,46 @@ subroutine orifice_setSetting(j, tstep)                                  !(5.0.0
     Orifice(k)%cWeir = orifice_getWeirCoeff(j, k, h) * f                      !(5.0.012 - LR)
 end subroutine orifice_setSetting
 
+
+subroutine weir_setSetting(j)                                  !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+!  Input:   j = link index                                                    !(5.0.010 - LR)
+!           tstep = time step over which setting is adjusted (sec)            !(5.0.010 - LR)
+!  Output:  none                                                              !(5.0.010 - LR)
+!  Purpose: updates an orifice's setting as a result of a control action.     !(5.0.010 - LR)
+!                                                                             !(5.0.010 - LR)
+    use headers
+    use modXsect
+    implicit none
+    integer, intent(in) :: j
+    
+    
+    integer(kind=K4) :: k                                               !(5.0.010 - LR)
+    real(kind=dp) :: q1, q2                                                        !(5.0.010 - LR)
+    real(kind=dp) :: h, q                                                              !(5.0.012 - LR)
+    real(kind=dp) ::  dire2
+    logical(kind=k2) :: noFlapGate2 = .FALSE.
+    
+   dire2 = 1.0
+   k = arrLink(j)%subindex
+  ! noFlapGate2 = 0
+   
+    !weir_getFlow(j, k, head, 1.0, FALSE, &q1, &q2);                            //(5.0.012 - LR)
+
+   arrLink(j)%setting = arrLink(j)%targetSetting  
+    if ( arrLink(j)%setting == 0.0 )  then                        
+        weir(k)%cSurcharge = 0.0                             
+                        
+    else                                                                       !(5.0.010 - LR)
+        h =  arrLink(j)%setting * arrLink(j)%xsect%yFull    
+         call weir_getFlow(j, k, h, dire2, noFlapGate2, q1, q2) 
+         q = q1 + q2                               !(5.0.010 - LR)
+         h = h/2.0
+         weir(k)%cSurcharge = q/(sqrt(h))
+    end if
+                  
+end subroutine weir_setSetting
+
 !=============================================================================
 
 real(kind=dpl) function outlet_getFlow(k, head)
@@ -1555,7 +1733,7 @@ subroutine link_setSetting(j, tstep)                                      !(5.0.
       case (E_ORIFICE)
           call orifice_setSetting(j, tstep)                       !(5.0.011 - LR)
       case (E_WEIR)
-          !call weir_setSetting(j)                                 !(5.0.011 - LR)
+          call weir_setSetting(j)                                 !(5.0.011 - LR)
       case default
           arrLink(j)%setting = arrLink(j)%targetSetting            !(5.0.011 - LR)
     end select                                                     !(5.0.010 - LR)
@@ -1590,7 +1768,7 @@ end subroutine link_setTargetSetting
 real(kind=dpl) function weir_getdqdh(k, dir, h, q1, q2)
     use headers
     implicit none
-    integer, intent(in) :: k
+    integer(kind=K4), intent(in) :: k
     real(kind=dpl), intent(in) :: dir, h, q1, q2
     
     real(kind=dpl) :: q1h
@@ -1648,7 +1826,8 @@ recursive subroutine weir_getFlow(j, k, head, dir, hasFlapGate, q1, q2)
     use swmm5futil
     use modXsect
     implicit none
-    integer, intent(in) :: j, k
+    integer, intent(in) :: j
+    integer(kind=K4), intent(in) :: k
     real(kind=dpl), intent(in) :: head, dir
     real(kind=dpl), intent(inout) :: q1, q2
     logical(kind=k2l), intent(in) :: hasFlapGate
@@ -1744,7 +1923,7 @@ real(kind=dpl) function weir_getInflow(j)
     integer, intent(in) :: j
     integer ::    n1          ! index of upstream node
     integer ::    n2          ! index of downstream node
-    integer ::    k           ! index of weir
+    integer(kind=K4) ::    k  ! index of weir
     real(kind=dpl) :: q1          ! flow through central part of weir (cfs)
     real(kind=dpl) :: q2          ! flow through end sections of weir (cfs)
     real(kind=dpl) :: head        ! head on weir (ft)
