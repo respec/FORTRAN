@@ -39,7 +39,7 @@ C
 C     + + + EXTERNALS + + +
       EXTERNAL   ZIPI,ITABLE,OMSG,RTABLE,FTABLE,FTBWDM,DAYVAL,TAGVAL
       EXTERNAL   OMSTC,ZIPD,ZIPR,OMSTI,OMSTR,CATSRT,DISCH,FNDROW,AUXIL
-      EXTERNAL   SHEAR
+      EXTERNAL   SHEAR,HSCKFL
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I1,I2,I4,I20/1,2,4,20/,BGRP/12/
@@ -711,6 +711,13 @@ C       process values in table-type DYNAMIC-WAVE
         NORIF = IVAL(6)
         DWWQFG= IVAL(7)
 C
+C       check output file - if not open,
+C       then open it with a standard name
+        IF (DWUNIT .GT. 0) THEN
+          CALL HSCKFL
+     I               (DWUNIT)
+        END IF
+C
 C       process values in table-type CONDUIT-PARM
         TBNO= 36
         TBSB= 1
@@ -825,79 +832,79 @@ C
 C       convert each conduit name string into int equiv
         IFOUND = 0
         DO 270 I= 1, NCOND
-          IF (CSC(I) .EQ. '               DUMMY') THEN
+          IF (TRIM(CSC(I)) .EQ. 'DUMMY') THEN
             CSHAPE(I) = 1
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '            CIRCULAR') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'CIRCULAR') THEN
             CSHAPE(I) = 2
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '     FILLED_CIRCULAR') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'FILLED_CIRCULAR') THEN
             CSHAPE(I) = 3
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '         RECT_CLOSED') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'RECT_CLOSED') THEN
             CSHAPE(I) = 4
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           RECT_OPEN') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'RECT_OPEN') THEN
             CSHAPE(I) = 5
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '         TRAPEZOIDAL') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'TRAPEZOIDAL') THEN
             CSHAPE(I) = 6
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          TRIANGULAR') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'TRIANGULAR') THEN
             CSHAPE(I) = 7
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           PARABOLIC') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'PARABOLIC') THEN
             CSHAPE(I) = 8
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           POWERFUNC') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'POWERFUNC') THEN
             CSHAPE(I) = 9
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '         RECT_TRIANG') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'RECT_TRIANG') THEN
             CSHAPE(I) = 10
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          RECT_ROUND') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'RECT_ROUND') THEN
             CSHAPE(I) = 11
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          MOD_BASKET') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'MOD_BASKET') THEN
             CSHAPE(I) = 12
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '       HORIZ_ELLIPSE') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'HORIZ_ELLIPSE') THEN
             CSHAPE(I) = 13
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '        VERT_ELLIPSE') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'VERT_ELLIPSE') THEN
             CSHAPE(I) = 14
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '                ARCH') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'ARCH') THEN
             CSHAPE(I) = 15
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           EGGSHAPED') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'EGGSHAPED') THEN
             CSHAPE(I) = 16
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           HORSESHOE') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'HORSESHOE') THEN
             CSHAPE(I) = 17
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '              GOTHIC') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'GOTHIC') THEN
             CSHAPE(I) = 18
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '            CATENARY') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'CATENARY') THEN
             CSHAPE(I) = 19
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '      SEMIELLIPTICAL') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'SEMIELLIPTICAL') THEN
             CSHAPE(I) = 20
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '        BASKETHANDLE') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'BASKETHANDLE') THEN
             CSHAPE(I) = 21
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '        SEMICIRCULAR') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'SEMICIRCULAR') THEN
             CSHAPE(I) = 22
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '           IRREGULAR') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'IRREGULAR') THEN
             CSHAPE(I) = 23
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '              CUSTOM') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'CUSTOM') THEN
             CSHAPE(I) = 24
             IFOUND = 1
-          ELSEIF (CSC(I) .EQ. '          FORCE_MAIN') THEN
+          ELSEIF (TRIM(CSC(I)) .EQ. 'FORCE_MAIN') THEN
             CSHAPE(I) = 25
             IFOUND = 1
           END IF
@@ -934,9 +941,9 @@ C         process values in table-type WEIR-PARM
               WTYPE(I) = 1
             ELSEIF (CTAG8 .EQ. 'SIDEFLOW') THEN
               WTYPE(I) = 2
-            ELSEIF (CTAG8 .EQ. ' V-NOTCH') THEN
+            ELSEIF (TRIM(CTAG8) .EQ. 'V-NOTCH') THEN
               WTYPE(I) = 3
-            ELSEIF (CTAG8 .EQ. '  TRAPEZ') THEN
+            ELSEIF (TRIM(CTAG8) .EQ. 'TRAPEZ') THEN
               WTYPE(I) = 4
             END IF 
             IC = IC + 1
@@ -946,7 +953,7 @@ C         process values in table-type WEIR-PARM
             IC = IC + 1
             WRITE (CTAG4,2010) RVALD(IC)
             WFLAP(I) = 0
-            IF (CTAG4 .EQ. ' YES') THEN
+            IF (TRIM(CTAG4) .EQ. 'YES') THEN
               WFLAP(I) = 1
             END IF 
             IC = IC + 1
@@ -966,11 +973,11 @@ C         process values in table-type WEIR-XS
             IC = IC + 1
             WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
             WSHAPE(I) = 1
-            IF (CPRIOR.EQ.'   RECT_OPEN') THEN
+            IF (TRIM(CPRIOR).EQ.'RECT_OPEN') THEN
               WSHAPE(I) = 1
-            ELSEIF (CPRIOR.EQ.'  TRIANGULAR') THEN
+            ELSEIF (TRIM(CPRIOR).EQ.'TRIANGULAR') THEN
               WSHAPE(I) = 2
-            ELSEIF (CPRIOR.EQ.' TRAPEZOIDAL') THEN
+            ELSEIF (TRIM(CPRIOR).EQ.'TRAPEZOIDAL') THEN
               WSHAPE(I) = 3
             END IF
             IC = IC + 3
@@ -1038,7 +1045,7 @@ C         process values in table-type ORIFICE-PARM
             IC = IC + 1
             WRITE (CTAG8,2011) (RVALD(J),J=IC,IC+1)
             OTYPE(I) = 1
-            IF (CTAG8 .EQ. '  BOTTOM') THEN
+            IF (TRIM(CTAG8) .EQ. 'BOTTOM') THEN
               OTYPE(I) = 2
             END IF 
             IC = IC + 1
@@ -1048,7 +1055,7 @@ C         process values in table-type ORIFICE-PARM
             IC = IC + 1
             WRITE (CTAG4,2010) RVALD(IC)
             OFLAP(I) = 0
-            IF (CTAG4 .EQ. ' YES') THEN
+            IF (TRIM(CTAG4) .EQ. 'YES') THEN
               OFLAP(I) = 1
             END IF 
             IC = IC + 1
@@ -1066,7 +1073,7 @@ C         process values in table-type ORIFICE-XS
             IC = IC + 1
             WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
             OSHAPE(I) = 1
-            IF (CPRIOR.EQ.' RECT_CLOSED') THEN
+            IF (TRIM(CPRIOR).EQ.'RECT_CLOSED') THEN
               OSHAPE(I) = 2
             END IF
             IC = IC + 3
@@ -4315,8 +4322,10 @@ C      write(messu,*) 'DWROUT: invol, VOLT, os ',INVOL,VOLT,OS
 C      
       Nobjects(E_NODE) = NNODE
       Nnodes(E_OUTFALL) = 1
-      Nobjects(LINK) = NCOND
+      Nobjects(LINK) = NCOND + NORIF + NWEIR
       Nlinks(E_CONDUIT) = NCOND
+      Nlinks(E_ORIFICE) = NORIF
+      Nlinks(E_WEIR)    = NWEIR
 C      
       Nobjects(E_GAGE) = 0 
       Nobjects(E_POLLUT) = 0 
@@ -4396,11 +4405,51 @@ C     1                 CNODE1(J),CNODE2(J),xc
  20   CONTINUE
 C
       IF (NWEIR.GT.0) THEN
-C       weirs not yet implemented
+C       weirs 
+        LTYPE = E_WEIR
+        DO 30 J= 1,NWEIR 
+          XC(1) = WTYPE(J)
+          XC(2) = WOFF(J)
+          XC(3) = WCD(J)
+          XC(4) = WFLAP(J)
+          XC(5) = WEC(J)
+          XC(6) = WCD2(J)
+          call link_setParams(J+NCOND, LTYPE, 
+     1                        WNODE1(J), WNODE2(J), 
+     1                        J, XC, 0.0)
+          XX(1) = WGEOM1(J)
+          XX(2) = WGEOM2(J)
+          XX(3) = WGEOM3(J)
+          XX(4) = WGEOM4(J)
+          isOK = xsect_setParams(arrLink(J+NCOND)%xsect, 
+     1                           WSHAPE(J), 
+     1                           XX, UCF(LENGTH))   
+          arrLink(J+NCOND)%rptFlag = .true. !this is was done in report_readoption
+ 30     CONTINUE
       END IF 
 C
       IF (NORIF.GT.0) THEN
-C       orifices not yet implemented
+C       orifices 
+        LTYPE = E_ORIFICE
+        DO 40 J= 1,NORIF 
+          XC(1) = OTYPE(J)
+          XC(2) = OOFF(J)
+          XC(3) = OCD(J)
+          XC(4) = OFLAP(J)
+          XC(5) = ORAT(J)
+          XC(6) = 0.0
+          call link_setParams(J+NCOND+NWEIR, LTYPE, 
+     1                        ONODE1(J), ONODE2(J), 
+     1                        J, XC, 0.0)
+          XX(1) = OGEOM1(J)
+          XX(2) = OGEOM2(J)
+          XX(3) = OGEOM3(J)
+          XX(4) = OGEOM4(J)
+          isOK = xsect_setParams(arrLink(J+NCOND+NWEIR)%xsect, 
+     1                           OSHAPE(J), 
+     1                           XX, UCF(LENGTH))   
+          arrLink(J+NCOND+NWEIR)%rptFlag = .true. !this is was done in report_readoption
+ 40     CONTINUE
       END IF
 C      
       RouteModel = DW
