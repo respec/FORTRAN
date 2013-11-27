@@ -948,7 +948,7 @@ C         process values in table-type WEIR-PARM
             ELSEIF (TRIM(CTAG8) .EQ. 'TRAPEZ') THEN
               WTYPE(I) = 4
             END IF 
-            IC = IC + 1
+            IC = IC + 2
             WOFF(I) = RVALD(IC) 
             IC = IC + 1
             WCD(I) = RVALD(IC) 
@@ -975,14 +975,14 @@ C         process values in table-type WEIR-XS
           DO 290 I= 1, NWEIR
             IC = IC + 1
             WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
-            WSHAPE(I) = 1
+            WSHAPE(I) = 5
             CPRIOR = ADJUSTL(CPRIOR)
             IF (TRIM(CPRIOR).EQ.'RECT_OPEN') THEN
-              WSHAPE(I) = 1
+              WSHAPE(I) = 5
             ELSEIF (TRIM(CPRIOR).EQ.'TRIANGULAR') THEN
-              WSHAPE(I) = 2
+              WSHAPE(I) = 7
             ELSEIF (TRIM(CPRIOR).EQ.'TRAPEZOIDAL') THEN
-              WSHAPE(I) = 3
+              WSHAPE(I) = 6
             END IF
             IC = IC + 3
             WGEOM1(I) = RVALD(IC) 
@@ -1053,7 +1053,7 @@ C         process values in table-type ORIFICE-PARM
             IF (TRIM(CTAG8) .EQ. 'BOTTOM') THEN
               OTYPE(I) = 2
             END IF 
-            IC = IC + 1
+            IC = IC + 2
             OOFF(I) = RVALD(IC) 
             IC = IC + 1
             OCD(I) = RVALD(IC) 
@@ -1078,10 +1078,10 @@ C         process values in table-type ORIFICE-XS
           DO 320 I= 1, NORIF
             IC = IC + 1
             WRITE (CPRIOR,2070) (RVALD(J),J=IC,IC+2)
-            OSHAPE(I) = 1
+            OSHAPE(I) = 2
             CPRIOR = ADJUSTL(CPRIOR)
             IF (TRIM(CPRIOR).EQ.'RECT_CLOSED') THEN
-              OSHAPE(I) = 2
+              OSHAPE(I) = 4
             END IF
             IC = IC + 3
             OGEOM1(I) = RVALD(IC) 
