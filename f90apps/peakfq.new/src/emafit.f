@@ -626,6 +626,8 @@ c   the B17B formula will be used to estimate the MSE of the skew.
 c
       if(gbtype .eq. "MGBT" .and. nlow .gt. 0) then
         at_site_std = "B17B"
+      else
+        at_site_std = "ADJE"      ! correction due to PRH 12/16/2013
       endif
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -681,6 +683,8 @@ c  3) final computation using weighted regional info
         as_M_mse  = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),1) ! compute true a-s
         as_S2_mse = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),2) ! MSEs based on at-
         as_G_mse  = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))  ! site skew cmoms(1,3)
+        as_G_mse_Syst = mseg_all(1,eff_n,-99.d0,99.d0,cmoms(1,2)) ! ERL
+        as_G_ERL    = dble(eff_n)*(as_G_mse_Syst/as_G_mse)
         call p3est_ema(n,ql,qu,
      1      as_M_mse,as_S2_mse,as_G_mse, ! use at-site MSEs
      2      r_M,     r_S2,     r_G,      ! and weighted regional info
@@ -1623,7 +1627,7 @@ c
         double precision
      1    fp_tnc_icdf
      
-        data nu_min/1.0d0/,c_min/0.5d0/  !CTAC 0.5
+        data nu_min/2.0d0/,c_min/1.0d0/  !CTAC 1.0, 0.5
 
 c
 c    beta1 is coefficient of regression of syp on yp
@@ -1655,7 +1659,6 @@ c
        ci_high =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
          t        =  -t
        ci_low  =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
-
         return
       end
       
@@ -1700,7 +1703,7 @@ C            EPS          R*8  CI COVERAGE TO EMPLOY
 C            R_S2         R*8  REGIONAL VARIANCE (STD.DEV^2)
 C                              (SEE COHN 2011 NOTEBOOK 2 FOR WHY NEEDED)
 C            R_M_MSE      R*8  MEAN SQUARE ERROR OF REGIONAL MEAN
-C            R_S2         R*8  REGIONAL VARIANCE (STD.DEV^2); (SEE NOTES)
+C            R_S2_MSE   R*8  MEAN SQUARE ERROR OF REGIONAL VARIANCE
 C            R_G_MSE      R*8  MSE OF G_R (B17) ; 
 C                            THIS VARIABLE ENCODES FOUR DISTINCT CASES:
 C                            1) R_G_MSE = 0 ("GENERALIZED SKEW, NO ERROR")
@@ -1712,7 +1715,6 @@ C                                USE G = WEIGHTED AVERAGE OF AT-SITE AND
 C                                REGIONAL SKEW (B17B RECOMMENDATION)
 C                            4) 1.D10 < R_G_MSE ("STATION SKEW")
 C                                USE G = AT-SITE SKEW
-C            R_S2_MSE   R*8  MEAN SQUARE ERROR OF REGIONAL VARIANCE
 C
 C            N.B.:  G_R, THE REGIONAL SKEWNESS, 
 C                          IS SET = SIGN(2,PARMS(3))/SQRT(PARMS(2))
