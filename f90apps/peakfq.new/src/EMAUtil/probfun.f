@@ -1788,8 +1788,8 @@ c
 c        B     =  MIN(0.D0,X1,1.D0/X2,X1/X2)
 c        C     =  MAX(0.D0,X1,1.D0/X2,X1/X2)
 
-         B     =  -10.D0
-         C     =   10.D0 
+         B     =  -32.D0  !  Works for 0.01<=p<=0.99,nu=1,nc=0  07/15/2013 (TAC)
+         C     =   32.D0 
                       
       CALL DZEROIN(FTNCINV,B,C,RE,AE,IFLAG)
       
