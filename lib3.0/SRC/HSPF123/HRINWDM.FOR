@@ -24,15 +24,15 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     MSGFL  - fortran unit number of HSPF message file
 C     MESSU  - ftn unit no. to be used for printout of messages
 C     WDMSFL - watershed data management file unit number
-C     VOLNO  - ???
-C     MEMN   - ???
-C     MEMSB  - ???
+C     VOLNO  - wdm dataset number
+C     MEMN   - member name
+C     MEMSB  - 
 C     SYST   - ???
 C     GAPST  - ???
 C     AMDST  - ???
 C     SDATIM - starting date/time
 C     EDATIM - ending date/time
-C     TRFLAG - ???
+C     TRFLAG - input(0) or output(1) flag
 C     IHMFG  - IHM flag (normal-0,IHM control-1)
 C     SYSKW1 - ???
 C     AMDKW1 - access mode keyword library
@@ -459,9 +459,9 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     MSGFL  - fortran unit number of HSPF message file
 C     MESSU  - ftn unit no. to be used for printout of messages
 C     WDMSFL - watershed data management file unit number
-C     VOLNO  - ???
-C     MEMN   - ???
-C     MEMSB  - ???
+C     VOLNO  - wdm dataset number
+C     MEMN   - member name
+C     MEMSB  - member subscripts
 C     GAPST  - ???
 C     GAPKW1 - ???
 C     SYST   - ???
@@ -470,7 +470,7 @@ C     AMDKW1 - access mode keyword library
 C     AMDST  - ???
 C     SDATIM - starting date/time
 C     EDATIM - ending date/time
-C     TRFLAG - ???
+C     TRFLAG - input(0) or output(1) flag
 C     OUTLEV - run interpreter output level
 C     ECOUNT - count(s) of specific errors
 C     MAXTTB - ???
@@ -485,20 +485,28 @@ C     TABL   - ???
 C     TABLR  - ???
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   I,KIND,QLFG,LREC,RETCOD,SCLU,SGRP
+      INTEGER   I,KIND,QLFG,LREC,RETCOD,SCLU,SGRP,I1,ILEN,
+     1          TCODE,TSTEP,TGROUP,TSBYR,TSFORM
+C     make this an argument eventually     
+      INTEGER   DEFDSN
+      CHARACTER*1 MEMN1(8),LOCN1(8)
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   WDDSCK,PROWDS,OMSG,OMSTI
+      EXTERNAL   WDDSCK,PROWDS,OMSG,OMSTI,WDDSCL,WDBSAC,WDBCRL,
+     1           WDBSAI
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT(A4,A2)
+ 1010 FORMAT(6A1)
 C
 C     + + + OUTPUT FORMATS + + +
  2010 FORMAT(' BEGIN CHECKING/EXPANDING A WDMS FILE REFERENCE')
  2020 FORMAT(' END CHECKING/EXPANDING A WDMS FILE REFERENCE')
+ 2030 FORMAT('   MISSING DATASET',I6,' CREATED IN WDM FILE ON UNIT',I4)
 C
 C     + + + HISTORY + + +
 C     05/06/2004  BRB added IHMFG to allow no data range checking for WDM datasets
+C     12/2013 JLK added automatic creation of missing output datasets
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -512,6 +520,96 @@ C     subroutine memts requires a valid value
 C     determine whether dataset exists in wdmsfl
       CALL WDDSCK(WDMSFL,VOLNO,
      O            LREC,RETCOD)
+C     
+      IF (RETCOD .EQ. -81 .AND. TRFLAG .EQ. 1) THEN
+C       dataset missing for an output dataset
+        I1= 1
+C
+C       use of a template dataset not yet implemented
+        DEFDSN= 0
+C  
+        IF (DEFDSN .GT. 0) THEN
+C         create it using template
+          CALL WDDSCL(DEFWDM,DEFDSN,WDMSFL,VOLNO,I1,
+     O                RETCOD)      
+C         indicate dataset created based on template
+C
+        ELSE
+C         default as well as possible
+          CALL WDBCRL(WDMSFL,VOLNO,I1,
+     O                RETCOD)
+C         or could specify some details with WDLBAX
+C
+C         add requirecd attributes    
+C         
+C         use DELT to default TCODE(ID=17) and TSTEP(ID=33)
+          IF (DELT .EQ. 1440) THEN
+C           daily
+            TCODE= 4
+            TSTEP= 1
+          ELSE IF (DELT .LT. 60) THEN
+C           minutes
+            TCODE= 2
+            TSTEP= DELT
+          ELSE
+C           hours
+            TCODE= 3
+            TSTEP= DELT/60
+          END IF    
+          I= 17
+          CALL WDBSAI(WDMSFL,VOLNO,MSGFL,I,I1,TCODE,
+     O                RETCOD)
+          I= 33
+          CALL WDBSAI(WDMSFL,VOLNO,MSGFL,I,I1,TSTEP,
+     O                RETCOD)                                       
+C 
+C         TGROUP(ID=34) default to years
+          I= 34
+          TGROUP= 6
+          CALL WDBSAI(WDMSFL,VOLNO,MSGFL,I,I1,TGROUP,
+     O                RETCOD)                                          
+C      
+C         TSBYR(ID=27) default to beginning of decade before start of run
+          I    = 27
+          TSBYR= SDATIM(1) - MOD(SDATIM(1),10)
+          CALL WDBSAI(WDMSFL,VOLNO,MSGFL,I,I1,TSBYR,
+     O                RETCOD)                                           
+C 
+C         TSFORM(ID=84) default to mean
+          I     = 84
+          TSFORM= 1
+          CALL WDBSAI(WDMSFL,VOLNO,MSGFL,I,I1,TSFORM,
+     O                RETCOD)                                           
+C
+C         indicate default dataset created
+          IF (OUTLEV .GT. 3) WRITE(MESSU,2030) VOLNO, WDMSFL
+C               
+        END IF
+C        
+C       update constituent
+        READ(MEMN,1010) MEMN1(1:6)
+        MEMN1(7)= ' '
+        MEMN1(8)= ' '
+C       TSTYPE(ID=1)
+        I   = 1
+        ILEN= 4
+        CALL WDBSAC(WDMSFL,VOLNO,MSGFL,I,ILEN,MEMN1,
+     O              RETCOD)
+C       IDCONS
+        I   = 289
+        ILEN= 8
+        CALL WDBSAC(WDMSFL,VOLNO,MSGFL,I,ILEN,MEMN1,
+     O              RETCOD)
+C     
+C       update location
+C       I   = 290
+C       CALL WDBSAC(WDMSFL,VOLNO,MSGFL,I,ILEN,LOCN1,
+C    O              RETCOD)
+C
+C       update scenario
+C
+      END IF
+      
       IF (RETCOD .EQ. 0) THEN
 C       dataset exists - process it
 C
