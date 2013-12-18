@@ -876,7 +876,9 @@ C           need default but none available
           END IF
 C
 C         check if echo buffer is full
-          IF ( (EPOS .GE. 123) .AND. (IFLD .LT. LFLDS) ) THEN
+C          IF ( (EPOS .GE. 123) .AND. (IFLD .LT. LFLDS) ) THEN
+C            the above line caused problems with dw conduit tables
+          IF (EPOS .GE. 123) THEN
 C           full buffer and more to come - write and reset
             WRITE (MESSU,2040) (EBUF1(I),I=1,EPOS- 1)
             EBUFF= ' '
