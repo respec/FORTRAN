@@ -4780,7 +4780,15 @@ C      write(messu,*) 'in dwrout, about to call swmm_run'
         lErrorCode = swmm_run('', '', '', dwunit, newd5)
       end if 
 C
-C      write(messu,*) 'swmm error code ',lerrorcode
+      if (lerrorcode.ne.0) then
+        write(messu,*) 'swmm error code ',lerrorcode
+        VOL = 0.0
+        O = 0.0
+        RO = 0.0
+        OVOL = 0.0
+        ROVOL = 0.0
+        RODWWQ = 0.0
+      end if 
 C
       !The resulting nodes' and links' flow, depth, and volume outputs are
       !saved in the onodes array and olinks array. 
@@ -4793,89 +4801,92 @@ C
       !             if you want to see the pollutant of 4th node at reporting step number 5, access it as below
       !  onodes(4)%oQual1(5)
 C
-C     set initial conditions for next time in
-      if (dwhead.eq.1) then
-C       NDINIT(NNODE) -- real, initial node depth, ft or m
-        do J = 1, NNODE
-C         set initial depth in each node
-C          write(messu,*) 'DWROUT: reset node depth ',
-C     1                    j,NDINIT(j),onodes(j)%odepth(1)
-          NDINIT(J) = onodes(j)%odepth(1)
-C          write(messu,*) 'node depth ',ndinit(j)
-          IF (DWWQFG.GT.0) THEN
-C           wq flag is on, save initial condition for next time    
-            QIN(J) = onodes(j)%oQual1(1)
-          END IF 
-        end do
+      if (lerrorcode.eq.0) then
+C       set initial conditions for next time in
+        if (dwhead.eq.1) then
+C         NDINIT(NNODE) -- real, initial node depth, ft or m
+          do J = 1, NNODE
+C           set initial depth in each node
+C           write(messu,*) 'DWROUT: reset node depth ',
+C     1                      j,NDINIT(j),onodes(j)%odepth(1)
+            NDINIT(J) = onodes(j)%odepth(1)
+C            write(messu,*) 'node depth ',ndinit(j)
+            IF (DWWQFG.GT.0) THEN
+C             wq flag is on, save initial condition for next time    
+              QIN(J) = onodes(j)%oQual1(1)
+            END IF 
+          end do
 C
-C       CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
-        do J = 1, NCOND
-C         set initial flow in each conduit
-C          write(messu,*) 'DWROUT: reset conduit flow ',
-C     1                    j,CQ0(J),olinks(j)%oflow(1)
-          CQ0(J) = olinks(j)%oflow(1)
-C          write(messu,*) 'conduit flow ',cq0(j)
+C         CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
+          do J = 1, NCOND
+C           set initial flow in each conduit
+C            write(messu,*) 'DWROUT: reset conduit flow ',
+C     1                      j,CQ0(J),olinks(j)%oflow(1)
+            CQ0(J) = olinks(j)%oflow(1)
+C            write(messu,*) 'conduit flow ',cq0(j)
+            IF (DWWQFG.GT.0) THEN
+C             wq flag is on, save initial condition for next time  
+              QIC(J) = olinks(j)%oQual1(1)
+            END IF
+          end do
+        end if 
+C
+        do J = 1, NNODE
+          PREVIN2(J)= PREVIN(J)
+          PREVIN(J) = IVOLDW(J)
           IF (DWWQFG.GT.0) THEN
-C           wq flag is on, save initial condition for next time  
-            QIC(J) = olinks(j)%oQual1(1)
+            PREVWQ2(J)= PREVWQ(J)
+            PREVWQ(J) = IDWWQ(J)
           END IF
         end do
-      end if 
+ 
 C
-      do J = 1, NNODE
-        PREVIN2(J)= PREVIN(J)
-        PREVIN(J) = IVOLDW(J)
-        IF (DWWQFG.GT.0) THEN
-          PREVWQ2(J)= PREVWQ(J)
-          PREVWQ(J) = IDWWQ(J)
-        END IF
-      end do
+C       VOL    - volume of water in reach above bed
+C       O      - rate of outflow from each reach exit at end of interval
+C       RO     - total rate of outflow from reach at end of interval
+C       OVOL   - volume of water leaving reach in an interval by exit
+C       ROVOL  - total volume of water leaving reach in an interval    
 C
-C     VOL    - volume of water in reach above bed
-C     O      - rate of outflow from each reach exit at end of interval
-C     RO     - total rate of outflow from reach at end of interval
-C     OVOL   - volume of water leaving reach in an interval by exit
-C     ROVOL  - total volume of water leaving reach in an interval    
-C
-C     return volume of water coming out bottom node
-C      write(messu,*) 'in dwrout nnode ',nnode
-      if (dwhead.eq.0) then
-        OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
-      else
-        OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(2)))*DELTS
-      end if 
-C      write(messu,*) 'DWROUT: ovol ',ovol,IVOLDW(NNODE)
-      OVOL = OVOL + IVOLDW(NNODE)
-C
-C     find volume in system at end of interval
-      VOL = VOLT - OVOL
-C
-C     return flow rate out of bottom node
-      O = IVOLDW(NNODE) / DELTS
-      if (dwhead.eq.0) then
-        O = O + onodes(NNODE)%oflow(1)
-      else
-        O = O + onodes(NNODE)%oflow(2)
-      end if 
-C
-C     only 1 exit here
-      RO = O
-      ROVOL = OVOL
-C
-      RODWWQ = 0.0
-      IF (DWWQFG.GT.0) THEN
-C       dw wq is on
-C       return conc of wq coming out bottom node
+C       return volume of water coming out bottom node
+C        write(messu,*) 'in dwrout nnode ',nnode
         if (dwhead.eq.0) then
-           RODWWQ = onodes(NNODE)%oQual1(1)
+          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
         else
-           RODWWQ = onodes(NNODE)%oQual1(2)
+          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(2)))*DELTS
         end if 
-      end if
+C        write(messu,*) 'DWROUT: ovol ',ovol,IVOLDW(NNODE)
+        OVOL = OVOL + IVOLDW(NNODE)
 C
-      dwhead = 1
-      call output_close
-C      write(messu,*) 'DWROUT: rovol, rodwwq ',rovol,rodwwq
+C       find volume in system at end of interval
+        VOL = VOLT - OVOL
+C
+C       return flow rate out of bottom node
+        O = IVOLDW(NNODE) / DELTS
+        if (dwhead.eq.0) then
+          O = O + onodes(NNODE)%oflow(1)
+        else
+          O = O + onodes(NNODE)%oflow(2)
+        end if 
+C
+C       only 1 exit here
+        RO = O
+        ROVOL = OVOL
+C
+        RODWWQ = 0.0
+        IF (DWWQFG.GT.0) THEN
+C         dw wq is on
+C         return conc of wq coming out bottom node
+          if (dwhead.eq.0) then
+             RODWWQ = onodes(NNODE)%oQual1(1)
+          else
+             RODWWQ = onodes(NNODE)%oQual1(2)
+          end if 
+        end if 
+C
+        dwhead = 1
+        call output_close
+C        write(messu,*) 'DWROUT: rovol, rodwwq ',rovol,rodwwq
+      end if
 C
       RETURN
       END
