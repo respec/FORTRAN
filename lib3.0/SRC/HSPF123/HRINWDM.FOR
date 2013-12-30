@@ -489,7 +489,7 @@ C     + + + LOCAL VARIABLES + + +
      1          TCODE,TSTEP,TGROUP,TSBYR,TSFORM
 C     make this an argument eventually     
       INTEGER   DEFDSN
-      CHARACTER*1 MEMN1(8),LOCN1(8)
+      CHARACTER*1 MEMN1(8)
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   WDDSCK,PROWDS,OMSG,OMSTI,WDDSCL,WDBSAC,WDBCRL,
@@ -600,14 +600,7 @@ C       IDCONS
         ILEN= 8
         CALL WDBSAC(WDMSFL,VOLNO,MSGFL,I,ILEN,MEMN1,
      O              RETCOD)
-C     
-C       update location
-C       I   = 290
-C       CALL WDBSAC(WDMSFL,VOLNO,MSGFL,I,ILEN,LOCN1,
-C    O              RETCOD)
-C
-C       update scenario
-C
+C       WRITE(MESSU,*) 'updated constitutent to <' // MEMN // '>',RETCOD
       END IF
       
       IF (RETCOD .EQ. 0) THEN

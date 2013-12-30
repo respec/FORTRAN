@@ -2121,20 +2121,28 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER     IDUM1,IDUM2,MESSU,MSGFL,SGRP,SCLU,BGRP,
      $            SMEMSB(2),TMEMSB(2),
      $            WKND,WKST,I1,I2,I3,I4,TSBKCD,
-     $            ITSR,GTCOD,RWFG,TOPFST,TOPLST
+     $            ITSR,GTCOD,RWFG,TOPFST,TOPLST,
+     $            WDMSFL(4),WDMFL,N,L,RETCOD
       REAL        MFACTR
+      CHARACTER*8 LOCN
       CHARACTER*6 SMEMN,TMEMN
       CHARACTER*4 TRAN,TSYST,SSYST,TGAPST,AMDST,SGAPST
 C
+C     + + + EQUIVALENCES + + +
+      EQUIVALENCE (LOCN,LOCN1)
+      CHARACTER*1 LOCN1(8)
+C
 C     + + + FUNCTIONS + + +
-      INTEGER   OPNNO
+      INTEGER   OPNNO,LENSTR
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL  GTTMRC,OPNNO,EXTTS,OPNTS,PAIRS,CHAIN,WKDMP1
+      EXTERNAL  GTTMRC,OPNNO,EXTTS,OPNTS,PAIRS,CHAIN,WKDMP1,
+     $          INTCHR,WDBSGC,LENSTR
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING ANY ENTRIES IN EXT TARGETS BLOCK')
  2010 FORMAT (/,' FINISHED PROCESSING ANY ENTRIES IN EXT TARGETS BLOCK')
+ 2020 FORMAT ('   DSN ',I6,' LOCATION UPDATED TO <',A8,'>')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -2142,6 +2150,9 @@ C
       SCLU= 215
 C
       MESSU= FILE(1)
+      DO 5 N= 1, 4
+        WDMSFL(N)= FILE(10+N)
+ 5    CONTINUE
       MSGFL= FILE(15)
 C
 C     wkst is key at which first record will be written to
@@ -2154,8 +2165,8 @@ C       processing message
       END IF
 C
       TSBKCD= 3
-      ITSR= KEYST
-      BGRP= 56
+      ITSR  = KEYST
+      BGRP  = 56
 C
 10    CONTINUE
 C       get an ext targets entry (first entry if first time through)
@@ -2180,6 +2191,34 @@ C           check and expand the supplied target reference
      I                 IHMFG,
      O                 TNUM,TDELT,TUNITS,TGRPN,TNTS,TAMDCD,TFRC,
      O                 TGAPCD,TTABL,TTABLR)
+C
+            IF (TVOLC(1:3) .EQ. 'WDM') THEN
+C             need to update scenario/location?
+              WDMFL= WDMSFL(TMEMSB(2)) 
+              IF (WDMFL .NE. 0) THEN
+C               WRITE(MESSU,*) 'wdmfl ',WDMFL
+C               wdm file is available - check attributes
+                N= 290
+                L= 8
+                CALL WDBSGC(WDMFL,TVOLNO,N,L,
+     O                      LOCN1,RETCOD)   
+C               WRITE(MESSU,*) 'dsn location>' // LOCN // '<'
+                IF (LENSTR(8,LOCN1) .EQ. 0) THEN
+C                 update location
+                  LOCN = SVOLC(1:1) // ':'
+                  CALL INTCHR(SVOLNO,5,1,
+     O                        RETCOD,LOCN1(3))
+C                 WRITE(MESSU,*) 'source - ',SVOLC, SVOLNO,'>',LOCN
+                  CALL WDBSAC(WDMSFL(TMEMSB(2)),TVOLNO,MSGFL,N,L,LOCN1,
+     O                        RETCOD)
+                  WRITE(MESSU,2020) TVOLNO,LOCN
+                END IF
+C
+C               update scenario
+C
+
+              END IF
+            END IF            
 C
 C           check and expand the supplied source reference
             SGRP  = OPNTAB(6,SNUM)
