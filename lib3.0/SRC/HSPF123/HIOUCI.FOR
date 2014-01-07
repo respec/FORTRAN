@@ -1148,7 +1148,7 @@ C     store name of file as first comment line
         STR = SCAN(FNAME,'\',.TRUE.)
       END IF     
       TXT = '*** ' // FNAME(STR+1:LEN-4)
-      WRITE(*,*) 'FILENAME <' // TXT // '>'
+C     WRITE(*,*) 'FILENAME <' // TXT // '>'
       
 C      
 C     read until end of uci file
