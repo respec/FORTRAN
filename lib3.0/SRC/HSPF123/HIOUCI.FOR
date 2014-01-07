@@ -1106,11 +1106,12 @@ C     MESSU  - unit number of output file
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER       CMTFG,I3,I132,SPACFG,PREREC,TYPREC,BLNKFG,
-     $              GLOBFG,DONEFG,I,INDENT,START,NUMMOV
+     $              GLOBFG,DONEFG,I,INDENT,START,NUMMOV,STR,LEN
       CHARACTER*1   STARS(3)
       CHARACTER*4   CEND
       CHARACTER*12  GLOKWD,SPAKWD
       CHARACTER*132 TXT
+      CHARACTER*256 FNAME
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (TXT,TXT1)
@@ -1139,12 +1140,22 @@ C     initialize in memory uci
       CALL INIUCI (MSGFL,MESSU,
      O             CEND)
 C
+C     store name of file as first comment line
+      INQUIRE(UNIT=USRFL,NAME=FNAME)
+      LEN = LEN_TRIM(FNAME)
+      STR = SCAN(FNAME,'/',.TRUE.)
+      IF (STR .EQ. 0) THEN
+        STR = SCAN(FNAME,'\',.TRUE.)
+      END IF     
+      TXT = '*** ' // FNAME(STR+1:LEN-4)
+      WRITE(*,*) 'FILENAME <' // TXT // '>'
+      
+C      
 C     read until end of uci file
       SPACFG= 0
       GLOBFG= 0
       PREREC= 1
  10   CONTINUE
-        READ (USRFL,1000,END=100) TXT
 C       unknown type
         TYPREC= 0
         INDENT= 0
@@ -1223,6 +1234,9 @@ C
 C       save the record
         CALL PUTUCX (TXT(1:80),TYPREC,PREREC,INDENT)
         PREREC= PREREC+ 1
+C
+C       next record
+        READ (USRFL,1000,END=100) TXT        
       GO TO 10
 C
 C     end of file

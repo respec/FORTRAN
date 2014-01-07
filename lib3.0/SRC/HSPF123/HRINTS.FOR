@@ -2122,27 +2122,28 @@ C     + + + LOCAL VARIABLES + + +
      $            SMEMSB(2),TMEMSB(2),
      $            WKND,WKST,I1,I2,I3,I4,TSBKCD,
      $            ITSR,GTCOD,RWFG,TOPFST,TOPLST,
-     $            WDMSFL(4),WDMFL,N,L,RETCOD
+     $            WDMSFL(4),WDMFL,N,L,RETCOD,UREC
       REAL        MFACTR
-      CHARACTER*8 LOCN
+      CHARACTER*8 ATVAL
       CHARACTER*6 SMEMN,TMEMN
       CHARACTER*4 TRAN,TSYST,SSYST,TGAPST,AMDST,SGAPST
+      CHARACTER*80 UCIREC
 C
 C     + + + EQUIVALENCES + + +
-      EQUIVALENCE (LOCN,LOCN1)
-      CHARACTER*1 LOCN1(8)
+      EQUIVALENCE (ATVAL,ATVAL1)
+      CHARACTER*1 ATVAL1(8)
 C
 C     + + + FUNCTIONS + + +
       INTEGER   OPNNO,LENSTR
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  GTTMRC,OPNNO,EXTTS,OPNTS,PAIRS,CHAIN,WKDMP1,
-     $          INTCHR,WDBSGC,LENSTR
+     $          INTCHR,WDBSGC,LENSTR,GETUCI
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (/,' PROCESSING ANY ENTRIES IN EXT TARGETS BLOCK')
  2010 FORMAT (/,' FINISHED PROCESSING ANY ENTRIES IN EXT TARGETS BLOCK')
- 2020 FORMAT ('   DSN ',I6,' LOCATION UPDATED TO <',A8,'>')
+ 2020 FORMAT ('   DSN ',I6,' ',A8,' UPDATED TO <',A8,'>')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -2201,22 +2202,33 @@ C               wdm file is available - check attributes
                 N= 290
                 L= 8
                 CALL WDBSGC(WDMFL,TVOLNO,N,L,
-     O                      LOCN1,RETCOD)   
-C               WRITE(MESSU,*) 'dsn location>' // LOCN // '<'
-                IF (LENSTR(8,LOCN1) .EQ. 0) THEN
+     O                      ATVAL1,RETCOD)   
+C               WRITE(MESSU,*) 'dsn location>' // ATVAL // '<'
+                IF (LENSTR(8,ATVAL1) .EQ. 0) THEN
 C                 update location
-                  LOCN = SVOLC(1:1) // ':'
+                  ATVAL = SVOLC(1:1) // ':'
                   CALL INTCHR(SVOLNO,5,1,
-     O                        RETCOD,LOCN1(3))
-C                 WRITE(MESSU,*) 'source - ',SVOLC, SVOLNO,'>',LOCN
-                  CALL WDBSAC(WDMSFL(TMEMSB(2)),TVOLNO,MSGFL,N,L,LOCN1,
+     O                        RETCOD,ATVAL1(3))
+C                 WRITE(MESSU,*) 'source - ',SVOLC, SVOLNO,'>',ATVAL
+                  CALL WDBSAC(WDMFL,TVOLNO,MSGFL,N,L,ATVAL1,
      O                        RETCOD)
-                  WRITE(MESSU,2020) TVOLNO,LOCN
+                  WRITE(MESSU,2020) TVOLNO,'LOCATION',ATVAL
                 END IF
 C
-C               update scenario
+                N= 288
+                L= 8
+                CALL WDBSGC(WDMFL,TVOLNO,N,L,
+     O                      ATVAL1,RETCOD)   
+                IF (LENSTR(8,ATVAL1) .EQ. 0) THEN
+C                 update scenario
+                  UREC= -1
+                  CALL GETUCI(-1,UREC,UCIREC)
+                  ATVAL= UCIREC(5:12)
+                  CALL WDBSAC(WDMFL,TVOLNO,MSGFL,N,L,ATVAL1,
+     O                        RETCOD)
+                  WRITE(MESSU,2020) TVOLNO,'SCENARIO',ATVAL
 C
-
+                END IF                     
               END IF
             END IF            
 C
