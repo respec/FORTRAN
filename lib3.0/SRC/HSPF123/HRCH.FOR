@@ -868,11 +868,11 @@ C       value to fluxid for printout
 C         printout is in english system
           IF (UUNITS .EQ. 1) THEN
 C           english to english
-            FACTA= 6.23E-05
+            FACTA= 6.2428E-05
             FACTB= 0.0
           ELSE
 C           metric to english
-            FACTA= 2.2E-03
+            FACTA= 2.2046E-03
             FACTB= 0.0
           END IF
           FLUXID= RQFLID(1)
@@ -880,7 +880,7 @@ C           metric to english
 C         printout is in metric system
           IF (UUNITS .EQ. 1) THEN
 C           english to metric
-            FACTA= 2.83E-05
+            FACTA= 2.8317E-05
             FACTB= 0.0
           ELSE
 C           metric to english
