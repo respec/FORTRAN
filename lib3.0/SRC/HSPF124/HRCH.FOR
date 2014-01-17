@@ -277,7 +277,7 @@ C
 C     find the highest numbered active section
       LAST= 0
       DO 50 L= 1,11
-        IF (ASVEC(L).EQ.1) THEN
+        IF (ASVEC(L).GT.0) THEN
           LAST= L
         END IF
  50   CONTINUE
