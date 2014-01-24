@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectType="typeDynamicLibrary" ProjectCreator="Intel Fortran" Keyword="Dll" Version="11.0" ProjectIdGuid="{5496243F-2C38-4DA6-84A1-ADB08DF4EDD8}">
+	<Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="copy $(OutDir)\$(ProjectName).dll c:\dev\basins40\bin\plugins\basins
+copy $(OutDir)\$(ProjectName).pdb c:\dev\basins40\bin\plugins\basins"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" OutputDirectory="c:\dev\basins40\bin\plugins\basins" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" OmitFramePointers="false" Traceback="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" OutputDirectory="C:\Dev\BASINS40\Bin\Plugins\BASINS" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="copy $(OutDir)\$(ProjectName).dll c:\dev\basins40\bin\basins
+copy $(OutDir)\$(ProjectName).pdb c:\dev\basins40\bin\basins"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" OmitFramePointers="false" Traceback="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Header Files" Filter="fi;fd"/>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath=".\src\dcdflib1.f90"/>
+		<File RelativePath=".\src\emafit.for"/>
+		<File RelativePath="src\imslfake.for"/>
+		<File RelativePath=".\src\probfun.for"/>
+		<File RelativePath=".\src\utilityfuncs.for"/></Filter></Files>
+	<Globals/></VisualStudioProject>
