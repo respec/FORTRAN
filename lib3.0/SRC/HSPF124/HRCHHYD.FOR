@@ -2785,6 +2785,12 @@ C         set input volume to each node
               IVOLDW(J) = PAD(IDWFP(I) + IVL1)
             END IF
           END IF 
+C         if (i.gt.0) then
+C            write(messu,*) 'pad contains ',PAD(IDWFP(I))
+C            write(messu,*) 'pad contains ',PAD(IDWFP(I)+ IVL1)
+C            write(messu,*) 'pad contains ',PAD(IDWFP(I)+ IVL1 +1)
+C          end if 
+C          write(messu,*) 'DWROUT:j,ivoldw ',j,ivoldw(j),idwfp(j)
 C          write(messu,*) 'DWROUT: node,previn,invol,idwfp,nlocin ',
 C     1                   j,previn(j),invol(j),IDWFP(J),int(NLOCIN(j))
 C
@@ -4215,8 +4221,8 @@ C     QIN    - initial conc of wq constituent in each node
 C     QIC    - initial conc of wq constituent in each conduit
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER          LTYPE,J,K,lErrorCode,DELTSI
-      INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5)
+      INTEGER          LTYPE,J,K,lErrorCode,DELTSI,SGRP,ECOUNT
+      INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5),RETCOD
       DOUBLE PRECISION XN(6),XC(6),XX(4)
       LOGICAL          isOK
       type(TExtInflow), dimension(NNODE-1), target :: inflows
@@ -4228,6 +4234,7 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + FUNCTIONS + + +
 C      LOGICAL          xsect_setParams
+      INTEGER      CKUSER
 C
 C     + + + INTRINSICS + + +
       INTRINSIC        ABS
@@ -4235,6 +4242,7 @@ C
 C     + + + EXTERNALS + + +
 C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
 C     1                 xsect_setParams
+      EXTERNAL         CKUSER
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4780,14 +4788,30 @@ C      write(messu,*) 'in dwrout, about to call swmm_run'
         lErrorCode = swmm_run('', '', '', dwunit, newd5)
       end if 
 C
+C     check for external cancel command
+      RETCOD= CKUSER ()
+      if (retcod.ne.0) then
+        lerrorcode = 1
+        CALL OMSTI (lerrorcode)
+        SGRP= 54
+        ECOUNT = 0
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      end if 
+C
       if (lerrorcode.ne.0) then
-        write(messu,*) 'swmm error code ',lerrorcode
+        !write(messu,*) 'swmm error code ',lerrorcode
         VOL = 0.0
         O = 0.0
         RO = 0.0
         OVOL = 0.0
         ROVOL = 0.0
         RODWWQ = 0.0
+        CALL OMSTI (lerrorcode)
+        SGRP= 55
+        ECOUNT = 0
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
       end if 
 C
       !The resulting nodes' and links' flow, depth, and volume outputs are
@@ -4887,6 +4911,23 @@ C
         call output_close
 C        write(messu,*) 'DWROUT: rovol, rodwwq ',rovol,rodwwq
       end if
+C
+      do J=1, NNODE
+        deallocate(oTsers(J)%odates)
+        nullify(oTsers(J)%odates)
+        deallocate(oTsers(J)%ovalues)
+        nullify(oTsers(J)%ovalues)
+        if (allocated(oTsersWQ)) then
+          deallocate(oTsersWQ(J)%odates)
+          nullify(oTsersWQ(J)%odates)
+          deallocate(oTsersWQ(J)%ovalues)
+          nullify(oTsersWQ(J)%ovalues)
+        end if 
+      end do
+      deallocate(oTsers)
+      if (allocated(oTsersWQ)) then
+        deallocate(oTsersWQ)
+      end if 
 C
       RETURN
       END

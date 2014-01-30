@@ -557,6 +557,30 @@ subroutine output_close()
           deallocate(onodes(i)%ovolume)
           nullify(onodes(i)%ovolume)
        end if
+       if (associated(onodes(i)%oQual1)) then
+          deallocate(onodes(i)%oQual1)
+          nullify(onodes(i)%oQual1)
+       end if
+       if (associated(onodes(i)%oQual2)) then
+          deallocate(onodes(i)%oQual2)
+          nullify(onodes(i)%oQual2)
+       end if
+       if (associated(onodes(i)%oQual3)) then
+          deallocate(onodes(i)%oQual3)
+          nullify(onodes(i)%oQual3)
+       end if
+       if (associated(onodes(i)%oQual4)) then
+          deallocate(onodes(i)%oQual4)
+          nullify(onodes(i)%oQual4)
+       end if
+       if (associated(onodes(i)%oQual5)) then
+          deallocate(onodes(i)%oQual5)
+          nullify(onodes(i)%oQual5)
+       end if
+       if (associated(onodes(i)%oQual6)) then
+          deallocate(onodes(i)%oQual6)
+          nullify(onodes(i)%oQual6)
+       end if
     end do
     deallocate(onodes)
     
@@ -572,6 +596,30 @@ subroutine output_close()
        if (associated(olinks(i)%ovolume)) then
           deallocate(olinks(i)%ovolume)
           nullify(olinks(i)%ovolume)
+       end if
+       if (associated(olinks(i)%oQual1)) then
+          deallocate(olinks(i)%oQual1)
+          nullify(olinks(i)%oQual1)
+       end if
+       if (associated(olinks(i)%oQual2)) then
+          deallocate(olinks(i)%oQual2)
+          nullify(olinks(i)%oQual2)
+       end if
+       if (associated(olinks(i)%oQual3)) then
+          deallocate(olinks(i)%oQual3)
+          nullify(olinks(i)%oQual3)
+       end if
+       if (associated(olinks(i)%oQual4)) then
+          deallocate(olinks(i)%oQual4)
+          nullify(olinks(i)%oQual4)
+       end if
+       if (associated(olinks(i)%oQual5)) then
+          deallocate(olinks(i)%oQual5)
+          nullify(olinks(i)%oQual5)
+       end if
+       if (associated(olinks(i)%oQual6)) then
+          deallocate(olinks(i)%oQual6)
+          nullify(olinks(i)%oQual6)
        end if
     end do
     deallocate(olinks)
