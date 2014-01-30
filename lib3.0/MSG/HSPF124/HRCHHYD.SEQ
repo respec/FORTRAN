@@ -392,5 +392,14 @@ $TEXT
  Unknown conduit shape &CCCCCCCCCCCCCCCCCCC was specified as a 
  cross-section in the CONDUIT-XS table.  All cross-section names 
  in this table must be one of the recognized types.
+#GROUP   54  TYPE TEXT
+$TEXT
+    1    1    1    5
+ User cancelled during dynamic wave algorithm with code &I    .
+#GROUP   55  TYPE TEXT
+$TEXT
+    1    1    1    5
+ Exit code from dynamic wave algorithm is &I    .
+ Run cannot continue.
   END DATA
 END CLU
