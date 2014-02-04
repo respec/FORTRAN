@@ -52,6 +52,8 @@ copy $(OutDir)\$(ProjectName).pdb c:\dev\basins40\bin\basins"/>
 		<File RelativePath=".\src\dcdflib1.f90"/>
 		<File RelativePath=".\src\emafit.for"/>
 		<File RelativePath="src\imslfake.for"/>
+		<File RelativePath=".\src\ktutil.for"/>
+		<File RelativePath=".\src\lgpstx.for"/>
 		<File RelativePath=".\src\probfun.for"/>
 		<File RelativePath=".\src\utilityfuncs.for"/></Filter></Files>
 	<Globals/></VisualStudioProject>
