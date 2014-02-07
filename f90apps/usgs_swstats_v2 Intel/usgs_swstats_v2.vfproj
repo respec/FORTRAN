@@ -50,10 +50,9 @@ copy $(OutDir)\$(ProjectName).pdb c:\dev\basins40\bin\basins"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<File RelativePath=".\src\dcdflib1.f90"/>
-		<File RelativePath=".\src\emafit.for"/>
-		<File RelativePath="src\imslfake.for"/>
+		<File RelativePath=".\src\emafit.f"/>
+		<File RelativePath=".\src\imslfake.f"/>
 		<File RelativePath=".\src\ktutil.for"/>
 		<File RelativePath=".\src\lgpstx.for"/>
-		<File RelativePath=".\src\probfun.for"/>
-		<File RelativePath=".\src\utilityfuncs.for"/></Filter></Files>
+		<File RelativePath=".\src\probfun.f"/></Filter></Files>
 	<Globals/></VisualStudioProject>
