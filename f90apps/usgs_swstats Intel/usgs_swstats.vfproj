@@ -12,8 +12,8 @@
 				<Tool Name="VFCustomBuildTool"/>
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool" CommandLine="copy $(OutDir)\$(ProjectName).dll g:\dev\basins40\bin\plugins\basins
-copy $(OutDir)\$(ProjectName).pdb g:\dev\basins40\bin\plugins\basins"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="copy $(OutDir)\$(ProjectName).dll c:\dev\basins40\bin\plugins\basins
+copy $(OutDir)\$(ProjectName).pdb c:\dev\basins40\bin\plugins\basins"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Release|Win32" OutputDirectory="c:\dev\basins40\bin\plugins\basins" ConfigurationType="typeDynamicLibrary">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" OmitFramePointers="false" Traceback="true" RuntimeLibrary="rtMultiThreadedDebug"/>
@@ -33,7 +33,8 @@ copy $(OutDir)\$(ProjectName).pdb g:\dev\basins40\bin\plugins\basins"/>
 				<Tool Name="VFCustomBuildTool"/>
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="copy $(OutDir)\$(ProjectName).dll c:\dev\basins40\bin\basins
+copy $(OutDir)\$(ProjectName).pdb c:\dev\basins40\bin\basins"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Release|x64" ConfigurationType="typeDynamicLibrary">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" OmitFramePointers="false" Traceback="true" RuntimeLibrary="rtMultiThreadedDLL"/>
@@ -48,9 +49,9 @@ copy $(OutDir)\$(ProjectName).pdb g:\dev\basins40\bin\plugins\basins"/>
 		<Filter Name="Header Files" Filter="fi;fd"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
-		<File RelativePath=".\src\emafit.for"/>
-		<File RelativePath="src\imslfake.for"/>
+		<File RelativePath=".\src\emafit.f"/>
+		<File RelativePath=".\src\imslfake.f"/>
 		<File RelativePath="src\ktutil.for"/>
 		<File RelativePath="src\lgpstx.for"/>
-		<File RelativePath=".\src\probfun.for"/></Filter></Files>
+		<File RelativePath=".\src\probfun.f"/></Filter></Files>
 	<Globals/></VisualStudioProject>
