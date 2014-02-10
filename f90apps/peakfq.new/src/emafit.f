@@ -1627,7 +1627,7 @@ c
         double precision
      1    fp_tnc_icdf
      
-        data nu_min/2.0d0/,c_min/1.0d0/  !CTAC 1.0, 0.5
+        data nu_min/1.0d0/,c_min/0.5d0/  !CTAC 0.5
 
 c
 c    beta1 is coefficient of regression of syp on yp
@@ -3455,6 +3455,7 @@ c
       data sk141/-1.41d0/
       data lskewXmax/.FALSE./
 
+c      data bcf/1997/
       data bcf/2004/
 
       data VarS2opt/'DF'/

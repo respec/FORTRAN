@@ -119,7 +119,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Provisional version 7.1 dated 05/08/2013',/,
+     $       'Provisional version 7.1 dated 12/19/2013',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -605,9 +605,9 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   202 FORMAT( 2X,'Prov. Ver. 7.1',
      $        6X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time' )
-  203 FORMAT( 2X,'05/08/2013',
+  203 FORMAT( 2X,'12/19/2013',
      $       10X,'following Bulletin 17-B Guidelines',7X,A)
-  213 FORMAT( 2X,'05/08/2013',
+  213 FORMAT( 2X,'12/19/2013',
      $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
   205 FORMAT(12X,'Preliminary release of PeakFQ for review and ',
      $           'testing only.')
@@ -1362,6 +1362,28 @@ C           no thresholds or intervals
           END IF
   310   CONTINUE
       IF(JLINE.LT.NPKS) GO TO 302
+
+      IF (EMAOPT .EQ. 1 .AND. NINTERVAL .GT. 0) THEN
+C       be sure to include thresholds prior to input peaks
+        DO 320 J = 1,NINTERVAL
+          IF (INTERVAL(J)%INTRVLYR .LT. ABS(IPKSEQ(1))) THEN
+            IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
+              LINTVLSTR = '     INF    '
+            ELSE
+              WRITE(LINTVLSTR,'(F10.1)') INTERVAL(J)%INTRVLUPR
+            END IF
+            IF (INTVAL(J) .GT. 0.0) THEN
+              WRITE(MSG,2024) INTERVAL(J)%INTRVLYR,
+     $              INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $              INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+            ELSE
+              WRITE(MSG,2025) INTERVAL(J)%INTRVLYR,
+     $              INTERVAL(J)%INTRVLPP,
+     $              INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+            END IF
+          END IF
+ 320    CONTINUE
+      END IF
 
       IF (LNLOW.GT.0) THEN
         WRITE(MSG,2030)
@@ -4315,10 +4337,10 @@ C          ENDIF
 
         IF (NINTERVAL.GT.0) THEN
           DO 30 I = 1,NINTERVAL
-            DO 25 J = 1,NPKS
-              IF (ABS(IPKSEQ(J)) .EQ. INTERVAL(I)%INTRVLYR) THEN
+            DO 25 J = 1,NOBS
+              IF (ABS(OPKSEQ(J)) .EQ. INTERVAL(I)%INTRVLYR) THEN
 C               assign plotting position for this interval
-                INTERVAL(I)%INTRVLPP = LPEX(J)
+                INTERVAL(I)%INTRVLPP = PEX(J)
               END IF
  25         CONTINUE
  30       CONTINUE
@@ -5119,7 +5141,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Provisional Ver. 7.1 dated 05/08/2013',/,'#',/,
+     $       'Provisional Ver. 7.1 dated 12/19/2013',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
