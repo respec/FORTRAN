@@ -1116,7 +1116,8 @@ C     WDMSFL - FORTRAN unit number for input WDM file
 C     GBCRIT - low outlier threshold
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER   JLINE, I, NB, J, ILINE, LYR, K, LWROTEINT,LNLOW
+      INTEGER   JLINE, I, NB, J, ILINE, LYR, K, 
+     $          LWROTEINT,LNLOW,MININTYR
       REAL    EPSILN, LTHR, UTHR, INTVAL(500)
       CHARACTER*9 LTHRCHR(2)
       CHARACTER*12 LINTVLSTR
@@ -1246,6 +1247,8 @@ C     write table of frequency curves
       WRITE(MSG,1010)
       CALL PRTPHD ( 2001, -999, EMAOPT, WDMSFL )
       LNLOW = 0
+C     set min interval year to first peak year 
+      MININTYR = ABS(IPKSEQ(1))
       JLINE = 0
   302 CONTINUE
         ILINE = JLINE+1
@@ -1323,6 +1326,9 @@ c                  END IF
      $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
                   END IF
                   LWROTEINT = INTERVAL(J)%INTRVLYR
+                  IF (LWROTEINT .LT. MININTYR) THEN
+                    MININTYR = LWROTEINT
+                  END IF
                 END IF
  308          CONTINUE
             END IF
@@ -1366,7 +1372,7 @@ C           no thresholds or intervals
       IF (EMAOPT .EQ. 1 .AND. NINTERVAL .GT. 0) THEN
 C       be sure to include thresholds prior to input peaks
         DO 320 J = 1,NINTERVAL
-          IF (INTERVAL(J)%INTRVLYR .LT. ABS(IPKSEQ(1))) THEN
+          IF (INTERVAL(J)%INTRVLYR .LT. MININTYR) THEN
             IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
               LINTVLSTR = '     INF    '
             ELSE
