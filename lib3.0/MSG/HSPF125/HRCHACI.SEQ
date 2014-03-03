@@ -1,0 +1,38 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          351    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  10   NDP 100
+  LABEL
+    GRPNAM  HRCHACI
+  END LABEL
+  DATA   CLU   351
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ RCHRES: &I
+
+ Section ACIDPH:  Error No. 2  (FATAL ERROR)
+                  Invalid value of acflag(2)
+#GROUP    2  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ RCHRES: &I
+
+ Section ACIDPH:   Warning No. 2
+                   Ratio of co2 to atmospheric co2 has been changed
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Number of cons or gquals in this ACIDPH is greater than the number
+ being simulated in section CONS or GQUAL; See values below:
+     ACIDPH      CONS    ACIDPH     GQUAL
+      NCONS     NCONS    NQUALS    NQUALS
+      &I        &I        &I        &I
+  END DATA
+END CLU
