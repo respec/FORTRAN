@@ -1,0 +1,214 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          216    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 200
+  LABEL
+    GRPNAM  HRINTSS
+  END LABEL
+  DATA   CLU   216
+#GROUP   74  TYPE TEXT
+$TEXT
+    1    1    1    5
+ Incompatible tss.  Processing must terminate.
+#GROUP   80  TYPE TEXT
+$TEXT
+ VOLNO: &I
+
+   20    1    1    5
+ Year containing initial interval of the run, &I   , is outside of the
+ valid range for the dataset.  Valid range is from baseyr+1 to baseyr+100.
+#GROUP   81  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Dataset is write protected.  Unable to output data to the specified
+ external target.
+#GROUP   82  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Year containing final interval of the run, &I   , is outside of the valid
+ range of the dataset.  Valid range is from baseyr+1 to baseyr+100.
+#GROUP   83  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ One or more years of data are missing in the dataset for the time
+ span of the run.
+#GROUP   84  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Invalid access mode &CCC was specified.
+#GROUP   85  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Member name &CCCCC was not found in the dataset label.
+#GROUP   86  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified dataset was not found in the tss.
+#GROUP   87  TYPE TEXT
+$TEXT
+   20    1    1    5
+ DSN: &I
+
+ Program bug.  Dataset number given in tss directory record does not
+ agree with dataset number used to find the record.
+#GROUP   88  TYPE TEXT
+$TEXT
+   20    1    1    5
+ DSN: &I
+
+ Time series dataset reference made to the tss dircetory dataset.
+#GROUP   89  TYPE TEXT
+$TEXT
+   20    1    1    5
+ DSN: &I
+
+ Dataset number outside of valid range for the tss.
+#GROUP   90  TYPE TEXT
+$TEXT
+   20    1    1    5
+ SVOLNO: &I
+
+ Member subscript &I    is out of range.
+#GROUP  124  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Time gap of one or more years encountered using add or insert
+ for a dataset which requires data to be stored in chronological
+ order.
+#GROUP  125  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Attempt to use add access on a dataset in which data is not in
+ chronological order.
+#GROUP  126  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Starting year is earlier than first year permitted in the
+ keying system.
+#GROUP  127  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Attempt to access dataset with insert for a year which already
+ contains data.
+#GROUP  128  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Attempt to use replace for a year without data.
+#GROUP  129  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug or invalid dataset label.  Improper branching.
+#GROUP  130  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Buffer underflow in gword.
+#GROUP  131  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Attempt to obtain data from beyond upper limit of dataset.
+#GROUP  132  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ End of year encountered in fitsb.  Either data is missing for part of
+ your run span or your tss is screwed up.
+#GROUP  133  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ End of data encountered in fitsb.  Either data is missing for part of
+ your run span or your tss is screwed up.
+#GROUP  134  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Invalid time series block encountered during setup for replace
+ access.  Block must be type uncompressed.
+#GROUP  135  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Timing error in aiunc.  stime not= tzero.
+#GROUP  136  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Timing error in aicomp.  stime not= tzero.
+#GROUP  137  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Linear variation bti encountered when such bti's
+ are not yet supported.
+#GROUP  138  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Linking bcw is not zero when it should be.
+#GROUP  139  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Invalid buffer state in pval.
+#GROUP  140  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Buffer underflow in pval.
+#GROUP  141  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Program bug.  Buffer/extension overflow in pval.
+#GROUP  142  TYPE TEXT
+$TEXT
+   20    1    1    5
+ FILE: &I
+
+ Dataset overflow in pval.  Probable cause - too little space
+ in your tss dataset.
+  END DATA
+END CLU
+                                                                                
+                                                                                
+                                                                                
