@@ -1,0 +1,602 @@
+MO   COPY
+SE   CCOPY.INC
+SI        18000         0
+CO   SCRTCH
+HE   COPY module common
+VA   COPYNO   0   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P COPYNO                  1
+VA 2 NPT      0   0   0   0 I P                         1
+EQ   NUMBR    2   0   0   0 I P NPT                     1
+VA 2 NMN      0   0   0   0 I P                         1
+VA   MESSU    0   0   0   0 I P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA 1 YR       0   0   0   0 I S                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA 1 MON      0   0   0   0 I S                         1
+VA 1 DAY      0   0   0   0 I S                         1
+VA 1 HR       0   0   0   0 I S                         1
+VA 1 MIN      0   0   0   0 I S                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA   SPAFP    0   0   0   0 I S                         1
+VA   SPAKND   0   0   0   0 I P                         1
+VA   SPIVL    0   0   0   0 I S                         1
+VA   SPOPNO   0   0   0   0 I P                         1
+VA 1 SPOUT    0   0   0   0 I P                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+VA   IPTFP   20   0   0   0 I T INPUT            POINT  1
+VA   IMNFP   20   0   0   0 I T INPUT            MEAN   1
+VA   OPTFP   20   0   0   0 I T OUTPUT           POINT  1
+VA   OMNFP   20   0   0   0 I T OUTPUT           MEAN   1
+VA   PTVAL   20   0   0   0 R S                         1
+SP 1 POINT   20   0   0         PTVAL
+VA   MNVAL   20   0   0   0 R S                         1
+SP 1 MEAN    20   0   0         MNVAL
+VA   SPNUND   0   0   0   0 I S                         1
+WR
+
+MO   PLTGEN
+SE   CPLTG.INC
+SI        18000         0
+CO   SCRTCH
+HE   PLTGEN module common
+VA   PLOTFL   0   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P PLOTFL                  1
+EQ   PLTINF   7   0   0   0 I P PLOTFL                  1
+VA 2 NPT      0   0   0   0 I P                         1
+VA 2 NMN      0   0   0   0 I P                         1
+VA   LABLFG   0   0   0   0 I P                         1
+VA   PYREND   0   0   0   0 I P                         1
+VA   NCURV    0   0   0   0 I P                         1
+VA   TYPEFG   0   0   0   0 I P                         1
+VA   MESSU    0   0   0   0 I P                         1
+VA   MSGFL    0   0   0   0 I P                         1
+VA   PLTNO    0   0   0   0 I P                         1
+VA   SPAFP    0   0   0   0 I P                         1
+VA   SPAKND   0   0   0   0 I P                         1
+VA   SPIVL    0   0   0   0 I P                         1
+VA   SPOPNO   0   0   0   0 I P                         1
+VA   SPOUT    0   0   0   0 I P                         1
+VA   SPNUND   0   0   0   0 I P                         1
+VA   DUMA    12   0   0   0 I D                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+VA   TITLE   10   0   0   0 I P                         1
+EQ   CODE     1   0   0   0 I P TITLE(1)                1
+EQ   GLABL   15   0   0   0 I P TITLE(1)                1
+VA   YLABL    5   0   0   0 I P                         1
+VA   YMIN     0   0   0   0 R P                         1
+EQ   SCALE    4   0   0   0 R P YMIN                    1
+VA   YMAX     0   0   0   0 R P                         1
+VA   IVLIN    0   0   0   0 R P                         1
+VA   THRESH   0   0   0   0 R P                         1
+VA   CUVDAT   9  99   0   0 I P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA   PIVL     0   0   0   0 I P                         1
+VA   VAL     99   0   0   0 R P                         1
+VA   YR       0   0   0   0 I S                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA   MON      0   0   0   0 I S                         1
+VA   DAY      0   0   0   0 I S                         1
+VA   HR       0   0   0   0 I S                         1
+VA   MIN      0   0   0   0 I S                         1
+VA   IVL      0   0   0   0 I S                         1
+VA   IVL1     0   0   0   0 I S                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA   PIVLNO   0   0   0   0 I S                         1
+VA   STFG     0   0   0   0 I S                         1
+VA   PLTFLG   0   0   0   0 I S                         1
+VA   PTFP    20   0   0   0 I T INPUT            POINT  1
+VA   MNFP    99   0   0   0 I T INPUT            MEAN   1
+VA   PIVLTM   0   0   0   0 I S                         1
+WR
+
+MO   DISPLY
+SE   CDISP.INC
+SI        18000         0
+CO   SCRTCH
+HE   DISPLY module common
+VA   TITLE    7   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P TITLE(1)                1
+EQ   INFO1   15   0   0   0 I P TITLE(1)                1
+VA   TRAN     1   0   0   0 I P                         1
+VA   PIVL     0   0   0   0 I P                         1
+VA   DIGIT1   0   0   0   0 I P                         1
+VA   FILE1    0   0   0   0 I P                         1
+VA   PYRFG    0   0   0   0 I P                         1
+VA   DIGIT2   0   0   0   0 I P                         1
+VA   FILE2    0   0   0   0 I P                         1
+VA   PYREND   0   0   0   0 I P                         1
+VA   DUMA    13   0   0   0 I D                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+VA   PSHFG    0   0   0   0 I P                         1
+VA   PDELT    0   0   0   0 I P                         1
+VA   NIVL     0   0   0   0 I P                         1
+VA   DISPNO   0   0   0   0 I P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA   TRNCOD   0   0   0   0 I P                         1
+VA   MSGFL    0   0   0   0 I P                         1
+VA   MESSU    0   0   0   0 I P                         1
+VA   FMT1    16   0   0   0 I P                         1
+VA   FMT2    30   0   0   0 I P                         1
+VA   FMT3    30   0   0   0 I P                         1
+VA   FMT4    30   0   0   0 I P                         1
+VA   FMT5    30   0   0   0 I P                         1
+VA   MONTHS   2  12   0   0 I P                         1
+VA   IVLDAY   0   0   0   0 I P                         1
+VA   HRSPAN   2   0   0   0 I P                         1
+VA   DASPAN   2   0   0   0 I P                         1
+VA   MNSPAN   2   0   0   0 I P                         1
+VA   BLANKR   0   0   0   0 R P                         1
+VA   STVAL    0   0   0   0 R P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   A        0   0   0   0 R P                         1
+EQ   INFO2    4   0   0   0 R P A                       1
+VA   B        0   0   0   0 R P                         1
+VA   THRSH1   0   0   0   0 R P                         1
+VA   THRSH2   0   0   0   0 R P                         1
+VA   DATA    60  31   0   0 R S                         1
+VA   DYVAL   31  12   0   0 R S                         1
+VA   YR       0   0   0   0 I S                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA   MON      0   0   0   0 I S                         1
+VA   DAY      0   0   0   0 I S                         1
+VA   HR       0   0   0   0 I S                         1
+VA   MIN      0   0   0   0 I S                         1
+VA   IVL      0   0   0   0 I S                         1
+VA   IVL1     0   0   0   0 I S                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA   PIVLNO   0   0   0   0 I S                         1
+VA   NXTMON   0   0   0   0 I S                         1
+VA   HRFG     0   0   0   0 I S                         1
+VA   DAYFG    0   0   0   0 I S                         1
+VA   EDAYFG   0   0   0   0 I S                         1
+VA   EMONFG   0   0   0   0 I S                         1
+VA   EPYRFG   0   0   0   0 I S                         1
+VA   IFP      0   0   0   0 I T INPUT            TIMSER 1
+WR
+
+MO   DURANL
+SE   CDURA.INC
+SI        18000         0
+CO   SCRTCH
+HE   DURANL module common
+VA   TITLE   10   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P TITLE(1)                1
+EQ   GENDAT  16   0   0   0 I P TITLE(1)                1
+VA   NDUR     0   0   0   0 I P                         1
+VA   NLEV     0   0   0   0 I P                         1
+VA   PRFG     0   0   0   0 I P                         1
+VA   PUNIT    0   0   0   0 I P                         1
+VA   LCNUM    0   0   0   0 I P                         1
+VA   LCOUT    0   0   0   0 I P                         1
+VA   M        0   0   0   0 I P                         1
+VA   MESSU    0   0   0   0 I P                         1
+VA   DUMA    10   0   0   0 I D                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+VA   MSGFL    0   0   0   0 I P                         1
+VA   PIVL     0   0   0   0 I P                         1
+VA   PYREND   0   0   0   0 I P                         1
+VA   DURAT   10   0   0   0 I P                         1
+VA   LEVEL   22   0   0   0 R P                         1
+VA   DURANO   0   0   0   0 I P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA   DATIMS   5   0   0   0 I P                         1
+VA   DATIME   5   0   0   0 I P                         1
+VA   YR       0   0   0   0 I S                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA   MON      0   0   0   0 I S                         1
+VA   DAY      0   0   0   0 I S                         1
+VA   HR       0   0   0   0 I S                         1
+VA   MIN      0   0   0   0 I S                         1
+VA   SESONS   5   0   0   0 I S                         1
+EQ   SEASON  10   0   0   0 I S SESONS(1)               1
+VA   SESONE   5   0   0   0 I S                         1
+VA   IVL      0   0   0   0 I S                         1
+VA   IVL1     0   0   0   0 I S                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA   PIVLNO   0   0   0   0 I S                         1
+VA   SESFG    0   0   0   0 I S                         1
+VA   DSFP     0   0   0   0 I T INPUT            TIMSER 1
+VA   NUM      0   0   0   0 I S                         1
+VA   SUM      0   0   0   0 R S                         1
+VA   SUMSQ    0   0   0   0 R S                         1
+VA   MEAN     0   0   0   0 R S                         1
+VA   MAX      0   0   0   0 R S                         1
+VA   MINIM    0   0   0   0 R S                         1
+VA   LASPOS   0   0   0   0 I S                         1
+VA   LASNEG   0   0   0   0 I S                         1
+VA   CURPOS   0   0   0   0 I S                         1
+VA   CURNEG   0   0   0   0 I S                         1
+VA   LGTPOS  22   0   0   0 I S                         1
+VA   LGTNEG  22   0   0   0 I S                         1
+VA   LGTNW    0   0   0   0 I S                         1
+EQ   LGTNW1   1   0   0   0 I S LGTNW                   1
+VA   FRQPOS  10  22   0   0 R S                         1
+VA   FRQNEG  10  22   0   0 R S                         1
+VA   FRQNW   10   0   0   0 R S                         1
+VA   SPOS    10  22   0   0 R S                         1
+VA   SNEG    10  22   0   0 R S                         1
+VA   SNW     10   0   0   0 R S                         1
+VA   SQPOS   10  22   0   0 R S                         1
+VA   SQNEG   10  22   0   0 R S                         1
+VA   SQNW    10   0   0   0 R S                         1
+VA   MPOS    10  22   0   0 R S                         1
+VA   MNEG    10  22   0   0 R S                         1
+VA   MNW     10   0   0   0 R S                         1
+VA   PTPOS   10  22   0   0 R S                         1
+VA   PTNEG   10  22   0   0 R S                         1
+VA   PTNW    10   0   0   0 R S                         1
+VA   PT1POS  10  22   0   0 R S                         1
+VA   PT1NEG  10  22   0   0 R S                         1
+VA   PT1NW   10   0   0   0 R S                         1
+VA   LCTSCT  10   5   0   0 I S                         1
+VA   LCTSTO   5   0   0   0 I S                         1
+VA   LCTIML  10   5   0   0 I S                         1
+VA   LCLEV   10   5   0   0 I S                         1
+VA   LCCONC  10   5   0   0 R S                         1
+WR
+
+MO   GENER
+SE   CGENE.INC
+SI        18000         0
+CO   SCRTCH
+HE   GENER module common
+VA   MESSU    0   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P MESSU                   1
+VA   MSGFL    0   0   0   0 I P                         1
+VA   GENRNO   0   0   0   0 I P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA 1 YR       0   0   0   0 I P                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA 1 MON      0   0   0   0 I P                         1
+VA 1 DAY      0   0   0   0 I P                         1
+VA 1 HR       0   0   0   0 I P                         1
+VA 1 MIN      0   0   0   0 I P                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA   SPAFP    0   0   0   0 I S                         1
+VA   SPAKND   0   0   0   0 I P                         1
+VA   SPIVL    0   0   0   0 I S                         1
+VA   SPOPNO   0   0   0   0 I P                         1
+VA 1 SPOUT    0   0   0   0 I P                         1
+VA   SPNUND   0   0   0   0 I P                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+VA 1 OPCODE   0   0   0   0 I P                         1
+VA 1 NTERMS   0   0   0   0 I P                         1
+VA 1 K        7   0   0   0 R P                         1
+VA 1 SUM      0   0   0   0 R P                         1
+VA   IVL      0   0   0   0 I P                         1
+VA   IVL1     0   0   0   0 I P                         1
+VA   DSFP1    0   0   0   0 I T INPUT            ONE    1
+VA   DSFP2    0   0   0   0 I T INPUT            TWO    1
+VA   DSFP3    0   0   0   0 I T OUTPUT           TIMSER 1
+WR
+
+MO   MUTSIN
+SE   CMUTS.INC
+SI        18000         0
+CO   SCRTCH
+HE   MUTSIN module common
+VA   MUTFL    0   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P MUTFL                   1
+EQ   MUTINF   5   0   0   0 I P MUTFL                   1
+VA 2 NPT      0   0   0   0 I P                         1
+VA 2 NMN      0   0   0   0 I P                         1
+VA   NLINES   0   0   0   0 I P                         1
+VA   MISSFG   0   0   0   0 I P                         1
+VA   NCURV    0   0   0   0 I P                         1
+VA   MESSU    0   0   0   0 I P                         1
+VA   MSGFL    0   0   0   0 I P                         1
+VA   MUTNO    0   0   0   0 I P                         1
+VA   FILVAL   0   0   0   0 R P                         1
+VA   DUMA    18   0   0   0 I D                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+VA   PIVL     0   0   0   0 I P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA   YR       0   0   0   0 I S                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA   MON      0   0   0   0 I S                         1
+VA   DAY      0   0   0   0 I S                         1
+VA   HR       0   0   0   0 I S                         1
+VA   MIN      0   0   0   0 I S                         1
+VA   IVL      0   0   0   0 I S                         1
+VA   IVL1     0   0   0   0 I S                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA   PIVLNO   0   0   0   0 I S                         1
+VA   STFG     0   0   0   0 I S                         1
+VA   VAL     20   0   0   0 R S                         1
+VA   PTFP    20   0   0   0 I T OUTPUT           POINT  1
+VA   MNFP    20   0   0   0 I T OUTPUT           MEAN   1
+WR
+
+MO   BMPRAC
+SE   CBMPR.INC
+SI        18000         0
+CO   SCRTCH
+HE   BMPRAC module common
+PF   phcat.inc
+PM   MXCAT   MC       100   1
+VA   BMPID    5   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P BMPID(1)                1
+VA   BMPTYP   0   0   0   0 I P                         1
+VA 2 NCONS    0   0   0   0 I P                         1
+VA 2 NGQUAL   0   0   0   0 I P                         1
+VA 2 NCATS    0   0   0   0 I P                         1
+VA 2 NACID    0   0   0   0 I P                         1
+VA   PFLAG   10   0   0   0 I P                         1
+VA   BFLAG   10   0   0   0 I P                         1
+VA   PIVL     0   0   0   0 I P                         1
+VA   BIVL     0   0   0   0 I P                         1
+VA   PYREND   0   0   0   0 I P                         1
+VA   BYREND   0   0   0   0 I P                         1
+VA   BMPPFG   0   0   0   0 I P                         1
+VA   BMPBFG   0   0   0   0 I P                         1
+VA   MESSU    0   0   0   0 I P                         1
+VA   MSGFL    0   0   0   0 I P                         1
+VA   BMPNO    0   0   0   0 I P                         1
+VA   DUMA     2   0   0   0 I D                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+EQ   UNIT     7   0   0   0 I P UUNITS                  1
+VA   IUNITS   0   0   0   0 I P                         1
+VA   OUNITS   0   0   0   0 I P                         1
+VA   PUNIT    2   0   0   0 I P                         1
+VA   BUNIT    2   0   0   0 I P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA   HRFG     0   0   0   0 I S                         1
+EQ   TIMFG    6   0   0   0 I S HRFG                    1
+VA   DAYFG    0   0   0   0 I S                         1
+VA   STFG     0   0   0   0 I S                         1
+VA   EDAYFG   0   0   0   0 I S                         1
+VA   EMONFG   0   0   0   0 I S                         1
+VA   EPYRFG   0   0   0   0 I S                         1
+VA   EBYRFG   0   0   0   0 I S                         1
+VA 1 YR       0   0   0   0 I S                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA 1 MON      0   0   0   0 I S                         1
+VA 1 DAY      0   0   0   0 I S                         1
+VA 1 HR       0   0   0   0 I S                         1
+VA 1 MIN      0   0   0   0 I S                         1
+VA   IVL      0   0   0   0 I S                         1
+VA   IVL1     0   0   0   0 I S                         1
+VA   PIVLNO   0   0   0   0 I S                         1
+VA   BIVLNO   0   0   0   0 I S                         1
+VA   NXTMON   0   0   0   0 I S                         1
+VA   SPAFP    0   0   0   0 I S                         1
+VA   SPAKND   0   0   0   0 I S                         1
+VA   SPIVL    0   0   0   0 I S                         1
+VA   SPOPNO   0   0   0   0 I S                         1
+VA 1 SPOUT    0   0   0   0 I S                         1
+VA   SPNUND   0   0   0   0 I S                         1
+VA   HYIF     5   0   0   0 R F                         1
+EQ 1 IVOL     0   0   0   0 R F HYIF(1)                 1
+VA   IVOLFP   0   0   0   0 I T INFLOW           IVOL   1
+VA   RCVOLX   0   0   0   0 I T RECEIV           IVOL   1
+VA   HYIFC   MC   5   0   0 R F                         1
+EQ 1 CIVOL   MC   0   0   0 R F HYIFC(1,1)              1
+VA   CIVLFP  MC   0   0   0 I T INFLOW           CIVOL  1
+VA   RCCVFP  MC   0   0   0 I T RECEIV           CIVOL  1
+VA   VOLFFG   0   0   0   0 I P                         1
+VA 1 VOLFRM  12   0   0   0 R P                         1
+VA 1 VOLFRC   0   0   0   0 R S                         1
+VA   HYOF     5   0   0   0 R F                         1
+EQ 1 ROVOL    0   0   0   0 R F HYOF(1)                 1
+VA   ROVFP    0   0   0   0 I T ROFLOW           ROVOL  1
+VA   HYOFC   MC   5   0   0 R F                         1
+EQ 1 CROVOL  MC   0   0   0 R F HYOFC(1,1)              1
+VA   CROVFP  MC   0   0   0 I T ROFLOW           CROVOL 1
+VA   HYRF     5   0   0   0 R F                         1
+EQ 1 RMVOL    0   0   0   0 R F HYRF(1)                 1
+VA   RMVFP    0   0   0   0 I T REMOVE           RMVOL  1
+VA   HYRFC   MC   5   0   0 R F                         1
+EQ 1 CRMVOL  MC   0   0   0 R F HYRFC(1,1)              1
+VA   CRMVFP  MC   0   0   0 I T REMOVE           CRMVOL 1
+VA   CNIF    10   5   0   0 R F                         1
+EQ 1 ICON    10   0   0   0 R F CNIF(1,1)               1
+VA   ICNFP   10   0   0   0 I T INFLOW           ICON   1
+VA   RCCNFP  10   0   0   0 I T RECEIV           ICON   1
+VA   CONFFG  10   0   0   0 I P                         1
+VA 1 CONFRM  12  10   0   0 R P                         1
+VA   CONID    5  10   0   0 R P                         1
+VA   CQTYID   2  10   0   0 R P                         1
+VA 1 CONFRC  10   0   0   0 R S                         1
+VA   CNOF    10   5   0   0 R F                         1
+EQ 1 ROCON   10   0   0   0 R F CNOF(1,1)               1
+VA   ROCNFP  10   0   0   0 I T ROFLOW           ROCON  1
+VA   CNRF    10   5   0   0 R F                         1
+EQ 1 RMCON   10   0   0   0 R F CNRF(1,1)               1
+VA   RMCNFP  10   0   0   0 I T REMOVE           RMCON  1
+VA   HTIF     5   0   0   0 R F                         1
+EQ 1 IHEAT    0   0   0   0 R F HTIF(1)                 1
+VA   IHTFP    0   0   0   0 I T INFLOW           IHEAT  1
+VA   RCHTFP   0   0   0   0 I T RECEIV           IHEAT  1
+VA   HTFFG    0   0   0   0 I P                         1
+VA 1 HTFRM   12   0   0   0 R P                         1
+VA 1 HTFRC    0   0   0   0 R S                         1
+VA   HTOF     5   0   0   0 R F                         1
+EQ 1 ROHEAT   0   0   0   0 R F HTOF(1)                 1
+VA   ROHTFP   0   0   0   0 I T ROFLOW           ROHEAT 1
+VA   HTRF     5   0   0   0 R F                         1
+EQ 1 RMHEAT   0   0   0   0 R F HTRF(1)                 1
+VA   RMHTFP   0   0   0   0 I T REMOVE           RMHEAT 1
+VA   SDIF     3   5   0   0 R F                         1
+EQ 1 ISED     3   0   0   0 R F SDIF(1,1)               1
+VA   ISEDFP   3   0   0   0 I T INFLOW           ISED   1
+VA   RCSDFP   3   0   0   0 I T RECEIV           ISED   1
+VA   SEDFFG   3   0   0   0 I P                         1
+VA 1 SEDFRM  12   3   0   0 R P                         1
+VA 1 SEDFRC   3   0   0   0 R S                         1
+VA   SDOF     3   5   0   0 R F                         1
+EQ 1 ROSED    3   0   0   0 R F SDOF(1,1)               1
+VA   ROSDFP   3   0   0   0 I T ROFLOW           ROSED  1
+VA   SDRF     3   5   0   0 R F                         1
+EQ 1 RMSED    3   0   0   0 R F SDRF(1,1)               1
+VA   RMSDFP   3   0   0   0 I T REMOVE           RMSED  1
+VA   GQDIF    3   5   0   0 R F                         1
+EQ 1 IDQAL    3   0   0   0 R F GQDIF(1,1)              1
+VA   IDQFP    3   0   0   0 I T INFLOW           IDQAL  1
+VA   RCDQFP   3   0   0   0 I T RECEIV           IDQAL  1
+VA   GQSIF    3   3   5   0 R F                         1
+EQ 1 ISQAL    3   3   0   0 R F GQSIF(1,1,1)            1
+VA   ISQFP    3   3   0   0 I T INFLOW           ISQAL  1
+VA   RCSQFP   3   3   0   0 I T RECEIV           ISQAL  1
+VA   GQFFG   12   0   0   0 I P                         1
+VA 1 GQDFRM  12   3   0   0 R P                         1
+VA 1 GQSFRM  12   3   3   0 R P                         1
+VA   GQID     5   3   0   0 R P                         1
+VA   GQTYID   2   3   0   0 R P                         1
+VA 1 GQDFRC   3   0   0   0 R S                         1
+VA 1 GQSFRC   3   3   0   0 R S                         1
+VA   GQDOF    3   5   0   0 R F                         1
+EQ 1 RODQAL   3   0   0   0 R F GQDOF(1,1)              1
+VA   RODQFP   3   0   0   0 I T ROFLOW           RODQAL 1
+VA   GQSOF    3   3   5   0 R F                         1
+EQ 1 ROSQAL   3   3   0   0 R F GQSOF(1,1,1)            1
+VA   ROSQFP   3   3   0   0 I T ROFLOW           ROSQAL 1
+VA   GQDRF    3   5   0   0 R F                         1
+EQ 1 RMDQAL   3   0   0   0 R F GQDRF(1,1)              1
+VA   RMDQFP   3   0   0   0 I T REMOVE           RMDQAL 1
+VA   GQSRF    3   3   5   0 R F                         1
+EQ 1 RMSQAL   3   3   0   0 R F GQSRF(1,1,1)            1
+VA   RMSQFP   3   3   0   0 I T REMOVE           RMSQAL 1
+VA   OXIF     2   5   0   0 R F                         1
+EQ 1 IOX      2   0   0   0 R F OXIF(1,1)               1
+VA   IOXFP    2   0   0   0 I T INFLOW           IOX    1
+VA   RCOXFP   2   0   0   0 I T RECEIV           IOX    1
+VA   OXFFG    2   0   0   0 I P                         1
+VA 1 OXFRM   12   2   0   0 R P                         1
+VA 1 OXFRC    2   0   0   0 R S                         1
+VA   OXOF     2   5   0   0 R F                         1
+EQ 1 ROOX     2   0   0   0 R F OXOF(1,1)               1
+VA   ROOXFP   2   0   0   0 I T ROFLOW           ROOX   1
+VA   OXRF     2   5   0   0 R F                         1
+EQ 1 RMOX     2   0   0   0 R F OXRF(1,1)               1
+VA   RMOXFP   2   0   0   0 I T REMOVE           RMOX   1
+VA   DNUIF    4   5   0   0 R F                         1
+EQ 1 IDNUT    4   0   0   0 R F DNUIF(1,1)              1
+VA   IDNUTX   4   0   0   0 I T INFLOW           IDNUT  1
+VA   RCDNUX   4   0   0   0 I T RECEIV           IDNUT  1
+VA   SNUIF    3   2   5   0 R F                         1
+EQ 1 ISNUT    3   2   0   0 R F SNUIF(1,1,1)            1
+VA   ISNUTX   3   2   0   0 I T INFLOW           ISNUT  1
+VA   RCSNUX   3   2   0   0 I T RECEIV           ISNUT  1
+VA   NUTFFG  10   0   0   0 I P                         1
+VA 1 DNUFRM  12   4   0   0 R P                         1
+VA 1 SNUFRM  12   3   2   0 R P                         1
+VA 1 DNUFRC   4   0   0   0 R S                         1
+VA 1 SNUFRC   3   2   0   0 R S                         1
+VA   DNUOF    4   5   0   0 R F                         1
+EQ 1 RODNUT   4   0   0   0 R F DNUOF(1,1)              1
+VA   RODNUX   4   0   0   0 I T ROFLOW           RODNUT 1
+VA   SNUOF    3   2   5   0 R F                         1
+EQ 1 ROSNUT   3   2   0   0 R F SNUOF(1,1,1)            1
+VA   ROSNUX   3   2   0   0 I T ROFLOW           ROSNUT 1
+VA   DNURF    4   5   0   0 R F                         1
+EQ 1 RMDNUT   4   0   0   0 R F DNURF(1,1)              1
+VA   RMDNUX   4   0   0   0 I T REMOVE           RMDNUT 1
+VA   SNURF    3   2   5   0 R F                         1
+EQ 1 RMSNUT   3   2   0   0 R F SNURF(1,1,1)            1
+VA   RMSNUX   3   2   0   0 I T REMOVE           RMSNUT 1
+VA   PKIF     5   5   0   0 R F                         1
+EQ 1 IPLK     5   0   0   0 R F PKIF(1,1)               1
+VA   IPLKFP   5   0   0   0 I T INFLOW           IPLK   1
+VA   RCPKFP   5   0   0   0 I T RECEIV           IPLK   1
+VA   PLKFFG   5   0   0   0 I P                         1
+VA 1 PLKFRM  12   5   0   0 R P                         1
+VA 1 PLKFRC   5   0   0   0 R S                         1
+VA   PKOF     5   5   0   0 R F                         1
+EQ 1 ROPLK    5   0   0   0 R F PKOF(1,1)               1
+VA   ROPLKX   5   0   0   0 I T ROFLOW           ROPLK  1
+VA   PKRF     5   5   0   0 R F                         1
+EQ 1 RMPLK    5   0   0   0 R F PKRF(1,1)               1
+VA   RMPLKX   5   0   0   0 I T REMOVE           RMPLK  1
+VA   PHIF     2   5   0   0 R F                         1
+EQ 1 IPH      2   0   0   0 R F PHIF(1,1)               1
+VA   IPHFP    2   0   0   0 I T INFLOW           IPH    1
+VA   RCPHFP   2   0   0   0 I T RECEIV           IPH    1
+VA   PHFFG    2   0   0   0 I P                         1
+VA 1 PHFRM   12   2   0   0 R P                         1
+VA 1 PHFRC    2   0   0   0 R S                         1
+VA   PHOF     2   5   0   0 R F                         1
+EQ 1 ROPH     2   0   0   0 R F PHOF(1,1)               1
+VA   ROPHFP   2   0   0   0 I T ROFLOW           ROPH   1
+VA   PHRF     2   5   0   0 R F                         1
+EQ 1 RMPH     2   0   0   0 R F PHRF(1,1)               1
+VA   RMPHFP   2   0   0   0 I T REMOVE           RMPH   1
+VA   ACIF     7   5   0   0 R F                         1
+EQ 1 IACID    7   0   0   0 R F ACIF(1,1)               1
+VA   IACIDX   7   0   0   0 I T INFLOW           IACID  1
+VA   RCACIX   7   0   0   0 I T RECEIV           IACID  1
+VA   ACIFFG   7   0   0   0 I P                         1
+VA 1 ACIFRM  12   7   0   0 R P                         1
+VA 1 ACIFRC   7   0   0   0 R S                         1
+VA   ACOF     7   5   0   0 R F                         1
+EQ 1 ROACID   7   0   0   0 R F ACOF(1,1)               1
+VA   ROACIX   7   0   0   0 I T ROFLOW           ROACID 1
+VA   ACRF     7   5   0   0 R F                         1
+EQ 1 RMACID   7   0   0   0 R F ACRF(1,1)               1
+VA   RMACIX   7   0   0   0 I T REMOVE           RMACID 1
+WR
+
+MO   REPORT
+SE   CREPT.INC
+SI        18000         0
+CO   SCRTCH
+HE   REPORT module common
+PM   MAXSRC  MS        99   0
+PM   MAXCON  MC        50   0
+PM   MAXTIM  MT       500   0
+PM   MAXACC  MA     10000   0
+VA   TITLE   15   0   0   0 I P                         1
+EQ   ASVEC    1   0   0   0 I P TITLE(1)                1
+VA   REPTFL   0   0   0   0 I P                         1
+EQ   RPTINF   9   0   0   0 I P REPTFL                  1
+VA 2 NCON     0   0   0   0 I P                         1
+VA 2 NSRC     0   0   0   0 I P                         1
+VA   FORMFG   0   0   0   0 I P                         1
+VA   CWID     0   0   0   0 I P                         1
+VA   PWID     0   0   0   0 I P                         1
+VA   PLIN     0   0   0   0 I P                         1
+VA   PCODE    0   0   0   0 I P                         1
+VA   PYREND   0   0   0   0 I P                         1
+VA   REPTNO   0   0   0   0 I P                         1
+VA   MSGFL    0   0   0   0 I P                         1
+VA   MESSU    0   0   0   0 I P                         1
+VA   NDAYS    0   0   0   0 I S                         1
+VA 1 UUNITS   0   0   0   0 I P                         1
+VA   NDAY    12   0   0   0 I P                         1
+VA   SDATE    5   0   0   0 I P                         1
+VA   TRNKWD   7   0   0   0 I P                         1
+VA   SRCHED   5   0   0   0 I P                         1
+VA   SRCTRC   0   0   0   0 I P                         1
+VA   TIMHED   5   0   0   0 I P                         1
+VA   TIMTRC   0   0   0   0 I P                         1
+VA   STTRFG   0   0   0   0 I P                         1
+VA   SRCID    5  MS   0   0 I P                         1
+VA   CONID    5  MC   0   0 I P                         1
+VA   TRNCOD  MC   0   0   0 I P                         1
+VA   SDIG    MC   0   0   0 I P                         1
+VA   DECPLA  MC   0   0   0 I P                         1
+VA   DELT     0   0   0   0 R P                         1
+VA   YR       0   0   0   0 I S                         1
+EQ   DATIM    5   0   0   0 I S YR                      1
+VA   MON      0   0   0   0 I S                         1
+VA   DAY      0   0   0   0 I S                         1
+VA   HR       0   0   0   0 I S                         1
+VA   MIN      0   0   0   0 I S                         1
+VA   IVL      0   0   0   0 I S                         1
+VA   IVL1     0   0   0   0 I S                         1
+VA   PIVLNO   0   0   0   0 I S                         1
+VA   EDAYFG   0   0   0   0 I S                         1
+VA   EMONFG   0   0   0   0 I S                         1
+VA   EPYRFG   0   0   0   0 I S                         1
+VA   CURTIM   0   0   0   0 I S                         1
+VA   MTIM     0   0   0   0 I S                         1
+VA   TIMLAB   3  MT   0   0 I S                         1
+VA   ACCUM   MA   0   0   0 R S                         1
+VA   IFP     MC  MS   0   0 I T INPUT            TIMSER 1
+WR
