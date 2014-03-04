@@ -81,6 +81,11 @@
          <property name="LibName" value="hspf124"/>
       </ant>
 
+      <echo message="make hspf125"/>
+      <ant antfile="makeLib.xml">
+         <property name="LibName" value="hspf125"/>
+      </ant>
+
       <concat destfile="${ant.project.name}Details.lis">
          <fileset dir=".">
             <include name="**/MakeLib.lis"/>
