@@ -26,7 +26,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR1 + + +
       INCLUDE    'chcat.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,J,N,IVAL(12),TBNO,TBSB,NVAL,RETCOD,LEV,OSVREC,
+      INTEGER     I,J,N,IVAL(14),TBNO,TBSB,NVAL,RETCOD,LEV,OSVREC,
      $            OSVKST,OSVKND
       REAL        RVAL(11)
 C
@@ -112,10 +112,26 @@ C     printout flag
 C     dummy value of overall print flag until run starts
       BMPPFG= 6
 C
-C     process table-type gen-info
+C     process table-type binary-info
       TBNO= 2
       TBSB= 1
-      NVAL= 12
+      NVAL= 11
+      CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
+     M             IVAL)
+      DO 45 I= 1, 9
+        BFLAG(I)= IVAL(I)
+ 45   CONTINUE
+C     printout flag
+      BFLAG(10)= PFLAG(9)
+      BIVL= IVAL(10)
+      BYREND= IVAL(11)
+C     dummy value of overall print flag until run starts
+      BMPBFG= 6
+C
+C     process table-type gen-info
+      TBNO= 3
+      TBSB= 1
+      NVAL= 14
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             IVAL)
       DO 50 I= 1, 5
@@ -128,6 +144,8 @@ C     process table-type gen-info
       OUNITS= IVAL(10)
       PUNIT(1)= IVAL(11)
       PUNIT(2)= IVAL(12)
+      BUNIT(1)= IVAL(13)
+      BUNIT(2)= IVAL(14)
 C
 C     check output files - if not open,
 C     then open them with a standard name
@@ -139,7 +157,7 @@ C     then open them with a standard name
  55   CONTINUE
 C
 C     process table-type flow-flag
-      TBNO= 3
+      TBNO= 4
       TBSB= 1
       NVAL= 1
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -147,7 +165,7 @@ C     process table-type flow-flag
       VOLFFG= IVAL(1)
 C
 C     process table-type flow-frac
-      TBNO= 4
+      TBNO= 5
       TBSB= 1
       NVAL= 1
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -173,14 +191,14 @@ C
 C       handle conseratives
 C
 C       process table-type cons-flag
-        TBNO= 5
+        TBNO= 6
         TBSB= 1
         NVAL= NCONS
         CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M               CONFFG)
 C     
 C       process table-type cons-frac
-        TBNO= 6
+        TBNO= 7
         NVAL= 8
         DO 70 TBSB= 1, NCONS
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -202,7 +220,7 @@ C           monthly fraction must be read
       END IF
 C
 C     process table-type heat-flag
-      TBNO= 7
+      TBNO= 8
       TBSB= 1
       NVAL= 1
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -210,7 +228,7 @@ C     process table-type heat-flag
       HTFFG= IVAL(1)
 C
 C     process table-type heat-frac
-      TBNO= 8
+      TBNO= 9
       TBSB= 1
       NVAL= 1
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -225,14 +243,14 @@ C       monthly fraction must be read
       END IF
 C
 C     process table-type sed-flag
-      TBNO= 9
+      TBNO= 10
       TBSB= 1
       NVAL= 3
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             SEDFFG)
 C
 C     process table-type sed-frac
-      TBNO= 10
+      TBNO= 11
       TBSB= 1
       NVAL= 3
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -251,14 +269,14 @@ C
 C       handle quals
 C
 C       process table-type gq-flag
-        TBNO= 11
+        TBNO= 12
         TBSB= 1
         NVAL= NGQUAL*4
         CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M               GQFFG)
 C
 C       process table-type gq-frac
-        TBNO= 12
+        TBNO= 13
         NVAL= 11
         DO 110 TBSB= 1, NGQUAL
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -292,14 +310,14 @@ C             monthly fraction must be read
       END IF
 C
 C     process table-type oxy-flag
-      TBNO= 13
+      TBNO= 14
       TBSB= 1
       NVAL= 2
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             OXFFG)
 C
 C     process table-type oxy-frac
-      TBNO= 14
+      TBNO= 15
       TBSB= 1
       NVAL= 2
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -315,14 +333,14 @@ C         monthly fraction must be read
  120  CONTINUE
 C
 C     process table-type nut-flag
-      TBNO= 15
+      TBNO= 16
       TBSB= 1
       NVAL= 10
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             NUTFFG)
 C
 C     process table-type dnut-frac
-      TBNO= 16
+      TBNO= 17
       TBSB= 1
       NVAL= 4
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -338,7 +356,7 @@ C         monthly fraction must be read
  130  CONTINUE
 C
 C     process table-type adsnut-frac
-      TBNO= 17
+      TBNO= 18
       TBSB= 1
       NVAL= 6
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -357,14 +375,14 @@ C           monthly fraction must be read
  150  CONTINUE
 C
 C     process table-type plank-flag
-      TBNO= 18
+      TBNO= 19
       TBSB= 1
       NVAL= 5
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             PLKFFG)
 C
 C     process table-type plank-frac
-      TBNO= 19
+      TBNO= 20
       TBSB= 1
       NVAL= 5
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -380,14 +398,14 @@ C         monthly fraction must be read
  160  CONTINUE
 C
 C     process table-type ph-flag
-      TBNO= 20
+      TBNO= 21
       TBSB= 1
       NVAL= 2
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             PHFFG)
 C
 C     process table-type ph-frac
-      TBNO= 21
+      TBNO= 22
       TBSB= 1
       NVAL= 2
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -403,7 +421,7 @@ C         monthly fraction must be read
  170  CONTINUE
 C
 C     process table-type acid-flag
-      TBNO= 22
+      TBNO= 23
       TBSB= 1
       NVAL= 8
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -414,7 +432,7 @@ C     process table-type acid-flag
  180  CONTINUE
 C
 C     process table-type acid-frac
-      TBNO= 23
+      TBNO= 24
       TBSB= 1
       NVAL= NACID
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
