@@ -1380,18 +1380,19 @@ C
 C
 C
       SUBROUTINE   BMPPRT
-     I                    (UNITFG,LEV,PRINTU)
+     I                    (UNITFG,LEV,PRINTU,BINU)
 C
 C     + + + PURPOSE + + +
 C     Perform printout for module BMPRAC.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    LEV,PRINTU,UNITFG
+      INTEGER    LEV,PRINTU,UNITFG,BINU
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     UNITFG - output units   1-english, 2-metric
 C     LEV    - current output level (2-pivl,3-day,4-mon,5-ann)
 C     PRINTU - fortran unit number on which to print output
+C     BINU   - fortran unit number on which to write binary output
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR2 + + +
       INCLUDE   'cbmpr.inc'
@@ -1399,12 +1400,16 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR2 + + +
       INCLUDE   'chcat.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,J
+      INTEGER     I,J,ACNT,CLEN(3+(3*MXCAT)),EXDAT(5)
       REAL        VFACT(2,2),HFACT(2,2),SFACT(2,2),MFACT(2,2),
-     $            PIFLUX,POFLUX,PRFLUX
+     $            PIFLUX,POFLUX,PRFLUX,APRINT(3+(3*MXCAT))
       CHARACTER*4 SDSIZE(3)
       CHARACTER*5 NUTNAM(4)
       CHARACTER*8 VUNIT(2),HUNIT(2),SUNIT(2),MUNIT(2)
+      CHARACTER*256 CHEAD(3+(3*MXCAT))
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   EXDATE,BINHED,BINREC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA VFACT/ 1. , 8.1071E+2 , 1.2335E-3 , 1. /
@@ -1448,34 +1453,74 @@ C     + + + OUTPUT FORMATS + + +
  2250 FORMAT (/,2X,'ACID MINE DRAINAGE CHEMICALS (',A8,')')
  2260 FORMAT (4X,'CHEMICAL NO.',I3,21X,3(1PG12.3))
 C
+C     + + + HISTORY + + +
+C     2014  PBD added binary output
+C
 C     + + + END SPECIFICATIONS + + +
 C
-      WRITE (PRINTU,2000)
+C     initialize array counter for binary printout, store variable
+C     names in local strings for use in building binary headers
+      ACNT = 0
 C
-      IF (PFLAG(1) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+        WRITE (PRINTU,2000)
+      END IF 
+C
+C     total flow
+      PIFLUX= HYIF(LEV)*VFACT(UUNITS,UNITFG)
+      POFLUX= HYOF(LEV)*VFACT(UUNITS,UNITFG)
+      PRFLUX= HYRF(LEV)*VFACT(UUNITS,UNITFG)
+C
+      IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
 C       printout flow results
-C
-C       total flow
-        PIFLUX= HYIF(LEV)*VFACT(UUNITS,UNITFG)
-        POFLUX= HYOF(LEV)*VFACT(UUNITS,UNITFG)
-        PRFLUX= HYRF(LEV)*VFACT(UUNITS,UNITFG)
         IF (NCATS .LE. 0) THEN
           WRITE (PRINTU,2005) VUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
         ELSE
           WRITE (PRINTU,2010) VUNIT(UNITFG)
           WRITE (PRINTU,2020) PIFLUX,POFLUX,PRFLUX
         END IF
-C
-C       by category
-        DO 10 I= 1, NCATS
-          PIFLUX= HYIFC(I,LEV)*VFACT(UUNITS,UNITFG)
-          POFLUX= HYOFC(I,LEV)*VFACT(UUNITS,UNITFG)
-          PRFLUX= HYRFC(I,LEV)*VFACT(UUNITS,UNITFG)
-          WRITE (PRINTU,2030) CATNAM(I),PIFLUX,POFLUX,PRFLUX
- 10     CONTINUE
       END IF
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+C       binary flow results
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PIFLUX
+        CHEAD(ACNT) = 'PIFLUX'
+        CLEN(ACNT) = 6
+        ACNT = ACNT + 1
+        APRINT(ACNT) = POFLUX
+        CHEAD(ACNT) = 'POFLUX'
+        CLEN(ACNT) = 6
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PRFLUX
+        CHEAD(ACNT) = 'PRFLUX'
+        CLEN(ACNT) = 6
+      END IF 
+
+C     flow results by category
+      DO 10 I= 1, NCATS
+        PIFLUX= HYIFC(I,LEV)*VFACT(UUNITS,UNITFG)
+        POFLUX= HYOFC(I,LEV)*VFACT(UUNITS,UNITFG)
+        PRFLUX= HYRFC(I,LEV)*VFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+          WRITE (PRINTU,2030) CATNAM(I),PIFLUX,POFLUX,PRFLUX
+        END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'PIFLUX' // CATNAM(I)
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'POFLUX' // CATNAM(I)
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'PRFLUX' // CATNAM(I)
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF
+ 10   CONTINUE
 C
-      IF (PFLAG(2) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(2) .LE. LEV) THEN
 C       printout conservative results
         WRITE (PRINTU,2040)
         DO 20 I= 1, NCONS
@@ -1489,7 +1534,7 @@ C       printout conservative results
  20     CONTINUE
       END IF
 C
-      IF (PFLAG(3) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
 C       printout heat results
         PIFLUX= HTIF(LEV)*HFACT(UUNITS,UNITFG)
         POFLUX= HTOF(LEV)*HFACT(UUNITS,UNITFG)
@@ -1497,7 +1542,7 @@ C       printout heat results
         WRITE (PRINTU,2060) HUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
       END IF
 C
-      IF (PFLAG(4) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(4) .LE. LEV) THEN
 C       printout sediment results
         WRITE (PRINTU,2070) SUNIT(UNITFG)
         DO 30 I= 1, 3
@@ -1508,7 +1553,7 @@ C       printout sediment results
  30     CONTINUE
       END IF
 C
-      IF (PFLAG(5) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(5) .LE. LEV) THEN
 C       printout general qual results
         WRITE (PRINTU,2090)
 C
@@ -1531,7 +1576,7 @@ C       dissolved
  50     CONTINUE
       END IF
 C
-      IF (PFLAG(6) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(6) .LE. LEV) THEN
 C       printout oxygen results
 C
         IF (IOXFP(1) .GE. 1) THEN
@@ -1551,7 +1596,7 @@ C         bod
         END IF
       END IF
 C
-      IF (PFLAG(7) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(7) .LE. LEV) THEN
 C       printout nutrient results
         WRITE (PRINTU,2150) MUNIT(UNITFG)
 C
@@ -1578,7 +1623,7 @@ C       dissolved
  80     CONTINUE
       END IF
 C
-      IF (PFLAG(8) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(8) .LE. LEV) THEN
 C       printout plankton results
 C
         IF (IPLKFP(1) .GE. 1) THEN
@@ -1622,7 +1667,7 @@ C         organic c
         END IF
       END IF
 C
-      IF (PFLAG(9) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(9) .LE. LEV) THEN
 C       printout inorganic carbon results
 C
         IF (IPHFP(1) .GE. 1) THEN
@@ -1642,7 +1687,7 @@ C         dissolved co2
         END IF
       END IF
 C
-      IF (PFLAG(10) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(10) .LE. LEV) THEN
 C       printout acid mine results
         WRITE (PRINTU,2250) MUNIT(UNITFG)
         DO 90 I= 1, NACID
@@ -1651,6 +1696,23 @@ C       printout acid mine results
           PRFLUX= ACRF(I,LEV)*MFACT(UUNITS,UNITFG)
           WRITE (PRINTU,2260) I,PIFLUX,POFLUX,PRFLUX
  90     CONTINUE
+      END IF
+C
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+C       write binary output
+        CALL EXDATE(
+     I              DATIM,
+     O              EXDAT)
+        IF (BFLAG(1) .GT. 0) THEN
+C         at start of run, write the header
+          CALL BINHED (BINU,'BMPRAC  ',BMPNO,'        ',ACNT,CLEN,CHEAD)
+          IF (BUNIT(2) .LE. 0 .OR. BINU .EQ. BUNIT(2)) THEN
+C           set bflag to negative to not write headers anymore
+            BFLAG(1) = -BFLAG(1)
+          END IF
+        END IF
+        CALL BINREC (BINU,'BMPRAC  ',BMPNO,'        ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN
@@ -1668,7 +1730,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    EXDAT(5),I1,I2,I3,I4,I5,J,PRINTU,UNITFG
+      INTEGER    EXDAT(5),I1,I2,I3,I4,I5,J,PRINTU,UNITFG,BINU
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I1,I2,I3,I4,I5/1,2,3,4,5/
@@ -1717,39 +1779,50 @@ C     printout
       DO 110 UNITFG= 1,2
 C
         PRINTU= PUNIT(UNITFG)
-        IF (PRINTU .NE. 0) THEN
+        BINU  = BUNIT(UNITFG)
+        IF (PRINTU .NE. 0 .OR. BINU .NE. 0) THEN
 C         printout is required in this set of external units.
 C         unitfg= 1 for english, 2 for metric.  printu is the
 C         fortran logical unit no. to be used for printout
-          IF ( (PIVLNO .EQ. PIVL) .AND. (BMPPFG .EQ. 2) ) THEN
+C
+          IF ((PIVLNO .EQ. PIVL .AND. BMPPFG .EQ. 2) .OR.
+     1        (PIVLNO .EQ. BIVL .AND. BMPBFG .EQ. 2))THEN
 C           it's time to handle any pivl level printout, and some
 C           is required
 C           convert hour and minute fields in date/time
 C           to external format
             CALL EXDATE (DATIM,
      O                   EXDAT)
-            WRITE (PRINTU,2000)  BMPNO, BMPID, PIVL, EXDAT
-            CALL BMPPRT (UNITFG,I2,PRINTU)
+            IF (PRINTU .GT. 0 .AND. BMPPFG .EQ. 2) THEN
+              WRITE (PRINTU,2000)  BMPNO, BMPID, PIVL, EXDAT
+            END IF
+            CALL BMPPRT (UNITFG,I2,PRINTU,BINU)
           END IF
 C
           IF (EDAYFG .EQ. 1) THEN
-            IF (BMPPFG .LE. 3) THEN
+            IF (BMPPFG .LE. 3 .OR. BMPBFG .LE. 3) THEN
 C             it's time to handle daily printout
-              WRITE (PRINTU,2010)  BMPNO, BMPID, (DATIM(J),J=1,3)
-              CALL BMPPRT (UNITFG,I3,PRINTU)
+              IF (PRINTU .GT. 0 .AND. BMPPFG .LE. 3) THEN
+                WRITE (PRINTU,2010)  BMPNO, BMPID, (DATIM(J),J=1,3)
+              END IF 
+              CALL BMPPRT (UNITFG,I3,PRINTU,BINU)
             END IF
 C
             IF (EMONFG .EQ. 1) THEN
-              IF (BMPPFG .LE. 4) THEN
+              IF (BMPPFG .LE. 4 .OR. BMPBFG .LE. 4) THEN
 C               it's time to handle monthly printout
-                WRITE (PRINTU,2020)  BMPNO, BMPID, (DATIM(J),J=1,2)
-                CALL BMPPRT (UNITFG,I4,PRINTU)
+                IF (PRINTU .GT. 0 .AND. BMPPFG .LE. 4) THEN
+                  WRITE (PRINTU,2020)  BMPNO, BMPID, (DATIM(J),J=1,2)
+                END IF 
+                CALL BMPPRT (UNITFG,I4,PRINTU,BINU)
               END IF
 C
               IF (EPYRFG .EQ. 1) THEN
 C               it's time to handle yearly printout
-                WRITE (PRINTU,2030)  BMPNO, BMPID, (DATIM(J),J=1,2)
-                CALL BMPPRT (UNITFG,I5,PRINTU)
+                IF (PRINTU .GT. 0 .AND. BMPPFG .LE. 5) THEN
+                  WRITE (PRINTU,2030)  BMPNO, BMPID, (DATIM(J),J=1,2)
+                END IF
+                CALL BMPPRT (UNITFG,I5,PRINTU,BINU)
               END IF
             END IF
           END IF
@@ -1758,7 +1831,8 @@ C               it's time to handle yearly printout
 C
 C     reset flux accumulators and state variables used in material
 C     balance checks
-      IF ( (PIVLNO .EQ. PIVL) .AND. (BMPPFG .EQ. 2) ) THEN
+      IF ((PIVLNO .EQ. PIVL .AND. BMPPFG .EQ. 2) .OR.
+     1    (PIVLNO .EQ. BIVL .AND. BMPBFG .EQ. 2)) THEN
 C       reset any pivl level variables in use
         CALL BMPRST (I2)
       END IF
