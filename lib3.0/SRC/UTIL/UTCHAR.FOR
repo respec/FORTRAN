@@ -2312,6 +2312,7 @@ C       dont force exponential
         LDECPL= DECPLA
       END IF
       JUST= 0
+      EXPFLG = 0
 C
       UFMT(1)= '('
       UFMT(2)= ' '
@@ -2323,7 +2324,11 @@ C
       UFMT(8)= DIGCHR(LDECPL)
       UFMT(9)= ')'
 C
-      WRITE (UBBUF,UFMTL) REAIN
+      WRITE (UBBUF,UFMTL,ERR=5) REAIN
+        GO TO 7
+ 5    CONTINUE
+        EXPFLG= 1
+ 7    CONTINUE
       IF (CHRDIG(USBUF(1)).LT.0.AND.USBUF(1).NE.' '.AND.
      1    USBUF(1).NE.'.'     .AND.USBUF(1).NE.'-') THEN
 C       real number didn't fit in user specified format, try E

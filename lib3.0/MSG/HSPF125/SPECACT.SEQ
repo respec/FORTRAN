@@ -1118,5 +1118,15 @@ $TEXT
  This one must be moved:
  
 &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP  111  TYPE TEXT
+$TEXT
+    1    1    1    5
+There is a type mismatch between a Special Action line and a UVQUAN based on
+its target variable.
+
+Type codes are: 2= integer; 3= real; 4= double precision
+
+The type code for the Action line is: &I
+The type code for the UVQUAN is: &I             for UVUAN &CCCCC
   END DATA
 END CLU
