@@ -119,7 +119,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Provisional version 7.1 dated 12/19/2013',/,
+     $       'Version 7.1 dated 3/14/2014',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -602,28 +602,15 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   200 FORMAT('  ')
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
-  202 FORMAT( 2X,'Prov. Ver. 7.1',
-     $        6X,'Annual peak flow frequency analysis',
-     $        6X,'Run Date / Time' )
-  203 FORMAT( 2X,'12/19/2013',
-     $       10X,'following Bulletin 17-B Guidelines',7X,A)
-  213 FORMAT( 2X,'12/19/2013',
-     $        9X,'using Expected Moments Algorithm (EMA)',4X,A )
-  205 FORMAT(12X,'Preliminary release of PeakFQ for review and ',
-     $           'testing only.')
+  202 FORMAT( 2X,'Version 7.1',
+     $        9X,'Annual peak flow frequency analysis',
+     $        6X,'Run Date / Time')
+  203 FORMAT( 2X,'3/14/2014',52X,A)
   206 FORMAT(22X,'standard method for flood frequency analysis.')
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
   208 FORMAT( ' ',2A1,T1,5('   *** EXPERIMENTAL ***   ')  )
 C 209 FORMAT(2X, A10, A15, 2X, A48)
-  301 FORMAT(  2X, '*********  NOTICE  --  Preliminary machine ',
-     $             'computations.        *********' )
-  302 FORMAT(  2X, '*********  User responsible for assessment ',
-     $             'and interpretation.  *********' )
-  401 FORMAT(  2X, '*********  WARNING  --  Experimental ',
-     $             'modification of 17B calculations  *********' )
-  402 FORMAT(  2X, '***************    User is responsible for ',
-     $             'assessment and interpretation.    *********' )
   501 FORMAT(   '1', /, (A) )
   502 FORMAT(   80A1 )
   503 FORMAT(///, A, /, A, / )
@@ -653,25 +640,7 @@ C         assume before 2000
         WRITE(MSG1,  199)
         WRITE(MSG1,  201) STAIND,PAGIND
         WRITE(MSG1,  202)
-        IF (EMAOPT .EQ. 0) THEN
-C         traditional B17 analysis
-          WRITE(MSG1,  203) CHDTTM
-        ELSE
-C         using new EMA option
-          WRITE(MSG1,  213) CHDTTM
-Cprh        EMA Warning removed 5/2012
-Cprh          WRITE(MSG1, *)
-Cprh          WRITE(MSG1,  205)
-Cprh          WRITE(MSG1,  206)
-        END IF
-C       temporary warning message for Prov. beta 7.1
-        WRITE(MSG1,  205)
-Cprh       WRITE(MSG1,  206)
-Cprh    original version never set JOBTTL, leave out for new version
-Cprh        WRITE(MSG1,  207)  JOBTTL
-Cprh        CALL DATLST (DT,CHDTTM,OLEN,ERRCOD)
-        
-Cprh        WRITE(MSG1, 101) (CHDTTM(I),I=1,OLEN)
+        WRITE(MSG1,  203) CHDTTM
         WRITE(MSG1, 102) CPLTOP(IPLTOP+1), CBCPUN(IBCPUN+1),
      $                   CPRTOP(IPRTOP+1), CDEBUG(IDEBUG+1),
      $                   CIPPOS(IPPOS+1),  CNFORM(INFORM)
@@ -700,33 +669,9 @@ C       prepare page heading in character strings
         WRITE(HEAD1,200)
         WRITE(HEAD2,201) STAIND,PAGIND
         WRITE(HEAD3,202)
-        IF (EMAOPT .EQ. 0) THEN
-C         traditional B17 analysis
-          WRITE(HEAD4,203) CHDTTM
-          HEAD5 = ' '
-          HEAD6 = ' '
-        ELSE
-C         using new EMA option
-          WRITE(HEAD4,213) CHDTTM
-Cprh        EMA Warning removed 5/2012
-CprhC         include warning about using EMA method
-Cprh          WRITE(HEAD5,205)
-Cprh          WRITE(HEAD6,206)
-        END IF
-C       WRITE(HEAD7,207) JOBTTL
-C       put date/time here for plots
-Cprh    date/time now in page header
-Cprh        WRITE(HEAD7,227) CHDTTM
+        WRITE(HEAD4,203) CHDTTM
         HEAD7 = ' '
         WRITE(HEAD8,208) (BLANK, I=1,IARG2)
-C       SET UP DISCLAIMER
-        IF(IARG2 .GE. 2) THEN
-          WRITE(DISCLM(1),401)
-          WRITE(DISCLM(2),402)
-        ELSE
-          WRITE(DISCLM(1),301)
-          WRITE(DISCLM(2),302)
-        ENDIF
 C
       ELSE IF( II .EQ. 1000 )  THEN
 C       PRINT PAGE HEADINGS FOR PGM OUTPUT....
@@ -746,19 +691,7 @@ C       start of new page
         PAGIND = PAGIND + 1
         WRITE(MSG1,  201) STAIND,PAGIND
         WRITE(MSG1,  202)
-        IF (EMAOPT .EQ. 0) THEN
-C         traditional B17 analysis
-          WRITE(MSG1,  203) CHDTTM
-        ELSE
-C         using new EMA option
-          WRITE(MSG1,  213) CHDTTM
-C          WRITE(MSG1, *)
-C          WRITE(MSG1,  205)
-C          WRITE(MSG1,  206)
-        END IF
-C       temporary warning message for provisional beta 7.1
-        WRITE(MSG1, *)
-        WRITE(MSG1,  205)
+        WRITE(MSG1,  203) CHDTTM
 
         WRITE(MSG1,200)
 C       build station id/ description
@@ -3241,14 +3174,6 @@ C    NOTE -- DUMMY ARG IS REQUIRED  IN ARG LIST BUT NOT USED --
       CALL PLOT22(NVGRID,IVGRID)
       J=8
       I=5
-      CALL PLOT3N('*****  NOTICE  *****  NOTICE  ******',I+0,J,36)
-      IF(IWXMOD.NE.2)
-     $CALL PLOT3N('* PRELIMINARY MACHINE COMPUTATION. *',I+1,J,36)
-      IF(IWXMOD.EQ.2)
-     $CALL PLOT3N('* EXPERIMENTAL NON-17B COMPUTATION.*',I+1,J,36)
-      CALL PLOT3N('*  USER IS RESPONSIBLE FOR ASSESS- *',I+2,J,36)
-      CALL PLOT3N('*     MENT AND INTERPRETATION.     *',I+3,J,36)
-      CALL PLOT3N('************************************',I+4,J,36)
       I=12
       J=10
       CALL PLOT3N('      PLOT SYMBOL KEY         ',I+0,J,30)
@@ -5147,7 +5072,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Provisional Ver. 7.1 dated 12/19/2013',/,'#',/,
+     $       'Version 7.1 dated 3/14/2014',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
