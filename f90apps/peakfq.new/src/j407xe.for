@@ -667,6 +667,7 @@ C   	    outputting additional BCD file
         WRITE(MSG1,200)
 C       prepare page heading in character strings
         WRITE(HEAD1,200)
+        STAIND = 0
         WRITE(HEAD2,201) STAIND,PAGIND
         WRITE(HEAD3,202)
         WRITE(HEAD4,203) CHDTTM
