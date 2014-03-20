@@ -71,6 +71,7 @@ c                                          50% zero flows
 c
 c       NEW VERSION         05 Mar 2013  employs 
 c                                          1) Inverse Gaussian Quadrature CI
+c       modified            19 Mar 2014  nu_min increased to 5.d0 from 0.5d0 
 c
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1627,7 +1628,7 @@ c
         double precision
      1    fp_tnc_icdf
      
-        data nu_min/1.0d0/,c_min/0.5d0/  !CTAC 0.5
+        data nu_min/5.0d0/,c_min/0.5d0/  !CTAC was 0.5; 3/19/14 (TAC)
 
 c
 c    beta1 is coefficient of regression of syp on yp
