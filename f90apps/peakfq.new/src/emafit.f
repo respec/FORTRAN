@@ -1733,7 +1733,7 @@ C
      1    (NTH,NOBS,TL,TU,MC,PQ,NQ,EPS,
      2         R_S2, R_M_MSE, R_S2_MSE, R_G_MSE,
      4         YP,CV_YP_SYP,CIL,CIH)
-     
+CDEC$ ATTRIBUTES DLLEXPORT :: VAR_EMAB     
         IMPLICIT NONE
           SAVE
 
