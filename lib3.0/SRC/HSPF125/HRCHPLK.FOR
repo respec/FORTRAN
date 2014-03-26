@@ -3114,15 +3114,15 @@ C
         ELSE
           ACNT = ACNT + 1
           APRINT(ACNT) = PCFLX3(1)
-          CHEAD(ACNT) = 'P-ATMDEPDRY'
+          CHEAD(ACNT) = 'N-ATMDEPDRY'
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
           ACNT = ACNT + 1
           APRINT(ACNT) = PCFLX4(1)
-          CHEAD(ACNT) = 'P-ATMDEPWET'
+          CHEAD(ACNT) = 'N-ATMDEPWET'
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
           ACNT = ACNT + 1
           APRINT(ACNT) = PADTOT(1)
-          CHEAD(ACNT) = 'P-ATMDEPTOT'
+          CHEAD(ACNT) = 'N-ATMDEPTOT'
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
           ACNT = ACNT + 1
           APRINT(ACNT) = PIFLX(3)
