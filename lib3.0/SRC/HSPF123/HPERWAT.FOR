@@ -27,7 +27,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER    TBSB,TBNO,NVAL,SCLU,SGRP,I,J,RDFLAG,STABNO,IRRPRI(3),
      $           ANNFLG,N,ID,LNCAN
       REAL       AGWRC,RVAL(140),UELVM,AGWSMX,IRRFRC(3),IRRTOT(3),R,
-     $           PELEV(6),PFAC
+     $           PELEV(6),PFAC,BLNK
 C
 C     + + + FUNCTIONS + + +
       REAL       DAYVAL
@@ -196,9 +196,10 @@ C     if NCANPY = 1-5 then table-type PWAT-CANOPY is expected
 C     that number of times
       DO I= 1, NCANPY
 C       initialize variables first
-        WRITE(CANNAM(1,I),'(A4)') '    '
-        WRITE(CANNAM(2,I),'(A4)') '    '
-        WRITE(CANNAM(3,I),'(A4)') '    '
+        WRITE(BLNK,'(A4)') '    '
+        CANNAM(1,I)= BLNK
+        CANNAM(2,I)= BLNK
+        CANNAM(3,I)= BLNK
         CEPSC(I)   = 0.0
         CEPS(I)    = 0.0
       END DO
