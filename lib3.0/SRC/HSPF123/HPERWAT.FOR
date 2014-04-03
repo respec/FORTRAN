@@ -196,9 +196,9 @@ C     if NCANPY = 1-5 then table-type PWAT-CANOPY is expected
 C     that number of times
       DO I= 1, NCANPY
 C       initialize variables first
-        READ ('    ','(A4)') CANNAM(1,I)
-        READ ('    ','(A4)') CANNAM(2,I)
-        READ ('    ','(A4)') CANNAM(3,I)
+        WRITE(CANNAM(1,I),'(A4)') '    '
+        WRITE(CANNAM(2,I),'(A4)') '    '
+        WRITE(CANNAM(3,I),'(A4)') '    '
         CEPSC(I)   = 0.0
         CEPS(I)    = 0.0
       END DO
