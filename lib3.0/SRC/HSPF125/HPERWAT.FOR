@@ -28,6 +28,7 @@ C     + + + LOCAL VARIABLES + + +
      $           ANNFLG,N,ID,LNCAN
       REAL       AGWRC,RVAL(140),UELVM,AGWSMX,IRRFRC(3),IRRTOT(3),R,
      $           PELEV(6),PFAC
+      CHARACTER*4 BLNK
 C
 C     + + + FUNCTIONS + + +
       REAL       DAYVAL
@@ -196,9 +197,10 @@ C     if NCANPY = 1-5 then table-type PWAT-CANOPY is expected
 C     that number of times
       DO I= 1, NCANPY
 C       initialize variables first
-        READ ('    ','(A4)') CANNAM(1,I)
-        READ ('    ','(A4)') CANNAM(2,I)
-        READ ('    ','(A4)') CANNAM(3,I)
+        BLNK = '    '
+        READ(BLNK,'(A4)') CANNAM(1,I)
+        READ(BLNK,'(A4)') CANNAM(2,I)
+        READ(BLNK,'(A4)') CANNAM(3,I)
         CEPSC(I)   = 0.0
         CEPS(I)    = 0.0
       END DO
@@ -1647,7 +1649,7 @@ C
 C     simulate ET
       CALL EVAPHW (PET,BASETP,UZSN,AGWETP,KVARY,DAYFG,VLEFG,LZETPM,MON,
      I             NXTMON,DAY,NDAYS,LZSN,DELT60,ULGWS,LLGWS,SELV,UELV,
-     I             LELV,UPGW,PGW,IFWS,
+     I             LELV,UPGW,PGW,IFWS,NCANPY,
      M             AGWO,CEPS,UZS,AGWS,TGWS,GWVS,LZETP,RPARM,LZS,SURS,
      M             GWEL,
      O             REMPET,TAET,BASET,CEPE,UZET,AGWET,LZET,SURET)
@@ -5542,7 +5544,7 @@ C
         END IF
       END DO
       IF (CESTFP .GE. 1) THEN
-        PAD(CESTFP+ IVAL1) = CEPST
+        PAD(CESTFP+ IVL1) = CEPST
       END IF 
 C
       IF (UZSFP .GE. 1) THEN
