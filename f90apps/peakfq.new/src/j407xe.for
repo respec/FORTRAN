@@ -127,10 +127,10 @@ C     + + + FORMATS + + +
      $        'LO OUT',A,'LO TEST',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
      $        'LATITUDE',A,'LONGITUDE')
  2015 FORMAT(8X,I8,' ZERO VALUES')
- 2020 FORMAT('    EMA003I-LOW OUTLIERS WERE DETECTED USING ',
-     $       'MULTIPLE GRUBBS-BECK TEST',I8,4X,F8.1,/
+ 2020 FORMAT('    EMA003I-PILFS (LOS) WERE DETECTED USING ',
+     $       'MULTIPLE GRUBBS-BECK TEST',I4,2X,F8.1,/
      $       '      THE FOLLOWING PEAKS (WITH CORRESPONDING P-VALUES)',
-     $       ' WERE DROPPED:')
+     $       ' WERE CENSORED:')
  2030 FORMAT(8X,F8.1,4X,'(',F6.4,')')
 C
 C     + + + END SPECIFICATIONS + + +
@@ -789,10 +789,10 @@ C     + + + FORMATS + + +
      $  /16X,'Skew option                          = ',A,
      $  /16X,'Gage base discharge                  = ',F8.1,
      $  /16X,'User supplied high outlier threshold = ',A,
-     $  /16X,'User supplied low outlier criterion  = ',A,
+     $  /16X,'User supplied PILF (LO) criterion    = ',A,
      $  /16X,'Plotting position parameter          = ',F8.2,
      $  /16X,'Type of analysis                       ',A,
-     $  /16X,'Low-outlier Test Method                ',4X,A)
+     $  /16X,'PILF (LO) Test Method                  ',4X,A)
  6    FORMAT(/)
 C    $ /'     -- YEARS OF RECORD --    HISTORIC    GENERALIZED',
 C    $           'GAGE BASE'/
@@ -1109,7 +1109,7 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
  2024 FORMAT( I8,F11.1,F11.4,2x,F10.1,A)
  2025 FORMAT( I8,5X,'------',F11.4,2x,F10.1,A)
- 2030 FORMAT(/,4X,'* DENOTES LOW OUTLIER',/)
+ 2030 FORMAT(/,4X,'* DENOTES PILF (LO)',/)
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
 C     + + + DATA INITIALIZATIONS + + +
@@ -1286,7 +1286,7 @@ c                WRITE(LTHRCHR(2),'(A9)') '      INF'
 c              ELSE
 c                WRITE(LTHRCHR(2),'(F9.0)') UTHR
 c              END IF
-              IF (PKS(IPKPTR(I)) .LT. 10**GBCRIT) THEN
+              IF (PKS(IPKPTR(I)) .LT. 0.999999*(10**GBCRIT)) THEN
                 WRITE(MSG,2023) '*',IPKSEQ(IPKPTR(I)),PKS(IPKPTR(I)),
      $                          WRCPP(I)
                 LNLOW = LNLOW + 1
@@ -4245,6 +4245,15 @@ C                     unused peak
             ELSE
               LPEX(LYR) = PEX(I)
             END IF
+        IF (NINTERVAL.GT.0) THEN
+          DO 19 K = 1,NINTERVAL
+              IF (ABS(IPKSEQ(LYR)) .EQ. INTERVAL(K)%INTRVLYR) THEN
+C               assign plotting position for this interval
+                INTERVAL(K)%INTRVLPP = PEX(I)
+                LPEX(LYR) = PEX(I)
+              END IF
+ 19       CONTINUE
+        END IF
             IF (PKLOG(LYR) .LT. 0) THEN
 C             coded peak not in use, save its negative value for sorting
               LQ(LYR) = PKLOG(LYR)
@@ -4296,10 +4305,10 @@ C             assume matching threshold value means matching thresholds
         write(99,*)
         write(99,*) '  Prob       EMA Est.        CL Low       CL High'
  2100   format(1X,F6.4,4F14.3)
-        do 19 i = 1,MXINT
+        do 41 i = 1,MXINT
           write(99,2100)PR(i),10**WRCYP(i),10**CILOW(i),10**CIHIGH(i),
      $                  VAREST(i)
- 19     continue
+ 41     continue
 C
         DO 50 I = 1,MXINT
 C         write(99,'(f8.4,4f12.1)')1-PR(I),10**WRCYP(I),
