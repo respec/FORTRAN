@@ -937,15 +937,18 @@ C     read in the osv
      O             OSV)
 C
 C     get internal unit system
-      IF (OMCODE .GE. 4) THEN
-C       utility operation
-        UUNITS= OSV(29)
+      IF (OMCODE.EQ.1 .OR. OMCODE.EQ.2) THEN
+C       perlnd or implnd operation
+        UUNITS= OSV(44)
       ELSE IF (OMCODE .EQ. 3) THEN
 C       rchres operation
         UUNITS= OSV(43)
-      ELSE
-C       perlnd or implnd operation
-        UUNITS= OSV(44)
+      ELSE IF (OMCODE .EQ. 10) THEN
+C       bmprac operation
+        UUNITS= OSV(42)
+      ELSE 
+C       utility operation
+        UUNITS= OSV(29)
       END IF
 C
 C     determine the external unit system appropriate to this reference
