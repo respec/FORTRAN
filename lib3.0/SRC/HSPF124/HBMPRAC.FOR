@@ -26,7 +26,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR1 + + +
       INCLUDE    'chcat.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,J,N,IVAL(12),TBNO,TBSB,NVAL,RETCOD,LEV,OSVREC,
+      INTEGER     I,J,N,IVAL(14),TBNO,TBSB,NVAL,RETCOD,LEV,OSVREC,
      $            OSVKST,OSVKND
       REAL        RVAL(11)
 C
@@ -112,10 +112,26 @@ C     printout flag
 C     dummy value of overall print flag until run starts
       BMPPFG= 6
 C
-C     process table-type gen-info
+C     process table-type binary-info
       TBNO= 2
       TBSB= 1
-      NVAL= 12
+      NVAL= 11
+      CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
+     M             IVAL)
+      DO 45 I= 1, 9
+        BFLAG(I)= IVAL(I)
+ 45   CONTINUE
+C     printout flag
+      BFLAG(10)= PFLAG(9)
+      BIVL= IVAL(10)
+      BYREND= IVAL(11)
+C     dummy value of overall print flag until run starts
+      BMPBFG= 6
+C
+C     process table-type gen-info
+      TBNO= 3
+      TBSB= 1
+      NVAL= 14
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             IVAL)
       DO 50 I= 1, 5
@@ -128,6 +144,8 @@ C     process table-type gen-info
       OUNITS= IVAL(10)
       PUNIT(1)= IVAL(11)
       PUNIT(2)= IVAL(12)
+      BUNIT(1)= IVAL(13)
+      BUNIT(2)= IVAL(14)
 C
 C     check output files - if not open,
 C     then open them with a standard name
@@ -139,7 +157,7 @@ C     then open them with a standard name
  55   CONTINUE
 C
 C     process table-type flow-flag
-      TBNO= 3
+      TBNO= 4
       TBSB= 1
       NVAL= 1
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -147,7 +165,7 @@ C     process table-type flow-flag
       VOLFFG= IVAL(1)
 C
 C     process table-type flow-frac
-      TBNO= 4
+      TBNO= 5
       TBSB= 1
       NVAL= 1
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -173,14 +191,14 @@ C
 C       handle conseratives
 C
 C       process table-type cons-flag
-        TBNO= 5
+        TBNO= 6
         TBSB= 1
         NVAL= NCONS
         CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M               CONFFG)
 C     
 C       process table-type cons-frac
-        TBNO= 6
+        TBNO= 7
         NVAL= 8
         DO 70 TBSB= 1, NCONS
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -202,7 +220,7 @@ C           monthly fraction must be read
       END IF
 C
 C     process table-type heat-flag
-      TBNO= 7
+      TBNO= 8
       TBSB= 1
       NVAL= 1
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -210,7 +228,7 @@ C     process table-type heat-flag
       HTFFG= IVAL(1)
 C
 C     process table-type heat-frac
-      TBNO= 8
+      TBNO= 9
       TBSB= 1
       NVAL= 1
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -225,14 +243,14 @@ C       monthly fraction must be read
       END IF
 C
 C     process table-type sed-flag
-      TBNO= 9
+      TBNO= 10
       TBSB= 1
       NVAL= 3
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             SEDFFG)
 C
 C     process table-type sed-frac
-      TBNO= 10
+      TBNO= 11
       TBSB= 1
       NVAL= 3
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -251,14 +269,14 @@ C
 C       handle quals
 C
 C       process table-type gq-flag
-        TBNO= 11
+        TBNO= 12
         TBSB= 1
         NVAL= NGQUAL*4
         CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M               GQFFG)
 C
 C       process table-type gq-frac
-        TBNO= 12
+        TBNO= 13
         NVAL= 11
         DO 110 TBSB= 1, NGQUAL
           CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -292,14 +310,14 @@ C             monthly fraction must be read
       END IF
 C
 C     process table-type oxy-flag
-      TBNO= 13
+      TBNO= 14
       TBSB= 1
       NVAL= 2
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             OXFFG)
 C
 C     process table-type oxy-frac
-      TBNO= 14
+      TBNO= 15
       TBSB= 1
       NVAL= 2
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -315,14 +333,14 @@ C         monthly fraction must be read
  120  CONTINUE
 C
 C     process table-type nut-flag
-      TBNO= 15
+      TBNO= 16
       TBSB= 1
       NVAL= 10
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             NUTFFG)
 C
 C     process table-type dnut-frac
-      TBNO= 16
+      TBNO= 17
       TBSB= 1
       NVAL= 4
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -338,7 +356,7 @@ C         monthly fraction must be read
  130  CONTINUE
 C
 C     process table-type adsnut-frac
-      TBNO= 17
+      TBNO= 18
       TBSB= 1
       NVAL= 6
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -357,14 +375,14 @@ C           monthly fraction must be read
  150  CONTINUE
 C
 C     process table-type plank-flag
-      TBNO= 18
+      TBNO= 19
       TBSB= 1
       NVAL= 5
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             PLKFFG)
 C
 C     process table-type plank-frac
-      TBNO= 19
+      TBNO= 20
       TBSB= 1
       NVAL= 5
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -380,14 +398,14 @@ C         monthly fraction must be read
  160  CONTINUE
 C
 C     process table-type ph-flag
-      TBNO= 20
+      TBNO= 21
       TBSB= 1
       NVAL= 2
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
      M             PHFFG)
 C
 C     process table-type ph-frac
-      TBNO= 21
+      TBNO= 22
       TBSB= 1
       NVAL= 2
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -403,7 +421,7 @@ C         monthly fraction must be read
  170  CONTINUE
 C
 C     process table-type acid-flag
-      TBNO= 22
+      TBNO= 23
       TBSB= 1
       NVAL= 8
       CALL ITABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -414,7 +432,7 @@ C     process table-type acid-flag
  180  CONTINUE
 C
 C     process table-type acid-frac
-      TBNO= 23
+      TBNO= 24
       TBSB= 1
       NVAL= NACID
       CALL RTABLE (TBNO,TBSB,NVAL,UUNITS,
@@ -622,7 +640,7 @@ C         check each acid mine drainage component
 C
         IF (SPAFP .GT. 0 .AND. SPAFP .LE. SPAKND) THEN
 C         special actions are being taken and there is at least one left
-          CALL SPECL (OPTYP,BMPNO,SPAKND,SPOPNO,DATIM,MESSU,SPIVL,
+          CALL SPECL (OPTYP,BMPNO,SPAKND,SPOPNO,DATIM,MESSU,MSGFL,SPIVL,
      I                SPOUT,SPNUND,
      M                SPAFP)
         END IF
@@ -1362,18 +1380,19 @@ C
 C
 C
       SUBROUTINE   BMPPRT
-     I                    (UNITFG,LEV,PRINTU)
+     I                    (UNITFG,LEV,PRINTU,BINU)
 C
 C     + + + PURPOSE + + +
 C     Perform printout for module BMPRAC.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    LEV,PRINTU,UNITFG
+      INTEGER    LEV,PRINTU,UNITFG,BINU
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     UNITFG - output units   1-english, 2-metric
 C     LEV    - current output level (2-pivl,3-day,4-mon,5-ann)
 C     PRINTU - fortran unit number on which to print output
+C     BINU   - fortran unit number on which to write binary output
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR2 + + +
       INCLUDE   'cbmpr.inc'
@@ -1381,12 +1400,18 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR2 + + +
       INCLUDE   'chcat.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,J
+      INTEGER     I,J,ACNT,CLEN((3*MXCAT)+123+(12*3)),EXDAT(5)
       REAL        VFACT(2,2),HFACT(2,2),SFACT(2,2),MFACT(2,2),
-     $            PIFLUX,POFLUX,PRFLUX
+     $            PIFLUX,POFLUX,PRFLUX,APRINT((3*MXCAT)+123+(12*3))
       CHARACTER*4 SDSIZE(3)
       CHARACTER*5 NUTNAM(4)
       CHARACTER*8 VUNIT(2),HUNIT(2),SUNIT(2),MUNIT(2)
+      CHARACTER*12  CNAMES(7)
+      CHARACTER*20  CONNAME
+      CHARACTER*256 CHEAD((3*MXCAT)+123+(12*3))
+C
+C     + + + EXTERNALS + + +
+      EXTERNAL   EXDATE,BINHED,BINREC
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA VFACT/ 1. , 8.1071E+2 , 1.2335E-3 , 1. /
@@ -1406,6 +1431,7 @@ C     + + + OUTPUT FORMATS + + +
  2010 FORMAT (/,2X,'FLOW (',A8,')')
  2020 FORMAT (4X,'TOTAL',31X,3(1PG12.3))
  2030 FORMAT (6X,A16,18X,3(1PG12.3))
+ 2035 FORMAT (5A4)
  2040 FORMAT (/,2X,'CONSERVATIVES')
  2050 FORMAT (4X,5A4,' (',2A4,')',5X,3(1PG12.3))
  2060 FORMAT (/,2X,'HEAT (',A8,')',23X,3(1PG12.3))
@@ -1430,209 +1456,557 @@ C     + + + OUTPUT FORMATS + + +
  2250 FORMAT (/,2X,'ACID MINE DRAINAGE CHEMICALS (',A8,')')
  2260 FORMAT (4X,'CHEMICAL NO.',I3,21X,3(1PG12.3))
 C
+C     + + + HISTORY + + +
+C     2014  PBD added binary output
+C
 C     + + + END SPECIFICATIONS + + +
 C
-      WRITE (PRINTU,2000)
+C     initialize array counter for binary printout, store variable
+C     names in local strings for use in building binary headers
+      ACNT = 0
 C
-      IF (PFLAG(1) .LE. LEV) THEN
+      IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+        WRITE (PRINTU,2000)
+      END IF 
+C
+C     total flow
+      PIFLUX= HYIF(LEV)*VFACT(UUNITS,UNITFG)
+      POFLUX= HYOF(LEV)*VFACT(UUNITS,UNITFG)
+      PRFLUX= HYRF(LEV)*VFACT(UUNITS,UNITFG)
+C
+      IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
 C       printout flow results
-C
-C       total flow
-        PIFLUX= HYIF(LEV)*VFACT(UUNITS,UNITFG)
-        POFLUX= HYOF(LEV)*VFACT(UUNITS,UNITFG)
-        PRFLUX= HYRF(LEV)*VFACT(UUNITS,UNITFG)
         IF (NCATS .LE. 0) THEN
           WRITE (PRINTU,2005) VUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
         ELSE
           WRITE (PRINTU,2010) VUNIT(UNITFG)
           WRITE (PRINTU,2020) PIFLUX,POFLUX,PRFLUX
         END IF
-C
-C       by category
-        DO 10 I= 1, NCATS
-          PIFLUX= HYIFC(I,LEV)*VFACT(UUNITS,UNITFG)
-          POFLUX= HYOFC(I,LEV)*VFACT(UUNITS,UNITFG)
-          PRFLUX= HYRFC(I,LEV)*VFACT(UUNITS,UNITFG)
-          WRITE (PRINTU,2030) CATNAM(I),PIFLUX,POFLUX,PRFLUX
- 10     CONTINUE
       END IF
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+C       binary flow results
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PIFLUX
+        CHEAD(ACNT) = 'IVOL'
+        CLEN(ACNT) = 4
+        ACNT = ACNT + 1
+        APRINT(ACNT) = POFLUX
+        CHEAD(ACNT) = 'ROVOL'
+        CLEN(ACNT) = 5
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PRFLUX
+        CHEAD(ACNT) = 'RMVOL'
+        CLEN(ACNT) = 5
+      END IF 
+
+C     flow results by category
+      DO 10 I= 1, NCATS
+        PIFLUX= HYIFC(I,LEV)*VFACT(UUNITS,UNITFG)
+        POFLUX= HYOFC(I,LEV)*VFACT(UUNITS,UNITFG)
+        PRFLUX= HYRFC(I,LEV)*VFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(1) .LE. LEV) THEN
+          WRITE (PRINTU,2030) CATNAM(I),PIFLUX,POFLUX,PRFLUX
+        END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'CIVOL' // CATNAM(I)
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'CROVOL' // CATNAM(I)
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'CRMVOL' // CATNAM(I)
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF
+ 10   CONTINUE
 C
-      IF (PFLAG(2) .LE. LEV) THEN
-C       printout conservative results
+C     printout conservative results
+      IF (PRINTU .GT. 0 .AND. PFLAG(2) .LE. LEV) THEN
         WRITE (PRINTU,2040)
-        DO 20 I= 1, NCONS
-          IF (ICNFP(I) .GE. 1) THEN
-            PIFLUX= CNIF(I,LEV)
-            POFLUX= CNOF(I,LEV)
-            PRFLUX= CNRF(I,LEV)
+      END IF
+      DO 20 I= 1, NCONS
+        IF (ICNFP(I) .GE. 1) THEN
+          WRITE (CONNAME,2035) (CONID(J,I),J=1,5)
+          CONNAME = ADJUSTL(CONNAME)
+          PIFLUX= CNIF(I,LEV)
+          POFLUX= CNOF(I,LEV)
+          PRFLUX= CNRF(I,LEV)
+          IF (PRINTU .GT. 0 .AND. PFLAG(2) .LE. LEV) THEN 
             WRITE (PRINTU,2050) (CONID(J,I),J=1,5),(CQTYID(J,I),J=1,2),
      $                           PIFLUX,POFLUX,PRFLUX
+          END IF 
+          IF (BINU .GT. 0 .AND. ABS(BFLAG(2)) .LE. LEV) THEN
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PIFLUX
+            CHEAD(ACNT) = CONNAME
+            CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-ICON' 
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            ACNT = ACNT + 1
+            APRINT(ACNT) = POFLUX
+            CHEAD(ACNT) = CONNAME
+            CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-ROCON' 
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PRFLUX
+            CHEAD(ACNT) = CONNAME
+            CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RMCON' 
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
           END IF
- 20     CONTINUE
-      END IF
+        END IF 
+ 20   CONTINUE
 C
-      IF (PFLAG(3) .LE. LEV) THEN
-C       printout heat results
-        PIFLUX= HTIF(LEV)*HFACT(UUNITS,UNITFG)
-        POFLUX= HTOF(LEV)*HFACT(UUNITS,UNITFG)
-        PRFLUX= HTRF(LEV)*HFACT(UUNITS,UNITFG)
+C     printout heat results
+      PIFLUX= HTIF(LEV)*HFACT(UUNITS,UNITFG)
+      POFLUX= HTOF(LEV)*HFACT(UUNITS,UNITFG)
+      PRFLUX= HTRF(LEV)*HFACT(UUNITS,UNITFG)
+      IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
         WRITE (PRINTU,2060) HUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
       END IF
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
+C       binary heat results
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PIFLUX
+        CHEAD(ACNT) = 'IHEAT'
+        CLEN(ACNT) = 5
+        ACNT = ACNT + 1
+        APRINT(ACNT) = POFLUX
+        CHEAD(ACNT) = 'ROHEAT'
+        CLEN(ACNT) = 6
+        ACNT = ACNT + 1
+        APRINT(ACNT) = PRFLUX
+        CHEAD(ACNT) = 'RMHEAT'
+        CLEN(ACNT) = 6
+      END IF
 C
-      IF (PFLAG(4) .LE. LEV) THEN
-C       printout sediment results
+C     printout sediment results
+      IF (PRINTU .GT. 0 .AND. PFLAG(4) .LE. LEV) THEN
         WRITE (PRINTU,2070) SUNIT(UNITFG)
-        DO 30 I= 1, 3
+      END IF 
+      DO 30 I= 1, 3
           PIFLUX= SDIF(I,LEV)*SFACT(UUNITS,UNITFG)
           POFLUX= SDOF(I,LEV)*SFACT(UUNITS,UNITFG)
           PRFLUX= SDRF(I,LEV)*SFACT(UUNITS,UNITFG)
-          WRITE (PRINTU,2080) SDSIZE(I),PIFLUX,POFLUX,PRFLUX
- 30     CONTINUE
-      END IF
+          IF (PRINTU .GT. 0 .AND. PFLAG(4) .LE. LEV) THEN
+            WRITE (PRINTU,2080) SDSIZE(I),PIFLUX,POFLUX,PRFLUX
+          END IF 
+          IF (BINU .GT. 0 .AND. ABS(BFLAG(4)) .LE. LEV) THEN
+C           binary sediment results
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PIFLUX
+            CHEAD(ACNT) = 'ISED-' // SDSIZE(I)
+            CLEN(ACNT) = 9
+            ACNT = ACNT + 1
+            APRINT(ACNT) = POFLUX
+            CHEAD(ACNT) = 'ROSED-' // SDSIZE(I)
+            CLEN(ACNT) = 10
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PRFLUX
+            CHEAD(ACNT) = 'RMSED-' // SDSIZE(I)
+            CLEN(ACNT) = 10
+          END IF 
+ 30   CONTINUE
 C
-      IF (PFLAG(5) .LE. LEV) THEN
-C       printout general qual results
+C     printout general qual results
+      IF (PRINTU .GT. 0 .AND. PFLAG(5) .LE. LEV) THEN
         WRITE (PRINTU,2090)
-C
-C       dissolved
-        DO 50 I= 1, NGQUAL
+      END IF 
+      DO 50 I= 1, NGQUAL
           IF ( (ISQFP(1,I) .GE. 1) .OR. (ISQFP(2,I) .GE. 1) .OR.
      $         (ISQFP(3,I) .GE. 1) .OR. (IDQFP(I) .GE. 1) ) THEN
+C           dissolved
+            WRITE (CONNAME,2035) (GQID(J,I),J=1,5)
+            CONNAME = ADJUSTL(CONNAME)
+            IF (PRINTU .GT. 0 .AND. PFLAG(5) .LE. LEV) THEN
             WRITE (PRINTU,2100) (GQID(J,I),J=1,5),(GQTYID(J,I),J=1,2)
+            END IF 
             PIFLUX= GQDIF(I,LEV)
             POFLUX= GQDOF(I,LEV)
             PRFLUX= GQDRF(I,LEV)
-            WRITE (PRINTU,2110) PIFLUX,POFLUX,PRFLUX
+            IF (PRINTU .GT. 0 .AND. PFLAG(5) .LE. LEV) THEN
+              WRITE (PRINTU,2110) PIFLUX,POFLUX,PRFLUX
+            END IF 
+            IF (BINU .GT. 0 .AND. ABS(BFLAG(5)) .LE. LEV) THEN
+              ACNT = ACNT + 1
+              APRINT(ACNT) = PIFLUX
+              CHEAD(ACNT) = CONNAME
+              CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-IDQAL' 
+              CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+              ACNT = ACNT + 1
+              APRINT(ACNT) = POFLUX
+              CHEAD(ACNT) = CONNAME
+              CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RODQAL' 
+              CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+              ACNT = ACNT + 1
+              APRINT(ACNT) = PRFLUX
+              CHEAD(ACNT) = CONNAME
+              CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RMDQAL' 
+              CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            END IF 
             DO 40 J= 1, 3
               PIFLUX= GQSIF(J,I,LEV)
               POFLUX= GQSOF(J,I,LEV)
               PRFLUX= GQSRF(J,I,LEV)
-              WRITE (PRINTU,2120) SDSIZE(J),PIFLUX,POFLUX,PRFLUX
+              IF (PRINTU .GT. 0 .AND. PFLAG(5) .LE. LEV) THEN
+                WRITE (PRINTU,2120) SDSIZE(J),PIFLUX,POFLUX,PRFLUX
+              END IF 
+              IF (BINU .GT. 0 .AND. ABS(BFLAG(5)) .LE. LEV) THEN
+                ACNT = ACNT + 1
+                APRINT(ACNT) = PIFLUX
+                CHEAD(ACNT) = TRIM(CONNAME) // '-' // SDSIZE(J)
+                CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-ISQAL' 
+                CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+                ACNT = ACNT + 1
+                APRINT(ACNT) = POFLUX
+                CHEAD(ACNT) = TRIM(CONNAME) // '-' // SDSIZE(J)
+                CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-ROSQAL' 
+                CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+                ACNT = ACNT + 1
+                APRINT(ACNT) = PRFLUX
+                CHEAD(ACNT) = TRIM(CONNAME) // '-' // SDSIZE(J)
+                CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RMSQAL' 
+                CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+              END IF
  40         CONTINUE
           END IF
- 50     CONTINUE
+ 50   CONTINUE
+C
+C     printout oxygen results
+      IF (IOXFP(1) .GE. 1) THEN
+C       dissolved oxygen
+        PIFLUX= OXIF(1,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= OXOF(1,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= OXRF(1,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(6) .LE. LEV) THEN
+          WRITE (PRINTU,2130) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
+        END IF 
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(6)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'IOX-DO'
+          CLEN(ACNT) = 6
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'ROOX-DO'
+          CLEN(ACNT) = 7
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'RMOX-DO'
+          CLEN(ACNT) = 7
+        END IF 
       END IF
 C
-      IF (PFLAG(6) .LE. LEV) THEN
-C       printout oxygen results
-C
-        IF (IOXFP(1) .GE. 1) THEN
-C         dissolved oxygen
-          PIFLUX= OXIF(1,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= OXOF(1,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= OXRF(1,LEV)*MFACT(UUNITS,UNITFG)
-          WRITE (PRINTU,2130) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
-        END IF
-C
-        IF (IOXFP(2) .GE. 1) THEN
-C         bod
-          PIFLUX= OXIF(2,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= OXOF(2,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= OXRF(2,LEV)*MFACT(UUNITS,UNITFG)
+      IF (IOXFP(2) .GE. 1) THEN
+C       bod
+        PIFLUX= OXIF(2,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= OXOF(2,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= OXRF(2,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(6) .LE. LEV) THEN
           WRITE (PRINTU,2140) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
         END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(6)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'IOX-BOD'
+          CLEN(ACNT) = 7
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'ROOX-BOD'
+          CLEN(ACNT) = 8
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'RMOX-BOD'
+          CLEN(ACNT) = 8
+        END IF
       END IF
 C
-      IF (PFLAG(7) .LE. LEV) THEN
-C       printout nutrient results
+C     printout nutrient results
+      IF (PRINTU .GT. 0 .AND. PFLAG(7) .LE. LEV) THEN
         WRITE (PRINTU,2150) MUNIT(UNITFG)
-C
-C       dissolved
-        DO 60 I= 1, 4
-          IF (IDNUTX(I) .GE. 1) THEN
-            PIFLUX= DNUIF(I,LEV)*MFACT(UUNITS,UNITFG)
-            POFLUX= DNUOF(I,LEV)*MFACT(UUNITS,UNITFG)
-            PRFLUX= DNURF(I,LEV)*MFACT(UUNITS,UNITFG)
+      END IF 
+C     dissolved
+      DO 60 I= 1, 4
+        IF (IDNUTX(I) .GE. 1) THEN
+          PIFLUX= DNUIF(I,LEV)*MFACT(UUNITS,UNITFG)
+          POFLUX= DNUOF(I,LEV)*MFACT(UUNITS,UNITFG)
+          PRFLUX= DNURF(I,LEV)*MFACT(UUNITS,UNITFG)
+          IF (PRINTU .GT. 0 .AND. PFLAG(7) .LE. LEV) THEN
             WRITE (PRINTU,2160) NUTNAM(I),PIFLUX,POFLUX,PRFLUX
-          END IF
- 60     CONTINUE
-        DO 80 I= 1, 2
-          IF ( (ISNUTX(1,I) .GE. 1) .OR. (ISNUTX(2,I) .GE. 1) .OR.
-     $         (ISNUTX(3,I) .GE. 1) ) THEN
-            DO 70 J= 1, 3
-              PIFLUX= SNUIF(J,I,LEV)*MFACT(UUNITS,UNITFG)
-              POFLUX= SNUOF(J,I,LEV)*MFACT(UUNITS,UNITFG)
-              PRFLUX= SNURF(J,I,LEV)*MFACT(UUNITS,UNITFG)
+          END IF 
+          IF (BINU .GT. 0 .AND. ABS(BFLAG(7)) .LE. LEV) THEN
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PIFLUX
+            CHEAD(ACNT) = NUTNAM(I) 
+            CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-IDNUT' 
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            ACNT = ACNT + 1
+            APRINT(ACNT) = POFLUX
+            CHEAD(ACNT) = NUTNAM(I) 
+            CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RODNUT' 
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            ACNT = ACNT + 1
+            APRINT(ACNT) = PRFLUX
+            CHEAD(ACNT) = NUTNAM(I) 
+            CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RMDNUT' 
+            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          END IF 
+        END IF
+ 60   CONTINUE
+      DO 80 I= 1, 2
+        IF ( (ISNUTX(1,I) .GE. 1) .OR. (ISNUTX(2,I) .GE. 1) .OR.
+     $       (ISNUTX(3,I) .GE. 1) ) THEN
+          DO 70 J= 1, 3
+            PIFLUX= SNUIF(J,I,LEV)*MFACT(UUNITS,UNITFG)
+            POFLUX= SNUOF(J,I,LEV)*MFACT(UUNITS,UNITFG)
+            PRFLUX= SNURF(J,I,LEV)*MFACT(UUNITS,UNITFG)
+            IF (PRINTU .GT. 0 .AND. PFLAG(7) .LE. LEV) THEN
               WRITE (PRINTU,2170) NUTNAM(2*I),SDSIZE(J),PIFLUX,POFLUX,
      $                            PRFLUX
- 70         CONTINUE
-          END IF
- 80     CONTINUE
-      END IF
+            END IF 
+            IF (BINU .GT. 0 .AND. ABS(BFLAG(7)) .LE. LEV) THEN
+              ACNT = ACNT + 1
+              APRINT(ACNT) = PIFLUX
+              CHEAD(ACNT) = TRIM(NUTNAM(2*I)) // '-' // SDSIZE(J)
+              CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-ISNUT' 
+              CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+              ACNT = ACNT + 1
+              APRINT(ACNT) = POFLUX
+              CHEAD(ACNT) = TRIM(NUTNAM(2*I)) // '-' // SDSIZE(J)
+              CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-ROSNUT' 
+              CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+              ACNT = ACNT + 1
+              APRINT(ACNT) = PRFLUX
+              CHEAD(ACNT) = TRIM(NUTNAM(2*I)) // '-' // SDSIZE(J)
+              CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RMSNUT' 
+              CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+            END IF
+ 70       CONTINUE
+        END IF
+ 80   CONTINUE
 C
-      IF (PFLAG(8) .LE. LEV) THEN
-C       printout plankton results
-C
-        IF (IPLKFP(1) .GE. 1) THEN
-C         phytoplankton
-          PIFLUX= PKIF(1,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= PKOF(1,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= PKRF(1,LEV)*MFACT(UUNITS,UNITFG)
+C     printout plankton results
+      IF (IPLKFP(1) .GE. 1) THEN
+C       phytoplankton
+        PIFLUX= PKIF(1,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= PKOF(1,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= PKRF(1,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(8) .LE. LEV) THEN
           WRITE (PRINTU,2180) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
         END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(8)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'PHYTO-IPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'PHYTO-ROPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'PHYTO-RMPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF 
+      END IF
 C
-        IF (IPLKFP(2) .GE. 1) THEN
-C         zooplankton
-          PIFLUX= PKIF(2,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= PKOF(2,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= PKRF(2,LEV)*MFACT(UUNITS,UNITFG)
+      IF (IPLKFP(2) .GE. 1) THEN
+C       zooplankton
+        PIFLUX= PKIF(2,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= PKOF(2,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= PKRF(2,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(8) .LE. LEV) THEN
           WRITE (PRINTU,2190) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
         END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(8)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'ZOO-IPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'ZOO-ROPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'ZOO-RMPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF
+      END IF
 C
-        IF (IPLKFP(3) .GE. 1) THEN
-C         organic n
-          PIFLUX= PKIF(3,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= PKOF(3,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= PKRF(3,LEV)*MFACT(UUNITS,UNITFG)
+      IF (IPLKFP(3) .GE. 1) THEN
+C       organic n
+        PIFLUX= PKIF(3,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= PKOF(3,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= PKRF(3,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(8) .LE. LEV) THEN
           WRITE (PRINTU,2200) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
         END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(8)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'ORN-IPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'ORN-ROPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'ORN-RMPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF
+      END IF
 C
-        IF (IPLKFP(4) .GE. 1) THEN
-C         organic p
-          PIFLUX= PKIF(4,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= PKOF(4,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= PKRF(4,LEV)*MFACT(UUNITS,UNITFG)
+      IF (IPLKFP(4) .GE. 1) THEN
+C       organic p
+        PIFLUX= PKIF(4,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= PKOF(4,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= PKRF(4,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(8) .LE. LEV) THEN
           WRITE (PRINTU,2210) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
         END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(8)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'ORP-IPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'ORP-ROPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'ORP-RMPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF
+      END IF
 C
-        IF (IPLKFP(5) .GE. 1) THEN
-C         organic c
-          PIFLUX= PKIF(5,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= PKOF(5,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= PKRF(5,LEV)*MFACT(UUNITS,UNITFG)
+      IF (IPLKFP(5) .GE. 1) THEN
+C       organic c
+        PIFLUX= PKIF(5,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= PKOF(5,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= PKRF(5,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(8) .LE. LEV) THEN
           WRITE (PRINTU,2220) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
+        END IF 
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(8)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'ORC-IPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'ORC-ROPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'ORC-RMPLK' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         END IF
       END IF
 C
-      IF (PFLAG(9) .LE. LEV) THEN
-C       printout inorganic carbon results
-C
-        IF (IPHFP(1) .GE. 1) THEN
-C         total inorganic carbon
-          PIFLUX= PHIF(1,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= PHOF(1,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= PHRF(1,LEV)*MFACT(UUNITS,UNITFG)
+C     printout inorganic carbon results
+      IF (IPHFP(1) .GE. 1) THEN
+C       total inorganic carbon
+        PIFLUX= PHIF(1,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= PHOF(1,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= PHRF(1,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(9) .LE. LEV) THEN
           WRITE (PRINTU,2230) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
+        END IF 
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(9)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'TIC-IPH' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'TIC-ROPH' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'TIC-RMPH' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         END IF
-C
-        IF (IPHFP(2) .GE. 1) THEN
-C         dissolved co2
-          PIFLUX= PHIF(2,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= PHOF(2,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= PHRF(2,LEV)*MFACT(UUNITS,UNITFG)
+      END IF
+      IF (IPHFP(2) .GE. 1) THEN
+C       dissolved co2
+        PIFLUX= PHIF(2,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= PHOF(2,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= PHRF(2,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(9) .LE. LEV) THEN
           WRITE (PRINTU,2240) MUNIT(UNITFG),PIFLUX,POFLUX,PRFLUX
+        END IF 
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(9)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = 'CO2-IPH' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = 'CO2-ROPH' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = 'CO2-RMPH' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         END IF
       END IF
 C
-      IF (PFLAG(10) .LE. LEV) THEN
-C       printout acid mine results
+C     printout acid mine results
+      IF (PRINTU .GT. 0 .AND. PFLAG(10) .LE. LEV) THEN
         WRITE (PRINTU,2250) MUNIT(UNITFG)
-        DO 90 I= 1, NACID
-          PIFLUX= ACIF(I,LEV)*MFACT(UUNITS,UNITFG)
-          POFLUX= ACOF(I,LEV)*MFACT(UUNITS,UNITFG)
-          PRFLUX= ACRF(I,LEV)*MFACT(UUNITS,UNITFG)
+      END IF 
+      CNAMES(1) = 'TOTAL AL+3'
+      CNAMES(2) = 'FREE AL+3'
+      CNAMES(3) = 'TOTAL FE+3'
+      CNAMES(4) = 'FREE FE+3'
+      CNAMES(5) = 'H+'
+      CNAMES(6) = 'TOT INORG C'
+      CNAMES(7) = 'ALKALINITY'
+      DO 90 I= 1, NACID
+        PIFLUX= ACIF(I,LEV)*MFACT(UUNITS,UNITFG)
+        POFLUX= ACOF(I,LEV)*MFACT(UUNITS,UNITFG)
+        PRFLUX= ACRF(I,LEV)*MFACT(UUNITS,UNITFG)
+        IF (PRINTU .GT. 0 .AND. PFLAG(10) .LE. LEV) THEN
           WRITE (PRINTU,2260) I,PIFLUX,POFLUX,PRFLUX
- 90     CONTINUE
+        END IF
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(10)) .LE. LEV) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PIFLUX
+          CHEAD(ACNT) = CNAMES(I) 
+          CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-IACID'
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = POFLUX
+          CHEAD(ACNT) = CNAMES(I) 
+          CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-ROACID' 
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PRFLUX
+          CHEAD(ACNT) = CNAMES(I) 
+          CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // '-RMACID'
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF 
+ 90   CONTINUE
+C
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(1)) .LE. LEV) THEN
+C       write binary output
+        CALL EXDATE(
+     I              DATIM,
+     O              EXDAT)
+        IF (BFLAG(1) .GT. 0) THEN
+C         at start of run, write the header
+          CALL BINHED (BINU,'BMPRAC  ',BMPNO,'        ',ACNT,CLEN,CHEAD)
+          IF (BUNIT(2) .LE. 0 .OR. BINU .EQ. BUNIT(2)) THEN
+C           set bflag to negative to not write headers anymore
+            BFLAG(1) = -BFLAG(1)
+          END IF
+        END IF
+        CALL BINREC (BINU,'BMPRAC  ',BMPNO,'        ',UNITFG,LEV,EXDAT,
+     I               ACNT,APRINT)
       END IF
 C
       RETURN
@@ -1650,7 +2024,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION BMPR2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    EXDAT(5),I1,I2,I3,I4,I5,J,PRINTU,UNITFG
+      INTEGER    EXDAT(5),I1,I2,I3,I4,I5,J,PRINTU,UNITFG,BINU
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA I1,I2,I3,I4,I5/1,2,3,4,5/
@@ -1699,39 +2073,50 @@ C     printout
       DO 110 UNITFG= 1,2
 C
         PRINTU= PUNIT(UNITFG)
-        IF (PRINTU .NE. 0) THEN
+        BINU  = BUNIT(UNITFG)
+        IF (PRINTU .NE. 0 .OR. BINU .NE. 0) THEN
 C         printout is required in this set of external units.
 C         unitfg= 1 for english, 2 for metric.  printu is the
 C         fortran logical unit no. to be used for printout
-          IF ( (PIVLNO .EQ. PIVL) .AND. (BMPPFG .EQ. 2) ) THEN
+C
+          IF ((PIVLNO .EQ. PIVL .AND. BMPPFG .EQ. 2) .OR.
+     1        (PIVLNO .EQ. BIVL .AND. BMPBFG .EQ. 2))THEN
 C           it's time to handle any pivl level printout, and some
 C           is required
 C           convert hour and minute fields in date/time
 C           to external format
             CALL EXDATE (DATIM,
      O                   EXDAT)
-            WRITE (PRINTU,2000)  BMPNO, BMPID, PIVL, EXDAT
-            CALL BMPPRT (UNITFG,I2,PRINTU)
+            IF (PRINTU .GT. 0 .AND. BMPPFG .EQ. 2) THEN
+              WRITE (PRINTU,2000)  BMPNO, BMPID, PIVL, EXDAT
+            END IF
+            CALL BMPPRT (UNITFG,I2,PRINTU,BINU)
           END IF
 C
           IF (EDAYFG .EQ. 1) THEN
-            IF (BMPPFG .LE. 3) THEN
+            IF (BMPPFG .LE. 3 .OR. BMPBFG .LE. 3) THEN
 C             it's time to handle daily printout
-              WRITE (PRINTU,2010)  BMPNO, BMPID, (DATIM(J),J=1,3)
-              CALL BMPPRT (UNITFG,I3,PRINTU)
+              IF (PRINTU .GT. 0 .AND. BMPPFG .LE. 3) THEN
+                WRITE (PRINTU,2010)  BMPNO, BMPID, (DATIM(J),J=1,3)
+              END IF 
+              CALL BMPPRT (UNITFG,I3,PRINTU,BINU)
             END IF
 C
             IF (EMONFG .EQ. 1) THEN
-              IF (BMPPFG .LE. 4) THEN
+              IF (BMPPFG .LE. 4 .OR. BMPBFG .LE. 4) THEN
 C               it's time to handle monthly printout
-                WRITE (PRINTU,2020)  BMPNO, BMPID, (DATIM(J),J=1,2)
-                CALL BMPPRT (UNITFG,I4,PRINTU)
+                IF (PRINTU .GT. 0 .AND. BMPPFG .LE. 4) THEN
+                  WRITE (PRINTU,2020)  BMPNO, BMPID, (DATIM(J),J=1,2)
+                END IF 
+                CALL BMPPRT (UNITFG,I4,PRINTU,BINU)
               END IF
 C
               IF (EPYRFG .EQ. 1) THEN
 C               it's time to handle yearly printout
-                WRITE (PRINTU,2030)  BMPNO, BMPID, (DATIM(J),J=1,2)
-                CALL BMPPRT (UNITFG,I5,PRINTU)
+                IF (PRINTU .GT. 0 .AND. BMPPFG .LE. 5) THEN
+                  WRITE (PRINTU,2030)  BMPNO, BMPID, (DATIM(J),J=1,2)
+                END IF
+                CALL BMPPRT (UNITFG,I5,PRINTU,BINU)
               END IF
             END IF
           END IF
@@ -1740,7 +2125,8 @@ C               it's time to handle yearly printout
 C
 C     reset flux accumulators and state variables used in material
 C     balance checks
-      IF ( (PIVLNO .EQ. PIVL) .AND. (BMPPFG .EQ. 2) ) THEN
+      IF ((PIVLNO .EQ. PIVL .AND. BMPPFG .EQ. 2) .OR.
+     1    (PIVLNO .EQ. BIVL .AND. BMPBFG .EQ. 2)) THEN
 C       reset any pivl level variables in use
         CALL BMPRST (I2)
       END IF

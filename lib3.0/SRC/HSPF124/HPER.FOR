@@ -537,7 +537,7 @@ C         reset fluxes for pqual -- needs to happen before specacts -- jlk
 C
         IF (SPAFP .GT. 0 .AND. SPAFP .LE. SPAKND) THEN
 C         special actions are being taken and there is at least one left
-          CALL SPECL (OPTYP,LSNO,SPAKND,SPOPNO,DATIM,MESSU,SPIVL,
+          CALL SPECL (OPTYP,LSNO,SPAKND,SPOPNO,DATIM,MESSU,MSGFL,SPIVL,
      I                SPOUT,SPNUND,
      M                SPAFP)
         END IF

@@ -457,8 +457,8 @@ C
      $                (UCIBUF(STWORD:STWORD+5) .EQ. 'END IF') ) THEN
 C             conditional
               CALL HDMES3 (IOPT,'CONDITIONAL')
-              CALL PSPCON (OUTLEV,MESSU,MSGFL,SCLU,MXBKLV,STWORD,LREPT,
-     I                     LLNPSP,MXSPBF,SPOS,
+              CALL PSPCON (OUTLEV,SPOUT,MESSU,MSGFL,SCLU,MXBKLV,STWORD,
+     I                     LREPT,LLNPSP,MXSPBF,SPOS,
      M                     SPBF,ECOUNT,UCIBUF,KEY,CURBLK,CURLVL,PREBLK,
      M                     ELSEFG,ALLFTR,RUNWID)
               CONDFG= 1
@@ -1465,8 +1465,8 @@ C
 C
 C
       SUBROUTINE   PSPCON
-     I                    (OUTLEV,MESSU,MSGFL,SCLU,MXBKLV,STWORD,LREPT,
-     I                     LLNPSP,MXSPBF,SPOS,
+     I                    (OUTLEV,SPOUT,MESSU,MSGFL,SCLU,MXBKLV,STWORD,
+     I                     LREPT,LLNPSP,MXSPBF,SPOS,
      M                     SPBF,ECOUNT,UCIBUF,KEY,CURBLK,CURLVL,PREBLK,
      M                     ELSEFG,ALLFTR,RUNWID)
 C
@@ -1474,13 +1474,15 @@ C     + + + PURPOSE + + +
 C     Read and process special action condition from ucifl.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER      OUTLEV,MESSU,MSGFL,SCLU,MXBKLV,STWORD,LREPT,LLNPSP,
-     $             MXSPBF,SPOS,SPBF(LLNPSP,MXSPBF),ECOUNT,KEY,CURBLK,
-     $             CURLVL,PREBLK(MXBKLV),ELSEFG(MXBKLV),ALLFTR,RUNWID
+      INTEGER      OUTLEV,SPOUT,MESSU,MSGFL,SCLU,MXBKLV,STWORD,LREPT,
+     $             LLNPSP,MXSPBF,SPOS,SPBF(LLNPSP,MXSPBF),ECOUNT,KEY,
+     $             CURBLK,CURLVL,PREBLK(MXBKLV),ELSEFG(MXBKLV),ALLFTR,
+     $             RUNWID
       CHARACTER*80 UCIBUF
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     OUTLEV - output level
+C     SPOUT  - runtime Special Action output level
 C     MESSU  - unit number to write messages on
 C     MSGFL  - unit number for file containing error messages
 C     SCLU   - cluster in file containing error text
@@ -1601,7 +1603,7 @@ C           copy chain references
 C
 C         add new chain
           STLINE= STWORD+ 3
-          CALL SPARSE (STLINE,OUTLEV,MESSU,MSGFL,SCLU,
+          CALL SPARSE (SPOUT,STLINE,OUTLEV,MESSU,MSGFL,SCLU,
      M                 ECOUNT,UCIBUF,KEY,
      O                 NEWCHN,NUMLIN)
           IF (NEWCHN .GT. 0) THEN
@@ -1702,7 +1704,7 @@ C           update pointers
             LSTREF= LSTREF+ 1
 C           parse rest of line
             STLINE= STWORD+ 8
-            CALL SPARSE (STLINE,OUTLEV,MESSU,MSGFL,SCLU,
+            CALL SPARSE (SPOUT,STLINE,OUTLEV,MESSU,MSGFL,SCLU,
      M                   ECOUNT,UCIBUF,KEY,
      O                   NEWCHN,NUMLIN)
             IF (NEWCHN .GT. 0) THEN
@@ -2570,6 +2572,7 @@ C       read value - format depends on type.
         IVAL=   0
         ACTUVQ= 0
         I= MXSPVQ* 6
+C        write (MESSU,*) 'Before MKQUAN for ACTUVQ:SPOUT',SPOUT
         CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,SPOUT,
      M               CACTVL,ERRFLG,ECOUNT,IVAL,RVAL,ACTUVQ)
         IF (SPOUT .GE. 10) THEN
@@ -3819,23 +3822,30 @@ C
 C
 C
       SUBROUTINE   SPVQUP
-     I                    (SPIVL,SPOPNO,ADDR,ADDR2,ACCADD,INEWVL,RVAL,
-     I                     RNEWVL,RNEWV2,DNEWVL,PIPEFG)
+     I                    (MESSU,MSGFL,SCLU,SPOUT,SPIVL,SPOPNO,ADDR,
+     I                     ADDR2,ACCADD,TYPCOD,INEWVL,RVAL,RNEWVL,
+     I                     RNEWV2,DNEWVL,PIPEFG)
 C
 C     + + + PURPOSE + + +
 C     Update User-defined Variable Quantity pipes after a Special Action
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER SPIVL,SPOPNO,ADDR,ADDR2,ACCADD,INEWVL,PIPEFG
+      INTEGER MESSU,MSGFL,SCLU,SPOUT,SPIVL,SPOPNO,ADDR,ADDR2,ACCADD,
+     $        TYPCOD,INEWVL,PIPEFG
       REAL    RVAL,RNEWVL,RNEWV2
       DOUBLE PRECISION DNEWVL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
+C     SPOUT  - runtime Special Action output level
 C     SPIVL  - interval of run
 C     SPOPNO - index of target operation
 C     ADDR   - address of target location
 C     ADDR2  - address of secondary target location
 C     ACCADD - address of accumulator location
+C     TYPCOD - type code: 2=integer, 3=real, 4=double precision
 C     INEWVL - new integer value for pipe
 C     RVAL   - action value for this interval
 C     RNEWVL - new real value for pipe
@@ -3849,13 +3859,20 @@ C     user defined variable quantity definitions
       INCLUDE     'CSPVQD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER      I,N,UVQ,PTR
+      INTEGER      I,N,UVQ,PTR,SGRP,LCOUNT
 C
 C     + + + INTRINSICS + + +
       INTRINSIC    MOD,SNGL
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      LCOUNT= 0
+C     write (MESSU,*) 'INSIDE SPVQUP'
+C     write (MESSU,*) 'MESSU,SPOUT,SPIVL',MESSU,SPOUT,SPIVL
+C     write (MESSU,*) 'SPOPNO,ADDR,ADDR2,ACCADD',SPOPNO,ADDR,ADDR2,
+C    $                 ACCADD
+C     write (MESSU,*) 'INEWVL,RVAL,RNEWVL,RNEWV2,DNEWVL,PIPEFG',
+C    $                 INEWVL,RVAL,RNEWVL,RNEWV2,DNEWVL,PIPEFG
       DO 10 UVQ= 1, NVQD
         IF ( ( (UVQOPX(UVQ) .EQ. SPOPNO) .OR.
      $         (UVQOPX(UVQ) .EQ. 0) ) .AND.
@@ -3863,6 +3880,22 @@ C
      $         (UVQADD(UVQ) .EQ. ADDR2) .OR.
      $         (UVQADD(UVQ) .EQ. ACCADD) ) ) THEN
 C         update pipe
+          IF (SPOUT .GE. 9) THEN
+C           echo operation and address information
+            WRITE (MESSU,*) 'Updating pipe for OPNO',UVQOPX(UVQ),
+     $                      ' for address',UVQADD(UVQ)
+          END IF
+C
+          IF (UVQTYP(UVQ) .NE. TYPCOD) THEN
+C           type mismatch between UVQUAN and base variable
+            CALL OMSTI (TYPCOD)
+            CALL OMSTI (UVQTYP(UVQ))
+            I= 6
+            CALL OMSTC (I,UVQNAM(UVQ))
+            SGRP= 111
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 LCOUNT)
+          END IF
 C
           IF (PIPEFG .EQ. 1) THEN
 C           must fill entire pipe, not just single value
@@ -3883,30 +3916,60 @@ C             current operation - look at previous interval
             END IF
           END IF
 C
+          IF (SPOUT .GE. 9) THEN
+C           echo pointer
+            WRITE (MESSU,*) '    update PTR,N',PTR,N
+          END IF
+C
 C         reset value(s) in pipe
           DO 5 I= 1, N
             IF (UVQTYP(UVQ) .EQ. 2) THEN
 C             integer
+              IF (SPOUT .GE. 9) THEN
+C               echo old and new values
+                WRITE (MESSU,*) 'PTR,OLD,NEW',PTR,IVQPIP(PTR),INEWVL
+              END IF
               IVQPIP(PTR)= INEWVL
             ELSE IF (UVQTYP(UVQ) .EQ. 3) THEN
 C             real
               IF (UVQADD(UVQ) .EQ. ADDR) THEN
 C               update first value
+                IF (SPOUT .GE. 9) THEN
+C                 echo old and new values
+                  WRITE (MESSU,*) 'PTR,OLD,NEW',PTR,UVQPIP(PTR),RNEWVL
+                END IF
                 UVQPIP(PTR)= RNEWVL
               ELSE IF (UVQADD(UVQ) .EQ. ADDR2) THEN
 C               update second value
+                IF (SPOUT .GE. 9) THEN
+C                 echo old and new values
+                  WRITE (MESSU,*) 'PTR,OLD,NEW',PTR,UVQPIP(PTR),RNEWV2
+                END IF
                 UVQPIP(PTR)= RNEWV2
               ELSE IF (UVQADD(UVQ) .EQ. ACCADD) THEN
 C               update accumulator
+                IF (SPOUT .GE. 9) THEN
+C                 echo old and new values
+                  WRITE (MESSU,*) 'PTR,OLD,NEW',PTR,UVQPIP(PTR),RVAL
+                END IF
                 UVQPIP(PTR)= RVAL
               END IF
             ELSE IF (UVQTYP(UVQ) .EQ. 4) THEN
 C             double precision
               IF (UVQADD(UVQ) .EQ. ADDR) THEN
 C               update first value
+                IF (SPOUT .GE. 9) THEN
+C                 echo old and new values
+                  WRITE (MESSU,*) 'PTR,OLD,NEW',PTR,UVQPIP(PTR),
+     $                             SNGL(DNEWVL)
+                END IF
                 UVQPIP(PTR)= SNGL (DNEWVL)
               ELSE IF (UVQADD(UVQ) .EQ. ACCADD) THEN
 C               update accumulator
+                IF (SPOUT .GE. 9) THEN
+C                 echo old and new values
+                  WRITE (MESSU,*) 'PTR,OLD,NEW',PTR,UVQPIP(PTR),RVAL
+                END IF
                 UVQPIP(PTR)= RVAL
               END IF
             END IF
@@ -4086,6 +4149,9 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+C     write (MESSU,*) 'inside SPNEWV: IVAL,RVAL',IVAL,RVAL
+C     write (MESSU,*) 'inside SPNEWV: TYPCOD,ACTCOD',TYPCOD,ACTCOD
+C
       IF (SPOUT .GE. 2) THEN
 C       write current value
         IF (TYPCOD .EQ. 2) THEN
@@ -4113,7 +4179,9 @@ C           prepare echo buffer
         ELSE
           IF (TYPCOD .EQ. 3) THEN
 C           real type
+C           write (MESSU,*) '    about to set RNEWVL=RVAL',RNEWVL,RVAL
             RNEWVL= RVAL
+C           write (MESSU,*) '    just set RNEWVL=RVAL',RNEWVL,RVAL
           ELSE
 C           dp type
             DNEWVL= DBLE (RVAL)
@@ -4362,6 +4430,7 @@ C         write details for second loc
           WRITE (MESSU,2050) CACTV2,CVAL1,CVAL2,CVAL3
         END IF
       END IF
+C     write (MESSU,*) '  end SPNEWV:RVAL,RNEWVL',RVAL,RNEWVL
 C
       RETURN
       END
@@ -4369,7 +4438,7 @@ C
 C
 C
       SUBROUTINE   SPACT
-     I                   (MESSU,SPIVL,SPOPNO,SPOUT,
+     I                   (MESSU,MSGFL,SCLU,SPIVL,SPOPNO,SPOUT,
      M                    LSPPTR,SPAFP,
      O                    SORTFG)
 C
@@ -4377,10 +4446,13 @@ C     + + + PURPOSE + + +
 C     Perform a Special Action.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER     MESSU,SPIVL,SPOPNO,SPOUT,LSPPTR,SPAFP,SORTFG
+      INTEGER     MESSU,MSGFL,SPIVL,SPOPNO,SPOUT,LSPPTR,SPAFP,SORTFG,
+     1            SCLU
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - unit number for file containing error messages
+C     SCLU   - cluster in file containing error text
 C     SPIVL  - interval of run
 C     SPOPNO - index of target operation
 C     SPOUT  - runtime Special Action output level
@@ -4443,6 +4515,9 @@ C     + + + OUTPUT FORMATS + + +
  2050 FORMAT (A20)
 C
 C     + + + END SPECIFICATIONS + + +
+C
+C     write (MESSU,*) '************************************'
+C     write (MESSU,*) 'Beginning of SPACT'
 C
 C     make a local copy of current action to use equiv
       DO 10 I= 1, LENSPI
@@ -4574,9 +4649,18 @@ C           get current value from pad
         END IF
 C
 C       compute new value
+C       write (MESSU,*) 'BEFORE SPNEWV'
+C       write (MESSU,*) 'MESSU,SPOUT,ACTCOD,TYPCOD',
+C    $                   MESSU,SPOUT,ACTCOD,TYPCOD
+C       write (MESSU,*) 'IVAL,RVAL',
+C    $                   IVAL,RVAL
+C       write (MESSU,*) 'CACTVA,CACTV2',CACTVA,CACTV2
         CALL SPNEWV (MESSU,SPOUT,ACTCOD,TYPCOD,ICURVL,RCURVL,
      I               RCURV2,DCURVL,IVAL,RVAL,CACTVA,CACTV2,
      O               INEWVL,RNEWVL,RNEWV2,DNEWVL)
+C       write (MESSU,*) 'AFTER SPNEWV'
+C       write (MESSU,*) 'INEWVL,RNEWVL,RNEWV2,DNEWVL',
+C    $                   INEWVL,RNEWVL,RNEWV2,DNEWVL
 C
 C       update values in osv and uvquans as necessary
 C
@@ -4597,6 +4681,7 @@ C           double precision
             DADD= DADDR (ADDR)
             DPPAD(DADD)= DNEWVL
             IF (ACCADD .GT. 0) THEN
+
 C             increment accumulator
               DADD= DADDR (ACCADD)
               DPPAD(DADD)= DPPAD(DADD)+ DBLE (RVAL)
@@ -4610,8 +4695,14 @@ C         second value in osv
 C
 C       check all osv and workspace uvquans to see if their base
 C       variable was changed
-        CALL SPVQUP (SPIVL,SPOPNO,ADDR,ADDR2,ACCADD,INEWVL,RVAL,
-     I               RNEWVL,RNEWV2,DNEWVL,I0)
+C       write (MESSU,*) 'BEFORE SPVQUP'
+C       write (MESSU,*) 'MESSU,SPOUT,SPIVL',MESSU,SPOUT,SPIVL
+C       write (MESSU,*) 'SPOPNO,ADDR,ADDR2,ACCADD',SPOPNO,ADDR,ADDR2,
+C    $                   ACCADD
+C       write (MESSU,*) 'INEWVL,RVAL,RNEWVL,RNEWV2,DNEWVL,I0',
+C    $                   INEWVL,RVAL,RNEWVL,RNEWV2,DNEWVL,I0
+        CALL SPVQUP (MESSU,MSGFL,SCLU,SPOUT,SPIVL,SPOPNO,ADDR,ADDR2,
+     I               ACCADD,TYPCOD,INEWVL,RVAL,RNEWVL,RNEWV2,DNEWVL,I0)
 C
       ELSE IF (CONDCK .EQ. 0) THEN
 C       condition not satisfied - action skipped
@@ -4689,14 +4780,17 @@ C       echo footers
  30     CONTINUE
       END IF
 C
+C     write (MESSU,*) 'End of SPACT'
+C     write (MESSU,*) '************************************'
+C
       RETURN
       END
 C
 C
 C
       SUBROUTINE   SPECL
-     I                   (COPTYP,PUNO,SPAKND,SPOPNO,DATIM,MESSU,SPIVL,
-     I                    SPOUT,SPNUND,
+     I                   (COPTYP,PUNO,SPAKND,SPOPNO,DATIM,MESSU,MSGFL,
+     I                    SPIVL,SPOUT,SPNUND,
      M                    SPAFP)
 C
 C     + + + PURPOSE + + +
@@ -4714,6 +4808,7 @@ C     SPAKND - last special act. instr. record number for this operation
 C     SPOPNO - index of target operation
 C     DATIM  - current date and time of day
 C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - unit number for file containing error messages
 C     SPIVL  - interval of run
 C     SPOUT  - runtime Special Action output level
 C     SPNUND - number of undated special actions
@@ -4726,7 +4821,7 @@ C     special action file in memory
 C
 C    + + + LOCAL VARIABLES + + +
       INTEGER          ACTCNT,NUNREM,DLAST,DPTR,DPOS,UPTR,UPOS,DOITFG,
-     $                 DATFG,LSPPTR,LSPAFP,EXDAT(5),SORTFG
+     $                 DATFG,LSPPTR,LSPAFP,EXDAT(5),SORTFG,SCLU
 C
 C     + + + EXTERNALS + + +
       EXTERNAL     SPWSUP,SPCKDT,EXDATE,SPACT,SPSORT
@@ -4736,6 +4831,7 @@ C     + + + OUTPUT FORMATS + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
+      SCLU= 203
 C      write (99,*) "spivl coptyp puno spopno spwsiv",SPIVL,COPTYP,
 C     $              PUNO,SPOPNO,SPWSIV
       IF (SPIVL .GT. SPWSIV) THEN
@@ -4838,7 +4934,7 @@ C           convert time to external format
           END IF
 C
 C         perform action
-          CALL SPACT (MESSU,SPIVL,SPOPNO,SPOUT,
+          CALL SPACT (MESSU,MSGFL,SCLU,SPIVL,SPOPNO,SPOUT,
      M                LSPPTR,LSPAFP,
      O                SORTFG)
 C
@@ -5283,6 +5379,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       UVQIDX= 0
 C
+C      write (MESSU,*) '   in MKQUAN:SPOUT',SPOUT
       IF (SPOUT .GE. 10) THEN
 C       echo quantity string
         WRITE (MESSU,'(A6,1X,I10)') 'ERRFLG',ERRFLG
@@ -5695,7 +5792,7 @@ C
 C
 C
       SUBROUTINE   SPARSE
-     I                    (STLINE,OUTLEV,MESSU,MSGFL,SCLU,
+     I                    (SPOUT,STLINE,OUTLEV,MESSU,MSGFL,SCLU,
      M                     ECOUNT,UCIBUF,KEY,
      O                     NEWCHN,NUMLIN)
 C
@@ -5703,11 +5800,12 @@ C     + + + PURPOSE + + +
 C     Parse free-form special action line(s) into a logic chain.
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER      STLINE,OUTLEV,MESSU,MSGFL,SCLU,ECOUNT,KEY,NEWCHN,
-     $             NUMLIN
+      INTEGER      SPOUT,STLINE,OUTLEV,MESSU,MSGFL,SCLU,ECOUNT,KEY,
+     $             NEWCHN,NUMLIN
       CHARACTER*80 UCIBUF
 C
 C     + + + ARGUMENT DEFINITIONS + + +
+C     SPOUT  - runtime Special Action output level
 C     STLINE - position of beginning of line after any keywords
 C     OUTLEV - run interpreter output level
 C     MESSU  - unit number to write messages on
@@ -5934,6 +6032,7 @@ C             error - quantity not in proper position
 C             get quantity
               ERRFLG= 0
               MAX= MXSPVQ*6
+C              write (MESSU,*) 'Before MKQUAN for CNDUVQ:SPOUT',SPOUT
               CALL MKQUAN (MESSU,MSGFL,SCLU,MAX,UVQNM1,NVQD,I3,SPOUT,
      M                     CITEM,ERRFLG,ECOUNT,J,CNDVAL(I,NCOND),
      M                     CNDUVQ(I,NCOND))
@@ -6435,6 +6534,7 @@ C       read value - format depends on type.
         MFUVQ= 0
         I= MXSPVQ* 6
         TYPCOD= 3
+C        write (MESSU,*) 'Before MKQUAN for MFUVQ:SPOUT',SPOUT
         CALL MKQUAN (MESSU,MSGFL,SCLU,I,UVQNM1,NVQD,TYPCOD,SPOUT,
      M               CMULVL,ERRFLG,ECOUNT,IVAL,RVAL,MFUVQ)
         SPUMIR(10,SPUMPT)= RVAL
@@ -6678,7 +6778,7 @@ C             fetch variable multiplier
 C             this gets minutes
 C             do we need to add one to SPIVL?
               IF (SPIVL .GT. 0) THEN
-                CALL GTQUAN (MFUVQ,SPIVL,I0,SPOUT,MESSU,
+                CALL GTQUAN (MFUVQ,SPIVL,I0,I0,MESSU,
      O                       I,MULT,J)
               END IF
             ELSE

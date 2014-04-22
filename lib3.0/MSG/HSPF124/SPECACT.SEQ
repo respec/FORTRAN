@@ -833,29 +833,29 @@ YR                    17 MON                   18 DAY                   19
 HR                    20 MIN                   21 OPCODE                30 
 NTERMS                31 K        7            32 SUM     20            39 
 SPOUT                 27 @@@@@@                 1 @@@@@@                 1 
-YR                    54 MON                   55 DAY                   56 
-HR                    57 MIN                   58 SPOUT                 67 
-IVOL                  69 CIVOL  100            76 VOLFRM  12           777 
-VOLFRC               789 ROVOL                790 CROVOL 100           796 
-RMVOL               1396 CRMVOL 100          1402 ICON    10          2002 
-CONFRM  12  10      2082 CONFRC  10          2272 ROCON   10          2282 
-RMCON   10          2342 IHEAT               2402 HTFRM   12          2410 
-HTFRC               2422 ROHEAT              2423 RMHEAT              2429 
-ISED     3          2435 SEDFRM  12   3      2459 SEDFRC   3          2495 
-ROSED    3          2498 RMSED    3          2516 IDQAL    3          2534 
-ISQAL    3   3      2555 GQDFRM  12   3      2630 GQSFRM  12   3   3  2666 
-GQDFRC   3          2795 GQSFRC   3   3      2798 RODQAL   3          2807 
-ROSQAL   3   3      2825 RMDQAL   3          3379 RMSQAL   3   3      3397 
-IOX      2          3451 OXFRM   12   2      3467 OXFRC    2          3491 
-ROOX     2          3493 RMOX     2          3505 IDNUT    4          3517 
-ISNUT    3   2      3545 DNUFRM  12   4      3597 SNUFRM  12   3   2  3645 
-DNUFRC   4          3717 SNUFRC   3   2      3721 RODNUT   4          3727 
-ROSNUT   3   2      3301 RMDNUT   4          3787 RMSNUT   3   2      3811 
-IPLK     5          3847 PLKFRM  12   5      3887 PLKFRC   5          3947 
-ROPLK    5          3952 RMPLK    5          3982 IPH      2          4012 
-PHFRM   12   2      4028 PHFRC    2          4052 ROPH     2          4054 
-RMPH     2          4066 IACID    7          4078 ACIFRM  12   7      4134 
-ACIFRC   7          4218 ROACID   7          4225 RMACID   7          4267 
+YR                    70 MON                   71 DAY                   72 
+HR                    73 MIN                   74 SPOUT                 84 
+IVOL                  86 CIVOL  100            93 VOLFRM  12           794 
+VOLFRC               806 ROVOL                807 CROVOL 100           813 
+RMVOL               1413 CRMVOL 100          1419 ICON    10          2019 
+CONFRM  12  10      2099 CONFRC  10          2289 ROCON   10          2299 
+RMCON   10          2359 IHEAT               2419 HTFRM   12          2427 
+HTFRC               2439 ROHEAT              2440 RMHEAT              2446 
+ISED     3          2452 SEDFRM  12   3      2476 SEDFRC   3          2512 
+ROSED    3          2515 RMSED    3          2533 IDQAL    3          2551 
+ISQAL    3   3      2572 GQDFRM  12   3      2647 GQSFRM  12   3   3  2683 
+GQDFRC   3          2812 GQSFRC   3   3      2815 RODQAL   3          2824 
+ROSQAL   3   3      2842 RMDQAL   3          2896 RMSQAL   3   3      2914 
+IOX      2          2968 OXFRM   12   2      2984 OXFRC    2          3008 
+ROOX     2          3010 RMOX     2          3022 IDNUT    4          3034 
+ISNUT    3   2      3062 DNUFRM  12   4      3114 SNUFRM  12   3   2  3162 
+DNUFRC   4          3234 SNUFRC   3   2      3238 RODNUT   4          3244 
+ROSNUT   3   2      3268 RMDNUT   4          3304 RMSNUT   3   2      3328 
+IPLK     5          3864 PLKFRM  12   5      3404 PLKFRC   5          3464 
+ROPLK    5          3469 RMPLK    5          3499 IPH      2          3529 
+PHFRM   12   2      3545 PHFRC    2          3569 ROPH     2          3571 
+RMPH     2          3583 IACID    7          3595 ACIFRM  12   7      3651 
+ACIFRC   7          3735 ROACID   7          3742 RMACID   7          3784 
 #GROUP   55  TYPE TEXT
 $TEXT
     1    1   40
@@ -1118,5 +1118,15 @@ $TEXT
  This one must be moved:
  
 &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP  111  TYPE TEXT
+$TEXT
+    1    1    1    5
+There is a type mismatch between a Special Action line and a UVQUAN based on
+its target variable.
+
+Type codes are: 2= integer; 3= real; 4= double precision
+
+The type code for the Action line is: &I
+The type code for the UVQUAN is: &I             for UVUAN &CCCCC
   END DATA
 END CLU

@@ -70,8 +70,8 @@ C       increment date/time
 C
         IF (SPAFP .GT. 0 .AND. SPAFP .LE. SPAKND) THEN
 C         special actions are being taken and there is at least one left
-          CALL SPECL (OPTYP,COPYNO,SPAKND,SPOPNO,DATIM,MESSU,SPIVL,
-     I                SPOUT,SPNUND,
+          CALL SPECL (OPTYP,COPYNO,SPAKND,SPOPNO,DATIM,MESSU,MSGFL,
+     I                SPIVL,SPOUT,SPNUND,
      M                SPAFP)
         END IF
 C
@@ -938,8 +938,8 @@ C       increment date/time
 C
         IF (SPAFP .GT. 0 .AND. SPAFP .LE. SPAKND) THEN
 C         special actions are being taken and there is at least one left
-          CALL SPECL (OPTYP,GENRNO,SPAKND,SPOPNO,DATIM,MESSU,SPIVL,
-     I                SPOUT,SPNUND,
+          CALL SPECL (OPTYP,GENRNO,SPAKND,SPOPNO,DATIM,MESSU,MSGFL,
+     I                SPIVL,SPOUT,SPNUND,
      M                SPAFP)
         END IF
 C
@@ -1485,7 +1485,7 @@ C     time loop
 C
         IF ( (SPAFP .GT. 0) .AND. (SPAFP .LE. SPAKND) ) THEN
 C         special actions are being taken and there is at least one left
-          CALL SPECL (OPTYP,PLTNO,SPAKND,SPOPNO,DATIM,MESSU,SPIVL,
+          CALL SPECL (OPTYP,PLTNO,SPAKND,SPOPNO,DATIM,MESSU,MSGFL,SPIVL,
      I                SPOUT,SPNUND,
      M                SPAFP)
         END IF
