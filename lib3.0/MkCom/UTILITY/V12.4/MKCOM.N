@@ -1,0 +1,12 @@
+NPT            2
+NMN            3
+NPT            2
+NMN            3
+NPT            2
+NMN            3
+NCONS          7
+NGQUAL         8
+NCATS          9
+NACID         10
+NCON          17
+NSRC          18
