@@ -7,9 +7,9 @@ C     + + + PURPOSE + + +
 C     Process input for the nutrx section of rchres application module
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERISON NUTRX1 + + +
-      INCLUDE    'crhnu.inc'
-      INCLUDE    'crin2.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHNU.INC'
+      INCLUDE    'CRIN2.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   RTABLE,ITABLE,OMSG,OMSTI,ZIPI
@@ -373,8 +373,8 @@ C     + + + PURPOSE + + +
 C     Determine primary inorganic nitrogen and phosphorus balances
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION NUTRX2 + + +
-      INCLUDE      'crhnu.inc'
-      INCLUDE      'cmpad.inc'
+      INCLUDE      'CRHNU.INC'
+      INCLUDE      'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      J,K,FPT,I,N,REQFG,TSSUB(2),FLGVAL
@@ -1819,8 +1819,8 @@ C     FRMROW - row containing incremental flux accumulation
 C     TOROW  - flux row to be incremented
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION NUTRX2 + + +
-      INCLUDE    'crhnu.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHNU.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,I4,I6,I7,I8
@@ -1979,8 +1979,8 @@ C     UNITFG - output units   1-english, 2-metric
 C     BINU   - fortran unit number on which to write binary output
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION NUTRX2 + + +
-      INCLUDE    'crhnu.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHNU.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     I,IX,J,K,N,I0,I1,I2,I3,I4,I5,I6,I7,PADFG,JLEN,ACNT,
@@ -2806,6 +2806,7 @@ C
           CHEAD(ACNT) = 'NO3-INTOT'
           CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
         ELSE
+          PTIFLX= PADTOT(1)+ PIFLX(1)
           ACNT = ACNT + 1
           APRINT(ACNT) = PCFX11(1)
           CHEAD(ACNT) = 'NO3-ATMDEPDRY'
@@ -2846,7 +2847,8 @@ C
             CALL INTCHR (I, I2, I1,
      O                   JLEN, CSTR)
             ACNT = ACNT + 1
-            APRINT(ACNT) = PCFLX9(I,3)
+Cthj corrected subscript from 3 to 1 for nitrate (not nitrite!) in following
+            APRINT(ACNT) = PCFLX9(I,1)
             CHEAD(ACNT) = 'NO3-OUTDIS-EXIT'
             DO 170 IX= 1, JLEN
               CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // CSTR(IX)
@@ -3128,8 +3130,8 @@ C     + + + PURPOSE + + +
 C     Handle subroutine group nutrx
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION NUTRX2 + + +
-      INCLUDE    'crhnu.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHNU.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,J,K,N
@@ -3238,8 +3240,8 @@ C     + + + PURPOSE + + +
 C     Handle subroutine group nutrx
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION NUTRX2 + + +
-      INCLUDE    'crhnu.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHNU.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I
@@ -3297,8 +3299,8 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     LEV    - current output level (2-pivl,3-day,4-mon,5-ann)
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION NUTRX2 + + +
-      INCLUDE    'crhnu.inc'
-      INCLUDE    'cmpad.inc'
+      INCLUDE    'CRHNU.INC'
+      INCLUDE    'CMPAD.INC'
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,I4,I5,I6,I7
