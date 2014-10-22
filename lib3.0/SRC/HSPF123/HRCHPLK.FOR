@@ -1402,6 +1402,14 @@ C         algae are added to aldth
       ELSE
 C       augment unit death rate to account for nutrient scarcity
         ALD= ALDH
+C       check for overcrowding
+        BALMAX= MBAL*DEPCOR
+        IF (BAL .LT. BALMAX) THEN
+          SLOF= 0.0
+        ELSE
+          SLOF= BAL - BALMAX
+          BAL = BALMAX
+        END IF
       END IF
 C
       IF (DOX .LT. ANAER) THEN
