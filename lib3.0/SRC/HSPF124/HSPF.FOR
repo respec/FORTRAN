@@ -23,8 +23,11 @@ C                            3:no run keyword found
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER      I0,I1,SCLU,SGRP,MESSU,MSGFL,INITFG,CLEN,CONT,KCNT,
-     $             ECOUNT,KWDDIM(1),KWDTYP(1),MKFILS,EMFG,IOPT,ITIM
+     $             ECOUNT,KWDDIM(1),KWDTYP(1),MKFILS,EMFG,IOPT,ITIM,
+     $             VERCOD
       CHARACTER*1  CHSTR1(20),KWDLIB(12)
+      CHARACTER*20 VERSN
+      CHARACTER*80 CMSG
 C
 C     + + + EQUIVALENCES + + +
       EQUIVALENCE (CHSTR1,CHSTR)
@@ -32,7 +35,7 @@ C     + + + EQUIVALENCES + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  PMXTFT, KEYUCI, DMPKEY, INTERP, OSUPER, WMSGTT
-      EXTERNAL  INIKEY, HDMEST, HDMES3, SDELAY, FILCLO
+      EXTERNAL  INIKEY, HDMEST, HDMES3, SDELAY, FILCLO, WMSQCK
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT (12A1,2I4)
@@ -63,6 +66,32 @@ C
 C     first pre-process input for a data set message
       SGRP= 3
       CALL PMXTFT (MSGFL,MESSU,SCLU,SGRP)
+C
+C     check hspfmsg.wdm version for compatibility
+      SGRP= 6
+C     check existence of version info in hspfmsg.wdm
+      CALL WMSQCK (MSGFL,SCLU,SGRP,
+     O             VERCOD)
+      IF (VERCOD.EQ.1) THEN
+C       do check
+        INITFG= 1
+        CLEN= 20
+        CALL WMSGTT (MSGFL,SCLU,SGRP,INITFG,
+     M               CLEN,
+     O               CHSTR1,CONT)
+C       compare CHSTR with version info 
+        INCLUDE 'HSPFVER.INC'
+        IF (VERSN.NE.CHSTR) THEN
+C         message file incompatible, throw up warning
+          VERCOD = 0
+        END IF
+      END IF
+      IF (VERCOD.EQ.0) THEN
+        CMSG = 'Warning: incompatible msg file for HSPF version '//VERSN
+        write(*,*) CMSG
+        write(MESSU,*) CMSG
+        write(MESSU,*) 
+      END IF     
 C
 C     get major keywords (RUN)
       SGRP= 21
