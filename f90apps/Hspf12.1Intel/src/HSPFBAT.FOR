@@ -40,8 +40,6 @@ C
 C     version info and unix what info
       INCLUDE 'versn.inc'
 C
-C     when start?
-      CALL CPU_TIME(TIMES)
 C     CALL TSTUF('    ',-1.0)
 C      uncomment these lines to determine f90 run times
 C      CALL DATE_AND_TIME(VALUES=SDATM)
@@ -56,6 +54,9 @@ C     avoid some lahey math errors
 C     CALL INVALOP (LFLAG)
 C     CALL UNDFL (LFLAG)
 C
+C     CALL CHANGEDIRQQ('e:\test\hspf\Salado\intel12.3detail10')
+C     CALL CHANGEDIRQQ('e:\F90APPS\HSPF12.3INTEL\TEST')
+C     CALL CHANGEDIRQQ('G:\Projects\coon')
       OPEN (UNIT=99,FILE='error.fil')
 C
 C     initialize wdm file common block
@@ -65,6 +66,8 @@ C     get command line - this is a system-specific routine
       CLINE= 'hspfuci.inp'
       CALL XGTARG
      M            (CLINE)
+C     when start?
+      CALL CPU_TIME(TIMES)
 C
 C     parse command line to get input filename - must be first argument
       I= 64
