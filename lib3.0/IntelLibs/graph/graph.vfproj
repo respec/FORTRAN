@@ -46,7 +46,6 @@
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
 	<Files>
 		<Filter Name="Source Files">
-		<File RelativePath="..\..\SRC\GRAPH\GKSINT90.FOR"/>
 		<File RelativePath="..\..\SRC\GRAPH\GRAXIS.FOR"/>
 		<File RelativePath="..\..\SRC\GRAPH\GRCAXE.FOR"/>
 		<File RelativePath="..\..\SRC\GRAPH\GRCCRV.FOR"/>

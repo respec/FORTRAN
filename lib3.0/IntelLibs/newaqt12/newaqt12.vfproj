@@ -84,7 +84,6 @@
 		<File RelativePath="..\..\SRC\Newaqt12\UTMAP.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\UTPLOT.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\UTWIN.FOR"/>
-		<File RelativePath="..\..\SRC\Newaqt12\WATINP.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\WDMAP.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\WSGSIM.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\WSGSYS.FOR"/>

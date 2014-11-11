@@ -52,7 +52,6 @@
 		<File RelativePath="..\..\SRC\iowdm\inflat.FOR"/>
 		<File RelativePath="..\..\SRC\iowdm\inflts.FOR"/>
 		<File RelativePath="..\..\SRC\iowdm\INWATG.FOR"/>
-		<File RelativePath="..\..\SRC\iowdm\INWATX.FOR"/>
 		<File RelativePath="..\..\SRC\iowdm\INWBAT.FOR"/>
 		<File RelativePath="..\..\SRC\iowdm\INWDMU.FOR"/>
 		<File RelativePath="..\..\SRC\iowdm\INXBAT.FOR"/>
