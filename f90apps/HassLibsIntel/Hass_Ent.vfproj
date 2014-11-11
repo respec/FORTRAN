@@ -4,39 +4,39 @@
 		<Platform Name="Win32"/>
 		<Platform Name="x64"/></Platforms>
 	<Configurations>
-		<Configuration Name="Debug|Win32" OutputDirectory="$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\Temp" ConfigurationType="typeDynamicLibrary">
+		<Configuration Name="Debug|Win32" ConfigurationType="typeDynamicLibrary">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
-				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" AdditionalLibraryDirectories="\lib3.0\IntelLibs\$(PlatformName)\$(ConfigurationName)" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
-				<Tool Name="VFResourceCompilerTool"/>
-				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
-				<Tool Name="VFCustomBuildTool"/>
-				<Tool Name="VFPreLinkEventTool"/>
-				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
-				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Release|Win32" OutputDirectory="$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\Temp" ConfigurationType="typeDynamicLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
-				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" AdditionalLibraryDirectories="\lib3.0\IntelLibs\$(PlatformName)\$(ConfigurationName)\" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
-				<Tool Name="VFResourceCompilerTool"/>
-				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
-				<Tool Name="VFCustomBuildTool"/>
-				<Tool Name="VFPreLinkEventTool"/>
-				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
-				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Debug|x64" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\Temp" ConfigurationType="typeDynamicLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnTruncateSource="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
 				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" OutputDirectory="C:\Dev\BASINS40\Bin\Plugins\BASINS" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnTruncateSource="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" MapExports="true" SubSystem="subSystemWindows" LinkDLL="true"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
 				<Tool Name="VFCustomBuildTool"/>
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool" CommandLine="copy $(OutDir)\$(ProjectName).* C:\Dev\HSPF\bin\Debug"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Release|x64" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\Temp" ConfigurationType="typeDynamicLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
-				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
+		<Configuration Name="Release|x64" ConfigurationType="typeDynamicLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" SubSystem="subSystemWindows" LinkDLL="true"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
 				<Tool Name="VFCustomBuildTool"/>
@@ -46,27 +46,16 @@
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
 	<Files>
 		<Filter Name="Libs">
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\adwdm.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\adwdm.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\ann.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\ann.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\awstat.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\awstat.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\graph.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\graph.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\hspf122.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\hspf122.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\HspNoDSS.lib"/>
+		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\hspf123.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\HspNoDSS.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\iowdm.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\iowdm.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\newaqt12.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\newaqt12.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\util.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\util.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\waide.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\waide.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\x64\Debug\wdm.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\wdm.lib"/></Filter>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<File RelativePath=".\src\HASS_DUM.FOR"/>

@@ -449,11 +449,12 @@
 
       END SUBROUTINE F90_MSGUNIT
 
-      SUBROUTINE F90_FILSTA (MSG)
+      SUBROUTINE f90_filsta (msg)
         USE SCENMOD, ONLY : M_FILSTA
-        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_FILSTA
-
-        CHARACTER(LEN=*),INTENT(IN)  :: MSG     
+        !DEC$ ATTRIBUTES DLLEXPORT :: f90_filsta
+        !DEC$ ATTRIBUTES STDCALL   :: f90_filsta
+        !DEC$ ATTRIBUTES REFERENCE :: msg
+        CHARACTER(LEN=132),INTENT(IN)  :: msg     
         
         CALL M_FILSTA (MSG)
 

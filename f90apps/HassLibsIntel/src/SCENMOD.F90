@@ -15,7 +15,7 @@
         PRIVATE
 
         TYPE FILTYP
-          CHARACTER*64 NAM
+          CHARACTER*256 NAM
           INTEGER      FUN
         END TYPE FILTYP
 
@@ -69,21 +69,16 @@
         END SUBROUTINE UPDATESTATUSX
 
         INTEGER FUNCTION UPDATESTATUS(I,J)
-
-          !INTEGER    WriteFile, PeekNamedPipe, ReadFile
-
           INTEGER,       INTENT(IN) :: I
           INTEGER*1  J(*)
 
-          INTEGER(LPDWORD)  L, lr, lm, lx, K
-          INTEGER(DWORD)    la 
+          INTEGER    P, K, L, lr, la, lm 
 
           CHARACTER*255 T,O,X
-          INTEGER(DWORD) P
-          
-          INTEGER(LPCVOID) SPTR
-          
-          INTEGER*1  M(200)
+          character   S(257)
+          character   M(200)
+
+          type (T_OVERLAPPED) :: lpOverlapped
 
           UPDATESTATUS = 0 !assume ok
 
@@ -110,7 +105,7 @@
                     ELSE IF (I .EQ. 99) THEN
                       X = "(MSG99"
                     END IF
-                    O = X(1:LEN_TRIM(X))//" "//T(1:P)//")"//CHAR(0)
+                    O = X(1:LEN_TRIM(X))//" "//T(1:P)//")"
                   END IF
                   P = LEN_TRIM(O)
                   IF (DBGLEV>0) THEN
@@ -119,9 +114,9 @@
                   END IF
                   IF (I.NE.0) THEN
                     P = P+ 1
-                    SPTR = LOC(O)
-                    !L=WriteFile(Carg(HPOUT),S,Carg(P),K,Carg(0))
-                    L=WriteFile(HPOUT,SPTR,P,K,IOVL)
+                    O(P:P)= CHAR(0)
+                    K = 0
+                    L = WriteFile(HPOUT, LOC(O), P, LOC(K), lpOverlapped)
                     IF (DBGLEV>0) THEN
                       WRITE(*,*) "Write:",HPOUT,P,L,K
                       IF (DBGPAU) READ(*,*)
@@ -135,24 +130,20 @@
             END IF
           ELSE !just looking for Pause or Cancel
             IF (HPIN .GT. 0) THEN ! check for user messages
-              !L = PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
-              L = PeekNamedPipe(HPIN,NULL,NULL,lr,lx,lm)
+              L = PeekNamedPipe(HPIN,0,0,lr,la,lm)
               IF (L .NE. 0 .AND. LA .GT. 0) THEN ! a message
-                !L = ReadFile(CARG(HPIN), M, CARG(la), lr, Carg(0))
-                SPTR= LOC(M)
-                L = ReadFile(HPIN, SPTR, la, lr, IOVL)
+                L = ReadFile(HPIN, LOC(M), la, lr, 0)
                 IF (DBGLEV>0) THEN
                   WRITE(*,*) "A message!",HPIN,L,LA,LR,M(1)
                   IF (DBGPAU) READ(*,*)
                 END IF
-                IF (M(1) .EQ. ICHAR('P')) THEN ! pause
+                IF (M(1) .EQ. 'P' ) THEN ! pause
                   LA = 0
                   DO WHILE (LA.EQ.0)
-                    !L=PeekNamedPipe(Carg(HPIN),Carg(0),carg(0),lr,la,lm)
-                    L=PeekNamedPipe(HPIN,NULL,NULL,lr,lx,lm)
+                    L=PeekNamedPipe(HPIN,0,0,lr,la,lm)
                   END DO
                 END IF
-                IF (M(1) .EQ. ICHAR('C')) THEN ! cancel
+                IF (M(1) .EQ. 'C') THEN ! cancel
                   UPDATESTATUS = 1  
                 END IF
               END IF
