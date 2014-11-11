@@ -148,14 +148,16 @@
         CALL LOG_MSG('CLOSE')
       END SUBROUTINE F90_W99CLO
 
-      FUNCTION F90_WDMOPN(UNIT,NAME)
-        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WDMOPN
-        INTEGER           :: F90_WDMOPN
-        INTEGER           :: UNIT
-        CHARACTER(LEN=*)  :: NAME
+      FUNCTION f90_wdmopn(unit,name)
+        !DEC$ ATTRIBUTES DLLEXPORT :: f90_wdmopn
+        !DEC$ ATTRIBUTES STDCALL   :: f90_wdmopn
+        !DEC$ ATTRIBUTES REFERENCE :: unit,name
+        INTEGER            :: F90_WDMOPN
+        INTEGER            :: UNIT
+        CHARACTER(LEN=256) :: NAME
 
-        CHARACTER*256     :: MSG
-        LOGICAL           :: OPEN
+        CHARACTER(LEN=384) :: MSG
+        LOGICAL            :: OPEN
             
         INQUIRE(UNIT=UNIT,OPENED=OPEN)
         
@@ -204,31 +206,30 @@
       END FUNCTION F90_WDMCLO
       
       !adwdm:wdopxx
-      FUNCTION F90_WDBOPN(RWFLG,WDNAME) RESULT(WDMSFL) 
-        !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDBOPN
+      FUNCTION f90_wdbopn(rwflg,wdname) RESULT(WDMSFL) 
+        !DEC$ ATTRIBUTES DLLEXPORT :: f90_wdbopn
+        !DEC$ ATTRIBUTES STDCALL   :: f90_wdbopn
+        !DEC$ ATTRIBUTES REFERENCE :: rwflg,wdname
 
-        CHARACTER(LEN=*),INTENT(IN) :: WDNAME
-        INTEGER,         INTENT(IN) :: RWFLG
-        INTEGER                     :: WDMSFL
+        CHARACTER(LEN=256),INTENT(IN) :: WDNAME
+        INTEGER,           INTENT(IN) :: RWFLG
+        INTEGER                       :: WDMSFL
 
-        CHARACTER*256               :: MSG
-        CHARACTER*256               :: LNAME
-        INTEGER                     :: RETCOD
+        CHARACTER(LEN=384)            :: MSG
+        INTEGER                       :: RETCOD
 
-        LNAME = WDNAME
-        
         IF (RWFLG .EQ. 1) THEN
           !read only, assign special number
-          WDMSFL = INQUIRE_NAME(LNAME,100)
+          WDMSFL = INQUIRE_NAME(WDNAME,100)
           WRITE(MSG,*) 'HASS_ENT:F90_WDBOPN:READONLY'
           CALL LOG_MSG(MSG)
         ELSE
-          WDMSFL= INQUIRE_NAME(LNAME,0)
+          WDMSFL= INQUIRE_NAME(WDNAME,0)
         END IF
         
         CALL GET_WDM_FUN(WDMSFL)
  
-        WRITE(MSG,*) 'HASS_ENT:F90_WDBOPN:RWFLG,WDMSFL:',RWFLG,WDMSFL,' ',TRIM(LNAME)
+        WRITE(MSG,*) 'HASS_ENT:F90_WDBOPN:RWFLG,WDMSFL:',RWFLG,WDMSFL,' ',TRIM(WDNAME)
         CALL LOG_MSG(MSG)
 
         CALL WDBOPN(WDMSFL,LNAME,RWFLG,RETCOD)
@@ -1933,92 +1934,92 @@
 
       END SUBROUTINE F90_UCGIRC_XX
 
-      !iowdm:watinp
-      SUBROUTINE F90_WATINI (WATNAM,INWAT)
-
-        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WATINI
-
-        INTEGER, INTENT(IN)          :: INWAT
-        CHARACTER(LEN=*), INTENT(IN) :: WATNAM
-
-        CHARACTER*80            :: FNAME
-
-        FNAME = WATNAM
-        OPEN(UNIT=INWAT,FILE=FNAME,CARRIAGECONTROL="LIST")
-
-        CALL WATINI
-
-      END SUBROUTINE F90_WATINI
-
-      !iowdm:watinp
-      SUBROUTINE F90_WATHED_XX (MESSFL,INWAT,IVAL,RVAL,ISIT, &
-                                ITYP,ID,INAME)
-
-        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WATHED_XX
-
-        INTEGER, INTENT(IN)     :: MESSFL,INWAT
-        REAL, INTENT(OUT)       :: RVAL(7)
-        INTEGER, INTENT(OUT)    :: IVAL(6),ID(8),INAME(48)
-        INTEGER, INTENT(OUT)    :: ISIT(2),ITYP(4)
-
-        INTEGER                 :: L
-        CHARACTER*2             :: CSITE
-        CHARACTER*4             :: CTSTYP
-        CHARACTER*8             :: CSTAID
-        CHARACTER*48            :: CSTANM
-
-        CALL WATHED (MESSFL,INWAT, &
-                     IVAL,RVAL, &
-                     CSITE,CTSTYP,CSTAID,CSTANM)
-        DO L = 1,8
-          ID(L) = ICHAR(CSTAID(L:L))
-        END DO
-        DO L = 1,48
-          INAME(L) = ICHAR(CSTANM(L:L))
-        END DO
-        DO L = 1,2
-          ISIT(L) = ICHAR(CSITE(L:L))
-        END DO
-        DO L = 1,4
-          ITYP(L) = ICHAR(CTSTYP(L:L))
-        END DO
-
-      END SUBROUTINE F90_WATHED_XX
-
-      !iowdm:watinp
-      SUBROUTINE F90_WATINP (MESSFL,INWAT,WDMSFL,RETCOD,IVAL,RVAL, &
-                             CSCEN,CLOC,CCONS, &
-                             ID,NAME,SITE,TYPE)
-
-        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WATINP
-
-        INTEGER, INTENT(IN)          :: MESSFL,WDMSFL,IVAL(6),INWAT
-        REAL, INTENT(IN)             :: RVAL(7)
-        INTEGER, INTENT(OUT)         :: RETCOD
-        CHARACTER(LEN=*), INTENT(IN) :: CSCEN,CLOC,CCONS,ID
-        CHARACTER(LEN=*), INTENT(IN) :: NAME,SITE,TYPE
-
-        INTEGER                :: FE
-        CHARACTER*2            :: SITE2
-        CHARACTER*4            :: TYPE4
-        CHARACTER*8            :: CSCEN8,CLOC8,CCONS8,ID8
-        CHARACTER*48           :: CNAME
-
-        CSCEN8 = CSCEN
-        CLOC8  = CLOC
-        CCONS8 = CCONS
-        ID8    = ID
-        CNAME  = NAME
-        SITE2  = SITE
-        TYPE4  = TYPE
-
-        FE = 99
-
-        CALL WATINP (MESSFL,WDMSFL,FE,INWAT,IVAL,RVAL, &
-                     CSCEN8,CLOC8,CCONS8,ID8,CNAME,SITE2,TYPE4, &
-                     RETCOD)
-
-      END SUBROUTINE F90_WATINP
+!      !iowdm:watinp
+!      SUBROUTINE F90_WATINI (WATNAM,INWAT)
+!
+!        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WATINI
+!
+!        INTEGER, INTENT(IN)          :: INWAT
+!        CHARACTER(LEN=*), INTENT(IN) :: WATNAM
+!
+!        CHARACTER*80            :: FNAME
+!
+!        FNAME = WATNAM
+!        OPEN(UNIT=INWAT,FILE=FNAME,CARRIAGECONTROL="LIST")
+!
+!        CALL WATINI
+!
+!      END SUBROUTINE F90_WATINI
+!
+!      !iowdm:watinp
+!      SUBROUTINE F90_WATHED_XX (MESSFL,INWAT,IVAL,RVAL,ISIT, &
+!                                ITYP,ID,INAME)
+!
+!        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WATHED_XX
+!
+!        INTEGER, INTENT(IN)     :: MESSFL,INWAT
+!        REAL, INTENT(OUT)       :: RVAL(7)
+!        INTEGER, INTENT(OUT)    :: IVAL(6),ID(8),INAME(48)
+!        INTEGER, INTENT(OUT)    :: ISIT(2),ITYP(4)
+!
+!        INTEGER                 :: L
+!        CHARACTER*2             :: CSITE
+!        CHARACTER*4             :: CTSTYP
+!        CHARACTER*8             :: CSTAID
+!        CHARACTER*48            :: CSTANM
+!
+!        CALL WATHED (MESSFL,INWAT, &
+!                     IVAL,RVAL, &
+!                     CSITE,CTSTYP,CSTAID,CSTANM)
+!        DO L = 1,8
+!          ID(L) = ICHAR(CSTAID(L:L))
+!        END DO
+!        DO L = 1,48
+!          INAME(L) = ICHAR(CSTANM(L:L))
+!        END DO
+!        DO L = 1,2
+!          ISIT(L) = ICHAR(CSITE(L:L))
+!        END DO
+!        DO L = 1,4
+!          ITYP(L) = ICHAR(CTSTYP(L:L))
+!        END DO
+!
+!      END SUBROUTINE F90_WATHED_XX
+!
+!      !iowdm:watinp
+!      SUBROUTINE F90_WATINP (MESSFL,INWAT,WDMSFL,RETCOD,IVAL,RVAL, &
+!                             CSCEN,CLOC,CCONS, &
+!                             ID,NAME,SITE,TYPE)
+!
+!        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WATINP
+!
+!        INTEGER, INTENT(IN)          :: MESSFL,WDMSFL,IVAL(6),INWAT
+!        REAL, INTENT(IN)             :: RVAL(7)
+!        INTEGER, INTENT(OUT)         :: RETCOD
+!        CHARACTER(LEN=*), INTENT(IN) :: CSCEN,CLOC,CCONS,ID
+!        CHARACTER(LEN=*), INTENT(IN) :: NAME,SITE,TYPE
+!
+!        INTEGER                :: FE
+!        CHARACTER*2            :: SITE2
+!        CHARACTER*4            :: TYPE4
+!        CHARACTER*8            :: CSCEN8,CLOC8,CCONS8,ID8
+!        CHARACTER*48           :: CNAME
+!
+!        CSCEN8 = CSCEN
+!        CLOC8  = CLOC
+!        CCONS8 = CCONS
+!        ID8    = ID
+!        CNAME  = NAME
+!        SITE2  = SITE
+!        TYPE4  = TYPE
+!
+!        FE = 99
+!
+!        CALL WATINP (MESSFL,WDMSFL,FE,INWAT,IVAL,RVAL, &
+!                     CSCEN8,CLOC8,CCONS8,ID8,CNAME,SITE2,TYPE4, &
+!                     RETCOD)
+!
+!      END SUBROUTINE F90_WATINP
 
       !iowdm:watclo
       SUBROUTINE F90_WATCLO (INWAT)
