@@ -2444,8 +2444,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL         CATSRT,CATFRC,ROUTE,NOROUT,OMSTD,OMSTI,OMSTR
-      EXTERNAL         OMSG,AUXIL,SHEAR
-C     EXTERNAL         DWROUT
+      EXTERNAL         OMSG,AUXIL,SHEAR,DWROUT
 C
 C     + + + HISTORY + + +
 C     2005  BRB added potential et to output summaries
@@ -2807,28 +2806,28 @@ C         set input concentration to each node
 C
 C        write(messu,*) 'B4 DWROUT: PREVIN',PREVIN,IDWFP,IVL1
 C        write(messu,*) 'B4 DWROUT: NDINIT',NDINIT   
-C        CALL DWROUT (DELTS,UUNITS,
-C     I               NNODE,NCOND,DTS,DWUNIT,
-C     I               OS(1),ROS,VOLT,IVOLDW,IDWWQ,
-C     I               MON,NXTMON,DAY,NDAYS,
-C     I               RCHNO,MESSU,MSGFL,SCLU,
-C     I               DATIM,NODEX,
-C     I               CNODE1,CNODE2,CSHAPE,
-C     I               NELEV,NDMAX,
-C     I               NDSURC,NPONDA,NLOCIN,NDWQIN,
-C     I               CLENTH,CMANN,COFF1,COFF2,
-C     I               CGEOM1,CGEOM2,CGEOM3,CGEOM4,
-C     I               NWEIR,WNODE1,WNODE2,WTYPE,
-C     I               WOFF,WCD,WFLAP,WEC,WCD2,WSHAPE,
-C     I               WGEOM1,WGEOM2,WGEOM3,WGEOM4,
-C     I               NORIF,ONODE1,ONODE2,OTYPE,
-C     I               OOFF,OCD,OFLAP,ORAT,OSHAPE,
-C     I               OGEOM1,OGEOM2,OGEOM3,OGEOM4,
-C     I               DWWQFG,DWWQNM,DWWQUN,DWDECA,
-C     M               HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
-C     M               PREVIN,PREVI2,PREVWQ,PREVW2,
-C     M               NQIN,CQIC,
-C     O               VOL,O(1),RO,OVOL(1),ROVOL,RODWWQ)
+        CALL DWROUT (DELTS,UUNITS,
+     I               NNODE,NCOND,DTS,DWUNIT,
+     I               OS(1),ROS,VOLT,IVOLDW,IDWWQ,
+     I               MON,NXTMON,DAY,NDAYS,
+     I               RCHNO,MESSU,MSGFL,SCLU,
+     I               DATIM,NODEX,
+     I               CNODE1,CNODE2,CSHAPE,
+     I               NELEV,NDMAX,
+     I               NDSURC,NPONDA,NLOCIN,NDWQIN,
+     I               CLENTH,CMANN,COFF1,COFF2,
+     I               CGEOM1,CGEOM2,CGEOM3,CGEOM4,
+     I               NWEIR,WNODE1,WNODE2,WTYPE,
+     I               WOFF,WCD,WFLAP,WEC,WCD2,WSHAPE,
+     I               WGEOM1,WGEOM2,WGEOM3,WGEOM4,
+     I               NORIF,ONODE1,ONODE2,OTYPE,
+     I               OOFF,OCD,OFLAP,ORAT,OSHAPE,
+     I               OGEOM1,OGEOM2,OGEOM3,OGEOM4,
+     I               DWWQFG,DWWQNM,DWWQUN,DWDECA,
+     M               HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
+     M               PREVIN,PREVI2,PREVWQ,PREVW2,
+     M               NQIN,CQIC,
+     O               VOL,O(1),RO,OVOL(1),ROVOL,RODWWQ)
         IF (DWWQFG.GT.0) THEN
 C          write(messu,*) 'AF DWROUT: RODWWQ',RODWWQ
         END IF 
@@ -4063,39 +4062,875 @@ C
 C
 C
 C
-C      SUBROUTINE   DWROUT
-C     I                   (DELTS,UUNITS,
-C     I                    NNODE,NCOND,DTS,DWUNIT,
-C     I                    OS,ROS,VOLT,IVOLDW,IDWWQ,
-C     I                    MON,NXTMON,DAY,NDAYS,
-C     I                    RCHNO,MESSU,MSGFL,SCLU,
-C     I                    DATIM,NODEX,
-C     I                    CNODE1,CNODE2,CSHAPE,
-C     I                    NELEV,NDMAX,
-C     I                    NDSURC,NPONDA,NLOCIN,NDWQIN,
-C     I                    CLENTH,CMANN,COFF1,COFF2,
-C     I                    CGEOM1,CGEOM2,CGEOM3,CGEOM4,
-C     I                    NWEIR,WNODE1,WNODE2,WTYPE,
-C     I                    WOFF,WCD,WFLAP,WEC,WCD2,WSHAPE,
-C     I                    WGEOM1,WGEOM2,WGEOM3,WGEOM4,
-C     I                    NORIF,ONODE1,ONODE2,OTYPE,
-C     I                    OOFF,OCD,OFLAP,ORAT,OSHAPE,
-C     I                    OGEOM1,OGEOM2,OGEOM3,OGEOM4,
-C     I                    DWWQFG,DWWQNM,DWWQUN,DWDECA,
-C     M                    HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
-C     M                    PREVIN,PREVIN2,PREVWQ,PREVWQ2,
-C     M                    QIN,QIC,
-C     O                    VOL,O,RO,OVOL,ROVOL,RODWWQ)
+      SUBROUTINE   DWROUT
+     I                   (DELTS,UUNITS,
+     I                    NNODE,NCOND,DTS,DWUNIT,
+     I                    OS,ROS,VOLT,IVOLDW,IDWWQ,
+     I                    MON,NXTMON,DAY,NDAYS,
+     I                    RCHNO,MESSU,MSGFL,SCLU,
+     I                    DATIM,NODEX,
+     I                    CNODE1,CNODE2,CSHAPE,
+     I                    NELEV,NDMAX,
+     I                    NDSURC,NPONDA,NLOCIN,NDWQIN,
+     I                    CLENTH,CMANN,COFF1,COFF2,
+     I                    CGEOM1,CGEOM2,CGEOM3,CGEOM4,
+     I                    NWEIR,WNODE1,WNODE2,WTYPE,
+     I                    WOFF,WCD,WFLAP,WEC,WCD2,WSHAPE,
+     I                    WGEOM1,WGEOM2,WGEOM3,WGEOM4,
+     I                    NORIF,ONODE1,ONODE2,OTYPE,
+     I                    OOFF,OCD,OFLAP,ORAT,OSHAPE,
+     I                    OGEOM1,OGEOM2,OGEOM3,OGEOM4,
+     I                    DWWQFG,DWWQNM,DWWQUN,DWDECA,
+     M                    HYECNT,HYWCNT,NDINIT,CQ0,DWHEAD,
+     M                    PREVIN,PREVIN2,PREVWQ,PREVWQ2,
+     M                    QIN,QIC,
+     O                    VOL,O,RO,OVOL,ROVOL,RODWWQ)
 C
 C     + + + PURPOSE + + +
 C     Use dynamic wave routing algorithm to 
 C     find the state of the reach or reservoir at the end of
 C     the time interval and the outflows from it
 C
-C     This subroutine has been removed from this version of HSPF -- it may be found in version 12.4b.
+C     + + + MODULES + + +
+      use headers
+      use consts
+      use enums
+      use swmm5f
+      use swmm5futil
+      use modXsect
+      use modLink
+      use output
+      implicit none
 C
-C     RETURN
-C     END
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER          NNODE,NCOND,DTS,MON,NXTMON,DAY,NDAYS,
+     $                 RCHNO,MESSU,MSGFL,SCLU,DATIM(5),
+     $                 HYECNT(5),HYWCNT(2),UUNITS,DWWQFG,
+     $                 CNODE1(NCOND),CNODE2(NCOND),
+     $                 CSHAPE(NCOND),DWUNIT,DWHEAD,
+     $                 NWEIR,WNODE1(NWEIR),WNODE2(NWEIR), 
+     $                 WTYPE(NWEIR),WFLAP(NWEIR),  
+     $                 WEC(NWEIR),WSHAPE(NWEIR),
+     $                 NORIF,ONODE1(NORIF),ONODE2(NORIF),
+     $                 OTYPE(NORIF),OFLAP(NORIF),OSHAPE(NORIF) 
+      REAL             DELTS,OS,ROS,NODEX(NNODE),RODWWQ,
+     $                 O,RO,OVOL,ROVOL,DWWQNM(2),
+     $                 NELEV(NNODE),NDMAX(NNODE),NDINIT(NNODE),
+     $                 NDSURC(NNODE),NPONDA(NNODE),NLOCIN(NNODE),
+     $                 NDWQIN(NNODE),DWWQUN,DWDECA,
+     $                 CLENTH(NCOND),CMANN(NCOND),COFF1(NCOND),
+     $                 COFF2(NCOND),CQ0(NCOND),CGEOM1(NCOND),
+     $                 CGEOM2(NCOND),CGEOM3(NCOND),CGEOM4(NCOND),
+     $                 WCD2(NWEIR),WOFF(NWEIR),WCD(NWEIR),
+     $                 WGEOM1(NWEIR),WGEOM2(NWEIR),
+     $                 WGEOM3(NWEIR),WGEOM4(NWEIR),
+     $                 OOFF(NORIF),OCD(NORIF),ORAT(NORIF),
+     $                 OGEOM1(NORIF),OGEOM2(NORIF),
+     $                 OGEOM3(NORIF),OGEOM4(NORIF),
+     $                 IVOLDW(NNODE),IDWWQ(NNODE),PREVIN(NNODE),
+     $                 PREVIN2(NNODE),QIN(NNODE),QIC(NCOND),
+     $                 PREVWQ(NNODE),PREVWQ2(NNODE)
+      DOUBLE PRECISION VOLT,VOL
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     DELTS  - simulation interval in seconds
+C     UUNITS - units of simulation, 1-english, 2-si
+C     NNODE  - number of nodes in dw simulated network
+C     NCOND  - number of conduits in dw simulated network
+C     DTS    - dynamic wave time step in seconds
+C     DWUNIT - fortran unit number of file for dw output
+C     DWHEAD - flag indicating if header has been written for this oper
+C     OS     - rate of outflow from each exit of reach at start of interval
+C     ROS    - total rate of outflow from reach at start of interval
+C     VOLT   - volume in the reach after inflow, precip and evap
+C     IVOLDW - inflow volume to this node at this time step
+C     PREVIN - inflow volume at previous time step
+C     PREVIN2- inflow volume at 2 previous time step
+C     IDWWQ  - inflow wq conc to this node at this time step
+C     PREVWQ - inflow wq conc at previous time step
+C     PREVWQ2- inflow wq conc at 2 previous time step
+C     MON    - calendar month
+C     NXTMON - next calendar month
+C     DAY    - day of month
+C     NDAYS  - no. of days in this month
+C     RCHNO  - reach number
+C     MESSU  - ftn unit no. to be used for printout of messages
+C     MSGFL  - fortran unit number of HSPF message file
+C     SCLU   - cluster containing error and warning message details
+C     DATIM  - date and time
+C     CNODE1 - upstream conduit node index 
+C     CNODE2 - downstream conduit node index
+C     CSHAPE - conduit shape type
+C     NODEX  - node name for each node
+C     NELEV  - invert elevation for each node
+C     NDMAX  - max depth for each node
+C     NDINIT - initial node depth for each node
+C     NDSURC - surcharge depth for each node
+C     NPONDA - ponded area for each node
+C     NLOCIN - inflow flag for each node, indicating which ivoldw timser 
+C     NDWQIN - local wq inflow timeseries subscript
+C     CLENTH - length for each conduit
+C     CMANN  - mannings n for each conduit
+C     COFF1  - inlet offset for each conduit
+C     COFF2  - outlet offset for each conduit
+C     CQ0    - initial flow for each conduit
+C     CGEOM1 - first item of shape geometry for each conduit
+C     CGEOM2 - second item of shape geometry for each conduit
+C     CGEOM3 - third item of shape geometry for each conduit
+C     CGEOM4 - fourth item of shape geometry for each conduit
+C     NWEIR  - number of weirs
+C     WNODE1 - upstream node index
+C     WNODE2 - downstream node index
+C     WTYPE  - weir shape type
+C     WOFF   - weir offset
+C     WCD    - weir dicharge coefficient
+C     WFLAP  - flap gate present: yes1 or no0
+C     WEC    - number of end contractions for tranv or trapez weir
+C     WCD2   - discharge coeff for triangular ends of trapez weir
+C     WSHAPE - weir shape type 
+C     WGEOM1 - first item of shape geometry 
+C     WGEOM2 - second item of shape geometry
+C     WGEOM3 - third item of shape geometry
+C     WGEOM4 - fourth item of shape geometry
+C     NORIF  - number of orifices
+C     ONODE1 - upstream node index
+C     ONODE2 - downstream node index
+C     OTYPE  - orifice type code
+C     OOFF   - amt o bottom is offset above the invert of inlet node
+C     OCD    - orifice discharge coefficient
+C     OFLAP  - flap gate present: yes1 or no0
+C     ORAT   - time in decimal hours to open orifice
+C     OSHAPE - orifice shape type
+C     OGEOM1 - first item of shape geometry
+C     OGEOM2 - second item of shape geometry
+C     OGEOM3 - third item of shape geometry
+C     OGEOM4 - fourth item of shape geometry
+C     DWWQFG - dw water quality flag  
+C     DWWQNM - name of wq constituent
+C     DWWQUN - name of wq units
+C     DWDECA - wq decay rate
+C     HYECNT - count of error messages for section HYDR
+C     HYWCNT - count of warning messages for section HYDR
+C     VOL    - volume of water in reach above bed
+C     O      - rate of outflow from each reach exit at end of interval
+C     RO     - total rate of outflow from reach at end of interval
+C     OVOL   - volume of water leaving reach in an interval by exit
+C     ROVOL  - total volume of water leaving reach in an interval
+C     RODWWQ - conc of wq constituent in water leaving the reach
+C     QIN    - initial conc of wq constituent in each node
+C     QIC    - initial conc of wq constituent in each conduit
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER          LTYPE,J,K,lErrorCode,DELTSI,SGRP,ECOUNT
+      INTEGER          SDATIM(6),NEWDAT(6),NEWD5(5),RETCOD
+      DOUBLE PRECISION XN(6),XC(6),XX(4)
+      LOGICAL          isOK
+      type(TExtInflow), dimension(NNODE-1), target :: inflows
+      type(TExtInflow), dimension(NNODE-1), target :: inflowsWQ
+      CHARACTER*4      CTAG4
+      CHARACTER*8      CTAG8
+      CHARACTER*10     CTAG10(NNODE),COUTFL,CDEPTH,CVOL,CWQ
+      CHARACTER*10     CFUNIT,CDUNIT,CVUNIT,CWQUNIT
+C
+C     + + + FUNCTIONS + + +
+C      LOGICAL          xsect_setParams
+      INTEGER      CKUSER
+C
+C     + + + INTRINSICS + + +
+      INTRINSIC        ABS
+C
+C     + + + EXTERNALS + + +
+C      EXTERNAL         dynwave_execute, node_setParams, link_setParams,
+C     1                 xsect_setParams
+      EXTERNAL         CKUSER
+C
+C     + + + END SPECIFICATIONS + + +
+C
+C     variables to pass in (added to the osv):
+C     DTS           -- integer, dynamic wave time step
+C
+C     note: assume last one in list is the outfall, type is free
+C     NNODE         -- integer, number of nodes
+C     NODEX(NNODE)  -- real, node name
+C     NELEV(NNODE)  -- real, invert elevation
+C     NDMAX(NNODE)  -- real, max depth for this node
+C     NDINIT(NNODE) -- real, initial node depth
+C     NDSURC(NNODE) -- real, surcharge depth for this node
+C     NPONDA(NNODE) -- real, ponded area for this node
+C     NLOCIN(NNODE) -- real, inflow flag for each node, indicating which ivoldw timser
+C     NDWQIN(NNODE) -- real, local wq inflow timeseries subscript
+C
+C     NCOND         -- integer, number of conduits
+C     CNODE1(NCOND) -- integer, upstream conduit node index 
+C     CNODE2(NCOND) -- integer, downstream conduit node index
+C     CLENTH(NCOND) -- real, conduit length
+C     CMANN(NCOND)  -- real, conduit mannings n
+C     COFF1(NCOND)  -- real, inlet offset
+C     COFF2(NCOND)  -- real, outlet offset
+C     CQ0(NCOND)    -- real, initial flow
+C     CSHAPE(NCOND) -- integer, conduit shape type
+C     CGEOM1(NCOND) -- real, first item of shape geometry
+C     CGEOM2(NCOND) -- real, second item of shape geometry
+C     CGEOM3(NCOND) -- real, third item of shape geometry
+C     CGEOM4(NCOND) -- real, fourth item of shape geometry
+C  
+C     NWEIR         -- integer, number of weirs
+C     WNODE1(NWEIR) -- integer, upstream node index
+C     WNODE2(NWEIR) -- integer, downstream node index
+C     WTYPE(NWEIR)  -- integer, weir shape type
+C     WOFF(NWEIR)   -- real, weir offset
+C     WCD(NWEIR)    -- real, weir dicharge coefficient
+C     WFLAP(NWEIR)  -- integer, flap gate present: yes1 or no0
+C     WEC(NWEIR)    -- integer, number of end contractions for tranv or trapez weir
+C     WCD2(NWEIR)   -- real, discharge coeff for triangular ends of trapez weir
+C     WSHAPE(NWEIR) -- integer, weir shape type 
+C     WGEOM1(NWEIR) -- real, first item of shape geometry 
+C     WGEOM2(NWEIR) -- real, second item of shape geometry
+C     WGEOM3(NWEIR) -- real, third item of shape geometry
+C     WGEOM4(NWEIR) -- real, fourth item of shape geometry
+C
+C     NORIF         -- integer, number of orifices
+C     ONODE1(NORIF) -- integer, upstream node index
+C     ONODE2(NORIF) -- integer, downstream node index
+C     OTYPE(NORIF)  -- integer, orifice type code
+C     OOFF(NORIF)   -- real, amt o bottom is offset above the invert of inlet node
+C     OCD(NORIF)    -- real, orifice discharge coefficient
+C     OFLAP(NORIF)  -- integer, flap gate present: yes1 or no0
+C     ORAT(NORIF)   -- real, time in decimal hours to open orifice
+C     OSHAPE(NORIF) -- integer, orifice shape type
+C     OGEOM1(NORIF) -- real, first item of shape geometry
+C     OGEOM2(NORIF) -- real, second item of shape geometry
+C     OGEOM3(NORIF) -- real, third item of shape geometry
+C     OGEOM4(NORIF) -- real, fourth item of shape geometry
+C
+C     DWWQFG        -- integer, dw water quality flag  
+C     DWWQNM(2)     -- real, name of wq constituent
+C     DWWQUN        -- real, name of wq units
+C     DWDECA        -- real, wq decay rate
+C
+C     conduit types
+C     DUMMY: 0
+C     CIRCULAR: 1
+C     FORCE_MAIN: 2                                                          
+C     FILLED_CIRCULAR: 3
+C     EGGSHAPED: 4
+C     HORSESHOE: 5
+C     GOTHIC: 6
+C     CATENARY: 7
+C     SEMIELLIPTICAL: 8
+C     BASKETHANDLE: 9
+C     SEMICIRCULAR: 10
+C     RECT_CLOSED: 11
+C     RECT_OPEN: 12
+C     RECT_TRIANG: 13
+C     RECT_ROUND: 14
+C     MOD_BASKET: 15
+C     TRAPEZOIDAL: 16
+C     TRIANGULAR: 17
+C     PARABOLIC: 18
+C     POWERFUNC: 19
+C     HORIZ_ELLIPSE: 20
+C     VERT_ELLIPSE: 21
+C     ARCH: 22
+C
+C      write(messu,*) 'DWROUT: invol, VOLT, os ',INVOL,VOLT,OS
+C      
+      Nobjects(E_NODE) = NNODE
+      Nnodes(E_OUTFALL) = 1
+      Nobjects(LINK) = NCOND + NORIF + NWEIR
+      Nlinks(E_CONDUIT) = NCOND
+      Nlinks(E_ORIFICE) = NORIF
+      Nlinks(E_WEIR)    = NWEIR
+C      
+      Nobjects(E_GAGE) = 0 
+      Nobjects(E_POLLUT) = 0 
+      IF (DWWQFG.GT.0) THEN
+C       dynamic wave water quality is on
+        Nobjects(E_POLLUT) = 1 
+      END IF 
+      Nobjects(E_TSERIES) = 0
+C
+      call initPointers  !project
+      call createObjects !project
+      call setDefaults   !project  
+C
+      IF (UUNITS .EQ. 1) THEN
+C       english 
+        UnitSystem = US
+      ELSE
+C       metric
+        UnitSystem = SI
+      END IF
+C
+      K = 0
+      DO 10 J= 1,NNODE
+        LTYPE = JUNCTION ! junction
+        IF (J.EQ.NNODE) THEN
+C         this is the outfall
+          LTYPE = E_OUTFALL ! outfall
+        END IF
+        !hard-code node counters 
+        if (lTYPE == JUNCTION) then
+           K = K + 1
+           XN(1) = NELEV(J)
+           XN(2) = NDMAX(J)
+           XN(3) = NDINIT(J)
+           XN(4) = NDSURC(J)
+           XN(5) = NPONDA(J)
+        else if (LTYPE == E_OUTFALL) then
+           K = 1 ! only one outfall
+           XN(1) = NELEV(J)
+           XN(2) = FREE_OUTFALL !outfall type 
+           XN(3) = NDINIT(J) + NELEV(J) !fixedStage
+           XN(4) = 0 !tideCurve, index of tidal stage curve
+           XN(5) = 0 !stageSeries, index of outfall stage time series
+           XN(6) = 0 !hasFlapGate, true(ie 1) if contains flap gate, false(ie 0) no
+        end if
+C        write(messu,*) 'DWROUT: setting node ',j,ltype,k,xn
+        if (dwhead.eq.0) then
+          QIN(J) = 0.0
+        end if
+        call node_setParams(J, LTYPE, K, XN, QIN(J))
+        Node(J)%rptFlag = .true. !this is was done in report_readoption
+        nullify(Node(J)%treatment) !this version no treatment
+ 10   CONTINUE
+C
+      LTYPE = E_CONDUIT
+      DO 20 J= 1,NCOND 
+        XC(1) = CLENTH(J)
+        XC(2) = CMANN(J)
+        XC(3) = COFF1(J)
+        XC(4) = COFF2(J)
+        XC(5) = CQ0(J)
+        XC(6) = 0.0
+        if (dwhead.eq.0) then
+          QIC(J) = 0.0
+        end if
+C        write(messu,*) 'DWROUT: setting link ',j,ltype, 
+C     1                 CNODE1(J),CNODE2(J),xc
+        call link_setParams(J, LTYPE, CNODE1(J), CNODE2(J), 
+     1                      J, XC, QIC(J))
+        XX(1) = CGEOM1(J)
+        XX(2) = CGEOM2(J)
+        XX(3) = CGEOM3(J)
+        XX(4) = CGEOM4(J)
+        isOK = xsect_setParams(arrLink(j)%xsect, CSHAPE(J), 
+     1                         XX, UCF(LENGTH))   !for normal conduit
+        arrLink(J)%rptFlag = .true. !this is was done in report_readoption
+ 20   CONTINUE
+C
+      IF (NWEIR.GT.0) THEN
+C       weirs 
+        LTYPE = E_WEIR
+        DO 30 J= 1,NWEIR 
+          XC(1) = WTYPE(J)
+          XC(2) = WOFF(J)
+          XC(3) = WCD(J)
+          XC(4) = WFLAP(J)
+          XC(5) = WEC(J)
+          XC(6) = WCD2(J)
+          call link_setParams(J+NCOND, LTYPE, 
+     1                        WNODE1(J), WNODE2(J), 
+     1                        J, XC, 0.0)
+          XX(1) = WGEOM1(J)
+          XX(2) = WGEOM2(J)
+          XX(3) = WGEOM3(J)
+          XX(4) = WGEOM4(J)
+          isOK = xsect_setParams(arrLink(J+NCOND)%xsect, 
+     1                           WSHAPE(J), 
+     1                           XX, UCF(LENGTH))   
+          arrLink(J+NCOND)%rptFlag = .true. !this is was done in report_readoption
+ 30     CONTINUE
+      END IF 
+C
+      IF (NORIF.GT.0) THEN
+C       orifices 
+        LTYPE = E_ORIFICE
+        DO 40 J= 1,NORIF 
+          XC(1) = OTYPE(J)
+          XC(2) = OOFF(J)
+          XC(3) = OCD(J)
+          XC(4) = OFLAP(J)
+          XC(5) = ORAT(J)
+          XC(6) = 0.0
+          call link_setParams(J+NCOND+NWEIR, LTYPE, 
+     1                        ONODE1(J), ONODE2(J), 
+     1                        J, XC, 0.0)
+          XX(1) = OGEOM1(J)
+          XX(2) = OGEOM2(J)
+          XX(3) = OGEOM3(J)
+          XX(4) = OGEOM4(J)
+          isOK = xsect_setParams(arrLink(J+NCOND+NWEIR)%xsect, 
+     1                           OSHAPE(J), 
+     1                           XX, UCF(LENGTH))   
+          arrLink(J+NCOND+NWEIR)%rptFlag = .true. !this is was done in report_readoption
+ 40     CONTINUE
+      END IF
+C      
+      RouteModel = DW
+      StartDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
+      StartTime = datetime_encodeTime(0, 0, 0) !datetime_strToTime
+C      
+      if (dwhead.eq.0) then
+        DELTSI = DELTS
+      else 
+        DELTSI = DELTS*2   !run for twice as long as needed to allow for spin up time
+      end if 
+      EndDate = datetime_encodeDate(1900, 1, 1) !datetime_strToDate
+      EndTime = datetime_encodeTime(0, 0, DELTSI) !datetime_strToTime
+C         
+      StartDryDays = 0 !number of antecedent dry days
+      
+      AllowPonding    = .false.
+      SlopeWeighting  = .true.
+      SkipSteadyState = .false. 
+      IgnoreRainfall  = .false.
+      IgnoreSnowmelt  = .true.
+      IgnoreGwater    = .true.
+      IgnoreRouting   = .false.
+      IgnoreQuality   = .true.
+      IF (DWWQFG.GT.0) THEN
+C       dynamic wave water quality is on
+        IgnoreQuality   = .false.
+      END IF
+      InertDamping = NO_DAMPING !InertDampingWords, w_PARTIAL, w_FULL
+      NormalFlowLtd = SLOPE !NormalFlowType !0, means NO
+
+      !set routing step size in seconds
+      WetStep         = 900              ! Runoff wet time step (secs)
+      DryStep         = 3600             ! Runoff dry time step (secs)
+      RouteStep       = DTS    !20
+      ReportStep      = DELTS            ! Reporting time step (secs)
+      StartDryDays    = 0.0              ! Antecedent dry days, DRY_DAYS
+C      
+      ForceMainEqn = D_W !ForceMainType
+C      
+      LinkOffsets = DEPTH_OFFSET !OffsetType
+C      
+      Compatibility = SWMM5
+      !RouteStep is set to 5 minutes in setDefault()
+      !LengtheningStep = MAX(0.0, RouteStep) !if 0, then no lengthening of conduit for DW routing
+C
+      CourantFactor = 0.0 !variable time step option not used, needs to be >= 0.0 and <= 2.0
+C      
+      ! --- minimum surface area (ft2 or sq. meters) associated with nodes
+      !     under dynamic wave flow routing 
+      MinSurfArea = 0.0
+C      
+      !minimum conduit slope, needs to be >= 0.0 and < 1; SWMM input file enters %
+      MinSlope = 0 !0.05
+C      
+      TmpDir = 'C:\Temp'
+C          
+      do J = 1, NCOND
+         !assume each conduit has only one barrels
+         Conduit(arrLink(J)%subIndex)%barrels = 1
+         !--- assume link is not a culvert   
+         arrLink(J)%xsect%culvertCode = 0
+      end do
+C
+C     construct external inflow to each node in the network
+      if (.not. allocated(oTsers)) then
+        allocate(oTsers(NNODE))
+      end if 
+      do J=1, NNODE
+        oTsers(J)%datatype = E_TSERIES
+        if (dwhead.eq.0) then
+          PREVIN(J) = 0.0
+          PREVIN2(J)= 0.0
+          allocate(oTsers(J)%odates(3))
+          allocate(oTsers(J)%ovalues(3))
+          if (associated(oTsers(J)%odates) .and. 
+     1        associated(oTsers(J)%ovalues)) then
+             oTsers(J)%odates(1) = StartDate + StartTime
+             oTsers(J)%odates(2) = oTsers(J)%odates(1) + (DELTS/86400.0)
+             oTsers(J)%odates(3) = oTsers(J)%odates(2) + (DELTS/86400.0)
+             oTsers(J)%ovalues(1) = PREVIN(J) / DELTS
+             oTsers(J)%ovalues(2) = IVOLDW(J) / DELTS
+             oTsers(J)%ovalues(3) = IVOLDW(J) / DELTS
+C             write(messu,*) 'DWROUT: oTsers ',oTsers(J)%ovalues(1),
+C     1                                        oTsers(J)%ovalues(2),
+C     1                                        oTsers(J)%ovalues(3)
+          end if
+        else
+!         when running 2 steps to deal with instability issue
+          allocate(oTsers(J)%odates(4))
+          allocate(oTsers(J)%ovalues(4))
+          if (associated(oTsers(J)%odates) .and. 
+     1        associated(oTsers(J)%ovalues)) then
+             oTsers(J)%odates(1) = StartDate + StartTime
+             oTsers(J)%odates(2) = oTsers(J)%odates(1) + (DELTS/86400.0)
+             oTsers(J)%odates(3) = oTsers(J)%odates(2) + (DELTS/86400.0)
+             oTsers(J)%odates(4) = oTsers(J)%odates(3) + (DELTS/86400.0)
+             oTsers(J)%ovalues(1) = PREVIN2(J) / DELTS
+             oTsers(J)%ovalues(2) = PREVIN(J) / DELTS
+             oTsers(J)%ovalues(3) = IVOLDW(J) / DELTS
+             oTsers(J)%ovalues(4) = IVOLDW(J) / DELTS
+C             write(messu,*) 'DWROUT: oTsers ',oTsers(J)%ovalues(1),
+C     1                                        oTsers(J)%ovalues(2),
+C     1                                        oTsers(J)%ovalues(3)
+          end if
+        end if 
+      end do
+      do J = 1, NNODE - 1
+        inflows(J)%param = -1 !flow
+        inflows(J)%datatype = FLOW_INFLOW !or EXTERNAL_INFLOW, user-supplied external inflow
+        inflows(J)%tseries = J
+        inflows(J)%basePat = 1
+        inflows(J)%cFactor = 1.0
+        inflows(J)%sFactor = 1.0
+        inflows(J)%baseline = 0.0
+        nullify(inflows(J)%next)
+        Node(J)%extInflow => inflows(J)
+      end do
+C
+      IF (DWWQFG.GT.0) THEN
+C       dynamic wave water quality is on
+C        write(messu,*) 'in dwrout, setting wq timsers'
+C
+C       DWWQFG        -- integer, dw water quality flag  
+C       DWWQNM(2)     -- real, name of wq constituent
+C       DWWQUN        -- real, name of wq units
+C       DWDECA        -- real, wq decay rate
+   
+        ! --- save values for pollutant object   
+        write(CTAG8,"(2A4)") DWWQNM(1),DWWQNM(2)
+        Pollut(1)%ID = CTAG8
+
+        !MG/L, UG/L, or #/L
+        write(CTAG4,"(1A4)") DWWQUN
+        Pollut(1)%units = 1
+        Pollut(1)%mcf = UCF(MASS)
+        IF (CTAG4.EQ.'UG/L') THEN
+          Pollut(1)%units = 2
+          Pollut(1)%mcf = UCF(MASS) / 1000.0
+        ELSEIF (CTAG4.EQ.' #/L') THEN
+          Pollut(1)%units = 3
+          Pollut(1)%mcf = 1.0
+        END IF 
+
+        Pollut(1)%pptConcen = 0.0 !x(0) Rain Concen.
+        Pollut(1)%gwConcen  = 0.0 !x(1) GW Concen.
+        Pollut(1)%rdiiConcen = 10.0 !x(2) I&I Concen.
+        Pollut(1)%kDecay = DWDECA / 86400.0 ! Decay Coeff.
+        Pollut(1)%snowOnly = .false.
+        Pollut(1)%coPollut = -1
+        Pollut(1)%coFraction = 0.0
+        Pollut(1)%dwfConcen = 0.0   !(5.0.017 - LR)
+    
+        !Assign timeseries
+        if (.not. allocated(oTsersWQ)) then
+          allocate(oTsersWQ(NNODE))
+        end if 
+        do J=1, NNODE
+          oTsersWQ(J)%datatype = E_TSERIES
+          if (dwhead.eq.0) then
+            PREVWQ(J) = 0.0
+            PREVWQ2(J) = 0.0
+            allocate(oTsersWQ(J)%odates(3))
+            allocate(oTsersWQ(J)%ovalues(3))
+            if (associated(oTsersWQ(J)%odates) .and. 
+     1          associated(oTsersWQ(J)%ovalues)) then
+               oTsersWQ(J)%odates(1) = StartDate + StartTime
+               oTsersWQ(J)%odates(2) = oTsersWQ(J)%odates(1) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%odates(3) = oTsersWQ(J)%odates(2) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%ovalues(1) = PREVWQ(J) 
+               oTsersWQ(J)%ovalues(2) = IDWWQ(J) 
+               oTsersWQ(J)%ovalues(3) = IDWWQ(J)
+            end if
+          else
+!           when running 2 steps to deal with instability issue
+            allocate(oTsersWQ(J)%odates(4))
+            allocate(oTsersWQ(J)%ovalues(4))
+            if (associated(oTsersWQ(J)%odates) .and. 
+     1          associated(oTsersWQ(J)%ovalues)) then
+               oTsersWQ(J)%odates(1) = StartDate + StartTime
+               oTsersWQ(J)%odates(2) = oTsersWQ(J)%odates(1) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%odates(3) = oTsersWQ(J)%odates(2) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%odates(4) = oTsersWQ(J)%odates(3) + 
+     1                                 (DELTS/86400.0)
+               oTsersWQ(J)%ovalues(1) = PREVWQ2(J)
+               oTsersWQ(J)%ovalues(2) = PREVWQ(J) 
+               oTsersWQ(J)%ovalues(3) = IDWWQ(J) 
+               oTsersWQ(J)%ovalues(4) = IDWWQ(J) 
+            end if
+          end if 
+        end do
+        do J = 1, NNODE - 1
+          inflowsWQ(J)%param = 1
+          inflowsWQ(J)%datatype = CONCEN_INFLOW
+          inflowsWQ(J)%tseries = J
+          inflowsWQ(J)%basePat = -1
+          inflowsWQ(J)%cFactor = 1.0
+          inflowsWQ(J)%sFactor = 1.0
+          inflowsWQ(J)%baseline = 0.0
+          nullify(inflowsWQ(J)%next)
+          Node(J)%extInflow => inflows(J)
+          if (associated(Node(J)%extInflow)) then
+             inflowsWQ(J)%next => Node(J)%extInflow
+             Node(J)%extInflow => inflowsWQ(J)
+          else
+             Node(J)%extInflow => inflowsWQ(J)   
+          end if
+        end do
+C        write(messu,*) 'in dwrout, end setting wq timsers'
+      END IF
+C     end of water quality inputs
+C
+      if (dwunit.GT.0 .AND. dwhead.eq.0) then
+C       write header to file        
+        do J = 1, NNODE
+          write(CTAG10(J),"(6X,A4)") nodex(j)
+          !write(dwunit,*) ctag10(j)
+        end do
+        COUTFL = '   OUTFLOW'
+        CDEPTH = '     DEPTH'
+        CVOL   = '    VOLUME'
+        CWQ    = '    WQCONC'
+        IF (DWWQFG.EQ.0) THEN
+          write(dwunit,'(A30,300(A10))') 
+     1                 '                              ',
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode)
+          write(dwunit,'(A30,300(A10))') 
+     1                 '                              ',
+     1                 (COUTFL,j=1,nnode),
+     1                 (CDEPTH,j=1,nnode),
+     1                 (CVOL,j=1,nnode)
+          IF (UUNITS .EQ. 1) THEN
+C           english 
+            CFUNIT = '     (cfs)'
+            CDUNIT = '      (ft)'
+            CVUNIT = '     (ft3)'
+            write(dwunit,'(A30,300(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode)
+          ELSE 
+C           metric
+            CFUNIT = '     (cms)'
+            CDUNIT = '       (m)'
+            CVUNIT = '     ( m3)'
+            write(dwunit,'(A30,300(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode)
+          END IF
+        ELSE
+C         wq is on
+          write(dwunit,'(A30,400(A10))') 
+     1                 '                              ',
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode),
+     1                 (ctag10(j),j=1,nnode)
+          write(dwunit,'(A30,400(A10))') 
+     1                 '                              ',
+     1                 (COUTFL,j=1,nnode),
+     1                 (CDEPTH,j=1,nnode),
+     1                 (CVOL,j=1,nnode),
+     1                 (CWQ,j=1,nnode)
+          IF (UUNITS .EQ. 1) THEN
+C           english 
+            CFUNIT = '     (cfs)'
+            CDUNIT = '      (ft)'
+            CVUNIT = '     (ft3)'
+            CWQUNIT = '      ' // CTAG4
+            write(dwunit,'(A30,400(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode),
+     1                   (CWQUNIT,j=1,nnode)
+          ELSE 
+C           metric
+            CFUNIT = '     (cms)'
+            CDUNIT = '       (m)'
+            CVUNIT = '     ( m3)'
+            CWQUNIT = '      ' // CTAG4
+            write(dwunit,'(A30,400(A10))') 
+     1                   ' year  mon  day hour  min  sec',
+     1                   (CFUNIT,j=1,nnode),
+     1                   (CDUNIT,j=1,nnode),
+     1                   (CVUNIT,j=1,nnode),
+     1                   (CWQUNIT,j=1,nnode)
+          END IF
+        END IF 
+      end if 
+C
+C     DATIM is the date/time at the end of the current HSPF interval, 
+C     we need to know when this interval began
+      sdatim(1) = datim(1)
+      sdatim(2) = datim(2)
+      sdatim(3) = datim(3)
+      sdatim(4) = datim(4)
+      sdatim(5) = datim(5)
+      sdatim(6) = 0
+      call timadd(sdatim,1,1,-1 * deltsi,newdat)
+      newd5(1) = newdat(1)
+      newd5(2) = newdat(2)
+      newd5(3) = newdat(3)
+      newd5(4) = newdat(4)
+      newd5(5) = newdat(5)
+C
+C      write(messu,*) 'in dwrout, about to call swmm_run'
+      if (dwhead.eq.0) then   
+        !use -1 to indicate first time, need to write all
+        lErrorCode = swmm_run('', '', '', -1*dwunit, newd5)
+      else
+        lErrorCode = swmm_run('', '', '', dwunit, newd5)
+      end if 
+C
+C     check for external cancel command
+      RETCOD= CKUSER ()
+      if (retcod.ne.0) then
+        lerrorcode = 1
+        CALL OMSTI (lerrorcode)
+        SGRP= 54
+        ECOUNT = 0
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      end if 
+C
+      if (lerrorcode.ne.0) then
+        !write(messu,*) 'swmm error code ',lerrorcode
+        VOL = 0.0
+        O = 0.0
+        RO = 0.0
+        OVOL = 0.0
+        ROVOL = 0.0
+        RODWWQ = 0.0
+        CALL OMSTI (lerrorcode)
+        SGRP= 55
+        ECOUNT = 0
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      end if 
+C
+      !The resulting nodes' and links' flow, depth, and volume outputs are
+      !saved in the onodes array and olinks array. 
+      !Each element of the onodes or olinks array has 3 arrays, oflow, odepth, and ovolume
+      !that contain output values for each reporting steps in TSDateTime
+      !For example, if you want to see the depth of 2nd node at reporting step number 4, access it as below
+      !  onodes(2)%odepth(4)
+      !             if you want to see the flow of 1st conduit at reporting step number 3, access it as below
+      !  olinks(1)%oflow(3)
+      !             if you want to see the pollutant of 4th node at reporting step number 5, access it as below
+      !  onodes(4)%oQual1(5)
+C
+      if (lerrorcode.eq.0) then
+C       set initial conditions for next time in
+        if (dwhead.eq.1) then
+C         NDINIT(NNODE) -- real, initial node depth, ft or m
+          do J = 1, NNODE
+C           set initial depth in each node
+C           write(messu,*) 'DWROUT: reset node depth ',
+C     1                      j,NDINIT(j),onodes(j)%odepth(1)
+            NDINIT(J) = onodes(j)%odepth(1)
+C            write(messu,*) 'node depth ',ndinit(j)
+            IF (DWWQFG.GT.0) THEN
+C             wq flag is on, save initial condition for next time    
+              QIN(J) = onodes(j)%oQual1(1)
+            END IF 
+          end do
+C
+C         CQ0(NCOND)    -- real, initial flow in conduit, cfs or cms
+          do J = 1, NCOND
+C           set initial flow in each conduit
+C            write(messu,*) 'DWROUT: reset conduit flow ',
+C     1                      j,CQ0(J),olinks(j)%oflow(1)
+            CQ0(J) = olinks(j)%oflow(1)
+C            write(messu,*) 'conduit flow ',cq0(j)
+            IF (DWWQFG.GT.0) THEN
+C             wq flag is on, save initial condition for next time  
+              QIC(J) = olinks(j)%oQual1(1)
+            END IF
+          end do
+        end if 
+C
+        do J = 1, NNODE
+          PREVIN2(J)= PREVIN(J)
+          PREVIN(J) = IVOLDW(J)
+          IF (DWWQFG.GT.0) THEN
+            PREVWQ2(J)= PREVWQ(J)
+            PREVWQ(J) = IDWWQ(J)
+          END IF
+        end do
+ 
+C
+C       VOL    - volume of water in reach above bed
+C       O      - rate of outflow from each reach exit at end of interval
+C       RO     - total rate of outflow from reach at end of interval
+C       OVOL   - volume of water leaving reach in an interval by exit
+C       ROVOL  - total volume of water leaving reach in an interval    
+C
+C       return volume of water coming out bottom node
+C        write(messu,*) 'in dwrout nnode ',nnode
+        if (dwhead.eq.0) then
+          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(1)))*DELTS
+        else
+          OVOL= ((0.5*ROS) + (0.5*onodes(NNODE)%oflow(2)))*DELTS
+        end if 
+C        write(messu,*) 'DWROUT: ovol ',ovol,IVOLDW(NNODE)
+        OVOL = OVOL + IVOLDW(NNODE)
+C
+C       find volume in system at end of interval
+        VOL = VOLT - OVOL
+C
+C       return flow rate out of bottom node
+        O = IVOLDW(NNODE) / DELTS
+        if (dwhead.eq.0) then
+          O = O + onodes(NNODE)%oflow(1)
+        else
+          O = O + onodes(NNODE)%oflow(2)
+        end if 
+C
+C       only 1 exit here
+        RO = O
+        ROVOL = OVOL
+C
+        RODWWQ = 0.0
+        IF (DWWQFG.GT.0) THEN
+C         dw wq is on
+C         return conc of wq coming out bottom node
+          if (dwhead.eq.0) then
+             RODWWQ = onodes(NNODE)%oQual1(1)
+          else
+             RODWWQ = onodes(NNODE)%oQual1(2)
+          end if 
+        end if 
+C
+        dwhead = 1
+        call output_close
+C        write(messu,*) 'DWROUT: rovol, rodwwq ',rovol,rodwwq
+      end if
+C
+      do J=1, NNODE
+        deallocate(oTsers(J)%odates)
+        nullify(oTsers(J)%odates)
+        deallocate(oTsers(J)%ovalues)
+        nullify(oTsers(J)%ovalues)
+        if (allocated(oTsersWQ)) then
+          deallocate(oTsersWQ(J)%odates)
+          nullify(oTsersWQ(J)%odates)
+          deallocate(oTsersWQ(J)%ovalues)
+          nullify(oTsersWQ(J)%ovalues)
+        end if 
+      end do
+      deallocate(oTsers)
+      if (allocated(oTsersWQ)) then
+        deallocate(oTsersWQ)
+      end if 
+C
+      RETURN
+      END
 C
 C
 C
