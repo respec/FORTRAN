@@ -851,7 +851,7 @@ ROOX     2          3010 RMOX     2          3022 IDNUT    4          3034
 ISNUT    3   2      3062 DNUFRM  12   4      3114 SNUFRM  12   3   2  3162 
 DNUFRC   4          3234 SNUFRC   3   2      3238 RODNUT   4          3244 
 ROSNUT   3   2      3268 RMDNUT   4          3304 RMSNUT   3   2      3328 
-IPLK     5          3864 PLKFRM  12   5      3404 PLKFRC   5          3464 
+IPLK     5          3364 PLKFRM  12   5      3404 PLKFRC   5          3464 
 ROPLK    5          3469 RMPLK    5          3499 IPH      2          3529 
 PHFRM   12   2      3545 PHFRC    2          3569 ROPH     2          3571 
 RMPH     2          3583 IACID    7          3595 ACIFRM  12   7      3651 

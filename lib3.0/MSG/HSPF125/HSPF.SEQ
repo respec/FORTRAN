@@ -30,8 +30,8 @@ $TEXT
                                   
    In cooperation with:
 
-     U.S. Geological Survey                Release 12.5beta
-     Water Resources Discipline            March 2014
+     U.S. Geological Survey                Release 12.5
+     Water Resources Discipline            November 2014
      Office of Surface Water
      Reston, Virginia             
      email: h2osoft@usgs.gov     
@@ -56,6 +56,9 @@ $TEXT
 
  INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
 
+#GROUP    6  TYPE TEXT
+$TEXT
+12.4.1
 #GROUP   10  TYPE TEXT
 $TEXT
 
