@@ -6778,7 +6778,7 @@ C             fetch variable multiplier
 C             this gets minutes
 C             do we need to add one to SPIVL?
               IF (SPIVL .GT. 0) THEN
-                CALL GTQUAN (MFUVQ,SPIVL,I0,I0,MESSU,
+                CALL GTQUAN (MFUVQ,SPIVL,I0,SPOUTM,MESSU,
      O                       I,MULT,J)
               END IF
             ELSE

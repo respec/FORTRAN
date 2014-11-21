@@ -5087,14 +5087,14 @@ C         compile values for binary printout
 C
 C     evapotranspiration printout
 C
-      IF (HWTFG .EQ. 0) THEN
-C       not using high water table algorithms
+      IF (HWTFG .EQ. 0 .AND. RTOPFG .NE. 3) THEN
+C       not using surface water evaporation
         IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
           WRITE (PRINTU,2200)
           WRITE (PRINTU,2210)
         END IF
       ELSE
-C       using high water table algorithms
+C       using surface water evaporation
         IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
           WRITE (PRINTU,2212)
           WRITE (PRINTU,2215)
@@ -5103,26 +5103,26 @@ C       using high water table algorithms
 C
       IF (UNITFG .EQ. 1) THEN
 C       english units
-        IF (HWTFG .EQ. 0) THEN
-C         not using high water table algorithms
+        IF (HWTFG .EQ. 0 .AND. RTOPFG .NE. 3) THEN
+C         not using surface water evaporation
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
             WRITE (PRINTU,2220)
           END IF
         ELSE
-C         using high water table algorithms
+C         using surface water evaporation
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
             WRITE (PRINTU,2225)
           END IF
         END IF
       ELSE
 C       metric units
-        IF (HWTFG .EQ. 0) THEN
-C         not using high water table algorithms
+        IF (HWTFG .EQ. 0 .AND. RTOPFG .NE. 3) THEN
+C         not using surface water evaporation
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
             WRITE (PRINTU,2230)
           END IF
         ELSE
-C         using high water table algorithms
+C         using surface water evaporation
           IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
             WRITE (PRINTU,2235)
           END IF
@@ -5135,8 +5135,8 @@ C     calculate total et from interception - handle multiple layers
         PCEPE= PCEPE+ PCFLX3(I+1)
       END DO
 C
-      IF (HWTFG .EQ. 0) THEN
-C       not using high water table algorithms
+      IF (HWTFG .EQ. 0 .AND. RTOPFG .NE. 3) THEN
+C       not using surface water evaporation
         IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
           WRITE (PRINTU,2240) PCFLX3(1), PCEPE, (PCFLX3(I), I= 8,12)
         END IF
@@ -5158,7 +5158,7 @@ C         compile values for binary printout
           END DO
         END IF
       ELSE
-C       using high water table algorithms
+C       using surface water evaporation
         IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
           WRITE (PRINTU,2240) PCFLX3(1), PCEPE, (PCFLX3(I), I= 7,12)
         END IF
