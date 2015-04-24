@@ -199,21 +199,15 @@ C       set undefined temp value to 20 degc
       END IF
 C
 C     simulate primary do and bod balances
-      write(24,*) 'about to call oxrx'
       CALL OXRX
-      write(24,*) 'back from oxrx'
 C
       IF (NUTFG .EQ. 1) THEN
 C       simulate primary inorganic nitrogen and phosphorus balances
-        write(24,*) 'about to call nutrx'
         CALL NUTRX
-        write(24,*) 'back from nutrx'
 C
         IF (PLKFG .EQ. 1) THEN
 C         simulate plankton populations and associated reactions
-          write(24,*) 'about to call plank'
           CALL PLANK
-          write(24,*) 'back from plank'
 C
           IF (PHFG .EQ. 1) THEN
 C           simulate ph and carbon species
