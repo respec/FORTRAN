@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{CDBB0451-40D1-4666-B628-3C7AB8F57861}">
+	<Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Source Files" Filter="f90;f95;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath="..\..\SRC\HSPF124\climate.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\consts.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\DataSizeSpecs.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\datetime.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\driver.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\dynwave.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\enums.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\error.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\findroot.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\flowrout.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\forcemain.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\globals.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\headers.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\infil.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\inflow.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\keywords.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\link.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\macros.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\massbal.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\node.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\objects.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\output.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\project.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\qualrout.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\rain.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\report.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\routing.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\stats.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\swmm5f.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\swmm5futil.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\table.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\text.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\toposort.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\treatmnt.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\xsect.f90"/>
+		<File RelativePath="..\..\SRC\HSPF124\XsectDat.f90"/></Filter></Files>
+	<Globals/></VisualStudioProject>
