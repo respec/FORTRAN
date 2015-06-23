@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioUserFile ProjectType="typeDynamicLibrary" ProjectCreator="Intel Fortran" Keyword="Dll" Version="11.0" ProjectIdGuid="{96667BD5-097B-47AE-8EB4-A39ADE59FA52}">
+	<Configurations>
+		<Configuration Name="Debug|Win32" Command="E:\Dev\BASINS40\bin\WinHspfLt.exe"/>
+		<Configuration Name="Release|Win32"/>
+		<Configuration Name="Debug|x64"/>
+		<Configuration Name="Release|x64"/></Configurations></VisualStudioUserFile>
