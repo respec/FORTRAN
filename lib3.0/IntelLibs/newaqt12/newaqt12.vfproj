@@ -82,7 +82,6 @@
 		<File RelativePath="..\..\SRC\Newaqt12\UTCLAS.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\UTDIR.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\UTMAP.FOR"/>
-		<File RelativePath="..\..\SRC\Newaqt12\UTPLOT.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\UTWIN.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\WDMAP.FOR"/>
 		<File RelativePath="..\..\SRC\Newaqt12\WSGSIM.FOR"/>
