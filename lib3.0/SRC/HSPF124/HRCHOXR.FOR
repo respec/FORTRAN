@@ -516,7 +516,12 @@ C     + + + END SPECIFICATIONS + + +
 C
 C     calculate amount of dissolved oxygen required to satisfy
 C     benthal oygen demand (mg/m2.ivl)
-      BENOX= BENOD*(TCBEN**(TW -20.))*(1.0 -EXP(-EXPOD*DOX))
+      IF (-EXPOD*DOX .LT. -1000) THEN
+C       catch possible underflow error here -- pbd
+        BENOX = 0.0
+      ELSE
+        BENOX= BENOD*(TCBEN**(TW -20.))*(1.0 -EXP(-EXPOD*DOX))
+      END IF 
 C
 C     adjust dissolved oxygen state variable to acount for oxygen
 C     lost to benthos, and compute concentration flux
