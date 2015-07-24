@@ -863,7 +863,7 @@ PKCF1   5  1     5     1 2   9      0 21771 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows from RCHRES (Group PLANK)  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  192  TYPE TEXT
 $TEXT
-TPKCF1  5  1     5     1 2   9      0 21176 ENG lb/iv      0 1.602E4   0 3.531E4
+TPKCF1  5  1     5     1 2   9      0 21776 ENG lb/iv      0 1.602E4   0 3.531E4
   Summary outflows of org & total N, P, & C MET kg/iv      0 4.537E2   0   1000.
 #GROUP  193  TYPE TEXT
 $TEXT
