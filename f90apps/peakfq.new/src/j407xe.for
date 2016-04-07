@@ -79,7 +79,7 @@ C      + + + LOCAL VARIABLES + + +
       INTEGER   IPKPTR(MXPK),  IQUAL(MXPK)
       REAL      FCXPG(MXINT),KENTAU,KENPVL,KENSLP,LASGMSE,LSKEW
       INTEGER   MAXPKS, IER, NFCXPG, JSEQNO,NPROC, NERR, NSKIP, NSTAYR,
-     &          NSKIP1, NPKS, I, NPKPLT, 
+     &          NSKIP1, NPKS, I, NPKPLT, NGAGEDPILFS,
      $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT, ECHFUN, DT(6)
       CHARACTER*1 LTAB
 Cprh     $      , SCLU, CNUM, CLEN, SGRP, MXLN, SCI, IWRT
@@ -127,11 +127,18 @@ C     + + + FORMATS + + +
      $        'LO OUT',A,'LO TEST',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
      $        'LATITUDE',A,'LONGITUDE')
  2015 FORMAT(8X,I8,' ZERO VALUES')
- 2020 FORMAT('    EMA003I-PILFS (LOS) WERE DETECTED USING ',
-     $       'MULTIPLE GRUBBS-BECK TEST',I4,2X,F8.1,/
-     $       '      THE FOLLOWING PEAKS (WITH CORRESPONDING P-VALUES)',
-     $       ' WERE CENSORED:')
- 2030 FORMAT(8X,F8.1,4X,'(',F6.4,')')
+ 2020 FORMAT(///18X,'    MULTIPLE GRUBBS-BECK TEST RESULTS',//,
+     $          18X,'MULTIPLE GRUBBS-BECK PILF THRESHOLD',F8.1,/,
+     $          18X,'NUMBER OF PILFS IDENTIFIED         ',I8,/,
+     $          18X,'    CLASSIFICATION OF PILFS:',/,
+     $          18X,'        NUMBER OF ZERO FLOWS       ',I8,/,
+     $          18X,'        NUMBER OF CENSORED FLOWS   ',I8,/,
+     $          18X,'        NUMBER OF GAGED PEAKS      ',I8,/,
+     $          20X,'          GAGED PEAKS AND CORRESPONDING P-VALUES')
+ 2021 FORMAT(34X,F8.1,4X,'(',F6.4,')')
+ 2030 FORMAT(//'    MULTIPLE GRUBBS-BECK TEST RESULTS',/,
+     $         'MULTIPLE GRUBBS-BECK PILF THRESHOLD     N/A',/,
+     $         'NUMBER OF PILFS IDENTIFIED                0')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -247,40 +254,49 @@ C         need to set EMA arrays
           CALL SETEMADATA(NPKS,PKS,IPKSEQ,GAGEB)
         END IF
 C
-       IF (.NOT.UPDATEFG) THEN
-C       CALL  PRTPHD(  2001 , -999 )
-        CALL  PRTINP( IDEBUG, XPKS, EMAOPT, IA3 )
+        IF (.NOT.UPDATEFG) THEN
+C          CALL  PRTPHD(  2001 , -999 )
+          CALL  PRTINP( IDEBUG, XPKS, EMAOPT, IA3 )
         
-        nlow = 0
-        nzero= 0
-        gbcrit = -99.0
-        gbthresh = -99.0
+          nlow = 0
+          nzero= 0
+          gbcrit = -99.0
+          gbthresh = -99.0
 C
-         write(99,*)'Debug Info for ',STAID
-        CALL WCFAGB(PKS, PKLOG, WRCPP, SYSPP, NPKS, IER, EMAOPT)
-         write(99,*)'after WCFAGB, IER=',IER
+          write(99,*)'Debug Info for ',STAID
+          CALL WCFAGB(PKS, PKLOG, WRCPP, SYSPP, NPKS, IER, EMAOPT)
+          write(99,*)'after WCFAGB, IER=',IER
 
-        IF (EMAOPT.EQ.1) THEN
-          write(99,*)
-          write(99,*)'Running EMA for station ',STAID
-          write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
-     $                                NPKS,NSYS,GENSKU,RMSEGS
-          CALL RUNEMA(NPKS)
-          IF (LOTYPE .EQ. 'MGBT') THEN
-C           report Multiple GB LO messges
-            IF (NLOW .GT. 0) THEN
-              WRITE(MSG,2020) nlow-nzero,10**gbcrit
-              IF (nzero .GT. 0) WRITE(MSG,2015) nzero
-              DO 10 I = 1,NLOW
-                IF (qs(I).GT.1.0D-99) THEN
-                  WRITE(MSG,2030)qs(I),pvaluew(I)
-                END IF
- 10           CONTINUE
+          IF (EMAOPT.EQ.1) THEN
+            write(99,*)
+            write(99,*)'Running EMA for station ',STAID
+            write(99,*)'calling RUNEMA: NPKS,NSYS,GENSKU,RMSEGS',
+     $                                  NPKS,NSYS,GENSKU,RMSEGS
+            CALL RUNEMA(NPKS)
+            CALL PRTEMAWARN(MSG,NSYS,HISTPD,SYSSKW)
+            IF (LOTYPE .EQ. 'MGBT') THEN
+C             report Multiple GB LO messges
+              IF (NLOW .GT. 0) THEN
+                NGAGEDPILFS = 0
+                DO 10 I = 1,NLOW
+                  IF (qs(I).GT.1.0D-99 .AND. qs(I).LT.10**gbcrit) THEN
+                    NGAGEDPILFS = NGAGEDPILFS + 1
+                  END IF
+ 10             CONTINUE
+                WRITE(MSG,2020) 10**gbcrit,nlow,nzero,
+     $                          nlow-nzero-NGAGEDPILFS,NGAGEDPILFS
+                DO 20 I = 1,NLOW
+                  IF (qs(I).GT.1.0D-99 .AND. qs(I).LT.10**gbcrit) THEN
+                    WRITE(MSG,2021)qs(I),pvaluew(I)
+                  END IF
+ 20             CONTINUE
+                WRITE(MSG,*)
+              ELSE
+                WRITE(MSG,2030)
+              END IF
             END IF
           END IF
-          CALL PRTEMAWARN(MSG,NSYS,HISTPD,SYSSKW)
         END IF
-       END IF
 
 C       store Skew/MSE of Skew for display on windows interface plot
         IF (EMAOPT .EQ. 1) ASMSEG = as_G_mse
@@ -611,6 +627,14 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   227 FORMAT(A16)
   208 FORMAT( ' ',2A1,T1,5('   *** EXPERIMENTAL ***   ')  )
 C 209 FORMAT(2X, A10, A15, 2X, A48)
+  301 FORMAT(  2X, '*********  NOTICE  --  Preliminary machine ',
+     $             'computations.        *********' )
+  302 FORMAT(  2X, '*********  User responsible for assessment ',
+     $             'and interpretation.  *********' )
+  401 FORMAT(  2X, '*********  WARNING  --  Experimental ',
+     $             'modification of 17B calculations  *********' )
+  402 FORMAT(  2X, '***************    User is responsible for ',
+     $             'assessment and interpretation.    *********' )
   501 FORMAT(   '1', /, (A) )
   502 FORMAT(   80A1 )
   503 FORMAT(///, A, /, A, / )
@@ -673,6 +697,14 @@ C       prepare page heading in character strings
         WRITE(HEAD4,203) CHDTTM
         HEAD7 = ' '
         WRITE(HEAD8,208) (BLANK, I=1,IARG2)
+C       SET UP DISCLAIMER
+        IF(IARG2 .GE. 2) THEN
+          WRITE(DISCLM(1),401)
+          WRITE(DISCLM(2),402)
+        ELSE
+          WRITE(DISCLM(1),301)
+          WRITE(DISCLM(2),302)
+        ENDIF
 C
       ELSE IF( II .EQ. 1000 )  THEN
 C       PRINT PAGE HEADINGS FOR PGM OUTPUT....
@@ -778,7 +810,7 @@ C     + + + FORMATS + + +
     5 FORMAT(  
      $  /16X,'Number of peaks in record            = ',I8,
      $  /16X,'Peaks not used in analysis           = ',I8,
-     $  /16X,'Systematic peaks in analysis         = ',I8,
+     $  /16X,'Gaged peaks in analysis              = ',I8,
      $  /16X,'Historic peaks in analysis           = ',I8,
      $  /16X,'Beginning Year                       = ',I8,
      $  /16X,'Ending Year                          = ',I8,
@@ -1490,13 +1522,13 @@ C   9 FORMAT(     5X,32HSYSTEMATIC PEAKS ABOVE BASE  --    ,
 C    $  10X,2H--,2X,2F15.4,F15.3/
 C    $       6X,32HWRC-ADJUSTED PKS ABOVE BASE  --  ,
 C    $       10X,2H--,2X,2F15.4,F15.3)
-    9 FORMAT(  /,' SYSTEMATIC PKS',
+    9 FORMAT(  /,'   GAGED PKS',
      $         /,'   ABOVE BASE            ---     ---   ',
      $           F11.4,F12.4,F11.3,
      $         /,' BULL.17B-ADJ PKS',
      $         /,'   ABOVE BASE            ---     ---   ',
      $           F11.4,F12.4,F11.3)
-   19 FORMAT(  /,' SYSTEMATIC PKS',
+   19 FORMAT(  /,'   GAGED PKS',
      $         /,'   ABOVE BASE            ---     ---   ',
      $           F11.4,F12.4,F11.3,
      $         /,' EMA-ADJ PKS',
@@ -1509,7 +1541,7 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $     /,' EMA W/REG. INFO      ',F11.4,F12.4,F11.3
      $    //,' EMA ESTIMATE OF MSE OF SKEW W/O REG. INFO (AT-SITE)    ',
      $       F8.4,/
-     $       ' EMA ESTIMATE OF MSE OF SKEW W/SYSTEMATIC ONLY (AT-SITE)',
+     $       ' EMA ESTIMATE OF MSE OF SKEW W/GAGED PEAKS ONLY (AT-SITE)',
      $       F8.4)
    15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
@@ -1752,7 +1784,7 @@ C     + + + OUTPUT FORMATS + + +
      $          56X,'MEDIAN   No. of',/,
      $          39X,'TAU    P-VALUE    SLOPE   PEAKS',/,
      $          32X,'---------------------------------------',/,
-     $          13X,'SYSTEMATIC RECORD',3F11.3,I6,//)
+     $          13X,'GAGED PEAKS',3F11.3,I6,//)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -4169,6 +4201,22 @@ c                 original peak found > lower interval, set upper to it
           END IF
  16     CONTINUE
         CALL plotposHS(NOBS,QL,LQU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
+      write(99,*)
+      write(99,*) 'Plotting positions of all values'
+      write(99,*) 'NOBS:',NOBS
+      write(99,*) '        QLow        QUpr',
+     $            '         TLow        TUpr       Q       PPos'
+ 2005 format(1X,2F12.1,2D14.4,F12.1,F12.3)
+      do 150 i = 1,NOBS
+        write(99,2005) 10**QL(I),10**LQU(I),10**TL(I),10**TU(I),
+     $                 10**Q(I),PEX(I)
+ 150  continue
+      write(99,*)
+      write(99,*) 'Plotting positions of Thresholds'
+ 2006 format(1X,F12.1,F12.3)
+      do 175 i = 1,NT
+        write(99,2006) 10**THR(I),PET(I)
+ 175  continue
 
 c      write(99,*) 'After EMAFIT'
 c      write(99,*) 'NOBS:',NOBS
@@ -4472,8 +4520,8 @@ C
      O                      NPKPLT,PKLOG,SYSPP,WRCPP,IXQUAL,IPKSEQ,
      O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
      O                      CLIML,CLIMU,NT,THRSH,PPTH,NOBSTH,
-     O                      THRSYR,THREYR,NINTVL,INTLWR,INTUPR,INTPPOS,
-     O                      GBCRIT,NLOW,NZERO,SKEW,RMSEGS,HEADER)
+     O                      THRSYR,THREYR,NINTVL,INTLWR,INTUPR,ALLPPOS,
+     O                      INTYR,GBCRIT,NLOW,NZERO,SKEW,RMSEGS,HEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
@@ -4481,15 +4529,19 @@ C     Return I/O data for a station to the Windows interface
 C
       Use StationData
       Use EMAThresh
+      
+C     + + + PARAMETERS + + +
+      INCLUDE 'PMXPK.INC'
+
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       STNIND,NPKPLT,IXQUAL(5,500),IPKSEQ(500),NPLOT,
      $              HSTFLG,NT,NOBSTH(500),THRSYR(500),
-     $              THREYR(500),NINTVL,NLOW,NZERO
+     $              THREYR(500),NINTVL,INTYR(500),NLOW,NZERO
       REAL          PKLOG(500),SYSPP(500),WRCPP(500),
      &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
      $              CLIML(32),CLIMU(32),THRSH(500),PPTH(500),
-     $              INTLWR(500),INTUPR(500),INTPPOS(500),
+     $              INTLWR(500),INTUPR(500),ALLPPOS(MXPK),
      $              GBCRIT,SKEW,RMSEGS
       CHARACTER*80  HEADER
 C
@@ -4523,7 +4575,7 @@ C     THREYR - array of threshold end years
 C     NINTVL - number of interval data entries
 C     INTLWR - array of lower interval values
 C     INTUPR - array of upper interval values
-C     INTPPOS - array of interval data plotting positions
+C     ALLPPOS- array of plotting positions for all years
 C     GBCRIT - low outlier threshold value
 C     NLOW   - number of low outliers
 C     NZERO  - number of zero values
@@ -4580,8 +4632,13 @@ C     interval data
       DO 40 I = 1,NINTVL
         INTLWR(I) = STNDATA(STNIND)%INTLWR(I)
         INTUPR(I) = STNDATA(STNIND)%INTUPR(I)
-        INTPPOS(I)= STNDATA(STNIND)%INTPPOS(I)
+        INTYR(I)  = STNDATA(STNIND)%INTYR(I)
  40   CONTINUE
+C
+C     plotting positions for all years
+      DO 50 I = 1,NOBS
+        ALLPPOS(I)= PEX(I)
+ 50   CONTINUE
 C 
       RETURN
       END
@@ -4952,10 +5009,10 @@ C     + + + OUTPUT FORMATS + + +
      $        4X,'EndYear ',A,I4,/,4X,'SkewOption',2A,/,
      $        4X,'Skew    ',A,F8.3,/,4X,'Mean    ',A,F8.3,/,
      $        4X,'StandDev',A,F8.3,/,4X,'AtSiteSkew',A,F8.3,/,
-     $        4X,'AtSiteMSEG',A,F8.3,/,4X,'Skew_SYS ',A,F8.3,/,
-     $        4X,'AtSiteMSEG_SYS',A,F8.3,/,
+     $        4X,'AtSiteMSEG',A,F8.3,/,
+     $        4X,'AtSiteMSEG_GagedOnly',A,F8.3,/,
      $        4X,'RegSkew',A,F8.3,/,4X,'RegMSEG',A,F8.3,/,
-     $        4X,'SysPeaks',A,I8,/,4X,'HisPeaks',A,I8,/,
+     $        4X,'GagedPeaks',A,I8,/,4X,'HisPeaks',A,I8,/,
      $        4X,'KENTAU  ',A,F8.3,/,4X,'KENPLV  ',A,F8.3,/,
      $        4X,'KENSLP  ',A,F8.3)
  2020 FORMAT (4X,A8,32(A,F8.4))
@@ -4983,7 +5040,7 @@ C
       WRITE(EXPFUN,2010) LTAB,LSTNID,LTAB,LHEADER,LTAB,LCHTYPE,LTAB,
      $                   BEGYR,LTAB,ENDYR,LTAB,CHSKUOPT,LTAB,WRCSKW,
      $                   LTAB,WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,
-     $                   LTAB,SYSASK,LTAB,ASMSEGSYS,LTAB,GENSKU,LTAB,
+     $                   LTAB,ASMSEGSYS,LTAB,GENSKU,LTAB,
      $                   RMSEGS**2,LTAB,NSYS,LTAB,
      $                   NHIST,LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
 
