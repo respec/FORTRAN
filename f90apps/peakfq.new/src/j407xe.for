@@ -300,7 +300,7 @@ C             report Multiple GB LO messges
 C       store Skew/MSE of Skew for display on windows interface plot
         IF (EMAOPT .EQ. 1) ASMSEG = as_G_mse
         IF (IGSOPT.EQ.1) THEN
-C         Generalized skew
+C         Regional skew
           LSKEW   = GENSKU
           LASGMSE = RMSEGS**2
         ELSE IF (IGSOPT.EQ.-1) THEN
@@ -810,7 +810,7 @@ C     + + + EXTERNALS + + +
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA         SKUOP /'STATION SKEW','  WEIGHTED  ',
-     $         ' GENERALIZED'/
+     $         '  REGIONAL  '/
 C
 C     + + + FORMATS + + +
     4 FORMAT(// 21X,  'TABLE 1 - INPUT DATA SUMMARY')
@@ -822,7 +822,7 @@ C     + + + FORMATS + + +
      $  /16X,'Beginning Year                       = ',I8,
      $  /16X,'Ending Year                          = ',I8,
      $  /16X,'Historical Period Length             = ',I8,
-     $  /16X,'Generalized skew                     = ',F8.3,
+     $  /16X,'Regional skew                        = ',F8.3,
      $  /16X,'     Standard error                  = ',2X,A6,
      $  /16X,'     Mean Square error               = ',2X,A6,
      $  /16X,'Skew option                          = ',A,
@@ -2038,8 +2038,8 @@ C     QHIOUT - USER-SET HIGH- OUTLIER DISCHARGE THRESHOLDS
 C     QLWOUT - USER-SET low-outlier discharge threshold
 C     LOTYPE - LO-OUTLIER TYPE (NONE, GBT, MGBT, FIXE)
 C     GAGEB  - GAGE BASE DISCHARGE
-C     GENSKU - GENERALIZED SKEW
-C     RMSEGS - RMS ERROR OF GENERALIZED SKEW
+C     GENSKU - REGIONAL SKEW
+C     RMSEGS - RMS ERROR OF REGIONAL SKEW
 C     ISKUOP - GEN.SKEW OPTION -- 1= GEN SKU, 0=WTD SKU, -1= STA SKU.
 C     NSKIP1 - NUMBER OF STATIONS SKIPPED BECAUSE OF INPUT ERRORS
 C     EMAOPT - Analysis option,
@@ -4161,7 +4161,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       REGSKEW= GENSKU
       IF (IGSOPT.EQ.1) THEN
-C       Generalized skew, set to very small
+C       Regional skew, set to very small
         REGMSE = 0.0
       ELSE IF (IGSOPT.EQ.-1) THEN
 C       Station skew, ignore regional skew
@@ -5048,7 +5048,7 @@ C
         LCHTYPE = 'B17B'
       END IF
       IF (IGSOPT.EQ.1) THEN
-        CHSKUOPT = 'Generalized'
+        CHSKUOPT = 'Regional'
       ELSE IF (IGSOPT.EQ.-1) THEN
         CHSKUOPT = 'Station'
       ELSE
@@ -5350,7 +5350,7 @@ C
       ELSE IF (SKUOPT.EQ.-1) THEN
         CHSKUOPT = 'STATION'
       ELSE
-        CHSKUOPT = 'GENERALIZED'
+        CHSKUOPT = 'REGIONAL'
       END IF
       IF (URBOPT.EQ.1) THEN
         CHURBOPT = 'YES'
