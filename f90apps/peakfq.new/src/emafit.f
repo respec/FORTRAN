@@ -3456,8 +3456,8 @@ c
       data sk141/-1.41d0/
       data lskewXmax/.FALSE./
 
-c      data bcf/1997/
-      data bcf/2004/
+      data bcf/1997/
+c      data bcf/2004/
 
       data VarS2opt/'DF'/
 
