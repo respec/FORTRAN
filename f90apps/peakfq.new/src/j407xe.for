@@ -126,19 +126,18 @@ C     + + + FORMATS + + +
      $        'SKEWOPT',A,'GENSKEW',A,'SKEWSTD',A,'SKEWMSE',A,
      $        'LO OUT',A,'LO TEST',A,'HI OUT',A,'GAGEB',A,'URB/REG',A,
      $        'LATITUDE',A,'LONGITUDE')
- 2015 FORMAT(8X,I8,' ZERO VALUES')
- 2020 FORMAT(///18X,'    MULTIPLE GRUBBS-BECK TEST RESULTS',//,
-     $          18X,'MULTIPLE GRUBBS-BECK PILF THRESHOLD',F8.1,/,
-     $          18X,'NUMBER OF PILFS IDENTIFIED         ',I8,/,
-     $          18X,'    CLASSIFICATION OF PILFS:',/,
-     $          18X,'        NUMBER OF ZERO FLOWS       ',I8,/,
-     $          18X,'        NUMBER OF CENSORED FLOWS   ',I8,/,
-     $          18X,'        NUMBER OF GAGED PEAKS      ',I8,/,
-     $          20X,'          GAGED PEAKS AND CORRESPONDING P-VALUES')
- 2021 FORMAT(34X,F8.1,4X,'(',F6.4,')')
- 2030 FORMAT(//'    MULTIPLE GRUBBS-BECK TEST RESULTS',/,
-     $         'MULTIPLE GRUBBS-BECK PILF THRESHOLD     N/A',/,
-     $         'NUMBER OF PILFS IDENTIFIED                0')
+ 2020 FORMAT(///4X,'MULTIPLE GRUBBS-BECK TEST RESULTS',//,
+     $          4X,'MULTIPLE GRUBBS-BECK PILF THRESHOLD',F8.1,/,
+     $          4X,'NUMBER OF PILFS IDENTIFIED         ',I8,/,
+     $          4X,'    CLASSIFICATION OF PILFS:',/,
+     $          4X,'        NUMBER OF ZERO FLOWS       ',I8,/,
+     $          4X,'        NUMBER OF CENSORED FLOWS   ',I8,/,
+     $          4X,'        NUMBER OF GAGED PEAKS      ',I8,/,
+     $          6X,'          GAGED PEAKS AND CORRESPONDING P-VALUES')
+ 2021 FORMAT(20X,F8.1,4X,'(',F6.4,')')
+ 2030 FORMAT(// 4X,'MULTIPLE GRUBBS-BECK TEST RESULTS',/,
+     $          4X,'MULTIPLE GRUBBS-BECK PILF THRESHOLD     N/A',/,
+     $          4X,'NUMBER OF PILFS IDENTIFIED                0')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -614,6 +613,8 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   114 FORMAT(19X,'   Output file(s): ',/
      $       19X,'      main - ',A)
   115 FORMAT(19X,'      bcd  - ',A)
+  116 FORMAT(//,2X, '***  User responsible for assessment and',
+     $             ' interpretation of the following analysis  ***' )
   199 FORMAT( '1' )
   200 FORMAT('  ')
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
@@ -627,8 +628,9 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   227 FORMAT(A16)
   208 FORMAT( ' ',2A1,T1,5('   *** EXPERIMENTAL ***   ')  )
 C 209 FORMAT(2X, A10, A15, 2X, A48)
-  301 FORMAT(  2X, '*********  NOTICE  --  Preliminary machine ',
-     $             'computations.        *********' )
+  301 FORMAT(4X, 'TABLE 2 - DIAGNOSTIC MESSAGE AND PILF RESULTS')
+Cprh  301 FORMAT(  2X, '*********  NOTICE  --  Preliminary machine ',
+Cprh     $             'computations.        *********' )
   302 FORMAT(  2X, '*********  User responsible for assessment ',
      $             'and interpretation.  *********' )
   401 FORMAT(  2X, '*********  WARNING  --  Experimental ',
@@ -688,6 +690,7 @@ C   	    outputting additional BCD file
           INQUIRE(IPUNCH,NAME=FNAME)
           WRITE(MSG1,115) FNAME
         END IF
+        WRITE(MSG1,116)
         WRITE(MSG1,200)
 C       prepare page heading in character strings
         WRITE(HEAD1,200)
@@ -697,14 +700,18 @@ C       prepare page heading in character strings
         WRITE(HEAD4,203) CHDTTM
         HEAD7 = ' '
         WRITE(HEAD8,208) (BLANK, I=1,IARG2)
-C       SET UP DISCLAIMER
-        IF(IARG2 .GE. 2) THEN
-          WRITE(DISCLM(1),401)
-          WRITE(DISCLM(2),402)
-        ELSE
-          WRITE(DISCLM(1),301)
-          WRITE(DISCLM(2),302)
-        ENDIF
+C
+Cprh    move disclaimer just after Processing Options
+Cprh    change this to Diagnostic/PILF message (Table 2)
+        WRITE(DISCLM(1),301)
+Cprh       SET UP DISCLAIMER
+Cprh        IF(IARG2 .GE. 2) THEN
+Cprh          WRITE(DISCLM(1),401)
+Cprh          WRITE(DISCLM(2),402)
+Cprh        ELSE
+Cprh          WRITE(DISCLM(1),301)
+Cprh          WRITE(DISCLM(2),302)
+Cprh        ENDIF
 C
       ELSE IF( II .EQ. 1000 )  THEN
 C       PRINT PAGE HEADINGS FOR PGM OUTPUT....
@@ -806,7 +813,7 @@ C     + + + DATA INITIALIZATIONS + + +
      $         ' GENERALIZED'/
 C
 C     + + + FORMATS + + +
-    4 FORMAT(// 21X,  'I N P U T   D A T A   S U M M A R Y')
+    4 FORMAT(// 21X,  'TABLE 1 - INPUT DATA SUMMARY')
     5 FORMAT(  
      $  /16X,'Number of peaks in record            = ',I8,
      $  /16X,'Peaks not used in analysis           = ',I8,
@@ -997,7 +1004,7 @@ C     + + + FORMATS + + +
      $ /6X,'    -  Minus-flagged water year -- ',
      $            'Historic peak used in computation' ///)
  1010 FORMAT('1',//)
- 1011 FORMAT(//23X,'I N P U T   D A T A   L I S T I N G')
+ 1011 FORMAT(//23X,'TABLE 5 - INPUT DATA LISTING')
  1012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ',
      $        /,'     YEAR      VALUE   CODES    CODES  REMARKS')
  2012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ   ',
@@ -1110,7 +1117,7 @@ C     + + + FORMATS + + +
      $ /6X,'    -  Minus-flagged water year -- ',
      $            'Historic peak used in computation' ///)
  1010 FORMAT('1',//)
- 1011 FORMAT(//23X,'I N P U T   D A T A   L I S T I N G')
+ 1011 FORMAT(//23X,'TABLE 5 - INPUT DATA LISTING')
  1012 FORMAT(//,'    WATER       PEAK   PEAKFQ',
      $        /,'     YEAR      VALUE    CODES  REMARKS')
  2012 FORMAT(//,'    WATER       PEAK   PEAKFQ   ',
@@ -1123,7 +1130,7 @@ C     + + + FORMATS + + +
  2015 FORMAT(F12.1)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
- 1021 FORMAT( //3X,
+ 1021 FORMAT( //2X,'TABLE 6 - ',
      $      'EMPIRICAL FREQUENCY CURVES -- ',A,' PLOTTING POSITIONS'
      $      / 73X, A, '** WEIBA =', F6.3, ' ***' )
 Cprh 1022 FORMAT( 6X, 5HWATER, 9X, 6HRANKED, 7X,
@@ -1391,23 +1398,25 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
-      CHARACTER*11 LQUSTR,LEQUSTR,LTLSTR,LTUSTR
+      CHARACTER*11 LQUSTR,LEQUSTR,LTLSTR,LTUSTR,LETLSTR,LETUSTR
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('1',//)
 Cprh  temporarily remove DATA TYPE from output, 8/2012
-c 2010 FORMAT(//,20X,'EMA REPRESENTATION OF DATA',
+c 2010 FORMAT(//,26X,'EMA REPRESENTATION OF DATA',
 c     $       //,'  WATER <----- OBSERVED-----><-------- EMA ------->',
 c     $          '<---- THRESHOLDS ---->  DATA',
 c     $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
 c     $          '      LOWER      UPPER  TYPE')
- 2010 FORMAT(//,25X,'EMA REPRESENTATION OF DATA',
-     $       //,'  WATER <----- OBSERVED-----><-------- EMA ------->',
-     $          '<-PERCEPTION THRESHOLDS->',
+ 2010 FORMAT(//,20X,'TABLE 7 - EMA REPRESENTATION OF DATA',
+     $       //,51X,
+     $          '<---- USER-ENTERED ----><--- FINAL THRESHOLD -->',
+     $        /,'  WATER <----- OBSERVED ----><-------- EMA ------->',
+     $          '<----- THRESHOLDS -----><----- PERCEPTIONS ---->',
      $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
-     $          '        LOWER       UPPER')
+     $          '       LOWER       UPPER       LOWER       UPPER')
  2015 FORMAT(F11.1)
- 2020 FORMAT(1X,I6,2(F11.1,A11),1X,2(1X,A11)) !,A6)
+ 2020 FORMAT(1X,I6,2(F11.1,A11),2(1X,A11),2(1X,A11)) !,A6)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1427,20 +1436,30 @@ C
         ELSE
           WRITE(LEQUSTR,2015) 10**EMAQU(I)
         END IF
-        IF (EMATL(I).GT.18) THEN
+        IF (TL(I).GT.18) THEN
           LTLSTR = '       INF '
         ELSE
-          WRITE(LTLSTR,2015) 10**EMATL(I)
+          WRITE(LTLSTR,2015) 10**TL(I)
         END IF
-        IF (EMATU(I).GT.18) THEN
+        IF (TU(I).GT.18) THEN
           LTUSTR = '       INF '
         ELSE
-          WRITE(LTUSTR,2015) 10**EMATU(I)
+          WRITE(LTUSTR,2015) 10**TU(I)
+        END IF
+        IF (EMATL(I).GT.18) THEN
+          LETLSTR = '       INF '
+        ELSE
+          WRITE(LETLSTR,2015) 10**EMATL(I)
+        END IF
+        IF (EMATU(I).GT.18) THEN
+          LETUSTR = '       INF '
+        ELSE
+          WRITE(LETUSTR,2015) 10**EMATU(I)
         END IF
 
 Cprh  temporarily remove DATA TYPE from output, 8/2012
         WRITE(MSG,2020) OPKSEQ(I),10**QL(I),LQUSTR,10**EMAQL(I),
-     $                  LEQUSTR,LTLSTR,LTUSTR !,EMADTYPE(I)
+     $                  LEQUSTR,LTLSTR,LTUSTR,LETLSTR,LETUSTR !,EMADTYPE(I)
  100  CONTINUE
 C
       RETURN
@@ -1501,7 +1520,7 @@ Cprh      DATA     IPLIST / -777, 30*0 /
       DATA     INITIP / 0 /
 C
 C     + + + FORMATS + + +
-    8 FORMAT(//1X,10X,  'ANNUAL FREQUENCY CURVE PARAMETERS -- ',
+    8 FORMAT(//1X,4X,'TABLE 3 - ANNUAL FREQUENCY CURVE PARAMETERS -- ',
      $       21HLOG-PEARSON TYPE III    // 
      $'                        FLOOD BASE      ',
      $'             LOGARITHMIC         '/
@@ -1511,7 +1530,7 @@ C     + + + FORMATS + + +
      $'               STANDARD          '/
      $'                   DISCHARGE PROBABILITY',
      $'     MEAN     DEVIATION     SKEW '/18X,55('-'))      
-   18 FORMAT(//1X,10X,  'ANNUAL FREQUENCY CURVE PARAMETERS -- ',
+   18 FORMAT(//1X,4X,'TABLE 3 - ANNUAL FREQUENCY CURVE PARAMETERS -- ',
      $       21HLOG-PEARSON TYPE III    // 
      $'                                    LOGARITHMIC         '/
      $'                         -------------------------------'/
@@ -1543,25 +1562,23 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $       F8.4,/
      $       ' EMA ESTIMATE OF MSE OF SKEW W/GAGED PEAKS ONLY (AT-SITE)',
      $       F8.4)
-   15 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
+   15 FORMAT(///,' TABLE 4 - ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL                      ',
      $           '   <-- FOR BULLETIN 17B ESTIMATES -->',
      $         /,'EXCEEDANCE  BULL.17B SYSTEMATIC',
-     $           '   VARIANCE  ',I2,
-     $           '% CONFIDENCE INTERVALS',
+     $           'LOG VARIANCE     CONFIDENCE INTERVALS',
      $         /,'PROBABILITY ESTIMATE   RECORD  ',
-     $           '    OF EST.       LOWER       UPPER', /)
-   16 FORMAT(///,'    ANNUAL FREQUENCY CURVE -- DISCHARGES',
+     $           '    OF EST.   ',I2,'% LOWER   ',I2,'% UPPER', /)
+   16 FORMAT(///,' TABLE 4 - ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
-     $        //,'   ANNUAL   EMA W/    EMA W/O  ',
-     $           '   <------ FOR EMA ESTIMATES ------->',
-     $         /,'EXCEEDANCE  REG INFO  REG INFO ',
-     $           '   VARIANCE  ',I2,
-     $           '% CONFIDENCE INTERVALS',
-     $         /,'PROBABILITY ESTIMATE  ESTIMATE ',
-     $           '    OF EST.       LOWER       UPPER', /)
-   20 FORMAT(1X,F8.4,  5A   )
+     $        //,'   ANNUAL   <- EMA ESTIMATE ->',
+     $           '    <- FOR EMA ESTIMATE WITH REG SKEW ->',
+     $         /,'EXCEEDANCE   WITH     WITHOUT ',
+     $           '    LOG VARIANCE   <-CONFIDENCE LIMITS->',
+     $         /,'PROBABILITY REG SKEW  REG SKEW',
+     $           '       OF EST.    ',I2,'% LOWER    ',I2,'% UPPER', /)
+   20 FORMAT(1X,F8.4,2A,2(2X,A),A)
  1010 FORMAT('1',//)
  2011 FORMAT ( 1X, F11.4, 1X, '         -- ',
      $         2X, '(', F6.2, '-year flood below base' )
@@ -1596,13 +1613,13 @@ C
 C       original B-17 estimates
         WRITE(MSG,10)SYSBAS,SYSPAB,SYSUAV,SYSUSD,SYSSKW,
      $               WRCBAS,WRCPAB,WRCUAV,WRCUSD,WRCSKW,ASMSEG
-        WRITE(MSG,15) INT( CLSIZE*100. + .5)
+        WRITE(MSG,15) INT(100-(CLSIZE*100. - .5)),INT( CLSIZE*100. + .5)
       ELSE
 C       new EMA estimates
         WRITE(MSG,11)SYSUAV,SYSUSD,SYSSKW,
      $               WRCUAV,WRCUSD,WRCSKW,
      $               as_G_mse,as_G_mse_Syst
-        WRITE(MSG,16) INT( CLSIZE*100. + .5)
+        WRITE(MSG,16) INT(100-(CLSIZE*100. - .5)),INT( CLSIZE*100. + .5)
       END IF
 C
       IF(INITIP .EQ. 0) THEN
@@ -1780,11 +1797,11 @@ C     + + + EXTERNALS + + +
       EXTERNAL KENT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(//,40X,'Kendall''s Tau Parameters',//,
-     $          56X,'MEDIAN   No. of',/,
-     $          39X,'TAU    P-VALUE    SLOPE   PEAKS',/,
-     $          32X,'---------------------------------------',/,
-     $          13X,'GAGED PEAKS',3F11.3,I6,//)
+ 2000 FORMAT(//,31X,'Kendall''s Tau Parameters',//,
+     $          47X,'MEDIAN   No. of',/,
+     $          30X,'TAU    P-VALUE    SLOPE   PEAKS',/,
+     $          13X,'---------------------------------------',/,
+     $          4X,'GAGED PEAKS',3F11.3,I6,//)
 C
 C     + + + END SPECIFICATIONS + + +
 C
