@@ -772,19 +772,19 @@ C     + + + ARGUMENT DEFINITIONS + + +
 C     STAID  - Station ID being processed
 C     XSYSPK - highest systematic peak
 C     XHSTPK - lowest historic peak
-C     GENSKU - generalized skew
+C     GENSKU - regional skew
 C     HISTPD - length of historic period
 C     QHIOUT - hi-outlier threshold
 C     QLWOUT - lo-outlier threshold
 C     LOTYPE - lo-outlier test type (NONE, GBT, MGBT, FIXE)
 C     GAGEB  - gage base discharge
-C     RMSEGS - standard error of generalized skew
+C     RMSEGS - standard error of regional skew
 C     IBEGYR - beginning year of analysis
 C     IENDYR - ending year of analysis
 C     ISKUOP - skew computation option,
 C              -1 - Station
 C               0 - Weighted
-C               1 - Generalized
+C               1 - Regional
 C     IKROPT - allow urban/regularized peaks (0 - no, 1 -yes)
 C     FLAT   - station latitude, decimal
 C     FLONG  - station longitude, decimal
@@ -874,7 +874,7 @@ C     init new peaks specs
               ISKUOP = -1
             ELSE IF (S .EQ. 'WEIGHTED') THEN 
               ISKUOP = 0
-            ELSE IF (S .EQ. 'GENERALIZED') THEN 
+            ELSE IF (S .EQ. 'REGIONAL') THEN 
               ISKUOP = 1
             END IF 
           ELSE IF (KWD .EQ. 'URB/REG') THEN
@@ -1303,19 +1303,19 @@ C     + + + DUMMY ARGUMENTS + + +
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STAID  - Station ID being processed
-C     GENSKU - generalized skew
+C     GENSKU - regional skew
 C     HISTPD - length of historic period
 C     QHIOUT - hi-outlier threshold
 C     QLWOUT - lo-outlier threshold
 C     LOTYPE - lo-outlier test type (NONE, GBT, MGBT, FIXE)
 C     GAGEB  - gage base discharge
-C     RMSEGS - standard error of generalized skew
+C     RMSEGS - standard error of regional skew
 C     IBEGYR - beginning year of analysis
 C     IENDYR - ending year of analysis
 C     ISKUOP - skew computation option,
 C              -1 - Station
 C               0 - Weighted
-C               1 - Generalized
+C               1 - Regional
 C     IKROPT - allow urban/regularized peaks (0 - no, 1 -yes)
 C     FLAT   - station latitude, decimal
 C     FLONG  - station longitude, decimal
@@ -1424,7 +1424,7 @@ C     skew parameters
       ELSE IF (ISKUOP.EQ.0) THEN
         WRITE(92,*) '     SkewOpt Weighted'
       ELSE IF (ISKUOP.EQ.1) THEN
-        WRITE(92,*) '     SkewOpt Generalized'
+        WRITE(92,*) '     SkewOpt Regional'
       END IF
       WRITE(92,*) '     GenSkew ',GENSKU
       WRITE(92,*) '     SkewSE ',RMSEGS
@@ -1550,7 +1550,7 @@ C
      O                     GENSKU, RETCOD)
 C
 C     + + + PURPOSE + + +
-C     This routine computes generalized skew from WRC guidelines using
+C     This routine computes regional skew from WRC guidelines using
 C     the routine WCFGSM with latitude and longitude from the
 C     attributes of the dataset.
 C
