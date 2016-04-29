@@ -1195,13 +1195,6 @@ C           still need to print record
       IF (EMAOPT.EQ.1 .AND. NINTERVAL.GT.0) THEN
 C       output interval data
         DO 220 I = 1, NINTERVAL
-C          IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
-C            LINTVLSTR = '        INF '
-C          ELSE
-C            WRITE(LINTVLSTR,2015) INTERVAL(I)%INTRVLUPR
-C          END IF
-C          WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTERVAL(I)%INTRVLLWR,
-C     $                    LINTVLSTR,INTERVAL(I)%INTRVLCOM
           IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
 C           upper Interval is infinity, just use lower Interval value
             INTVAL(I) = INTERVAL(I)%INTRVLLWR
@@ -1209,6 +1202,17 @@ C           upper Interval is infinity, just use lower Interval value
 C           save average of interval lower/upper bounds
             INTVAL(I)= 10**((LOG10(INTERVAL(I)%INTRVLLWR) + 
      $                       LOG10(INTERVAL(I)%INTRVLUPR))/2)
+          END IF
+          IF (INTERVAL(I)%INTRVLYR .GT. IPKSEQ(NPKS)) THEN
+C           this interval would not have been printed in above loop
+            IF (INTERVAL(I)%INTRVLUPR .GT. 1.0E18) THEN
+              LINTVLSTR = '        INF '
+            ELSE
+              WRITE(LINTVLSTR,2015) INTERVAL(I)%INTRVLUPR
+            END IF
+            WRITE(MSG,2014) INTERVAL(I)%INTRVLYR,INTVAL(I),'       ',
+     $                      INTERVAL(I)%INTRVLLWR,LINTVLSTR,
+     $                      INTERVAL(I)%INTRVLCOM
           END IF
  220    CONTINUE
       END IF
