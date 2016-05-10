@@ -2218,7 +2218,7 @@ C             not too many peaks & user wants to continue
               FLAT      =  AUX(12)
               FLONG     =  AUX(13)
 C             default to Bull 17B analysis
-              EMAOPT = 0
+              EMAOPT = 1
 C             default low outlier test to single GB
               LOTYPE = 'GBT'
 C
