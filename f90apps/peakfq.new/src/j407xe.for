@@ -2217,7 +2217,7 @@ C             not too many peaks & user wants to continue
               IKROPT    =  AUX(11)
               FLAT      =  AUX(12)
               FLONG     =  AUX(13)
-C             default to Bull 17B analysis
+C             default to EMA analysis
               EMAOPT = 1
 C             default low outlier test to single GB
               LOTYPE = 'GBT'
