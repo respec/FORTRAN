@@ -946,6 +946,8 @@ c  fill in various arrays and compute nlow
 
           nlow    = 0
       do 30 i=1,n
+c       added check of data type conditional; change made 16 Mar 15 (PRH)
+c        if(qu_in(i) .lt. gbcrit .and. dtype(i).eq.'Syst') then     ! note:
         if(qu_in(i) .lt. gbcrit) then     ! note:
           nlow  = nlow+1
           qu(i) = gbthresh
@@ -3466,7 +3468,7 @@ c      data bcf/2004/
       data pqd/0.0001,0.0005,0.001 ,0.002 ,0.005 ,0.010 ,0.020 ,0.025 ,
      1         0.040 ,0.050 ,0.100 ,0.200 ,0.300 ,0.3333,0.400 ,0.4296,
      2         0.5   ,0.5708,0.600 ,0.700 ,0.800 ,0.900 ,0.950 ,0.960 ,
-     3         0.975 ,0.980 ,0.990 ,0.995 ,0.998 ,0.999 ,0.9995,0.9999,
+     3         0.975 ,0.980 ,0.990 ,0.995 ,0.998 ,0.999 ,0.9999,0.99999,
      4         68*99.000/
 
       data eps/0.90d0/
