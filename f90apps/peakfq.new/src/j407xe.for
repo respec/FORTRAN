@@ -1582,7 +1582,7 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $           '    LOG VARIANCE   <-CONFIDENCE LIMITS->',
      $         /,'PROBABILITY REG SKEW  REG SKEW',
      $           '       OF EST.    ',I2,'% LOWER    ',I2,'% UPPER', /)
-   20 FORMAT(1X,F8.4,2A,2(2X,A),A)
+   20 FORMAT(1X,F8.5,2A,2(2X,A),A)
  1010 FORMAT('1',//)
  2011 FORMAT ( 1X, F11.4, 1X, '         -- ',
      $         2X, '(', F6.2, '-year flood below base' )
