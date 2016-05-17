@@ -335,7 +335,7 @@ C           save data (pre-Gausex transform) for retrieval by PKFQWIN
 C
 C         PRINT FITTED LOG-PEARSON TYPE III FREQUENCY CURVES PARAMETERS
 C                                                   AND ORDINATES
-          CALL PRTFIT ( IDEBUG, EMAOPT, IA3 )
+          CALL PRTFIT ( IDEBUG, IEXTEND, EMAOPT, IA3 )
 C
 Ckmf      moved call to output to after plot so that the plot will
 Ckmf      be drawn before the output is displayed.  When pause
@@ -1472,7 +1472,7 @@ C
 C
 C
       SUBROUTINE   PRTFIT
-     #                 ( IDEBUG, EMAOPT, WDMSFL )
+     #                 ( IDEBUG, IEXTEND, EMAOPT, WDMSFL )
 C
 C     + + + PURPOSE + + +
 C     PRINTS TABLUATED FITTED LOG-PEARSON TYPE III CURVE FOR J407.
@@ -1480,19 +1480,26 @@ C
 C     + + + HISTORY + + +
 C     Updated 11/03 by PRH of AQUA TERRA Consultants for batch PEAKFQ
 C
+C     Include perception thresholds and interval data
+C     with plotting positions, PRH 8/2010
+      Use EMAThresh
+C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   IDEBUG, EMAOPT, WDMSFL
+      INTEGER   IDEBUG, IEXTEND, EMAOPT, WDMSFL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     IDEBUG -
+C     IEXTEND- indicator flag for printing additional AEPs
 C     EMAOPT - indicator flag for performing EMA analysis
 C              0 - no, just do traditional J407
 C              1 - yes, run EMA
 C
 C     + + + PARAMETERS + + +
+      INCLUDE 'pmxpk.inc'
       INCLUDE 'pmxint.inc'
 C
 C     + + + COMMON BLOCKS + + +
+      INCLUDE 'cj407.inc'
       INCLUDE 'cwcf0.inc'
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
@@ -1504,7 +1511,7 @@ C     from Tim Cohn's code, for output of EMA at-site MSE of G
 C
 C     + + + LOCAL VARIABLES + + +
       CHARACTER*13  DWORK(6)
-      INTEGER   I, J, SIGDIG, DECPLA, LEN
+      INTEGER   I, J, SIGDIG, DECPLA, LEN, LNINDX
       REAL      PEP, TMP !, XTRPK
 C
 C     + + + SAVES + + +
@@ -1582,7 +1589,8 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $           '    LOG VARIANCE   <-CONFIDENCE LIMITS->',
      $         /,'PROBABILITY REG SKEW  REG SKEW',
      $           '       OF EST.    ',I2,'% LOWER    ',I2,'% UPPER', /)
-   20 FORMAT(1X,F8.5,2A,2(2X,A),A)
+   20 FORMAT(1X,F8.4,2A,2(2X,A),A)
+   21 FORMAT(1X,F8.6,2A,2(2X,A),A)
  1010 FORMAT('1',//)
  2011 FORMAT ( 1X, F11.4, 1X, '         -- ',
      $         2X, '(', F6.2, '-year flood below base' )
@@ -1631,6 +1639,13 @@ C
         CALL SORTI(IPLIST,NINDX)
         INITIP = 1
       ENDIF
+
+      IF (IEXTEND .EQ. 1) THEN
+C       extended AEPs desired
+        LNINDX = NINDX
+      ELSE
+        LNINDX = NINDX - 4
+      END IF
 C
 C     fill in table, 4 significant digits, 1 decimal place and --
 C     for no entries.  DECCHX replaced intermal writes to get
@@ -1645,7 +1660,7 @@ Cprh  LEN = 13
       LEN = 10
       SIGDIG = 4
       DECPLA = 1
-      DO 210 I = 1,NINDX
+      DO 210 I = 1,LNINDX
         DO 201 J = 1,6
           DWORK(J) = '          -- '
   201   CONTINUE
@@ -1697,9 +1712,16 @@ CPRH              TMP = EXP(CLIMU(J))
             END IF
           END IF
 Cprh          WRITE(MSG,20)  PEP, DWORK
-          WRITE(MSG,20) PEP,DWORK(1)(1:10),DWORK(2)(1:10),
-     &                      DWORK(4)(1:12),
-     &                      DWORK(5)(1:12),DWORK(6)(1:13)
+          IF (PEP .LT. 0.0001) THEN
+C           need extra decimals
+            WRITE(MSG,21) PEP,DWORK(1)(1:10),DWORK(2)(1:10),
+     &                        DWORK(4)(1:12),
+     &                        DWORK(5)(1:12),DWORK(6)(1:13)
+          ELSE
+            WRITE(MSG,20) PEP,DWORK(1)(1:10),DWORK(2)(1:10),
+     &                        DWORK(4)(1:12),
+     &                        DWORK(5)(1:12),DWORK(6)(1:13)
+          END IF
         END IF
   210 CONTINUE
 C

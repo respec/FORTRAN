@@ -116,6 +116,7 @@ C     common JOBOPT (IPLTOP through ALLSOM)
       IDEBUG= 0
       IMODFG= 1  
       ALLSOM= 1
+      IEXTEND= 0
       PAUSE = 2    !don't pause between stations
 C     assume no export or empirical output files
       EXPFUN= 0
@@ -209,7 +210,7 @@ C     process driver input file
           CALL OPNOUT
      M               (S, INFORM, FOUT, IPUNCH,
      M                IPLTOP, GRFMT, IPRTOP, IBCPUN, IDEBUG,
-     M                CLSIZE, WEIBA, EXPFUN, EMPFUN,
+     M                CLSIZE, WEIBA, EXPFUN, EMPFUN, IEXTEND,
      O                RETCOD)
         ELSE IF (KWD .EQ. 'STATION') THEN !processing station specs
           WRITE(FE,*) "MAIN:Got STATION, Remaining:'" // TRIM(S) // "'"
@@ -346,7 +347,7 @@ C       set printer plot file to FOUT
         IF (UPDATEFG) THEN !write out verbose spec file
           CALL WRITESPECIO (WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
      I                      IPLTOP,GRFMT,IPRTOP,IBCPUN,IDEBUG,
-     I                      CLSIZE,WEIBA,EXPFUN,EMPFUN)
+     I                      CLSIZE,WEIBA,EXPFUN,EMPFUN,IEXTEND)
         END IF
 C       do the analysis
         CALL J407XE (MESSFL,WDMSFL,PAUSE,UPDATEFG,NSTA)
@@ -512,7 +513,7 @@ C
      I                   ( ISTR, INFORM,
      M                     FOUT, IPUNCH,
      M                     IPLTOP, GRFMT, IPRTOP, IBCPUN, IDEBUG,
-     M                     CLSIZE, WEIBA, EXPFUN, EMPFUN,
+     M                     CLSIZE, WEIBA, EXPFUN, EMPFUN, IEXTEND,
      O                     RETCOD )
 C
 C     + + + PURPOSE + + +
@@ -525,7 +526,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER      INFORM, FOUT, IPUNCH,
      $             IPLTOP, IPRTOP, IBCPUN, IDEBUG, 
-     $             EXPFUN, EMPFUN, RETCOD
+     $             EXPFUN, EMPFUN, IEXTEND, RETCOD
       REAL         CLSIZE, WEIBA
       CHARACTER*3  GRFMT
       CHARACTER*120 ISTR
@@ -544,6 +545,7 @@ C     CLSIZE - ???
 C     WEIBA  - ???
 C     EXPFUN - export file unit number
 C     EMPFUN - empirical file unit number
+C     IEXTEND- extended annual exceedence percentiles
 C     RETCOD - ???
 C
 C     + + + LOCAL VARIABLES + + +
@@ -718,6 +720,8 @@ C       successful open of Empirical output file
 
  80     CONTINUE
 
+      ELSE IF (KWD.EQ.'EXTENDED') THEN
+        IEXTEND = IYESNO(ISTR,1)
       ELSE IF (KWD.EQ.'DEBUG') THEN
         IDEBUG = IYESNO(ISTR,1)
       ELSE IF (KWD.EQ.'CONFIDENCE') THEN
@@ -1178,7 +1182,7 @@ C
 C
       SUBROUTINE   WRITESPECIO (WDMSFL,INCRD,INFORM,FOUT,IPUNCH,
      I                          IPLTOP,GRFMT,IPRTOP,IBCPUN,IDEBUG,
-     I                          CLSIZE,WEIBA,EXPFUN,EMPFUN)
+     I                          CLSIZE,WEIBA,EXPFUN,EMPFUN,IEXTEND)
 C
 C     + + + PURPOSE + + +
 C     Write out verbose version of spec file (i.e. include 
@@ -1272,6 +1276,11 @@ C     additional output
         WRITE(92,*) 'O Debug Yes'
       ELSE
         WRITE(92,*) 'O Debug No'
+      END IF
+      IF (IEXTEND.EQ.1) THEN
+        WRITE(92,*) 'O Extended Yes'
+      ELSE
+        WRITE(92,*) 'O Extended No'
       END IF
       WRITE(92,*) 'O Confidence ',CLSIZE
 C
