@@ -1,10 +1,10 @@
 C     PEAKFQ job options
       COMMON/ JOBOPT / IPLTOP,IBCPUN,IPRTOP,IDEBUG,IPPOS,
      $                 ISKUDP, NOXPA, NOCLM, MOROPT(2),
-     $                 IMODFG, ALLSOM, DOSTA, GRFMT
+     $                 IMODFG, ALLSOM, IEXTEND, DOSTA, GRFMT
       INTEGER          IPLTOP,IBCPUN,IPRTOP,IDEBUG,IPPOS,
      $                 ISKUDP, NOXPA, NOCLM, MOROPT,
-     $                 IMODFG, ALLSOM
+     $                 IMODFG, ALLSOM, IEXTEND
       CHARACTER*3      GRFMT
       CHARACTER*15     DOSTA(20)
 C
