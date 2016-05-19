@@ -699,7 +699,7 @@ SATDO   1  1     1     1 1   7      0 19642 ENG mg/l       0       1   0       1
   Saturation DO concentration in RCHRES     MET mg/l       0       1   0       1
 #GROUP  145  TYPE TEXT
 $TEXT
-OXCF1   2  1     2     1 2   7      0 20253 ENG lb/iv      0 1.602E4   0 3.531E4
+OXCF1   2  1     2     1 2   7      0 19653 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of DO and BOD from the RCHRES    MET kg/iv      0 4.537E2   0   1000.
 #GROUP  146  TYPE TEXT
 $TEXT
