@@ -1303,7 +1303,7 @@ C
 Cmeb: BIGLOG changed from 38 to 37 on Data General AViiON
 Caml: and further changed to 29 for 5/94 compiler
       DATA  GSMIN, GSMAX, WEIBA, CLSIZE, INDX1, INDX2, WSKLAT, BIGLOG
-     $   /-.4001, .8001,     0.,    .95,    5,    32,      0.,    29.  /
+     $   /-.4001, .8001,     0.,    .95,    4,    32,      0.,    29.  /
 C
 c      DATA NINDX/14/, INDXPT/16,21,26,5,6,10,11,12,   17,20,23,25,27,28,
 c     *                        17*0 /
