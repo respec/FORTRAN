@@ -374,8 +374,13 @@ C
               DO 170 I = 1,MXINT
                 FCXPG(I) = GAUSEX(TXPROB(I))
   170         CONTINUE
-              NFCXPG = INDX2 - INDX1 + 1
             ENDIF
+C           assume additional AEPs
+            NFCXPG = INDX2 - INDX1 + 1
+            IF (IEXTEND .EQ. 0) THEN
+C             only include traditional AEPs
+              NFCXPG = NFCXPG - 4
+            END IF
 C
             NPKPLT=NHIST+NSYS-NBGB
 C
