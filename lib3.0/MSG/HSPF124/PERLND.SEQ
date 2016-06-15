@@ -44,8 +44,8 @@ $TEXT
   4  3 2CROP-SEASPM       131    258    331    458   32    4
   5  1 1IRRIG-PARM1       132    132    332    332   33    4
   8  1 2IRRIG-PARM2       133    259    333    459   34    4
-  6  1 2IRRIG-SOURCE      134    134    334    334   35    4
-  6  1 2IRRIG-TARGET      135    135    335    335   36    4
+  7  1 2IRRIG-SOURCE      134    134    334    334   35    4
+  5  1 2IRRIG-TARGET      135    135    335    335   36    4
  14  1 2IRRIG-SCHED       136    260    336    460   37    4
  12  1 2MON-IRR-CRDP      137    261    337    461   38    4
  12  1 2MON-IRR-AWD       138    138    338    338   39    4
@@ -7092,7 +7092,7 @@ $HELP
 Irrigation source priorities and fractions.
 #GROUP  334  TYPE TEXT
 $TEXT
-(1X,6(1PE10.3),F10.0)
+(1X,7(1PE10.3))
            Irrigation source priorities and fractions
 <-----External-----><---Groundwater----><-----------RCHRES----------->
     XPRIOR     XFRAC    GPRIOR     GFRAC    RPRIOR     RFRAC    IRCHNO
