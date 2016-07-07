@@ -119,7 +119,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Version 7.1 dated 3/14/2014',/,
+     $       'Version 7.2 dated 7/4/2016',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -624,10 +624,10 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   200 FORMAT('  ')
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
-  202 FORMAT( 2X,'Version 7.1',
+  202 FORMAT( 2X,'Version 7.2',
      $        9X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time')
-  203 FORMAT( 2X,'3/14/2014',52X,A)
+  203 FORMAT( 2X,'7/4/2014',53X,A)
   206 FORMAT(22X,'standard method for flood frequency analysis.')
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
@@ -805,7 +805,7 @@ C     + + + LOCAL VARIABLES + + +
       CHARACTER*12 SKUOP(3)
       INTEGER   I
       CHARACTER*8  YNHIST, ATYPE
-      CHARACTER*10 LWRSTR, UPRSTR
+      CHARACTER*13 LWRSTR, UPRSTR
 C
 C     + + + INTRINSICS + + +
       INTRINSIC   INT
@@ -847,20 +847,21 @@ C    $  /' ', 8X,I3,5X,I7,9X,I3,7X,F7.3,8X, A6,5X,  A ,2X,F8.1,//
 C    $         '     USER-SET OUTLIER CRITERIA   '         /
 C    $        '     HIGH OUTLIER   LOW OUTLIER  '        /
 C    $   6X, 2A )
- 7    FORMAT(16X,'Perception Thresholds:',
-     $      /16X,'     Begin     End       Low     High     Comment')
- 8    FORMAT(16X,'Perception Thresholds (defaults set by PeakFQ):',
-     $      /16X,'     Begin     End       Low     High     Comment')
- 10   FORMAT(18X,2I8,2A10,5X,A)
- 11   FORMAT(16X,'Perception Thresholds            =   None Specified')
- 15   FORMAT(16X,'Interval Data:',
-     $      /16X,'              Year       Low     High     Comment')
- 20   FORMAT(26X,I8,2A10,5X,A)
+ 7    FORMAT(16X,'Perceptible Ranges:',
+     $      /16X,'    Start Year  End Year  Lower Bound  Upper Bound')
+ 8    FORMAT(16X,'Perceptible Ranges (defaults set by PeakFQ):',
+     $      /16X,'    Start Year  End Year  Lower Bound  Upper Bound')
+ 10   FORMAT(20X,2I10,2A13,4X,A)
+ 11   FORMAT(16X,'Perceptible Ranges               =   None Specified')
+ 15   FORMAT(16X,'Flow Intervals ',
+     $           '(where Lower Bound not = Upper Bound):',
+     $      /16X,'                    Year  Lower Bound  Upper Bound')
+ 20   FORMAT(32X,I8,2A13,4X,A)
  21   FORMAT(16X,'Interval Data                    =   None Specified')
- 30   FORMAT(16X,'Perception Thresholds            =   Not Applicable',
+ 30   FORMAT(16X,'Perceptible Ranges               =   Not Applicable',
      $      /16X,'Interval Data                    =   Not Applicable')
- 2030 FORMAT(F10.1)
- 2040 FORMAT(G10.1)
+ 2030 FORMAT(F13.1)
+ 2040 FORMAT(G13.1)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -905,14 +906,14 @@ C       historic adjustment applied
             ELSEIF (THRESH(I)%THRLWR .LT. 1.0E19) THEN
               WRITE(LWRSTR,2040) THRESH(I)%THRLWR
             ELSE
-              LWRSTR = '       INF'
+              LWRSTR = '          INF'
             END IF
             IF (THRESH(I)%THRUPR .LT. 1.0E9) THEN
               WRITE(UPRSTR,2030) THRESH(I)%THRUPR
             ELSEIF (THRESH(I)%THRUPR .LT. 1.0E19) THEN
               WRITE(UPRSTR,2040) THRESH(I)%THRUPR
             ELSE
-              UPRSTR = '       INF'
+              UPRSTR = '          INF'
             END IF
             WRITE(MSG,10) THRESH(I)%THRBYR,THRESH(I)%THREYR,
      $                    LWRSTR,UPRSTR,THRESH(I)%THRCOM
@@ -934,7 +935,7 @@ C         no thresholds (don't think this is possible with SETTHRESH)
             ELSEIF (INTERVAL(I)%INTRVLUPR .LT. 1.0E19) THEN
               WRITE(UPRSTR,2040) THRESH(I)%THRUPR
             ELSE
-              UPRSTR = '       INF'
+              UPRSTR = '          INF'
             END IF
             WRITE(MSG,20) INTERVAL(I)%INTRVLYR,LWRSTR,UPRSTR,
      $                    INTERVAL(I)%INTRVLCOM
@@ -1012,10 +1013,11 @@ C     + + + FORMATS + + +
  1011 FORMAT(//23X,'TABLE 5 - INPUT DATA LISTING')
  1012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ',
      $        /,'     YEAR      VALUE   CODES    CODES  REMARKS')
- 2012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ   ',
-     $          '<--- Intervals --->',
-     $        /,'     YEAR      VALUE   CODES    CODES   ',
-     $          '  LOW         HIGH   REMARKS')
+ 2012 FORMAT(//,'    WATER       PEAK   NWIS    PEAKFQ  ',
+     $          'FLOW INTERVALS ',
+     $          '(WHERE LOWER BOUND NOT = UPPER BOUND)',/,
+     $          '     YEAR      VALUE   CODES    CODES  ',
+     $          'LOWER BOUND  UPPER BOUND  REMARKS')
  1013 FORMAT(I9,F11.1,A6,A9,A)
  2013 FORMAT(I9,F11.1,A6,A9,2F12.1,A)
 C
@@ -1125,13 +1127,14 @@ C     + + + FORMATS + + +
  1011 FORMAT(//23X,'TABLE 5 - INPUT DATA LISTING')
  1012 FORMAT(//,'    WATER       PEAK   PEAKFQ',
      $        /,'     YEAR      VALUE    CODES  REMARKS')
- 2012 FORMAT(//,'    WATER       PEAK   PEAKFQ   ',
-     $          '<--- Intervals --->',
-     $        /,'     YEAR      VALUE    CODES   ',
-     $          '  LOW         HIGH   REMARKS')
+ 2012 FORMAT(//,'    WATER       PEAK   PEAKFQ  ',
+     $          'FLOW INTERVALS ',
+     $          '(WHERE LOWER BOUND NOT = UPPER BOUND)',
+     $        /,'     YEAR      VALUE    CODES  ',
+     $          'LOWER BOUND  UPPER BOUND  REMARKS')
  1013 FORMAT(I9,F11.1,A7,A)
  2013 FORMAT(I9,F11.1,A7,24X,A)
- 2014 FORMAT(I9,F11.1,A7,F12.1,A12,2X,A)
+ 2014 FORMAT(I9,F11.1,A7,3X,F12.1,1X,A12,2X,A)
  2015 FORMAT(F12.1)
 C1017 FORMAT(/33X,'-- CONTINUED --')
 C
@@ -1144,15 +1147,16 @@ Cprh     $       7X,4HYEAR, 7X, 9HDISCHARGE, 8X, 6HRECORD,8X,8HESTIMATE/)
  1022 FORMAT('   WATER     RANKED   SYSTEMATIC     B17B' / 
      $       '    YEAR   DISCHARGE    RECORD     ESTIMATE')
  2022 FORMAT('   WATER     RANKED ',5X,
-     $       'EMA',9X,'INTERVALS' / 
+     $       'EMA',6X,'FLOW INTERVALS (WHERE LOWER BOUND NOT = ',
+     $       'UPPER BOUND)',/ 
      $       '    YEAR   DISCHARGE   ',
-     $       'ESTIMATE',5X,' LOW      HIGH')
+     $       'ESTIMATE',3X,'LOWER BOUND  UPPER BOUND')
  1023 FORMAT( I8,F11.1,F11.4,F12.4,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2023 FORMAT( 2X,A,I5,F11.1,F11.4,2x,
+ 2023 FORMAT( 2X,A,I5,F11.1,F11.4,2X,
      $      2A1,T20,'       --  ',  1A1, '       --  ' )
- 2024 FORMAT( I8,F11.1,F11.4,2x,F10.1,A)
- 2025 FORMAT( I8,5X,'------',F11.4,2x,F10.1,A)
+ 2024 FORMAT( 2X,A,I5,F11.1,F11.4,5X,F10.1,3X,A)
+ 2025 FORMAT( 2X,A,I5,5X,'------',F11.4,5X,F10.1,3X,A)
  2030 FORMAT(/,4X,'* DENOTES PILF (LO)',/)
 C1027 FORMAT(/33X,'-- CONTINUED --')
 C
@@ -1294,18 +1298,32 @@ c                  ELSE
 c                    WRITE(LTHRCHR(2),'(F9.0)') UTHR
 c                  END IF
                   IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
-                    LINTVLSTR = '     INF    '
+                    LINTVLSTR = '       INF  '
                   ELSE
                     WRITE(LINTVLSTR,'(F10.1)') INTERVAL(J)%INTRVLUPR
                   END IF
                   IF (INTVAL(J) .GT. 0.0) THEN
-                    WRITE(MSG,2024) INTERVAL(J)%INTRVLYR,
-     $                    INTVAL(J),INTERVAL(J)%INTRVLPP,
-     $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                    IF (INTERVAL(J)%INTRVLUPR .LT. 
+     $                  0.999999*(10**GBCRIT)) THEN
+                      WRITE(MSG,2024) '*',INTERVAL(J)%INTRVLYR,
+     $                      INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $                      INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                    ELSE
+                      WRITE(MSG,2024) ' ',INTERVAL(J)%INTRVLYR,
+     $                      INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $                      INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                    END IF
                   ELSE
-                    WRITE(MSG,2025) INTERVAL(J)%INTRVLYR,
-     $                    INTERVAL(J)%INTRVLPP,
-     $                    INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                    IF (INTERVAL(J)%INTRVLUPR .LT. 
+     $                  0.999999*(10**GBCRIT)) THEN
+                      WRITE(MSG,2025) '*',INTERVAL(J)%INTRVLYR,
+     $                      INTERVAL(J)%INTRVLPP,
+     $                      INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                    ELSE
+                      WRITE(MSG,2025) ' ',INTERVAL(J)%INTRVLYR,
+     $                      INTERVAL(J)%INTRVLPP,
+     $                      INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+                    END IF
                   END IF
                   LWROTEINT = INTERVAL(J)%INTRVLYR
                   IF (LWROTEINT .LT. MININTYR) THEN
@@ -1356,18 +1374,30 @@ C       be sure to include thresholds prior to input peaks
         DO 320 J = 1,NINTERVAL
           IF (INTERVAL(J)%INTRVLYR .LT. MININTYR) THEN
             IF (INTERVAL(J)%INTRVLUPR .GT. 1.0E18) THEN
-              LINTVLSTR = '     INF    '
+              LINTVLSTR = '       INF  '
             ELSE
               WRITE(LINTVLSTR,'(F10.1)') INTERVAL(J)%INTRVLUPR
             END IF
             IF (INTVAL(J) .GT. 0.0) THEN
-              WRITE(MSG,2024) INTERVAL(J)%INTRVLYR,
-     $              INTVAL(J),INTERVAL(J)%INTRVLPP,
-     $              INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+              IF (INTERVAL(J)%INTRVLUPR .LT. 0.999999*(10**GBCRIT)) THEN
+                WRITE(MSG,2024) '*',INTERVAL(J)%INTRVLYR,
+     $                INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $                INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+              ELSE
+                WRITE(MSG,2024) ' ',INTERVAL(J)%INTRVLYR,
+     $                INTVAL(J),INTERVAL(J)%INTRVLPP,
+     $                INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+              END IF
             ELSE
-              WRITE(MSG,2025) INTERVAL(J)%INTRVLYR,
-     $              INTERVAL(J)%INTRVLPP,
-     $              INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+              IF (INTERVAL(J)%INTRVLUPR .LT. 0.999999*(10**GBCRIT)) THEN
+                WRITE(MSG,2025) '*',INTERVAL(J)%INTRVLYR,
+     $                INTERVAL(J)%INTRVLPP,
+     $                INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+              ELSE
+                WRITE(MSG,2025) ' ',INTERVAL(J)%INTRVLYR,
+     $                INTERVAL(J)%INTRVLPP,
+     $                INTERVAL(J)%INTRVLLWR,LINTVLSTR(1:10)
+              END IF
             END IF
           END IF
  320    CONTINUE
@@ -1419,9 +1449,9 @@ c     $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
 c     $          '      LOWER      UPPER  TYPE')
  2010 FORMAT(//,20X,'TABLE 7 - EMA REPRESENTATION OF DATA',
      $       //,51X,
-     $          '<---- USER-ENTERED ----><--- FINAL THRESHOLD -->',
+     $          '<---- USER-ENTERED ----><-------- FINAL ------->',
      $        /,'  WATER <----- OBSERVED ----><-------- EMA ------->',
-     $          '<----- THRESHOLDS -----><----- PERCEPTIONS ---->',
+     $          '<- PERCEPTIBLE RANGES -><- PERCEPTIBLE RANGES ->',
      $        /,'   YEAR    Q_LOWER    Q_UPPER    Q_LOWER    Q_UPPER',
      $          '       LOWER       UPPER       LOWER       UPPER')
  2015 FORMAT(F11.1)
@@ -1572,9 +1602,9 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
    10 FORMAT(    ' SYSTEMATIC RECORD',F10.1,F11.4,F11.4,F12.4,F11.3
      $         /,' BULL.17B ESTIMATE',F10.1,F11.4,F11.4,F12.4,F11.3
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
-   11 FORMAT(' EMA W/O REG. INFO    ',F11.4,F12.4,F11.3
-     $     /,' EMA W/REG. INFO      ',F11.4,F12.4,F11.3
-     $    //,' EMA ESTIMATE OF MSE OF SKEW W/O REG. INFO (AT-SITE)    ',
+   11 FORMAT(' EMA WITHOUT REG SKEW ',F11.4,F12.4,F11.3
+     $     /,' EMA WITH REG SKEW    ',F11.4,F12.4,F11.3
+     $    //,' EMA ESTIMATE OF MSE OF SKEW WITHOUT REG SKEW            ',
      $       F8.4,/
      $       ' EMA ESTIMATE OF MSE OF SKEW W/GAGED PEAKS ONLY (AT-SITE)',
      $       F8.4)
@@ -1602,6 +1632,14 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
  2012 FORMAT ( 1X, F11.4, 1X, F12.1,
      $         2X, '(', F6.2, '-year flood )' )
 C 203 FORMAT(1X,F12.1)
+ 2020 FORMAT (/,1X,'*Note: If Station Skew option is selected then ',
+     $             'EMA ESTIMATE WITH REG SKEW will',/,
+     $           8X,'display values for and be equal to EMA ESTIMATE ',
+     $              'WITHOUT REG SKEW.')
+ 2030 FORMAT (/,1X,'*Note: The Extended Analysis option has been ',
+     $             'selected.  This table now includes ',/,
+     $          8X,'additional extended AEP estimates ',
+     $             'for use only in designated projects.')
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -1730,6 +1768,14 @@ C           need extra decimals
         END IF
   210 CONTINUE
 C
+      IF (EMAOPT.EQ.1) THEN !include skew note for EMA
+        WRITE(MSG,2020)
+      END IF
+C
+      IF (IEXTEND.EQ.1) THEN !include extended output note
+        WRITE(MSG,2030)
+      END IF
+C
 Ckmf  Oct 3, 2000, in consultation with wrk
 Ckmf  call added to compute and print extra n-year floods
 Cprh  updated 11/03 for batch version of PEAKFQ that uses EMA method
@@ -1828,10 +1874,10 @@ C     + + + EXTERNALS + + +
       EXTERNAL KENT
 C
 C     + + + OUTPUT FORMATS + + +
- 2000 FORMAT(//,31X,'Kendall''s Tau Parameters',//,
-     $          47X,'MEDIAN   No. of',/,
-     $          30X,'TAU    P-VALUE    SLOPE   PEAKS',/,
-     $          13X,'---------------------------------------',/,
+ 2000 FORMAT(//,23X,'Kendall''s Tau Parameters',//,
+     $          40X,'MEDIAN   No. of',/,
+     $          23X,'TAU    P-VALUE    SLOPE   PEAKS',/,
+     $          15X,'---------------------------------------',/,
      $          4X,'GAGED PEAKS',3F11.3,I6,//)
 C
 C     + + + END SPECIFICATIONS + + +
@@ -2247,7 +2293,7 @@ C             not too many peaks & user wants to continue
 C             default to EMA analysis
               EMAOPT = 1
 C             default low outlier test to single GB
-              LOTYPE = 'GBT'
+              LOTYPE = 'MGBT'
 C
               IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 
@@ -5187,7 +5233,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Version 7.1 dated 3/14/2014',/,'#',/,
+     $       'Version 7.2 dated 7/4/2016',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
