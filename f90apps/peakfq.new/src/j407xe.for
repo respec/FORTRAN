@@ -2290,8 +2290,9 @@ C             not too many peaks & user wants to continue
               IKROPT    =  AUX(11)
               FLAT      =  AUX(12)
               FLONG     =  AUX(13)
-C             default to EMA analysis
+C             default to EMA analysis and to use any Historic Peaks
               EMAOPT = 1
+              IF (HISTPD.EQ.0) HISTPD = ENDYR - BEGYR + 1
 C             default low outlier test to single GB
               LOTYPE = 'MGBT'
 C
