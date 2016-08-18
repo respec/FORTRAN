@@ -2296,7 +2296,8 @@ C             default to EMA analysis and to use any Historic Peaks
 C             default low outlier test to single GB
               LOTYPE = 'MGBT'
 C
-              IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
+C             remove default gen skew computation per USGS request, 8/2016
+C              IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 
 C             update specs
               CALL PARSESTASPECS (CURSTA,XSYSPK,XHSTPK,
@@ -2759,7 +2760,8 @@ C
 C     check if start/end on I card, if not, use systematic record
       IF (ABS(AUX(7)) .LT. 1.0) AUX(7) = REAL(MINYR)
       IF (ABS(AUX(8)) .LT. 1.0) AUX(8) = REAL(MAXYR)
-      IF (ABS(AUX(6)) .LT. 0.00001) AUX(6) = 0.55
+Cprh  remove default setting of root mean sq error per USGS, 8/2016
+C      IF (ABS(AUX(6)) .LT. 0.00001) AUX(6) = 0.55
 Cprh      IF (XHSTPK .GT. 1.0E29) XHSTPK = 0.0
       IF (XHSTPK .GE. 1.0E29) XHSTPK = 0.0
 C
@@ -3030,7 +3032,7 @@ C
 C     + + + DATA INITIALIZATIONS + + +
 Cprh      DATA    JPUN   /12,16,20,21,23,25,26,27,28/
 Cprh  updated for inclusion of 1.5 and 2.33 intervals, 11/03
-      DATA    JPUN   /12,14,17,18,21,22,24,26,27,28,29/
+      DATA    JPUN   /11,13,16,17,20,21,23,25,26,27,28/
       DATA    VAR    /75,76,77,78,79,80,81,82,178/
       DATA    VARNAM /'STAID ',' P1.25','  P1.5','   P2.',' P2.33',
      $                '   P5.','  P10.','  P25.','  P50.',' P100.',
