@@ -2122,7 +2122,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  2.7824E-07    0.00001   28.314                                                  *
+ *  2.7853E-07    0.00001   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -2193,10 +2193,10 @@
    SPSPM    8   1       ORIG:      0.12000          RESET TO =       0.06000
 
  SPEC-ACT: PERLND    1 AT 1976/ 7/ 1 13: 0
-   DETS                 ORIG:      1.2681           RESET TO =       1.5000 
+   DETS                 ORIG:   1.2681E+00          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    1 AT 1976/ 7/25 13: 0
-   DETS                 ORIG:      0.79440          RESET TO =       1.5000 
+   DETS                 ORIG:   7.9440E-01          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    1 AT 1976/ 8/25  1: 0
    INFILT               ORIG:      0.13000          RESET TO =       0.10000
@@ -2368,39 +2368,13 @@
    DETS                 ORIG:   1.0597E+00          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    2 AT 1976/ 7/15 13: 0
-   DETS                 ORIG:   8.8100E-01          RESET TO =    1.5000E+00
+   DETS                 ORIG:      0.88100          RESET TO =       1.5000 
 
  SPEC-ACT: PERLND    2 AT 1976/ 8/25  1: 0
    INFILT               ORIG:      0.13000          RESET TO =       0.10000
 
  SPEC-ACT: PERLND    2 AT 1976/12/ 2  1: 0
    INFILT               ORIG:      0.10000          RESET TO =       0.06000
- 
- 
- ************************************************************************************
- *                                                                                  *
- *  ERROR/WARNING ID:   308   3                                                     *
- *                                                                                  *
- *  DATE/TIME: 1976/ 1/11 15: 0                                                     *
- *                                                                                  *
- *  Pervious land segment:     3                                                    *
- *                                                                                  *
- *  The simulated quantity of soil/sediment removed from the surface in this        *
- *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
- *  To avoid likely resulting problems due to lack of significance (using single    *
- *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
- *                                                                                  *
- *         FSD      SOSED       SLME                                                *
- *  1.2101E-10    0.00000   28.314                                                  *
- *                                                                                  *
- *  Where:                                                                          *
- *  FSD is SOSED/SLME                                                               *
- *  SOSED is the total quantity of soil/sediment removed from the surface           *
- *       (tons/acre)                                                                *
- *  SLME is the mass of soil in the surface layer (tons/acre)                       *
- *                                                                                  *
- ************************************************************************************
- 
  
  
  ************************************************************************************
@@ -2417,7 +2391,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  2.5706E-07    0.00001   28.314                                                  *
+ *  2.5664E-07    0.00001   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -2469,7 +2443,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  6.2554E-07    0.00002   28.314                                                  *
+ *  6.2511E-07    0.00002   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -2496,6 +2470,32 @@
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
  *  5.6684E-07    0.00002   28.314                                                  *
+ *                                                                                  *
+ *  Where:                                                                          *
+ *  FSD is SOSED/SLME                                                               *
+ *  SOSED is the total quantity of soil/sediment removed from the surface           *
+ *       (tons/acre)                                                                *
+ *  SLME is the mass of soil in the surface layer (tons/acre)                       *
+ *                                                                                  *
+ ************************************************************************************
+ 
+ 
+ 
+ ************************************************************************************
+ *                                                                                  *
+ *  ERROR/WARNING ID:   308   3                                                     *
+ *                                                                                  *
+ *  DATE/TIME: 1976/ 1/14 13: 0                                                     *
+ *                                                                                  *
+ *  Pervious land segment:     3                                                    *
+ *                                                                                  *
+ *  The simulated quantity of soil/sediment removed from the surface in this        *
+ *  interval is less than 1/100000 of the quantity of soil in the surface layer.    *
+ *  To avoid likely resulting problems due to lack of significance (using single    *
+ *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
+ *                                                                                  *
+ *         FSD      SOSED       SLME                                                *
+ *  5.4807E-06    0.00016   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *

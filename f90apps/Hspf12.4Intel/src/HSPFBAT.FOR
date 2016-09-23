@@ -55,8 +55,8 @@ C     CALL INVALOP (LFLAG)
 C     CALL UNDFL (LFLAG)
 C
 C     CALL CHANGEDIRQQ('e:\test\hspf\Salado\intel12.3detail10')
-C     CALL CHANGEDIRQQ('e:\F90APPS\HSPF12.3INTEL\TEST')
-      CALL CHANGEDIRQQ('E:\Projects\NHC_BMPProcessor')
+      CALL CHANGEDIRQQ('e:\devhspf.com\F90APPS\HSPF12.4INTEL\TEST\BASE')
+C     CALL CHANGEDIRQQ('E:\Projects\NHC_BMPProcessor')
       OPEN (UNIT=99,FILE='error.fil')
 C
 C     initialize wdm file common block
@@ -138,6 +138,9 @@ C           file block processed without error - beginning message
 C           read users uci file
             MESSU  = FILES(1)
             CALL UCIINP (USRFL,MESSFL,MESSU)
+C           dummy to match hasent output
+            WRITE(MESSU,'(" FOUND RUN ")')
+            WRITE(MESSU,'(" FOUND END RUN ")')
 C           close users input file
             CLOSE (UNIT=USRFL)
 C           proceed to run model
@@ -187,7 +190,8 @@ C       close any dss files
 C
 C     when end?
       CALL CPU_TIME(TIMEE)
-      WRITE(99,*) TIMEE-TIMES, TIMES, TIMEE
+C     include something about exe and hspfmsg.wdm versions too?      
+      WRITE(99,'(3f10.3,1x,a)') TIMEE-TIMES, TIMES, TIMEE, TRIM(FILNAM)
 C     CALL TSTUF('Done',1.0)
 C      uncomment these lines for run times on f90
 C      CALL DATE_AND_TIME(VALUES=EDATM)

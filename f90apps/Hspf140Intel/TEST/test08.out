@@ -73,7 +73,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             70826.2                47.9           1142959.6             28251.9
+                                                0.0             70826.1                47.9           1142959.6             28251.8
 
  *** NITR ***
 
@@ -94,7 +94,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        1.424E-04 6.326E-02 2.440E-02 3.002E-04 2.651E-04           7.146E-03 7.940E-04           3.627E-03
+       NH4-N IN SOLUTION        1.424E-04 6.326E-02 2.440E-02 3.002E-04 2.651E-04           7.146E-03 7.940E-04           3.626E-03
        NO3(+NO2)-N              3.381E-04 2.997E-01 2.140E+00 2.644E-02 2.412E-02           2.921E-01 3.245E-02           9.429E-01
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -127,7 +127,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           2.220E+00           4.835E-04           2.221E+00
+                                          0.000E+00           0.000E+00           2.220E+00           4.834E-04           2.221E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -166,7 +166,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        8.668E-03 3.288E+00 5.938E-02 5.363E-04 5.002E-04           3.120E-03 3.466E-04           4.248E-02
+       PO4-P IN SOLUTION        8.667E-03 3.288E+00 5.938E-02 5.363E-04 5.002E-04           3.120E-03 3.466E-04           4.248E-02
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -656,7 +656,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            393138.8               490.6           2066829.8            301666.5
+                                                0.0            393138.9               490.6           2066829.8            301666.5
 
  *** NITR ***
 
@@ -671,13 +671,13 @@
        LOWER LAYER                  0.725     4.583    23.619     0.000  1493.265     0.000     0.000    10.708            1532.900
        ACTIVE GROUNDWATER           0.007    10.179     2.937     0.000  1000.000     0.000     0.000     0.000            1013.124
 
-     TOTALS                         0.854    15.331    26.619     0.000  3008.077     0.000     0.000    10.708            3061.590
+     TOTALS                         0.854    15.331    26.619     0.000  3008.077     0.000     0.000    10.708            3061.589
 
    FLUXES            (LB/AC) 
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        7.541E-06 1.031E-03 5.563E-02 9.494E-03 1.219E-02           8.870E-02 9.856E-03           5.377E-03
+       NH4-N IN SOLUTION        7.539E-06 1.031E-03 5.563E-02 9.494E-03 1.219E-02           8.870E-02 9.856E-03           5.377E-03
        NO3(+NO2)-N              0.000E+00 0.000E+00 4.093E-02 6.359E-03 1.115E-02           3.039E+00 3.377E-01           2.227E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -749,7 +749,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        1.585E-04 2.377E-02 2.057E-04 3.672E-05 6.143E-05           5.500E-06 6.111E-07           0.000E+00
+       PO4-P IN SOLUTION        1.584E-04 2.377E-02 2.057E-04 3.672E-05 6.143E-05           5.500E-06 6.111E-07           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -845,7 +845,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            233173.5               389.6           1981305.5            220799.1
+                                                0.0            233173.5               389.6           1981305.8            220799.0
 
  *** NITR ***
 
@@ -866,7 +866,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        2.057E-07 2.763E-04 1.908E-02 8.617E-04 9.074E-04           5.227E-02 5.808E-03           6.017E-03
+       NH4-N IN SOLUTION        2.097E-07 2.763E-04 1.908E-02 8.617E-04 9.074E-04           5.227E-02 5.808E-03           6.017E-03
        NO3(+NO2)-N              0.000E+00 0.000E+00 1.419E-02 7.163E-04 7.035E-04           1.770E+00 1.967E-01           2.331E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -938,12 +938,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.371E-06 4.454E-03 3.189E-05 1.078E-06 1.239E-06           3.311E-06 3.678E-07           0.000E+00
+       PO4-P IN SOLUTION        3.438E-06 4.454E-03 3.189E-05 1.078E-06 1.240E-06           3.311E-06 3.678E-07           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                1.600E-05 1.387E-04 1.547E-04           1.433E-04 1.593E-04
+                                1.600E-05 1.387E-04 1.547E-04           1.434E-04 1.594E-04
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -1034,7 +1034,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            115402.8               107.5           1616907.2            156828.9
+                                                0.0            115402.8               107.5           1616907.5            156828.9
 
  *** NITR ***
 
@@ -1055,7 +1055,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        1.659E-07 1.988E-04 1.402E-02 1.070E-03 1.131E-03           3.189E-02 3.543E-03           3.565E-03
+       NH4-N IN SOLUTION        1.658E-07 1.988E-04 1.402E-02 1.070E-03 1.131E-03           3.189E-02 3.543E-03           3.565E-03
        NO3(+NO2)-N              0.000E+00 0.000E+00 1.166E-02 9.883E-04 1.048E-03           1.178E+00 1.309E-01           1.458E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -1127,7 +1127,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        2.360E-06 2.825E-03 2.677E-05 2.177E-06 2.255E-06           2.432E-06 2.702E-07           0.000E+00
+       PO4-P IN SOLUTION        2.358E-06 2.826E-03 2.677E-05 2.177E-06 2.255E-06           2.432E-06 2.702E-07           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -1223,7 +1223,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             29851.7                25.6            917866.6             24601.7
+                                                0.0             29851.7                25.6            917866.7             24601.7
 
  *** NITR ***
 
@@ -1245,7 +1245,7 @@
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
        NH4-N IN SOLUTION        2.086E-08 4.161E-05 1.018E-03 3.186E-05 5.689E-05           1.679E-03 1.865E-04           1.321E-03
-       NO3(+NO2)-N              0.000E+00 0.000E+00 2.033E-03 7.569E-05 9.022E-05           9.126E-02 1.014E-02           7.998E-01
+       NO3(+NO2)-N              0.000E+00 0.000E+00 2.033E-03 7.569E-05 9.021E-05           9.126E-02 1.014E-02           7.998E-01
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -1316,7 +1316,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        2.753E-07 5.487E-04 5.288E-06 1.795E-07 1.805E-07           1.990E-07 2.211E-08           0.000E+00
+       PO4-P IN SOLUTION        2.754E-07 5.488E-04 5.288E-06 1.794E-07 1.805E-07           1.990E-07 2.211E-08           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -1344,7 +1344,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                0.000E+00 0.000E+00 7.862E-02 2.928E-03 3.489E-03 8.990E-01 9.988E-02 9.219E+00           9.223E+00
+                                0.000E+00 0.000E+00 7.862E-02 2.927E-03 3.489E-03 8.990E-01 9.988E-02 9.219E+00           9.223E+00
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   2.050E+02
@@ -1433,8 +1433,8 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 3.817E-06           0.000E+00 0.000E+00           5.006E-05
-       NO3(+NO2)-N              0.000E+00 0.000E+00 0.000E+00 0.000E+00 8.878E-06           0.000E+00 0.000E+00           7.753E-01
+       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 3.816E-06           0.000E+00 0.000E+00           5.006E-05
+       NO3(+NO2)-N              0.000E+00 0.000E+00 0.000E+00 0.000E+00 8.877E-06           0.000E+00 0.000E+00           7.753E-01
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -1442,7 +1442,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           5.388E-05 7.753E-01 0.000E+00 7.753E-01
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           5.387E-05 7.753E-01 0.000E+00 7.753E-01
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -1533,7 +1533,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00 3.434E-04 0.000E+00 0.000E+00 9.642E+00           9.642E+00
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00 3.433E-04 0.000E+00 0.000E+00 9.642E+00           9.642E+00
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   1.957E+02
@@ -1581,7 +1581,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          7.698E-13           1.941E-06 1.941E-06           1.016E-02  0.00    
+                                          7.690E-13           1.941E-06 1.941E-06           1.016E-02  0.00    
 
  *** PSTEMP ***
 
@@ -1601,7 +1601,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0               856.1                 0.0             94183.8                 0.0
+                                                0.0               856.1                 0.0             94183.7                 0.0
 
  *** NITR ***
 
@@ -1622,8 +1622,8 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        3.043E-11 9.187E-06 7.517E-06 1.242E-09 0.000E+00           1.946E-06 2.162E-07           1.446E-08
-       NO3(+NO2)-N              0.000E+00 0.000E+00 8.906E-05 2.752E-08 0.000E+00           4.841E-04 5.379E-05           4.841E-04
+       NH4-N IN SOLUTION        3.105E-11 9.187E-06 7.517E-06 1.256E-09 0.000E+00           1.946E-06 2.162E-07           2.500E-08
+       NO3(+NO2)-N              0.000E+00 0.000E+00 8.906E-05 2.755E-08 0.000E+00           4.841E-04 5.379E-05           4.841E-04
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -1631,7 +1631,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           1.449E-08 4.841E-04 0.000E+00 4.841E-04
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           2.504E-08 4.841E-04 0.000E+00 4.841E-04
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -1694,12 +1694,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.978E-10 1.200E-04 5.220E-08 7.297E-12 0.000E+00           1.175E-09 1.305E-10           0.000E+00
+       PO4-P IN SOLUTION        4.049E-10 1.199E-04 5.215E-08 7.391E-12 0.000E+00           1.175E-09 1.305E-10           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                0.000E+00 0.000E+00 0.000E+00           3.978E-10 3.978E-10
+                                0.000E+00 0.000E+00 0.000E+00           4.049E-10 4.049E-10
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -1722,7 +1722,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                0.000E+00 0.000E+00 3.444E-03 1.064E-06 0.000E+00 5.504E-03 6.116E-04 5.504E-03           5.504E-03
+                                0.000E+00 0.000E+00 3.445E-03 1.065E-06 0.000E+00 5.504E-03 6.116E-04 5.504E-03           5.504E-03
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   1.861E+02
@@ -1790,7 +1790,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0               860.4                 0.0            334265.7               784.1
+                                                0.0               860.4                 0.0            334265.6               784.1
 
  *** NITR ***
 
@@ -1811,7 +1811,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        2.844E-09 5.864E-05 5.543E-05 3.437E-07 0.000E+00           1.451E-04 1.613E-05           2.237E-06
+       NH4-N IN SOLUTION        2.844E-09 5.864E-05 5.544E-05 3.438E-07 0.000E+00           1.451E-04 1.613E-05           2.273E-06
        NO3(+NO2)-N              0.000E+00 0.000E+00 6.454E-04 3.835E-06 0.000E+00           9.758E-03 1.084E-03           5.426E-03
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -1820,7 +1820,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           2.239E-06 5.426E-03 0.000E+00 5.428E-03
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           2.276E-06 5.426E-03 0.000E+00 5.428E-03
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -1840,11 +1840,11 @@
 
               DENITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                               SDENI               UDENI               LDENI               ADENI               TDENI
-                                          0.000E+00           0.000E+00           2.394E-01           8.915E-05           2.395E-01
+                                          0.000E+00           0.000E+00           2.394E-01           8.916E-05           2.395E-01
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           6.334E-01           4.814E-06           6.334E-01
+                                          0.000E+00           0.000E+00           6.334E-01           4.889E-06           6.334E-01
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -1883,12 +1883,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.622E-08 7.508E-04 3.632E-07 2.208E-09 0.000E+00           2.522E-08 2.803E-09           0.000E+00
+       PO4-P IN SOLUTION        3.621E-08 7.507E-04 3.632E-07 2.207E-09 0.000E+00           2.522E-08 2.803E-09           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                0.000E+00 0.000E+00 0.000E+00           3.622E-08 3.622E-08
+                                0.000E+00 0.000E+00 0.000E+00           3.621E-08 3.621E-08
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -1990,7 +1990,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0               783.1                 0.0            316887.4                 0.0
+                                                0.0               783.1                 0.0            316887.3                 0.0
 
  *** NITR ***
 
@@ -2011,7 +2011,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           1.163E-06
+       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           1.171E-06
        NO3(+NO2)-N              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           4.179E-03
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -2020,7 +2020,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           1.163E-06 4.179E-03 0.000E+00 4.180E-03
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           1.171E-06 4.179E-03 0.000E+00 4.180E-03
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -2044,7 +2044,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           1.046E+00           2.509E-06           1.046E+00
+                                          0.000E+00           0.000E+00           1.046E+00           2.498E-06           1.046E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -2063,7 +2063,7 @@
                                           0.000E+00           0.000E+00           0.000E+00           0.000E+00           0.000E+00
 
    BALANCE                      % ERROR IN    LB/AC
-                                 -0.131   3.054E+03
+                                 -0.130   3.054E+03
 
  *** PHOS ***
 
@@ -2170,7 +2170,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.338E-10           5.580E-05 5.580E-05            0.00      0.00    
+                                          1.339E-10           5.580E-05 5.580E-05            0.00      0.00    
 
  *** PSTEMP ***
 
@@ -2190,7 +2190,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0              1236.6                 0.0            389643.6               747.8
+                                                0.0              1236.6                 0.0            389643.4               747.8
 
  *** NITR ***
 
@@ -2200,9 +2200,9 @@
                                 NH4-N SOL NH4-N ADS   NO3/2-N ORGANIC N ORGANIC N ORGANIC N ORGANIC N   PLANT N             TOTAL N
 
        SURFACE LAYER                0.000     0.001     0.000     0.000    15.000     0.000     0.000     0.000              15.001
-       UPPER PRINCIPAL              0.000     0.653     0.032     0.000   500.000     0.000     0.000     0.000             500.685
+       UPPER PRINCIPAL              0.000     0.653     0.032     0.000   500.000     0.000     0.000     0.000             500.686
        UPPER TRANSITORY(INTER)      0.000               0.000     0.000               0.000                                   0.000
-       LOWER LAYER                  0.468     9.564    13.995     0.000  1496.632     0.000     0.000     2.646            1523.306
+       LOWER LAYER                  0.468     9.564    13.995     0.000  1496.632     0.000     0.000     2.646            1523.305
        ACTIVE GROUNDWATER           0.000    10.245     0.004     0.000  1000.000     0.000     0.000     0.000            1010.249
 
      TOTALS                         0.469    20.463    14.031     0.000  3011.632     0.000     0.000     2.646            3049.240
@@ -2211,7 +2211,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        2.811E-09 1.224E-05 3.662E-05 5.553E-07 0.000E+00           1.418E-04 1.576E-05           4.515E-06
+       NH4-N IN SOLUTION        2.811E-09 1.224E-05 3.662E-05 5.553E-07 0.000E+00           1.418E-04 1.576E-05           4.473E-06
        NO3(+NO2)-N              0.000E+00 0.000E+00 5.780E-04 8.338E-06 0.000E+00           4.773E-03 5.303E-04           8.944E-04
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -2220,7 +2220,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           4.517E-06 8.944E-04 0.000E+00 8.989E-04
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           4.476E-06 8.944E-04 0.000E+00 8.989E-04
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -2244,7 +2244,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           1.262E+00           9.922E-06           1.262E+00
+                                          0.000E+00           0.000E+00           1.262E+00           9.839E-06           1.262E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -2283,12 +2283,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.521E-08 1.534E-04 1.984E-07 3.047E-09 0.000E+00           1.311E-08 1.457E-09           0.000E+00
+       PO4-P IN SOLUTION        3.519E-08 1.531E-04 1.982E-07 3.045E-09 0.000E+00           1.311E-08 1.457E-09           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                0.000E+00 0.000E+00 0.000E+00           3.521E-08 3.521E-08
+                                0.000E+00 0.000E+00 0.000E+00           3.519E-08 3.519E-08
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -2390,7 +2390,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0              1236.6                 0.0            389643.6               747.8
+                                                0.0              1236.6                 0.0            389643.4               747.8
 
  *** NITR ***
 
@@ -2400,9 +2400,9 @@
                                 NH4-N SOL NH4-N ADS   NO3/2-N ORGANIC N ORGANIC N ORGANIC N ORGANIC N   PLANT N             TOTAL N
 
        SURFACE LAYER                0.000     0.001     0.000     0.000    15.000     0.000     0.000     0.000              15.001
-       UPPER PRINCIPAL              0.000     0.653     0.032     0.000   500.000     0.000     0.000     0.000             500.685
+       UPPER PRINCIPAL              0.000     0.653     0.032     0.000   500.000     0.000     0.000     0.000             500.686
        UPPER TRANSITORY(INTER)      0.000               0.000     0.000               0.000                                   0.000
-       LOWER LAYER                  0.468     9.564    13.995     0.000  1496.632     0.000     0.000     2.646            1523.306
+       LOWER LAYER                  0.468     9.564    13.995     0.000  1496.632     0.000     0.000     2.646            1523.305
        ACTIVE GROUNDWATER           0.000    10.245     0.004     0.000  1000.000     0.000     0.000     0.000            1010.249
 
      TOTALS                         0.469    20.463    14.031     0.000  3011.632     0.000     0.000     2.646            3049.240
@@ -2483,7 +2483,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        2.472E-02 4.247E+00 7.344E-02 3.414E-03 3.414E-03           3.146E-03 3.496E-04           4.248E-02
+       PO4-P IN SOLUTION        2.473E-02 4.247E+00 7.344E-02 3.414E-03 3.414E-03           3.146E-03 3.496E-04           4.248E-02
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -2612,7 +2612,7 @@
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
        NH4-N IN SOLUTION        1.813E-04 6.138E-02 1.692E-02 2.912E-04 2.560E-04           6.773E-03 7.525E-04           3.670E-03
-       NO3(+NO2)-N              2.119E-04 2.998E-01 2.035E+00 3.327E-02 3.043E-02           2.709E-01 3.010E-02           9.386E-01
+       NO3(+NO2)-N              2.115E-04 2.998E-01 2.035E+00 3.327E-02 3.043E-02           2.709E-01 3.010E-02           9.386E-01
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -2644,7 +2644,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           2.210E+00           4.722E-04           2.210E+00
+                                          0.000E+00           0.000E+00           2.210E+00           4.723E-04           2.210E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -2711,7 +2711,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                3.531E-03 4.996E+00 7.873E+01 1.287E+00 5.114E+01 1.366E+00 1.518E-01 4.758E+01           9.872E+01
+                                3.525E-03 4.996E+00 7.873E+01 1.287E+00 5.114E+01 1.366E+00 1.518E-01 4.758E+01           9.872E+01
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   4.550E+02
@@ -2800,12 +2800,12 @@
                                 NH4-N SOL NH4-N ADS   NO3/2-N ORGANIC N ORGANIC N ORGANIC N ORGANIC N   PLANT N             TOTAL N
 
        SURFACE LAYER                0.000     0.005     0.000     0.000    14.991     0.000     0.000     0.000              14.996
-       UPPER PRINCIPAL              0.098     0.835     0.824     0.000   500.000     0.000     0.000     0.000             501.757
+       UPPER PRINCIPAL              0.098     0.835     0.824     0.000   500.000     0.000     0.000     0.000             501.756
        UPPER TRANSITORY(INTER)      0.003               0.026     0.000               0.000                                   0.028
        LOWER LAYER                  0.877     6.025    27.507     0.000  1496.660     0.000     0.000     8.768            1539.838
        ACTIVE GROUNDWATER           0.003    10.034     1.580     0.000  1000.000     0.000     0.000     0.000            1011.616
 
-     TOTALS                         0.980    16.898    29.937     0.000  3011.651     0.000     0.000     8.768            3068.235
+     TOTALS                         0.980    16.898    29.936     0.000  3011.651     0.000     0.000     8.768            3068.235
 
    FLUXES            (LB/AC) 
 
@@ -2883,7 +2883,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        6.829E-03 9.464E-01 1.434E-02 1.916E-03 1.834E-03           1.097E-05 1.219E-06           2.038E-09
+       PO4-P IN SOLUTION        6.828E-03 9.464E-01 1.434E-02 1.916E-03 1.834E-03           1.097E-05 1.219E-06           2.038E-09
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -3173,7 +3173,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            355110.5               530.5           2074924.9            303271.1
+                                                0.0            355110.5               530.5           2074924.5            303271.0
 
  *** NITR ***
 
@@ -3188,13 +3188,13 @@
        LOWER LAYER                  0.726     4.576    19.500     0.000  1493.265     0.000     0.000    16.182            1534.249
        ACTIVE GROUNDWATER           0.007    10.175     2.502     0.000  1000.000     0.000     0.000     0.000            1012.685
 
-     TOTALS                         0.847    15.331    22.067     0.000  3008.056     0.000     0.000    16.182            3062.482
+     TOTALS                         0.847    15.331    22.066     0.000  3008.056     0.000     0.000    16.182            3062.482
 
    FLUXES            (LB/AC) 
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        9.523E-06 1.048E-03 6.130E-02 1.180E-02 1.496E-02           8.936E-02 9.929E-03           5.288E-03
+       NH4-N IN SOLUTION        9.524E-06 1.048E-03 6.130E-02 1.180E-02 1.496E-02           8.936E-02 9.929E-03           5.287E-03
        NO3(+NO2)-N              0.000E+00 0.000E+00 4.900E-02 8.636E-03 1.454E-02           2.564E+00 2.849E-01           1.899E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -3257,16 +3257,16 @@
        SURFACE LAYER                0.197               1.715     0.000                                   1.000               2.912
        UPPER PRINCIPAL              1.000              34.176     0.000                                   5.000              40.176
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.879             300.146     0.000                                   0.000             304.026
+       LOWER LAYER                  3.879             300.146     0.000                                   0.000             304.025
        ACTIVE GROUNDWATER           4.000             299.957     0.000                                   0.000             303.957
 
-       TOTALS                       9.077             635.994     0.000                                   6.000             651.070
+       TOTALS                       9.077             635.994     0.000                                   6.000             651.071
 
    FLUXES            (LB/AC) 
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        1.988E-04 2.370E-02 2.305E-04 5.031E-05 7.874E-05           5.613E-06 6.236E-07           0.000E+00
+       PO4-P IN SOLUTION        1.989E-04 2.370E-02 2.305E-04 5.031E-05 7.874E-05           5.613E-06 6.237E-07           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -3362,7 +3362,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            216661.4               381.1           1980546.8            208611.3
+                                                0.0            216661.3               381.1           1980546.4            208611.2
 
  *** NITR ***
 
@@ -3388,7 +3388,7 @@
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
        NH4-N IN SOLUTION        2.279E-02 1.246E+01 6.800E+00 3.954E-01 3.449E-01           9.959E-02 1.107E-02           5.859E-03
-       NO3(+NO2)-N              0.000E+00 0.000E+00 1.414E-02 8.001E-04 7.957E-04           1.297E+00 1.441E-01           1.896E+00
+       NO3(+NO2)-N              0.000E+00 0.000E+00 1.414E-02 8.001E-04 7.958E-04           1.297E+00 1.441E-01           1.896E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -3396,7 +3396,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                6.515E-06 1.220E-03 0.000E+00 1.227E-03           3.735E-01 1.896E+00 1.220E-03 2.271E+00
+                                6.515E-06 1.220E-03 0.000E+00 1.227E-03           3.736E-01 1.896E+00 1.220E-03 2.271E+00
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -3459,7 +3459,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.395E-06 4.451E-03 3.514E-05 1.127E-06 1.347E-06           2.949E-06 3.276E-07           0.000E+00
+       PO4-P IN SOLUTION        3.387E-06 4.451E-03 3.515E-05 1.128E-06 1.347E-06           2.949E-06 3.276E-07           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -3487,7 +3487,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                0.000E+00 0.000E+00 5.468E-01 3.094E-02 3.078E-02 1.452E+01 1.614E+00 2.485E+01           2.488E+01
+                                0.000E+00 0.000E+00 5.468E-01 3.095E-02 3.078E-02 1.452E+01 1.614E+00 2.485E+01           2.488E+01
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   2.507E+02
@@ -3555,7 +3555,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            102294.2               100.3           1618792.8            146589.2
+                                                0.0            102294.2               100.4           1618792.2            146589.2
 
  *** NITR ***
 
@@ -3580,7 +3580,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        1.250E-02 1.489E+01 9.689E+00 6.885E-01 7.097E-01           1.370E-01 1.522E-02           3.430E-03
+       NH4-N IN SOLUTION        1.251E-02 1.489E+01 9.689E+00 6.885E-01 7.097E-01           1.370E-01 1.522E-02           3.430E-03
        NO3(+NO2)-N              0.000E+00 0.000E+00 1.191E-02 1.030E-03 1.097E-03           1.028E+00 1.143E-01           1.165E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -3589,7 +3589,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                3.477E-07 4.990E-04 0.000E+00 4.994E-04           7.256E-01 1.166E+00 4.990E-04 1.892E+00
+                                3.477E-07 4.990E-04 0.000E+00 4.993E-04           7.256E-01 1.166E+00 4.990E-04 1.892E+00
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -3652,12 +3652,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        2.273E-06 2.879E-03 2.826E-05 2.025E-06 2.091E-06           2.263E-06 2.515E-07           0.000E+00
+       PO4-P IN SOLUTION        2.273E-06 2.879E-03 2.827E-05 2.025E-06 2.093E-06           2.263E-06 2.515E-07           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                6.654E-06 5.768E-05 6.433E-05           6.204E-05 6.869E-05
+                                6.653E-06 5.767E-05 6.433E-05           6.204E-05 6.869E-05
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -3728,7 +3728,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          4.319E-07           2.287E-04 2.292E-04           0.109      0.00    
+                                          4.319E-07           2.287E-04 2.291E-04           0.109      0.00    
 
  *** PSTEMP ***
 
@@ -3748,7 +3748,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             25083.4                22.8            910819.8             19207.1
+                                                0.0             25083.4                22.8            910819.4             19207.1
 
  *** NITR ***
 
@@ -3763,7 +3763,7 @@
        LOWER LAYER                  1.356    10.906    22.038     0.000  1488.144     0.000     0.000    25.601            1548.045
        ACTIVE GROUNDWATER           0.000    10.399     0.701     0.000  1000.000     0.000     0.000     0.000            1011.100
 
-     TOTALS                        13.903    90.734    22.773     0.000  3002.933     0.000     0.000    25.601            3155.945
+     TOTALS                        13.903    90.734    22.773     0.000  3002.933     0.000     0.000    25.601            3155.944
 
    FLUXES            (LB/AC) 
 
@@ -3841,12 +3841,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.015E-07 5.946E-04 5.630E-06 2.027E-07 2.046E-07           1.806E-07 2.007E-08           0.000E+00
+       PO4-P IN SOLUTION        3.012E-07 5.943E-04 5.628E-06 2.027E-07 2.011E-07           1.806E-07 2.007E-08           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                0.000E+00 0.000E+00 0.000E+00           5.061E-07 5.061E-07
+                                0.000E+00 0.000E+00 0.000E+00           5.023E-07 5.023E-07
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -3937,7 +3937,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0              2862.7                 0.0            188530.5                 0.0
+                                                0.0              2862.7                 0.0            188530.8                 0.0
 
  *** NITR ***
 
@@ -3952,13 +3952,13 @@
        LOWER LAYER                  0.302    11.318    20.671     0.000  1486.418     0.000     0.000    29.021            1547.730
        ACTIVE GROUNDWATER           0.000    10.399     0.000     0.000  1000.000     0.000     0.000     0.000            1010.399
 
-     TOTALS                         1.734   102.257    20.705     0.000  3001.207     0.000     0.000    29.021            3154.925
+     TOTALS                         1.734   102.257    20.705     0.000  3001.207     0.000     0.000    29.021            3154.924
 
    FLUXES            (LB/AC) 
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 3.979E-03           0.000E+00 0.000E+00           3.340E-05
+       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 3.979E-03           0.000E+00 0.000E+00           3.433E-05
        NO3(+NO2)-N              0.000E+00 0.000E+00 0.000E+00 0.000E+00 8.264E-06           0.000E+00 0.000E+00           6.866E-01
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -3967,7 +3967,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           4.012E-03 6.866E-01 0.000E+00 6.906E-01
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           4.013E-03 6.866E-01 0.000E+00 6.906E-01
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -3991,7 +3991,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           2.362E+00           6.858E-05           2.363E+00
+                                          0.000E+00           0.000E+00           2.362E+00           6.854E-05           2.363E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -4106,7 +4106,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          5.741E-12           1.525E-06 1.525E-06           1.377E-02  0.00    
+                                          5.744E-12           1.525E-06 1.525E-06           1.377E-02  0.00    
 
  *** PSTEMP ***
 
@@ -4136,7 +4136,7 @@
                                 NH4-N SOL NH4-N ADS   NO3/2-N ORGANIC N ORGANIC N ORGANIC N ORGANIC N   PLANT N             TOTAL N
 
        SURFACE LAYER                0.000     0.032     0.000     0.000    14.789     0.000     0.000     0.000              14.821
-       UPPER PRINCIPAL              0.273    81.661     0.034     0.000   500.000     0.000     0.000     0.000             581.967
+       UPPER PRINCIPAL              0.273    81.660     0.034     0.000   500.000     0.000     0.000     0.000             581.967
        UPPER TRANSITORY(INTER)      0.001               0.000     0.000               0.000                                   0.001
        LOWER LAYER                  0.173    12.568    18.012     0.000  1484.748     0.000     0.000    31.964            1547.464
        ACTIVE GROUNDWATER           0.000    10.399     0.000     0.000  1000.000     0.000     0.000     0.000            1010.399
@@ -4147,8 +4147,8 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        2.097E-08 7.826E-03 6.629E-03 1.074E-06 0.000E+00           3.837E-06 4.264E-07           9.989E-09
-       NO3(+NO2)-N              0.000E+00 0.000E+00 6.686E-05 2.343E-08 0.000E+00           4.879E-04 5.421E-05           4.879E-04
+       NH4-N IN SOLUTION        2.084E-08 7.826E-03 6.629E-03 1.068E-06 0.000E+00           3.837E-06 4.264E-07           1.983E-06
+       NO3(+NO2)-N              0.000E+00 0.000E+00 6.686E-05 2.340E-08 0.000E+00           4.879E-04 5.421E-05           4.879E-04
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -4156,7 +4156,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           3.096E-08 4.879E-04 0.000E+00 4.879E-04
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           2.003E-06 4.879E-04 0.000E+00 4.899E-04
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -4219,12 +4219,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.089E-10 1.182E-04 4.102E-08 5.767E-12 0.000E+00           1.027E-09 1.141E-10           0.000E+00
+       PO4-P IN SOLUTION        3.070E-10 1.183E-04 4.105E-08 5.733E-12 0.000E+00           1.027E-09 1.141E-10           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                0.000E+00 0.000E+00 0.000E+00           3.089E-10 3.089E-10
+                                0.000E+00 0.000E+00 0.000E+00           3.070E-10 3.070E-10
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -4247,7 +4247,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                0.000E+00 0.000E+00 2.586E-03 9.061E-07 0.000E+00 4.903E-03 5.448E-04 4.903E-03           4.903E-03
+                                0.000E+00 0.000E+00 2.586E-03 9.049E-07 0.000E+00 4.903E-03 5.448E-04 4.903E-03           4.903E-03
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   1.896E+02
@@ -4336,7 +4336,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        6.335E-07 1.904E-02 4.560E-02 2.996E-04 0.000E+00           2.118E-04 2.353E-05           4.469E-06
+       NH4-N IN SOLUTION        6.336E-07 1.904E-02 4.560E-02 2.996E-04 0.000E+00           2.118E-04 2.353E-05           4.492E-06
        NO3(+NO2)-N              0.000E+00 0.000E+00 4.311E-04 2.759E-06 0.000E+00           8.632E-03 9.591E-04           3.780E-03
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -4345,7 +4345,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           5.103E-06 3.780E-03 0.000E+00 3.785E-03
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           5.126E-06 3.780E-03 0.000E+00 3.785E-03
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -4369,7 +4369,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           1.228E+00           5.415E-06           1.228E+00
+                                          0.000E+00           0.000E+00           1.228E+00           5.451E-06           1.228E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -4408,7 +4408,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        3.036E-08 7.476E-04 2.676E-07 1.726E-09 0.000E+00           1.997E-08 2.219E-09           0.000E+00
+       PO4-P IN SOLUTION        3.036E-08 7.477E-04 2.676E-07 1.726E-09 0.000E+00           1.997E-08 2.219E-09           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -4540,7 +4540,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           5.305E-06
+       NH4-N IN SOLUTION        0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           5.283E-06
        NO3(+NO2)-N              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           4.512E-03
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -4549,7 +4549,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           5.305E-06 4.512E-03 0.000E+00 4.517E-03
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           5.283E-06 4.512E-03 0.000E+00 4.517E-03
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -4573,7 +4573,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           1.746E+00           1.179E-05           1.746E+00
+                                          0.000E+00           0.000E+00           1.746E+00           1.175E-05           1.746E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -4731,17 +4731,17 @@
        SURFACE LAYER                0.000     0.011     0.000     0.000    15.000     0.000     0.000     0.000              15.011
        UPPER PRINCIPAL              0.384   106.502     0.033     0.000   500.000     0.000     0.000     0.000             606.919
        UPPER TRANSITORY(INTER)      0.002               0.000     0.000               0.000                                   0.002
-       LOWER LAYER                  0.651    12.479    14.656     0.000  1496.632     0.000     0.000     4.758            1529.176
+       LOWER LAYER                  0.651    12.479    14.656     0.000  1496.632     0.000     0.000     4.757            1529.176
        ACTIVE GROUNDWATER           0.000    10.399     0.003     0.000  1000.000     0.000     0.000     0.000            1010.402
 
-     TOTALS                         1.036   129.392    14.692     0.000  3011.632     0.000     0.000     4.758            3161.510
+     TOTALS                         1.036   129.392    14.692     0.000  3011.632     0.000     0.000     4.757            3161.510
 
    FLUXES            (LB/AC) 
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        2.180E-07 1.261E-03 2.153E-02 3.457E-04 0.000E+00           1.312E-04 1.458E-05           2.720E-06
-       NO3(+NO2)-N              0.000E+00 0.000E+00 3.690E-04 5.094E-06 0.000E+00           3.207E-03 3.564E-04           5.528E-04
+       NH4-N IN SOLUTION        2.180E-07 1.261E-03 2.153E-02 3.457E-04 0.000E+00           1.312E-04 1.458E-05           2.771E-06
+       NO3(+NO2)-N              0.000E+00 0.000E+00 3.690E-04 5.094E-06 0.000E+00           3.207E-03 3.564E-04           5.529E-04
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -4749,7 +4749,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           2.938E-06 5.528E-04 0.000E+00 5.558E-04
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           2.989E-06 5.529E-04 0.000E+00 5.558E-04
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -4773,7 +4773,7 @@
 
             NH3 NITRIFICATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMNIT              UAMNIT              LAMNIT              AAMNIT              TAMNIT
-                                          0.000E+00           0.000E+00           1.858E+00           5.841E-06           1.858E+00
+                                          0.000E+00           0.000E+00           1.858E+00           5.995E-06           1.858E+00
 
            NH3 IMMOBILIZATION               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SAMIMB              UAMIMB              LAMIMB              AAMIMB              TAMIMB
@@ -4812,12 +4812,12 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        2.099E-08 1.189E-04 1.057E-07 1.737E-09 0.000E+00           8.338E-09 9.264E-10           0.000E+00
+       PO4-P IN SOLUTION        2.098E-08 1.188E-04 1.057E-07 1.737E-09 0.000E+00           8.338E-09 9.264E-10           0.000E+00
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
                                     SDORP     SDP4A    SOSEDP               POPO4    POPHOS
-                                0.000E+00 0.000E+00 0.000E+00           2.099E-08 2.099E-08
+                                0.000E+00 0.000E+00 0.000E+00           2.098E-08 2.098E-08
 
   PO4 IMMOBILIZATION BY LAYER               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SP4IMB              UP4IMB              LP4IMB              AP4IMB              TP4IMB
@@ -4931,10 +4931,10 @@
        SURFACE LAYER                0.000     0.011     0.000     0.000    15.000     0.000     0.000     0.000              15.011
        UPPER PRINCIPAL              0.384   106.502     0.033     0.000   500.000     0.000     0.000     0.000             606.919
        UPPER TRANSITORY(INTER)      0.002               0.000     0.000               0.000                                   0.002
-       LOWER LAYER                  0.651    12.479    14.656     0.000  1496.632     0.000     0.000     4.758            1529.176
+       LOWER LAYER                  0.651    12.479    14.656     0.000  1496.632     0.000     0.000     4.757            1529.176
        ACTIVE GROUNDWATER           0.000    10.399     0.003     0.000  1000.000     0.000     0.000     0.000            1010.402
 
-     TOTALS                         1.036   129.392    14.692     0.000  3011.632     0.000     0.000     4.758            3161.510
+     TOTALS                         1.036   129.392    14.692     0.000  3011.632     0.000     0.000     4.757            3161.510
 
    FLUXES            (LB/AC) 
 
@@ -4944,8 +4944,8 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        3.581E-02 2.753E+01 1.795E+01 1.201E+00 1.199E+00           4.551E-01 5.056E-02           2.408E-02
-       NO3(+NO2)-N              2.119E-04 2.998E-01 4.818E+00 4.486E-01 4.485E-01           8.863E+00 9.847E-01           9.621E+00
+       NH4-N IN SOLUTION        3.583E-02 2.753E+01 1.795E+01 1.201E+00 1.199E+00           4.551E-01 5.056E-02           2.408E-02
+       NO3(+NO2)-N              2.115E-04 2.998E-01 4.818E+00 4.486E-01 4.485E-01           8.863E+00 9.847E-01           9.621E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -5044,7 +5044,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                3.531E-03 4.996E+00 1.864E+02 1.735E+01 6.735E+01 8.839E+01 9.821E+00 1.884E+02           2.557E+02
+                                3.525E-03 4.996E+00 1.864E+02 1.735E+01 6.735E+01 8.839E+01 9.821E+00 1.884E+02           2.557E+02
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   4.550E+02
@@ -5123,7 +5123,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            112315.2               223.5           1648557.8             58921.0
+                                                0.0            112315.1               223.5           1648557.8             58921.0
 
  *** NITR ***
 
@@ -5138,14 +5138,14 @@
        LOWER LAYER                  2.307     4.757    30.294     0.000  1499.728     0.000     0.000     1.490            1538.576
        ACTIVE GROUNDWATER           1.964     5.651     1.834     0.000  1000.000     0.000     0.000     0.000            1009.449
 
-     TOTALS                         4.619    10.954    36.337     0.000  3014.680     0.000     0.000     1.551            3068.140
+     TOTALS                         4.619    10.954    36.337     0.000  3014.680     0.000     0.000     1.551            3068.141
 
    FLUXES            (LB/AC) 
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        4.410E-05 2.996E-02 1.028E-01 3.235E-03 2.389E-03           4.160E-02 4.623E-03           1.898E+00
-       NO3(+NO2)-N              4.410E-04 2.996E-01 1.127E+00 3.547E-02 2.596E-02           4.803E-01 5.336E-02           1.144E+00
+       NH4-N IN SOLUTION        4.411E-05 2.996E-02 1.028E-01 3.235E-03 2.389E-03           4.160E-02 4.623E-03           1.898E+00
+       NO3(+NO2)-N              4.411E-04 2.996E-01 1.127E+00 3.547E-02 2.596E-02           4.803E-01 5.336E-02           1.144E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -5238,13 +5238,13 @@
 
    STATE VARIABLES   (LB/AC) 
      STORAGES BY LAYERS           SURFACE     UPPER PRINCIPAL  UPPER TRANS(INTER)     LOWER  ACTIVE GROUNDWATER               TOTAL
-        CHEM6F                      0.000             160.298               1.198   141.160              53.393             356.049
+        CHEM6F                      0.000             160.298               1.198   141.160              53.393             356.048
 
    FLUXES            (LB/AC) 
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                7.350E-03 4.993E+00 4.333E+01 1.363E+00 5.017E+01 1.955E+00 2.172E-01 4.856E+01           9.873E+01
+                                7.351E-03 4.993E+00 4.333E+01 1.363E+00 5.017E+01 1.955E+00 2.172E-01 4.856E+01           9.873E+01
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   4.550E+02
@@ -5303,7 +5303,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.745E-07           1.135E-03 1.135E-03           2.208E-03  0.00    
+                                          1.744E-07           1.134E-03 1.135E-03           2.208E-03  0.00    
 
  *** PSTEMP ***
 
@@ -5323,7 +5323,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            168409.5                81.3           1779166.5             69546.9
+                                                0.0            168409.5                81.3           1779166.4             69547.0
 
  *** NITR ***
 
@@ -5407,16 +5407,16 @@
        SURFACE LAYER                0.200               5.000     0.000                                   1.000               6.200
        UPPER PRINCIPAL              0.996              29.676     0.049                                   5.731              36.452
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.976             288.733     1.112                                  10.476             304.297
+       LOWER LAYER                  3.976             288.734     1.112                                  10.476             304.298
        ACTIVE GROUNDWATER           4.000             250.000    13.622                                   0.000             267.622
 
-       TOTALS                       9.172             573.409    14.782                                  17.207             614.570
+       TOTALS                       9.172             573.410    14.782                                  17.207             614.571
 
    FLUXES            (LB/AC) 
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        0.000E+00 0.000E+00 4.000E-02 1.019E-03 4.092E-03           2.693E-02 2.992E-03           1.241E+01
+       PO4-P IN SOLUTION        0.000E+00 0.000E+00 4.000E-02 1.018E-03 4.092E-03           2.693E-02 2.992E-03           1.241E+01
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -5601,10 +5601,10 @@
        SURFACE LAYER                0.199               4.970     0.000                                   1.000               6.168
        UPPER PRINCIPAL              0.990              29.574     0.037                                   5.814              36.415
        UPPER TRANSITORY(INTER)                                    0.004                                                       0.004
-       LOWER LAYER                  3.950             286.126     0.950                                  13.208             304.234
+       LOWER LAYER                  3.950             286.127     0.950                                  13.208             304.235
        ACTIVE GROUNDWATER           4.000             250.000     6.374                                   0.000             260.374
 
-       TOTALS                       9.138             570.670     7.365                                  20.022             607.195
+       TOTALS                       9.138             570.671     7.365                                  20.022             607.195
 
    FLUXES            (LB/AC) 
 
@@ -5706,7 +5706,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            313328.2              3864.6           2290144.8            298537.6
+                                                0.0            313328.2              3864.6           2290144.2            298537.6
 
  *** NITR ***
 
@@ -5721,7 +5721,7 @@
        LOWER LAYER                  0.824     2.170    13.537     0.000  1493.472     0.000     0.000    25.648            1535.650
        ACTIVE GROUNDWATER           0.398     2.208     2.685     0.000  1000.000     0.000     0.000     0.000            1005.291
 
-     TOTALS                         1.404     4.716    17.436     0.000  3006.479     0.000     0.000    26.702            3056.737
+     TOTALS                         1.404     4.716    17.437     0.000  3006.479     0.000     0.000    26.702            3056.737
 
    FLUXES            (LB/AC) 
 
@@ -5790,10 +5790,10 @@
        SURFACE LAYER                0.198               4.960     0.000                                   1.000               6.158
        UPPER PRINCIPAL              0.975              29.358     0.041                                   6.018              36.392
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.885             280.199     0.902                                  19.152             304.139
+       LOWER LAYER                  3.885             280.200     0.902                                  19.152             304.140
        ACTIVE GROUNDWATER           4.000             250.000     2.611                                   0.000             256.611
 
-       TOTALS                       9.059             564.517     3.554                                  26.170             603.300
+       TOTALS                       9.059             564.517     3.554                                  26.170             603.301
 
    FLUXES            (LB/AC) 
 
@@ -5875,7 +5875,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          9.729E-07           1.960E-03 1.961E-03           1.713E-02  0.00    
+                                          9.728E-07           1.960E-03 1.961E-03           1.713E-02  0.00    
 
  *** PSTEMP ***
 
@@ -5895,7 +5895,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            118758.4               150.1           2107685.2            218958.9
+                                                0.0            118758.4               150.1           2107684.8            218958.9
 
  *** NITR ***
 
@@ -5907,10 +5907,10 @@
        SURFACE LAYER                0.000     0.050     0.000     0.000    14.879     0.000     0.000     0.000              14.929
        UPPER PRINCIPAL              0.205     0.242     1.621     0.000   496.692     0.000     0.000     1.619             500.379
        UPPER TRANSITORY(INTER)      0.000               0.001     0.000               0.000                                   0.001
-       LOWER LAYER                  0.826     1.492     8.661     0.000  1488.778     0.000     0.000    34.851            1534.608
+       LOWER LAYER                  0.826     1.492     8.661     0.000  1488.778     0.000     0.000    34.851            1534.607
        ACTIVE GROUNDWATER           0.237     1.248     1.646     0.000  1000.000     0.000     0.000     0.000            1003.130
 
-     TOTALS                         1.269     3.032    11.928     0.000  3000.349     0.000     0.000    36.470            3053.047
+     TOTALS                         1.269     3.032    11.928     0.000  3000.349     0.000     0.000    36.469            3053.047
 
    FLUXES            (LB/AC) 
 
@@ -5977,12 +5977,12 @@
      STORAGES BY LAYERS         ORGANIC P           PO4-P ADS PO4-P SOL                                 PLANT P              TOTALS
 
        SURFACE LAYER                0.198               4.960     0.000                                   1.000               6.158
-       UPPER PRINCIPAL              0.957              29.105     0.039                                   6.282              36.382
+       UPPER PRINCIPAL              0.957              29.104     0.039                                   6.282              36.382
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
        LOWER LAYER                  3.805             272.992     0.838                                  26.441             304.075
        ACTIVE GROUNDWATER           4.000             250.000     1.014                                   0.000             255.014
 
-       TOTALS                       8.960             557.056     1.890                                  33.722             601.629
+       TOTALS                       8.960             557.057     1.890                                  33.723             601.629
 
    FLUXES            (LB/AC) 
 
@@ -6084,7 +6084,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             92270.5                69.9           1699400.9            102170.6
+                                                0.0             92270.6                69.9           1699400.6            102170.5
 
  *** NITR ***
 
@@ -6105,7 +6105,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        1.767E-08 1.908E-05 2.918E-02 3.866E-03 3.951E-03           2.969E-02 3.299E-03           1.466E-01
+       NH4-N IN SOLUTION        1.771E-08 1.908E-05 2.918E-02 3.866E-03 3.951E-03           2.969E-02 3.299E-03           1.466E-01
        NO3(+NO2)-N              0.000E+00 0.000E+00 2.523E-01 3.312E-02 3.366E-02           2.474E-01 2.749E-02           1.040E+00
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -6168,16 +6168,16 @@
        SURFACE LAYER                0.198               4.959     0.000                                   1.000               6.157
        UPPER PRINCIPAL              0.931              28.766     0.038                                   6.642              36.377
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.693             263.500     0.802                                  36.054             304.050
+       LOWER LAYER                  3.693             263.501     0.802                                  36.054             304.050
        ACTIVE GROUNDWATER           4.000             250.000     0.464                                   0.000             254.464
 
-       TOTALS                       8.823             547.225     1.304                                  43.695             601.048
+       TOTALS                       8.823             547.226     1.304                                  43.695             601.048
 
    FLUXES            (LB/AC) 
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        7.067E-07 7.631E-04 4.944E-03 6.492E-04 6.676E-04           2.702E-02 3.002E-03           5.773E-01
+       PO4-P IN SOLUTION        7.084E-07 7.631E-04 4.944E-03 6.491E-04 6.676E-04           2.702E-02 3.002E-03           5.773E-01
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -6357,10 +6357,10 @@
        SURFACE LAYER                0.198               4.959     0.000                                   1.000               6.157
        UPPER PRINCIPAL              0.901              28.377     0.037                                   7.058              36.373
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.566             252.917     0.760                                  46.799             304.042
+       LOWER LAYER                  3.566             252.917     0.760                                  46.799             304.043
        ACTIVE GROUNDWATER           4.000             250.000     0.245                                   0.000             254.245
 
-       TOTALS                       8.666             536.252     1.043                                  54.857             600.818
+       TOTALS                       8.666             536.253     1.043                                  54.857             600.818
 
    FLUXES            (LB/AC) 
 
@@ -6442,7 +6442,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          2.893E-07           5.089E-04 5.092E-04           6.781E-02  0.00    
+                                          2.893E-07           5.089E-04 5.091E-04           6.781E-02  0.00    
 
  *** PSTEMP ***
 
@@ -6474,7 +6474,7 @@
        SURFACE LAYER                0.000     0.050     0.000     0.000    14.878     0.000     0.000     0.000              14.927
        UPPER PRINCIPAL              0.214     0.219     2.689     0.000   490.130     0.000     0.000     5.855             499.108
        UPPER TRANSITORY(INTER)      0.000               0.002     0.000               0.000                                   0.002
-       LOWER LAYER                  0.799     0.859     5.361     0.000  1467.424     0.000     0.000    59.311            1533.754
+       LOWER LAYER                  0.799     0.859     5.361     0.000  1467.424     0.000     0.000    59.311            1533.753
        ACTIVE GROUNDWATER           0.000     0.178     0.000     0.000  1000.000     0.000     0.000     0.000            1000.178
 
      TOTALS                         1.013     1.305     8.053     0.000  2972.432     0.000     0.000    65.166            3047.969
@@ -6483,7 +6483,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        2.815E-08 4.219E-05 1.608E-02 1.141E-03 1.816E-03           5.582E-03 6.202E-04           1.067E-01
+       NH4-N IN SOLUTION        2.795E-08 4.219E-05 1.608E-02 1.141E-03 1.816E-03           5.582E-03 6.202E-04           1.067E-01
        NO3(+NO2)-N              0.000E+00 0.000E+00 2.008E-01 1.432E-02 2.218E-02           3.748E-02 4.165E-03           5.726E-01
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -6546,7 +6546,7 @@
        SURFACE LAYER                0.198               4.956     0.001                                   1.000               6.155
        UPPER PRINCIPAL              0.876              28.028     0.037                                   7.432              36.372
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.455             243.604     0.730                                  56.250             304.040
+       LOWER LAYER                  3.455             243.605     0.730                                  56.250             304.040
        ACTIVE GROUNDWATER           4.000             250.000     0.000                                   0.000             254.000
 
        TOTALS                       8.529             526.589     0.768                                  64.681             600.567
@@ -6555,7 +6555,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        1.123E-06 1.683E-03 2.742E-03 1.951E-04 3.066E-04           5.148E-03 5.720E-04           2.502E-01
+       PO4-P IN SOLUTION        1.115E-06 1.683E-03 2.742E-03 1.951E-04 3.066E-04           5.148E-03 5.720E-04           2.502E-01
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -6631,7 +6631,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.106E-08           9.002E-05 9.003E-05           2.107E-02  0.00    
+                                          1.105E-08           9.002E-05 9.003E-05           2.107E-02  0.00    
 
  *** PSTEMP ***
 
@@ -6672,7 +6672,7 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        3.727E-09 1.506E-05 7.116E-03 2.861E-04 4.332E-04           1.815E-03 2.017E-04           1.353E-02
+       NH4-N IN SOLUTION        3.727E-09 1.506E-05 7.116E-03 2.861E-04 4.331E-04           1.815E-03 2.017E-04           1.353E-02
        NO3(+NO2)-N              0.000E+00 0.000E+00 1.027E-01 4.128E-03 5.919E-03           1.304E-02 1.449E-03           1.527E-02
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
@@ -6681,7 +6681,7 @@
                                              LABILE    REFRAC
                                 NH4-N ADS ORGANIC N ORGANIC N     TOTAL               NH4-N     NO3-N      ORGN  NITROGEN
                                     SDAMA    SDLORN    SDRORN    SOSEDN               PONH4     PONO3     POORN ALL FORMS
-                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           1.397E-02 2.119E-02 0.000E+00 3.516E-02
+                                0.000E+00 0.000E+00 0.000E+00 0.000E+00           1.397E-02 2.119E-02 0.000E+00 3.515E-02
 
   BELOW-GROUND PLANT N RETURN               SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                TO LABILE ORGN                SRTLBN              URTLBN              LRTLBN              ARTLBN              TRTLBN
@@ -6733,9 +6733,9 @@
      STORAGES BY LAYERS         ORGANIC P           PO4-P ADS PO4-P SOL                                 PLANT P              TOTALS
 
        SURFACE LAYER                0.198               4.956     0.000                                   1.000               6.155
-       UPPER PRINCIPAL              0.857              27.770     0.037                                   7.708              36.371
+       UPPER PRINCIPAL              0.857              27.769     0.037                                   7.708              36.371
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.376             236.799     0.712                                  63.151             304.039
+       LOWER LAYER                  3.376             236.800     0.712                                  63.152             304.039
        ACTIVE GROUNDWATER           4.000             250.000     0.000                                   0.000             254.000
 
        TOTALS                       8.431             519.525     0.749                                  71.859             600.565
@@ -6744,7 +6744,7 @@
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        1.485E-07 5.999E-04 1.358E-03 5.456E-05 7.886E-05           1.819E-03 2.021E-04           1.819E-03
+       PO4-P IN SOLUTION        1.485E-07 5.999E-04 1.358E-03 5.456E-05 7.885E-05           1.819E-03 2.021E-04           1.819E-03
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -6772,7 +6772,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                0.000E+00 0.000E+00 5.451E-01 2.192E-02 3.261E-02 4.545E-01 5.050E-02 4.545E-01           4.871E-01
+                                0.000E+00 0.000E+00 5.451E-01 2.191E-02 3.261E-02 4.545E-01 5.050E-02 4.545E-01           4.871E-01
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   2.013E+02
@@ -6852,17 +6852,17 @@
        SURFACE LAYER                0.000     0.050     0.000     0.000    14.878     0.000     0.000     0.000              14.927
        UPPER PRINCIPAL              0.166     0.201     2.736     0.000   487.781     0.000     0.000     7.683             498.567
        UPPER TRANSITORY(INTER)      0.000               0.001     0.000               0.000                                   0.001
-       LOWER LAYER                  0.637     0.761     5.516     0.000  1459.648     0.000     0.000    67.122            1533.684
+       LOWER LAYER                  0.637     0.761     5.516     0.000  1459.648     0.000     0.000    67.121            1533.684
        ACTIVE GROUNDWATER           0.016     0.135     0.019     0.000  1000.000     0.000     0.000     0.000            1000.169
 
-     TOTALS                         0.819     1.145     8.272     0.000  2962.308     0.000     0.000    74.805            3047.349
+     TOTALS                         0.819     1.145     8.272     0.000  2962.308     0.000     0.000    74.805            3047.348
 
    FLUXES            (LB/AC) 
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
        NH4-N IN SOLUTION        8.356E-10 2.149E-06 1.432E-02 2.933E-04 2.584E-04           2.503E-03 2.781E-04           1.032E-02
-       NO3(+NO2)-N              0.000E+00 0.000E+00 2.279E-01 4.702E-03 4.086E-03           2.017E-02 2.241E-03           6.572E-03
+       NO3(+NO2)-N              0.000E+00 0.000E+00 2.279E-01 4.703E-03 4.086E-03           2.017E-02 2.241E-03           6.572E-03
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -6924,7 +6924,7 @@
        SURFACE LAYER                0.198               4.956     0.000                                   1.000               6.154
        UPPER PRINCIPAL              0.848              27.624     0.041                                   7.855              36.368
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.335             232.990     0.809                                  66.905             304.039
+       LOWER LAYER                  3.335             232.991     0.809                                  66.905             304.039
        ACTIVE GROUNDWATER           4.000             250.000     0.002                                   0.000             254.002
 
        TOTALS                       8.381             515.571     0.852                                  75.759             600.563
@@ -6961,7 +6961,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                0.000E+00 0.000E+00 1.141E+00 2.351E-02 2.055E-02 6.932E-01 7.702E-02 1.944E-01           2.150E-01
+                                0.000E+00 0.000E+00 1.141E+00 2.351E-02 2.055E-02 6.932E-01 7.703E-02 1.944E-01           2.150E-01
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   2.008E+02
@@ -7044,7 +7044,7 @@
        LOWER LAYER                  0.616     0.733     5.492     0.000  1458.793     0.000     0.000    68.006            1533.640
        ACTIVE GROUNDWATER           0.017     0.112     0.017     0.000  1000.000     0.000     0.000     0.000            1000.146
 
-     TOTALS                         0.799     1.089     8.289     0.000  2961.216     0.000     0.000    75.871            3047.263
+     TOTALS                         0.799     1.089     8.289     0.000  2961.215     0.000     0.000    75.870            3047.262
 
    FLUXES            (LB/AC) 
 
@@ -7113,7 +7113,7 @@
        SURFACE LAYER                0.198               4.956     0.000                                   1.000               6.154
        UPPER PRINCIPAL              0.845              27.575     0.045                                   7.903              36.368
        UPPER TRANSITORY(INTER)                                    0.000                                                       0.000
-       LOWER LAYER                  3.322             231.605     0.890                                  68.221             304.039
+       LOWER LAYER                  3.322             231.606     0.890                                  68.221             304.039
        ACTIVE GROUNDWATER           4.000             250.000     0.001                                   0.000             254.001
 
        TOTALS                       8.366             514.137     0.936                                  77.124             600.562
@@ -7209,7 +7209,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          2.692E-10           1.945E-05 1.945E-05            0.00      0.00    
+                                          2.690E-10           1.945E-05 1.945E-05            0.00      0.00    
 
  *** PSTEMP ***
 
@@ -7251,7 +7251,7 @@
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
        NH4-N IN SOLUTION        0.000E+00 0.000E+00 2.289E-03 1.679E-05 0.000E+00           1.850E-04 2.055E-05           9.501E-03
-       NO3(+NO2)-N              0.000E+00 0.000E+00 3.866E-02 2.835E-04 0.000E+00           1.658E-03 1.843E-04           9.081E-03
+       NO3(+NO2)-N              0.000E+00 0.000E+00 3.866E-02 2.834E-04 0.000E+00           1.658E-03 1.843E-04           9.081E-03
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -7316,13 +7316,13 @@
        LOWER LAYER                  3.317             231.054     0.891                                  68.777             304.039
        ACTIVE GROUNDWATER           4.000             250.000     0.001                                   0.000             254.001
 
-       TOTALS                       8.360             513.567     0.937                                  77.698             600.561
+       TOTALS                       8.360             513.567     0.937                                  77.698             600.562
 
    FLUXES            (LB/AC) 
 
      FLOWS OF P IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       PO4-P IN SOLUTION        0.000E+00 0.000E+00 6.112E-04 4.470E-06 0.000E+00           2.628E-04 2.920E-05           6.370E-04
+       PO4-P IN SOLUTION        0.000E+00 0.000E+00 6.112E-04 4.468E-06 0.000E+00           2.628E-04 2.920E-05           6.370E-04
 
      OTHER OUTFLOWS              SEDIMENT ASSOCIATED OUTFLOWS          <--TOTAL OUTFLOW--->
                                 ORGANIC P PO4-P ADS     TOTAL               PO4-P  PHOSPHOR
@@ -7450,8 +7450,8 @@
 
      FLOWS OF N IN SOLUTION    <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
-       NH4-N IN SOLUTION        4.415E-05 3.003E-02 4.889E-01 7.566E-02 7.562E-02           3.787E-01 4.208E-02           4.676E+00
-       NO3(+NO2)-N              4.410E-04 2.996E-01 5.621E+00 8.683E-01 8.677E-01           6.021E+00 6.689E-01           1.089E+01
+       NH4-N IN SOLUTION        4.416E-05 3.003E-02 4.889E-01 7.566E-02 7.562E-02           3.787E-01 4.208E-02           4.676E+00
+       NO3(+NO2)-N              4.411E-04 2.996E-01 5.621E+00 8.683E-01 8.677E-01           6.021E+00 6.689E-01           1.089E+01
        LABILE ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
        REFRAC ORGN              0.000E+00 0.000E+00 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
@@ -7516,7 +7516,7 @@
        LOWER LAYER                  3.317             231.054     0.891                                  68.777             304.039
        ACTIVE GROUNDWATER           4.000             250.000     0.001                                   0.000             254.001
 
-       TOTALS                       8.360             513.567     0.937                                  77.698             600.561
+       TOTALS                       8.360             513.567     0.937                                  77.698             600.562
 
    FLUXES            (LB/AC) 
 
@@ -7550,7 +7550,7 @@
      FLOWS (ALL IN SOLUTION)   <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW<---LOWER LAYER----> GRNDWATER               TOTAL
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW      PERC DEEP PERC   OUTFLOW             OUTFLOW
         CHEM6F                      SOTRS     SPTRS     UPTRS     IITRS     IOTRS     LPTRS    LDPTRS     AOTRS               POTRS
-                                7.350E-03 4.993E+00 1.642E+02 2.744E+01 7.744E+01 6.989E+01 7.765E+00 1.697E+02           2.471E+02
+                                7.351E-03 4.993E+00 1.642E+02 2.744E+01 7.744E+01 6.989E+01 7.765E+00 1.697E+02           2.471E+02
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   4.550E+02

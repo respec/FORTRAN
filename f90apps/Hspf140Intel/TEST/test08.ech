@@ -1661,7 +1661,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  1.4147E-06    0.00004   28.314                                                  *
+ *  1.4150E-06    0.00004   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1687,7 +1687,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  1.4147E-06    0.00004   28.314                                                  *
+ *  1.4150E-06    0.00004   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1713,7 +1713,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  3.4819E-07    0.00001   28.314                                                  *
+ *  3.4816E-07    0.00001   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1749,7 +1749,7 @@
    DETS                 ORIG:      1.5436           RESET TO =       1.5000 
 
  SPEC-ACT: PERLND    1 AT 1976/ 7/25 13: 0
-   DETS                 ORIG:      0.79758          RESET TO =       1.5000 
+   DETS                 ORIG:   7.9758E-01          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    1 AT 1976/ 8/25  1: 0
    INFILT               ORIG:      0.13000          RESET TO =       0.10000
@@ -1757,7 +1757,7 @@
  SPEC-ACT: PERLND    1 AT 1976/11/ 1 13: 0
    SPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
    UPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
-   LPLTN                ORIG:   2.1217E+01          RESET TO =    0.0000E+00
+   LPLTN                ORIG:     21.216            RESET TO =    0.0000E+00
    SORGN                ORIG:   1.4810E+01          RESET TO =    1.5000E+01
    UORGN                ORIG:    500.00             RESET TO =     500.00   
    LORGN                ORIG:   1483.0              RESET TO =    1500.0    
@@ -1816,7 +1816,7 @@
  *  PERLND :    1                                                                   *
  *                                                                                  *
  *      RELERR       STORS        STOR       MATIN      MATDIF                      *
- *  -1.192E-03  3071.4      3049.2         0.00000   -18.479                        *
+ *  -1.192E-03  3071.4      3049.2         0.00000  -1.848E+01                      *
  *                                                                                  *
  *  Where:                                                                          *
  *                                                                                  *
@@ -1850,7 +1850,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  8.4007E-08    0.00000   28.314                                                  *
+ *  8.3709E-08    0.00000   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1876,7 +1876,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  8.4007E-08    0.00000   28.314                                                  *
+ *  8.3709E-08    0.00000   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1902,7 +1902,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  3.4488E-07    0.00001   28.314                                                  *
+ *  3.4485E-07    0.00001   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1928,7 +1928,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  3.4488E-07    0.00001   28.314                                                  *
+ *  3.4485E-07    0.00001   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1954,7 +1954,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  3.4645E-07    0.00001   28.314                                                  *
+ *  3.4643E-07    0.00001   28.314                                                  *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *
@@ -1981,17 +1981,17 @@
 
  SPEC-ACT: PERLND    2 AT 1976/ 5/ 7 13: 0
    INFILT               ORIG:      0.10000          RESET TO =       0.13000
-   DETS                 ORIG:   6.3819E-01          RESET TO =    2.0000E+00
+   DETS                 ORIG:      0.63819          RESET TO =       2.0000 
    SAMAD                ORIG:   1.5780E-03  +     1.2500E+01 =    1.2502E+01
    UAMAD                ORIG:   6.0115E-01  +     5.0000E+01 =    5.0601E+01
 
  SPEC-ACT: PERLND    2 AT 1976/ 6/20 13: 0
-   DETS                 ORIG:      1.3415           RESET TO =       1.5000 
+   DETS                 ORIG:   1.3415E+00          RESET TO =    1.5000E+00
    SAMAD                ORIG:   8.0727E-03  +     1.5000E+01 =    1.5008E+01
    UAMAD                ORIG:     27.940    +       22.500   =    5.0440E+01
 
  SPEC-ACT: PERLND    2 AT 1976/ 7/15 13: 0
-   DETS                 ORIG:      0.92108          RESET TO =       1.5000 
+   DETS                 ORIG:   9.2108E-01          RESET TO =    1.5000E+00
 
  SPEC-ACT: PERLND    2 AT 1976/ 8/25  1: 0
    INFILT               ORIG:      0.13000          RESET TO =       0.10000
@@ -1999,12 +1999,12 @@
  SPEC-ACT: PERLND    2 AT 1976/11/ 1 13: 0
    SPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
    UPLTN                ORIG:   0.0000E+00          RESET TO =    0.0000E+00
-   LPLTN                ORIG:   3.4698E+01          RESET TO =    0.0000E+00
+   LPLTN                ORIG:     34.698            RESET TO =    0.0000E+00
    SORGN                ORIG:   1.4789E+01          RESET TO =    1.5000E+01
    UORGN                ORIG:    500.00             RESET TO =     500.00   
    LORGN                ORIG:   1483.0              RESET TO =    1500.0    
    DETS                 ORIG:   1.3985E-01          RESET TO =    1.2000E+00
-   UAMAD                ORIG:     81.630    +       25.000   =     106.63   
+   UAMAD                ORIG:   8.1630E+01  +     2.5000E+01 =    1.0663E+02
  
  
  ************************************************************************************
@@ -2060,7 +2060,7 @@
  *  PERLND :    2                                                                   *
  *                                                                                  *
  *      RELERR       STORS        STOR       MATIN      MATDIF                      *
- *  -5.356E-03  3071.4      3161.5       125.00     1.0725E+02                      *
+ *  -5.356E-03  3071.4      3161.5       125.00      107.25                         *
  *                                                                                  *
  *  Where:                                                                          *
  *                                                                                  *
@@ -2198,7 +2198,7 @@
  *  precision variables), FSD will be arbitrarily set to zero.  Relevant data are:  *
  *                                                                                  *
  *         FSD      SOSED       SLME                                                *
- *  3.6084E-07    0.00001 2.2651E+01                                                *
+ *  3.6137E-07    0.00001 2.2651E+01                                                *
  *                                                                                  *
  *  Where:                                                                          *
  *  FSD is SOSED/SLME                                                               *

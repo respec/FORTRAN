@@ -56,7 +56,7 @@ C     CALL UNDFL (LFLAG)
 C
 C     CALL CHANGEDIRQQ('e:\test\hspf\Salado\intel12.3detail10')
 C     CALL CHANGEDIRQQ('e:\F90APPS\HSPF12.3INTEL\TEST')
-C     CALL CHANGEDIRQQ('G:\Projects\coon')
+      CALL CHANGEDIRQQ('E:\Projects\Revised HSPF')
       OPEN (UNIT=99,FILE='error.fil')
 C
 C     initialize wdm file common block
