@@ -7,8 +7,8 @@ FFLAGS    = -c -o0 -i $(SRCLOC)
 
 DLL       = $(BINLOC)\hass_ent.dll
 LDMAP     = $(BINLOC)\hass_ent.map
-LBLOC     = ..\..\lib3.0\lf90libs
-LIBS      = hspf122.lib \
+LBLOC     = ..\..\..\lib3.0\lf90libs
+LIBS      = hspf124.lib \
             hspdss.lib \
             hec.lib \
             wdm.lib \
