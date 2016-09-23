@@ -65,6 +65,9 @@ C
 C
       MOD_TABLE%TABLE(2)%NAME = "END COPY"
       MOD_TABLE%TABLE(2)%DIM = 0
+C      
+      MOD_TABLE%NAME = "COPY"
+      MOD_TABLE%INITIALIZED = .TRUE.
 C
       END SUBROUTINE            
 C
@@ -303,8 +306,8 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
 C     point to where the osv for this operation is in memory
-      P      = LOC(OSVM(1,OSVKST))
-      PDATIM = LOC(HCOPY%YR)    
+      P     = LOC(OSVM(1,OSVKST))
+      PDATIM= LOC(HCOPY%YR)    
 C      
       IVL   = STIVL- 1
       IVL1  = STIVL
@@ -401,7 +404,7 @@ C
  130  CONTINUE
 C
       RETURN
-      END SUBROUTINE
+      END SUBROUTINE COPY
 C    
       END MODULE HMCOPY  
                
