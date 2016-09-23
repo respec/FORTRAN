@@ -68,8 +68,8 @@ C     + + + END SPECIFICATIONS + + +
 C
 C     this is a Intel extension
       CALL GETARG (1,TNAME)
-      WRITE(99,*) 'XGTARG1:',FNAME
-      WRITE(99,*) '      2:',TNAME
+C     WRITE(99,*) 'XGTARG1:',FNAME
+C     WRITE(99,*) '      2:',TNAME
 C
       IF (TNAME .EQ. ' ') THEN
 C       prompt user

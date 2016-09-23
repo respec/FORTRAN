@@ -60,5 +60,6 @@
 		<File RelativePath="..\..\SRC\ADWDM\WDMCHK.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\WDMESS.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\WDOPVX.FOR"/>
+		<File RelativePath="..\..\SRC\ADWDM\ZTWDMFX.FOR"/>
 		<File RelativePath="..\..\SRC\ADWDM\ZTWDMF.FOR"/></Filter></Files>
 	<Globals/></VisualStudioProject>
