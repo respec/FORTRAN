@@ -67,9 +67,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           185.1               131.0              0.5879E+05          0.5911E+05
+         (RELATIVE TO FREEZING)           185.1               146.5              0.5879E+05          0.5912E+05
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                2.917E-03 5.764E-05 1.920E-04 1.600E-06 8.995E-02 8.995E-04 9.306E-02 9.588E-04
+                                2.917E-03 5.764E-05 2.214E-04 1.845E-06 8.995E-02 8.995E-04 9.309E-02 9.590E-04
 1
 
  PERVIOUS LAND SEGMENT NO.   1                           BICKNELL FARM                                     REPORT FOR MONTH 1976/ 2
@@ -139,9 +139,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           499.4               5044.              0.4075E+06          0.4130E+06
+         (RELATIVE TO FREEZING)           499.3               5044.              0.4075E+06          0.4130E+06
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                7.872E-03 1.555E-04 3.572E-03 2.977E-05 0.208     2.077E-03 0.219     2.262E-03
+                                7.871E-03 1.555E-04 3.572E-03 2.976E-05 0.208     2.077E-03 0.219     2.262E-03
 1
 
  PERVIOUS LAND SEGMENT NO.   1                           BICKNELL FARM                                     REPORT FOR MONTH 1976/ 3
@@ -207,7 +207,7 @@
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
          (RELATIVE TO FREEZING)           1062.              0.5070E+05          0.2842E+07          0.2894E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                1.674E-02 3.306E-04 3.447E-02 2.872E-04  1.10     1.101E-02  1.15     1.163E-02
+                                1.674E-02 3.306E-04 3.446E-02 2.872E-04  1.10     1.101E-02  1.15     1.163E-02
 1
 
  PERVIOUS LAND SEGMENT NO.   1                           BICKNELL FARM                                     REPORT FOR MONTH 1976/ 4
@@ -571,9 +571,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)          0.3087               0.000               93.52               93.83    
+         (RELATIVE TO FREEZING)          0.3086               0.000               93.52               93.83    
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                4.866E-06 9.613E-08  0.00      0.00     1.508E-05 1.508E-07 1.995E-05 2.469E-07
+                                4.865E-06 9.612E-08  0.00      0.00     1.508E-05 1.508E-07 1.994E-05 2.469E-07
 1
 
  IMPERVIOUS LAND SEGMENT NO.   1                         DONIGIAN INDUSTRY                                 REPORT FOR MONTH 1976/ 1
@@ -627,7 +627,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -692,7 +692,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -757,7 +757,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -817,7 +817,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -877,7 +877,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -937,7 +937,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -997,7 +997,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -1057,7 +1057,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -1117,7 +1117,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -1143,11 +1143,11 @@
 
    STATE VARIABLES                    VOL       DEP     STAGE     AVDEP      TWID      HRAD     SAREA     AVVEL    AVSECT
      ENTIRE REACH:                  AC-FT        FT        FT        FT        FT        FT     ACRES      FT/S       FT2
-                                    0.269     0.238     0.238     0.222      3.34     0.196      1.22      1.10     0.741
+                                    0.270     0.239     0.239     0.222      3.35     0.196      1.22      1.10     0.742
 
                                    PUSTAR      PTAU   OUTFLOW
                                      FT/S    LB/FT2     FT3/S
-                                    0.126 3.084E-02     0.814
+                                    0.126 3.087E-02     0.815
 
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
@@ -1165,15 +1165,15 @@
    CONSERVATIVE NO.  1              ALKALINITY     
 
    STATE VARIABLE
-     CONCENTRATION  (    MG/L)  2.923E+02
+     CONCENTRATION  (    MG/L)  2.922E+02
 
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
                                      ICON     ROCON
-                                2.541E+07 2.532E+07
+                                2.542E+07 2.532E+07
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   2.541E+07
+                                  0.000   2.542E+07
 
  *** HTRCH ***
 
@@ -1184,7 +1184,7 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              1.262E+09  -6.250E+07   1.199E+09
+                              1.262E+09  -6.249E+07   1.199E+09
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
@@ -1203,7 +1203,7 @@
      CONC. IN SUSPENSION (MG/L)            1.68      0.00      1.62      3.30    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  6.139E-04 0.000E+00 5.922E-04 1.206E-03
+              SUSPENSION                  6.149E-04 0.000E+00 5.931E-04 1.208E-03
               BED                         1.332E+03 1.672E+02 1.667E+02 1.666E+03
               TOTAL                       1.332E+03 1.672E+02 1.667E+02 1.666E+03
 
@@ -1228,33 +1228,33 @@
    CONSTITUENT NO.  1
 
    STATE VARIABLES
-     DISSOLVED CONCENTRATION  (  UG/L)    4.669E+00
+     DISSOLVED CONCENTRATION  (  UG/L)    4.667E+00
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)             4.813E-04  -1.000E+30   4.561E-03   5.836E-04   5.830E-03   5.836E-03
+     WITH SEDIMENT  (  UG/MG)             4.811E-04  -1.000E+30   4.560E-03   5.836E-04   5.829E-03   5.836E-03
 
-     DISSOLVED STORAGE  (       G)        5.480E-02
+     DISSOLVED STORAGE  (       G)        5.487E-02
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
-       SUSPENDED                          9.484E-06   0.000E+00   8.671E-05   9.620E-05
+       SUSPENDED                          9.497E-06   0.000E+00   8.682E-05   9.632E-05
        BED                                2.495E+01   3.129E+01   3.123E+01   8.748E+01
        TOTAL                              2.495E+01   3.129E+01   3.123E+01   8.748E+01
 
-     TOTAL STORAGE  (       G)            8.754E+01
+     TOTAL STORAGE  (       G)            8.753E+01
 
    FLUXES  (       G)
-     INFLOW OF DISSOLVED QUAL             9.622E+00
+     INFLOW OF DISSOLVED QUAL             9.624E+00
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
-                                          1.665E-03   8.067E-08   5.565E-02   5.732E-02
+                                          1.666E-03   8.067E-08   5.566E-02   5.732E-02
 
-     TOTAL INFLOW                         9.680E+00
+     TOTAL INFLOW                         9.681E+00
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          4.234E+01   4.234E-02   4.107E-01   1.902E-02   2.342E-02   4.684E-02   4.288E+01
+                                          4.235E+01   4.234E-02   4.107E-01   1.903E-02   2.342E-02   4.684E-02   4.289E+01
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   5.506E-01   6.892E-01   6.888E-01   1.929E+00
+                                          0.000E+00   0.000E+00   0.000E+00   5.505E-01   6.892E-01   6.888E-01   1.929E+00
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
        (POSITIVE INDICATES ADSORPTION)   -1.517E-02   1.023E-01   1.136E-01  -1.726E+01  -2.154E+01  -2.159E+01  -6.019E+01
@@ -1279,15 +1279,15 @@
    STATE VARIABLES
      CONCENTRATION  (MG/L)                1.437E+01
 
-     STORAGE (LBS)            1.051E+01
+     STORAGE (LBS)            1.052E+01
 
    FLUXES (LBS)
      INFLOW                   1.564E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN) -3.778E+01  -1.727E+00  -5.105E+00  -1.397E+01  -5.094E+00  -1.188E+01   3.232E-04  -7.356E-03
+       (POS. INDICATES GAIN) -3.778E+01  -1.725E+00  -5.105E+00  -1.397E+01  -5.094E+00  -1.188E+01   3.233E-04  -7.356E-03
 
-     OUTFLOW                  1.559E+04
+     OUTFLOW                  1.560E+04
 
    BALANCE                      % ERROR IN      LBS
                                   0.000   1.564E+04
@@ -1295,15 +1295,15 @@
    BIOCHEMICAL OXYGEN DEMAND
 
    STATE VARIABLES
-     CONCENTRATION  (MG/L)                2.890E-01
+     CONCENTRATION  (MG/L)                2.888E-01
 
-     STORAGE (LBS)            2.113E-01
+     STORAGE (LBS)            2.115E-01
 
    FLUXES (LBS)
      INFLOW                   3.481E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -3.043E+03  -5.105E+00   2.066E+02  -3.244E+03   0.000E+00   2.180E-03   1.869E-05   3.308E-02
+       (POS. INDICATES GAIN) -3.043E+03  -5.105E+00   2.066E+02  -3.244E+03   0.000E+00   2.180E-03   1.868E-05   3.308E-02
 
      OUTFLOW                  4.379E+02
 
@@ -1315,51 +1315,51 @@
    TOTAL AMMONIA(TAM-N)
 
    STATE VARIABLES                            TAM       NH4       NH3
-     DISSOLVED CONCENTRATION  (MG/L)      5.311E+00   5.304E+00   7.376E-03
+     DISSOLVED CONCENTRATION  (MG/L)      5.309E+00   5.302E+00   7.373E-03
 
-     DISSOLVED STORAGE  (LBS)             3.884E+00   3.878E+00   5.393E-03
+     DISSOLVED STORAGE  (LBS)             3.889E+00   3.883E+00   5.400E-03
 
    FLUXES (LBS)
-     INFLOW OF DISSOLVED TAM              6.698E+02
+     INFLOW OF DISSOLVED TAM              6.699E+02
 
-     TOTAL INFLOW OF TAM                  6.698E+02
+     TOTAL INFLOW OF TAM                  6.699E+02
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.109E+02  -1.399E+00  -2.085E+00   1.136E+02   2.225E-01   5.177E-01  -2.534E-05   3.206E-04
+       (POS. INDICATES GAIN)  1.109E+02  -1.399E+00  -2.086E+00   1.136E+02   2.225E-01   5.178E-01  -2.535E-05   3.206E-04
 
-     TOTAL OUTFLOW OF DISSOLVED TAM       7.768E+02
+     TOTAL OUTFLOW OF DISSOLVED TAM       7.769E+02
 
-     TOTAL OUTFLOW                        7.768E+02
+     TOTAL OUTFLOW                        7.769E+02
 
    BALANCE                      % ERROR IN      LBS
-                                  0.000   7.836E+02
+                                  0.000   7.837E+02
 
    NITRITE(NO2-N)
 
    STATE VARIABLES
-     CONCENTRATION  (MG/L)                1.080E+00
+     CONCENTRATION  (MG/L)                1.079E+00
 
-     STORAGE (LBS)            7.895E-01
+     STORAGE (LBS)            7.906E-01
 
    FLUXES (LBS)
      INFLOW                   1.398E+02
 
                                             NITRIF-
      OTHER GAINS/LOSSES           TOTAL     ICATION
-       (POS. INDICATES GAIN)  8.687E-01   8.687E-01
+       (POS. INDICATES GAIN)  8.688E-01   8.688E-01
 
-     OUTFLOW                  1.398E+02
+     OUTFLOW                  1.399E+02
 
    BALANCE                      % ERROR IN      LBS
-                                  0.000   1.406E+02
+                                  0.000   1.407E+02
 
    NITRATE(NO3-N)
 
    STATE VARIABLES
      CONCENTRATION  (MG/L)                1.225E+01
 
-     STORAGE (LBS)            8.961E+00
+     STORAGE (LBS)            8.973E+00
 
    FLUXES (LBS)
      INFLOW                   2.284E+03
@@ -1378,7 +1378,7 @@
    STATE VARIABLES
      DISSOLVED CONCENTRATION  (MG/L)      1.500E+01
 
-     DISSOLVED STORAGE  (LBS)             1.097E+01
+     DISSOLVED STORAGE  (LBS)             1.099E+01
 
    FLUXES (LBS)
      INFLOW OF DISSOLVED PO4              2.821E+03
@@ -1387,21 +1387,21 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.146E+01   1.136E+01   3.079E-02   7.165E-02  -3.506E-06   4.437E-05
+       (POS. INDICATES GAIN)  1.146E+01   1.136E+01   3.079E-02   7.166E-02  -3.508E-06   4.437E-05
 
-     TOTAL OUTFLOW OF DISSOLVED PO4       2.821E+03
+     TOTAL OUTFLOW OF DISSOLVED PO4       2.822E+03
 
-     TOTAL OUTFLOW                        2.821E+03
+     TOTAL OUTFLOW                        2.822E+03
 
    BALANCE                      % ERROR IN      LBS
-                                  0.000   2.832E+03
+                                  0.000   2.833E+03
 
  *** PLANK ***
 
    STATE VARIABLES
      PHYTOPLANKTON                  PHYTO    PHYCLA    LIMPHY       ZOO
        & ZOOPLANKTON                 MG/L      UG/L               ORG/L
-                                6.490E-03 4.650E-02      LIT  1.255E+00
+                                6.490E-03 4.650E-02      LIT  1.253E+00
 
      BENTHIC ALGAE                  BENAL    BALCLA    LIMBAL
                                     MG/M2     UG/M2
@@ -1409,11 +1409,11 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                1.588E-06 2.197E-07 9.015E-06 1.319E-02 1.825E-03 7.490E-02 2.958E-01
+                                1.586E-06 2.195E-07 9.007E-06 1.318E-02 1.824E-03 7.484E-02 2.956E-01
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
-                                1.866E+01 1.501E+01
+                                1.865E+01 1.500E+01
 
    FLUXES                           TOTAL     TOTAL
                                    INFLOW   OUTFLOW
@@ -1437,10 +1437,10 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -1.201E+01  -6.005E+00  -7.409E-07  -2.202E-03  -6.000E+00
+                               -1.201E+01  -6.006E+00  -4.585E-07  -2.202E-03  -6.001E+00
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -1.853E-05   3.481E-07  -1.887E-05
+                               -1.866E-05   2.154E-07  -1.887E-05
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -2.519E+00  -2.548E-01  -2.264E+00
@@ -1448,13 +1448,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.891E-02  -2.044E-02   9.499E-05   8.313E-07   1.442E-03
+                               -1.891E-02  -2.044E-02   9.499E-05   8.247E-07   1.442E-03
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.904E-02  -1.925E-02   1.315E-05   1.150E-07   1.995E-04
+                               -1.904E-02  -1.925E-02   1.315E-05   1.141E-07   1.995E-04
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.817E-02  -2.690E-02   5.394E-04   4.720E-06   8.187E-03
+                               -1.817E-02  -2.690E-02   5.394E-04   4.683E-06   8.188E-03
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -1472,26 +1472,26 @@
                                           3.246E+03 3.212E+03
 
      TOTAL PHOSPHORUS (LBS)                   ITOTP    ROTOTP
-                                          2.842E+03 2.825E+03
+                                          2.843E+03 2.825E+03
 
  *** PHCARB ***
 
    STATE VARIABLES                    TIC       CO2        PH
                                      MG/L      MG/L
-                                2.928E+01 5.140E-06 1.197E+01
+                                2.927E+01 5.143E-06 1.197E+01
 
    FLUXES                           TOTAL     TOTAL
                                    INFLOW   OUTFLOW
 
      INORGANIC CARBON (LBS)          ITIC     ROTIC
-                                2.828E+03 3.169E+03
+                                2.829E+03 3.169E+03
 
      CARBON DIOXIDE (LBS)            ICO2     ROCO2
                                 2.812E+02 3.072E+01
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    1.199E-02   5.971E-05   1.130E-04   1.863E-09   9.742E-08   3.007E-02  -1.825E-02
+       (POS. INDICATES GAIN)    1.199E-02   5.970E-05   1.130E-04   1.862E-09   9.742E-08   3.007E-02  -1.825E-02
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 2
@@ -1509,20 +1509,20 @@
    FLUXES                           TOTAL    PRECIP      EVAP     TOTAL
      ENTIRE REACH:                 INFLOW                LOSS   OUTFLOW
        VOLUMES  (AC-FT)              IVOL    PRSUPY     VOLEV     ROVOL
-                                     326.     0.386 8.635E-02      326.
+                                     326.     0.386 8.636E-02      326.
 
      POTENTIAL ET (IN)              POTEV
                                     0.609
 
    BALANCE                      % ERROR IN    AC-FT
-                                  0.000   3.269E+02
+                                  0.000   3.270E+02
 
  *** CONS ***
 
    CONSERVATIVE NO.  1              ALKALINITY     
 
    STATE VARIABLE
-     CONCENTRATION  (    MG/L)  2.148E+01
+     CONCENTRATION  (    MG/L)  2.147E+01
 
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
@@ -1560,7 +1560,7 @@
      CONC. IN SUSPENSION (MG/L)            2.57      0.00     0.373E-01  2.61    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  3.465E-03 0.000E+00 5.029E-05 3.515E-03
+              SUSPENSION                  3.465E-03 0.000E+00 5.027E-05 3.515E-03
               BED                         1.332E+03 1.693E+02 1.667E+02 1.668E+03
               TOTAL                       1.332E+03 1.693E+02 1.667E+02 1.668E+03
 
@@ -1569,7 +1569,7 @@
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
      TOTAL INFLOWS                        1.858E+00 7.255E+00 6.982E+00 1.609E+01
-     DEPOSITION/SCOUR                    -3.450E-01 2.060E+00 6.747E-03 1.722E+00
+     DEPOSITION/SCOUR                    -3.450E-01 2.060E+00 6.746E-03 1.722E+00
      TOTAL OUTFLOWS                       2.200E+00 5.194E+00 6.976E+00 1.437E+01
 
                                FOR SAND, SILT, CLAY
@@ -1603,7 +1603,7 @@
      INFLOW OF DISSOLVED QUAL             1.223E+01
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
-                                          1.728E-03   0.000E+00   4.228E-03   5.957E-03
+                                          1.728E-03   0.000E+00   4.228E-03   5.956E-03
 
      TOTAL INFLOW                         1.224E+01
 
@@ -1611,18 +1611,18 @@
                                           3.748E+01   3.748E-02   5.696E-01   1.679E-02   2.260E-02   4.519E-02   3.817E+01
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   3.419E-01   4.297E-01   4.280E-01   1.200E+00
+                                          0.000E+00   0.000E+00   0.000E+00   3.418E-01   4.297E-01   4.280E-01   1.199E+00
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -2.422E-03   4.888E-02   6.188E-02  -1.217E+01  -1.516E+01  -1.524E+01  -4.246E+01
+       (POSITIVE INDICATES ADSORPTION)   -2.422E-03   4.887E-02   6.187E-02  -1.217E+01  -1.516E+01  -1.524E+01  -4.246E+01
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -1.022E-02   9.458E-03   6.783E-04  -7.991E-05
+       (POSITIVE INDICATES DEPOSITION)   -1.022E-02   9.457E-03   6.781E-04  -8.002E-05
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      1.651E+01
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          9.515E-03   3.942E-02   6.551E-02   1.144E-01
+                                          9.514E-03   3.941E-02   6.551E-02   1.144E-01
 
      TOTAL OUTFLOW                        1.662E+01
 
@@ -1642,7 +1642,7 @@
      INFLOW                   1.145E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN) -2.321E+02  -1.815E+02  -7.368E+00  -2.228E+01  -5.696E+00  -1.521E+01   4.087E-04  -1.802E-02
+       (POS. INDICATES GAIN) -2.321E+02  -1.815E+02  -7.368E+00  -2.228E+01  -5.695E+00  -1.521E+01   4.088E-04  -1.802E-02
 
      OUTFLOW                  1.120E+04
 
@@ -1660,7 +1660,7 @@
      INFLOW                   1.766E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -1.574E+03  -7.368E+00   2.367E+02  -1.803E+03   0.000E+00   1.385E-03   3.265E-05   1.597E-02
+       (POS. INDICATES GAIN) -1.574E+03  -7.368E+00   2.367E+02  -1.803E+03   0.000E+00   1.385E-03   3.264E-05   1.597E-02
 
      OUTFLOW                  1.919E+02
 
@@ -1677,27 +1677,27 @@
      DISSOLVED STORAGE  (LBS)             3.894E+00   3.889E+00   5.408E-03
 
    FLUXES (LBS)
-     INFLOW OF DISSOLVED TAM              6.279E+02
+     INFLOW OF DISSOLVED TAM              6.278E+02
 
-     TOTAL INFLOW OF TAM                  6.279E+02
+     TOTAL INFLOW OF TAM                  6.278E+02
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.278E+02  -1.576E+00  -1.843E+00   1.302E+02   3.211E-01   6.628E-01  -3.203E-05   7.851E-04
+       (POS. INDICATES GAIN)  1.278E+02  -1.576E+00  -1.843E+00   1.302E+02   3.211E-01   6.628E-01  -3.204E-05   7.852E-04
 
      TOTAL OUTFLOW OF DISSOLVED TAM       7.556E+02
 
      TOTAL OUTFLOW                        7.556E+02
 
    BALANCE                      % ERROR IN      LBS
-                                  0.000   7.623E+02
+                                  0.000   7.622E+02
 
    NITRITE(NO2-N)
 
    STATE VARIABLES
      CONCENTRATION  (MG/L)                2.111E-01
 
-     STORAGE (LBS)            5.689E-01
+     STORAGE (LBS)            5.688E-01
 
    FLUXES (LBS)
      INFLOW                   1.302E+02
@@ -1719,7 +1719,7 @@
      STORAGE (LBS)            2.708E+00
 
    FLUXES (LBS)
-     INFLOW                   1.011E+03
+     INFLOW                   1.010E+03
 
                                             NITRIF-   DENITRIF-   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     ICATION                  GROWTH       DEATH      GROWTH
@@ -1735,7 +1735,7 @@
    STATE VARIABLES
      DISSOLVED CONCENTRATION  (MG/L)      1.233E+00
 
-     DISSOLVED STORAGE  (LBS)             3.323E+00
+     DISSOLVED STORAGE  (LBS)             3.322E+00
 
    FLUXES (LBS)
      INFLOW OF DISSOLVED PO4              1.217E+03
@@ -1744,7 +1744,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.316E+01   1.302E+01   4.444E-02   9.173E-02  -4.432E-06   1.087E-04
+       (POS. INDICATES GAIN)  1.316E+01   1.302E+01   4.444E-02   9.173E-02  -4.434E-06   1.087E-04
 
      TOTAL OUTFLOW OF DISSOLVED PO4       1.238E+03
 
@@ -1758,7 +1758,7 @@
    STATE VARIABLES
      PHYTOPLANKTON                  PHYTO    PHYCLA    LIMPHY       ZOO
        & ZOOPLANKTON                 MG/L      UG/L               ORG/L
-                                6.490E-03 4.650E-02      LIT  7.602E-01
+                                6.490E-03 4.650E-02      LIT  7.601E-01
 
      BENTHIC ALGAE                  BENAL    BALCLA    LIMBAL
                                     MG/M2     UG/M2
@@ -1794,10 +1794,10 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -1.534E+01  -7.661E+00  -1.547E-06  -1.399E-03  -7.681E+00
+                               -1.534E+01  -7.661E+00  -1.230E-06  -1.399E-03  -7.682E+00
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -3.225E-05   7.267E-07  -3.298E-05
+                               -3.240E-05   5.775E-07  -3.297E-05
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -1.584E+00  -4.654E-01  -1.119E+00
@@ -1805,13 +1805,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.315E-04  -6.263E-04   6.037E-05   1.458E-06   6.960E-04
+                                1.315E-04  -6.263E-04   6.037E-05   1.451E-06   6.960E-04
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.820E-05  -8.667E-05   8.354E-06   2.018E-07   9.632E-05
+                                1.820E-05  -8.668E-05   8.354E-06   2.008E-07   9.633E-05
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                7.469E-04  -3.556E-03   3.428E-04   8.281E-06   3.952E-03
+                                7.469E-04  -3.557E-03   3.428E-04   8.239E-06   3.952E-03
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -1826,7 +1826,7 @@
                                           4.369E+02 4.750E+01
 
      TOTAL NITROGEN (LBS)                     ITOTN    ROTOTN
-                                          1.846E+03 1.913E+03
+                                          1.845E+03 1.912E+03
 
      TOTAL PHOSPHORUS (LBS)                   ITOTP    ROTOTP
                                           1.228E+03 1.239E+03
@@ -1835,20 +1835,20 @@
 
    STATE VARIABLES                    TIC       CO2        PH
                                      MG/L      MG/L
-                                5.444E+00 2.986E-01 7.776E+00
+                                5.442E+00 2.986E-01 7.776E+00
 
    FLUXES                           TOTAL     TOTAL
                                    INFLOW   OUTFLOW
 
      INORGANIC CARBON (LBS)          ITIC     ROTIC
-                                4.156E+03 4.373E+03
+                                4.156E+03 4.372E+03
 
      CARBON DIOXIDE (LBS)            ICO2     ROCO2
                                 2.079E+02 1.240E+02
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    8.839E-03   6.900E-05   1.297E-04   3.401E-09   1.507E-07   3.073E-02  -2.209E-02
+       (POS. INDICATES GAIN)    8.837E-03   6.900E-05   1.297E-04   3.399E-09   1.507E-07   3.072E-02  -2.209E-02
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 3
@@ -1887,7 +1887,7 @@
                                 1.075E+06 1.101E+06
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   1.102E+06
+                                  0.000   1.101E+06
 
  *** HTRCH ***
 
@@ -1917,7 +1917,7 @@
      CONC. IN SUSPENSION (MG/L)            3.38      0.00     0.163E-04  3.38    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  7.636E-03 0.000E+00 3.692E-08 7.636E-03
+              SUSPENSION                  7.636E-03 0.000E+00 3.691E-08 7.636E-03
               BED                         1.334E+03 1.801E+02 1.667E+02 1.681E+03
               TOTAL                       1.334E+03 1.801E+02 1.667E+02 1.681E+03
 
@@ -1945,41 +1945,41 @@
      DISSOLVED CONCENTRATION  (  UG/L)    2.952E-01
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)             2.678E-05  -1.000E+30   2.852E-04   6.171E-05   5.925E-04   6.190E-04
+     WITH SEDIMENT  (  UG/MG)             2.678E-05  -1.000E+30   2.852E-04   6.170E-05   5.924E-04   6.189E-04
 
      DISSOLVED STORAGE  (       G)        2.142E-02
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
-       SUSPENDED                          6.565E-06   0.000E+00   3.381E-10   6.565E-06
-       BED                                2.643E+00   3.425E+00   3.313E+00   9.380E+00
-       TOTAL                              2.643E+00   3.425E+00   3.313E+00   9.380E+00
+       SUSPENDED                          6.565E-06   0.000E+00   3.379E-10   6.565E-06
+       BED                                2.643E+00   3.424E+00   3.313E+00   9.380E+00
+       TOTAL                              2.643E+00   3.424E+00   3.313E+00   9.380E+00
 
-     TOTAL STORAGE  (       G)            9.402E+00
+     TOTAL STORAGE  (       G)            9.401E+00
 
    FLUXES  (       G)
      INFLOW OF DISSOLVED QUAL             1.520E+01
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
-                                          1.296E-03   0.000E+00   5.382E-05   1.350E-03
+                                          1.296E-03   0.000E+00   5.380E-05   1.350E-03
 
      TOTAL INFLOW                         1.520E+01
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          3.028E+01   3.028E-02   5.850E-01   1.229E-02   1.881E-02   3.762E-02   3.097E+01
+                                          3.028E+01   3.028E-02   5.850E-01   1.229E-02   1.881E-02   3.762E-02   3.096E+01
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
                                           0.000E+00   0.000E+00   0.000E+00   1.375E-01   1.749E-01   1.723E-01   4.847E-01
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -3.361E-03   5.453E-02   6.487E-02  -9.637E+00  -1.212E+01  -1.208E+01  -3.372E+01
+       (POSITIVE INDICATES ADSORPTION)   -3.361E-03   5.453E-02   6.486E-02  -9.636E+00  -1.212E+01  -1.208E+01  -3.372E+01
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -1.534E-02   5.902E-03   1.846E-05  -9.420E-03
+       (POSITIVE INDICATES DEPOSITION)   -1.534E-02   5.902E-03   1.846E-05  -9.419E-03
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      1.800E+01
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          1.329E-02   4.863E-02   6.490E-02   1.268E-01
+                                          1.328E-02   4.862E-02   6.490E-02   1.268E-01
 
      TOTAL OUTFLOW                        1.813E+01
 
@@ -2017,7 +2017,7 @@
      INFLOW                   2.704E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -2.268E+03  -1.766E+01   5.251E+02  -2.775E+03   0.000E+00   5.870E-03   7.900E-05   1.125E-02
+       (POS. INDICATES GAIN) -2.268E+03  -1.766E+01   5.251E+02  -2.775E+03   0.000E+00   5.870E-03   7.899E-05   1.125E-02
 
      OUTFLOW                  4.363E+02
 
@@ -2040,7 +2040,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.892E+02  -1.515E+00  -7.440E-01   2.888E+02   7.698E-01   1.907E+00  -1.236E-04   5.556E-04
+       (POS. INDICATES GAIN)  2.892E+02  -1.515E+00  -7.440E-01   2.888E+02   7.698E-01   1.907E+00  -1.237E-04   5.556E-04
 
      TOTAL OUTFLOW OF DISSOLVED TAM       1.009E+03
 
@@ -2063,7 +2063,7 @@
      OTHER GAINS/LOSSES           TOTAL     ICATION
        (POS. INDICATES GAIN)  1.322E+00   1.322E+00
 
-     OUTFLOW                  6.274E+01
+     OUTFLOW                  6.273E+01
 
    BALANCE                      % ERROR IN      LBS
                                   0.000   6.295E+01
@@ -2076,7 +2076,7 @@
      STORAGE (LBS)            5.134E-02
 
    FLUXES (LBS)
-     INFLOW                   1.192E+02
+     INFLOW                   1.191E+02
 
                                             NITRIF-   DENITRIF-   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     ICATION                  GROWTH       DEATH      GROWTH
@@ -2085,7 +2085,7 @@
      OUTFLOW                  1.215E+02
 
    BALANCE                      % ERROR IN      LBS
-                                  0.000   1.221E+02
+                                  0.000   1.220E+02
 
    ORTHO-PHOSPHATE(PO4-P)
 
@@ -2095,20 +2095,20 @@
      DISSOLVED STORAGE  (LBS)             3.199E-01
 
    FLUXES (LBS)
-     INFLOW OF DISSOLVED PO4              1.969E+02
+     INFLOW OF DISSOLVED PO4              1.968E+02
 
-     TOTAL INFLOW                         1.969E+02
+     TOTAL INFLOW                         1.968E+02
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.925E+01   2.888E+01   1.065E-01   2.640E-01  -1.710E-05   7.689E-05
+       (POS. INDICATES GAIN)  2.925E+01   2.888E+01   1.065E-01   2.640E-01  -1.711E-05   7.689E-05
 
      TOTAL OUTFLOW OF DISSOLVED PO4       2.291E+02
 
      TOTAL OUTFLOW                        2.291E+02
 
    BALANCE                      % ERROR IN      LBS
-                                  0.000   2.292E+02
+                                  0.000   2.291E+02
 
  *** PLANK ***
 
@@ -2123,7 +2123,7 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                1.144E-07 1.583E-08 6.497E-07 4.124E-03 5.708E-04 2.342E-02 8.778E-02
+                                1.144E-07 1.583E-08 6.496E-07 4.124E-03 5.708E-04 2.342E-02 8.778E-02
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
@@ -2140,21 +2140,21 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                4.504E-04 6.334E-04
+                                4.504E-04 6.333E-04
 
      PHOSPHORUS (LBS)                IORP     ROORP
                                 6.233E-05 8.765E-05
 
      CARBON (LBS)                    IORC     ROORC
-                                2.558E-03 3.597E-03
+                                2.557E-03 3.596E-03
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -4.416E+01  -2.205E+01  -1.169E-05  -5.929E-03  -2.211E+01
+                               -4.416E+01  -2.205E+01  -1.045E-05  -5.929E-03  -2.211E+01
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -7.431E-05   5.491E-06  -7.980E-05
+                               -7.488E-05   4.909E-06  -7.979E-05
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -6.576E-01  -2.350E-01  -4.225E-01
@@ -2162,13 +2162,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.828E-04  -5.671E-04   2.558E-04   3.710E-06   4.903E-04
+                                1.828E-04  -5.670E-04   2.558E-04   3.682E-06   4.903E-04
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                2.529E-05  -7.848E-05   3.540E-05   5.135E-07   6.786E-05
+                                2.529E-05  -7.847E-05   3.540E-05   5.095E-07   6.786E-05
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.038E-03  -3.220E-03   1.453E-03   2.107E-05   2.784E-03
+                                1.038E-03  -3.220E-03   1.453E-03   2.091E-05   2.784E-03
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -2186,7 +2186,7 @@
                                           1.016E+03 1.212E+03
 
      TOTAL PHOSPHORUS (LBS)                   ITOTP    ROTOTP
-                                          2.132E+02 2.318E+02
+                                          2.132E+02 2.317E+02
 
  *** PHCARB ***
 
@@ -2198,14 +2198,14 @@
                                    INFLOW   OUTFLOW
 
      INORGANIC CARBON (LBS)          ITIC     ROTIC
-                                9.901E+02 1.432E+03
+                                9.899E+02 1.431E+03
 
      CARBON DIOXIDE (LBS)            ICO2     ROCO2
                                 1.113E+03 8.286E+02
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    2.699E-04   3.330E-05   9.549E-05   2.392E-09   2.841E-08   1.308E-02  -1.293E-02
+       (POS. INDICATES GAIN)    2.698E-04   3.330E-05   9.549E-05   2.390E-09   2.841E-08   1.308E-02  -1.293E-02
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 4
@@ -2236,15 +2236,15 @@
    CONSERVATIVE NO.  1              ALKALINITY     
 
    STATE VARIABLE
-     CONCENTRATION  (    MG/L)  3.689E-05
+     CONCENTRATION  (    MG/L)  3.688E-05
 
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
                                      ICON     ROCON
-                                3.124E+03 3.176E+03
+                                3.123E+03 3.175E+03
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   3.176E+03
+                                  0.000   3.175E+03
 
  *** HTRCH ***
 
@@ -2274,7 +2274,7 @@
      CONC. IN SUSPENSION (MG/L)            3.98      0.00     0.105E-07  3.98    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  1.242E-02 0.000E+00 3.287E-11 1.242E-02
+              SUSPENSION                  1.242E-02 0.000E+00 3.286E-11 1.242E-02
               BED                         1.338E+03 1.923E+02 1.649E+02 1.695E+03
               TOTAL                       1.338E+03 1.923E+02 1.649E+02 1.695E+03
 
@@ -2302,19 +2302,19 @@
      DISSOLVED CONCENTRATION  (  UG/L)    3.209E-02
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)             2.999E-06  -1.000E+30   3.124E-05   6.453E-06   6.271E-05   6.471E-05
+     WITH SEDIMENT  (  UG/MG)             2.998E-06  -1.000E+30   3.123E-05   6.452E-06   6.271E-05   6.471E-05
 
      DISSOLVED STORAGE  (       G)        3.213E-03
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
-       SUSPENDED                          1.195E-06   0.000E+00   3.296E-14   1.195E-06
+       SUSPENDED                          1.195E-06   0.000E+00   3.294E-14   1.195E-06
        BED                                2.772E-01   3.871E-01   3.425E-01   1.007E+00
        TOTAL                              2.772E-01   3.871E-01   3.425E-01   1.007E+00
 
      TOTAL STORAGE  (       G)            1.010E+00
 
    FLUXES  (       G)
-     INFLOW OF DISSOLVED QUAL             3.924E+00
+     INFLOW OF DISSOLVED QUAL             3.923E+00
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
                                           4.208E-04   0.000E+00   1.086E-08   4.208E-04
@@ -2322,18 +2322,18 @@
      TOTAL INFLOW                         3.924E+00
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          7.743E+00   7.743E-03   2.834E-01   2.598E-03   6.796E-03   1.359E-02   8.057E+00
+                                          7.742E+00   7.742E-03   2.834E-01   2.597E-03   6.796E-03   1.359E-02   8.056E+00
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   4.184E-02   5.558E-02   5.225E-02   1.497E-01
+                                          0.000E+00   0.000E+00   0.000E+00   4.183E-02   5.557E-02   5.225E-02   1.497E-01
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -8.856E-04   1.343E-02   6.019E-03  -2.321E+00  -2.984E+00  -2.906E+00  -8.193E+00
+       (POSITIVE INDICATES ADSORPTION)   -8.855E-04   1.343E-02   6.019E-03  -2.321E+00  -2.984E+00  -2.906E+00  -8.192E+00
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
        (POSITIVE INDICATES DEPOSITION)   -2.563E-03   2.068E-03  -1.220E-02  -1.270E-02
 
-     TOTAL OUTFLOW OF DISSOLVED QUAL      4.078E+00
+     TOTAL OUTFLOW OF DISSOLVED QUAL      4.077E+00
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
                                           2.103E-03   1.136E-02   1.822E-02   3.169E-02
@@ -2341,7 +2341,7 @@
      TOTAL OUTFLOW                        4.109E+00
 
    BALANCE                      % ERROR IN        G
-                                  0.000   1.333E+01
+                                  0.000   1.332E+01
 
  *** OXRX ***
 
@@ -2356,7 +2356,7 @@
      INFLOW                   5.462E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  3.714E+02   6.806E+02  -4.648E+01  -1.905E+02  -1.039E+01  -6.183E+01   1.717E-03  -1.167E-02
+       (POS. INDICATES GAIN)  3.714E+02   6.806E+02  -4.648E+01  -1.905E+02  -1.039E+01  -6.183E+01   1.718E-03  -1.167E-02
 
      OUTFLOW                  5.498E+04
 
@@ -2374,7 +2374,7 @@
      INFLOW                   1.499E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -1.132E+03  -4.648E+01   6.733E+02  -1.759E+03   0.000E+00   1.071E-02   1.914E-04   2.169E-03
+       (POS. INDICATES GAIN) -1.132E+03  -4.648E+01   6.733E+02  -1.759E+03   0.000E+00   1.071E-02   1.913E-04   2.169E-03
 
      OUTFLOW                  3.672E+02
 
@@ -2433,11 +2433,11 @@
      STORAGE (LBS)            4.493E-02
 
    FLUXES (LBS)
-     INFLOW                   2.518E+01
+     INFLOW                   2.517E+01
 
                                             NITRIF-   DENITRIF-   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     ICATION                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN) -1.110E+00   4.450E-01   0.000E+00   0.000E+00  -1.555E+00   0.000E+00  -1.308E-06
+       (POS. INDICATES GAIN) -1.109E+00   4.450E-01   0.000E+00   0.000E+00  -1.555E+00   0.000E+00  -1.308E-06
 
      OUTFLOW                  2.407E+01
 
@@ -2458,7 +2458,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  3.768E+01   3.703E+01   2.803E-01   3.729E-01  -1.847E-05   7.036E-05
+       (POS. INDICATES GAIN)  3.768E+01   3.703E+01   2.803E-01   3.729E-01  -1.848E-05   7.036E-05
 
      TOTAL OUTFLOW OF DISSOLVED PO4       1.285E+02
 
@@ -2472,7 +2472,7 @@
    STATE VARIABLES
      PHYTOPLANKTON                  PHYTO    PHYCLA    LIMPHY       ZOO
        & ZOOPLANKTON                 MG/L      UG/L               ORG/L
-                                6.490E-03 4.650E-02      LIT  1.801E+00
+                                6.490E-03 4.650E-02      LIT  1.800E+00
 
      BENTHIC ALGAE                  BENAL    BALCLA    LIMBAL
                                     MG/M2     UG/M2
@@ -2480,7 +2480,7 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                5.494E-08 7.603E-09 3.120E-07 3.352E-03 4.638E-04 1.903E-02 6.995E-02
+                                5.492E-08 7.600E-09 3.118E-07 3.352E-03 4.638E-04 1.903E-02 6.995E-02
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
@@ -2497,21 +2497,21 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                3.271E-04 5.157E-04
+                                3.271E-04 5.156E-04
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                4.527E-05 7.137E-05
+                                4.526E-05 7.136E-05
 
      CARBON (LBS)                    IORC     ROORC
-                                1.858E-03 2.928E-03
+                                1.857E-03 2.928E-03
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -6.221E+01  -3.097E+01  -5.473E-05  -1.081E-02  -3.123E+01
+                               -6.221E+01  -3.097E+01  -5.281E-05  -1.081E-02  -3.123E+01
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -1.676E-04   2.571E-05  -1.933E-04
+                               -1.685E-04   2.480E-05  -1.933E-04
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -2.200E-01  -1.538E-01  -6.612E-02
@@ -2519,13 +2519,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.884E-04  -3.823E-04   4.665E-04   9.592E-06   9.455E-05
+                                1.884E-04  -3.822E-04   4.665E-04   9.547E-06   9.455E-05
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                2.607E-05  -5.291E-05   6.456E-05   1.327E-06   1.308E-05
+                                2.607E-05  -5.290E-05   6.456E-05   1.321E-06   1.308E-05
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.070E-03  -2.171E-03   2.649E-03   5.447E-05   5.369E-04
+                                1.070E-03  -2.171E-03   2.649E-03   5.421E-05   5.369E-04
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -2562,7 +2562,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)   -1.240E-03   5.513E-05   8.230E-05   9.906E-09   1.954E-08   1.108E-02  -1.246E-02
+       (POS. INDICATES GAIN)   -1.240E-03   5.513E-05   8.230E-05   9.904E-09   1.954E-08   1.108E-02  -1.246E-02
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 5
@@ -2598,10 +2598,10 @@
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
                                      ICON     ROCON
-                                5.419E+00 5.524E+00
+                                5.418E+00 5.522E+00
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   5.524E+00
+                                  0.000   5.522E+00
 
  *** HTRCH ***
 
@@ -2631,7 +2631,7 @@
      CONC. IN SUSPENSION (MG/L)            3.34      0.00     0.263E-10  3.34    
 
      STORAGES (TONS)                           SAND      SILT      CLAY     TOTAL
-              SUSPENSION                  7.353E-03 0.000E+00 5.782E-14 7.353E-03
+              SUSPENSION                  7.353E-03 0.000E+00 5.780E-14 7.353E-03
               BED                         1.342E+03 2.073E+02 1.649E+02 1.714E+03
               TOTAL                       1.342E+03 2.073E+02 1.649E+02 1.714E+03
 
@@ -2659,27 +2659,27 @@
      DISSOLVED CONCENTRATION  (  UG/L)    3.782E-03
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)             3.652E-07  -1.000E+30   3.726E-06   5.449E-07   5.392E-06   5.452E-06
+     WITH SEDIMENT  (  UG/MG)             3.652E-07  -1.000E+30   3.726E-06   5.449E-07   5.391E-06   5.452E-06
 
-     DISSOLVED STORAGE  (       G)        2.673E-04
+     DISSOLVED STORAGE  (       G)        2.672E-04
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
-       SUSPENDED                          8.620E-08   0.000E+00   6.917E-18   8.620E-08
-       BED                                2.347E-02   3.588E-02   2.885E-02   8.820E-02
-       TOTAL                              2.347E-02   3.588E-02   2.885E-02   8.820E-02
+       SUSPENDED                          8.619E-08   0.000E+00   6.914E-18   8.619E-08
+       BED                                2.346E-02   3.588E-02   2.885E-02   8.820E-02
+       TOTAL                              2.346E-02   3.588E-02   2.885E-02   8.820E-02
 
-     TOTAL STORAGE  (       G)            8.847E-02
+     TOTAL STORAGE  (       G)            8.846E-02
 
    FLUXES  (       G)
-     INFLOW OF DISSOLVED QUAL             4.581E-01
+     INFLOW OF DISSOLVED QUAL             4.580E-01
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
-                                          5.812E-05   0.000E+00   8.147E-13   5.812E-05
+                                          5.811E-05   0.000E+00   8.144E-13   5.811E-05
 
      TOTAL INFLOW                         4.581E-01
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          8.425E-01   8.425E-04   3.518E-02   2.653E-04   8.076E-04   1.615E-03   8.812E-01
+                                          8.425E-01   8.425E-04   3.518E-02   2.652E-04   8.075E-04   1.615E-03   8.812E-01
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
                                           0.000E+00   0.000E+00   0.000E+00   4.645E-03   6.653E-03   5.729E-03   1.703E-02
@@ -2688,12 +2688,12 @@
        (POSITIVE INDICATES ADSORPTION)    6.668E-05   1.265E-03   1.764E-03  -2.490E-01  -3.448E-01  -3.079E-01  -8.986E-01
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -6.494E-05   2.231E-04   1.200E-07   1.582E-04
+       (POSITIVE INDICATES DEPOSITION)   -6.494E-05   2.230E-04   1.200E-07   1.582E-04
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      4.784E-01
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          1.909E-04   1.042E-03   1.764E-03   2.997E-03
+                                          1.908E-04   1.042E-03   1.764E-03   2.997E-03
 
      TOTAL OUTFLOW                        4.814E-01
 
@@ -2815,7 +2815,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.897E+01   2.847E+01   2.332E-01   2.642E-01   2.317E-05   4.359E-06
+       (POS. INDICATES GAIN)  2.897E+01   2.847E+01   2.332E-01   2.642E-01   2.316E-05   4.359E-06
 
      TOTAL OUTFLOW OF DISSOLVED PO4       1.192E+02
 
@@ -2829,7 +2829,7 @@
    STATE VARIABLES
      PHYTOPLANKTON                  PHYTO    PHYCLA    LIMPHY       ZOO
        & ZOOPLANKTON                 MG/L      UG/L               ORG/L
-                                6.490E-03 4.650E-02      LIT  9.777E-01
+                                6.490E-03 4.650E-02      LIT  9.773E-01
 
      BENTHIC ALGAE                  BENAL    BALCLA    LIMBAL
                                     MG/M2     UG/M2
@@ -2837,7 +2837,7 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                8.677E-09 1.201E-09 4.927E-08 3.970E-03 5.494E-04 2.254E-02 8.437E-02
+                                8.664E-09 1.199E-09 4.920E-08 3.970E-03 5.494E-04 2.254E-02 8.437E-02
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
@@ -2857,18 +2857,18 @@
                                 1.410E-04 2.805E-04
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                1.952E-05 3.882E-05
+                                1.951E-05 3.882E-05
 
      CARBON (LBS)                    IORC     ROORC
-                                8.009E-04 1.593E-03
+                                8.006E-04 1.593E-03
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -4.396E+01  -2.183E+01  -4.163E-05  -6.375E-03  -2.212E+01
+                               -4.396E+01  -2.183E+01  -4.046E-05  -6.375E-03  -2.212E+01
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -1.483E-04   1.955E-05  -1.679E-04
+                               -1.489E-04   1.901E-05  -1.679E-04
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -1.844E-02  -1.359E-02  -4.853E-03
@@ -2876,13 +2876,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.392E-04  -1.498E-04   2.751E-04   8.196E-06   5.730E-06
+                                1.392E-04  -1.498E-04   2.751E-04   8.168E-06   5.730E-06
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.926E-05  -2.074E-05   3.807E-05   1.134E-06   7.930E-07
+                                1.926E-05  -2.073E-05   3.807E-05   1.130E-06   7.930E-07
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                7.902E-04  -8.508E-04   1.562E-03   4.654E-05   3.254E-05
+                                7.904E-04  -8.505E-04   1.562E-03   4.638E-05   3.254E-05
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -2950,15 +2950,15 @@
    CONSERVATIVE NO.  1              ALKALINITY     
 
    STATE VARIABLE
-     CONCENTRATION  (    MG/L)  6.906E-09
+     CONCENTRATION  (    MG/L)  6.904E-09
 
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
                                      ICON     ROCON
-                                2.852E-02 2.890E-02
+                                2.851E-02 2.889E-02
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   2.891E-02
+                                  0.000   2.890E-02
 
  *** HTRCH ***
 
@@ -3016,14 +3016,14 @@
      DISSOLVED CONCENTRATION  (  UG/L)    4.446E-04
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)             4.331E-08  -1.000E+30   4.452E-07   5.566E-08   5.555E-07   5.567E-07
+     WITH SEDIMENT  (  UG/MG)             4.331E-08  -1.000E+30   4.452E-07   5.566E-08   5.554E-07   5.567E-07
 
      DISSOLVED STORAGE  (       G)        2.389E-05
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          6.685E-09   0.000E+00   3.039E-16   6.685E-09
-       BED                                2.407E-03   3.787E-03   2.946E-03   9.140E-03
-       TOTAL                              2.407E-03   3.787E-03   2.946E-03   9.140E-03
+       BED                                2.407E-03   3.786E-03   2.946E-03   9.140E-03
+       TOTAL                              2.407E-03   3.786E-03   2.946E-03   9.140E-03
 
      TOTAL STORAGE  (       G)            9.164E-03
 
@@ -3033,21 +3033,21 @@
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
                                           3.633E-06   0.000E+00   2.075E-16   3.633E-06
 
-     TOTAL INFLOW                         3.375E-02
+     TOTAL INFLOW                         3.374E-02
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          6.687E-02   6.687E-05   8.380E-03   1.814E-05   7.908E-05   1.582E-04   7.558E-02
+                                          6.687E-02   6.687E-05   8.379E-03   1.814E-05   7.907E-05   1.581E-04   7.557E-02
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   5.972E-04   9.227E-04   7.333E-04   2.253E-03
+                                          0.000E+00   0.000E+00   0.000E+00   5.971E-04   9.227E-04   7.332E-04   2.253E-03
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -2.861E-06   1.834E-04   2.120E-04  -2.045E-02  -3.119E-02  -2.518E-02  -7.642E-02
+       (POSITIVE INDICATES ADSORPTION)   -2.861E-06   1.834E-04   2.120E-04  -2.045E-02  -3.118E-02  -2.517E-02  -7.641E-02
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -1.518E-05   1.507E-05   2.789E-08  -8.057E-08
+       (POSITIVE INDICATES DEPOSITION)   -1.518E-05   1.507E-05   2.788E-08  -8.056E-08
 
-     TOTAL OUTFLOW OF DISSOLVED QUAL      3.483E-02
+     TOTAL OUTFLOW OF DISSOLVED QUAL      3.482E-02
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
                                           1.603E-05   1.683E-04   2.120E-04   3.963E-04
@@ -3070,7 +3070,7 @@
      INFLOW                   2.697E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN) -3.766E+02  -1.197E+00  -5.456E+01  -2.605E+02  -1.623E+01  -4.411E+01   3.895E-04  -2.241E-05
+       (POS. INDICATES GAIN) -3.766E+02  -1.197E+00  -5.456E+01  -2.605E+02  -1.623E+01  -4.411E+01   3.905E-04  -2.241E-05
 
      OUTFLOW                  2.661E+04
 
@@ -3088,7 +3088,7 @@
      INFLOW                   1.727E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -1.496E+03  -5.456E+01   4.624E+02  -1.904E+03   0.000E+00   5.248E-03   1.396E-04   3.233E-06
+       (POS. INDICATES GAIN) -1.496E+03  -5.456E+01   4.624E+02  -1.904E+03   0.000E+00   5.248E-03   1.395E-04   3.233E-06
 
      OUTFLOW                  2.318E+02
 
@@ -3111,7 +3111,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.516E+02  -4.556E+00  -2.508E+00   2.543E+02   2.378E+00   1.923E+00  -2.859E-05   1.142E-06
+       (POS. INDICATES GAIN)  2.516E+02  -4.556E+00  -2.508E+00   2.543E+02   2.378E+00   1.923E+00  -2.869E-05   1.142E-06
 
      TOTAL OUTFLOW OF DISSOLVED TAM       8.952E+02
 
@@ -3172,7 +3172,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.603E+01   2.543E+01   3.291E-01   2.660E-01  -3.956E-06   1.351E-07
+       (POS. INDICATES GAIN)  2.603E+01   2.543E+01   3.291E-01   2.660E-01  -3.970E-06   1.351E-07
 
      TOTAL OUTFLOW OF DISSOLVED PO4       1.153E+02
 
@@ -3194,7 +3194,7 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                2.789E-09 3.859E-10 1.583E-08 4.614E-03 6.385E-04 2.620E-02 9.898E-02
+                                2.781E-09 3.849E-10 1.579E-08 4.614E-03 6.385E-04 2.620E-02 9.898E-02
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
@@ -3211,21 +3211,21 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                1.644E-05 1.923E-04
+                                1.641E-05 1.922E-04
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                2.275E-06 2.661E-05
+                                2.272E-06 2.661E-05
 
      CARBON (LBS)                    IORC     ROORC
-                                9.335E-05 1.092E-03
+                                9.321E-05 1.092E-03
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -4.377E+01  -2.149E+01  -8.601E-05  -5.301E-03  -2.228E+01
+                               -4.377E+01  -2.149E+01  -8.485E-05  -5.301E-03  -2.228E+01
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -1.006E-04   4.040E-05  -1.410E-04
+                               -1.011E-04   3.986E-05  -1.409E-04
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -6.346E-04  -5.002E-04  -1.344E-04
@@ -3233,13 +3233,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.758E-04  -6.110E-05   2.287E-04   8.050E-06   1.409E-07
+                                1.758E-04  -6.107E-05   2.287E-04   8.023E-06   1.409E-07
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                2.433E-05  -8.456E-06   3.165E-05   1.114E-06   1.950E-08
+                                2.433E-05  -8.452E-06   3.165E-05   1.110E-06   1.950E-08
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                9.983E-04  -3.470E-04   1.299E-03   4.571E-05   8.000E-07
+                                9.983E-04  -3.468E-04   1.299E-03   4.556E-05   8.000E-07
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -3307,15 +3307,15 @@
    CONSERVATIVE NO.  1              ALKALINITY     
 
    STATE VARIABLE
-     CONCENTRATION  (    MG/L)  6.887E-10
+     CONCENTRATION  (    MG/L)  6.885E-10
 
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
                                      ICON     ROCON
-                                7.407E-04 7.510E-04
+                                7.404E-04 7.507E-04
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   7.512E-04
+                                  0.000   7.510E-04
 
  *** HTRCH ***
 
@@ -3370,17 +3370,17 @@
    CONSTITUENT NO.  1
 
    STATE VARIABLES
-     DISSOLVED CONCENTRATION  (  UG/L)    9.366E-05
+     DISSOLVED CONCENTRATION  (  UG/L)    9.365E-05
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)             9.530E-09  -1.000E+30   9.376E-08   1.017E-08   1.015E-07   1.017E-07
+     WITH SEDIMENT  (  UG/MG)             9.529E-09  -1.000E+30   9.376E-08   1.017E-08   1.015E-07   1.017E-07
 
      DISSOLVED STORAGE  (       G)        1.118E-06
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          1.910E-10   0.000E+00   7.319E-12   1.983E-10
-       BED                                4.418E-04   7.118E-04   5.307E-04   1.684E-03
-       TOTAL                              4.418E-04   7.118E-04   5.307E-04   1.684E-03
+       BED                                4.418E-04   7.118E-04   5.306E-04   1.684E-03
+       TOTAL                              4.418E-04   7.118E-04   5.306E-04   1.684E-03
 
      TOTAL STORAGE  (       G)            1.685E-03
 
@@ -3388,15 +3388,15 @@
      INFLOW OF DISSOLVED QUAL             2.735E-03
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
-                                          2.822E-07   0.000E+00   3.147E-19   2.822E-07
+                                          2.822E-07   0.000E+00   3.146E-19   2.822E-07
 
      TOTAL INFLOW                         2.735E-03
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          5.707E-03   5.707E-06   1.259E-03   1.311E-06   8.580E-06   1.716E-05   6.998E-03
+                                          5.706E-03   5.706E-06   1.259E-03   1.311E-06   8.579E-06   1.716E-05   6.998E-03
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   1.171E-04   1.851E-04   1.431E-04   4.452E-04
+                                          0.000E+00   0.000E+00   0.000E+00   1.171E-04   1.851E-04   1.430E-04   4.452E-04
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
        (POSITIVE INDICATES ADSORPTION)    1.441E-07   1.798E-05   1.275E-05  -1.848E-03  -2.892E-03  -2.263E-03  -6.972E-03
@@ -3404,12 +3404,12 @@
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
        (POSITIVE INDICATES DEPOSITION)   -5.547E-07   2.162E-06  -9.437E-06  -7.829E-06
 
-     TOTAL OUTFLOW OF DISSOLVED QUAL      2.732E-03
+     TOTAL OUTFLOW OF DISSOLVED QUAL      2.731E-03
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          9.875E-07   1.582E-05   2.219E-05   3.900E-05
+                                          9.874E-07   1.582E-05   2.219E-05   3.900E-05
 
-     TOTAL OUTFLOW                        2.771E-03
+     TOTAL OUTFLOW                        2.770E-03
 
    BALANCE                      % ERROR IN        G
                                   0.000   1.190E-02
@@ -3427,7 +3427,7 @@
      INFLOW                   1.886E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN) -5.348E+02  -5.491E+01  -6.218E+01  -3.595E+02  -2.263E+01  -3.565E+01   2.431E-03   1.946E-06
+       (POS. INDICATES GAIN) -5.348E+02  -5.491E+01  -6.218E+01  -3.595E+02  -2.263E+01  -3.565E+01   2.432E-03   1.959E-06
 
      OUTFLOW                  1.835E+04
 
@@ -3468,7 +3468,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.088E+02  -6.220E+00  -1.869E+00   2.126E+02   2.710E+00   1.555E+00  -1.894E-04   4.426E-08
+       (POS. INDICATES GAIN)  2.088E+02  -6.220E+00  -1.869E+00   2.126E+02   2.710E+00   1.555E+00  -1.895E-04   4.369E-08
 
      TOTAL OUTFLOW OF DISSOLVED TAM       6.321E+02
 
@@ -3529,7 +3529,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.185E+01   2.126E+01   3.750E-01   2.150E-01  -2.621E-05  -1.174E-08
+       (POS. INDICATES GAIN)  2.185E+01   2.126E+01   3.750E-01   2.150E-01  -2.622E-05  -1.182E-08
 
      TOTAL OUTFLOW OF DISSOLVED PO4       8.890E+01
 
@@ -3551,7 +3551,7 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                2.132E-08 2.950E-09 1.211E-07 1.280E-02 1.771E-03 7.268E-02 2.824E-01
+                                2.131E-08 2.950E-09 1.210E-07 1.280E-02 1.771E-03 7.268E-02 2.824E-01
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
@@ -3568,35 +3568,35 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                1.160E-06 2.263E-04
+                                1.155E-06 2.263E-04
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                1.606E-07 3.132E-05
+                                1.598E-07 3.132E-05
 
      CARBON (LBS)                    IORC     ROORC
-                                6.589E-06 1.285E-03
+                                6.558E-06 1.285E-03
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -3.490E+01  -1.689E+01  -5.741E-05  -7.000E-03  -1.801E+01
+                               -3.490E+01  -1.689E+01  -5.662E-05  -7.000E-03  -1.801E+01
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -8.559E-05   2.696E-05  -1.126E-04
+                               -8.595E-05   2.660E-05  -1.125E-04
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
-                               -2.075E-08   2.560E-06  -2.581E-06
+                               -6.717E-09   2.574E-06  -2.581E-06
 
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                2.252E-04  -8.301E-05   3.020E-04   6.169E-06   1.419E-08
+                                2.252E-04  -8.300E-05   3.020E-04   6.151E-06   1.419E-08
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                3.116E-05  -1.149E-05   4.180E-05   8.538E-07   1.964E-09
+                                3.116E-05  -1.149E-05   4.180E-05   8.513E-07   1.964E-09
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.279E-03  -4.714E-04   1.715E-03   3.503E-05   8.057E-08
+                                1.279E-03  -4.713E-04   1.715E-03   3.493E-05   8.057E-08
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -3633,7 +3633,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)   -4.028E-04   3.745E-04   1.325E-04   6.449E-08  -1.170E-13   2.379E-02  -2.470E-02
+       (POS. INDICATES GAIN)   -4.028E-04   3.745E-04   1.325E-04   6.449E-08  -1.180E-13   2.379E-02  -2.470E-02
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 8
@@ -3669,10 +3669,10 @@
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
                                      ICON     ROCON
-                                6.700E-06 6.933E-06
+                                6.698E-06 6.931E-06
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   6.933E-06
+                                  0.000   6.931E-06
 
  *** HTRCH ***
 
@@ -3730,7 +3730,7 @@
      DISSOLVED CONCENTRATION  (  UG/L)   -1.000E+30
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)            -1.000E+30  -1.000E+30  -1.000E+30   6.681E-09   6.635E-08   6.722E-08
+     WITH SEDIMENT  (  UG/MG)            -1.000E+30  -1.000E+30  -1.000E+30   6.680E-09   6.635E-08   6.722E-08
 
      DISSOLVED STORAGE  (       G)        0.000E+00
 
@@ -3742,10 +3742,10 @@
      TOTAL STORAGE  (       G)            1.116E-03
 
    FLUXES  (       G)
-     INFLOW OF DISSOLVED QUAL             3.335E-05
+     INFLOW OF DISSOLVED QUAL             3.334E-05
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
-                                          5.667E-09   0.000E+00   2.250E-22   5.667E-09
+                                          5.666E-09   0.000E+00   2.249E-22   5.666E-09
 
      TOTAL INFLOW                         3.335E-05
 
@@ -3756,17 +3756,17 @@
                                           0.000E+00   0.000E+00   0.000E+00   2.781E-05   4.490E-05   3.338E-05   1.061E-04
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -7.780E-08   6.771E-06   7.124E-06  -1.214E-04  -1.943E-04  -1.467E-04  -4.485E-04
+       (POSITIVE INDICATES ADSORPTION)   -7.780E-08   6.771E-06   7.123E-06  -1.214E-04  -1.942E-04  -1.467E-04  -4.485E-04
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -2.914E-07   6.162E-07   6.125E-09   3.309E-07
+       (POSITIVE INDICATES DEPOSITION)   -2.914E-07   6.161E-07   6.125E-09   3.308E-07
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      2.225E-04
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          2.195E-07   6.155E-06   7.118E-06   1.349E-05
+                                          2.195E-07   6.155E-06   7.117E-06   1.349E-05
 
-     TOTAL OUTFLOW                        2.360E-04
+     TOTAL OUTFLOW                        2.359E-04
 
    BALANCE                      % ERROR IN        G
                                   0.000   1.719E-03
@@ -3784,7 +3784,7 @@
      INFLOW                   1.058E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  1.210E+03   1.348E+03  -1.935E+01  -1.008E+02  -3.122E+00  -1.415E+01   6.120E-03   2.044E-11
+       (POS. INDICATES GAIN)  1.210E+03   1.348E+03  -1.935E+01  -1.008E+02  -3.122E+00  -1.415E+01   6.120E-03  -3.671E-12
 
      OUTFLOW                  1.180E+04
 
@@ -3802,7 +3802,7 @@
      INFLOW                   1.427E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -1.153E+03  -1.935E+01   1.527E+02  -1.287E+03   0.000E+00   2.839E-03   4.859E-05  -2.728E-11
+       (POS. INDICATES GAIN) -1.153E+03  -1.935E+01   1.527E+02  -1.287E+03   0.000E+00   2.839E-03   4.859E-05  -2.727E-11
 
      OUTFLOW                  2.743E+02
 
@@ -3825,7 +3825,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  8.417E+01  -8.871E-01  -3.616E-01   8.396E+01   8.433E-01   6.169E-01  -4.795E-04  -9.659E-14
+       (POS. INDICATES GAIN)  8.417E+01  -8.871E-01  -3.616E-01   8.396E+01   8.433E-01   6.169E-01  -4.795E-04   9.036E-13
 
      TOTAL OUTFLOW OF DISSOLVED TAM       1.239E+02
 
@@ -3865,7 +3865,7 @@
 
                                             NITRIF-   DENITRIF-   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     ICATION                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.392E-01   2.396E-01   0.000E+00   0.000E+00  -3.825E-04   0.000E+00  -7.944E-13
+       (POS. INDICATES GAIN)  2.392E-01   2.396E-01   0.000E+00   0.000E+00  -3.825E-04   0.000E+00  -7.436E-13
 
      OUTFLOW                  2.143E+01
 
@@ -3886,7 +3886,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  8.598E+00   8.396E+00   1.167E-01   8.537E-02  -6.636E-05  -1.233E-13
+       (POS. INDICATES GAIN)  8.598E+00   8.396E+00   1.167E-01   8.537E-02  -6.636E-05   2.214E-14
 
      TOTAL OUTFLOW OF DISSOLVED PO4       1.599E+01
 
@@ -3920,40 +3920,40 @@
                                 2.077E-03 1.424E-02
 
      ZOOPLANKTON (LBS)               IZOO     ROZOO
-                                3.619E-06 9.199E-03
+                                3.615E-06 9.199E-03
 
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                4.676E-08 9.661E-05
+                                4.631E-08 9.661E-05
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                6.471E-09 1.337E-05
+                                6.409E-09 1.337E-05
 
      CARBON (LBS)                    IORC     ROORC
-                                2.655E-07 5.486E-04
+                                2.630E-07 5.486E-04
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -1.422E+01  -7.067E+00  -2.741E-05  -2.867E-03  -7.149E+00
+                               -1.422E+01  -7.067E+00  -2.708E-05  -2.867E-03  -7.149E+00
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -3.620E-05   1.288E-05  -4.908E-05
+                               -3.636E-05   1.272E-05  -4.908E-05
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
-                                1.753E-10   1.373E-10   3.797E-11
+                               -3.165E-10  -3.555E-10   3.900E-11
 
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                9.655E-05  -2.990E-05   1.237E-04   2.745E-06  -1.189E-12
+                                9.655E-05  -2.990E-05   1.237E-04   2.737E-06  -1.188E-12
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.336E-05  -4.138E-06   1.712E-05   3.799E-07  -1.645E-13
+                                1.336E-05  -4.138E-06   1.712E-05   3.788E-07  -1.645E-13
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                5.483E-04  -1.698E-04   7.025E-04   1.559E-05  -6.751E-12
+                                5.482E-04  -1.698E-04   7.025E-04   1.554E-05  -6.748E-12
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -3990,7 +3990,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    2.050E-04   1.310E-04   3.139E-05   5.339E-08  -6.330E-17   9.339E-03  -9.296E-03
+       (POS. INDICATES GAIN)    2.050E-04   1.310E-04   3.139E-05   5.339E-08   1.707E-16   9.339E-03  -9.296E-03
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/ 9
@@ -4093,10 +4093,10 @@
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          0.000E+00   0.000E+00   0.000E+00   0.000E+00
-       BED                                2.562E-04   4.153E-04   3.072E-04   9.787E-04
-       TOTAL                              2.562E-04   4.153E-04   3.072E-04   9.787E-04
+       BED                                2.561E-04   4.153E-04   3.072E-04   9.786E-04
+       TOTAL                              2.561E-04   4.153E-04   3.072E-04   9.786E-04
 
-     TOTAL STORAGE  (       G)            9.787E-04
+     TOTAL STORAGE  (       G)            9.786E-04
 
    FLUXES  (       G)
      INFLOW OF DISSOLVED QUAL             0.000E+00
@@ -4107,21 +4107,21 @@
      TOTAL INFLOW                         0.000E+00
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          3.681E-05   3.681E-08   7.254E-07   1.096E-08   3.006E-08   6.013E-08   3.768E-05
+                                          3.681E-05   3.681E-08   7.254E-07   1.096E-08   3.006E-08   6.012E-08   3.767E-05
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   1.385E-05   2.243E-05   1.661E-05   5.288E-05
+                                          0.000E+00   0.000E+00   0.000E+00   1.384E-05   2.243E-05   1.661E-05   5.288E-05
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -3.747E-08   1.120E-06   1.178E-06  -2.216E-05  -3.568E-05  -2.677E-05  -8.235E-05
+       (POSITIVE INDICATES ADSORPTION)   -3.747E-08   1.120E-06   1.177E-06  -2.216E-05  -3.568E-05  -2.677E-05  -8.235E-05
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -1.060E-07   8.475E-08   1.133E-09  -2.008E-08
+       (POSITIVE INDICATES DEPOSITION)   -1.060E-07   8.474E-08   1.133E-09  -2.008E-08
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      4.468E-05
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          6.849E-08   1.036E-06   1.176E-06   2.281E-06
+                                          6.848E-08   1.036E-06   1.176E-06   2.280E-06
 
      TOTAL OUTFLOW                        4.696E-05
 
@@ -4141,7 +4141,7 @@
      INFLOW                   6.426E+03
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  1.141E+03   1.169E+03  -4.362E+00  -1.722E+01  -2.970E-01  -6.881E+00   3.580E-03   1.407E-11
+       (POS. INDICATES GAIN)  1.141E+03   1.169E+03  -4.362E+00  -1.722E+01  -2.970E-01  -6.881E+00   3.580E-03   1.998E-11
 
      OUTFLOW                  7.567E+03
 
@@ -4159,7 +4159,7 @@
      INFLOW                   1.102E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -8.079E+02  -4.362E+00   7.035E+01  -8.739E+02   0.000E+00   8.181E-04   4.759E-06  -4.869E-12
+       (POS. INDICATES GAIN) -8.079E+02  -4.362E+00   7.035E+01  -8.739E+02   0.000E+00   8.181E-04   4.760E-06  -4.845E-12
 
      OUTFLOW                  2.938E+02
 
@@ -4182,7 +4182,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  3.908E+01  -9.223E-02  -5.758E-03   3.869E+01   1.901E-01   2.999E-01  -2.808E-04  -6.132E-13
+       (POS. INDICATES GAIN)  3.908E+01  -9.223E-02  -5.758E-03   3.869E+01   1.901E-01   2.999E-01  -2.808E-04  -8.706E-13
 
      TOTAL OUTFLOW OF DISSOLVED TAM       3.908E+01
 
@@ -4243,7 +4243,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  3.937E+00   3.869E+00   2.631E-02   4.150E-02  -3.886E-05  -8.486E-14
+       (POS. INDICATES GAIN)  3.937E+00   3.869E+00   2.631E-02   4.150E-02  -3.886E-05  -1.205E-13
 
      TOTAL OUTFLOW OF DISSOLVED PO4       3.937E+00
 
@@ -4282,7 +4282,7 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                0.000E+00 2.703E-05
+                                0.000E+00 2.702E-05
 
      PHOSPHORUS (LBS)                IORP     ROORP
                                 0.000E+00 3.740E-06
@@ -4293,24 +4293,24 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -6.915E+00  -3.439E+00  -3.546E-06  -8.264E-04  -3.475E+00
+                               -6.915E+00  -3.439E+00  -3.356E-06  -8.264E-04  -3.475E+00
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -3.142E-06   1.666E-06  -4.808E-06
+                               -3.232E-06   1.576E-06  -4.808E-06
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
-                                6.169E-11   7.414E-11  -1.245E-11
+                               -1.598E-10  -1.472E-10  -1.261E-11
 
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                2.703E-05  -8.915E-06   3.565E-05   2.886E-07  -2.122E-13
+                                2.702E-05  -8.913E-06   3.565E-05   2.842E-07  -2.111E-13
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                3.740E-06  -1.234E-06   4.934E-06   3.994E-08  -2.936E-14
+                                3.740E-06  -1.234E-06   4.934E-06   3.933E-08  -2.922E-14
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.535E-04  -5.062E-05   2.025E-04   1.639E-06  -1.205E-12
+                                1.535E-04  -5.062E-05   2.025E-04   1.614E-06  -1.199E-12
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -4347,7 +4347,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    1.141E-04   3.344E-06   3.662E-06  -9.782E-11   5.204E-18   9.118E-04  -8.047E-04
+       (POS. INDICATES GAIN)    1.141E-04   3.344E-06   3.662E-06  -9.787E-11   8.000E-17   9.118E-04  -8.047E-04
 1
 
  PERVIOUS LAND SEGMENT NO.   1                           BICKNELL FARM                                     REPORT FOR MONTH 1976/10
@@ -4421,7 +4421,7 @@
 
                                    RDENPF    SKYCLR    SNOCOV      DULL    ALBEDO    PAKTMP    DEWTMP   SNOWTMP
                                                                                       DEG F     DEG F     DEG F
-                                     0.42      0.15      1.00      66.0      0.73      16.9      -5.0      33.0
+                                     0.42      0.15      1.00      66.0      0.73      17.0      -5.0      33.0
 
    FLUXES                          PRECIP     SNOWF     PRAIN     SNOWE    WYIELD      MELT
                                        IN        IN        IN        IN        IN        IN
@@ -4478,7 +4478,7 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           0.000               0.000               796.0               796.0    
+         (RELATIVE TO FREEZING)           0.000               0.000               795.9               795.9    
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
                                  0.00      0.00      0.00      0.00     2.404E-04 2.404E-06 2.404E-04 2.404E-06
 1
@@ -4622,7 +4622,7 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           4924.              0.7104E+06          0.2866E+08          0.2937E+08
+         (RELATIVE TO FREEZING)           4924.              0.7105E+06          0.2866E+08          0.2937E+08
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
                                 7.745E-02 1.530E-03 0.180     1.498E-03  5.32     5.322E-02  5.58     5.625E-02
 1
@@ -4655,12 +4655,12 @@
    CONSERVATIVE NO.  1              ALKALINITY     
 
    STATE VARIABLE
-     CONCENTRATION  (    MG/L)  6.266E-10
+     CONCENTRATION  (    MG/L)  6.264E-10
 
    FLUXES  (      KG)               TOTAL     TOTAL    INDIVIDUAL GATE OUTFLOWS (OCON)
                                    INFLOW   OUTFLOW         1         2
                                      ICON     ROCON                OCON
-                                0.000E+00 3.701E+07 3.701E+07 2.233E+01
+                                0.000E+00 3.701E+07 3.701E+07 2.232E+01
 
    BALANCE                      % ERROR IN       KG
                                   0.000   3.701E+07
@@ -4703,11 +4703,11 @@
 
      TOTAL INFLOWS                        0.000E+00 0.000E+00 0.000E+00 0.000E+00
      DEPOSITION/SCOUR                     1.942E-01 8.141E-01 7.648E-01 1.773E+00
-     TOTAL OUTFLOWS                       9.314E-03 4.279E-07 4.564E-01 4.657E-01
+     TOTAL OUTFLOWS                       9.314E-03 4.279E-07 4.564E-01 4.658E-01
 
      OUTFLOWS FOR EACH EXIT:
        EXIT 1                             7.953E-03 4.279E-07 4.564E-01 4.644E-01
-       EXIT 2                             1.361E-03 0.000E+00 7.948E-09 1.361E-03
+       EXIT 2                             1.361E-03 0.000E+00 7.946E-09 1.361E-03
 
                                FOR SAND, SILT, CLAY
 
@@ -4769,7 +4769,7 @@
 
      OUTFLOW ON SEDIMENT FOR EACH EXIT      ON SAND     ON SILT     ON CLAY       TOTAL
        EXIT  1                            1.701E-06   8.067E-08   3.925E-02   3.925E-02
-       EXIT  2                            1.455E-08   0.000E+00   1.193E-12   1.455E-08
+       EXIT  2                            1.455E-08   0.000E+00   1.192E-12   1.455E-08
 
    BALANCE                      % ERROR IN        G
                                   0.000   3.769E+03
@@ -4787,7 +4787,7 @@
      INFLOW                   3.342E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  2.804E+04   4.531E+04  -1.006E+03  -4.701E+03  -1.015E+04  -1.399E+03  -7.691E+00  -1.530E-01
+       (POS. INDICATES GAIN)  2.804E+04   4.531E+04  -1.006E+03  -4.701E+03  -1.015E+04  -1.399E+03  -7.690E+00  -1.530E-01
 
      OUTFLOWS                     TOTAL      INDIVIDUAL GATE OUTFLOWS
                                 OUTFLOW           1           2
@@ -4878,11 +4878,11 @@
 
                                             NITRIF-   DENITRIF-   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     ICATION                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.639E+03   1.639E+03   0.000E+00   0.000E+00   0.000E+00   0.000E+00  -2.231E-10
+       (POS. INDICATES GAIN)  1.639E+03   1.639E+03   0.000E+00   0.000E+00   0.000E+00   0.000E+00  -2.455E-10
 
      OUTFLOWS                     TOTAL      INDIVIDUAL GATE OUTFLOWS
                                 OUTFLOW           1           2
-                              3.719E+03   3.708E+03   1.004E+01
+                              3.718E+03   3.708E+03   1.004E+01
 
    BALANCE                      % ERROR IN      LBS
                                   0.000   4.895E+03
@@ -4927,7 +4927,7 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                8.413E-11 1.164E-11 4.778E-10 1.145E-03 1.585E-04 6.504E-03 1.985E-02
+                                4.011E-11 5.551E-12 2.278E-10 1.145E-03 1.585E-04 6.504E-03 1.985E-02
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
@@ -4944,13 +4944,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN                OORN
-                                0.000E+00 5.707E-01 5.706E-01 1.487E-04
+                                0.000E+00 5.707E-01 5.706E-01 1.486E-04
 
      PHOSPHORUS (LBS)                IORP     ROORP                OORP
-                                0.000E+00 5.613E-01 5.613E-01 2.058E-05
+                                0.000E+00 5.613E-01 5.613E-01 2.057E-05
 
      CARBON (LBS)                    IORC     ROORC                OORC
-                                0.000E+00 6.217E-01 6.209E-01 8.444E-04
+                                0.000E+00 6.217E-01 6.209E-01 8.441E-04
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
@@ -5106,7 +5106,7 @@
      DISSOLVED CONCENTRATION  (  UG/L)   -1.000E+30
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)            -1.000E+30  -1.000E+30  -1.000E+30   4.217E-18   1.351E-19   1.351E-19
+     WITH SEDIMENT  (  UG/MG)            -1.000E+30  -1.000E+30  -1.000E+30   4.218E-18   1.351E-19   1.351E-19
 
      DISSOLVED STORAGE  (       G)        0.000E+00
 
@@ -5129,15 +5129,15 @@
                                           2.624E-01   2.624E-04   5.790E-03   1.175E-04   1.674E-04   3.348E-04   2.690E-01
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   4.787E-09   3.375E-11   3.375E-11   4.855E-09
+                                          0.000E+00   0.000E+00   0.000E+00   4.788E-09   3.375E-11   3.375E-11   4.856E-09
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)    2.214E-05   0.000E+00  -7.098E-06  -3.035E-07   3.375E-11   3.375E-11   1.473E-05
+       (POSITIVE INDICATES ADSORPTION)    2.213E-05   0.000E+00  -7.096E-06  -3.036E-07   3.374E-11   3.374E-11   1.474E-05
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
        (POSITIVE INDICATES DEPOSITION)    3.083E-07   0.000E+00   0.000E+00   3.083E-07
 
-     TOTAL OUTFLOW OF DISSOLVED QUAL      9.731E+00
+     TOTAL OUTFLOW OF DISSOLVED QUAL      9.732E+00
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
                                           2.353E-05   8.067E-08   3.924E-02   3.926E-02
@@ -5160,7 +5160,7 @@
      INFLOW                   5.540E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  2.693E+02   2.747E+02   2.117E-08   0.000E+00  -1.043E+00  -4.329E+00   4.545E-07  -3.426E-03
+       (POS. INDICATES GAIN)  2.693E+02   2.747E+02   2.010E-08   0.000E+00  -1.043E+00  -4.329E+00   4.885E-07  -3.426E-03
 
      OUTFLOW                  5.567E+04
 
@@ -5178,12 +5178,12 @@
      INFLOW                   4.714E+01
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -2.583E+00   2.117E-08   0.000E+00  -2.585E+00   0.000E+00   0.000E+00   4.254E-08   2.085E-03
+       (POS. INDICATES GAIN) -2.583E+00   2.010E-08   0.000E+00  -2.585E+00   0.000E+00   0.000E+00   4.205E-08   2.085E-03
 
      OUTFLOW                  4.456E+01
 
    BALANCE                      % ERROR IN      LBS
-                                  0.000   4.714E+01
+                                  0.000   4.715E+01
 
  *** NUTRX ***
 
@@ -5201,7 +5201,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN) -3.265E-01  -2.846E-01  -2.307E-01   0.000E+00  -9.225E-10   1.886E-01  -3.410E-08   1.493E-04
+       (POS. INDICATES GAIN) -3.265E-01  -2.846E-01  -2.307E-01   0.000E+00  -8.762E-10   1.886E-01  -3.832E-08   1.493E-04
 
      TOTAL OUTFLOW OF DISSOLVED TAM       3.954E+03
 
@@ -5241,7 +5241,7 @@
 
                                             NITRIF-   DENITRIF-   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     ICATION                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.138E-01   1.138E-01   0.000E+00   0.000E+00   0.000E+00   0.000E+00  -3.361E-13
+       (POS. INDICATES GAIN)  1.138E-01   1.138E-01   0.000E+00   0.000E+00   0.000E+00   0.000E+00  -3.882E-13
 
      OUTFLOW                  3.709E+03
 
@@ -5262,7 +5262,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.613E-02   0.000E+00  -1.277E-10   2.611E-02  -4.719E-09   2.066E-05
+       (POS. INDICATES GAIN)  2.613E-02   0.000E+00  -1.213E-10   2.611E-02  -5.303E-09   2.066E-05
 
      TOTAL OUTFLOW OF DISSOLVED PO4       4.502E+03
 
@@ -5296,7 +5296,7 @@
                                 7.400E-01 7.398E-01
 
      ZOOPLANKTON (LBS)               IZOO     ROZOO
-                                0.000E+00 3.728E-07
+                                0.000E+00 3.725E-07
 
     DEAD REFRACTORY ORGANICS
 
@@ -5312,10 +5312,10 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -4.373E+00  -2.186E+00  -6.768E-08   0.000E+00  -2.186E+00
+                               -4.373E+00  -2.186E+00   0.000E+00   0.000E+00  -2.186E+00
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -1.117E-08   3.180E-08  -4.297E-08
+                               -4.248E-08   0.000E+00  -4.248E-08
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -5.000E+00  -2.195E+00  -2.805E+00
@@ -5323,13 +5323,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -6.465E-05  -1.555E-04   0.000E+00   3.402E-09   9.086E-05
+                               -6.463E-05  -1.555E-04   0.000E+00   1.833E-09   9.086E-05
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -8.947E-06  -2.152E-05   0.000E+00   4.708E-10   1.257E-05
+                               -8.944E-06  -2.152E-05   0.000E+00   2.536E-10   1.257E-05
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -3.671E-04  -8.831E-04   0.000E+00   1.932E-08   5.160E-04
+                               -3.670E-04  -8.830E-04   0.000E+00   1.041E-08   5.160E-04
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -5366,7 +5366,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)   -1.034E-01  -3.682E-12   7.164E-04  -3.302E-10   6.075E-07   0.000E+00  -1.041E-01
+       (POS. INDICATES GAIN)   -1.034E-01  -3.484E-12   7.164E-04  -3.460E-10   6.075E-07   0.000E+00  -1.041E-01
 1
 
  REACH/MIXED-RESERVOIR NO.   3                          SPILLWAY                            REPORT FOR PRINTOUT YEAR ENDING 1976/12
@@ -5402,10 +5402,10 @@
    FLUXES  (      KG)               TOTAL     TOTAL
                                    INFLOW   OUTFLOW
                                      ICON     ROCON
-                                2.233E+01 2.233E+01
+                                2.232E+01 2.232E+01
 
    BALANCE                      % ERROR IN       KG
-                                  0.000   2.233E+01
+                                  0.000   2.232E+01
 
  *** HTRCH ***
 
@@ -5416,14 +5416,14 @@
    FLUXES                         TOTAL       ATMOS       TOTAL
      HEAT GAINS/LOSSES (BTU)     INFLOW        EXCH     OUTFLOW
                                   IHEAT      HTEXCH      ROHEAT
-                              1.597E+10  -3.327E+07   1.594E+10
+                              1.597E+10  -3.322E+07   1.594E+10
 
    ATMOS/BED HEAT BALANCE COMPONENTS (BTU/FT2)
      (POSITIVE INDICATES GAIN)
                                   TOTAL       SOLAR    LONGWAVE                CONVECT/                     BED
                                    HEAT   RADIATION   RADIATION      EVAPOR     CONDUCT      PRECIP     CONDUCT
                                  QTOTAL      QSOLAR      QLONGW       QEVAP        QCON       QPREC        QBED
-                              4.465E+01   3.648E+04  -1.268E+04  -2.019E+04  -3.830E+03   2.688E+02   0.000E+00
+                              4.471E+01   3.648E+04  -1.268E+04  -2.019E+04  -3.830E+03   2.688E+02   0.000E+00
 
    BALANCE                      % ERROR IN      BTU
                                   0.000   1.597E+10
@@ -5443,9 +5443,9 @@
 
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
-     TOTAL INFLOWS                        1.361E-03 0.000E+00 7.948E-09 1.361E-03
+     TOTAL INFLOWS                        1.361E-03 0.000E+00 7.946E-09 1.361E-03
      DEPOSITION/SCOUR                    -4.195E+00 0.000E+00 0.000E+00-4.195E+00
-     TOTAL OUTFLOWS                       4.197E+00 0.000E+00 7.948E-09 4.197E+00
+     TOTAL OUTFLOWS                       4.197E+00 0.000E+00 7.946E-09 4.197E+00
 
                                FOR SAND, SILT, CLAY
 
@@ -5469,16 +5469,16 @@
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          0.000E+00   0.000E+00   0.000E+00   0.000E+00
-       BED                                3.415E-12   1.287E-14   1.287E-14   3.441E-12
-       TOTAL                              3.415E-12   1.287E-14   1.287E-14   3.441E-12
+       BED                                3.415E-12   1.287E-14   1.287E-14   3.440E-12
+       TOTAL                              3.415E-12   1.287E-14   1.287E-14   3.440E-12
 
-     TOTAL STORAGE  (       G)            3.441E-12
+     TOTAL STORAGE  (       G)            3.440E-12
 
    FLUXES  (       G)
      INFLOW OF DISSOLVED QUAL             2.717E-02
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
-                                          1.455E-08   0.000E+00   1.193E-12   1.455E-08
+                                          1.455E-08   0.000E+00   1.192E-12   1.455E-08
 
      TOTAL INFLOW                         2.717E-02
 
@@ -5489,7 +5489,7 @@
                                           0.000E+00   0.000E+00   0.000E+00   4.729E-12   1.895E-13   1.895E-13   5.108E-12
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)    8.343E-08   0.000E+00  -4.106E-14  -1.658E-10   2.024E-13   2.024E-13   8.326E-08
+       (POSITIVE INDICATES ADSORPTION)    8.342E-08   0.000E+00  -4.104E-14  -1.658E-10   2.024E-13   2.024E-13   8.326E-08
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
        (POSITIVE INDICATES DEPOSITION)    1.740E-10   0.000E+00   0.000E+00   1.740E-10
@@ -5497,7 +5497,7 @@
      TOTAL OUTFLOW OF DISSOLVED QUAL      2.588E-02
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          9.780E-08   0.000E+00   1.152E-12   9.780E-08
+                                          9.780E-08   0.000E+00   1.151E-12   9.780E-08
 
      TOTAL OUTFLOW                        2.588E-02
 
@@ -5517,7 +5517,7 @@
      INFLOW                   5.665E+03
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  4.298E+01   4.346E+01   2.045E-09   0.000E+00  -5.384E-02  -4.189E-01   2.095E-06  -4.525E-03
+       (POS. INDICATES GAIN)  4.298E+01   4.346E+01   1.863E-09   0.000E+00  -5.384E-02  -4.189E-01   2.096E-06  -4.525E-03
 
      OUTFLOW                  5.708E+03
 
@@ -5535,7 +5535,7 @@
      INFLOW                   4.814E+00
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -2.401E-01   2.045E-09   0.000E+00  -2.410E-01   0.000E+00   0.000E+00   3.873E-08   8.897E-04
+       (POS. INDICATES GAIN) -2.401E-01   1.863E-09   0.000E+00  -2.409E-01   0.000E+00   0.000E+00   3.870E-08   8.897E-04
 
      OUTFLOW                  4.574E+00
 
@@ -5558,7 +5558,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN) -1.434E-02  -1.536E-02  -1.743E-02   0.000E+00  -8.913E-11   1.825E-02  -1.642E-07   1.972E-04
+       (POS. INDICATES GAIN) -1.434E-02  -1.536E-02  -1.743E-02   0.000E+00  -8.119E-11   1.825E-02  -1.644E-07   1.972E-04
 
      TOTAL OUTFLOW OF DISSOLVED TAM       2.174E+02
 
@@ -5619,7 +5619,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  2.554E-03   0.000E+00  -1.234E-11   2.526E-03  -2.272E-08   2.729E-05
+       (POS. INDICATES GAIN)  2.554E-03   0.000E+00  -1.124E-11   2.526E-03  -2.275E-08   2.729E-05
 
      TOTAL OUTFLOW OF DISSOLVED PO4       2.576E+01
 
@@ -5650,7 +5650,7 @@
    FLUXES                           TOTAL     TOTAL
                                    INFLOW   OUTFLOW
      PHYTOPLANKTON (LBS)           IPHYTO    ROPHYT
-                                0.000E+00 6.144E-04
+                                0.000E+00 6.145E-04
 
      ZOOPLANKTON (LBS)               IZOO     ROZOO
                                 0.000E+00 0.000E+00
@@ -5658,21 +5658,21 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                1.487E-04 1.793E-04
+                                1.486E-04 1.792E-04
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                2.058E-05 2.481E-05
+                                2.057E-05 2.480E-05
 
      CARBON (LBS)                    IORC     ROORC
-                                8.444E-04 1.018E-03
+                                8.441E-04 1.018E-03
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -4.225E-01  -2.109E-01  -6.507E-09   0.000E+00  -2.116E-01
+                               -4.224E-01  -2.109E-01   0.000E+00   0.000E+00  -2.115E-01
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -3.606E-08   3.057E-09  -3.912E-08
+                               -3.909E-08   0.000E+00  -3.909E-08
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -4.315E+00  -3.105E+00  -1.209E+00
@@ -5680,13 +5680,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                3.055E-05  -8.222E-06   0.000E+00   1.837E-09   3.877E-05
+                                3.056E-05  -8.220E-06   0.000E+00   1.687E-09   3.877E-05
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                4.228E-06  -1.138E-06   0.000E+00   2.542E-10   5.366E-06
+                                4.229E-06  -1.138E-06   0.000E+00   2.334E-10   5.366E-06
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.735E-04  -4.669E-05   0.000E+00   1.043E-08   2.202E-04
+                                1.735E-04  -4.668E-05   0.000E+00   9.577E-09   2.202E-04
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -5723,7 +5723,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)   -1.332E-02  -4.701E-13   1.034E-04  -7.602E-10   1.092E-06   0.000E+00  -1.343E-02
+       (POS. INDICATES GAIN)   -1.332E-02  -4.519E-13   1.034E-04  -7.614E-10   1.092E-06   0.000E+00  -1.343E-02
 1
 
  REACH/MIXED-RESERVOIR NO.   4                          UPPER KITTLE CREEK                  REPORT FOR PRINTOUT YEAR ENDING 1976/12
@@ -5800,7 +5800,7 @@
 
    FLUXES (TONS)                               SAND      SILT      CLAY     TOTAL
 
-     TOTAL INFLOWS                        4.196E+01 4.279E-07 4.564E-01 4.242E+01
+     TOTAL INFLOWS                        4.196E+01 4.279E-07 4.564E-01 4.241E+01
      DEPOSITION/SCOUR                     2.874E+01 0.000E+00 2.398E-02 2.877E+01
      TOTAL OUTFLOWS                       1.321E+01 4.279E-07 4.325E-01 1.365E+01
 
@@ -5826,13 +5826,13 @@
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          0.000E+00   0.000E+00   0.000E+00   0.000E+00
-       BED                                2.413E-04   2.892E-04   2.893E-04   8.199E-04
-       TOTAL                              2.413E-04   2.892E-04   2.893E-04   8.199E-04
+       BED                                2.413E-04   2.892E-04   2.893E-04   8.198E-04
+       TOTAL                              2.413E-04   2.892E-04   2.893E-04   8.198E-04
 
-     TOTAL STORAGE  (       G)            8.199E-04
+     TOTAL STORAGE  (       G)            8.198E-04
 
    FLUXES  (       G)
-     INFLOW OF DISSOLVED QUAL             9.757E+00
+     INFLOW OF DISSOLVED QUAL             9.758E+00
 
      INFLOW OF QUAL ON SEDIMENT             ON SAND     ON SILT     ON CLAY       TOTAL
                                           2.363E-05   8.067E-08   3.924E-02   3.926E-02
@@ -5843,13 +5843,13 @@
                                           4.026E+01   4.026E-02   7.127E-01   1.889E-02   2.409E-02   4.817E-02   4.110E+01
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   6.462E-01   8.073E-01   8.075E-01   2.261E+00
+                                          0.000E+00   0.000E+00   0.000E+00   6.462E-01   8.073E-01   8.074E-01   2.261E+00
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)    6.814E-03   0.000E+00   2.437E-02  -2.081E+01  -2.601E+01  -2.602E+01  -7.281E+01
+       (POSITIVE INDICATES ADSORPTION)    6.813E-03   0.000E+00   2.437E-02  -2.081E+01  -2.601E+01  -2.602E+01  -7.282E+01
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)    1.664E-03   0.000E+00   3.670E-03   5.334E-03
+       (POSITIVE INDICATES DEPOSITION)    1.664E-03   0.000E+00   3.670E-03   5.333E-03
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      4.147E+01
 
@@ -5874,7 +5874,7 @@
      INFLOW                   6.138E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  5.230E+03   5.796E+03  -7.378E+01  -3.763E+02  -3.572E+01  -7.987E+01   7.618E-06  -2.107E-02
+       (POS. INDICATES GAIN)  5.230E+03   5.796E+03  -7.378E+01  -3.763E+02  -3.572E+01  -7.987E+01   8.495E-06  -2.107E-02
 
      OUTFLOW                  6.661E+04
 
@@ -5892,7 +5892,7 @@
      INFLOW                   4.913E+01
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN)  4.896E+02  -7.378E+01   9.288E+02  -3.655E+02   0.000E+00   3.676E-08   4.400E-06   2.846E-02
+       (POS. INDICATES GAIN)  4.896E+02  -7.378E+01   9.288E+02  -3.655E+02   0.000E+00   2.445E-08   4.379E-06   2.846E-02
 
      OUTFLOW                  5.387E+02
 
@@ -5915,7 +5915,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  5.017E+02  -9.834E+00  -5.997E+00   5.108E+02   3.215E+00   3.481E+00  -5.576E-07   9.183E-04
+       (POS. INDICATES GAIN)  5.017E+02  -9.834E+00  -5.997E+00   5.108E+02   3.215E+00   3.481E+00  -6.664E-07   9.183E-04
 
      TOTAL OUTFLOW OF DISSOLVED TAM       4.674E+03
 
@@ -5932,7 +5932,7 @@
      STORAGE (LBS)            0.000E+00
 
    FLUXES (LBS)
-     INFLOW                   7.501E+02
+     INFLOW                   7.500E+02
 
                                             NITRIF-
      OTHER GAINS/LOSSES           TOTAL     ICATION
@@ -5955,7 +5955,7 @@
 
                                             NITRIF-   DENITRIF-   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     ICATION                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  3.652E+00   3.652E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00  -8.576E-12
+       (POS. INDICATES GAIN)  3.652E+00   3.652E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00  -9.554E-12
 
      OUTFLOW                  3.722E+03
 
@@ -5976,7 +5976,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  5.201E+01   5.108E+01   4.450E-01   4.817E-01  -7.717E-08   1.271E-04
+       (POS. INDICATES GAIN)  5.201E+01   5.108E+01   4.450E-01   4.817E-01  -9.223E-08   1.271E-04
 
      TOTAL OUTFLOW OF DISSOLVED PO4       4.580E+03
 
@@ -6010,7 +6010,7 @@
                                 7.404E-01 7.308E-01
 
      ZOOPLANKTON (LBS)               IZOO     ROZOO
-                                3.728E-07 3.619E-06
+                                3.725E-07 3.615E-06
 
     DEAD REFRACTORY ORGANICS
 
@@ -6018,7 +6018,7 @@
                                 5.707E-01 5.687E-01
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                5.613E-01 5.610E-01
+                                5.613E-01 5.611E-01
 
      CARBON (LBS)                    IORC     ROORC
                                 6.215E-01 6.105E-01
@@ -6026,10 +6026,10 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -8.060E+01  -4.026E+01  -1.749E-06  -3.713E-08  -4.034E+01
+                               -8.060E+01  -4.026E+01   0.000E+00  -2.470E-08  -4.034E+01
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -3.622E-06   8.219E-07  -4.444E-06
+                               -4.423E-06   0.000E+00  -4.423E-06
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -5.000E+00  -1.231E+00  -3.769E+00
@@ -6037,13 +6037,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.936E-03  -3.176E-03   1.602E-09   2.318E-07   1.240E-03
+                               -1.936E-03  -3.176E-03   1.065E-09   1.908E-07   1.240E-03
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -2.679E-04  -4.396E-04   2.217E-10   3.208E-08   1.716E-04
+                               -2.679E-04  -4.395E-04   1.475E-10   2.641E-08   1.716E-04
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.099E-02  -1.804E-02   9.098E-09   1.316E-06   7.042E-03
+                               -1.099E-02  -1.804E-02   6.050E-09   1.084E-06   7.042E-03
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -6080,7 +6080,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)   -5.133E-02   8.947E-04   7.914E-04  -2.526E-10   3.663E-07   1.456E-01  -1.986E-01
+       (POS. INDICATES GAIN)   -5.133E-02   8.947E-04   7.914E-04  -2.750E-10   3.662E-07   1.456E-01  -1.986E-01
 1
 
  IMPERVIOUS LAND SEGMENT NO.   1                         DONIGIAN INDUSTRY                                 REPORT FOR MONTH 1976/10
@@ -6123,7 +6123,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -6183,7 +6183,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -6254,7 +6254,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -6325,7 +6325,7 @@
    STATE VARIABLES             WATER TEMP           DISSOLVED:   OXYGEN      CARBON DIOXIDE
                                     SOTMP                         SODOX               SOCO2
                                     DEG F                          MG/L           MG OF C/L
-                                 0.00                        -0.100E+31          -0.100E+31
+                               -0.100E+31                    -0.100E+31          -0.100E+31
    FLUXES                            HEAT           DISSOLVED:   OXYGEN      CARBON DIOXIDE
      OUTFLOWS IN WATER               SOHT                        SODOXM              SOCO2M
                                    BTU/AC                         LB/AC               LB/AC
@@ -6459,13 +6459,13 @@
      TOTAL INFLOW                         0.000E+00
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          6.846E-05   6.846E-08   1.921E-06   2.375E-08   4.802E-08   9.604E-08   7.062E-05
+                                          6.846E-05   6.846E-08   1.921E-06   2.375E-08   4.802E-08   9.603E-08   7.062E-05
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-                                          0.000E+00   0.000E+00   0.000E+00   7.108E-06   1.154E-05   8.523E-06   2.717E-05
+                                          0.000E+00   0.000E+00   0.000E+00   7.108E-06   1.153E-05   8.522E-06   2.716E-05
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -1.619E-08   1.444E-06   1.880E-06  -4.689E-05  -7.490E-05  -5.668E-05  -1.752E-04
+       (POSITIVE INDICATES ADSORPTION)   -1.618E-08   1.444E-06   1.880E-06  -4.689E-05  -7.490E-05  -5.667E-05  -1.751E-04
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
        (POSITIVE INDICATES DEPOSITION)   -1.454E-07   2.000E-07   3.195E-09   5.778E-08
@@ -6478,7 +6478,7 @@
      TOTAL OUTFLOW                        1.078E-04
 
    BALANCE                      % ERROR IN        G
-                                  0.000   9.787E-04
+                                  0.000   9.786E-04
 
  *** OXRX ***
 
@@ -6493,7 +6493,7 @@
      INFLOW                   1.136E+04
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  3.066E+02   3.362E+02  -5.684E+00  -1.432E+01  -3.366E-01  -9.281E+00   2.810E-03  -1.579E-11
+       (POS. INDICATES GAIN)  3.066E+02   3.362E+02  -5.684E+00  -1.432E+01  -3.366E-01  -9.281E+00   2.810E-03  -5.486E-11
 
      OUTFLOW                  1.166E+04
 
@@ -6511,7 +6511,7 @@
      INFLOW                   1.828E+03
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -1.456E+03  -5.684E+00   1.305E+02  -1.581E+03   0.000E+00   3.809E-03   5.297E-06   5.640E-12
+       (POS. INDICATES GAIN) -1.456E+03  -5.684E+00   1.305E+02  -1.581E+03   0.000E+00   3.809E-03   5.297E-06   5.937E-12
 
      OUTFLOW                  3.719E+02
 
@@ -6534,7 +6534,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  7.233E+01  -1.045E-01  -1.484E-02   7.180E+01   2.477E-01   4.045E-01  -2.203E-04   6.881E-13
+       (POS. INDICATES GAIN)  7.233E+01  -1.045E-01  -1.484E-02   7.180E+01   2.477E-01   4.045E-01  -2.203E-04   2.391E-12
 
      TOTAL OUTFLOW OF DISSOLVED TAM       7.233E+01
 
@@ -6595,7 +6595,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  7.270E+00   7.180E+00   3.428E-02   5.597E-02  -3.049E-05   9.522E-14
+       (POS. INDICATES GAIN)  7.270E+00   7.180E+00   3.428E-02   5.597E-02  -3.049E-05   3.309E-13
 
      TOTAL OUTFLOW OF DISSOLVED PO4       7.270E+00
 
@@ -6617,7 +6617,7 @@
 
      ORGANIC CONSTITUENTS             ORN       ORP       ORC      TORN      TORP      TORC    POTBOD
                                      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L      MG/L
-                                1.465E-09 2.027E-10 8.317E-09 5.964E-02 8.254E-03 3.387E-01 7.701E-01
+                                1.463E-09 2.024E-10 8.305E-09 5.964E-02 8.254E-03 3.387E-01 7.701E-01
 
      OTHER TOTALS                 TOTAL N   TOTAL P
                                      MG/L      MG/L
@@ -6645,24 +6645,24 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -9.347E+00  -4.656E+00  -4.494E-06  -3.848E-03  -4.687E+00
+                               -9.347E+00  -4.656E+00  -4.319E-06  -3.848E-03  -4.687E+00
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -3.240E-06   2.111E-06  -5.350E-06
+                               -3.322E-06   2.029E-06  -5.350E-06
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
-                               -7.382E-11  -1.303E-10   5.650E-11
+                               -3.253E-10  -3.666E-10   4.127E-11
 
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.294E-04  -3.695E-05   1.660E-04   3.337E-07   2.458E-13
+                                1.294E-04  -3.695E-05   1.660E-04   3.297E-07   2.587E-13
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                1.791E-05  -5.113E-06   2.297E-05   4.618E-08   3.402E-14
+                                1.791E-05  -5.113E-06   2.297E-05   4.562E-08   3.581E-14
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                7.347E-04  -2.098E-04   9.427E-04   1.895E-06   1.396E-12
+                                7.347E-04  -2.098E-04   9.427E-04   1.872E-06   1.469E-12
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -6699,7 +6699,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    4.386E-04   8.103E-06   1.170E-05  -1.049E-09   1.389E-17   2.773E-03  -2.354E-03
+       (POS. INDICATES GAIN)    4.386E-04   8.103E-06   1.170E-05  -1.049E-09   5.458E-17   2.773E-03  -2.354E-03
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                                 REPORT FOR MONTH 1976/11
@@ -6796,16 +6796,16 @@
      DISSOLVED CONCENTRATION  (  UG/L)   -1.000E+30
 
      CONCENTRATION ASSOCIATED            SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY
-     WITH SEDIMENT  (  UG/MG)            -1.000E+30  -1.000E+30  -1.000E+30   4.516E-09   4.401E-08   4.556E-08
+     WITH SEDIMENT  (  UG/MG)            -1.000E+30  -1.000E+30  -1.000E+30   4.516E-09   4.400E-08   4.556E-08
 
      DISSOLVED STORAGE  (       G)        0.000E+00
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          0.000E+00   0.000E+00   0.000E+00   0.000E+00
-       BED                                1.983E-04   3.231E-04   2.377E-04   7.591E-04
-       TOTAL                              1.983E-04   3.231E-04   2.377E-04   7.591E-04
+       BED                                1.983E-04   3.230E-04   2.376E-04   7.590E-04
+       TOTAL                              1.983E-04   3.230E-04   2.376E-04   7.590E-04
 
-     TOTAL STORAGE  (       G)            7.591E-04
+     TOTAL STORAGE  (       G)            7.590E-04
 
    FLUXES  (       G)
      INFLOW OF DISSOLVED QUAL             0.000E+00
@@ -6991,13 +6991,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                0.000E+00 1.931E-12
+                                0.000E+00 1.929E-12
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                0.000E+00 2.673E-13
+                                0.000E+00 2.669E-13
 
      CARBON (LBS)                    IORC     ROORC
-                                0.000E+00 1.097E-11
+                                0.000E+00 1.095E-11
 
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
@@ -7159,10 +7159,10 @@
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          0.000E+00   0.000E+00   0.000E+00   0.000E+00
-       BED                                1.776E-04   2.900E-04   2.126E-04   6.802E-04
-       TOTAL                              1.776E-04   2.900E-04   2.126E-04   6.802E-04
+       BED                                1.775E-04   2.900E-04   2.126E-04   6.801E-04
+       TOTAL                              1.775E-04   2.900E-04   2.126E-04   6.801E-04
 
-     TOTAL STORAGE  (       G)            6.802E-04
+     TOTAL STORAGE  (       G)            6.801E-04
 
    FLUXES  (       G)
      INFLOW OF DISSOLVED QUAL             0.000E+00
@@ -7173,26 +7173,26 @@
      TOTAL INFLOW                         0.000E+00
 
      DECAY OF DISSOLVED QUAL             HYDROLYSIS   OXIDATION  PHOTOLYSIS  VOLATILIZ.   BIODEGRD.  GEN. DECAY       TOTAL
-                                          3.040E-05   3.040E-08   1.398E-07   1.162E-08   1.755E-08   3.511E-08   3.064E-05
+                                          3.040E-05   3.040E-08   1.398E-07   1.162E-08   1.755E-08   3.511E-08   3.063E-05
 
      DECAY OF QUAL ON SEDIMENT           SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
                                           0.000E+00   0.000E+00   0.000E+00   3.114E-06   5.079E-06   3.731E-06   1.192E-05
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -1.670E-08   1.110E-07   1.326E-07  -1.762E-05  -2.800E-05  -2.129E-05  -6.669E-05
+       (POSITIVE INDICATES ADSORPTION)   -1.669E-08   1.110E-07   1.326E-07  -1.762E-05  -2.800E-05  -2.129E-05  -6.668E-05
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -5.164E-08   1.568E-08   6.115E-10  -3.535E-08
+       (POSITIVE INDICATES DEPOSITION)   -5.164E-08   1.568E-08   6.114E-10  -3.535E-08
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      3.605E-05
 
      TOTAL OUTFLOW OF QUAL ON SEDIMENT      ON SAND     ON SILT     ON CLAY       TOTAL
-                                          3.495E-08   9.532E-08   1.320E-07   2.623E-07
+                                          3.495E-08   9.531E-08   1.320E-07   2.623E-07
 
      TOTAL OUTFLOW                        3.631E-05
 
    BALANCE                      % ERROR IN        G
-                                  0.000   7.591E-04
+                                  0.000   7.590E-04
 
  *** OXRX ***
 
@@ -7207,7 +7207,7 @@
      INFLOW                   2.963E+03
                                                                     BENTHAL    NITRIFI-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL  REAERATION   BOD DECAY      DEMAND      CATION      GROWTH       RESP.      GROWTH
-       (POS. INDICATES GAIN)  7.767E+01   8.276E+01  -7.586E-01  -2.052E+00  -6.014E-02  -2.225E+00   3.441E-04  -4.728E-12
+       (POS. INDICATES GAIN)  7.767E+01   8.276E+01  -7.586E-01  -2.052E+00  -6.014E-02  -2.225E+00   3.441E-04  -3.077E-12
 
      OUTFLOW                  3.041E+03
 
@@ -7225,7 +7225,7 @@
      INFLOW                   9.263E+02
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -8.501E+02  -7.586E-01   2.888E+01  -8.783E+02   0.000E+00   1.363E-04   1.149E-06  -2.677E-12
+       (POS. INDICATES GAIN) -8.501E+02  -7.586E-01   2.888E+01  -8.783E+02   0.000E+00   1.363E-04   1.149E-06  -2.674E-12
 
      OUTFLOW                  7.620E+01
 
@@ -7248,7 +7248,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.599E+01  -1.868E-02  -1.058E-02   1.589E+01   3.306E-02   9.699E-02  -2.699E-05   2.060E-13
+       (POS. INDICATES GAIN)  1.599E+01  -1.868E-02  -1.058E-02   1.589E+01   3.306E-02   9.699E-02  -2.699E-05   1.341E-13
 
      TOTAL OUTFLOW OF DISSOLVED TAM       1.599E+01
 
@@ -7309,7 +7309,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.607E+00   1.589E+00   4.575E-03   1.342E-02  -3.735E-06   2.851E-14
+       (POS. INDICATES GAIN)  1.607E+00   1.589E+00   4.575E-03   1.342E-02  -3.735E-06   1.856E-14
 
      TOTAL OUTFLOW OF DISSOLVED PO4       1.607E+00
 
@@ -7348,10 +7348,10 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                  IORN     ROORN
-                                0.000E+00 4.526E-06
+                                0.000E+00 4.525E-06
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                0.000E+00 6.264E-07
+                                0.000E+00 6.263E-07
 
      CARBON (LBS)                    IORC     ROORC
                                 0.000E+00 2.570E-05
@@ -7359,24 +7359,24 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -2.241E+00  -1.117E+00  -9.510E-08  -1.376E-04  -1.124E+00
+                               -2.241E+00  -1.117E+00  -3.446E-08  -1.376E-04  -1.124E+00
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -1.116E-06   4.468E-08  -1.161E-06
+                               -1.145E-06   1.619E-08  -1.161E-06
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
-                                3.969E-11  -1.384E-10   1.781E-10
+                                8.194E-11  -9.600E-11   1.779E-10
 
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                4.526E-06  -1.464E-06   5.938E-06   5.226E-08  -1.167E-13
+                                4.525E-06  -1.464E-06   5.938E-06   5.088E-08  -1.165E-13
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                6.264E-07  -2.026E-07   8.218E-07   7.233E-09  -1.614E-14
+                                6.263E-07  -2.026E-07   8.218E-07   7.041E-09  -1.613E-14
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                                2.570E-05  -8.314E-06   3.372E-05   2.968E-07  -6.624E-13
+                                2.570E-05  -8.312E-06   3.372E-05   2.889E-07  -6.618E-13
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -7413,7 +7413,7 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    3.426E-04   3.790E-06   9.197E-06  -5.627E-10   4.512E-17   1.884E-03  -1.555E-03
+       (POS. INDICATES GAIN)    3.426E-04   3.790E-06   9.197E-06  -5.629E-10   3.397E-17   1.884E-03  -1.555E-03
 1
 
  REACH/MIXED-RESERVOIR NO.   5                          LOWER KITTLE CREEK                  REPORT FOR PRINTOUT YEAR ENDING 1976/12
@@ -7516,10 +7516,10 @@
 
      STORAGE ON SEDIMENT  (       G)        ON SAND     ON SILT     ON CLAY       TOTAL
        SUSPENDED                          0.000E+00   0.000E+00   0.000E+00   0.000E+00
-       BED                                1.776E-04   2.900E-04   2.126E-04   6.802E-04
-       TOTAL                              1.776E-04   2.900E-04   2.126E-04   6.802E-04
+       BED                                1.775E-04   2.900E-04   2.126E-04   6.801E-04
+       TOTAL                              1.775E-04   2.900E-04   2.126E-04   6.801E-04
 
-     TOTAL STORAGE  (       G)            6.802E-04
+     TOTAL STORAGE  (       G)            6.801E-04
 
    FLUXES  (       G)
      INFLOW OF DISSOLVED QUAL             4.147E+01
@@ -7536,10 +7536,10 @@
                                           0.000E+00   0.000E+00   0.000E+00   1.077E+00   1.357E+00   1.348E+00   3.782E+00
 
      ADSORPTION/DESORPTION               SUSP. SAND  SUSP. SILT  SUSP. CLAY    BED SAND    BED SILT    BED CLAY       TOTAL
-       (POSITIVE INDICATES ADSORPTION)   -2.177E-02   2.206E-01   2.484E-01  -4.166E+01  -5.218E+01  -5.216E+01  -1.455E+02
+       (POSITIVE INDICATES ADSORPTION)   -2.177E-02   2.206E-01   2.483E-01  -4.166E+01  -5.218E+01  -5.216E+01  -1.455E+02
 
      DEPOSITION/SCOUR                       ON SAND     ON SILT     ON CLAY       TOTAL
-       (POSITIVE INDICATES DEPOSITION)   -7.297E-02   2.560E-02  -5.736E-03  -5.310E-02
+       (POSITIVE INDICATES DEPOSITION)   -7.297E-02   2.560E-02  -5.735E-03  -5.310E-02
 
      TOTAL OUTFLOW OF DISSOLVED QUAL      6.598E+01
 
@@ -7582,7 +7582,7 @@
      INFLOW                   2.018E+04
                                                         BENTHAL               DENITRIF-      PHYTO.        ZOO.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL       DECAY     RELEASE        SINK     ICATION       DEATH       DEATH       DEATH
-       (POS. INDICATES GAIN) -1.703E+04  -2.622E+02   3.391E+03  -2.016E+04   0.000E+00   4.623E-02   7.987E-04   6.261E-02
+       (POS. INDICATES GAIN) -1.703E+04  -2.622E+02   3.391E+03  -2.016E+04   0.000E+00   4.623E-02   7.986E-04   6.261E-02
 
      OUTFLOW                  3.157E+03
 
@@ -7605,7 +7605,7 @@
 
                                             NITRIF-    VOLATIL-     BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     ICATION     IZATION     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.854E+03  -2.282E+01  -1.176E+01   1.865E+03   1.143E+01   1.259E+01  -1.372E-03   2.204E-03
+       (POS. INDICATES GAIN)  1.854E+03  -2.282E+01  -1.176E+01   1.865E+03   1.143E+01   1.259E+01  -1.373E-03   2.204E-03
 
      TOTAL OUTFLOW OF DISSOLVED TAM       6.528E+03
 
@@ -7666,7 +7666,7 @@
 
                                             BENTHAL   BOD DECAY  PHYTOPLANK   ZOOPLANK.  BENTH.ALG.
      OTHER GAINS/LOSSES           TOTAL     RELEASE                  GROWTH       DEATH      GROWTH
-       (POS. INDICATES GAIN)  1.898E+02   1.865E+02   1.581E+00   1.742E+00  -1.899E-04   3.048E-04
+       (POS. INDICATES GAIN)  1.898E+02   1.865E+02   1.581E+00   1.742E+00  -1.900E-04   3.048E-04
 
      TOTAL OUTFLOW OF DISSOLVED PO4       4.769E+03
 
@@ -7700,7 +7700,7 @@
                                 7.308E-01 7.538E-01
 
      ZOOPLANKTON (LBS)               IZOO     ROZOO
-                                3.619E-06 1.531E-02
+                                3.615E-06 1.531E-02
 
     DEAD REFRACTORY ORGANICS
 
@@ -7708,7 +7708,7 @@
                                 5.687E-01 5.511E-01
 
      PHOSPHORUS (LBS)                IORP     ROORP
-                                5.610E-01 5.422E-01
+                                5.611E-01 5.422E-01
 
      CARBON (LBS)                    IORC     ROORC
                                 6.105E-01 5.997E-01
@@ -7716,10 +7716,10 @@
      OTHER GAINS/LOSSES (POS. INDICATES GAIN)
 
      PHYTOPLANKTON (LBS)            TOTAL        SINK   ZOO GRAZE       DEATH      GROWTH
-                               -2.891E+02  -1.432E+02  -2.893E-04  -4.670E-02  -1.459E+02
+                               -2.891E+02  -1.432E+02  -2.817E-04  -4.670E-02  -1.459E+02
 
      ZOOPLANKTON (LBS)              TOTAL      GROWTH       DEATH
-                               -6.709E-04   1.359E-04  -8.068E-04
+                               -6.744E-04   1.323E-04  -8.067E-04
 
      BENTHIC ALGAE (MG/M2)          TOTAL      GROWTH       DEATH
                                -5.000E+00  -1.123E+00  -3.877E+00
@@ -7727,13 +7727,13 @@
     DEAD REFRACTORY ORGANICS
 
      NITROGEN (LBS)                 TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.761E-02  -2.239E-02   2.015E-03   4.143E-05   2.729E-03
+                               -1.761E-02  -2.239E-02   2.015E-03   4.125E-05   2.729E-03
 
      PHOSPHORUS (LBS)               TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.886E-02  -1.952E-02   2.788E-04   5.733E-06   3.776E-04
+                               -1.886E-02  -1.952E-02   2.788E-04   5.708E-06   3.776E-04
 
      CARBON (LBS)                   TOTAL        SINK PHYTO DEATH   ZOO DEATH BENAL DEATH
-                               -1.079E-02  -3.796E-02   1.144E-02   2.352E-04   1.549E-02
+                               -1.079E-02  -3.796E-02   1.144E-02   2.342E-04   1.549E-02
 
     SUMMARY FLUXES                            TOTAL     TOTAL
                                              INFLOW   OUTFLOW
@@ -7770,4 +7770,4 @@
 
                                                             PHYTO         ZOO       BENAL     BENTHIC         CO2
    OTHER CO2 GAINS/LOSSES (LBS)     TOTAL   BOD DECAY      GROWTH        RESP      GROWTH     RELEASE    INVASION
-       (POS. INDICATES GAIN)    1.801E-02   9.309E-04   7.942E-04   1.628E-07   2.977E-07   1.484E-01  -1.321E-01
+       (POS. INDICATES GAIN)    1.800E-02   9.309E-04   7.942E-04   1.628E-07   2.977E-07   1.484E-01  -1.321E-01

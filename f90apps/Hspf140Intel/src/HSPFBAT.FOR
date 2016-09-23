@@ -58,7 +58,7 @@ C     CALL INVALOP (LFLAG)
 C     CALL UNDFL (LFLAG)
 C
 C     CALL CHANGEDIRQQ('C:\F90APPS\HSPF140INTEL\TEST')
-C     CALL CHANGEDIRQQ('G:\Projects\coon')
+      CALL CHANGEDIRQQ('E:\Projects\Revised HSPF')
       OPEN (UNIT=99,FILE='error.fil')
 C
 C     initialize wdm file common block

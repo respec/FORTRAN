@@ -933,7 +933,6 @@
        1.00      1.00      0.00      0.00      0.00
  
     RIFVEL1   RIFVEL2   RIFVEL3   RIFVEL4   RIFDEP1   RIFDEP2   RIFDEP3   RIFDEP4
- 
        1.00      1.00      1.00      1.00      1.00      1.00      1.00      1.00
  
       PHYTO       ZOO     BENAL       ORN       ORP       ORC
@@ -1318,7 +1317,6 @@
        1.00      1.00      0.00      0.00      0.00
  
     RIFVEL1   RIFVEL2   RIFVEL3   RIFVEL4   RIFDEP1   RIFDEP2   RIFDEP3   RIFDEP4
- 
        1.00      1.00      1.00      1.00      1.00      1.00      1.00      1.00
  
       PHYTO       ZOO     BENAL       ORN       ORP       ORC
@@ -1703,7 +1701,6 @@
        1.00      1.00      0.00      0.00      0.00
  
     RIFVEL1   RIFVEL2   RIFVEL3   RIFVEL4   RIFDEP1   RIFDEP2   RIFDEP3   RIFDEP4
- 
        1.00      1.00      1.00      1.00      1.00      1.00      1.00      1.00
  
       PHYTO       ZOO     BENAL       ORN       ORP       ORC
@@ -2092,7 +2089,6 @@
        1.00      1.00      0.00      0.00      0.00
  
     RIFVEL1   RIFVEL2   RIFVEL3   RIFVEL4   RIFDEP1   RIFDEP2   RIFDEP3   RIFDEP4
- 
        1.00      1.00      1.00      1.00      1.00      1.00      1.00      1.00
  
       PHYTO       ZOO     BENAL       ORN       ORP       ORC
@@ -2480,7 +2476,6 @@
        1.00      1.00      0.00      0.00      0.00
  
     RIFVEL1   RIFVEL2   RIFVEL3   RIFVEL4   RIFDEP1   RIFDEP2   RIFDEP3   RIFDEP4
- 
        1.00      1.00      1.00      1.00      1.00      1.00      1.00      1.00
  
       PHYTO       ZOO     BENAL       ORN       ORP       ORC
@@ -3333,5 +3328,11 @@
  
 
  COMMENCING EXECUTION
+ADVECT:TW problem     805.034    16.016
+ADVECT:TW problem     227.285    20.737
+ADVECT:TW problem      77.160    14.240
+ADVECT:TW problem      71.069    11.465
+ADVECT:TW problem      97.013    27.424
+ADVECT:TW problem     135.031    24.488
  
  End of Job

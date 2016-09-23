@@ -86,7 +86,7 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           548.3               384.0              0.1887E+05          0.1980E+05
+         (RELATIVE TO FREEZING)           548.3               384.1              0.1887E+05          0.1980E+05
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
                                 8.487E-03 1.677E-04 1.488E-03 1.240E-05 4.437E-02 4.437E-04 5.435E-02 6.238E-04
 
@@ -410,7 +410,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            175007.3              7504.8           1941442.4            229358.1
+                                                0.0            175007.3              7504.8           1941442.1            229358.0
 
  *** PEST ***
 
@@ -799,7 +799,7 @@
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
          (RELATIVE TO FREEZING)          0.1817E+05          0.1847E+06          0.6367E+07          0.6570E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                4.527E-03 7.520E-05 2.785E-02 2.321E-04 0.715     7.146E-03 0.747     7.453E-03
+                                4.528E-03 7.521E-05 2.785E-02 2.321E-04 0.715     7.146E-03 0.747     7.453E-03
 
  *** PQUAL ***
 
@@ -847,12 +847,12 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                5.625E-06 6.783E-03 5.379E-04 3.309E-05 3.122E-05           8.486E-06 9.429E-07           9.271E-07
+                                5.616E-06 6.783E-03 5.379E-04 3.309E-05 3.122E-05           8.486E-06 9.429E-07           9.271E-07
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
                                     SDPSY     SDPSA    SOSDPS              SOPEST    POPEST
-                                0.000E+00 5.380E-05 5.380E-05           5.942E-05 9.157E-05
+                                0.000E+00 5.380E-05 5.380E-05           5.941E-05 9.156E-05
      DEGRADATION BY LAYER                   SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SDEGPS              UDEGPS              LDEGPS              ADEGPS              TDEGPS
                                           2.130E+00           2.383E-03           1.389E-04           2.477E-06           2.133E+00
@@ -986,12 +986,12 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                1.729E-07 3.215E-04 3.939E-05 1.379E-06 3.047E-06           7.436E-07 8.262E-08           1.532E-06
+                                1.728E-07 3.215E-04 3.939E-05 1.379E-06 3.047E-06           7.436E-07 8.262E-08           1.532E-06
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
                                     SDPSY     SDPSA    SOSDPS              SOPEST    POPEST
-                                0.000E+00 0.000E+00 0.000E+00           1.729E-07 4.751E-06
+                                0.000E+00 0.000E+00 0.000E+00           1.728E-07 4.751E-06
      DEGRADATION BY LAYER                   SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SDEGPS              UDEGPS              LDEGPS              ADEGPS              TDEGPS
                                           3.094E-01           2.985E-03           2.865E-04           4.294E-06           3.127E-01
@@ -1188,7 +1188,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          8.172E-13           1.994E-06 1.994E-06           5.081E-03  0.00    
+                                          8.173E-13           1.995E-06 1.995E-06           5.081E-03  0.00    
 
  *** PSTEMP ***
 
@@ -1214,9 +1214,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           11.10               0.000               88.75               99.85    
+         (RELATIVE TO FREEZING)           11.11               0.000               88.75               99.86    
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                4.514E-06 7.885E-08  0.00      0.00     1.390E-05 1.390E-07 1.842E-05 2.179E-07
+                                4.516E-06 7.890E-08  0.00      0.00     1.390E-05 1.390E-07 1.842E-05 2.179E-07
 
  *** PQUAL ***
 
@@ -1233,7 +1233,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       4.086E-13 9.969E-07 9.969E-07  0.00     9.969E-07  0.00     8.910E-06 9.907E-06
+      CHEM3B    (  LB/AC)       4.087E-13 9.974E-07 9.974E-07  0.00     9.974E-07  0.00     8.910E-06 9.907E-06
 
  *** MSTLAY ***
 
@@ -1244,7 +1244,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0               875.0                 0.0             95536.7                 0.0
+                                                0.0               875.0                 0.0             95536.8                 0.0
 
  *** PEST ***
 
@@ -1264,12 +1264,12 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                1.836E-11 2.154E-06 1.267E-07 4.138E-11 0.000E+00           4.939E-10 5.487E-11           0.000E+00
+                                1.839E-11 2.154E-06 1.267E-07 4.145E-11 0.000E+00           4.939E-10 5.487E-11           0.000E+00
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
                                     SDPSY     SDPSA    SOSDPS              SOPEST    POPEST
-                                0.000E+00 0.000E+00 0.000E+00           1.836E-11 1.836E-11
+                                0.000E+00 0.000E+00 0.000E+00           1.839E-11 1.839E-11
      DEGRADATION BY LAYER                   SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SDEGPS              UDEGPS              LDEGPS              ADEGPS              TDEGPS
                                           6.576E-03           2.027E-04           2.824E-05           4.939E-10           6.807E-03
@@ -1355,7 +1355,7 @@
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
          (RELATIVE TO FREEZING)           170.3               0.000               1497.               1667.    
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                1.626E-04 3.033E-06  0.00      0.00     4.345E-04 4.345E-06 5.972E-04 7.379E-06
+                                1.626E-04 3.033E-06  0.00      0.00     4.345E-04 4.345E-06 5.972E-04 7.378E-06
 
  *** PQUAL ***
 
@@ -1372,7 +1372,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       5.374E-11 3.031E-05 3.031E-05 9.641E-05 1.267E-04  0.00     2.784E-04 4.051E-04
+      CHEM3B    (  LB/AC)       5.374E-11 3.030E-05 3.030E-05 9.641E-05 1.267E-04  0.00     2.784E-04 4.051E-04
 
  *** MSTLAY ***
 
@@ -1383,7 +1383,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0               887.5                 0.0            337846.9               803.4
+                                                0.0               887.5                 0.0            337847.0               803.4
 
  *** PEST ***
 
@@ -1533,7 +1533,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0               812.8                 0.0            321668.4                 0.0
+                                                0.0               812.8                 0.0            321668.5                 0.0
 
  *** PEST ***
 
@@ -1655,7 +1655,7 @@
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
          (RELATIVE TO FREEZING)           6.630               0.000               391.8               398.5    
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                1.026E-04 2.028E-06  0.00      0.00     7.883E-04 7.883E-06 8.909E-04 9.911E-06
+                                1.026E-04 2.027E-06  0.00      0.00     7.883E-04 7.883E-06 8.909E-04 9.910E-06
 
  *** PQUAL ***
 
@@ -1683,7 +1683,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0              1077.0                 0.0            386924.0               676.9
+                                                0.0              1077.0                 0.0            386924.1               676.9
 
  *** PEST ***
 
@@ -1833,7 +1833,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0              1077.0                 0.0            386924.0               676.9
+                                                0.0              1077.0                 0.0            386924.1               676.9
 
  *** PEST ***
 
@@ -1853,12 +1853,12 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                5.798E-06 7.107E-03 5.778E-04 3.447E-05 3.443E-05           9.234E-06 1.026E-06           2.459E-06
+                                5.789E-06 7.107E-03 5.778E-04 3.447E-05 3.443E-05           9.234E-06 1.026E-06           2.459E-06
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
                                     SDPSY     SDPSA    SOSDPS              SOPEST    POPEST
-                                0.000E+00 5.380E-05 5.380E-05           5.959E-05 9.649E-05
+                                0.000E+00 5.380E-05 5.380E-05           5.959E-05 9.648E-05
      DEGRADATION BY LAYER                   SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SDEGPS              UDEGPS              LDEGPS              ADEGPS              TDEGPS
                                           2.493E+00           6.495E-03           5.675E-04           6.775E-06           2.500E+00
@@ -1953,9 +1953,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           538.3               378.1              0.1839E+05          0.1931E+05
+         (RELATIVE TO FREEZING)           538.4               378.1              0.1839E+05          0.1931E+05
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                8.333E-03 1.646E-04 1.464E-03 1.220E-05 4.319E-02 4.319E-04 5.299E-02 6.088E-04
+                                8.334E-03 1.646E-04 1.464E-03 1.220E-05 4.319E-02 4.319E-04 5.299E-02 6.088E-04
 
  *** PQUAL ***
 
@@ -1972,7 +1972,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       5.601E-07 1.320E-03 1.320E-03 3.587E-02 3.719E-02 7.819E-03 2.768E-02 7.268E-02
+      CHEM3B    (  LB/AC)       5.602E-07 1.320E-03 1.320E-03 3.587E-02 3.719E-02 7.819E-03 2.768E-02 7.269E-02
 
  *** MSTLAY ***
 
@@ -1983,7 +1983,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             52991.4                52.4           1132916.5             27493.9
+                                                0.0             52991.3                52.5           1132916.5             27493.9
 
  *** PEST ***
 
@@ -2103,7 +2103,7 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           6310.              0.1672E+06          0.3330E+06          0.5066E+06
+         (RELATIVE TO FREEZING)           6309.              0.1672E+06          0.3330E+06          0.5066E+06
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
                                 6.114E-02 1.205E-03 0.116     9.644E-04 0.160     1.600E-03 0.337     3.770E-03
 
@@ -2277,7 +2277,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            181759.0              8418.3           1931677.2            221532.1
+                                                0.0            181759.0              8418.3           1931677.5            221532.1
 
  *** PEST ***
 
@@ -2388,7 +2388,7 @@
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
          (RELATIVE TO FREEZING)          0.2478E+06          0.9436E+06          0.5696E+07          0.6887E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                0.123     2.183E-03 0.284     2.368E-03  1.08     1.082E-02  1.49     1.538E-02
+                                0.123     2.182E-03 0.284     2.368E-03  1.08     1.082E-02  1.49     1.538E-02
 
  *** PQUAL ***
 
@@ -2416,7 +2416,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            356440.8               543.9           2083951.8            306883.0
+                                                0.0            356440.9               543.9           2083951.8            306883.1
 
  *** PEST ***
 
@@ -2499,7 +2499,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          9.232E-05           3.380E-03 3.472E-03           0.238      0.00    
+                                          9.232E-05           3.379E-03 3.472E-03           0.238      0.00    
 
  *** PSTEMP ***
 
@@ -2575,12 +2575,12 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                8.015E-04 5.015E-01 5.301E-03 5.742E-04 4.772E-04           2.594E-05 2.882E-06           4.636E-06
+                                8.014E-04 5.015E-01 5.301E-03 5.742E-04 4.772E-04           2.594E-05 2.882E-06           4.636E-06
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
                                     SDPSY     SDPSA    SOSDPS              SOPEST    POPEST
-                                0.000E+00 1.409E-05 1.409E-05           8.156E-04 1.297E-03
+                                0.000E+00 1.409E-05 1.409E-05           8.155E-04 1.297E-03
      DEGRADATION BY LAYER                   SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SDEGPS              UDEGPS              LDEGPS              ADEGPS              TDEGPS
                                           1.303E+00           1.569E-01           1.194E-03           5.795E-06           1.462E+00
@@ -2694,7 +2694,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            103074.6               101.5           1625865.2            147730.0
+                                                0.0            103074.7               101.5           1625865.2            147730.0
 
  *** PEST ***
 
@@ -2777,7 +2777,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          4.464E-07           2.320E-04 2.325E-04           5.469E-02  0.00    
+                                          4.464E-07           2.320E-04 2.324E-04           5.469E-02  0.00    
 
  *** PSTEMP ***
 
@@ -2803,9 +2803,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           1750.               9457.              0.2255E+07          0.2266E+07
+         (RELATIVE TO FREEZING)           1750.               9456.              0.2255E+07          0.2266E+07
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                4.729E-04 7.925E-06 1.446E-03 1.205E-05 0.237     2.367E-03 0.239     2.387E-03
+                                4.729E-04 7.924E-06 1.446E-03 1.205E-05 0.237     2.367E-03 0.239     2.387E-03
 
  *** PQUAL ***
 
@@ -2961,7 +2961,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)        0.00      0.00      0.00      0.00      0.00     5.867E-04 4.119E-03 4.706E-03
+      CHEM3B    (  LB/AC)        0.00      0.00      0.00      0.00      0.00     5.866E-04 4.119E-03 4.706E-03
 
  *** MSTLAY ***
 
@@ -3055,7 +3055,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          6.071E-12           1.568E-06 1.568E-06           6.884E-03  0.00    
+                                          6.071E-12           1.569E-06 1.569E-06           6.884E-03  0.00    
 
  *** PSTEMP ***
 
@@ -3081,9 +3081,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           8.732               0.000               81.58               90.31    
+         (RELATIVE TO FREEZING)           8.734               0.000               81.58               90.31    
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                3.551E-06 6.203E-08  0.00      0.00     1.273E-05 1.273E-07 1.628E-05 1.893E-07
+                                3.551E-06 6.204E-08  0.00      0.00     1.273E-05 1.273E-07 1.628E-05 1.893E-07
 
  *** PQUAL ***
 
@@ -3100,7 +3100,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       3.035E-12 7.842E-07 7.842E-07  0.00     7.842E-07  0.00     8.156E-06 8.940E-06
+      CHEM3B    (  LB/AC)       3.035E-12 7.843E-07 7.843E-07  0.00     7.843E-07  0.00     8.156E-06 8.940E-06
 
  *** MSTLAY ***
 
@@ -3131,7 +3131,7 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                0.000E+00 0.000E+00 3.488E-10 2.303E-13 0.000E+00           0.000E+00 0.000E+00           0.000E+00
+                                0.000E+00 0.000E+00 3.484E-10 2.300E-13 0.000E+00           0.000E+00 0.000E+00           0.000E+00
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
@@ -3194,7 +3194,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          4.646E-10           4.318E-05 4.318E-05           1.333E-02  0.00    
+                                          4.645E-10           4.318E-05 4.318E-05           1.333E-02  0.00    
 
  *** PSTEMP ***
 
@@ -3278,7 +3278,7 @@
                                 0.000E+00 0.000E+00 0.000E+00           0.000E+00 0.000E+00
      DEGRADATION BY LAYER                   SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SDEGPS              UDEGPS              LDEGPS              ADEGPS              TDEGPS
-                                          5.019E-05           1.507E-03           4.150E-05           0.000E+00           1.598E-03
+                                          5.018E-05           1.507E-03           4.150E-05           0.000E+00           1.598E-03
 
    BALANCE                      % ERROR IN    LB/AC
                                   0.000   2.099E-03
@@ -3720,12 +3720,12 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                9.283E-04 6.150E-01 7.826E-03 9.461E-04 9.461E-04           3.725E-05 4.139E-06           1.472E-05
+                                9.282E-04 6.150E-01 7.826E-03 9.461E-04 9.461E-04           3.725E-05 4.139E-06           1.472E-05
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
                                     SDPSY     SDPSA    SOSDPS              SOPEST    POPEST
-                                0.000E+00 1.692E-05 1.692E-05           9.452E-04 1.906E-03
+                                0.000E+00 1.692E-05 1.692E-05           9.451E-04 1.906E-03
      DEGRADATION BY LAYER                   SURFACE          UPPER PRIN               LOWER           ACTIVE GW               TOTAL
                                              SDEGPS              UDEGPS              LDEGPS              ADEGPS              TDEGPS
                                           1.884E+00           6.062E-01           7.783E-03           2.254E-05           2.498E+00
@@ -3820,9 +3820,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           447.2               493.4              0.4611E+05          0.4705E+05
+         (RELATIVE TO FREEZING)           447.1               493.3              0.4611E+05          0.4705E+05
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                6.922E-03 1.367E-04 2.563E-03 2.135E-05 0.115     1.148E-03 0.124     1.307E-03
+                                6.921E-03 1.367E-04 2.562E-03 2.135E-05 0.115     1.148E-03 0.124     1.307E-03
 
  *** PQUAL ***
 
@@ -3944,7 +3944,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.673E-07           1.057E-03 1.057E-03           1.104E-03  0.00    
+                                          1.672E-07           1.057E-03 1.057E-03           1.104E-03  0.00    
 
  *** PSTEMP ***
 
@@ -3970,9 +3970,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           351.2               6047.              0.3828E+06          0.3892E+06
+         (RELATIVE TO FREEZING)           351.3               6047.              0.3828E+06          0.3892E+06
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                3.311E-03 6.524E-05 6.757E-03 5.631E-05 0.202     2.020E-03 0.212     2.141E-03
+                                3.311E-03 6.523E-05 6.757E-03 5.631E-05 0.202     2.020E-03 0.212     2.141E-03
 
  *** PQUAL ***
 
@@ -3989,7 +3989,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       8.363E-08 5.285E-04 5.286E-04 1.348E-02 1.401E-02 3.608E-02 0.129     0.180    
+      CHEM3B    (  LB/AC)       8.361E-08 5.285E-04 5.285E-04 1.348E-02 1.401E-02 3.608E-02 0.129     0.180    
 
  *** MSTLAY ***
 
@@ -4000,7 +4000,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            164892.4                72.7           1782835.5             71439.8
+                                                0.0            164892.5                72.7           1782835.5             71439.8
 
  *** PEST ***
 
@@ -4422,7 +4422,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0            120670.8               153.3           2124160.2            221476.7
+                                                0.0            120670.9               153.3           2124160.2            221476.7
 
  *** PEST ***
 
@@ -4505,7 +4505,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.291E-06           1.604E-03 1.606E-03           2.716E-02  0.00    
+                                          1.291E-06           1.605E-03 1.606E-03           2.716E-02  0.00    
 
  *** PSTEMP ***
 
@@ -4550,7 +4550,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       6.455E-07 8.022E-04 8.029E-04 1.806E-02 1.886E-02 0.118     0.426     0.563    
+      CHEM3B    (  LB/AC)       6.455E-07 8.023E-04 8.029E-04 1.806E-02 1.886E-02 0.118     0.426     0.563    
 
  *** MSTLAY ***
 
@@ -4783,7 +4783,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          2.996E-07           5.172E-04 5.175E-04           3.390E-02  0.00    
+                                          2.996E-07           5.173E-04 5.176E-04           3.390E-02  0.00    
 
  *** PSTEMP ***
 
@@ -4809,9 +4809,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           4515.              0.6821E+05          0.1185E+06          0.1912E+06
+         (RELATIVE TO FREEZING)           4516.              0.6821E+05          0.1185E+06          0.1912E+06
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                1.001E-03 1.646E-05 1.075E-02 8.962E-05 1.375E-02 1.375E-04 2.550E-02 2.436E-04
+                                1.001E-03 1.646E-05 1.076E-02 8.963E-05 1.375E-02 1.375E-04 2.550E-02 2.436E-04
 
  *** PQUAL ***
 
@@ -4828,7 +4828,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       1.498E-07 2.586E-04 2.588E-04 6.107E-03 6.365E-03 5.743E-02 8.809E-03 7.260E-02
+      CHEM3B    (  LB/AC)       1.498E-07 2.587E-04 2.588E-04 6.107E-03 6.365E-03 5.743E-02 8.809E-03 7.260E-02
 
  *** MSTLAY ***
 
@@ -4839,7 +4839,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             81609.8               172.6           1050597.8                 0.0
+                                                0.0             81609.8               172.6           1050597.9                 0.0
 
  *** PEST ***
 
@@ -4978,7 +4978,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             32312.0                11.8            800407.0                 0.0
+                                                0.0             32312.0                11.8            800407.1                 0.0
 
  *** PEST ***
 
@@ -5066,7 +5066,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.722E-07           5.955E-04 5.957E-04           3.665E-03  0.00    
+                                          1.723E-07           5.955E-04 5.957E-04           3.665E-03  0.00    
 
  *** PSTEMP ***
 
@@ -5111,7 +5111,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       8.612E-08 2.978E-04 2.978E-04 7.071E-03 7.368E-03 2.130E-03 4.427E-03 1.393E-02
+      CHEM3B    (  LB/AC)       8.613E-08 2.978E-04 2.978E-04 7.071E-03 7.368E-03 2.130E-03 4.427E-03 1.393E-02
 
  *** MSTLAY ***
 
@@ -5122,7 +5122,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             25395.1                13.7            922586.8              7904.1
+                                                0.0             25395.2                13.7            922586.9              7904.1
 
  *** PEST ***
 
@@ -5142,7 +5142,7 @@
      OUTFLOWS IN SOLUTION      <--SURFACE LAYER---><-UPPER LAYER PRIN-> INTERFLOW          <---LOWER LAYER---->         GROUNDWATER
                                   OUTFLOW      PERC      PERC  TO TRANS   OUTFLOW                PERC DEEP PERC             OUTFLOW
                                     SOPSS     SPPSS     UPPSS     IIPSS     IOPSS               LPPSS    LDPPSS               AOPSS
-                                0.000E+00 0.000E+00 2.400E-08 3.974E-10 1.187E-09           7.590E-09 8.433E-10           0.000E+00
+                                0.000E+00 0.000E+00 2.400E-08 3.973E-10 1.187E-09           7.590E-09 8.433E-10           0.000E+00
 
      OTHER OUTFLOWS            -SEDIMENT ASSOCIATED OUTFLOW--          <--TOTAL OUTFLOW--->
                                  CRYSTALL  ADSORBED     TOTAL           FROM SURF  FROM PLS
@@ -5250,7 +5250,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)        0.00      0.00      0.00      0.00      0.00     2.913E-04 8.818E-03 9.109E-03
+      CHEM3B    (  LB/AC)        0.00      0.00      0.00      0.00      0.00     2.912E-04 8.818E-03 9.109E-03
 
  *** MSTLAY ***
 
@@ -5261,7 +5261,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             23605.7                 0.0            904202.7              2073.8
+                                                0.0             23605.7                 0.0            904202.8              2073.8
 
  *** PEST ***
 
@@ -5355,7 +5355,7 @@
    FLUXES                                   WASHOFF               SCOUR     TOTAL            VERTICAL ADDITIONS
                                                WSSD               SCRSD     SOSED                 DET      NVSI
                                             TONS/AC             TONS/AC   TONS/AC             TONS/AC   TONS/AC
-                                          1.160E-10           9.642E-06 9.642E-06            0.00      0.00    
+                                          1.160E-10           9.638E-06 9.638E-06            0.00      0.00    
 
  *** PSTEMP ***
 
@@ -5381,9 +5381,9 @@
 
      OUTFLOWS IN WATER                                                                                  (TOTAL)
        HEAT ENERGY (BTU/AC)                    SOHT                IOHT                AOHT                POHT
-         (RELATIVE TO FREEZING)           1.967               0.000               2955.               2957.    
+         (RELATIVE TO FREEZING)           1.966               0.000               2955.               2957.    
        DISSOLVED GASES (LB/AC)     SODOXM    SOCO2M    IODOXM    IOCO2M    AODOXM    AOCO2M    PODOXM    POCO2M
-                                3.044E-05 6.015E-07  0.00      0.00     5.463E-03 5.463E-05 5.494E-03 5.523E-05
+                                3.043E-05 6.012E-07  0.00      0.00     5.463E-03 5.463E-05 5.494E-03 5.523E-05
 
  *** PQUAL ***
 
@@ -5400,7 +5400,7 @@
      OUTFLOWS                  <--------------------SURFACE---------------------> INTERFLOW GRNDWATER     TOTAL
                                <----SEDIMENT ASSOCIATED----->FLOW ASSOC     TOTAL                       OUTFLOW
                                    WASHQS     SCRQS      SOQS      SOQO    SOQUAL    IOQUAL    AOQUAL    POQUAL
-      CHEM3B    (  LB/AC)       5.799E-11 4.821E-06 4.821E-06  0.00     4.821E-06  0.00     3.501E-03 3.505E-03
+      CHEM3B    (  LB/AC)       5.799E-11 4.819E-06 4.819E-06  0.00     4.819E-06  0.00     3.501E-03 3.505E-03
 
  *** MSTLAY ***
 
@@ -5411,7 +5411,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             23687.4                 0.0            914668.9              1569.4
+                                                0.0             23687.4                 0.0            914669.1              1569.4
 
  *** PEST ***
 
@@ -5561,7 +5561,7 @@
 
      MOISTURE (LB/AC)                       STORAGE             STORAGE             STORAGE             STORAGE             STORAGE
                                               SMSTM               UMSTM               IMSTM               LMSTM               AMSTM
-                                                0.0             23687.4                 0.0            914668.9              1569.4
+                                                0.0             23687.4                 0.0            914669.1              1569.4
 
  *** PEST ***
 

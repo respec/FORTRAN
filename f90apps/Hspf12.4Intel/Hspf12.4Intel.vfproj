@@ -14,9 +14,9 @@
 				<Tool Name="VFPreBuildEventTool"/>
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Release|Win32" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="/$(PlatformName)\$(ConfigurationName)">
+		<Configuration Name="Release|Win32" OutputDirectory="$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="/$(PlatformName)\$(ConfigurationName)\Temp">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
-				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="\lib3.0\intellibs\$(PlatformName)\$(ConfigurationName)" SubSystem="subSystemConsole"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
 				<Tool Name="VFCustomBuildTool"/>
@@ -34,7 +34,7 @@
 				<Tool Name="VFPreBuildEventTool"/>
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Release|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="/$(PlatformName)\$(ConfigurationName)">
+		<Configuration Name="Release|x64" OutputDirectory="$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="/$(PlatformName)\$(ConfigurationName)\Temp">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true"/>
 				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
 				<Tool Name="VFResourceCompilerTool"/>
