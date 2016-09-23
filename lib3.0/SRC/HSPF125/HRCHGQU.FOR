@@ -1800,7 +1800,7 @@ C       there was deposition or no scour/deposition
 C       during the interval
         DENOM= RSED + DEPSCR + ROSED
 C
-        IF ((ABS(DENOM)) .LE. 0.0) THEN
+        IF ((ABS(DENOM)) .LE. 1.0E-30) THEN
 C         there was no sediment in suspension during the interval
           SQAL  = -1.0E30
           ROSQAL= 0.0

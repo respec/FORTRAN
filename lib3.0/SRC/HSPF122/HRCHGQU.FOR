@@ -1806,8 +1806,18 @@ C         there was no sediment in suspension during the interval
           ROSQAL= 0.0
           DSQAL = 0.0
 C
-          IF ((ABS(ISQAL)) .GT. 0.0 .OR.
-     $        (ABS(RSQALS)) .GT. 0.0) THEN
+C         4/5/2016 -- fix below at BRB suggestion, like one in advnut.
+C         fix sed-qal problem caused by very small sediment loads
+C         that are stored in wdm file as zero (due to wdm attribute tolr > 0.0
+C         when adsorbed qal load is not zero;
+C         changed comparison from 0.0 to 1.0e-3; this should not cause
+C         any mass balance errors since the condition is not likely
+C         to exist over a long period and will be insignificant compared to
+C         the total mass over a printout period; note that
+C         1.0e-3 mg*ft3/l is 0.028 mg (a very, very small mass)
+C
+          IF ((ABS(ISQAL)) .GT. 1.0E-3 .OR.
+     $        (ABS(RSQALS)) .GT. 1.0E-3) THEN
 C           error-under these conditions these values should be zero
             CALL OMSTD (DATIM)
             CALL OMSTI (RCHNO)
