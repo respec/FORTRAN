@@ -1,0 +1,791 @@
+RUN
+
+GLOBAL
+  Version 12.3 test run: PERLND with multiple canopy layers
+  START       1976              END    1976
+  RUN INTERP OUTPUT LEVEL    3
+  RESUME     0 RUN     1                   UNIT SYSTEM     1
+END GLOBAL
+
+FILES      
+<FILE>  <UN#>***<----FILE NAME------------------------------------------------->
+WDM        21   test.wdm
+WDM2       22   test2.wdm
+WDM3       23   test16.wdm
+MESSU      24   test16.ech
+           01   test16.out
+BINO       62   test16.hbn
+           97   test16.p97
+END FILES
+
+OPN SEQUENCE
+    INGRP              INDELT 01:00
+      PERLND       1
+      IMPLND       1
+      RCHRES       1
+      PERLND       2
+      RCHRES       2
+      PLTGEN       1
+    END INGRP
+END OPN SEQUENCE
+
+PERLND
+  ACTIVITY
+    <PLS >          Active Sections (1=Active, 0=Inactive)             ***
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC ***
+    1              1    1    1    1    1                       
+    2              1    1    1    1    1                  
+  END ACTIVITY
+
+  PRINT-INFO
+    <PLS >          Print-flags                                    *** PIVL  PYR
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC       ***
+    1              4    4    4    4    4                                  1   12
+    2              4    4    4    4    4                                  1   12
+  END PRINT-INFO
+
+  BINARY-INFO
+    <PLS >          Print-flags                                    *** BIVL  BYR
+    # -  # ATMP SNOW PWAT  SED  PST  PWG PQAL MSTL PEST NITR PHOS TRAC       ***
+    1              4    4    4    4    4                                  1   12
+    2              4    4    4    4    4                                  1   12
+  END BINARY-INFO
+
+  GEN-INFO
+    <PLS ><-------Name------->        Unit-systems   Printer BinaryOut ***
+    # -  #                                t-series Engl Metr Engl Metr ***
+                                           in  out                     ***
+    1      BICKNELL FARM                    1    1    1    0   62   
+    2      JOBES FOREST                     1    1    1    0   62
+  END GEN-INFO
+
+  *** Section SNOW ***
+
+  ICE-FLAG
+    <PLS >  0= Ice formation not simulated, 1= Simulated ***
+    # -  #ICEFG                                          ***
+    1    2    1
+  END ICE-FLAG
+
+  SNOW-PARM1
+    <PLS >  Snow input info: Part 1                          ***
+    # -  #       LAT     MELEV     SHADE    SNOWCF    COVIND ***
+    1    2       42.     1800.       0.0      1.45       0.5
+  END SNOW-PARM1
+
+  SNOW-PARM2
+    <PLS >  Snow input info: Part 2                                    ***
+    # -  #     RDCSN     TSNOW    SNOEVP    CCFACT    MWATER    MGMELT ***
+    1    2      0.12       32.      0.05       0.5      0.08    0.0001
+  END SNOW-PARM2
+
+  SNOW-INIT1
+    <PLS >  Initial snow conditions: Part 1                            ***
+    # -  #  PACKSNOW   PACKICE PACKWATER    RDENPF      DULL    PAKTMP ***
+    1    2       1.4       0.2       0.1       0.2      375.      27.5
+  END SNOW-INIT1
+
+  SNOW-INIT2
+    <PLS >  Initial snow conditions: Part 2 ***
+    # -  #    COVINX    XLNMLT    SKYCLR    ***
+    1    2      0.50       0.0       1.0
+  END SNOW-INIT2
+
+  *** Section PWATER ***
+
+  PWAT-PARM1
+    <PLS >  PWATER variable monthly parameter value flags ***
+    # -  # CSNO RTOP UZFG  VCS  VUZ  VNN VIFW VIRC  VLE IFFC  HWT IRRG IFRD NCAN  ***
+    1         0    1    1    1    1    1    0    0    1                        
+    2         0    1    1    1    0    0    0    0    0                        3 
+          *** change VCS to -1 to get cepsc values from ext source timeseries
+  END PWAT-PARM1
+
+  PWAT-PARM2
+    <PLS > ***  PWATER input info: Part 2
+    # -  # ***FOREST      LZSN    INFILT      LSUR     SLSUR     KVARY     AGWRC
+    1          0.000     8.000    0.0300      300.   0.07000     0.000     0.985
+    2          0.000     8.000      0.06      200.   0.22000     0.000     0.985
+  END PWAT-PARM2
+
+  PWAT-PARM3
+    <PLS > ***  PWATER input info: Part 3
+    # -  # ***PETMAX    PETMIN    INFEXP    INFILD    DEEPFR    BASETP    AGWETP
+    1    2       40.       35.       2.0       2.0       0.0       0.0       0.0
+  END PWAT-PARM3
+
+  PWAT-PARM4
+    <PLS >     PWATER input info: Part 4                               ***
+    # -  #     CEPSC      UZSN      NSUR     INTFW       IRC     LZETP ***
+    1           0.00     0.800     0.090     1.000     0.600     0.420
+    2           0.00     1.000     0.350     3.000     0.750     0.420
+  END PWAT-PARM4
+
+  PWAT-CANOPY
+    <PLS >    CANOPY         CANOPY     CEPSC      CEPS   ***
+    x -  x         #           NAME      (in)      (in)   ***
+    2              1      Overstory       0.0     0.020
+  END PWAT-CANOPY
+
+  PWAT-CANOPY
+    <PLS >    CANOPY         CANOPY     CEPSC      CEPS   ***
+    x -  x         #           NAME      (in)      (in)   ***
+    2              2     Understory       0.0     0.010
+  END PWAT-CANOPY
+
+  PWAT-CANOPY
+    <PLS >    CANOPY         CANOPY     CEPSC      CEPS   ***
+    x -  x         #           NAME      (in)      (in)   ***
+    2              3    ForestFloor       0.0     0.020
+  END PWAT-CANOPY
+
+  MON-INTERCEP
+    <PLS>   Only required if VCSFG=1 in PWAT-PARM1                     ***
+    # -  #  Interception storage capacity at start of each month       ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      .030 .030 .030 .030 .015 .060 .120 .143 .135 .105 .050 .040
+    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020 
+  END MON-INTERCEP
+
+  MON-INTERCEP
+    <PLS>   Only required if VCSFG=1 in PWAT-PARM1                     ***
+    # -  #  Interception storage capacity at start of each month       ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020 
+  END MON-INTERCEP
+
+  MON-INTERCEP
+    <PLS>   Only required if VCSFG=1 in PWAT-PARM1                     ***
+    # -  #  Interception storage capacity at start of each month       ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    2      .020 .020 .020 .033 .053 .053 .053 .053 .053 .033 .020 .020 
+  END MON-INTERCEP
+
+  MON-UZSN
+    <PLS>   Only required if VUZFG=1 in PWAT-PARM1                     ***
+    # -  #  Upper zone storage at start of each month                  ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      .300 .300 .300 .300 .280 .250 .250 .250 .250 .300 .300 .300
+  END MON-UZSN
+
+  MON-MANNING
+    <PLS >  Only required if VNNFG=1 in PWAT-PARM1                     ***
+    # -  #  Manning's n for overland flow at start of each month       ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      .100 .100 .100 .080 .080 .080 .080 .090 .090 .100 .100 .100
+  END MON-MANNING
+
+  MON-LZETPARM
+    <PLS >  Only required if VLEFG=1 in PWAT-PARM1                     ***
+    # -  #  Lower zone ET parameter at start of each month             ***
+            JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC ***
+    1      .100 .100 .100 .100 .250 .550 .550 .550 .450 .250 .150 .100
+  END MON-LZETPARM
+
+  PWAT-STATE1
+    <PLS > *** Initial conditions at start of simulation
+    # -  # ***  CEPS      SURS       UZS      IFWS       LZS      AGWS      GWVS
+    1    2     0.050     0.000     1.500     0.000     7.900     1.006     0.000
+  END PWAT-STATE1
+
+  *** Section SEDMNT ***
+
+  SED-PARM1      
+    #    #  CRV VSIV SDOP  ***
+    1         1    0    1
+    2         1    0    0
+  END SED-PARM1      
+ 
+  SED-PARM2      
+    #    #      SMPF      KRER      JRER     AFFIX     COVER      NVSI  ***
+    1          1.000     0.320     2.000     0.010     0.000     1.000
+    2          1.000     0.271     2.000     0.002     0.000     2.000
+  END SED-PARM2      
+ 
+  SED-PARM3      
+    #    #      KSER      JSER      KGER      JGER  ***
+    1           0.75     2.000     0.000     2.000
+    2          13.00     2.000     0.000     2.000
+  END SED-PARM3      
+ 
+  MON-COVER      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      .230 .220 .150 .170 .280 .500 .750 .930 .930 .320 .290 .240
+    2      .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 
+  END MON-COVER      
+ 
+  MON-COVER      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    2      .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 
+  END MON-COVER
+
+  MON-COVER      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    2      .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 .500 
+  END MON-COVER
+
+  SED-STOR       
+    #    #      DETS  ***
+    1           0.70
+    2           0.10
+  END SED-STOR       
+
+  *** Section PSTEMP ***
+
+  PSTEMP-PARM1   
+    #    # SLTV ULTV LGTV TSOP  ***
+    1    2    1    1    1    1
+  END PSTEMP-PARM1   
+
+  MON-ASLT      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      33.9 33.9 37.5 43.0 49.6 55.8 59.8 59.8 53.5 44.8 40.0 35.7
+    2       33.  33.  35.  41.  47.  50.  50.  50.  50.  47.  40.  35.
+  END MON-ASLT
+
+  MON-BSLT      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50 0.50
+    2      0.30 0.30 0.35 0.45 0.52 0.57 0.57 0.57 0.56 0.52 0.45 0.42
+  END MON-BSLT
+     
+  MON-ULTP1      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      34.6 34.6 40.7 50.7 62.4 74.0 81.2 81.2 69.7 53.2 45.2 37.7
+    2       36.  36.  37.  40.  45.  48.  48.  48.  48.  45.  40.  48.
+  END MON-ULTP1
+
+  MON-ULTP2      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10 0.10
+    2       .22  .22  .25  .40  .50  .55  .55  .55  .55  .50  .45  .25
+  END MON-ULTP2
+ 
+  MON-LGTP1      
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1      50.0 50.0 52.0 54.0 56.0 58.0 60.0 62.0 58.0 55.0 52.0 50.0
+    2      49.0 48.5 50.0 55.0 58.0 60.0 61.0 61.5 59.5 56.0 52.0 49.5
+  END MON-LGTP1      
+ 
+  PSTEMP-TEMPS   
+    #    #     AIRTC     SLTMP     ULTMP     LGTMP  ***
+    1           32.0      32.0      32.0      49.0
+    2           32.0      32.0      32.0      50.0
+  END PSTEMP-TEMPS   
+
+  *** Section PWTGAS ***
+
+  PWT-PARM1      
+    #    #  IDV  ICV  GDV  GCV  ***
+    1    2    1    0    1    0
+  END PWT-PARM1      
+ 
+  PWT-PARM2      
+    #    #      ELEV     IDOXP     ICO2P     ADOXP     ACO2P  ***
+    1    2     1880.      8.80      0.00      8.80      0.00
+  END PWT-PARM2      
+ 
+  MON-IFWDOX     
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1    2 12.7 12.7 11.2 9.70 7.40 6.50 5.50 5.50 6.00 8.40 9.40 11.6
+  END MON-IFWDOX     
+ 
+  MON-GRNDDOX    
+    #    #  JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ***
+    1    2 12.0 12.0 11.0 10.0 7.50 5.50 4.50 4.00 4.50 7.50  9.0 10.0
+  END MON-GRNDDOX    
+ 
+  PWT-GASES      
+    #    #     SODOX     SOCO2     IODOX     IOCO2     AODOX     AOCO2  ***
+    1    2      14.5       0.0      12.7       0.0      10.0       0.0
+  END PWT-GASES      
+ 
+END PERLND
+
+IMPLND
+  ACTIVITY
+    <ILS >  Active Sections              ***
+    # -  # ATMP SNOW IWAT  SLD  IWG IQAL ***
+    1              1    1    1    1    
+  END ACTIVITY
+
+  PRINT-INFO
+    <ILS >  Print-flags                            ***
+    # -  # ATMP SNOW IWAT  SLD  IWG IQAL PIVL  PYR ***
+    1              4    4    4    4         1   12
+  END PRINT-INFO
+
+  GEN-INFO
+    <ILS ><-------Name------->   Unit-systems   Printer ***
+    # -  #                           t-series Engl Metr ***
+                                      in  out           ***
+    1      DONIGIAN INDUSTRY           1    1    1    0
+  END GEN-INFO
+
+  *** Section SNOW ***
+
+  ICE-FLAG
+    <ILS >  0= Ice formation not simulated, 1= Simulated ***
+    # -  #ICEFG                                          ***
+    1         1
+  END ICE-FLAG
+
+  SNOW-PARM1
+    <ILS >  Snow input info: Part 1                          ***
+    # -  #       LAT     MELEV     SHADE    SNOWCF    COVIND ***
+    1            42.     1400.       0.0      1.45       0.5
+  END SNOW-PARM1
+
+  SNOW-PARM2
+    <ILS >  Snow input info: Part 2                                    ***
+    # -  #     RDCSN     TSNOW    SNOEVP    CCFACT    MWATER    MGMELT ***
+    1           0.12       32.      0.05       0.5      0.08    0.0001
+  END SNOW-PARM2
+
+  SNOW-INIT1
+    <ILS >  Initial snow conditions: Part 1                            ***
+    # -  #  PACKSNOW   PACKICE PACKWATER    RDENPF      DULL    PAKTMP ***
+    1            1.4       0.2       0.1       0.2      375.      27.5
+  END SNOW-INIT1
+
+  SNOW-INIT2
+    <ILS >  Initial snow conditions: Part 2 ***
+    # -  #    COVINX    XLNMLT    SKYCLR    ***
+    1           0.50       0.0       1.0
+  END SNOW-INIT2
+
+  *** Section IWATER ***
+
+  IWAT-PARM1
+    <ILS >           Flags          ***
+    # -  # CSNO RTOP  VRS  VNN RTLI ***
+    1         1                   1
+  END IWAT-PARM1
+
+  IWAT-PARM2
+    <ILS >                                         ***
+    # -  #      LSUR     SLSUR      NSUR     RETSC ***
+    1           250.    0.0350     0.030     0.000
+  END IWAT-PARM2
+
+  IWAT-PARM3
+    <ILS >                     ***
+    # -  #    PETMAX    PETMIN ***
+    1            40.       35.
+  END IWAT-PARM3
+
+  IWAT-STATE1
+    <ILS >  IWATER state variables ***
+    # -  #      RETS      SURS     ***
+    1            .01       .01
+  END IWAT-STATE1
+
+  *** Section SOLIDS ***
+
+  SLD-PARM2
+    <ILS >                                         ***
+    # -  #      KEIM      JEIM    ACCSDP    REMSDP ***
+    1            .08       1.9       .01        .5
+  END SLD-PARM2
+
+  SLD-STOR
+    <ILS >  Solids storage (tons/acre) ***
+    # -  #                             ***
+    1            0.2
+  END SLD-STOR
+
+  *** Section IWTGAS ***
+
+  IWT-PARM2
+    <ILS >                               ***
+    # -  #      ELEV      AWTF      BWTF ***
+    1          1400.       60.      0.15
+  END IWT-PARM2
+
+END IMPLND
+
+RCHRES
+  ACTIVITY
+    RCHRES  Active Sections (1=Active, 0=Inactive)           ***
+    # -  # HYFG ADFG CNFG HTFG SDFG GQFG OXFG NUFG PKFG PHFG ***
+    1    2    1    1         1    1                  
+  END ACTIVITY
+
+  PRINT-INFO
+    RCHRES  Print-flags                                                     ***
+    # -  # HYDR ADCA CONS HEAT  SED  GQL OXRX NUTR PLNK PHCB PIVL  PYR ***
+    1    2    4    4         4    4                             1   12
+  END PRINT-INFO
+
+  GEN-INFO
+    RCHRES<-------Name------->Nexit   Unit Systems   Printer      ***
+    # -  #                               t-series  Engl Metr LKFG ***
+                                           in  out                ***
+    1     UPPER KITTLE CREEK      1         1    1    1    0
+    2     LOWER KITTLE CREEK      1         1    1    1    0
+  END GEN-INFO
+
+  *** Section HYDR ***
+
+  HYDR-PARM1
+    RCHRES  Flags for HYDR section                           ***
+    # -  #  VC A1 A2 A3  ODFVFG for each     ODGTFG for each *** FUNCT  for each
+            FG FG FG FG  possible   exit     possible   exit *** possible   exit
+                           1  2  3  4  5       1  2  3  4  5 ***
+
+    1    2      1  1  1    4
+  END HYDR-PARM1
+
+  HYDR-PARM2
+    RCHRES ***
+    # -  #  DSN FTBN       LEN     DELTH     STCOR        KS      DB50 ***
+    1              2       2.0       40.                  .5
+    2              2       3.0       40.                  .5
+  END HYDR-PARM2
+
+  HYDR-INIT
+    RCHRES  Initial conditions for HYDR section    ***
+    # -  #       VOL     Initial  value  of COLIND *** Initial  value  of OUTDGT
+             (ac-ft)     for  each  possible  exit *** for  each  possible  exit
+                           EX1  EX2  EX3  EX4  EX5 ***   EX1  EX2  EX3  EX4  EX5
+    1    2       1.0       4.0
+  END HYDR-INIT
+
+  *** Section HTRCH ***
+
+  HT-BED-FLAGS
+    RCHRES                ***
+    # -  # BDFG TGFG TSTP ***
+    1         3        55
+    2         2    3
+  END HT-BED-FLAGS
+  
+  HEAT-PARM
+    RCHRES      ELEV     ELDAT    CFSAEX    KATRAD     KCOND     KEVAP ***
+    # -  #                                                             ***
+    1          1400.      100.       .95
+    2          1300.      100.       .85
+  END HEAT-PARM
+  
+  HT-BED-PARM 
+    RCHRES    MUDDEP     TGRND      KMUD     KGRND  ***
+    # -  #        ft     deg F    (kcal/m2/C/hr)    ***
+    2            1.0                15.4      1.42
+  END HT-BED-PARM 
+  
+  MON-HT-TGRND                          
+    RCHRES  TG1  TG2  TG3  TG4  TG5  TG6  TG7  TG8  TG9 TG10 TG11 TG12*** 
+    # -  #                                                            *** 
+    2       63.  63.  64.  64.  65.  66.  67.  67.  66.  65.  64.  63.
+  END MON-HT-TGRND
+
+  HT-BED-DELH
+    RCHRES ***  DELH      DELH      DELH      DELH      DELH      DELH      DELH
+    # -  # ***     1         2         3         4         5         6         7
+    1         -2.917    -1.934    -1.599    -1.365    -1.183    -1.095    -1.024
+    1         -.9639    -.9144    -.8739    -.7811    -.8044    -.7228    -.7505
+    1         -.6744    -.7083    -.6339    -.6189    -.6050    -.6361    -.5744
+    1         -.5628    -.5994    -.5369    -.5275    -.5185    -.5104    -.5465
+    1         -.5513    -.4828    -.4758    -.4692    -.4627    -.4564    -.4904
+    1         -.4414    -.4362    -.4308    -.4258    -.4208    -.4159    -.4115
+    1         -.4456    -.3999    -.3960    -.3920    -.3880    -.3844    -.3809
+    1         -.3770    -.3738    -.3705    -.3670    -.3990    -.3586          
+  END HT-BED-DELH 
+                         
+  HT-BED-DELTT
+    RCHRES *** DELTT     DELTT     DELTT     DELTT     DELTT     DELTT     DELTT
+    # -  # ***     1         2         3         4         5         6         7
+    1           -1.0      -1.1      -1.2      -1.2      -1.2      -1.2      -1.2
+    1           -1.2      -0.2       0.3       0.4       0.6       1.3       1.3
+    1            1.3       1.1       0.6      -0.4      -0.5      -0.5      -0.5
+    1           -0.7      -0.9      -1.0      -1.0      -1.1      -1.0      -1.2
+    1           -1.2      -1.2      -1.2      -1.2      -0.2       0.3       0.4
+    1            0.6       1.3       1.3       1.3       1.1       0.6      -0.4
+    1           -0.5      -0.5      -0.5      -0.7      -0.9      -1.0      -1.0
+    1           -1.1      -1.2      -1.2      -1.2      -1.2      -1.2          
+  END HT-BED-DELTT 
+
+  HEAT-INIT
+    RCHRES        TW    AIRTMP ***
+    # -  #                     ***
+    1    2       41.       46.
+  END HEAT-INIT
+
+  *** Section SEDTRN ***
+
+  SANDFG
+    RCHRES       ***
+    # -  # SNDFG ***
+    1    2     3
+  END SANDFG
+
+  SED-GENPARM
+    RCHRES    BEDWID    BEDWRN       POR ***
+    # -  #                               ***
+    1            2.0        2.
+    2           2.66        2.
+  END SED-GENPARM
+
+  SAND-PM
+    RCHRES         D         W       RHO     KSAND    EXPSND ***
+    # -  #                                                   ***
+    1    2      .014       2.5                 1.5       1.2
+  END SAND-PM
+
+  SILT-CLAY-PM
+    RCHRES         D         W       RHO     TAUCD     TAUCS         M ***
+    # -  #                                                             ***
+    1    2    .00063     .0066       2.2        .2        .4        .5
+  END SILT-CLAY-PM
+
+  SILT-CLAY-PM
+    RCHRES         D         W       RHO     TAUCD     TAUCS         M ***
+    # -  #                                                             ***
+    1    2   .000055   .000034       2.0       .15        .3       .75
+  END SILT-CLAY-PM
+
+  SSED-INIT
+    RCHRES     Suspended sed concs (mg/l) ***
+    # -  #      Sand      Silt      Clay  ***
+    1    2        5.       20.       30.
+  END SSED-INIT
+
+  BED-INIT
+    RCHRES    BEDDEP  Initial bed composition      ***
+    # -  #      (ft)      Sand      Silt      Clay ***
+    1    2        1.        .8        .1        .1
+  END BED-INIT
+
+END RCHRES
+
+FTABLES
+  FTABLE      1
+ ROWS COLS ***
+   13    4
+     DEPTH      AREA    VOLUME     DISCH  FLO-THRU ***
+      (FT)   (ACRES)   (AC-FT)     (CFS)     (MIN) ***
+      .000      .000     .0000      .000       0.0
+      .250      .848     .1970     .9024     158.5
+      .500      .970     .4242    2.8860     106.7
+      .750     1.091     .6818    5.7642      85.9
+     1.000     1.212     .9697    9.5120      74.0
+     1.250     1.333    1.2879   14.1431      66.1
+     1.500     1.455    1.6364   19.6862      60.3
+     2.000     1.697    2.4242   33.6545      52.3
+     2.500     1.939    3.3333   51.7323      46.8
+     3.000     2.182    4.3636   74.2486      42.7
+     4.000    11.879   11.3939  155.5774      53.2
+     5.000    21.576   28.1212  296.8633      68.8
+     6.000    31.273   54.5454  522.1440      75.8
+  END FTABLE  1
+
+  FTABLE      2
+ ROWS COLS ***
+   13    4
+     DEPTH      AREA    VOLUME     DISCH  FLO-THRU ***
+      (FT)   (ACRES)   (AC-FT)     (CFS)     (MIN) ***
+      .000      .000     .0000      .000       0.0
+      .333     1.697     .5253    1.5869     240.3
+      .667     1.939    1.1313    5.0752     161.8
+     1.000     2.182    1.8182   10.1370     130.2
+     1.333     2.424    2.5859   16.7279     112.2
+     1.667     2.667    3.4343   24.8719     100.2
+     2.000     2.909    4.3636   34.6200      91.5
+     2.667     3.394    6.4646   59.1848      79.3
+     3.333     3.879    8.8889   90.9763      70.9
+     4.000     4.364   11.6364  130.5731      64.7
+     5.333    36.687   39.0034  284.8886      99.4
+     6.667    69.010  109.4680  593.7734     133.8
+     8.000   101.333  223.0302 1129.6948     143.3
+  END FTABLE  2
+END FTABLES
+
+PLTGEN
+  PLOTINFO
+    # -  # FILE  NPT  NMN LABL  PYR PIVL ***
+    1        97    2    4        12    6
+  END PLOTINFO
+
+  GEN-LABELS
+    # -  #<----------------Title ---------------->   ***    <------Y axis------>
+    1     WATER TEMPERATURE AND HEAT EXCHANGE               DEG F OR BTU/6HR
+  END GEN-LABELS
+
+  SCALING
+    # -  #      YMIN      YMAX     IVLIN ***
+    1             0.        1.       20.
+  END SCALING
+
+  CURV-DATA         (first curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         TW - REACH 1             1    1 LAST
+  END CURV-DATA
+
+  CURV-DATA         (second curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         TW - REACH 2             1    1 LAST
+  END CURV-DATA
+
+  CURV-DATA         (third curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         QBED - REACH 1           1    1 SUM
+  END CURV-DATA
+
+  CURV-DATA         (fourth curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         QBED - REACH 2           1    1 SUM
+  END CURV-DATA
+
+  CURV-DATA         (fifth curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         HTEXCH - REACH 1         1    1 SUM
+  END CURV-DATA
+
+  CURV-DATA         (sixth curve)
+              <-Curve label--> Line Intg  Col Tran ***
+    # -  #                     type  eqv code code ***
+    1         HTEXCH - REACH 2         1    1 SUM
+  END CURV-DATA
+END PLTGEN
+
+EXT SOURCES
+<-Volume-> <Member> SsysSgap<--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   # <Name> # tem strg<-factor->strg <Name>   #   #        <Name> # #  ***
+WDM     39 PREC     ENGLZERO          SAME PERLND   1   2 EXTNL  PREC
+WDM    131 PREC     ENGLZERO          SAME IMPLND   1     EXTNL  PREC
+WDM    131 PREC     ENGLZERO          SAME RCHRES   1   2 EXTNL  PREC
+WDM    123 ATMP     ENGL              SAME PERLND   1   2 ATEMP  AIRTMP
+WDM    122 ATMP     ENGL              SAME IMPLND   1     ATEMP  AIRTMP
+WDM    122 ATMP     ENGL              SAME RCHRES   1   2 EXTNL  GATMP
+WDM     41 EVAP     ENGL        .7    DIV  PERLND   1   2 EXTNL  PETINP
+WDM     41 EVAP     ENGL        .7    DIV  IMPLND   1     EXTNL  PETINP
+WDM     41 EVAP     ENGL        .7    DIV  RCHRES   1   2 EXTNL  POTEV
+WDM     42 WIND     ENGL              DIV  PERLND   1   2 EXTNL  WINMOV
+WDM     42 WIND     ENGL              DIV  IMPLND   1     EXTNL  WINMOV
+WDM     42 WIND     ENGL              DIV  RCHRES   1   2 EXTNL  WIND
+WDM     46 SOLR     ENGL              DIV  PERLND   1   2 EXTNL  SOLRAD
+WDM     46 SOLR     ENGL              DIV  IMPLND   1     EXTNL  SOLRAD
+WDM     46 SOLR     ENGL              DIV  RCHRES   1   2 EXTNL  SOLRAD
+WDM    126 DEWP     ENGL              SAME PERLND   1   2 EXTNL  DTMPG
+WDM    125 DEWP     ENGL              SAME IMPLND   1     EXTNL  DTMPG
+WDM    125 DEWP     ENGL              SAME RCHRES   1   2 EXTNL  DEWTMP
+WDM    135 CLDC     ENGL              SAME PERLND   1   2 EXTNL  CLOUD
+WDM    135 CLDC     ENGL              SAME IMPLND   1     EXTNL  CLOUD
+WDM    135 CLDC     ENGL              SAME RCHRES   1   2 EXTNL  CLOUD
+*** the following 3 lines are not used unless VCSFG = -1 
+WDM3   100 CEPSC    ENGL              SAME PERLND   2     EXTNL  CEPSC  1
+WDM3   100 CEPSC    ENGL              SAME PERLND   2     EXTNL  CEPSC  2
+WDM3   100 CEPSC    ENGL              SAME PERLND   2     EXTNL  CEPSC  3
+*** the following 3 lines are not used unless CRVFG = -1 
+WDM3   101 COVER    ENGL      ***     SAME PERLND   2     EXTNL  COVER  1
+WDM3   101 COVER    ENGL      ***     SAME PERLND   2     EXTNL  COVER  2
+WDM3   101 COVER    ENGL      ***     SAME PERLND   2     EXTNL  COVER  3
+END EXT SOURCES
+
+SCHEMATIC
+<-Source->                <--Area-->       <-Target->  <ML->  ***
+<Name>   #                <-factor->       <Name>   #      #  ***
+PERLND   1                      500.       RCHRES   1      1
+IMPLND   1                      500.       RCHRES   1      2
+PERLND   2                      500.       RCHRES   2      3
+RCHRES   1                                 RCHRES   2      4  
+END SCHEMATIC
+
+MASS-LINK
+  MASS-LINK        1
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+PERLND     PWATER PERO       0.0833333     RCHRES         INFLOW IVOL
+PERLND     SEDMNT SOSED  1   0.05          RCHRES         INFLOW ISED   1
+PERLND     SEDMNT SOSED  1   0.69          RCHRES         INFLOW ISED   2
+PERLND     SEDMNT SOSED  1   0.26          RCHRES         INFLOW ISED   3
+PERLND     PWTGAS POHT                     RCHRES         INFLOW IHEAT
+PERLND     PWTGAS PODOXM                   RCHRES         INFLOW OXIF   1
+  END MASS-LINK    1
+
+  MASS-LINK        2
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+IMPLND     IWATER SURO       0.0833333     RCHRES         INFLOW IVOL
+IMPLND     SOLIDS SOSLD         0.10       RCHRES         INFLOW ISED   1
+IMPLND     SOLIDS SOSLD         0.46       RCHRES         INFLOW ISED   2
+IMPLND     SOLIDS SOSLD         0.44       RCHRES         INFLOW ISED   3
+IMPLND     IWTGAS SOHT                     RCHRES         INFLOW IHEAT
+IMPLND     IWTGAS SODOXM                   RCHRES         INFLOW OXIF   1
+  END MASS-LINK    2
+
+  MASS-LINK        3
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+PERLND     PWATER PERO       0.0833333     RCHRES         INFLOW IVOL
+PERLND     SEDMNT SOSED  1   0.05          RCHRES         INFLOW ISED   1
+PERLND     SEDMNT SOSED  1   0.69          RCHRES         INFLOW ISED   2
+PERLND     SEDMNT SOSED  1   0.26          RCHRES         INFLOW ISED   3
+PERLND     PWTGAS POHT                     RCHRES         INFLOW IHEAT
+PERLND     PWTGAS PODOXM                   RCHRES         INFLOW OXIF   1
+  END MASS-LINK    3
+
+  MASS-LINK        4
+<Srce>     <-Grp> <-Member-><--Mult-->     <Targ>         <-Grp> <-Member-> ***
+<Name>     <Name> <Name> # #<-factor->     <Name>         <Name> <Name> # # ***
+RCHRES     ROFLOW                          RCHRES         INFLOW
+  END MASS-LINK    4
+END MASS-LINK
+
+NETWORK
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Target vols> <-Grp> <-Member->  ***
+<Name>   #        <Name> # #<-factor->strg <Name>   #   #        <Name> # #  ***
+RCHRES   1 HTRCH  TW                       PLTGEN   1     INPUT  POINT  1
+RCHRES   2 HTRCH  TW                       PLTGEN   1     INPUT  POINT  2
+RCHRES   1 HTRCH  HTCF4  7                 PLTGEN   1     INPUT  MEAN   1
+RCHRES   2 HTRCH  HTCF4  7                 PLTGEN   1     INPUT  MEAN   2
+RCHRES   1 HTRCH  HTEXCH                   PLTGEN   1     INPUT  MEAN   3
+RCHRES   2 HTRCH  HTEXCH                   PLTGEN   1     INPUT  MEAN   4
+END NETWORK
+
+EXT TARGETS
+<-Volume-> <-Grp> <-Member-><--Mult-->Tran <-Volume-> <Member> Tsys Tgap Amd ***
+<Name>   #        <Name> # #<-factor->strg <Name>   # <Name> #  tem strg strg***
+RCHRES   1 HTRCH  TW                       WDM2   304 TEST     ENGL AGGR REPL
+RCHRES   2 HTRCH  TW                       WDM2   305 TEST     ENGL AGGR REPL
+RCHRES   1 HTRCH  HTCF4  7                 WDM2   306 TEST     ENGL AGGR REPL
+RCHRES   2 HTRCH  HTCF4  7                 WDM2   307 TEST     ENGL AGGR REPL
+RCHRES   1 HTRCH  HTEXCH                   WDM2   308 TEST     ENGL AGGR REPL
+RCHRES   2 HTRCH  HTEXCH                   WDM2   309 TEST     ENGL AGGR REPL
+PERLND   2 PWATER CEPE   1                 WDM3   201 CEPE     ENGL AGGR REPL
+PERLND   2 PWATER CEPE   2                 WDM3   202 CEPE     ENGL AGGR REPL
+PERLND   2 PWATER CEPE   3                 WDM3   203 CEPE     ENGL AGGR REPL
+PERLND   2 PWATER CEPO   1                 WDM3   204 CEPO     ENGL AGGR REPL
+PERLND   2 PWATER CEPO   2                 WDM3   205 CEPO     ENGL AGGR REPL
+PERLND   2 PWATER CEPO   3                 WDM3   206 CEPO     ENGL AGGR REPL
+PERLND   2 SEDMNT COVER                    WDM3   207 COVER    ENGL AGGR REPL
+END EXT TARGETS
+
+SPEC-ACTIONS
+*** User-Defined Variable Quantity Lines
+***                          addr
+***                        <------>
+*** kwd  varnam optyp  opn  vari  s1 s2 s3 tp multiply  lc ls ac as agfn ***
+  <****> <----> <----> <-> <----><-><-><-><-><--------> <><-> <><-> <--> ***
+  UVQUAN prec   PERLND   1 PREC             3                 DY  1 SUM
+  
+  DISTRB  4  10 DY   1 SHIFT    .20  .20  .20  .20  .20    0    0    0    0    0
+
+*** Action Lines ***
+
+  <****><f><-l>dcdts<yr><m><d><h><n>dstp  <vari><1><2><3><a><-value--> tc tst nu
+
+IF (prec < 0.05) THEN    
+  PERLND  1    DY  11976  4 13         3  DETS             1       3.0
+  PERLND  1    DY  11976  5 12         3  DETS             1       1.5
+  PERLND  1    DY  11976 10 15         3  DETS             1       1.0
+END IF    
+
+END SPEC-ACTIONS
+
+END RUN

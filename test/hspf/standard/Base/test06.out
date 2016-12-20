@@ -1,0 +1,174 @@
+1
+
+
+ Duration analysis operation no.     1
+
+ DURANL OF SIM DAILY FLOW (CFS)          
+
+ Start date: 1975/12/31 24: 0  End date: 1976/12/31 24: 0
+
+ Analysis season starts: 12/31 24: 0  Ends: 12/31 24: 0
+1
+
+
+ FRACTION OF TIME EACH LEVEL EQUALED OR EXCEEDED WITH DURATION >= THE SPECIFIED DURATIONS
+ FRACTION IS RELATIVE TO TOTAL TIME SPAN
+ 
+
+
+ EVENTS GREATER THAN
+
+                       DURATIONS
+                      1
+ LEVELS
+   0.000      1.000    
+   150.0     0.2568    
+   300.0     0.8470E-01
+   450.0     0.2732E-01
+   600.0     0.8197E-02
+   750.0      0.000    
+   900.0      0.000    
+   1050.      0.000    
+   1200.      0.000    
+   1350.      0.000    
+   1500.      0.000    
+   1650.      0.000    
+   1800.      0.000    
+   2000.      0.000    
+ 
+
+
+ EVENTS LESS THAN   
+
+                       DURATIONS
+                      1
+ LEVELS
+   0.000      0.000    
+   150.0     0.7432    
+   300.0     0.9153    
+   450.0     0.9727    
+   600.0     0.9918    
+   750.0      1.000    
+   900.0      1.000    
+   1050.      1.000    
+   1200.      1.000    
+   1350.      1.000    
+   1500.      1.000    
+   1650.      1.000    
+   1800.      1.000    
+   2000.      1.000    
+ 
+
+
+ UNDEFINED EVENTS (NO WATER)
+
+                       DURATIONS
+                      1
+              0.000    
+1
+
+
+     SUMMARY
+
+     TOTAL LENGTH OF DEFINED EVENTS:         366. INTERVALS
+
+     TOTAL LENGTH OF UNDEFINED EVENTS:         0. INTERVALS
+
+     TOTAL LENGTH OF ANALYSIS:     366.00 DAYS
+
+     SAMPLE SIZE:      366
+
+     SAMPLE MAXIMUM:  670.060    
+
+     SAMPLE MINIMUM:  0.00000    
+
+     SAMPLE MEAN:  93.1958    
+
+     SAMPLE STANDARD DEVIATION:  134.483    
+1
+
+
+ Duration analysis operation no.     2
+
+ DURANL OF OBS DAILY FLOW (CFS)          
+
+ Start date: 1975/12/31 24: 0  End date: 1976/12/31 24: 0
+
+ Analysis season starts: 12/31 24: 0  Ends: 12/31 24: 0
+1
+
+
+ FRACTION OF TIME EACH LEVEL EQUALED OR EXCEEDED WITH DURATION >= THE SPECIFIED DURATIONS
+ FRACTION IS RELATIVE TO TOTAL TIME SPAN
+ 
+
+
+ EVENTS GREATER THAN
+
+                       DURATIONS
+                      1
+ LEVELS
+   0.000      1.000    
+   150.0     0.1803    
+   300.0     0.4098E-01
+   450.0     0.1639E-01
+   600.0     0.8197E-02
+   750.0     0.2732E-02
+   900.0      0.000    
+   1050.      0.000    
+   1200.      0.000    
+   1350.      0.000    
+   1500.      0.000    
+   1650.      0.000    
+   1800.      0.000    
+   2000.      0.000    
+ 
+
+
+ EVENTS LESS THAN   
+
+                       DURATIONS
+                      1
+ LEVELS
+   0.000      0.000    
+   150.0     0.8197    
+   300.0     0.9590    
+   450.0     0.9836    
+   600.0     0.9918    
+   750.0     0.9973    
+   900.0      1.000    
+   1050.      1.000    
+   1200.      1.000    
+   1350.      1.000    
+   1500.      1.000    
+   1650.      1.000    
+   1800.      1.000    
+   2000.      1.000    
+ 
+
+
+ UNDEFINED EVENTS (NO WATER)
+
+                       DURATIONS
+                      1
+              0.000    
+1
+
+
+     SUMMARY
+
+     TOTAL LENGTH OF DEFINED EVENTS:         366. INTERVALS
+
+     TOTAL LENGTH OF UNDEFINED EVENTS:         0. INTERVALS
+
+     TOTAL LENGTH OF ANALYSIS:     366.00 DAYS
+
+     SAMPLE SIZE:      366
+
+     SAMPLE MAXIMUM:  810.000    
+
+     SAMPLE MINIMUM:  0.00000    
+
+     SAMPLE MEAN:  73.0164    
+
+     SAMPLE STANDARD DEVIATION:  111.076    

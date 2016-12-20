@@ -1,4 +1,4 @@
-module modTable
+
 !!-----------------------------------------------------------------------------
 !!   table.c
 !!
@@ -28,7 +28,7 @@ module modTable
 !int  table_parseFileLine(char* line, TTable* table, double* x, double* y);
 !
 !
-contains
+
 !!=============================================================================
 !
 real(kind=kind(1.d0)) function table_interpolate(x, x1, y1, x2, y2)
@@ -853,4 +853,4 @@ end function table_tseriesLookup1
 !    return TRUE;
 !}
 !
-end module
+
