@@ -1,0 +1,31 @@
+WDMENT.F90
+	or
+HASS_ENT.F90
+	
+CDRLOC.INC - lib3.0/src/adwdm
+CFBUFF.INC - lib3.0/src/adwdm
+CONST.INC - lib3.0/src/util
+CTSBUF.INC - lib3.0/src/wdm
+CWDMID.INC - lib3.0/src/wdm
+CWTSDS.INC - lib3.0/src/wdm
+
+FVERSN.INC - lib3.0/src/util
+
+DATSYS90.FOR - lib3.0/src/util
+TSBUFR.FOR - lib3.0/src/wdm
+UTCHARR90.FOR - lib3.0/src/util
+UTCOPY90.FOR - lib3.0/src/util
+UTDATE.F90 - lib3.0/src/util
+UTNUMB90.FOR - lib3.0/src/util
+UTWDMD.FOR - lib3.0/src/adwdm
+UTWDMF.FOR - lib3.0/src/adwdm
+UTWDT1.FOR - lib3.0/src/adwdm
+WDATM1.FOR - lib3.0/src/adwdm
+WDATM2.FOR - lib3.0/src/wdm
+WDATRB.FOR - lib3.0/src/wdm
+WDBTCH.FOR - lib3.0/src/wdm
+WDMESS.FOR - lib3.0/src/wdm
+WDMID.FOR - lib3.0/src/wdm
+WDOPIN95.FOR - lib3.0/src/adwdm
+WDTMS1.FOR - lib3.0/src/wdm
+WDTMS2.FOR - lib3.0/src/wdm

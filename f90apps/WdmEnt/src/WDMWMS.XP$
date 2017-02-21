@@ -1,0 +1,6 @@
+-export    F90_WDBOPN
+-export    F90_WDFLCL
+-export    F90_WDTGET
+-export    F90_WDCKDT
+-export    F90_WDBSGC
+-export    F90_WTFNDT
