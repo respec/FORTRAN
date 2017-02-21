@@ -2215,6 +2215,10 @@ C       compute amounts
               END IF
               PADTOT(J,I)= PCFL10(J,I)+ PCFL11(J,I)
               PADALL= PADALL+ PADTOT(J,I)
+            ELSE
+              PCFL10(J,I)= 0.0
+              PCFL11(J,I)= 0.0
+              PADTOT(J,I)= 0.0
             END IF
  30       CONTINUE
  40     CONTINUE

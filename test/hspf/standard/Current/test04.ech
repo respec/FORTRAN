@@ -1,0 +1,628 @@
+ FOUND RUN 
+ FOUND END RUN 
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+ 
+   Developed for:                Modified and Maintained by
+ 
+     U.S. Environmental            Aqua Terra Consultants
+       Protection Agency           (650)962-1864
+     Office of Research            email: hspf@aquaterra.com
+       and Development
+     Center for Exposure
+       Assessment Modeling
+     Athens, Georgia
+     (706)355-8400
+     email: ceam@epamail.epa.gov
+ 
+   In cooperation with:
+ 
+     U.S. Geological Survey                Release 12.5
+     Water Resources Discipline            December 2016
+     Office of Surface Water
+     Reston, Virginia
+     email: h2osoft@usgs.gov
+ 
+ 
+ Start of Job
+ 
+ PREPROCESSING USERS CONTROL INPUT.
+ 
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+ 
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND DISPLY      
+ FOUND END DISPLY      
+ FOUND EXT SOURCES 
+ FOUND END EXT SOURCES 
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    Version 11 test run:  Display of data in WDM
+
+   START       1976              END    1976
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1975/12/31 24:60    1976/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  3
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  2
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG =    1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  EMFG =     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     OPN SEQUENCE                                                                    
+         INGRP              INDELT 01:00                                             
+           DISPLY       1                                                            
+           DISPLY       2                                                            
+           DISPLY       3                                                            
+           DISPLY       4                                                            
+           DISPLY       5                                                            
+           DISPLY       6                                                            
+           DISPLY       7                                                            
+           DISPLY       8                                                            
+           DISPLY       9                                                            
+           DISPLY      10                                                            
+           DISPLY      11                                                            
+           DISPLY      12                                                            
+           DISPLY      13                                                            
+           DISPLY      14                                                            
+           DISPLY      15                                                            
+           DISPLY      16                                                            
+           DISPLY      17                                                            
+           DISPLY      18                                                            
+           DISPLY      19                                                            
+         END INGRP                                                                   
+     END OPN SEQUENCE                                                                
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING DISPLY   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    1  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PRECIP (IN), TRAER, IA              SUM          1         2        61              1         2        61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    1
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    2  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PRECIP (IN), IOWA FALLS, IA         SUM          0                   4              1         2        61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    2
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    3  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PRECIP (IN), SHEFFIELD, IA          SUM          0                   4              1         2        61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    3
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    4  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ PAN EVAP (IN), FARM COOP WS         SUM          0                   4              1         3        61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    4
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    5  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ WIND (MI/DAY), FARM COOP WS         SUM          0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    5
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    6  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ SOLAR RADIATION (LANG), FCWS        SUM          0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    6
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    7  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ AIR TEMP (DEG F), CDR RAPIDS        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    7
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    8  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ AIR TEMP (DEG F), IOWA FALLS        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    8
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.    9  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ AIR TEMP (DEG F), MARSHALTWN        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.    9
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   10  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ DEWPOINT (DEG F), CDR RAPIDS        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   10
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   11  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ DEWPOINT (DEG F), IOWA FALLS        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   11
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   12  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ DEWPOINT (DEG F), MARSHALTWN        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   12
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   13  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ SEDIMENT (LBS/ACRE), MARENGO        SUM          0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   13
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   14  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ WATER TEMP (DEG C),ESTIMATED        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   14
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   15  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ FLOW (CFS), IR @ MARSHALTOWN        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   15
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   16  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ FLOW (CFS), IR @ MARENGO            AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   16
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   17  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ FLOW (CFS), IR @ ROWAN              AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   17
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   18  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ COLIND FOR MEIER POND               AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   18
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING DISPLY OPERATION NO.   19  TIME INTERVAL   60 MINS
+ 
+ Title of display               Transform   Data for short-span display              Data for long-span display
+                                     code      PIVL    Digits  File-no.          PYRFG    Digits  File-no.    PYREND
+ CLOUD CVR, WATERLOO (TENTHS)        AVER         0                   4              1                  61        12
+ 
+    Convert DegC to F    Display negative data
+          A         B    THRSH1    THRSH2
+       1.00      0.00      0.00      0.00
+
+ FINISHED PROCESSING DISPLAY OPERATION NO.   19
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING DISPLY   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ SPEC-ACTIONS BLOCK NOT FOUND
+
+ FINISHED PROCESSING SPEC-ACTIONS BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+
+ INGROUP NO.  1    OSVSZ= 2500    INPAD WIDTH=515499 INTERVALS    MAXROW=    1  RUNWID=    0
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    1
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     39        60      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    2
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    131        60      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    3
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    132        60      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    4
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     41      1440      DIV      1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    5
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     42      1440      DIV      1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    6
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1     46       120      DIV      1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    7
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    121       120      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    8
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    122       120      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY    9
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    123       120      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   10
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    124      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   11
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    125      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   12
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    126      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   13
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    127      1440      DIV      1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   14
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    134      1440      AVER     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   15
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    113      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   16
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    119      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   17
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    136      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   18
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    140      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   DISPLY   19
+
+   INPUT TIMESERIES
+
+     FROM EXTERNAL SOURCES
+     TYPE      #  INTERVAL   TRN STR         MFACT    GROUP   MEMBER  S1  S2   
+
+     WDM1    135      1440      SAME     1.000E+00    INPUT   TIMSER   1   1
+
+ FINISHED PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+ ====================================================================================================================================
+ 
+ INTERPRETATION OF RUN DATA SET COMPLETE
+ 
+
+ COMMENCING EXECUTION
+ 
+ End of Job

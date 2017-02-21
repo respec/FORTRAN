@@ -1,0 +1,167 @@
+ FOUND RUN 
+ FOUND END RUN 
+ ************************************************************
+ *                                                          *
+ *        Hydrological Simulation Program - FORTRAN         *
+ *                                                          *
+ ************************************************************
+ 
+   Developed for:                Modified and Maintained by
+ 
+     U.S. Environmental            Aqua Terra Consultants
+       Protection Agency           (650)962-1864
+     Office of Research            email: hspf@aquaterra.com
+       and Development
+     Center for Exposure
+       Assessment Modeling
+     Athens, Georgia
+     (706)355-8400
+     email: ceam@epamail.epa.gov
+ 
+   In cooperation with:
+ 
+     U.S. Geological Survey                Release 12.5
+     Water Resources Discipline            December 2016
+     Office of Surface Water
+     Reston, Virginia
+     email: h2osoft@usgs.gov
+ 
+ 
+ Start of Job
+ 
+ PREPROCESSING USERS CONTROL INPUT.
+ 
+ SEARCHING FOR BOUNDARIES OF NEXT DATA SET IN USERS CONTROL INPUT.
+ 
+ FOUND RUN 
+ FOUND END RUN 
+ 
+ INTERPRETING RUN DATA SET IN USERS CONTROL INPUT
+ 
+ FOUND GLOBAL      
+ FOUND END GLOBAL      
+ FOUND FILES       
+ FOUND END FILES       
+ FOUND OPN SEQUENCE
+ FOUND END OPN SEQUENCE
+ FOUND MUTSIN      
+ FOUND END MUTSIN      
+ FOUND EXT TARGETS 
+ FOUND END EXT TARGETS 
+ FOUND PATHNAMES   
+ FOUND END PATHNAMES   
+ 
+ 
+ ====================================================================================================================================
+ PROCESSING GLOBAL BLOCK
+
+ GENERAL RUN INFORMATION:    Version 11 test run:  Inputting test data to DSS
+
+   START       1976              END    1976
+
+ START AND END DATE/TIMES TRANSLATE TO THE FOLLOWING, IN INTERNAL FORMAT:  1975/12/31 24:60    1976/12/31 24:60
+
+ RUN INTERPRETER OUTPUT LEVEL HAS BEEN SET TO:  3
+ RUNTIME SPECIAL ACTION OUTPUT LEVEL HAS BEEN SET TO:  2
+ 
+ SYSTEM HAS BEEN ASKED TO INTERPRET AND EXECUTE THE RUN.  RUNFG =    1
+ THE UNIT SYSTEM OF THE RUN WILL BE ENGLISH.  EMFG =     1
+ 
+ FINISHED PROCESSING GLOBAL BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ CATEGORY BLOCK NOT FOUND
+ 
+ FINISHED PROCESSING CATEGORY BLOCK
+ ====================================================================================================================================
+ 
+ ====================================================================================================================================
+ PROCESSING OPN SEQUENCE BLOCK
+ 
+ 
+ USERS CONTROL INPUT IS:
+     OPN SEQUENCE                                                                    
+           MUTSIN       1   INDELT 24:00                                             
+     END OPN SEQUENCE                                                                
+
+ FINISHED PROCESSING OPN SEQUENCE BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING PATHNAMES BLOCK
+ 
+ USERS CONTROL INPUT IS:
+     PATHNAMES                                                                       
+     <ds>f# <ctype-> <***************************pathname***************************>
+       41 1 PER-CUM  /TEST/FARM COOP WS/EVAP//1DAY/OBSERVED-INCHES|DAY/              
+       42 1 PER-CUM  /TEST/FARM COOP WS/WIND//1DAY/OBSERVED-MILES|DAY/               
+      113 2 PER-AVER /TEST/MARSHALTOWN/FLOW//1DAY/OBSERVED-CFS/                      
+      119 2 PER-AVER /TEST/MARENGO/FLOW//1DAY/OBSERVED-CFS/                          
+      124 1 PER-AVER /TEST/CEDAR RAPIDS/DEWPOINT//1DAY/OBSERVED-DEG F/               
+      125 1 PER-AVER /TEST/IOWA FALLS/DEWPOINT//1DAY/OBSERVED-DEG F/                 
+      126 1 PER-AVER /TEST/MARSHALTOWN/DEWPOINT//1DAY/OBSERVED-DEG F/                
+      127 2 PER-CUM  /TEST/MARENGO/SEDIMENT//1DAY/OBSERVED-LBS|ACRE/                 
+      134 2 INST-VAL /TEST/IOWA RIVER/WATER TEMP//1DAY/ESTIMATED-DEG C/              
+      136 2 PER-AVER /TEST/ROWAN/FLOW//1DAY/OBSERVED-CFS/                            
+     END PATHNAMES                                                                   
+
+ FINISHED PROCESSING PATHNAMES BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING MUTSIN   BLOCK
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ PROCESSING MUTSIN OPERATION NO.    1
+ 
+      MUTFL       NPT       NMN       NLI      MSFG
+         91         1         9        25         0
+
+ FINISHED PROCESSING MUTSIN OPERATION NO.    1
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ FINISHED PROCESSING MUTSIN   BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ SPEC-ACTIONS BLOCK NOT FOUND
+
+ FINISHED PROCESSING SPEC-ACTIONS BLOCK
+ ====================================================================================================================================
+
+ ====================================================================================================================================
+ PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+
+ INGROUP NO.  1    OSVSZ= 1000    INPAD WIDTH= 51699 INTERVALS    MAXROW=   10  RUNWID=    0
+
+
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ TIMESERIES USED BY OPERATION   MUTSIN    1
+
+   OUTPUT TIMESERIES
+
+     TO EXTERNAL TARGETS
+     GROUP   MEMBER  S1  S2        MFACT   TRN STR  TYPE      #  INTERVAL      
+
+     OUTPUT  POINT    1   1    1.000E+00      SAME  DSS     134      1440
+     OUTPUT  MEAN     1   1    1.000E+00      SAME  DSS      41      1440
+     OUTPUT  MEAN     2   1    1.000E+00      SAME  DSS      42      1440
+     OUTPUT  MEAN     3   1    1.000E+00      SAME  DSS     113      1440
+     OUTPUT  MEAN     4   1    1.000E+00      SAME  DSS     119      1440
+     OUTPUT  MEAN     5   1    1.000E+00      SAME  DSS     124      1440
+     OUTPUT  MEAN     6   1    1.000E+00      SAME  DSS     125      1440
+     OUTPUT  MEAN     7   1    1.000E+00      SAME  DSS     126      1440
+     OUTPUT  MEAN     8   1    1.000E+00      SAME  DSS     127      1440
+     OUTPUT  MEAN     9   1    1.000E+00      SAME  DSS     136      1440
+
+ FINISHED PROCESSING BLOCKS CONTAINING TIME SERIES LINKAGES
+ ====================================================================================================================================
+ 
+ INTERPRETATION OF RUN DATA SET COMPLETE
+ 
+
+ COMMENCING EXECUTION
+ 
+ End of Job
