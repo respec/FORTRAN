@@ -116,7 +116,7 @@
         CALL GET_WDM_FUN(WDMSFL)
         !WRITE(*,*) 'F90_WDBOPN:RWFLG,WDMSFL:',RWFLG,WDMSFL
         CALL WDBOPN(WDMSFL,LNAME,RWFLG,RETCOD)
-        !WRITE(*,*) 'F90_WDBOPN:',RWFLG,WSTAT
+        
         IF (RETCOD .NE. 0) THEN
           IF (RETCOD .LT. -10) THEN
             RETCOD = ABS(RETCOD) - 16384
@@ -125,45 +125,105 @@
           WDMSFL= 0
         END IF
     END FUNCTION F90_WDBOPN
-    
+
+    !adwdm:wdopxx
+    SUBROUTINE F90_WDBOPNR(RWFLG,WDNAME,WDMSFL,RETCOD)
+        !DEC$ ATTRIBUTES DLLEXPORT ::  F90_WDBOPNR
+
+        CHARACTER(LEN=*),INTENT(IN) :: WDNAME
+        INTEGER,         INTENT(IN) :: RWFLG
+        INTEGER                     :: WDMSFL
+        INTEGER                     :: RETCOD
+
+        CHARACTER*256               :: LNAME
+
+        LNAME = WDNAME
+        !WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
+
+        IF (RWFLG .EQ. 1) THEN
+          !special case for hspfmsg.wdm (or any other readonly file)
+          WDMSFL = 100
+        ELSE
+          WDMSFL= INQUIRE_NAME(LNAME,WDMSFL)
+        END IF
+        !CALL GET_WDM_FUN(WDMSFL)
+
+        !WRITE(*,*) 'F90_WDBOPNR:entr:WDMSFL,RWFLG:',WDMSFL,RWFLG,' ',TRIM(LNAME)
+
+        !IF (WDMSFL .LT. 0) THEN
+        !  WDMSFL = -WDMSFL
+        !END IF
+
+        CALL WDBOPN(WDMSFL,LNAME,RWFLG,RETCOD)
+
+        IF (RETCOD .NE. 0) THEN
+          IF (RETCOD .LT. -10) THEN
+            RETCOD = ABS(RETCOD) - 16384
+          END IF
+          WDMSFL= 0
+        END IF
+        !WRITE(*,*) 'F90_WDBOPNR:exit:WDMSFL,RETCOD',WDMSFL,RETCOD
+
+    END SUBROUTINE F90_WDBOPNR
+
     !local
     SUBROUTINE GET_WDM_FUN(WDMSFL)
-        INTEGER      :: WDMSFL
-        INTEGER,SAVE :: NXTWDM
-        LOGICAL      :: OPFG
-        DATA NXTWDM/0/
+        INTEGER          :: WDMSFL
 
-        IF (WDMSFL == -1) THEN
-          DO WHILE (NXTWDM > 0)
-            INQUIRE (UNIT=NXTWDM,OPENED=OPFG)
-            IF (OPFG) THEN
-              !WRITE(*,*) 'GET_WDM_FUN:close:',NXTWDM
-              CLOSE(NXTWDM)
-            END IF
-            NXTWDM = NXTWDM - 1
-            IF (NXTWDM < 40) THEN
-              NXTWDM = 0
-            END IF
-          END DO
+        LOGICAL          :: OPFG
+        INTEGER          :: NXTWDM
+
+        !WRITE(*,*)  'GET_WDM_FUN:entry:WDMSFL:',WDMSFL
+
+        IF (WDMSFL .GE. 100) THEN
+          NXTWDM = WDMSFL
         ELSE
-          IF (NXTWDM == 0) THEN
-            NXTWDM = 40
-          END IF
-          WDMSFL = NXTWDM
-          NXTWDM = NXTWDM+ 1
+          NXTWDM = 101
         END IF
+        WDMSFL = 0
+        DO WHILE (WDMSFL .EQ. 0)
+          INQUIRE (UNIT=NXTWDM,OPENED=OPFG)
+          IF (OPFG) THEN
+            NXTWDM= NXTWDM+ 1
+          ELSE
+            WDMSFL= NXTWDM
+          END IF
+        END DO
+        !WRITE(*,*) 'GET_WDM_FUN:exit :WDMSFL:',WDMSFL
     END SUBROUTINE
 
     !adwdm:utwdmd
     FUNCTION F90_WDFLCL(WDMSFL) RESULT (RETCOD)
         !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDFLCL
 
-        INTEGER  :: WDMSFL, RETCOD
+        INTEGER, INTENT(IN) :: WDMSFL
+        INTEGER             :: RETCOD
+ 
+        CHARACTER*200 :: FNAM
+        INTEGER       :: FUN
+        LOGICAL       :: OPEN
+            
+        !WRITE(*,*) 'F90_WDFLCL:entry:WDMSFL:',WDMSFL
 
-        CALL WDFLCL(WDMSFL,RETCOD)
+        INQUIRE(UNIT=WDMSFL,OPENED=OPEN,NAME=FNAM)
+
+        IF (OPEN) THEN
+          CALL WDFLCL(WDMSFL,RETCOD)
+          !WRITE(*,*) 'F90_WDFLCL:close:WDMSFL:RETCOD:', WDMSFL,RETCOD
+
+          INQUIRE(UNIT=WDMSFL,OPENED=OPEN)
+          !WRITE(*,*) "F90_WDFLCL:opned:WDMSFL:", WDMSFL,OPEN
+          INQUIRE(FILE=FNAM,NUMBER=FUN,OPENED=OPEN)
+          !WRITE(*,*) "F90_WDFLCL:final:WDMSFL:", FUN,OPEN,' ',TRIM(FNAM)
+        ELSE
+          !not open, cant close it
+          WRITE(*,*) 'F90_WDFLCL:not open'
+          RETCOD = -255
+        END IF
     END FUNCTION F90_WDFLCL
 
     FUNCTION F90_WDFLCL2(WDMSFL) RESULT (RETCOD)
+        !Note this function is not from hass_ent!
         !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDFLCL2
 
         INTEGER  :: WDMSFL, RETCOD
