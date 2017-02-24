@@ -10,7 +10,7 @@
   
       IF (Find_Test_Folder() .EQ. .TRUE.) THEN
         WDNAME = 'test.wdm'
-        WDMSFL = F90_WDBOPN(WDNAME)
+        WDMSFL = F90_WDBOPN(0,WDNAME)
         IF (WDMSFL .LT. 0) THEN
           Write(*,*) 'Return Code ', RETCOD, ' Opening ', WDNAME
         ELSE
