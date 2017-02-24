@@ -1,15 +1,7 @@
 WDMENT.F90
-	or
-HASS_ENT.F90
 	
 CDRLOC.INC - lib3.0/src/adwdm
 CFBUFF.INC - lib3.0/src/adwdm
-CONST.INC - lib3.0/src/util
-CTSBUF.INC - lib3.0/src/wdm
-CWDMID.INC - lib3.0/src/wdm
-CWTSDS.INC - lib3.0/src/wdm
-
-FVERSN.INC - lib3.0/src/util
 
 DATSYS90.FOR - lib3.0/src/util
 TSBUFR.FOR - lib3.0/src/wdm
