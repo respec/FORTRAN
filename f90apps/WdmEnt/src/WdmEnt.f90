@@ -368,14 +368,13 @@
     
     !wdm:wdtms1
     SUBROUTINE F90_WDTGET(WDMSFL,DSN,DELT,DATES,NVAL, &
-                          DTRAN,TUNITS, &
+                          DTRAN,QUALFG,TUNITS, &
                           RVAL,RETCOD)
         !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDTGET
         INTEGER           :: WDMSFL,DSN,DELT,DATES(6),NVAL,DTRAN
         INTEGER           :: QUALFG,TUNITS,RETCOD
         REAL              :: RVAL(NVAL)
 
-        QUALFG = 0
         CALL WDTGET(WDMSFL,DSN,DELT,DATES,NVAL,DTRAN,QUALFG,TUNITS, &
                     RVAL,RETCOD)
     END SUBROUTINE F90_WDTGET
@@ -400,8 +399,8 @@
 
     
     !wdm:wdtms2
-    SUBROUTINE F90_WTFNDT (WDMSFL,DSN, &
-                           SDAT,EDAT,RETCOD)
+    SUBROUTINE F90_WTFNDT (WDMSFL,DSN,GPFLG, &
+                           TDSFRC,SDAT,EDAT,RETCOD)
         !DEC$ ATTRIBUTES DLLEXPORT :: F90_WTFNDT
         INTEGER           :: WDMSFL,DSN
         INTEGER           :: SDAT(6),EDAT(6),RETCOD
@@ -409,7 +408,6 @@
         INTEGER           :: GPFLG
         INTEGER           :: TDSFRC
 
-        GPFLG = 1
         !WRITE(*,*) 'F90_WTFNDT:',WDMSFL,DSN,GPFLG
         CALL WTFNDT (WDMSFL,DSN,GPFLG, &
                      TDSFRC,SDAT,EDAT,RETCOD)

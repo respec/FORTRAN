@@ -12,9 +12,19 @@
     <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
     Public Function F90_WDCKDT(ByRef aWdmsFile As Integer, ByRef aDSN As Integer) As Integer
     End Function
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
     Public Function F90_WDFLCL(ByRef aWdmsFile As Integer) As Integer
     End Function
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    Public Sub F90_WDDSNX(ByRef aWdmsFile As Integer, ByRef aDsn As Integer)
+    End Sub
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    Public Sub F90_WDTGET(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aDelt As Integer, ByVal aDates() As Integer,
+                          ByRef aNval As Integer, ByRef aDtran As Integer, ByRef aQualfg As Integer, ByRef aTunits As Integer, ByVal aRval() As Single, ByRef aRetcod As Integer)
+    End Sub
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    Public Sub F90_WTFNDT(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aGpflg As Integer, ByRef aTdsfrc As Integer, ByVal aSDate() As Integer, ByVal aEDate() As Integer, ByRef aRetcod As Integer)
+    End Sub
 
     Dim gOutFileStream As IO.FileStream
 
@@ -58,6 +68,31 @@
                     DSTYPE = F90_WDCKDT(WDMSFL, DSN)
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDCKDT: DSN, TYPE: " & DSN & ", " & DSTYPE & vbCrLf))
                     gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                    F90_WDDSNX(WDMSFL, DSN)
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDDSNX: DSN: " & DSN & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                    Dim lGpFlg As Integer = 1
+                    Dim lDsfrc As Integer
+                    Dim lSdat(6) As Integer
+                    Dim lEdat(6) As Integer
+                    F90_WTFNDT(WDMSFL, DSN, lGpFlg, lDsfrc, lSdat, lEdat, RETCOD)
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WTFNDT: DSN, SDAT, EDAT: " & DSN & ", " & lSdat(0).ToString & ", " & lEdat(0).ToString & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                    Dim lDates(6) As Integer
+                    Dim lDelt As Integer = 1
+                    Dim lNvals As Integer = 10
+                    Dim lTran As Integer = 0
+                    Dim lQual As Integer = 31
+                    Dim lTunit As Integer = 4
+                    lDates(0) = 1976 : lDates(1) = 4 : lDates(2) = 5 : lDates(3) = 24 : lDates(4) = 0 : lDates(5) = 0 : lDates(6) = 0
+                    Dim lRval(10) As Single
+                    F90_WDTGET(WDMSFL, DSN, lDelt, lDates, lNvals, lTran, lQual, lTunit, lRval, RETCOD)
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDTGET: DSN, RVAL: " & DSN & ", " & lRval(0).ToString & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
                     RETCOD = F90_WDFLCL(WDMSFL)
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDFLCL Return Code " & RETCOD & vbCrLf))
                     gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
