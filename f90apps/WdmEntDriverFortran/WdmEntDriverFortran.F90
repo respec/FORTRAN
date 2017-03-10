@@ -1,9 +1,12 @@
       Program WdmEntDriverFortran
       
-!DEC$ ATTRIBUTES DLLIMPORT:: F90_WDMOPN, F90_WDMCLO, F90_WDBOPN, F90_WDCKDT, F90_WDFLCL
+!DEC$ ATTRIBUTES DLLIMPORT:: F90_WDMOPN, F90_WDMCLO, F90_WDBOPN, F90_WDCKDT, F90_WDFLCL, F90_WDDSNX, F90_WTFNDT
 
 !     local variables
       Integer*4    :: WDMSFL, RETCOD, DSN, DSTYPE, I, OUTFL
+      Integer*4    :: GPFLG, DSFRC, SDAT(6), EDAT(6)
+      Integer*4    :: DATES(6), DELT, NVALS, TRAN, QUAL, TUNIT
+      Real*8       :: RVAL(10)
       Character*64 :: WDNAME, WDMNAMES(3)
 
 !     functions
@@ -39,6 +42,28 @@
             DSN = 39
             DSTYPE = F90_WDCKDT(WDMSFL, DSN)
             Write(OUTFL,*) '  F90_WDCKDT: DSN, TYPE: ', DSN, DSTYPE
+            
+            CALL F90_WDDSNX(WDMSFL, DSN) 
+            Write(OUTFL,*) '  F90_WDDSNX: DSN: ', DSN
+                    
+            GPFLG = 1
+            CALL F90_WTFNDT(WDMSFL, DSN, GPFLG, DSFRC, SDAT, EDAT, RETCOD)
+            Write(OUTFL,*) '  F90_WTFNDT: DSN, SDAT, EDAT: ', DSN, SDAT(1), EDAT(1)
+                    
+            DELT = 1
+            NVALS = 10
+            TRAN = 0
+            QUAL = 31
+            TUNIT = 4
+            DATES(1) = 1976 
+            DATES(2) = 4 
+            DATES(3) = 5 
+            DATES(4) = 24 
+            DATES(5) = 0 
+            DATES(6) = 0 
+            CALL F90_WDTGET(WDMSFL, DSN, DELT, DATES, NVALS, TRAN, QUAL, TUNIT, RVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDTGET: DSN, RVAL: ', DSN, RVAL(1)
+                        
             RETCOD = F90_WDFLCL(WDMSFL)
             Write(OUTFL,*) '  F90_WDFLCL Return Code ', RETCOD
           END IF
