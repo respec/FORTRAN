@@ -1,13 +1,15 @@
       Program WdmEntDriverFortran
       
-!DEC$ ATTRIBUTES DLLIMPORT:: F90_WDMOPN, F90_WDMCLO, F90_WDBOPN, F90_WDCKDT, F90_WDFLCL, F90_WDDSNX, F90_WTFNDT
+!DEC$ ATTRIBUTES DLLIMPORT:: F90_WDMOPN, F90_WDMCLO, F90_WDBOPN, F90_WDCKDT, F90_WDFLCL, F90_WDDSNX, F90_WTFNDT, F90_WDTPUT
+!DEC$ ATTRIBUTES DLLIMPORT:: F90_WDBSGI, F90_WDBSAI, F90_WDBSGR, F90_WDBSAR, F90_WDBSGC, F90_WDBSAC
 
 !     local variables
-      Integer*4    :: WDMSFL, RETCOD, DSN, DSTYPE, I, OUTFL
-      Integer*4    :: GPFLG, DSFRC, SDAT(6), EDAT(6)
+      Integer*4    :: WDMSFL, RETCOD, DSN, DSTYPE, I, OUTFL, IVAL(80)
+      Integer*4    :: GPFLG, DSFRC, SDAT(6), EDAT(6), OVFG, SAIND, SALEN, SAVAL
       Integer*4    :: DATES(6), DELT, NVALS, TRAN, QUAL, TUNIT
-      Real*8       :: RVAL(10)
+      Real*8       :: RVAL(10), RSAVAL
       Character*64 :: WDNAME, WDMNAMES(3)
+      Character*80 :: CVAL
 
 !     functions
       Logical*4    :: Find_Test_Folder
@@ -63,6 +65,43 @@
             DATES(6) = 0 
             CALL F90_WDTGET(WDMSFL, DSN, DELT, DATES, NVALS, TRAN, QUAL, TUNIT, RVAL, RETCOD)
             Write(OUTFL,*) '  F90_WDTGET: DSN, RVAL: ', DSN, RVAL(1)
+            
+            OVFG = 1
+            RVAL(1) = 1.0
+            RVAL(2) = 2.0
+            RVAL(3) = 3.0
+            CALL F90_WDTPUT(WDMSFL, DSN, DELT, DATES, NVALS, OVFG, QUAL, TUNIT, RVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDTPUT: DSN, RETCOD: ', DSN, RETCOD
+            
+            ! work with attributes
+            ! have to open message wdm first
+            MESSFL = F90_WDBOPN(1,"\FORTRAN\lib3.0\hspfmsg.wdm")
+            
+            SAIND = 34
+            SALEN = 1
+            CALL F90_WDBSGI(WDMSFL, DSN, SAIND, SALEN, SAVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDBSGI: SAVAL, RETCOD: ', SAVAL, RETCOD
+            
+            CALL F90_WDBSAI(WDMSFL, DSN, MESSFL, SAIND, SALEN, SAVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDBSAI: SAVAL, RETCOD: ', SAVAL, RETCOD
+            
+            SAIND = 7
+            SALEN = 1
+            CALL F90_WDBSGR(WDMSFL, DSN, SAIND, SALEN, RSAVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDBSGR: SAVAL, RETCOD: ', RSAVAL, RETCOD
+            
+            CALL F90_WDBSAR(WDMSFL, DSN, MESSFL, SAIND, SALEN, RSAVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDBSAR: SAVAL, RETCOD: ', RSAVAL, RETCOD  
+            
+            SAIND = 45
+            SALEN = 48
+            CALL F90_WDBSGC (WDMSFL,DSN,SAIND,SALEN,IVAL)
+            ! need to turn these integer values back into a character string
+            Write(OUTFL,*) '  F90_WDBSGC: IVAL, RETCOD: ', IVAL, RETCOD
+            
+            CVAL = 'Test Stanam'
+            CALL F90_WDBSAC (WDMSFL,DSN,MESSFL,SAIND,SALEN,RETCOD,CVAL)
+            Write(OUTFL,*) '  F90_WDBSAC: CVAL, RETCOD: ', CVAL, RETCOD  
                         
             RETCOD = F90_WDFLCL(WDMSFL)
             Write(OUTFL,*) '  F90_WDFLCL Return Code ', RETCOD
