@@ -31,7 +31,7 @@
     End Sub
     <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
     Public Sub F90_WDBSGI(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
-                          ByVal aSaval As Integer, ByRef aRetcod As Integer)
+                          ByRef aSaval As Integer, ByRef aRetcod As Integer)
     End Sub
     <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
     Public Sub F90_WDBSAI(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
@@ -39,7 +39,7 @@
     End Sub
     <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
     Public Sub F90_WDBSGR(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
-                          ByVal aSaval As Single, ByRef aRetcod As Integer)
+                          ByRef aSaval As Single, ByRef aRetcod As Integer)
     End Sub
     <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
     Public Sub F90_WDBSAR(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
@@ -97,6 +97,7 @@
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDCKDT: DSN, TYPE: " & DSN & ", " & DSTYPE & vbCrLf))
                     gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
+                    DSN += 1
                     F90_WDDSNX(WDMSFL, DSN)
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDDSNX: DSN: " & DSN & vbCrLf))
                     gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
@@ -133,6 +134,7 @@
                     MSNAME = "\FORTRAN\lib3.0\hspfmsg.wdm"
                     MESSFL = F90_WDBOPN(1, MSNAME, Len(MSNAME))
 
+                    'tsgroup
                     Dim lSaind As Integer = 34
                     Dim lSalen As Integer = 1
                     Dim lSaval As Integer
@@ -142,18 +144,21 @@
                     F90_WDBSAI(WDMSFL, DSN, MESSFL, lSaind, lSalen, lSaval, RETCOD)
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAI: SAVAL, RETCOD: " & lSaval & ", " & RETCOD))
 
+                    'elev
                     lSaind = 7
                     lSalen = 1
-                    Dim lRsaval As Integer
+                    Dim lRsaval As Single
                     F90_WDBSGR(WDMSFL, DSN, lSaind, lSalen, lRsaval, RETCOD)
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGR: SAVAL, RETCOD: " & lRsaval & ", " & RETCOD))
 
+                    lRsaval = 111.2
                     F90_WDBSAR(WDMSFL, DSN, MESSFL, lSaind, lSalen, lRsaval, RETCOD)
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAR: SAVAL, RETCOD: " & lRsaval & ", " & RETCOD))
 
+                    'stanam
                     lSaind = 45
                     lSalen = 48
-                    Dim lIval() As Integer
+                    Dim lIval(80) As Integer
                     F90_WDBSGC(WDMSFL, DSN, lSaind, lSalen, lIval)
                     'need to turn these integer values back into a character string
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGC: IVAL, RETCOD: " & lIval(1) & ", " & RETCOD))
