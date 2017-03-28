@@ -12,45 +12,49 @@
     <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
     Public Function F90_WDCKDT(ByRef aWdmsFile As Integer, ByRef aDSN As Integer) As Integer
     End Function
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
     Public Function F90_WDFLCL(ByRef aWdmsFile As Integer) As Integer
     End Function
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
     Public Sub F90_WDDSNX(ByRef aWdmsFile As Integer, ByRef aDsn As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
     Public Sub F90_WTFNDT(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aGpflg As Integer, ByRef aTdsfrc As Integer, ByVal aSDate() As Integer, ByVal aEDate() As Integer, ByRef aRetcod As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDTGET(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aDelt As Integer, ByVal aDates() As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDTGET(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aDelt As Integer, ByVal aDates() As Integer, _
                           ByRef aNval As Integer, ByRef aDtran As Integer, ByRef aQualfg As Integer, ByRef aTunits As Integer, ByVal aRval() As Single, ByRef aRetcod As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDTPUT(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aDelt As Integer, ByVal aDates() As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDTPUT(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aDelt As Integer, ByVal aDates() As Integer, _
                           ByRef aNval As Integer, ByRef aOvfg As Integer, ByRef aQualfg As Integer, ByRef aTunits As Integer, ByVal aRval() As Single, ByRef aRetcod As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDBSGI(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDBSGI(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer, _
                           ByRef aSaval As Integer, ByRef aRetcod As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDBSAI(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDBSAI(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer, _
                           ByRef aSaval As Integer, ByRef aRetcod As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDBSGR(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDBSGR(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer, _
                           ByRef aSaval As Single, ByRef aRetcod As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDBSAR(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDBSAR(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer, _
                           ByRef aSaval As Single, ByRef aRetcod As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDBSGC(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDBSGC(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer, _
                           ByVal aSaval() As Integer)
     End Sub
-    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Sub F90_WDBSAC(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer,
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDBSGCX(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer, _
+                           ByVal aSaval As String)
+    End Sub
+    <DllImport("WdmEnt.dll", CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)> _
+    Public Sub F90_WDBSAC(ByRef aWdmsFile As Integer, ByRef aDsn As Integer, ByRef aMsFile As Integer, ByRef aSaind As Integer, ByRef aSalen As Integer, _
                           ByRef aRetcod As Integer, ByRef aSaval As String, ByVal aStringLength As Short)
     End Sub
 
@@ -163,7 +167,12 @@
                     'need to turn these integer values back into a character string
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGC: IVAL, RETCOD: " & lIval(1) & ", " & RETCOD))
 
-                    Dim lCval As String = "Test Stanam"
+                    Dim lCval As String = ""
+                    F90_WDBSGCX(WDMSFL, DSN, lSaind, lSalen, lCval)
+                    'need to turn these integer values back into a character string
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGC: IVAL, RETCOD: " & lIval(1) & ", " & RETCOD))
+
+                    lCval = "Test Stanam"
                     F90_WDBSAC(WDMSFL, DSN, MESSFL, lSaind, lSalen, RETCOD, lCval, Len(lCval))
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAC: CVAL, RETCOD: " & lCval & ", " & RETCOD))
 

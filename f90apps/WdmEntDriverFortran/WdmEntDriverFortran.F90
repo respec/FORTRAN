@@ -100,12 +100,18 @@
             SALEN = 48
             CALL F90_WDBSGC (WDMSFL,DSN,SAIND,SALEN,IVAL)
             ! need to turn these integer values back into a character string
-            Write(OUTFL,*) '  F90_WDBSGC: IVAL, RETCOD: ', IVAL, RETCOD
+            Write(OUTFL,*) '  F90_WDBSGC: IVAL, RETCOD: ', IVAL
+
+            CALL F90_WDBSGCX (WDMSFL,DSN,SAIND,SALEN,CVAL)
+            Write(OUTFL,*) '  F90_WDBSGCX: CVAL, RETCOD: ', CVAL
             
             CVAL = 'Test Stanam'
             CALL F90_WDBSAC (WDMSFL,DSN,MESSFL,SAIND,SALEN,RETCOD,CVAL)
             Write(OUTFL,*) '  F90_WDBSAC: CVAL, RETCOD: ', CVAL, RETCOD  
                         
+            CALL F90_WDBSGCX (WDMSFL,DSN,SAIND,SALEN,CVAL)
+            Write(OUTFL,*) '  F90_WDBSGCX: CVAL, RETCOD: ', CVAL, RETCOD
+
             RETCOD = F90_WDFLCL(WDMSFL)
             Write(OUTFL,*) '  F90_WDFLCL Return Code ', RETCOD
           END IF
