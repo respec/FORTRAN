@@ -72,6 +72,7 @@
             RVAL(1) = 1.0
             RVAL(2) = 2.0
             RVAL(3) = 3.0
+            QUAL = 1
             CALL F90_WDTPUT(WDMSFL, DSN, DELT, DATES, NVALS, OVFG, QUAL, TUNIT, RVAL, RETCOD)
             Write(OUTFL,*) '  F90_WDTPUT: DSN, RETCOD: ', DSN, RETCOD
             
