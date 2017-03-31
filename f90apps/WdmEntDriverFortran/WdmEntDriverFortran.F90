@@ -25,7 +25,7 @@
         WDMNAMES(2) = 'missing.wdm'
         WDMNAMES(3) = 'corrupt.wdm'
   
-        DO I = 1, 3
+        DO I = 1, 1 !just testing with actual wdm
           WDNAME = WDMNAMES(I)
           Write(OUTFL,*) 'Testing ' // WDNAME
           WDMSFL = 40
@@ -66,18 +66,19 @@
             DATES(5) = 0 
             DATES(6) = 0 
             CALL F90_WDTGET(WDMSFL, DSN, DELT, DATES, NVALS, TRAN, QUAL, TUNIT, RVAL, RETCOD)
-            Write(OUTFL,*) '  F90_WDTGET: DSN, RVAL: ', DSN, RVAL(1)
+            Write(OUTFL,*) '  F90_WDTGET: DSN, RETCOD, RVAL: ', DSN, RETCOD, RVAL
             
             OVFG = 1
             RVAL(1) = 1.0
             RVAL(2) = 2.0
             RVAL(3) = 3.0
+            QUAL = 1
             CALL F90_WDTPUT(WDMSFL, DSN, DELT, DATES, NVALS, OVFG, QUAL, TUNIT, RVAL, RETCOD)
             Write(OUTFL,*) '  F90_WDTPUT: DSN, RETCOD: ', DSN, RETCOD
             
             ! work with attributes
             ! have to open message wdm first
-            MESSFL = F90_WDBOPN(1,"\FORTRAN\lib3.0\hspfmsg.wdm")
+            MESSFL = F90_WDBOPN(1,"e:\respec\FORTRAN\lib3.0\hspfmsg.wdm")
             
             SAIND = 34   !tgroup
             SALEN = 1
