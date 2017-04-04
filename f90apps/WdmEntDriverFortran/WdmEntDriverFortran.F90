@@ -1,10 +1,11 @@
       Program WdmEntDriverFortran
       
-!DEC$ ATTRIBUTES DLLIMPORT:: F90_WDMOPN, F90_WDMCLO, F90_WDBOPN, F90_WDCKDT, F90_WDFLCL, F90_WDDSNX, F90_WTFNDT, F90_WDTPUT
+!DEC$ ATTRIBUTES DLLIMPORT:: F90_WDMOPN, F90_WDMCLO, F90_WDBOPN, F90_WDCKDT, F90_WDDSNX, F90_WTFNDT, F90_WDTPUT
 !DEC$ ATTRIBUTES DLLIMPORT:: F90_WDBSGI, F90_WDBSAI, F90_WDBSGR, F90_WDBSAR, F90_WDBSGC, F90_WDBSAC, F90_WDTGET
+! F90_WDFLCL
 
 !     local variables
-      Integer*4    :: WDMSFL, RETCOD, DSN, DSNS(3), DSTYPE, I, OUTFL, IVAL(80)
+      Integer*4    :: WDMSFL, RETCOD, DSN, DSNS(2), DSTYPE, I, OUTFL, IVAL(80)
       Integer*4    :: GPFLG, DSFRC, SDAT(6), EDAT(6), OVFG, SAIND, SALEN, SAVAL
       Integer*4    :: DATES(6), DELT, NVALS, TRAN, QUAL, TUNIT, RECSIZE
       Real*4       :: RVAL(10), RSAVAL
@@ -14,8 +15,8 @@
 !     functions
       Logical*4    :: Find_Test_Folder
       Integer*4    :: F90_WDMOPN, F90_WDBOPN
-      Integer*4    :: F90_WDMCLO, F90_WDFLCL
-      Integer*4    :: F90_WDCKDT
+      Integer*4    :: F90_WDMCLO, F90_WDCKDT
+      !Integer*4    :: F90_WDFLCL
 
       Write(*,*) 'Start WdmEntDriverFortran'
       
@@ -38,7 +39,7 @@
         
           WDMSFL = F90_WDBOPN(0,WDNAME)
           IF (WDMSFL .LE. 0) THEN
-            Write(OUTFL,*) '  F90_WDBOPN Return Code ', RETCOD, ' Opening ', Trim(WDNAME)
+            Write(OUTFL,*) '  F90_WDBOPN Return Code ', WDMSFL, ' Opening ', Trim(WDNAME)
           ELSE
             Write(OUTFL,*) '  F90_WDBOPN Return Code ', WDMSFL, ' Opening ', Trim(WDNAME)
 
@@ -113,21 +114,22 @@
             CALL F90_WDBSGCX (WDMSFL,DSN,SAIND,SALEN,CVAL)
             Write(OUTFL,*) '  F90_WDBSGCX: CVAL, RETCOD: ', CVAL, RETCOD
 
-            RETCOD = F90_WDFLCL(WDMSFL)
-            Write(OUTFL,*) '  F90_WDFLCL Return Code ', RETCOD
+            !leave open for multiple wdm test
+            !RETCOD = F90_WDFLCL(WDMSFL)
+            !Write(OUTFL,*) '  F90_WDFLCL Return Code ', RETCOD
           END IF
         END DO
         
         !TBW specific tests
-        DSNS = (/ 501, 9022, 231 /)
+        DSNS = (/ 9022, 231 /)
         WDNAME = 'divrsion.wdm'
         Write(OUTFL,*) 'Testing ' // WDNAME
         WDMSFL = F90_WDBOPN(0,WDNAME)
         IF (WDMSFL .LE. 0) THEN
-          Write(OUTFL,*) '  F90_WDBOPN Return Code ', RETCOD, ' Opening ', Trim(WDNAME)
+          Write(OUTFL,*) '  F90_WDBOPN Return Code ', WDMSFL, ' Opening ', Trim(WDNAME)
         ELSE
           Write(OUTFL,*) '  F90_WDBOPN Return Code ', WDMSFL, ' Opening ', Trim(WDNAME)
-          DO I = 1, 3
+          DO I = 1, 2
             DSN = DSNS(I)
             DSTYPE = F90_WDCKDT(WDMSFL, DSN)
             Write(OUTFL,*) '  F90_WDCKDT: DSN, TYPE: ', DSN, DSTYPE
@@ -143,12 +145,21 @@
             DATES(5) = 0 
             DATES(6) = 0 
             CALL F90_WDTGET(WDMSFL, DSN, DELT, DATES, NVALS, TRAN, QUAL, TUNIT, RVAL, RETCOD)
-            Write(OUTFL,*) '  F90_WDTGET: DSN, RETCOD, RVAL: ', DSN, RETCOD, RVAL
+            Write(OUTFL,*) '  F90_WDTGET1: DSN, RETCOD, RVAL: ', DSN, RETCOD, RVAL
+            RSAVAL = RVAL(1)
             
             OVFG = 1
             RVAL(1) = -2.97520661
             CALL F90_WDTPUT(WDMSFL, DSN, DELT, DATES, NVALS, OVFG, QUAL, TUNIT, RVAL, RETCOD)
-            Write(OUTFL,*) '  F90_WDTPUT: DSN, RETCOD: ', DSN, RETCOD
+            Write(OUTFL,*) '  F90_WDTPUT1: DSN, RETCOD: ', DSN, RETCOD
+
+            CALL F90_WDTGET(WDMSFL, DSN, DELT, DATES, NVALS, TRAN, QUAL, TUNIT, RVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDTGET2: DSN, RETCOD, RVAL: ', DSN, RETCOD, RVAL
+            RVAL(1) = RSAVAL
+            CALL F90_WDTPUT(WDMSFL, DSN, DELT, DATES, NVALS, OVFG, QUAL, TUNIT, RVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDTPUT2: DSN, RETCOD: ', DSN, RETCOD
+            CALL F90_WDTGET(WDMSFL, DSN, DELT, DATES, NVALS, TRAN, QUAL, TUNIT, RVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDTGET3: DSN, RETCOD, RVAL: ', DSN, RETCOD, RVAL
           END DO
         END IF
         
