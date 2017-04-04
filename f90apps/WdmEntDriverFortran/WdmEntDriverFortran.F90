@@ -4,7 +4,7 @@
 !DEC$ ATTRIBUTES DLLIMPORT:: F90_WDBSGI, F90_WDBSAI, F90_WDBSGR, F90_WDBSAR, F90_WDBSGC, F90_WDBSAC, F90_WDTGET
 
 !     local variables
-      Integer*4    :: WDMSFL, RETCOD, DSN, DSTYPE, I, OUTFL, IVAL(80)
+      Integer*4    :: WDMSFL, RETCOD, DSN, DSNS(3), DSTYPE, I, OUTFL, IVAL(80)
       Integer*4    :: GPFLG, DSFRC, SDAT(6), EDAT(6), OVFG, SAIND, SALEN, SAVAL
       Integer*4    :: DATES(6), DELT, NVALS, TRAN, QUAL, TUNIT, RECSIZE
       Real*4       :: RVAL(10), RSAVAL
@@ -117,6 +117,41 @@
             Write(OUTFL,*) '  F90_WDFLCL Return Code ', RETCOD
           END IF
         END DO
+        
+        !TBW specific tests
+        DSNS = (/ 501, 9022, 231 /)
+        WDNAME = 'divrsion.wdm'
+        Write(OUTFL,*) 'Testing ' // WDNAME
+        WDMSFL = F90_WDBOPN(0,WDNAME)
+        IF (WDMSFL .LE. 0) THEN
+          Write(OUTFL,*) '  F90_WDBOPN Return Code ', RETCOD, ' Opening ', Trim(WDNAME)
+        ELSE
+          Write(OUTFL,*) '  F90_WDBOPN Return Code ', WDMSFL, ' Opening ', Trim(WDNAME)
+          DO I = 1, 3
+            DSN = DSNS(I)
+            DSTYPE = F90_WDCKDT(WDMSFL, DSN)
+            Write(OUTFL,*) '  F90_WDCKDT: DSN, TYPE: ', DSN, DSTYPE
+            DELT = 1
+            NVALS = 10
+            TRAN = 0
+            QUAL = 0
+            TUNIT = 4
+            DATES(1) = 1988
+            DATES(2) = 1
+            DATES(3) = 1 
+            DATES(4) = 0 
+            DATES(5) = 0 
+            DATES(6) = 0 
+            CALL F90_WDTGET(WDMSFL, DSN, DELT, DATES, NVALS, TRAN, QUAL, TUNIT, RVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDTGET: DSN, RETCOD, RVAL: ', DSN, RETCOD, RVAL
+            
+            OVFG = 1
+            RVAL(1) = -2.97520661
+            CALL F90_WDTPUT(WDMSFL, DSN, DELT, DATES, NVALS, OVFG, QUAL, TUNIT, RVAL, RETCOD)
+            Write(OUTFL,*) '  F90_WDTPUT: DSN, RETCOD: ', DSN, RETCOD
+          END DO
+        END IF
+        
       ELSE
         Write(*,*) 'Test Folder Not Found'
       END IF
