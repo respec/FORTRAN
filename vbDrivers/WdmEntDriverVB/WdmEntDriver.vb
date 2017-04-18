@@ -74,7 +74,7 @@
             WDMNAMES(2) = "missing.wdm"
             WDMNAMES(3) = "corrupt.wdm"
 
-            For I = 1 To 3
+            For I = 1 To 1 'not testing 2 and 3 for now
                 WDNAME = WDMNAMES(I)
                 lOutStream = (System.Text.Encoding.Unicode.GetBytes("Testing " & WDNAME & vbCrLf))
                 gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
@@ -91,7 +91,7 @@
 
                 WDMSFL = F90_WDBOPN(0, WDNAME, Len(WDNAME))
                 If (WDMSFL <= 0) Then
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBOPN Return Code " & RETCOD & " Opening " & Trim(WDNAME) & vbCrLf))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBOPN Return Code " & WDMSFL & " Opening " & Trim(WDNAME) & vbCrLf))
                     gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
                 Else
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBOPN Return Code " & WDMSFL & " Opening " & Trim(WDNAME) & vbCrLf))
@@ -114,13 +114,13 @@
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WTFNDT: DSN, SDAT, EDAT: " & DSN & ", " & lSdat(0).ToString & ", " & lEdat(0).ToString & vbCrLf))
                     gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
-                    Dim lDates(6) As Integer
+                    Dim lDates(5) As Integer
                     Dim lDelt As Integer = 1
                     Dim lNvals As Integer = 10
                     Dim lTran As Integer = 0
                     Dim lQual As Integer = 31
                     Dim lTunit As Integer = 4
-                    lDates(0) = 1976 : lDates(1) = 4 : lDates(2) = 5 : lDates(3) = 24 : lDates(4) = 0 : lDates(5) = 0 : lDates(6) = 0
+                    lDates(0) = 1976 : lDates(1) = 4 : lDates(2) = 5 : lDates(3) = 24 : lDates(4) = 0 : lDates(5) = 0
                     Dim lRval(10) As Single
                     F90_WDTGET(WDMSFL, DSN, lDelt, lDates, lNvals, lTran, lQual, lTunit, lRval, RETCOD)
                     lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDTGET: DSN, RVAL: " & DSN & ", " & lRval(0).ToString & vbCrLf))
@@ -131,11 +131,12 @@
                     lRval(2) = 2.0
                     lRval(3) = 3.0
                     F90_WDTPUT(WDMSFL, DSN, lDelt, lDates, lNvals, lOvfg, lQual, lTunit, lRval, RETCOD)
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDTPUT: DSN, RETCOD: " & DSN & ", " & RETCOD))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDTPUT: DSN, RETCOD: " & DSN & ", " & RETCOD & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
                     'work with attributes
                     'have to open message wdm first
-                    MSNAME = "\FORTRAN\lib3.0\hspfmsg.wdm"
+                    MSNAME = "e:\respec\FORTRAN\lib3.0\hspfmsg.wdm"
                     MESSFL = F90_WDBOPN(1, MSNAME, Len(MSNAME))
 
                     'tsgroup
@@ -143,21 +144,25 @@
                     Dim lSalen As Integer = 1
                     Dim lSaval As Integer
                     F90_WDBSGI(WDMSFL, DSN, lSaind, lSalen, lSaval, RETCOD)
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGI: SAVAL, RETCOD: " & lSaval & ", " & RETCOD))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGI: SAVAL, RETCOD: " & lSaval & ", " & RETCOD & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
                     F90_WDBSAI(WDMSFL, DSN, MESSFL, lSaind, lSalen, lSaval, RETCOD)
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAI: SAVAL, RETCOD: " & lSaval & ", " & RETCOD))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAI: SAVAL, RETCOD: " & lSaval & ", " & RETCOD & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
                     'elev
                     lSaind = 7
                     lSalen = 1
                     Dim lRsaval As Single
                     F90_WDBSGR(WDMSFL, DSN, lSaind, lSalen, lRsaval, RETCOD)
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGR: SAVAL, RETCOD: " & lRsaval & ", " & RETCOD))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGR: SAVAL, RETCOD: " & lRsaval & ", " & RETCOD & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
                     lRsaval = 111.2
                     F90_WDBSAR(WDMSFL, DSN, MESSFL, lSaind, lSalen, lRsaval, RETCOD)
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAR: SAVAL, RETCOD: " & lRsaval & ", " & RETCOD))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAR: SAVAL, RETCOD: " & lRsaval & ", " & RETCOD & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
                     'stanam
                     lSaind = 45
@@ -165,21 +170,77 @@
                     Dim lIval(80) As Integer
                     F90_WDBSGC(WDMSFL, DSN, lSaind, lSalen, lIval)
                     'need to turn these integer values back into a character string
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGC: IVAL, RETCOD: " & lIval(1) & ", " & RETCOD))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGC: IVAL, RETCOD: " & lIval(1) & ", " & RETCOD & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
                     Dim lCval As String = ""
                     F90_WDBSGCX(WDMSFL, DSN, lSaind, lSalen, lCval)
                     'need to turn these integer values back into a character string
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGC: IVAL, RETCOD: " & lIval(1) & ", " & RETCOD))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSGC: IVAL, RETCOD: " & lCval & ", " & RETCOD & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
 
                     lCval = "Test Stanam"
                     F90_WDBSAC(WDMSFL, DSN, MESSFL, lSaind, lSalen, RETCOD, lCval, Len(lCval))
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAC: CVAL, RETCOD: " & lCval & ", " & RETCOD))
-
-                    RETCOD = F90_WDFLCL(WDMSFL)
-                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDFLCL Return Code " & RETCOD & vbCrLf))
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBSAC: CVAL, RETCOD: " & lCval & ", " & RETCOD & vbCrLf))
                     gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                    'leave open for multiple wdm test
+                    'RETCOD = F90_WDFLCL(WDMSFL)
+                    'lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDFLCL Return Code " & RETCOD & vbCrLf))
+                    'gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
                 End If
+
+                'TBW specific tests
+                Dim lDsns() As Integer = {9022, 231}
+                WDNAME = "divrsion.wdm"
+                lOutStream = (System.Text.Encoding.Unicode.GetBytes("Testing " & WDNAME & vbCrLf))
+                gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+                WDMSFL = F90_WDBOPN(0, WDNAME, WDNAME.Length)
+                If (WDMSFL < 0) Then
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBOPN Return Code " & WDMSFL & " Opening " & Trim(WDNAME) & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+                Else
+                    lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDBOPN Return Code " & WDMSFL & " Opening " & Trim(WDNAME) & vbCrLf))
+                    gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+                    For Each DSN In lDsns
+                        DSTYPE = F90_WDCKDT(WDMSFL, DSN)
+                        lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDCKDT: DSN, TYPE: " & DSN & ", " & DSTYPE & vbCrLf))
+                        gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+                        Dim lDelt As Integer = 1
+                        Dim lNvals As Integer = 10
+                        Dim lTran As Integer = 0
+                        Dim lQual As Integer = 1
+                        Dim lTunit As Integer = 4
+
+                        Dim lDates() As Integer = {1988, 1, 1, 0, 0, 0}
+                        Dim lRval(10) As Single
+                        Call F90_WDTGET(WDMSFL, DSN, lDelt, lDates, lNvals, lTran, lQual, lTunit, lRval, RETCOD)
+                        lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDTGET1: DSN, RETCOD, RVAL: " & DSN & ", " & RETCOD & ", " & lRval(0).ToString & vbCrLf))
+                        gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                        Dim lRSAVAL As Single = lRval(0)
+
+                        Dim lOvfg As Integer = 1
+                        lRval(0) = -2.97520661
+                        Call F90_WDTPUT(WDMSFL, DSN, lDelt, lDates, lNvals, lOVFG, lQual, lTunit, lRval, RETCOD)
+                        lOutStream = (System.Text.Encoding.Unicode.GetBytes("   F90_WDTPUT1: DSN, RETCOD: " & DSN & ", " & RETCOD & vbCrLf))
+                        gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                        Call F90_WDTGET(WDMSFL, DSN, lDelt, lDates, lNvals, lTran, lQual, lTunit, lRval, RETCOD)
+                        lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDTGET2: DSN, RETCOD, RVAL: " & DSN & ", " & RETCOD & ", " & lRval(0).ToString & vbCrLf))
+                        gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                        lRval(0) = lRSAVAL
+                        Call F90_WDTPUT(WDMSFL, DSN, lDelt, lDates, lNvals, lOvfg, lQual, lTunit, lRval, RETCOD)
+                        lOutStream = (System.Text.Encoding.Unicode.GetBytes("   F90_WDTPUT2: DSN, RETCOD: " & DSN & ", " & RETCOD & vbCrLf))
+                        gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+
+                        Call F90_WDTGET(WDMSFL, DSN, lDelt, lDates, lNvals, lTran, lQual, lTunit, lRval, RETCOD)
+                        lOutStream = (System.Text.Encoding.Unicode.GetBytes("  F90_WDTGET3: DSN, RETCOD, RVAL: " & DSN & ", " & RETCOD & ", " & lRval(0).ToString & vbCrLf))
+                        gOutFileStream.Write(lOutStream, 0, lOutStream.Length)
+                    Next
+                End If
+
                 gOutFileStream.Flush()
             Next I
         Else
@@ -187,7 +248,7 @@
         End If
 
         gOutFileStream.Close()
-        Debug.Print("End WdmEntDriverFortran")
+        Debug.Print("End WdmEntDriverVB")
 
     End Sub
 
