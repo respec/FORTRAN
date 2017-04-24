@@ -397,7 +397,7 @@ C     + + + LOCAL VARIABLES + + +
      $              ADDR,OMCODE,OPTNO,iyear,imon,iday,ihr,imin,RETCOD,C,
      $              BINADD,BINU,ERRFLG,ARCFIL,ILEN,VARSUB,MXSUB(5)
       INTEGER       WDMXRC(5), IMXRC, IBUFF(512)
-      LOGICAL       MXMSG
+      LOGICAL       MXMSG, OPENFG
       REAL          NEWVAL,OLDVAL
       CHARACTER*1   FUNC
       CHARACTER*4   CTYP
@@ -570,11 +570,17 @@ C     $                  INFIL,TRIM(FILNAM)
         ARCNAM = TRIM(FILNAM) // 's'
 C        Write(99,*) '  readfile',trim(arcnam)
 
+	Write(*,*) 'Just before FileOpenErrorArc,I',I
         OPEN (ARCFIL, FILE=ARCNAM, POSITION='APPEND',
      $        ERR=73, IOSTAT=I)
 
         GO TO 77
  73     CONTINUE
+          Write(*,*) 'FileOpenErrorArc,I',I
+          INQUIRE (ARCFIL,OPENED=OPENFG,NAME=ARCNAM)
+          write(*,*) 'FileOpenErrorArc,ARCFIL',ARCFIL
+          write(*,*) 'FileOpenErrorArc,OPENFG',OPENFG
+          write(*,*) 'FileOpenErrorArc,ARCNAM',ARCNAM
           Write(*,2050) '(HSPSTA:EXT_UPDATE:FileOpenErrorArc:',
      $                  I-16384,')'
           ERRFLG= 1
