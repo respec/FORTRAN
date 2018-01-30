@@ -1,0 +1,103 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          129    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 473
+  LABEL
+    GRPNAM  MUTSIN
+  END LABEL
+  DATA   CLU   129
+#GROUP    1  TYPE TEXT
+$TEXT
+  5  1 1MUTSINFO          101    101    301    301
+  0  0 0END MUTSIN        000    000    000    000
+#GROUP   50  TYPE PRM1
+$SCREEN
+  Select MUTSIN table to modify.
+ 
+  @ MUTSINFO
+ 
+ 
+$FIELD @ M
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the MUTSIN MUTSINFO table.
+#GROUP  101  TYPE PRM2
+$HEADER
+    MUTSIN  MFL  NPT  NMN  NLI MSFG
+    x -  x
+$TNAME  MUTSINFO
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+MUTSIN operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  30 : 99
+_DEFAULT  30
+_HELP
+MUTFL  is the Fortran unit number of the file being input.
+_PNAME  MUTFL
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 20
+_DEFAULT  0
+_HELP
+NPT  is the number of point-valued time series to be input.
+_PNAME  NPT
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 20
+_DEFAULT  0
+_HELP
+NMN  is the number of mean-valued time series to be input.
+_PNAME  NMN
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : -999
+_DEFAULT  25
+_HELP
+NLINES  is the  number of lines to skip at  the beginning of
+MUTFL.
+_PNAME  NLINES
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 3
+_DEFAULT  0
+_HELP
+MISSFG is 0 to stop on missing data,  1 to fill missing data
+with 0, 2 to fill missing data with -1.0E30.
+_PNAME  MISSFG
+$HELP
+Information about time series to be copied.
+#GROUP  301  TYPE TEXT
+$TEXT
+(1X,5I10)
+     MUTFL       NPT       NMN       NLI      MSFG
+  END DATA
+END CLU

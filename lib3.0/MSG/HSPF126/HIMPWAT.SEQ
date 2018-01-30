@@ -1,0 +1,34 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          323    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HIMPWAT
+  END LABEL
+  DATA   CLU   323
+#GROUP    1  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Impervious land segment: &I
+
+ Error - Iteration in subroutine IROUTE did not converge in 100+ cycles.
+
+      SURSE       SURO     SURSNW      FSURO     DFSURO      DSURO
+ &R         &R         &R         &R         &R         &R
+  END DATA
+END CLU
+
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

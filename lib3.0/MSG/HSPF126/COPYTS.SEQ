@@ -1,0 +1,40 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          144    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  COPYTS
+  END LABEL
+  DATA   CLU   144
+#GROUP    1  TYPE TEXT
+$TEXT
+INPUT   10
+OUTPUT  20
+#GROUP    2  TYPE TEXT
+$TEXT
+POINT
+MEAN
+#GROUP    3  TYPE TEXT
+$TEXT
+POINT
+MEAN
+#GROUP   11  TYPE TEXT
+$TEXT
+POINT  20  1    -2     1 1   0 2    0    30 ENG any        0       1   0       1
+  Point-valued input time series            MET any        0       1   0       1
+#GROUP   12  TYPE TEXT
+$TEXT
+MEAN   20  1    -3     1 2   0 2    0    50 ENG any        0       1   0       1
+  Mean-valued input time series             MET any        0       1   0       1
+#GROUP   21  TYPE TEXT
+$TEXT
+POINT  20  1    -2     1 1   0 0    0    70 ENG any        0       1   0       1
+  Point-valued output time series           MET any        0       1   0       1
+#GROUP   22  TYPE TEXT
+$TEXT
+MEAN   20  1    -3     1 2   0 0    0    90 ENG any        0       1   0       1
+  Mean-valued output time series            MET any        0       1   0       1
+  END DATA
+END CLU

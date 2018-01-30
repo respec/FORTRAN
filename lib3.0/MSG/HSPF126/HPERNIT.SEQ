@@ -1,0 +1,148 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          310    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HPERNIT
+  END LABEL
+  DATA   CLU   310
+#GROUP    1  TYPE TEXT
+$TEXT
+   10   11    0    5
+&D
+
+ Pervious land segment: &I       Layer: &CCC
+
+ A negative value is projected for nitrate.  To avoid the problem,
+ fluxes will be arbitrarily reduced.  Relevant data are:
+
+       FRAC        NO3       TNO3      NITRF      IMMNI       DENI       UTNI
+ &R         &R         &R         &R         &R         &R         &R        
+
+      UTNIA
+ &R        
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced to avoid the negative
+      concentration
+ NO3 is the mass of nitrate before reaction (LB/ACRE or KG/HA)
+ TNO3 is the projected (negative) mass of nitrate after reaction
+      (LB/ACRE or KG/HA)
+ NITRF is the projected nitrification (LB/ACRE or KG/HA) per interval
+ IMMNI is the projected immobilization of nitrate (LB/ACRE OR KG/HA)
+      per interval
+ DENI is the projected denitrification (LB/ACRE or KG/HA) per interval
+ UTNI is the projected below-ground plant uptake of nitrate (LB/ACRE
+      or KG/HA) per interval
+ UTNIA is the projected above-ground plant uptake of nitrate (LB/ACRE
+      or KG/HA) per interval
+#GROUP    2  TYPE TEXT
+$TEXT
+   10   11    0    5
+&D
+
+ Pervious land segment: &I       Layer: &CCC
+
+ A negative value is projected for particulate labile organic nitrogen.
+ To avoid the problem, fluxes will be arbitrarily reduced.  Relevant data
+ are:
+
+       FRAC       ORGN      TORGN      AMMIF      IMMAM      IMMNI
+ &R         &R         &R         &R         &R         &R
+
+      PRETL       RFON
+ &R         &R
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced to avoid the negative
+      concentration
+ ORGN is the mass of organic N before reaction (LB/ACRE or KG/HA)
+ TORGN is the projected (negative) mass of organic N after reaction (LB/ACRE
+      or KG/HA)
+ AMMIF is the projected ammonification (LB/ACRE or KG/HA) per interval
+ IMMAM is the projected immobilization of ammonium (LB/ACRE or KG/HA)
+       per interval
+ IMMNI is the projected immobilization of nitrate (LB/ACRE OR KG/HA)
+      per interval
+ PRETL is the projected return of plant nitrogen (LB/ACRE OR KG/HA)
+      to labile organic nitrogen per interval
+ RFON is the projected conversion to refractory organic nitrogen
+      (LB/ACRE OR KG/HA) per interval
+#GROUP    3  TYPE TEXT
+$TEXT
+   10   11    0    5
+&D
+
+ Pervious land segment: &I        Layer: &CCC
+
+ A negative value is projected for adsorbed ammonium.  To avoid the
+ problem, fluxes will be arbitrarily reduced.  Relevant data are:
+
+       FRAC       AMAD      TAMAD      ADSAM      DESAM
+ &R         &R         &R         &R         &R
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced to avoid the negative
+      concentration
+ AMAD is the mass of adsorbed ammonium before reaction (LB/ACRE or KG/HA)
+ TAMAD is the projected (negative) mass of ads. amm. after reaction (LB/ACRE
+      or KG/HA)
+ ADSAM is the projected adsorption flux (LB/ACRE or KG/HA) per interval
+ DESAM is the projected desorption flux per interval
+#GROUP    4  TYPE TEXT
+$TEXT
+   10   11    0    5
+&D
+
+ Pervious land segment: &I        Layer: &CCC
+
+ A negative value is projected for solution ammonium.  To avoid the problem,
+ fluxes will be arbitrarily reduced.  Relevant data are:
+
+       FRAC       AMSU      TAMSU      ADSAM      DESAM      AMMIF      IMMAM
+ &R         &R         &R         &R         &R         &R         &R
+
+      NITRF       UTAM      UTAMA       AMVO
+ &R         &R         &R         &R
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced to avoid the negative
+      concentration
+ AMSU is the mass of solution amm. before reaction (LB/ACRE or KG/HA)
+ TAMSU is the projected (negative) mass of solution amm. after reaction
+      (LB/ACRE or KG/HA)
+ ADSAM is the projected adsorption flux (LB/ACRE or KG/HA) per interval
+ DESAM is the projected desorption flux per interval
+ AMMIF is the projected ammonification (LB/ACRE or KG/HA) per interval
+ IMMAM is the projected immobilization of ammonium (LB/ACRE or KG/HA)
+       per interval
+ NITRF is the projected nitrification (LB/ACRE or KG/HA) per interval
+ UTAM is the projected below-ground plant uptake of ammonium (LB/ACRE
+       or KG/HA) per interval
+ UTAMA is the projected above-ground plant uptake of ammonium (LB/ACRE
+       or KG/HA) per interval
+ AMVO is the projected ammonia volatilization (LB/ACRE or KG/HA) per
+      interval
+#GROUP    5  TYPE TEXT
+$TEXT
+   50    2    1    5
+ Pervious land segment: &I   
+ The sum of the twelve monthly fractions in Table-type MON-NUPT-FR1
+ did not equal one.  The values provided summed to &R
+#GROUP    6  TYPE TEXT
+$TEXT
+   50    2    1    5
+ Pervious land segment: &I   
+ In month &I   , the sum of the four fractions for the four soil layers
+ in Table-type MON-NUPT-FR2 did not equal one.  The values provided
+ summed to &R
+#GROUP    7  TYPE TEXT
+$TEXT
+   50    2    1    5
+ Pervious land segment: &I   
+ The sum of the plant uptake fractions NO3UTF and NH4UTF in Table-type
+ NIT-FSTGEN did not equal one.  The values provided summed to &R
+  END DATA
+END CLU

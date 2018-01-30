@@ -1,0 +1,89 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          218    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HSPFITAB
+  END LABEL
+  DATA   CLU   218
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Operation      : &CCCCC         Number  : &I
+ Table          : &CCCCCCCCCCC   Subscrpt: &I
+ Parameter      : &I             Value   : &I
+
+ Allowed Min    : &I             Max     : &I
+
+ Set to Default : &I
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Operation      : &CCCCC         Number  : &I
+ Table          : &CCCCCCCCCCC   Subscrpt: &I
+ Parameter      : &I
+
+ No value was found in UCI and no default is available.
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Operation      : &CCCCC         Number  : &I
+ Table          : &CCCCCCCCCCC   Subscrpt: &I
+ Parameter      : &I             Value   : &R
+
+ Allowed Min    : &R             Max     : &R
+
+ Set to Default : &R
+#GROUP    4  TYPE TEXT
+$TEXT
+ INFORMATION NORMALLY CONTAINED IN THIS TABLE HAS NOT BEEN SUPPLIED FOR THIS OPERATION
+#GROUP    5  TYPE TEXT
+$TEXT
+ OPERATING IN RESUME MODE, SO EXISTING VALUES WILL BE USED
+#GROUP    6  TYPE TEXT
+$TEXT
+ WILL USE DEFAULT VALUES WHERE POSSIBLE
+#GROUP    7  TYPE TEXT
+$TEXT
+ FINISHED PROCESSING ENTRIES IN THIS TABLE
+#GROUP    8  TYPE TEXT
+$TEXT
+
+ PROCESSING: &
+#GROUP   10  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The MONTH-DATA table &I    was referred to in an operation block
+ of the user's control input but not found in the MONTH-DATA block.
+ Is the number in error, or is it in the wrong columns, in either
+ place?
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+ MONTH-DATA tables cannot contain negative values.  However, in
+table &I     value number &I     is &R
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Invalid numeric input in MONTH-DATA table &I   .  The input string was:
+ &CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   13  TYPE TEXT
+$TEXT
+   20   11    0    5
+ Operation      : &CCCCC         Number  : &I
+ Table          : &CCCCCCCCCCC   Subscrpt: &I
+ Parameter      : &I             Value   : &CCCC
+
+ Unable to convert value entered into an integer.
+#GROUP   14  TYPE TEXT
+$TEXT
+   20   11    0    5
+ Operation      : &CCCCC         Number  : &I
+ Table          : &CCCCCCCCCCC   Subscrpt: &I
+ Parameter      : &I             Value   : &CCCCCCCCC
+
+ Unable to convert value entered into a real number.
+  END DATA
+END CLU

@@ -1,0 +1,95 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          311    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HPERPHO
+  END LABEL
+  DATA   CLU   311
+#GROUP    1  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ Pervious land segment: &I
+
+ A negative value is projected for organic phosphorus.  To avoid the problem,
+ fluxes will arbitrarily be reduced.  Relevant data are:
+
+       FRAC      ORGP     TORGP    MINZOP     IMMP4     LAYER
+ &R        &R        &R        &R        &R              &CCC
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced, to avoid the negative
+      concentration.
+ ORGP is the mass of organic P before reaction (LB/ACRE or KG/HA)
+ TORGP is the projected (negative) mass of organic P after reaction
+      (LB/ACRE or KG/HA)
+ MINZOP is the projected mineralization of organic P (LB/ACRE or KG/HA)
+      per interval
+ IMMP4 is the projected immobilization of phosphate (LB/ACRE or KG/HA)
+      per interval
+#GROUP    2  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ Pervious land segment: &I
+
+ A negative value is projected for adsorbed phosphorus.  To avoid the problem,
+ fluxes will arbitrarily be reduced.  Relevant data are:
+
+       FRAC      P4AD     TP4AD     ADSP4     DESP4     LAYER
+ &R        &R        &R        &R        &R              &CCC
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced, to avoid the negative
+      concentration.
+ P4AD is the mass of adsorbed P before reaction (LB/ACRE or KG/HA)
+ TP4AD is the projected (negative) mass of adsorbed P after reaction (LB/ACRE
+      or KG/HA)
+ ADSP4 is the projected adsorption of P (LB/ACRE or KG/HA) per interval
+ DESP4 is the projected desorption of P (LB/ACRE or KG/HA) per interval
+#GROUP    3  TYPE TEXT
+$TEXT
+   20   11    0    5    8
+&D
+
+ Pervious land segment: &I
+
+ A negative value is projected for phosphorus in solution.  To avoid the
+ problem, fluxes will be arbitrarily reduced.  Relevant data are:
+
+     FRAC    P4SU   TP4SU   ADSP4   DESP4  MINZOP   IMMP4    UTP4   LAYER
+ &R      &R      &R      &R      &R      &R      &R      &R          &CCC
+
+ Where:
+ FRAC is the factor by which fluxes will be reduced, to avoid the negative
+      concentration.
+ P4SU is the mass of solution P before reaction (LB/ACRE or KG/HA)
+ TP4SU is the projected (negative) mass of solution P after reaction (LB/ACRE
+      or KG/HA)
+ ADSP4 is the projected adsorption of P (LB/ACRE or KG/HA) per interval
+ DESP4 is the projected desorption of P (LB/ACRE or KG/HA) per interval
+ MINZOP is the projected mineralization of organic P (LB/ACRE or KG/HA)
+      per interval
+ IMMP4 is the projected immobilization of phosphate (LB/ACRE or KG/HA)
+      per interval
+ UTP4 is the projected uptake by plants (LB/ACRE or KG/HA) per interval
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Pervious land segment: &I   
+ The sum of the twelve monthly fractions in Table-type MON-PUPT-FR1
+ did not equal one.  The values provided summed to &R
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Pervious land segment: &I   
+ In month &I   , the sum of the four fractions for the four soil layers
+ in Table-type MON-PUPT-FR2 did not equal one.  The values provided
+ summed to &R
+  END DATA
+END CLU

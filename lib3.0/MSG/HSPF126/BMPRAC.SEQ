@@ -1,0 +1,2225 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          130    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 473
+  LABEL
+    GRPNAM  BMPRAC
+  END LABEL
+  DATA   CLU   130
+#GROUP    1  TYPE TEXT
+$TEXT
+ 11  1 1PRINT-INFO        101    101    301    301    1
+ 11  1 1BINARY-INFO       210    210    410    410    2    
+ 14  1 1GEN-INFO          102    102    302    302    3
+  1  1 1FLOW-FLAG         103    103    303    303    4 
+  1  1 2FLOW-FRAC         104    104    304    304    5
+ 10  1 1CONS-FLAG         105    105    305    305    6
+  8 10 2CONS-FRAC         106    106    306    306    7
+  1  1 1HEAT-FLAG         107    107    307    307    8
+  1  1 2HEAT-FRAC         108    108    308    308    9
+  3  1 1SED-FLAG          109    109    309    309   10
+  3  1 2SED-FRAC          110    110    310    310   11
+ 12  1 1GQ-FLAG           111    111    311    311   12
+ 11  3 2GQ-FRAC           112    112    312    312   13
+  2  1 1OXY-FLAG          113    113    313    313   14
+  2  1 2OXY-FRAC          114    114    314    314   15
+ 10  1 1NUT-FLAG          115    115    315    315   16
+  4  1 2DNUT-FRAC         116    116    316    316   17
+  6  1 2ADSNUT-FRAC       117    117    317    317   18
+  5  1 1PLANK-FLAG        118    118    318    318   19
+  5  1 2PLANK-FRAC        119    119    319    319   20
+  2  1 1PH-FLAG           120    120    320    320   21
+  2  1 2PH-FRAC           121    121    321    321   22
+  8  1 1ACID-FLAG         122    122    322    322   23
+  7  1 2ACID-FRAC         123    123    323    323   24
+  0  0 0END BMPRAC        000    000    000    000
+#GROUP   10  TYPE TEXT
+$TEXT
+CONS-FRAC                           CONID
+GQ-FRAC                             GQID
+#GROUP   50  TYPE PRM1
+$SCREEN
+  Select BMPRAC table to modify.
+ 
+  @ PRINT-INFO    @EHEAT-FLAG     @ OXY-FLAG      @GPLANK-FLAG
+  @ GEN-INFO      @FHEAT-FRAC     @ OXY-FRAC      @HPLANK-FRAC
+
+  @AFLOW-FLAG     @ SED-FLAG      @ NUT-FLAG      @ PH-FLAG
+  @BFLOW-FRAC     @ SED-FRAC      @ DNUT-FRAC     @ PH-FRAC
+                                  @ ADSNUT-FRAC
+  @CCONS-FLAG     @ GQ-FLAG                       @IACID-FLAG
+  @DCONS-FRAC     @ GQ-FRAC                       @JACID-FRAC
+$FIELD @ PRINT-INFO
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC PRINT-INFO table.
+$FIELD @ GEN-INFO
+_TYPE OPTION
+_SET  1
+_WIDTH 10
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC GEN-INFO table.
+$FIELD @A
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC FLOW-FLAG table.
+$FIELD @B
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC FLOW-FRAC table.
+$FIELD @C
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC CONS-FLAG table.
+$FIELD @D
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC CONS-FRAC table.
+$FIELD @E
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC HEAT-FLAG table.
+$FIELD @F
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC HEAT-FRAC table.
+$FIELD @ SED-FL
+_TYPE OPTION
+_SET  1
+_WIDTH 10
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC SED-FLAG table.
+$FIELD @ SED-FR
+_TYPE OPTION
+_SET  1
+_WIDTH 10
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC SED-FRAC table.
+$FIELD @ GQ-FL
+_TYPE OPTION
+_SET  1
+_WIDTH  9
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC GQ-FLAG table.
+$FIELD @ GQ-FR
+_TYPE OPTION
+_SET  1
+_WIDTH  9
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC GQ-FRAC table.
+$FIELD @ OXY-FL
+_TYPE OPTION
+_SET  1
+_WIDTH 10
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC OXY-FLAG table.
+$FIELD @ OXY-FR
+_TYPE OPTION
+_SET  1
+_WIDTH 10
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC OXY-FRAC table.
+$FIELD @ NUT-
+_TYPE OPTION
+_SET  1
+_WIDTH 10
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC NUT-FLAG table.
+$FIELD @ DNUT-
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC DNUT-FRAC table.
+$FIELD @ ADSNUT-
+_TYPE OPTION
+_SET  1
+_WIDTH 13
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC ADSNUT-FRAC table.
+$FIELD @G
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC PLANK-FLAG table.
+$FIELD @H
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC PLANK-FRAC table.
+$FIELD @ PH-FL
+_TYPE OPTION
+_SET  1
+_WIDTH  9
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC PH-FLAG table.
+$FIELD @ PH-FR
+_TYPE OPTION
+_SET  1
+_WIDTH  9
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC PH-FRAC table.
+$FIELD @I
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC ACID-FLAG table.
+$FIELD @J
+_TYPE OPTION
+_SET  1
+_WIDTH 11
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the BMPRAC ACID-FRAC table.
+#GROUP  101  TYPE PRM2
+$HEADER
+    BMPRAC  Printout level flags
+    x -  x FLOW CONS HEAT  SED   GQ  OXY  NUT PLNK   PH PIVL  PYR
+$TNAME  PRINT-INFO
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for flow.
+_PNAME  FLOWPR
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for conservatives.
+_PNAME  CONSPR
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for heat.
+_PNAME  HEATPR
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for sediment.
+_PNAME  SEDPR
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for general quals.
+_PNAME  GQPR
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for oxygen components.
+_PNAME  OXRXPR
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for nutrients.
+_PNAME  NUTPR
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for plankton components.
+_PNAME  PLNKPR
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Printout level for pH and inorganic carbon.
+_PNAME  PHPR
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 1440
+_DEFAULT  1
+_HELP
+A   value need  only be  supplied for  PIVL if  one or  more
+sections have a  printout level of 2.    For those sections,
+printout will  occur every PIVL  intervals (that  is,  every
+PDELT=PIVL*DELT mins).  PIVL must be  chosen such that there
+are an integer no. of PDELT periods in a day.
+_PNAME  PIVL
+$FIELD  FIELD13
+_WIDTH   5
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 12
+_DEFAULT  9
+_HELP
+PYREND  is the calendar month  which will terminate the year
+for printout purposes.  Thus, the annual summary can reflect
+the situation over the past water  year or the past calendar
+year, etc.
+_PNAME  PYREND
+$HELP
+Table of printout level flags for BMPRAC.
+HSPF  permits the  user to vary the  printout level (maximum
+frequency)  for the various active sections of an operation.
+2 means every  PIVL intervals,  3 means every  day,  4 means
+every month, 5 means every year, 6 means never.
+#GROUP  301  TYPE TEXT
+$TEXT
+(1X,9I5,5X,2I10)
+                Printout level flags                Print-ivl Print-yrend
+ FLOW CONS HEAT  SED   GQ  OXY  NUT PLNK   PH           PIVL    PYREND
+#GROUP  210  TYPE PRM2
+$HEADER
+    BMPRAC  Binary Output level flags
+    x -  x FLOW CONS HEAT  SED   GQ  OXY  NUT PLNK   PH PIVL  PYR
+$TNAME  BINARY-INFO
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for flow.
+_PNAME  FLOWPR
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for conservatives.
+_PNAME  CONSPR
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for heat.
+_PNAME  HEATPR
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for sediment.
+_PNAME  SEDPR
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for general quals.
+_PNAME  GQPR
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for oxygen components.
+_PNAME  OXRXPR
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for nutrients.
+_PNAME  NUTPR
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for plankton components.
+_PNAME  PLNKPR
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  2 : 6
+_DEFAULT  4
+_HELP
+Output level for pH and inorganic carbon.
+_PNAME  PHPR
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 1440
+_DEFAULT  1
+_HELP
+A   value need  only be  supplied for  PIVL if  one or  more
+sections have an  output level  of 2.    For those sections,
+output  will  occur every  PIVL  intervals (that  is,  every
+PDELT=PIVL*DELT mins).  PIVL must be  chosen such that there
+are an integer no. of PDELT periods in a day.
+_PNAME  PIVL
+$FIELD  FIELD13
+_WIDTH   5
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 12
+_DEFAULT  9
+_HELP
+PYREND  is the calendar month  which will terminate the year
+for output  purposes.  Thus, the annual summary  can reflect
+the situation over the past water  year or the past calendar
+year, etc.
+_PNAME  PYREND
+$HELP
+Table of binary output level flags for BMPRAC.
+HSPF  permits the  user  to vary  the  output level (maximum
+frequency)  for the various active sections of an operation.
+2 means every  PIVL intervals,  3 means every  day,  4 means
+every month, 5 means every year, 6 means never.
+#GROUP  410  TYPE TEXT
+$TEXT
+(1X,9I5,5X,2I10)
+           Binary Output level flags               Print-ivl Print-yrend
+ FLOW CONS HEAT  SED   GQ  OXY  NUT PLNK   PH           PIVL    PYREND
+#GROUP  102  TYPE PRM2
+$HEADER
+                 Name           BMP             Unit Systems   Printer
+    BMPRAC                     Type NCON  NGQ      t-series  Engl Metr
+    x -  x<------------------>                      in  out
+$TNAME  GEN-INFO
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  20
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+Any string of up to 20 characters may be supplied as the
+identifier for a BMPRAC.
+_PNAME  BMPID
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 1
+_DEFAULT  1
+_HELP
+BMPTYP is the type of BMP implementation.  1 means simple removal
+fractions.  No other type is currently supported.
+_PNAME  BMPTYP
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 10
+_DEFAULT  0
+_HELP
+NCONS  is the number of conservative constituents simulated.
+_PNAME  NCONS
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 3
+_DEFAULT  0
+_HELP
+NGQUAL is the number of generalized constituents (quals)
+being simulated.
+_PNAME  NGQUAL
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 2
+_DEFAULT  1
+_HELP
+IUNITS indicates the system of units for data in the input
+time series; 1 means English units, 2 means Metric units.
+_PNAME  IUNITS
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 2
+_DEFAULT  1
+_HELP
+OUNITS indicates the system of units for data in the output
+time series; 1 means English units, 2 means Metric units.
+_PNAME  OUNITS
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 99
+_DEFAULT  0
+_HELP
+PUNIT(1) indicates the destinations of printout in English
+units.  A value 0 means no printout is required in English
+units.  A non-zero value means printout is required in
+English units and the value is the Fortran unit no. of the
+file to which the printout is to be written.  Note that
+printout for each BMP can be obtained in either the English
+or Metric systems, or both (irrespective of the system used
+to supply the inputs).
+_PNAME  PUNITE
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 66
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 99
+_DEFAULT  0
+_HELP
+PUNIT(2) indicates the destinations of printout in Metric
+units.  A value 0 means no printout is required in Metric
+units.  A non-zero value means printout is required in
+Metric units and the value is the Fortran unit no. of the
+file to which the printout is to be written.  Note that
+printout for each BMP can be obtained in either the English
+or Metric systems, or both (irrespective of the system used
+to supply the inputs).
+_PNAME  PUNITM
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 71
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 99
+_DEFAULT  0
+_HELP
+BUNIT(1)   indicates the  destinations of output  in English
+units.   A value 0 means no  output  is  required in English
+units.    A  non-zero  value  means  output  is required  in
+English units and the value is  the Fortran unit no.  of the
+file to which the output is to be written.  Note that output
+for  each  BMP  can  be  obtained in  either  the English or
+Metric systems, or both  (irrespective of the system used to
+supply the inputs).
+_PNAME  BUNITE
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 76
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 99
+_DEFAULT  0
+_HELP
+BUNIT(2)   indicates the  destinations  of output  in Metric
+units.   A value  0 means  no output  is  required in Metric
+units.    A  non-zero  value  means  output  is required  in
+Metric units and the value  is the Fortran  unit no.  of the
+file to which the output is to be written.  Note that output
+for  each  BMP  can  be  obtained in  either  the English or
+Metric systems, or both  (irrespective of the system used to
+supply the inputs).
+_PNAME  BUNITM
+$HELP
+General information for BMPRAC.
+#GROUP  302  TYPE TEXT
+$TEXT
+(1X,5A4,3I10,2I10,2I10,2I10)
+Best Management-id      BMPTYP     NCONS    NGQUAL     Unit systems        Print-file nos     BinaryOutfileNos
+                                                     IUNITS    OUNITS    English    Metric   English    Metric
+#GROUP  103  TYPE PRM2
+$HEADER
+    BMPRAC Monthly variable flag 
+    x -  x VOLF
+$TNAME  FLOW-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for flow is
+constant, given in FLOW-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify
+the monthly removal factors.
+_PNAME  VOLFFG
+$HELP
+Flow flags.
+#GROUP  303  TYPE TEXT
+$TEXT
+(1X,I10)
+ Flow flag
+    VOLFFG
+#GROUP  104  TYPE PRM2
+$HEADER
+    BMPRAC Removal fraction
+    x -  x    VOLFRC
+$TNAME  FLOW-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+VOLFRC is the BMP removal fraction for flow.
+_PNAME  VOLFRC
+$HELP
+Removal fraction for flow.
+#GROUP  304  TYPE TEXT
+$TEXT
+(1X,1PE10.3)
+Flow removal fraction
+     VOLFRC
+#GROUP  105  TYPE PRM2
+$HEADER
+    BMPRAC            Monthly variable flags
+    x -  x  C1F  C2F  C3F  C4F  C5F  C6F  C7F  C8F  C9F C10F
+$TNAME  CONS-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #1 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(1)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #2 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(2)
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #3 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(3)
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #4 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(4)
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #5 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(5)
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #6 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(6)
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #7 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(7)
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #8 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(8)
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #9 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(9)
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for conservative
+constituent #10 is constant, given in CONS-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  CONFFG(10)
+$HELP
+Conservative constituent flags.
+#GROUP  305  TYPE TEXT
+$TEXT
+(1X,10I10)
+                           Conservative Constituent Flags
+     CONS1     CONS2     CONS3     CONS4     CONS5     CONS6     CONS7     CONS8     CONS9    CONS10
+#GROUP  106  TYPE PRM2
+$HEADER
+    BMPRAC        Name           Units  Removal fraction
+    x -  x<-------CONID------>  <CQTYID>    CONFRC
+$TNAME  CONS-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  20
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+Any string of up to 20 characters may be supplied as the
+name of the conservative constituent.
+_PNAME  CONID
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN 33
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+CQTYID is a string of up to 8 characters which specifies the
+units in which the inflows and outflows of constituent will
+be expressed, eg "kg".
+_PNAME  CQTYID
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+CONFRC(*) is the BMP removal fraction for this conservative
+constituent.
+_PNAME  CONFRC(*)
+$HELP
+Name and removal fraction for one conservative substance.
+#GROUP  306  TYPE TEXT
+$TEXT
+(1X,5A4,2X,2A4,1PE10.3)
+             Conservative data
+   Name                 Units  Removal fraction
+   CONID                CQTYID     CONFRC
+#GROUP  107  TYPE PRM2
+$HEADER
+    BMPRAC Monthly variable flag
+    x -  x  HTF
+$TNAME  HEAT-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for heat is
+constant, given in HEAT-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify
+the monthly removal factors.
+_PNAME  HTFFG
+$HELP
+Heat flags.
+#GROUP  307  TYPE TEXT
+$TEXT
+(1X,I10)
+ Heat flag
+     HTFFG
+#GROUP  108  TYPE PRM2
+$HEADER
+    BMPRAC Removal fraction
+    x -  x     HTFRC
+$TNAME  HEAT-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+HTFRC is the removal fraction for heat.
+_PNAME  HTFRC
+$HELP
+Removal fraction for heat.
+#GROUP  308  TYPE TEXT
+$TEXT
+(1X,1PE10.3)
+Heat removal fraction
+      HTFRC
+#GROUP  109  TYPE PRM2
+$HEADER
+    BMPRAC Monthly variable flags
+    x -  x Sand Silt Clay
+$TNAME  SED-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for sand is
+constant, given in SED-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify
+the monthly removal factors.
+_PNAME  SEDFG(1)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for silt is
+constant, given in SED-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify
+the monthly removal factors.
+_PNAME  SEDFG(2)
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for clay is
+constant, given in SED-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify
+the monthly removal factors.
+_PNAME  SEDFG(3)
+$HELP
+Sediment flags.
+#GROUP  309  TYPE TEXT
+$TEXT
+(1X,3I10)
+          Sediment flags
+      SAND      SILT      CLAY
+#GROUP  110  TYPE PRM2
+$HEADER
+    BMPRAC         Removal fractions
+    x -  x      sand      silt      clay
+$TNAME  SED-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SEDFRC(1) is the BMP removal fraction for sand.
+_PNAME  SEDFRC(1)
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SEDFRC(2) is the BMP removal fraction for silt.
+_PNAME  SEDFRC(2)
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SEDFRC(3) is the BMP removal fraction for clay.
+_PNAME  SEDFRC(3)
+$HELP
+Removal fractions for sediment.
+#GROUP  310  TYPE TEXT
+$TEXT
+(1X,3PE10.3)
+  Sediment removal fractions
+       Sand      Silt      Clay
+#GROUP  111  TYPE PRM2
+$HEADER
+                      Monthly variable flags
+    BMPRAC<------Qual 1------><------Qual 2------><------Qual 3------>
+    x -  x Soln Sand Silt Clay Soln Sand Silt Clay Soln Sand Silt Clay
+$TNAME  GQ-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #1 in
+solution is constant, given in GQ-FRAC.  A value greater than 0
+indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  GQFFG(1)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #1
+adsorbed to sand is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(2)
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #1
+adsorbed to silt is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(3)
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #1
+adsorbed to clay is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(4)
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #2 in
+solution is constant, given in GQ-FRAC.  A value greater than 0
+indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  GQFFG(5)
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #2
+adsorbed to sand is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(6)
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #2
+adsorbed to silt is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(7)
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #2
+adsorbed to clay is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(8)
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #3 in
+solution is constant, given in GQ-FRAC.  A value greater than 0
+indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  GQFFG(9)
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #3
+adsorbed to sand is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(10)
+$FIELD  FIELD13
+_WIDTH   5
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #3
+adsorbed to silt is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(11)
+$FIELD  FIELD14
+_WIDTH   5
+_COLUMN 66
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for qual #3
+adsorbed to clay is constant, given in GQ-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  GQFFG(12)
+$HELP
+General constituent (qual) flags.
+#GROUP  311  TYPE TEXT
+$TEXT
+(1X,12I10)
+                           Generalized Quality Constituent Flags
+                    QUAL 1                                  QUAL 2                                  QUAL 3              
+      soln      sand      silt      clay      soln      sand      silt      clay      soln      sand      silt      clay
+#GROUP  112  TYPE PRM2
+$HEADER
+  BMPRAC        Name           Units            Removal fractions
+   x - x<-------GQID------->  <GQTYID>      Soln      Sand      Silt      Clay
+$TNAME  GQ-FRAC
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  20
+_COLUMN  9
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+Any string of up to 20 characters may be supplied as the
+name of the generalized quality constituent.
+_PNAME  GQID
+$FIELD  FIELD4
+_WIDTH   8
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+GQTYID is a string of up to 8 characters which specifies the
+units in which the inflows and outflows of the qual will
+be expressed, eg "kg".
+_PNAME  GQTYID
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 39
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+GQDFRC is the BMP removal fraction for this qual in solution.
+_PNAME  GQDFRC(*)
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 49
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+GQSFRC(1,*) is the BMP removal fraction for this qual adsorbed to sand.
+_PNAME  GQSFRC(1,*)
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 59
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+GQSFRC(2,*) is the BMP removal fraction for this qual adsorbed to silt.
+_PNAME  GQSFRC(2,*)
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 69
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+GQSFRC(3,*) is the BMP removal fraction for this qual adsorbed to clay.
+_PNAME  GQSFRC(3,*)
+$HELP
+Name and removal fraction for one generalized quality constituent.
+#GROUP  312  TYPE TEXT
+$TEXT
+(1X,5A4,2X,2A4,4(1PE10.3))
+                       Qual data
+   Name                 Units              Removal fractions
+    GQID                GQTYID       Soln      Sand      Silt      Clay
+#GROUP  113  TYPE PRM2
+$HEADER
+    BMPRAC  Monthly variable flags
+    x -  x DOXF BODF
+$TNAME  OXY-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for dissolved
+oxygen is constant, given in OXY-FRAC.  A value greater than 0
+indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  OXFFG(1)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for biochemical
+oxygen demand is constant, given in OXY-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  OXFFG(2)
+$HELP
+Oxygen components flags.
+#GROUP  313  TYPE TEXT
+$TEXT
+(1X,2I10)
+ Oxygen component flags
+       DOX       BOD
+#GROUP  114  TYPE PRM2
+$HEADER
+    BMPRAC   Removal fractions
+    x -  x       DOX       BOD
+$TNAME  OXY-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+OXYFRC(1) is the BMP removal fraction for dissolved oxygen.
+_PNAME  OXYFRC(1)
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+OXYFRC(2) is the BMP removal fraction for biochemical oxygen demand.
+_PNAME  OXYFRC(2)
+$HELP
+Removal fractions for oxygen components.
+#GROUP  314  TYPE TEXT
+$TEXT
+(1X,2PE10.3)
+  Oxygen components removal fractions
+        DOX       BOD
+#GROUP  115  TYPE PRM2
+$HEADER
+                     Monthly variable flags
+    BMPRAC<-----Solution-----><---Ads-NH4---><---Ads-PO4--->
+    x -  x  NO3  TAM  NO2  PO4 Sand Silt Clay Sand Silt Clay
+$TNAME  NUT-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for nitrate
+is constant, given in DNUT-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify the
+monthly removal factors.
+_PNAME  NUTFFG(1)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for dissolved
+ammonia is constant, given in DNUT-FRAC.  A value greater than 0
+indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  NUTFFG(2)
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for nitrite
+is constant, given in DNUT-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify the
+monthly removal factors.
+_PNAME  NUTFFG(3)
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for dissolved
+phosphate is constant, given in DNUT-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  NUTFFG(4)
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for ammonia
+adsorbed to sand is constant, given in ADSNUT-FRAC.  A value
+greater than 0 indicates the index number of the MONTH-DATA
+block to be used to specify the monthly removal factors.
+_PNAME  NUTFFG(5)
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for ammonia
+adsorbed to silt is constant, given in ADSNUT-FRAC.  A value
+greater than 0 indicates the index number of the MONTH-DATA
+block to be used to specify the monthly removal factors.
+_PNAME  NUTFFG(6)
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for ammonia
+adsorbed to clay is constant, given in ADSNUT-FRAC.  A value
+greater than 0 indicates the index number of the MONTH-DATA
+block to be used to specify the monthly removal factors.
+_PNAME  NUTFFG(7)
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for phosphate
+adsorbed to sand is constant, given in ADSNUT-FRAC.  A value
+greater than 0 indicates the index number of the MONTH-DATA
+block to be used to specify the monthly removal factors.
+_PNAME  NUTFFG(8)
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for phosphate
+adsorbed to silt is constant, given in ADSNUT-FRAC.  A value
+greater than 0 indicates the index number of the MONTH-DATA
+block to be used to specify the monthly removal factors.
+_PNAME  NUTFFG(9)
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for phosphate
+adsorbed to clay is constant, given in ADSNUT-FRAC.  A value
+greater than 0 indicates the index number of the MONTH-DATA
+block to be used to specify the monthly removal factors.
+_PNAME  NUTFFG(10)
+$HELP
+Nutrient flags.
+#GROUP  315  TYPE TEXT
+$TEXT
+(1X,10I10)
+ Nutrient flags
+                   Solution                     Adsorbed Ammonia              Adsorbed Phosphate
+       NO3       TAM       NO2       PO4      SAND      SILT      CLAY      SAND      SILT      CLAY
+#GROUP  116  TYPE PRM2
+$HEADER
+    BMPRAC               Removal fractions
+    x -  x       NO3       TAM       NO2       PO4
+$TNAME  DNUT-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+DNUFRC(1) is the BMP removal fraction for dissolved nitrate.
+_PNAME  DNUFRC(1)
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+DNUFRC(2) is the BMP removal fraction for dissolved total ammonia.
+_PNAME  DNUFRC(2)
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+DNUFRC(3) is the BMP removal fraction for dissolved nitrite.
+_PNAME  DNUFRC(3)
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+DNUFRC(4) is the BMP removal fraction for dissolved orthophosphate.
+_PNAME  DNUFRC(4)
+$HELP
+Removal fractions for dissolved nutrients.
+#GROUP  316  TYPE TEXT
+$TEXT
+(1X,4PE10.3)
+  Dissolved nutrient removal fractions
+       NO3       TAM       NO3       PO4
+#GROUP  117  TYPE PRM2
+$HEADER
+                                Removal fractions
+    BMPRAC              Ammonia                     Phosphate
+    x -  x      Sand      Silt      Clay      Sand      Silt      Clay
+$TNAME  ADSNUT-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SNUFRC(1) is the BMP removal fraction for ammonia adsorbed to sand.
+_PNAME  SNUFRC(1)
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SNUFRC(2) is the BMP removal fraction for ammonia adsorbed to silt.
+_PNAME  SNUFRC(2)
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SNUFRC(3) is the BMP removal fraction for ammonia adsorbed to clay.
+_PNAME  SNUFRC(3)
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SNUFRC(4) is the BMP removal fraction for phosphate adsorbed to sand.
+_PNAME  SNUFRC(4)
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SNUFRC(5) is the BMP removal fraction for phosphate adsorbed to silt.
+_PNAME  SNUFRC(5)
+$FIELD  FIELD8
+_WIDTH  10
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+SNUFRC(6) is the BMP removal fraction for phosphate adsorbed to clay.
+_PNAME  SNUFRC(6)
+$HELP
+Removal fractions for adsorbed nutrients.
+#GROUP  317  TYPE TEXT
+$TEXT
+(1X,6PE10.3)
+  Adsorbed nutrient removal fractions
+              Ammonia                     Phosphate
+      Sand      Silt      Clay      Sand      Silt      Clay
+#GROUP  118  TYPE PRM2
+$HEADER
+    BMPRAC  Monthly variable flags
+    x -  x Phyt  Zoo  ORN  ORP  ORC
+$TNAME  PLANK-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for phytoplankton
+is constant, given in PLANK-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify the
+monthly removal factors.
+_PNAME  PLKFFG(1)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for zooplankton
+is constant, given in PLANK-FRAC.  A value greater than 0 indicates
+the index number of the MONTH-DATA block to be used to specify the
+monthly removal factors.
+_PNAME  PLKFFG(2)
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for dead refractory
+organic nitrogen is constant, given in PLANK-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be used
+to specify the monthly removal factors.
+_PNAME  PLKFFG(3)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for dead refractory
+organic phosphorus is constant, given in PLANK-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be used
+to specify the monthly removal factors.
+_PNAME  PLKFFG(4)
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for dead refractory
+organic carbon is constant, given in PLANK-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  PLKFFG(5)
+$HELP
+Plankton components flags.
+#GROUP  318  TYPE TEXT
+$TEXT
+(1X,5I10)
+              Plankton component flags
+      PHYT       ZOO       ORN       ORP       ORC
+#GROUP  119  TYPE PRM2
+$HEADER
+    BMPRAC                  Removal Fractions
+    x -  x      Phyt       Zoo       ORN       ORP       ORC
+$TNAME  PLANK-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+PLKFRC(1) is the BMP removal fraction for phytoplankton.
+_PNAME  PLKFRC(1)
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+PLKFRC(2) is the BMP removal fraction for zooplankton.
+_PNAME  PLKFRC(2)
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+PLKFRC(3) is the BMP removal fraction for dead refractory organic
+nitrogen.
+_PNAME  PLKFRC(3)
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+PLKFRC(4) is the BMP removal fraction for dead refractory organic
+phosphorus.
+_PNAME  PLKFRC(4)
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+PLKFRC(5) is the BMP removal fraction for dead refractory organic
+carbon.
+_PNAME  PLKFRC(5)
+$HELP
+Removal fractions for plankton components.
+#GROUP  319  TYPE TEXT
+$TEXT
+(1X,5PE10.3)
+  Plankton components removal fractions
+     Phyto       Zoo     Org N     Org P     Org C
+#GROUP  120  TYPE PRM2
+$HEADER
+    BMPRAC  Monthly variable flags
+    x -  x  TIC  CO2
+$TNAME  PH-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for total
+inorganic carbon is constant, given in PH-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  PHFFG(1)
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for dissolved
+carbon dioxide is constant, given in PH-FRAC.  A value greater
+than 0 indicates the index number of the MONTH-DATA block to be
+used to specify the monthly removal factors.
+_PNAME  PHFFG(2)
+$HELP
+Inorganic carbon components flags.
+#GROUP  320  TYPE TEXT
+$TEXT
+(1X,2I10)
+ Inorganic carbon component flags
+       TIC       CO2
+#GROUP  121  TYPE PRM2
+$HEADER
+    BMPRAC    Removal fractions
+    x -  x       TIC       CO2
+$TNAME  PH-FRAC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+PHFRC(1) is the BMP removal fraction for total inorganic carbon.
+_PNAME  PHFRC(1)
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+PHFRC(2) is the BMP removal fraction for dissolved carbon dioxide.
+_PNAME  PHFRC(2)
+$HELP
+Removal fractions for inorganic carbon components.
+#GROUP  321  TYPE TEXT
+$TEXT
+(1X,2PE10.3)
+  Inorganic carbon components removal fractions
+        TIC       CO2
+#GROUP  122  TYPE PRM2
+$HEADER
+    BMPRAC  Num       Monthly variable flags
+    x -  x Chem ACI1 ACI2 ACI3 ACI4 ACI5 ACI6 ACI7
+$TNAME  ACID-FLAG
+$FIELD  FIELD1
+_WIDTH   10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 7
+_DEFAULT  0
+_HELP
+Number of chemicals used in acid mine drainage section ACIDPH.
+_PNAME  NACID
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for acid mine
+chemical #1 is constant, given in ACID-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  ACIFFG(1)
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for acid mine
+chemical #2 is constant, given in ACID-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  ACIFFG(2)
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for acid mine
+chemical #3 is constant, given in ACID-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  ACIFFG(3)
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for acid mine
+chemical #4 is constant, given in ACID-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  ACIFFG(4)
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for acid mine
+chemical #5 is constant, given in ACID-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  ACIFFG(5)
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for acid mine
+chemical #6 is constant, given in ACID-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  ACIFFG(6)
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 999
+_DEFAULT  0
+_HELP
+Value of 0 indicates that the BMP removal factor for acid mine
+chemical #7 is constant, given in ACID-FRAC.  A value greater than
+0 indicates the index number of the MONTH-DATA block to be used to
+specify the monthly removal factors.
+_PNAME  ACIFFG(7)
+$HELP
+Acid mine drainage components flags.
+#GROUP  322  TYPE TEXT
+$TEXT
+(1X,7I10)
+ Acid mine drainage component flags
+      ACI1      ACI2      ACI3      ACI4      ACI5      ACI6      ACI7
+#GROUP  123  TYPE PRM2
+$HEADER
+  BMPRAC                           Removal fractions
+   x - x      ACI1      ACI2      ACI3      ACI4      ACI5      ACI6      ACI7
+$TNAME  ACID-FRAC
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+BMPRAC to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN  9
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+ACIFRC(1) is the BMP removal fraction for acid mine chemical #1.
+_PNAME  ACIFRC(1)
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 19
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+ACIFRC(2) is the BMP removal fraction for acid mine chemical #2.
+_PNAME  ACIFRC(2)
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 29
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+ACIFRC(3) is the BMP removal fraction for acid mine chemical #3.
+_PNAME  ACIFRC(3)
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 39
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+ACIFRC(4) is the BMP removal fraction for acid mine chemical #4.
+_PNAME  ACIFRC(4)
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 49
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+ACIFRC(5) is the BMP removal fraction for acid mine chemical #5.
+_PNAME  ACIFRC(5)
+$FIELD  FIELD8
+_WIDTH  10
+_COLUMN 59
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+ACIFRC(6) is the BMP removal fraction for acid mine chemical #6.
+_PNAME  ACIFRC(6)
+$FIELD  FIELD9
+_WIDTH  10
+_COLUMN 69
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE   0. : 1.
+_DEFAULT  0.
+_HELP
+ACIFRC(7) is the BMP removal fraction for acid mine chemical #7.
+_PNAME  ACIFRC(7)
+$HELP
+Removal fractions for acid mine drainage chemicals
+#GROUP  323  TYPE TEXT
+$TEXT
+(1X,7PE10.3)
+  Acid mine drainage chemcial removal fractions
+      ACI1      ACI2      ACI3      ACI4      ACI5      ACI6      ACI7
+  END DATA
+END CLU

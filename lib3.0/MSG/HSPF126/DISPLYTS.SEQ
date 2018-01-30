@@ -1,0 +1,22 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          146    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  DISPLYTS
+  END LABEL
+  DATA   CLU   146
+#GROUP    1  TYPE TEXT
+$TEXT
+INPUT   10
+#GROUP    2  TYPE TEXT
+$TEXT
+TIMSER
+#GROUP   11  TYPE TEXT
+$TEXT
+TIMSER  1  1     1     1 2   0 2    0  2470 ENG any        0       1   0       1
+  A mean-valued input time series           MET any        0       1   0       1
+  END DATA
+END CLU
