@@ -44,8 +44,8 @@ C
       INTEGER       DUM1(3765),DUM2(823),DUM3(8691),DUM4(90),
      $              DUM5(370),DUM6(100),DUM7(553),DUM8(230),DUM9,
      $              DUM10(4800),DUM11(4),DUM12(34),DUM13(12),
-     $              DUM14(14),DUM15(356),DUM16(707),DUM17(258),
-     $              DUM18(793),DUM19(107),DUMRCH(31974)
+     $              DUM14(14),DUM15(357),DUM16(707),DUM17(258),
+     $              DUM18(793),DUM19(107),DUMRCH(31973)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(OXST,DOX),(OXSTX,DOFP),

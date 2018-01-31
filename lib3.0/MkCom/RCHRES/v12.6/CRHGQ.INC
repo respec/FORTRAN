@@ -96,8 +96,8 @@ C
      $              DUM14(4),DUM15(2),DUM16(5),DUM17,DUM18(27),
      $              DUM19(230),DUM20,DUM21(181),DUM22(14),DUM23(4),
      $              DUM24(8),DUM25(20),DUM26(23),DUM27(4),DUM28(6),
-     $              DUM29(29),DUM30(1318),DUM31(226),DUM32(33),
-     $              DUM33(670),DUMRCH(32093)
+     $              DUM29(29),DUM30(1319),DUM31(226),DUM32(33),
+     $              DUM33(670),DUMRCH(32092)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(DEPSCR,SDCF1(1,1)),(ROSED,SDCF2(1,1)),

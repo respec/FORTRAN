@@ -35,7 +35,7 @@ C
      $              PRECFP,VOLFP,SAFP,GATFP,WDFP,TWFP,GQALFG(7),
      $              BENRFG,OXIFX(2),RCOXFP(2),REAMFG,DOPFG,OXWCNT,
      $              DOFP,BODFP,SATFP,OXCF1X(2),OXCF2X(MXEXIT,2),
-     $              OXCF3X(8),OXCF4X(8)
+     $              OXCF3X(9),OXCF4X(8)
       REAL          DELT,DELT60,DELTS,PREC,DELTH,LEN,SAREA,SROVOL,
      $              EROVOL,SOVOL(MXEXIT),EOVOL(MXEXIT),GATMP,WIND,
      $              ELEV,CFPRES,TW,SCRFAC,DEPCOR,AVDEPE,AVVELE,
@@ -49,7 +49,7 @@ C
      $              DUM5(15),DUM6(715),DUM7(107),DUM8(605),DUM9(8085),
      $              DUM10(1099),DUM11(6),DUM12(5),DUM13(29),
      $              DUM14(230),DUM15,DUM16(809),DUM17(3984),DUM18(4),
-     $              DUMRCH(34182)
+     $              DUMRCH(34181)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IDOX,OXIF(1,1)),(IBOD,OXIF(2,1)),

@@ -658,7 +658,7 @@ EQ 1 PHYBOD   0   0   0   0 R   OXCF4(5,1)              00000000111000
 EQ 1 ZOOBOD   0   0   0   0 R   OXCF4(6,1)              00000000111000
 EQ 1 BALBOD   0   0   0   0 R   OXCF4(7,1)              00000000111000
 EQ 1 TOTBOD   0   0   0   0 R   OXCF4(8,1)              00000000111000
-VA   OXCF3X   8   0   0   0 I T OXRX             OXCF3  00000000100000
+VA   OXCF3X   9   0   0   0 I T OXRX             OXCF3  00000000100000
 VA   OXCF4X   8   0   0   0 I T OXRX             OXCF4  00000000100000
 
 SE   CRHNU.INC

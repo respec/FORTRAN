@@ -39,7 +39,7 @@ C
      $              TSAR(MXSP),SKOP(MXSP),VSAL(MXSP),VSAR(MXSP),DLT1,
      $              DEC,HFDLT,DF
       INTEGER       DUM1(4482),DUM2(9909),DUM3(4),DUM4(277),
-     $              DUM5(7802),DUMRCH(1399)
+     $              DUM5(7803),DUMRCH(1398)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR)

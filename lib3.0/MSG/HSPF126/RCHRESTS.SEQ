@@ -359,23 +359,23 @@ GQADCN  3  1-15455     1 2   0 2    0 15448 ENG concu/l    0       1   0       1
   Concentration of QUAL in precip to RCHRES MET concu/l    0       1   0       1
 #GROUP   43  TYPE TEXT
 $TEXT
-NUADFX  3  1     3     1 2   0 2    0 19909 ENG lb/aciv    0  0.3677   0  0.3281
+NUADFX  3  1     3     1 2   0 2    0 19910 ENG lb/aciv    0  0.3677   0  0.3281
   Atmospheric deposition of nutrient        MET kg/haiv    0  0.1121   0     0.1
 #GROUP   44  TYPE TEXT
 $TEXT
-NUADCN  3  1     3     1 2   0 2    0 19912 ENG mg/l       0       1   0       1
+NUADCN  3  1     3     1 2   0 2    0 19913 ENG mg/l       0       1   0       1
   Concentration of nutrient in precip       MET mg/l       0       1   0       1
 #GROUP   45  TYPE TEXT
 $TEXT
-PLADFX  3  1     3     1 2   0 2    0 20963 ENG lb/aciv    0  0.3677   0  0.3281
+PLADFX  3  1     3     1 2   0 2    0 20964 ENG lb/aciv    0  0.3677   0  0.3281
   Atmospheric deposition of constituent     MET kg/haiv    0  0.1121   0     0.1
 #GROUP   46  TYPE TEXT
 $TEXT
-PLADCN  3  1     3     1 2   0 2    0 20966 ENG mg/l       0       1   0       1
+PLADCN  3  1     3     1 2   0 2    0 20967 ENG mg/l       0       1   0       1
   Concentration of constituent in precip    MET mg/l       0       1   0       1
 #GROUP   47  TYPE TEXT
 $TEXT
-BINV    1  1     1     1 2   0 2    0 21165 ENG mg/l       0       1   0       1
+BINV    1  1     1     1 2   0 2    0 21166 ENG mg/l       0       1   0       1
   Benthic invertebrate density for grazing  MET mg/l       0       1   0       1
 #GROUP   48  TYPE TEXT
 $TEXT
@@ -711,263 +711,263 @@ OXCF3   8  1     8     1 2   7      0 19803 ENG lb/iv      0 1.602E4   0 3.531E4
   DO process fluxes                         MET kg/iv      0 4.537E2   0   1000.
 #GROUP  148  TYPE TEXT
 $TEXT
-OXCF4   8  1     8     1 2   7      0 19811 ENG lb/iv      0 1.602E4   0 3.531E4
+OXCF4   8  1     8     1 2   7      0 19812 ENG lb/iv      0 1.602E4   0 3.531E4
   BOD process fluxes                        MET kg/iv      0 4.537E2   0   1000.
 #GROUP  151  TYPE TEXT
 $TEXT
-NUIF1   4  1     4     1 2   8      0 19887 ENG lb/iv      0 1.602E4   0 3.531E4
+NUIF1   4  1     4     1 2   8      0 19888 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of dissolved nutrients            MET kg/iv      0 4.537E2   0   1000.
 #GROUP  152  TYPE TEXT
 $TEXT     
-NUIF2   4  2     4     2 2   8      0 19897 ENG lb/iv      0 1.602E4   0 3.531E4
+NUIF2   4  2     4     2 2   8      0 19898 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of adsorbed NH4 and PO4           MET kg/iv      0 4.537E2   0   1000.
 #GROUP  153  TYPE TEXT
 $TEXT
-TNUIF   4  1     4     1 2   8      0 19905 ENG lb/iv      0 1.602E4   0 3.531E4
+TNUIF   4  1     4     1 2   8      0 19906 ENG lb/iv      0 1.602E4   0 3.531E4
   Total inflows of nutrients                MET kg/iv      0 4.537E2   0   1000.
 #GROUP  154  TYPE TEXT
 $TEXT
-DNUST   6  1     6     1 1   8      0 20101 ENG mg/l       0       1   0       1
+DNUST   6  1     6     1 1   8      0 20102 ENG mg/l       0       1   0       1
   Dissolved nutrient concentrations         MET mg/l       0       1   0       1
 #GROUP  155  TYPE TEXT
 $TEXT
-SNH4    3  1     3     1 1   8      0 20107 ENG mg/kg      0  1.0E-6   0  1.0E-6
+SNH4    3  1     3     1 1   8      0 20108 ENG mg/kg      0  1.0E-6   0  1.0E-6
   Adsorbed NH4 concentrations               MET mg/kg      0  1.0E-6   0  1.0E-6
 #GROUP  156  TYPE TEXT
 $TEXT
-SPO4    3  1     3     1 1   8      0 20110 ENG mg/kg      0  1.0E-6   0  1.0E-6
+SPO4    3  1     3     1 1   8      0 20111 ENG mg/kg      0  1.0E-6   0  1.0E-6
   Adsorbed PO4 concentrations               MET mg/kg      0  1.0E-6   0  1.0E-6
 #GROUP  157  TYPE TEXT
 $TEXT
-DNUST2  6  1     6     1 1   8      0 20113 ENG lb         0 1.602E4   0 3.531E4
+DNUST2  6  1     6     1 1   8      0 20114 ENG lb         0 1.602E4   0 3.531E4
   Dissolved nutrient storages               MET kg         0 4.537E2   0   1000.
 #GROUP  158  TYPE TEXT
 $TEXT
-RSNH4  12  1    12     1 1   8      0 20119 ENG lb         0 1.602E4   0 3.531E4
+RSNH4  12  1    12     1 1   8      0 20120 ENG lb         0 1.602E4   0 3.531E4
   Adsorbed NH4 storages                     MET kg         0 4.537E2   0   1000.
 #GROUP  159  TYPE TEXT
 $TEXT
-RSPO4  12  1    12     1 1   8      0 20131 ENG lb         0 1.602E4   0 3.531E4
+RSPO4  12  1    12     1 1   8      0 20132 ENG lb         0 1.602E4   0 3.531E4
   Adsorbed PO4 storages                     MET kg         0 4.537E2   0   1000.
 #GROUP  160  TYPE TEXT
 $TEXT
-NUST    4  1     4     1 1   8      0 20143 ENG lb         0 1.602E4   0 3.531E4
+NUST    4  1     4     1 1   8      0 20144 ENG lb         0 1.602E4   0 3.531E4
   Total nutrient storages in RCHRES         MET kg         0 4.537E2   0   1000.
 #GROUP  161  TYPE TEXT
 $TEXT
-NUCF1   4  1     4     1 2   8      0 20755 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF1   4  1     4     1 2   8      0 20756 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows of dissolved nutrients     MET kg/iv      0 4.537E2   0   1000.
 #GROUP  162  TYPE TEXT
 $TEXT
-NUCF2   4  2     4     2 2   8      0 20759 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF2   4  2     4     2 2   8      0 20760 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows of adsorbed NH4 and PO4    MET kg/iv      0 4.537E2   0   1000.
 #GROUP  163  TYPE TEXT
 $TEXT
-TNUCF1  4  1     4     1 2   8      0 20767 ENG lb/iv      0 1.602E4   0 3.531E4
+TNUCF1  4  1     4     1 2   8      0 20768 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows of nutrients               MET kg/iv      0 4.537E2   0   1000.
 #GROUP  164  TYPE TEXT
 $TEXT
-NUCF3   4  2     4     2 2   8      0 20771 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF3   4  2     4     2 2   8      0 20772 ENG lb/iv      0 1.602E4   0 3.531E4
   Scour/deposition of adsorbed NH4 and PO4  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  165  TYPE TEXT
 $TEXT
-NUCF4   7  1     7     1 2   8      0 20779 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF4   7  1     7     1 2   8      0 20780 ENG lb/iv      0 1.602E4   0 3.531E4
   NO3 process fluxes                        MET kg/iv      0 4.537E2   0   1000.
 #GROUP  166  TYPE TEXT
 $TEXT
-NUCF5   8  1     8     1 2   8      0 20786 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF5   8  1     8     1 2   8      0 20787 ENG lb/iv      0 1.602E4   0 3.531E4
   TAM process fluxes                        MET kg/iv      0 4.537E2   0   1000.
 #GROUP  167  TYPE TEXT
 $TEXT
-NUCF6   1  1     1     1 2   8      0 20794 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF6   1  1     1     1 2   8      0 20795 ENG lb/iv      0 1.602E4   0 3.531E4
   NO2 process fluxes                        MET kg/iv      0 4.537E2   0   1000.
 #GROUP  168  TYPE TEXT
 $TEXT
-NUCF7   6  1     6     1 2   8      0 20795 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF7   6  1     6     1 2   8      0 20796 ENG lb/iv      0 1.602E4   0 3.531E4
   PO4 process fluxes                        MET kg/iv      0 4.537E2   0   1000.
 #GROUP  169  TYPE TEXT
 $TEXT
-NUCF8   4  2     4     2 2   8      0 20801 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF8   4  2     4     2 2   8      0 20802 ENG lb/iv      0 1.602E4   0 3.531E4
   Adsorption/desorption of NH4 and PO4      MET kg/iv      0 4.537E2   0   1000.
 #GROUP  170  TYPE TEXT
 $TEXT
-NUCF9   5  4   -75     4 2   8      0 20809 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF9   5  4   -75     4 2   8      0 20810 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of dissolved nutrients via exits MET kg/iv      0 4.537E2   0   1000.
 #GROUP  171  TYPE TEXT
 $TEXT
-OSNH4   5  4   -75     4 2   8      0 20829 ENG lb/iv      0 1.602E4   0 3.531E4
+OSNH4   5  4   -75     4 2   8      0 20830 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of adsorbed NH4 via exits        MET kg/iv      0 4.537E2   0   1000.
 #GROUP  172  TYPE TEXT
 $TEXT
-OSPO4   5  4   -75     4 2   8      0 20849 ENG lb/iv      0 1.602E4   0 3.531E4
+OSPO4   5  4   -75     4 2   8      0 20850 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of adsorbed PO4 via exits        MET kg/iv      0 4.537E2   0   1000.
 #GROUP  173  TYPE TEXT
 $TEXT
-TNUCF2  5  4   -75     4 2   8      0 20869 ENG lb/iv      0 1.602E4   0 3.531E4
+TNUCF2  5  4   -75     4 2   8      0 20870 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of nutrients via exits           MET kg/iv      0 4.537E2   0   1000.
 #GROUP  174  TYPE TEXT
 $TEXT
-NUADDR  3  1     3     1 2   8      0 20889 ENG lb/iv      0 1.602E4   0 3.531E4
+NUADDR  3  1     3     1 2   8      0 20890 ENG lb/iv      0 1.602E4   0 3.531E4
   Dry atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
 #GROUP  175  TYPE TEXT
 $TEXT
-NUADWT  3  1     3     1 2   8      0 20892 ENG lb/iv      0 1.602E4   0 3.531E4
+NUADWT  3  1     3     1 2   8      0 20893 ENG lb/iv      0 1.602E4   0 3.531E4
   Wet atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
 #GROUP  176  TYPE TEXT
 $TEXT
-NUADEP  3  1     3     1 2   8      0 20895 ENG lb/iv      0 1.602E4   0 3.531E4
+NUADEP  3  1     3     1 2   8      0 20896 ENG lb/iv      0 1.602E4   0 3.531E4
   Total atmospheric deposition to reach     MET kg/iv      0 4.537E2   0   1000.
 #GROUP  181  TYPE TEXT
 $TEXT
-PKIF    5  1     5     1 2   9      0 20928 ENG lb/iv      0 1.602E4   0 3.531E4
+PKIF    5  1     5     1 2   9      0 20929 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of plankton related constituents  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  182  TYPE TEXT
 $TEXT
-TPKIF   5  1     5     1 2   9      0 20958 ENG lb/iv      0 1.602E4   0 3.531E4
+TPKIF   5  1     5     1 2   9      0 20959 ENG lb/iv      0 1.602E4   0 3.531E4
   Summary inflows of org & total N, P, & C  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  183  TYPE TEXT
 $TEXT
-PKST3   7  1     7     1 1   9      0 21229 ENG mg/l       0       1   0       1
+PKST3   7  1     7     1 1   9      0 21230 ENG mg/l       0       1   0       1
   Concentrations in Group PLANK (RCHRES)    MET mg/l       0       1   0       1
 #GROUP  184  TYPE TEXT
 $TEXT
-PHYTO   1  1     1     1 1   9 1    0 21236 ENG mg/l       0       1   0       1
+PHYTO   1  1     1     1 1   9 1    0 21237 ENG mg/l       0       1   0       1
   Phytoplankton concentration in RCHRES     MET mg/l       0       1   0       1
 #GROUP  185  TYPE TEXT
 $TEXT
-ZOO     1  1     1     1 1   9      0 21237 ENG org/l      0       1   0       1
+ZOO     1  1     1     1 1   9      0 21238 ENG org/l      0       1   0       1
   Zooplankton population in RCHRES          MET org/l      0       1   0       1
 #GROUP  186  TYPE TEXT
 $TEXT
-BENAL   4  1-20984     1 1   9      0 21238 ENG mg/m2      0       1   0       1
+BENAL   4  1-20985     1 1   9      0 21239 ENG mg/m2      0       1   0       1
   Benthic algae as biomass by species       MET mg/m2      0       1   0       1
 #GROUP  187  TYPE TEXT
 $TEXT
-PHYCLA  1  1     1     1 1   9      0 21242 ENG ug/l       0       1   0       1
+PHYCLA  1  1     1     1 1   9      0 21243 ENG ug/l       0       1   0       1
   Phytoplankton conc. as chlorophyll a      MET ug/l       0       1   0       1
 #GROUP  188  TYPE TEXT
 $TEXT
-BALCLA  4  1-20984     1 1   9      0 21243 ENG ug/m2      0       1   0       1
+BALCLA  4  1-20985     1 1   9      0 21244 ENG ug/m2      0       1   0       1
   Benthic algae as chlorophyll a by species MET ug/m2      0       1   0       1
 #GROUP  189  TYPE TEXT
 $TEXT
-TBENAL  2  1     1     1 1   9      0 21247 ENG mg/m2      0       1   0       1
+TBENAL  2  1     1     1 1   9      0 21248 ENG mg/m2      0       1   0       1
   Total benthic algae in RCHRES             MET mg/m2      0       1   0       1
 #GROUP  190  TYPE TEXT
 $TEXT
-PKST4   2  1     2     1 1   9      0 21249 ENG mg/l       0       1   0       1
+PKST4   2  1     2     1 1   9      0 21250 ENG mg/l       0       1   0       1
   Total nitrogen and phosphorus concs.      MET mg/l       0       1   0       1
 #GROUP  191  TYPE TEXT
 $TEXT
-PKCF1   5  1     5     1 2   9      0 21777 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF1   5  1     5     1 2   9      0 21778 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows from RCHRES (Group PLANK)  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  192  TYPE TEXT
 $TEXT
-TPKCF1  5  1     5     1 2   9      0 21182 ENG lb/iv      0 1.602E4   0 3.531E4
+TPKCF1  5  1     5     1 2   9      0 21183 ENG lb/iv      0 1.602E4   0 3.531E4
   Summary outflows of org & total N, P, & C MET kg/iv      0 4.537E2   0   1000.
 #GROUP  193  TYPE TEXT
 $TEXT
-PKCF2   5  5   -75     5 2   9      0 21787 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF2   5  5   -75     5 2   9      0 21788 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows thru indiv exits (Group PLANK)   MET kg/iv      0 4.537E2   0   1000.
 #GROUP  194  TYPE TEXT
 $TEXT
-TPKCF2  5  5   -75     5 2   9      0 21812 ENG lb/iv      0 1.602E4   0 3.531E4
+TPKCF2  5  5   -75     5 2   9      0 21813 ENG lb/iv      0 1.602E4   0 3.531E4
   Summary outflows thru indiv exits         MET kg/iv      0 4.537E2   0   1000.
 #GROUP  195  TYPE TEXT
 $TEXT
-PLADDR  3  1     3     1 2   9      0 21837 ENG lb/iv      0 1.602E4   0 3.531E4
+PLADDR  3  1     3     1 2   9      0 21838 ENG lb/iv      0 1.602E4   0 3.531E4
   Dry atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
 #GROUP  196  TYPE TEXT
 $TEXT
-PLADWT  3  1     3     1 2   9      0 21840 ENG lb/iv      0 1.602E4   0 3.531E4
+PLADWT  3  1     3     1 2   9      0 21841 ENG lb/iv      0 1.602E4   0 3.531E4
   Wet atmospheric deposition to reach       MET kg/iv      0 4.537E2   0   1000.
 #GROUP  197  TYPE TEXT
 $TEXT
-PLADEP  3  1     3     1 2   9      0 21843 ENG lb/iv      0 1.602E4   0 3.531E4
+PLADEP  3  1     3     1 2   9      0 21844 ENG lb/iv      0 1.602E4   0 3.531E4
   Total atmospheric deposition to reach     MET kg/iv      0 4.537E2   0   1000.
 #GROUP  198  TYPE TEXT
 $TEXT
-PKCF5   5  1     5     1 2   9      0 21846 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF5   5  1     5     1 2   9      0 21847 ENG lb/iv      0 1.602E4   0 3.531E4
   Phytoplankton reaction fluxes             MET kg/iv      0 4.537E2   0   1000.
 #GROUP  199  TYPE TEXT
 $TEXT
-PKCF6   3  1     3     1 2   9      0 21851 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF6   3  1     3     1 2   9      0 21852 ENG lb/iv      0 1.602E4   0 3.531E4
   Zooplankton reaction fluxes               MET kg/iv      0 4.537E2   0   1000.
 #GROUP  200  TYPE TEXT
 $TEXT
-PKCF7   3  4     3-20984 2   9      0 21854 ENG mg/m2.iv   0       1   0       1
+PKCF7   3  4     3-20985 2   9      0 21855 ENG mg/m2.iv   0       1   0       1
   Benthic algae reaction fluxes             MET mg/m2.iv   0       1   0       1
 #GROUP  201  TYPE TEXT
 $TEXT
-TPKCF7  3  1     3     1 2   9      0 21866 ENG mg/m2.iv   0       1   0       1
+TPKCF7  3  1     3     1 2   9      0 21867 ENG mg/m2.iv   0       1   0       1
   Benthic algae reaction fluxes             MET mg/m2.iv   0       1   0       1
 #GROUP  202  TYPE TEXT
 $TEXT
-PKCF8   5  1     5     1 2   9      0 21869 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF8   5  1     5     1 2   9      0 21870 ENG lb/iv      0 1.602E4   0 3.531E4
   Dead refractory organic N fluxes          MET kg/iv      0 4.537E2   0   1000.
 #GROUP  203  TYPE TEXT
 $TEXT
-PKCF9   5  1     5     1 2   9      0 21874 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF9   5  1     5     1 2   9      0 21875 ENG lb/iv      0 1.602E4   0 3.531E4
   Dead refractory organic P fluxes          MET kg/iv      0 4.537E2   0   1000.
 #GROUP  204  TYPE TEXT
 $TEXT
-PKCF10  5  1     5     1 2   9      0 21879 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF10  5  1     5     1 2   9      0 21880 ENG lb/iv      0 1.602E4   0 3.531E4
   Dead refractory organic C fluxes          MET kg/iv      0 4.537E2   0   1000.
 #GROUP  211  TYPE TEXT
 $TEXT
-PHIF    2  1     2     1 2  10      0 21896 ENG lb/iv      0 1.602E4   0 3.531E4
+PHIF    2  1     2     1 2  10      0 21897 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of TIC and CO2 to RCHRES          MET kg/iv      0 4.537E2   0   1000.
 #GROUP  212  TYPE TEXT
 $TEXT
-PHST    3  1     3     1 1  10      0 21908 ENG mg/l;pH    0       1   0       1
+PHST    3  1     3     1 1  10      0 21909 ENG mg/l;pH    0       1   0       1
   TIC and CO2 concs, and pH,                MET mg/l;pH    0       1   0       1
 #GROUP  213  TYPE TEXT
 $TEXT
-SATCO2  1  1     3     1 1  10      0 21912 ENG mg/l       0       1   0       1
+SATCO2  1  1     3     1 1  10      0 21913 ENG mg/l       0       1   0       1
   Saturation CO2 concentration              MET mg/l       0       1   0       1
 #GROUP  214  TYPE TEXT
 $TEXT
-PHCF1   2  1     2     1 2  10      0 21923 ENG lb/iv      0 1.602E4   0 3.531E4
+PHCF1   2  1     2     1 2  10      0 21924 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of TIC and CO2 from RCHRES       MET kg/iv      0 4.537E2   0   1000.
 #GROUP  215  TYPE TEXT
 $TEXT
-PHCF2   5  2   -75     2 2  10      0 21975 ENG lb/iv      0 1.602E4   0 3.531E4
+PHCF2   5  2   -75     2 2  10      0 21976 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of TIC and CO2 thru indiv exits  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  216  TYPE TEXT
 $TEXT
-PHCF3   7  1     7     1 2  10      0 22020 ENG lb/iv      0 1.602E4   0 3.531E4
+PHCF3   7  1     7     1 2  10      0 22021 ENG lb/iv      0 1.602E4   0 3.531E4
   Inorganic carbon reaction fluxes          MET kg/iv      0 4.537E2   0   1000.
 #GROUP  221  TYPE TEXT
 $TEXT
-ACINFL  7  1-22048     1 2  11      0 22185 ENG lb/iv      0 1.602E1   0 3.531E1
+ACINFL  7  1-22049     1 2  11      0 22186 ENG lb/iv      0 1.602E1   0 3.531E1
   Inflows of acid chemicals (Group ACIDPH)  MET kg/iv      0  0.4537   0      1.
 #GROUP  222  TYPE TEXT
 $TEXT
-ACCONC  7  1-22048     1 1  11      0 22094 ENG mol/l      0       1   0       1
+ACCONC  7  1-22049     1 1  11      0 22095 ENG mol/l      0       1   0       1
   Concentrations (Group ACIDPH)             MET mol/l      0       1   0       1
 #GROUP  223  TYPE TEXT
 $TEXT
-ACSTOR  7  1-22048     1 1  11      0 22136 ENG lb         0 1.602E1   0 3.531E1
+ACSTOR  7  1-22049     1 1  11      0 22137 ENG lb         0 1.602E1   0 3.531E1
   Storages (Group ACIDPH)                   MET kg         0  0.4537   0       1
 #GROUP  224  TYPE TEXT
 $TEXT
-ACFLX1  7  1-22048     1 2  11      0 22227 ENG lb/iv      0 1.602E1   0 3.531E1
+ACFLX1  7  1-22049     1 2  11      0 22228 ENG lb/iv      0 1.602E1   0 3.531E1
   Total outflows  (Group ACIDPH)            MET kg/iv      0  0.4537   0       1
 #GROUP  225  TYPE TEXT
 $TEXT
-ACFLX2  5  7   -75-22048 2  11      0 22409 ENG lb/iv      0 1.602E1   0 3.531E1
+ACFLX2  5  7   -75-22049 2  11      0 22410 ENG lb/iv      0 1.602E1   0 3.531E1
   Outflows thru indiv exits (Group ACIDPH)  MET kg/iv      0  0.4537   0       1
 #GROUP  226  TYPE TEXT
 $TEXT
-ACFLXC 10  1-13498     1 2  11      0 22494 ENG qty/iv     0       1   0       1
+ACFLXC 10  1-13498     1 2  11      0 22495 ENG qty/iv     0       1   0       1
   Net fluxes of conservatives (ACIDPH)      MET qty/iv     0       1   0       1
 #GROUP  227  TYPE TEXT
 $TEXT
-ACFLXG  3  1-14254     1 2  11      0 22539 ENG qty/iv     0       1   0       1
+ACFLXG  3  1-14254     1 2  11      0 22540 ENG qty/iv     0       1   0       1
   Net fluxes of GQUALS (Group ACIDPH)       MET qty/iv     0       1   0       1
 #GROUP  228  TYPE TEXT
 $TEXT
-ACPH    1  1     1     1 1  11      0 22582 ENG pH units   0       1   0       1
+ACPH    1  1     1     1 1  11      0 22583 ENG pH units   0       1   0       1
   pH  (Group ACIDPH)                        MET pH units   0       1   0       1
 #GROUP  231  TYPE TEXT
 $TEXT
@@ -1003,23 +1003,23 @@ OXCF1   2  1     2     1 2   7      0 19654 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of DO and BOD from the RCHRES    MET kg/iv      0 4.537E2   0   1000.
 #GROUP  239  TYPE TEXT
 $TEXT
-NUCF1   4  1     4     1 2   8      0 20755 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF1   4  1     4     1 2   8      0 20756 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows of dissolved nutrients     MET kg/iv      0 4.537E2   0   1000.
 #GROUP  240  TYPE TEXT
 $TEXT
-NUCF2   4  2     3     2 2   8      0 20759 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF2   4  2     3     2 2   8      0 20760 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows of adsorbed NH4 and PO4    MET kg/iv      0 4.537E2   0   1000.
 #GROUP  241  TYPE TEXT
 $TEXT
-PKCF1   5  1     5     1 2   9      0 21777 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF1   5  1     5     1 2   9      0 21778 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows from RCHRES (Group PLANK)  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  242  TYPE TEXT
 $TEXT
-PHCF1   2  1     2     1 2  10      0 21923 ENG lb/iv      0 1.602E4   0 3.531E4
+PHCF1   2  1     2     1 2  10      0 21924 ENG lb/iv      0 1.602E4   0 3.531E4
   PHCARB     TIC, CO2                       MET kg/iv      0 4.537E2   0   1000.
 #GROUP  243  TYPE TEXT
 $TEXT
-ACFLX1  7  1-22048     1 2  11      0 22227 ENG lb/iv      0 1.602E1   0 3.531E1
+ACFLX1  7  1-22049     1 2  11      0 22228 ENG lb/iv      0 1.602E1   0 3.531E1
   Total outflows  (Group ACIDPH)            MET kg/iv      0  0.4537   0      1.
 #GROUP  251  TYPE TEXT
 $TEXT
@@ -1055,23 +1055,23 @@ OXIF    2  1     2     1 2   7 2    0 19605 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of DO and BOD to RCHRES           MET kg/iv      0 4.537E2   0   1000.
 #GROUP  259  TYPE TEXT
 $TEXT
-NUIF1   4  1     4     1 2   8 2    0 19883 ENG lb/iv      0 1.602E4   0 3.531E4
+NUIF1   4  1     4     1 2   8 2    0 19884 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of dissolved nutrients            MET kg/iv      0 4.537E2   0   1000.
 #GROUP  260  TYPE TEXT
 $TEXT
-NUIF2   3  2     3     2 2   8 2    0 19891 ENG lb/iv      0 1.602E4   0 3.531E4
+NUIF2   3  2     3     2 2   8 2    0 19892 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of adsorbed NH4 and PO4           MET kg/iv      0 4.537E2   0   1000.
 #GROUP  261  TYPE TEXT
 $TEXT
-PKIF    5  1     5     1 2   9 2    0 20923 ENG lb/iv      0 1.602E4   0 3.531E4
+PKIF    5  1     5     1 2   9 2    0 20924 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of plankton related constituents  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  262  TYPE TEXT
 $TEXT
-PHIF    2  1     2     1 2  10 2    0 21894 ENG lb/iv      0 1.602E4   0 3.531E4
+PHIF    2  1     2     1 2  10 2    0 21895 ENG lb/iv      0 1.602E4   0 3.531E4
   Inflows of TIC and CO2 to RCHRES          MET kg/iv      0 4.537E2   0   1000.
 #GROUP  263  TYPE TEXT
 $TEXT
-ACINFL  7  1-22048     1 2  11 2    0 22178 ENG lb/iv      0 1.602E1   0 3.531E1
+ACINFL  7  1-22049     1 2  11 2    0 22179 ENG lb/iv      0 1.602E1   0 3.531E1
   Inflows of acid chemicals (Group ACIDPH)  MET kg/iv      0  0.4537   0      1.
 #GROUP  264  TYPE TEXT
 $TEXT
@@ -1115,27 +1115,27 @@ OXCF2   5  2   -75     2 2   7      0 19708 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of DO and BOD thru indiv exits   MET kg/iv      0 4.537E2   0   1000.
 #GROUP  279  TYPE TEXT
 $TEXT
-NUCF9   5  4   -75     4 2   8      0 20809 ENG lb/iv      0 1.602E4   0 3.531E4
+NUCF9   5  4   -75     4 2   8      0 20810 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of dissolved nutrients via exits MET kg/iv      0 4.537E2   0   1000.
 #GROUP  280  TYPE TEXT
 $TEXT
-OSNH4   5  4   -75     3 2   8      0 20829 ENG lb/iv      0 1.602E4   0 3.531E4
+OSNH4   5  4   -75     3 2   8      0 20830 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of adsorbed NH4 thru indiv exits MET kg/iv      0 4.537E2   0   1000.
 #GROUP  281  TYPE TEXT
 $TEXT
-OSPO4   5  4   -75     3 2   8      0 20849 ENG lb/iv      0 1.602E4   0 3.531E4
+OSPO4   5  4   -75     3 2   8      0 20850 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of adsorbed PO4 thru indiv exits MET kg/iv      0 4.537E2   0   1000.
 #GROUP  282  TYPE TEXT
 $TEXT
-PKCF2   5 10   -75     5 2   9      0 21787 ENG lb/iv      0 1.602E4   0 3.531E4
+PKCF2   5 10   -75     5 2   9      0 21788 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows thru indiv exits (Group PLANK)   MET kg/iv      0 4.537E2   0   1000.
 #GROUP  283  TYPE TEXT
 $TEXT
-PHCF2   5  3   -75     2 2  10      0 21975 ENG lb/iv      0 1.602E4   0 3.531E4
+PHCF2   5  3   -75     2 2  10      0 21976 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of TIC and CO2 thru indiv exits  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  284  TYPE TEXT
 $TEXT
-ACFLX2  5  7   -75-22048 2  11      0 22409 ENG lb/iv      0 1.602E1   0 3.531E1
+ACFLX2  5  7   -75-22049 2  11      0 22410 ENG lb/iv      0 1.602E1   0 3.531E1
   Outflows thru indiv exits (Group ACIDPH)  MET lb/iv      0  0.4537   0      1.
   END DATA
 END CLU

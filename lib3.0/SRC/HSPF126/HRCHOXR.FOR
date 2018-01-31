@@ -169,10 +169,12 @@ C
       SATDO= RVAL(3)
 C
 C     initialize dissolved oxygen & bod fluxes
-      DO 140 I= 1,8
+      DO 140 I= 1,9
         OXCF3(I,1)= 0.0
-        OXCF4(I,1)= 0.0
  140  CONTINUE
+      DO 150 I= 1,8
+        OXCF4(I,1)= 0.0
+ 150  CONTINUE
 C
       IF (OUTLEV.GT.1) THEN
         WRITE (MESSU,2010)
@@ -262,7 +264,7 @@ C         precipitation is input
 C         no precipitation
           PREC= 0.0
         END IF
-
+C
         IF (PREC .GT. 0.0001) THEN
 C         get gage air temperature
           REQFG= 2
@@ -302,11 +304,11 @@ C         compute DO mass from precipitation
 C	    PREC = ft (or m)
 C	    SAREA = ft2 (or m2)
 C	    SATDOP = mg oxygen/l 
-C           DOPREC = mg ft3 / l
+C           DOPREC = mg ft3 / l (or mg m3 /l)
 C
 C         compute DO mass already in reach (mg/l * ft3)  
           DOMASS= DOX*VOL
-C           DOMASS = mg ft3 / l 
+C           DOMASS = mg ft3 / l (or mg m3 /l)
 C
 C         update dissolved oxygen with precipitation DO flux 
           IF (DOPREC .GT. 0.0001) THEN
@@ -520,7 +522,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,I2,I8
+      INTEGER    I,I2,I8,I9
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  ACCVEC
@@ -529,6 +531,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       I2=2
       I8=8
+      I9=9
 C
 C     handle flux groups dealing with reach-wide variables
       CALL ACCVEC
@@ -549,7 +552,7 @@ C       handle flux groups dealing with individual exit gates
       END IF
 C
       CALL ACCVEC
-     I            (I8,OXCF3(1,FRMROW),
+     I            (I9,OXCF3(1,FRMROW),
      M             OXCF3(1,TOROW))
 C
       CALL ACCVEC
@@ -661,8 +664,8 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     I,IX,I0,I1,I2,I8,J,JLEN,ACNT,CLEN(24+NEXITS*2),
-     $            EXDAT(5)
-      REAL        PIFLX(2),PCFLX1(2),PCFLX2(5,2),PCFLX3(8),PCFLX4(8),
+     $            EXDAT(5),I9
+      REAL        PIFLX(2),PCFLX1(2),PCFLX2(5,2),PCFLX3(9),PCFLX4(8),
      $            PRDOX,PRDOXS,PRBOD,PRBODS,PROXST(2),DOXIN,DOXDIF,
      $            BODIN,BODDIF,APRINT(24+NEXITS*2)
       CHARACTER*16  UNITID,CCFLX3(7),CCFLX4(7)
@@ -703,6 +706,7 @@ C
       I1= 1
       I2= 2
       I8= 8
+      I9= 9
 C
 C     initialize array counter for binary printout, store variable
 C     names in local strings for use in building binary headers
@@ -741,7 +745,7 @@ C     computed fluxes
      O             PCFLX1)
 C
       CALL TRNVEC
-     I            (I8,OXCF3(1,LEV),FACTA,FACTB,
+     I            (I9,OXCF3(1,LEV),FACTA,FACTB,
      O             PCFLX3)
 C
       CALL TRNVEC
@@ -976,14 +980,16 @@ C
  30     CONTINUE
       END IF
 C
-      DO 40 I= 1, 8
+      DO 40 I= 1, 9
         IF (OXCF3X(I) .GE. 1) THEN
           PAD(OXCF3X(I)+ IVL1)= OXCF3(I,1)
         END IF
+ 40   CONTINUE
+      DO 50 I= 1, 8
         IF (OXCF4X(I) .GE. 1) THEN
           PAD(OXCF4X(I)+ IVL1)= OXCF4(I,1)
         END IF
- 40   CONTINUE
+ 50   CONTINUE
 C
       RETURN
       END
@@ -1036,7 +1042,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,I2,I8
+      INTEGER    I,I2,I8,I9
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   SETVEC
@@ -1045,6 +1051,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       I2=2
       I8=8
+      I9=9
 C     handle flux groups dealing with reach-wide variables
       CALL SETVEC
      I            (I2,0.0,
@@ -1064,7 +1071,7 @@ C       handle flux groups dealing with individual exit gates
       END IF
 C
       CALL SETVEC
-     I            (I8,0.0,
+     I            (I9,0.0,
      O             OXCF3(1,LEV))
 C
       CALL SETVEC
