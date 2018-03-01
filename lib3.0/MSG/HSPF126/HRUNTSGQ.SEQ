@@ -1,0 +1,130 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          232    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRUNTSGQ
+  END LABEL
+  DATA   CLU   232
+#GROUP   10  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Debug Error: Time interval on inpad, DELT, does not agree with time
+ interval on sequential file, DELTAT, in GETSEQ subroutine.
+ Relevant data:
+
+   DELT   DELTAT   File No.
+  &I       &I         &I
+
+ Aggregation/Disaggregation not allowed for sequential files, except
+ semi-monthly or monthly data will be disaggregated to daily data on
+ inpad
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Debug Error: In subroutine GETSEQ monthly or semi-monthly data is not
+ being disaggregated to daily data on inpad.
+ Relevant data:
+
+   DELT   DELTAT   File No.   Format Class
+  &I       &I         &I             &I
+
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Debug Error: In subroutine GETSEQ the value for format class is out
+ of bounds.
+ Relevant data:
+
+ Format Class   File
+        &I     &I
+
+#GROUP   13  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Trying to read more values than exist on input card in subroutine SEQINP.
+ Relevant data:
+
+ MAXCNT   CRDCNT   File No.
+  &I       &I        &I
+
+ MAXCNT is number of values on card
+ CRDCNT is number of card values trying to be read
+#GROUP   14  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Debug Error: Month read from Hydrocomp daily format card is out of
+ bounds in subroutine DACRD.
+ Relevant data:
+
+  SEQFL   MONTH
+  &I      &I
+
+#GROUP   15  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Invalid date (&I   /&I   /&I   ) found on input card.
+ The card is ignored.
+#GROUP   16  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Invalid card number (&I   , at &I   /&I   /&I   ) found on input card.
+ The card is ignored.
+#GROUP   17  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Error in sequence of input cards in subroutine CHKSEQ.
+ Relevant data:
+ CARDNO/DATE of last card read: &I   , &I   /&I   /&I
+ CARDNO/DATE of last card in proper sequence: &I   , &I   /&I   /&I
+#GROUP   21  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Error reading input card in sequential time series (SEQ) file.
+ The card is:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+ The FORTRAN read format is:
+
+&CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  END DATA
+END CLU

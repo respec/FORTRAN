@@ -1,0 +1,71 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          124    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 473
+  LABEL
+    GRPNAM  COPY
+  END LABEL
+  DATA   CLU   124
+#GROUP    1  TYPE TEXT
+$TEXT
+  2  1 1TIMESERIES        101    101    301    301
+  0  0 0END COPY          000    000    000    000
+#GROUP   50  TYPE PRM1
+$SCREEN
+  Select COPY table to modify.
+ 
+  @ TIMESERIES
+ 
+ 
+$FIELD @ T
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the COPY TIMESERIES table.
+#GROUP  101  TYPE PRM2
+$HEADER
+  Copy-opn
+    x -  x  NPT  NMN
+$TNAME  TIMESERIES
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+COPY operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 20
+_DEFAULT  0
+_HELP
+NPT  is the number of point-valued time series to be copied.
+_PNAME  NPT
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 20
+_DEFAULT  0
+_HELP
+NMN  is the number of mean-valued time series to be copied.
+_PNAME  NMN
+$HELP
+Number of time series to be copied using COPY Operation.
+#GROUP  301  TYPE TEXT
+$TEXT
+(1X,2I10)
+       NPT       NMN
+  END DATA
+END CLU

@@ -1,0 +1,369 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          131    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 473
+  LABEL
+    GRPNAM  REPORT
+  END LABEL
+  DATA   CLU   131
+#GROUP    1  TYPE TEXT
+$TEXT
+ 10  1 1REPORT-FLAGS      101    101    301    301
+ 15  1 1REPORT-TITLE      102    102    302    302
+ 11  1 1REPORT-SRC        103    103    303    303
+ 11  1 1REPORT-CON        104    104    304    304
+ 13  1 1REPORT-SUMM       105    105    305    305
+  0  0 0END REPORT        000    000    000    000
+#GROUP   50  TYPE PRM1
+$SCREEN
+  Select REPORT table(s) to modify.
+
+  @AREPORT-FLAGS
+  @BREPORT-TITLE
+  @CREPORT-SRC
+  @DREPORT-CON
+$FIELD @A
+_TYPE OPTION
+_SET  1
+_WIDTH 14 QUIET
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the REPORT REPORT-FLAGS table.
+$FIELD @B
+_TYPE OPTION
+_SET  1
+_WIDTH 14 QUIET
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the REPORT REPORT-TITLE table.
+$FIELD @C
+_TYPE OPTION
+_SET  1
+_WIDTH 12 QUIET
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the REPORT REPORT-SRC table.
+$FIELD @D
+_TYPE OPTION
+_SET  1
+_WIDTH 12 QUIET
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+
+Toggle this field on to edit the REPORT REPORT-CON table.
+#GROUP  101  TYPE PRM2
+$HEADER
+  Rept-opn
+    x -  x REPT NCON NSRC FORM CWID PWID PLIN PCOD  PYR
+$TNAME  REPORT-FLAGS
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+REPORT operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  10 : 99
+_DEFAULT  30
+_HELP
+REPTFL is the file unit number for the report output file
+_PNAME  REPTFL
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 50
+_DEFAULT  1
+_HELP
+NCON is the number of constituents (i.e. timeseries per source) to be
+entered in report.  Note that, for example, the concentration and loading
+of the same substance count as separate constituents for this purpose.
+_PNAME  NCON
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 99
+_DEFAULT  1
+_HELP
+NSRC is the number of sources (e.g. land segments, point sources,
+atmospheric deposition to reach) to be entered in report.
+_PNAME  NSRC
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  0 : 99
+_DEFAULT  1
+_HELP
+FORMFG specifies the format for the report: 0 - database records;
+1 - unit-area loading table; 2 - total loading table; 3 - general
+summary table; 10+ - user-defined format (requires input format file
+whose unit number in the FILES block equals FORMFG).
+_PNAME  FORMFG
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  -2 : 20
+_DEFAULT  10
+_HELP
+CWID is the column width for the reported tables: 8-20.  -1 means write
+tab-delimited file.  -2 means write comma-delimited file.
+_PNAME  CWID
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  20 : 1000
+_DEFAULT  80
+_HELP
+PWID is the page width in characters, used only for the general flux
+table format (FORMFG=3).
+_PNAME  PWID
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  5 : -999
+_DEFAULT  40
+_HELP
+PLIN is the page length in lines.  Not used for user-defined format
+(FORMFG >= 4).
+_PNAME  PLIN
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  3 : 5
+_DEFAULT  5
+_HELP
+PCODE is the print interval code for the report: 3 - daily;
+4 - monthly; 5 - annual.
+_PNAME  PCODE
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE  1 : 12
+_DEFAULT  9
+_HELP
+PYREND is the month ending the print year for the report.
+_PNAME  PYREND
+$HELP
+Flags for REPORT Operation.
+#GROUP  301  TYPE TEXT
+$TEXT
+(1X,9I10)
+       REPT      NCON      NSRC      FORM      CWID      PWID      PLIN      PCOD       PYR
+#GROUP  102  TYPE PRM2
+$HEADER
+  Rept-opn
+    x -  x<--------------------------title--------------------------->
+$TNAME  REPORT-TITLE
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+REPORT operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  60
+_COLUMN 11
+_TYPE CHARACTER
+_HELP
+TITLE is the title of the report, to appear at the top of each page.
+_PNAME  TITLE
+$HELP
+TITLE is the title of the report, to appear at the top of each page.
+#GROUP  302  TYPE TEXT
+$TEXT
+(1X,15A4)
+      TITLE
+#GROUP  103  TYPE PRM2
+$HEADER
+  Rept-opn
+    x -  x<---source-name---->
+$TNAME  REPORT-SRC
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+REPORT operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  20
+_COLUMN 11
+_TYPE CHARACTER
+_HELP
+SRCID is the 20-character name for a source.
+_PNAME  SRCID1
+$HELP
+SRCID is an 20-character name for each source.  NSRC lines are input
+for each operation.
+#GROUP  303  TYPE TEXT
+$TEXT
+(1X,5A4)
+            SRCID
+#GROUP  104  TYPE PRM2
+$HEADER
+  Rept-opn
+    x -  x<-----con-name-----> TRAN SIGD DECP
+$TNAME  REPORT-CON
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+REPORT operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  20
+_COLUMN 11
+_TYPE CHARACTER
+_HELP
+CONID is a 20-character name for each constituent.
+_PNAME  CONID
+$FIELD  FIELD4
+_WIDTH  4
+_COLUMN 32
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID SUM ,AVER,MAX ,MIN ,LAST
+_DEFAULT SUM
+_HELP
+TRAN  is  the "transformation code"  used to  aggregate data    
+from the basic interval (internal  time step) to the  REPORT
+interval. Valid values are:  SUM, AVER, MAX, MIN, and LAST.
+_PNAME  TRAN
+$FIELD  FIELD5
+_WIDTH  5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE 2:5
+_DEFAULT 5
+_PNAME  SIGD
+_HELP
+SIGD is the number of significant digits for reporting.
+$FIELD  FIELD6
+_WIDTH  5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE 0:3
+_DEFAULT 2
+_PNAME  DECPLA
+_HELP
+DECPLA is the number of decimal places for reporting.
+$HELP
+Name and parameters for each constituent.  NCON lines are given.
+#GROUP  304  TYPE TEXT
+$TEXT
+(1X,5A4,1X,A4,2I10)
+       Source name    TRAN      SIGD    DECPLA
+#GROUP  105  TYPE PRM2
+$HEADER
+  Rept-opn
+    x -  x<--src-sum-header--> STRN <--tim-sum-header--> TTRN STTR
+$TNAME  REPORT-SUMM
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+REPORT operations to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  20
+_COLUMN 11
+_TYPE CHARACTER
+_HELP
+SRCHED is the header used to mark the summary over all sources.
+_PNAME  SRCHED
+$FIELD  FIELD4
+_WIDTH  4
+_COLUMN 32
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID SUM ,AVER,MAX ,MIN ,LAST,PCT 
+_DEFAULT SUM
+_HELP
+SRCTRN is the "transformation code" used to aggregate data across all
+sources.
+Valid values are:  SUM, AVER, MAX, MIN, LAST, and PCT.
+_PNAME  SRCTRN
+$FIELD  FIELD5
+_WIDTH  20
+_COLUMN 37
+_TYPE CHARACTER
+_HELP
+TIMHED is the header used to mark the summary over the REPORT time
+intervals.
+_PNAME  TIMHED
+$FIELD  FIELD6
+_WIDTH  4
+_COLUMN 58
+_PROTECT CORRECT
+_TYPE CHARACTER
+_VALID SUM ,AVER,MAX ,MIN ,LAST
+_DEFAULT SUM
+_HELP
+TIMTRN is the "transformation code" used to aggregate data from the
+REPORT intervals to their summary.  This value is independent of 
+TRAN in REPORT-CON, which is used to aggregate from the run interval
+to the REPORT interval.
+Valid values are:  SUM, AVER, MAX, MIN, and LAST.
+_PNAME  TIMTRN
+$FIELD  FIELD7
+_WIDTH  5
+_COLUMN 62
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE 1:2
+_DEFAULT 2
+_PNAME  STTRFG
+_HELP
+STTRFG indicates how to compute the double-summary value (over
+all sources and over all REPORT intervals).  If 1, then SRCTRN
+is applied to the time summaries for each source.  If 2, then
+TIMTRN is applied to the source summaries for each REPORT
+interval.
+$HELP
+These parameters describe how the reported values are summarized
+when aggregated across time and across sources.
+#GROUP  305  TYPE TEXT
+$TEXT
+(1X,2(5A4,1X,A4,1X)I10)
+       Source header  SRCT       Time header   TIMT    STTRFG
+  END DATA
+END CLU

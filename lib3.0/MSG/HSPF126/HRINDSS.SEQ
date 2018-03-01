@@ -1,0 +1,94 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          219    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRINDSS
+  END LABEL
+  DATA   CLU   219
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified data record number not defined in PATHNAMES block
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified gap value is invalid.  UNDF (undefined) was substituted.  Valid
+ values are ZERO, UNDF.  Supplied value was &CCC.
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified amend string is invalid.  ADD was substituted.  Valid values are
+ ADD and REPL.  Supplied value was &CCC.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified pathname does not conform to conventions for a regular timeseries.
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified data record is not a regular timeseries.
+#GROUP    6  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Program bug.  A fatal error occurred reading the first and last data points.
+ Return code for first point was &I   , and for last point was &I   .
+#GROUP    7  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Time span of simulation is not within time span of specified DSS source data
+ record(s).  At least one endpoint is missing.   Return code for first point
+ was &I   , and for last point was &I   .
+#GROUP    8  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Amend code is ADD, but data already present in record.  Data must be absent,
+ or amend code must be REPL.
+#GROUP    9  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified system string is invalid.  Valid values are ENGL and METR.  Supplied
+ value was &CCC.
+#GROUP   10  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Data type not consistent at beginning and end of run.  Starting type is
+&CCCCCCC, and ending type is &CCCCCCC.
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Data type &CCCCCCC specified in PATHNAMES block does not match actual data
+ type &CCCCCCC.
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+ VOLNO: &I
+
+ Specified data record number requires that DSS File number &I
+ must be successfully opened in the FILES block.
+  END DATA
+END CLU

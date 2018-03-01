@@ -1,0 +1,240 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          215    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 200
+  LABEL
+    GRPNAM  HRINTS
+  END LABEL
+  DATA   CLU   215
+#GROUP   12  TYPE TEXT
+$TEXT
+TSS       SEQ       WDM       DSS
+#GROUP   13  TYPE TEXT
+$TEXT
+ADD       INST      REPL
+#GROUP   14  TYPE TEXT
+$TEXT
+ENGL      METR
+#GROUP   15  TYPE TEXT
+$TEXT
+ZERO      UNDF
+#GROUP   16  TYPE TEXT
+$TEXT
+HYDHR             60         3
+HYDDAY          1440         3
+HYDSMN          1440         3
+HYDMON          1440         3
+HYDFIV             5         3
+HYDFIF            15         3
+#GROUP   17  TYPE TEXT
+$TEXT
+SAME      DIV       AVER      SUM       MAX       MIN       INTP      LAST
+#GROUP   18  TYPE TEXT
+$TEXT
+   1     1    1                                       1
+   1     2    1                                       1
+   1     3              1                             3
+   2     1                                  1         7
+   2     2    1    1                                  2
+   2     3              1                             3
+   3     1                                       1    8
+   3     2              1    1    1    1              4
+   3     3              1    1    1    1              3
+$HELP
+CASE STKND             STTRAN
+              1    2    3    4    5    6    7    8  def
+#GROUP   21  TYPE TEXT
+$TEXT
+(10X,I2,1X,I2,1X,I2,1X,I1,12F5.0)
+#GROUP   22  TYPE TEXT
+$TEXT
+(7X,2I2,I1,11F6.0)
+#GROUP   23  TYPE TEXT
+$TEXT
+(7X,I2,I1,12F5.0)
+#GROUP   24  TYPE TEXT
+$TEXT
+(6X,I2,12F6.0)
+#GROUP   25  TYPE TEXT
+$TEXT
+(1X,3I2,I1,36F2.0)
+#GROUP   26  TYPE TEXT
+$TEXT
+(1X,3I2,I1,12F6.0)
+#GROUP   31  TYPE TEXT
+$TEXT
+        30         0         0
+#GROUP   32  TYPE TEXT
+$TEXT
+        30         0         0
+#GROUP   41  TYPE TEXT
+$TEXT
+PWATER  PERO   1 1       0.08333    INFLOW  IVOL   1 1
+PWTGAS  POHT   1 1           1.0    INFLOW  IHEAT  1 1
+SEDMNT  SOSED  1 1       0.33333    INFLOW  ISED   1 1
+SEDMNT  SOSED  1 1       0.33333    INFLOW  ISED   2 1
+SEDMNT  SOSED  1 1       0.33333    INFLOW  ISED   3 1
+PWTGAS  PODOXM 1 1           1.0    INFLOW  OXIF   1 1
+NITR    PONO3  1 1           1.0    INFLOW  NUIF1  1 1
+NITR    TSAMS  1 1           1.0    INFLOW  NUIF1  2 1
+NITR    TSAMS  5 1           1.0    INFLOW  NUIF1  2 1
+NITR    SSAMS  3 1           1.0    INFLOW  NUIF1  2 1
+PHOS    TSP4S  1 1           1.0    INFLOW  NUIF1  4 1
+PHOS    TSP4S  5 1           1.0    INFLOW  NUIF1  4 1
+PHOS    SSP4S  3 1           1.0    INFLOW  NUIF1  4 1
+NITR    SEDN   2 1           1.0    INFLOW  NUIF2  1 1
+PHOS    SEDP   2 1           1.0    INFLOW  NUIF2  2 1
+NITR    SEDN   1 1           1.0    INFLOW  PKIF   3 1
+PHOS    SEDP   1 1           1.0    INFLOW  PKIF   4 1
+PWTGAS  POCO2M 1 1           1.0    INFLOW  PHIF   2 1
+$HELP
+ perlnd to rchres
+#GROUP   42  TYPE TEXT
+$TEXT
+IWATER  SURO   1 1       0.08333    INFLOW  IVOL   1 1
+IWTGAS  SOHT   1 1           1.0    INFLOW  IHEAT  1 1
+SOLIDS  SOSLD  1 1       0.33333    INFLOW  ISED   1 1
+SOLIDS  SOSLD  1 1       0.33333    INFLOW  ISED   2 1
+SOLIDS  SOSLD  1 1       0.33333    INFLOW  ISED   3 1
+IWTGAS  SODOXM 1 1           1.0    INFLOW  OXIF   1 1
+IWTGAS  SOCO2M 1 1           1.0    INFLOW  PHIF   2 1
+$HELP
+ implnd to rchres
+#GROUP   50  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in EXT SOURCES block.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP   51  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in EXT SOURCES block, but no category
+  tags were defined in the CATEGORY block.
+#GROUP   52  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in NETWORK block.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP   53  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in NETWORK block, but no category
+  tags were defined in the CATEGORY block.
+#GROUP   54  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in SCHEMATIC block.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP   55  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in SCHEMATIC block, but no category
+  tags were defined in the CATEGORY block.
+#GROUP   56  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Unrecognized category tag &C was supplied by user in EXT TARGETS block.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP   57  TYPE TEXT
+$TEXT
+   20    1    1    5
+  Category tag &C was supplied by user in EXT TARGETS block, but no category
+  tags were defined in the CATEGORY block.
+#GROUP   96  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The timeseries below is input only.  User is attempting to output it.
+     Opn-ID       Grp-Name      Mem-Name
+   &CCCCC &I       &CCCCC        &CCCCC
+#GROUP   97  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The timeseries below is output only.  User is attempting to input it.
+     Opn-ID       Grp-Name      Mem-Name
+   &CCCCC &I       &CCCCC        &CCCCC
+#GROUP  111  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The time series group-name &CCCCC, for operation ID &CCCCC, &I   ,
+ encountered in the ext sources, network or ext targets blocks, is invalid.
+ Was it placed in the wrong columns?
+#GROUP  112  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The following time series member-name, encountered in the
+ ext sources, network or ext targets blocks, is invalid.  Was it placed
+ in the wrong columns?
+     Opn-ID      Grp-Name     Mem-Name
+   &CCCCC &I      &CCCCC       &CCCCC
+#GROUP  115  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A member-name subscript, encountered in the ext sources, network
+ or ext targets blocks, is invalid (out of range).  Was it placed in the
+ wrong columns?
+     Opn-ID      Grp-Name     Mem-Name    Subscript
+                                            Value
+   &CCCCC &I      &CCCCC       &CCCCC       &I
+#GROUP  116  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The time intervals of the following source and target time series,
+ specified in the ext sources, network or ext targets blocks, are
+ not compatible.
+    Source: &CCCCC, &I
+    Target: &CCCCC, &I
+#GROUP  117  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The following source/target pair of time series is specified or
+ implied in an entry in the ext sources, network or ext targets
+ blocks.  However, this is invalid because the source is mean valued
+ and the target is point-valued.
+              Opn-ID       Grp-Name     Member-ID
+    Source: &CCCCC, &I      &CCCCC    &CCCCC &I   &I
+    Target: &CCCCC, &I      &CCCCC    &CCCCC &I   &I
+#GROUP  118  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The source/target transformation function, specified in the following
+ entry which appeared in the ext sources, network or ext targets
+ blocks, is invalid:
+
+   Transf  Stkind   Case  |            Opn-ID     Grp-Name    Member-ID
+ Function                 |  Source: &CCCCC,&I      &CCCCC  &CCCCC &I   &I
+   &CCC     &I     &I     |  Target: &CCCCC,&I      &CCCCC  &CCCCC &I   &I
+#GROUP  119  TYPE TEXT
+$TEXT
+   20    1    1    5
+ For each entry in the network or schematic block, the source opn must be
+ "upstream" of the target operation; that is, the source must appear
+ ahead of the target in the opn sequence block.  However, the
+ following entry violates this condition:
+     Source         Target
+     Opn-ID         Opn-ID
+   &CCCCC &I      &CCCCC &I
+#GROUP  123  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Program bug.  VOLCOD requests EXPAD operation when EXPAD not yet
+ implemented.
+#GROUP  124  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Program bug.  DSS record ID number &I    listed in EXT SOURCES or EXT TARGETS
+ blocks does not appear in PATHNAMES block.  This should have caused a fatal
+ error in subroutine DSSDS.
+#GROUP  150  TYPE TEXT
+$TEXT
+   20    1    1    5
+ Aggregation to a WDM dataset requires that the timestep of the dataset
+ be an even multiple of the run timestep.  Check TCODE and TSSTEP of
+ the dataset.  Also, VBTIME may be incompatible with TCODE, TSSTEP.
+  END DATA
+END CLU

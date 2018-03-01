@@ -1,0 +1,149 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          220    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HIOSTA
+  END LABEL
+  DATA   CLU   220
+#GROUP    1  TYPE TEXT
+$TEXT
+   10    1    1    5
+ In this configuration of HSPF, input of the STASAV file requires
+ specifications of the variable name and any necessary subscripts.
+
+ A memory location was input.
+#GROUP    2  TYPE TEXT
+$TEXT
+   10    1    1    5
+ In this configuration of HSPF, input of the STASAV file requires
+ specifications of a memory location.
+
+ A variable name was input.
+#GROUP    3  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The variable name '&CCCCC' in the STASAV file is invalid.
+ It may be mispelled, placed in the wrong field, or it may
+ not be currently available in the "Special Actions Variable
+ Name" library.
+#GROUP    4  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The number of nonzero subscripts specified for the STASAV file
+ variable '&CCCCC' is not correct.
+
+ The correct number of dimensions is &I   .
+#GROUP    5  TYPE TEXT
+$TEXT
+   10    1    1    5
+ At least one of the specified subscripts for the STASAV file
+ variable '&CCCCC' exceeds the corresponding dimension of the array.
+#GROUP    6  TYPE TEXT
+$TEXT
+   10    1    1    5
+ User specified a bad repeat code in the STASAV file.
+ 
+ The supplied value of '&C' was interpreted as: &I
+
+ Valid values are 'MI','HR','DY','MO','YR' or '  ' (defaults to minutes).
+#GROUP    8  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading special action numerical address from string:
+
+ &CCCCCCCCCCCCCC
+#GROUP    9  TYPE TEXT
+$TEXT
+   10    1    1    5
+  Unrecognized category tag &C was supplied by user the STASAV file.
+  Is it spelled correctly?  Is it placed in the correct columns here?
+  In the CATEGORY block?
+#GROUP   10  TYPE TEXT
+$TEXT
+   10    1    1    5
+  Category tag &C was supplied by user in the STASAV file, but no category
+  tags were defined in the CATEGORY block.
+#GROUP   11  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading general information from the STASAV header line.
+ The line begins with the string:
+ 
+             &CCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   12  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading column dates from the STASAV header line.
+#GROUP   13  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading variable status line from the STASAV file.
+ The line begins with the string:
+ 
+             &CCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+#GROUP   14  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The workspace variable &CCCCC at address &I     was not found.
+ It was referred to in the STASAV file.
+#GROUP   15  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The user-defined variable name (UVNAME) &CCCCC, referred to in the
+ STASAV file, was not defined as a workspace variable in the User's
+ Control Input (UCI) file.
+#GROUP   16  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The GLOBAL variable name &CCCCC, referred to in the STASAV file,
+ was not defined in the User's Control Input (UCI) file.
+#GROUP   17  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The GLOBAL variable name &CCCCC was referred to in the STASAV file.
+ However, no workspace variables were defined in the User's Control
+ Input (UCI) file.
+#GROUP   18  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Operation type '&CCCCC' does not allow STASAV file updates.
+ 
+ Valid operation types are  'PERLND','IMPLND','RCHRES','COPY  ','PLTGEN',
+ and 'GENER '.
+#GROUP   19  TYPE TEXT
+$TEXT
+   10    1    1    5
+  An invalid variable type code was specified in the STASAV file for
+  the variable &CCCCC.  The code found was &I   .  Valid codes are:
+
+     2: integer     3: real     4: double precision
+
+  The default is real.
+#GROUP   20  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading integer value for variable &CCCCC from the STASAV
+ file. The input string was: '&CCCCCCCCC'
+#GROUP   21  TYPE TEXT
+$TEXT
+   10    1    1    5
+ Problem reading real value for variable &CCCCC from the STASAV
+ file. The input string was: '&CCCCCCCCC'
+#GROUP   22  TYPE TEXT
+$TEXT
+   10   11    0    5
+ The STASAV file contains more than the &I    variable lines allowed.
+ The extra lines will be ignored.
+#GROUP   31  TYPE TEXT
+$TEXT
+   10    1    1    5
+ The STASAV file variable &CCCCC was declared in the STASAV file to
+ be of the type &I   .  However, this variable was found to be of
+ type &I   .  Valid codes are:
+
+     2: integer     3: real     4: double precision
+  END DATA
+END CLU

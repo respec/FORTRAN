@@ -1,0 +1,22 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          151    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  REPORTTS
+  END LABEL
+  DATA   CLU   151
+#GROUP    1  TYPE TEXT
+$TEXT
+INPUT   10
+#GROUP    2  TYPE TEXT
+$TEXT
+TIMSER
+#GROUP   11  TYPE TEXT
+$TEXT
+TIMSER 50 99   -17   -18 2   0 2    0 12476 ENG any        0       1   0       1
+  Input time series                         MET any        0       1   0       1
+  END DATA
+END CLU

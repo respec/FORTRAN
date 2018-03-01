@@ -1,0 +1,139 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          346    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRCHGQU
+  END LABEL
+  DATA   CLU   346
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ RCHRES: &I
+
+ In subroutine advqal, the value of denom is zero.  Under this condition
+ ISQAL and RSQALS should also be zero, but they have the values &R         and
+ &R        , respectively.  &CCCCCCCCCCCCCCCCCCC is the relevant constituent
+ and the associated sediment size fraction is &I    (1-SAND,2-SILT,3-CLAY).
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ RCHRES: &I
+
+ In subroutine advqal, the value of bsed is zero.  Under this condition
+ DSQAL and RBQALS should also be zero, but they have the values &R         and
+ &R        , respectively.  &CCCCCCCCCCCCCCCCCCC is the relevant constituent
+ and the associated sediment size fraction is &I    (1-SAND,2-SILT,3-CLAY).
+#GROUP   11  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ One or more quality constituents in section GQUAL are sediment associated.
+ This means that section SEDTRN must also be active, but it is not.
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ One or more quality constituents in section GQUAL undergoes photolysis
+ decay.  This means that AUX1FG in section HYDR must be on to calculate
+ average depth, but it is not.
+#GROUP   13  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ One or more constituents in section GQUAL undergoes volatilization.
+ For a free-flowing reach (LKFG=0), this means that AUX1FG and AUX2FG
+ in section HYDR must be on to calculate average velocity, but they
+ are not.
+#GROUP   14  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ One or more constituents in section GQUAL undergoes volatilization.
+ For a lake (LKFG=1), this means that AUX1FG in section HYDR must be on
+ to calculate average depth, but it is not.
+#GROUP   51  TYPE TEXT
+$HELP
+ 10 degrees, Spring, Summer, Fall, Winter
+$TEXT
+   .0102   .0178   .0285   .0327   .0418   .0370    .339    .433    .840
+    1.16    1.47    1.50    2.74    2.90    2.90    2.80    2.70    3.00
+ .000466  .00316  .00937   .0190   .0291   .0265    .329    .438    .837
+    1.17    1.47    1.50    2.69    2.79    2.80    2.80    2.70    2.50
+ .000419  .00287  .00851  .00173   .0266   .0291    .299    .385    .764
+    1.07    1.36    1.37    2.46    2.52    2.60    2.60    2.50    2.30
+ .000320  .00239  .00726   .0151   .0238   .0236   .0292    .344    .696
+    .980    1.23    1.27    2.26    2.35    2.43    2.30    2.40    2.10
+#GROUP   52  TYPE TEXT
+$HELP
+ 20 degrees, Spring, Summer, Fall, Winter
+$TEXT
+ .000351  .00251  .00809   .0181   .0282   .0283    .329    .424    .841
+    1.17    1.47    1.50    2.68    2.80    2.80    2.80    2.76    2.50
+ .000444  .00315  .00961   .0197   .0302   .0303    .347    .447    .883
+    1.23    1.55    1.58    2.81    2.96    2.90    3.00    2.80    2.70
+ .000274  .00220  .00689   .0148   .0233   .0233    .268    .345    .696
+    .980    1.24    1.26    2.30    2.35    2.42    2.40    2.20    2.26
+ .000147  .00147  .00534   .0115   .0188   .0188    .221    .286    .597
+    .840    1.06    1.09    1.95    2.03    2.07    2.10    2.36    1.60
+#GROUP   53  TYPE TEXT
+$HELP
+ 30 degrees, Spring, Summer, Fall, Winter
+$TEXT
+ .000230  .00213  .00726   .0165   .0264   .0269    .320    .414    .827
+    1.15    1.45    1.48    2.64    2.74    2.76    2.80    2.70    2.50
+ .000365  .00232  .00902   .0192   .0302   .0304    .374    .437    .907
+    1.34    1.59    1.62    2.89    3.03    3.00    3.00    2.90    2.80
+ .000135  .00144  .00484   .0116   .0189   .0230    .223    .284    .623
+    .850    1.09    1.11    2.00    2.07    2.09    2.10    2.10    1.90
+.0000410 .000650  .00276  .00755   .0131   .0134    .170    .219    .475
+    .669    .850    .880    1.57    1.63    1.67    1.73    1.63    1.60
+#GROUP   54  TYPE TEXT
+$HELP
+ 40 degrees, Spring, Summer, Fall, Winter
+$TEXT
+ .000109  .00137  .00296  .00799   .0138   .0142    .178    .230    .526
+    .676    .890    .923    1.69    1.73    1.78    1.50    1.70    1.60
+ .000249  .00232  .00793   .0181   .0291   .0297    .354    .458    .971
+    1.28    1.43    1.63    2.92    3.05    3.00    3.10    2.90    2.90
+ .000109  .00137  .00535   .0138  .02319   .0239    .108    .384    .791
+    1.11    1.39    1.42    2.52    2.62    2.60    4.70    2.60    2.50
+.0000054 .000156  .00102  .00379  .00753  .00810   .0752    .147    .338
+    .480    .610    .620    1.12    1.16    1.19    1.39    1.20    1.16
+#GROUP   55  TYPE TEXT
+$HELP
+ 50 degrees, Spring, Summer, Fall, Winter
+$TEXT
+.0000371 .000710  .00355  .00730  .00184   .0196    .266    .348    .724
+    1.02    1.29    1.32    2.34    2.40    2.44    2.50    2.50    2.30
+.0000079  .00175  .00653   .0163   .0267   .0277    .343    .444    .904
+    1.26    1.60    1.63    2.90    3.04    3.00    3.10    2.90    2.90
+ .000152 .000225  .00129  .00439  .00864  .00920    .124    .166    .365
+    .517    .660    .680    1.22    1.25    1.31    1.34    1.31    1.24
+.0000004.0000157 .000178  .00120  .00293  .00368   .0629   .0821    .196
+    .275    .351    .355    .630    .640    .690    .710    .710    .690
+  END DATA
+END CLU
+
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

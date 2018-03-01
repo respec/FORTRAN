@@ -1,0 +1,63 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          374    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HREPORT
+  END LABEL
+  DATA   CLU   374
+#GROUP    1  TYPE TEXT
+$TEXT
+@LOOP COL=SRC ROW=TIM TAB=CON
+@TITLE
+@CON:**
+            @SRC:**
+@TIM:**     @**:**:**
+@TSUM:12    @**:**:00
+
+#GROUP    2  TYPE TEXT
+$TEXT
+@LOOP COL=SRC ROW=TIM TAB=CON
+@TITLE
+@CON:**
+            @SRC:**     @SSUM:12    
+@TIM:**     @**:**:**   @**:00:**
+@TSUM:12    @**:**:00   @**:00:00
+
+#GROUP    3  TYPE TEXT
+$TEXT
+@LOOP COL=TIM ROW=CON TAB=SRC
+@TITLE
+@SRC:**
+                    @TIM:**     @TSUM:12    
+@CON:**             @**:**:**   @**:**:00
+
+#GROUP   11  TYPE TEXT
+$TEXT
+SUM  AVER MAX  MIN  LAST PCT        
+#GROUP   12  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An invalid transformation (aggregation) functional was specified in the
+ user's control input.  The valid values are SUM, AVER, MAX, MIN and LAST.
+ The value supplied is '&CCC'.  Was it mis-spelled or placed in the
+ wrong columns?
+#GROUP   21  TYPE TEXT
+$TEXT
+   10    1    1    5
+ REPORT: &I   
+
+ In a field marker, one of the indices on sources, constituents, or time
+ step cannot be read correctly as an integer.  Part of the affected line
+ reads:      @CCCCCCC
+#GROUP   22  TYPE TEXT
+$TEXT
+   10    1    1    5
+ REPORT: &I   
+
+ In a field marker, one of the indices on sources, constituents, or time
+ step is out of range.  Part of the affected line reads:      @CCCCCCC
+  END DATA
+END CLU

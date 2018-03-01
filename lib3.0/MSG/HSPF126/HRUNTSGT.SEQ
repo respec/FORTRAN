@@ -1,0 +1,85 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          233    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRUNTSGT
+  END LABEL
+  DATA   CLU   233
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ The end of chronological data for this tss dataset has been
+ encountered in bcwupd subroutine.
+ Relevant data:
+
+          BCW      INPEND      FRMTIM       TENDR        DSNO
+        &I          &I          &I          &I          &I
+
+ BCW is the block control word
+ INPEND is the time at the end of the inpad
+ FRMTIM is the frame time of the current value from the tss
+ TENDR is time at end of the run
+ DSNO is dataset number
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ The year read from the tss in subroutine bcwupd does not agree with the
+ current year.
+ Relevant data:
+
+ YEAR FROM TSS   PRESENT YEAR       DSNO
+     &I             &I             &I
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Debug error:  BTI (block type indicator) from the current BCW does not
+ have a valid value in subroutine fillws.
+ Relevant data:
+
+    BTI   DSNO
+  &I     &I
+
+ BTI allows values from 1-4, where 1 is uncompressed data, 2 is zero compressed
+ data, 3 is undefined compressed data, and 4 is linear variation.
+ DSNO is dataset number.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+&D
+
+ FILE: &I
+
+ Debug error:  In subroutine gtssrc the desired tss record number is out of
+ the bounds of the current dataset.
+ Relevant data:
+
+  RECNO  FREC  LREC  DSNO
+  &I    &I    &I    &I
+
+ RECNO is the desired record number in tss.
+ FREC, LREC are the first and last record number in this dataset.
+ DSNO is the dataset number.
+  END DATA
+END CLU
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

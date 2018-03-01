@@ -1,0 +1,62 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          345    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRCHSED
+  END LABEL
+  DATA   CLU   345
+#GROUP    1  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ RCHRES: &I
+
+ The bed storage of sediment size fraction &I    is empty.
+ (1- sand 2- silt 3- clay)
+#GROUP    2  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ RCHRES: &I
+
+ The total bed sediment depth has a value of &R        , which is above the
+ "warning level" (bedwrn) specified in your input as &R        .
+#GROUP    3  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ RCHRES: &I
+
+ Subroutine Colby is set up to simulate sand transport only when the
+ following conditions are met:
+
+  0.1<db50<0.8mm; 0.1<hydraulic radius<100ft; 1<velocity<10ft/sec.
+
+ At least one of the values printed below is outside of this range.
+
+      DB50M               HRADE              AVVELE
+ &R                  &R                  &R
+
+ HSPF will automatically switch to the Toffaleti method for this time step.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+ When sediment is being simulated, all 3 "auxiliary flags" (AUX1FG, etc)
+ in section HYDR must be turned on to compute shear velocity, etc.
+ This was not done.
+#GROUP    5  TYPE TEXT
+$TEXT
+   20    1    1    5
+ When specifying the initial composition of the bed, the fraction of
+ sand, silt, and clay must sum to a value close to 1.0.  This
+ condition was not met.  The values supplied were:
+       Sand       Silt       Clay
+ &R         &R         &R
+  END DATA
+END CLU

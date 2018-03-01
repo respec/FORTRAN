@@ -1,0 +1,33 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          349    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HRCHPLK
+  END LABEL
+  DATA   CLU   349
+#GROUP    1  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ ZOOFG is on, but PHYFG is off.  Zooplankton cannot be simulated
+ without phytoplankton.
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ NSFG = 1, but NH3FG is off.  The nitrogen supply cannot include
+ ammonia if it is not being simulated.
+#GROUP    3  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ PO4FG is off.  Phosphate must be simulated if plankton are being
+ simulated.
+  END DATA
+END CLU

@@ -1,0 +1,82 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          371    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 100
+  LABEL
+    GRPNAM  HUTOPINP
+  END LABEL
+  DATA   CLU   371
+#GROUP    1  TYPE TEXT
+$TEXT
+SUM  AVER MAX  MIN  LAST       0
+#GROUP    2  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An invalid transformation (aggregation) functional was specified in the
+ user's control input.  The valid values are SUM, AVER, MAX, MIN and LAST.
+ The value supplied is '&CCC'.  Was it mis-spelled or placed in the
+ wrong columns?
+#GROUP    3  TYPE TEXT
+$TEXT
+    (' ',I6,F12.bbbb,6X,   12F8.bbbb,/, (' ',24X,  12F8.bbbb))
+(' ',I5,':',F12.bbbb,6X,   12F8.bbbb,/, (' ',24X,  12F8.bbbb))
+     JAN     FEB     MAR     APR     MAY     JUN
+     JUL     AUG     SEP     OCT     NOV     DEC
+(' ',I6,3X  ,F8.bbbb,A8     )
+(/,2X,A4,4X
+HOUR  DAY   MONTH                                                                   
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The interval of the data in a short-span display (pdelt= delt*pivl mins)
+ must divide exactly into a day (1440 mins).  For disply operation &I   ,
+ this is not the case since the value of pdelt is &I   .
+#GROUP   21  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The total number of timeseries to be input is incorrect.  The value is
+ &I   , but it must be between 0 and 20.
+#GROUP   31  TYPE TEXT
+$TEXT
+   20    1    1    5
+ The maximum total number of curves (point plus mean) that may be output
+ to a flat-format PLTGEN file (TYPEFG = 1) is 20.  The user has asked
+ for &I   .
+#GROUP   32  TYPE TEXT
+$TEXT
+SUM  AVER MAX  MIN  LAST
+#GROUP   33  TYPE TEXT
+$TEXT
+   20    1    1    5
+ An invalid transformation (aggregation) functional was specified in the
+ user's control input.  The valid values are SUM, AVER, MAX, MIN and LAST.
+ The value supplied was '&CCC'.  Was it mis-spelled or placed in the
+ wrong columns?
+#GROUP   34  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A Diffuse Time Series File produced by PLTGEN (TYPEFG = 2) may contain
+ only mean-valued timeseries.  The user has specified &I    point-valued
+ timeseries.
+#GROUP   35  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A Point Time Series File produced by PLTGEN (TYPEFG = 3) may contain
+ only point-valued timeseries.  The user has specified &I    mean-valued
+ timeseries.
+#GROUP   36  TYPE TEXT
+$TEXT
+   20    1    1    5
+ A Point Time Series File produced by PLTGEN (TYPEFG = 3) may contain
+ only one point-valued timeseries.  The user has specified &I   .
+  END DATA
+END CLU
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+                                                                                
+                                                                                

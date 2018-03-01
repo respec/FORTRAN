@@ -1,0 +1,621 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          127    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 473
+  LABEL
+    GRPNAM  DURANL
+  END LABEL
+  DATA   CLU   127
+#GROUP    1  TYPE TEXT
+$TEXT
+ 16  1 1GEN-DURDATA       101    101    301    301
+ 10  1 1SEASON            102    102    302    302
+ 10  1 1DURATIONS         103    103    303    303
+ 14  1 2LEVELS            104    104    304    304
+  7  5 2LCONC             105    105    305    305
+  0  0 0END DURANL        000    000    000    000
+#GROUP   50  TYPE PRM1
+$SCREEN
+  Select DURANL table(s) to modify.
+ 
+  @ GEN-DURDATA
+  @ SEASON
+  @ DURATIONS
+  @ LEVELS
+  @ LCONC
+$FIELD @ G
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the DURANL GEN-DURDATA table.
+$FIELD @ S
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the DURANL SEASON table.
+$FIELD @ D
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the DURANL DURATIONS table.
+$FIELD @ LE
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the DURANL LEVELS table.
+$FIELD @ LC
+_TYPE OPTION
+_SET  1
+_WIDTH 12
+_BOX
+_HELP
+Toggle field On (X) or Off ( ) using the space bar.
+ 
+Toggle this field on to edit the DURANL LCONC table.
+#GROUP  101  TYPE PRM2
+$HEADER
+  DURANL<-----------------title----------------> NDUR NLEV PRFG   P- LCNU LCOU
+   x - x                                                        UNIT
+$TNAME  GEN-DURDATA
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+DURANL to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  40
+_COLUMN  9
+_PROTECT CORRECT
+_TYPE CHARACTER
+_HELP
+TITLE  is  the title  which the user  gives to  the duration
+analysis operation.
+_PNAME  TITLE
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 49
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: 10
+_DEFAULT   1
+_HELP
+NDUR  is the no. of durations for which the time series will
+be analyzed.
+_PNAME  NDUR
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 54
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: 20
+_DEFAULT   1
+_HELP
+NLEV  is the no. of "levels" which will be used in analyzing
+the time series.
+_PNAME  NLEV
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 59
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1:  7
+_DEFAULT   1
+_HELP
+PRFG  is  a flag which  governs the quantity  of information
+printed  out.  A   value  of 1  results  in minimal  (basic)
+output.   Increasing the  value  (up to  the  maximum of  7)
+results in increased detail of output.
+_PNAME  PRFG
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 64
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: 99
+_DEFAULT   6
+_HELP
+PUNIT  is the Fortran unit no. to which the (printed) output
+of the duration analysis operation will be routed.
+_PNAME  PUNIT
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 69
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   0:  5
+_DEFAULT   0
+_HELP
+LCNUM  indicates  the number of lethal  concentration curves
+to be used in the analysis.  A  zero means no LC analysis is
+to be performed.
+_PNAME  LCNUM
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 74
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   0:  1
+_DEFAULT   0
+_HELP
+LCOUT  is a flag which  governs the printout of intermediate
+lethal event information (1-on).
+_PNAME  LCOUT
+$HELP
+General information for durational analysis.
+#GROUP  301  TYPE TEXT
+$TEXT
+(1X,10A4,6I10)
+Title of display                              NDUR      NLEV      PRFG     PUNIT     LCNUM     LCOUT
+#GROUP  102  TYPE PRM2
+$HEADER
+    DURANL         Start               End
+    x -  x         mo da hr mn         mo da hr mn
+$TNAME  SEASON
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+DURANL to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   4
+_COLUMN 15
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1 : -999
+_DEFAULT   1
+_HELP
+Allow this value to default.
+_PNAME  SESON1
+$FIELD  FIELD4
+_WIDTH   2
+_COLUMN 20
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: 12
+_DEFAULT   1
+_HELP
+SMON is the starting month for the "analysis season".
+_PNAME  SESON2
+$FIELD  FIELD5
+_WIDTH   2
+_COLUMN 23
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: 31
+_DEFAULT   1
+_HELP
+SDAY is the starting day for the "analysis season".
+_PNAME  SESON3
+$FIELD  FIELD6
+_WIDTH   2
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   0: 23
+_DEFAULT   0
+_HELP
+SHOUR is the starting hour for the "analysis season".
+_PNAME  SESON4
+$FIELD  FIELD7
+_WIDTH   2
+_COLUMN 29
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   0: 59
+_DEFAULT   0
+_HELP
+SMIN is the starting minute for the "analysis season".
+_PNAME  SESON5
+$FIELD  FIELD8
+_WIDTH   4
+_COLUMN 35
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: -999
+_DEFAULT   1
+_HELP
+Allow this value to default.
+_PNAME  SESOE1
+$FIELD  FIELD9
+_WIDTH   2
+_COLUMN 40
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: 12
+_DEFAULT   12
+_HELP
+EMON is the ending month for the "analysis season".
+_PNAME  SESOE2
+$FIELD  FIELD10
+_WIDTH   2
+_COLUMN 43
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1: 31
+_DEFAULT   31
+_HELP
+EDAY is the ending day for the "analysis season".
+_PNAME  SESOE3
+$FIELD  FIELD11
+_WIDTH   2
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   0: 24
+_DEFAULT   24
+_HELP
+EHOUR is the ending hour for the "analysis season".
+Default value is 24 only if EMIN is zero.
+_PNAME  SESOE4
+$FIELD  FIELD12
+_WIDTH   2
+_COLUMN 49
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   0: 59
+_DEFAULT   0
+_HELP
+EMIN is the ending minute for the "analysis season".
+_PNAME  SESOE5
+$HELP
+Information for seasonal duration analysis.
+#GROUP  302  TYPE TEXT
+$TEXT
+(1X,2(4X,I4,2('/',I2),I3,':',I2))
+    Analysis season
+    Start date/time       End date/time
+#GROUP  103  TYPE PRM2
+$HEADER
+    DURANL   <---Durations-------->
+    x -  x    1    2    3    4    5
+$TNAME  DURATIONS
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+DURANL to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   1:  1
+_DEFAULT   1
+_HELP
+DURAT(*)   is  an array  which contains  the NDUR  different
+durations for which  the time series will  be analyzed (NDUR
+was specified in Table-type GEN-DURDATA).  The durations are
+expressed in multiples  of the internal time  step specified
+in  the OPN  SEQUENCE Block  (Section  4.3).   The  analysis
+algorithm requires that  the first duration be  1 time step,
+but the others can have any value.
+_PNAME  DURAT1
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT2
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT3
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT4
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT5
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT6
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT7
+_UCODE  -999
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT8
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURAT9
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE INTEGER
+_RANGE   2: -999
+_DEFAULT   2
+_PNAME  DURA10
+$HELP
+Table of durations to be used in the duration analysis.
+#GROUP  303  TYPE TEXT
+$TEXT
+(1X,10I10)
+Durations, in multiples of DELT
+#GROUP  104  TYPE PRM2
+$HEADER
+  DURANL
+   x - x    2    3    4    5    6    7    8    9   10   11   12   13   14   15
+   x - x   16   17   18   19   20   21
+$TNAME  LEVELS
+$FIELD  FIELD1
+_WIDTH  10
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+DURANL to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH   5
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE    -999.:       -999.
+_DEFAULT         0.
+_HELP
+LEVEL(2thru21)   contains the 20 possible "levels" for which
+the  input time  series will  be  analyzed.  (LEVEL(1)   and
+LEVEL(22)  are  reserved for  system use  and this  does not
+affect the user  since he can only  specify LEVEL(2thru21)).
+The actual no. of levels (NLEV) was specified by the user in
+Table-type GEN-DURDATA.
+_PNAME  LEVEL2
+$FIELD  FIELD4
+_WIDTH   5
+_COLUMN 16
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVEL3
+$FIELD  FIELD5
+_WIDTH   5
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVEL4
+$FIELD  FIELD6
+_WIDTH   5
+_COLUMN 26
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVEL5
+$FIELD  FIELD7
+_WIDTH   5
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVEL6
+$FIELD  FIELD8
+_WIDTH   5
+_COLUMN 36
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVEL7
+$FIELD  FIELD9
+_WIDTH   5
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVEL8
+$FIELD  FIELD10
+_WIDTH   5
+_COLUMN 46
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVEL9
+$FIELD  FIELD11
+_WIDTH   5
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVE10
+$FIELD  FIELD12
+_WIDTH   5
+_COLUMN 56
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVE11
+$FIELD  FIELD13
+_WIDTH   5
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVE12
+$FIELD  FIELD14
+_WIDTH   5
+_COLUMN 66
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVE13
+$FIELD  FIELD15
+_WIDTH   5
+_COLUMN 71
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVE14
+$FIELD  FIELD16
+_WIDTH   5
+_COLUMN 76
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_PNAME  LEVE15
+$HELP
+Levels to be used in the duration analysis.
+#GROUP  304  TYPE TEXT
+$TEXT
+(1X,10(1PE10.3),/,1X,10(1PE10.3))
+Levels for the analysis
+#GROUP  105  TYPE PRM2
+$HEADER
+  DURANL
+   x - x       LC1       LC2       LC3       LC4       LC5       LC6       LC7
+   x - x       LC8       LC9      LC10
+$TNAME  LCONC
+$FIELD  FIELD1
+_WIDTH   8
+_COLUMN  1
+_PROTECT PROTECTED
+_TYPE CHARACTER
+_HELP
+DURANL to which these data apply.
+_PNAME  OPNID
+$FIELD  FIELD3
+_WIDTH  10
+_COLUMN 11
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE      -999.:     -999.
+_DEFAULT         0.
+_HELP
+LCONC(1-10)   is  an array  which contains  the NDUR  different
+lethal  levels which  are  used  in a  lethal  concentration
+analysis.
+_PNAME  LCONC1
+$FIELD  FIELD4
+_WIDTH  10
+_COLUMN 21
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999.: -999.
+_DEFAULT    0.
+_PNAME  LCONC2
+$FIELD  FIELD5
+_WIDTH  10
+_COLUMN 31
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999.: -999.
+_DEFAULT    0.
+_PNAME  LCONC3
+$FIELD  FIELD6
+_WIDTH  10
+_COLUMN 41
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999.: -999.
+_DEFAULT    0.
+_PNAME  LCONC4
+$FIELD  FIELD7
+_WIDTH  10
+_COLUMN 51
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999.: -999.
+_DEFAULT    0.
+_PNAME  LCONC5
+$FIELD  FIELD8
+_WIDTH  10
+_COLUMN 61
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999.: -999.
+_DEFAULT    0.
+_PNAME  LCONC6
+$FIELD  FIELD9
+_WIDTH  10
+_COLUMN 71
+_PROTECT CORRECT
+_TYPE REAL
+_RANGE  -999.: -999.
+_DEFAULT    0.
+_PNAME  LCONC7
+$HELP
+Lethal concentrations to be used in the duration analysis.
+Repeats for each lethal concentration curve-LCNUM times.
+If no lethal analysis is being done, this table may be omitted.
+#GROUP  305  TYPE TEXT
+$TEXT
+(1X,10(1PE10.3))
+Lethal levels
+  END DATA
+END CLU

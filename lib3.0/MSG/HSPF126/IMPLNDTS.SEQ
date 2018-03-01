@@ -1,0 +1,365 @@
+DATE
+WDMSFL
+SYSTEM
+COMMENT
+END COMMENT
+CLU          142    TYPE  MESS   NDN   1   NUP   1   NSA   3   NSP  11   NDP 200
+  LABEL
+    GRPNAM  IMPLNDTS
+  END LABEL
+  DATA   CLU   142
+#GROUP    1  TYPE TEXT
+$TEXT
+EXTNL   20
+ATEMP   40
+SNOW    50
+IWATER  80
+SOLIDS  90
+IWTGAS 100
+IQUAL  110
+#GROUP    2  TYPE TEXT
+$TEXT
+GATMP
+PREC
+DTMPG
+WINMOV
+SOLRAD
+CLOUD
+SURLI
+PETINP
+SLSLD
+SLITMP
+SLIDOX
+SLICO2
+SLIQO
+SLIQSP
+IQADFX
+IQADCN
+#GROUP    3  TYPE TEXT
+$TEXT
+AIRTMP
+#GROUP    4  TYPE TEXT
+$TEXT
+PACK  
+PACKF 
+PACKW 
+PACKI 
+PDEPTH
+COVINX
+NEGHTS
+XLNMLT
+RDENPF
+SKYCLR
+SNOCOV
+DULL  
+ALBEDO
+PAKTMP
+DEWTMP
+SNOTMP
+SNOWF 
+PRAIN 
+SNOWE 
+WYIELD
+MELT  
+RAINF 
+#GROUP    5  TYPE TEXT
+$TEXT
+IMPS
+RETS
+SURS
+PETADJ
+SUPY  
+SURO
+PET
+IMPEV
+SURI
+#GROUP    6  TYPE TEXT
+$TEXT
+SLDS
+SOSLD
+#GROUP    7  TYPE TEXT
+$TEXT
+SOTMP
+SODOX
+SOCO2
+SOHT
+SODOXM
+SOCO2M
+#GROUP    8  TYPE TEXT
+$TEXT
+SQO
+SOQSP
+SOQS
+SOQO
+SOQOC
+SOQUAL
+SOQC
+IQADDR
+IQADWT
+IQADEP
+#GROUP   21  TYPE TEXT
+$TEXT
+GATMP   1  1     1     1 2   0 2    0   115 ENG Deg F      0       117.8     1.8
+  Measured air temp over ILS                MET Deg C      0       117.8     1.8
+#GROUP   22  TYPE TEXT
+$TEXT
+PREC    1  1     1     1 2   0 2    0   116 ENG in/iv      0       1   0   .0394
+  Measured precipitation on ILS             MET mm/iv      0       1   0   .0394
+#GROUP   23  TYPE TEXT
+$TEXT
+DTMPG   1  1     1     1 2   0 2    0   153 ENG Deg F      0       117.8     1.8
+  Measured dewpoint temp over ILS           MET Deg C      0       117.8     1.8
+#GROUP   24  TYPE TEXT
+$TEXT
+WINMOV  1  1     1     1 2   0 2    0   154 ENG mi/iv      0       1   0    .621
+  Measured wind movement over ILS           MET km/iv      0       1   0    .621
+#GROUP   25  TYPE TEXT
+$TEXT
+SOLRAD  1  1     1     1 2   0 2    0   155 ENG Ly/iv      0       1   0       1
+  Measured solar radiation over ILS         MET Ly/iv      0       1   0       1
+#GROUP   26  TYPE TEXT
+$TEXT
+CLOUD   1  1     1     1 2   0 2    0   156 ENG tenths     0       1   0       1
+  Cloud cover (range 0 thru 10)             MET tenths     0       1   0       1
+#GROUP   27  TYPE TEXT
+$TEXT
+SURLI   1  1     1     1 2   0 2    0   326 ENG in/iv      0       1   0   .0394
+  Surface lateral inflow to ILS             MET mm/iv      0       1   0   .0394
+#GROUP   28  TYPE TEXT
+$TEXT
+PETINP  1  1     1     1 2   0 2    0   327 ENG in/iv      0       1   0   .0394
+  Input potential E-T from ILS              MET mm/iv      0       1   0   .0394
+#GROUP   29  TYPE TEXT
+$TEXT
+SLSLD   1  1     1     1 2   0 2    0   422 ENG tn/        0       1   0   .4462
+  Lateral input of solids to ILS            MET tne/       0       1   0   .4462
+#GROUP   30  TYPE TEXT
+$TEXT
+SLITMP  1  1     1     1 2   0 2    0   466 ENG Deg F    -32    .555   0       1
+ Temp of surface lateral inflow             MET Deg C    -32    .555   0       1
+#GROUP   31  TYPE TEXT
+$TEXT
+SLIDOX  1  1     1     1 2   0 2    0   467 ENG mg/l       0       1   0       1
+ Conc of DO in surface lateral inflow       MET mg/l       0       1   0       1
+#GROUP   32  TYPE TEXT
+$TEXT
+SLICO2  1  1     1     1 2   0 2    0   468 ENG mg/l       0       1   0       1
+ Conc of CO2 in surface lateral inflow      MET mg/l       0       1   0       1
+#GROUP   33  TYPE TEXT
+$TEXT
+SLIQO   7  1  -626     1 2   0 2    0   584 ENG qty/aciv   0       1   0   .4047
+ Lateral input of QUALOF to ILS             MET qty/haiv   0       1   0   .4047
+#GROUP   34  TYPE TEXT
+$TEXT
+SLIQSP  7  1  -625     1 2   0 2    0   594 ENG qty/ton    0       1   0   .9072
+ Pot fac of QUALSD on lat sediment inflow   MET qty/tonn   0       1   0   .9072
+#GROUP   35  TYPE TEXT
+$TEXT
+IQADFX 10  1  -624     1 2   0 2    0   604 ENG qty/aciv   0       1   0   .4047
+  Atmoshperic deposition of QUAL to ILS     MET qty/haiv   0       1   0   .4047
+#GROUP   36  TYPE TEXT
+$TEXT
+IQADCN 10  1  -624     1 2   0 2    0   614 ENG qty/ft3    0   3630.   0 102833.
+  Atmoshperic deposition of QUAL to ILS     MET qty/l      0   3630.   0 102833.
+#GROUP   41  TYPE TEXT
+$TEXT
+AIRTMP  1  1     1     1 2   1 1    0   144 ENG Deg F      0       117.8     1.8
+  Estimated surf air temp over PLS          MET Deg C      0       117.8     1.8
+#GROUP   51  TYPE TEXT
+$TEXT
+PACK    1  1     1     1 1   2      0   262 ENG in         0       1   0   .0394
+  Total contents of pack(water equiv)       MET mm         0       1   0   .0394
+#GROUP   52  TYPE TEXT
+$TEXT
+PACKF   1  1     1     1 1   2 1    0   263 ENG in         0       1   0   .0394
+  Frozen contents of pack (water equiv)     MET mm         0       1   0   .0394
+#GROUP   53  TYPE TEXT
+$TEXT
+PACKW   1  1     1     1 1   2      0   264 ENG in         0       1   0   .0394
+  Liquid water in pack                      MET mm         0       1   0   .0394
+#GROUP   54  TYPE TEXT
+$TEXT
+PACKI   1  1     1     1 1   2 1    0   265 ENG in         0       1   0   .0394
+  Ice in pack (water equiv)                 MET mm         0       1   0   .0394
+#GROUP   55  TYPE TEXT
+$TEXT
+PDEPTH  1  1     1     1 1   2      0   266 ENG in         0       1   0   .0394
+  Pack depth                                MET mm         0       1   0   .0394
+#GROUP   56  TYPE TEXT
+$TEXT
+COVINX  1  1     1     1 1   2      0   267 ENG in         0       1   0   .0394
+  Snowfall cover index for complete cover   MET mm         0       1   0   .0394
+#GROUP   57  TYPE TEXT
+$TEXT
+NEGHTS  1  1     1     1 1   2      0   268 ENG in         0       1   0   .0394
+  Negative heat storage of pack (water eq)  MET mm         0       1   0   .0394
+#GROUP   58  TYPE TEXT
+$TEXT
+XLNMLT  1  1     1     1 1   2      0   269 ENG in         0       1   0   .0394
+  Curr max increment to ice in pack         MET mm         0       1   0   .0394
+#GROUP   59  TYPE TEXT
+$TEXT
+RDENPF  1  1     1     1 1   2      0   270 ENG none       0       1   0       1
+  Rel density of frozen contents of pack    MET none       0       1   0       1
+#GROUP   60  TYPE TEXT
+$TEXT
+SKYCLR  1  1     1     1 1   2      0   271 ENG none       0       1   0       1
+  Fraction of sky assumed clear             MET none       0       1   0       1
+#GROUP   61  TYPE TEXT
+$TEXT
+SNOCOV  1  1     1     1 1   2 1    0   272 ENG none       0       1   0       1
+  Fraction of PLS covered by pack           MET none       0       1   0       1
+#GROUP   62  TYPE TEXT
+$TEXT
+DULL    1  1     1     1 1   2      0   273 ENG none       0       1   0       1
+  Dullness index of the pack                MET none       0       1   0       1
+#GROUP   63  TYPE TEXT
+$TEXT
+ALBEDO  1  1     1     1 1   2      0   274 ENG none       0       1   0       1
+  Albedo of the pack                        MET none       0       1   0       1
+#GROUP   64  TYPE TEXT
+$TEXT
+PAKTMP  1  1     1     1 1   2      0   275 ENG Deg F      0       117.8     1.8
+  Mean temp of the pack                     MET Deg C      0       117.8     1.8
+#GROUP   65  TYPE TEXT
+$TEXT
+DEWTMP  1  1     1     1 1   2      0   276 ENG Deg F      0       117.8     1.8
+  Effective dewpoint temp                   MET Deg C      0       117.8     1.8
+#GROUP   66  TYPE TEXT
+$TEXT
+SNOTMP  1  1     1     1 1   2      0   277 ENG Deg F      0       117.8     1.8
+  Curren max temp for precip as snowfall    MET Deg C      0       117.8     1.8
+#GROUP   67  TYPE TEXT
+$TEXT
+SNOWF   1  1     1     1 2   2      0   314 ENG in/iv      0       1   0   .0394
+  Snowfall, water equivalent                MET mm/iv      0       1   0   .0394
+#GROUP   68  TYPE TEXT
+$TEXT
+PRAIN   1  1     1     1 2   2      0   315 ENG in/iv      0       1   0   .0394
+  Rainfall on pack                          MET mm/iv      0       1   0   .0394
+#GROUP   69  TYPE TEXT
+$TEXT
+SNOWE   1  1     1     1 2   2      0   316 ENG in/iv      0       1   0   .0394
+  Evap from PACKF (sublimation)             MET mm/iv      0       1   0   .0394
+#GROUP   70  TYPE TEXT
+$TEXT
+WYIELD  1  1     1     1 2   2 1    0   317 ENG in/iv      0       1   0   .0394
+  Water yielded by pack (to land-surface)   MET mm/iv      0       1   0   .0394
+#GROUP   71  TYPE TEXT
+$TEXT
+MELT    1  1     1     1 2   2      0   318 ENG in/iv      0       1   0   .0394
+  Quantity of melt from PACKF(water equiv)  MET mm/iv      0       1   0   .0394
+#GROUP   72  TYPE TEXT
+$TEXT
+RAINF   1  1     1     1 2   2 1    0   319 ENG in/iv      0       1   0   .0394
+  Rainfall                                  MET mm/iv      0       1   0   .0394
+#GROUP   81  TYPE TEXT
+$TEXT
+IMPS    1  1     1     1 1   3      0   376 ENG in         0       1   0   .0394
+  Total water stored in the ILS             MET mm         0       1   0   .0394
+#GROUP   82  TYPE TEXT
+$TEXT
+RETS    1  1     1     1 1   3      0   377 ENG in         0       1   0   .0394
+  Retention storage                         MET mm         0       1   0   .0394
+#GROUP   83  TYPE TEXT
+$TEXT
+SURS    1  1     1     1 1   3 1    0   378 ENG in         0       1   0   .0394
+  Surface (overland flow) storage           MET mm         0       1   0   .0394
+#GROUP   84  TYPE TEXT
+$TEXT
+PETADJ  1  1     1     1 1   3 1    0   379 ENG none       0       1   0       1
+  Potential ET adjustment factor            MET none       0       1   0       1
+#GROUP   85  TYPE TEXT
+$TEXT
+SUPY    1  1     1     1 2   3 1    0   412 ENG in/iv      0       1   0   .0394
+  Moisture supply                           MET mm/iv      0       1   0   .0394
+#GROUP   86  TYPE TEXT
+$TEXT
+SURO    1  1     1     1 2   3 1    0   413 ENG in/iv      0       1   0   .0394
+  Surface outflow from ILS                  MET mm/iv      0       1   0   .0394
+#GROUP   87  TYPE TEXT
+$TEXT                                     
+PET     1  1     1     1 2   3      0   414 ENG in/iv      0       1   0   .0394
+  Pot. E-T, adj for snow cover + air temp   MET mm/iv      0       1   0   .0394
+#GROUP   88  TYPE TEXT
+$TEXT
+IMPEV   1  1     1     1 2   3      0   415 ENG in/iv      0       1   0   .0394
+  Total simulated E-T from ILS              MET mm/iv      0       1   0   .0394
+#GROUP   89  TYPE TEXT
+$TEXT
+SURI    1  1     1     1 2   3      0   416 ENG in/iv      0       1   0   .0394
+  Surface inflow to ILS                     MET mm/iv      0       1   0   .0394
+#GROUP   91  TYPE TEXT
+$TEXT
+SLDS    1  1     1     1 1   4      0   454 ENG tn/ac      0       1   0   .4462
+  Storage of solids on surface of ILS       MET tne/ha     0       1   0   .4462
+#GROUP   92  TYPE TEXT
+$TEXT
+SOSLD   1  1     1     1 2   4 1    0   462 ENG tn/aciv    0       1   0   .4462
+  Washoff of solids from surface of ILS     MET tne/haiv   0       1   0   .4462
+#GROUP  101  TYPE TEXT
+$TEXT
+SOTMP   1  1     1     1 1   5      0   501 ENG Deg F    -32    .555   0       1
+  Temp of surface outflow                   MET Deg C    -32    .555   0       1
+#GROUP  102  TYPE TEXT
+$TEXT
+SODOX   1  1     1     1 1   5      0   502 ENG mg/l       0       1   0       1
+  DO conc in surface outflow                MET mg/l       0       1   0       1
+#GROUP  103  TYPE TEXT
+$TEXT
+SOCO2   1  1     1     1 1   5      0   503 ENG mg/l       0       1   0       1
+  CO2 conc in surface outflow               MET mg/l       0       1   0       1
+#GROUP  104  TYPE TEXT
+$TEXT
+SOHT    1  1     1     1 2   5      0   521 ENG BTU/aciv 0.02.455E-6 0.03.942E-6
+  Heat in surf outflow (rel. to 0 DEG C)    MET kcl/haiv 0.02.455E-6 0.03.942E-6
+#GROUP  105  TYPE TEXT
+$TEXT
+SODOXM  1  1     1     1 2   5      0   522 ENG lb/aciv    0   4.411   0   3.937
+  Flux of DO in surface outflow             MET kg/haiv    0   4.411   0   3.937
+#GROUP  106  TYPE TEXT
+$TEXT
+SOCO2M  1  1     1     1 2   5      0   523 ENG lb/aciv    0   4.411   0   3.937
+  Flux of CO2 in surface outflow            MET kg/haiv    0   4.411   0   3.937
+#GROUP  111  TYPE TEXT
+$TEXT
+SQO     7  1  -626     1 1   6      0  1407 ENG qty/ac     0       1   0   .4047
+  Storage of QUALOF on the surface          MET qty/ha     0       1   0   .4047
+#GROUP  112  TYPE TEXT
+$TEXT
+SOQSP   7  1  -625     1 1   6      0  1417 ENG qty/ton    0       1   0   .9072
+ Pot factor of QUALSD on sediment outflow   MET qty/tonn   0       1   0   .9072
+#GROUP  113  TYPE TEXT
+$TEXT
+SOQS    7  1  -625     1 2   6      0  1667 ENG qty/aciv   0       1   0   .4047
+  Total flux of QUALSD from surface         MET qty/haiv   0       1   0   .4047
+#GROUP  114  TYPE TEXT
+$TEXT
+SOQO    7  1  -626     1 2   6      0  1677 ENG qty/aciv   0       1   0   .4047
+  Washoff of QUALOF from surface            MET qty/haiv   0       1   0   .4047
+#GROUP  115  TYPE TEXT
+$TEXT
+SOQOC   7  1  -626     1 2   6      0  1687 ENG qty/ft3    0   3630.   0 102833.
+  Conc of QUALOF in surface outflow         MET qty/l      0   3630.   0 102833.
+#GROUP  116  TYPE TEXT
+$TEXT
+SOQUAL 10  1  -624     1 2   6      0  1697 ENG qty/aciv   0       1   0   .4047
+  Total outflow of QUAL from the surface    MET qty/haiv   0       1   0   .4047
+#GROUP  117  TYPE TEXT
+$TEXT
+SOQC   10  1  -624     1 2   6      0  1707 ENG qty/ft3    0   3630.   0 102833.
+  Conc of QUAL in surface outflow           MET qty/l      0   3630.   0 102833.
+#GROUP  118  TYPE TEXT
+$TEXT
+IQADDR 10  1  -624     1 2   6      0  1717 ENG qty/aciv   0       1   0   .4047
+  Dry atmospheric deposition flux to PLS    MET qty/haiv   0       1   0   .4047
+#GROUP  119  TYPE TEXT
+$TEXT
+IQADWT 10  1  -624     1 2   6      0  1727 ENG qty/aciv   0       1   0   .4047
+  Wet atmospheric deposition flux to PLS    MET qty/haiv   0       1   0   .4047
+#GROUP  120  TYPE TEXT
+$TEXT
+IQADEP 10  1  -624     1 2   6      0  1737 ENG qty/aciv   0       1   0   .4047
+  Total atmospheric deposition flux to PLS  MET qty/haiv   0       1   0   .4047
+  END DATA
+END CLU
