@@ -752,8 +752,8 @@ C
       SUBROUTINE PARSESTASPECS
      I                        (STAID,XSYSPK,XHSTPK,
      M                         GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,
-     M                         ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
+     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
+     M                         IKROPT,ISKMAP,FLAT,FLONG,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     Parse driver input file records into station computational options
@@ -766,7 +766,7 @@ C
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, EMAOPT
+      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, ISKMAP, EMAOPT
       REAL          XSYSPK, XHSTPK, GENSKU, HISTPD, QHIOUT, QLWOUT, 
      $              GAGEB, RMSEGS, FLAT, FLONG
       CHARACTER*(*) STAID
@@ -790,6 +790,7 @@ C              -1 - Station
 C               0 - Weighted
 C               1 - Regional
 C     IKROPT - allow urban/regularized peaks (0 - no, 1 -yes)
+C     ISKMAP - use B17B Gen Skew Map
 C     FLAT   - station latitude, decimal
 C     FLONG  - station longitude, decimal
 C     EMAOPT - Analysis option,
@@ -883,6 +884,8 @@ C     init new peaks specs
             END IF 
           ELSE IF (KWD .EQ. 'URB/REG') THEN
             IKROPT = IYESNO(S,0)
+          ELSE IF (KWD .EQ. 'USESKEWMAP') THEN
+            ISKMAP = IYESNO(S,0)
           ELSE IF (KWD .EQ. 'LOTHRESH') THEN
             QLWOUT = CVRDEC(S)
           ELSE IF (KWD .EQ. 'LOTYPE') THEN
@@ -1071,8 +1074,8 @@ C             assume code is only thing left
 C
       IF (UPDATEFG) THEN
         CALL WRITESPECSTA (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     I                     GAGEB,RMSEGS,IBEGYR,IENDYR,
-     I                     ISKUOP,IKROPT,FLAT,FLONG,XSYSPK,XHSTPK,
+     I                     GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
+     I                     IKROPT,ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,
      I                     EMAOPT)
       END IF
 C
@@ -1291,8 +1294,8 @@ C
 C
       SUBROUTINE   WRITESPECSTA
      I                        (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
-     M                         IKROPT,FLAT,FLONG,XSYSPK,XHSTPK,EMAOPT)
+     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,IKROPT,
+     M                         ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,EMAOPT)
 C
 C     + + + PURPOSE + + +
 C     Write out verbose version of spec file (i.e. include 
@@ -1307,7 +1310,7 @@ C
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, EMAOPT
+      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, ISKMAP, EMAOPT
       REAL          GENSKU, HISTPD, QHIOUT, QLWOUT, GAGEB, RMSEGS, 
      $              FLAT, FLONG, XSYSPK, XHSTPK
       CHARACTER*(*) STAID
@@ -1329,6 +1332,7 @@ C              -1 - Station
 C               0 - Weighted
 C               1 - Regional
 C     IKROPT - allow urban/regularized peaks (0 - no, 1 -yes)
+C     ISKMAP - use B17B Gen Skew Map (0 - no, 1 - yes)
 C     FLAT   - station latitude, decimal
 C     FLONG  - station longitude, decimal
 C     XSYSPK - highest systematic peak
@@ -1437,6 +1441,11 @@ C     skew parameters
         WRITE(92,*) '     SkewOpt Weighted'
       ELSE IF (ISKUOP.EQ.1) THEN
         WRITE(92,*) '     SkewOpt Regional'
+      END IF
+      IF (ISKMAP.EQ.1) THEN
+        WRITE(92,*) '     UseSkewMap Yes'
+      ELSE
+        WRITE(92,*) '     UseSkewMap No'
       END IF
       WRITE(92,*) '     GenSkew ',GENSKU
       WRITE(92,*) '     SkewSE ',RMSEGS
