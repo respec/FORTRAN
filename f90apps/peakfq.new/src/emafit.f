@@ -880,6 +880,10 @@ c specified low outlier threshold?
       if(gbtype .eq. "FIXE") then
         gbthresh  = gbthrsh0        
         gbcrit    = gbthrsh0        
+cPRH    09/2017
+c       sort values for fixed LO threshold so calling code reports properly        
+        call dsvrgn(ns,x,x)
+        call dsvrgn(ns,qs,qs)
         goto 25
       endif
       

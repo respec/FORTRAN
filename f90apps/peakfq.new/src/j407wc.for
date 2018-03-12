@@ -1337,6 +1337,7 @@ C
 C
       REAL   FUNCTION   WCFGSM
      #                         ( FLATA, FLONGA )
+      !DEC$ ATTRIBUTES DLLEXPORT :: WCFGSM
 C
 C     + + + PURPOSE + + +
 C     WRC BULL. 17-A GENERALIZED SKEW MAP.C

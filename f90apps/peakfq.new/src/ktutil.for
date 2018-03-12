@@ -5,7 +5,8 @@ C
      I                  (X, N,
      O                   TAU, PLEVEL, SLOPE)
 C
-c      dll_export KENT
+C      dll_export KENT
+CDEC$ ATTRIBUTES DLLEXPORT :: KENT
 C
 C     + + + PURPOSE + + +
 C     Computes Kendall's tau, the associated p-level, and the

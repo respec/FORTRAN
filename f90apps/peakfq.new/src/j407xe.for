@@ -82,6 +82,7 @@ C      + + + LOCAL VARIABLES + + +
      &          NSKIP1, NPKS, I, NPKPLT, NGAGEDPILFS,
      $          ISTART, HSTFLG, XPKS, EMAOPT, IOPT, ECHFUN, DT(6)
       CHARACTER*1 LTAB
+      CHARACTER*6 PVALSTR
 Cprh     $      , SCLU, CNUM, CLEN, SGRP, MXLN, SCI, IWRT
 C
 C     + + + EQUIVALENCES + + +
@@ -119,7 +120,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Version 7.2 dated 7/4/2016',/,
+     $       'Version 7.2 dated 3/ 7/2018',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -134,7 +135,8 @@ C     + + + FORMATS + + +
      $          4X,'        NUMBER OF CENSORED FLOWS   ',I8,/,
      $          4X,'        NUMBER OF GAGED PEAKS      ',I8,/,
      $          6X,'          GAGED PEAKS AND CORRESPONDING P-VALUES')
- 2021 FORMAT(20X,F8.1,4X,'(',F6.4,')')
+ 2021 FORMAT(20X,F8.1,4X,'(',A,')')
+ 2022 FORMAT(F6.4)
  2030 FORMAT(// 4X,'MULTIPLE GRUBBS-BECK TEST RESULTS',/,
      $          4X,'MULTIPLE GRUBBS-BECK PILF THRESHOLD     N/A',/,
      $          4X,'NUMBER OF PILFS IDENTIFIED                0')
@@ -273,7 +275,7 @@ C
      $                                  NPKS,NSYS,GENSKU,RMSEGS
             CALL RUNEMA(NPKS)
             CALL PRTEMAWARN(MSG,NSYS,HISTPD,SYSSKW)
-            IF (LOTYPE .EQ. 'MGBT') THEN
+            IF (LOTYPE .EQ. 'MGBT' .OR. LOTYPE .EQ. 'FIXE') THEN
 C             report Multiple GB LO messges
               IF (NLOW .GT. 0) THEN
                 NGAGEDPILFS = 0
@@ -286,7 +288,12 @@ C             report Multiple GB LO messges
      $                          nlow-nzero-NGAGEDPILFS,NGAGEDPILFS
                 DO 20 I = 1,NLOW
                   IF (qs(I).GT.1.0D-99 .AND. qs(I).LT.10**gbcrit) THEN
-                    WRITE(MSG,2021)qs(I),pvaluew(I)
+                    IF (LOTYPE .EQ. 'MGBT') THEN
+                      WRITE(PVALSTR,2022) pvaluew(I)
+                    ELSE
+                      PVALSTR = '  --  '
+                    END IF
+                    WRITE(MSG,2021)qs(I),PVALSTR
                   END IF
  20             CONTINUE
                 WRITE(MSG,*)
@@ -320,6 +327,8 @@ C         Weighted, set to root mean square
 C           sort input peak logs and correlate with plotting positions
             CALL SORTM( PKLOG, IPKPTR, 1, -1, NPKS )
             IF(NHIST.GT.0) CALL ALIGNP(IPKPTR,IPKSEQ,NPKS,NHIST,SYSPP)
+C           NPKPLT can get creamed under certain error conditions, reset it
+            NPKPLT = NPKS
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
@@ -627,7 +636,7 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   202 FORMAT( 2X,'Version 7.2',
      $        9X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time')
-  203 FORMAT( 2X,'7/4/2014',53X,A)
+  203 FORMAT( 2X,'3/ 7/2018',53X,A)
   206 FORMAT(22X,'standard method for flood frequency analysis.')
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
@@ -801,7 +810,7 @@ C     + + + COMMON BLOCKS + + +
       INCLUDE 'cwcf1.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      CHARACTER * 15  DWORK(4)
+      CHARACTER * 15  DWORK(5)
       CHARACTER*12 SKUOP(3)
       INTEGER   I
       CHARACTER*8  YNHIST, ATYPE
@@ -827,10 +836,10 @@ C     + + + FORMATS + + +
      $  /16X,'Beginning Year                       = ',I8,
      $  /16X,'Ending Year                          = ',I8,
      $  /16X,'Historical Period Length             = ',I8,
-     $  /16X,'Regional skew                        = ',F8.3,
+     $  /16X,'Skew option                          = ',A,
+     $  /16X,'Regional skew                        = ',A8,
      $  /16X,'     Standard error                  = ',2X,A6,
      $  /16X,'     Mean Square error               = ',2X,A6,
-     $  /16X,'Skew option                          = ',A,
      $  /16X,'Gage base discharge                  = ',F8.1,
      $  /16X,'User supplied high outlier threshold = ',A,
      $  /16X,'User supplied PILF (LO) criterion    = ',A,
@@ -865,7 +874,7 @@ C    $   6X, 2A )
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      DO 107 I = 1,3
+      DO 107 I = 1,5
         DWORK(I) = '  --  '
   107 CONTINUE
 C
@@ -880,6 +889,7 @@ C       historic adjustment applied
       ELSE
         ATYPE = '     EMA'
       END IF
+      IF (GENSKU .GT. -999) WRITE(DWORK(5),'(F8.3)') GENSKU
       IF(RMSEGS .GT. 0.) THEN
         WRITE(DWORK(1),'(F6.3)') RMSEGS
         WRITE(DWORK(4),'(F6.3)') RMSEGS**2
@@ -890,8 +900,8 @@ C       historic adjustment applied
       CALL  PRTPHD(  2001 , -999, EMAOPT, WDMSFL )
       WRITE(MSG,4)
       WRITE(MSG,5) NSYS+NHIST, XPKS, NSYS-XPKS, NHIST,BEGYR,ENDYR,
-     $             INT(HISTPD+.5), GENSKU, DWORK(1),DWORK(4),
-     $             SKUOP(IGSOPT+2),GAGEB, DWORK(2),DWORK(3),WEIBA,
+     $             INT(HISTPD+.5), SKUOP(IGSOPT+2),DWORK(5), DWORK(1),
+     $             DWORK(4), GAGEB, DWORK(2),DWORK(3),WEIBA,
      $             ATYPE,LOTYPE
       IF (EMAOPT .GT. 0) THEN
         IF (NTHRESH .GT. 0) THEN
@@ -2136,7 +2146,7 @@ C     + + + LOCAL VARIABLES + + +
 Cprh      CHARACTER*15 CD
       CHARACTER*18 CURSTA
       INTEGER   MSG, NOBS, IHOPTI, IKROPT, I, IBEGIN,
-     &          IEND, IPK, LOOPBK, OKFG, LSTART
+     &          IEND, IPK, LOOPBK, OKFG, LSTART, ISKMAP
 Cprh                , K, L15, IRET, SCLU, SGRP,
 Cprh     $          IVAL(2), CVAL(3), L3, L2, L7, L4, L1, L8,
 Cprh     $          L6, L9, L10
@@ -2295,6 +2305,8 @@ C             default to EMA analysis and to use any Historic Peaks
               IF (HISTPD.EQ.0) HISTPD = ENDYR - BEGYR + 1
 C             default low outlier test to single GB
               LOTYPE = 'MGBT'
+C             default use of B17B Gen Skew Map to 'No'
+              ISKMAP = 0
 C
 C             remove default gen skew computation per USGS request, 8/2016
 C              IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
@@ -2302,8 +2314,8 @@ C              IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 C             update specs
               CALL PARSESTASPECS (CURSTA,XSYSPK,XHSTPK,
      M                            GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                            GAGEB,RMSEGS,BEGYR,ENDYR,
-     M                            ISKUOP,IKROPT,FLAT,FLONG,EMAOPT)
+     M                            GAGEB,RMSEGS,BEGYR,ENDYR,ISKUOP,
+     M                            IKROPT,ISKMAP,FLAT,FLONG,EMAOPT)
 C
 C             write inputs to echo file
               CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
@@ -2556,7 +2568,8 @@ C     set Z,N,H card flags
       DO 6 I = 2,13
         AUX(I) = 0.
  6    CONTINUE
-      AUX(1) = -1.01E29
+Cprh      AUX(1) = -1.01E29
+      AUX(1) = -999.0
       XHSTPK = 1.0E29
       XSYSPK = 0.0
       AGENCY = '     '	
@@ -4805,7 +4818,7 @@ C             historic peak
               END IF
             END IF
             I = I + 1
-          IF (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0) GOTO 2
+          IF (I.LT.NPKS .AND. (PKS(I).LT.0 .OR. IPKSEQ(I).LT.0)) GOTO 2
           IF (THRESH(1)%THRLWR .GT. 1.0D34) THEN
 C           valid threshold default still not found
             THRESH(1)%THRLWR = MAX(QHIOUT, 10**WRCHHB)
@@ -5236,7 +5249,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Version 7.2 dated 7/4/2016',/,'#',/,
+     $       'Version 7.2 dated 3/ 7/2018',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
