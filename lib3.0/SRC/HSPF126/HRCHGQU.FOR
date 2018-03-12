@@ -2726,7 +2726,7 @@ C
      O                     JLEN, CSTR)
               ACNT = ACNT + 1
               APRINT(ACNT) = PGQCF8(N)
-              CHEAD(ACNT) = TRIM(GQNAME) // '-TOSQAL-EXIT'
+              CHEAD(ACNT) = TRIM(GQNAME) // '-ODQAL-EXIT'
               DO 110 IX= 1, JLEN
                 CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // CSTR(IX)
  110          CONTINUE
