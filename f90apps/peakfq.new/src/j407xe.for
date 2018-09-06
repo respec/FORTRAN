@@ -4622,6 +4622,11 @@ C
         STNDATA(STNIND)%INTCOM(I) = INTERVAL(I)%INTRVLCOM
  40   CONTINUE
 C
+      STNDATA(STNIND)%NOBS = NOBS
+      DO 50 I = 1,NOBS
+        STNDATA(STNIND)%ALLPOS(I) = PEX(I)
+ 50   CONTINUE
+C
       RETURN
       END
 C
@@ -4644,6 +4649,7 @@ C
       
 C     + + + PARAMETERS + + +
       INCLUDE 'PMXPK.INC'
+      INCLUDE 'PMXINT.INC'
 
 C
 C     + + + DUMMY ARGUMENTS + + +
@@ -4651,8 +4657,8 @@ C     + + + DUMMY ARGUMENTS + + +
      $              HSTFLG,NT,NOBSTH(500),THRSYR(500),
      $              THREYR(500),NINTVL,INTYR(500),NLOW,NZERO
       REAL          PKLOG(500),SYSPP(500),WRCPP(500),
-     &              SYSRFC(32),WRCFC(32),TXPROB(32),WEIBA,
-     $              CLIML(32),CLIMU(32),THRSH(500),PPTH(500),
+     &              SYSRFC(MXINT),WRCFC(MXINT),TXPROB(MXINT),WEIBA,
+     $              CLIML(MXINT),CLIMU(MXINT),THRSH(500),PPTH(500),
      $              INTLWR(500),INTUPR(500),ALLPPOS(MXPK),
      $              GBCRIT,SKEW,RMSEGS
       CHARACTER*80  HEADER
@@ -4748,8 +4754,8 @@ C     interval data
  40   CONTINUE
 C
 C     plotting positions for all years
-      DO 50 I = 1,NOBS
-        ALLPPOS(I)= PEX(I)
+      DO 50 I = 1,STNDATA(STNIND)%NOBS
+        ALLPPOS(I)= STNDATA(STNIND)%ALLPOS(I)
  50   CONTINUE
 C 
       RETURN
