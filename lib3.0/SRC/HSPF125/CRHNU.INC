@@ -56,7 +56,7 @@ C
      $              SOVOL(MXEXIT),EOVOL(MXEXIT),WIND,TW,RSED(10),
      $              SSED(4),SDCF1(4,5),SDCF2(4,5),SDCF3(MXEXIT,4,5),
      $              PHVAL,PHVALM(12),SCRFAC,DEPCOR,AVDEPE,DOX,BOD,
-     $              KOREA,BODOX,OXCF3(8,5),OXCF4(8,5),NUIF1(4,5),
+     $              KOREA,BODOX,OXCF3(9,5),OXCF4(8,5),NUIF1(4,5),
      $              NUIF2(4,2,5),TNUIF(4),NUAFXM(12,3),NUACNM(12,3),
      $              CVBN,CVBO,CVBP,CVBPC,CVBPN,BPCNTC,CVOC,CVON,CVOP,
      $              BRTAM(2),BRPO4(2),ANAER,BNH4(3),BPO4(3),KTAM20,
@@ -74,9 +74,9 @@ C
      $              DUM5(107),DUM6(605),DUM7(8085),DUM8(1100),DUM9(7),
      $              DUM10(266),DUM11,DUM12(181),DUM13(14),DUM14(4),
      $              DUM15(8),DUM16(202),DUM17(78),DUM18(24),
-     $              DUM19(395),DUM20(3721),DUM21(4),DUM22(33),
-     $              DUM23(26),DUM24(60),DUM25(16),DUM26(1009),
-     $              DUMRCH(32099)
+     $              DUM19(395),DUM20(3721),DUM21(4),DUM22(34),
+     $              DUM23(26),DUM24(60),DUM25(17),DUM26(1009),
+     $              DUMRCH(32092)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(DEPSCR,SDCF1(1,1)),(ROSED,SDCF2(1,1)),

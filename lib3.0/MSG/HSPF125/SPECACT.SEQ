@@ -685,147 +685,147 @@ BENRFG             19586 SCRVEL             19587 SCRPM    2         19587
 SCRMUL             19588 SCRFAC             19591 DEPCOR             19592
 AVDEPE             19593 AVVELE             19594 IDOX               19595
 IBOD               19596 REAMFG             19609 OXPM1              19609
-KBOD20             19610 OXPM2    4         19610 TCBOD              19611
-KODSET             19612 SUPSAT             19613 CFOREA             19614
-REAKT              19615 BENOD              19616 OXPM3    6         19616
-TCBEN              19617 EXPOD              19618 BRBOD    2         19619
-EXPREL             19621 TCGINV             19622 OXPM4    4         19622
-REAK               19623 EXPRED             19624 EXPREV             19625
-DOX                19627 OXST     2         19627 BOD                19628
-RDOX               19629 RBOD               19630 SATDO              19639
-RODOX              19643 ROBOD              19644 KOREA              19655
-BODOX              19656 ODOX     5         19657 OBOD     5         19662
-READOX             19717 BODDOX             19718 BENDOX             19719
-NITDOX             19720 PHYDOX             19721 ZOODOX             19722
-BALDOX             19723 TOTDOX             19724 DECBOD             19757
-BNRBOD             19758 SNKBOD             19759 DENBOD             19760
-PHYBOD             19761 ZOOBOD             19762 BALBOD             19763
-TOTBOD             19764 INO3               19813 ITAM               19814
-INO2               19815 IPO4               19816 ISNH4    4         19833
-ISPO4    4         19837 TNUIF    4         19873 NUADFG   6         19909
-TAMFG              19915 NUPM1    7         19915 NO2FG              19916
-PO4FG              19917 AMVFG              19918 DENFG              19919
-ADNHFG             19920 ADPOFG             19921 NUAFXM  12   3     19922
-NUACNM  12   3     19958 CVBN               19994 CVBO               19995
-CVBP               19996 CVBPC              19997 CVBPN              19998
-BPCNTC             19999 CVOC               20000 CVON               20001
-CVOP               20002 BRTAM    2         20003 NUPM2    5         20003
-BRPO4    2         20005 ANAER              20007 BNH4     3         20008
-NUPM3    6         20008 BPO4     3         20011 KTAM20             20014
-NUPM4    6         20014 KNO220             20015 TCNIT              20016
-KNO320             20017 TCDEN              20018 DENOXT             20019
-EXPNVG             20020 NUPM5    2         20020 EXPNVL             20021
-ADNHPM   3         20022 NUADPM   6         20022 ADPOPM   3         20025
-NO3                20033 DNUST    6         20033 TAM                20034
-NO2                20035 PO4                20036 NH4                20037
-NH3                20038 SNH4     3         20039 SPO4     3         20042
-RNO3               20045 DNUST2   6         20045 RTAM               20046
-RNO2               20047 RPO4               20048 RNH4               20049
-RNH3               20050 RSNH4   12         20051 RSPO4   12         20063
-RRNO3              20075 RRTAM              20076 RRNO2              20077
-RRPO4              20078 RONO3              20141 ROTAM              20142
-RONO2              20143 ROPO4              20144 ROSNH4   4         20161
-ROSPO4   4         20165 TNUCF1   4         20201 DSNH4    4         20205
-DSPO4    4         20209 NITNO3             20245 DENNO3             20246
-BODNO3             20247 PHYNO3             20248 ZOONO3             20249
-BALNO3             20250 TOTNO3             20251 NITTAM             20280
-VOLNH3             20281 BNRTAM             20282 BODTAM             20283
-PHYTAM             20284 ZOOTAM             20285 BALTAM             20286
-TOTTAM             20287 NITNO2             20320 BNRPO4             20325
-BODPO4             20326 PHYPO4             20327 ZOOPO4             20328
-BALPO4             20329 TOTPO4             20330 ADNH4    4         20355
-ADPO4    4         20359 ONO3     5         20395 OTAM     5         20400
-ONO2     5         20405 OPO4     5         20410 OSNH4    5   4     20495
-OSPO4    5   4     20515 TNUCF2   5   4     20695 DECCO2             20715
-NUADDR   3         20716 NUADWT   3         20731 NUADEP   3         20746
-IPHYTO             20892 IZOO               20893 IORN               20894
-IORP               20895 IORC               20896 ITORN              20927
-ITORP              20928 ITORC              20929 ITOTN              20930
-ITOTP              20931 PLADFG   6         20963 PHYFG              20969
-PKFG     9         20969 ZOOFG              20970 BALFG              20971
-SDLTFG             20972 AMRFG              20973 DECFG              20974
-NSFG               20975 ZFOOD              20976 BNPFG              20977
-BFIXFG   4         20979 BINVFG             20983 PLAFXM  12   3     20984
-PLACNM  12   3     21020 CVBC               21056 CVBCL              21057
-CVNRBO             21058 CVPB               21059 RATCLP             21060
-PKPM1    7         21060 NONREF             21061 LITSED             21062
-ALNPR              21063 EXTB               21064 MALGR              21065
-PARADF             21066 CMMLT              21067 PKPM2    7         21067
-CMMN               21068 CMMNP              21069 CMMP               21070
-TALGRH             21071 TALGRL             21072 TALGRM             21073
-ALR20              21074 PKPM3    6         21074 ALDH               21075
-ALDL               21076 OXALD              21077 NALDH              21078
-PALDH              21079 NMINGR             21080 PKPM12   5         21080
-PMINGR             21081 CMINGR             21082 LMINGR             21083
-NMINC              21084 SEED               21085 PKPM4    6         21085
-MXSTAY             21086 OREF               21087 CLALDH             21088
-PHYSET             21089 REFSET             21090 MZOEAT             21091
-PKPM5    5         21091 ZFIL20             21092 ZRES20             21093
-ZD                 21094 OXZD               21095 TCZFIL             21096
-PKPM6    4         21096 TCZRES             21097 ZEXDEL             21098
-ZOMASS             21099 MBAL               21100 PKPM7    7         21100
-CFBALR             21101 CFBALG             21102 MINBAL             21103
-CAMPR              21104 FRAVL              21105 NMAXFX             21106
-MBALGR   4         21107 TCBALG   4         21111 CMMNB    4         21115
-CMMPB    4         21119 CMMD1    4         21123 CMMD2    4         21127
-CSLIT    4         21131 BALR20   4         21135 TCBALR   4         21139
-CSLOF1   4         21143 CSLOF2   4         21147 GRORES   4         21151
-CREMVL             21155 PKPM8    4         21155 CMMBI              21156
-BINV               21157 TCGRAZ             21158 BINVM   12         21160
-CTRBQ1             21172 PKPM9    4         21172 CTRBQ2             21173
-CKTRB1             21174 CKTRB2             21175 FRRIF              21176
-PKPM10   5         21176 CMMV               21177 RIFCQ1             21178
-RIFCQ2             21179 RIFCQ3             21180 RIFVEL   4         21181
-PKPM11   8         21181 RIFDEP   4         21185 JDAT               21193
-BALDEP             21194 BALVEL             21195 PHYTO              21196
-PKST1    3         21196 PHYCLA             21197 LIMPHY             21198
-BENAL    4         21199 PKST2    4   3     21199 BALCLA   4         21203
-LIMBAL   4         21207 TBENAL   2         21211 ORN                21213
-PKST3    7         21213 ORP                21214 ORC                21215
-TORN               21216 TORP               21217 TORC               21218
-POTBOD             21219 ZOO                21220 TN                 21221
-PKST4    2         21221 TP                 21222 ROPHYT             21245
-ROZOO              21246 ROORN              21247 ROORP              21248
-ROORC              21249 ROTORN             21270 ROTORP             21271
-ROTORC             21272 ROTOTN             21273 ROTOTP             21274
-OPHYT    5         21295 OZOO     5         21300 OORN     5         21305
-OORP     5         21310 OORC     5         21315 OTORN    5         21420
-OTORP    5         21425 OTORC    5         21430 OTOTN    5         21435
-OTOTP    5         21440 PLADDR   3         21545 PLADWT   3         21560
-PLADEP   3         21575 SNKPHY             21578 ZOOPHY             21579
-DTHPHY             21580 GROPHY             21581 TOTPHY             21582
-GROZOO             21603 DTHZOO             21604 TOTZOO             21605
-FLXBAL   3   4     21618 GROTBA             21678 DTHTBA             21679
-TOTTBA             21680 SNKORN             21693 PHYORN             21694
-ZOOORN             21695 BALORN             21696 TOTORN             21697
-SNKORP             21718 PHYORP             21719 ZOOORP             21720
-BALORP             21721 TOTORP             21722 SNKORC             21743
-PHYORC             21744 ZOOORC             21745 BALORC             21746
-TOTORC             21747 PYCO2              21768 ZOCO2              21769
-BACO2              21770 ITIC               21878 ICO2               21879
-PHCNT              21892 PHPM1    2         21892 ALKCON             21893
-CFCINV             21894 PHPM2    3         21894 BRCO2    2         21895
-TIC                21899 PHST     3         21899 CO2                21900
-PH                 21901 SATCO2             21905 ROTIC              21907
-ROCO2              21908 OTIC     5         21919 OCO2     5         21924
-BODCO2             21979 PHYCO2             21980 ZOOCO2             21981
-BALCO2             21982 BENCO2             21983 INVCO2             21984
-TOTCO2             21985 ACFLAG  14         22021 ACPARM   7         22035
-NUMCON             22043 NUMGQL             22044 ACCONC   7         22081
-ACSTOR   7   5     22095 ACINFL   7   5     22137 ACFLX1   7   5     22186
-ACFLX2   5   7   5 22228 ACFLXC  10   5     22438 ACFLXG   7   5     22498
-ACFLX3   7   5     22540 ACPH               22575 ACCONV   7         22577
-TOPFL              22584 VEGFL              22585 NSSP               22586
-TSA    250  12     22587 DISL   250  10     25487 DISR   250  10     28087
-WIDL   250  10     30587 WIDR   250  10     33087 HABSL  250  10     35487
-HABSR  250  10     38087 HDEML  250  10     40587 HDEMR  250  10     43087
-LATDEG             45587 LONDEG             45588 LONSTD             45589
-DENL   250  10     45590 DENR   250  10     48090 NVPL   250         50590
-NVPR   250         50840 JDAY               51090 LATRAD             51091
-SO     250         51092 TSAL   250         51342 TSAR   250         51592
-SKOP   250         51842 VSAL   250         52092 VSAR   250         52342
-DLT1               52592 DEC                52593 HFDLT              52594
-DF                 52595 @@@@@@                 1 @@@@@@                 1 
+DOPFG              19610 KBOD20             19611 OXPM2    4         19611 
+TCBOD              19612 KODSET             19613 SUPSAT             19614 
+CFOREA             19615 REAKT              19616 BENOD              19617 
+OXPM3    6         19617 TCBEN              19618 EXPOD              19619 
+BRBOD    2         19620 EXPREL             19622 TCGINV             19623
+OXPM4    4         19623 REAK               19624 EXPRED             19625 
+EXPREV             19626 DOX                19628 OXST     2         19628 
+BOD                19629 RDOX               19630 RBOD               19631 
+SATDO              19640 RODOX              19644 ROBOD              19645 
+KOREA              19656 BODOX              19657 ODOX     5         19658 
+OBOD     5         19663 READOX             19718 BODDOX             19719 
+BENDOX             19720 NITDOX             19721 PHYDOX             19722 
+ZOODOX             19723 BALDOX             19724 TOTDOX             19725 
+PRCDOX             19726 DECBOD             19763 BNRBOD             19764 
+SNKBOD             19765 DENBOD             19766 PHYBOD             19767 
+ZOOBOD             19768 BALBOD             19769 TOTBOD             19770 
+INO3               19820 ITAM               19821 INO2               19822 
+IPO4               19823 ISNH4    4         19840 ISPO4    4         19844 
+TNUIF    4         19880 NUADFG   6         19916 TAMFG              19922 
+NUPM1    7         19922 NO2FG              19923 PO4FG              19924 
+AMVFG              19925 DENFG              19926 ADNHFG             19927 
+ADPOFG             19928 NUAFXM  12   3     19929 NUACNM  12   3     19965 
+CVBN               20001 CVBO               20002 CVBP               20003 
+CVBPC              20004 CVBPN              20005 BPCNTC             20006 
+CVOC               20007 CVON               20008 CVOP               20009 
+BRTAM    2         20010 NUPM2    5         20010 BRPO4    2         20012 
+ANAER              20014 BNH4     3         20015 NUPM3    6         20015 
+BPO4     3         20018 KTAM20             20021 NUPM4    6         20021  
+KNO220             20022 TCNIT              20023 KNO320             20024 
+TCDEN              20025 DENOXT             20026 EXPNVG             20027 
+NUPM5    2         20027 EXPNVL             20028 ADNHPM   3         20029 
+NUADPM   6         20029 ADPOPM   3         20032 NO3                20040 
+DNUST    6         20040 TAM                20041 NO2                20042 
+PO4                20043 NH4                20044 NH3                20045 
+SNH4     3         20046 SPO4     3         20049 RNO3               20052 
+DNUST2   6         20052 RTAM               20053 RNO2               20054 
+RPO4               20055 RNH4               20056 RNH3               20057 
+RSNH4   12         20058 RSPO4   12         20070 RRNO3              20082 
+RRTAM              20083 RRNO2              20084 RRPO4              20085 
+RONO3              20148 ROTAM              20149 RONO2              20150 
+ROPO4              20151 ROSNH4   4         20168 ROSPO4   4         20172
+TNUCF1   4         20208 DSNH4    4         20212 DSPO4    4         20216 
+NITNO3             20252 DENNO3             20253 BODNO3             20254 
+PHYNO3             20255 ZOONO3             20256 BALNO3             20257 
+TOTNO3             20258 NITTAM             20287 VOLNH3             20288 
+BNRTAM             20289 BODTAM             20290 PHYTAM             20291 
+ZOOTAM             20292 BALTAM             20293 TOTTAM             20294
+NITNO2             20327 BNRPO4             20332 BODPO4             20333 
+PHYPO4             20334 ZOOPO4             20335 BALPO4             20336 
+TOTPO4             20337 ADNH4    4         20362 ADPO4    4         20366 
+ONO3     5         20402 OTAM     5         20407 ONO2     5         20412 
+OPO4     5         20417 OSNH4    5   4     20502 OSPO4    5   4     20522 
+TNUCF2   5   4     20702 DECCO2             20722 NUADDR   3         20723 
+NUADWT   3         20738 NUADEP   3         20753 IPHYTO             20899 
+IZOO               20900 IORN               20901 IORP               20902 
+IORC               20903 ITORN              20934 ITORP              20935 
+ITORC              20936 ITOTN              20937 ITOTP              20938 
+PLADFG   6         20970 PHYFG              20976 PKFG     9         20976 
+ZOOFG              20977 BALFG              20978 SDLTFG             20979 
+AMRFG              20980 DECFG              20981 NSFG               20982 
+ZFOOD              20983 BNPFG              20984 BFIXFG   4         20986 
+BINVFG             20990 PLAFXM  12   3     20991 PLACNM  12   3     21027 
+CVBC               21063 CVBCL              21064 CVNRBO             21065 
+CVPB               21066 RATCLP             21067 PKPM1    7         21067 
+NONREF             21068 LITSED             21069 ALNPR              21070
+EXTB               21071 MALGR              21072 PARADF             21073 
+CMMLT              21074 PKPM2    7         21074 CMMN               21075 
+CMMNP              21076 CMMP               21077 TALGRH             21078 
+TALGRL             21079 TALGRM             21080 ALR20              21081 
+PKPM3    6         21081 ALDH               21082 ALDL               21083 
+OXALD              21084 NALDH              21085 PALDH              21086 
+NMINGR             21087 PKPM12   5         21087 PMINGR             21088 
+CMINGR             21089 LMINGR             21090 NMINC              21091 
+SEED               21092 PKPM4    6         21092 MXSTAY             21093 
+OREF               21094 CLALDH             21095 PHYSET             21096 
+REFSET             21097 MZOEAT             21098 PKPM5    5         21098 
+ZFIL20             21099 ZRES20             21100 ZD                 21101 
+OXZD               21102 TCZFIL             21103 PKPM6    4         21103 
+TCZRES             21104 ZEXDEL             21105 ZOMASS             21106 
+MBAL               21107 PKPM7    7         21107 CFBALR             21108 
+CFBALG             21109 MINBAL             21110 CAMPR              21111 
+FRAVL              21112 NMAXFX             21113 MBALGR   4         21114
+TCBALG   4         21118 CMMNB    4         21122 CMMPB    4         21126 
+CMMD1    4         21130 CMMD2    4         21134 CSLIT    4         21138 
+BALR20   4         21142 TCBALR   4         21146 CSLOF1   4         21150 
+CSLOF2   4         21154 GRORES   4         21158 CREMVL             21162 
+PKPM8    4         21162 CMMBI              21163 BINV               21164 
+TCGRAZ             21165 BINVM   12         21167 CTRBQ1             21179 
+PKPM9    4         21179 CTRBQ2             21180 CKTRB1             21181 
+CKTRB2             21182 FRRIF              21183 PKPM10   5         21183 
+CMMV               21184 RIFCQ1             21185 RIFCQ2             21186 
+RIFCQ3             21187 RIFVEL   4         21188 PKPM11   8         21188 
+RIFDEP   4         21192 JDAT               21200 BALDEP             21201 
+BALVEL             21202 PHYTO              21203 PKST1    3         21203 
+PHYCLA             21204 LIMPHY             21205 BENAL    4         21206 
+PKST2    4   3     21206 BALCLA   4         21210 LIMBAL   4         21214 
+TBENAL   2         21218 ORN                21220 PKST3    7         21220 
+ORP                21221 ORC                21222 TORN               21223 
+TORP               21224 TORC               21225 POTBOD             21226 
+ZOO                21227 TN                 21228 PKST4    2         21228 
+TP                 21229 ROPHYT             21252 ROZOO              21253 
+ROORN              21254 ROORP              21255 ROORC              21256 
+ROTORN             21277 ROTORP             21278 ROTORC             21279 
+ROTOTN             21280 ROTOTP             21281 OPHYT    5         21302 
+OZOO     5         21307 OORN     5         21312 OORP     5         21317 
+OORC     5         21322 OTORN    5         21427 OTORP    5         21432 
+OTORC    5         21437 OTOTN    5         21442 OTOTP    5         21447 
+PLADDR   3         21552 PLADWT   3         21567 PLADEP   3         21582 
+SNKPHY             21585 ZOOPHY             21586 DTHPHY             21587 
+GROPHY             21588 TOTPHY             21589 GROZOO             21610 
+DTHZOO             21611 TOTZOO             21612 FLXBAL   3   4     21625 
+GROTBA             21685 DTHTBA             21686 TOTTBA             21687 
+SNKORN             21700 PHYORN             21701 ZOOORN             21702 
+BALORN             21703 TOTORN             21704 SNKORP             21725 
+PHYORP             21726 ZOOORP             21727 BALORP             21728 
+TOTORP             21729 SNKORC             21750 PHYORC             21751 
+ZOOORC             21752 BALORC             21753 TOTORC             21754 
+PYCO2              21775 ZOCO2              21776 BACO2              21777 
+ITIC               21885 ICO2               21886 PHCNT              21899 
+PHPM1    2         21899 ALKCON             21900 CFCINV             21901 
+PHPM2    3         21901 BRCO2    2         21902 TIC                21906 
+PHST     3         21906 CO2                21907 PH                 21908 
+SATCO2             21912 ROTIC              21914 ROCO2              21915 
+OTIC     5         21926 OCO2     5         21931 BODCO2             21986 
+PHYCO2             21987 ZOOCO2             21988 BALCO2             21989 
+BENCO2             21990 INVCO2             21991 TOTCO2             21992 
+ACFLAG  14         22028 ACPARM   7         22042 NUMCON             22050 
+NUMGQL             22051 ACCONC   7         22088 ACSTOR   7   5     22102 
+ACINFL   7   5     22144 ACFLX1   7   5     22193 ACFLX2   5   7   5 22235 
+ACFLXC  10   5     22445 ACFLXG   7   5     22505 ACFLX3   7   5     22547 
+ACPH               22582 ACCONV   7         22584 TOPFL              22591 
+VEGFL              22592 NSSP               22593 TSA    250  12     22594 
+DISL   250  10     25494 DISR   250  10     28094 WIDL   250  10     30594 
+WIDR   250  10     33094 HABSL  250  10     35494 HABSR  250  10     38094 
+HDEML  250  10     40594 HDEMR  250  10     43094 LATDEG             45594 
+LONDEG             45595 LONSTD             45596 DENL   250  10     45597 
+DENR   250  10     48097 NVPL   250         50597 NVPR   250         50847 
+JDAY               51097 LATRAD             51098 SO     250         51099 
+TSAL   250         51349 TSAR   250         51599 SKOP   250         51849 
+VSAL   250         52099 VSAR   250         52349 DLT1               52599 
+DEC                52600 HFDLT              52601 DF                 52602 
 YR                    18 MON                   19 DAY                   20 
 HR                    21 MIN                   22 POINT   20           110 
 MEAN    20           130 SPOUT                 28 @@@@@@                 1 

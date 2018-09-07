@@ -13,7 +13,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX1 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,I1,I2,I4,IVAL(1)
+      INTEGER    I,I1,I2,I4,IVAL(2)
       REAL       RVAL(3)
 C
 C     + + + EXTERNALS + + +
@@ -38,12 +38,13 @@ C       reaeration data have already been processed
       ELSE
 C       flags - table-type ox-flags
         I2= 71
-        I4=  1
+        I4=  2
         CALL ITABLE
      I               (I2,I1,I4,UUNITS,
      M                IVAL)
 C
         OXPM1= IVAL(1)
+	DOPFG= IVAL(2)
 C
         IF (HTFG.EQ.0) THEN
 C         get elevation and compute pressure correction factor -
@@ -168,10 +169,12 @@ C
       SATDO= RVAL(3)
 C
 C     initialize dissolved oxygen & bod fluxes
-      DO 140 I= 1,8
+      DO 140 I= 1,9
         OXCF3(I,1)= 0.0
-        OXCF4(I,1)= 0.0
  140  CONTINUE
+      DO 150 I= 1,8
+        OXCF4(I,1)= 0.0
+ 150  CONTINUE
 C
       IF (OUTLEV.GT.1) THEN
         WRITE (MESSU,2010)
@@ -193,7 +196,8 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    SCLU,SGRP,REQFG,TSSUB(2)
-      REAL       DOREA,DOBEN,BODBNR,VOLSP
+      REAL       DOREA,DOBEN,BODBNR,VOLSP,
+     1           SATDOP,DOPREC,DOMASS
       DOUBLE PRECISION DPBOD,DPDOX
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
@@ -245,6 +249,86 @@ C
      M             DPBOD,
      O             ROBOD,OBOD(1))
       BOD=DPBOD
+C
+C
+C
+C     new code to add DO in precip -- 1/2018 pbd
+      PRCDOX = 0.0
+      IF (DOPFG.GT.0) THEN
+C
+C       get precipitation time series
+        IF (PRECFP .GE. 1) THEN
+C         precipitation is input
+          PREC= PAD(PRECFP+IVL1)
+        ELSE
+C         no precipitation
+          PREC= 0.0
+        END IF
+C
+        IF (PREC .GT. 0.0001) THEN
+C         get gage air temperature
+          REQFG= 2
+          TSNAM= 'GATMP '
+          CALL HREQTS (GATFP,IVL1,REQFG,MESSU,MSGFL,DATIM,OPTYP,RCHNO,
+     I                 TSNAM,TSSUB,SECNAM,MSECNM,OPFGNM,GATFP,
+     O                 GATMP)
+C
+C         calculate oxygen saturation level for current air
+C         temperature; satdo is expressed as mg oxygen per liter
+C
+          SATDOP= 14.652 + 
+     $            GATMP*(-0.41022 + GATMP*(0.007991 - 0.7777E-4*GATMP))
+C
+C         adjust satdo to conform to prevalent atmospheric pressure
+C         conditions; cfpres is the ratio of site pressure to sea level
+C         pressure
+C
+          SATDOP= CFPRES*SATDOP
+C
+          IF (SATDOP .LT. 0.0) THEN
+C           warning - this occurs only when air temperature is very
+C           high - above about 66 C.  Usually means error in input gatmp
+            CALL OMSTD (DATIM)
+            CALL OMSTI (RCHNO)
+            CALL OMSTR (SATDOP)
+            CALL OMSTR (GATMP)
+            SGRP= 2
+            CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M                 OXWCNT)
+C           reset saturation level
+            SATDOP= 0.0
+          END IF     
+C
+C         compute DO mass from precipitation 
+          DOPREC= PREC*SAREA*SATDOP
+C	    PREC = ft (or m)
+C	    SAREA = ft2 (or m2)
+C	    SATDOP = mg oxygen/l 
+C           DOPREC = mg ft3 / l (or mg m3 /l)
+C
+C         compute DO mass already in reach (mg/l * ft3)  
+          DOMASS= DOX*VOL
+C           DOMASS = mg ft3 / l (or mg m3 /l)
+C
+C         update dissolved oxygen with precipitation DO flux 
+          IF (DOPREC .GT. 0.0001) THEN
+            DOX = (DOMASS + DOPREC) / (VOL)
+            IDOX= IDOX + DOPREC
+C           for debugging
+C            write(messu,*) 'SATDOP, DOPREC, DOMASS, DOX: ',
+C     1                      SATDOP, DOPREC, DOMASS, DOX
+C            write(messu,*) 'PREC, SAREA, VOL: ',
+C     1                      PREC, SAREA, VOL
+          END IF
+C
+C         transfer precipitation DO flux to OXCF3
+      	  PRCDOX = DOPREC
+        END IF
+      END IF
+C
+C     end of new code to add DO in precip
+C
+C      
 C
       IF (AVDEPE .GT. 0.17) THEN
 C
@@ -438,7 +522,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,I2,I8
+      INTEGER    I,I2,I8,I9
 C
 C     + + + EXTERNALS + + +
       EXTERNAL  ACCVEC
@@ -447,6 +531,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       I2=2
       I8=8
+      I9=9
 C
 C     handle flux groups dealing with reach-wide variables
       CALL ACCVEC
@@ -467,7 +552,7 @@ C       handle flux groups dealing with individual exit gates
       END IF
 C
       CALL ACCVEC
-     I            (I8,OXCF3(1,FRMROW),
+     I            (I9,OXCF3(1,FRMROW),
      M             OXCF3(1,TOROW))
 C
       CALL ACCVEC
@@ -578,14 +663,14 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER     I,IX,I0,I1,I2,I8,J,JLEN,ACNT,CLEN(24+NEXITS*2),
-     $            EXDAT(5)
-      REAL        PIFLX(2),PCFLX1(2),PCFLX2(5,2),PCFLX3(8),PCFLX4(8),
+      INTEGER     I,IX,I0,I1,I2,I8,J,JLEN,ACNT,CLEN(25+NEXITS*2),
+     $            EXDAT(5),I9
+      REAL        PIFLX(2),PCFLX1(2),PCFLX2(5,2),PCFLX3(9),PCFLX4(8),
      $            PRDOX,PRDOXS,PRBOD,PRBODS,PROXST(2),DOXIN,DOXDIF,
-     $            BODIN,BODDIF,APRINT(24+NEXITS*2)
+     $            BODIN,BODDIF,APRINT(25+NEXITS*2)
       CHARACTER*16  UNITID,CCFLX3(7),CCFLX4(7)
       CHARACTER*1   CSTR(2)
-      CHARACTER*256 CHEAD(24+NEXITS*2)
+      CHARACTER*256 CHEAD(25+NEXITS*2)
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   TRNVEC,BALCHK,INTCHR,EXDATE,BINHED,BINREC
@@ -598,6 +683,8 @@ C     + + + OUTPUT FORMATS + + +
  2040 FORMAT (/,5X,'STORAGE (',A3,')',11X,1PE10.3)
  2050 FORMAT (/,3X,'FLUXES (',A3,')')
  2060 FORMAT (  5X,'INFLOW',18X,1PE10.3)
+ 2065 FORMAT (  5X,'INFLOW FROM PRECIP',6X,1PE10.3)
+ 2067 FORMAT (  5X,'TOTAL INFLOW',12X,1PE10.3)
  2070 FORMAT ( 68X,'BENTHAL',4X,'NITRIFI-',6X,'PHYTO.',8X,'ZOO.',
      $        '  BENTH.ALG.')
  2080 FORMAT (  5X,'OTHER GAINS/LOSSES',11X,'TOTAL  REAERATION',
@@ -621,6 +708,7 @@ C
       I1= 1
       I2= 2
       I8= 8
+      I9= 9
 C
 C     initialize array counter for binary printout, store variable
 C     names in local strings for use in building binary headers
@@ -659,7 +747,7 @@ C     computed fluxes
      O             PCFLX1)
 C
       CALL TRNVEC
-     I            (I8,OXCF3(1,LEV),FACTA,FACTB,
+     I            (I9,OXCF3(1,LEV),FACTA,FACTB,
      O             PCFLX3)
 C
       CALL TRNVEC
@@ -702,7 +790,12 @@ C
         WRITE (PRINTU,2030)  OXST(1)
         WRITE (PRINTU,2040)  FLUXID, PROXST(1)
         WRITE (PRINTU,2050)  FLUXID
-        WRITE (PRINTU,2060)  PIFLX(1)
+        IF (DOPFG .EQ. 0) THEN
+          WRITE (PRINTU,2060)  PIFLX(1)
+        ELSE
+          WRITE (PRINTU,2065)  PCFLX3(9)
+          WRITE (PRINTU,2067)  PIFLX(1)
+        END IF
         WRITE (PRINTU,2070)
         WRITE (PRINTU,2080)
         WRITE (PRINTU,2090)  PCFLX3(8), (PCFLX3(J),J=1,7)
@@ -727,6 +820,12 @@ C
         APRINT(ACNT) = PIFLX(1)
         CHEAD(ACNT) = 'DOXIN'
         CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        IF (DOPFG .GT. 0) THEN
+          ACNT = ACNT + 1
+          APRINT(ACNT) = PCFLX3(9)
+          CHEAD(ACNT) = 'DOXIN-PREC'
+          CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+        END IF
         ACNT = ACNT + 1
         APRINT(ACNT) = PCFLX3(8)
         CHEAD(ACNT) = 'DOXFLUX-TOT'
@@ -894,14 +993,16 @@ C
  30     CONTINUE
       END IF
 C
-      DO 40 I= 1, 8
+      DO 40 I= 1, 9
         IF (OXCF3X(I) .GE. 1) THEN
           PAD(OXCF3X(I)+ IVL1)= OXCF3(I,1)
         END IF
+ 40   CONTINUE
+      DO 50 I= 1, 8
         IF (OXCF4X(I) .GE. 1) THEN
           PAD(OXCF4X(I)+ IVL1)= OXCF4(I,1)
         END IF
- 40   CONTINUE
+ 50   CONTINUE
 C
       RETURN
       END
@@ -954,7 +1055,7 @@ C     + + + COMMON BLOCKS- SCRTCH, VERSION OXRX2 + + +
       INCLUDE    'cmpad.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER    I,I2,I8
+      INTEGER    I,I2,I8,I9
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   SETVEC
@@ -963,6 +1064,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       I2=2
       I8=8
+      I9=9
 C     handle flux groups dealing with reach-wide variables
       CALL SETVEC
      I            (I2,0.0,
@@ -982,7 +1084,7 @@ C       handle flux groups dealing with individual exit gates
       END IF
 C
       CALL SETVEC
-     I            (I8,0.0,
+     I            (I9,0.0,
      O             OXCF3(1,LEV))
 C
       CALL SETVEC

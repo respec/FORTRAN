@@ -69,7 +69,7 @@ C
       REAL          DELT,DELT60,DELTS,PREC,SAREA,RO,SROVOL,EROVOL,
      $              SOVOL(MXEXIT),EOVOL(MXEXIT),SOLRAD,ELEV,CFSAEX,TW,
      $              SSED(4),PHVAL,DEPCOR,AVDEPE,AVVELE,OXIF(2,5),DOX,
-     $              BOD,OXCF1(2,5),OXCF2(MXEXIT,2,5),OXCF3(8,5),
+     $              BOD,OXCF1(2,5),OXCF2(MXEXIT,2,5),OXCF3(9,5),
      $              OXCF4(8,5),NUIF1(4,5),NUIF2(4,2,5),CVBN,CVBO,CVBP,
      $              CVBPC,CVBPN,BPCNTC,ANAER,NO3,TAM,NO2,PO4,NH4,NH3,
      $              RSNH4(12),RSPO4(12),NUCF1(4,5),NUCF2(4,2,5),
@@ -101,10 +101,10 @@ C
      $              DUM6(102),DUM7(605),DUM8(8085),DUM9(1096),
      $              DUM10(7),DUM11(9),DUM12,DUM13(258),DUM14,
      $              DUM15(191),DUM16(14),DUM17(354),DUM18(4238),
-     $              DUM19(22),DUM20(14),DUM21(4),DUM22(10),DUM23(16),
+     $              DUM19(23),DUM20(14),DUM21(4),DUM22(10),DUM23(17),
      $              DUM24(42),DUM25(2),DUM26(72),DUM27(7),DUM28(25),
      $              DUM29(12),DUM30(66),DUM31(40),DUM32(40),DUM33(31),
-     $              DUM34(143),DUM35(21),DUM36(78),DUMRCH(31987)
+     $              DUM34(143),DUM35(21),DUM36(78),DUMRCH(31980)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(IBOD,OXIF(2,1)),(OXST,DOX),

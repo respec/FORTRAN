@@ -26,6 +26,21 @@ $TEXT
 
       SATDO         TW
  &R         &R        
+#GROUP    2  TYPE TEXT
+$TEXT
+   20   11    0    5
+&D
+
+ RCHRES: &I
+
+ The calculated saturation dissolved oxygen concentration (SATDOP) is
+ negative.  This occurs when the air temperature is above 66 C (150 F).
+ In most cases, this indicates an error in the time series input (GATMP).
+ 
+ Relevant values are :
+
+     SATDOP      GATMP
+ &R         &R        
   END DATA
 END CLU
                                                                                 

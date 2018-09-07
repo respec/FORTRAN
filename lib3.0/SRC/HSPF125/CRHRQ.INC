@@ -28,14 +28,14 @@ C            RQUAL section
      $              AMVFG,DENFG,ADNHFG,ADPOFG
       REAL          DELT,DELT60,DELTS,AVDEP,AVVEL,TW,SCRVEL,SCRMUL,
      $              RQFLID(2),SCRFAC,DEPCOR,AVDEPE,AVVELE,SUPSAT,DOX,
-     $              BOD,OXST2(2,5),SATDO,OXCF3(8,5),NO3,TAM,NO2,PO4,
+     $              BOD,OXST2(2,5),SATDO,OXCF3(9,5),NO3,TAM,NO2,PO4,
      $              NH4,NH3,RNO3,RTAM,RNO2,RPO4,RNH4,RNH3,RSNH4(12),
      $              RSPO4(12),NUST(4,5)
       DOUBLE PRECISION  VOL,VOLS
       INTEGER       DUM1(3765),DUM2(712),DUM3(3),DUM4(106),DUM5(602),
-     $              DUM6(3),DUM7(9471),DUM8,DUM9(4800),DUM10(18),
-     $              DUM11(13),DUM12(77),DUM13(158),DUM14(111),
-     $              DUM15(6),DUMRCH(33906)
+     $              DUM6(3),DUM7(9471),DUM8,DUM9(4800),DUM10(19),
+     $              DUM11(13),DUM12(77),DUM13(159),DUM14(111),
+     $              DUM15(6),DUMRCH(33899)
 C
       EQUIVALENCE   (ASVEC,HYDRFG),(UNIT,UUNITS),(TIMFG,HRFG),
      $              (DATIM,YR),(SCRPM,SCRVEL),(OXST,DOX),

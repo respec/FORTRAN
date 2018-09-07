@@ -8,9 +8,9 @@
  
    Developed for:                Modified and Maintained by
  
-     U.S. Environmental            Aqua Terra Consultants
-       Protection Agency           (650)962-1864
-     Office of Research            email: hspf@aquaterra.com
+     U.S. Environmental            RESPEC, Inc.
+       Protection Agency           (605)394-6512
+     Office of Research            email: hspf@respec.com
        and Development
      Center for Exposure
        Assessment Modeling
@@ -21,7 +21,7 @@
    In cooperation with:
  
      U.S. Geological Survey                Release 12.5
-     Water Resources Discipline            December 2016
+     Water Resources Discipline            September 2018
      Office of Surface Water
      Reston, Virginia
      email: h2osoft@usgs.gov
@@ -1659,8 +1659,8 @@
 
  PROCESSING INPUT FOR SECTION OXRX
  
-     REAMFG
-          3
+     REAMFG,     DOPFG
+          3         0
  
      TCGINV      REAK    EXPRED    EXPREV
                 (/hr)
@@ -1928,8 +1928,8 @@
 
  PROCESSING INPUT FOR SECTION OXRX
  
-     REAMFG
-          2
+     REAMFG,     DOPFG
+          2         0
  
      TCGINV
        1.05

@@ -606,12 +606,13 @@ C       process- input required to compute reaeration coefficient
 C
 C       flags - table-type ox-flags
         I2= 71
-        I4=  1
+        I4=  2
         CALL ITABLE
      I               (I2,I1,I4,UUNITS,
      M                IVAL)
 C
         OXPM1= IVAL(1)
+	DOPFG= IVAL(2)
 C
         IF (HTFG.EQ.0) THEN
 C         get elevation and compute pressure correction factor -

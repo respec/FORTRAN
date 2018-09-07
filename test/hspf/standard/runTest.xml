@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <project name="runTest" default="all">
    <property name="TestSummaryFile"    value="${ant.project.name}.lis"/>
-   <property name="WinHspfLt"          value="C:\basins41\models\hspf\bin\winhspflt.exe"/>
+   <property name="WinHspfLt"          value="C:\basins45\models\hspf\bin\winhspflt.exe"/>
    <property name="BC2"                value="C:\Program Files (x86)\Beyond Compare 2\BC2.exe"/>
 
    <target name="all" depends="run,compare"/>
