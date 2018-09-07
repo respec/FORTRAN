@@ -19,16 +19,17 @@
         INTEGER            :: INTYR(200)
         INTEGER            :: NLOW
         INTEGER            :: NZERO
+        INTEGER            :: NOBS
         REAL               :: WEIBA
         REAL               :: PKS(200)
         REAL               :: PKLOG(200)
         REAL               :: SYSPP(200)
         REAL               :: WRCPP(200)
-        REAL               :: SYSRFC(200)
-        REAL               :: WRCFC(200)
-        REAL               :: TXPROB(200)
-        REAL               :: CLIML(200)
-        REAL               :: CLIMU(200)
+        REAL               :: SYSRFC(32)
+        REAL               :: WRCFC(32)
+        REAL               :: TXPROB(32)
+        REAL               :: CLIML(32)
+        REAL               :: CLIMU(32)
         REAL               :: INTLWR(200)
         REAL               :: INTUPR(200)
         REAL               :: INTPPOS(200)
@@ -38,6 +39,7 @@
         REAL               :: GBCRIT
         REAL               :: WRCSKW
         REAL               :: RMSEGS
+        REAL               :: ALLPOS(10000)
         CHARACTER*80       :: THRCOM(20)
         CHARACTER*80       :: INTCOM(200)
       END TYPE
