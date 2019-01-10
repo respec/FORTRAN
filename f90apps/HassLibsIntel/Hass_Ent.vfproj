@@ -5,7 +5,7 @@
 		<Platform Name="x64"/></Platforms>
 	<Configurations>
 		<Configuration Name="Debug|Win32" ConfigurationType="typeDynamicLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug" Interfaces="true"/>
 				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemWindows" LinkDLL="true"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
@@ -25,7 +25,7 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Debug|x64" OutputDirectory="C:\Dev\BASINS40\Bin\Plugins\BASINS" ConfigurationType="typeDynamicLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Interfaces="true" WarnTruncateSource="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnTruncateSource="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL" Interfaces="true"/>
 				<Tool Name="VFLinkerTool" SuppressStartupBanner="true" GenerateDebugInformation="true" MapExports="true" SubSystem="subSystemWindows" LinkDLL="true"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
@@ -50,47 +50,14 @@
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\ann.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\awstat.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\graph.lib"/>
-		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\hspf124.lib"/>
+		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\hspf125.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\HspNoDSS.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\iowdm.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\newaqt12.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\util.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\waide.lib"/>
 		<File RelativePath="..\..\lib3.0\IntelLibs\Win32\Debug\wdm.lib"/></Filter>
-		<Filter Name="Mods">
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\climate.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\consts.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\datetime.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\dynwave.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\enums.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\error.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\findroot.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\flowrout.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\forcemain.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\globals.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\headers.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\infil.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\inflow.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\keywords.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\link.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\macros.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\massbal.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\node.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\objects.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\output.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\project.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\qualrout.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\rain.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\report.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\routing.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\stats.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\swmm5f.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\swmm5futil.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\text.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\toposort.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\treatmnt.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\xsect.f90"/>
-		<File RelativePath="..\..\lib3.0\SRC\HSPF124\XsectDat.f90"/></Filter>
+		<Filter Name="Mods"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<File RelativePath=".\src\HASS_DUM.FOR"/>
 		<File RelativePath=".\src\HASS_ENT.F90"/>

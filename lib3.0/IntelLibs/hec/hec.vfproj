@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}">
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{633825B5-07D5-43FD-BC98-ED8F60B140E0}">
 	<Platforms>
 		<Platform Name="Win32"/>
 		<Platform Name="x64"/></Platforms>
 	<Configurations>
 		<Configuration Name="Debug|Win32" ConfigurationType="typeStaticLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug" Interfaces="true"/>
 				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
@@ -25,7 +25,7 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util/" Interfaces="true" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" AdditionalIncludeDirectories="../../src/util/" WarnInterfaces="true" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug" Interfaces="true"/>
 				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
@@ -109,7 +109,7 @@
 		<File RelativePath="..\..\SRC\hec\ERASF.FOR"/>
 		<File RelativePath="..\..\SRC\hec\FINDLM.FOR"/>
 		<File RelativePath="..\..\SRC\hec\GETBIN.FOR"/>
-		<File RelativePath="..\..\SRC\hec\GETHOLPC.FOR"/>
+		<File RelativePath="..\..\SRC\hec\GETHOLIN90.FOR"/>
 		<File RelativePath="..\..\SRC\hec\GETIME.FOR"/>
 		<File RelativePath="..\..\SRC\hec\GETNAM.FOR"/>
 		<File RelativePath="..\..\SRC\hec\GTCOPT.FOR"/>
@@ -201,7 +201,7 @@
 		<File RelativePath="..\..\SRC\hec\PUFL.FOR"/>
 		<File RelativePath="..\..\SRC\hec\PUFLA.FOR"/>
 		<File RelativePath="..\..\SRC\hec\PUFWCA.FOR"/>
-		<File RelativePath="..\..\SRC\hec\PUTHOL90.FOR"/>
+		<File RelativePath="..\..\SRC\hec\PUTHOLIN90.FOR"/>
 		<File RelativePath="..\..\SRC\hec\R2SD3.FOR"/>
 		<File RelativePath="..\..\SRC\hec\RBELL.FOR"/>
 		<File RelativePath="..\..\SRC\hec\READF.FOR"/>

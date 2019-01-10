@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "util", "util\util.vfproj", "{E2AADE62-ABA8-40FB-B834-8E81236B26D4}"
 EndProject
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "adwdm", "adwdm\adwdm.vfproj", "{6ED3837D-3DC9-46F0-94B4-2A274BF28DCD}"
@@ -31,9 +33,11 @@ Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "hspf140", "hspf140\hspf140.
 EndProject
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "HspNoDSS140", "HspNoDSS140\HspNoDSS140.vfproj", "{0AA9A94D-2C5E-450B-89F2-A01B80248F46}"
 EndProject
-Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "hspf124", "hspf124\hspf124.vfproj", "{CDBB0451-40D1-4666-B628-3C7AB8F57861}"
-EndProject
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "newaqt12", "newaqt12\newaqt12.vfproj", "{F7E377B9-8CBA-4479-AF84-51325B55F0EE}"
+EndProject
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "hspf125", "hspf125\hspf125.vfproj", "{78F5D51D-631E-4982-A428-179626CAB853}"
+EndProject
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "aide", "aide\aide.vfproj", "{44F87EA1-8AF5-4203-982F-1F956A5C6864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,14 +139,6 @@ Global
 		{0AA9A94D-2C5E-450B-89F2-A01B80248F46}.Release|Win32.Build.0 = Release|Win32
 		{0AA9A94D-2C5E-450B-89F2-A01B80248F46}.Release|x64.ActiveCfg = Release|x64
 		{0AA9A94D-2C5E-450B-89F2-A01B80248F46}.Release|x64.Build.0 = Release|x64
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Debug|Win32.ActiveCfg = Debug|Win32
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Debug|Win32.Build.0 = Debug|Win32
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Debug|x64.ActiveCfg = Debug|x64
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Debug|x64.Build.0 = Debug|x64
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Release|Win32.ActiveCfg = Release|Win32
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Release|Win32.Build.0 = Release|Win32
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Release|x64.ActiveCfg = Release|x64
-		{CDBB0451-40D1-4666-B628-3C7AB8F57861}.Release|x64.Build.0 = Release|x64
 		{F7E377B9-8CBA-4479-AF84-51325B55F0EE}.Debug|Win32.ActiveCfg = Debug|Win32
 		{F7E377B9-8CBA-4479-AF84-51325B55F0EE}.Debug|Win32.Build.0 = Debug|Win32
 		{F7E377B9-8CBA-4479-AF84-51325B55F0EE}.Debug|x64.ActiveCfg = Debug|x64
@@ -151,6 +147,22 @@ Global
 		{F7E377B9-8CBA-4479-AF84-51325B55F0EE}.Release|Win32.Build.0 = Release|Win32
 		{F7E377B9-8CBA-4479-AF84-51325B55F0EE}.Release|x64.ActiveCfg = Release|x64
 		{F7E377B9-8CBA-4479-AF84-51325B55F0EE}.Release|x64.Build.0 = Release|x64
+		{78F5D51D-631E-4982-A428-179626CAB853}.Debug|Win32.ActiveCfg = Debug|Win32
+		{78F5D51D-631E-4982-A428-179626CAB853}.Debug|Win32.Build.0 = Debug|Win32
+		{78F5D51D-631E-4982-A428-179626CAB853}.Debug|x64.ActiveCfg = Debug|x64
+		{78F5D51D-631E-4982-A428-179626CAB853}.Debug|x64.Build.0 = Debug|x64
+		{78F5D51D-631E-4982-A428-179626CAB853}.Release|Win32.ActiveCfg = Release|Win32
+		{78F5D51D-631E-4982-A428-179626CAB853}.Release|Win32.Build.0 = Release|Win32
+		{78F5D51D-631E-4982-A428-179626CAB853}.Release|x64.ActiveCfg = Release|x64
+		{78F5D51D-631E-4982-A428-179626CAB853}.Release|x64.Build.0 = Release|x64
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Debug|Win32.Build.0 = Debug|Win32
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Debug|x64.ActiveCfg = Debug|x64
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Debug|x64.Build.0 = Debug|x64
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Release|Win32.ActiveCfg = Release|Win32
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Release|Win32.Build.0 = Release|Win32
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Release|x64.ActiveCfg = Release|x64
+		{44F87EA1-8AF5-4203-982F-1F956A5C6864}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
