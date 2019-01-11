@@ -50,7 +50,7 @@
 		<File RelativePath="..\..\SRC\hec\ANREAD.FOR"/>
 		<File RelativePath="..\..\SRC\hec\ASCTRL.FOR"/>
 		<File RelativePath="..\..\SRC\hec\ATTACHPC.FOR"/>
-		<File RelativePath="..\..\SRC\hec\ATTCRKPC.FOR"/>
+		<File RelativePath="..\..\SRC\hec\ATTCRKIN90.FOR"/>
 		<File RelativePath="..\..\SRC\hec\ATTDCD.FOR"/>
 		<File RelativePath="..\..\SRC\hec\ATTMAT.FOR"/>
 		<File RelativePath="..\..\SRC\hec\ATTOPN.FOR"/>
