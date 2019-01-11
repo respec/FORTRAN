@@ -1,6 +1,7 @@
-
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "Hass_Ent", "Hass_Ent.vfproj", "{96667BD5-097B-47AE-8EB4-A39ADE59FA52}"
 EndProject
 Global
