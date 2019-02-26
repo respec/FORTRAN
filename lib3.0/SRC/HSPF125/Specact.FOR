@@ -6813,7 +6813,7 @@ C               this was the last one
               END IF
             ELSE IF (DOFG .EQ. 1) THEN
 C             undated
-              IF (UNDCNT.LT.NSPUMN .OR. NSPUM.GT.NSPUMN) THEN
+              IF (UNDCNT.LT.NSPUNM .OR. NSPUM.GT.NSPUNM) THEN
 C               there are either more undated or there are dated coming
                 CHKNXT= 1
               END IF
