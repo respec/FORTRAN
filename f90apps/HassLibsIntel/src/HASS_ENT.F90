@@ -77,7 +77,7 @@
 
       !local
       INTEGER FUNCTION INQUIRE_NAME(NAME,FUN_DEF)
-        CHARACTER*256      :: NAME
+        CHARACTER(LEN=*)   :: NAME
         INTEGER            :: FUN_DEF
 
         CHARACTER*512      :: MSG
@@ -148,9 +148,9 @@
         CALL LOG_MSG('CLOSE')
       END SUBROUTINE F90_W99CLO
 
-      FUNCTION f90_wdmopn(unit,name)
-        !DEC$ ATTRIBUTES DLLEXPORT :: f90_wdmopn
-        !DEC$ ATTRIBUTES STDCALL   :: f90_wdmopn
+      FUNCTION F90_WDMOPN(unit,name)
+        !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDMOPN
+        !DEC$ ATTRIBUTES STDCALL   :: F90_WDMOPN
         !DEC$ ATTRIBUTES REFERENCE :: unit,name
         INTEGER            :: F90_WDMOPN
         INTEGER            :: UNIT
@@ -206,18 +206,19 @@
       END FUNCTION F90_WDMCLO
       
       !adwdm:wdopxx
-      FUNCTION f90_wdbopn(rwflg,wdname) RESULT(WDMSFL) 
-        !DEC$ ATTRIBUTES DLLEXPORT :: f90_wdbopn
-        !DEC$ ATTRIBUTES STDCALL   :: f90_wdbopn
-        !DEC$ ATTRIBUTES REFERENCE :: rwflg,wdname
+      FUNCTION F90_WDBOPN(rwflg,wdname) RESULT(WDMSFL) 
+        !DEC$ ATTRIBUTES DLLEXPORT :: F90_WDBOPN
 
-        CHARACTER(LEN=256),INTENT(IN) :: WDNAME
-        INTEGER,           INTENT(IN) :: RWFLG
+        CHARACTER(LEN=*)              :: WDNAME
+        INTEGER                       :: RWFLG
         INTEGER                       :: WDMSFL
 
         CHARACTER(LEN=384)            :: MSG
         INTEGER                       :: RETCOD
 
+        WRITE(MSG,*) 'HASS_ENT:F90_WDBOPN:Entered',rwflg,wdname
+        CALL LOG_MSG(MSG)
+        
         IF (RWFLG .EQ. 1) THEN
           !read only, assign special number
           WDMSFL = INQUIRE_NAME(WDNAME,100)
@@ -232,13 +233,13 @@
         WRITE(MSG,*) 'HASS_ENT:F90_WDBOPN:RWFLG,WDMSFL:',RWFLG,WDMSFL,' ',TRIM(WDNAME)
         CALL LOG_MSG(MSG)
 
-        CALL WDBOPN(WDMSFL,LNAME,RWFLG,RETCOD)
+        CALL WDBOPN(WDMSFL,WDNAME,RWFLG,RETCOD)
         
         IF (RETCOD .NE. 0) THEN
           IF (RETCOD .LT. -10) THEN
             RETCOD = ABS(RETCOD) - 16384
           END IF
-          !WRITE(*,*) 'HASS_ENT:F90_WDBOPN: "'//LNAME,'" retc:',RETCOD
+          !WRITE(*,*) 'HASS_ENT:F90_WDBOPN: "'//WDNAME,'" retc:',RETCOD
           WDMSFL= 0
         END IF
 
