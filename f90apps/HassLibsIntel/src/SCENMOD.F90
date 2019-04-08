@@ -55,7 +55,7 @@
 		
 		  INTEGER                     :: ILEN
 		  
-		  ILEN = LEN(TRIM(ATXT))
+		  ILEN = LEN_TRIM(ATXT)
 		  
           CALL UPDATESTATUSX(IOPT,ILEN,ATXT)
           IF (DBGLEV > 0) THEN
@@ -191,12 +191,13 @@
 
           INTEGER                      :: IOPT,TMKFIL,L,I,LEN,I7
           INTEGER                      :: LOCLFG,TRET,LUCIU
-          LOGICAL                      :: LFLAG
+          LOGICAL                      :: LFLAG,EXISTS
           CHARACTER(LEN=1024)          :: M
           CHARACTER(LEN=1024)          :: S
           CHARACTER(LEN=1024)          :: LSCEN
 
 2000      FORMAT(1X,A,I3,1X,A)
+2010      FORMAT(1X,A,I3,1X,L)
 
           TMKFIL = MKFILS
 
@@ -228,9 +229,17 @@
  
           UCI%FUN= 10
           LSCEN = TRIM(CSCEN)
+          WRITE(S,2000) 'M_ACTSCN:UCINAM:',UCI%FUN,TRIM(LSCEN)
+          CALL UPDATESTATUSD(I7,S)
           UCI%NAM= LSCEN // '.UCI'
           WRITE(S,2000) 'M_ACTSCN:UCIFL:',UCI%FUN,TRIM(UCI%NAM)
           CALL UPDATESTATUSD(I7,S)
+		  UCI%NAM = 'TEST05.UCI'
+          WRITE(S,2000) 'M_ACTSCN:HARDCODE UCI:',UCI%FUN,TRIM(UCI%NAM)
+          CALL UPDATESTATUSD(I7,S)
+		  INQUIRE(NAME=UCI%NAM,EXIST=EXISTS)
+		  WRITE(S,2010) 'M_ACTSCN:UCI EXISTS:',UCI%FUN,EXISTS
+		  CALL UPDATESTATUSD(I7,S)
 
           OPEN(UNIT=UCI%FUN,FILE=UCI%NAM,STATUS='OLD',ERR=10)
 
