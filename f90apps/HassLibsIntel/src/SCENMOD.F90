@@ -49,6 +49,22 @@
 
         END SUBROUTINE M_SPIPH
 
+		SUBROUTINE UPDATESTATUSD (IOPT,ATXT)
+          INTEGER,         INTENT(IN) :: IOPT 
+          CHARACTER(LEN=*),INTENT(IN) :: ATXT
+		
+		  INTEGER                     :: ILEN
+		  
+		  ILEN = TRIM(ATXT)
+		  
+          CALL UPDATESTATUSX(IOPT,ILEN,ATXT)
+          IF (DBGLEV > 0) THEN
+            WRITE(99,*) ATXT
+            IF (DBGPAU) READ(*,*)
+          END IF
+
+		END SUBROUTINE UPDATESTATUSD
+		
         SUBROUTINE UPDATESTATUSX (IOPT,ILEN,ATXT)
           INTEGER,         INTENT(IN) :: IOPT,ILEN
           CHARACTER(LEN=*),INTENT(IN) :: ATXT
@@ -173,7 +189,7 @@
           INTEGER,         INTENT(IN)  :: WDMFL(4),MSGFL
           INTEGER,         INTENT(OUT) :: RETCOD
 
-          INTEGER                      :: IOPT,TMKFIL,L,I,LEN
+          INTEGER                      :: IOPT,TMKFIL,L,I,LEN,I7
           INTEGER                      :: LOCLFG,TRET,LUCIU
           LOGICAL                      :: LFLAG
           CHARACTER(LEN=1024)          :: M
@@ -184,14 +200,9 @@
 
           TMKFIL = MKFILS
 
-          I = 7   !debug
+          I7 = 7   !debug
           WRITE(S,*) 'M_ACTSCN:entry:',CSCEN,WDMFL(1),MSGFL
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV > 0) THEN
-            WRITE(99,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
+          CALL UPDATESTATUSD(I7,S)
 
           ! avoid some lahey math errors
           LFLAG = .TRUE.
@@ -205,47 +216,26 @@
             IF (WDMFL(L).GT.0) THEN
               WDM(L)%FUN = WDMFL(L)
               INQUIRE(UNIT=WDMFL(L),NAME=WDM(L)%NAM)
-              I = 7   !debug
           WRITE(S,2000) 'M_ACTSCN:WDMFL:',WDM(L)%FUN,TRIM(WDM(L)%NAM)
-              LEN = LEN_TRIM(S)
-              CALL UPDATESTATUSX(I,LEN,S)
-              IF (DBGLEV>0) THEN
-                WRITE(99,*) S
-                IF (DBGPAU) READ(*,*)
-              END IF
+              CALL UPDATESTATUSD(I7,S)
             END IF
           END DO
 
           MSG%FUN    = MSGFL
           INQUIRE(UNIT=MSGFL,NAME=MSG%NAM)
-          I = 7   !debug
           WRITE(S,2000) 'M_ACTSCN:MSGFL:',MSG%FUN,TRIM(MSG%NAM)
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV>0) THEN
-            WRITE(99,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
-
+          CALL UPDATESTATUSD(I7,S)
+ 
           UCI%FUN= 10
-          LSCEN = CSCEN 
-          UCI%NAM= TRIM(LSCEN) // '.UCI'
-
-          I = 7   !debug
+          LSCEN = TRIM(CSCEN)
+          UCI%NAM= LSCEN // '.UCI'
           WRITE(S,2000) 'M_ACTSCN:UCIFL:',UCI%FUN,TRIM(UCI%NAM)
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV>0) THEN
-            WRITE(99,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
+          CALL UPDATESTATUSD(I7,S)
 
           OPEN(UNIT=UCI%FUN,FILE=UCI%NAM,STATUS='OLD',ERR=10)
 
-          I = 7   !debug
           WRITE(S,*) 'M_ACTSCN:about to call FILSET'
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
+          CALL UPDATESTATUSD(I7,S)
 
           IF (WDM(1)%FUN.GT.0) THEN
             !coming from local call, not remote
@@ -280,35 +270,21 @@
           WDM(3)%FUN = FILES(13)
           WDM(4)%FUN = FILES(14)
 
-          I = 7   !debug
           WRITE(S,*) 'M_ACTSCN:back from FILSET',RETCOD
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV>0) THEN
-            WRITE(99,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
+          CALL UPDATESTATUSD(I7,S)
 
           DO I = 1,4
             IF (WDM(I)%FUN .GT. 0) THEN
               INQUIRE(UNIT=WDM(I)%FUN,NAME=WDM(I)%NAM,ERR=10)
-              J = 7   !debug
         WRITE(S,2000) 'M_ACTSCN:WDMFL:',WDM(I)%FUN,TRIM(WDM(I)%NAM)
-              L = LEN_TRIM(S)
-              CALL UPDATESTATUSX(J,L,S)
+              CALL UPDATESTATUSD(J,S)
             END IF
           END DO        
 
           ECH%FUN    = FILES(1)
           INQUIRE(UNIT=ECH%FUN,NAME=ECH%NAM,ERR=10)
-          I = 7   !debug
           WRITE(S,2000) 'M_ACTSCN:ECHFL:',ECH%FUN,TRIM(ECH%NAM)
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV>0) THEN
-            WRITE(99,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
+          CALL UPDATESTATUSD(I7,S)
 
           IF (RETCOD .EQ. 0) THEN
             IOPT  = 10
@@ -322,36 +298,21 @@
               IF (TMKFIL.LT.0) THEN
                 TMKFIL = 0
               END IF
-              I = 7   !debug
               WRITE(S,*) 'M_ACTSCN:abt 2call INTERP',I0,FILES
-              L = LEN_TRIM(S)
-              CALL UPDATESTATUSX(I,L,S)
-              IF (DBGLEV>1) THEN
-                WRITE(99,*) S
-                IF (DBGPAU) READ(*,*)
-              END IF
-
+              CALL UPDATESTATUSD(I7,S)
+ 
               M= "before calling INTERP"
               CALL M_FILSTA (M)
 
               CALL INTERP (I0,TMKFIL,FILES,UNIT_FLG,RETCOD)
 
-              I = 7   !debug
               WRITE(S,*) 'M_ACTSCN:back from INTERP',RETCOD
-              L = LEN_TRIM(S)
-              CALL UPDATESTATUSX(I,L,S)
+              CALL UPDATESTATUSD(I7,S)
             ELSE
-              I = 7   !debug
               WRITE(S,*) 'M_ACTSCN:skip INTERP'
-              L = LEN_TRIM(S)
-              CALL UPDATESTATUSX(I,L,S)
+              CALL UPDATESTATUSD(I7,S)
             END IF
-
-            IF (DBGLEV>0) THEN
-              WRITE(99,*) S
-              IF (DBGPAU) READ(*,*)
-            END IF
-   
+  
             M= "before File Closing in M_ACTSCN"
             CALL M_FILSTA (M)
 
@@ -427,18 +388,14 @@
           I = 7   !debug
           WRITE(S,*) 'M_SIMSCN:entry:',TRIM(ECH%NAM)
           L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV > 0) THEN
-            WRITE(*,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
+          CALL UPDATESTATUSD(I,L,S)
 
           M= "before FILSET in M_SIMSCN"
           CALL M_FILSTA (M)
           I = 7   !debug
           WRITE(S,*) 'M_SIMSCN:about to call FILSET',MSG%FUN,UCI%FUN,WDM(1)%FUN,WDM(2)%FUN,WDM(3)%FUN,WDM(4)%FUN
           L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
+          CALL UPDATESTATUSD(I,L,S)
 
           OPEN(UNIT=UCI%FUN,FILE=UCI%NAM,STATUS='OLD',ERR=10)
 
