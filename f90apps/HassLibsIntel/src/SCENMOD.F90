@@ -176,8 +176,9 @@
           INTEGER                      :: IOPT,TMKFIL,L,I,LEN
           INTEGER                      :: LOCLFG,TRET,LUCIU
           LOGICAL                      :: LFLAG
-          CHARACTER(LEN=80)            :: M
-          CHARACTER(LEN=240)           :: S
+          CHARACTER(LEN=1024)          :: M
+          CHARACTER(LEN=1024)          :: S
+          CHARACTER(LEN=1024)          :: LSCEN
 
 2000      FORMAT(1X,A,I3,1X,A)
 
@@ -227,7 +228,8 @@
           END IF
 
           UCI%FUN= 10
-          UCI%NAM= CSCEN // '.UCI'
+          LSCEN = CSCEN 
+          UCI%NAM= TRIM(LSCEN) // '.UCI'
 
           I = 7   !debug
           WRITE(S,2000) 'M_ACTSCN:UCIFL:',UCI%FUN,TRIM(UCI%NAM)
