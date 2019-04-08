@@ -55,7 +55,7 @@
 		
 		  INTEGER                     :: ILEN
 		  
-		  ILEN = TRIM(ATXT)
+		  ILEN = LEN(TRIM(ATXT))
 		  
           CALL UPDATESTATUSX(IOPT,ILEN,ATXT)
           IF (DBGLEV > 0) THEN
@@ -387,15 +387,13 @@
 
           I = 7   !debug
           WRITE(S,*) 'M_SIMSCN:entry:',TRIM(ECH%NAM)
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSD(I,L,S)
+          CALL UPDATESTATUSD(I,S)
 
           M= "before FILSET in M_SIMSCN"
           CALL M_FILSTA (M)
           I = 7   !debug
           WRITE(S,*) 'M_SIMSCN:about to call FILSET',MSG%FUN,UCI%FUN,WDM(1)%FUN,WDM(2)%FUN,WDM(3)%FUN,WDM(4)%FUN
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSD(I,L,S)
+          CALL UPDATESTATUSD(I,S)
 
           OPEN(UNIT=UCI%FUN,FILE=UCI%NAM,STATUS='OLD',ERR=10)
 
