@@ -254,8 +254,6 @@
           CALL UPDATESTATUSA(I7,'M_ACTSCN:UCINAM:',UCI%FUN,TRIM(LSCEN))
           UCI%NAM= TRIM(LSCEN) // '.UCI'
           CALL UPDATESTATUSA(I7,'M_ACTSCN:UCIFL:',UCI%FUN,TRIM(UCI%NAM))
-          UCI%NAM = 'TEST05.UCI'
-          CALL UPDATESTATUSA(I7,'M_ACTSCN:HARDCODE UCI:',UCI%FUN,TRIM(UCI%NAM))
           INQUIRE(FILE=UCI%NAM,EXIST=EXISTS)
           WRITE(S,2010) 'M_ACTSCN:UCI EXISTS:',UCI%FUN,EXISTS
           CALL UPDATESTATUSD(I7,S)
@@ -404,20 +402,20 @@
 
           INTEGER, INTENT(OUT)  :: RETCOD
 
-          INTEGER       L,I,LOCLFG,TRET
+          INTEGER       L,I,I7,LOCLFG,TRET
           CHARACTER*240 S
           CHARACTER(LEN=80)            :: M
           LOGICAL       OPEN
 
 2000      FORMAT(1X,A,I3,1X,A)
 
-          I = 7   !debug
+          I7 = 7   !debug
           WRITE(S,*) 'M_SIMSCN:entry:',TRIM(ECH%NAM)
           CALL UPDATESTATUSD(I,S)
 
           M= "before FILSET in M_SIMSCN"
           CALL M_FILSTA (M)
-          I = 7   !debug
+
           WRITE(S,*) 'M_SIMSCN:about to call FILSET',MSG%FUN,UCI%FUN,WDM(1)%FUN,WDM(2)%FUN,WDM(3)%FUN,WDM(4)%FUN
           CALL UPDATESTATUSD(I,S)
 
@@ -452,14 +450,8 @@
           M= "at end of FilSet in M_SIMSCN"
           CALL M_FILSTA (M)
 
-          I = 7   !debug
           WRITE(S,*) 'M_SIMSCN:about to call HSPF',FILES
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV > 0) THEN
-            WRITE(*,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
+          CALL UPDATESTATUSD(I,S)
 
           ! proceed to run model
           CALL HSPF (FILES,RETCOD)
@@ -490,14 +482,8 @@
           END IF
           CLOSE (UNIT=UCI%FUN)   ! close users input file
 
-          I = 7   !debug
           WRITE(S,*) 'M_SIMSCN:back from HSPF with',RETCOD
-          L = LEN_TRIM(S)
-          CALL UPDATESTATUSX(I,L,S)
-          IF (DBGLEV > 0) THEN
-            WRITE(*,*) S
-            IF (DBGPAU) READ(*,*)
-          END IF
+          CALL UPDATESTATUSD(I,S)
 
           M= "at end of File Closing in M_SIMSCN"
           CALL M_FILSTA (M)
@@ -506,14 +492,8 @@
 
 10        CONTINUE
 
-            I = 7   !debug
             WRITE(S,*) 'M_ACTSCN:got to ERR 10'
-            L = LEN_TRIM(S)
-            CALL UPDATESTATUSX(I,L,S)
-            IF (DBGLEV>0) THEN
-              WRITE(99,*) S
-              IF (DBGPAU) READ(*,*)
-            END IF
+            CALL UPDATESTATUSD(I,S)
 
             RETCOD = -1
             RETURN
