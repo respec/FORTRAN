@@ -411,13 +411,13 @@
 
           I7 = 7   !debug
           WRITE(S,*) 'M_SIMSCN:entry:',TRIM(ECH%NAM)
-          CALL UPDATESTATUSD(I,S)
+          CALL UPDATESTATUSD(I7,S)
 
           M= "before FILSET in M_SIMSCN"
           CALL M_FILSTA (M)
 
           WRITE(S,*) 'M_SIMSCN:about to call FILSET',MSG%FUN,UCI%FUN,WDM(1)%FUN,WDM(2)%FUN,WDM(3)%FUN,WDM(4)%FUN
-          CALL UPDATESTATUSD(I,S)
+          CALL UPDATESTATUSD(I7,S)
 
           OPEN(UNIT=UCI%FUN,FILE=UCI%NAM,STATUS='OLD',ERR=10)
 
@@ -451,7 +451,7 @@
           CALL M_FILSTA (M)
 
           WRITE(S,*) 'M_SIMSCN:about to call HSPF',FILES
-          CALL UPDATESTATUSD(I,S)
+          CALL UPDATESTATUSD(I7,S)
 
           ! proceed to run model
           CALL HSPF (FILES,RETCOD)
@@ -483,7 +483,7 @@
           CLOSE (UNIT=UCI%FUN)   ! close users input file
 
           WRITE(S,*) 'M_SIMSCN:back from HSPF with',RETCOD
-          CALL UPDATESTATUSD(I,S)
+          CALL UPDATESTATUSD(I7,S)
 
           M= "at end of File Closing in M_SIMSCN"
           CALL M_FILSTA (M)
@@ -493,7 +493,7 @@
 10        CONTINUE
 
             WRITE(S,*) 'M_ACTSCN:got to ERR 10'
-            CALL UPDATESTATUSD(I,S)
+            CALL UPDATESTATUSD(I7,S)
 
             RETCOD = -1
             RETURN
