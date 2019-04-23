@@ -403,8 +403,8 @@
           INTEGER, INTENT(OUT)  :: RETCOD
 
           INTEGER       L,I,I7,LOCLFG,TRET
-          CHARACTER*240 S
-          CHARACTER(LEN=80)            :: M
+          CHARACTER(LEN=1024) :: S
+          CHARACTER(LEN=1024) :: M
           LOGICAL       OPEN
 
 2000      FORMAT(1X,A,I3,1X,A)
