@@ -53,12 +53,12 @@
           INTEGER,         INTENT(IN) :: IOPT,I1
           CHARACTER(LEN=*),INTENT(IN) :: A1,A2
 		
-          INTEGER                     :: ILEN
+          INTEGER                     :: ILEN, ENUM
 		  CHARACTER*1024              :: ATXT
 		  
 2000      FORMAT(1X,A,I3,1X,A)
 		  
-		  WRITE(ATXT,2000,ERR=10) TRIM(A1),I1,TRIM(A2)
+		  WRITE(ATXT,2000,ERR=10,IOSTAT=ENUM) TRIM(A1),I1,TRIM(A2)
           ILEN = LEN_TRIM(ATXT)
 		  
           CALL UPDATESTATUSX(IOPT,ILEN,ATXT)
@@ -70,6 +70,9 @@
  		  
 10        CONTINUE
           ! message about internal write problem goes here
+		  WRITE(99,*) 'UPDATESTATUSA:10:', ENUM
+		  WRITE(99,*) ' ',LEN_TRIM(A1)
+		  WRITE(99,*) ' ',LEN_TRIM(A2)
  
         END SUBROUTINE UPDATESTATUSA
 
@@ -1032,7 +1035,7 @@
           CALL UPDATESTATUSX(J,L,S)
 
           DO 10 I = 1, 200
-            IF (I.NE.5 .AND. I.NE.6) THEN
+            IF (I.LT.4 .OR I.GT.6) THEN
               INQUIRE(I,OPENED=O)
             ELSE !avoid opening nasty dos box!
               O = .FALSE.
