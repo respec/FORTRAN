@@ -1035,7 +1035,7 @@
           CALL UPDATESTATUSX(J,L,S)
 
           DO 10 I = 1, 200
-            IF (I.LT.4 .OR. I.GT.6) THEN
+            IF (I.LT.5 .OR. I.GT.6) THEN
               INQUIRE(I,OPENED=O)
             ELSE !avoid opening nasty dos box!
               O = .FALSE.
