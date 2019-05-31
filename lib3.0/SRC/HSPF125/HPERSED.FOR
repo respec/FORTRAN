@@ -78,6 +78,11 @@ C     M              CSNOFG)
         CSNOFG= 0
       END IF
 C
+      IF (NCANPY.LT.1) then
+C       '0' means multiple canopy feature is not in use,
+C       default to single canopy layer
+        NCANPY= 1
+      END IF
       IF (CRVFG.EQ.1) THEN
 C       get monthly values of erosion-related cover -
 C       table-type mon-cover
