@@ -1014,6 +1014,7 @@ C     + + + FORMATS + + +
      $ /6X,'    L        4    Discharge less than stated value',
      $ /6X,'    K     6 OR C  Known effect of regulation or ',
      $                        'urbanization',
+     $ /6X,'    O        O    Opportunistic peak',
      $ /6X,'    H        7    Historic peak', /
      $ /6X,'    -  Minus-flagged discharge -- Not used in computation',
      $ /6X,'          -8888.0 -- No discharge value given',
@@ -1128,6 +1129,7 @@ C     + + + FORMATS + + +
      $ /6X,'    L        4    Discharge less than stated value',
      $ /6X,'    K     6 OR C  Known effect of regulation or ',
      $                        'urbanization',
+     $ /6X,'    O        O    Opportunistic peak',
      $ /6X,'    H        7    Historic peak' /
      $ /6X,'    -  Minus-flagged discharge -- Not used in computation',
      $ /6X,'          -8888.0 -- No discharge value given',
@@ -1614,9 +1616,9 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $        //,' BULL.17B ESTIMATE OF MSE OF AT-SITE SKEW',F11.4)
    11 FORMAT(' EMA WITHOUT REG SKEW ',F11.4,F12.4,F11.3
      $     /,' EMA WITH REG SKEW    ',F11.4,F12.4,F11.3
-     $    //,' EMA ESTIMATE OF MSE OF SKEW WITHOUT REG SKEW            ',
+     $   //,' EMA ESTIMATE OF MSE OF SKEW WITHOUT REG SKEW            ',
      $       F8.4,/
-     $       ' EMA ESTIMATE OF MSE OF SKEW W/GAGED PEAKS ONLY (AT-SITE)',
+     $      ' EMA ESTIMATE OF MSE OF SKEW W/GAGED PEAKS ONLY (AT-SITE)',
      $       F8.4)
    15 FORMAT(///,' TABLE 4 - ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
@@ -1625,7 +1627,7 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $         /,'EXCEEDANCE  BULL.17B SYSTEMATIC',
      $           'LOG VARIANCE     CONFIDENCE INTERVALS',
      $         /,'PROBABILITY ESTIMATE   RECORD  ',
-     $           '    OF EST.   ',I2,'% LOWER   ',I2,'% UPPER', /)
+     $           '    OF EST.  ',F4.1,'% LOWER  ',F4.1,'% UPPER', /)
    16 FORMAT(///,' TABLE 4 - ANNUAL FREQUENCY CURVE -- DISCHARGES',
      $           ' AT SELECTED EXCEEDANCE PROBABILITIES',
      $        //,'   ANNUAL   <- EMA ESTIMATE ->',
@@ -1633,7 +1635,7 @@ C    $       10X,2H--,2X,2F15.4,F15.3)
      $         /,'EXCEEDANCE   WITH     WITHOUT ',
      $           '    LOG VARIANCE   <-CONFIDENCE LIMITS->',
      $         /,'PROBABILITY REG SKEW  REG SKEW',
-     $           '       OF EST.    ',I2,'% LOWER    ',I2,'% UPPER', /)
+     $          '       OF EST.   ',F4.1,'% LOWER   ',F4.1,'% UPPER', /)
    20 FORMAT(1X,F8.4,2A,2(2X,A),A)
    21 FORMAT(1X,F8.6,2A,2(2X,A),A)
  1010 FORMAT('1',//)
@@ -1678,13 +1680,15 @@ C
 C       original B-17 estimates
         WRITE(MSG,10)SYSBAS,SYSPAB,SYSUAV,SYSUSD,SYSSKW,
      $               WRCBAS,WRCPAB,WRCUAV,WRCUSD,WRCSKW,ASMSEG
-        WRITE(MSG,15) INT(100-(CLSIZE*100. - .5)),INT( CLSIZE*100. + .5)
+Cprh        WRITE(MSG,15) INT(100-(CLSIZE*100. - .5)),INT( CLSIZE*100. + .5)
+        WRITE(MSG,15) 100*(1.-CLSIZE)/2.,100*(1.+CLSIZE)/2.
       ELSE
 C       new EMA estimates
         WRITE(MSG,11)SYSUAV,SYSUSD,SYSSKW,
      $               WRCUAV,WRCUSD,WRCSKW,
      $               as_G_mse,as_G_mse_Syst
-        WRITE(MSG,16) INT(100-(CLSIZE*100. - .5)),INT( CLSIZE*100. + .5)
+Cprh        WRITE(MSG,16) INT(100-(CLSIZE*100. - .5)),INT( CLSIZE*100. + .5)
+        WRITE(MSG,16) 100*(1.-CLSIZE)/2,100*(1.+CLSIZE)/2.
       END IF
 C
       IF(INITIP .EQ. 0) THEN
@@ -2141,7 +2145,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       REAL      AUX(13),  FLAT, FLONG, GAGEBT, XSYSPK,XHSTPK
       LOGICAL   BIT(15) ,  NOHIST,  REJECT
-      CHARACTER*1   LQCODE(6)
+      CHARACTER*1   LQCODE(7)
       CHARACTER*4  LREG
 Cprh      CHARACTER*15 CD
       CHARACTER*18 CURSTA
@@ -2167,7 +2171,7 @@ Cprh      EXTERNAL   QSETR, QSETI, QGETI, QSETCO, QGETCO, QSTCTF
 Cprh      EXTERNAL   ZSTCMA, QSETRB, QGETRB
 C
 C     + + + DATA INITIALIZATIONS + + +
-      DATA          LQCODE   /'D','L','K','H','G','X'/
+      DATA          LQCODE   /'D','L','K','H','G','X','O'/
 C
 C     + + + FORMATS + + + 
   593 FORMAT(/' *** INPUT2 - HISTORIC PEAKS OVERFLOWED -',2I6,
@@ -2364,6 +2368,7 @@ C                 examine quality codes
                   IF( BIT(3)) LREG(1:1) = LQCODE(1)
                   IF(BIT( 8)) LREG(1:1) = LQCODE(5)
                   IF(BIT( 8).AND.BIT(3)) LREG(1:1) = LQCODE(6)
+                  IF(BIT(14)) LREG(1:1) = LQCODE(7)
                   IF(BIT(4))  LREG(2:2) = LQCODE(2)
                   IF(BIT(6).OR.BIT(12)) LREG(3:3) = LQCODE(3)
                   IF(BIT(7))  LREG(4:4) = LQCODE(4)
@@ -2373,6 +2378,7 @@ C                 act on codes
 C                 only act on code 'G' for traditional B17B analysis                  
                   REJECT = PKSABG(IPK).LT.0. .OR. BIT(3) 
      $                    .OR.(BIT(8) .AND. EMAOPT.EQ.0)
+     $                    .OR. BIT(14)
      $                    .OR.((BIT(6).OR.BIT(12)) .AND. IKROPT.LE.0)
                   REJECT = REJECT .OR. (BIT(7).AND.NOHIST)
                   REJECT = REJECT .OR. (BIT(7).AND.
@@ -2523,7 +2529,7 @@ C     + + + EXTERNALS + + +
 C
 C     + + + DATA INITIALIZATIONS + + +
       DATA        QCODE    /'1','2','3','4','5','6','7','8','9',
-     $      'A','B','C','D','E' /
+     $      'A','B','C','D','O' /
 C
 C     + + + INPUT FORMATS + + +
  1000 FORMAT ( A )
@@ -4291,6 +4297,11 @@ C
      I              REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
      O              WRCMOM,PR,LMXINT,WRCYP,CILOW,CIHIGH,VAREST)
       
+      write(99,*)
+      write(99,*) 'calling plotposHS with these inputs (Log-based):'
+      write(99,*) 'NOBS:',NOBS
+      write(99,*) '        QLow        QUpr',
+     $            '         TLow        TUpr'
 C       get plotting positions for all peaks and thresholds
         DO 16 I = 1, NOBS
 C         check for interval with INF as upper limit
@@ -4309,10 +4320,12 @@ c                 original peak found > lower interval, set upper to it
           ELSE
             LQU(I) = QU(I)
           END IF
+ 2008   format(1X,4F14.4)
+        write(99,2008) QL(I),LQU(I),TL(I),TU(I)
  16     CONTINUE
         CALL plotposHS(NOBS,QL,LQU,TL,TU,WEIBA,Q,PEX,NT,THR,PET,NB)
       write(99,*)
-      write(99,*) 'Plotting positions of all values'
+      write(99,*) 'Plotting positions of all values (after plotposHS)'
       write(99,*) 'NOBS:',NOBS
       write(99,*) '        QLow        QUpr',
      $            '         TLow        TUpr       Q       PPos'
@@ -4638,7 +4651,7 @@ C
      O                      WEIBA,NPLOT,SYSRFC,WRCFC,TXPROB,HSTFLG,
      O                      CLIML,CLIMU,NT,THRSH,PPTH,NOBSTH,
      O                      THRSYR,THREYR,NINTVL,INTLWR,INTUPR,ALLPPOS,
-     O                      INTYR,GBCRIT,NLOW,NZERO,SKEW,RMSEGS,HEADER)
+     O                      INTYR,GBCRIT,NLOW,NZERO,SKEW,RMSEGS,IHEADER)
       !DEC$ ATTRIBUTES DLLEXPORT :: GETDATA
 C
 C     + + + PURPOSE + + +
@@ -4654,14 +4667,15 @@ C     + + + PARAMETERS + + +
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       STNIND,NPKPLT,IXQUAL(5,500),IPKSEQ(500),NPLOT,
-     $              HSTFLG,NT,NOBSTH(500),THRSYR(500),
-     $              THREYR(500),NINTVL,INTYR(500),NLOW,NZERO
+     $              HSTFLG,NT,NOBSTH(500),THRSYR(500),THREYR(500),
+     $              NINTVL,INTYR(500),NLOW,NZERO,IHEADER(80)
       REAL          PKLOG(500),SYSPP(500),WRCPP(500),
      &              SYSRFC(MXINT),WRCFC(MXINT),TXPROB(MXINT),WEIBA,
      $              CLIML(MXINT),CLIMU(MXINT),THRSH(500),PPTH(500),
      $              INTLWR(500),INTUPR(500),ALLPPOS(MXPK),
      $              GBCRIT,SKEW,RMSEGS
-      CHARACTER*80  HEADER
+C      CHARACTER*80  HEADER
+C      CHARACTER(LEN=*) :: HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STNIND - index number of this station
@@ -4699,14 +4713,17 @@ C     NLOW   - number of low outliers
 C     NZERO  - number of zero values
 C     SKEW   - skew value used in computation
 C     RMSEGS - mean standard error
-C     HEADER - Title header for each station's analysis
+C     IHEADER - Title header for each station's analysis (Integer version)
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      HEADER = STNDATA(STNIND)%HEADER
+C      HEADER = STNDATA(STNIND)%HEADER
+      DO 2 I = 1, 80
+        IHEADER(I)=ICHAR(STNDATA(STNIND)%HEADER(I:I))
+ 2    CONTINUE
       NPKPLT = STNDATA(STNIND)%NPKPLT 
       NPLOT = STNDATA(STNIND)%NPLOT
       WEIBA = STNDATA(STNIND)%WEIBA

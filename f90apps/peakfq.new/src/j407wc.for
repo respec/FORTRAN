@@ -1179,7 +1179,8 @@ C     + + + COMMON BLOCKS + + +
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER I,IIK,N233,NDF
-      REAL A,ABT,C,EP,ERL,EXPFAC,RAD,SDA,SIGMA,T,TAB(3),TAB2(3),Z,ZC2
+      REAL A,ABT,C,EP,ERL,EXPFAC,RAD,SDA,SIGMA,T,TAB(3),TAB2(3),Z,ZC2,
+     $     LALPHA
 C
 C     + + + FUNCTIONS + + +
       REAL HARTK, GAUSCF, GAUSAB, STUTX
@@ -1244,7 +1245,11 @@ C
 c      write(*,*) 'WCFFCX: after 70, NOCLIM=',NOCLIM
 C  95 PCT CONFIDENCE LIMITS APPROX FOR SMALL SKEW
       IF(NOCLIM.EQ.1)GOTO90
-      ZC2=GAUSAB(CLSIZE)**2
+Cprh  August 8, 2019
+Cprh  CLSIZE now Confidence Interval rather than upper CLIML
+Cprh  compute alpha of upper limit based on CLSIZE
+      LALPHA = (1.0 + CLSIZE)/2.0
+      ZC2=GAUSAB(LALPHA)**2
       A=1.-ZC2/(2.*(ERL-1.))
       C=1.-A
       ABT = A*ZC2/ERL
@@ -1266,7 +1271,8 @@ c      write(*,*) 'WCFFCX: 80 Loop-CLIML,CLIMU',CLIML(I),CLIMU(I)
       DO85I=1,3
       TAB(I)= 10.**CLIML(INDXPT(I))
    85 TAB2(I)=10.**CLIMU(INDXPT(I))
-      Z=100.*CLSIZE
+Cprh  replace CLSIZE (now confidence interval) with local Alpha, Aug 30, 2019
+      Z=100.*LALPHA
       WRITE(*,239) Z, TAB2, TAB
       WRITE(MSG,239) Z, TAB2, TAB
 239   FORMAT( '    WCF239J-FREQ CURVE CONF LIMS B17B', F5.1,F9.1,2F12.1,
@@ -1303,7 +1309,7 @@ C
 Cmeb: BIGLOG changed from 38 to 37 on Data General AViiON
 Caml: and further changed to 29 for 5/94 compiler
       DATA  GSMIN, GSMAX, WEIBA, CLSIZE, INDX1, INDX2, WSKLAT, BIGLOG
-     $   /-.4001, .8001,     0.,    .95,    4,    32,      0.,    29.  /
+     $   /-.4001, .8001,     0.,    .90,    4,    32,      0.,    29.  /
 C
 c      DATA NINDX/14/, INDXPT/16,21,26,5,6,10,11,12,   17,20,23,25,27,28,
 c     *                        17*0 /
