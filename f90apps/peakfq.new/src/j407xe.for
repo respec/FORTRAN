@@ -218,7 +218,7 @@ C
      O              STAID,PKS,IPKSEQ,XQUAL,IQUAL, 
      O              NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
      O              LOTYPE,GAGEB,GENSKU,RMSEGS, IGSOPT,
-     O              NSKIP1,EMAOPT,IER)
+     O              NSKIP1,EMAOPT,HSTFLG,IER)
         write(99,*)'After INPUT - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
 C
 C       see if any revised/new peaks need to be accounted for
@@ -252,7 +252,7 @@ C         need to set thresholds before input data listing
 C        END IF
         IF (EMAOPT.EQ.1 .OR. LOTYPE.EQ.'MGBT') THEN
 C         need to set EMA arrays 
-          CALL SETEMADATA(NPKS,PKS,IPKSEQ,GAGEB)
+          CALL SETEMADATA(NPKS,PKS,IPKSEQ,GAGEB,HSTFLG)
         END IF
 C
         IF (.NOT.UPDATEFG) THEN
@@ -409,13 +409,13 @@ C             output empircal frequency table file
      i                    JSEQNO,DT)
             END IF
 
-            IF (QHIOUT .LE. 0.01 .AND. HISTPD .LE. 0.5) THEN
-C             don't plot historic adjusted peaks
-              HSTFLG = 1
-            ELSE
-C             do plot historic adjusted peaks
-              HSTFLG = 0
-            END IF
+!            IF (QHIOUT .LE. 0.01 .AND. HISTPD .LE. 0.5) THEN
+!C             don't plot historic adjusted peaks
+!              HSTFLG = 1
+!            ELSE
+!C             do plot historic adjusted peaks
+!              HSTFLG = 0
+!            END IF
 C           save data (pre-Gausex transform) for retrieval by PKFQWIN
             CALL STOREDATA (NPKS,NPKPLT,IPKPTR,PKS,PKLOG,SYSPP,WRCPP,
      I                      XQUAL,IPKSEQ,WEIBA,NFCXPG,SYSRFC(INDX1),
@@ -1971,7 +1971,7 @@ C
      O               STAID,PKSABG,IWYSN,XQUAL,IQUAL, 
      O               NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
      O               LOTYPE,GAGEB,GENSKU, RMSEGS,ISKUOP,  
-     O               NSKIP1,EMAOPT,IRC)
+     O               NSKIP1,EMAOPT,HSTFLG,IRC)
 C
 C     + + + PURPOSE + + +
 C     RE-WRITTEN FOR PRIME VERSION 3.8-P,  WK, 7/88.
@@ -1979,7 +1979,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   IA1,IA3, INFORM, MAXPKS, EMAOPT, WDMSFL, NHIST, 
      &          NSYS, BEGYR,ENDYR,ISKUOP, NSKIP1, IRC, ISTART, 
-     &          IBCPUN, ECHFUN
+     &          IBCPUN, ECHFUN, HSTFLG
       INTEGER                     IWYSN(MAXPKS),  IQUAL(MAXPKS)
       REAL       PKSABG(MAXPKS)
       REAL       HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
@@ -2045,7 +2045,7 @@ C
      I              MAXPKS, STAID, PKSABG, IWYSN, XQUAL,
      O              NHIST, NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT,
      O              LOTYPE, GAGEB, GENSKU,RMSEGS,ISKUOP, 
-     O              NSKIP1, EMAOPT, IRC)
+     O              NSKIP1, EMAOPT, HSTFLG, IRC)
 C
       ELSE IF ( INFORM .EQ. 2 )  THEN
         CALL INPUT2(IA1, MAXPKS, WDMSFL, ECHFUN,
@@ -2053,7 +2053,7 @@ C
      O              STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
      O              NHIST, NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT,
      O              LOTYPE, GAGEB, GENSKU, RMSEGS, ISKUOP, 
-     O              NSKIP1, EMAOPT, IRC)
+     O              NSKIP1, EMAOPT, HSTFLG, IRC)
 C
       ELSE IF ( INFORM .EQ. 3 ) THEN
         CALL INPUT3(  MAXPKS, IDSTA,PKSABG, IWYSN, NHIST,NSYS,HISTPD,
@@ -2078,7 +2078,7 @@ C
      O                    STAID, PKSABG, IWYSN, XQUAL, IQUAL, NHIST, 
      O                    NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT, 
      O                    LOTYPE, GAGEB, GENSKU, RMSEGS, ISKUOP,
-     O                    NSKIP1, EMAOPT, IRC )
+     O                    NSKIP1, EMAOPT, HSTFLG, IRC )
 C
 C     + + + PURPOSE + + +
 C     GETS INPUT DATA FROM WATSTORE PEAK-FILE PUNCHED-CARD RETRIEVAL
@@ -2093,7 +2093,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MAXPKS, NHIST, NSYS, ISKUOP, NSKIP1, IRC, ISTART
       INTEGER   MESSFL,         IWYSN(MAXPKS) , IQUAL(MAXPKS)
-      INTEGER   BEGYR, ENDYR, EMAOPT, WDMSFL, ECHFUN
+      INTEGER   BEGYR, ENDYR, EMAOPT, WDMSFL, ECHFUN, HSTFLG
       REAL      PKSABG(MAXPKS)
       REAL      HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
       CHARACTER*(*) XQUAL(MAXPKS)
@@ -2136,6 +2136,9 @@ C     NSKIP1 - NUMBER OF STATIONS SKIPPED BECAUSE OF INPUT ERRORS
 C     EMAOPT - Analysis option,
 C              0 - Bull. 17B
 C              1 - EMA
+C     HSTFLG - INCLUDE HISTORIC PEAKS FLAG,
+C              0 - No
+C              1 - Yes
 C     IRC    - RETURN CODE - 0=NO ERROR, 1=ERRORS, 2=END OF FILE, 3=BOTH
 C
 C     + + + COMMON BLOCKS + + +
@@ -2316,10 +2319,10 @@ C             remove default gen skew computation per USGS request, 8/2016
 C              IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 
 C             update specs
-              CALL PARSESTASPECS (CURSTA,XSYSPK,XHSTPK,
-     M                            GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                            GAGEB,RMSEGS,BEGYR,ENDYR,ISKUOP,
-     M                            IKROPT,ISKMAP,FLAT,FLONG,EMAOPT)
+              CALL PARSESTASPECS(CURSTA,XSYSPK,XHSTPK,
+     M                           GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
+     M                           GAGEB,RMSEGS,BEGYR,ENDYR,ISKUOP,
+     M                           IKROPT,ISKMAP,FLAT,FLONG,EMAOPT,HSTFLG)
 C
 C             write inputs to echo file
               CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
@@ -4021,7 +4024,7 @@ C
 C
 C
       SUBROUTINE   SETEMADATA
-     I                       (NPKS,PKS,IPKSEQ,GAGEB)
+     I                       (NPKS,PKS,IPKSEQ,GAGEB,HSTFLG)
 C
 C     + + + HISTORY + + +
 C     Created 12/2011 by Paul Hummel, AQUA TERRA Consultants
@@ -4046,7 +4049,7 @@ C     EMAThresh contains Threshold specifications pulled from the .psf file
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER   NPKS
+      INTEGER   NPKS,HSTFLG
       INTEGER   IPKSEQ(NPKS)
       REAL      PKS(NPKS),GAGEB
 C
@@ -4055,6 +4058,8 @@ C     NPKS    - number of peaks
 C     PKS     - array of annual peak values
 C     IPKSEQ  - array of peak value water years
 C     GAGEB   - gage base discharge
+C     HSTFLG  - include Historic peaks flag
+C               0 - No;  1 - Yes
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I,J,K,WYMIN,WYMAX,LYR,LNINT
@@ -4128,7 +4133,8 @@ C          bound on the observation threshold corresponding to all flows
 C
 C     fill in measured peaks
       DO 40 J=1,NPKS
-        IF (PKS(J) .GT. MISSING) THEN
+        IF (PKS(J) .GT. MISSING .AND. 
+     $     (IPKSEQ(J).GT.0 .OR. HSTFLG.EQ.1)) THEN
           I = ABS(IPKSEQ(J)) - WYMIN + 1
           IF (ABS(TL(I)-MISSING) .LT. QMIN) THEN  ! this should never occur
             write(99,*) ' *** PROBLEM ***'

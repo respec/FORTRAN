@@ -6,7 +6,7 @@ C
      I                    STAID,PKSABG,IWYSN,XQUAL,
      O                    NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
      O                    LOTYPE,GAGEB,GENSKU,RMSEGS,ISKUOP,
-     O                    NSKIP1,EMAOPT,IRC)
+     O                    NSKIP1,EMAOPT,HSTFLG,IRC)
 C
 C     + + + PURPOSE + + +
 C     This routine gets data from the WDM file for analysis by J407,
@@ -18,7 +18,8 @@ C     Paul Hummel of AQUA TERRA Consultants
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER   MESSFL, WDMSFL, IBCPUN, ECHFUN, MAXPKS, IWYSN(MAXPKS),
-     &          NHIST, NSYS, BEGYR, ENDYR, ISKUOP, NSKIP1, EMAOPT, IRC
+     &          NHIST, NSYS, BEGYR, ENDYR, ISKUOP, NSKIP1, EMAOPT, 
+     $          HSTFLG, IRC
       REAL      PKSABG(MAXPKS), HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU,
      &          RMSEGS
       CHARACTER*4  LOTYPE
@@ -70,6 +71,9 @@ C     NSKIP1 - number of stations skipped because of input errors
 C     EMAOPT - Analysis option,
 C              0 - Bull. 17B
 C              1 - EMA
+C     HSTFLG - INCLUDE HISTORIC PEAKS FLAG,
+C              0 - No
+C              1 - Yes
 C     IRC    - return code
 C              0 - no error
 C              1 - errors
@@ -305,7 +309,7 @@ C           get any specs from spec file
             CALL PARSESTASPECS (CURSTA,SYSHI,HSTLOW,
      M                          GENSKU,HISTPD,QHIOUT,QLWOUT,
      M                          GAGEB,RMSEGS,BEGYR,ENDYR,
-     M                          ISKUOP,URBREG,FLAT,FLONG,EMAOPT)
+     M                          ISKUOP,URBREG,FLAT,FLONG,EMAOPT,HSTFLG)
 C
 C           write inputs to echo file
             CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,

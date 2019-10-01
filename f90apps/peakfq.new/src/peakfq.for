@@ -724,7 +724,7 @@ C       successful open of Empirical output file
         IEXTEND = IYESNO(ISTR,1)
       ELSE IF (KWD.EQ.'DEBUG') THEN
         IDEBUG = IYESNO(ISTR,1)
-      ELSE IF (KWD.EQ.'CONFIDENCE') THEN
+      ELSE IF (KWD.EQ.'CONFINTERVAL') THEN
         ILEN = ZLNTXT(ISTR)
         IF (ILEN.GT.0) THEN
           CALL CVARAR (ILEN,ISTR,ILEN,ISTR1)
@@ -753,7 +753,7 @@ C
      I                        (STAID,XSYSPK,XHSTPK,
      M                         GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
-     M                         IKROPT,ISKMAP,FLAT,FLONG,EMAOPT)
+     M                         IKROPT,ISKMAP,FLAT,FLONG,EMAOPT,HSTFLG)
 C
 C     + + + PURPOSE + + +
 C     Parse driver input file records into station computational options
@@ -766,7 +766,7 @@ C
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, ISKMAP, EMAOPT
+      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, ISKMAP,EMAOPT,HSTFLG
       REAL          XSYSPK, XHSTPK, GENSKU, HISTPD, QHIOUT, QLWOUT, 
      $              GAGEB, RMSEGS, FLAT, FLONG
       CHARACTER*(*) STAID
@@ -796,6 +796,9 @@ C     FLONG  - station longitude, decimal
 C     EMAOPT - Analysis option,
 C              0 - Bull. 17B
 C              1 - EMA
+C     HSTFLG - Include Historic peaks flag,
+C              0 - No
+C              1 - Yes
 C
 C     + + + LOCAL VARIABLES
       INTEGER      I,J,ISTA,NSPECS,IVAL
@@ -852,6 +855,7 @@ C     init new peaks specs
       IF (ALLOCATED(NEWPKS)) THEN
         DEALLOCATE (NEWPKS)
       END IF
+      HSTFLG = 1  !assume inclusion of historic peaks
       IF (NSPECS .GT. 0) THEN
         DO 100 I = 1, NSPECS
           S = STASPECS(ISTA)%SPECS(I)%STR
@@ -874,6 +878,10 @@ C     init new peaks specs
             IENDYR = CVRINT(S)
           ELSE IF (KWD .EQ. 'HISTPERIOD') THEN
             HISTPD = CVRDEC(S)
+          ELSE IF (KWD .EQ. '''NO') THEN
+            IF (S(1:8) .EQ. 'HISTORIC') THEN
+              HSTFLG = 0
+            END IF
           ELSE IF (KWD .EQ. 'SKEWOPT') THEN
             IF (S .EQ. 'STATION') THEN 
               ISKUOP = -1
@@ -1285,7 +1293,7 @@ C     additional output
       ELSE
         WRITE(92,*) 'O Extended No'
       END IF
-      WRITE(92,*) 'O Confidence ',CLSIZE
+      WRITE(92,*) 'O ConfInterval ',CLSIZE
 C
       RETURN
       END
