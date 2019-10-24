@@ -2329,7 +2329,8 @@ C             write inputs to echo file
      I                        ISKUOP,GENSKU,RMSEGS,QLWOUT,LOTYPE,
      I                        QHIOUT,GAGEB,IKROPT,FLAT,FLONG)
 C
-              NOHIST = HISTPD.LE.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
+Cprh              NOHIST = HISTPD.LE.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
+              NOHIST = HSTFLG.EQ.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
               GAGEBT= 0.
 C
 C             find first and last years of record
