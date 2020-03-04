@@ -179,7 +179,7 @@ C
 C     + + + PARAMETERS + + +
       INTEGER      MAXBLK,MAXMLK
       PARAMETER    (MAXBLK=30)
-      PARAMETER    (MAXMLK=100)
+      PARAMETER    (MAXMLK=1000)
 C
 C     + + + COMMON BLOCKS- SCRTCH, VERSION INTERP1 + + +
       INCLUDE    'crin1.inc'
