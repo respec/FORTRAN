@@ -682,7 +682,7 @@ SATDO   1  1     1     1 1   7      0 19643 ENG mg/l       0       1   0       1
   Saturation DO concentration in RCHRES     MET mg/l       0       1   0       1
 #GROUP  145  TYPE TEXT
 $TEXT
-OXCF1   2  1     2     1 2   7      0 20259 ENG lb/iv      0 1.602E4   0 3.531E4
+OXCF1   2  1     2     1 2   7      0 19654 ENG lb/iv      0 1.602E4   0 3.531E4
   Outflows of DO and BOD from the RCHRES    MET kg/iv      0 4.537E2   0   1000.
 #GROUP  146  TYPE TEXT
 $TEXT
@@ -846,7 +846,7 @@ PKCF1   5  1     5     1 2   9      0 21778 ENG lb/iv      0 1.602E4   0 3.531E4
   Total outflows from RCHRES (Group PLANK)  MET kg/iv      0 4.537E2   0   1000.
 #GROUP  192  TYPE TEXT
 $TEXT
-TPKCF1  5  1     5     1 2   9      0 21183 ENG lb/iv      0 1.602E4   0 3.531E4
+TPKCF1  5  1     5     1 2   9      0 21783 ENG lb/iv      0 1.602E4   0 3.531E4
   Summary outflows of org & total N, P, & C MET kg/iv      0 4.537E2   0   1000.
 #GROUP  193  TYPE TEXT
 $TEXT
@@ -946,7 +946,7 @@ ACFLXC 10  1-13498     1 2  11      0 22495 ENG qty/iv     0       1   0       1
   Net fluxes of conservatives (ACIDPH)      MET qty/iv     0       1   0       1
 #GROUP  227  TYPE TEXT
 $TEXT
-ACFLXG  3  1-14254     1 2  11      0 22540 ENG qty/iv     0       1   0       1
+ACFLXG  3  1-15455     1 2  11      0 22540 ENG qty/iv     0       1   0       1
   Net fluxes of GQUALS (Group ACIDPH)       MET qty/iv     0       1   0       1
 #GROUP  228  TYPE TEXT
 $TEXT
