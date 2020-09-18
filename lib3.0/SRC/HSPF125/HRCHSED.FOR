@@ -1569,21 +1569,21 @@ C       write outflows by exit
             WRITE (PRINTU,2170) I,(PCFLX3(I,J),J=1,4)
  130      CONTINUE
         END IF
-      END IF
-      IF (BINU .GT. 0 .AND. ABS(BFLAG(5)) .LE. LEV) THEN
-        DO 160 I= 1, NEXITS
-          CALL INTCHR (I, I2, I1,
-     O                 JLEN, CSTR)
-          DO 150 J= 1, 4
-            ACNT = ACNT + 1
-            APRINT(ACNT) = PCFLX3(I,J)
-            CHEAD(ACNT) = TRIM(CCFLX3(J)) // '-EXIT'
-            DO 140 IX= 1, JLEN
-              CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // CSTR(IX)
- 140        CONTINUE
-            CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
- 150      CONTINUE
- 160    CONTINUE
+        IF (BINU .GT. 0 .AND. ABS(BFLAG(5)) .LE. LEV) THEN
+          DO 160 I= 1, NEXITS
+            CALL INTCHR (I, I2, I1,
+     O                   JLEN, CSTR)
+            DO 150 J= 1, 4
+              ACNT = ACNT + 1
+              APRINT(ACNT) = PCFLX3(I,J)
+              CHEAD(ACNT) = TRIM(CCFLX3(J)) // '-EXIT'
+              DO 140 IX= 1, JLEN
+                CHEAD(ACNT) = TRIM(CHEAD(ACNT)) // CSTR(IX)
+ 140          CONTINUE
+              CLEN(ACNT) = LEN_TRIM(CHEAD(ACNT))
+ 150        CONTINUE
+ 160      CONTINUE
+        END IF
       END IF
 C
 C     material balance check

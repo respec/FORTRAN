@@ -3710,7 +3710,10 @@ C       no total outflow, so no exit outflow
  20     CONTINUE
       ELSE
         DIFF= VOL - V1
-        IF (DIFF .LT. 0.01) THEN
+        IF (DIFF .LT. 0.01 .AND. ABS(V2 - V1) .GT. 1000.) THEN
+C         avoid underflow
+          FACTR= 0.0
+        ELSEIF (DIFF .LT. 1.0E-7) THEN
 C         avoid underflow
           FACTR= 0.0
         ELSE

@@ -241,10 +241,12 @@ C
         IF (NEXITS .GT. 1) THEN
 C         calculate amount of material leaving through each exit gate;
 C         omat is expressed as qty.vol/l.ivl
-C
+C  
           DO 60 N= 1,NEXITS
             IF (SROVOL .GT. 0.0) THEN
               OMAT(N)= (SOVOL(N)/SROVOL)*ROMAT
+            ELSEIF (EROVOL .GT. 0.0) THEN
+              OMAT(N)= (EOVOL(N)/EROVOL)*ROMAT
             ELSE
               OMAT(N)= 0.0
             END IF
