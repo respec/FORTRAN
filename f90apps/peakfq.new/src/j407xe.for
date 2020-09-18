@@ -120,7 +120,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Version 7.3 dated 10/25/2019',/,
+     $       'Version 7.3 dated  9/18/2020',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -636,7 +636,7 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   202 FORMAT( 2X,'Version 7.3',
      $        9X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time')
-  203 FORMAT( 2X,'10/25/2019',53X,A)
+  203 FORMAT( 2X,'9/18/2020',53X,A)
   206 FORMAT(22X,'standard method for flood frequency analysis.')
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
@@ -5281,7 +5281,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Version 7.3 dated 10/25/2019',/,'#',/,
+     $       'Version 7.3 dated  9/18/2020',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
