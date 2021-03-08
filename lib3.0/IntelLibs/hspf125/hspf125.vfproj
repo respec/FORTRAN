@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{78F5D51D-631E-4982-A428-179626CAB853}">
+	<Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug" Interfaces="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" IntermediateDirectory="$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" Optimization="optimizeDisabled"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" AdditionalOptions="/Qprec&#xA;" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" Traceback="true" BoundsCheck="true" RuntimeLibrary="rtMultiThreadedDebug" Interfaces="true"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64" OutputDirectory="../$(PlatformName)\$(ConfigurationName)" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Source Files" Filter="f95;f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath="..\..\SRC\HSPF125\HBINUX.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HBMPRAC.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HDATUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HEXTUTIL.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HFILES.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HGENUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIMP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\himpgas.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIMPQUA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIMPSLD.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIMPWAT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\Hioosup.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIOOSV.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIOSTA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIOTSIN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIOUCI.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIOWRK.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HIRRIG.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HOSUPER.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPER.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERAGUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERAIR.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERGAS.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERMST.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERNIT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERPES.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERPHO.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERQUA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERSED.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERSNO.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERTMP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERTRA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPERWAT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPESTUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HPRBUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCH.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHACI.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHCON.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHGQU.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHHTR.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHHYD.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHNUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHOXR.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHPHC.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHPLK.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHRQ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHSED.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHSHD.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRCHUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HREPORT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINGEN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINGEUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINOPN.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINOPUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINSEQ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINTS.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINTSS.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRINWDM.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNTSGP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNTSGQ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNTSGT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNTSGW.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNTSPT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNTSPW.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNTSUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HRUNUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HSPF.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HSPFEC.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HSPFITAB.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HTSINSI.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HTSINSZ.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HTSSUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HUTDURA.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HUTOP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HUTOPINP.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\HWDMUT.FOR"/>
+		<File RelativePath="..\..\SRC\HSPF125\Specact.FOR"/></Filter></Files>
+	<Globals/></VisualStudioProject>
