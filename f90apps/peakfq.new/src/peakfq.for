@@ -1084,7 +1084,7 @@ C
         CALL WRITESPECSTA (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      I                     GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
      I                     IKROPT,ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,
-     I                     EMAOPT)
+     I                     EMAOPT,HSTFLG)
       END IF
 C
       RETURN
@@ -1303,7 +1303,8 @@ C
       SUBROUTINE   WRITESPECSTA
      I                        (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
      M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,IKROPT,
-     M                         ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,EMAOPT)
+     M                         ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,EMAOPT,
+     M                         HSTFLG)
 C
 C     + + + PURPOSE + + +
 C     Write out verbose version of spec file (i.e. include 
@@ -1318,7 +1319,7 @@ C
       USE EMAThresh
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT, ISKMAP, EMAOPT
+      INTEGER       IBEGYR, IENDYR, ISKUOP, IKROPT,ISKMAP,EMAOPT,HSTFLG
       REAL          GENSKU, HISTPD, QHIOUT, QLWOUT, GAGEB, RMSEGS, 
      $              FLAT, FLONG, XSYSPK, XHSTPK
       CHARACTER*(*) STAID
@@ -1348,6 +1349,9 @@ C     XHSTPK - lowest historic peak
 C     EMAOPT - Analysis option,
 C              0 - Bull. 17B
 C              1 - EMA
+C     HSTFLG - Include Historic peaks flag,
+C              0 - No
+C              1 - Yes
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER   I,J
@@ -1373,6 +1377,7 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
       write(99,*) 'Updating spec file Station info'
+      write(99,*) 'Historic period, Historic flag ',HISTPD, HSTFLG
 C     save original station ID for default plot name
       OSTAID = STAID
 C     start with station ID, remove any duplicate identifier at end
@@ -1460,7 +1465,11 @@ C     skew parameters
 C     historic parameters
       WRITE(92,*) '     BegYear ',IBEGYR
       WRITE(92,*) '     EndYear ',IENDYR
-      WRITE(92,*) '     HistPeriod ',HISTPD
+      IF (HSTFLG.EQ.0) THEN
+        WRITE(92,*) '     ''NO Historic Period In Use'
+      ELSE
+        WRITE(92,*) '     HistPeriod ',HISTPD
+      END IF
 C     other flow parameters
       IF (IKROPT.EQ.1) THEN
         WRITE(92,*) '     Urb/Reg Yes'
