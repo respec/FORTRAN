@@ -383,6 +383,7 @@ C
 C       estimate the rate of heat exchange, except for contributions
 C       from groundmelt and rain  - this is done intermittently
 C
+        write(22,*) 'melev, optyp ',melev,optyp
         IF (IREGFG .NE. 0) THEN
           IF (SNOPFG .EQ. 0) THEN
 C           energy balance approach
@@ -1960,11 +1961,13 @@ C         at start of run, write the header
           IF (OPERFG .EQ. 1) THEN
 C           WRITE (BINU) I0,'PERLND  ',LSNO,'SNOW    ',
 C    1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
-          CALL BINHED (BINU,'PERLND  ',LSNO,'SNOW    ',ACNT,CLEN,CHEAD)
-          ELSE IF (UNITFG .EQ. 2) THEN
+            CALL BINHED (BINU,'PERLND  ',LSNO,'SNOW    ',ACNT,
+     1                   CLEN,CHEAD)
+          ELSE IF (OPERFG .EQ. 2) THEN
 C           WRITE (BINU) I0,'IMPLND  ',LSNO,'SNOW    ',
 C    1            (CLEN(I),(CHEAD(I)(J:J),J=1,CLEN(I)),I=1,ACNT)
-          CALL BINHED (BINU,'IMPLND  ',LSNO,'SNOW    ',ACNT,CLEN,CHEAD)
+            CALL BINHED (BINU,'IMPLND  ',LSNO,'SNOW    ',ACNT,
+     1                   CLEN,CHEAD)
           END IF
 C         set bflag to negative to not write headers anymore
           BFLAG(2) = -BFLAG(2)
@@ -1972,13 +1975,13 @@ C         set bflag to negative to not write headers anymore
         IF (OPERFG .EQ. 1) THEN
 C         WRITE (BINU) I1,'PERLND  ', LSNO,'SNOW    ',UNITFG,
 C    1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
-        CALL BINREC (BINU,'PERLND  ',LSNO,'SNOW    ',UNITFG,LEV,EXDAT,
-     I               ACNT,APRINT)
+          CALL BINREC (BINU,'PERLND  ',LSNO,'SNOW    ',UNITFG,LEV,EXDAT,
+     I                 ACNT,APRINT)
         ELSE IF (OPERFG.EQ. 2) THEN
 C         WRITE (BINU) I1,'IMPLND  ', LSNO,'SNOW    ',UNITFG,
 C    1                 LEV,(EXDAT(I),I=1,5),(APRINT(I),I=1,ACNT)
-        CALL BINREC (BINU,'IMPLND  ',LSNO,'SNOW    ',UNITFG,LEV,EXDAT,
-     I               ACNT,APRINT)
+          CALL BINREC (BINU,'IMPLND  ',LSNO,'SNOW    ',UNITFG,LEV,EXDAT,
+     I                 ACNT,APRINT)
         END IF
       END IF
 C
