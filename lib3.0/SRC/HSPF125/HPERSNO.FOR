@@ -383,7 +383,6 @@ C
 C       estimate the rate of heat exchange, except for contributions
 C       from groundmelt and rain  - this is done intermittently
 C
-        write(22,*) 'melev, optyp ',melev,optyp
         IF (IREGFG .NE. 0) THEN
           IF (SNOPFG .EQ. 0) THEN
 C           energy balance approach
