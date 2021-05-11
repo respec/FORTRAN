@@ -2257,13 +2257,11 @@ C       kmelt is allowed to vary throughout the year
 C       interpolate for the daily value
 C       linearly interpolate kmelt between two values from the
 C       monthly array kmeltm(12)
-        IF (DAYFG .EQ. 1) THEN
-C         it is the first interval of the day
-          KMELT= DAYVAL (KMELTM(MON),KMELTM(NXTMON),DAY,NDAYS)
-        ELSE
+C
+        KMELT= DAYVAL (KMELTM(MON),KMELTM(NXTMON),DAY,NDAYS)
+      ELSE
 C         kmelt does not vary throughout the year and
 C         has been supplied by the run interpreter
-        END IF
       END IF
 C
       MOSTHT= KMELT*(AIRTMP- TBASE)
