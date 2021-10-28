@@ -864,7 +864,7 @@ VA 1 DECFG    0   0   0   0 I P                         00000000001100
 VA 1 NSFG     0   0   0   0 I P                         00000000001000
 VA 1 ZFOOD    0   0   0   0 I P                         00000000001000
 VA 1 BNPFG    0   0   0   0 I P                         00000000001000
-VA 1 NFIXFG   0   0   0   0 I P                         00000000001000
+VA 1 PHFXFG   0   0   0   0 I P                         00000000001000
 VA 2 NUMBAL   0   0   0   0 I P                         00000000001000
 VA 1 BFIXFG   4   0   0   0 I P                         00000000001000
 VA 1 BINVFG   0   0   0   0 I P                         00000000001000
@@ -903,8 +903,8 @@ VA 1 PMINGR   0   0   0   0 R P                         00000000001000
 VA 1 CMINGR   0   0   0   0 R P                         00000000001000
 VA 1 LMINGR   0   0   0   0 R P                         00000000001000
 VA 1 NMINC    0   0   0   0 R P                         00000000001000
-VA 1 NMXFX    0   0   0   0 R P                         00000000001000
-VA 1 FIXADJ   0   0   0   0 R P                         00000000001000
+VA 1 PHMXFX   0   0   0   0 R P                         00000000001000
+VA 1 PHMXAD   0   0   0   0 R P                         00000000001000
 VA 1 SEED     0   0   0   0 R P                         00000000001000
 EQ 1 PKPM4    6   0   0   0 R   SEED                    00000000001000
 VA 1 MXSTAY   0   0   0   0 R P                         00000000001000
