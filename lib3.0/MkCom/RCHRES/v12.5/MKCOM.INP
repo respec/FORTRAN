@@ -904,7 +904,7 @@ VA 1 CMINGR   0   0   0   0 R P                         00000000001000
 VA 1 LMINGR   0   0   0   0 R P                         00000000001000
 VA 1 NMINC    0   0   0   0 R P                         00000000001000
 VA 1 PHMXFX   0   0   0   0 R P                         00000000001000
-VA 1 PHMXAD   0   0   0   0 R P                         00000000001000
+VA 1 PHFXAD   0   0   0   0 R P                         00000000001000
 VA 1 SEED     0   0   0   0 R P                         00000000001000
 EQ 1 PKPM4    6   0   0   0 R   SEED                    00000000001000
 VA 1 MXSTAY   0   0   0   0 R P                         00000000001000
