@@ -68,7 +68,7 @@ C       error - zooplankton cannot be simulated without phytoplankton
      M             ECOUNT)
       END IF
 C
-      IF (NSFG.EQ.1.AND.TAMFG.EQ.0) THEN
+      IF (NSFG.GT.0.AND.TAMFG.EQ.0) THEN
 C       error - ammonia cannot be included in n supply if it is not
 C       being simulated
         SGRP = 2
@@ -1176,7 +1176,7 @@ C     CMMNP  - ???
 C     TAMFG  - ???
 C     AMRFG  - ???
 C     TAM    - total ammonia (nh3 + nh4) in mg n/l
-C     NSFG   - ???
+C     NSFG   - switch for algal uptake of both NO3 and TAM
 C     CMMN   - ???
 C     CMMLT  - ???
 C     ALR20  - ???
@@ -1245,10 +1245,14 @@ C               ammonia retardation is not considered
                 MALGN= MALGRT
               END IF
 C
-              IF (NSFG .NE. 0) THEN
+              IF (NSFG .EQ. 1) THEN
 C               include tam in nitrogen pool for calculation of
 C               nitrogen limited growth rate
                 MMN= NO3 + TAM
+              ELSEIF (NSFG .EQ. 2) THEN
+C               include only tam in nitrogen pool for calculation of
+C               nitrogen limited growth rate
+                MMN= TAM
               ELSE
 C               tam is not included in nitrogen pool for calculation
 C               of nitrogen limited growth
@@ -1348,7 +1352,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $           DOX,ANAER,OXALD,BAL,DEPCOR,DTHBAL
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     NSFG   - ???
+C     NSFG   - switch for algal uptake of both NO3 and TAM
 C     NO3    - dissolved nitrate concentration in mg/l
 C     TAM    - total ammonia (nh3 + nh4) in mg n/l
 C     PO4    - ???
@@ -1374,8 +1378,10 @@ C     unit death rates are expressed in units of per interval
 C
 C     determine available inorganic nitrogen pool for test of
 C     nutrient scarcity
-      IF (NSFG .NE. 0) THEN
+      IF (NSFG .EQ. 1) THEN
         NIT= NO3 + TAM
+      ELSEIF (NSFG .EQ. 2) THEN
+        NIT= TAM
       ELSE
         NIT= NO3
       END IF
@@ -1468,7 +1474,7 @@ C     CMMP   - ???
 C     CMMNP  - ???
 C     TAMFG  - ???
 C     AMRFG  - ???
-C     NSFG   - ???
+C     NSFG   - switch for algal uptake of both NO3 and TAM
 C     CMMN   - ???
 C     CMMLT  - ???
 C     DELT60 - simulation time interval in hours
@@ -1662,7 +1668,7 @@ C     DECFG  - ???
 C     CO2    - ???
 C     CVBPC  - ???
 C     CVBPN  - ???
-C     NSFG   - ???
+C     NSFG   - switch for algal uptake of both NO3 and TAM
 C     NMINGR - minimum nitrate concentration for algal growth
 C     PMINGR - minimum phosphate concentration for algal growth
 C     CMINGR - minimum CO2-carbon concentration for algal growth
@@ -1689,6 +1695,9 @@ C     as umoles phosphorus per interval
       IF (NSFG .EQ. 0) THEN
 C       tam is not considered as a possible nutrient
         UPLIMN= (NO3 - NMINGR)*71.43/CVBPN
+      ELSEIF (NSFG .EQ. 2) THEN
+C       no3 is not considered as a possible nutrient
+        UPLIMN= (TAM - NMINGR)*71.43/CVBPN
       ELSE
         UPLIMN= (NO3 + TAM - NMINGR)*71.43/CVBPN
       END IF
@@ -1846,7 +1855,7 @@ C     + + + DUMMY ARGUMENTS + + +
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     GROW   - ???
-C     NSFG   - ???
+C     NSFG   - switch for algal uptake of both NO3 and TAM
 C     CVBPN  - ???
 C     ALNPR  - ???
 C     CVBPC  - ???
@@ -2017,7 +2026,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $           DOX,ANAER,OXALD,STC,DTHPHY,PHYCLA
 C
 C     + + + ARGUMENT DEFINITIONS + + +
-C     NSFG   - ???
+C     NSFG   - switch for algal uptake of both NO3 and TAM
 C     NO3    - dissolved nitrate concentration in mg/l
 C     TAM    - total ammonia (nh3 + nh4) in mg n/l
 C     PO4    - ???
@@ -2042,8 +2051,10 @@ C     determine whether to use high or low unit death rate; all unit
 C     death rates are expressed in units of per interval
 C     determine available inorganic nitrogen pool for test of nutrient
 C     scarcity
-      IF (NSFG .NE. 0) THEN
+      IF (NSFG .EQ. 1) THEN
         NIT= NO3 + TAM
+      ELSEIF (NSFG .EQ. 2) THEN
+        NIT= TAM
       ELSE
         NIT= NO3
       END IF
@@ -2118,7 +2129,7 @@ C     CMMP   - ???
 C     CMMNP  - ???
 C     TAMFG  - ???
 C     AMRFG  - ???
-C     NSFG   - ???
+C     NSFG   - switch for algal uptake of both NO3 and TAM
 C     CMMN   - ???
 C     CMMLT  - ???
 C     DELT60 - simulation time interval in hours
@@ -4129,14 +4140,18 @@ C
 C         calculate the nitrogen limited unit growth factor
           IF (TAMFG .NE. 0) THEN
 C           consider influence of tam on growth rate
-            IF (NSFG .NE. 0) THEN
+            IF (NSFG .EQ. 1) THEN
 C             include tam in nitrogen pool for calculation of
 C             nitrogen limited growth rate
               MMN= NO3+ TAM
+            ELSEIF (NSFG .EQ. 2) THEN
+C             include only tam in nitrogen pool for calculation of
+C             nitrogen limited growth rate
+              MMN= TAM
             ELSE
 C             tam is not included in nitrogen pool for calculation
 C             of nitrogen limited growth
-               MMN= NO3
+              MMN= NO3
             END IF
           ELSE
 C           tam is not simulated

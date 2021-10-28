@@ -10975,12 +10975,12 @@ _WIDTH   5
 _COLUMN 41
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
 NSFG:   value  of 1  means ammonia  is included  as part  of
 available  nitrogen   supply  in  nitrogen   limited  growth
-calculations.
+calculations.  value of 2 means only ammonia.
 _PNAME  NSFG
 $FIELD  FIELD10
 _WIDTH   5
