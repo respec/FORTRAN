@@ -29,5 +29,12 @@ $TEXT
 
  PO4FG is off.  Phosphate must be simulated if plankton are being
  simulated.
+#GROUP    4  TYPE TEXT
+$TEXT
+   20    1    1    5
+ RCHRES: &I
+
+ PHFXFG is on, but PHYFG is off.  N-Fixation cannot be simulated
+ without phytoplankton.
   END DATA
 END CLU

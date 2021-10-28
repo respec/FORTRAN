@@ -55,7 +55,7 @@ C
 C
 C     flags - table-type plnk-flgs
       I2= 95
-      I4=  9
+      I4= 10
       CALL ITABLE
      I             (I2,I1,I4,UUNITS,
      M              PKFG)
@@ -86,12 +86,20 @@ C       simulated
      M             ECOUNT)
       END IF
 C
+      IF (PHFXFG.EQ.1.AND.PHYFG.EQ.0) THEN
+C       error - N Fixation cannot be simulated without phytoplankton
+        SGRP = 4
+        CALL OMSTI (RCHNO)
+        CALL OMSG (MESSU,MSGFL,SCLU,SGRP,
+     M             ECOUNT)
+      END IF
+C
       IF (BALFG .EQ. 2) THEN
 C       user has selected multiple species with more complex kinetics
 C
 C       additional benthic algae flags - table-type BENAL-FLAG
         I2= 96
-        I4=  5
+        I4=  6
         CALL ITABLE
      I              (I2,I1,I4,UUNITS,
      M               IVAL)
@@ -759,7 +767,7 @@ C         simulate phytoplankton
      I                CFLIT,ALR20,CVBPN,PHFG,DECFG,CVBPC,PALDH,
      I                NALDH,CLALDH,ALDL,ALDH,ANAER,OXALD,ALNPR,
      I                CVBO,REFR,CVNRBO,CVPB,CVBCL,CO2,NMINGR,PMINGR,
-     I                CMINGR,LMINGR,NMINC,
+     I                CMINGR,LMINGR,NMINC,PHFXFG,PHMXFX,PHFXAD,
      M                PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,PHYTO,
      O                LIMPHY,PYCO2,PHYCLA,DOPHY,BODPHY,TAMPHY,
      O                NO3PHY,PO4PHY,PHDTH,PHGRO,ORNPHY,ORPPHY,
@@ -1150,6 +1158,7 @@ C
      I                   (LIGHT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,
      I                    CMMP,CMMNP,TAMFG,AMRFG,TAM,NSFG,CMMN,CMMLT,
      I                    ALR20,CFLIT,DELT60,NMINGR,PMINGR,LMINGR,
+     I                    PHFXFG,PHMXFX,PHFXAD,
      O                    LIM,GRO,RES)
 C
 C     + + + PURPOSE + + +
@@ -1157,10 +1166,10 @@ C     Calculate unit growth and respiration rates for algae
 C     population; both are expressed in units of per interval
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER     TAMFG,AMRFG,NSFG
+      INTEGER     TAMFG,AMRFG,NSFG,PHFXFG
       REAL        LIGHT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,
      $            CMMP,CMMNP,TAM,CMMN,CMMLT,ALR20,CFLIT,DELT60,
-     $            NMINGR,PMINGR,LMINGR,LIM,GRO,RES
+     $            NMINGR,PMINGR,LMINGR,PHMXFX,PHFXAD,LIM,GRO,RES
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     LIGHT  - ???
@@ -1176,7 +1185,7 @@ C     CMMNP  - ???
 C     TAMFG  - ???
 C     AMRFG  - ???
 C     TAM    - total ammonia (nh3 + nh4) in mg n/l
-C     NSFG   - switch for algal uptake of both NO3 and TAM
+C     NSFG   - ???
 C     CMMN   - ???
 C     CMMLT  - ???
 C     ALR20  - ???
@@ -1185,6 +1194,9 @@ C     DELT60 - simulation time interval in hours
 C     NMINGR - minimum nitrate concentration for algal growth
 C     PMINGR - minimum phosphate concentration for algal growth
 C     LMINGR - minimum light intensity for algal growth
+C     PHFXFG - N Fixation simulation flag (0-No, 1-Yes)
+C     PHMXFX - conc of inorganic N above which fixation does not occur
+C     PHFXAD - adjustment factor for algal growth when N fixation active
 C     LIM    - code for limiting factor in growth
 C     GRO    - growth rate
 C     RES    - respiration rate
@@ -1264,8 +1276,21 @@ C             tam is not simulated
               MMN  = NO3
             END IF
 C
-C           calculate the maximum nitrogen limited unit growth rate
-            GRON= (MALGN*MMN)/(CMMN + MMN)
+            IF (PHFXFG .NE. 1) THEN
+C             calculate the maximum nitrogen limited unit growth rate
+              GRON= (MALGN*MMN)/(CMMN + MMN)
+            ELSE
+C             N-fixing blue-green algae.
+C             determine if available nitrogen concentrations are high
+C             enough to suppress nitrogen fixation
+              IF (MMN .GE. PHMXFX) THEN
+                GRON= (MALGN*MMN)/(CMMN + MMN)
+              ELSE
+C               available nitrogen concentrations do not suppress n-fixation
+C               apply algal growth adjustment
+                GRON= (MMN*PHFXAD) / (CMMN+ MMN*PHFXAD)
+              END IF
+            END IF
 C
 C           calculate the maximum light limited unit growth rate
             GROL= (MALGRT*LIGHT)/(CMMLT + LIGHT)
@@ -1530,7 +1555,7 @@ C     BALORC - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    I0
-      REAL       BAL,GRO,DTHBAL,MINBAL,RES,GROBAL,GRTOTN
+      REAL       BAL,GRO,DTHBAL,MINBAL,RES,GROBAL,GRTOTN,R0
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   ALGRO,GROCHK,BALDTH,ORGBAL,NUTRUP
@@ -1538,6 +1563,7 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
       I0= 0
+      R0= 0.0
 C
 C     convert benal to units of umoles phosphorus/l (bal) for
 C     internal calculations
@@ -1548,7 +1574,7 @@ C     determine growth limiting factor
       CALL ALGRO
      I           (BALLIT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,CMMP,
      I            CMMNP,TAMFG,AMRFG,TAM,NSFG,CMMN,CMMLT,ALR20,
-     I            CFLIT,DELT60,NMINGR,PMINGR,LMINGR,
+     I            CFLIT,DELT60,NMINGR,PMINGR,LMINGR,I0,R0,R0,
      O            LIMBAL,GRO,RES)
 C
 C     calculate net growth rate of algae; grobal is expressed as
@@ -2099,6 +2125,7 @@ C
      I                    NALDH,CLALDH,ALDL,ALDH,ANAER,OXALD,ALNPR,
      I                    CVBO,REFR,CVNRBO,CVPB,CVBCL,CO2,
      I                    NMINGR,PMINGR,CMINGR,LMINGR,NMINC,
+     I                    PHFXFG,PHMXFX,PHFXAD,
      M                    PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,PHYTO,
      O                    LIMPHY,PYCO2,PHYCLA,DOPHY,BODPHY,TAMPHY,
      O                    NO3PHY,PO4PHY,PHDTH,PHGRO,PHYORN,PHYORP,
@@ -2109,14 +2136,14 @@ C     Simulate behavior of phytoplankton, as standing crop, in units
 C     of umoles P per liter
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER     TAMFG,AMRFG,NSFG,PHFG,DECFG
+      INTEGER     TAMFG,AMRFG,NSFG,PHFG,DECFG,PHFXFG
       REAL        PHYLIT,TW,TALGRL,TALGRH,TALGRM,MALGR,CMMP,CMMNP,
      $            CMMN,CMMLT,DELT60,CFLIT,ALR20,CVBPN,CVBPC,PALDH,
      $            NALDH,CLALDH,ALDL,ALDH,ANAER,OXALD,ALNPR,CVBO,REFR,
      $            CVNRBO,CVPB,CVBCL,CO2,NMINGR,PMINGR,CMINGR,LMINGR,
-     $            NMINC,PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,PHYTO,LIMPHY,
-     $            PYCO2,PHYCLA,DOPHY,BODPHY,TAMPHY,NO3PHY,PO4PHY,
-     $            PHDTH,PHGRO,PHYORN,PHYORP,PHYORC
+     $            NMINC,PHMXFX,PHFXAD,PO4,NO3,TAM,DOX,ORN,ORP,ORC,BOD,
+     $            PHYTO,LIMPHY,PYCO2,PHYCLA,DOPHY,BODPHY,TAMPHY,NO3PHY,
+     $            PO4PHY,PHDTH,PHGRO,PHYORN,PHYORP,PHYORC
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     PHYLIT - ???
@@ -2158,6 +2185,9 @@ C     PMINGR - minimum phosphate concentration for algal growth
 C     CMINGR - minimum CO2-carbon concentration for algal growth
 C     LMINGR - minimum light intensity for algal growth
 C     NMINC  - minimum concentration of inorganic N species in mg N/L
+C     PHFXFG - N Fixation simulation flag (0-No, 1-Yes)
+C     PHMXFX - conc of inorganic N above which fixation does not occur
+C     PHFXAD - adjustment factor for algal growth when N fixation active
 C     PO4    - ???
 C     NO3    - dissolved nitrate concentration in mg/l
 C     TAM    - total ammonia (nh3 + nh4) in mg n/l
@@ -2203,6 +2233,7 @@ C     determine growth limiting factor
      I           (PHYLIT,PO4,NO3,TW,TALGRL,TALGRH,TALGRM,MALGR,CMMP,
      I            CMMNP,TAMFG,AMRFG,TAM,NSFG,CMMN,CMMLT,ALR20,
      I            CFLIT,DELT60,NMINGR,PMINGR,LMINGR,
+     I            PHFXFG,PHMXFX,PHFXAD,
      O            LIMPHY,GRO,RES)
 C
 C     calculate net growth rate of phytoplankton; grophy is
@@ -2214,7 +2245,7 @@ C       adjust growth rate to account for limitations imposed by
 C       availability of required nutrients
         GRTOTN= GROPHY
         CALL GROCHK (PO4,NO3,TAM,PHFG,DECFG,CO2,CVBPC,CVBPN,NSFG,
-     I               NMINGR,PMINGR,CMINGR,I0,GRTOTN,
+     I               NMINGR,PMINGR,CMINGR,PHFXFG,GRTOTN,
      M               GROPHY)
 C
       END IF
