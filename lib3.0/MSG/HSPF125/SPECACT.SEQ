@@ -247,18 +247,18 @@ $TEXT
 $TEXT
     PERLND         1        94        95        98        99         1       912
     IMPLND         1        94        95        98        99       847       162
-    RCHRES         1        93        94        97        98      1009       679
-    COPY           1        24        25        28       150      1690         8
+    RCHRES         1        93        94        97        98      1009       682
+    COPY           1        24        25        28       150      1693         8
     PLTGEN         1        11        12        15        16         0         0
     DISPLY         0         0         0         0         0         0         0
     DURANL         0         0         0         0         0         0         0
-    GENER          1        23        24        27        28      1699        10
+    GENER          1        23        24        27        28      1702        10
     MUTSIN         0         0         0         0         0         0         0
-    BMPRAC         1        63        64        67        68      1711        69
+    BMPRAC         1        63        64        67        68      1714        69
     REPORT         0         0         0         0         0         0         0
 #GROUP   52  TYPE TEXT
 $TEXT
-      1779                   1
+      1782                   1
 #GROUP   53  TYPE TEXT
 $TEXT
 YR                    84 MON                   85 DAY                   86 
@@ -745,87 +745,88 @@ ITORC              20936 ITOTN              20937 ITOTP              20938
 PLADFG   6         20970 PHYFG              20976 PKFG     9         20976 
 ZOOFG              20977 BALFG              20978 SDLTFG             20979 
 AMRFG              20980 DECFG              20981 NSFG               20982 
-ZFOOD              20983 BNPFG              20984 BFIXFG   4         20986 
-BINVFG             20990 PLAFXM  12   3     20991 PLACNM  12   3     21027 
-CVBC               21063 CVBCL              21064 CVNRBO             21065 
-CVPB               21066 RATCLP             21067 PKPM1    7         21067 
-NONREF             21068 LITSED             21069 ALNPR              21070
-EXTB               21071 MALGR              21072 PARADF             21073 
-CMMLT              21074 PKPM2    7         21074 CMMN               21075 
-CMMNP              21076 CMMP               21077 TALGRH             21078 
-TALGRL             21079 TALGRM             21080 ALR20              21081 
-PKPM3    6         21081 ALDH               21082 ALDL               21083 
-OXALD              21084 NALDH              21085 PALDH              21086 
-NMINGR             21087 PKPM12   5         21087 PMINGR             21088 
-CMINGR             21089 LMINGR             21090 NMINC              21091 
-SEED               21092 PKPM4    6         21092 MXSTAY             21093 
-OREF               21094 CLALDH             21095 PHYSET             21096 
-REFSET             21097 MZOEAT             21098 PKPM5    5         21098 
-ZFIL20             21099 ZRES20             21100 ZD                 21101 
-OXZD               21102 TCZFIL             21103 PKPM6    4         21103 
-TCZRES             21104 ZEXDEL             21105 ZOMASS             21106 
-MBAL               21107 PKPM7    7         21107 CFBALR             21108 
-CFBALG             21109 MINBAL             21110 CAMPR              21111 
-FRAVL              21112 NMAXFX             21113 MBALGR   4         21114
-TCBALG   4         21118 CMMNB    4         21122 CMMPB    4         21126 
-CMMD1    4         21130 CMMD2    4         21134 CSLIT    4         21138 
-BALR20   4         21142 TCBALR   4         21146 CSLOF1   4         21150 
-CSLOF2   4         21154 GRORES   4         21158 CREMVL             21162 
-PKPM8    4         21162 CMMBI              21163 BINV               21164 
-TCGRAZ             21165 BINVM   12         21167 CTRBQ1             21179 
-PKPM9    4         21179 CTRBQ2             21180 CKTRB1             21181 
-CKTRB2             21182 FRRIF              21183 PKPM10   5         21183 
-CMMV               21184 RIFCQ1             21185 RIFCQ2             21186 
-RIFCQ3             21187 RIFVEL   4         21188 PKPM11   8         21188 
-RIFDEP   4         21192 JDAT               21200 BALDEP             21201 
-BALVEL             21202 PHYTO              21203 PKST1    3         21203 
-PHYCLA             21204 LIMPHY             21205 BENAL    4         21206 
-PKST2    4   3     21206 BALCLA   4         21210 LIMBAL   4         21214 
-TBENAL   2         21218 ORN                21220 PKST3    7         21220 
-ORP                21221 ORC                21222 TORN               21223 
-TORP               21224 TORC               21225 POTBOD             21226 
-ZOO                21227 TN                 21228 PKST4    2         21228 
-TP                 21229 ROPHYT             21252 ROZOO              21253 
-ROORN              21254 ROORP              21255 ROORC              21256 
-ROTORN             21277 ROTORP             21278 ROTORC             21279 
-ROTOTN             21280 ROTOTP             21281 OPHYT    5         21302 
-OZOO     5         21307 OORN     5         21312 OORP     5         21317 
-OORC     5         21322 OTORN    5         21427 OTORP    5         21432 
-OTORC    5         21437 OTOTN    5         21442 OTOTP    5         21447 
-PLADDR   3         21552 PLADWT   3         21567 PLADEP   3         21582 
-SNKPHY             21585 ZOOPHY             21586 DTHPHY             21587 
-GROPHY             21588 TOTPHY             21589 GROZOO             21610 
-DTHZOO             21611 TOTZOO             21612 FLXBAL   3   4     21625 
-GROTBA             21685 DTHTBA             21686 TOTTBA             21687 
-SNKORN             21700 PHYORN             21701 ZOOORN             21702 
-BALORN             21703 TOTORN             21704 SNKORP             21725 
-PHYORP             21726 ZOOORP             21727 BALORP             21728 
-TOTORP             21729 SNKORC             21750 PHYORC             21751 
-ZOOORC             21752 BALORC             21753 TOTORC             21754 
-PYCO2              21775 ZOCO2              21776 BACO2              21777 
-ITIC               21885 ICO2               21886 PHCNT              21899 
-PHPM1    2         21899 ALKCON             21900 CFCINV             21901 
-PHPM2    3         21901 BRCO2    2         21902 TIC                21906 
-PHST     3         21906 CO2                21907 PH                 21908 
-SATCO2             21912 ROTIC              21914 ROCO2              21915 
-OTIC     5         21926 OCO2     5         21931 BODCO2             21986 
-PHYCO2             21987 ZOOCO2             21988 BALCO2             21989 
-BENCO2             21990 INVCO2             21991 TOTCO2             21992 
-ACFLAG  14         22028 ACPARM   7         22042 NUMCON             22050 
-NUMGQL             22051 ACCONC   7         22088 ACSTOR   7   5     22102 
-ACINFL   7   5     22144 ACFLX1   7   5     22193 ACFLX2   5   7   5 22235 
-ACFLXC  10   5     22445 ACFLXG   7   5     22505 ACFLX3   7   5     22547 
-ACPH               22582 ACCONV   7         22584 TOPFL              22591 
-VEGFL              22592 NSSP               22593 TSA    250  12     22594 
-DISL   250  10     25494 DISR   250  10     28094 WIDL   250  10     30594 
-WIDR   250  10     33094 HABSL  250  10     35494 HABSR  250  10     38094 
-HDEML  250  10     40594 HDEMR  250  10     43094 LATDEG             45594 
-LONDEG             45595 LONSTD             45596 DENL   250  10     45597 
-DENR   250  10     48097 NVPL   250         50597 NVPR   250         50847 
-JDAY               51097 LATRAD             51098 SO     250         51099 
-TSAL   250         51349 TSAR   250         51599 SKOP   250         51849 
-VSAL   250         52099 VSAR   250         52349 DLT1               52599 
-DEC                52600 HFDLT              52601 DF                 52602 
+ZFOOD              20983 BNPFG              20984 PHFXFG             20985
+BFIXFG   4         20987 BINVFG             20991 PLAFXM  12   3     20992 
+PLACNM  12   3     21028 CVBC               21064 CVBCL              21065 
+CVNRBO             21066 CVPB               21067 RATCLP             21068 
+PKPM1    7         21068 NONREF             21069 LITSED             21070 
+ALNPR              21071 EXTB               21072 MALGR              21073 
+PARADF             21074 CMMLT              21075 PKPM2    7         21075 
+CMMN               21076 CMMNP              21077 CMMP               21078 
+TALGRH             21079 TALGRL             21080 TALGRM             21081 
+ALR20              21082 PKPM3    6         21082 ALDH               21083 
+ALDL               21084 OXALD              21085 NALDH              21086 
+PALDH              21087 NMINGR             21088 PKPM12   5         21088 
+PMINGR             21089 CMINGR             21090 LMINGR             21091 
+NMINC              21092 PHMXFX             21093 PHFXAD             21094
+SEED               21095 PKPM4    6         21095 MXSTAY             21096 
+OREF               21097 CLALDH             21098 PHYSET             21099 
+REFSET             21100 MZOEAT             21101 PKPM5    5         21101 
+ZFIL20             21102 ZRES20             21103 ZD                 21104 
+OXZD               21105 TCZFIL             21106 PKPM6    4         21106 
+TCZRES             21107 ZEXDEL             21108 ZOMASS             21109 
+MBAL               21110 PKPM7    7         21110 CFBALR             21111 
+CFBALG             21112 MINBAL             21113 CAMPR              21114 
+FRAVL              21115 NMAXFX             21116 MBALGR   4         21117
+TCBALG   4         21121 CMMNB    4         21125 CMMPB    4         21129 
+CMMD1    4         21133 CMMD2    4         21137 CSLIT    4         21141 
+BALR20   4         21145 TCBALR   4         21149 CSLOF1   4         21153 
+CSLOF2   4         21157 GRORES   4         21161 CREMVL             21165 
+PKPM8    4         21165 CMMBI              21166 BINV               21167 
+TCGRAZ             21168 BINVM   12         21170 CTRBQ1             21182 
+PKPM9    4         21182 CTRBQ2             21183 CKTRB1             21184 
+CKTRB2             21185 FRRIF              21186 PKPM10   5         21186 
+CMMV               21187 RIFCQ1             21188 RIFCQ2             21189 
+RIFCQ3             21190 RIFVEL   4         21191 PKPM11   8         21191 
+RIFDEP   4         21195 JDAT               21203 BALDEP             21204 
+BALVEL             21205 PHYTO              21206 PKST1    3         21206 
+PHYCLA             21207 LIMPHY             21208 BENAL    4         21209 
+PKST2    4   3     21209 BALCLA   4         21213 LIMBAL   4         21217 
+TBENAL   2         21221 ORN                21223 PKST3    7         21223 
+ORP                21224 ORC                21225 TORN               21226 
+TORP               21227 TORC               21228 POTBOD             21229 
+ZOO                21230 TN                 21231 PKST4    2         21231 
+TP                 21232 ROPHYT             21255 ROZOO              21256 
+ROORN              21257 ROORP              21258 ROORC              21259 
+ROTORN             21280 ROTORP             21281 ROTORC             21282 
+ROTOTN             21283 ROTOTP             21284 OPHYT    5         21305 
+OZOO     5         21310 OORN     5         21315 OORP     5         21320 
+OORC     5         21325 OTORN    5         21430 OTORP    5         21435 
+OTORC    5         21440 OTOTN    5         21445 OTOTP    5         21450 
+PLADDR   3         21553 PLADWT   3         21570 PLADEP   3         21585 
+SNKPHY             21588 ZOOPHY             21589 DTHPHY             21590 
+GROPHY             21591 TOTPHY             21592 GROZOO             21613 
+DTHZOO             21614 TOTZOO             21615 FLXBAL   3   4     21628 
+GROTBA             21688 DTHTBA             21689 TOTTBA             21690 
+SNKORN             21703 PHYORN             21704 ZOOORN             21705 
+BALORN             21706 TOTORN             21707 SNKORP             21728 
+PHYORP             21729 ZOOORP             21730 BALORP             21731 
+TOTORP             21732 SNKORC             21753 PHYORC             21754 
+ZOOORC             21755 BALORC             21756 TOTORC             21757 
+PYCO2              21778 ZOCO2              21779 BACO2              21780 
+ITIC               21888 ICO2               21889 PHCNT              21902 
+PHPM1    2         21902 ALKCON             21903 CFCINV             21904 
+PHPM2    3         21904 BRCO2    2         21905 TIC                21909 
+PHST     3         21909 CO2                21910 PH                 21911 
+SATCO2             21915 ROTIC              21917 ROCO2              21918 
+OTIC     5         21929 OCO2     5         21934 BODCO2             21989 
+PHYCO2             21990 ZOOCO2             21991 BALCO2             21992 
+BENCO2             21993 INVCO2             21994 TOTCO2             21995 
+ACFLAG  14         22031 ACPARM   7         22045 NUMCON             22053 
+NUMGQL             22054 ACCONC   7         22091 ACSTOR   7   5     22105 
+ACINFL   7   5     22147 ACFLX1   7   5     22196 ACFLX2   5   7   5 22238 
+ACFLXC  10   5     22448 ACFLXG   7   5     22508 ACFLX3   7   5     22550 
+ACPH               22585 ACCONV   7         22587 TOPFL              22594 
+VEGFL              22595 NSSP               22596 TSA    250  12     22597 
+DISL   250  10     25497 DISR   250  10     28097 WIDL   250  10     30597 
+WIDR   250  10     33097 HABSL  250  10     35497 HABSR  250  10     38097 
+HDEML  250  10     40597 HDEMR  250  10     43097 LATDEG             45597 
+LONDEG             45598 LONSTD             45599 DENL   250  10     45600 
+DENR   250  10     48100 NVPL   250         50600 NVPR   250         50850 
+JDAY               51100 LATRAD             51101 SO     250         51102 
+TSAL   250         51352 TSAR   250         51602 SKOP   250         51852 
+VSAL   250         52102 VSAR   250         52352 DLT1               52602 
+DEC                52603 HFDLT              52604 DF                 52605 
 YR                    18 MON                   19 DAY                   20 
 HR                    21 MIN                   22 POINT   20           110 
 MEAN    20           130 SPOUT                 28 @@@@@@                 1 
