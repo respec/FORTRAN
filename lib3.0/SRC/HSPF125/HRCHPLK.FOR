@@ -196,7 +196,7 @@ C     convert rates from 1/hr to 1/ivl
 C
 C     general parameters - group 4.  table-type plnk-parm4
       I2= 102
-      I4=  5
+      I4=  7
       CALL RTABLE
      I             (I2,I1,I4,UUNITS,
      M              PKPM12)
