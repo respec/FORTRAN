@@ -61,13 +61,14 @@ C
       INCLUDE 'cwcf1.inc'
       INCLUDE 'cwcf2.inc'
 
-      integer ns,nlow,nzero
-      double precision  gbcrit,gbthresh,pvaluew,qs
+      integer ns,nlow,nzero,nlow_V,nGBiter
+      double precision  gbcrit,gbthresh,pvaluew,qs,gbcrit_V,gbthresh_V
       character*4 gbtype
 
 C     used by Tim's EMA code
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
      1               ns,nlow,nzero,gbtype
+      common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
 C     from Tim Cohn's code, for output of EMA at-site MSE of G
       double precision as_M_mse,as_S2_mse,as_G_mse,
      1                 as_G_mse_Syst,as_G_ERL
@@ -395,12 +396,13 @@ C
 C
             IF (EXPFUN .GT. 0) THEN
 C             output export file
-              CALL PRTEXP (EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
-     I                     SYSSKW,GENSKU,RMSEGS,ASMSEG,SYSASK,
-     I                     as_G_mse_Syst,KENTAU,KENPVL,
-     I                     KENSLP,NFCXPG,WRCFC(INDX1),TXPROB(INDX1),
-     I                     CLIML(INDX1),CLIMU(INDX1),VAREST(INDX1),
-     I                     JSEQNO,HEADNG(9),EMAOPT,IGSOPT,BEGYR,ENDYR)
+              CALL PRTEXP(EXPFUN,NSYS,NHIST,WRCSKW,WRCUAV,WRCUSD,
+     I                    SYSSKW,GENSKU,RMSEGS,ASMSEG,SYSASK,
+     I                    as_G_mse_Syst,KENTAU,KENPVL,KENSLP,NFCXPG,
+     I                    WRCFC(INDX1),TXPROB(INDX1),CLIML(INDX1),
+     I                    CLIMU(INDX1),VAREST(INDX1),JSEQNO,HEADNG(9),
+     I                    EMAOPT,IGSOPT,BEGYR,ENDYR,HISTPD,gbcrit,
+     I                    nlow,nzero,NGAGEDPILFS,LOTYPE,nGBiter)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
@@ -4181,7 +4183,10 @@ C     For years without peaks, assume peak is less than threshold tl
 C     collapse the data set, eliminating any periods of missing record
       NOBS = 0
       DO 60 J = 1, WYMAX - WYMIN + 1
-        IF (ABS(QL(J)-MISSING) .GT. QMIN) THEN
+C       check that value is not missing and
+C       that this is not a year with (inf,inf) perception threshold
+        IF (ABS(QL(J)-MISSING) .GT. QMIN .AND.
+     $      TL(J) .LT. 1.0E18) THEN
           NOBS = NOBS + 1
           TL(NOBS) = TL(J)
           TU(NOBS) = TU(J)
@@ -5093,17 +5098,21 @@ C
      I                       ASMSEGSYS,KENTAU,KENPVL,
      I                       KENSLP,NPLOT,WRCFC,TXPROB,CLIML,CLIMU,
      I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT,
-     I                       BEGYR,ENDYR)
+     I                       BEGYR,ENDYR,HISTPD,gbcrit,nlow,nzero,
+     I                       NGAGEDPILFS,LOTYPE,nGBiter)
 C
 C     + + + PURPOSE + + +
 C     Output analysis results to PeakFQ export file
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT,BEGYR,ENDYR
+      INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT,BEGYR,ENDYR,
+     $              nlow,nzero,NGAGEDPILFS,nGBiter
       REAL          WRCSKW,WRCMN,WRCSD,SYSSKW,GENSKU,RMSEGS,
      $              ASMSEG,SYSASK,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
-     $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT)
-      DOUBLE PRECISION ASMSEGSYS,VAREST(NPLOT)
+     $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT),HISTPD
+
+      DOUBLE PRECISION ASMSEGSYS,VAREST(NPLOT),gbcrit
+      CHARACTER*4   LOTYPE
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -5125,7 +5134,7 @@ C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
 C
 C     + + + LOCAL VARIABLES + + +
-      INTEGER I,LEN,SIGDIG,DECPLA
+      INTEGER I,LEN,SIGDIG,DECPLA,I0
       DOUBLE PRECISION KVALS(MXINT)
       CHARACTER*1 LTAB
       CHARACTER*4 LCHTYPE
@@ -5148,7 +5157,9 @@ C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A80)
  2010 FORMAT (4X,'Station',2A,/,4X,'StationName',2A,/,
      $        4X,'Analysis',A,A4,/,4X,'BegYear ',A,I4,/,
-     $        4X,'EndYear ',A,I4,/,4X,'SkewOption',2A,/,
+     $        4X,'EndYear ',A,I4,/,
+     $        4X,'Historical Period Length',A,I4,/,
+     $        4X,'SkewOption',2A,/,
      $        4X,'Skew    ',A,F8.3,/,4X,'Mean    ',A,F8.3,/,
      $        4X,'StandDev',A,F8.3,/,4X,'AtSiteSkew',A,F8.3,/,
      $        4X,'AtSiteMSEG',A,F8.3,/,
@@ -5157,6 +5168,16 @@ C     + + + OUTPUT FORMATS + + +
      $        4X,'GagedPeaks',A,I8,/,4X,'HisPeaks',A,I8,/,
      $        4X,'KENTAU  ',A,F8.3,/,4X,'KENPLV  ',A,F8.3,/,
      $        4X,'KENSLP  ',A,F8.3)
+ 2011 FORMAT (4X,'Multiple Grubbs-Beck PILF Threshold',A,F8.1,/,
+     $        4X,'Number of PILFs Identified',A,I4,/,
+     $        4X,'Classification of PILFs: Number of Zero Flows',
+     $        A,I4,/,
+     $        4X,'Classification of PILFs: Number of Censored Flows',
+     $        A,I4,/,
+     $        4X,'Classification of PILFs: Number of Gaged Peaks',
+     $        A,I4,/,
+     $        4X,'PILF (LO) Test Method',A,A,/,
+     $        4X,'Number of Iterations',A,I4)
  2020 FORMAT (4X,A8,32(A,F8.4))
  2030 FORMAT (4X,A8,32(A,F8.0))
  2040 FORMAT (4X,A8,32(A,A10))
@@ -5164,6 +5185,7 @@ C
 C     + + + END SPECIFICATIONS + + +
 C
       LTAB = CHAR(9)
+      I0 = 0
       WRITE(EXPFUN,2000) HEADER
       LHEADER = HEADER(11:80)
       LSTNID = STRRETREM(LHEADER)
@@ -5180,11 +5202,21 @@ C
         CHSKUOPT = 'Weighted'
       END IF
       WRITE(EXPFUN,2010) LTAB,LSTNID,LTAB,LHEADER,LTAB,LCHTYPE,LTAB,
-     $                   BEGYR,LTAB,ENDYR,LTAB,CHSKUOPT,LTAB,WRCSKW,
-     $                   LTAB,WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,
+     $                   BEGYR,LTAB,ENDYR,LTAB,INT(HISTPD+.5),LTAB,
+     $                   CHSKUOPT,LTAB,WRCSKW,LTAB,
+     $                   WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,
      $                   LTAB,ASMSEGSYS,LTAB,GENSKU,LTAB,
      $                   RMSEGS**2,LTAB,NSYS,LTAB,
      $                   NHIST,LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
+      IF (nlow .GT. 0) THEN
+        WRITE(EXPFUN,2011) LTAB,10**gbcrit,LTAB,nlow,LTAB,nzero,LTAB,
+     $                     nlow-nzero-NGAGEDPILFS,LTAB,NGAGEDPILFS,
+     $                     LTAB,LOTYPE,LTAB,nGBiter
+      ELSE
+        WRITE(EXPFUN,2011) LTAB,10**gbcrit,LTAB,nlow,LTAB,I0,LTAB,
+     $                     I0,LTAB,I0,
+     $                     LTAB,LOTYPE,LTAB,nGBiter
+      END IF
 
       LEN = 10
       SIGDIG = 4
