@@ -855,7 +855,7 @@ VA   PLAFFP   3   0   0   0 I T EXTNL            PLADFX 00000000001000
 VA   PLACFP   3   0   0   0 I T EXTNL            PLADCN 00000000001000
 VA 1 PLADFG   6   0   0   0 I P                         00000000001000
 VA 1 PHYFG    0   0   0   0 I P                         00000010001000
-EQ 1 PKFG     9   0   0   0 I   PHYFG                   00000000001000
+EQ 1 PKFG    10   0   0   0 I   PHYFG                   00000000001000
 VA 1 ZOOFG    0   0   0   0 I P                         00000000001000
 VA 1 BALFG    0   0   0   0 I P                         00000000001000
 VA 1 SDLTFG   0   0   0   0 I P                         00000000001000
