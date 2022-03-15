@@ -71,9 +71,12 @@ C     used by Tim's EMA code
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
 C     from Tim Cohn's code, for output of EMA at-site MSE of G
       double precision as_M_mse,as_S2_mse,as_G_mse,
-     1                 as_G_mse_Syst,as_G_ERL
+     1                 as_G_mse_Syst,as_G_ERL,
+     2                 rM,rMmse,rS2,rS2mse,rG,rGmse
       common /tac005/as_M_mse,as_S2_mse,as_G_mse,
      1               as_G_mse_Syst,as_G_ERL
+      integer EMAIterations
+      common /reg001/rM,rMmse,rS2,rS2mse,rG,rGmse,EMAIterations
 C
 C
 C      + + + LOCAL VARIABLES + + +
@@ -121,7 +124,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Version 7.4 dated  3/10/2021',/,
+     $       'Version 7.4 dated  3/ 8/2022',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -402,7 +405,7 @@ C             output export file
      I                    WRCFC(INDX1),TXPROB(INDX1),CLIML(INDX1),
      I                    CLIMU(INDX1),VAREST(INDX1),JSEQNO,HEADNG(9),
      I                    EMAOPT,IGSOPT,BEGYR,ENDYR,HISTPD,gbcrit,
-     I                    nlow,nzero,NGAGEDPILFS,LOTYPE,nGBiter)
+     I                    nlow,nzero,NGAGEDPILFS,LOTYPE,EMAIterations)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
@@ -638,7 +641,7 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   202 FORMAT( 2X,'Version 7.4',
      $        9X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time')
-  203 FORMAT( 2X,'3/10/2021',53X,A)
+  203 FORMAT( 2X,'3/ 8/2022',53X,A)
   206 FORMAT(22X,'standard method for flood frequency analysis.')
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
@@ -4563,15 +4566,23 @@ C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits
 C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
 C
+C     + + + PARAMETERS + + +
+      INTEGER NX
+      PARAMETER (NX=25000)
+C
 C     + + + COMMON BLOCKS + + +
       integer nlow_V,ns,nlow,nzero,nGBiter
       double precision  gbcrit,gbthresh,gbcrit_V,gbthresh_V,
      $                  pvaluew,qs,as_mse
       character*4 gbtype,at_site_option,at_site_default,at_site_std
+      DOUBLE PRECISION EMAQL,EMAQU,EMATL,EMATU
+      CHARACTER*4 EMADTYPE
 
 C     used by Tim's EMA code
       common /tacg01/gbcrit,gbthresh,pvaluew(10000),qs(10000),
      1               ns,nlow,nzero,gbtype
+      COMMON /tacg02/EMAQL(NX),EMAQU(NX),
+     $               EMATL(NX),EMATU(NX),EMADTYPE(NX)
       common /tacg03/gbcrit_V(10),gbthresh_V(10),nlow_V(10),nGBiter
       common /tacg04/at_site_option,at_site_default,at_site_std
       common /jfe001/as_mse
@@ -4650,6 +4661,14 @@ C
       STNDATA(STNIND)%NOBS = NOBS
       DO 50 I = 1,NOBS
         STNDATA(STNIND)%ALLPOS(I) = PEX(I)
+        STNDATA(STNIND)%EQL(I) = EMAQL(I)
+        STNDATA(STNIND)%EQU(I) = EMAQU(I)
+        STNDATA(STNIND)%ETL(I) = EMATL(I)
+        STNDATA(STNIND)%ETU(I) = EMATU(I)
+        STNDATA(STNIND)%UQL(I) = QL(I)
+        STNDATA(STNIND)%UQU(I) = QU(I)
+        STNDATA(STNIND)%UTL(I) = TL(I)
+        STNDATA(STNIND)%UTU(I) = TU(I)
  50   CONTINUE
 C
       RETURN
@@ -4786,6 +4805,72 @@ C     plotting positions for all years
       DO 50 I = 1,STNDATA(STNIND)%NOBS
         ALLPPOS(I)= STNDATA(STNIND)%ALLPOS(I)
  50   CONTINUE
+C 
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   GETEMAREP
+     I                     (STNIND,
+     O                      ANOBS,OBSYRS,
+     O                      UQL,UQU,EQL,EQU,UTL,UTU,ETL,ETU)
+      !DEC$ ATTRIBUTES DLLEXPORT :: GETEMAREP
+C
+C     + + + PURPOSE + + +
+C     Return EMA representation of data for a station 
+C     to the Windows interface
+C
+      Use StationData
+      Use EMAThresh
+C      
+C     + + + PARAMETERS + + +
+      INCLUDE 'PMXPK.INC'
+      INCLUDE 'PMXINT.INC'
+      INTEGER NX
+      PARAMETER (NX=25000)
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER       STNIND,ANOBS,OBSYRS(NX)
+      REAL          UQL(NX),UQU(NX),EQL(NX),EQU(NX),
+     $              UTL(NX),UTU(NX),ETL(NX),ETU(NX)
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     STNIND - index number of this station
+C     ANOBS   - number of years of observations
+C     OBSYRS - array of observation years
+C     UQL    - array of user-entered peak values lower bound
+C     UQU    - array of user-entered peak values upper bound
+C     EQL    - array of EMA peak values lower bound
+C     EQU    - array of EMA peak values upper bound
+C     UTL    - array of user-entered perception thresholds lower bounds
+C     UTU    - array of user-entered perception thresholds upper bounds
+C     ETL    - array of EMA perception thresholds lower bounds
+C     ETU    - array of EMA perception thresholds upper bounds
+C
+C     + + + COMMON BLOCKS + + +
+      DOUBLE PRECISION EMAQL,EMAQU,EMATL,EMATU
+      CHARACTER*4 EMADTYPE
+      COMMON /tacg02/EMAQL(NX),EMAQU(NX),
+     $               EMATL(NX),EMATU(NX),EMADTYPE(NX)
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER I
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      ANOBS = STNDATA(STNIND)%NOBS
+      DO 10 I = 1,ANOBS
+        OBSYRS(I) = OPKSEQ(I)
+        UQL(I) = 10**STNDATA(STNIND)%UQL(I) 
+        UQU(I) = 10**STNDATA(STNIND)%UQU(I) 
+        EQL(I) = 10**STNDATA(STNIND)%EQL(I) 
+        EQU(I) = 10**STNDATA(STNIND)%EQU(I) 
+        UTL(I) = 10**STNDATA(STNIND)%UTL(I) 
+        UTU(I) = 10**STNDATA(STNIND)%UTU(I) 
+        ETL(I) = 10**STNDATA(STNIND)%ETL(I) 
+        ETU(I) = 10**STNDATA(STNIND)%ETU(I) 
+ 10   CONTINUE
 C 
       RETURN
       END
@@ -5099,14 +5184,14 @@ C
      I                       KENSLP,NPLOT,WRCFC,TXPROB,CLIML,CLIMU,
      I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT,
      I                       BEGYR,ENDYR,HISTPD,gbcrit,nlow,nzero,
-     I                       NGAGEDPILFS,LOTYPE,nGBiter)
+     I                       NGAGEDPILFS,LOTYPE,nEMAIter)
 C
 C     + + + PURPOSE + + +
 C     Output analysis results to PeakFQ export file
 C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER       EXPFUN,NSYS,NHIST,NPLOT,STNIND,EMAOPT,BEGYR,ENDYR,
-     $              nlow,nzero,NGAGEDPILFS,nGBiter
+     $              nlow,nzero,NGAGEDPILFS,nEMAIter
       REAL          WRCSKW,WRCMN,WRCSD,SYSSKW,GENSKU,RMSEGS,
      $              ASMSEG,SYSASK,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
      $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT),HISTPD
@@ -5158,26 +5243,20 @@ C     + + + OUTPUT FORMATS + + +
  2010 FORMAT (4X,'Station',2A,/,4X,'StationName',2A,/,
      $        4X,'Analysis',A,A4,/,4X,'BegYear ',A,I4,/,
      $        4X,'EndYear ',A,I4,/,
-     $        4X,'Historical Period Length',A,I4,/,
+     $        4X,'HistLength',A,I4,/,
      $        4X,'SkewOption',2A,/,
      $        4X,'Skew    ',A,F8.3,/,4X,'Mean    ',A,F8.3,/,
      $        4X,'StandDev',A,F8.3,/,4X,'AtSiteSkew',A,F8.3,/,
      $        4X,'AtSiteMSEG',A,F8.3,/,
      $        4X,'AtSiteMSEG_GagedOnly',A,F8.3,/,
      $        4X,'RegSkew',A,F8.3,/,4X,'RegMSEG',A,F8.3,/,
-     $        4X,'GagedPeaks',A,I8,/,4X,'HisPeaks',A,I8,/,
+     $        4X,'GagedPeaks',A,I8,/,4X,'HistPeaks',A,I8,/,
      $        4X,'KENTAU  ',A,F8.3,/,4X,'KENPLV  ',A,F8.3,/,
      $        4X,'KENSLP  ',A,F8.3)
- 2011 FORMAT (4X,'Multiple Grubbs-Beck PILF Threshold',A,F8.1,/,
-     $        4X,'Number of PILFs Identified',A,I4,/,
-     $        4X,'Classification of PILFs: Number of Zero Flows',
-     $        A,I4,/,
-     $        4X,'Classification of PILFs: Number of Censored Flows',
-     $        A,I4,/,
-     $        4X,'Classification of PILFs: Number of Gaged Peaks',
-     $        A,I4,/,
-     $        4X,'PILF (LO) Test Method',A,A,/,
-     $        4X,'Number of Iterations',A,I4)
+ 2011 FORMAT (4X,'PILF_Method',A,A,/,4X,'MGBT_PILF_Thresh',A,F8.1,/,
+     $        4X,'PILFs',A,I4,/,4X,'PILF_0s',A,I4,/,
+     $        4X,'PILF_Censored',A,I4,/,4X,'PILF_Gaged',A,I4,/,
+     $        4X,'EMA_Num_Iter',A,I4)
  2020 FORMAT (4X,A8,32(A,F8.4))
  2030 FORMAT (4X,A8,32(A,F8.0))
  2040 FORMAT (4X,A8,32(A,A10))
@@ -5201,21 +5280,21 @@ C
       ELSE
         CHSKUOPT = 'Weighted'
       END IF
-      WRITE(EXPFUN,2010) LTAB,LSTNID,LTAB,LHEADER,LTAB,LCHTYPE,LTAB,
-     $                   BEGYR,LTAB,ENDYR,LTAB,INT(HISTPD+.5),LTAB,
-     $                   CHSKUOPT,LTAB,WRCSKW,LTAB,
-     $                   WRCMN,LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,
-     $                   LTAB,ASMSEGSYS,LTAB,GENSKU,LTAB,
-     $                   RMSEGS**2,LTAB,NSYS,LTAB,
-     $                   NHIST,LTAB,KENTAU,LTAB,KENPVL,LTAB,KENSLP
+      WRITE(EXPFUN,2010) LTAB,LSTNID,LTAB,LHEADER,LTAB,LCHTYPE,
+     $                   LTAB,BEGYR,LTAB,ENDYR,LTAB,INT(HISTPD+.5),
+     $                   LTAB,CHSKUOPT,LTAB,WRCSKW,LTAB,WRCMN,
+     $                   LTAB,WRCSD,LTAB,SYSSKW,LTAB,ASMSEG,
+     $                   LTAB,ASMSEGSYS,LTAB,GENSKU,LTAB,RMSEGS**2,
+     $                   LTAB,NSYS,LTAB,NHIST,LTAB,KENTAU,
+     $                   LTAB,KENPVL,LTAB,KENSLP
       IF (nlow .GT. 0) THEN
-        WRITE(EXPFUN,2011) LTAB,10**gbcrit,LTAB,nlow,LTAB,nzero,LTAB,
-     $                     nlow-nzero-NGAGEDPILFS,LTAB,NGAGEDPILFS,
-     $                     LTAB,LOTYPE,LTAB,nGBiter
+        WRITE(EXPFUN,2011) LTAB,LOTYPE,LTAB,10**gbcrit,LTAB,nlow,
+     $                     LTAB,nzero,LTAB,nlow-nzero-NGAGEDPILFS,
+     $                     LTAB,NGAGEDPILFS,LTAB,nEMAIter
       ELSE
-        WRITE(EXPFUN,2011) LTAB,10**gbcrit,LTAB,nlow,LTAB,I0,LTAB,
-     $                     I0,LTAB,I0,
-     $                     LTAB,LOTYPE,LTAB,nGBiter
+        WRITE(EXPFUN,2011) LTAB,LOTYPE,LTAB,10**gbcrit,LTAB,nlow,
+     $                     LTAB,I0,LTAB,I0,
+     $                     LTAB,I0,LTAB,nEMAIter
       END IF
 
       LEN = 10
@@ -5313,7 +5392,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Version 7.4 dated  3/10/2021',/,'#',/,
+     $       'Version 7.4 dated  3/ 8/2022',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',

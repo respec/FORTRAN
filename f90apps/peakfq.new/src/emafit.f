@@ -1045,8 +1045,9 @@ c
      1  n,nsize,i,j,k
       
       character*4 VarS2opt      
-      common /tacR01/VarS2opt     
-      common /reg001/rM,rMmse,rS2,rS2mse,rG,rGmse
+      common /tacR01/VarS2opt
+      integer EMAIterations
+      common /reg001/rM,rMmse,rS2,rS2mse,rG,rGmse,EMAIterations
       
       parameter (nsize=20001)
       
@@ -1149,6 +1150,7 @@ c            if(d11(i) .le. tol) then  ! tac added additional test 15 sep 11
                do 20 k=1,3
                  moms_out(k) = moms(k,i)
 20             continue
+              EMAIterations = i
               return
             endif
 10    continue

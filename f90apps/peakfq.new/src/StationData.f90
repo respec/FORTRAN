@@ -13,9 +13,9 @@
         INTEGER            :: NINTRVL
         INTEGER            :: HSTFLG
         INTEGER            :: IPKSEQ(200)
-        INTEGER            :: THRSYR(20)
-        INTEGER            :: THREYR(20)
-        INTEGER            :: THRNOB(20)
+        INTEGER            :: THRSYR(200)
+        INTEGER            :: THREYR(200)
+        INTEGER            :: THRNOB(200)
         INTEGER            :: INTYR(200)
         INTEGER            :: NLOW
         INTEGER            :: NZERO
@@ -33,13 +33,21 @@
         REAL               :: INTLWR(200)
         REAL               :: INTUPR(200)
         REAL               :: INTPPOS(200)
-        REAL               :: THRLWR(20)
-        REAL               :: THRUPR(20)
-        REAL               :: THRPP(20)
+        REAL               :: THRLWR(200)
+        REAL               :: THRUPR(200)
+        REAL               :: THRPP(200)
         REAL               :: GBCRIT
         REAL               :: WRCSKW
         REAL               :: RMSEGS
         REAL               :: ALLPOS(10000)
+        REAL               :: UQL(10000)
+        REAL               :: UQU(10000)
+        REAL               :: EQL(10000)
+        REAL               :: EQU(10000)
+        REAL               :: UTL(10000)
+        REAL               :: UTU(10000)
+        REAL               :: ETL(10000)
+        REAL               :: ETU(10000)
         CHARACTER*80       :: THRCOM(20)
         CHARACTER*80       :: INTCOM(200)
       END TYPE
