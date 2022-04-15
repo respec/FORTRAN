@@ -20,6 +20,7 @@
         INTEGER            :: NLOW
         INTEGER            :: NZERO
         INTEGER            :: NOBS
+        INTEGER            :: OPKSEQ(25000)
         REAL               :: WEIBA
         REAL               :: PKS(200)
         REAL               :: PKLOG(200)
@@ -39,16 +40,16 @@
         REAL               :: GBCRIT
         REAL               :: WRCSKW
         REAL               :: RMSEGS
-        REAL               :: ALLPOS(10000)
-        REAL               :: UQL(10000)
-        REAL               :: UQU(10000)
-        REAL               :: EQL(10000)
-        REAL               :: EQU(10000)
-        REAL               :: UTL(10000)
-        REAL               :: UTU(10000)
-        REAL               :: ETL(10000)
-        REAL               :: ETU(10000)
-        CHARACTER*80       :: THRCOM(20)
+        REAL               :: ALLPOS(25000)
+        REAL               :: UQL(25000)
+        REAL               :: UQU(25000)
+        REAL               :: EQL(25000)
+        REAL               :: EQU(25000)
+        REAL               :: UTL(25000)
+        REAL               :: UTU(25000)
+        REAL               :: ETL(25000)
+        REAL               :: ETU(25000)
+        CHARACTER*80       :: THRCOM(200)
         CHARACTER*80       :: INTCOM(200)
       END TYPE
 
