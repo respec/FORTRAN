@@ -584,6 +584,7 @@ c        a) Identify/recode LOs based on at-site systematic + historical data
 c        b) Iterate search for LOs using at-site systematic + historical data
 c             combined with regional skew information
 c
+      write(99,*) 'emafitb: start'
       do 12 i=1,n
         ql(i)    = ql_in(i)
         qu(i)    = qu_in(i)
@@ -599,6 +600,7 @@ c   loop up to 10 times to see if any new LOs uncovered
         it_max = 1
       endif
 
+      write(99,*) 'emafitb: gbtest loop 15'
       do 15 i=1,it_max
         call gbtest(n,ql,qu,tl,tu,dtype_in,gbthrsh0,
      1              ql,qu,tl,tu)
@@ -634,6 +636,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   2.  organize data for computing ci and set up the tl and tu vectors
 c
+      write(99,*) 'emafitb: compress2'
 
       call compress2(n,tl,tu,nt,nobs,tl2,tu2)
       
@@ -654,6 +657,8 @@ c                   with B17B MSE(G) formula  (B17B eqn 6; p. 13)
 c            3.  final computation using regional skew information 
 c                   with EMA MSE(G)
 c
+      write(99,*) 'emafitb: p3est_ema 1'
+
 c  1) Get at-site skews
       call p3est_ema(n,ql,qu,
      1      1.d0,  1.d0,  1.d0,       ! set all at-site MSEs to 1
@@ -663,6 +668,8 @@ c  1) Get at-site skews
 
 
 c  2) EMA computation using weighted regional information/B17B MSEs
+      write(99,*) 'emafitb: calls to mse_ema'
+
         at_site_option = "B17B"
         as_M_mse  = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),1) ! compute true a-s
         as_S2_mse = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),2) ! MSEs based on at-
@@ -672,12 +679,14 @@ c
         as_G_mse_Syst = mseg_all(1,eff_n,-99.d0,99.d0,cmoms(1,2)) ! ERL Computation
         as_G_ERL    = dble(eff_n)*(as_G_mse_Syst/as_G_mse)
 
+      write(99,*) 'emafitb: p3est_ema 2'
       call p3est_ema(n,ql,qu,
      1      as_M_mse,as_S2_mse,as_G_mse,
      2      r_M,     r_S2,     r_G, 
      3      r_M_mse, r_S2_mse, r_G_mse,
      4      cmoms(1,3))
       
+      write(99,*) 'emafitb: p3est_ema 3'
 c  3) final computation using weighted regional info
       if(at_site_std .ne. 'B17B') then
         at_site_option = at_site_std
@@ -702,12 +711,14 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   4.  compute confidence intervals
 c
+      write(99,*) 'emafitb: conf intervals'
       if( abs(cmoms(3,1)) .gt. skewmin) then
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c   4.1  for skews far from zero
 c
 
+      write(99,*) 'emafitb: var_emab-conditional 1'
         call var_emab(nt,nobs,tl2,tu2,cmoms,pq,nq,eps,
      1         r_s2, r_m_mse, r_s2_mse, r_g_mse,
      3         yp,cv_yp_syp,ci_low,ci_high)
@@ -717,6 +728,7 @@ c
 c   4.2  for skews close to zero; preserves mean and variance
 c
       else                   !  compute a weighted sum/interpolate values
+      write(99,*) 'emafitb: var_emab-conditional 2'
           skew       =  cmoms(3,1)
           cmoms(3,1) = -skewmin  
         call m2p(cmoms,parms)
@@ -742,11 +754,12 @@ c  compute weighted average of results (assume approx. linear)
           ci_high(i) = (1.d0-wt) * ci_high1(i) +  wt * ci_high2(i)
 20      continue
       endif
+      write(99,*) 'emafitb: after var_emab calls, cv_yp_syp next'
 c  return estimate of log-quantile variance for each quantile      
         do 30 i=1,nq
           var_est(i) = cv_yp_syp(1,1,i)
 30      continue
-     
+      write(99,*) 'emafitb: all done'
       return
       end
 
@@ -1641,13 +1654,20 @@ c
 c
 c    beta1 is coefficient of regression of syp on yp
 c
+      write(99,*) 'ci_ema_m3b: yp,cv_yp_syp(2,2) ',yp,
+     $ cv_yp_syp(1,1),cv_yp_syp(1,2),cv_yp_syp(2,1),cv_yp_syp(2,2)
+
           beta1       =  cv_yp_syp(1,2)/cv_yp_syp(1,1)
+      write(99,*) 'ci_ema_m3b: calculated beta1= ',beta1
 c
 c    note computation of nu involves not var[syp], but var[syp-beta1*yp]
 c
         var_xsi_d   =  cv_yp_syp(2,2) -
      1                     cv_yp_syp(1,2)**2/cv_yp_syp(1,1)
+      write(99,*) 'ci_ema_m3b: var_xsi_d calc - var_xsi_d=',var_xsi_d
+
         nu          =  0.5d0 * cv_yp_syp(1,1)/var_xsi_d
+      write(99,*) 'ci_ema_m3b: nu calc - nu=',nu
 c
 c    prevent numerical problems for very small nu (does this arise in practice?)
 c
@@ -1663,11 +1683,17 @@ c    compute confidence intervals
 c    n.b.  sign on t means that low t corresponds to high yp
 c
 
+      write(99,*) 'ci_ema_m3b: p_high calc'
          p_high   =  (1.d0+eps)/2.d0
+      write(99,*) 'ci_ema_m3b: t calc - p_high,nu',p_high,nu
+
          t        =  fp_tnc_icdf(p_high,nu,0.d0)
+      write(99,*) 'ci_ema_m3b: ci_high calc'
        ci_high =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
          t        =  -t
+      write(99,*) 'ci_ema_m3b: ci_low calc'
        ci_low  =  yp + sqrt(cv_yp_syp(1,1))*t/max(c_min,1.d0-beta1*t)
+      write(99,*) 'ci_ema_m3b: all done'
         return
       end
       
@@ -1773,28 +1799,54 @@ C    COMPUTE COVARIANCE MATRIX; GRID1; GRID2; RESULTS
 C
       CALL REGMOMS(NTH,NOBS,TL,TU,MC,
      1                    R_G_MSE,R_M_MSE,R_S2,R_S2_MSE,S_MC)     
+      write(99,*)'var_emab:regmoms-R_G_MSE,R_M_MSE,R_S2,R_S2_MSE,S_MC',
+     $                              R_G_MSE,R_M_MSE,R_S2,R_S2_MSE,S_MC
+      write(99,*) 'var_emab: gridmake'
       CALL GRIDMAKE(MC,S_MC,NND,W1,GR_MC1)
+      write(99,*) 'var_emab: after GRIDMAKE 1-MC,S_MC,NND,W1,GR_MC1',
+     $                                        MC,S_MC,NND,W1,GR_MC1
+
       DO 40 I=1,PNNDSUM
           CALL REGMOMS(NTH,NOBS,TL,TU,GR_MC1(1,I),
      1                    R_G_MSE,R_M_MSE,R_S2,R_S2_MSE,S_MC)    
           CALL GRIDMAKE(GR_MC1(1,I),S_MC,NND,W2(1,I),GR_MC2(1,1,I))
 40    CONTINUE
+      write(99,*) 'var_emab: after 40 -GR_MC1,S_MC,NND,W2,GR_MC2',
+     $                                 GR_MC1,S_MC,NND,W2,GR_MC2
 C
+      write(99,*) 'var_emab: 50 loop'
       DO 50 K=1,NQ
         DO 60 I=1,PNNDSUM
+      write(99,*) 'var_emab: in 60 loop, qp3'
             QP1(I) = QP3(PQ(K),GR_MC1(1,I))
           DO 70 J=1,PNNDSUM
+      write(99,*) 'var_emab: in 70 loop, qp3'
             QP2(J,I) = QP3(PQ(K),GR_MC2(1,J,I))
 70        CONTINUE
+      write(99,*) 'var_emab: in 60 loop, covw - QP2,W2',
+     $                                  QP2(1,I),W2(1,I)
             VP1(I) = COVW(PNNDSUM,QP2(1,I),QP2(1,I),W2(1,I))
+      write(99,*) 'var_emab: in 60 loop, vp1,sp1',VP1(I),SP1(I)
             SP1(I) = SQRT(VP1(I))
 60      CONTINUE
+      write(99,*) 'var_emab: after 60, qp3 - PQ(K),MC',PQ(K),MC
           YP(K)            = QP3(PQ(K),MC)
+      write(99,*) 'var_emab: after 60, after QP3 - YP(K) ', YP(K)
+      write(99,*) 'var_emab: after 60, covw-1 - PNNDSUM,QP1,W1',
+     $                                        PNNDSUM,QP1,W1
           CV_YP_SYP(1,1,K) = COVW(PNNDSUM,QP1,QP1,W1)
+      write(99,*) 'var_emab: after 60, covw-2 - PNNDSUM,QP1,SP1,W1',
+     $                                        PNNDSUM,QP1,SP1,W1
           CV_YP_SYP(1,2,K) = COVW(PNNDSUM,QP1,SP1,W1)
+      write(99,*) 'var_emab: after 60 loop, cv_yp'
           CV_YP_SYP(2,1,K) = CV_YP_SYP(1,2,K) 
           CV_YP_SYP(2,2,K) = COVW(PNNDSUM,SP1,SP1,W1)
+      write(99,*) 'var_emab: after 60 loop, ci_ema_m3b'
+      write(99,*) 'YP(K),CV_YP_SYP(2,2,K),EPS,CIL(K),CIH(K)',YP(K),
+     $             CV_YP_SYP(1,1,K),CV_YP_SYP(1,2,K),
+     $       CV_YP_SYP(2,1,K),CV_YP_SYP(2,2,K),EPS,CIL(K),CIH(K)
           CALL CI_EMA_M3B(YP(K),CV_YP_SYP(1,1,K),EPS,CIL(K),CIH(K))
+      write(99,*) 'var_emab: after 60 loop, after ci_ema_m3b'
 50    CONTINUE    
       RETURN
       END
@@ -2956,6 +3008,9 @@ c
       if(wg .gt. 0.d0) then
         call m2p(m,parms)
         pP3g = fp_g3_cdf(x,parms)
+      else
+c       set to 0 to assure it is not NaN (P Hummel, 04/14/22)
+        pP3g =0.d0
       endif
 c
 c  compute cdf for small skews using wilson-hilferty transformation
@@ -2965,6 +3020,9 @@ c
         s  = sqrt(m(2))
         z  = whlp2z((x-mu)/s,g)
         pP3wh = fp_z_cdf(z)
+      else
+c       set to 0 to assure it is not NaN (P Hummel, 04/14/22)
+        pP3wh = 0.d0
       endif
 c
 c   compute weighted sum
