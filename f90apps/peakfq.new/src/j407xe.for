@@ -223,13 +223,14 @@ C
      O              NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
      O              LOTYPE,GAGEB,GENSKU,RMSEGS, IGSOPT,
      O              NSKIP1,EMAOPT,HSTFLG,IER)
-        write(99,*)'After INPUT - NSYS,NHIST,EMAOPT',NSYS,NHIST,EMAOPT
+        write(99,*)'After INPUT - NSYS,NHIST,EMAOPT,IER',
+     $                            NSYS,NHIST,EMAOPT,IER
 C
 C       see if any revised/new peaks need to be accounted for
         CALL UPDATEPEAKS (MAXPKS,
      M                    NHIST,NSYS,PKS,IPKSEQ,XQUAL,IQUAL)
-        write(99,*)'After UPDATEPEAKS - NSYS,NHIST,EMAOPT',
-     $                                  NSYS,NHIST,EMAOPT
+        write(99,*)'After UPDATEPEAKS - NSYS,NHIST,EMAOPT,JSEQNO',
+     $                                  NSYS,NHIST,EMAOPT,JSEQNO
 C
         CALL PRTPHD( 1000 , JSEQNO, EMAOPT, IA3)
 C
@@ -241,6 +242,7 @@ C       count peaks to be skipped
         DO 120 I = 1, NPKS
           IF (PKS(I) .LT. 0.0) XPKS = XPKS + 1
  120    CONTINUE
+        write(99,*)'After 120 loop - JSEQNO,IER',JSEQNO,IER
         IF(IER.GE.2) GO TO  970
 C
         IGSOPT=MAX0(-1,MIN0(+1,IGSOPT))
@@ -4660,6 +4662,7 @@ C
 C
       STNDATA(STNIND)%NOBS = NOBS
       DO 50 I = 1,NOBS
+        STNDATA(STNIND)%OPKSEQ(I) = OPKSEQ(I)
         STNDATA(STNIND)%ALLPOS(I) = PEX(I)
         STNDATA(STNIND)%EQL(I) = EMAQL(I)
         STNDATA(STNIND)%EQU(I) = EMAQU(I)
@@ -4861,7 +4864,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       ANOBS = STNDATA(STNIND)%NOBS
       DO 10 I = 1,ANOBS
-        OBSYRS(I) = OPKSEQ(I)
+        OBSYRS(I) = STNDATA(STNIND)%OPKSEQ(I)
         UQL(I) = 10**STNDATA(STNIND)%UQL(I) 
         UQU(I) = 10**STNDATA(STNIND)%UQU(I) 
         EQL(I) = 10**STNDATA(STNIND)%EQL(I) 
