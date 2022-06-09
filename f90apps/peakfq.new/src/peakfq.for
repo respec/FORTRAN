@@ -85,8 +85,7 @@ C     open the old WDM message file (read only if possible)
      O             ERRFLG)
       IF (ERRFLG.NE.0) THEN
 C       bad wdm file
-        WRITE(FE,*) 'Bad WDM file:',ERRFLG,WDNAME,FILNAM
-        WRITE(FE,*)  'Bad WDM file:',ERRFLG,WDNAME,FILNAM
+        WRITE(FE,*) 'Bad WDM file:',ERRFLG,FNAME
         STOP
       END IF
 C
