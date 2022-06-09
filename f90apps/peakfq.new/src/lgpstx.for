@@ -394,7 +394,7 @@ C       range of probabilities (as done in formerly called HARTKX)
      1      (PPRIME.GT.PROB(NQS) .OR. PPRIME.LT.PROB(1))) THEN
 C         RETURN + OR - 1E31 IF OUT OF RANGE OF PROB
           XOUT(I) = HUGE
-          IF (PRIME.LT.PROB(1))XOUT(I) = -HUGE
+          IF (PPRIME.LT.PROB(1))XOUT(I) = -HUGE
         ELSE
           XK = KFXX(LSKEW,PPRIME)
           XOUT(I) = XBAR+ (XK*STD)
