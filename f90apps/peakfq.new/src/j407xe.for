@@ -5751,6 +5751,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       STNCOUNT = 0
       NCARDCOUNT = 0
+      CURSTN = '               '
 C
       REWIND(INFUN,ERR=999)
 C
