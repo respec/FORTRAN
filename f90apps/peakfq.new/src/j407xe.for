@@ -103,7 +103,7 @@ C     + + + INTRINSICS + + +
 C
 C     + + + EXTERNALS + + +
       EXTERNAL   INPUT, PRTPHD, PRTINP, ALIGNP, PRTFIT
-      EXTERNAL   PRTEMAWARN, PRTEMADATA
+      EXTERNAL   PRTEMAWARN, PRTEMADATA, FINDALLSTATIONS
       EXTERNAL   OUTPUT, PLTFRQ, RUNEMA, WCFAGB, SETTHRESH, PKFQSTA
       EXTERNAL   SORTM, PRTIN2, PRTIN3, PRTKNT, GAUSEX, STOREDATA
       EXTERNAL   SETEMADATA, PRTEXP, PRTEMP, SYDATM, ECHOTHRINT
@@ -213,6 +213,9 @@ C       assume before 2000
 
 C     for ascii input need to reset start flag for 1st record read
       ISTART = 0
+C
+C     find total station count and allocate station info data structure
+      CALL FINDALLSTATIONS (INCRD)
 C
   100 CONTINUE
         JSEQNO = JSEQNO + 1
@@ -2625,7 +2628,7 @@ C           unrecognized card type
       END IF
       STANO = CARD(2:16)
 C
-      IF(CARD .NE. '$EOF') THEN       
+      IF(CARD .NE. '$EOF') THEN
 C       last CARD not end of file
         MINYR = 2020
         MAXYR = 0
@@ -2777,6 +2780,8 @@ C
       ELSE
 C       end of file
         IER = IER + 2
+        MINYR = 0
+        MAXYR = 0
       END IF
 C
       GO TO 999
@@ -4595,20 +4600,24 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + END SPECIFICATIONS + + +
 C
-      IF (ALLOCATED(STNDATA)) THEN
-        ALLOCATE (TMPDATA(STNIND-1))
-        DO 1 I = 1, STNIND-1
-          TMPDATA(I) = STNDATA(I)
- 1      CONTINUE                  
-        DEALLOCATE (STNDATA)
-      END IF
-c      
-      ALLOCATE (STNDATA(STNIND))
-      IF (ALLOCATED(TMPDATA)) THEN
-        DO 2 I = 1, STNIND-1
-          STNDATA(I) = TMPDATA(I)
- 2      CONTINUE          
-      END IF
+!      IF (ALLOCATED(STNDATA)) THEN
+!        ALLOCATE (TMPDATA(STNIND-1))
+!        DO 1 I = 1, STNIND-1
+!          TMPDATA(I) = STNDATA(I)
+! 1      CONTINUE                  
+!        DEALLOCATE (STNDATA)
+!      END IF
+!c      
+!      ALLOCATE (STNDATA(STNIND))
+!      IF (ALLOCATED(TMPDATA)) THEN
+!        DO 2 I = 1, STNIND-1
+!          STNDATA(I) = TMPDATA(I)
+! 2      CONTINUE          
+!      END IF
+!C
+!      IF (.NOT. ALLOCATED(STNDATA)) THEN
+!        ALLOCATE (STNDATA(NSTNS))
+!      END IF
 C
       STNDATA(STNIND)%HEADER = HEADER
       STNDATA(STNIND)%NPKS = NPKS
@@ -5709,6 +5718,71 @@ C         write interval data to echo file
      $                       STNDATA(J)%INTCOM(I)
  30     CONTINUE
  40   CONTINUE
+C
+      RETURN
+      END
+C
+C
+C
+      SUBROUTINE   FINDALLSTATIONS
+     I                            (INFUN)
+C
+C     + + + PURPOSE + + +
+C     Read Watstore Peakflow file to find all instances
+C     of stations to be analyzed; 
+c     may include multiple instances of the same 
+C     station ID with varying analysis options.
+C     Then allocate Station Data accordingly.
+C
+      Use StationData
+C
+C     + + + DUMMY ARGUMENTS + + +
+      INTEGER INFUN
+C
+C     + + + ARGUMENT DEFINITIONS + + +
+C     INFUN - input file unit number
+C
+C     + + + LOCAL VARIABLES + + +
+      INTEGER STNCOUNT, NCARDCOUNT
+      CHARACTER*15 CURSTN
+      CHARACTER*80 CARD
+C
+C     + + + END SPECIFICATIONS + + +
+C
+      STNCOUNT = 0
+      NCARDCOUNT = 0
+C
+      REWIND(INFUN,ERR=999)
+C
+ 10   CONTINUE   
+        READ(INFUN, '(A)', END=998) CARD
+        IF (CARD(2:16) .NE. CURSTN) THEN
+C         start of a new station
+          CURSTN = CARD(2:16)
+          STNCOUNT = STNCOUNT + 1
+          NCARDCOUNT = 0
+        END IF
+        IF (CARD(1:1).EQ.'N') THEN
+C         N card found 
+          IF (NCARDCOUNT .EQ. 1) THEN
+C           already read N card for this station ID, must be
+C           another station with different options
+            STNCOUNT = STNCOUNT + 1
+            NCARDCOUNT = 0
+          ELSE
+            NCARDCOUNT = NCARDCOUNT + 1
+          END IF
+        END IF
+      GO TO 10
+C
+ 998  CONTINUE
+C
+      IF (ALLOCATED(STNDATA)) THEN
+          DEALLOCATE(STNDATA)
+      END IF 
+      ALLOCATE (STNDATA(STNCOUNT))
+C
+ 999  CONTINUE
 C
       RETURN
       END

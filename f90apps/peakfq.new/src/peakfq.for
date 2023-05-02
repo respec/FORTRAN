@@ -1216,7 +1216,7 @@ C     WDMSFL - Fortran unit number for WDM input file
 C     INCRD  - Fortran unit number for ASCI input file
 C
 C     + + + LOCAL VARIABLES + + +
-      CHARACTER*240 FNAME
+      CHARACTER*240 FNAME,WRKDIR,FNNOEXT
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT(2A)
@@ -1229,14 +1229,20 @@ C
 C     input file
       IF (INFORM.EQ.1) THEN !WDM file
         INQUIRE(WDMSFL,NAME=FNAME)
-        WRITE(92,2000) 'I WDM ',TRIM(FNAME)
+        CALL QFDPRS (FNAME,
+     O               WRKDIR,FNNOEXT)
+        WRITE(92,2000) 'I WDM ',TRIM(FNNOEXT)
       ELSE !ASCII file
         INQUIRE(INCRD,NAME=FNAME)
-        WRITE(92,2000) 'I ASCI ',TRIM(FNAME)
+        CALL QFDPRS (FNAME,
+     O               WRKDIR,FNNOEXT)
+        WRITE(92,2000) 'I ASCI ',TRIM(FNNOEXT)
       END IF
 C     output file
       INQUIRE(FOUT,NAME=FNAME)
-      WRITE(92,2000) 'O File ',TRIM(FNAME)
+      CALL QFDPRS (FNAME,
+     O             WRKDIR,FNNOEXT)
+      WRITE(92,2000) 'O File ',TRIM(FNNOEXT)
 C     plot style and other plot options
       IF (IPLTOP.LE.0) THEN
         WRITE(92,*) 'O Plot Style None'
