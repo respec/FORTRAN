@@ -62,7 +62,8 @@ C
       INCLUDE 'cwcf2.inc'
 
       integer ns,nlow,nzero,nlow_V,nGBiter
-      double precision  gbcrit,gbthresh,pvaluew,qs,gbcrit_V,gbthresh_V
+      double precision  gbcrit,gbthresh,pvaluew,qs,
+     1                  gbcrit_V,gbthresh_V,Wd
       character*4 gbtype
 
 C     used by Tim's EMA code
@@ -77,6 +78,7 @@ C     from Tim Cohn's code, for output of EMA at-site MSE of G
      1               as_G_mse_Syst,as_G_ERL
       integer EMAIterations
       common /reg001/rM,rMmse,rS2,rS2mse,rG,rGmse,EMAIterations
+      common /sas/Wd !Weighting factor for Halloween skew method
 C
 C
 C      + + + LOCAL VARIABLES + + +
@@ -410,7 +412,8 @@ C             output export file
      I                    WRCFC(INDX1),TXPROB(INDX1),CLIML(INDX1),
      I                    CLIMU(INDX1),VAREST(INDX1),JSEQNO,HEADNG(9),
      I                    EMAOPT,IGSOPT,BEGYR,ENDYR,HISTPD,gbcrit,
-     I                    nlow,nzero,NGAGEDPILFS,LOTYPE,EMAIterations)
+     I                    nlow,nzero,NGAGEDPILFS,LOTYPE,EMAIterations,
+     I                    Wd)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
@@ -5196,7 +5199,7 @@ C
      I                       KENSLP,NPLOT,WRCFC,TXPROB,CLIML,CLIMU,
      I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT,
      I                       BEGYR,ENDYR,HISTPD,gbcrit,nlow,nzero,
-     I                       NGAGEDPILFS,LOTYPE,nEMAIter)
+     I                       NGAGEDPILFS,LOTYPE,nEMAIter,Wd)
 C
 C     + + + PURPOSE + + +
 C     Output analysis results to PeakFQ export file
@@ -5207,8 +5210,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          WRCSKW,WRCMN,WRCSD,SYSSKW,GENSKU,RMSEGS,
      $              ASMSEG,SYSASK,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
      $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT),HISTPD
-
-      DOUBLE PRECISION ASMSEGSYS,VAREST(NPLOT),gbcrit
+      DOUBLE PRECISION ASMSEGSYS,VAREST(NPLOT),gbcrit,Wd
       CHARACTER*4   LOTYPE
       CHARACTER*80  HEADER
 C
@@ -5226,6 +5228,7 @@ C     CLIML  - log10 ordinates of fitted curve, lower confidence limits
 C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits 
 C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
+C     Wd     - Weighting Factor for skew method
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -5268,7 +5271,8 @@ C     + + + OUTPUT FORMATS + + +
  2011 FORMAT (4X,'PILF_Method',A,A,/,4X,'MGBT_PILF_Thresh',A,F8.1,/,
      $        4X,'PILFs',A,I4,/,4X,'PILF_0s',A,I4,/,
      $        4X,'PILF_Censored',A,I4,/,4X,'PILF_Gaged',A,I4,/,
-     $        4X,'EMA_Num_Iter',A,I4)
+     $        4X,'EMA_Num_Iter',A,I4,/,
+     $        4X,'Weighting_Factor',A,F8.3)
  2020 FORMAT (4X,A8,32(A,F8.4))
  2030 FORMAT (4X,A8,32(A,F8.0))
  2040 FORMAT (4X,A8,32(A,A10))
@@ -5302,11 +5306,11 @@ C
       IF (nlow .GT. 0) THEN
         WRITE(EXPFUN,2011) LTAB,LOTYPE,LTAB,10**gbcrit,LTAB,nlow,
      $                     LTAB,nzero,LTAB,nlow-nzero-NGAGEDPILFS,
-     $                     LTAB,NGAGEDPILFS,LTAB,nEMAIter
+     $                     LTAB,NGAGEDPILFS,LTAB,nEMAIter,LTAB,Wd
       ELSE
         WRITE(EXPFUN,2011) LTAB,LOTYPE,LTAB,10**gbcrit,LTAB,nlow,
      $                     LTAB,I0,LTAB,I0,
-     $                     LTAB,I0,LTAB,nEMAIter
+     $                     LTAB,I0,LTAB,nEMAIter,LTAB,Wd
       END IF
 
       LEN = 10
@@ -5751,6 +5755,7 @@ C     + + + END SPECIFICATIONS + + +
 C
       STNCOUNT = 0
       NCARDCOUNT = 0
+      CURSTN = '               '
 C
       REWIND(INFUN,ERR=999)
 C

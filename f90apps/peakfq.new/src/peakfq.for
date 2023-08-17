@@ -1218,6 +1218,9 @@ C
 C     + + + LOCAL VARIABLES + + +
       CHARACTER*240 FNAME,WRKDIR,FNNOEXT
 C
+C     + + + EXTERNALS + + +
+      EXTERNAL  QFDPRS
+C      
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT(2A)
 C
