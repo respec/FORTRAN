@@ -69,13 +69,46 @@ contains
     subroutine test_moms_p3(error)
       type(error_type), allocatable, intent(out) :: error
       integer :: n
-      double precision :: moms_x(3),ql(34),qu(34),rG,nG,mc_old(3),moms(3),thr
+      double precision :: ql(34),qu(34),rG,mc_old(3),moms(3),thr
+      double precision :: nG_orig,nG_ERL,nG_HWN
+      double precision :: moms_x_orig(3),moms_x_ERL(3),moms_x_HWN(3)
       
-      moms_x(1) = 165.470588235294
-      moms_x(2) = 40083.6914062500
-      moms_x(3) = 0.872831878591302
-     
+!c       moms_p3 input variables:
+!c       ------------------------------------------------------------------------
+!c            n          i*4  number of observations (censored, uncensored, or 
+!c                              other)
+!c            ql(n)      r*8  vector of lower bounds on (log) floods
+!c            qu(n)      r*8  vector of upper bounds on (log) floods
+!c            rG         r    regional skew value (needed for B17C EQ 7-10)
+!c            nG         r    equivalent years of record for regional skew
+!c            mc_old(3)  r*8  vector of p3 parameters
+!c
+!c       moms_p3 output variables:
+!c       ------------------------------------------------------------------------
+!c            moms(3)    r*8  vector of updated p3 parameters
+      
+      ! expected values from tests
+      moms_x_orig(1) = 165.5409898
+      moms_x_orig(2) = 40060.40734
+      moms_x_orig(3) = 1.423055596
+      
+      moms_x_ERL(1) = 165.5409898
+      moms_x_ERL(2) = 40060.40734
+      moms_x_ERL(3) = 1.385585543
+      
+      moms_x_HWN(1) = 165.5409898
+      moms_x_HWN(2) = 40060.40734
+      moms_x_HWN(3) = 1.449544227
+      
+      !input values for tests
       n = 34
+      ! nG = n*Wd*as_G_mse/r_G_mse
+      !orig version Wd = 1
+      nG_orig = n * 1.0 * 0.160 / 0.206
+      !ERL version Wd = 1.056
+      nG_ERL = n * 1.056 * 0.160 / 0.206
+      !HWN version Wd = 0.962
+      nG_HWN = n * 0.962 * 0.160 / 0.206
       
       ql(1) = 68.0        
       ql(2) = 20.0        
@@ -147,21 +180,73 @@ contains
       qu(33) = 111.0    
       qu(34) = 178.0    
 
+      !ql(1) = 1.8325089
+      !qu(1) = 1.8325089
       rG = -0.145
-      nG = 59
-      mc_old = 0.0
-      moms = 0.0
-      CALL moms_p3(n,ql,qu,rG,nG,mc_old,moms)
       
-      thr = 1.0e-5
       
-      call check(error, moms(1), moms_x(1), 'Problem with moms(1)', '', thr)
+      ! test for orig version
       if (.not.allocated(error)) then
-        !call check(error, moms(2), moms_x(2), 'Problem with moms(2)', '', thr)
-        !if (.not.allocated(error)) then
-        !    call check(error, moms(3), moms_x(3), 'Problem with moms(3)', '', thr)
-        !end if 
-      end if
+          thr = 1.0e-2
+      
+          mc_old(1) = 0.0
+          mc_old(2) = 1.0
+          mc_old(3) = 0.0
+      
+          moms = 0.0
+          CALL moms_p3(n,ql,qu,rG,nG_orig,mc_old,moms)
+      
+          call check(error, moms(1), moms_x_orig(1), 'Problem with orig moms(1)', '', thr)
+          if (.not.allocated(error)) then
+            call check(error, moms(2), moms_x_orig(2), 'Problem with orig moms(2)', '', thr)
+            if (.not.allocated(error)) then
+                call check(error, moms(3), moms_x_orig(3), 'Problem with orig moms(3)', '', thr)
+            end if 
+          end if      
+      end if 
+      
+    
+      ! test for ERL version
+      if (.not.allocated(error)) then
+          thr = 1.0e-2
+      
+          mc_old(1) = 0.0
+          mc_old(2) = 1.0
+          mc_old(3) = 0.0
+      
+          moms = 0.0
+          CALL moms_p3(n,ql,qu,rG,nG_ERL,mc_old,moms)
+      
+          call check(error, moms(1), moms_x_ERL(1), 'Problem with ERL moms(1)', '', thr)
+          if (.not.allocated(error)) then
+            call check(error, moms(2), moms_x_ERL(2), 'Problem with ERL moms(2)', '', thr)
+            if (.not.allocated(error)) then
+                call check(error, moms(3), moms_x_ERL(3), 'Problem with ERL moms(3)', '', thr)
+            end if 
+          end if      
+      end if 
+      
+      
+      ! test for HWN version
+      if (.not.allocated(error)) then
+          thr = 1.0e-2
+      
+          mc_old(1) = 0.0
+          mc_old(2) = 1.0
+          mc_old(3) = 0.0
+      
+          moms = 0.0
+          CALL moms_p3(n,ql,qu,rG,nG_HWN,mc_old,moms)
+      
+          call check(error, moms(1), moms_x_HWN(1), 'Problem with HWN moms(1)', '', thr)
+          if (.not.allocated(error)) then
+            call check(error, moms(2), moms_x_HWN(2), 'Problem with HWN moms(2)', '', thr)
+            if (.not.allocated(error)) then
+                call check(error, moms(3), moms_x_HWN(3), 'Problem with HWN moms(3)', '', thr)
+            end if 
+          end if      
+      end if 
+      
     end subroutine test_moms_p3
     
 end module test_suite1
