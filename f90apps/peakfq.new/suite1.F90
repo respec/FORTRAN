@@ -75,6 +75,10 @@ contains
       double precision :: nG_orig,nG_ERL,nG_HWN
       double precision :: moms_x_orig(3),moms_x_ERL(3),moms_x_HWN(3)
       
+      integer ::          abcf
+      logical ::          alskewXmax
+      double precision :: ask0,ask141,askxmax
+      
 !c       moms_p3 input variables:
 !c       ------------------------------------------------------------------------
 !c            n          i*4  number of observations (censored, uncensored, or 
@@ -186,6 +190,12 @@ contains
       !qu(1) = 1.8325089
       rG = -0.145
       
+      abcf = 1997
+      alskewXmax = .False.
+      ask0 = 99.0
+      ask141 = -1.41
+      askxmax = 0.0
+      call set_common_tac002(ask0,ask141,askxmax,alskewXmax,abcf)
       
       ! test for orig version
       if (.not.allocated(error)) then
