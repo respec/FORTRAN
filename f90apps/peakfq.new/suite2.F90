@@ -133,9 +133,9 @@ contains
       if (.not.allocated(error)) then
           thr = 1.0e-2
       
-          mc_old(1) = 0.0
-          mc_old(2) = 1.0
-          mc_old(3) = 0.0
+          mc_old(1) = moms(1)
+          mc_old(2) = moms(2)
+          mc_old(3) = moms(3)
       
           moms = 0.0
           CALL moms_p3(n,ql,qu,rG,nG,mc_old,moms)
