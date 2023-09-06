@@ -23,7 +23,8 @@ contains
       testsuite = [ &
         new_unittest("valid", test_valid), &
         new_unittest("invalid", test_invalid, should_fail=.true.), &
-        new_unittest("truth_test_moms_p3", truth_test_moms_p3) &
+        new_unittest("truth_test_moms_p3", truth_test_moms_p3), &
+        new_unittest("truth_test_p3est_ema", truth_test_p3est_ema) &
         ]
 
     end subroutine collect_suite2
@@ -150,5 +151,144 @@ contains
       end if 
       
     end subroutine truth_test_moms_p3
+    
+    subroutine truth_test_p3est_ema(error)
+      type(error_type), allocatable, intent(out) :: error
+      integer :: n, nthresh
+      double precision :: ql(250),qu(250),mc_old(3),moms(3)
+      double precision :: tl(250),tu(250),nobs(250)
+      double precision :: nG
+      double precision :: moms_x(3)
+
+      double precision :: as_M_mse,as_S2_mse,as_G_mse
+      double precision :: r_M,     r_S2,     r_G
+      double precision :: r_M_mse, r_S2_mse, r_G_mse
+      double precision :: Wd,cmoms(3),thr
+      
+      character*4       :: VarS2opt
+      integer           :: EMAIterations
+      double precision  :: rM,rMmse,rS2,rS2mse,rG,rGmse
+      
+      double precision  :: mseg_all, detrat
+!c
+!c       p3est_ema input variables:
+!c       ------------------------------------------------
+!c            n          i*4  number of observations
+!c            ql(n)      r*8  vector of lower bounds 
+!c            qu(n)      r*8  vector of upper bounds 
+!c            as_M_mse   r*8  mean square error of at-site mean (M)
+!c                              this is calculated by mse_ema
+!c            as_S2_mse  r*8  mean square error of at-site variance (S2)
+!c                              this is calculated by mse_ema
+!c            as_G_mse   r*8  mean square error of at-site skew (G)
+!c                              this is calculated by mseg_all
+!c            r_M        r*8  regional mean (M)
+!c            r_S2       r*8  regional variance (std.dev^2) (S2)
+!c            r_G        r*8  regional skew (G)
+!c            r_M_mse    r*8  mean square error of regional mean
+!c            r_S2_mse   r*8  mean square error of regional variance
+!c            r_G_mse    r*8  mean square error of regional skew
+!c            Wd         r*8  weighting factor for regional skew
+!c                            effective record length
+!c
+!c       output variable: 
+!c       ----------------------------------------------------
+!c
+!c            cmoms(3)   r*8  first 3 central moments 
+!c                              mc = {mean, variance, coeff. skew}
+!c      
+      ! read ql and qu from csv file
+      integer :: I
+      character(len=8) header(3),dat1
+
+      open(unit=50,file="example_intervals.csv")
+      read(50,*) header
+      do I=1,200
+        read(50,*) dat1,ql(I),qu(I)
+      end do
+      close(unit=50)
+      
+      open(unit=50,file="example_truth.csv")
+      read(50,*) header
+      read(50,*) dat1,moms_x(1),moms_x(2),moms_x(3)
+      close(unit=50)
+      
+      !input values for tests
+      n = 200
+      
+      !set common block variables
+      call set_common_tacR01(VarS2opt)
+      call set_common_reg001(rM,rMmse,rS2,rS2mse,rG,rGmse,EMAIterations)
+      
+      if (.not.allocated(error)) then
+          thr = 1.0e-2
+          
+          Wd = 1.0
+          r_G = 0.0          ! supplied by USGS
+          as_M_mse = 1.d0    ! turn off
+          as_S2_mse = 1.d0   ! turn off
+          as_G_mse = 0.d0    ! calc by mseg_all
+          r_M = 0.0          ! turn off
+          r_S2 = 1.0         ! turn off
+          r_M_mse = -99.d0   ! turn off
+          r_S2_mse = -99.d0  ! turn off
+          r_G_mse = 1.d0     ! supplied by USGS, is a number greater than zero
+          
+          call p3est_ema(n,ql,qu, &
+            as_M_mse,as_S2_mse,as_G_mse, &
+            r_M,     r_S2,     r_G, &
+            r_M_mse, r_S2_mse, r_G_mse, &
+            Wd, &
+            cmoms)    
+          
+          ! as_G_mse = mseg_all(n,nobs,ql,qu,cmoms)   ! not sure about input args to this function
+          moms_x(3) = (moms_x(3)*r_G_mse + r_G*as_G_mse)/(r_G_mse + as_G_mse)
+      
+          call check(error, cmoms(1), moms_x(1), 'Problem with truth p3est_ema cmoms(1)', '', thr)
+          if (.not.allocated(error)) then
+            call check(error, cmoms(2), moms_x(2), 'Problem with truth p3est_ema cmoms(2)', '', thr)
+            if (.not.allocated(error)) then
+                call check(error, cmoms(3), moms_x(3), 'Problem with truth p3est_ema cmoms(3)', '', thr)
+            end if 
+          end if      
+      end if 
+      
+      ! now do advanced test, with 50+ additional values
+      n = 250
+      do I=201,250
+        ql(I) = -10.0
+        qu(I) =  10.0
+      end do
+      
+      if (.not.allocated(error)) then         
+          ! For uncensored values (ql value is equal to corresponding qu value), set tl = -20 and tu = +20
+          ! Wd using detrat() in this manner should produce a value of 1.0
+          nthresh = n
+          nobs = 1.
+          tl = -20.
+          tu = 20.
+          Wd = detrat(cmoms, n, nthresh, nobs, tl, tu)
+          
+!       input variables:
+!       ---------------------------------------------------------------------------
+!            mc(3)   r*8     central moments vector
+!            n          i*4  number of observations (censored, uncensored, or other)
+!            nthresh    i*4  number of distinct censoring thresholds
+!            nobs(nthresh)   number of observations in each censoring regime
+!            tl(nthresh)     vector of lower censoring thresholds
+!            tu(nthresh)     vector of upper censoring thresholds
+!
+!       output variables:
+!       ---------------------------------------------------------------------------
+!            detrat      r*8 determinate ratio for skew weighting
+          
+      end if     
+      
+      if (.not.allocated(error)) then         
+          ! For censored values (where we set ql = -10 and qu = +10), set tl = +10 and tu = +20 
+          ! Wd using detrat() in this manner should produce a value very close to 1.0 
+      end if 
+
+    end subroutine truth_test_p3est_ema  
 
 end module test_suite2   
