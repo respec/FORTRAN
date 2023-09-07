@@ -158,7 +158,7 @@ contains
       double precision :: ql(250),qu(250),mc_old(3),moms(3)
       double precision :: tl(250),tu(250),nobs(250)
       double precision :: nG
-      double precision :: moms_x(3)
+      double precision :: moms_x(3),moms_x_new
 
       double precision :: as_M_mse,as_S2_mse,as_G_mse
       double precision :: r_M,     r_S2,     r_G
@@ -234,6 +234,12 @@ contains
           r_S2_mse = -99.d0  ! turn off
           r_G_mse = 1.d0     ! supplied by USGS, is a number greater than zero
           
+          nthresh = 1
+          nobs = n
+          tl = -20.
+          tu = 20.
+          as_G_mse = mseg_all(nthresh,nobs,tl,tu,moms_x)   
+                    
           call p3est_ema(n,ql,qu, &
             as_M_mse,as_S2_mse,as_G_mse, &
             r_M,     r_S2,     r_G, &
@@ -241,33 +247,36 @@ contains
             Wd, &
             cmoms)    
           
-          ! as_G_mse = mseg_all(n,nobs,ql,qu,cmoms)   ! not sure about input args to this function
-          moms_x(3) = (moms_x(3)*r_G_mse + r_G*as_G_mse)/(r_G_mse + as_G_mse)
+          moms_x_new = (moms_x(3)*r_G_mse + r_G*as_G_mse)/(r_G_mse + as_G_mse)
       
           call check(error, cmoms(1), moms_x(1), 'Problem with truth p3est_ema cmoms(1)', '', thr)
           if (.not.allocated(error)) then
             call check(error, cmoms(2), moms_x(2), 'Problem with truth p3est_ema cmoms(2)', '', thr)
             if (.not.allocated(error)) then
-                call check(error, cmoms(3), moms_x(3), 'Problem with truth p3est_ema cmoms(3)', '', thr)
+                call check(error, cmoms(3), moms_x_new, 'Problem with truth p3est_ema cmoms(3)', '', thr)
             end if 
           end if      
-      end if 
+      end if  
       
       ! now do advanced test, with 50+ additional values
+      tl = -20.
+      tu = 20.
       n = 250
       do I=201,250
         ql(I) = -10.0
         qu(I) =  10.0
+        tl(I) = 10.
+        tu(I) = 20.
       end do
       
       if (.not.allocated(error)) then         
           ! For uncensored values (ql value is equal to corresponding qu value), set tl = -20 and tu = +20
           ! Wd using detrat() in this manner should produce a value of 1.0
-          nthresh = n
-          nobs = 1.
-          tl = -20.
-          tu = 20.
-          Wd = detrat(cmoms, n, nthresh, nobs, tl, tu)
+          ! For censored values (where we set ql = -10 and qu = +10), set tl = +10 and tu = +20 
+          ! Wd using detrat() in this manner should produce a value very close to 1.0 
+          nthresh = 2
+          nobs = n
+          Wd = detrat(moms_x, n, nthresh, nobs, tl, tu)     !0.8???
           
 !       input variables:
 !       ---------------------------------------------------------------------------
@@ -282,11 +291,36 @@ contains
 !       ---------------------------------------------------------------------------
 !            detrat      r*8 determinate ratio for skew weighting
           
-      end if     
+          r_G = 0.0          ! supplied by USGS
+          as_M_mse = 1.d0    ! turn off
+          as_S2_mse = 1.d0   ! turn off
+          as_G_mse = 0.d0    ! calc by mseg_all
+          r_M = 0.0          ! turn off
+          r_S2 = 1.0         ! turn off
+          r_M_mse = -99.d0   ! turn off
+          r_S2_mse = -99.d0  ! turn off
+          r_G_mse = 1.d0     ! supplied by USGS, is a number greater than zero
+          
+          nthresh = 2
+          nobs = n
+          as_G_mse = mseg_all(nthresh,nobs,tl,tu,moms_x)   
+          
+          call p3est_ema(n,ql,qu, &
+            as_M_mse,as_S2_mse,as_G_mse, &
+            r_M,     r_S2,     r_G, &
+            r_M_mse, r_S2_mse, r_G_mse, &
+            Wd, &
+            cmoms)    
+          
+          moms_x_new = (moms_x(3)*r_G_mse + r_G*as_G_mse)/(r_G_mse + as_G_mse)
       
-      if (.not.allocated(error)) then         
-          ! For censored values (where we set ql = -10 and qu = +10), set tl = +10 and tu = +20 
-          ! Wd using detrat() in this manner should produce a value very close to 1.0 
+          call check(error, cmoms(1), moms_x(1), 'Problem with truth censored p3est_ema cmoms(1)', '', thr)
+          if (.not.allocated(error)) then
+            call check(error, cmoms(2), moms_x(2), 'Problem with truth censored p3est_ema cmoms(2)', '', thr)
+            if (.not.allocated(error)) then
+                call check(error, cmoms(3), moms_x_new, 'Problem with truth censored p3est_ema cmoms(3)', '', thr)
+            end if 
+          end if    
       end if 
 
     end subroutine truth_test_p3est_ema  
