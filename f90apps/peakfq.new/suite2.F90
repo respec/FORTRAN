@@ -24,8 +24,10 @@ contains
         new_unittest("valid", test_valid), &
         new_unittest("invalid", test_invalid, should_fail=.true.), &
         new_unittest("truth_test_moms_p3", truth_test_moms_p3), &
-        new_unittest("truth_test_p3est_ema", truth_test_p3est_ema) &
+        new_unittest("truth_test_p3est_ema", truth_test_p3est_ema), &
+        new_unittest("truth_test_var_mom", truth_test_var_mom) &
         ]
+          
 
     end subroutine collect_suite2
 
@@ -324,5 +326,91 @@ contains
       end if 
 
     end subroutine truth_test_p3est_ema  
+    
+    subroutine truth_test_var_mom(error)
+      type(error_type), allocatable, intent(out) :: error
+      
+      integer :: nthresh,I
+      double precision :: tl_in(250),tu_in(250),n_in(250) 
+      double precision :: mc_in(3),varm(3,3),x(3),n,thr
+    
+    ! Inputs to var_mom(nthresh,n_in,tl_in,tu_in,mc_in,varm) are as follows:  
+    !
+    ! nthresh: Number of unique perception thresholds, set to 1 for simple case and 2 for advanced
+    ! n_in: Array of number of data values associated with each unique threshold (Set to 200 for simple case and [200, 50?] for advanced case)
+    ! tl_in: Array of lower perception thresholds (same as p3est_ema for simple and advanced cases)
+    ! tu_in: Array of upper perception thresholds (same as p3est_ema for simple and advanced cases)
+    ! mc_in: Array of central moments (Taken from USGS supplied truth values for other tests)
+
+      ! truth vals from csv file
+      character(len=8) header(3),dat1
+      
+      open(unit=50,file="example_truth.csv")
+      read(50,*) header
+      read(50,*) dat1,mc_in(1),mc_in(2),mc_in(3)
+      close(unit=50)
+            
+      thr = 1.0e-2
+      
+      if (.not.allocated(error)) then
+          !input values for tests
+          nthresh = 1
+          n_in = 200
+          tl_in = -20.
+          tu_in = 20.
+      
+          call var_mom(nthresh,n_in,tl_in,tu_in,mc_in,varm)
+      
+          ! Variance of mean (first element on diagonal): sigma^2/n
+          ! Variance of variance (second element on diagonal): 2*sigma^4/(n-1)
+          ! Variance of skew (third element on diagonal): (6/n)*(1 + 9/6*g^2 + 15/48*g^4) (Griffis and others, 2004 EQN with small sample correction terms removed)
+          !
+          ! Where: 
+          ! n = 200 (number of exact observations)
+          ! sigma^2 = moms_c_2
+          ! g = moms_c_3
+          ! (with moms_c_2 and moms_c_3 taken from USGS supplied truth values)
+      
+          n = 200.
+          x(1) = mc_in(2)/n
+          x(2) = 2*mc_in(2)**2/(n-1)
+          x(3) = (6/n)*(1 + (9.0/6.0*(mc_in(3)**2)) + (15.0/48.0*(mc_in(3)**4)))
+
+          call check(error, varm(1,1), x(1), 'Problem with truth var_mom(1)', '', thr)
+          if (.not.allocated(error)) then
+              call check(error, varm(2,2), x(2), 'Problem with truth var_mom(2)', '', thr)
+              if (.not.allocated(error)) then
+                  call check(error, varm(3,3), x(3), 'Problem with truth var_mom(3)', '', thr)
+              end if 
+          end if      
+      end if 
+      
+      ! now do advanced test, with 50+ additional values
+      tl_in = -20.
+      tu_in = 20.
+      n_in = 200
+      do I=201,250
+        tl_in(I) = 10.
+        tu_in(I) = 20.
+        n_in(I) = 50.
+      end do
+      
+      if (.not.allocated(error)) then
+          !input values for tests
+          nthresh = 2
+      
+          call var_mom(nthresh,n_in,tl_in,tu_in,mc_in,varm)
+      
+          call check(error, varm(1,1), x(1), 'Problem with truth censored var_mom(1)', '', thr)
+          if (.not.allocated(error)) then
+              call check(error, varm(2,2), x(2), 'Problem with truth censored var_mom(2)', '', thr)
+              if (.not.allocated(error)) then
+                  call check(error, varm(3,3), x(3), 'Problem with truth censored var_mom(3)', '', thr)
+              end if 
+          end if      
+      end if 
+
+    end subroutine truth_test_var_mom
+    
 
 end module test_suite2   
