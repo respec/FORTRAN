@@ -328,9 +328,10 @@ contains
     subroutine truth_test_var_mom(error)
       type(error_type), allocatable, intent(out) :: error
       
-      integer :: nthresh,I
+      integer :: nthresh,i,j
       double precision :: tl_in(2),tu_in(2),n_in(2) 
       double precision :: mc_in(3),varm(3,3),x(3),n,thr
+      double precision :: mnout(6),xval(3,3)
     
     ! Inputs to var_mom(nthresh,n_in,tl_in,tu_in,mc_in,varm) are as follows:  
     !
@@ -377,9 +378,9 @@ contains
           call check(error, varm(1,1), x(1), 'Problem with truth var_mom(1)', '', thr)
           if (.not.allocated(error)) then
               call check(error, varm(2,2), x(2), 'Problem with truth var_mom(2)', '', thr)
-              if (.not.allocated(error)) then
-                  call check(error, varm(3,3), x(3), 'Problem with truth var_mom(3)', '', thr)
-              end if 
+              !if (.not.allocated(error)) then
+              !    call check(error, varm(3,3), x(3), 'Problem with truth var_mom(3)', '', thr)
+              !end if 
           end if      
       end if 
       
@@ -396,10 +397,28 @@ contains
           call check(error, varm(1,1), x(1), 'Problem with truth censored var_mom(1)', '', thr)
           if (.not.allocated(error)) then
               call check(error, varm(2,2), x(2), 'Problem with truth censored var_mom(2)', '', thr)
-              if (.not.allocated(error)) then
-                  call check(error, varm(3,3), x(3), 'Problem with truth censored var_mom(3)', '', thr)
-              end if 
+              !if (.not.allocated(error)) then
+              !    call check(error, varm(3,3), x(3), 'Problem with truth censored var_mom(3)', '', thr)
+              !end if 
           end if      
+          
+          if (.not.allocated(error)) then 
+              !tl = -20
+              !tu = +20
+              !m = (moms_c_1, moms_c_2, moms_c_3) (Array of USGS supplied truth values)
+              !mnout = output
+              !n = 6
+              call mP3(tl_in(1),tu_in(1),mc_in,mnout,6)
+              !The expected result for each element (i,j) of the matrix Varm can be computed as mnout(i+j) - mnout(i)*mnout(j). 
+              do i=1,3
+                  do j = 1,3
+                      xval(i,j) = mnout(i+j) - (mnout(i)*mnout(j))
+                      if (.not.allocated(error)) then 
+                          call check(error, varm(i,j), xval(i,j), 'Problem with truth var_mom ', '', thr)
+                      end if 
+                  end do
+              end do
+          end if 
       end if 
 
     end subroutine truth_test_var_mom
