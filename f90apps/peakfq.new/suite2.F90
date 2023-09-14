@@ -158,7 +158,7 @@ contains
       type(error_type), allocatable, intent(out) :: error
       integer :: n, nthresh
       double precision :: ql(250),qu(250),mc_old(3),moms(3)
-      double precision :: tl(250),tu(250),nobs(250)
+      double precision :: tl(2),tu(2),nobs(2)
       double precision :: nG
       double precision :: moms_x(3),moms_x_new
 
@@ -267,17 +267,17 @@ contains
       do I=201,250
         ql(I) = -10.0
         qu(I) =  10.0
-        tl(I) = 10.
-        tu(I) = 20.
       end do
+      nthresh = 2
+      tl(2) = 10. 
+      tu(2) = 20.
+      nobs(2) = 50.
       
       if (.not.allocated(error)) then         
           ! For uncensored values (ql value is equal to corresponding qu value), set tl = -20 and tu = +20
           ! Wd using detrat() in this manner should produce a value of 1.0
           ! For censored values (where we set ql = -10 and qu = +10), set tl = +10 and tu = +20 
           ! Wd using detrat() in this manner should produce a value very close to 1.0 
-          nthresh = 2
-          nobs = n
           Wd = detrat(moms_x, n, nthresh, nobs, tl, tu)     !0.8???
           
 !       input variables:
@@ -302,9 +302,7 @@ contains
           r_M_mse = -99.d0   ! turn off
           r_S2_mse = -99.d0  ! turn off
           r_G_mse = 1.d0     ! supplied by USGS, is a number greater than zero
-          
-          nthresh = 2
-          nobs = n
+
           as_G_mse = mseg_all(nthresh,nobs,tl,tu,moms_x)   
           
           call p3est_ema(n,ql,qu, &
