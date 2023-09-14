@@ -331,7 +331,7 @@ contains
       type(error_type), allocatable, intent(out) :: error
       
       integer :: nthresh,I
-      double precision :: tl_in(250),tu_in(250),n_in(250) 
+      double precision :: tl_in(2),tu_in(2),n_in(2) 
       double precision :: mc_in(3),varm(3,3),x(3),n,thr
     
     ! Inputs to var_mom(nthresh,n_in,tl_in,tu_in,mc_in,varm) are as follows:  
@@ -386,18 +386,12 @@ contains
       end if 
       
       ! now do advanced test, with 50+ additional values
-      tl_in = -20.
-      tu_in = 20.
-      n_in = 200
-      do I=201,250
-        tl_in(I) = 10.
-        tu_in(I) = 20.
-        n_in(I) = 50.
-      end do
+      nthresh = 2
+      tl_in(2) = 10. 
+      tu_in(2) = 20.
+      n_in(2) = 50.
       
       if (.not.allocated(error)) then
-          !input values for tests
-          nthresh = 2
       
           call var_mom(nthresh,n_in,tl_in,tu_in,mc_in,varm)
       
