@@ -408,6 +408,7 @@ contains
               !m = (moms_c_1, moms_c_2, moms_c_3) (Array of USGS supplied truth values)
               !mnout = output
               !n = 6
+              mc_in(1) = 0.0
               call mP3(tl_in(1),tu_in(1),mc_in,mnout,6)
               !The expected result for each element (i,j) of the matrix Varm can be computed as mnout(i+j) - mnout(i)*mnout(j). 
               do i=1,3
