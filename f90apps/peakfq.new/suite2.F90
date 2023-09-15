@@ -413,6 +413,7 @@ contains
               do i=1,3
                   do j = 1,3
                       xval(i,j) = mnout(i+j) - (mnout(i)*mnout(j))
+                      xval(i,j) = xval(i,j) / n
                       if (.not.allocated(error)) then 
                           call check(error, varm(i,j), xval(i,j), 'Problem with truth var_mom ', '', thr)
                       end if 
