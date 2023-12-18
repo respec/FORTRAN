@@ -25,7 +25,8 @@ contains
         new_unittest("invalid", test_invalid, should_fail=.true.), &
         new_unittest("truth_test_moms_p3", truth_test_moms_p3), &
         new_unittest("truth_test_p3est_ema", truth_test_p3est_ema), &
-        new_unittest("truth_test_var_mom", truth_test_var_mom) &
+        new_unittest("truth_test_var_mom", truth_test_var_mom), &
+        new_unittest("truth_test_qP3", truth_test_qP3) &
         ]
           
 
@@ -425,5 +426,67 @@ contains
 
     end subroutine truth_test_var_mom
     
+    subroutine truth_test_qP3(error)
+      type(error_type), allocatable, intent(out) :: error
+      
+      integer :: nthresh,i,j
+      double precision :: tl_in(2),tu_in(2),n_in(2) 
+      double precision :: mc_in(3),varm(3,3),x(3),n,thr
+      double precision :: mnout(6),xval(3,3)
+    
+      double precision qP3
+    ! qP3 computes the inverse cdf of 
+    ! a pearson type 3 variate with moments m=(mu,sigma^2,g)
+    ! Inputs to qP3(q,m) are as follows:  
+    ! q - probability
+    ! mc_in: Array of central moments (Taken from USGS supplied truth values for other tests)
+      double precision :: q_in(7), p(7), mu, s2, g, alpha, beta, tau
+      data q_in/0.9980, 0.9900, 0.9000, 0.5000, 0.1000, 0.0100, 0.0020/
+      
+      ! truth vals from csv file
+      character(len=8) header(3),dat1
+      
+      open(unit=50,file="example_truth.csv")
+      read(50,*) header
+      read(50,*) dat1,mu,s2,g
+      close(unit=50)
+
+      thr = 1.0e-2
+
+      if (.not.allocated(error)) then
+          !start with skew of +2
+          g = 2.0
+          alpha = 4/g**2
+          beta = g/abs(g) * (s2/alpha)**0.5
+          tau = mu - alpha * beta
+          mc_in(1) = mu
+          mc_in(2) = s2
+          mc_in(3) = g
+          do i=1,7
+              p(i) = 1 - exp((tau - qP3(q_in(i),mc_in))/beta)
+              if (.not.allocated(error)) then 
+                call check(error, q_in(i), p(i), 'Problem with truth qP3 ', '', thr)
+              end if 
+          end do
+      end if
+
+      if (.not.allocated(error)) then
+          !repeat with skew of -2
+          g = -2.0
+          alpha = 4/g**2
+          beta = g/abs(g) * (s2/alpha)**0.5
+          tau = mu - alpha * beta
+          mc_in(1) = mu
+          mc_in(2) = s2
+          mc_in(3) = g
+          do i=1,7
+              p(i) = exp((tau - qP3(q_in(i),mc_in))/beta)
+              if (.not.allocated(error)) then 
+                call check(error, q_in(i), p(i), 'Problem with truth qP3 ', '', thr)
+              end if 
+          end do
+      end if
+
+    end subroutine truth_test_qP3
 
 end module test_suite2   
