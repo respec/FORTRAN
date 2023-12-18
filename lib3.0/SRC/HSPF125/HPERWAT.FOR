@@ -4974,10 +4974,12 @@ C           compile values for binary printout
       END IF
 C      
       IF (NCANPY .GT. 1) THEN
-        WRITE(PRINTU,2057)
-        DO I = 1, NCANPY
-          WRITE(PRINTU,2058) I,(CANNAM(J,I),J=1,3),PSTAT1(I),DEPUNT
-        END DO
+        IF (PRINTU .GT. 0 .AND. PFLAG(3) .LE. LEV) THEN
+          WRITE(PRINTU,2057)
+          DO I = 1, NCANPY
+            WRITE(PRINTU,2058) I,(CANNAM(J,I),J=1,3),PSTAT1(I),DEPUNT
+          END DO
+        END IF
       END IF
 C
       IF (IRRGFG .EQ. 2) THEN
