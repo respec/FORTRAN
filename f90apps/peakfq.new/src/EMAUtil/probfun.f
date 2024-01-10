@@ -1529,28 +1529,30 @@ C      SAVE
 C
 C    RETURN IF THE RESULTS DO NOT DEPEND ON THE PARAMETERS
 C
-        IF(TU .LE. TL) GOTO 99
+      IF(TU .LE. TL) GOTO 99
         
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
 C    STANDARDIZE THE THRESHOLDS;  COMPUTE DERIVATIVES
 C
-        IF(BETA .GT. 0.D0) THEN
-          STDL  =  MAX(0.D0,(TL-TAU)/BETA)
-          STDU  =  (TU-TAU)/BETA
-        ELSE IF(BETA .LT. 0.D0) THEN
-          STDL  =  MAX(0.D0,(TU-TAU)/BETA)
-          STDU  =  (TL-TAU)/BETA
-        ELSE IF(BETA .EQ. 0.D0) THEN
-          GOTO 99
-        ENDIF
-          LSTDL   =  LOG(MAX(1.D-99,STDL))
-          LSTDU   =  LOG(MAX(1.D-99,STDU))
+      IF(BETA .GT. 0.D0) THEN
+        STDL  =  MAX(0.D0,(TL-TAU)/BETA)
+        STDU  =  (TU-TAU)/BETA
+      ELSE IF(BETA .LT. 0.D0) THEN
+        STDL  =  MAX(0.D0,(TU-TAU)/BETA)
+        STDU  =  (TL-TAU)/BETA
+      ELSE IF(BETA .EQ. 0.D0) THEN
+        GOTO 99
+      ENDIF
+      LSTDL   =  LOG(MAX(1.D-99,STDL))
+      LSTDU   =  LOG(MAX(1.D-99,STDU))
+
+      IF(LSTDL .EQ. LSTDU) GOTO 99 !Added by SAS, for Halloween weighting
           
-          DSTDLT  =  -1.D0/BETA
-          DSTDUT  =  -1.D0/BETA
-          DSTDLB  =  -STDL/BETA
-          DSTDUB  =  -STDU/BETA
+      DSTDLT  =  -1.D0/BETA
+      DSTDUT  =  -1.D0/BETA
+      DSTDLB  =  -STDL/BETA
+      DSTDUB  =  -STDU/BETA
 
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
@@ -1566,12 +1568,12 @@ C
 C
 C      1.A   FIRST COMPUTE THE ADJUSTMENT FACTOR
 C
-          ADJ(0)    =  1.D0
-          DADJ(0)   =  0.D0
-        DO 40 J=1,3
-          ADJ(J)    =  (ALPHA+J-1.D0) * ADJ(J-1)
-          DADJ(J)   =  ADJ(J-1) + (ALPHA+J-1.D0) * DADJ(J-1)
-40      CONTINUE
+      ADJ(0)    =  1.D0
+      DADJ(0)   =  0.D0
+      DO 40 J=1,3
+        ADJ(J)    =  (ALPHA+J-1.D0) * ADJ(J-1)
+        DADJ(J)   =  ADJ(J-1) + (ALPHA+J-1.D0) * DADJ(J-1)
+40    CONTINUE
 
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 C
@@ -3933,6 +3935,168 @@ C
 10    CONTINUE
         COVW = XSUM/WSUM
       RETURN
-	  END
-     
+      END
+
+!*_*-*~*_*-*~*             NEW PROGRAM BEGINS HERE            *_*-*~*_*-*~*_*-*~
+         SUBROUTINE EXPMOMCDERIV(PARMS, TL, TU, MNE, DEDMC)
+!****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+! 
+!     PROGRAM TO COMPUTE DERIVATIVE OF EXPECTED VALUE OF CENTRAL MOMENTS
+!         OF GAMMA VARIATE TRUNCATED BETWEEN XMIN AND XMAX
+!
+!     FOR IMPLEMENTATION OF GREG SCHWARZ'S HALLOWEEN SKEW WEIGHTING METHOD
+!
+!     AUTHOR.....SETH SIEFKEN
+!     DATE.......NOVEMBER 4, 2022
+!     MODIFIED...DECEMBER 22, 2023
+!
+!     INPUT VARIABLES:
+!          PARMS CONTAINS P3 PARAMETER VALUES (TAU, ALPHA, BETA)
+!          TL = LOWER CENSORING THRESHOLD
+!          TU = UPPER CENSORING THRESHOLD
+!
+!     RETURN VARIABLES:
+!          MNE[J]      CONTAINS E[X^J | X IS CENSORED]
+!          DEDMC[J,K]   CONTAINS D[ E[MC[J] | X IS CENSORED] ]/MC[K]
+!
+!          DEDMC[1,1]  =   D[ E[MU | X IS CENSORED] ]/D_MU
+!          DEDMC[1,2]  =   D[ E[MU | X IS CENSORED] ]/D_SIGMA2
+!          DEDMC[1,3]  =   D[ E[MU | X IS CENSORED] ]/D_SKEW
+!
+!          DEDMC[2,1]  =   D[ E[SIGMA2 | X IS CENSORED] ]/D_MU
+!          DEDMC[2,2]  =   D[ E[SIGMA2 | X IS CENSORED] ]/D_SIGMA2
+!          DEDMC[2,3]  =   D[ E[SIGMA2 | X IS CENSORED] ]/D_SKEW
+!
+!          DEDMC[3,1]  =   D[ E[SKEW | X IS CENSORED] ]/D_MU
+!          DEDMC[3,2]  =   D[ E[SKEW | X IS CENSORED] ]/D_SIGMA2
+!          DEDMC[3,3]  =   D[ E[SKEW | X IS CENSORED] ]/D_SKEW
+!
+!****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      DOUBLE PRECISION   PARMS(3), TL, TU, DEDMC(3,3), MC(3)
+	  DOUBLE PRECISION   db(3,3), B(3,3), tp(3,3)
+      DOUBLE PRECISION   ALPHA, BETA, TAU, JACL(3,3), JACG(3,3), D2(3,3)
+	  DOUBLE PRECISION   D3(3,3), BM(3,3), D12(3,3), PIL, PIG
+      DOUBLE PRECISION   MNEL(3), MNEG(3), MNE(3), INF
+	  DOUBLE PRECISION   PIJACL(3,3), PIJACG(3,3), JAC(3,3), PICK
+	  
+	  data inf/20d0/ !Make sure infinity is consistent throughout program
       
+	  
+        CALL P2M(PARMS,MC) !Compute central moments, mc(2) = variance
+		
+		
+		S = SQRT(MC(2))
+		
+        TAU   = PARMS(1)
+        ALPHA = PARMS(2)
+        BETA  = PARMS(3)
+		  
+
+
+		!Compute probability of censoring
+		PIL = FP_G3_CDF(TL,PARMS) 
+		PIG = 1 - FP_G3_CDF(TU,PARMS) 
+		PICK = PIL + PIG
+
+        !Compute individual Jacobians for upper and lower censoring
+        CALL DMMULT(PIL,3,3,JACL,3,3,3,PIJACL,3) 
+		CALL DMMULT(PIG,3,3,JACG,3,3,3,PIJACG,3) 
+		
+		
+		IF (PICK .GT. 1d-10) THEN
+		
+        !Compute individual Jacobians for upper and lower censoring		
+            CALL DEXPECT(TAU,ALPHA,BETA,-inf,tl,MNEL,JACL)
+            CALL DEXPECT(TAU,ALPHA,BETA,tu, inf,MNEG,JACG)
+			
+            CALL DMMULT(PIL,3,3,JACL,3,3,3,PIJACL,3) 
+		    CALL DMMULT(PIG,3,3,JACG,3,3,3,PIJACG,3) 
+			
+        !Compute expected values of noncentral moments when X is censored
+			MNE(1) = (PIL*MNEL(1) + PIG*MNEG(1))/PICK
+			MNE(2) = (PIL*MNEL(2) + PIG*MNEG(2))/PICK
+            MNE(3) = (PIL*MNEL(3) + PIG*MNEG(3))/PICK
+			
+        !Compute Jacobian when X is censored
+            CALL DMSUM(3,3,PIJACL,3,3,3,PIJACG,3,3,3,JAC,3)
+            CALL DMMULT(1/PICK,3,3,JAC,3,3,3,JAC,3) 
+        ELSE
+        !When X is not (effectively) censored can just use DEXPECT
+            CALL DEXPECT(TAU,ALPHA,BETA,-inf,inf,MNE,JAC)
+		
+		ENDIF
+		
+		
+		
+		
+		
+		
+!       Compute derivative of b vector from Schwarz (2022)
+        db(1,1) = 0
+        db(1,2) = 0
+        db(1,3) = 0
+
+        db(2,1) = 2*MC(1)
+        db(2,2) = 0
+        db(2,3) = 0
+
+        db(3,1) = -3*mc(1)**2/S**3
+        db(3,2) = 3*mc(1)**3/(2*S**5)
+        db(3,3) = 0
+        
+
+
+!       Compute B matrix from Schwarz (2022)
+        B(1,1) = 1d0
+        B(1,2) = 0d0
+        B(1,3) = 0d0
+
+        B(2,1) = -2*mc(1)
+        B(2,2) = 1d0
+        B(2,3) = 0d0
+
+        B(3,1) = 3*mc(1)**2/S**3
+        B(3,2) = -3*mc(1)/S**3
+        B(3,3) = 1/S**3
+
+!       Compute theta prime matrix from Schwarz (2022)
+        tp(1,1) = 1d0
+        tp(1,2) = -1d0/(S*mc(3))
+        tp(1,3) = 2*S/mc(3)**2
+        
+        tp(2,1) = 0d0
+        tp(2,2) = 0d0
+        tp(2,3) = -8/mc(3)**3
+
+        tp(3,1) = 0d0
+        tp(3,2) = mc(3)/(4*S)
+        tp(3,3) = S/2
+
+!       Compute third term of derivative
+		D3(1,1) = 0d0
+		D3(1,2) = 0d0
+		D3(1,3) = 0d0
+
+		D3(2,1) = -2d0*MNE(1)
+		D3(2,2) = 0d0
+		D3(2,3) = 0d0
+
+	  D3(3,1)=6*mc(1)/S**3*MNE(1) - 3/S**3*MNE(2)
+	  D3(3,2)=(-4.5*mc(1)**2*MNE(1)+4.5*mc(1)*MNE(2)-1.5*MNE(3))/S**5
+	  D3(3,3)=0d0
+
+		
+
+		
+		CALL DMRRRR(3,3,B,3,3,3,JAC,3,3,3,BM,3) 
+		CALL DMRRRR(3,3,BM,3,3,3,tp,3,3,3,D2,3) !2nd term in EQ 27
+		
+		CALL DMSUM(3,3,db,3,3,3,D2,3,3,3,D12,3)
+		CALL DMSUM(3,3,D12,3,3,3,D3,3,3,3,DEDMC,3)
+		
+		
+        RETURN
+        END

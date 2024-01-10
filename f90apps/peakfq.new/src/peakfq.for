@@ -751,7 +751,7 @@ C
       SUBROUTINE PARSESTASPECS
      I                        (STAID,XSYSPK,XHSTPK,
      M                         GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
+     M                         WGTOPT,GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
      M                         IKROPT,ISKMAP,FLAT,FLONG,EMAOPT,HSTFLG)
 C
 C     + + + PURPOSE + + +
@@ -769,7 +769,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          XSYSPK, XHSTPK, GENSKU, HISTPD, QHIOUT, QLWOUT, 
      $              GAGEB, RMSEGS, FLAT, FLONG
       CHARACTER*(*) STAID
-      CHARACTER*4   LOTYPE
+      CHARACTER*4   LOTYPE,WGTOPT
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STAID  - Station ID being processed
@@ -780,6 +780,7 @@ C     HISTPD - length of historic period
 C     QHIOUT - hi-outlier threshold
 C     QLWOUT - lo-outlier threshold
 C     LOTYPE - lo-outlier test type (NONE, GBT, MGBT, FIXE)
+C     WGTOPT - skew weighting option (HWN, ERL, INV)
 C     GAGEB  - gage base discharge
 C     RMSEGS - standard error of regional skew
 C     IBEGYR - beginning year of analysis
@@ -897,6 +898,8 @@ C     init new peaks specs
             QLWOUT = CVRDEC(S)
           ELSE IF (KWD .EQ. 'LOTYPE') THEN
             LOTYPE = S
+          ELSE IF (KWD .EQ. 'WEIGHTOPT') THEN
+            WGTOPT = S
           ELSE IF (KWD .EQ. 'HITHRESH') THEN
             QHIOUT = CVRDEC(S)
           ELSE IF (KWD .EQ. 'GAGEBASE') THEN
@@ -1081,7 +1084,7 @@ C             assume code is only thing left
 C
       IF (UPDATEFG) THEN
         CALL WRITESPECSTA (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     I                     GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
+     I                     WGTOPT,GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
      I                     IKROPT,ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,
      I                     EMAOPT,HSTFLG)
       END IF
@@ -1269,27 +1272,33 @@ C       also write out graphic format
 C     additional output
       IF (IBCPUN.GE.2) THEN
         INQUIRE(IPUNCH,NAME=FNAME)
+        CALL QFDPRS (FNAME,
+     O               WRKDIR,FNNOEXT)
       END IF
       IF (IBCPUN.EQ.0) THEN
         WRITE(92,*) 'O Additional None'
       ELSE IF (IBCPUN.EQ.1) THEN
         WRITE(92,*) 'O Additional WDM'
       ELSE IF (IBCPUN.EQ.2) THEN
-        WRITE(92,*) 'O Additional WAT '//TRIM(FNAME)
+        WRITE(92,*) 'O Additional WAT '//TRIM(FNNOEXT)
       ELSE IF (IBCPUN.EQ.3) THEN
-        WRITE(92,*) 'O Additional Both WAT '//TRIM(FNAME)
+        WRITE(92,*) 'O Additional Both WAT '//TRIM(FNNOEXT)
       ELSE IF (IBCPUN.EQ.4) THEN
-        WRITE(92,*) 'O Additional TAB '//TRIM(FNAME)
+        WRITE(92,*) 'O Additional TAB '//TRIM(FNNOEXT)
       ELSE IF (IBCPUN.EQ.5) THEN
-        WRITE(92,*) 'O Additional Both TAB '//TRIM(FNAME)
+        WRITE(92,*) 'O Additional Both TAB '//TRIM(FNNOEXT)
       END IF
       IF (EXPFUN.GT.0) THEN
         INQUIRE(EXPFUN,NAME=FNAME)
-        WRITE(92,*) 'O Export '//TRIM(FNAME)
+        CALL QFDPRS (FNAME,
+     O               WRKDIR,FNNOEXT)
+        WRITE(92,*) 'O Export '//TRIM(FNNOEXT)
       END IF
       IF (EMPFUN.GT.0) THEN
         INQUIRE(EMPFUN,NAME=FNAME)
-        WRITE(92,*) 'O Empirical '//TRIM(FNAME)
+        CALL QFDPRS (FNAME,
+     O               WRKDIR,FNNOEXT)
+        WRITE(92,*) 'O Empirical '//TRIM(FNNOEXT)
       END IF
       IF (IDEBUG.EQ.1) THEN
         WRITE(92,*) 'O Debug Yes'
@@ -1310,9 +1319,9 @@ C
 C
       SUBROUTINE   WRITESPECSTA
      I                        (STAID,GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                         GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,IKROPT,
-     M                         ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,EMAOPT,
-     M                         HSTFLG)
+     M                         WGTOPT,GAGEB,RMSEGS,IBEGYR,IENDYR,ISKUOP,
+     M                         IKROPT,ISKMAP,FLAT,FLONG,XSYSPK,XHSTPK,
+     M                         EMAOPT,HSTFLG)
 C
 C     + + + PURPOSE + + +
 C     Write out verbose version of spec file (i.e. include 
@@ -1331,7 +1340,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL          GENSKU, HISTPD, QHIOUT, QLWOUT, GAGEB, RMSEGS, 
      $              FLAT, FLONG, XSYSPK, XHSTPK
       CHARACTER*(*) STAID
-      CHARACTER*4   LOTYPE
+      CHARACTER*4   LOTYPE,WGTOPT
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     STAID  - Station ID being processed
@@ -1340,6 +1349,7 @@ C     HISTPD - length of historic period
 C     QHIOUT - hi-outlier threshold
 C     QLWOUT - lo-outlier threshold
 C     LOTYPE - lo-outlier test type (NONE, GBT, MGBT, FIXE)
+C     WGTOPT - skew weighting option (HWN, ERL, INV)
 C     GAGEB  - gage base discharge
 C     RMSEGS - standard error of regional skew
 C     IBEGYR - beginning year of analysis
@@ -1485,6 +1495,9 @@ C     other flow parameters
         WRITE(92,*) '     Urb/Reg No'
       END IF
       WRITE(92,*) '     LOType ',LOTYPE
+      IF (ZLNTXT(WGTOPT) .GT. 0) THEN
+        WRITE(92,*) '     WeightOpt ',WGTOPT
+      END IF
       WRITE(92,*) '     LoThresh ',QLWOUT
       WRITE(92,*) '     HiThresh ',QHIOUT
       WRITE(92,*) '     GageBase ',GAGEB

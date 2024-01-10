@@ -126,7 +126,7 @@ C     + + + FORMATS + + +
      $    /, '(2, 4, and * records are ignored.)')
  2005 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, ',
-     $       'Version 7.4.1 dated  5/ 1/2023',/,
+     $       'Version 7.5 dated 1/ 1/2024',/,
      $       '#',/,'# Analyzed:  ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,
      $       '#',/,'# Summary of input parameters',/,'#')
  2010 FORMAT ('STATION',A,'OPTION',A,'BEGYR',A,'ENDYR',A,
@@ -226,7 +226,7 @@ C
      M              ISTART,
      O              STAID,PKS,IPKSEQ,XQUAL,IQUAL, 
      O              NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
-     O              LOTYPE,GAGEB,GENSKU,RMSEGS, IGSOPT,
+     O              LOTYPE,WGTOPT,GAGEB,GENSKU,RMSEGS, IGSOPT,
      O              NSKIP1,EMAOPT,HSTFLG,IER)
         write(99,*)'After INPUT - NSYS,NHIST,EMAOPT,IER',
      $                            NSYS,NHIST,EMAOPT,IER
@@ -413,7 +413,7 @@ C             output export file
      I                    CLIMU(INDX1),VAREST(INDX1),JSEQNO,HEADNG(9),
      I                    EMAOPT,IGSOPT,BEGYR,ENDYR,HISTPD,gbcrit,
      I                    nlow,nzero,NGAGEDPILFS,LOTYPE,EMAIterations,
-     I                    Wd)
+     I                    Wd,WGTOPT)
             END IF
             IF (EMPFUN .GT. 0) THEN
 C             output empircal frequency table file
@@ -646,10 +646,10 @@ C    $  1A1,T21,66X,T21,    '  LOG-PEARSON CARDS              ' )
   200 FORMAT('  ')
   201 FORMAT( 2X,'Program PeakFq',11X,'U. S. GEOLOGICAL SURVEY',
      $       13X,'Seq.',I3.3,'.',I3.3 )
-  202 FORMAT( 2X,'Version 7.4.1',
-     $        7X,'Annual peak flow frequency analysis',
+  202 FORMAT( 2X,'Version 7.5',
+     $        9X,'Annual peak flow frequency analysis',
      $        6X,'Run Date / Time')
-  203 FORMAT( 2X,'5/ 1/2023',53X,A)
+  203 FORMAT( 2X,'1/ 1/2024',53X,A)
   206 FORMAT(22X,'standard method for flood frequency analysis.')
   207 FORMAT( 20X, A40 )
   227 FORMAT(A16)
@@ -1983,7 +1983,7 @@ C
      M               ISTART,
      O               STAID,PKSABG,IWYSN,XQUAL,IQUAL, 
      O               NHIST,NSYS,HISTPD,BEGYR,ENDYR,QHIOUT,QLWOUT,
-     O               LOTYPE,GAGEB,GENSKU, RMSEGS,ISKUOP,  
+     O               LOTYPE,WGTOPT,GAGEB,GENSKU, RMSEGS,ISKUOP,  
      O               NSKIP1,EMAOPT,HSTFLG,IRC)
 C
 C     + + + PURPOSE + + +
@@ -1997,7 +1997,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL       PKSABG(MAXPKS)
       REAL       HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
       CHARACTER*(*)  STAID , XQUAL(MAXPKS)
-      CHARACTER*4 LOTYPE
+      CHARACTER*4 LOTYPE,WGTOPT
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     IA1   -
@@ -2027,6 +2027,7 @@ C     ENDYR  - ENDING YEAR OF ANALYSIS
 C     QHIOUT -
 C     QLWOUT -
 C     LOTYPE - lo-outlier type (NONE, GBT, MGBT, FIXE)
+C     WGTOPT - Skew weighting option ('HWN', 'ERL', 'INV')
 C     GAGEB  -
 C     GENSKU -
 C     RMSEGS  -
@@ -2065,7 +2066,7 @@ C
      M              ISTART,
      O              STAID, PKSABG, IWYSN, XQUAL, IQUAL, 
      O              NHIST, NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT,
-     O              LOTYPE, GAGEB, GENSKU, RMSEGS, ISKUOP, 
+     O              LOTYPE, WGTOPT, GAGEB, GENSKU, RMSEGS, ISKUOP, 
      O              NSKIP1, EMAOPT, HSTFLG, IRC)
 C
       ELSE IF ( INFORM .EQ. 3 ) THEN
@@ -2090,7 +2091,7 @@ C
      M                    ISTART,
      O                    STAID, PKSABG, IWYSN, XQUAL, IQUAL, NHIST, 
      O                    NSYS, HISTPD, BEGYR, ENDYR, QHIOUT, QLWOUT, 
-     O                    LOTYPE, GAGEB, GENSKU, RMSEGS, ISKUOP,
+     O                    LOTYPE, WGTOPT, GAGEB, GENSKU, RMSEGS, ISKUOP,
      O                    NSKIP1, EMAOPT, HSTFLG, IRC )
 C
 C     + + + PURPOSE + + +
@@ -2111,7 +2112,7 @@ C     + + + DUMMY ARGUMENTS + + +
       REAL      HISTPD, QHIOUT, QLWOUT, GAGEB, GENSKU, RMSEGS
       CHARACTER*(*) XQUAL(MAXPKS)
       CHARACTER*(*) STAID
-      CHARACTER*4 LOTYPE
+      CHARACTER*4 LOTYPE, WGTOPT
 C
 C     + + + ARGUMENT DEFINITIONS + + +
 C     MESSFL - Fortran unit number of AIDE message file
@@ -2141,6 +2142,7 @@ C     ENDYR  - ENDING YEAR OF ANALYSIS
 C     QHIOUT - USER-SET HIGH- OUTLIER DISCHARGE THRESHOLDS
 C     QLWOUT - USER-SET low-outlier discharge threshold
 C     LOTYPE - LO-OUTLIER TYPE (NONE, GBT, MGBT, FIXE)
+C     WGTOPT - Skew weighting option ('HWN', 'ERL', 'INV')
 C     GAGEB  - GAGE BASE DISCHARGE
 C     GENSKU - REGIONAL SKEW
 C     RMSEGS - RMS ERROR OF REGIONAL SKEW
@@ -2172,7 +2174,7 @@ Cprh     $          IVAL(2), CVAL(3), L3, L2, L7, L4, L1, L8,
 Cprh     $          L6, L9, L10
 C
 C     + + + FUNCTIONS + + +
-      INTEGER   IBITEX
+      INTEGER   ZLNTXT, IBITEX
       REAL      WCFGSM
       LOGICAL   DOSTATION
 C
@@ -2180,7 +2182,7 @@ C     + + + INTRINSICS + + +
       INTRINSIC   AMAX1, ABS, INT
 C
 C     + + + EXTERNALS + + +
-      EXTERNAL   PKFRD4, WCFGSM, IBITEX, LFTSTR
+      EXTERNAL   PKFRD4, WCFGSM, ZLNTXT, IBITEX, LFTSTR
       EXTERNAL   DOSTATION, PARSESTASPECS, ECHOINPUT
 Cprh      EXERNAL    Q1EDIT, Q1INIT, QGETR
 Cprh      EXTERNAL   QSETR, QSETI, QGETI, QSETCO, QGETCO, QSTCTF
@@ -2325,6 +2327,10 @@ C             default to EMA analysis and to use any Historic Peaks
               IF (HISTPD.EQ.0) HISTPD = ENDYR - BEGYR + 1
 C             default low outlier test to single GB
               LOTYPE = 'MGBT'
+              IF (ZLNTXT(WGTOPT) .EQ. 0) THEN
+C                 set Skew Weight option to default Halloween method
+                  WGTOPT = 'HWN'
+              END IF
 C             default use of B17B Gen Skew Map to 'No'
               ISKMAP = 0
 C
@@ -2334,13 +2340,13 @@ C              IF( GENSKU  .LT. -9999.9)  GENSKU  = WCFGSM(FLAT,FLONG)
 C             update specs
               CALL PARSESTASPECS(CURSTA,XSYSPK,XHSTPK,
      M                           GENSKU,HISTPD,QHIOUT,QLWOUT,LOTYPE,
-     M                           GAGEB,RMSEGS,BEGYR,ENDYR,ISKUOP,
+     M                           WGTOPT,GAGEB,RMSEGS,BEGYR,ENDYR,ISKUOP,
      M                           IKROPT,ISKMAP,FLAT,FLONG,EMAOPT,HSTFLG)
 C
 C             write inputs to echo file
               CALL ECHOINPUT (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
      I                        ISKUOP,GENSKU,RMSEGS,QLWOUT,LOTYPE,
-     I                        QHIOUT,GAGEB,IKROPT,FLAT,FLONG)
+     I                        WGTOPT,QHIOUT,GAGEB,IKROPT,FLAT,FLONG)
 C
 Cprh              NOHIST = HISTPD.LE.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
               NOHIST = HSTFLG.EQ.0. .AND. QHIOUT.LE.0. .AND. IHOPTI.LE.0
@@ -4310,8 +4316,9 @@ C       Weighted, set to root mean square
       write(99,*) 'GENSDMSE:',GENSDMSE
       write(99,*) 'REGSKEW:',REGSKEW
       write(99,*) 'REGMSE:',REGMSE
-      write(99,*) 'GBTYPE:',GBTYPE
+      write(99,*) 'GBTYPE: ',GBTYPE
       write(99,*) 'GBTHRSH',GBTHRSH
+      write(99,*) 'WeightOpt: ',WGTOPT
 C
       IF (NOBS.GT.0) THEN
         ALLOCATE (LQU(NOBS))
@@ -4320,7 +4327,7 @@ C
 
         CALL EMAFIT(NOBS,QL,QU,TL,TU,DTYPE,
      I              REGSTD,GENSDMSE,REGSKEW,REGMSE,GBTYPE,GBTHRSH,
-     O              WRCMOM,PR,LMXINT,WRCYP,CILOW,CIHIGH,VAREST)
+     O              WGTOPT,WRCMOM,PR,LMXINT,WRCYP,CILOW,CIHIGH,VAREST)
       
       write(99,*)
       write(99,*) 'calling plotposHS with these inputs (Log-based):'
@@ -5199,7 +5206,7 @@ C
      I                       KENSLP,NPLOT,WRCFC,TXPROB,CLIML,CLIMU,
      I                       VAREST,STNIND,HEADER,EMAOPT,IGSOPT,
      I                       BEGYR,ENDYR,HISTPD,gbcrit,nlow,nzero,
-     I                       NGAGEDPILFS,LOTYPE,nEMAIter,Wd)
+     I                       NGAGEDPILFS,LOTYPE,nEMAIter,Wd,WGTOPT)
 C
 C     + + + PURPOSE + + +
 C     Output analysis results to PeakFQ export file
@@ -5211,7 +5218,7 @@ C     + + + DUMMY ARGUMENTS + + +
      $              ASMSEG,SYSASK,KENTAU,KENPVL,KENSLP,WRCFC(NPLOT),
      $              TXPROB(NPLOT),CLIML(NPLOT),CLIMU(NPLOT),HISTPD
       DOUBLE PRECISION ASMSEGSYS,VAREST(NPLOT),gbcrit,Wd
-      CHARACTER*4   LOTYPE
+      CHARACTER*4   LOTYPE,WGTOPT
       CHARACTER*80  HEADER
 C
 C     + + + ARGUMENT DEFINITIONS + + +
@@ -5229,6 +5236,7 @@ C     CLIMU  - log10 ordinates of fitted curve, upper confidence limits
 C     STNIND - index number of this station
 C     HEADER - Title header for each station's analysis
 C     Wd     - Weighting Factor for skew method
+C     WGTOPT - skew weighting option (HWN, ERL, INV)
 C
 C     + + + PARAMETERS + + +
       INCLUDE 'pmxint.inc'
@@ -5271,8 +5279,8 @@ C     + + + OUTPUT FORMATS + + +
  2011 FORMAT (4X,'PILF_Method',A,A,/,4X,'MGBT_PILF_Thresh',A,F8.1,/,
      $        4X,'PILFs',A,I4,/,4X,'PILF_0s',A,I4,/,
      $        4X,'PILF_Censored',A,I4,/,4X,'PILF_Gaged',A,I4,/,
-     $        4X,'EMA_Num_Iter',A,I4,/,
-     $        4X,'Weighting_Factor',A,F8.3)
+     $        4X,'EMA_Num_Iter',A,I4,/,4X,'WeightOpt',A,A,/,
+     $        4X,'WeightCo',A,F8.3)
  2020 FORMAT (4X,A8,32(A,F8.4))
  2030 FORMAT (4X,A8,32(A,F8.0))
  2040 FORMAT (4X,A8,32(A,A10))
@@ -5306,11 +5314,12 @@ C
       IF (nlow .GT. 0) THEN
         WRITE(EXPFUN,2011) LTAB,LOTYPE,LTAB,10**gbcrit,LTAB,nlow,
      $                     LTAB,nzero,LTAB,nlow-nzero-NGAGEDPILFS,
-     $                     LTAB,NGAGEDPILFS,LTAB,nEMAIter,LTAB,Wd
+     $                     LTAB,NGAGEDPILFS,LTAB,nEMAIter,LTAB,WGTOPT,
+     $                     LTAB,Wd
       ELSE
         WRITE(EXPFUN,2011) LTAB,LOTYPE,LTAB,10**gbcrit,LTAB,nlow,
      $                     LTAB,I0,LTAB,I0,
-     $                     LTAB,I0,LTAB,nEMAIter,LTAB,Wd
+     $                     LTAB,I0,LTAB,nEMAIter,LTAB,WGTOPT,LTAB,Wd
       END IF
 
       LEN = 10
@@ -5408,7 +5417,7 @@ C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT('# US Geological Survey',/,
      $       '# PeakFQ Flood Frequency Analysis, '
-     $       'Version 7.4.1 dated  5/ 1/2023',/,'#',/,
+     $       'Version 7.5 dated  1/ 1/2024',/,'#',/,
      $       '# Analyzed: ',I2.2,'/',I2.2,'/',I4,I3.2,':',I2.2,/,'#')
  2001 FORMAT('# Empirical Frequency Curves')
 c 2001 FORMAT('# Empirical Frequency Curves -- ',
@@ -5567,7 +5576,7 @@ C
       SUBROUTINE   ECHOINPUT 
      I                       (ECHFUN,CURSTA,EMAOPT,BEGYR,ENDYR,
      I                        SKUOPT,GENSKU,RMSEGS,QLWOUT,LOTYPE,
-     I                        QHIOUT,GAGEB,URBOPT,FLAT,FLONG)
+     I                        WGTOPT,QHIOUT,GAGEB,URBOPT,FLAT,FLONG)
 C
 C     + + + PURPOSE + + +
 C     write input parameters to echo file
@@ -5575,7 +5584,7 @@ C
 C     + + + DUMMY ARGUMENTS + + +
       INTEGER ECHFUN,EMAOPT,BEGYR,ENDYR,SKUOPT,URBOPT
       REAL    GENSKU,RMSEGS,QLWOUT,QHIOUT,GAGEB,FLAT,FLONG
-      CHARACTER*4  LOTYPE
+      CHARACTER*4  LOTYPE,WGTOPT
       CHARACTER*18 CURSTA
 C
 C     + + + LOCAL VARIABLES + + +
@@ -5586,7 +5595,7 @@ C     + + + LOCAL VARIABLES + + +
 C
 C     + + + OUTPUT FORMATS + + +
  2000 FORMAT (A18,A,A4,A,I4,A,I4,A,A11,A,3(F6.3,A),
-     $        F8.0,A,A4,A,2(F8.0,A),A3,A,F8.3,A,F8.3)
+     $        F8.0,A,2( A4,A),2(F8.0,A),A3,A,F8.3,A,F8.3)
 C
 C     + + + END SPECIFICATIONS + + +
 C
@@ -5610,9 +5619,9 @@ C
         CHURBOPT = 'NO'
       END IF
       WRITE(ECHFUN,2000) CURSTA,LTAB,CHEMAOPT,LTAB,BEGYR,LTAB,
-     $                   ENDYR,LTAB,CHSKUOPT,LTAB,
-     $                   GENSKU,LTAB,RMSEGS,LTAB,RMSEGS**2,LTAB,
-     $                   QLWOUT,LTAB,LOTYPE,LTAB,QHIOUT,LTAB,
+     $                   ENDYR,LTAB,CHSKUOPT,LTAB,GENSKU,LTAB,
+     $                   RMSEGS,LTAB,RMSEGS**2,LTAB,QLWOUT,LTAB,
+     $                   LOTYPE,LTAB,WGTOPT,LTAB,QHIOUT,LTAB,
      $                   GAGEB,LTAB,CHURBOPT,LTAB,FLAT,LTAB,FLONG
 C
       RETURN

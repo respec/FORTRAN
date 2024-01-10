@@ -146,6 +146,13 @@ c                              N.B. gbthrsh0 codes for 3 cases
 c                               1. gbthrsh0 <= -6  ==> Compute GB critical value
 c                               2. gbthrsh0 >  -6  ==> gbthrsh0 as crit. val.
 c                               3. gbthrsh0 (small, e.g. -5.9) no low out. test
+c            weightOpt  c*4  weighting option for regional skew. Choices are
+c                            1) "HWN" - Greg Schwarz's Halloween Method
+c                            2) "ERL" - Relative effective record length
+c                                       weighting (used by HEC-SSP 2.3)
+c                            3) "" - PeakFQ 7.4 weighting scheme as described
+c                               in Bulletin 17C. Will default to this option
+c                               for any string except "HWN" or "ERL"
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -223,7 +230,8 @@ c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
       subroutine emafit(n,ql,qu,tl,tu,dtype,
-     1               reg_SD,reg_SD_mse,r_G,r_G_mse,gbtype,gbthrsh0,
+     1                  reg_SD,reg_SD_mse,r_G,r_G_mse,
+     1                  gbtype,gbthrsh0,weightOpt,
      1                  cmoms,pq,nq,yp,ci_low,ci_high,var_est)
 
       implicit none
@@ -238,7 +246,7 @@ c
      4  r_M,r_M_mse,r_S2,r_S2_mse
      
       character*4
-     1  dtype(*),gbtype
+     1  dtype(*),gbtype,weightOpt
 
       common /tacpq1/pqd(100),nqd
 
@@ -261,7 +269,7 @@ c
 10    continue
         call emafitb(n,ql,qu,tl,tu,dtype,
      1                  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
-     1                  eps,gbtype,gbthrsh0,pq,nq,
+     1                  eps,gbtype,gbthrsh0,pq,nq,weightOpt,
      1                  cmoms,yp,ci_low,ci_high,var_est)
 c
 c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)
@@ -355,6 +363,13 @@ c                              N.B. gbthrsh0 codes for 3 cases
 c                               1. gbthrsh0 <= -6  ==> Compute GB critical value
 c                               2. gbthrsh0 >  -6  ==> gbthrsh0 as crit. val.
 c                               3. gbthrsh0 (small, e.g. -5.9) no low out. test
+c            weightOpt  c*4  weighting option for regional skew. Choices are
+c                            1) "HWN" - Greg Schwarz's Halloween Method
+c                            2) "ERL" - Relative effective record length
+c                                       weighting (used by HEC-SSP 2.3)
+c                            3) "" - PeakFQ 7.4 weighting scheme as described
+c                               in Bulletin 17C. Will default to this option
+c                               for any string except "HWN" or "ERL"
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -379,7 +394,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
       subroutine emafitpr(n,ql,qu,tl,tu,dtype,
      1               reg_M,reg_M_mse,reg_SD,reg_SD_mse,r_G,r_G_mse,
-     2               gbtype,gbthrsh0,
+     2               gbtype,gbthrsh0,weightOpt,
      2               cmoms,pq,nq,yp,ci_low,ci_high,var_est)
 
       implicit none
@@ -394,7 +409,7 @@ c
      4  reg_M,reg_M_mse,r_M,r_M_mse,r_S2,r_S2_mse
      
       character*4
-     1  dtype(*),gbtype
+     1  dtype(*),gbtype,weightOpt
 
 ctac      data eps/0.90d0/,nqd/32/
       
@@ -433,7 +448,7 @@ c     1c. regional information for skew must be supplied by user as argument
 10    continue
         call emafitb(n,ql,qu,tl,tu,dtype,
      1                  r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
-     1                  eps,gbtype,gbthrsh0,pq,nq,
+     1                  eps,gbtype,gbthrsh0,pq,nq,weightOpt,
      1                  cmoms,yp,ci_low,ci_high,var_est)
 c
 c     correction to adjust for small sample sizes (see tac notes 17 feb 2007)
@@ -512,6 +527,13 @@ c            eps        r*8  vector of ci coverages (usually just 0.90)
 c            gbthrsh0   r*8  critical value for Grubbs-Beck test
 c                              (values < -6 result in computed low outlier
 c                               test criterion)
+c            weightOpt  c*4  weighting option for regional skew. Choices are
+c                            1) "HWN" - Greg Schwarz's Halloween Method
+c                            2) "ERL" - Relative effective record length
+c                                       weighting (used by HEC-SSP 2.3)
+c                            3) "" - PeakFQ 7.4 weighting scheme as described
+c                               in Bulletin 17C. Will default to this option
+c                               for any string except "HWN" or "ERL"
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -533,7 +555,7 @@ c
 
       subroutine emafitb(n,ql_in,qu_in,tl_in,tu_in,dtype_in,
      1                   r_M,r_M_mse,r_S2,r_S2_mse,r_G,r_G_mse,
-     1                   eps,gbtype_in,gbthrsh0,pq,nq,
+     1                   eps,gbtype_in,gbthrsh0,pq,nq,weightOpt,
      2                   cmoms,yp,ci_low,ci_high,var_est)
       
       implicit none
@@ -544,7 +566,7 @@ c
       parameter (ntmax=100,nn=100,nx=25000)
       
       integer
-     1  n,i,nt,ns,nlow,nzero,nGBiter,nlow_V,it_max,nq
+     1  n,i,nt,ns,nlow,nzero,nGBiter,nlow_V,it_max,nq,i1
      
       double precision
      1  ql_in(*),qu_in(*),tl_in(*),tu_in(*),
@@ -552,7 +574,7 @@ c
      2  cmoms(3,3),yp(nn),ci_low(nn),ci_high(nn),var_est(nn),     ! output
      3  yp1(nn),yp2(nn),ci_low1(nn),ci_low2(nn),ci_high1(nn),
      4  ci_high2(nn),skewmin,qP3,parms(3),
-     5  ql,qu,tl,tu,qs,
+     5  ql,qu,tl,tu,qs,thrmin(1),thrmax(1),
      6  cv_yp_syp(2,2,nn),eps,tl2(ntmax),tu2(ntmax),nobs(ntmax),
      7  skew,wt,as_M_mse,as_S2_mse,as_G_mse,as_G_mse_Syst,as_G_ERL,
      8  eff_n,gbthrsh0,gbcrit,gbthresh,gbcrit_V,gbthresh_V,pvaluew
@@ -560,11 +582,11 @@ c
       parameter (skewmin=0.06324555)
       
       double precision
-     1  mseg_all,mse_ema
+     1  mseg_all,mse_ema, detrat, Wd, erlg
      
       character*4 
      1  at_site_option,at_site_default,at_site_std,gbtype,gbtype_in,
-     2  dtype,dtype_in(*),VarS2opt
+     2  dtype,dtype_in(*),VarS2opt, weightOpt
      
       logical cirun
       
@@ -576,9 +598,13 @@ c
       common /tacdgb/cirun
       common /tac005/as_M_mse,as_S2_mse,as_G_mse,as_G_mse_Syst,as_G_ERL
       common /tacR01/VarS2opt
-      
+      common /sas/Wd !Weighting factor for Halloween skew method
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
+      i1 = 1
+      thrmin(1) = -99.0
+      thrmax(1) = 99.0
+      
 c   1.  check for low outliers
 c        a) Identify/recode LOs based on at-site systematic + historical data
 c        b) Iterate search for LOs using at-site systematic + historical data
@@ -660,7 +686,8 @@ c  1) Get at-site skews
      1      1.d0,  1.d0,  1.d0,       ! set all at-site MSEs to 1
      2      r_M,      r_S2,     r_G, 
      3      -99.d0, -99.d0,  -99.d0,  ! set all regional MSEs to Infinity
-     4      cmoms(1,2))               ! return moments (only skew is needed)
+     4      -99.d0,                   ! skew weighting coefficient (SAS)
+     5      cmoms(1,2))               ! return moments (only skew is needed)
 
 
 c  2) EMA computation using weighted regional information/B17B MSEs
@@ -671,14 +698,29 @@ c  2) EMA computation using weighted regional information/B17B MSEs
         as_G_mse  = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))  ! site skew cmoms(1,3)
 c
           eff_n = dble(max(ns,10))    ! use a reasonable sample size if ns=0
-        as_G_mse_Syst = mseg_all(1,eff_n,-99.d0,99.d0,cmoms(1,2)) ! ERL Computation
+        as_G_mse_Syst = mseg_all(i1,eff_n,thrmin,thrmax,cmoms(1,2)) ! ERL Computation
         as_G_ERL    = dble(eff_n)*(as_G_mse_Syst/as_G_mse)
+
+!      weightOpt = "ERL"
+
+      if( weightOpt .eq. "HWN" .and. abs(cmoms(3,2)) .ge. 0.04 ) then
+        !Halloween method weighting from Greg Schwarz
+        Wd =  detrat(cmoms(:,2), n, nt, nobs, tl2, tu2)
+
+      else if(weightOpt .eq. "ERL") then
+        Wd = erlg(cmoms(3,2), as_G_mse) / n !Relative effective record length weighting
+          
+      else
+        Wd = 1d0 !For Halloween method skews near zero, Wd reduces to 1.0
+      endif
+
 
       call p3est_ema(n,ql,qu,
      1      as_M_mse,as_S2_mse,as_G_mse,
      2      r_M,     r_S2,     r_G, 
      3      r_M_mse, r_S2_mse, r_G_mse,
-     4      cmoms(1,3))
+     4      Wd,
+     5      cmoms(1,3))
       
 c  3) final computation using weighted regional info
       if(at_site_std .ne. 'B17B') then
@@ -686,13 +728,14 @@ c  3) final computation using weighted regional info
         as_M_mse  = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),1) ! compute true a-s
         as_S2_mse = mse_ema(nt,nobs,tl2,tu2,cmoms(1,2),2) ! MSEs based on at-
         as_G_mse  = mseg_all(nt,nobs,tl2,tu2,cmoms(1,2))  ! site skew cmoms(1,3)
-        as_G_mse_Syst = mseg_all(1,eff_n,-99.d0,99.d0,cmoms(1,2)) ! ERL
+        as_G_mse_Syst = mseg_all(i1,eff_n,thrmin,thrmax,cmoms(1,2)) ! ERL
         as_G_ERL    = dble(eff_n)*(as_G_mse_Syst/as_G_mse)
         call p3est_ema(n,ql,qu,
      1      as_M_mse,as_S2_mse,as_G_mse, ! use at-site MSEs
      2      r_M,     r_S2,     r_G,      ! and weighted regional info
      3      r_M_mse, r_S2_mse, r_G_mse,
-     4      cmoms(1,1))                  ! these are the EMA results
+     4      Wd,
+     5      cmoms(1,1))                  ! these are the EMA results
        else
          cmoms(1,1) = cmoms(1,3)
          cmoms(2,1) = cmoms(2,3)
@@ -914,7 +957,8 @@ c
      1                      1.d0,  1.d0,  1.d0,   ! At-site MSEs
      2                      0.d0,  1.d0,  0.d0,   ! Regional parameters (dumb)
      3                    -99.d0,-99.d0,-99.d0,   ! use no regional info
-     4                      cmoms)                ! get moms
+     4                    -99.d0,                 ! skew weighting coefficient (SAS)
+     5                      cmoms)                ! get moms
           xm      = cmoms(1)
           s       = sqrt(cmoms(2))
           t       = -0.9043+3.345*sqrt(log10(dble(ns-nzero))) ! N.B. ns, not n
@@ -1018,6 +1062,8 @@ c            r_G        r*8  regional skew (G)
 c            r_M_mse    r*8  mean square error of regional mean
 c            r_S2_mse   r*8  mean square error of regional variance
 c            r_G_mse    r*8  mean square error of regional skew
+c            Wd         r*8  weighting factor for regional skew
+c                            effective record length
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
@@ -1038,7 +1084,9 @@ c
      1      as_M_mse,as_S2_mse,as_G_mse, ! use at-site MSEs
      2      r_M,     r_S2,     r_G,      ! and weighted regional info
      3      r_M_mse, r_S2_mse, r_G_mse,
-     4      moms_out)
+     4      Wd,
+     5      moms_out)
+      !DEC$ ATTRIBUTES DLLEXPORT :: p3est_ema
 
       implicit none
       
@@ -1055,21 +1103,39 @@ c
       double precision 
      1     ql(*),qu(*),as_M_mse,as_S2_mse,as_G_mse,
      1     r_M,     r_S2,     r_G,
-     3     r_M_mse, r_S2_mse, r_G_mse,
+     3     r_M_mse, r_S2_mse, r_G_mse, 
      4     moms_out(3),
      2     moms(3,nsize),d11(nsize),dist_p3,tol,
      3     rM,rMmse,rS2,rS2mse,rG,rGmse
      
       double precision
      1     momsadj
-      
+
+      double precision erlg, nG, Wd
+
       data tol/1.d-10/ 
       data moms(1,1),moms(2,1),moms(3,1)/0.0, 1.0, 0.0/
 
             rG    = r_G
             rGmse = r_G_mse       
+
+!           SAS 10/28/2022: Calculation of equivalent years
+!           of record for regional skew (nG) using
+!           Griffis and others (2004) EQN 2
+
+            if(rGmse > 0 .AND. rGmse < 1.d10) then
+	
+                          nG = n*Wd*as_G_mse/r_G_mse
+
+            else
+!             Station or generalized skew
+              nG = 0.d0
+            endif
+
+
+
       do 10 i=2,nsize
-        call moms_p3(n,ql,qu,moms(1,i-1),moms(1,i))
+        call moms_p3(n,ql,qu,rG,nG,moms(1,i-1),moms(1,i))
 c
 c   compute weighted regional mean (M)? 
 c    N.B. Uncertainty in at-site mean is based on previous call to 
@@ -1121,8 +1187,8 @@ c
           if(rGmse .le. 0.d0 .and. rGmse .gt. -98.d0) then ! "GENERALIZED, NO MSE"
             moms(3,i) = rG
           else if (rGmse .gt. 0.d0) then                  ! "WEIGHTED"
-            moms(3,i) = (rG*as_G_mse+moms(3,i)*rGmse)/
-     1                     (rGmse+as_G_mse)
+c           moms(3,i) = (rG*as_G_mse+moms(3,i)*rGmse)/
+c    1                     (rGmse+as_G_mse)
           else if (rGmse .lt. -98.d0) then                ! "STATION SKEW
 c            moms(3,i) = moms(3,i)
           else if (rGmse .ge. 1.d10) then                 ! "STATION SKEW
@@ -1164,7 +1230,8 @@ c            if(d11(i) .le. tol) then  ! tac added additional test 15 sep 11
 40          continue
             stop
       end
- 
+	  
+
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
 c****|subroutine moms_p3
 c****|==|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1184,6 +1251,8 @@ c            n          i*4  number of observations (censored, uncensored, or
 c                              other)
 c            ql(n)      r*8  vector of lower bounds on (log) floods
 c            qu(n)      r*8  vector of upper bounds on (log) floods
+c            rG         r    regional skew value (needed for B17C EQ 7-10)
+c            nG         r    equivalent years of record for regional skew
 c            mc_old(3)  r*8  vector of p3 parameters
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
@@ -1195,7 +1264,8 @@ c            moms(3)    r*8  vector of updated p3 parameters
 c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
-      subroutine moms_p3(n,ql,qu,mc_old,moms)
+      subroutine moms_p3(n,ql,qu,rG,nG,mc_old,moms)
+      !DEC$ ATTRIBUTES DLLEXPORT :: moms_p3
 
       implicit none
 
@@ -1210,8 +1280,9 @@ c
      2     m_nc_moms(3,nsize),
      3     sum,c2,c3,n_bcf,
      4     choose,
-     5     sk0,sk141,skxmax
-     
+     5     sk0,sk141,skxmax,
+     6     rG, nG
+
       logical lskewXmax
 
       common /tac002/sk0,sk141,skxmax,lskewXmax,bcf
@@ -1272,7 +1343,8 @@ c     jfe modify to handle all bcf input cases
         c3          =  1.d0
       endif
         moms(2)     =  ( c2*s_e(2) + s_c(2) )/n
-        moms(3)     =  ( c3*s_e(3) + s_c(3) )/( n * moms(2)**1.5d0)
+        moms(3)     =  (c3*s_e(3) + s_c(3) + nG*rG*moms(2)**1.5d0)
+     1                 / ((n + nG)*moms(2)**1.5d0)
         
       return
       end
@@ -1420,6 +1492,7 @@ c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
        double precision function mseg_all(nthresh,nobs,tl,tu,mc)
+      !DEC$ ATTRIBUTES DLLEXPORT :: mseg_all
 
       implicit none
       
@@ -1427,15 +1500,18 @@ c
      1    nobs(*),tl(*),tu(*),mc(3)
      
       double precision mseg,mse_ema,bias_adj,INF(2)
+      double precision dn
 
       integer 
-     1    nthresh,i,n,n_adj
+     1    nthresh,i,n,n_adj,i1
      
       character*4 at_site_option,at_site_default,at_site_std
       
       common /tacg04/at_site_option,at_site_default,at_site_std
       
       data INF/-99.d0,99.d0/
+      
+      i1 = 1
       
         n      = 0
       do 10 i=1,nthresh
@@ -1449,8 +1525,9 @@ c
         mseg_all = mse_ema(nthresh,nobs,tl,tu,mc,3)
       else if(at_site_option .eq. 'ADJE') then
         n_adj  = min(n,150)
+        dn = dble(n_adj)
         bias_adj = mseg(n_adj,mc(3)) /
-     1             mse_ema(1,dble(n_adj),INF(1),INF(2),mc,3)
+     1             mse_ema(i1,dn,INF(1),INF(2),mc,3)
         mseg_all = bias_adj * mse_ema(nthresh,nobs,tl,tu,mc,3)
       endif
       
@@ -1755,6 +1832,10 @@ CDEC$ ATTRIBUTES DLLEXPORT :: VAR_EMAB
         PARAMETER (PNND1=2,PNND2=2,PNND3=2)
         PARAMETER (PNNDSUM=PNND1*PNND2*PNND3)
 
+        INTEGER PDIM
+        PARAMETER (PDIM=512)
+      
+
         INTEGER 
      1    I,J,K,N,NND(3),NQ,NTH
      
@@ -1763,8 +1844,8 @@ CDEC$ ATTRIBUTES DLLEXPORT :: VAR_EMAB
      2    YP(*),CV_YP_SYP(2,2,*),CIL(*),CIH(*),
      3    MC(3),S_MC(3,3),
      7    R_S2, R_M_MSE, R_S2_MSE, R_G_MSE,
-     8    GR_MC1(3,PNNDSUM),GR_MC2(3,PNNDSUM,PNNDSUM),
-     1    W1(PNNDSUM),W2(PNNDSUM,PNNDSUM),
+     8    GR_MC1(3,PDIM),GR_MC2(3,PNNDSUM,PNNDSUM),
+     1    W1(PDIM),W2(PNNDSUM,PNNDSUM),
      2    QP1(PNNDSUM),QP2(PNNDSUM,PNNDSUM),VP1(PNNDSUM),SP1(PNNDSUM),
      3    QP3,COVW
     
@@ -2052,6 +2133,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
         subroutine var_mom
      1    (nthresh,n_in,tl_in,tu_in,mc_in,varm)
+        !DEC$ ATTRIBUTES DLLEXPORT :: var_mom
 
         implicit none
           save
@@ -2063,8 +2145,8 @@ c
         parameter (nth_p=100)
 
         double precision 
-     1    tl_in(nth_p),tu_in(nth_p),mc_in(3),mc(3),
-     2    mnouta(6),mnoutb(6),mnoutc(6),n_in(nth_p),
+     1    tl_in(*),tu_in(*),mc_in(3),mc(3),
+     2    mnouta(6),mnoutb(6),mnoutc(6),n_in(*),
      3    varm(3,3),a(3,3),ainv(3,3),bc_t(3,3),d(3,3),d_t(3,3),e_x(6),
      4    xinf,mu_x(3,3),nh,n_t,t1(3,3),tl,tu,p1,p2,p3,pa,pb,
      5    vb(3,3),vb_t(3,3),vc(3,3),vc_t(3,3),
@@ -2706,6 +2788,7 @@ c
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
         subroutine mP3(tl,tu,m,mnout,n)
+        !DEC$ ATTRIBUTES DLLEXPORT :: mP3
 
         implicit none
         
@@ -2984,6 +3067,7 @@ c
       end
 c*_*-*~*_*-*~*             new program begins here            *_*-*~*_*-*~*_*-*~
       double precision function qP3(q,m)
+        !DEC$ ATTRIBUTES DLLEXPORT :: qP3
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c     program to compute the inverse cdf of 
@@ -3079,7 +3163,7 @@ c
       implicit none
       
       double precision 
-     1  m,qP3
+     1  m(3),qP3
       
       real rand
       
@@ -3309,6 +3393,7 @@ c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
       end
           
       subroutine b17ci(n,skew,p,c,klpc,kupc)
+      !DEC$ ATTRIBUTES DLLEXPORT :: b17ci
 c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 c
 c    computes confidence intervals used by B17B
@@ -3490,4 +3575,260 @@ c      data bcf/2004/
       data eps/0.90d0/
      
       end
+
+
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c****|double precision function erlg
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c     computes the effective record length of skew from Griffis 2004 EQ 2
+c
+c           author.......Seth Siefken
+c           date.........2022-10-27
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+c       input variables:
+c       ------------------------------------------------------------------------
+c            g         r*8  regional skew
+c            mse       r*8  regional skew mse
+c
+c       output variables:
+c       ------------------------------------------------------------------------
+c            n      r*8  equivalent recond length of regional skew
+c
+c****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+c
+      double precision function erlg(g, mse)
       
+      
+      double precision g, mse, mse_i, n, a, b, c, eps, mse_delta
+      integer i
+      eps = 1d-10
+      n = 20 !initial guess of n
+      do 10 i=1,100
+c Consider moving mse_i eqn to separate function
+        a = -17.75/n**2 + 50.06/n**3
+        b = 3.93/n**0.3 - 30.97/n**0.6 + 37.1/n**0.9
+        c = -6.16/n**0.56 + 36.83/n**1.12 - 66.9/n**1.68
+      
+        mse_i = (6d0/n +a)*(1+(9d0/6d0 +b)*g**2 + (15d0/48d0 +c)*g**4)
+        mse_delta = mse_i - mse
+        if(abs(mse_delta) .lt. eps) then
+          exit
+        endif
+      
+        n = n + n*(mse_delta/mse)
+        if(i .eq. 100) then
+          write(*,*) ' failure to converge in erlg'
+          stop
+        endif
+      
+10    continue
+      erlg = n
+      return
+      end
+
+
+      double precision function detrat(mc, n, nthresh, nobs, tl, tu)
+        !DEC$ ATTRIBUTES DLLEXPORT :: detrat
+!****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!    computes skew weighting factor using determinate ratio for Greg Schwarz's
+!    Halloween weighting method
+!
+!    Seth Siefken 2022-12-16
+!
+!****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+!
+!       input variables:
+!       ---------------------------------------------------------------------------
+!            mc(3)   r*8     central moments vector
+!            n          i*4  number of observations (censored, uncensored, or other)
+!            nthresh    i*4  number of distinct censoring thresholds
+!            nobs(nthresh)   number of observations in each censoring regime
+!            tl(nthresh)     vector of lower censoring thresholds
+!            tu(nthresh)     vector of upper censoring thresholds
+!
+!       output variables:
+!       ---------------------------------------------------------------------------
+!            detrat      r*8 determinate ratio for skew weighting
+!****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
+
+      !IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+	  IMPLICIT NONE
+	  INTEGER n, nthresh, k
+      DOUBLE PRECISION  MC(3), tl(*), tu(*), nobs(*)
+      DOUBLE PRECISION	F0PHI(3,3), F0PHIK(3,3), F0PHIUL(2,2)
+      DOUBLE PRECISION	PARMS(3), S, ETAK, IMF(3,3),IMFUL(2,2)
+	  DOUBLE PRECISION  PICK, FP_G3_CDF
+	  DOUBLE PRECISION  I3(3,3), I2(2,2),  MNEXPECT(3), MCEXPECT(3)
+	  DOUBLE PRECISION  DCK(3,3), PICKDCK(3,3), F1(3,3), DET2, DET3
+
+      EXTERNAL ZIPD, EXPMOMCDERIV, DMMULT, DMSUM
+
+      CALL ZIPD(9, 0,
+     O          F0PHI)
+      !Set up identity matrices by initializing to all zeroes and setting diagonals to 1
+      CALL ZIPD(4, 0,
+     O          I2)
+      CALL ZIPD(9, 0,
+     O          I3)
+      I2(1,1) = 1d0
+      I2(2,2) = 1d0
+  
+      I3(1,1) = 1d0
+      I3(2,2) = 1d0
+      I3(3,3) = 1d0
+	  
+	  
+	  CALL M2P(MC,PARMS) !Compute P3 parameters
+	  S = SQRT(MC(2))
+	  
+	  !Compute EQ 16 in Greg's write-up
+	  
+	  DO 70 K=1, nthresh
+	  
+	      !Compute probability of censoring
+          PICK = 1- (FP_G3_CDF(tu(K),PARMS) - FP_G3_CDF(tl(K),PARMS)) 
+
+		  
+		  ETAK = nobs(K)/n
+
+		  !Compute Dck from Greg's EQ 16
+		  CALL EXPMOMCDERIV(PARMS, TL(K), TU(K), MNEXPECT, DCK)
+	  
+		  
+		  !Compute expectations of central moments correctly using Greg's EQ 23
+		  MCEXPECT(1) = MNEXPECT(1)
+		  MCEXPECT(2) = MC(1)**2 - 2*MC(1)*MNEXPECT(1) + MNEXPECT(2)
+		  MCEXPECT(3) = (-1*MC(1)**3 + 3*MC(1)**2*MNEXPECT(1) - 
+	1	  3*MC(1)*MNEXPECT(2) + MNEXPECT(3))/S**3
+		  
+		  !Compute matrix in Greg's EQ 16
+		  F1(1,1) = 0
+		  F1(1,2) = 0
+		  F1(1,3) = 0
+		
+	      F1(2,1) = 2*PICK*(MCEXPECT(1) - MC(1))
+		  F1(2,2) = 0
+		  F1(2,3) = 0
+		
+	      F1(3,1) = 3*(PICK*MCEXPECT(2) - MC(2))/S**3
+		  F1(3,2) = 3*(PICK*MCEXPECT(3) - MC(3))/(2*MC(2))
+		  F1(3,3) = 0
+		
+		CALL DMMULT(PICK,3,3,DCK,3,3,3,PICKDCK,3) !Test this subroutine, unsure if it's used elsewhere
+		
+		CALL DMSUM(3,3,F1,3,3,3,PICKDCK,3,3,3,F0PHIK,3)
+		CALL DMMULT(ETAK,3,3,F0PHIK,3,3,3,F0PHIK,3) !Multiply by ETA_k
+		
+		CALL DMSUM(3,3,F0PHI,3,3,3,F0PHIK,3,3,3,F0PHI,3)
+		  
+	  
+70    CONTINUE
+	  
+
+	  
+	  !Take upper left partition
+	  F0PHIUL(1,1) = F0PHI(1,1)
+	  F0PHIUL(1,2) = F0PHI(1,2)
+	  F0PHIUL(2,1) = F0PHI(2,1)
+	  F0PHIUL(2,2) = F0PHI(2,2)
+	  
+	  CALL DMDIFF(2,2,I2,2,2,2,F0PHIUL,2,2,2,IMFUL,2)
+	  CALL DMDIFF(3,3,I3,3,3,3,F0PHI,3,3,3,IMF,3)
+	  
+
+	  
+	  !Compute determinates
+	  DET2 = IMFUL(1,1)*IMFUL(2,2) - IMFUL(1,2)*IMFUL(2,1)
+	  DET3 = (IMF(1,1)*(IMF(2,2)*IMF(3,3) - IMF(2,3)*IMF(3,2)) +
+	1        IMF(1,2)*(IMF(2,3)*IMF(3,1) - IMF(2,1)*IMF(3,3)) +
+	2		 IMF(1,3)*(IMF(2,1)*IMF(3,2) - IMF(2,2)*IMF(3,1)))
+			 
+		
+
+		
+		
+	  detrat = DET3/DET2
+        
+      RETURN
+      END
+c
+c
+c
+      subroutine set_common_tac002(ask0,ask141,askxmax,alskewXmax,abcf)
+      !DEC$ ATTRIBUTES DLLEXPORT :: set_common_tac002
+      
+      !added for unit testing purposes to set values in common block
+
+      implicit none
+      
+      integer           abcf
+      logical           alskewXmax
+      double precision  ask0,ask141,askxmax
+      
+      integer           bcf
+      logical           lskewXmax
+      double precision  sk0,sk141,skxmax
+     
+      common /tac002/sk0,sk141,skxmax,lskewXmax,bcf
+
+      bcf = abcf
+      lskewXmax = alskewXmax
+      sk0 = ask0
+      sk141 = ask141 
+      skxmax = askxmax
+        
+      return
+      end
+c
+c
+c     
+      subroutine set_common_tacR01(aVarS2opt)
+      !DEC$ ATTRIBUTES DLLEXPORT :: set_common_tacR01
+      
+      !added for unit testing purposes to set values in common block
+
+      implicit none
+
+      character*4 aVarS2opt
+      
+      character*4 VarS2opt      
+      
+      common /tacR01/VarS2opt
+      
+      VarS2opt = aVarS2opt
+        
+      return
+      end
+c
+c
+c     
+      subroutine set_common_reg001(arM,arMmse,arS2,arS2mse,arG,arGmse,
+     1                             aEMAIterations)
+      !DEC$ ATTRIBUTES DLLEXPORT :: set_common_reg001
+
+      !added for unit testing purposes to set values in common block
+      
+      implicit none
+
+      integer            aEMAIterations
+      double precision   arM,arMmse,arS2,arS2mse,arG,arGmse
+      
+      integer            EMAIterations
+      double precision   rM,rMmse,rS2,rS2mse,rG,rGmse
+      
+      common /reg001/rM,rMmse,rS2,rS2mse,rG,rGmse,EMAIterations
+      
+      rM = arM
+      rMmse = arMmse
+      rS2 = arS2
+      rS2mse = arS2mse
+      rG = arG
+      rGmse = arGmse
+      EMAIterations = aEMAIterations
+        
+      return
+      end
