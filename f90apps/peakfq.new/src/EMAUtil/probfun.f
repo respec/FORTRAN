@@ -110,7 +110,7 @@ C
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-C      SAVE
+      SAVE
       
       CALL SP_Z(X,F,PHI,XLNPHI,RAT,HAZ)
       
@@ -131,7 +131,7 @@ C
 C****|===|====-====|====-====|====-====|====-====|====-====|====-====|==////////
 
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-C      SAVE
+      SAVE
       
       CALL SP_Z(X,F,PHI,XLNPHI,RAT,HAZ)
       
