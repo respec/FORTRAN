@@ -614,7 +614,7 @@ C                  day defaults to the first
               COGTP(IG)= FLOAT (YY)+ (FLOAT (MM))/100.0+
      $                  (FLOAT (DD))/10000.0
  190        CONTINUE
-            FG= ODGTFG(COGTE(IG))
+            FG= ABS(ODGTFG(COGTE(IG)))
             COTDGT(FG,COGTC(IG))= RVAL(IG*6)
             OUTDGT(FG)= OUTDGT(FG)+ COTDGT(FG,COGTC(IG))
  200      CONTINUE
@@ -1185,7 +1185,7 @@ C       find initial gt rates, and overall fvol rates for each exit
         DO 30 IG= 1, NCOGT
           IC= COGTC(IG)
           IX= COGTE(IG)
-          FG= ODGTFG(IX)
+          FG= ABS(ODGTFG(IX))
           COREL(FG,IC)= COTDGT(FG,IC)
           CO(IX,IC)= CO(IX,IC)+ COTDGT(FG,IC)
           CRO(IC)= CRO(IC)+ COTDGT(FG,IC)
@@ -1915,7 +1915,7 @@ C     + + + LOCAL VARIABLES + + +
       INTEGER          IX,FG,IC,ROWADD,SCLU,SGRP,N,I,CATPOS(MXCUSR)
       REAL             SAS,VOLPEV,CORELS(MXEXIT,MXCAT),RTMP,IRRDEM,
      $                 COTDGS(MXEXIT,MXCAT),CVOLEV(MXCAT),DEMVOL,
-     $                 CIRRWD(MXCAT)
+     $                 CIRRWD(MXCAT),LROVEL
       DOUBLE PRECISION VOLT,CVOLT(MXCAT),CFRAC(MXCAT),CKVOL,CCORR
 C
 C     + + + INTRINSICS + + +
@@ -2194,7 +2194,7 @@ C       dont consider evap
 C
 C     get any input time series which govern outflow demands
       DO 120 IX= 1, NEXITS
-        FG= ODGTFG(IX)
+        FG= ABS(ODGTFG(IX))
         IF (FG .GT. 0) THEN
 C         there is a gt demand for this exit
           IF (NCATS .GE. 1) THEN
@@ -2305,7 +2305,7 @@ C           error - cannot correct
 C
 C       check for demand deficits
         DO 160 IX= 1, NEXITS
-          FG= ODGTFG(IX)
+          FG= ABS(ODGTFG(IX))
           IF (FG .GT. 0) THEN
 C           check for deficits from this exit
             DO 150 IC= 1, NCATS
@@ -2334,8 +2334,22 @@ C
         IF (AUX2FG .EQ. 1) THEN
 C         calc av velocity and cross section
           IF (VOL .GT. 0.0) THEN
+            IF (NEXITS .EQ. 1) THEN
+              LROVEL = RO
+            ELSE
+              LROVEL = 0.0
+              DO 170 IX= 1, NEXITS
+C               check for exits that should be included in avvel calc
+                FG= ODGTFG(IX)
+                IF (FG .GT. -0.1) THEN
+C                 include if zero or higher (exclude if negative)
+C                   fix for case like a water supply withdrawal taking almost all water
+                  LROVEL = LROVEL + O(IX)
+                END IF
+ 170          CONTINUE
+            END IF 
 C           av velocity
-            AVVEL= LEN*RO/VOL
+            AVVEL= LEN*LROVEL/VOL
 C           av cross section
             AVSECT= VOL/LEN
           ELSE
@@ -2442,7 +2456,7 @@ C             use the value in a single column
 C
 C     get function of time demand
       DO 30 IX= 1, NEXITS
-        FG2= ODGTFG(IX)
+        FG2= ABS(ODGTFG(IX))
         IF (FG2 .GE. 1) THEN
 C         outflow demand also has a g(t) component
           IF (NCATS .LE. 0) THEN
@@ -2468,7 +2482,7 @@ C     casentry funct(n)
         OD(IX)= 0.0
         IF (ODFVFG(IX) .NE. 0) THEN
 C         there is a function of colume demand
-          IF (ODGTFG(IX) .LE. 0) THEN
+          IF (ABS(ODGTFG(IX)) .LE. 0) THEN
 C           there is no function of time demand
             OD(IX)= ODFV(IX)
           ELSE
@@ -2496,7 +2510,7 @@ C             case min
               OD(IX)= MIN (ODFV(IX),ODGT(IX))
             END IF
           END IF
-        ELSE IF (ODGTFG(IX) .GT. 0) THEN
+        ELSE IF (ABS(ODGTFG(IX)) .GT. 0) THEN
 C         there is function of time demand
           OD(IX)= ODGT(IX)
         ELSE
@@ -2608,7 +2622,7 @@ C         subtract off category demands to determine fvol ks water
           DO 10 IG= 1, NCOGT
             IC= COGTC(IG)
             IX= COGTE(IG)
-            FG= ODGTFG(IX)
+            FG= ABS(ODGTFG(IX))
             FOS(IX)= FOS(IX)- CORELS(FG,IC)
             IF (ABS (FOS(IX)) .LT. OSEFF(IX)*1.0E-5) THEN
 C             prevent underflow
@@ -2630,7 +2644,7 @@ C       now check gt water
         DO 30 IG= 1, NCOGT
           IC= COGTC(IG)
           IX= COGTE(IG)
-          FG= ODGTFG(IX)
+          FG= ABS(ODGTFG(IX))
 C
 C         determine maximum ks demand rate
           COINT= CVINT(IC)/KSF
@@ -2660,7 +2674,7 @@ C     as many as possible
       DO 40 IG= 1, NCOGT
         IC= COGTC(IG)
         IX= COGTE(IG)
-        FG= ODGTFG(IX)
+        FG= ABS(ODGTFG(IX))
 C
 C       determine maximum coks rate
         COINT= CVINT(IC)/COKSF
@@ -2756,7 +2770,7 @@ C     + + + LOCAL VARIABLES + + +
       DOUBLE PRECISION LVOL
 C
 C     + + + INTRINSICS + + +
-      INTRINSIC  DBLE
+      INTRINSIC  DBLE,ABS
 C
 C     + + + EXTERNALS + + +
       EXTERNAL ZIPR,COPYD,COPYR,CATFRC
@@ -2789,7 +2803,7 @@ C     allocate gt water and get fvol rates
       DO 10 IG= 1, NCOGT
         IC= COGTC(IG)
         IX= COGTE(IG)
-        FG= ODGTFG(IX)
+        FG= ABS(ODGTFG(IX))
 C
 C       subtract all demands from appropriate category in priority order
 C
