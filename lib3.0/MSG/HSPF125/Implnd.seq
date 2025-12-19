@@ -4485,7 +4485,7 @@ _WIDTH   5
 _COLUMN 41
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  -1 : 2
+_RANGE  -1 : 3
 _DEFAULT  0
 _HELP
 If QSOFG is non-zero, this constituent is a QUALOF (directly
@@ -4494,10 +4494,12 @@ removal are performed daily, and the removal rate is dependent
 only on the accumulation and storage limit parameters (ACQOP
 and SQOLIM).  If 2, accumulation and removel are performed
 every interval, and the removal rate also takes into account
-atmospheric deposition plus lateral inflows.  If -1, then the
-outflow concentration is specified in ACQOP rather than the
-accumulation rate, and buildup and washoff processes are not
-simulated.
+atmospheric deposition plus lateral inflows. If 3, accumulation 
+and removal are performed every interval, but the removal rate 
+does not takes into account atmospheric deposition nor
+lateral inflows. If -1, then the outflow concentration is 
+specified in ACQOP rather than the accumulation rate, and 
+buildup and washoff processes are not simulated.
 _PNAME  QSOFG
 $FIELD  FIELD8
 _WIDTH   5

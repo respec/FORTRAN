@@ -78,13 +78,13 @@ C
       END IF
       OSVREC= MAX(OSVREC,40)
 C
-      IF (NUTFG.EQ.1) THEN
+      IF (NUTFG.GT.0) THEN
         CALL PNUTRX
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
         END IF
         OSVREC= MAX(OSVREC,42)
-        IF (PLKFG.EQ.1) THEN
+        IF (PLKFG.GT.0) THEN
           CALL PPLANK
           IF (OUTLEV.GT.1) THEN
             WRITE (MESSU,2020)
@@ -201,11 +201,11 @@ C
 C     simulate primary do and bod balances
       CALL OXRX
 C
-      IF (NUTFG .EQ. 1) THEN
+      IF (NUTFG .GT. 0) THEN
 C       simulate primary inorganic nitrogen and phosphorus balances
         CALL NUTRX
 C
-        IF (PLKFG .EQ. 1) THEN
+        IF (PLKFG .GT. 0) THEN
 C         simulate plankton populations and associated reactions
           CALL PLANK
 C

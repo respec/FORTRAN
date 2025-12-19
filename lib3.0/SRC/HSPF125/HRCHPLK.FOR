@@ -467,7 +467,9 @@ C     + + + LOCAL VARIABLES + + +
      $         TAMBAL,NO3BAL,PO4BAL,NITZOO,PO4ZOO,VOLSP,INORN,INORP,
      $         INORC,ZGRO,ZDTH,ZORN,ZORP,ZORC,BGRO(4),BDTH(4),ORNBAL,
      $         ORPBAL,ORCBAL,DUMVAL,INNO3,INTAM,INPO4,PLADFX,PLADCN,
-     $         TURB,GROBAL(4),DTHBAL(4),LSNH4(3),LSPO4(3)
+     $         TURB,GROBAL(4),DTHBAL(4),LSNH4(3),LSPO4(3),
+     $         TMPPHY,TMPZOO,TMPCLA,TMPORN,TMPORP,TMPORC,
+     $         TMPTORN,TMPTORP,TMPTORC,TMPPOT,TMPTN,TMPTP
       DOUBLE PRECISION DORC,DORN,DORP,DPHYTO
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
@@ -551,6 +553,22 @@ CTHJ          PLADWT(I)= PREC*SAREA*PAD(PLACFP(I)+IVL1)
         END IF
         PLADEP(I)= PLADDR(I)+ PLADWT(I)
  10   CONTINUE
+C
+      IF (PLKFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C       water level is low and using option, save conc for later
+        TMPPHY = PHYTO
+        TMPZOO = ZOO
+        TMPCLA = PHYCLA
+        TMPORN = ORN
+        TMPORP = ORP
+        TMPORC = ORC
+        TMPTORN = TORN
+        TMPTORP = TORP
+        TMPTORC = TORC
+        TMPPOT  = POTBOD
+        TMPTN = TN
+        TMPTP = TP
+      END IF
 C
 C     get inflowing material from pad; advect
       IF (PHYFG .EQ. 1) THEN
@@ -960,6 +978,7 @@ C         water scarcity limits zooplankton growth
           DTHZOO= 0.0
           TOTZOO= 0.0
         END IF
+C
       END IF
 C
       IF (BALFG.GE.1) THEN
@@ -1012,6 +1031,23 @@ C       undefined summary concentrations
         POTBOD= -1.0E30
         TN= -1.0E30
         TP= -1.0E30
+      END IF
+C
+      IF (PLKFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C       water level is low and using option
+C       don't recalc concentration
+        PHYTO = TMPPHY
+        ZOO = TMPZOO
+        PHYCLA = TMPCLA
+        ORN = TMPORN
+        ORP = TMPORP
+        ORC = TMPORC
+        TORN = TMPTORN
+        TORP = TMPTORP
+        TORC = TMPTORC
+        POTBOD = TMPPOT
+        TN = TMPTN
+        TP = TMPTP
       END IF
 C
 C     total inflows

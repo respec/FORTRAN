@@ -11925,16 +11925,19 @@ _WIDTH   5
 _COLUMN 46
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 2
+_RANGE  0 : 3
 _DEFAULT  0
 _HELP
-If QSOFG is 1 or 2, this constituent is a QUALOF (directly
+If QSOFG is 1, 2 or 3, this constituent is a QUALOF (directly
 associated with overland flow).  If 1, then accumulation and
 removal are performed daily, and the removal rate is dependent
 only on the accumulation and storage limit parameters (ACQOP
-and SQOLIM).  If 2, accumulation and removel are performed
+and SQOLIM).  If 2, accumulation and removal are performed
 every interval, and the removal rate also takes into account
-atmospheric deposition plus lateral inflows.
+atmospheric deposition plus lateral inflows. If 3, accumulation 
+and removal are performed every interval, but the removal rate 
+does not takes into account atmospheric deposition nor
+lateral inflows.
 _PNAME  QSOFG
 $FIELD  FIELD8
 _WIDTH   5

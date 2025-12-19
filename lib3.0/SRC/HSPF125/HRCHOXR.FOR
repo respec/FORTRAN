@@ -33,7 +33,7 @@ C
 C
       OXWCNT= 0
 C
-      IF (GQFG.EQ.1.AND.GQALFG(4).EQ.1) THEN
+      IF (GQFG.GT.0.AND.GQALFG(4).EQ.1) THEN
 C       reaeration data have already been processed
       ELSE
 C       flags - table-type ox-flags
@@ -197,7 +197,7 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    SCLU,SGRP,REQFG,TSSUB(2)
       REAL       DOREA,DOBEN,BODBNR,VOLSP,
-     1           SATDOP,DOPREC,DOMASS
+     1           SATDOP,DOPREC,DOMASS,TMPDOX,TMPBOD
       DOUBLE PRECISION DPBOD,DPDOX
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
@@ -228,6 +228,12 @@ C
         IBOD= PAD(IODFP + IVL1)
       ELSE
         IBOD= 0.0
+      END IF
+C
+      IF (OXFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C       water level is low and using option, save conc for later
+        TMPDOX = DOX
+        TMPBOD = BOD
       END IF
 C
 C     advect dissolved oxygen
@@ -377,7 +383,7 @@ CBRB      WIND= PAD(WDFP + IVL1)
 C
 C       calculate oxygen reaeration
 C
-        IF (GQFG .EQ. 1 .AND. GQALFG(4) .EQ. 1) THEN
+        IF (GQFG .GT. 0 .AND. GQALFG(4) .EQ. 1) THEN
 C         korea has already been calculated in section gqual
         ELSE
 C
@@ -445,6 +451,13 @@ C
         BNRBOD= 0.0
         SNKBOD= 0.0
 C
+      END IF
+C
+      IF (OXFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C       water level is low and using option
+C       don't recalc concentration
+        DOX = TMPDOX
+        BOD = TMPBOD
       END IF
 C
       TOTDOX= READOX+ BODDOX+ BENDOX

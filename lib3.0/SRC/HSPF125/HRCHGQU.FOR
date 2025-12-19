@@ -798,7 +798,9 @@ C
 C     + + + LOCAL VARIABLES + + +
       INTEGER     FPT,I,IDMK,ITOBE,J,K,L,N,REQFG,TSSUB(2),FLGVAL
       REAL        A,AVDEPE,AVDEPM,AVVELE,CLDL,EXPNT,FACT2(18),KL,
-     $            TW20,VOLSP,INDQAL,GQADFX,GQADCN
+     $            TW20,VOLSP,INDQAL,GQADFX,GQADCN,TMPDQAL,
+     $            TMPSQAL1,TMPSQAL2,TMPSQAL3,
+     $            TMPSQAL4,TMPSQAL5,TMPSQAL6
       DOUBLE PRECISION DPDQAL(MXGQAL)
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
 C
@@ -1014,7 +1016,7 @@ C       case 1
  130      CONTINUE
 C         use time series for sediment conc
 C
-          IF (SEDFG .EQ. 1) THEN
+          IF (SEDFG .GT. 0) THEN
 C           use value computed in section sedtrn
             SDCNC= SSED(4)
           ELSE
@@ -1056,7 +1058,7 @@ C
 C       case 1
  170      CONTINUE
 C         use time series for phyto
-          IF (PLKFG .EQ. 1) THEN
+          IF (PLKFG .GT. 0) THEN
 C
             IF (PHYFG .EQ. 1) THEN
 C             use last simulated value
@@ -1266,6 +1268,18 @@ C
 C     main loop-simulate each quality constituent
 C
       DO 420 I=1,NGQUAL
+C
+        IF (GQFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C         water level is low and using option, save conc for later
+          TMPDQAL = DQAL(I)
+          TMPSQAL1 = SQAL(1,I)
+          TMPSQAL2 = SQAL(2,I)
+          TMPSQAL3 = SQAL(3,I)
+          TMPSQAL4 = SQAL(4,I)
+          TMPSQAL5 = SQAL(5,I)
+          TMPSQAL6 = SQAL(6,I)
+        END IF
+C
 C       get data on inflow of dissolved material
         FPT= GQIF1X(I)
 C
@@ -1545,6 +1559,18 @@ C
           RRQAL(I)= RDQAL(I)
         END IF
         GQST(I,1)= RRQAL(I)
+C
+        IF (GQFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C         water level is low and using option
+C         use previous concentration
+          DQAL(I) = TMPDQAL
+          SQAL(1,I) = TMPSQAL1
+          SQAL(2,I) = TMPSQAL2
+          SQAL(3,I) = TMPSQAL3
+          SQAL(4,I) = TMPSQAL4
+          SQAL(5,I) = TMPSQAL5
+          SQAL(6,I) = TMPSQAL6
+        END IF
 C
  420  CONTINUE
 C

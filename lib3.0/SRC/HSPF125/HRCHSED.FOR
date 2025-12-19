@@ -353,8 +353,9 @@ C       uci is in english units
 C
 C     simulate silt and clay
       CALL COHESV
-     I            (ISED(1),VOLS,SROVOL,VOL,EROVOL,SOVOL(1),EOVOL(1),
-     I             NEXITS,AVDEPM,AVDEPE,SDPM(1,1),TAU,
+     I            (SEDFG,STCOR,ISED(1),VOLS,SROVOL,VOL,EROVOL,
+     I             SOVOL(1),EOVOL(1),NEXITS,AVDEPM,AVDEPE,
+     I             SDPM(1,1),TAU,
      M             SSED(1),RSED(1),
      O             ROSED(1),OSED(1,1),DEPSCR(1))
 C
@@ -367,10 +368,10 @@ C     compute fine sediment load
       EXPSND= SDPM(5,1)
 C
       CALL SANDLD
-     I            (ISED(1),VOLS,SROVOL,VOL,EROVOL,SOVOL(1),EOVOL(1),
-     I             NEXITS,KSAND,AVVELE,EXPSND,ROM,SANDFG,DB50E,HRADE,
-     I             SLOPE,TW,WSANDE,TWIDE,DB50M,FSL,RCHNO,
-     I             MESSU,MSGFL,DATIM,AVDEPE,
+     I            (SEDFG,STCOR,ISED(1),VOLS,SROVOL,VOL,EROVOL,
+     I             SOVOL(1),EOVOL(1),NEXITS,KSAND,AVVELE,EXPSND,
+     I             ROM,SANDFG,DB50E,HRADE,SLOPE,TW,WSANDE,TWIDE,
+     I             DB50M,FSL,RCHNO,MESSU,MSGFL,DATIM,AVDEPE,
      M             SSED(1),RSED(1),RSED(4),SDECNT(1),
      O             DEPSCR(1),ROSED(1),OSED(1,1))
 C
@@ -555,8 +556,8 @@ C
 C
 C
       SUBROUTINE   COHESV
-     I                    (ISED,VOLS,SROVOL,VOL,EROVOL,SOVOL,
-     I                     EOVOL,NEXITS,AVDEPM,AVDEPE,SDPM,TAU,
+     I                    (SEDFG,STCOR,ISED,VOLS,SROVOL,VOL,EROVOL,
+     I                     SOVOL,EOVOL,NEXITS,AVDEPM,AVDEPE,SDPM,TAU,
      M                     SSED,RSED,
      O                     ROSED,OSED,DEPSCR)
 C
@@ -564,13 +565,15 @@ C     + + + PURPOSE + + +
 C     Simulate behavior of cohesive sediments (silt and clay)
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER    NEXITS
+      INTEGER    NEXITS,SEDFG
       REAL       AVDEPM,AVDEPE,DEPSCR(3),EOVOL(5),EROVOL,ISED(3),
      $           OSED(5,3),ROSED(3),RSED(6),SDPM(6,3),
-     $           SOVOL(5),SROVOL,SSED(3),TAU
+     $           SOVOL(5),SROVOL,SSED(3),TAU,STCOR
       DOUBLE PRECISION VOL,VOLS
 C
 C     + + + ARGUMENT DEFINITIONS + + +
+C     SEDFG  - sediment activity flag
+C     STCOR  - stage correction / threshold for conc calc
 C     ISED   - ???
 C     VOLS   - ???
 C     SROVOL - ???
@@ -591,7 +594,7 @@ C     DEPSCR - ???
 C
 C     + + + LOCAL VARIABLES + + +
       INTEGER    J
-      REAL       TOTBED,FRCSED(2)
+      REAL       TOTBED,FRCSED(2),TMPSED
       DOUBLE PRECISION DPSSED(3)
 C
 C     + + + EXTERNALS + + +
@@ -613,6 +616,11 @@ C       no bed at start of interval, assume equal fractions
       END IF
 C
       DO 10 J= 2,3
+C
+        IF (SEDFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C         water level is low and using option, save conc for later
+          TMPSED = SSED(J)
+        END IF
 C
         DPSSED(J)=SSED(J)
         CALL ADVECT
@@ -646,6 +654,12 @@ C         water is present in the rchres
         ELSE
 C         rchres is dry
           SSED(J)  = -1.0E30
+        END IF
+C
+        IF (SEDFG.EQ.2 .AND. AVDEPE.LT.STCOR) THEN
+C         water level is low and using option, don't use recalc concentration,
+C         use previous value
+          SSED(J) = TMPSED
         END IF
 C
  10   CONTINUE
@@ -1009,10 +1023,10 @@ C
 C
 C
       SUBROUTINE   SANDLD
-     I                    (ISAND,VOLS,SROVOL,VOL,EROVOL,SOVOL,EOVOL,
-     I                     NEXITS,KSAND,AVVELE,EXPSND,ROM,SANDFG,DB50E,
-     I                     HRADE,SLOPE,TW,WSANDE,TWIDE,DB50M,FSL,RCHNO,
-     I                     MESSU,MSGFL,DATIM,AVDEPE,
+     I                    (SEDFG,STCOR,ISAND,VOLS,SROVOL,VOL,EROVOL,
+     I                     SOVOL,EOVOL,NEXITS,KSAND,AVVELE,EXPSND,ROM,
+     I                     SANDFG,DB50E,HRADE,SLOPE,TW,WSANDE,TWIDE,
+     I                     DB50M,FSL,RCHNO,MESSU,MSGFL,DATIM,AVDEPE,
      M                     SAND,RSAND,BDSAND,SDWCT2,
      O                     DEPSCR,ROSAND,OSAND)
 C
@@ -1021,14 +1035,17 @@ C     Simulate behavior of sand/gravel
 C     variables are r4 unless otherwise stated
 C
 C     + + + DUMMY ARGUMENTS + + +
-      INTEGER     MESSU,NEXITS,RCHNO,SANDFG,SDWCT2(2),MSGFL,DATIM(5)
+      INTEGER     SEDFG,MESSU,NEXITS,RCHNO,SANDFG,SDWCT2(2),
+     $            MSGFL,DATIM(5)
       REAL        AVVELE,BDSAND,DB50E,DB50M,DEPSCR,EOVOL(5),
      $            EROVOL,EXPSND,FSL,HRADE,ISAND,KSAND,OSAND(5),
      $            ROM,ROSAND,RSAND,SAND,SLOPE,SOVOL(5),SROVOL,
-     $            TW,TWIDE,WSANDE,AVDEPE
+     $            TW,TWIDE,WSANDE,AVDEPE,STCOR
       DOUBLE PRECISION VOL,VOLS
 C
 C     + + + ARGUMENT DEFINITIONS + + +
+C     SEDFG  - sediment activity flag
+C     STCOR  - stage correction / threshold for conc calc
 C     ISAND  - ???
 C     VOLS   - ???
 C     SROVOL - ???
@@ -1182,6 +1199,7 @@ C
               OSAND(N)= SOVOL(N)*SANDS + EOVOL(N)*SAND
  90         CONTINUE
           END IF
+C
         ELSE
 C         no outflow (still water) or water depth less than two inches
           SAND  = 0.0
@@ -1214,6 +1232,11 @@ C
         DO 150 N=1,5
           OSAND(N)=0.0
  150    CONTINUE
+      END IF
+C
+      IF (SEDFG.EQ.2 .AND. AVDEPE.LT.STCOR) THEN
+C       water level is low and using option, don't recalc concentration
+        SAND = SANDS
       END IF
 C
 C     calculate depth of bed scour or deposition; positive for

@@ -117,7 +117,7 @@ C     htrch
       END IF
 C
 C     sedtrn
-      IF (SEDFG.EQ.1) THEN
+      IF (SEDFG.GT.0) THEN
         CALL PSED
         IF (OUTLEV.GT.1) THEN
           WRITE (MESSU,2020)
@@ -126,7 +126,7 @@ C     sedtrn
       END IF
 C
 C     gqual
-      IF (GQFG.EQ.1) THEN
+      IF (GQFG.GT.0) THEN
         CALL PGQUAL
      M             (OSVREC)
         IF (OUTLEV.GT.1) THEN
@@ -135,7 +135,7 @@ C     gqual
       END IF
 C
 C     oxrx
-      IF (OXFG.EQ.1) THEN
+      IF (OXFG.GT.0) THEN
         CALL PRQUAL
      M             (OSVREC)
         IF (OUTLEV.GT.1) THEN
@@ -537,15 +537,15 @@ C
             CALL HTRCH
           END IF
 C
-          IF (SEDFG .EQ. 1) THEN
+          IF (SEDFG .GT. 0) THEN
             CALL SEDTRN
           END IF
 C
-          IF (GQFG .EQ. 1) THEN
+          IF (GQFG .GT. 0) THEN
             CALL GQUAL
           END IF
 C
-          IF (OXFG .EQ. 1) THEN
+          IF (OXFG .GT. 0) THEN
             CALL RQUAL
           END IF
 C
@@ -607,21 +607,21 @@ C
         CALL HTRB
       END IF
 C
-      IF (SEDFG .EQ. 1) THEN
+      IF (SEDFG .GT. 0) THEN
         CALL SEDRB
       END IF
 C
-      IF (GQFG .EQ. 1) THEN
+      IF (GQFG .GT. 0) THEN
         CALL GQRB
       END IF
 C
-      IF (OXFG .EQ. 1) THEN
+      IF (OXFG .GT. 0) THEN
         CALL OXRB
 C
-        IF (NUTFG .EQ. 1) THEN
+        IF (NUTFG .GT. 0) THEN
           CALL NUTRB
 C
-          IF (PLKFG .EQ. 1) THEN
+          IF (PLKFG .GT. 0) THEN
             CALL PLKRB
 C
             IF (PHFG .EQ. 1) THEN
@@ -685,29 +685,29 @@ C       section htrch is active
      I            (FRMROW,TOROW)
       END IF
 C
-      IF (SEDFG .EQ. 1) THEN
+      IF (SEDFG .GT. 0) THEN
 C       section sedtrn is active 
         CALL SEDACC
      I             (FRMROW,TOROW)
       END IF
 C
-      IF (GQFG .EQ. 1) THEN
+      IF (GQFG .GT. 0) THEN
 C       section gqual is active 
         CALL GQACC
      I            (FRMROW,TOROW)
       END IF
 C
-      IF (OXFG .EQ. 1) THEN
+      IF (OXFG .GT. 0) THEN
 C       section oxrx is active 
         CALL OXACC
      I            (FRMROW,TOROW)
 C
-        IF (NUTFG .EQ. 1) THEN
+        IF (NUTFG .GT. 0) THEN
 C         section nutrx is active
           CALL NUTACC
      I               (FRMROW,TOROW)
 C
-          IF (PLKFG .EQ. 1) THEN
+          IF (PLKFG .GT. 0) THEN
 C           section plank is active
             CALL PLKACC
      I                 (FRMROW,TOROW)
@@ -822,7 +822,7 @@ C         section htrch produces printout at this level
         END IF
       END IF
 C
-      IF (SEDFG .EQ. 1) THEN
+      IF (SEDFG .GT. 0) THEN
 C       section sedtrn is active
         IF (PRINTU .GT. 0 .AND. PFLAG(5) .LE. LEV) THEN
           LPRTU = PRINTU
@@ -841,7 +841,7 @@ C         section sedtrn produces printout at this level
         END IF
       END IF
 C
-      IF (GQFG .EQ. 1) THEN
+      IF (GQFG .GT. 0) THEN
 C       section gqual is active
         IF (PRINTU .GT. 0 .AND. PFLAG(6) .LE. LEV) THEN
           LPRTU = PRINTU
@@ -860,7 +860,7 @@ C         section gqual produces printout at this level
         END IF
       END IF
 C
-      IF (OXFG .EQ. 1) THEN
+      IF (OXFG .GT. 0) THEN
 C       assign values to parameters used for conversion from
 C       internal to external units for section rqual - assign
 C       value to fluxid for printout
@@ -907,7 +907,7 @@ C         section oxrx produces printout at this level
      I              (LEV,LPRTU,FACTA,FACTB,FLUXID,UNITFG,LBINU)
         END IF
 C
-        IF (NUTFG .EQ. 1) THEN
+        IF (NUTFG .GT. 0) THEN
 C         section nutrx is active
           IF (PRINTU .GT. 0 .AND. PFLAG(8) .LE. LEV) THEN
             LPRTU = PRINTU
@@ -925,7 +925,7 @@ C           section nutrx produces printout at this level
      I                 (LEV,LPRTU,FACTA,FACTB,FLUXID,UNITFG,LBINU)
           END IF
 C
-          IF (PLKFG .EQ. 1) THEN
+          IF (PLKFG .GT. 0) THEN
 C           section plank is active
             IF (PRINTU .GT. 0 .AND. PFLAG(9) .LE. LEV) THEN
               LPRTU = PRINTU
@@ -1034,29 +1034,29 @@ C       section htrch is active
      I            (LEV)
       END IF
 C
-      IF (SEDFG .EQ. 1) THEN
+      IF (SEDFG .GT. 0) THEN
 C       section sedtrn is active 
         CALL SEDRST
      I             (LEV)
       END IF
 C
-      IF (GQFG .EQ. 1) THEN
+      IF (GQFG .GT. 0) THEN
 C       section gqual is active 
         CALL GQRST
      I            (LEV)
       END IF
 C
-      IF (OXFG .EQ. 1) THEN
+      IF (OXFG .GT. 0) THEN
 C       section oxrx is active 
         CALL OXRST
      I            (LEV)
 C
-        IF (NUTFG .EQ. 1) THEN
+        IF (NUTFG .GT. 0) THEN
 C         section nutrx is active 
           CALL NUTRST
      I               (LEV)
 C
-          IF (PLKFG .EQ. 1) THEN
+          IF (PLKFG .GT. 0) THEN
 C           section plank is active 
             CALL PLKRST
      I                 (LEV)
@@ -1260,21 +1260,21 @@ C
         CALL HTRP
       END IF
 C
-      IF (SEDFG .EQ. 1) THEN
+      IF (SEDFG .GT. 0) THEN
         CALL SEDRP
       END IF
 C
-      IF (GQFG .EQ. 1) THEN
+      IF (GQFG .GT. 0) THEN
         CALL GQRP
       END IF
 C
-      IF (OXFG .EQ. 1) THEN
+      IF (OXFG .GT. 0) THEN
         CALL OXRP
 C
-        IF (NUTFG .EQ. 1) THEN
+        IF (NUTFG .GT. 0) THEN
           CALL NUTRP
 C
-          IF (PLKFG .EQ. 1) THEN
+          IF (PLKFG .GT. 0) THEN
             CALL PLKRP
 C
             IF (PHFG .EQ. 1) THEN

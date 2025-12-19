@@ -138,7 +138,7 @@ C     calculate derived values
       CVON= CVBN/CVBO
       CVOP= CVBP/CVBO
 C
-      IF ( (BENRFG .EQ. 1) .OR. (PLKFG .EQ. 1) ) THEN
+      IF ( (BENRFG .EQ. 1) .OR. (PLKFG .GT. 0) ) THEN
 C       benthal release parms - table-type nut-benparm
         I2= 87
         I4=  5
@@ -381,7 +381,8 @@ C     + + + LOCAL VARIABLES + + +
       REAL         NH3VLT,BENTAM,BENPO4,DECNIT,DECPO4,DODEMD,TAMNIT,
      $             NO2NTC,NO3NIT,NO3DE,VOLSP,TOTPM1,TOTPM2,TOTPM3,
      $             TOTNM1,TOTNM2,TOTNM3,TWKELV,AVDEPM,DUMXXX,INNO3,
-     $             INTAM,INPO4,NUADFX,NUADCN
+     $             INTAM,INPO4,NUADFX,NUADCN,
+     $             TMPNO3,TMPTAM,TMPNO2,TMPPO4,TMPNH4,TMPNH3
       DOUBLE PRECISION DTAM,DNO2,DNO3,DPO4
       CHARACTER*6 OPTYP,TSNAM,SECNAM,MSECNM,OPFGNM
       CHARACTER*20 NUTID(2)
@@ -472,6 +473,16 @@ C     get inflowing material from pad
       TNUIF(1)= INO3
 C
       INNO3= INO3+ NUADEP(1)
+C
+      IF (NUTFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C       water level is low and using option, save conc for later
+        TMPNO3 = NO3
+        TMPTAM = TAM
+        TMPNO2 = NO2
+        TMPPO4 = PO4
+        TMPNH4 = NH4
+        TMPNH3 = NH3
+      END IF
 C
 C     advect nitrate
       DNO3= NO3
@@ -887,8 +898,21 @@ C
           ADNH4(K)= 0.0
           ADPO4(K)= 0.0
  80     CONTINUE
+
 C
       END IF
+C
+      IF (NUTFG .EQ. 2 .AND. AVDEPE .LT. STCOR) THEN
+C       water level is low and using option
+C       don't recalc concentration
+        NO3 = TMPNO3      
+        TAM = TMPTAM
+        NO2 = TMPNO2
+        PO4 = TMPPO4
+        NH4 = TMPNH4
+        NH3 = TMPNH3
+      END IF
+C
       TOTDOX= READOX+ BODDOX+ BENDOX+ NITDOX
       TOTBOD= DECBOD+ BNRBOD+ SNKBOD+ DENBOD
       TOTNO3= NITNO3+ DENNO3+ BODNO3

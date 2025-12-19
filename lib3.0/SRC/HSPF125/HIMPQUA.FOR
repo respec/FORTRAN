@@ -1205,6 +1205,11 @@ C       independent of runoff - units are qty/acre
         DUMMY= REMQOP+ (ADTOT+SLIQO)/(ACQOP/REMQOP)
         IF (DUMMY .GT. 1.0) DUMMY=1.0
         SQO= ACQOP*(DELT60/24.0)+ SQO*(1.0-DUMMY)**(DELT60/24.0)
+      ELSEIF (QSOFG .EQ. 3) THEN
+C       update storage due to accumulation and removal which occurs
+C       independent of runoff - units are qty/acre
+C       do not include atmos dep or lateral inflow
+        SQO= ACQOP*(DELT60/24.0)+ SQO*(1.0-REMQOP)**(DELT60/24.0)
       END IF
 C
 C     update storage

@@ -1336,50 +1336,55 @@ _WIDTH   5
 _COLUMN 31
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
-Value  of 1 indicates section SEDTRN is active.
+Value of 1 or 2 indicates section SEDTRN is active.
+2 means cut off concentration calculation under STCOR inches.
 _PNAME  SEDFG
 $FIELD  FIELD8
 _WIDTH   5
 _COLUMN 36
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
-Value  of 1 indicates section GQUAL is active.
+Value of 1 or 2 indicates section GQUAL is active.
+2 means cut off concentration calculation under STCOR inches.
 _PNAME  GQALFG
 $FIELD  FIELD9
 _WIDTH   5
 _COLUMN 41
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
-Value  of 1 indicates section OXRX is active.
+Value of 1 or 2 indicates section OXRX is active.
+2 means cut off concentration calculation under STCOR inches.
 _PNAME  OXFG
 $FIELD  FIELD10
 _WIDTH   5
 _COLUMN 46
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
-Value  of 1 indicates section NUTRX is active.
+Value of 1 or 2 indicates section NUTRX is active.
+2 means cut off concentration calculation under STCOR inches.
 _PNAME  NUTFG
 $FIELD  FIELD11
 _WIDTH   5
 _COLUMN 51
 _PROTECT CORRECT
 _TYPE INTEGER
-_RANGE  0 : 1
+_RANGE  0 : 2
 _DEFAULT  0
 _HELP
-Value  of 1 indicates section PLANK is active.
+Value of 1 or 2 indicates section PLANK is active.
+2 means cut off concentration calculation under STCOR inches.
 _PNAME  PLKFG
 $FIELD  FIELD12
 _WIDTH   5
@@ -9400,7 +9405,7 @@ Oxygen flags (RCHRES).
 #GROUP  363  TYPE TEXT
 $TEXT
 (1X,2I10)
-    REAMFG,     DOPFG
+    REAMFG     DOPFG
 #GROUP  164  TYPE PRM2
 $HEADER
     RCHRES    KBOD20     TCBOD    KODSET    SUPSAT
@@ -13545,9 +13550,9 @@ $HELP
 General plankton parameters, group 4.
 #GROUP  409  TYPE TEXT
 $TEXT
-(1X,5(1PE10.3))
-    NMINGR    PMINGR    CMINGR    LMINGR     NMINC
-      mg/l      mg/l      mg/l    ly/min      mg/l
+(1X,7(1PE10.3))
+    NMINGR    PMINGR    CMINGR    LMINGR     NMINC    PHMXFX    PHFXAD
+      mg/l      mg/l      mg/l    ly/min      mg/l      mg/l
 #GROUP  211  TYPE PRM2
 $HEADER
     RCHRES   Values of benthic invertebrate density (mg/m2)
