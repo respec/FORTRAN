@@ -569,27 +569,26 @@ C
      I              (J,RCHNO,DATIM,MESSU,PRINTU,MSGFL,
      I               PRCONS,PRCON,CONIN,CONDIF,UNITID,I1,
      M               CNWCNT(I))
+ 10   CONTINUE
 C
-        IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
-C         write binary output
+      IF (BINU .GT. 0 .AND. ABS(BFLAG(3)) .LE. LEV) THEN
+C       write binary output
         CALL EXDATE(
      I              DATIM,
      O              EXDAT)
-          IF (BFLAG(3) .GT. 0) THEN
-C           at start of run, write the header
-C           WRITE (BINU) I0,'RCHRES  ',RCHNO,'CONS    ',
-C    1            (CLEN(J),(CHEAD(J)(K:K),K=1,CLEN(J)),J=1,ACNT)
+        IF (BFLAG(3) .GT. 0) THEN
+C         at start of run, write the header
+C         WRITE (BINU) I0,'RCHRES  ',RCHNO,'CONS    ',
+C    1          (CLEN(J),(CHEAD(J)(K:K),K=1,CLEN(J)),J=1,ACNT)
           CALL BINHED (BINU,'RCHRES  ',RCHNO,'CONS    ',ACNT,CLEN,CHEAD)
-C           set bflag to negative to not write headers anymore
-            BFLAG(3) = -BFLAG(3)
-          END IF
-C         WRITE (BINU) I1,'RCHRES  ',RCHNO,'CONS    ',UNITFG,
-C    1                 LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
+C         set bflag to negative to not write headers anymore
+          BFLAG(3) = -BFLAG(3)
+        END IF
+C       WRITE (BINU) I1,'RCHRES  ',RCHNO,'CONS    ',UNITFG,
+C    1               LEV,(EXDAT(J),J=1,5),(APRINT(J),J=1,ACNT)
         CALL BINREC (BINU,'RCHRES  ',RCHNO,'CONS    ',UNITFG,LEV,EXDAT,
      I               ACNT,APRINT)
-        END IF
-C
- 10   CONTINUE
+      END IF
 C
       RETURN
       END
